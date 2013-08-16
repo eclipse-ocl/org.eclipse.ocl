@@ -189,6 +189,40 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_2713bae9",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T22:13:58Z",
+      "side": 1,
+      "message": "Copyright",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_c7b1364e",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T22:13:58Z",
+      "side": 1,
+      "message": "This page is inconsistent with the New-\u003eFile dialog.\n\na) a prefix \"/\" on the path\nb) valid name prompt is inaccurate and frightening\nc) default name is invalid; better NewFile.ocl\nd) radio button confused me.\n\nBetter to make top half like the New-\u003eFile dialog\nbottom half with all Sample Ecore Editor Load Resource buttons\n\nIf there is a selection, use IFile as seed for name, and if selection is a metamodel use it as the seed for the metamodel.\n\nI expect that as with genmodels, an OCL file will usually be adjacent to the metamodel.\n\nReusing Sample Ecore Editor buttons should avoid all the metamodel loading complexity.\n\nIf a metamodel is not registered it can and should be imported as \n\nimport \u0027platform:/resource/....",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_27d29a44",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
         "patchSetId": 1
