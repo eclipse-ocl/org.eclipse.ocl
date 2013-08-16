@@ -1,0 +1,429 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_87a1eeaa",
+        "filename": "plugins/org.eclipse.ocl.ui/.settings/org.eclipse.jdt.ui.prefs",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "What\u0027s wrong with no change?",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_a4ca28b1",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "1.2.0",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_44bd241d",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "2.7.0,3.0.0",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_64c02094",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "3.5.0,4.0.0",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_84c72ca9",
+        "filename": "plugins/org.eclipse.ocl.ui/icons/OCLModelFile.gif",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Why not reuse an existing copy",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_e49390b0",
+        "filename": "plugins/org.eclipse.ocl.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "MF_COMPLETE_OCL_WIZARD_NAME",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_2489f87a",
+        "filename": "plugins/org.eclipse.ocl.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Needs a property to support internationalization",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_048e7c82",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/common/OCLUIPlugin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "No copyright",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_6472e007",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/common/OCLUIPlugin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Needs merging with org.eclipse.ocl.common.ui.internal.Activator",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_446fe420",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "No copyright",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_e7b0b22b",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "This has no mnemonic quality\n\ncf MF_SyntaxColoring",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_27d29a44",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Needs more precise wording to be useful.\n\nDo you mean workspace-relative?",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_07d79e34",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "This comment is useless.\n\nIs the file absolute/relative/... what file name is it.\n\n[I would not object to no comment.]",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_47e886ef",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "(Draft)\t\tDraft saved at 9:27 PM\n\nDon\u0027t understand the comment.",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_67eb02ee",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Don\u0027t understand the comment.",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_87e28e0b",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/Messages.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "No copyright",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_c72e56c8",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/Messages.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this use the same pattern as EcoreAndUMLUIMessages",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_27245ae5",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/MetamodelUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Wrong date",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_671dc29a",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/MetamodelUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Wronf contributor",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_471a46a3",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/MetamodelUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "NO NO. You never modify the global registry in non-standalone code.",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_e73b92f5",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/OCLResourceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "No copyright",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_679ae27c",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/OCLResourceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "This whole file makes me very uncomfortable. The wizad should be easy.",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_c7401661",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/OCLResourceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Why does OCL need a *.xml only facility?",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_27361a0d",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/OCLResourceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Why do we need this? I\u0027ve never needed it. It looks like an Acceleo bug.",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73e4bec_4797e651",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/messages.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 1,
+      "message": "Why not give thew user freedom?\n\ne.g a.b.ocl",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}

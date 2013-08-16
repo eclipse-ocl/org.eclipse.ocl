@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e4bec_a7a4eaba",
+        "filename": "plugins/org.eclipse.ocl.ui/.settings/org.eclipse.jdt.core.prefs",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-08-16T20:48:34Z",
+      "side": 0,
+      "message": "What\u0027s wrong with no change?",
+      "revId": "485e21839ba553093d2a646177ccb2b58b1a118c",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
