@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_fd895c7b",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2758,
+      "author": {
+        "id": 1289
+      },
+      "writtenOn": "2013-09-03T18:48:35Z",
+      "side": 1,
+      "message": "Matchers are reusable objects, so long as they are not shared by multiple threads.  That\u0027s why they can be \"reset()\" to run again on another input string.\n\nCaching Patterns means having to create a new Matcher for every regex-match invocation.  By reusing matchers, we can save creating so many more ephemeral (one-shot) objects.  Sure, there are objects referenced internally by a Matcher that aren\u0027t re-used, but there\u0027s only so much we can do ...",
+      "parentUuid": "a74dd7b0_1dc2487b",
+      "revId": "6a66f149787aee283b9625834a99815fe6d025c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_2af41cc0",
         "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
         "patchSetId": 2
