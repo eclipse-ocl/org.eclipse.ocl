@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_c9a30d2e",
+        "filename": "plugins/org.eclipse.ocl/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1289
+      },
+      "writtenOn": "2013-09-03T05:24:17Z",
+      "side": 1,
+      "message": "I made this change because the API tooling put at error on it.  I didn\u0027t tell me anything about the features.\n\nHow many features will need to be up-versioned?  Have any of them already been up-versioned?  Is OCL planning a major version update, which would obviate a minor feature-version bump?  I\u0027d rather let the OCL team\u0027s releng experts figure out the feature versioning ...",
+      "parentUuid": "a74dd7b0_830e04ed",
+      "revId": "efc3d9f61750f8c0bd9b5e00e5dcd7cdaad04206",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_c3edac85",
         "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
         "patchSetId": 1
@@ -81,6 +99,24 @@
       "writtenOn": "2013-09-03T01:07:35Z",
       "side": 1,
       "message": "Shouldn\u0027t this also \u0027put\u0027 to ensure that a re-used regex is treated as new in the list.",
+      "revId": "efc3d9f61750f8c0bd9b5e00e5dcd7cdaad04206",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_89b2a579",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2766,
+      "author": {
+        "id": 1289
+      },
+      "writtenOn": "2013-09-03T05:24:17Z",
+      "side": 1,
+      "message": "No, this shouldn\u0027t be necessary, but I forgot to initialize the map as access-ordered.  I\u0027ll fix that.",
+      "parentUuid": "a74dd7b0_a311800d",
       "revId": "efc3d9f61750f8c0bd9b5e00e5dcd7cdaad04206",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
