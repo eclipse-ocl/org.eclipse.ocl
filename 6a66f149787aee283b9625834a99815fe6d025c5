@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "a74dd7b0_ca9e58eb",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-03T17:16:55Z",
+      "side": 1,
+      "message": "I\u0027m not enthusiastic about growing copyrights. CEA LIST apears in the contributors, and they are happy enough with that for my work.",
+      "revId": "6a66f149787aee283b9625834a99815fe6d025c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_1dc2487b",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2758,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-03T17:16:55Z",
+      "side": 1,
+      "message": "I don\u0027t understand. Why are we caching Matchers rather than Patterns?\n\nThe Patterns may reoccur, but the Matchers are pretty unique.",
+      "revId": "6a66f149787aee283b9625834a99815fe6d025c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_2af41cc0",
         "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
         "patchSetId": 2
@@ -31,6 +65,24 @@
       "side": 1,
       "message": "I always implement lazy-instantiating getters for fields, even if they\u0027re private.  If you prefer, I could eliminate it, but it\u0027s quite harmless.",
       "parentUuid": "a74dd7b0_2af41cc0",
+      "revId": "6a66f149787aee283b9625834a99815fe6d025c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_aaa30c2e",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2767,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-03T17:16:55Z",
+      "side": 1,
+      "message": "I\u0027ll flatten it.",
+      "parentUuid": "a74dd7b0_0a7a0061",
       "revId": "6a66f149787aee283b9625834a99815fe6d025c5",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
