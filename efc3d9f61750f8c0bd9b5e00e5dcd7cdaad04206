@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74dd7b0_830e04ed",
+        "filename": "plugins/org.eclipse.ocl/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-03T01:07:35Z",
+      "side": 1,
+      "message": "Feature ancestry probably needs doing too.",
+      "revId": "efc3d9f61750f8c0bd9b5e00e5dcd7cdaad04206",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_c3edac85",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-03T01:07:35Z",
+      "side": 1,
+      "message": "The cache is nicely scoped by the Visitor, and there is absolutely no support for concurrent evaluation within one visitor so I think the thread safety comment is redundant and confusing.",
+      "revId": "efc3d9f61750f8c0bd9b5e00e5dcd7cdaad04206",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_23e3b097",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-03T01:07:35Z",
+      "side": 1,
+      "message": "Most users will not need the cache, so I think it should be initialized to null and created lazily.",
+      "revId": "efc3d9f61750f8c0bd9b5e00e5dcd7cdaad04206",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_4304fcce",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-03T01:07:35Z",
+      "side": 1,
+      "message": "With lazy cache construction, CACHE_SIZE can be \u0027set\u0027 by an astute user who has a really intensive regex application. Perhaps the default can then be smaller.",
+      "revId": "efc3d9f61750f8c0bd9b5e00e5dcd7cdaad04206",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_a311800d",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2766,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-03T01:07:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this also \u0027put\u0027 to ensure that a re-used regex is treated as new in the list.",
+      "revId": "efc3d9f61750f8c0bd9b5e00e5dcd7cdaad04206",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
