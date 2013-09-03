@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_9dfe5875",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2758,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-03T19:16:01Z",
+      "side": 1,
+      "message": "Since thread safety is not an issue caching Matchers is about three object constructions quicker, but the matcher working context will be locked in to memory by the cache; at least there should be no EObjects so it is a modest cost.\n\nFor the pivot evaluator and code generator I\u0027m aiming to support concurrency, so it must be a Pattern cache.",
+      "parentUuid": "a74dd7b0_1dc2487b",
+      "revId": "6a66f149787aee283b9625834a99815fe6d025c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_2af41cc0",
         "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
         "patchSetId": 2
