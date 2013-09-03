@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74dd7b0_2af41cc0",
+        "filename": "plugins/org.eclipse.ocl/src/org/eclipse/ocl/EvaluationVisitorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2767,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-03T15:36:03Z",
+      "side": 1,
+      "message": "What\u0027s the point of factoring out this single use private method?",
+      "revId": "6a66f149787aee283b9625834a99815fe6d025c5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
