@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_9bd9246d",
+        "filename": "plugins/org.eclipse.ocl.ui/.settings/org.eclipse.jdt.ui.prefs",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "CR is not correct in my workspace! I have \\r\\n instead of \\n. indeed, there is no change. Next patch does not contain this file",
+      "parentUuid": "c73e4bec_87a1eeaa",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_a4ca28b1",
         "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-08-16T20:48:34Z",
       "side": 1,
       "message": "1.2.0",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_6c78a0e3",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "ok done in the next patch.",
+      "parentUuid": "c73e4bec_a4ca28b1",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_cc68d416",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "ok corrected in the next patch",
+      "parentUuid": "c73e4bec_44bd241d",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_64c02094",
         "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-08-16T20:48:34Z",
       "side": 1,
       "message": "3.5.0,4.0.0",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_ac6d8825",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "ok in the next patch",
+      "parentUuid": "c73e4bec_64c02094",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_5b195cab",
+        "filename": "plugins/org.eclipse.ocl.ui/icons/OCLModelFile.gif",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "It is a copy from the existing plugin org.eclipse.ocl.examples. The same icon exists already in 6 plugins : examples, examples.xtext.completeocl.ui, xtext.conxole, xtext.essentialocl.ui, xtext.oclinecore.ui and xtext.oclstdlib.ui",
+      "parentUuid": "c73e4bec_84c72ca9",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_e49390b0",
         "filename": "plugins/org.eclipse.ocl.ui/plugin.properties",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_7b40985e",
+        "filename": "plugins/org.eclipse.ocl.ui/plugin.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "c73e4bec_e49390b0",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_2489f87a",
         "filename": "plugins/org.eclipse.ocl.ui/plugin.xml",
         "patchSetId": 1
@@ -115,6 +223,24 @@
       "writtenOn": "2013-08-16T20:48:34Z",
       "side": 1,
       "message": "Needs a property to support internationalization",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_db372c07",
+        "filename": "plugins/org.eclipse.ocl.ui/plugin.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "ok I add a property : MF_COMPLETE_OCL_WIZARD_DESCRIPTION \u003d Create a new Complete OCL File",
+      "parentUuid": "c73e4bec_2489f87a",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_4f684195",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/common/OCLUIPlugin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "ok done in the next patch",
+      "parentUuid": "c73e4bec_6472e007",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_446fe420",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizard.java",
         "patchSetId": 1
@@ -166,6 +310,24 @@
       "writtenOn": "2013-08-16T20:48:34Z",
       "side": 1,
       "message": "No copyright",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_0c5f5c6e",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "added in the next patch",
+      "parentUuid": "c73e4bec_446fe420",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_9e675244",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "I replaced the string by WP_NewCompleteOCLFile. WP for wizard page. All other externalized strings are renamed too.",
+      "parentUuid": "c73e4bec_e7b0b22b",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_2713bae9",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
         "patchSetId": 1
@@ -200,6 +380,24 @@
       "writtenOn": "2013-08-16T22:13:58Z",
       "side": 1,
       "message": "Copyright",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_ec631033",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "added in the next patch",
+      "parentUuid": "c73e4bec_2713bae9",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_6fdd3dd8",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "ok, the wizard in the next patch is composed of : top half like the New-\u003eFile dialog bottom half with all Sample Ecore Editor Load Resource buttons. with no uri validation rules. if uri is not selected, the created file will be empty",
+      "parentUuid": "c73e4bec_c7b1364e",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_27d29a44",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
         "patchSetId": 1
@@ -234,6 +450,24 @@
       "writtenOn": "2013-08-16T20:48:34Z",
       "side": 1,
       "message": "Needs more precise wording to be useful.\n\nDo you mean workspace-relative?",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_11f853b5",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "yes it is the workspace-relative location.",
+      "parentUuid": "c73e4bec_27d29a44",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_27d1913f",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "code change in next patch",
+      "parentUuid": "c73e4bec_07d79e34",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_47e886ef",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
         "patchSetId": 1
@@ -268,6 +520,24 @@
       "writtenOn": "2013-08-16T20:48:34Z",
       "side": 1,
       "message": "(Draft)\t\tDraft saved at 9:27 PM\n\nDon\u0027t understand the comment.",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_c7df0d4d",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "code change in next patch",
+      "parentUuid": "c73e4bec_47e886ef",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -291,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_e7da095e",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/NewCompleteOCLFileWizardPage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "code change in next patch",
+      "parentUuid": "c73e4bec_67eb02ee",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_87e28e0b",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/Messages.java",
         "patchSetId": 1
@@ -308,6 +596,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_07d61537",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/Messages.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "added in the next patch",
+      "parentUuid": "c73e4bec_87e28e0b",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_c72e56c8",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/Messages.java",
         "patchSetId": 1
@@ -319,6 +625,24 @@
       "writtenOn": "2013-08-16T20:48:34Z",
       "side": 1,
       "message": "Why doesn\u0027t this use the same pattern as EcoreAndUMLUIMessages",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_fe7db68e",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/Messages.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "Wasn\u0027t sure about the content. the content of Messages.properties file is merged to the EcoreAndUMLUIMessages.properties and uses the EcoreAndUMLUIMessages.java",
+      "parentUuid": "c73e4bec_c72e56c8",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -359,6 +683,23 @@
     },
     {
       "key": {
+        "uuid": "c73e4bec_79df79f9",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/MetamodelUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "The usefull code of this file is merged to WizardNewCompleteOCLFileCreationPage.java in the next patch",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_471a46a3",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/MetamodelUtils.java",
         "patchSetId": 1
@@ -370,6 +711,24 @@
       "writtenOn": "2013-08-16T20:48:34Z",
       "side": 1,
       "message": "NO NO. You never modify the global registry in non-standalone code.",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_4fda01e1",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/MetamodelUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "ok. corrected",
+      "parentUuid": "c73e4bec_471a46a3",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -393,6 +752,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_e72cc9d2",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/OCLResourceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "file merged with the wizard page",
+      "parentUuid": "c73e4bec_e73b92f5",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_679ae27c",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/OCLResourceUtil.java",
         "patchSetId": 1
@@ -404,6 +781,24 @@
       "writtenOn": "2013-08-16T20:48:34Z",
       "side": 1,
       "message": "This whole file makes me very uncomfortable. The wizad should be easy.",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_afeaa56a",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/OCLResourceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "this file is refactored and merged with the wizard page",
+      "parentUuid": "c73e4bec_679ae27c",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -427,6 +822,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_272351df",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/OCLResourceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "there is no need at all. an extra code in the original topcased code",
+      "parentUuid": "c73e4bec_c7401661",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_27361a0d",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/OCLResourceUtil.java",
         "patchSetId": 1
@@ -444,6 +857,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_c731cd25",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/OCLResourceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "right, no need after refactoring. corrected in the next patch.",
+      "parentUuid": "c73e4bec_27361a0d",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73e4bec_4797e651",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/messages.properties",
         "patchSetId": 1
@@ -455,6 +886,24 @@
       "writtenOn": "2013-08-16T20:48:34Z",
       "side": 1,
       "message": "Why not give thew user freedom?\n\ne.g a.b.ocl",
+      "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_8fefe97b",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/utils/messages.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-11T07:37:12Z",
+      "side": 1,
+      "message": "limitation deleted, the ocl file name has the same facilities as the text file name",
+      "parentUuid": "c73e4bec_4797e651",
       "revId": "7096047ee57e63aed4358cf5f3b4de83c8d1a1c0",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
