@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74dd7b0_a478f8e3",
+        "filename": "plugins/org.eclipse.ocl.common.ui/src/org/eclipse/ocl/common/ui/internal/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "This is a Java 5 plugin. Use Java 5.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_c47b84df",
+        "filename": "plugins/org.eclipse.ocl.common.ui/src/org/eclipse/ocl/common/ui/internal/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "What does this mean?",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_040c4ccb",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "Unnecessary dependency; (and why not same bounds as org.eclipse.ocl?)",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_24c508d5",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "(Draft)\t\tDraft saved at 6:45 PM\n\nUnnecessary dependency; (and why a package and why no bounds?)",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_04ba8c5a",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "Unnecessary dependency; (and why a package and why no bounds?)",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_c43c244b",
+        "filename": "plugins/org.eclipse.ocl.ui/icons/EPackage.gif",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "I see no need to reference this file and so need for an image registry\n\ncf OCLinEcoreLabelProvider usage as\n\n\tprotected String image(PackageCS ele) {\n\t\treturn \"/org.eclipse.emf.ecore.edit/icons/full/obj16/EPackage.gif\";\n\t}",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_24006873",
+        "filename": "plugins/org.eclipse.ocl.ui/plugin.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "This is all in the wrong plugin.\n\nocl.ui provides functionality for the Classic OCL.\n\nocl.examples.ui provides extended functionality for the Pivot OCL such as the Complete OCL editor.\n\nWith the functionality in ocl.ui, Classic-only installations will see a create file for which there is no editor.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_84f85cef",
+        "filename": "plugins/org.eclipse.ocl.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "reuse icon file from a plugin that is on the classpath.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_64f550f4",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/internal/messages/EcoreAndUMLUIMessages.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "What are all these \\r\u0027s.\n\nCorrect your editors to respect the project settings.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_a4559898",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/internal/messages/EcoreAndUMLUIMessages.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "The icon file is not sensibly internationalizeable.\n\nIt is already available as org.eclipse.ocl.examples.xtext.completeocl.ui\\icons\\OCLModelFile.gif (??but not on classpath??)",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_47e49655",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "The page starts nicely using the folder at which the New-\u003e... was invoked, unfortunately a default *.ocl and content-derived metamodel are not. The example package and class could both be correct to avoid an initial error.\n\nBrowse File.... seems to work fine even if it\u0027s a bit stupid.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_47d1363e",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "This is a new file so copyright Obeo.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_27d6aa37",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "No reference to the true copy sources; e.g.EcoreActionBarContributor\n\nWhy not just reuse ExtendedLoadResourceAction and enhance the dialog area with the restricted platform bits?",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_87521e30",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "This is only used for one reference that should perhaps have a local emphasis anyway.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_a713da89",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "In similar situations I take a local copy and put it in a ...ripoffs package. But maybe after stripped to necessity it becomes manageable.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_c716e67b",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "Use of restricted imports needs a strong justification.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_d2dfc24c",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "org.eclipse.emf.ecore.presentation.EcoreActionBarContributor.ExtendedLoadResourceAction.TargetPlatformPackageDialog;\n\nis public static. Why not re-use.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_32d1c63f",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "org.eclipse.emf.ecore.presentation.EcoreActionBarContributor.ExtendedLoadResourceAction.RegisteredPackageDialog;\n\nwhy not re-use?",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_2421885c",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-11T19:56:09Z",
+      "side": 1,
+      "message": "We have not yet moved to Java 6 so String.isEmpty() is not available.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    }
+  ]
+}
