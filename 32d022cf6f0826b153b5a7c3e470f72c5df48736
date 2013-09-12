@@ -545,6 +545,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_cf52745f",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T13:49:44Z",
+      "side": 1,
+      "message": "The derived ExtendedLoadResourceDialog reduces the copied code in the WizardPage. but It doesn\u0027t resolve the need to explicitly use the ResourceAndContainerGroup (ContainerSelectionGroup and ContainerContentProvider). \n\nDuplication of the three classes seems to me fondamental. I didn\u0027t found a non-restricted ContainerSelectionGroup to use. \n\nthe question now: is the org.eclipse.ocl.examples.ui is the right location for this three classes ?",
+      "parentUuid": "a74dd7b0_34c52bd5",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_c716e67b",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
         "patchSetId": 2
