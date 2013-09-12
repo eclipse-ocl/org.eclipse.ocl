@@ -527,6 +527,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_34c52bd5",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1305
+      },
+      "writtenOn": "2013-09-12T11:58:52Z",
+      "side": 1,
+      "message": "The current design is to re-use the restricted access platform ContainerSelectionGroup class and add the ExtendedLoadResourceDialog buttoms at the bottom.\n\nI\u0027m suggesting instead creating a derived ExtendedLoadResourceDialog class giving you access to the protected methods with a clone of ContainerSelectionGroup added at the top.\n\nI recall incurring similar pain before ExtendedLoadResourceDialog became friendly.\n\nMaybe my suggestion just isn\u0027t possible. Maybe there is a non-restricted ContainerSelectionGroup already available. Worth investigation to avoid the cloning, but if the worst comes to the worst we have to clone three or four platform classes.",
+      "parentUuid": "a74dd7b0_593592fe",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_c716e67b",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
         "patchSetId": 2
