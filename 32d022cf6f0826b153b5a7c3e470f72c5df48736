@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_bb22ce2a",
+        "filename": "plugins/org.eclipse.ocl.common.ui/src/org/eclipse/ocl/common/ui/internal/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "ok. public static void log(@SuppressWarnings(\"rawtypes\") Class clazz, String methodName, Throwable t) {...",
+      "parentUuid": "a74dd7b0_a478f8e3",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_c47b84df",
         "filename": "plugins/org.eclipse.ocl.common.ui/src/org/eclipse/ocl/common/ui/internal/Activator.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-09-11T19:56:09Z",
       "side": 1,
       "message": "What does this mean?",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_fb373667",
+        "filename": "plugins/org.eclipse.ocl.common.ui/src/org/eclipse/ocl/common/ui/internal/Activator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "it\u0027s a copy from the IDEWorkbenchPlugin.java class. should be deleted ?",
+      "parentUuid": "a74dd7b0_c47b84df",
       "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_9bc3929f",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "ok deleted. \nIt was used by orginal copied code. I have used the auto completion to get dependencies",
+      "parentUuid": "a74dd7b0_040c4ccb",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_24c508d5",
         "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2013-09-11T19:56:09Z",
       "side": 1,
       "message": "(Draft)\t\tDraft saved at 6:45 PM\n\nUnnecessary dependency; (and why a package and why no bounds?)",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_1b97829f",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "ok deleted. \nIt was used by orginal copied code. I have used the auto completion to get dependencies (that\u0027s why no bounds)",
+      "parentUuid": "a74dd7b0_24c508d5",
       "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_fb9bb6c7",
+        "filename": "plugins/org.eclipse.ocl.ui/META-INF/MANIFEST.MF",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "ok deleted. \nIt was used by orginal copied code. I have used the auto completion to get dependencies (that\u0027s why no bounds)",
+      "parentUuid": "a74dd7b0_04ba8c5a",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_c43c244b",
         "filename": "plugins/org.eclipse.ocl.ui/icons/EPackage.gif",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2013-09-11T19:56:09Z",
       "side": 1,
       "message": "I see no need to reference this file and so need for an image registry\n\ncf OCLinEcoreLabelProvider usage as\n\n\tprotected String image(PackageCS ele) {\n\t\treturn \"/org.eclipse.emf.ecore.edit/icons/full/obj16/EPackage.gif\";\n\t}",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_5b8d8a8d",
+        "filename": "plugins/org.eclipse.ocl.ui/icons/EPackage.gif",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "deleted. \nIt was used by orginal copied code.",
+      "parentUuid": "a74dd7b0_c43c244b",
       "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_7b596684",
+        "filename": "plugins/org.eclipse.ocl.ui/plugin.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "ok moved to /org.eclipse.ocl.examples.ui/plugin.properties",
+      "parentUuid": "a74dd7b0_24006873",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_84f85cef",
         "filename": "plugins/org.eclipse.ocl.ui/plugin.xml",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2013-09-11T19:56:09Z",
       "side": 1,
       "message": "reuse icon file from a plugin that is on the classpath.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_f400e30f",
+        "filename": "plugins/org.eclipse.ocl.ui/plugin.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "do you mean: \n\nsimply, that I have to add the icons folder to the classpath ?\n\nor, that I have to use an already existing icon form another plugin ? is it possible?",
+      "parentUuid": "a74dd7b0_84f85cef",
       "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_f4a46390",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/internal/messages/EcoreAndUMLUIMessages.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "working on windows :(\n\nI ll see what I can do about this",
+      "parentUuid": "a74dd7b0_64f550f4",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_a4559898",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/internal/messages/EcoreAndUMLUIMessages.properties",
         "patchSetId": 2
@@ -166,6 +328,24 @@
       "writtenOn": "2013-09-11T19:56:09Z",
       "side": 1,
       "message": "The icon file is not sensibly internationalizeable.\n\nIt is already available as org.eclipse.ocl.examples.xtext.completeocl.ui\\icons\\OCLModelFile.gif (??but not on classpath??)",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_9e4c204a",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/internal/messages/EcoreAndUMLUIMessages.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "ok. in the WizardNewCompleteOCLFileCreation.java :\nsetDefaultPageImageDescriptor(Activator\t\t.getImageDescriptor(\"org.eclipse.ocl.examples.xtext.completeocl.ui/icons/OCLModelFile.gif\"));\n\nthe icons folder of the plugin org.eclipse.ocl.examples.xtext.completeocl.ui is in the bin.includes and in the classpath",
+      "parentUuid": "a74dd7b0_a4559898",
       "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_d4904721",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "ok I ll initialize the File name and the metamodel uri basing on the event selection",
+      "parentUuid": "a74dd7b0_47e49655",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_47d1363e",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
         "patchSetId": 2
@@ -200,6 +398,24 @@
       "writtenOn": "2013-09-11T19:56:09Z",
       "side": 1,
       "message": "This is a new file so copyright Obeo.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_3964063c",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "a74dd7b0_47d1363e",
       "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_949d1f75",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "reference is added in the copyright.\n\nThe ExtendedLoadResourceAction creates a dialog window (containing the four load resource buttons and the uri field element).\n\nwhat I need to create is an only one dialog containing the file location, file name and metamodel uri buttons.\n\nI think I cannot reuse the  ExtendedLoadResourceAction directly. And I cannot call ExtendedLoadResourceDialog methods because of the protected visibility",
+      "parentUuid": "a74dd7b0_27d6aa37",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_87521e30",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
         "patchSetId": 2
@@ -234,6 +468,24 @@
       "writtenOn": "2013-09-11T19:56:09Z",
       "side": 1,
       "message": "This is only used for one reference that should perhaps have a local emphasis anyway.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_de3ce84a",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "The reference is replaced by : org.eclipse.ocl.common.ui.new_file_wizard_page_context",
+      "parentUuid": "a74dd7b0_87521e30",
       "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_593592fe",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "local copy needs restrictions too ... it needs to import org.eclipse.ui.internal.ide.IDEWorkbenchMessages an org.eclipse.ui.internal.ide.misc.ContainerSelectionGroup which are both restricted. \n\nas for the IDEWorkbenchMessages I can copy all used messages in the local internal messages\n\nbut what about the ContainerSelectionGroup.java class ? it needs ContainerContentProvider.java which is restricted too ...\n\ndo I copy the three classes to resolve the restriction problem ?",
+      "parentUuid": "a74dd7b0_a713da89",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_c716e67b",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
         "patchSetId": 2
@@ -268,6 +538,24 @@
       "writtenOn": "2013-09-11T19:56:09Z",
       "side": 1,
       "message": "Use of restricted imports needs a strong justification.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_19230ab1",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "deleted",
+      "parentUuid": "a74dd7b0_c716e67b",
       "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_5e3578fe",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "done. I have began the work by making a copy off all the reused code. and didn\u0027t clean at the end.",
+      "parentUuid": "a74dd7b0_d2dfc24c",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_32d1c63f",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
         "patchSetId": 2
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "a74dd7b0_3e3a2cf0",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "done. I have began the work by making a copy off all the reused code. and didn\u0027t clean at the end.",
+      "parentUuid": "a74dd7b0_32d1c63f",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a74dd7b0_2421885c",
         "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
         "patchSetId": 2
@@ -319,6 +643,24 @@
       "writtenOn": "2013-09-11T19:56:09Z",
       "side": 1,
       "message": "We have not yet moved to Java 6 so String.isEmpty() is not available.",
+      "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74dd7b0_9e526030",
+        "filename": "plugins/org.eclipse.ocl.ui/src/org/eclipse/ocl/ui/wizards/WizardNewCompleteOCLFileCreationPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1334
+      },
+      "writtenOn": "2013-09-12T11:36:30Z",
+      "side": 1,
+      "message": "configured, was an oversight.",
+      "parentUuid": "a74dd7b0_2421885c",
       "revId": "32d022cf6f0826b153b5a7c3e470f72c5df48736",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": false
