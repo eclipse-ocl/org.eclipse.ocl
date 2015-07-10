@@ -50,7 +50,13 @@ public class SingleResultLookupEnvironment extends LookupEnvironmentImpl impleme
 	public SingleResultLookupEnvironment(@NonNull Executor executor, @NonNull String name) {
 		this.executor = executor;
 		this.name = name;
-		this.envFactory = executor.getEnvironmentFactory();
+		//this.envFactory = executor.getEnvironmentFactory();
+	}
+	
+	public SingleResultLookupEnvironment(@NonNull Executor executor, @NonNull String name, Boolean isLocal) {
+		this.executor = executor;
+		this.name = name;
+		//this.envFactory = executor.getEnvironmentFactory();
 	}
 	
 	@Override
@@ -110,11 +116,7 @@ public class SingleResultLookupEnvironment extends LookupEnvironmentImpl impleme
 		return executor;
 	}
 	
-//	To delete
-//	public String getName() {
-//		return name;
-//	}
-	
+/*	
 	//
 	// ADDITIONAL STUFF TO INTEGRATE WITH
 	//
@@ -342,4 +344,5 @@ public class SingleResultLookupEnvironment extends LookupEnvironmentImpl impleme
 		}
 		return this;
 	}
+*/
 }

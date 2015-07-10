@@ -87,8 +87,10 @@ public abstract class AbstractPivotNameResolver {
 	@NonNull
 	protected SingleResultEnvironment computeNamedResult(@NonNull Element element, 
 		@NonNull SingleResultEnvironment env) { 
-		SingleResultEnvironment env2= (SingleResultEnvironment) executeVisitor(element, env);	
-		return env2 instanceof SingleResultLookupEnvironment ? ((SingleResultLookupEnvironment)env2).resolveDuplicates() : env2; 
+//		FIXME resolveDuplicates might not be needed
+//		SingleResultEnvironment env2= (SingleResultEnvironment) executeVisitor(element, env);	
+//		return env2 instanceof SingleResultLookupEnvironment ? ((SingleResultLookupEnvironment)env2).resolveDuplicates() : env2;
+		return env;
 	}		
 	
 //	@NonNull
