@@ -477,6 +477,33 @@ public class SerializeTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testSerialize_Expressions() throws Exception {
+		OCL ocl = OCL.newInstance(getProjectMap());
+		String testFile = 
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
+				"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" + 
+				"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"b\" nsURI=\"bbb\" nsPrefix=\"bb\">\n" + 
+				"  <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" + 
+				"    <details key=\"invocationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
+				"    <details key=\"settingDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
+				"    <details key=\"validationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
+				"  </eAnnotations>\n" + 
+				"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Expressions\">\n" + 
+				"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" + 
+				"      <details key=\"constraints\" value=\"SimpleIf SingleElseIf DoubleElseIf\"/>\n" + 
+				"    </eAnnotations>\n" + 
+				"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\">\n" + 
+				"      <details key=\"SimpleIf\" value=\"if true then 1 else 2 endif &lt;> 0\"/>\n" + 
+				"      <details key=\"SingleElseIf\" value=\"if true then 1 elseif true then 2 else 3 endif &lt;> 0\"/>\n" + 
+				"      <details key=\"DoubleElseIf\" value=\"if true then 1 elseif true then 2 elseif true then 3 else 4 endif &lt;> 0\"/>\n" + 
+				"    </eAnnotations>\n" + 
+				"  </eClassifiers>\n" + 
+				"</ecore:EPackage>\n";
+		createOCLinEcoreFile("Expressions.ecore", testFile);
+		doSerialize(ocl, "Expressions");
+		ocl.dispose();
+	}
+
 	public void testSerialize_Imports() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		XtextResource xtextResource = doSerialize(ocl, "Imports");

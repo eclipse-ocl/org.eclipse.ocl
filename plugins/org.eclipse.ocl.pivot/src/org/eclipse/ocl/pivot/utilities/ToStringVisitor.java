@@ -702,13 +702,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 */
 	@Override
 	public String visitIfExp(@NonNull IfExp ifExp) {
-		append("if ");  //$NON-NLS-1$
+		boolean isElseIf = ifExp.isIsElseIf();
+		append(isElseIf ? "/*else*/if ": "if ");  //$NON-NLS-1$
 		safeVisit(ifExp.getOwnedCondition());
 		append(" then "); //$NON-NLS-1$
 		safeVisit(ifExp.getOwnedThen());
 		append(" else "); //$NON-NLS-1$
 		safeVisit(ifExp.getOwnedElse());
-		append(" endif"); //$NON-NLS-1$
+		append(isElseIf ? " /*else*/endif": " endif"); //$NON-NLS-1$
 		return null;
 	}
 

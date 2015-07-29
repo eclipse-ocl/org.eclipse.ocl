@@ -122,11 +122,23 @@ public class PrettyPrinterTest extends PivotTestSuite
 	}
 
 	/**
-	 * Tests the non-printing of implicoit collect's realization.
+	 * Tests the non-printing of implicit collect's realization.
 	 */
 	public void test_ImplicitCollect() {
 		MyOCL ocl = createOCL();
 		ocl.assertPrintResults(null, "Set{1}.toString()");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests the unnesting of IfExp.
+	 */
+	public void test_ElseIf() {
+		MyOCL ocl = createOCL();
+		ocl.assertPrintResults(null, "if true then 1 else 2 endif");
+		ocl.assertPrintResults(null, "if true then 1 elseif true then 2 else 3 endif");
+		ocl.assertPrintResults(null, "if true then 1 elseif true then 2 elseif true then 3 else 4 endif");
+		ocl.assertPrintResults(null, "if if true then 1 elseif true then 2 else if true then 1 elseif true then 2 else 3 endif endif then if true then 1 elseif true then 2 else 3 endif elseif if true then 1 elseif true then 2 else 3 endif then 2 else 3 endif");
 		ocl.dispose();
 	}
 }

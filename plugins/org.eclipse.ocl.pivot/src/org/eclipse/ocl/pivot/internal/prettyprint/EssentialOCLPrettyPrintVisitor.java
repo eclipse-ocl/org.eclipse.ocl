@@ -198,14 +198,25 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 
 	@Override
 	public Object visitIfExp(@NonNull IfExp object) {
-		context.push("if", " ");
+		boolean isElseIf = object.isIsElseIf();
+		if (!isElseIf) {
+			context.push("if", " ");
+		}
+		else {
+			context.exdent(" ", "elseif", " ");
+		}
 		safeVisit(object.getOwnedCondition());
 		context.exdent(" ", "then", " ");
 		safeVisit(object.getOwnedThen());
-		context.exdent(" ", "else", " ");
-		safeVisit(object.getOwnedElse());
-		context.exdent(" ", "endif", "");
-		context.pop();
+		OCLExpression ownedElse = object.getOwnedElse();
+		if (!(ownedElse instanceof IfExp) || !((IfExp)ownedElse).isIsElseIf()) {
+			context.exdent(" ", "else", " ");
+		}
+		safeVisit(ownedElse);
+		if (!isElseIf) {
+			context.exdent(" ", "endif", "");
+			context.pop();
+		}
 		return null;
 	}
 

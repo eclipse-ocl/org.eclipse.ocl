@@ -120,6 +120,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.ContextCS;
 import org.eclipse.ocl.xtext.essentialoclcs.CurlyBracketedClauseCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.IfExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.IfThenExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.InfixExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.InvalidLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.LetExpCS;
@@ -1571,28 +1572,21 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	@Override
 	public Element visitIfExpCS(@NonNull IfExpCS csIfExp) {
-		IfExp expression = PivotUtil.getPivot(IfExp.class, csIfExp);
-		if (expression != null) {
-			ExpCS csIf = csIfExp.getOwnedCondition();
-			ExpCS csThen = csIfExp.getOwnedThenExpression();
-			ExpCS csElse = csIfExp.getOwnedElseExpression();
-			if ((csIf != null) && (csThen != null) && (csElse != null)) {
-				expression.setOwnedCondition(context.visitLeft2Right(OCLExpression.class, csIf));
-				OCLExpression thenExpression = context.visitLeft2Right(OCLExpression.class, csThen);
-				expression.setOwnedThen(thenExpression);
-				OCLExpression elseExpression = context.visitLeft2Right(OCLExpression.class, csElse);
-				expression.setOwnedElse(elseExpression);
-				Type thenType = thenExpression != null ? thenExpression.getType() : null;
-				Type elseType = elseExpression != null ? elseExpression.getType() : null;
-				Type thenTypeValue = thenExpression != null ? thenExpression.getTypeValue() : null;
-				Type elseTypeValue = elseExpression != null ? elseExpression.getTypeValue() : null;
-				Type commonType = (thenType != null) && (elseType != null) ? metamodelManager.getCommonType(thenType, TemplateParameterSubstitutions.EMPTY, elseType, TemplateParameterSubstitutions.EMPTY) : null;
-				Type commonTypeValue = (thenTypeValue != null) && (elseTypeValue != null) ? metamodelManager.getCommonType(thenTypeValue, TemplateParameterSubstitutions.EMPTY, elseTypeValue, TemplateParameterSubstitutions.EMPTY) : null;
-				boolean isRequired = ((thenExpression != null) && thenExpression.isIsRequired()) && ((elseExpression != null) && elseExpression.isIsRequired());
-				context.setType(expression, commonType, isRequired, commonTypeValue);
+		IfExp ifExpression = PivotUtil.getPivot(IfExp.class, csIfExp);
+		ExpCS csElse = csIfExp.getOwnedElseExpression();
+		if ((ifExpression != null) && (csElse != null)) {
+			OCLExpression elseExpression = context.visitLeft2Right(OCLExpression.class, csElse);
+			List<IfThenExpCS> csIfThens = csIfExp.getOwnedIfThenExpressions();
+			for (int i = csIfThens.size(); --i >= 0; ) {
+				IfThenExpCS csIfThen = csIfThens.get(i);
+				IfExp elseIfExpression = PivotUtil.getPivot(IfExp.class, csIfThen);
+				if (elseIfExpression != null) {
+					elseExpression = doIfThenElse(elseIfExpression, csIfThen.getOwnedCondition(), csIfThen.getOwnedThenExpression(), elseExpression);
+				}
 			}
+			doIfThenElse(ifExpression, csIfExp.getOwnedCondition(), csIfExp.getOwnedThenExpression(), elseExpression);
 		}
-		return expression;
+		return ifExpression;
 	}
 
 	@Override
@@ -1625,6 +1619,24 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		//			context.installPivotUsage(csInfixExp, pivot);
 		//		}
 		return pivot;
+	}
+
+	protected @NonNull OCLExpression doIfThenElse(@NonNull IfExp expression, @Nullable ExpCS csCondition, @Nullable ExpCS csThen, @Nullable OCLExpression elseExpression) {
+		if ((csCondition != null) && (csThen != null)) {
+			expression.setOwnedCondition(context.visitLeft2Right(OCLExpression.class, csCondition));
+			OCLExpression thenExpression = context.visitLeft2Right(OCLExpression.class, csThen);
+			expression.setOwnedThen(thenExpression);
+			expression.setOwnedElse(elseExpression);
+			Type thenType = thenExpression != null ? thenExpression.getType() : null;
+			Type elseType = elseExpression != null ? elseExpression.getType() : null;
+			Type thenTypeValue = thenExpression != null ? thenExpression.getTypeValue() : null;
+			Type elseTypeValue = elseExpression != null ? elseExpression.getTypeValue() : null;
+			Type commonType = (thenType != null) && (elseType != null) ? metamodelManager.getCommonType(thenType, TemplateParameterSubstitutions.EMPTY, elseType, TemplateParameterSubstitutions.EMPTY) : null;
+			Type commonTypeValue = (thenTypeValue != null) && (elseTypeValue != null) ? metamodelManager.getCommonType(thenTypeValue, TemplateParameterSubstitutions.EMPTY, elseTypeValue, TemplateParameterSubstitutions.EMPTY) : null;
+			boolean isRequired = ((thenExpression != null) && thenExpression.isIsRequired()) && ((elseExpression != null) && elseExpression.isIsRequired());
+			context.setType(expression, commonType, isRequired, commonTypeValue);
+		}
+		return expression;
 	}
 
 	protected @NonNull OCLExpression doVisitBinaryOperatorCS(@NonNull InfixExpCS csOperator) {

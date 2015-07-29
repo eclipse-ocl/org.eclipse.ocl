@@ -88,6 +88,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpSpecificationCS;
 import org.eclipse.ocl.xtext.essentialoclcs.IfExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.IfThenExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.InfixExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.InvalidLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.LetExpCS;
@@ -438,12 +439,27 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 
 	@Override
 	public @Nullable ElementCS visitIfExp(@NonNull IfExp asIfExp) {
-		IfExpCS csIfExp = EssentialOCLCSFactory.eINSTANCE.createIfExpCS();
-		csIfExp.setPivot(asIfExp);
-		csIfExp.setOwnedCondition(createExpCS(asIfExp.getOwnedCondition()));
-		csIfExp.setOwnedThenExpression(createExpCS(asIfExp.getOwnedThen()));
-		csIfExp.setOwnedElseExpression(createExpCS(asIfExp.getOwnedElse()));
-		return csIfExp;
+		if (!asIfExp.isIsElseIf()) {
+			IfExpCS csIfExp = EssentialOCLCSFactory.eINSTANCE.createIfExpCS();
+			csIfExp.setPivot(asIfExp);
+			csIfExp.setOwnedCondition(createExpCS(asIfExp.getOwnedCondition()));
+			csIfExp.setOwnedThenExpression(createExpCS(asIfExp.getOwnedThen()));
+			OCLExpression asElse = asIfExp.getOwnedElse();
+			ExpCS csElse = createExpCS(asElse);
+			while ((asElse instanceof IfExp) && (((IfExp)asElse).isIsElseIf())) {
+				asElse = ((IfExp)asElse).getOwnedElse();
+				csElse = createExpCS(asElse);
+			}
+			csIfExp.setOwnedElseExpression(csElse);
+			return csIfExp;
+		}
+		else {
+			IfThenExpCS csIfThenExp = EssentialOCLCSFactory.eINSTANCE.createIfThenExpCS();
+			csIfThenExp.setPivot(asIfExp);
+			csIfThenExp.setOwnedCondition(createExpCS(asIfExp.getOwnedCondition()));
+			csIfThenExp.setOwnedThenExpression(createExpCS(asIfExp.getOwnedThen()));
+			return csIfThenExp;
+		}
 	}
 
 	@Override

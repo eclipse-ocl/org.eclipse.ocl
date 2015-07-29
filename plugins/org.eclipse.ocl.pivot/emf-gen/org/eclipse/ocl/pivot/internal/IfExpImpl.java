@@ -637,18 +637,11 @@ implements IfExp {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
-	public String toString()
-	{
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isElseIf: "); //$NON-NLS-1$
-		result.append((eFlags & IS_ELSE_IF_EFLAG) != 0);
-		result.append(')');
-		return result.toString();
+	public String toString() {
+		return super.toString();
 	}
 
 	@Override
