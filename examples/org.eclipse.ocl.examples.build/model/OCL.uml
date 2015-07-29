@@ -340,6 +340,13 @@
         <ownedAttribute xmi:id="OCL-OCL_Expressions-IfExp-condition" name="ownedCondition" type="OCL-OCL_Expressions-OCLExpression" aggregation="composite"/>
         <ownedAttribute xmi:id="OCL-OCL_Expressions-IfExp-thenExpression" name="ownedThen" type="OCL-OCL_Expressions-OCLExpression" aggregation="composite"/>
         <ownedAttribute xmi:id="OCL-OCL_Expressions-IfExp-elseExpression" name="ownedElse" type="OCL-OCL_Expressions-OCLExpression" aggregation="composite"/>
+        <ownedAttribute xmi:id="_8kbLoDXKEeWLrLq3b6D2xg" name="isElseIf" type="OCL-OCL_PrimitiveTypes-Boolean">
+          <ownedComment xmi:id="_BsU5kDXLEeWLrLq3b6D2xg">
+            <body>True if this IfExp corresponds to an 'elseif' in the OCL source, false if it corresponds to an 'if'. This attribute has no semantic significance; it merely supports more faithful reconstruction of the OCL source by a pretty printer. </body>
+          </ownedComment>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8kbysDXKEeWLrLq3b6D2xg" value="1"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_8kbysTXKEeWLrLq3b6D2xg"/>
+        </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Expressions-IntegerLiteralExp" name="IntegerLiteralExp">
         <generalization xmi:id="_XpnTHX7VEeOu79LxSz8Ylw" general="OCL-OCL_Expressions-NumericLiteralExp"/>
