@@ -81,7 +81,7 @@ URIPathNameCS returns base::PathNameCS:
 	ownedPathElements+=URIFirstPathElementCS ('::' ownedPathElements+=NextPathElementCS)*;
 
 URIFirstPathElementCS returns base::PathElementCS:
-	referredElement=[pivot::NamedElement|UnrestrictedName] | {base::PathElementWithURICS} referredElement=[pivot::Namespace|URI];
+	name=UnrestrictedName | {base::PathElementWithURICS} uri=URI;
 
 //---------------------------------------------------------------------
 //  Types

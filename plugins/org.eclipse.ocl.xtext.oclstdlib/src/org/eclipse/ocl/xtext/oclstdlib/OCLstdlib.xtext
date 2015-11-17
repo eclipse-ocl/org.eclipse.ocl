@@ -74,7 +74,7 @@ LibPathNameCS returns base::PathNameCS:
 	ownedPathElements+=LibPathElementCS ('::' ownedPathElements+=LibPathElementCS)*;
 
 LibPathElementCS returns base::PathElementCS:
-	referredElement=[pivot::NamedElement|Name];
+	name=Name;
 
 AccumulatorCS returns base::ParameterCS:
 	name=Identifier ':' ownedType=TypedMultiplicityRefCS

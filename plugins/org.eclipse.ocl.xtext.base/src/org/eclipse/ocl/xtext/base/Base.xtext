@@ -26,10 +26,10 @@ PathNameCS returns PathNameCS:
 	ownedPathElements+=FirstPathElementCS ('::' ownedPathElements+=NextPathElementCS)*;
 
 FirstPathElementCS returns PathElementCS:
-	referredElement=[pivot::NamedElement|UnrestrictedName];
+	name = UnrestrictedName;
 
 NextPathElementCS returns PathElementCS:
-	referredElement=[pivot::NamedElement|UnreservedName];
+	name = UnreservedName;
 
 TemplateBindingCS returns TemplateBindingCS:
 	ownedSubstitutions+=TemplateParameterSubstitutionCS (',' ownedSubstitutions+=TemplateParameterSubstitutionCS)* (ownedMultiplicity=MultiplicityCS)?
