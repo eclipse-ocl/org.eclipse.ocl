@@ -68,7 +68,7 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  *	EValidatorRegistryImpl registry = new EValidatorRegistryImpl();
  *	registry.put(EcorePackage.eINSTANCE, EcoreOCLEValidator.INSTANCE);
  *	Diagnostician diagnostician = new Diagnostician(registry);
- *	Diagnostic diagnostic = dignostician.validate(eObject, validationContext);
+ *	Diagnostic diagnostic = disgnostician.validate(eObject, validationContext);
  * </pre>
  */
 public class EcoreOCLEValidator implements EValidator

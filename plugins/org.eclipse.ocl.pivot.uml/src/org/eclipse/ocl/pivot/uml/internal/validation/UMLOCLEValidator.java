@@ -67,7 +67,7 @@ import org.eclipse.uml2.uml.util.UMLValidator;
  *	EValidatorRegistryImpl registry = new EValidatorRegistryImpl();
  *	registry.put(UMLPackage.eINSTANCE, UMLOCLEValidator.INSTANCE);
  *	Diagnostician diagnostician = new Diagnostician(registry);
- *	Diagnostic diagnostic = dignostician.validate(eObject, validationContext);
+ *	Diagnostic diagnostic = diagnostician.validate(eObject, validationContext);
  * </pre>
  */
 public class UMLOCLEValidator implements EValidator

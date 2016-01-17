@@ -41,7 +41,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * A CompleteOCLEObjectValidator validates CompleteOCL invariants during an EMF validation, provided
- * an CompleteOCLEObjectValidator instance has been registered as a validator in the EValidator.Registry.
+ * a CompleteOCLEObjectValidator instance has been registered as a validator in the EValidator.Registry.
  * 
  * Loading of the Complete OCL occurs during @link{initialize()} which may be called explicitly
  * or lazily during validation.
