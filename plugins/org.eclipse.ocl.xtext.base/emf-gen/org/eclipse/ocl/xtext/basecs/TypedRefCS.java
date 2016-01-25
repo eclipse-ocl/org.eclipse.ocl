@@ -43,6 +43,7 @@ public interface TypedRefCS extends TypeRefCS {
 	 * @see #setOwnedMultiplicity(MultiplicityCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedRefCS_OwnedMultiplicity()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TypedRefCS!ownedMultiplicity'"
 	 * @generated
 	 */
 	MultiplicityCS getOwnedMultiplicity();

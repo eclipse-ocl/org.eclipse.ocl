@@ -47,7 +47,8 @@ public interface StructuredClassCS extends ClassCS, NamespaceCS {
 	 * @return the value of the '<em>Is Abstract</em>' attribute.
 	 * @see #setIsAbstract(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuredClassCS_IsAbstract()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
+	 * @model default="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuredClassCS!isAbstract'"
 	 * @generated
 	 */
 	boolean isIsAbstract();
@@ -74,7 +75,8 @@ public interface StructuredClassCS extends ClassCS, NamespaceCS {
 	 * @return the value of the '<em>Is Interface</em>' attribute.
 	 * @see #setIsInterface(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuredClassCS_IsInterface()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
+	 * @model default="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuredClassCS!isInterface'"
 	 * @generated
 	 */
 	boolean isIsInterface();
@@ -101,6 +103,7 @@ public interface StructuredClassCS extends ClassCS, NamespaceCS {
 	 * @return the value of the '<em>Owned Super Types</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuredClassCS_OwnedSuperTypes()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuredClassCS!ownedSuperTypes'"
 	 * @generated
 	 */
 	EList<TypedRefCS> getOwnedSuperTypes();
@@ -119,6 +122,7 @@ public interface StructuredClassCS extends ClassCS, NamespaceCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuredClassCS_OwnedOperations()
 	 * @see org.eclipse.ocl.xtext.basecs.OperationCS#getOwningClass
 	 * @model opposite="owningClass" containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuredClassCS!ownedOperations'"
 	 * @generated
 	 */
 	EList<OperationCS> getOwnedOperations();
@@ -137,6 +141,7 @@ public interface StructuredClassCS extends ClassCS, NamespaceCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuredClassCS_OwnedProperties()
 	 * @see org.eclipse.ocl.xtext.basecs.StructuralFeatureCS#getOwningClass
 	 * @model opposite="owningClass" containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuredClassCS!ownedProperties'"
 	 * @generated
 	 */
 	EList<StructuralFeatureCS> getOwnedProperties();
@@ -153,6 +158,7 @@ public interface StructuredClassCS extends ClassCS, NamespaceCS {
 	 * @see #setOwnedMetaclass(TypedRefCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuredClassCS_OwnedMetaclass()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuredClassCS!ownedMetaclass'"
 	 * @generated
 	 */
 	TypedRefCS getOwnedMetaclass();

@@ -43,6 +43,7 @@ public interface TemplateableElementCS extends ElementCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTemplateableElementCS_OwnedSignature()
 	 * @see org.eclipse.ocl.xtext.basecs.TemplateSignatureCS#getOwningElement
 	 * @model opposite="owningElement" containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TemplateableElementCS!ownedSignature'"
 	 * @generated
 	 */
 	TemplateSignatureCS getOwnedSignature();

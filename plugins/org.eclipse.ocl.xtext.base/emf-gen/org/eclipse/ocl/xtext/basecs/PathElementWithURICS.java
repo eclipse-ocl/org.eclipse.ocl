@@ -40,7 +40,8 @@ public interface PathElementWithURICS extends PathElementCS
 	 * @return the value of the '<em>Uri</em>' attribute.
 	 * @see #setUri(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathElementWithURICS_Uri()
-	 * @model dataType="org.eclipse.ocl.pivot.String" transient="true"
+	 * @model transient="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PathElementWithURICS!uri'"
 	 * @generated
 	 */
 	String getUri();

@@ -43,6 +43,7 @@ public interface PivotableElementCS extends ElementCS, Pivotable
 	 * @see #setPivot(Element)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPivotableElementCS_Pivot()
 	 * @model resolveProxies="false" transient="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PivotableElementCS!pivot'"
 	 * @generated
 	 */
 	@Override

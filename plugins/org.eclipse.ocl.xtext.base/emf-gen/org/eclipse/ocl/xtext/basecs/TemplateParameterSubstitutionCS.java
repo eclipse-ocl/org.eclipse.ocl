@@ -43,6 +43,7 @@ public interface TemplateParameterSubstitutionCS extends ModelElementCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTemplateParameterSubstitutionCS_OwningBinding()
 	 * @see org.eclipse.ocl.xtext.basecs.TemplateBindingCS#getOwnedSubstitutions
 	 * @model opposite="ownedSubstitutions" transient="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TemplateParameterSubstitutionCS!owningBinding'"
 	 * @generated
 	 */
 	TemplateBindingCS getOwningBinding();
@@ -84,6 +85,7 @@ public interface TemplateParameterSubstitutionCS extends ModelElementCS {
 	 * @see #setOwnedActualParameter(TypeRefCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTemplateParameterSubstitutionCS_OwnedActualParameter()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TemplateParameterSubstitutionCS!ownedActualParameter'"
 	 * @generated
 	 */
 	TypeRefCS getOwnedActualParameter();

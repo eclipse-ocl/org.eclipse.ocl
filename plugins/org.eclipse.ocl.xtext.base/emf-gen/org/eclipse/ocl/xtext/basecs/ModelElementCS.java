@@ -43,6 +43,7 @@ public interface ModelElementCS extends PivotableElementCS {
 	 * @return the value of the '<em>Owned Annotations</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getModelElementCS_OwnedAnnotations()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ModelElementCS!ownedAnnotations'"
 	 * @generated
 	 */
 	EList<AnnotationElementCS> getOwnedAnnotations();
@@ -58,7 +59,8 @@ public interface ModelElementCS extends PivotableElementCS {
 	 * @return the value of the '<em>Original Xmi Id</em>' attribute.
 	 * @see #setOriginalXmiId(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getModelElementCS_OriginalXmiId()
-	 * @model dataType="org.eclipse.ocl.pivot.String" transient="true"
+	 * @model transient="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ModelElementCS!originalXmiId'"
 	 * @generated
 	 */
 	String getOriginalXmiId();

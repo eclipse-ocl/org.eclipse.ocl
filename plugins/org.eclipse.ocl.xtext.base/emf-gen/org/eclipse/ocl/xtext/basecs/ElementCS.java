@@ -47,6 +47,7 @@ public interface ElementCS extends EObject, VisitableCS {
 	 * @return the value of the '<em>Parent</em>' reference.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getElementCS_Parent()
 	 * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ElementCS!parent'"
 	 * @generated
 	 */
 	ElementCS getParent();
@@ -54,7 +55,8 @@ public interface ElementCS extends EObject, VisitableCS {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model kind="operation" dataType="org.eclipse.ocl.pivot.String"
+	 * @model kind="operation"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ElementCS!getDescription()'"
 	 * @generated
 	 */
 	String getDescription();
@@ -71,6 +73,7 @@ public interface ElementCS extends EObject, VisitableCS {
 	 * @see #setCsi(CSI)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getElementCS_Csi()
 	 * @model dataType="org.eclipse.ocl.xtext.basecs.CSI" transient="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ElementCS!csi'"
 	 * @generated
 	 */
 	CSI getCsi();

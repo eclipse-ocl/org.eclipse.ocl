@@ -41,6 +41,7 @@ public interface MultiplicityCS extends ElementCS
 	 * @see #setIsNullFree(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getMultiplicityCS_IsNullFree()
 	 * @model default="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!MultiplicityCS!isNullFree'"
 	 * @generated
 	 */
 	boolean isIsNullFree();
@@ -63,6 +64,7 @@ public interface MultiplicityCS extends ElementCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!MultiplicityCS!getLower()'"
 	 * @generated
 	 */
 	int getLower();
@@ -75,6 +77,7 @@ public interface MultiplicityCS extends ElementCS
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @model kind="operation" required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!MultiplicityCS!getUpper()'"
 	 * @generated
 	 */
 	int getUpper();

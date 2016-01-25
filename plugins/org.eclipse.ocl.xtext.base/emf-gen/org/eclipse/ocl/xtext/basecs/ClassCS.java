@@ -46,6 +46,7 @@ public interface ClassCS extends NamedElementCS, TypeCS, TemplateableElementCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getClassCS_OwningPackage()
 	 * @see org.eclipse.ocl.xtext.basecs.PackageCS#getOwnedClasses
 	 * @model opposite="ownedClasses" transient="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ClassCS!owningPackage'"
 	 * @generated
 	 */
 	PackageCS getOwningPackage();
@@ -71,7 +72,7 @@ public interface ClassCS extends NamedElementCS, TypeCS, TemplateableElementCS {
 	 * @return the value of the '<em>Instance Class Name</em>' attribute.
 	 * @see #setInstanceClassName(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getClassCS_InstanceClassName()
-	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ClassCS!instanceClassName'"
 	 * @generated
 	 */
 	String getInstanceClassName();
@@ -98,6 +99,7 @@ public interface ClassCS extends NamedElementCS, TypeCS, TemplateableElementCS {
 	 * @return the value of the '<em>Owned Constraints</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getClassCS_OwnedConstraints()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ClassCS!ownedConstraints'"
 	 * @generated
 	 */
 	EList<ConstraintCS> getOwnedConstraints();
