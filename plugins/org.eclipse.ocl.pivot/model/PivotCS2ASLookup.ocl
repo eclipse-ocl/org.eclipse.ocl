@@ -7,25 +7,25 @@ package pivot
 ---- Default Environment related functionality
 context OclElement
 --	
-def : env() : lookup::LookupEnvironment =
+def : env() : lookup::LookupEnvironment[1] =
 	_env(null)
 
-def : _env(child : OclElement) : lookup::LookupEnvironment =
+def : _env(child : OclElement) : lookup::LookupEnvironment[1] =
 	parentEnv()
 	
-def : _exported_env(importer : OclElement) : lookup::LookupEnvironment =
+def : _exported_env(importer : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
 	
-def : parentEnv() : lookup::LookupEnvironment =
+def : parentEnv() : lookup::LookupEnvironment[1] =
 	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env(self) endif
 endpackage 
 
 package lookup
 context LookupEnvironment
-def : nestedEnv() : LookupEnvironment = 
+def : nestedEnv() : LookupEnvironment[1] = 
 	LookupEnvironment {
 		parentEnv = self
-	}		
+	}
 endpackage
 
 package as
@@ -149,6 +149,9 @@ def : lookupExportedPackage(importer : ocl::OclElement, aPathElementCS : cs::Pat
 	_lookupExportedPackage(importer, aPathElementCS.name)
 	
 context Operation
+	
+def : _appliesFilter_Operation(argTypes : OrderedSet(Type)) : Boolean =
+	matchesArgs(argTypes)
 def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
 	if not (ownedParameters->includes(child)
 	   )
@@ -227,6 +230,7 @@ def : lookupVariable(aPathElementCS : cs::PathElementCS) : Variable[?] =
    _lookupVariable(aPathElementCS.name)
    
 
+
 -- Namespace lookup
 def : _lookupNamespace(env : lookup::LookupEnvironment, nName : String) : OrderedSet(Namespace) =
 let foundNamespace = env.namedElements->selectByKind(Namespace)->select(name = nName)
@@ -246,6 +250,7 @@ in  if foundNamespace->isEmpty()
 def : lookupNamespace(aPathElementCS : cs::PathElementCS) : Namespace[?] =
    _lookupNamespace(aPathElementCS.name)
    
+
 
 -- Class lookup
 def : _lookupClass(env : lookup::LookupEnvironment, cName : String) : OrderedSet(Class) =
@@ -278,6 +283,7 @@ def : lookupClass(segments : OrderedSet(cs::PathElementCS)) : Class[?] =
             qualifier = lookupPackage(qualifierSegments)
         in qualifier?.lookupQualifiedClass(segments->last())
    endif
+
 -- Model exports Package
 	
 def : lookupPackageFrom(exporter : Model, aPathElementCS : cs::PathElementCS) : Package[?] =
@@ -296,7 +302,7 @@ def : lookupPackageFrom(exporter : Model, segments : OrderedSet(cs::PathElementC
 -- Operation lookup
 def : _lookupOperation(env : lookup::LookupEnvironment, oName : String, argTypes : OrderedSet(Type)) : OrderedSet(Operation) =
 let foundOperation = env.namedElements->selectByKind(Operation)->select(name = oName)
-                                         ->select(matchesArgs(argTypes))
+                                         ->select(_appliesFilter_Operation(argTypes))
 in  if foundOperation->isEmpty() and not (env.parentEnv = null)
 	then _lookupOperation(env.parentEnv, oName, argTypes)
 	else foundOperation
@@ -325,6 +331,7 @@ def : lookupOperation(segments : OrderedSet(cs::PathElementCS), argTypes : Order
             qualifier = lookupClass(qualifierSegments)
         in qualifier?.lookupQualifiedOperation(segments->last(), argTypes)
    endif
+
 -- Package lookup
 def : _lookupPackage(env : lookup::LookupEnvironment, pName : String) : OrderedSet(Package) =
 let foundPackage = env.namedElements->selectByKind(Package)->select(name = pName)
@@ -356,6 +363,7 @@ def : lookupPackage(segments : OrderedSet(cs::PathElementCS)) : Package[?] =
             qualifier = lookupPackage(qualifierSegments)
         in qualifier?.lookupQualifiedPackage(segments->last())
    endif
+
 -- Package exports Class
 	
 def : lookupClassFrom(exporter : Package, aPathElementCS : cs::PathElementCS) : Class[?] =
@@ -402,6 +410,7 @@ def : lookupProperty(segments : OrderedSet(cs::PathElementCS)) : Property[?] =
             qualifier = lookupClass(qualifierSegments)
         in qualifier?.lookupQualifiedProperty(segments->last())
    endif
+
 
 
 endpackage
