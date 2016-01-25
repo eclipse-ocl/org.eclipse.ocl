@@ -44,7 +44,7 @@ public interface ReferenceCS extends StructuralFeatureCS {
 	 * @return the value of the '<em>Referred Opposite</em>' reference.
 	 * @see #setReferredOpposite(Property)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getReferenceCS_ReferredOpposite()
-	 * @model
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ReferenceCS!referredOpposite'"
 	 * @generated
 	 */
 	Property getReferredOpposite();
@@ -70,7 +70,7 @@ public interface ReferenceCS extends StructuralFeatureCS {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Referred Keys</em>' reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getReferenceCS_ReferredKeys()
-	 * @model
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ReferenceCS!referredKeys'"
 	 * @generated
 	 */
 	EList<Property> getReferredKeys();

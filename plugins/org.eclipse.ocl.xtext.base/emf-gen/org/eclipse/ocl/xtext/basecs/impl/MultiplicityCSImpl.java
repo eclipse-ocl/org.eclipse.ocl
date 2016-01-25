@@ -104,9 +104,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	@Override
 	public int getLower()
 	{
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!MultiplicityCS!getLower()
 	}
 
 	/**
@@ -117,9 +115,7 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	@Override
 	public int getUpper()
 	{
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!MultiplicityCS!getUpper()
 	}
 
 	/**

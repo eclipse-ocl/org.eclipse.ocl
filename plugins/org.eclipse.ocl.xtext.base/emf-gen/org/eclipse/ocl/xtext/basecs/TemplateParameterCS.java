@@ -42,6 +42,7 @@ public interface TemplateParameterCS extends NamedElementCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTemplateParameterCS_OwningSignature()
 	 * @see org.eclipse.ocl.xtext.basecs.TemplateSignatureCS#getOwnedParameters
 	 * @model opposite="ownedParameters" required="true" transient="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TemplateParameterCS!owningSignature'"
 	 * @generated
 	 */
 	TemplateSignatureCS getOwningSignature();

@@ -50,6 +50,7 @@ public interface PathNameCS extends ElementCS, Pivotable
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_OwnedPathElements()
 	 * @see org.eclipse.ocl.xtext.basecs.PathElementCS#getOwningPathName
 	 * @model opposite="owningPathName" containment="true" required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PathNameCS!ownedPathElements'"
 	 * @generated
 	 */
 	EList<PathElementCS> getOwnedPathElements();
@@ -65,6 +66,7 @@ public interface PathNameCS extends ElementCS, Pivotable
 	 * @return the value of the '<em>Referred Element</em>' reference.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_ReferredElement()
 	 * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PathNameCS!referredElement'"
 	 * @generated
 	 */
 	Element getReferredElement();
@@ -83,6 +85,7 @@ public interface PathNameCS extends ElementCS, Pivotable
 	 * @see #setContext(ElementCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_Context()
 	 * @model resolveProxies="false" unsettable="true" transient="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PathNameCS!context'"
 	 * @generated
 	 */
 	ElementCS getContext();
@@ -134,6 +137,7 @@ public interface PathNameCS extends ElementCS, Pivotable
 	 * @see #setScopeFilter(ScopeFilter)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPathNameCS_ScopeFilter()
 	 * @model dataType="org.eclipse.ocl.xtext.basecs.ScopeFilter" transient="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PathNameCS!scopeFilter'"
 	 * @generated
 	 */
 	ScopeFilter getScopeFilter();

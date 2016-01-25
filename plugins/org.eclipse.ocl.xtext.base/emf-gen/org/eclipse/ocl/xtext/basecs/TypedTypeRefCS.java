@@ -44,6 +44,7 @@ public interface TypedTypeRefCS extends TypedRefCS {
 	 * @see #setOwnedPathName(PathNameCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedTypeRefCS_OwnedPathName()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TypedTypeRefCS!ownedPathName'"
 	 * @generated
 	 */
 	PathNameCS getOwnedPathName();
@@ -69,6 +70,7 @@ public interface TypedTypeRefCS extends TypedRefCS {
 	 * @return the value of the '<em>Referred Type</em>' reference.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedTypeRefCS_ReferredType()
 	 * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TypedTypeRefCS!referredType'"
 	 * @generated
 	 */
 	Type getReferredType();
@@ -87,6 +89,7 @@ public interface TypedTypeRefCS extends TypedRefCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedTypeRefCS_OwnedBinding()
 	 * @see org.eclipse.ocl.xtext.basecs.TemplateBindingCS#getOwningElement
 	 * @model opposite="owningElement" containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TypedTypeRefCS!ownedBinding'"
 	 * @generated
 	 */
 	TemplateBindingCS getOwnedBinding();
@@ -113,7 +116,8 @@ public interface TypedTypeRefCS extends TypedRefCS {
 	 * @return the value of the '<em>Is Typeof</em>' attribute.
 	 * @see #setIsTypeof(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedTypeRefCS_IsTypeof()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean" required="true"
+	 * @model default="false" required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TypedTypeRefCS!isTypeof'"
 	 * @generated
 	 */
 	boolean isIsTypeof();

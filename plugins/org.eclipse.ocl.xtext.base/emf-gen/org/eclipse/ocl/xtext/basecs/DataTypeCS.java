@@ -43,7 +43,8 @@ public interface DataTypeCS extends ClassCS, NamespaceCS
 	 * @return the value of the '<em>Is Primitive</em>' attribute.
 	 * @see #setIsPrimitive(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getDataTypeCS_IsPrimitive()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
+	 * @model default="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!DataTypeCS!isPrimitive'"
 	 * @generated
 	 */
 	boolean isIsPrimitive();
@@ -70,7 +71,8 @@ public interface DataTypeCS extends ClassCS, NamespaceCS
 	 * @return the value of the '<em>Is Serializable</em>' attribute.
 	 * @see #setIsSerializable(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getDataTypeCS_IsSerializable()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
+	 * @model default="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!DataTypeCS!isSerializable'"
 	 * @generated
 	 */
 	boolean isIsSerializable();

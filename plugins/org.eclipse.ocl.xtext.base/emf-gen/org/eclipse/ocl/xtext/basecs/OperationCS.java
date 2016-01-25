@@ -49,6 +49,7 @@ public interface OperationCS extends FeatureCS, TemplateableElementCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getOperationCS_OwningClass()
 	 * @see org.eclipse.ocl.xtext.basecs.StructuredClassCS#getOwnedOperations
 	 * @model opposite="ownedOperations" transient="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!OperationCS!owningClass'"
 	 * @generated
 	 */
 	StructuredClassCS getOwningClass();
@@ -77,6 +78,7 @@ public interface OperationCS extends FeatureCS, TemplateableElementCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getOperationCS_OwnedParameters()
 	 * @see org.eclipse.ocl.xtext.basecs.ParameterCS#getOwningOperation
 	 * @model opposite="owningOperation" containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!OperationCS!ownedParameters'"
 	 * @generated
 	 */
 	EList<ParameterCS> getOwnedParameters();
@@ -93,6 +95,7 @@ public interface OperationCS extends FeatureCS, TemplateableElementCS {
 	 * @return the value of the '<em>Owned Exceptions</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getOperationCS_OwnedExceptions()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!OperationCS!ownedExceptions'"
 	 * @generated
 	 */
 	EList<TypedRefCS> getOwnedExceptions();
@@ -109,6 +112,7 @@ public interface OperationCS extends FeatureCS, TemplateableElementCS {
 	 * @return the value of the '<em>Owned Preconditions</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getOperationCS_OwnedPreconditions()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!OperationCS!ownedPreconditions'"
 	 * @generated
 	 */
 	EList<ConstraintCS> getOwnedPreconditions();
@@ -125,6 +129,7 @@ public interface OperationCS extends FeatureCS, TemplateableElementCS {
 	 * @return the value of the '<em>Owned Postconditions</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getOperationCS_OwnedPostconditions()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!OperationCS!ownedPostconditions'"
 	 * @generated
 	 */
 	EList<ConstraintCS> getOwnedPostconditions();
@@ -141,6 +146,7 @@ public interface OperationCS extends FeatureCS, TemplateableElementCS {
 	 * @return the value of the '<em>Owned Body Expressions</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getOperationCS_OwnedBodyExpressions()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!OperationCS!ownedBodyExpressions'"
 	 * @generated
 	 */
 	EList<SpecificationCS> getOwnedBodyExpressions();

@@ -42,6 +42,7 @@ public interface AnnotationCS extends AnnotationElementCS {
 	 * @return the value of the '<em>Owned Contents</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getAnnotationCS_OwnedContents()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!AnnotationCS!ownedContents'"
 	 * @generated
 	 */
 	EList<ModelElementCS> getOwnedContents();
@@ -58,6 +59,7 @@ public interface AnnotationCS extends AnnotationElementCS {
 	 * @return the value of the '<em>Owned References</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getAnnotationCS_OwnedReferences()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!AnnotationCS!ownedReferences'"
 	 * @generated
 	 */
 	EList<ModelElementRefCS> getOwnedReferences();

@@ -41,7 +41,7 @@ public interface ConstraintCS extends NamedElementCS
 	 * @return the value of the '<em>Stereotype</em>' attribute.
 	 * @see #setStereotype(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getConstraintCS_Stereotype()
-	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ConstraintCS!stereotype'"
 	 * @generated
 	 */
 	String getStereotype();
@@ -68,6 +68,7 @@ public interface ConstraintCS extends NamedElementCS
 	 * @see #setOwnedSpecification(SpecificationCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getConstraintCS_OwnedSpecification()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ConstraintCS!ownedSpecification'"
 	 * @generated
 	 */
 	SpecificationCS getOwnedSpecification();
@@ -94,6 +95,7 @@ public interface ConstraintCS extends NamedElementCS
 	 * @see #setOwnedMessageSpecification(SpecificationCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getConstraintCS_OwnedMessageSpecification()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ConstraintCS!ownedMessageSpecification'"
 	 * @generated
 	 */
 	SpecificationCS getOwnedMessageSpecification();

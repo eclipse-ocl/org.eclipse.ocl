@@ -44,6 +44,7 @@ public interface TemplateSignatureCS extends ModelElementCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTemplateSignatureCS_OwningElement()
 	 * @see org.eclipse.ocl.xtext.basecs.TemplateableElementCS#getOwnedSignature
 	 * @model opposite="ownedSignature" transient="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TemplateSignatureCS!owningElement'"
 	 * @generated
 	 */
 	TemplateableElementCS getOwningElement();
@@ -72,6 +73,7 @@ public interface TemplateSignatureCS extends ModelElementCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTemplateSignatureCS_OwnedParameters()
 	 * @see org.eclipse.ocl.xtext.basecs.TemplateParameterCS#getOwningSignature
 	 * @model opposite="owningSignature" containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TemplateSignatureCS!ownedParameters'"
 	 * @generated
 	 */
 	EList<TemplateParameterCS> getOwnedParameters();
