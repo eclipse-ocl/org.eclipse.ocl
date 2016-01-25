@@ -43,6 +43,7 @@ public interface ModelElementRefCS extends ElementRefCS
 	 * @see #setOwnedPathName(PathNameCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getModelElementRefCS_OwnedPathName()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ModelElementRefCS!ownedPathName'"
 	 * @generated
 	 */
 	PathNameCS getOwnedPathName();
@@ -68,6 +69,7 @@ public interface ModelElementRefCS extends ElementRefCS
 	 * @return the value of the '<em>Referred Element</em>' reference.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getModelElementRefCS_ReferredElement()
 	 * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ModelElementRefCS!referredElement'"
 	 * @generated
 	 */
 	Element getReferredElement();

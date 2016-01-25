@@ -40,7 +40,7 @@ public interface DocumentationCS extends AnnotationElementCS {
 	 * @return the value of the '<em>Value</em>' attribute.
 	 * @see #setValue(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getDocumentationCS_Value()
-	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!DocumentationCS!value'"
 	 * @generated
 	 */
 	String getValue();

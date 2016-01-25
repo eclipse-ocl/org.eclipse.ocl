@@ -45,6 +45,7 @@ public interface ParameterCS extends TypedElementCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getParameterCS_OwningOperation()
 	 * @see org.eclipse.ocl.xtext.basecs.OperationCS#getOwnedParameters
 	 * @model opposite="ownedParameters" transient="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ParameterCS!owningOperation'"
 	 * @generated
 	 */
 	OperationCS getOwningOperation();

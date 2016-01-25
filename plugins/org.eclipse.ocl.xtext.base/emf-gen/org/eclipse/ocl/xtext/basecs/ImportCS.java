@@ -45,6 +45,7 @@ public interface ImportCS extends NamespaceCS {
 	 * @see #setOwnedPathName(PathNameCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getImportCS_OwnedPathName()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ImportCS!ownedPathName'"
 	 * @generated
 	 */
 	PathNameCS getOwnedPathName();
@@ -70,6 +71,7 @@ public interface ImportCS extends NamespaceCS {
 	 * @return the value of the '<em>Referred Namespace</em>' reference.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getImportCS_ReferredNamespace()
 	 * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ImportCS!referredNamespace'"
 	 * @generated
 	 */
 	Namespace getReferredNamespace();
@@ -86,7 +88,8 @@ public interface ImportCS extends NamespaceCS {
 	 * @return the value of the '<em>Is All</em>' attribute.
 	 * @see #setIsAll(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getImportCS_IsAll()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
+	 * @model default="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ImportCS!isAll'"
 	 * @generated
 	 */
 	boolean isIsAll();

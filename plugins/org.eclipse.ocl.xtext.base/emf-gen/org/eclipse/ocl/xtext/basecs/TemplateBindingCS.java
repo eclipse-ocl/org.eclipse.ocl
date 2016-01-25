@@ -43,6 +43,7 @@ public interface TemplateBindingCS extends ElementRefCS {
 	 * @see #setOwnedMultiplicity(MultiplicityCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTemplateBindingCS_OwnedMultiplicity()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TemplateBindingCS!ownedMultiplicity'"
 	 * @generated
 	 */
 	MultiplicityCS getOwnedMultiplicity();
@@ -71,6 +72,7 @@ public interface TemplateBindingCS extends ElementRefCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTemplateBindingCS_OwningElement()
 	 * @see org.eclipse.ocl.xtext.basecs.TypedTypeRefCS#getOwnedBinding
 	 * @model opposite="ownedBinding" transient="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TemplateBindingCS!owningElement'"
 	 * @generated
 	 */
 	TypedTypeRefCS getOwningElement();
@@ -99,6 +101,7 @@ public interface TemplateBindingCS extends ElementRefCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTemplateBindingCS_OwnedSubstitutions()
 	 * @see org.eclipse.ocl.xtext.basecs.TemplateParameterSubstitutionCS#getOwningBinding
 	 * @model opposite="owningBinding" containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TemplateBindingCS!ownedSubstitutions'"
 	 * @generated
 	 */
 	EList<TemplateParameterSubstitutionCS> getOwnedSubstitutions();

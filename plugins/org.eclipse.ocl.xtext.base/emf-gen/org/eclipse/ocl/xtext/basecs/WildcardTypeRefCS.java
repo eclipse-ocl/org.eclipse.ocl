@@ -42,6 +42,7 @@ public interface WildcardTypeRefCS extends TypeRefCS {
 	 * @see #setOwnedExtends(TypedRefCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getWildcardTypeRefCS_OwnedExtends()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!WildcardTypeRefCS!ownedExtends'"
 	 * @generated
 	 */
 	TypedRefCS getOwnedExtends();
@@ -68,6 +69,7 @@ public interface WildcardTypeRefCS extends TypeRefCS {
 	 * @see #setOwnedSuper(TypedRefCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getWildcardTypeRefCS_OwnedSuper()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!WildcardTypeRefCS!ownedSuper'"
 	 * @generated
 	 */
 	TypedRefCS getOwnedSuper();

@@ -42,6 +42,7 @@ public interface MultiplicityBoundsCS extends MultiplicityCS
 	 * @see #setLowerBound(int)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getMultiplicityBoundsCS_LowerBound()
 	 * @model default="1"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!MultiplicityBoundsCS!lowerBound'"
 	 * @generated
 	 */
 	int getLowerBound();
@@ -67,7 +68,7 @@ public interface MultiplicityBoundsCS extends MultiplicityCS
 	 * @return the value of the '<em>Upper Bound</em>' attribute.
 	 * @see #setUpperBound(Integer)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getMultiplicityBoundsCS_UpperBound()
-	 * @model
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!MultiplicityBoundsCS!upperBound'"
 	 * @generated
 	 */
 	Integer getUpperBound();

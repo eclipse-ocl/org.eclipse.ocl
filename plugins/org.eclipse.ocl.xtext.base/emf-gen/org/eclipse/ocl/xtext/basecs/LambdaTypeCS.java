@@ -45,7 +45,7 @@ public interface LambdaTypeCS extends TypedRefCS, TemplateableElementCS, Nameabl
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getLambdaTypeCS_Name()
-	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!LambdaTypeCS!name'"
 	 * @generated
 	 */
 	@Override
@@ -73,6 +73,7 @@ public interface LambdaTypeCS extends TypedRefCS, TemplateableElementCS, Nameabl
 	 * @see #setOwnedContextType(TypedRefCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getLambdaTypeCS_OwnedContextType()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!LambdaTypeCS!ownedContextType'"
 	 * @generated
 	 */
 	TypedRefCS getOwnedContextType();
@@ -99,6 +100,7 @@ public interface LambdaTypeCS extends TypedRefCS, TemplateableElementCS, Nameabl
 	 * @return the value of the '<em>Owned Parameter Types</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getLambdaTypeCS_OwnedParameterTypes()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!LambdaTypeCS!ownedParameterTypes'"
 	 * @generated
 	 */
 	EList<TypedRefCS> getOwnedParameterTypes();
@@ -115,6 +117,7 @@ public interface LambdaTypeCS extends TypedRefCS, TemplateableElementCS, Nameabl
 	 * @see #setOwnedResultType(TypedRefCS)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getLambdaTypeCS_OwnedResultType()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!LambdaTypeCS!ownedResultType'"
 	 * @generated
 	 */
 	TypedRefCS getOwnedResultType();

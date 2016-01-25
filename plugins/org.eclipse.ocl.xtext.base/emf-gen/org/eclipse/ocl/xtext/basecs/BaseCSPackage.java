@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see org.eclipse.ocl.xtext.basecs.BaseCSFactory
  * @model kind="package"
+ *        annotation="http://www.eclipse.org/OCL/Import ecore='http://www.eclipse.org/emf/2002/Ecore'"
  * @generated
  */
 public interface BaseCSPackage extends EPackage {
@@ -2964,13 +2965,22 @@ public interface BaseCSPackage extends EPackage {
 	int PATH_ELEMENT_CS__REFERRED_ELEMENT = ELEMENT_CS_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATH_ELEMENT_CS__NAME = ELEMENT_CS_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Path Element CS</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PATH_ELEMENT_CS_FEATURE_COUNT = ELEMENT_CS_FEATURE_COUNT + 3;
+	int PATH_ELEMENT_CS_FEATURE_COUNT = ELEMENT_CS_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.basecs.impl.PathElementWithURICSImpl <em>Path Element With URICS</em>}' class.
@@ -3026,6 +3036,15 @@ public interface BaseCSPackage extends EPackage {
 	 * @ordered
 	 */
 	int PATH_ELEMENT_WITH_URICS__REFERRED_ELEMENT = PATH_ELEMENT_CS__REFERRED_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATH_ELEMENT_WITH_URICS__NAME = PATH_ELEMENT_CS__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Uri</b></em>' attribute.
@@ -5286,6 +5305,17 @@ public interface BaseCSPackage extends EPackage {
 	EReference getPathElementCS_ReferredElement();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.PathElementCS#getName()
+	 * @see #getPathElementCS()
+	 * @generated
+	 */
+	EAttribute getPathElementCS_Name();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.xtext.basecs.PathElementCS#getElementType <em>Element Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6719,6 +6749,14 @@ public interface BaseCSPackage extends EPackage {
 		 * @generated
 		 */
 		EReference PATH_ELEMENT_CS__REFERRED_ELEMENT = eINSTANCE.getPathElementCS_ReferredElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PATH_ELEMENT_CS__NAME = eINSTANCE.getPathElementCS_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Element Type</b></em>' reference feature.

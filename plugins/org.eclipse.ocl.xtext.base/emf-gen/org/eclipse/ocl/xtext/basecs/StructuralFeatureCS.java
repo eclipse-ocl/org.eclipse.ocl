@@ -48,6 +48,7 @@ public interface StructuralFeatureCS extends FeatureCS {
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuralFeatureCS_OwningClass()
 	 * @see org.eclipse.ocl.xtext.basecs.StructuredClassCS#getOwnedProperties
 	 * @model opposite="ownedProperties" transient="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuralFeatureCS!owningClass'"
 	 * @generated
 	 */
 	StructuredClassCS getOwningClass();
@@ -73,7 +74,7 @@ public interface StructuralFeatureCS extends FeatureCS {
 	 * @return the value of the '<em>Default</em>' attribute.
 	 * @see #setDefault(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuralFeatureCS_Default()
-	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuralFeatureCS!default'"
 	 * @generated
 	 */
 	String getDefault();
@@ -100,6 +101,7 @@ public interface StructuralFeatureCS extends FeatureCS {
 	 * @return the value of the '<em>Owned Default Expressions</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuralFeatureCS_OwnedDefaultExpressions()
 	 * @model containment="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuralFeatureCS!ownedDefaultExpressions'"
 	 * @generated
 	 */
 	EList<SpecificationCS> getOwnedDefaultExpressions();
