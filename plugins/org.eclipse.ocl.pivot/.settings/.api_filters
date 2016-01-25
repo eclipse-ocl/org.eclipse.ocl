@@ -471,6 +471,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/util/OperationFilter.java" type="org.eclipse.ocl.pivot.internal.lookup.util.OperationFilter">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.lookup.util.OperationFilter"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/util/PivotLookupFilter.java" type="org.eclipse.ocl.pivot.internal.lookup.util.PivotLookupFilter">
         <filter id="1110441988">
             <message_arguments>

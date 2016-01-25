@@ -132,7 +132,7 @@ def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
 	parentEnv()
 		.addElements(ownedPackages)
 		.addElements(ownedImports.importedNamespace)
-		.addElements(ownedImports.importedNamespace._exported_env(self).namedElements)
+		-- NOT SUPPORTED YET .addElements(ownedImports.importedNamespace._exported_env(self).namedElements)
 def : _exported_env(importer : ocl::OclElement) : lookup::LookupEnvironment =
 	let env = lookup::LookupEnvironment {}
 	in env
