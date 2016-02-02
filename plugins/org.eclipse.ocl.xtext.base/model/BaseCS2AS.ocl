@@ -423,8 +423,11 @@ def : multiplicityType(type : ocl::Type ) : ocl::Type =
 
 context TypedTypeRefCS
 def : ast() : ocl::Class =	
+	referredType()
+	
+def : referredType() : ocl::Class = 
 	let finalType : ocl::Type = 
-		if ownedBinding = null
+	if ownedBinding = null
 		then referredType  -- it should return proper type, hand-coded in TypedTypeRefCSImpl
 		else ocl::Class {
 				name = referredType.name,
@@ -432,8 +435,7 @@ def : ast() : ocl::Class =
 				ownedBindings = Set{ownedBinding.ast()}
 			}
 		endif
-	in multiplicityType(finalType)
-	
+	in multiplicityType(finalType).isClass()
 --def : specializeType(type : ocl::Type, tBinding : ocl::TemplateBinding) : ocl::Type =
 --	-- TODO 
 --	ocl::Class {
