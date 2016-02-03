@@ -43,7 +43,7 @@ public interface EnumerationCS extends ClassCS, NamespaceCS
 	 * @return the value of the '<em>Is Serializable</em>' attribute.
 	 * @see #setIsSerializable(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getEnumerationCS_IsSerializable()
-	 * @model default="false"
+	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!EnumerationCS!isSerializable'"
 	 * @generated
 	 */

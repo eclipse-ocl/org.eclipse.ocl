@@ -70,7 +70,8 @@ public interface TypedElementCS extends NamedElementCS {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Qualifiers</em>' attribute list.
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedElementCS_Qualifiers()
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TypedElementCS!qualifiers'"
+	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TypedElementCS!qualifiers'"
 	 * @generated
 	 */
 	EList<String> getQualifiers();
@@ -86,7 +87,8 @@ public interface TypedElementCS extends NamedElementCS {
 	 * @return the value of the '<em>Is Optional</em>' attribute.
 	 * @see #setIsOptional(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedElementCS_IsOptional()
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TypedElementCS!isOptional'"
+	 * @model dataType="org.eclipse.ocl.pivot.Boolean"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TypedElementCS!isOptional'"
 	 * @generated
 	 */
 	boolean isIsOptional();

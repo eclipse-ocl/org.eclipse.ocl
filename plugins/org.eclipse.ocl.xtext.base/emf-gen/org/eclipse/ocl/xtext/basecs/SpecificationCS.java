@@ -40,7 +40,8 @@ public interface SpecificationCS extends ModelElementCS
 	 * @return the value of the '<em>Expr String</em>' attribute.
 	 * @see #setExprString(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getSpecificationCS_ExprString()
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!SpecificationCS!exprString'"
+	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!SpecificationCS!exprString'"
 	 * @generated
 	 */
 	String getExprString();
