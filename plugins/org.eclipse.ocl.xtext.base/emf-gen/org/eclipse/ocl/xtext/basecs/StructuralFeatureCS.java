@@ -74,7 +74,8 @@ public interface StructuralFeatureCS extends FeatureCS {
 	 * @return the value of the '<em>Default</em>' attribute.
 	 * @see #setDefault(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuralFeatureCS_Default()
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuralFeatureCS!default'"
+	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuralFeatureCS!default'"
 	 * @generated
 	 */
 	String getDefault();

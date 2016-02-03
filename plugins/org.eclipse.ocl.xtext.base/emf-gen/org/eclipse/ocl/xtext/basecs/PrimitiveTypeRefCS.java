@@ -42,7 +42,8 @@ public interface PrimitiveTypeRefCS extends TypedRefCS, Nameable {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPrimitiveTypeRefCS_Name()
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PrimitiveTypeRefCS!name'"
+	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PrimitiveTypeRefCS!name'"
 	 * @generated
 	 */
 	@Override

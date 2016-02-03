@@ -62,7 +62,8 @@ public interface PackageCS extends PackageOwnerCS, NamespaceCS {
 	 * @return the value of the '<em>Ns Prefix</em>' attribute.
 	 * @see #setNsPrefix(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPackageCS_NsPrefix()
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PackageCS!nsPrefix'"
+	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PackageCS!nsPrefix'"
 	 * @generated
 	 */
 	String getNsPrefix();
@@ -88,7 +89,8 @@ public interface PackageCS extends PackageOwnerCS, NamespaceCS {
 	 * @return the value of the '<em>Ns URI</em>' attribute.
 	 * @see #setNsURI(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getPackageCS_NsURI()
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PackageCS!nsURI'"
+	 * @model dataType="org.eclipse.ocl.pivot.String"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!PackageCS!nsURI'"
 	 * @generated
 	 */
 	String getNsURI();

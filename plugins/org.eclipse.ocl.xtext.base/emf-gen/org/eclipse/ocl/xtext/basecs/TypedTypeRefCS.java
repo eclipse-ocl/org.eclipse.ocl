@@ -116,7 +116,7 @@ public interface TypedTypeRefCS extends TypedRefCS {
 	 * @return the value of the '<em>Is Typeof</em>' attribute.
 	 * @see #setIsTypeof(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedTypeRefCS_IsTypeof()
-	 * @model default="false" required="true"
+	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean" required="true"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!TypedTypeRefCS!isTypeof'"
 	 * @generated
 	 */
