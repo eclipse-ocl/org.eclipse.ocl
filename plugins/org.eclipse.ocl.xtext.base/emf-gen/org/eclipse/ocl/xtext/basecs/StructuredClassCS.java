@@ -47,7 +47,7 @@ public interface StructuredClassCS extends ClassCS, NamespaceCS {
 	 * @return the value of the '<em>Is Abstract</em>' attribute.
 	 * @see #setIsAbstract(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuredClassCS_IsAbstract()
-	 * @model default="false"
+	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuredClassCS!isAbstract'"
 	 * @generated
 	 */
@@ -75,7 +75,7 @@ public interface StructuredClassCS extends ClassCS, NamespaceCS {
 	 * @return the value of the '<em>Is Interface</em>' attribute.
 	 * @see #setIsInterface(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuredClassCS_IsInterface()
-	 * @model default="false"
+	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!StructuredClassCS!isInterface'"
 	 * @generated
 	 */

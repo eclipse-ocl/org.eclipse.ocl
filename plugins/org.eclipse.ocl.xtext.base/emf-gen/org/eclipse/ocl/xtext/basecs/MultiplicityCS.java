@@ -40,7 +40,7 @@ public interface MultiplicityCS extends ElementCS
 	 * @return the value of the '<em>Is Null Free</em>' attribute.
 	 * @see #setIsNullFree(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getMultiplicityCS_IsNullFree()
-	 * @model default="false"
+	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!MultiplicityCS!isNullFree'"
 	 * @generated
 	 */

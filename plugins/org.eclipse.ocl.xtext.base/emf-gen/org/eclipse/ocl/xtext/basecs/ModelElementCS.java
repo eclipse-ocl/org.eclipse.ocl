@@ -59,7 +59,7 @@ public interface ModelElementCS extends PivotableElementCS {
 	 * @return the value of the '<em>Original Xmi Id</em>' attribute.
 	 * @see #setOriginalXmiId(String)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getModelElementCS_OriginalXmiId()
-	 * @model transient="true"
+	 * @model dataType="org.eclipse.ocl.pivot.String" transient="true"
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/BaseCS!ModelElementCS!originalXmiId'"
 	 * @generated
 	 */
