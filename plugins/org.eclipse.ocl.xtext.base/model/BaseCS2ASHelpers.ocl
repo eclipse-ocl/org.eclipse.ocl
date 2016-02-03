@@ -1,0 +1,88 @@
+import 'BaseCS.ecore'
+import '/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'
+
+package basecs
+
+context TypedElementCS
+def : isRequired() : Boolean =
+	let typeMultiplicity = ownedType.ownedMultiplicity
+	in
+		if typeMultiplicity = null
+		then false
+		else
+			if typeMultiplicity.getUpper() = 1
+			then typeMultiplicity.getLower() = 1
+			else false
+			endif
+		endif
+		
+context TypedRefCS
+def : isMultiple() : Boolean = 
+		ownedMultiplicity.getUpper() > 1
+		
+def : multiplicityType(type : ocl::Type ) : ocl::Type =
+	if not isMultiple()
+	then type
+	else 
+		let ordered = if oclContainer().oclIsKindOf(TypedElementCS)
+					 	then oclContainer().oclAsType(TypedElementCS).qualifiers->includes('ordered')
+					 	else false
+					 	endif,
+			unique = if  oclContainer().oclIsKindOf(TypedElementCS)
+						then oclContainer().oclAsType(TypedElementCS).qualifiers->includes('unique')
+						else false
+						endif,
+			superType = ocl::CollectionType {
+							name = 'Collection',
+							elementType = type,
+							superClasses = OclAny	
+						}
+		in
+			if unique
+			then
+				if ordered
+				then ocl::OrderedSetType {
+						name = 'OrderedSet',
+						elementType = type,
+						superClasses = superType
+					}
+				else ocl::SetType {
+						name = 'Set',
+						elementType = type,
+						superClasses = superType
+					}
+				endif
+			else 
+				if ordered
+				then ocl::SequenceType {
+						name = 'Sequence',
+						elementType = type,
+						superClasses = superType
+					}
+				else ocl::BagType {
+						name = 'Bag',
+						elementType = type,
+						superClasses = superType
+					}
+				endif
+			endif
+			
+	endif
+
+context TypedTypeRefCS
+def : ast() : ocl::Class =	
+	referredType()
+	
+def : referredType() : ocl::Class = 
+	let finalType : ocl::Type = 
+	if ownedBinding = null
+		then referredType  -- it should return proper type, hand-coded in TypedTypeRefCSImpl
+		else ocl::Class {
+				name = referredType.name,
+				unspecializedElement = referredType
+				-- ownedBindings = Set{ownedBinding.ast()} FIXME
+			}
+		endif
+	in multiplicityType(finalType).isClass()
+		
+endpackage
