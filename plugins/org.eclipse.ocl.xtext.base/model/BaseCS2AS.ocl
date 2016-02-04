@@ -69,7 +69,7 @@ context DataTypeCS
 def: ast() : ocl::DataType =
 	ocl::DataType { 
 		name = name,
-		ownedSignature = ownedSignature,
+		ownedSignature = ownedSignature.ast(),
 		instanceClassName = instanceClassName,
 		isSerializable = isSerializable,
 		ownedAnnotations = ownedAnnotations.ast(),
@@ -108,7 +108,7 @@ def : ast() : ocl::EnumerationLiteral =
 	ocl::EnumerationLiteral {
 				name = name,
 				value = value,
-				ownedAnnotations = ownedAnnotations
+				ownedAnnotations = ownedAnnotations.ast()
 	}
 
 --context	FeatureCS
