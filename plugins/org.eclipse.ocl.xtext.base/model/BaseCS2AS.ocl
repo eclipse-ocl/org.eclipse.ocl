@@ -29,11 +29,12 @@ def: ast() : ocl::Property=
 		defaultValueString = default,
 		ownedExpression = ownedDefaultExpressions.ast(),
 		ownedAnnotations = ownedAnnotations.ast(),
-		type = ownedType.ast(), -- REF
-		owningClass = if (qualifiers->includes('definition'))
-					 then null -- TODO Look for secondary type, create it if it doesn't exist
-					 else null -- FIXME return null, it will be added by owning class afterwards. BUT it will do the same even though if we have previously added it to a secondary type as well !!! 
-					 endif
+		type = ownedType.ast() -- REF
+-- FIXME I don't think we should need this. The attribute will be added to the class by the owner
+--		owningClass = if (qualifiers->includes('definition'))
+--					 then null -- TODO Look for secondary type, create it if it doesn't exist
+--					 else null -- FIXME return null, it will be added by owning class afterwards. BUT it will do the same even though if we have previously added it to a secondary type as well !!! 
+--					 endif
 	}
 
 context /*abstract*/ ClassCS 
@@ -53,7 +54,7 @@ def: ast() : ocl::Class =
 		ownedProperties = ownedProperties.ast(),
 		ownedInvariants = ownedConstraints.ast(),
 		superClasses = if ownedSuperTypes = null -- REF
-					 then ocl::OclElement  
+					 then Set{ocl::OclElement}  
 					 else ownedSuperTypes.ast() 
 					 endif
 	}
@@ -74,7 +75,7 @@ def: ast() : ocl::DataType =
 		isSerializable = isSerializable,
 		ownedAnnotations = ownedAnnotations.ast(),
 		ownedInvariants = ownedConstraints.ast(),
-		superClasses = ocl::OclElement
+		superClasses = Set{ocl::OclElement}
 	}
 
 context DetailCS
@@ -100,7 +101,7 @@ def : ast() : ocl::Enumeration =
 		ownedSignature = ownedSignature.ast(),
 		ownedAnnotations = ownedAnnotations.ast(),
 		ownedInvariants = ownedConstraints.ast(),
-		superClasses = ocl::OclElement
+		superClasses = Set{ocl::OclElement}
 	}
 
 context EnumerationLiteralCS
@@ -125,14 +126,12 @@ def : ast() : ocl::Import =
 -- Shouldn't the lambda be looked up in the environment?
 context LambdaTypeCS 
 def :  ast() : ocl::Type =
-	let type : ocl::Type = 
-		ocl::LambdaType {
+	multiplicityType(ocl::LambdaType {
 			name = name,
 			contextType = ownedContextType.ast(),	-- REF
 			resultType = ownedResultType.ast(),	--REF
 			parameterType = ownedParameterTypes.ast()	-- REF
-		}
-	in multiplicityType(type)
+		})
 	 
 
 -- No idea about this
@@ -176,11 +175,12 @@ def : ast() : ocl::Operation =
 		ownedPreconditions = ownedPreconditions.ast(),
 		ownedPostconditions = ownedPostconditions.ast(),
 		bodyExpression = ownedBodyExpressions.ast(),		
-		type = ownedType.ast(),
-		owningClass = if (qualifiers->includes('definition'))
-					 then null -- TODO Look for secondary type, create it if it doesn't exist, and say it's its owningType
-					 else null -- FIXME return null, it will be added by owning class afterwards. BUT it will do the same even though if we have previously added it to a secondary type as well !!! 
-					 endif				
+		type = ownedType.ast()
+-- FIXME I don't think we should need this. The attribute will be added to the class by the owner
+--		owningClass = if (qualifiers->includes('definition'))
+--					 then null -- TODO Look for secondary type, create it if it doesn't exist, and say it's its owningType
+--					 else null -- FIXME return null, it will be added by owning class afterwards. BUT it will do the same even though if we have previously added it to a secondary type as well !!! 
+--					 endif				
 	}
 
 context PackageCS
@@ -242,33 +242,34 @@ def : ast() : ocl::Property =
 		keys = referredKeys, -- No idea what is this for
 		defaultValueString = default, -- default vs defaultExpressions ?
 		ownedExpression = if ownedDefaultExpressions->notEmpty()
-							then ownedDefaultExpressions.ast()
+							then ownedDefaultExpressions.ast()->first() -- FIXME why do we many defaultExpressions ? Smelly
 							else null
 							endif,
 		ownedAnnotations = ownedAnnotations.ast(),
 		type =	ownedType.ast(),
-		opposite = if not (referredOpposite = null)
+		opposite = if referredOpposite <> null
 		 		   then referredOpposite
 		 		   else ocl::Property {
 								name = self.ast().owningClass.name, -- FIXME hazard when having different types with same name => two properties with the same name
 								isImplicit = true,
 								isRequired = false,
-								owningClass = ownedType.ast()								
+								owningClass = ownedType.ast()
 								-- FIXME how to statically define a collection of a dinamic Type  
 								-- type = env().getCollectionType(ocl::CollectionKind::OrderedSet, thisType)
 						}
-					endif,
-		owningClass = if (qualifiers->includes('definition'))
-					 then null -- TODO Look for secondary type, create it if it doesn't exist, and say it's its owningType
-					 else null -- FIXME return null, it will be added by owning class afterwards. BUT it will do the same even though if we have previously added it to a secondary type as well !!! 
-					 endif
+					endif
+-- FIXME I don't think we should need this. The attribute will be added to the class by the owner
+--		owningClass = if (qualifiers->includes('definition'))
+--					 then null -- TODO Look for secondary type, create it if it doesn't exist, and say it's its owningType
+--					 else null -- FIXME return null, it will be added by owning class afterwards. BUT it will do the same even though if we have previously added it to a secondary type as well !!! 
+--					 endif
 	}
 	
 
 -- context RootCS
 
 context RootPackageCS
-def :ast() : ocl::Model =
+def : ast() : ocl::Model =
 	ocl::Model {
 		ownedImports = ownedImports.ast(),
 		ownedPackages = ownedPackages.ast()
@@ -276,24 +277,27 @@ def :ast() : ocl::Model =
  
 context SpecificationCS
 def : ast() : ocl::LanguageExpression =
-	ocl::LanguageExpression  {
-		language = 'OCL',
-		_body =	Sequence(String){exprString}
+	ocl::ExpressionInOCL  {
+		--language = 'OCL',
+		_body =	exprString
 	}
 	
 	
--- context StructuralFeatureCS
+context /*abstract*/ StructuralFeatureCS
+def : ast() : ocl::Property =
+	null -- to be overridden
 	
 context TemplateBindingCS
 def : ast() : ocl::TemplateBinding =
 	ocl::TemplateBinding {
-		ownedSubstitutions = ownedSubstitutions.ast(),
-		templateSignature = owningElement.ast().unspecializedElement.ownedSignature -- REF
-				-- Possible loop with TypedTypeRefCS
+		ownedSubstitutions = ownedSubstitutions.ast()
 	}
 	
 -- See TypeParameterCS
--- context TemplateParameterCS
+context /*abstract*/ TemplateParameterCS
+def : ast() : ocl::TemplateParameter =
+	null
+	
 context TemplateParameterSubstitutionCS
 def : ast() : ocl::TemplateParameterSubstitution = 
 	ocl::TemplateParameterSubstitution {
@@ -339,6 +343,14 @@ def : ast() : ocl::TemplateParameter =
 
 -- FIXME remove TypedElementCS::optional ?
 
+context /*abstract*/ TypeRefCS
+def : ast() : ocl::Class =
+	null -- To be overriden
+	
+context /*abstract*/ TypedRefCS
+def : ast() : ocl::Class =
+	null -- To be overridden
+	
 --context TypedRefCS	 
 --def : ast(unique : Boolean, ordered : Boolean) : ocl::Type =
 --	null -- FIXME
