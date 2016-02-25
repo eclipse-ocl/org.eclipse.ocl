@@ -44,7 +44,7 @@ nameresolution {
 			occluding let allSuperClasses = self->closure(superClass) -- FIXME
 					in allSuperClasses->collect(ownedProperties->select(not isStatic))
 					->includingAll(allSuperClasses->collect(ownedOperations->select(not isStatic)))
-					->includingAll(allSuperClasses->collection(ownedBehaviors));
+					->includingAll(allSuperClasses->collect(ownedBehaviors));
 	}
 	
 	DataType {
@@ -98,7 +98,8 @@ nameresolution {
 	
 	Model {
 		same-scope ownedPackages, ownedImports.importedNamespace
-			-- NOT SUPPORTED YET , imported ownedImports.importedNamespace;
+			-- NOT SUPPORTED YET , imported ownedImports.importedNamespace
+			;
 		
 		exports Package using ownedPackages;
 	}
@@ -118,7 +119,7 @@ nameresolution {
 					   Package using ownedPackages;
 		/*for all*/
 		nested-scope ownedClasses;
-		exports Class using ownedClasses;
+		exports Class using ownedClasses; -- FIXME do we need to export Packages ?
 	}
 	
 	Property {
