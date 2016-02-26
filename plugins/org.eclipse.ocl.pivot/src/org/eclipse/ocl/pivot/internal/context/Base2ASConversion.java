@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
 
-public interface Base2ASConversion
+public interface Base2ASConversion extends CS2ASConversion
 {
 	void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance);
 	void setClassifierContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Type contextType);
