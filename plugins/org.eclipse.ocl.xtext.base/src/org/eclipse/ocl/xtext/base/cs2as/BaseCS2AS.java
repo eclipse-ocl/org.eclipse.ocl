@@ -17,12 +17,15 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
+import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
 
 /**
  * BaseCS2AS provides an extensible conversion from CS models to the pivot model.
  */
 public class BaseCS2AS extends CS2AS
 {	
+	protected static boolean NEW_CS2AS = false;
+	
 	public BaseCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
 	}
@@ -49,5 +52,22 @@ public class BaseCS2AS extends CS2AS
 	@Override
 	protected @NonNull BaseCSVisitor<Continuation<?>> createPreOrderVisitor(@NonNull CS2ASConversion converter) {
 		return new BaseCSPreOrderVisitor(converter);
+	}
+	
+	
+	@Override
+	protected @NonNull CS2ASConversion createConversion(
+			@NonNull IDiagnosticConsumer diagnosticsConsumer,
+			@NonNull BaseCSResource csResource) {
+		if (NEW_CS2AS) {
+			return createNewCS2ASConversion(this, diagnosticsConsumer);
+		} else {
+			return super.createConversion(diagnosticsConsumer, csResource);	
+		}
+	}
+	
+	@NonNull
+	protected CS2ASConversion createNewCS2ASConversion(@NonNull BaseCS2AS cs2as, @NonNull IDiagnosticConsumer diagnostic) {
+		return new BaseCS2ASConversion(this, diagnostic);
 	}
 }
