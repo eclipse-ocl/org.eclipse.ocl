@@ -20,6 +20,7 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
+import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
 
 public class EssentialOCLCS2AS extends BaseCS2AS
 {		
@@ -49,5 +50,10 @@ public class EssentialOCLCS2AS extends BaseCS2AS
 	@Override
 	protected @NonNull EssentialOCLCSVisitor<Continuation<?>> createPreOrderVisitor(@NonNull CS2ASConversion converter) {
 		return new EssentialOCLCSPreOrderVisitor(converter);
+	}
+	
+	@Override
+	protected @NonNull CS2ASConversion createNewCS2ASConversion(@NonNull BaseCS2AS cs2as, @NonNull IDiagnosticConsumer diagnostic) {
+		return new EssentialOCLCS2ASConversion(this, diagnostic);
 	}
 }
