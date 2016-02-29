@@ -1,0 +1,56 @@
+import 'EssentialOCLCS.ecore'
+import '/resource/org.eclipse.ocl.xtext.base/model/BaseCS.ecore'
+import '/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'
+import '/resource/org.eclipse.ocl.pivot/model/PivotCS2ASLookup.ocl'
+
+package essentialoclcs
+
+context CollectionLiteralPartCS
+def : isCollectionItem() : Boolean =
+	ownedLastExpression = null
+def : isCollectionRange() : Boolean =
+	ownedLastExpression <> null
+	
+context NameExpCS
+def : isAssociationClassExp() : Boolean =
+	ownedCurlyBracketedClause->isEmpty() and 
+	ownedRoundBracketedClause->isEmpty() and 
+	ownedSquareBracketedClauses->isEmpty() and	 
+	referredAssociation <> null -- FIXME do a name based lookup
+
+def : isIterateExp() : Boolean = 
+	ownedCurlyBracketedClause->isEmpty() and 
+	ownedRoundBracketedClause->notEmpty() and 
+	ownedSquareBracketedClauses->isEmpty() and 
+	referredIteration <> null -- FIXME do a name based lookup
+	
+-- FIXME difference between iterate and iterator
+def : isIteratorExp() : Boolean =
+	ownedCurlyBracketedClause->isEmpty() and 
+	ownedRoundBracketedClause->notEmpty() and 
+	ownedSquareBracketedClauses->isEmpty() and 
+	referredIteration <> null -- FIXME do a name based lookup
+	
+def : isOperationCallExp() : Boolean =
+	ownedCurlyBracketedClause->isEmpty() and 
+	ownedRoundBracketedClause->notEmpty() and 
+	ownedSquareBracketedClauses->isEmpty() and 
+	referredOperation <> null -- FIXME do a name based lookup
+	
+def : isPropertyCallExp() : Boolean =
+	ownedCurlyBracketedClause->isEmpty() and 
+	ownedRoundBracketedClause->isEmpty() and 
+	ownedSquareBracketedClauses->isEmpty() and 
+	referredProperty <> null
+	
+def : isShadowExp() : Boolean = 
+	ownedCurlyBracketedClause->notEmpty() and 
+	ownedRoundBracketedClause->isEmpty() and 
+	ownedSquareBracketedClauses->isEmpty()
+	
+def : isVariableExp() : Boolean = 
+	ownedCurlyBracketedClause->isEmpty() and 
+	ownedRoundBracketedClause->isEmpty() and 
+	ownedSquareBracketedClauses->isEmpty() and 
+	referredVariable <> null
+endpackage
