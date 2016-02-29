@@ -349,8 +349,10 @@ in  if foundVariable->isEmpty()
 	endif
 def : lookupVariable(aPathElementCS : cs::PathElementCS) : Variable[?] =
    _lookupVariable(aPathElementCS.name)
-   
 
+-- FIXME manually added
+def : lookupVariable(vName : String) : Variable[?] =
+   _lookupVariable(vName)
 
 -- Namespace lookup
 def : _lookupNamespace(env : lookup::LookupEnvironment, nName : String) : OrderedSet(Namespace) =
@@ -391,6 +393,10 @@ in  if foundClass->isEmpty()
 	endif
 def : lookupClass(aPathElementCS : cs::PathElementCS) : Class[?] =
    _lookupClass(aPathElementCS.name)
+   
+-- FIXME manually added
+def : lookupClass(cName : String) : Class[?] =
+   _lookupClass(cName)
    
 
 -- QN Class lookup

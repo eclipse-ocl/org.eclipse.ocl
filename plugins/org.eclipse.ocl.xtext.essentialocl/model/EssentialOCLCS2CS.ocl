@@ -1,6 +1,6 @@
 import 'EssentialOCLCS.ecore'
 import '/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'
-import '/resource/org.eclipse.ocl.pivot/model/PivotNameResolution.ocl'
+import '/resource/org.eclipse.ocl.pivot/model/PivotLookup.ocl'
 
 import '/resource/org.eclipse.ocl.xtext.base/model/BaseCS2AS.ocl' -- To import other OCL definitions
 

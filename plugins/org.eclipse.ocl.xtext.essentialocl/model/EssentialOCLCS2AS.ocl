@@ -1,9 +1,11 @@
 import 'EssentialOCLCS.ecore'
 import '/resource/org.eclipse.ocl.xtext.base/model/BaseCS.ecore'
 import '/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'
-import '/resource/org.eclipse.ocl.pivot/model/PivotLookup.ocl'
-
+import '/resource/org.eclipse.ocl.pivot/model/PivotCS2ASLookup.ocl'
 import '/resource/org.eclipse.ocl.xtext.base/model/BaseCS2AS.ocl' -- To import other OCL definitions
+
+import 'EssentialOCLCS2ASDisambiguation.ocl'
+import 'EssentialOCLCS2ASHelpers.ocl'
 
 package basecs
 
@@ -18,24 +20,13 @@ def : parent : basecs::ElementCS = elementParent
 endpackage
 
 package essentialoclcs
-	
-context AssociationClassCallExpCS
-def : ast() : ocl::AssociationClassCallExp =
-	ocl::AssociationClassCallExp {
-		name = referredAssociation.name,
---		type = specialized(referredAssociation.type),
-		ownedSource = source.ast(),
-		referredAssociationClass = referredAssociation
---		isPre = isPre
-	}
-def : isValid() : Boolean =
-	ownedCurlyBracketedClause->isEmpty() and ownedRoundBracketedClause->isEmpty() and ownedSquareBracketedClauses->isEmpty() and referredAssociation <> null
 
 context BooleanLiteralExpCS
 def : ast() : ocl::BooleanLiteralExp = 
 	ocl::BooleanLiteralExp {
 		booleanSymbol =	symbol.toBoolean(),
-		type = Boolean
+--		type = Boolean
+		type = ast().lookupClass('Boolean')
 	}
 	
 context CollectionLiteralExpCS 
@@ -48,41 +39,42 @@ def : ast() : ocl::CollectionLiteralExp =
 
 context CollectionLiteralPartCS
 def : ast() : ocl::CollectionLiteralPart = 
-	if ownedLastExpression = null
+	if isCollectionItem()
 	then ocl::CollectionItem {
 			ownedItem = ownedExpression.ast(),	
 			type = ownedExpression.ast().oclAsType(ocl::OCLExpression).type
 		}
-	else ocl::CollectionRange {
+	else if isCollectionRange() 
+		then ocl::CollectionRange {
 			ownedFirst = ownedExpression.ast(),
 			ownedLast = ownedLastExpression.ast()
 --			type = commonType(ownedExpression.ast().type, ownedLastExpression.ast().type)
 		}
+		else
+			invalid
+		endif
 	endif
 
 context CollectionTypeCS
-def : ast() : ocl::CollectionType =
-	 -- env().lookupCollectionType(name, ownedType)
-	let lower : Integer = 
-			if ownedMultiplicity = null
-			then null
-			else ownedMultiplicity.getLower()
-			endif,
-		upper : UnlimitedNatural =
-			if ownedMultiplicity = null
-			then null
-			else 
-				if ownedMultiplicity.getUpper() = -1
-				then *
-				else ownedMultiplicity.getUpper()
+def : ast() : ocl::CollectionType =	
+	-- env().lookupCollectionType(name, ownedType)
+	-- FIXME this should probably be a lookup
+	ocl::CollectionType {
+		name = name,
+		elementType = ownedType.ast(),
+		lower = if ownedMultiplicity = null
+				then null
+				else ownedMultiplicity.getLower()
+				endif,
+		upper = if ownedMultiplicity = null
+				then null
+				else 
+					if ownedMultiplicity.getUpper() = -1
+					then *
+					else ownedMultiplicity.getUpper()
+					endif
 				endif
-			endif
-	in	ocl::CollectionType {
-			name = name,
-			elementType = ownedType.ast(),
-			lower = lower,
-			upper = upper
-		}
+	}
 
 -- FIXME probably move this to BaseCS.ocl
 -- TODO 
@@ -122,9 +114,9 @@ def : parent : basecs::ElementCS = if localParent <> null then localParent else 
 context ExpSpecificationCS
 def : ast() : ocl::ExpressionInOCL =
 	if ownedExpression = null
-	then ocl::LanguageExpression {
+	then ocl::ExpressionInOCL {
 		language = 'OCL',
-		_body = exprString->asSequence()
+		_body = exprString
 	}
 	else ocl::ExpressionInOCL {
 		language = 'OCL',
@@ -149,36 +141,7 @@ def : ast() : ocl::InvalidLiteralExp =
 		type = OclInvalid
 	}
 	
-context IterateCallExpCS
-def : ast() : ocl::IterateExp =
-	let iteration : ocl::Iteration = null in --lookupIteration(ownedPathName, ownedArguments)
-	ocl::IterateExp {
-		name = iteration.name,
---		type = specialized(iteration.type),
-		ownedSource = source.ast(),
-		ownedIterators = iterators.ast(),
-		ownedResult = accumulators->at(1).ast(),
-		ownedBody = arguments->at(1).ast(),
-		referredIteration = iteration
---		isPre = isPre
-	}
-def : isValid() : Boolean =
-	ownedCurlyBracketedClause->isEmpty() and ownedRoundBracketedClause->notEmpty() and ownedSquareBracketedClauses->isEmpty() and referredIteration <> null
-	
-context IterationCallExpCS
-def : ast() : ocl::IteratorExp =
-	let iteration : ocl::Iteration = null in --lookupIteration(ownedPathName, ownedArguments)
-	ocl::IteratorExp {
-		name = iteration.name,
---		type = specialized(iteration.type),
-		ownedSource = source.ast(),
-		ownedIterators = iterators.ast(),
-		ownedBody = arguments->at(1).ast(),
-		referredIteration = iteration
---		isPre = isPre
-	}
-def : isValid() : Boolean =
-	ownedCurlyBracketedClause->isEmpty() and ownedRoundBracketedClause->notEmpty() and ownedSquareBracketedClauses->isEmpty() and referredIteration <> null
+
 
 context LetExpCS
 def : ast() : ocl::LetExp = 
@@ -192,14 +155,67 @@ inv LetHasBeenFlattened: ownedVariables->size() = 1
 
 context NameExpCS
 def : ast() : ocl::OCLExpression =
-	if oclAsType(AssociationClassCallExpCS).isValid() then oclAsType(AssociationClassCallExpCS).ast()
-	else if oclAsType(IterateCallExpCS).isValid() then oclAsType(IterateCallExpCS).ast()
-	else if oclAsType(IterationCallExpCS).isValid() then oclAsType(IterationCallExpCS).ast()
-	else if oclAsType(OperationCallExpCS).isValid() then oclAsType(OperationCallExpCS).ast()
-	else if oclAsType(PropertyCallExpCS).isValid() then oclAsType(PropertyCallExpCS).ast()
-	else if oclAsType(ShadowExpCS).isValid() then oclAsType(ShadowExpCS).ast()
-	else if oclAsType(VariableExpCS).isValid() then oclAsType(VariableExpCS).ast()
-	else null endif endif endif endif endif endif endif
+	if isAssociationClassExp() then 
+		ocl::AssociationClassCallExp {			
+			name = referredAssociation.name, -- FIXME do a named-based lookup
+--			type = specialized(referredAssociation.type),
+			ownedSource = source.ast(),
+			referredAssociationClass = referredAssociation -- FIXME do a named-based looku
+--			isPre = isPre
+		}
+	else if isIterateExp() then
+		ocl::IterateExp {
+			name = referredIteration.name, -- FIXME do a named-based lookup
+--			type = specialized(iteration.type),
+			ownedSource = source.ast(),
+			ownedIterators = iterators.ast(),
+			ownedResult = accumulators->at(1).ast(),
+			ownedBody = arguments->at(1).ast(),
+			referredIteration = referredIteration -- FIXME do a named-based lookup
+--			isPre = isPre
+		}
+	else if isIteratorExp() then 
+		ocl::IteratorExp {
+			name = referredIteration.name,
+--			type = specialized(iteration.type),
+			ownedSource = source.ast(),
+			ownedIterators = iterators.ast(),
+			ownedBody = arguments->at(1).ast(),
+			referredIteration = referredIteration
+--			isPre = isPre
+		}
+	else if isOperationCallExp() then 
+		ocl::OperationCallExp {
+			name = referredOperation.name, -- FIXME do a named-based lookup
+--			type = specialized(referredOperation.type),
+			ownedSource = source.ast(),
+			ownedArguments = arguments.ast(),
+			referredOperation = referredOperation, -- FIXME do a named-based lookup
+			isPre = isPre
+		}
+	else if isPropertyCallExp() then 
+		ocl::PropertyCallExp {
+			name = referredProperty.name,
+--			type = specialized(property.type),
+			ownedSource = source.ast(),
+			referredProperty = referredProperty
+--			isPre = isPre
+		}
+	else if isShadowExp() then 
+		ocl::ShadowExp {
+			value = value,
+			ownedParts = parts.ast()
+--			type = env().lookupType(nameExp.pathName)
+--			type = nameExp.ast().oclAsType(ocl::Type)
+	}
+	else if isVariableExp() then 
+		ocl::VariableExp {
+			name = referredVariable.name, -- FIXME do a named-based lookup
+			type = referredVariable.type, -- FIXME do a named-based lookup
+			referredVariable = referredVariable -- FIXME do a named-based lookup
+		}
+	else invalid
+	endif endif endif endif endif endif endif
 
 context NullLiteralExpCS
 def : ast() : ocl::NullLiteralExp = 
@@ -220,54 +236,13 @@ def : ast() : ocl::NumericLiteralExp =
 --			type = Real
 --		}
 --	endif 
-	
-context OperationCallExpCS
-def : ast() : ocl::OperationCallExp =
-	let operation : ocl::Operation = null in --lookupOperation(ownedPathName, ownedArguments)
-	ocl::OperationCallExp {
-		name = operation.name,
---		type = specialized(referredOperation.type),
-		ownedSource = source.ast(),
-		ownedArguments = arguments.ast(),
-		referredOperation = operation,
-		isPre = isPre
-	}
-def : isValid() : Boolean =
-	ownedCurlyBracketedClause->isEmpty() and ownedRoundBracketedClause->notEmpty() and ownedSquareBracketedClauses->isEmpty() and referredOperation <> null
-	
-context PropertyCallExpCS
-def : ast() : ocl::PropertyCallExp =
-	let property : ocl::Property = null in --lookupProperty(ownedPathName)
-	ocl::PropertyCallExp {
-		name = property.name,
---		type = specialized(property.type),
-		ownedSource = source.ast(),
-		referredProperty = property
---		isPre = isPre
-	}
-def : isValid() : Boolean =
-	ownedCurlyBracketedClause->isEmpty() and ownedRoundBracketedClause->isEmpty() and ownedSquareBracketedClauses->isEmpty() and referredProperty <> null
 
 context SelfExpCS
 def :  ast() : ocl::VariableExp = 
-	let refVariable : ocl::VariableDeclaration = ast().lookupVariable(name)
-	in ocl::VariableExp {
-			referredVariable = refVariable, 
-			type = refVariable.type 
+	ocl::VariableExp {
+		referredVariable = ast().lookupVariable(name), 
+		type = ast().referredVariable.type 
 	}
-
-context ShadowExpCS
-def : ast() : ocl::ShadowExp =
-	ocl::ShadowExp {
-		value = value,
-		ownedParts = parts.ast()
---		-- type = env().lookupType(nameExp.pathName)
---		type = nameExp.ast().oclAsType(ocl::Type)
-	}
-def : isValid() : Boolean =
-	ownedCurlyBracketedClause->notEmpty() and ownedRoundBracketedClause->isEmpty() and ownedSquareBracketedClauses->isEmpty()
-inv : parts->notEmpty() implies value = null
-		and not (value = null) implies parts->isEmpty()
 	
 context ShadowPartCS
 def : ast() :  ocl::ShadowPart =
@@ -281,7 +256,7 @@ def : ast() : ocl::StringLiteralExp =
 	ocl::StringLiteralExp {
 		stringSymbol = segments->iterate(x : String, result : String = '' |
 						result = result.concat(x)),
-		type = String
+						type = String
 	}
 	
 context TupleLiteralExpCS
@@ -300,16 +275,11 @@ def : ast() : ocl::TupleLiteralPart =
 	}
 	
 context TypeLiteralExpCS
-def : ast() : ocl::TypeExp = 
-	let refType : ocl::Type = ownedType.ast()
-	in ocl::TypeExp {
-			referredType = refType,
-			type = refType
+def : ast() : ocl::TypeExp =
+	ocl::TypeExp {
+		referredType = ownedType.ast(),
+		type = ast().referredType
 	}
-
-context TypeNameExpCS
-def : ast() : ocl::Type =
-	multiplicityType(element) -- REF element manually hand-coded which returns the proper type  
 	
 -- TODO context UnaryOperatorCS
 context UnlimitedNaturalLiteralExpCS
@@ -326,16 +296,5 @@ def : ast() : ocl::Variable =
 		ownedInit = ownedInitExpression.ast(),
 		type = ownedType.ast()
 	}
-	
-context VariableExpCS
-def : ast() : ocl::VariableExp =
-	let variable : ocl::VariableDeclaration = null in --lookupVariable(ownedPathName)
-	ocl::VariableExp {
-		name = variable.name,
-		type = variable.type,
-		referredVariable = variable
-	}
-def : isValid() : Boolean =
-	ownedCurlyBracketedClause->isEmpty() and ownedRoundBracketedClause->isEmpty() and ownedSquareBracketedClauses->isEmpty() and referredVariable <> null
 
 endpackage
