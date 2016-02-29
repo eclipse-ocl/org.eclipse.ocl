@@ -1,0 +1,13 @@
+import 'EssentialOCLCS.ecore'
+import '/resource/org.eclipse.ocl.xtext.base/model/BaseCS.ecore'
+import '/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'
+import '/resource/org.eclipse.ocl.pivot/model/PivotCS2ASLookup.ocl'
+
+import '/resource/org.eclipse.ocl.xtext.base/model/BaseCS2ASHelpers.ocl'
+
+package essentialoclcs
+
+context TypeNameExpCS
+def : ast() : ocl::Type =
+	multiplicityType(element) -- REF element manually hand-coded which returns the proper type  
+endpackage
