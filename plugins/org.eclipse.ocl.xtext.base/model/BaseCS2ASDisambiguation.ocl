@@ -1,0 +1,23 @@
+import 'BaseCS.ecore'
+import '/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'
+
+package basecs
+
+context	TypedTypeRefCS
+def : isTemplateableTypedTypeRef() : Boolean =
+	ownedBinding <> null
+	
+def : isBasicTypedRefTypeRef() : Boolean =
+	ownedBinding = null
+
+context WildcardTypeRefCS
+def : isExtendsWildcardTypeRef() : Boolean =
+	ownedExtends <> null
+def : isSuperWildcardTypeRef() : Boolean =
+	ownedSuper <> null
+def : isPlainWildcardTypeRef() : Boolean =
+	ownedExtends = null and 
+	ownedSuper = null
+	
+
+endpackage

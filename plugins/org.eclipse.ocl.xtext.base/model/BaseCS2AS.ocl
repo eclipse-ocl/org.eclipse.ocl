@@ -1,6 +1,7 @@
 import 'BaseCS.ecore'
 import '/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'
 import 'BaseCS2ASHelpers.ocl'
+import 'BaseCS2ASDisambiguation.ocl'
 
 package basecs
 
@@ -205,19 +206,19 @@ def : ast() : ocl::Parameter =
 		type =ownedType.ast()
 	}
 	
-context PathElementCS
-def : ast() : ocl::Element = 
-	referredElement 
+--context PathElementCS
+--def : ast() : ocl::Element = 
+--	referredElement 
 	
 -- context PathElementWithURICS
 
-context PathNameCS 
-def : ast() : ocl::Element =
-	referredElement
+--context PathNameCS 
+--def : ast() : ocl::Element =
+--	referredElement
 	
-context PivotableElementCS
-def : ast() : ocl::Element =
-	pivot
+-- context PivotableElementCS
+-- def : ast() : ocl::Element =
+--	pivot
 
 context PrimitiveTypeRefCS
 def : ast() : ocl::Type =
@@ -296,12 +297,11 @@ def : ast() : ocl::TemplateBinding =
 -- See TypeParameterCS
 context /*abstract*/ TemplateParameterCS
 def : ast() : ocl::TemplateParameter =
-	null
+	null -- to be overridden
 	
 context TemplateParameterSubstitutionCS
 def : ast() : ocl::TemplateParameterSubstitution = 
 	ocl::TemplateParameterSubstitution {
-		-- ownedActual. It looks like ownedActual is surplus
 		actual = ownedActualParameter.ast(),
 		formal = let elementPosition: Integer = owningBinding.ownedSubstitutions->indexOf(self) 
 				 in owningBinding.owningElement.ast().ownedSignature.ownedParameters->at(elementPosition)
@@ -334,59 +334,37 @@ def : ast() : ocl::Type =
 context TypeParameterCS 
 def : ast() : ocl::TemplateParameter =
 	ocl::TemplateParameter {
-		constrainingClasses = Set{ocl::Class {
-									name = name,
-									superClasses = ownedExtends.ast()
-									}
-							}
+		name = name,
+		constrainingClasses = ownedExtends.ast()
 	}
 
 -- FIXME remove TypedElementCS::optional ?
 
 context /*abstract*/ TypeRefCS
 def : ast() : ocl::Class =
-	null -- To be overriden
+	null -- To be overridden
 	
 context /*abstract*/ TypedRefCS
 def : ast() : ocl::Class =
 	null -- To be overridden
-	
---context TypedRefCS	 
---def : ast(unique : Boolean, ordered : Boolean) : ocl::Type =
---	null -- FIXME
---	if not isMultiple()
---	then env().lookupType(pathName)
---	else 
---		if unique
---		then
---			if ordered
---			then env().lookupCollectionType('OrderedSet', self)
---			else env().lookupCollectionType('Set', self)
---			endif
---		else
---			if ordered
---			then env().lookupCollectionType('Sequence', self)
---			else env().lookupCollectionType('Bag', self)
---			endif
---		endif
---	endif
 
 context TypedTypeRefCS
-def : ast() : ocl::Class =	
-	referredType()
-	
---def : specializeType(type : ocl::Type, tBinding : ocl::TemplateBinding) : ocl::Type =
---	-- TODO 
---	ocl::Class {
---		name = type.name,
---		unspecializedElement = type,
---		templateBinding = tBinding
---	}
+def : ast() : ocl::Class =
+	if isTemplateableTypedTypeRef()	then 
+		multiplicityType(specializeType(ownedBinding.ast())).isClass() -- FIXME review Type/Class
+	else if isBasicTypedRefTypeRef()then 
+		multiplicityType(referredType).isClass() -- FIXME this should be a name lookup -- FIXME review Type/Class
+	else invalid
+	endif endif
 
---context WildcardTypeRefCS
---def : ast() : ocl::UnspecifiedType =
---	ocl::UnspecifiedType {
---		superClass = extends.ast()
---	}
-	
+context WildcardTypeRefCS
+def : ast() : ocl::WildcardType =
+	if isExtendsWildcardTypeRef() then 
+		wildcardTypeExtends(ownedExtends.ast())
+	else if isSuperWildcardTypeRef() then
+		wildcardTypeSuper(ownedSuper.ast())
+	else if isPlainWildcardTypeRef() then
+		wildcardType()
+	else invalid
+	endif endif endif 
 endpackage

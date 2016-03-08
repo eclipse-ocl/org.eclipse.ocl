@@ -20,7 +20,7 @@ context TypedRefCS
 def : isMultiple() : Boolean = 
 		ownedMultiplicity.getUpper() > 1
 		
-def : multiplicityType(type : ocl::Type ) : ocl::Type =
+def : multiplicityType(type : ocl::Type) : ocl::Type =
 	if not isMultiple()
 	then type
 	else 
@@ -35,7 +35,7 @@ def : multiplicityType(type : ocl::Type ) : ocl::Type =
 			superType = ocl::CollectionType {
 							name = 'Collection',
 							elementType = type,
-							superClasses = OclAny	
+							superClasses = Set{OclAny} -- FIXME lookup
 						}
 		in
 			if unique
@@ -44,12 +44,12 @@ def : multiplicityType(type : ocl::Type ) : ocl::Type =
 				then ocl::OrderedSetType {
 						name = 'OrderedSet',
 						elementType = type,
-						superClasses = superType
+						superClasses = Set{superType}
 					}
 				else ocl::SetType {
 						name = 'Set',
 						elementType = type,
-						superClasses = superType
+						superClasses = Set{superType}
 					}
 				endif
 			else 
@@ -57,32 +57,45 @@ def : multiplicityType(type : ocl::Type ) : ocl::Type =
 				then ocl::SequenceType {
 						name = 'Sequence',
 						elementType = type,
-						superClasses = superType
+						superClasses = Set{superType}
 					}
 				else ocl::BagType {
 						name = 'Bag',
 						elementType = type,
-						superClasses = superType
+						superClasses = Set{superType}
 					}
 				endif
 			endif
-			
 	endif
 
-context TypedTypeRefCS
-def : ast() : ocl::Class =	
-	referredType()
+context TypedTypeRefCS	
+
+def : specializeType(tBinding : ocl::TemplateBinding) : ocl::Class =
+	let type = referredType -- FIME type lookup
+	in ocl::Class {
+		name = type.name,
+		unspecializedElement = type,
+		ownedBindings = tBinding
+	}
+
+context WildcardTypeRefCS
+def : wildcardType() : ocl::WildcardType =
+	ocl::WildcardType {
+		name = '?'--,
+		-- lowerBound = OclAny FIXME lookup
+		-- upperBound = OclVoid FIXME lookup
+	}
 	
-def : referredType() : ocl::Class = 
-	let finalType : ocl::Type = 
-	if ownedBinding = null
-		then referredType  -- it should return proper type, hand-coded in TypedTypeRefCSImpl
-		else ocl::Class {
-				name = referredType.name,
-				unspecializedElement = referredType
-				-- ownedBindings = Set{ownedBinding.ast()} FIXME
-			}
-		endif
-	in multiplicityType(finalType).isClass()
-		
+def : wildcardTypeExtends(_extends : ocl::Class ) : ocl::WildcardType =
+	ocl::WildcardType {
+		name = '?',
+		lowerBound = _extends
+		-- upperBound = OclVoid FIXME lookup
+	}
+def : wildcardTypeSuper(super : ocl::Class) : ocl::WildcardType =
+	ocl::WildcardType {
+		name = '?',
+		-- lowerBound = OclAny FIXME lookup
+		upperBound = super
+	}
 endpackage
