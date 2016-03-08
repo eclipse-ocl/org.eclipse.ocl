@@ -32,7 +32,7 @@ def : ast() : ocl::BooleanLiteralExp =
 context CollectionLiteralExpCS 
 def : ast() : ocl::CollectionLiteralExp =
 	ocl::CollectionLiteralExp {
-		kind = ocl::CollectionKind.allInstances()->any(name=ownedType.name),
+		kind = ocl::CollectionKind.allLiterals->any(name=ownedType.name),
 		ownedParts = ownedParts.ast(),
 		type = ownedType.ast()
 	}
@@ -146,7 +146,7 @@ def : ast() : ocl::InvalidLiteralExp =
 context LetExpCS
 def : ast() : ocl::LetExp = 
 	ocl::LetExp {
-		ownedVariable = ownedVariables->at(1),
+		ownedVariable = ownedVariables->at(1).ast(),
 		ownedIn = ownedInExpression.ast(),
 --		isImplicit = isImplicit
 		type = ownedInExpression.ast().oclAsType(ocl::OCLExpression).type
@@ -227,9 +227,11 @@ context NumberLiteralExpCS
 def : ast() : ocl::NumericLiteralExp =
 --	if symbol.floor() = symbol then 
 		ocl::IntegerLiteralExp {
-			integerSymbol = symbol,
-			type = Integer
+			-- integerSymbol = symbol--, FIXME
+			-- type = Integer FIXME
 		}
+	
+		
 --	else 
 --		ocl::RealLiteralExp {
 --			realSymbol = symbol,
@@ -255,8 +257,8 @@ context StringLiteralExpCS
 def : ast() : ocl::StringLiteralExp = 
 	ocl::StringLiteralExp {
 		stringSymbol = segments->iterate(x : String, result : String = '' |
-						result = result.concat(x)),
-						type = String
+						result = result.concat(x))--,
+						-- type = String FIXME
 	}
 	
 context TupleLiteralExpCS
@@ -270,7 +272,7 @@ context TupleLiteralPartCS
 def : ast() : ocl::TupleLiteralPart = 
 	ocl::TupleLiteralPart {
 		name = name,
-		ownedInit = ownedInitExpression,
+		ownedInit = ownedInitExpression.ast(),
 		type = ownedType.ast()
 	}
 	
