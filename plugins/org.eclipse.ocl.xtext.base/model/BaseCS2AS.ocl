@@ -1,5 +1,6 @@
 import 'BaseCS.ecore'
 import '/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'
+import '/resource/org.eclipse.ocl.pivot/model/PivotCS2ASLookup.ocl'
 import 'BaseCS2ASHelpers.ocl'
 import 'BaseCS2ASDisambiguation.ocl'
 
