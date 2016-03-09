@@ -32,7 +32,7 @@ def : ast() : ocl::BooleanLiteralExp =
 context CollectionLiteralExpCS 
 def : ast() : ocl::CollectionLiteralExp =
 	ocl::CollectionLiteralExp {
-		kind = ocl::CollectionKind.allLiterals->any(name=ownedType.name),
+--		kind = ocl::CollectionKind.allLiterals->any(name=ownedType.name),
 		ownedParts = ownedParts.ast(),
 		type = ownedType.ast()
 	}
@@ -257,7 +257,7 @@ context StringLiteralExpCS
 def : ast() : ocl::StringLiteralExp = 
 	ocl::StringLiteralExp {
 		stringSymbol = segments->iterate(x : String, result : String = '' |
-						result = result.concat(x))--,
+						result.concat(x))--,
 						-- type = String FIXME
 	}
 	
