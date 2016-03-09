@@ -21,50 +21,64 @@ nameresolution {
 	
 	Namespace {
 		named-element
-			/*qualifying Namespace using invalid,
-					Class using invalid,
-					Package using invalid,
-					Operation using invalid,
-					Property using invalid*/;
+			/*qualifies Namespace ,
+					Class ,
+					Package ,
+					Operation ,
+					Property */;
 	}
 	
 	/*FIXME Element {
 		same-scope	
 	}*/
 	
-	
+	Behavior {	named-element; }
 	Class {
 		named-element 
-			qualifying Property using ownedProperties,
+			qualifies Property using ownedProperties,
 						Operation using ownedOperations;
 						
-		nested-scope ownedProperties->select(not isStatic), 
-				  ownedOperations->select(not isStatic),
-				  ownedBehaviors 
-			occluding let allSuperClasses = self->closure(superClass) -- FIXME
-					in allSuperClasses->collect(ownedProperties->select(not isStatic))
-					->includingAll(allSuperClasses->collect(ownedOperations->select(not isStatic)))
-					->includingAll(allSuperClasses->collect(ownedBehaviors));
+		scopes-occluding
+			Property, Namespace 
+				using ownedProperties->select(not isStatic)
+				occluding let allSuperClasses = self->closure(superClass)
+						 in allSuperClasses.ownedProperties->select(not isStatic)
+			Operation, Namespace
+				using ownedOperations->select(not isStatic)
+				occluding let allSuperClasses = self->closure(superClass)
+						in allSuperClasses.ownedOperations->select(not isStatic)
+			Behavior, Namespace
+				using ownedBehaviors
+				occluding let allSuperClasses = self->closure(superClass)
+						in allSuperClasses.ownedBehaviors;
 	}
 	
 	DataType {
-		nested-scope ownedProperties->select(not isStatic), 
-				  ownedOperations->select(not isStatic)
-			occluding let allSuperClasses = self->closure(superClass)
-					in allSuperClasses->collect(ownedProperties->select(not isStatic))
-					->includingAll(allSuperClasses->collect(ownedOperations->select(not isStatic)));
+		scopes-occluding 
+			Property, Namespace 
+				using ownedProperties->select(not isStatic)
+				occluding let allSuperClasses = self->closure(superClass)
+						 in allSuperClasses.ownedProperties->select(not isStatic)
+			Operation, Namespace
+				using ownedOperations->select(not isStatic)
+				occluding let allSuperClasses = self->closure(superClass)
+						in allSuperClasses.ownedOperations->select(not isStatic);
 	}
 	
 	Enumeration {
-		nested-scope ownedLiterals,
-				  ownedProperties->select(not isStatic),
-				  ownedOperations->select(not isStatic),
-				  ownedBehaviors;
+		scopes-occluding 
+			EnumerationLiteral using ownedLiterals
+			Property using  ownedProperties->select(not isStatic)
+			Operation using  ownedOperations->select(not isStatic)
+			Behavior using ownedBehaviors;
 		
 	}
 	
+	EnumerationLiteral{ named-element; }
+	
 	ExpressionInOCL{
-		nested-scope ownedContext->asSequence() /*FIXME*/,
+		scopes-occluding 
+			Variable using ownedContext->asSequence() /*FIXME*/,
 				ownedParameters,
 				ownedResult->asSequence() /*FIXME*/;
 		
@@ -72,36 +86,45 @@ nameresolution {
 	
 	IterateExp{
 		for ownedIterators
-			nested-scope ownedResult->asSequence() /*FIXME*/, following ownedIterators;
+			scopes-occluding 
+				Variable using ownedResult->asSequence() /*FIXME*/, following ownedIterators;
 		for all
-			nested-scope ownedIterators;
+			scopes-occluding 
+				Variable using ownedIterators;
 	}
 	
 	IteratorExp {
 		for ownedIterators
-			nested-scope following ownedIterators;
+			scopes-occluding 
+				Variable using following ownedIterators;
 		for all
-			nested-scope ownedIterators;
+			scopes-occluding 
+				Variable using ownedIterators;
 	}
 	
 	
 	LetExp {
 		for ownedIn
-			nested-scope ownedVariable->asSequence() /*FIXME*/;
+			scopes-occluding
+				Variable using ownedVariable->asSequence() /*FIXME*/;
 	}
 	
 	Library {
-		nested-scope ownedPackages,
-				ownedClasses,
-				ownedPrecedences;
+		scopes-occluding 
+			Package using ownedPackages
+			Class using	ownedClasses
+			Precedence using ownedPrecedences;
 	}
 	
 	Model {
-		same-scope ownedPackages, ownedImports.importedNamespace
+		scopes-resetting
+			Package, Namespace using ownedPackages
+			Namespace using ownedImports.importedNamespace
 			-- NOT SUPPORTED YET , imported ownedImports.importedNamespace
 			;
 		
-		exports Package using ownedPackages;
+		exports 
+			Package using ownedPackages;
 	}
 	
 	Operation {
@@ -109,22 +132,25 @@ nameresolution {
 			filtered by argTypes : OrderedSet(Type) 
 				when matchesArgs(argTypes);
 		for all excepting ownedParameters
-			nested-scope ownedParameters;
+			scopes-occluding 
+				Variable using ownedParameters;
 	}
 	
 	
 	Package {
 		named-element 
-			qualifying Class using ownedClasses, 
+			qualifies Class using ownedClasses, 
 					   Package using ownedPackages;
 		/*for all*/
-		nested-scope ownedClasses;
-		exports Class using ownedClasses; -- FIXME do we need to export Packages ?
+		scopes-occluding
+			Class using ownedClasses;
+			
+		exports 
+			Class using ownedClasses;
 	}
-	
-	Property {
-		named-element;
-	}
+		
+	Precedence { named-element; }
+	Property { named-element; }
 }
 
 helpers {

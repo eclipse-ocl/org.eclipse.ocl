@@ -7,43 +7,43 @@ package pivot
 ---- Default Environment related functionality
 context OclElement
 --	
-def : env() : lookup::LookupEnvironment[1] =
-	_env(null)
-
-def : _env(child : OclElement) : lookup::LookupEnvironment[1] =
-	parentEnv()
-	
 def : _exported_env(importer : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
 	
-def : parentEnv() : lookup::LookupEnvironment[1] =
-	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env(self) endif
 -- Domain specific default functionality
 def : env_Variable() : lookup::LookupEnvironment[1] =
-_env_Variable(null)
-def : env_Model() : lookup::LookupEnvironment[1] =
-_env_Model(null)
+	_env_Variable(null)
 def : env_Class() : lookup::LookupEnvironment[1] =
-_env_Class(null)
+	_env_Class(null)
+def : env_Behavior() : lookup::LookupEnvironment[1] =
+	_env_Behavior(null)
 def : env_Operation() : lookup::LookupEnvironment[1] =
-_env_Operation(null)
+	_env_Operation(null)
 def : env_Package() : lookup::LookupEnvironment[1] =
-_env_Package(null)
+	_env_Package(null)
+def : env_Precedence() : lookup::LookupEnvironment[1] =
+	_env_Precedence(null)
+def : env_EnumerationLiteral() : lookup::LookupEnvironment[1] =
+	_env_EnumerationLiteral(null)
 def : env_Property() : lookup::LookupEnvironment[1] =
-_env_Property(null)
+	_env_Property(null)
 def : env_Namespace() : lookup::LookupEnvironment[1] =
-_env_Namespace(null)
+	_env_Namespace(null)
 
 def : _env_Variable(child : OclElement) : lookup::LookupEnvironment[1] =
 	parentEnv_Variable()
-def : _env_Model(child : OclElement) : lookup::LookupEnvironment[1] =
-	parentEnv_Model()
 def : _env_Class(child : OclElement) : lookup::LookupEnvironment[1] =
 	parentEnv_Class()
+def : _env_Behavior(child : OclElement) : lookup::LookupEnvironment[1] =
+	parentEnv_Behavior()
 def : _env_Operation(child : OclElement) : lookup::LookupEnvironment[1] =
 	parentEnv_Operation()
 def : _env_Package(child : OclElement) : lookup::LookupEnvironment[1] =
 	parentEnv_Package()
+def : _env_Precedence(child : OclElement) : lookup::LookupEnvironment[1] =
+	parentEnv_Precedence()
+def : _env_EnumerationLiteral(child : OclElement) : lookup::LookupEnvironment[1] =
+	parentEnv_EnumerationLiteral()
 def : _env_Property(child : OclElement) : lookup::LookupEnvironment[1] =
 	parentEnv_Property()
 def : _env_Namespace(child : OclElement) : lookup::LookupEnvironment[1] =
@@ -51,14 +51,18 @@ def : _env_Namespace(child : OclElement) : lookup::LookupEnvironment[1] =
 
 def : parentEnv_Variable() : lookup::LookupEnvironment[1] =
 	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env_Variable(self) endif
-def : parentEnv_Model() : lookup::LookupEnvironment[1] =
-	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env_Model(self) endif
 def : parentEnv_Class() : lookup::LookupEnvironment[1] =
 	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env_Class(self) endif
+def : parentEnv_Behavior() : lookup::LookupEnvironment[1] =
+	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env_Behavior(self) endif
 def : parentEnv_Operation() : lookup::LookupEnvironment[1] =
 	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env_Operation(self) endif
 def : parentEnv_Package() : lookup::LookupEnvironment[1] =
 	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env_Package(self) endif
+def : parentEnv_Precedence() : lookup::LookupEnvironment[1] =
+	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env_Precedence(self) endif
+def : parentEnv_EnumerationLiteral() : lookup::LookupEnvironment[1] =
+	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env_EnumerationLiteral(self) endif
 def : parentEnv_Property() : lookup::LookupEnvironment[1] =
 	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._env_Property(self) endif
 def : parentEnv_Namespace() : lookup::LookupEnvironment[1] =
@@ -72,19 +76,10 @@ def : nestedEnv() : LookupEnvironment[1] =
 	LookupEnvironment {
 		parentEnv = self
 	}
-
 endpackage
 
 package as
 
-	
-context Variable
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv()
-	
-context Namespace
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv()
 	
 context Class
 	
@@ -113,142 +108,125 @@ def : _qualified_env() : lookup::LookupEnvironment =
 	in env
 		.addElements(ownedProperties)
 .addElements(ownedOperations)
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
+def : _env_Property(child : ocl::OclElement) : lookup::LookupEnvironment =
+	parentEnv_Property().nestedEnv()
+		.addElements(ownedProperties->select(not isStatic))
+		
+def : _env_Namespace(child : ocl::OclElement) : lookup::LookupEnvironment =
+	parentEnv_Namespace().nestedEnv()
 		.addElements(ownedProperties->select(not isStatic))
 		.addElements(ownedOperations->select(not isStatic))
 		.addElements(ownedBehaviors)
 		
 def : _env_Operation(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
+	parentEnv_Operation().nestedEnv()
 		.addElements(ownedOperations->select(not isStatic))
+		
+def : _env_Behavior(child : ocl::OclElement) : lookup::LookupEnvironment =
+	parentEnv_Behavior().nestedEnv()
+		.addElements(ownedBehaviors)
+		
 	
-def : _env_Property(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
-		.addElements(ownedProperties->select(not isStatic))
-			
 context DataType
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
-		.addElements(ownedProperties->select(not isStatic))
-		.addElements(ownedOperations->select(not isStatic))
-
-def : _env_Operation(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
-		.addElements(ownedOperations->select(not isStatic))
-	
 def : _env_Property(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
+	parentEnv_Property().nestedEnv()
 		.addElements(ownedProperties->select(not isStatic))
+		
+def : _env_Namespace(child : ocl::OclElement) : lookup::LookupEnvironment =
+	parentEnv_Namespace().nestedEnv()
+		.addElements(ownedProperties->select(not isStatic))
+		.addElements(ownedOperations->select(not isStatic))
+		
+def : _env_Operation(child : ocl::OclElement) : lookup::LookupEnvironment =
+	parentEnv_Operation().nestedEnv()
+		.addElements(ownedOperations->select(not isStatic))
+		
 	
 context Enumeration
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
+def : _env_EnumerationLiteral(child : ocl::OclElement) : lookup::LookupEnvironment =
+	parentEnv_EnumerationLiteral().nestedEnv()
 		.addElements(ownedLiterals)
+		
+def : _env_Property(child : ocl::OclElement) : lookup::LookupEnvironment =
+	parentEnv_Property().nestedEnv()
 		.addElements(ownedProperties->select(not isStatic))
-		.addElements(ownedOperations->select(not isStatic))
-		.addElements(ownedBehaviors)
 		
 def : _env_Operation(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
+	parentEnv_Operation().nestedEnv()
 		.addElements(ownedOperations->select(not isStatic))
-	
-def : _env_Property(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
-		.addElements(ownedProperties->select(not isStatic))
+		
+def : _env_Behavior(child : ocl::OclElement) : lookup::LookupEnvironment =
+	parentEnv_Behavior().nestedEnv()
+		.addElements(ownedBehaviors)
+		
 	
 context ExpressionInOCL
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
-		.addElements(ownedContext->asSequence())
-		.addElements(ownedParameters)
-		.addElements(ownedResult->asSequence())
-
 def : _env_Variable(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
+	parentEnv_Variable().nestedEnv()
 		.addElements(ownedContext->asSequence())
 		.addElements(ownedParameters)
 		.addElements(ownedResult->asSequence())
 		
+	
 context IterateExp
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	if ownedIterators->includes(child)
-	then parentEnv().nestedEnv()
-		.addElements(ownedResult->asSequence())
-		.addElements(ownedIterators->select(x | self.ownedIterators->indexOf(x) < self.ownedIterators->indexOf(child)))
-	else parentEnv().nestedEnv()
-		.addElements(ownedIterators)
-	endif
-	
 def : _env_Variable(child : ocl::OclElement) : lookup::LookupEnvironment =
 	if ownedIterators->includes(child)
-	then parentEnv().nestedEnv()
+	then parentEnv_Variable().nestedEnv()
 		.addElements(ownedResult->asSequence())
 		.addElements(ownedIterators->select(x | self.ownedIterators->indexOf(x) < self.ownedIterators->indexOf(child)))
-	else parentEnv().nestedEnv()
-		.addElements(ownedIterators)
-	endif
-			
-context IteratorExp
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	if ownedIterators->includes(child)
-	then parentEnv().nestedEnv()
-		.addElements(ownedIterators->select(x | self.ownedIterators->indexOf(x) < self.ownedIterators->indexOf(child)))
-	else parentEnv().nestedEnv()
-		.addElements(ownedIterators)
-	endif
-
-def : _env_Variable(child : ocl::OclElement) : lookup::LookupEnvironment =
-	if ownedIterators->includes(child)
-	then parentEnv().nestedEnv()
-		.addElements(ownedIterators->select(x | self.ownedIterators->indexOf(x) < self.ownedIterators->indexOf(child)))
-	else parentEnv().nestedEnv()
-		.addElements(ownedIterators)
-	endif
 		
-context LetExp
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	if ownedIn->includes(child)
-	then parentEnv().nestedEnv()
-		.addElements(ownedVariable->asSequence())
-	else parentEnv()
+	else parentEnv_Variable().nestedEnv()
+		.addElements(ownedIterators)
+		
 	endif
 	
+context IteratorExp
+def : _env_Variable(child : ocl::OclElement) : lookup::LookupEnvironment =
+	if ownedIterators->includes(child)
+	then parentEnv_Variable().nestedEnv()
+		.addElements(ownedIterators->select(x | self.ownedIterators->indexOf(x) < self.ownedIterators->indexOf(child)))
+		
+	else parentEnv_Variable().nestedEnv()
+		.addElements(ownedIterators)
+		
+	endif
+	
+context LetExp
 def : _env_Variable(child : ocl::OclElement) : lookup::LookupEnvironment =
 	if ownedIn->includes(child)
-	then parentEnv().nestedEnv()
+	then parentEnv_Variable().nestedEnv()
 		.addElements(ownedVariable->asSequence())
-	else parentEnv()
+		
+	else parentEnv_Variable()
 	endif
 	
 context Library
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
-		.addElements(ownedPackages)
-		.addElements(ownedClasses)
-		.addElements(ownedPrecedences)
-
-def : _env_Class(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
-		.addElements(ownedClasses)
-		
 def : _env_Package(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
+	parentEnv_Package().nestedEnv()
 		.addElements(ownedPackages)
 		
+def : _env_Class(child : ocl::OclElement) : lookup::LookupEnvironment =
+	parentEnv_Class().nestedEnv()
+		.addElements(ownedClasses)
+		
+def : _env_Precedence(child : ocl::OclElement) : lookup::LookupEnvironment =
+	parentEnv_Precedence().nestedEnv()
+		.addElements(ownedPrecedences)
+		
+	
 context Model
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv()
+def : _env_Package(child : ocl::OclElement) : lookup::LookupEnvironment =
+	let env = lookup::LookupEnvironment {}
+	in env
+		.addElements(ownedPackages)
+		
+def : _env_Namespace(child : ocl::OclElement) : lookup::LookupEnvironment =
+	let env = lookup::LookupEnvironment {}
+	in env
 		.addElements(ownedPackages)
 		.addElements(ownedImports.importedNamespace)
 		-- NOT SUPPORTED YET .addElements(ownedImports.importedNamespace._exported_env(self).namedElements)
 		
-def : _env_Package(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv()
-		.addElements(ownedPackages)
-		.addElements(ownedImports.importedNamespace->selectByKind(Package))
-		-- NOT SUPPORTED YET .addElements(ownedImports.importedNamespace._exported_env(self).namedElements->selectByKind(Package))
-
 def : _exported_env(importer : ocl::OclElement) : lookup::LookupEnvironment =
 	let env = lookup::LookupEnvironment {}
 	in env
@@ -268,14 +246,14 @@ context Operation
 	
 def : _appliesFilter_Operation(argTypes : OrderedSet(Type)) : Boolean =
 	matchesArgs(argTypes)
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
+def : _env_Variable(child : ocl::OclElement) : lookup::LookupEnvironment =
 	if not (ownedParameters->includes(child)
 	   )
-	then parentEnv().nestedEnv()
+	then parentEnv_Variable().nestedEnv()
 		.addElements(ownedParameters)
-	else parentEnv()
+		
+	else parentEnv_Variable()
 	endif
--- FIXME parameter lookup ?
 	
 context Package
 	
@@ -304,11 +282,8 @@ def : _qualified_env() : lookup::LookupEnvironment =
 	in env
 		.addElements(ownedClasses)
 .addElements(ownedPackages)
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
-		.addElements(ownedClasses)
 def : _env_Class(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv().nestedEnv()
+	parentEnv_Class().nestedEnv()
 		.addElements(ownedClasses)
 		
 def : _exported_env(importer : ocl::OclElement) : lookup::LookupEnvironment =
@@ -325,10 +300,6 @@ def : _lookupExportedClass(importer : ocl::OclElement, cName : String) : Class[?
 		
 def : lookupExportedClass(importer : ocl::OclElement, aPathElementCS : cs::PathElementCS) : Class[?] =
 	_lookupExportedClass(importer, aPathElementCS.name)
-	
-context Property
-def : _env(child : ocl::OclElement) : lookup::LookupEnvironment =
-	parentEnv()
 
 context Visitable
 -- Variable lookup
@@ -349,6 +320,7 @@ in  if foundVariable->isEmpty()
 	endif
 def : lookupVariable(aPathElementCS : cs::PathElementCS) : Variable[?] =
    _lookupVariable(aPathElementCS.name)
+   
 
 -- FIXME manually added
 def : lookupVariable(vName : String) : Variable[?] =
@@ -372,6 +344,27 @@ in  if foundNamespace->isEmpty()
 	endif
 def : lookupNamespace(aPathElementCS : cs::PathElementCS) : Namespace[?] =
    _lookupNamespace(aPathElementCS.name)
+   
+
+
+-- Behavior lookup
+def : _lookupBehavior(env : lookup::LookupEnvironment, bName : String) : OrderedSet(Behavior) =
+let foundBehavior = env.namedElements->selectByKind(Behavior)->select(name = bName)
+in  if foundBehavior->isEmpty() and not (env.parentEnv = null)
+	then _lookupBehavior(env.parentEnv, bName)
+	else foundBehavior
+	endif
+	
+-- Note: when calling this method, the source element of the argument passed to this method, will be the contextual 
+-- object on which error reports will be handled
+def : _lookupBehavior(bName : String) : Behavior[?] =
+let foundBehavior = _lookupBehavior(env_Behavior(), bName)
+in  if foundBehavior->isEmpty()
+	then null
+	else foundBehavior->first() -- LookupVisitor will report ambiguous result
+	endif
+def : lookupBehavior(aPathElementCS : cs::PathElementCS) : Behavior[?] =
+   _lookupBehavior(aPathElementCS.name)
    
 
 
@@ -410,6 +403,27 @@ def : lookupClass(segments : OrderedSet(cs::PathElementCS)) : Class[?] =
             qualifier = lookupPackage(qualifierSegments)
         in qualifier?.lookupQualifiedClass(segments->last())
    endif
+
+-- EnumerationLiteral lookup
+def : _lookupEnumerationLiteral(env : lookup::LookupEnvironment, eName : String) : OrderedSet(EnumerationLiteral) =
+let foundEnumerationLiteral = env.namedElements->selectByKind(EnumerationLiteral)->select(name = eName)
+in  if foundEnumerationLiteral->isEmpty() and not (env.parentEnv = null)
+	then _lookupEnumerationLiteral(env.parentEnv, eName)
+	else foundEnumerationLiteral
+	endif
+	
+-- Note: when calling this method, the source element of the argument passed to this method, will be the contextual 
+-- object on which error reports will be handled
+def : _lookupEnumerationLiteral(eName : String) : EnumerationLiteral[?] =
+let foundEnumerationLiteral = _lookupEnumerationLiteral(env_EnumerationLiteral(), eName)
+in  if foundEnumerationLiteral->isEmpty()
+	then null
+	else foundEnumerationLiteral->first() -- LookupVisitor will report ambiguous result
+	endif
+def : lookupEnumerationLiteral(aPathElementCS : cs::PathElementCS) : EnumerationLiteral[?] =
+   _lookupEnumerationLiteral(aPathElementCS.name)
+   
+
 
 -- Model exports Package
 	
@@ -506,6 +520,27 @@ def : lookupClassFrom(exporter : Package, segments : OrderedSet(cs::PathElementC
             qualifier = lookupPackage(qualifierSegments)
         in qualifier?.lookupQualifiedClass(segments->last())
    endif
+-- Precedence lookup
+def : _lookupPrecedence(env : lookup::LookupEnvironment, pName : String) : OrderedSet(Precedence) =
+let foundPrecedence = env.namedElements->selectByKind(Precedence)->select(name = pName)
+in  if foundPrecedence->isEmpty() and not (env.parentEnv = null)
+	then _lookupPrecedence(env.parentEnv, pName)
+	else foundPrecedence
+	endif
+	
+-- Note: when calling this method, the source element of the argument passed to this method, will be the contextual 
+-- object on which error reports will be handled
+def : _lookupPrecedence(pName : String) : Precedence[?] =
+let foundPrecedence = _lookupPrecedence(env_Precedence(), pName)
+in  if foundPrecedence->isEmpty()
+	then null
+	else foundPrecedence->first() -- LookupVisitor will report ambiguous result
+	endif
+def : lookupPrecedence(aPathElementCS : cs::PathElementCS) : Precedence[?] =
+   _lookupPrecedence(aPathElementCS.name)
+   
+
+
 -- Property lookup
 def : _lookupProperty(env : lookup::LookupEnvironment, pName : String) : OrderedSet(Property) =
 let foundProperty = env.namedElements->selectByKind(Property)->select(name = pName)
