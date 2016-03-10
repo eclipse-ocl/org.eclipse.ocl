@@ -119,8 +119,7 @@ context ImportCS
 def : ast() : ocl::Import =
 	ocl::Import {
 		name = name,
-		importedNamespace = referredNamespace
-		-- importedNamespace = env().lookupNamespace(pathName)
+		importedNamespace = ast().lookupNamespace(ownedPathName)
 	}
 
 
