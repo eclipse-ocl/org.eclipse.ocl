@@ -21,11 +21,7 @@ nameresolution {
 	
 	Namespace {
 		named-element
-			/*qualifies Namespace ,
-					Class ,
-					Package ,
-					Operation ,
-					Property */;
+			qualifies Namespace using none; -- derived namespaces will specify the qualification
 	}
 	
 	/*FIXME Element {
@@ -33,10 +29,12 @@ nameresolution {
 	}*/
 	
 	Behavior {	named-element; }
+	
 	Class {
 		named-element 
-			qualifies Property using ownedProperties,
-						Operation using ownedOperations;
+		qualifies 
+			Property, Namespace using ownedProperties,
+			Operation, Namespace using ownedOperations;
 						
 		scopes-occluding
 			Property, Namespace 
@@ -117,6 +115,9 @@ nameresolution {
 	}
 	
 	Model {
+		qualifies
+			Package,Namespace using ownedPackages;
+			
 		scopes-resetting
 			Package, Namespace using ownedPackages
 			Namespace using ownedImports.importedNamespace
@@ -139,11 +140,11 @@ nameresolution {
 	
 	Package {
 		named-element 
-			qualifies Class using ownedClasses, 
-					   Package using ownedPackages;
+			qualifies Class, Namespace using ownedClasses, 
+					   Package, Namespace using ownedPackages;
 		/*for all*/
 		scopes-occluding
-			Class using ownedClasses;
+			Class, Namespace using ownedClasses;
 			
 		exports 
 			Class using ownedClasses;
