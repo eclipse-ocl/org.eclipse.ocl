@@ -242,6 +242,24 @@ def : _lookupExportedPackage(importer : ocl::OclElement, pName : String) : Packa
 def : lookupExportedPackage(importer : ocl::OclElement, aPathElementCS : cs::PathElementCS) : Package[?] =
 	_lookupExportedPackage(importer, aPathElementCS.name)
 	
+-- FIXME manually added
+context Namespace
+	
+def : _lookupQualifiedNamespace(nName : String) : Namespace[?] =
+	let foundClass = _lookupClass(_qualified_env(), nName)
+	in  if foundClass->isEmpty()
+		then null
+		else foundClass->first()
+		endif
+def : lookupQualifiedNamespace(aPathElementCS : cs::PathElementCS) : Namespace[?] =
+   _lookupQualifiedNamespace(aPathElementCS.name)
+
+
+def : _qualified_env() : lookup::LookupEnvironment =
+	let env = lookup::LookupEnvironment{}
+	in env  -- TO be overriden
+-- ENDOF manual addition   
+  
 context Operation
 	
 def : _appliesFilter_Operation(argTypes : OrderedSet(Type)) : Boolean =
@@ -345,7 +363,19 @@ in  if foundNamespace->isEmpty()
 def : lookupNamespace(aPathElementCS : cs::PathElementCS) : Namespace[?] =
    _lookupNamespace(aPathElementCS.name)
    
+-- FIXME manually added
+-- QN Namespace lookup
+def : lookupNamespace(aPathNameCS : cs::PathNameCS) : Namespace[?] =
+   lookupNamespace(aPathNameCS .ownedPathElements)
 
+def : lookupNamespace(segments : OrderedSet(cs::PathElementCS)) : Namespace[?] =
+   if segments->size() = 1
+   then lookupNamespace(segments->first())
+   else let qualifierSegments = segments->subOrderedSet(1,segments->size()-1),
+            qualifier = lookupNamespace(qualifierSegments)
+        in qualifier?.lookupQualifiedNamespace(segments->last())
+   endif
+-- ENDOF manual additio
 
 -- Behavior lookup
 def : _lookupBehavior(env : lookup::LookupEnvironment, bName : String) : OrderedSet(Behavior) =
