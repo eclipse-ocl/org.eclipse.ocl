@@ -39,15 +39,15 @@ nameresolution {
 		scopes-occluding
 			Property, Namespace 
 				using ownedProperties->select(not isStatic)
-				occluding let allSuperClasses = self->closure(superClass)
+				occluding let superClasses = self->closure(superClasses)
 						 in allSuperClasses.ownedProperties->select(not isStatic)
 			Operation, Namespace
 				using ownedOperations->select(not isStatic)
-				occluding let allSuperClasses = self->closure(superClass)
+				occluding let allSuperClasses = self->closure(superClasses)
 						in allSuperClasses.ownedOperations->select(not isStatic)
 			Behavior, Namespace
 				using ownedBehaviors
-				occluding let allSuperClasses = self->closure(superClass)
+				occluding let allSuperClasses = self->closure(superClasses)
 						in allSuperClasses.ownedBehaviors;
 	}
 	
@@ -55,11 +55,11 @@ nameresolution {
 		scopes-occluding 
 			Property, Namespace 
 				using ownedProperties->select(not isStatic)
-				occluding let allSuperClasses = self->closure(superClass)
+				occluding let allSuperClasses = self->closure(superClasses)
 						 in allSuperClasses.ownedProperties->select(not isStatic)
 			Operation, Namespace
 				using ownedOperations->select(not isStatic)
-				occluding let allSuperClasses = self->closure(superClass)
+				occluding let allSuperClasses = self->closure(superClasses)
 						in allSuperClasses.ownedOperations->select(not isStatic);
 	}
 	
@@ -85,7 +85,7 @@ nameresolution {
 	IterateExp{
 		for ownedIterators
 			scopes-occluding 
-				Variable using ownedResult->asSequence() /*FIXME*/, following ownedIterators;
+				Variable using ownedResult->asSequence() /*FIXME*/, preceding ownedIterators;
 		for all
 			scopes-occluding 
 				Variable using ownedIterators;
@@ -94,7 +94,7 @@ nameresolution {
 	IteratorExp {
 		for ownedIterators
 			scopes-occluding 
-				Variable using following ownedIterators;
+				Variable using preceding ownedIterators;
 		for all
 			scopes-occluding 
 				Variable using ownedIterators;
@@ -115,10 +115,11 @@ nameresolution {
 	}
 	
 	Model {
-		qualifies
-			Package,Namespace using ownedPackages;
+		--named-element
+		--	qualifies
+		--	Package,Namespace using ownedPackages;
 			
-		scopes-resetting
+		scopes-occluding
 			Package, Namespace using ownedPackages
 			Namespace using ownedImports.importedNamespace
 			-- NOT SUPPORTED YET , imported ownedImports.importedNamespace
