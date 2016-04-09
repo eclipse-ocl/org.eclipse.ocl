@@ -38,8 +38,8 @@ Workflow {
 
     component = CopyAndRename {
     	script = "org.eclipse.ocl.examples.build.GenerateAutoCSModels.mwe2"
-    	fromProject = "../../../org.eclipse.qvtd/plugins/org.eclipse.qvtd.runtime/src"
-    	toProject = "../../../org.eclipse.ocl/plugins/org.eclipse.ocl.pivot/src-gen"
+    	fromProjectFolder = "org.eclipse.qvtd.runtime/src"
+    	toProjectFolder = "org.eclipse.ocl.pivot/src-gen"
     	packageCopy = {
     		from = "org.eclipse.qvtd.runtime.evaluation"
     		to = "org.eclipse.ocl.pivot.evaluation.tx"
@@ -63,8 +63,8 @@ Workflow {
     }
     component = CopyAndRename {
     	script = "org.eclipse.ocl.examples.build.GenerateAutoCSModels.mwe2"
-    	fromProject = "../../../org.eclipse.qvtd/plugins/org.eclipse.qvtd.runtime/src"
-    	toProject = "../../../org.eclipse.ocl/plugins/org.eclipse.ocl.xtext.base/src-gen"
+    	fromProjectFolder = "org.eclipse.qvtd.runtime/src"
+    	toProjectFolder = "org.eclipse.ocl.xtext.base/src-gen"
     	packageCopy = {
     		from = "org.eclipse.qvtd.runtime.internal.cs2as"
     		to = "org.eclipse.ocl.xtext.base.cs2as.tx"
