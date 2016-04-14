@@ -97,7 +97,7 @@ public class OperationFilter
                 throw (InvalidValueException)BOXED_argTypes_0;
             }
             /*@Thrown*/ java.lang.@org.eclipse.jdt.annotation.Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-            @Nullable Iterator<?> ITERATOR_x = ((OrderedSetValue)BOXED_argTypes_0).iterator();
+            @Nullable Iterator<Object> ITERATOR_x = ((OrderedSetValue)BOXED_argTypes_0).iterator();
             /*@Thrown*/ boolean forAll;
             while (true) {
                 if (!ITERATOR_x.hasNext()) {
