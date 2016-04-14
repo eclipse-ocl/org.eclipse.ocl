@@ -64,37 +64,20 @@ def : parentEnv_Property() : lookup::LookupEnvironment[1] =
 def : parentEnv_Namespace() : lookup::LookupEnvironment[1] =
 	let parent = oclContainer() in if parent = null then lookup::LookupEnvironment { } else parent._unqualified_env_Namespace(self) endif
 
-def : _exported_env_Variable(importer : OclElement) : lookup::LookupEnvironment[1] =
-	lookup::LookupEnvironment { }
 def : _exported_env_Class(importer : OclElement) : lookup::LookupEnvironment[1] =
-	lookup::LookupEnvironment { }
-def : _exported_env_Behavior(importer : OclElement) : lookup::LookupEnvironment[1] =
-	lookup::LookupEnvironment { }
-def : _exported_env_Operation(importer : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
 def : _exported_env_Package(importer : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
-def : _exported_env_Precedence(importer : OclElement) : lookup::LookupEnvironment[1] =
-	lookup::LookupEnvironment { }
-def : _exported_env_EnumerationLiteral(importer : OclElement) : lookup::LookupEnvironment[1] =
-	lookup::LookupEnvironment { }
-def : _exported_env_Property(importer : OclElement) : lookup::LookupEnvironment[1] =
-	lookup::LookupEnvironment { }
-def : _exported_env_Namespace(importer : OclElement) : lookup::LookupEnvironment[1] =
-	lookup::LookupEnvironment { }
 
--- FIXME Workaround for CG. To delete.
-def : _qualified_env_Class(child : OclElement) : lookup::LookupEnvironment[1] =
+def : _qualified_env_Class(qualifier : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
-def : _qualified_env_Behavior(child : OclElement) : lookup::LookupEnvironment[1] =
+def : _qualified_env_Operation(qualifier : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
-def : _qualified_env_Operation(child : OclElement) : lookup::LookupEnvironment[1] =
+def : _qualified_env_Package(qualifier : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
-def : _qualified_env_Package(child : OclElement) : lookup::LookupEnvironment[1] =
+def : _qualified_env_Property(qualifier : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
-def : _qualified_env_Property(child : OclElement) : lookup::LookupEnvironment[1] =
-	lookup::LookupEnvironment { }
-def : _qualified_env_Namespace(child : OclElement) : lookup::LookupEnvironment[1] =
+def : _qualified_env_Namespace(qualifier : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
 -- End of domain specific default functionality
 endpackage 
@@ -111,6 +94,23 @@ endpackage
 
 package as
 
+	
+context Namespace
+	
+def : _lookupQualifiedNamespace(nName : String) : Namespace[?] =
+	let foundNamespace = _lookupNamespace(_qualified_env_Namespace(), nName)
+	in  if foundNamespace->isEmpty()
+		then null
+		else foundNamespace->first()
+		endif
+def : _qualified_env_Namespace() : lookup::LookupEnvironment =
+	let env = lookup::LookupEnvironment{}
+-- FIXME manually modified	
+	in env -- TODO TO be overriden	
+-- ENDOF manual addition
+def : lookupQualifiedNamespace(aPathElementCS : cs::PathElementCS) : Namespace[?] =
+   _lookupQualifiedNamespace(aPathElementCS.name)
+   
 	
 context Class
 	
@@ -138,6 +138,9 @@ def : _qualified_env_Namespace() : lookup::LookupEnvironment =
 	let env = lookup::LookupEnvironment{}
 	in env
 	.addElements(ownedProperties)
+-- FIXME manually added -> Fix the CS2AS OclGen
+	.addElements(ownedOperations)
+-- END OF manual addition
 def : lookupQualifiedNamespace(aPathElementCS : cs::PathElementCS) : Namespace[?] =
    _lookupQualifiedNamespace(aPathElementCS.name)
    
@@ -155,20 +158,8 @@ def : _qualified_env_Operation() : lookup::LookupEnvironment =
 def : lookupQualifiedOperation(aPathElementCS : cs::PathElementCS, argTypes : OrderedSet(Type)) : Operation[?] =
    _lookupQualifiedOperation(aPathElementCS.name, argTypes)
    
-	
-def : _lookupQualifiedNamespace(nName : String) : Namespace[?] =
-	let foundNamespace = _lookupNamespace(_qualified_env_Namespace(), nName)
-	in  if foundNamespace->isEmpty()
-		then null
-		else foundNamespace->first()
-		endif
-def : _qualified_env_Namespace() : lookup::LookupEnvironment =
-	let env = lookup::LookupEnvironment{}
-	in env
-	.addElements(ownedOperations)
-def : lookupQualifiedNamespace(aPathElementCS : cs::PathElementCS) : Namespace[?] =
-   _lookupQualifiedNamespace(aPathElementCS.name)
-   
+-- FIXME Code suppressed since it's unnecessarily generated twice -> Fix the CS2AS OclGen
+-- END OF SUPRESSION
 def : _unqualified_env_Property(child : ocl::OclElement) : lookup::LookupEnvironment =
 	parentEnv_Property().nestedEnv()
 		.addElements(let allSuperClasses  = self->closure(superClasses)
@@ -342,24 +333,6 @@ def : _lookupExportedPackage(importer : ocl::OclElement, pName : String) : Packa
 def : lookupExportedPackage(importer : ocl::OclElement, aPathElementCS : cs::PathElementCS) : Package[?] =
 	_lookupExportedPackage(importer, aPathElementCS.name)
 	
--- FIXME manually added
-context Namespace
-	
-def : _lookupQualifiedNamespace(nName : String) : Namespace[?] =
-	let foundClass = _lookupClass(_qualified_env_Namespace(), nName)
-	in  if foundClass->isEmpty()
-		then null
-		else foundClass->first()
-		endif
-def : lookupQualifiedNamespace(aPathElementCS : cs::PathElementCS) : Namespace[?] =
-   _lookupQualifiedNamespace(aPathElementCS.name)
-
-
-def : _qualified_env_Namespace() : lookup::LookupEnvironment =
-	let env = lookup::LookupEnvironment{}
-	in env  -- TO be overriden
--- ENDOF manual addition   
-  
 context Operation
 	
 def : _appliesFilter_Operation(argTypes : OrderedSet(Type)) : Boolean =
@@ -399,6 +372,9 @@ def : _qualified_env_Namespace() : lookup::LookupEnvironment =
 	let env = lookup::LookupEnvironment{}
 	in env
 	.addElements(ownedClasses)
+-- FIXME manual addition -> Fix the CS2AS OclGen
+	.addElements(ownedPackages) 
+-- END OF manual addition
 def : lookupQualifiedNamespace(aPathElementCS : cs::PathElementCS) : Namespace[?] =
    _lookupQualifiedNamespace(aPathElementCS.name)
    
@@ -415,20 +391,9 @@ def : _qualified_env_Package() : lookup::LookupEnvironment =
 	.addElements(ownedPackages)
 def : lookupQualifiedPackage(aPathElementCS : cs::PathElementCS) : Package[?] =
    _lookupQualifiedPackage(aPathElementCS.name)
-   
-	
-def : _lookupQualifiedNamespace(nName : String) : Namespace[?] =
-	let foundNamespace = _lookupNamespace(_qualified_env_Namespace(), nName)
-	in  if foundNamespace->isEmpty()
-		then null
-		else foundNamespace->first()
-		endif
-def : _qualified_env_Namespace() : lookup::LookupEnvironment =
-	let env = lookup::LookupEnvironment{}
-	in env
-	.addElements(ownedPackages)
-def : lookupQualifiedNamespace(aPathElementCS : cs::PathElementCS) : Namespace[?] =
-   _lookupQualifiedNamespace(aPathElementCS.name)
+
+-- FIXME Code suppressed since it's unnecessarily generated twice -> Fix the CS2AS OclGen
+-- END OF SUPRESSION
    
 def : _unqualified_env_Class(child : ocl::OclElement) : lookup::LookupEnvironment =
 	parentEnv_Class().nestedEnv()
@@ -443,6 +408,11 @@ def : _exported_env_Class(importer : ocl::OclElement) : lookup::LookupEnvironmen
 	in env
 		.addElements(ownedClasses)
 	
+def : _exported_env_Package(importer : ocl::OclElement) : lookup::LookupEnvironment =
+	let env = lookup::LookupEnvironment {}
+	in env
+		.addElements(ownedPackages)
+	
 	
 def : _lookupExportedClass(importer : ocl::OclElement, cName : String) : Class[?] =
 	let foundClass = _lookupClass(_exported_env_Class(importer), cName)
@@ -453,6 +423,16 @@ def : _lookupExportedClass(importer : ocl::OclElement, cName : String) : Class[?
 		
 def : lookupExportedClass(importer : ocl::OclElement, aPathElementCS : cs::PathElementCS) : Class[?] =
 	_lookupExportedClass(importer, aPathElementCS.name)
+	
+def : _lookupExportedPackage(importer : ocl::OclElement, pName : String) : Package[?] =
+	let foundPackage = _lookupPackage(_exported_env_Package(importer), pName)
+	in  if foundPackage->isEmpty()
+		then null
+		else foundPackage->first()
+		endif
+		
+def : lookupExportedPackage(importer : ocl::OclElement, aPathElementCS : cs::PathElementCS) : Package[?] =
+	_lookupExportedPackage(importer, aPathElementCS.name)
 
 context Visitable
 -- Variable lookup
@@ -687,6 +667,21 @@ def : lookupClassFrom(exporter : Package, segments : OrderedSet(cs::PathElementC
    else let qualifierSegments = segments->subOrderedSet(1,segments->size()-1),
             qualifier = lookupPackage(qualifierSegments)
         in qualifier?.lookupQualifiedClass(segments->last())
+   endif
+-- Package exports Package
+	
+def : lookupPackageFrom(exporter : Package, aPathElementCS : cs::PathElementCS) : Package[?] =
+	exporter.lookupExportedPackage(self, aPathElementCS)
+
+def : lookupPackageFrom(exporter : Package, aPathNameCS : cs::PathNameCS) : Package[?] =
+   lookupPackageFrom(exporter, aPathNameCS.ownedPathElements)
+
+def : lookupPackageFrom(exporter : Package, segments : OrderedSet(cs::PathElementCS)) : Package[?] =
+   if segments->size() = 1
+   then lookupPackageFrom(exporter, segments->first())
+   else let qualifierSegments = segments->subOrderedSet(1,segments->size()-1),
+            qualifier = lookupPackage(qualifierSegments)
+        in qualifier?.lookupQualifiedPackage(segments->last())
    endif
 -- Precedence lookup
 def : _lookupPrecedence(env : lookup::LookupEnvironment, pName : String) : OrderedSet(Precedence) =
