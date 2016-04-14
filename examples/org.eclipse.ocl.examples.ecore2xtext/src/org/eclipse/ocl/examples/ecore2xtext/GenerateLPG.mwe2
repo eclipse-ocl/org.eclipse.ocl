@@ -1,0 +1,91 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *******************************************************************************/
+module GenerateLPG
+
+import org.eclipse.ocl.examples.xtext2lpg.*
+import org.eclipse.ocl.examples.build.utilities.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe2.runtime.workflow.*
+import org.eclipse.emf.ecore.resource.impl.*
+import org.eclipse.m2m.internal.qvt.oml.runtime.ant.QvtoAntTransformationTask
+
+var projectName = "org.eclipse.ocl.examples.ecore2xtext"
+var qvtoProjectURI = "platform:/resource/org.eclipse.ocl.examples.xtext2lpg"
+var syntaxName // e.g. "OCLinEcore"
+var grammarPath // e.g. "platform:/resource/org.eclipse.ocl.xtext.oclinecore/src/org/eclipse/ocl/examples/xtext/oclinecore/OCLinEcore.xtext"
+var grammar.XBNF = "platform:/resource/${projectName}/lpg-gen/org/eclipse/ocl/examples/ecore2xtext/${syntaxName}.xtext.XBNF"
+var normalized.XBNF = "platform:/resource/${projectName}/lpg-gen/org/eclipse/ocl/examples/ecore2xtext/${syntaxName}.normal.XBNF"
+var inlined.XBNF = "platform:/resource/${projectName}/lpg-gen/org/eclipse/ocl/examples/ecore2xtext/${syntaxName}.inline.XBNF"
+var lpgExe
+var lpgIncs = "../../../../../../lpg"
+var lpgOpts = ""
+
+/**
+ *	Generate the Concrete Syntax Models used by the Xtext editors.
+ */
+org.eclipse.emf.mwe2.runtime.workflow.Workflow {
+	bean = ResourceSetImpl : resourceSet {}
+    bean = StandaloneSetup { resourceSet = resourceSet
+//    	extensionMap = Mapping {
+//    		from = "XBNF"
+//    		to = "org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl"
+//    	}
+//    	platformUri = "./META-INF"		// A local folder to minimize workspace searching
+//    	scanClassPath = true			// But we do need to search the plugin-space
+//    	registerGeneratedEPackage = "org.eclipse.xtext.common.types.TypesPackage"
+//    	uriMap = Mapping {
+//    		from = "platform:/plugin/org.eclipse.xtext.common.types/"
+//    		to = "platform:/resource/org.eclipse.xtext.common.types/"
+//    	}
+	}
+	bean = XtextStandaloneSetupBean {}
+	bean = OCLDelegateSetup { resourceSet = resourceSet }
+	bean = ClasspathURIHandler { resourceSet = resourceSet }			// Needed for OCLstdlib
+    bean = ProjectMapSetup { resourceSet = resourceSet }
+//    bean = DynamicEPackageSetup { resourceSet = resourceSet
+//		dynamicEPackage = "/${projectName}/model/XBNF.ecore"
+//		dynamicEPackage = "/${projectName}/model/XBNFwithCardinality.ecore"
+//    }
+    component = QVToTransformationExecutor {
+    	resourceSet = resourceSet
+    	uri = "${qvtoProjectURI}/src/org/eclipse/ocl/examples/xtext2lpg/xtext2xbnf.qvto"
+    	in = "${grammarPath}"
+    	out = "${grammar.XBNF}"
+    	validate = true
+    }
+    component = QVToTransformationExecutor {
+    	resourceSet = resourceSet
+    	uri = "${qvtoProjectURI}/src/org/eclipse/ocl/examples/xtext2lpg/normalize.qvto"
+    	in = "${grammar.XBNF}"
+    	out = "${normalized.XBNF}"
+    	validate = true
+    }
+    component = QVToTransformationExecutor {
+    	resourceSet = resourceSet
+    	uri = "${qvtoProjectURI}/src/org/eclipse/ocl/examples/xtext2lpg/inline.qvto"
+    	in = "${normalized.XBNF}"
+    	out = "${inlined.XBNF}"
+    	validate = true
+     }
+    component = GenerateLPGXtend { resourceSet = resourceSet
+    	in = "${inlined.XBNF}"
+    	javaFolder = "../${projectName}/lpg-gen/org/eclipse/ocl/examples/ecore2xtext"
+    	javaPackageName = "${projectName}"
+    	syntaxName = "${syntaxName}"
+    }
+    component = RunLPG {
+    	in = "../${projectName}/lpg-gen/org/eclipse/ocl/examples/ecore2xtext/${syntaxName}Parser.gi"
+    	lpgExe = "${lpgExe}"
+    	lpgIncs = "${lpgIncs}"
+    	lpgOpts = "${lpgOpts}"
+    }
+}
+

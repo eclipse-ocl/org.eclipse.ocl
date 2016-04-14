@@ -1,0 +1,249 @@
+grammar org.eclipse.ocl.examples.ecore2xtext.Ecore2Xtext hidden(WS)
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "platform:/resource/org.eclipse.ocl.examples.ecore2xtext/model/generated/Ecore2Xtext.ecore"
+//generate ecore2Xtext "http://www.eclipse.org/ocl/example/ecore2xtext/Ecore2Xtext"
+
+XmlRoot: {XmlRoot} '<?xml' ('version' '=' version=STRING)? ('encoding' '=' encoding=STRING)? '?>'
+	(body+=RootEPackage | ('<xmi:XMI' attributes+=(XmiVersionAttribute | XmlnsAttribute)* ( '/>' | ('>' (body+=XmlElement)* '</xmi:XMI>'))))
+;
+
+RootEPackage returns EPackage: {EPackage}
+	'<ecore:EPackage' attributes+=(XmiVersionAttribute | XmlnsAttribute | XsiTypeAttribute | NameAttribute | NsURIAttribute | NsPrefixAttribute | OtherAttribute)*
+	( '/>' | ('>' elements+=(EClassifier | EAnnotation | OtherElement)* '</ecore:EPackage>'));
+
+EAnnotation: {EAnnotation}
+	'<eAnnotations' attributes+=(XsiTypeAttribute | SourceAttribute | OtherAttribute)*
+	( '/>' | ('>' elements+=(EDetail | EAnnotation | OtherElement)* '</eAnnotations>'));
+
+EClassifier: {EClassifier}
+	'<eClassifiers' attributes+=(XsiTypeAttribute | NameAttribute | AbstractAttribute | InstanceClassNameAttribute | SerializableAttribute | ESuperTypeAttribute | OtherAttribute)*
+	( '/>' | ('>' elements+=(EStructuralFeature | EOperation | EAnnotation | OtherElement)* '</eClassifiers>'));
+
+EDetail: {EDetail}
+	'<details' attributes+=(XsiTypeAttribute | KeyAttribute | ValueAttribute | OtherAttribute)*
+	( '/>' | ('>' elements+=(EAnnotation | OtherElement)* '</details>'));
+
+EGenericType: {EGenericType}
+	'<eGenericType' attributes+=(XsiTypeAttribute | EClassifierAttribute | OtherAttribute)*
+	( '/>' | ('>' elements+=(ETypeArgument | EAnnotation | OtherElement)* '</eGenericType>'));
+
+EOperation: {EOperation}
+	'<eOperations' attributes+=(XsiTypeAttribute | ETypeAttribute | EExceptionsAttribute | NameAttribute | OtherAttribute)*
+	( '/>' | ('>' elements+=(EParameter | EGenericType | EAnnotation | OtherElement)* '</eOperations>'));
+
+EPackage: {EPackage}
+	'<ePackages' attributes+=(XsiTypeAttribute | NameAttribute | NsURIAttribute | NsPrefixAttribute | OtherAttribute)*
+	( '/>' | ('>' elements+=(EClassifier | EGenericType | EAnnotation | OtherElement)* '</ePackages>'));
+
+EParameter: {EParameter}
+	'<eParameters' attributes+=(XsiTypeAttribute | ETypeAttribute | NameAttribute | OtherAttribute)*
+	( '/>' | ('>' elements+=(EGenericType | EAnnotation | OtherElement)* '</eParameters>'));
+
+EStructuralFeature: {EStructuralFeature}
+	'<eStructuralFeatures' attributes+=(XsiTypeAttribute | NameAttribute | ChangeableAttribute | TransientAttribute | DerivedAttribute
+		| ContainmentAttribute | LowerBoundAttribute | UpperBoundAttribute | OrderedAttribute | UnsettableAttribute | VolatileAttribute
+		| ETypeAttribute | ResolveProxiesAttribute | EOppositeAttribute | DefaultValueLiteralAttribute | OtherAttribute
+	)*
+	( '/>' | ('>' elements+=(EGenericType | EAnnotation | OtherElement)* '</eStructuralFeatures>'));
+
+ETypeArgument: {ETypeArgument}
+	'<eTypeArguments' attributes+=(XsiTypeAttribute | EClassifierAttribute | OtherAttribute)*
+	( '/>' | ('>' elements+=(EAnnotation | OtherElement)* '</eTypeArguments>'));
+
+OtherElement:
+	'<' tag=ID attributes+=(XmlAttribute)*
+	( '/>' | ('>' elements+=(XmlElement)* '</' endTag=ID '>'))
+;
+
+XmlAttribute:
+	BooleanAttribute
+  | IntegerAttribute
+  | StringAttribute
+  | OtherAttribute
+;
+
+BooleanAttribute:
+	AbstractAttribute
+  | ChangeableAttribute
+  | ContainmentAttribute
+  | DefaultValueLiteralAttribute
+  | DerivedAttribute
+  | OrderedAttribute
+  | ResolveProxiesAttribute
+  | SerializableAttribute
+  | TransientAttribute
+  | UnsettableAttribute
+  | VolatileAttribute
+;
+
+IntegerAttribute:
+	LowerBoundAttribute
+  | UpperBoundAttribute
+;
+
+StringAttribute:
+	EClassifierAttribute
+  | EExceptionsAttribute
+  | EOppositeAttribute
+  | ESuperTypeAttribute
+  | ETypeAttribute
+  | InstanceClassNameAttribute
+  | KeyAttribute
+  | NameAttribute
+  | NsPrefixAttribute
+  | NsURIAttribute
+  | SourceAttribute
+  | ValueAttribute
+  | XmiVersionAttribute
+  | XmlnsAttribute
+  | XsiTypeAttribute
+;
+
+AbstractAttribute:
+	'abstract' '=' value=STRING;
+
+ChangeableAttribute:
+	'changeable' '=' value=STRING;
+
+ContainmentAttribute:
+	'containment' '=' value=STRING;
+	
+DefaultValueLiteralAttribute:
+	'defaultValueLiteral' '=' value=STRING;
+
+DerivedAttribute:
+	'derived' '=' value=STRING;
+
+EClassifierAttribute:
+	'eClassifier' '=' value=STRING;
+
+EExceptionsAttribute:
+	'eExceptions' '=' value=STRING;
+	
+EOppositeAttribute:
+	'eOpposite' '=' value=STRING;
+
+ESuperTypeAttribute:
+	'eSuperTypes' '=' value=STRING;
+
+ETypeAttribute:
+	'eType' '=' value=STRING;
+
+InstanceClassNameAttribute:
+	'instanceClassName' '=' value=STRING;
+
+KeyAttribute:
+	'key' '=' value=STRING;
+
+LowerBoundAttribute:
+	'lowerBound' '=' value=STRING;
+
+NameAttribute:
+	'name' '=' value=STRING;
+
+NsURIAttribute:
+	'nsURI' '=' value=STRING;
+
+NsPrefixAttribute:
+	'nsPrefix' '=' value=STRING;
+
+OrderedAttribute:
+	'ordered' '=' value=STRING;
+
+ResolveProxiesAttribute:
+	'resolveProxies' '=' value=STRING;
+
+SerializableAttribute:
+	'serializable' '=' value=STRING;
+
+SourceAttribute:
+	'source' '=' value=STRING;
+
+TransientAttribute:
+	'transient' '=' value=STRING;
+
+UnsettableAttribute:
+	'unsettable' '=' value=STRING;
+
+UpperBoundAttribute:
+	'upperBound' '=' value=STRING;
+
+ValueAttribute:
+	'value' '=' value=STRING;
+
+VolatileAttribute:
+	'volatile' '=' value=STRING;
+
+XmiVersionAttribute:
+	'xmi' ':' 'version' '=' value=STRING;
+
+XmlnsAttribute:
+	'xmlns' ':' ns=ID '=' value=STRING;
+
+XsiTypeAttribute:
+	'xsi' ':' 'type' '=' value=STRING;
+
+OtherAttribute:
+	tag=IDENTIFIER '=' value=STRING;
+
+XmlElement:
+	EAnnotation
+  | EClassifier
+  | EDetail
+  | EGenericType
+  | EOperation
+  | EParameter
+  | EStructuralFeature
+  | EPackage
+  | ETypeArgument
+  | OtherElement
+;
+
+ID : IDENTIFIER
+  | 'abstract'
+  | 'changeable'
+  | 'containment'
+  | 'defaultValueLiteral'
+  | 'derived'
+  | 'eClassifier'
+  | 'eExceptions'
+  | 'eOpposite'
+  | 'eSuperTypes'
+  | 'eType'
+  | 'encoding'
+  | 'instanceClassName'
+  | 'key'
+  | 'lowerBound'
+  | 'name'
+  | 'nsURI'
+  | 'nsPrefix'
+  | 'ordered'
+  | 'resolveProxies'
+  | 'serializable'
+  | 'source'
+  | 'transient'
+  | 'unsettable'
+  | 'upperBound'
+  | 'value'
+  | 'version'
+  | 'volatile'
+;
+
+//terminal LETTER  	: 'a'..'z'|'A'..'Z';
+//terminal DIGIT  	: '0'..'9';
+//terminal PUNCT		: '_' | '.' | '-' | '|' | '~' | '{' | '}' | '`' | '[' | ']' | '^' | '!' | '@' | ';' | ',' | '*' | '+' | '(' | ')' | '&' | '\'' | '\\' | '$' | '%' | '#';
+//terminal WS_CHAR	: (' '|'\t'|'\r'|'\n'/*|'\f'*/);
+
+terminal STRING	: '"' (
+					('a'..'z'|'A'..'Z'|'_'..'_')
+					| ('0'..'9') 
+					| (' '|'\t'|'\r'|'\n'/*|'\f'*/)
+					| (':' | '/' | '.' | '-' | '|' | '~' | '{' | '}' | '`' | '[' | ']' | '^' | '!' | '@' | ';' | ',' | '*' | '+' | '(' | ')' | '\'' | '\\' | '$' | '%' | '#' | '>')
+					| ('&' ('a'..'z'|'A'..'Z')+ ';')
+					)* '"'; 
+terminal IDENTIFIER  		: (('a'..'z'|'A'..'Z'|'_'..'_') | ('0'..'9'))+;	// xtext2lpg only considers ranges for letters etc
+terminal WS			: (' '|'\t'|'\r'|'\n'/*|'\f'*/)+;
+
+//terminal ANY_OTHER: .;
+	

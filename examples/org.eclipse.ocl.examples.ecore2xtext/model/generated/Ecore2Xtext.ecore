@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ecore2Xtext" nsURI="http://www.eclipse.org/ocl/example/ecore2xtext/Ecore2Xtext"
+    nsPrefix="ecore2Xtext">
+  <eClassifiers xsi:type="ecore:EClass" name="XmlRoot">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="encoding" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" upperBound="-1" eType="#//XmlElement"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//StringAttribute" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EPackage" eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EAnnotation" eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EClassifier" eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EDetail" eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EGenericType" eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EOperation" eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EParameter" eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EStructuralFeature" eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ETypeArgument" eSuperTypes="#//XmlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OtherElement" eSuperTypes="#//XmlElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="XmlAttribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanAttribute" eSuperTypes="#//XmlAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IntegerAttribute" eSuperTypes="#//XmlAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StringAttribute" eSuperTypes="#//XmlAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ChangeableAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ContainmentAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DefaultValueLiteralAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DerivedAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EClassifierAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EExceptionsAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EOppositeAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ESuperTypeAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ETypeAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InstanceClassNameAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LowerBoundAttribute" eSuperTypes="#//IntegerAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NameAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NsURIAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NsPrefixAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OrderedAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ResolveProxiesAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SerializableAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SourceAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TransientAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UnsettableAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UpperBoundAttribute" eSuperTypes="#//IntegerAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VolatileAttribute" eSuperTypes="#//BooleanAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="XmiVersionAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="XmlnsAttribute" eSuperTypes="#//StringAttribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ns" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="XsiTypeAttribute" eSuperTypes="#//StringAttribute"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OtherAttribute" eSuperTypes="#//XmlAttribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="XmlElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//XmlAttribute" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//XmlElement" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>
