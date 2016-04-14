@@ -39,7 +39,7 @@ nameresolution {
 		scopes-occluding
 			Property, Namespace 
 				using ownedProperties->select(not isStatic)
-				occluding let superClasses = self->closure(superClasses)
+				occluding let allSuperClasses = self->closure(superClasses)
 						 in allSuperClasses.ownedProperties->select(not isStatic)
 			Operation, Namespace
 				using ownedOperations->select(not isStatic)
@@ -148,7 +148,8 @@ nameresolution {
 			Class, Namespace using ownedClasses;
 			
 		exports 
-			Class using ownedClasses;
+			Class using ownedClasses,
+			Package using ownedPackages;
 	}
 		
 	Precedence { named-element; }
