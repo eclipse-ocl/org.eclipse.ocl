@@ -652,24 +652,115 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotExportedLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotExportedLookupVisitor">
-        <filter id="1110441988">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotExportedClassLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotExportedClassLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
             <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.util.PivotExportedLookupVisitor"/>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotExportedClassLookupVisitor"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotQualifiedLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotQualifiedLookupVisitor">
-        <filter id="1110441988">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotExportedPackageLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotExportedPackageLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
             <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.util.PivotQualifiedLookupVisitor"/>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotExportedPackageLookupVisitor"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotUnqualifiedLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotUnqualifiedLookupVisitor">
-        <filter id="1110441988">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotQualifiedClassLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotQualifiedClassLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
             <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.util.PivotUnqualifiedLookupVisitor"/>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotQualifiedClassLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotQualifiedNamespaceLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotQualifiedNamespaceLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotQualifiedNamespaceLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotQualifiedOperationLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotQualifiedOperationLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotQualifiedOperationLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotQualifiedPackageLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotQualifiedPackageLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotQualifiedPackageLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotQualifiedPropertyLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotQualifiedPropertyLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotQualifiedPropertyLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotUnqualifiedBehaviorLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotUnqualifiedBehaviorLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotUnqualifiedBehaviorLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotUnqualifiedClassLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotUnqualifiedClassLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotUnqualifiedClassLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotUnqualifiedEnumerationLiteralLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotUnqualifiedEnumerationLiteralLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotUnqualifiedEnumerationLiteralLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotUnqualifiedNamespaceLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotUnqualifiedNamespaceLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotUnqualifiedNamespaceLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotUnqualifiedOperationLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotUnqualifiedOperationLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotUnqualifiedOperationLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotUnqualifiedPackageLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotUnqualifiedPackageLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotUnqualifiedPackageLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotUnqualifiedPrecedenceLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotUnqualifiedPrecedenceLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotUnqualifiedPrecedenceLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotUnqualifiedPropertyLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotUnqualifiedPropertyLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotUnqualifiedPropertyLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotUnqualifiedVariableLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotUnqualifiedVariableLookupVisitor">
+        <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotUnqualifiedVariableLookupVisitor"/>
             </message_arguments>
         </filter>
     </resource>
