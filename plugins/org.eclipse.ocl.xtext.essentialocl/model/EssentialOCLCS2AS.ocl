@@ -42,7 +42,7 @@ def : ast() : ocl::CollectionLiteralPart =
 	if isCollectionItem()
 	then ocl::CollectionItem {
 			ownedItem = ownedExpression.ast(),	
-			type = ownedExpression.ast().oclAsType(ocl::OCLExpression).type
+			type = ownedExpression.ast().type
 		}
 	else if isCollectionRange() 
 		then ocl::CollectionRange {
@@ -65,14 +65,13 @@ def : ast() : ocl::CollectionType =
 		lower = if ownedMultiplicity = null
 				then null
 				else ownedMultiplicity.getLower()
+				-- NOT SUPPORTED else ocl::Integer{ownedMultiplicity.getLower().toString()}
 				endif,
 		upper = if ownedMultiplicity = null
 				then null
-				else 
-					if ownedMultiplicity.getUpper() = -1
-					then *
-					else ownedMultiplicity.getUpper()
-					endif
+				-- NOT SUPPORTED else ocl::UnlimitedNatural{ownedMultiplicity.getUpper().toString()}
+				else ownedMultiplicity.getUpper()
+				
 				endif
 	}
 
@@ -100,6 +99,9 @@ def : ast() : ocl::ExpressionInOCL =
 	}
 
 context ExpCS
+def : ast() : ocl::OCLExpression =
+	null -- to be overriden
+	
 --def : precedence : Precedence = LEAF_PRECEDENCE
 def : isLocalLeftAncestorOf(csExp : ExpCS) : Boolean = false
 def : isLocalRightAncestorOf(csExp : ExpCS) : Boolean = false
@@ -115,11 +117,9 @@ context ExpSpecificationCS
 def : ast() : ocl::ExpressionInOCL =
 	if ownedExpression = null
 	then ocl::ExpressionInOCL {
-		language = 'OCL',
 		_body = exprString
 	}
 	else ocl::ExpressionInOCL {
-		language = 'OCL',
 		ownedBody = ownedExpression.ast()
 	}
 	endif
@@ -140,19 +140,28 @@ def : ast() : ocl::InvalidLiteralExp =
 	ocl::InvalidLiteralExp {
 		type = OclInvalid
 	}
-	
 
 
 context LetExpCS
 def : ast() : ocl::LetExp = 
 	ocl::LetExp {
-		ownedVariable = ownedVariables->at(1).ast(),
+-- FIXME TODO		ownedVariable = ownedVariables->at(1).ast(),
 		ownedIn = ownedInExpression.ast(),
 --		isImplicit = isImplicit
 		type = ownedInExpression.ast().oclAsType(ocl::OCLExpression).type
 	}	
 inv LetHasBeenFlattened: ownedVariables->size() = 1
 
+-- FIXME this makes the scheduler fail
+-- FIXME isn't this unnecessarily redundant ?
+--context LetVariableCS
+--def : ast() : ocl::Variable =
+--	ocl::Variable {
+--		name = name,
+--		ownedInit = ownedInitExpression.ast(),
+--		type = ownedType.ast()
+--	}
+	
 context NameExpCS
 def : ast() : ocl::OCLExpression =
 	if isAssociationClassExp() then 
@@ -160,8 +169,8 @@ def : ast() : ocl::OCLExpression =
 			name = referredAssociation.name, -- FIXME do a named-based lookup
 --			type = specialized(referredAssociation.type),
 			ownedSource = source.ast(),
-			referredAssociationClass = referredAssociation -- FIXME do a named-based looku
---			isPre = isPre
+			referredAssociationClass = referredAssociation, -- FIXME do a named-based looku
+			isPre = isPre
 		}
 	else if isIterateExp() then
 		ocl::IterateExp {
@@ -172,7 +181,6 @@ def : ast() : ocl::OCLExpression =
 			ownedResult = accumulators->at(1).ast(),
 			ownedBody = arguments->at(1).ast(),
 			referredIteration = referredIteration -- FIXME do a named-based lookup
---			isPre = isPre
 		}
 	else if isIteratorExp() then 
 		ocl::IteratorExp {
@@ -181,8 +189,7 @@ def : ast() : ocl::OCLExpression =
 			ownedSource = source.ast(),
 			ownedIterators = iterators.ast(),
 			ownedBody = arguments->at(1).ast(),
-			referredIteration = referredIteration
---			isPre = isPre
+			referredIteration = referredIteration -- FIXME do a named-based lookup
 		}
 	else if isOperationCallExp() then 
 		ocl::OperationCallExp {
@@ -198,8 +205,8 @@ def : ast() : ocl::OCLExpression =
 			name = referredProperty.name,
 --			type = specialized(property.type),
 			ownedSource = source.ast(),
-			referredProperty = referredProperty
---			isPre = isPre
+			referredProperty = referredProperty,
+			isPre = isPre
 		}
 	else if isShadowExp() then 
 		ocl::ShadowExp {
@@ -246,6 +253,7 @@ def :  ast() : ocl::VariableExp =
 		type = ast().referredVariable.type 
 	}
 	
+-- ShadowExps come from NameExpCS 
 context ShadowPartCS
 def : ast() :  ocl::ShadowPart =
 	ocl::ShadowPart {
@@ -287,8 +295,8 @@ def : ast() : ocl::TypeExp =
 context UnlimitedNaturalLiteralExpCS
 def : ast() : ocl::UnlimitedNaturalLiteralExp =
 	ocl::UnlimitedNaturalLiteralExp{
-		name = '*'
-		-- unlimitedNaturalSymbol = ocl::_UnlimitedNatural{'*'} FIXME bug in AS2CG   
+		name = '*',
+		unlimitedNaturalSymbol = ocl::_UnlimitedNatural{'*'}
 	}
 
 context VariableCS
