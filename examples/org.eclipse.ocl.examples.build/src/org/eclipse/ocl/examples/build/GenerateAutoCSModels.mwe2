@@ -118,5 +118,9 @@ Workflow {
     		from = "org.eclipse.qvtd.runtime.internal.cs2as"
     		to = "org.eclipse.ocl.xtext.base.cs2as.tx"
     	}
+    	packageRename = {
+    		from = "org.eclipse.qvtd.runtime.evaluation"
+    		to = "org.eclipse.ocl.pivot.evaluation.tx"
+    	}
 	}
 }
