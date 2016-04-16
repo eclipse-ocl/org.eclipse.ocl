@@ -69,7 +69,7 @@ public class PivotUnqualifiedPropertyLookupVisitor
     
     public PivotUnqualifiedPropertyLookupVisitor(@NonNull LookupEnvironment context) {
         super(context);
-        this.executor = context.getExecutor();
+        this.executor = ClassUtil.nonNull(context.getExecutor());
         this.idResolver = executor.getIdResolver();
     }
     
