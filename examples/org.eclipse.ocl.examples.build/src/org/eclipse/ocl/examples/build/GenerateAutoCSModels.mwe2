@@ -102,9 +102,12 @@ Workflow {
     		to = "org.eclipse.ocl.xtext.base.cs2as.tx"
     	}
 	}
+
+	bean = ResourceSetImpl : resourceSet2 {}
 	
 	// Generate the CS2AS CGed transformation for EssentialOCLCS
 	component = org.eclipse.ocl.examples.build.utilities.GenerateCGedQVTiTransformation auto-inject {
+		resourceSet = resourceSet2
 		oclDocURI = "platform:/resource/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS2AS.ocl"
 		extendedOclDocURIs = "platform:/resource/org.eclipse.ocl.xtext.base/model/BaseCS2AS.ocl"
 		// FIXME the following only works if the output project are in the same FS folder. Better use a projectName and improve generator 
