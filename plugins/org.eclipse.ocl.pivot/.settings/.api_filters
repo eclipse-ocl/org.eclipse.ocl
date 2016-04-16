@@ -659,6 +659,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotExportedOperationLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotExportedOperationLookupVisitor">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotExportedOperationLookupVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotExportedPackageLookupVisitor.java" type="org.eclipse.ocl.pivot.util.PivotExportedPackageLookupVisitor">
         <filter comment="Generated code from OCL AutoAS which doesn't add @sinces" id="1110441988">
             <message_arguments>

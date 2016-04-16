@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperatio
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
@@ -71,7 +72,7 @@ public class PivotUnqualifiedVariableLookupVisitor
     
     public PivotUnqualifiedVariableLookupVisitor(@NonNull LookupEnvironment context) {
         super(context);
-        this.executor = context.getExecutor();
+        this.executor = ClassUtil.nonNull(context.getExecutor());
         this.idResolver = executor.getIdResolver();
     }
     

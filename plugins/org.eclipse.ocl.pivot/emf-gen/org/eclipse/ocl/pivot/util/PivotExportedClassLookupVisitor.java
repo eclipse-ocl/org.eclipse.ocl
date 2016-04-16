@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.lookup.LookupEnvironment;
 import org.eclipse.ocl.pivot.internal.lookup.LookupPackage;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class PivotExportedClassLookupVisitor
 	extends AbstractPivotCommonLookupVisitor
@@ -41,7 +42,7 @@ public class PivotExportedClassLookupVisitor
     
     public PivotExportedClassLookupVisitor(@NonNull LookupEnvironment context, @NonNull Object importer) {
         super(context);
-        this.executor = context.getExecutor();
+        this.executor = ClassUtil.nonNull(context.getExecutor());
         this.idResolver = executor.getIdResolver();
         this.importer = importer;
     }
