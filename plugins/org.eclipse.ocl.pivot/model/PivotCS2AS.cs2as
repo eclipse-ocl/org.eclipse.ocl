@@ -49,6 +49,12 @@ nameresolution {
 				using ownedBehaviors
 				occluding let allSuperClasses = self->closure(superClasses)
 						in allSuperClasses.ownedBehaviors;
+						
+		exports
+			Operation 
+				using ownedOperations->select(not isStatic)
+				occluding let allSuperClasses = self->closure(superClasses)
+						in allSuperClasses.ownedOperations->select(not isStatic);					
 	}
 	
 	DataType {
@@ -148,7 +154,7 @@ nameresolution {
 			Class, Namespace using ownedClasses;
 			
 		exports 
-			Class using ownedClasses,
+			Class using ownedClasses
 			Package using ownedPackages;
 	}
 		
