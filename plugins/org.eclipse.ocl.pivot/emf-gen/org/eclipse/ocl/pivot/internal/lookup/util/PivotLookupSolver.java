@@ -18,22 +18,23 @@ package	org.eclipse.ocl.pivot.internal.lookup.util;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.util.PivotUnqualifiedVariableLookupVisitor;
-import org.eclipse.ocl.pivot.util.PivotUnqualifiedClassLookupVisitor;
-import org.eclipse.ocl.pivot.util.PivotUnqualifiedBehaviorLookupVisitor;
-import org.eclipse.ocl.pivot.util.PivotUnqualifiedOperationLookupVisitor;
-import org.eclipse.ocl.pivot.util.PivotUnqualifiedPackageLookupVisitor;
-import org.eclipse.ocl.pivot.util.PivotUnqualifiedPrecedenceLookupVisitor;
-import org.eclipse.ocl.pivot.util.PivotUnqualifiedEnumerationLiteralLookupVisitor;
-import org.eclipse.ocl.pivot.util.PivotUnqualifiedPropertyLookupVisitor;
-import org.eclipse.ocl.pivot.util.PivotUnqualifiedNamespaceLookupVisitor;
 import org.eclipse.ocl.pivot.util.PivotExportedClassLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotExportedOperationLookupVisitor;
 import org.eclipse.ocl.pivot.util.PivotExportedPackageLookupVisitor;
 import org.eclipse.ocl.pivot.util.PivotQualifiedClassLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotQualifiedNamespaceLookupVisitor;
 import org.eclipse.ocl.pivot.util.PivotQualifiedOperationLookupVisitor;
 import org.eclipse.ocl.pivot.util.PivotQualifiedPackageLookupVisitor;
 import org.eclipse.ocl.pivot.util.PivotQualifiedPropertyLookupVisitor;
-import org.eclipse.ocl.pivot.util.PivotQualifiedNamespaceLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotUnqualifiedBehaviorLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotUnqualifiedClassLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotUnqualifiedEnumerationLiteralLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotUnqualifiedNamespaceLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotUnqualifiedOperationLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotUnqualifiedPackageLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotUnqualifiedPrecedenceLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotUnqualifiedPropertyLookupVisitor;
+import org.eclipse.ocl.pivot.util.PivotUnqualifiedVariableLookupVisitor;
 
 
 public class PivotLookupSolver {
@@ -44,6 +45,15 @@ public class PivotLookupSolver {
 		this.executor = executor;
 	}
 	
+	
+	public PivotLookupResult<org.eclipse.ocl.pivot.Operation> _lookupExportedOperation(org.eclipse.ocl.pivot.Class context, java.lang.Object importer, java.lang.String oName, java.util.List<org.eclipse.ocl.pivot.Type> argTypes) {
+		OperationFilter filter = new OperationFilter(executor, argTypes);
+		PivotSingleResultLookupEnvironment _lookupEnv = new PivotSingleResultLookupEnvironment(executor, org.eclipse.ocl.pivot.PivotPackage.Literals.OPERATION,oName,filter);
+		PivotExportedOperationLookupVisitor _lookupVisitor = new PivotExportedOperationLookupVisitor(_lookupEnv, importer);
+		context.accept(_lookupVisitor);
+		return new PivotLookupResultImpl<org.eclipse.ocl.pivot.Operation>
+				(_lookupEnv.getNamedElementsByKind(org.eclipse.ocl.pivot.Operation.class));
+	}
 	
 	public PivotLookupResult<org.eclipse.ocl.pivot.Namespace> _lookupQualifiedNamespace(org.eclipse.ocl.pivot.Class context, java.lang.String nName) {
 		PivotSingleResultLookupEnvironment _lookupEnv = new PivotSingleResultLookupEnvironment(executor, org.eclipse.ocl.pivot.PivotPackage.Literals.NAMESPACE,nName);
