@@ -63,12 +63,12 @@ def : ast() : ocl::CollectionType =
 		name = name,
 		elementType = ownedType.ast(),
 		lower = if ownedMultiplicity = null
-				then null
+				then 0
 				else ownedMultiplicity.getLower()
 				-- NOT SUPPORTED else ocl::Integer{ownedMultiplicity.getLower().toString()}
 				endif,
 		upper = if ownedMultiplicity = null
-				then null
+				then *
 				-- NOT SUPPORTED else ocl::UnlimitedNatural{ownedMultiplicity.getUpper().toString()}
 				else ownedMultiplicity.getUpper()
 				
@@ -134,7 +134,11 @@ def : ast() : ocl::IfExp =
 --		isImplicit = isImplicit
 	}
 inv ElseIfHasBeenFlattened: ownedIfThenExpressions->isEmpty()
-	
+
+context InfixExpCS
+def : ast() : ocl::OCLExpression =
+	argument.ast()
+		
 context InvalidLiteralExpCS
 def : ast() : ocl::InvalidLiteralExp = 
 	ocl::InvalidLiteralExp {
@@ -162,6 +166,9 @@ inv LetHasBeenFlattened: ownedVariables->size() = 1
 --		type = ownedType.ast()
 --	}
 	
+-- TODO context NavigatingArgCS
+
+
 context NameExpCS
 def : ast() : ocl::OCLExpression =
 	if isAssociationClassExp() then 
@@ -197,7 +204,7 @@ def : ast() : ocl::OCLExpression =
 --			type = specialized(referredOperation.type),
 			ownedSource = source.ast(),
 			ownedArguments = arguments.ast(),
-			referredOperation = referredOperation, -- FIXME do a named-based lookup
+			--referredOperation = lookupOperation(), FIXME 
 			isPre = isPre
 		}
 	else if isPropertyCallExp() then 

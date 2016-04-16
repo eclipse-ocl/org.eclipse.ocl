@@ -66,6 +66,8 @@ def : parentEnv_Namespace() : lookup::LookupEnvironment[1] =
 
 def : _exported_env_Class(importer : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
+def : _exported_env_Operation(importer : OclElement) : lookup::LookupEnvironment[1] =
+	lookup::LookupEnvironment { }
 def : _exported_env_Package(importer : OclElement) : lookup::LookupEnvironment[1] =
 	lookup::LookupEnvironment { }
 
@@ -203,6 +205,25 @@ def : _unqualified_env_Behavior(child : ocl::OclElement) : lookup::LookupEnviron
 		.nestedEnv()
 		.addElements(ownedBehaviors)
 		
+def : _exported_env_Operation(importer : ocl::OclElement) : lookup::LookupEnvironment =
+	let env = lookup::LookupEnvironment {}
+	in env
+		.addElements(let allSuperClasses  = self->closure(superClasses)
+		in allSuperClasses.ownedOperations->select(not isStatic)
+		)
+		.nestedEnv()
+		.addElements(ownedOperations->select(not isStatic))
+	
+	
+def : _lookupExportedOperation(importer : ocl::OclElement, oName : String, argTypes : OrderedSet(Type)) : Operation[?] =
+	let foundOperation = _lookupOperation(_exported_env_Operation(importer), oName, argTypes)
+	in  if foundOperation->isEmpty()
+		then null
+		else foundOperation->first()
+		endif
+		
+def : lookupExportedOperation(importer : ocl::OclElement, aPathElementCS : cs::PathElementCS, argTypes : OrderedSet(Type)) : Operation[?] =
+	_lookupExportedOperation(importer, aPathElementCS.name, argTypes)
 	
 context DataType
 def : _unqualified_env_Property(child : ocl::OclElement) : lookup::LookupEnvironment =
@@ -391,10 +412,10 @@ def : _qualified_env_Package() : lookup::LookupEnvironment =
 	.addElements(ownedPackages)
 def : lookupQualifiedPackage(aPathElementCS : cs::PathElementCS) : Package[?] =
    _lookupQualifiedPackage(aPathElementCS.name)
-
+   
 -- FIXME Code suppressed since it's unnecessarily generated twice -> Fix the CS2AS OclGen
 -- END OF SUPRESSION
-   
+
 def : _unqualified_env_Class(child : ocl::OclElement) : lookup::LookupEnvironment =
 	parentEnv_Class().nestedEnv()
 		.addElements(ownedClasses)
@@ -457,7 +478,7 @@ def : lookupVariable(aPathElementCS : cs::PathElementCS) : Variable[?] =
 
 -- FIXME manually added
 def : lookupVariable(vName : String) : Variable[?] =
-   _lookupVariable(vName)
+   _lookupUnqualifiedVariable(vName)
 -- END OF manual addition
 
 -- Namespace lookup
@@ -537,7 +558,7 @@ def : lookupClass(aPathElementCS : cs::PathElementCS) : Class[?] =
 
 -- FIXME manually added
 def : lookupClass(cName : String) : Class[?] =
-   _lookupClass(cName)
+   _lookupUnqualifiedClass(cName)
 -- END OF manual addition   
 
 -- QN Class lookup
@@ -552,6 +573,21 @@ def : lookupClass(segments : OrderedSet(cs::PathElementCS)) : Class[?] =
         in qualifier?.lookupQualifiedClass(segments->last())
    endif
 
+-- Class exports Operation
+	
+def : lookupOperationFrom(exporter : Class, aPathElementCS : cs::PathElementCS, argTypes : OrderedSet(Type)) : Operation[?] =
+	exporter.lookupExportedOperation(self, aPathElementCS, argTypes)
+
+def : lookupOperationFrom(exporter : Class, aPathNameCS : cs::PathNameCS, argTypes : OrderedSet(Type)) : Operation[?] =
+   lookupOperationFrom(exporter, aPathNameCS.ownedPathElements, argTypes)
+
+def : lookupOperationFrom(exporter : Class, segments : OrderedSet(cs::PathElementCS), argTypes : OrderedSet(Type)) : Operation[?] =
+   if segments->size() = 1
+   then lookupOperationFrom(exporter, segments->first(), argTypes)
+   else let qualifierSegments = segments->subOrderedSet(1,segments->size()-1),
+            qualifier = lookupClass(qualifierSegments)
+        in qualifier?.lookupQualifiedOperation(segments->last(), argTypes)
+   endif
 -- EnumerationLiteral lookup
 def : _lookupEnumerationLiteral(env : lookup::LookupEnvironment, eName : String) : OrderedSet(EnumerationLiteral) =
 let foundEnumerationLiteral = env.namedElements->selectByKind(EnumerationLiteral)->select(name = eName)

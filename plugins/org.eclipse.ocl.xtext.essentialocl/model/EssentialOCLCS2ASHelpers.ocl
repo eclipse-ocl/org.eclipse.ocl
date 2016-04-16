@@ -9,5 +9,21 @@ package essentialoclcs
 
 context TypeNameExpCS
 def : ast() : ocl::Type =
-	multiplicityType(element) -- REF element manually hand-coded which returns the proper type  
+	multiplicityType(element) -- REF element manually hand-coded which returns the proper type
+	
+-- FIXME This has been manually added. Discuss with Ed
+	
+context ExpCS 
+def : ast() : ocl::OCLExpression =
+	invalid -- to be overriden
+
+-- END OF manual addition	
+
+-- FIXME to be defined in helpers section
+context NameExpCS
+def : lookupOperation() : ocl::Operation =
+	ast().lookupOperationFrom(source.ast().type.oclAsType(ocl::Class) /* FIXME */, ownedPathName, OrderedSet{} /*FIXME*/ )
+	
 endpackage
+
+
