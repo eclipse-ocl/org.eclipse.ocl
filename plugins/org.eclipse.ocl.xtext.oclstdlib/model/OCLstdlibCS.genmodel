@@ -7,7 +7,7 @@
     codeFormatting="true" testsDirectory="/org.eclipse.ocl.xtext.oclstdlib.tests/emf-gen"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
     editPluginID="org.eclipse.ocl.xtext.oclstdlib.edit" editorPluginID="org.eclipse.ocl.xtext.oclstdlib.editor"
-    runtimeVersion="2.7" usedGenPackages="../../org.eclipse.ocl.xtext.base/model/BaseCS.genmodel#//basecs ../../org.eclipse.ocl.pivot/model/Pivot.genmodel#//pivot ../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
+    runtimeVersion="2.7" usedGenPackages="../../org.eclipse.ocl.xtext.base/model/BaseCS.genmodel#//basecs ../../org.eclipse.ocl.pivot/model/Pivot.genmodel#//pivot"
     importOrganizing="true">
   <genAnnotations source="http://www.eclipse.org/OCL/GenModel">
     <details key="Use Delegates" value="false"/>
