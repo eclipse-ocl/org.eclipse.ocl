@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -32,6 +34,7 @@ import org.eclipse.qvtd.runtime.invocation.TransformationTechnology.Transformati
 public  class GenerateCGedQVTiTransformation extends AbstractWorkflowComponent
 {
 	private final static @NonNull String BACKSLASH = "/";
+	private static final Log LOG = LogFactory.getLog(GenerateCGedQVTiTransformation.class);
 	
 	protected String projectName;
 	protected String oclFileURI;
@@ -78,7 +81,9 @@ public  class GenerateCGedQVTiTransformation extends AbstractWorkflowComponent
 			parametersMap.put("extendedOclFileURIs", extendedOclFileURIs);
 			parametersMap.put("traceabilityPropName", traceabilityPropName);
 			parametersMap.put("packageRenames", packageRenameMap);
+			parametersMap.put("log", LOG);
 			//
+			LOG.info("Transforming " + oclFileURI + " to " + javaFolder + javaPackage);
 			tx.execute(ClassUtil.nonNullState(resourceSet), modelMap, parametersMap);
 		} catch (TransformationException e) {
 			issues.addError(this, e.getMessage(), null, e.getCause(), null);
