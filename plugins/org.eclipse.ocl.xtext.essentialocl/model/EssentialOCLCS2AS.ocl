@@ -303,7 +303,7 @@ context UnlimitedNaturalLiteralExpCS
 def : ast() : ocl::UnlimitedNaturalLiteralExp =
 	ocl::UnlimitedNaturalLiteralExp{
 		name = '*',
-		unlimitedNaturalSymbol = ocl::_UnlimitedNatural{'*'}
+		unlimitedNaturalSymbol = *
 	}
 
 context VariableCS
