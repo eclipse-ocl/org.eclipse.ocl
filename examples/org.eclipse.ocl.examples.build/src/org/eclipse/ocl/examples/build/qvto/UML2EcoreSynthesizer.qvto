@@ -302,6 +302,15 @@ mapping UML2EcoreMapping::CreateOperation::createOperation(type : Ecore::EClassi
 	result.map installComments(oldOperations.ownedComment->sortedBy(body));
 	result.lowerBound := oldOperation.lower;
 	result.upperBound := oldOperation.upper;
+	if (result.upperBound <> 1) {
+		result.eAnnotations += object Ecore::EAnnotation {
+			source := 'http://www.eclipse.org/OCL/Collection';
+			details += object Ecore::EStringToStringMapEntry {
+				key := 'nullFree';
+				value := 'true';
+			};
+		};
+	};
 	result.unique := oldOperation.isUnique;
 	result._'ordered' := if (0 <= oldOperation.upper) and (oldOperation.upper <= 1) then true else oldOperation.isOrdered endif;
 --	log('    createOperation', Sequence{oldType, newType});
@@ -317,6 +326,15 @@ mapping UML::Parameter::createParameter() : Ecore::EParameter
 	result.map installComments(self.ownedComment->asSequence()->sortedBy(body));
 	result.lowerBound := self.lower;
 	result.upperBound := self.upper;
+	if (result.upperBound <> 1) {
+		result.eAnnotations += object Ecore::EAnnotation {
+			source := 'http://www.eclipse.org/OCL/Collection';
+			details += object Ecore::EStringToStringMapEntry {
+				key := 'nullFree';
+				value := 'true';
+			};
+		};
+	};
 	result.unique := self.isUnique;
 	result._'ordered' := if (0 <= self.upper) and (self.upper <= 1) then true else self.isOrdered endif;
 	result.eType := umlType2eClassifier->get(self.type).resolveForXtext();
@@ -381,6 +399,15 @@ helper UML2EcoreMapping::CreateProperty::createStructuralFeature(inout output : 
 	var finiteUppers := oldProperties.upper->excluding(null)->select(n | n >= 0);
 	output.upperBound := if finiteUppers->notEmpty() then finiteUppers->min() else -1 endif;
 	if (debugDerived) log('    upperBound', 'null' + "=>" + output.upperBound.toString());
+	if (output.upperBound <> 1) {
+		output.eAnnotations += object Ecore::EAnnotation {
+			source := 'http://www.eclipse.org/OCL/Collection';
+			details += object Ecore::EStringToStringMapEntry {
+				key := 'nullFree';
+				value := 'true';
+			};
+		};
+	};
 	output.unique := oldProperty->exists(isUnique);
 	output._'ordered' := if (0 <= output.upperBound) and (output.upperBound <= 1) then true else oldProperty->exists(isOrdered) endif;
 	output.changeable := oldProperties->forAll(not isReadOnly);
