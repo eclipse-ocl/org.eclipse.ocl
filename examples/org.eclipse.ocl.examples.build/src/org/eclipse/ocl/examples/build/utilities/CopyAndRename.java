@@ -162,6 +162,7 @@ public class CopyAndRename extends AbstractWorkflowComponent2 {
 			String fromText = readFile(fromFile);
 			editedText = fromText;
 			if (editedText != null) {
+				editedText = editedText.replace("@since", "at-since");
 				for (Map.Entry<String, String> entry : packageCopyMap.entrySet()) {
 					String fromPackage = entry.getKey();
 					String toPackage = entry.getValue();
