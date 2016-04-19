@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
@@ -127,29 +128,34 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 						PropertyCallExp asPropertyCallExp = (PropertyCallExp)ownedBody;
 						OCLExpression asSource = asPropertyCallExp.getOwnedSource();
 						Property asReferredProperty = asPropertyCallExp.getReferredProperty();
-						if ((asReferredProperty != null) && PivotConstants.STATUS_PART_NAME.equals(asReferredProperty.getName()) && (asSource instanceof TupleLiteralExp)) {
-							TupleLiteralExp asTupleLiteralExp = (TupleLiteralExp)asSource;
-							List<TupleLiteralPart> asTupleParts = asTupleLiteralExp.getOwnedParts();
-							TupleLiteralPart asStatusPart = NameUtil.getNameable(asTupleParts, PivotConstants.STATUS_PART_NAME);
-							if (asStatusPart != null) {
-								OCLExpression asStatusInit = asStatusPart.getOwnedInit();
-								if (asStatusInit != null) {
-									statusExpression = PrettyPrinter.print(asStatusInit);
-								}
-								TupleLiteralPart asMessagePart = NameUtil.getNameable(asTupleParts, PivotConstants.MESSAGE_PART_NAME);
-								if (asMessagePart != null) {
-									OCLExpression asMessageInit = asMessagePart.getOwnedInit();
-									if (asMessageInit != null) {
-										messageExpression = PrettyPrinter.print(asMessageInit);
+						if ((asReferredProperty != null) && PivotConstants.STATUS_PART_NAME.equals(asReferredProperty.getName())) {
+							if (asSource instanceof TupleLiteralExp) {
+								TupleLiteralExp asTupleLiteralExp = (TupleLiteralExp)asSource;
+								List<TupleLiteralPart> asTupleParts = asTupleLiteralExp.getOwnedParts();
+								TupleLiteralPart asStatusPart = NameUtil.getNameable(asTupleParts, PivotConstants.STATUS_PART_NAME);
+								if (asStatusPart != null) {
+									OCLExpression asStatusInit = asStatusPart.getOwnedInit();
+									if (asStatusInit != null) {
+										statusExpression = PrettyPrinter.print(asStatusInit);
+									}
+									TupleLiteralPart asMessagePart = NameUtil.getNameable(asTupleParts, PivotConstants.MESSAGE_PART_NAME);
+									if (asMessagePart != null) {
+										OCLExpression asMessageInit = asMessagePart.getOwnedInit();
+										if (asMessageInit != null) {
+											messageExpression = PrettyPrinter.print(asMessageInit);
+										}
+									}
+									TupleLiteralPart asSeverityPart = NameUtil.getNameable(asTupleParts, PivotConstants.SEVERITY_PART_NAME);
+									if (asSeverityPart != null) {
+										OCLExpression asSeverityInit = asSeverityPart.getOwnedInit();
+										if (asSeverityInit != null) {
+											severityExpression = PrettyPrinter.print(asSeverityInit);
+										}
 									}
 								}
-								TupleLiteralPart asSeverityPart = NameUtil.getNameable(asTupleParts, PivotConstants.SEVERITY_PART_NAME);
-								if (asSeverityPart != null) {
-									OCLExpression asSeverityInit = asSeverityPart.getOwnedInit();
-									if (asSeverityInit != null) {
-										severityExpression = PrettyPrinter.print(asSeverityInit);
-									}
-								}
+							}
+							else if (asSource.getType() instanceof TupleType) {
+								statusExpression = PrettyPrinter.print(asSource);
 							}
 						}
 					}
