@@ -534,20 +534,22 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		TestOCL ocl = createOCL();
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
-		ocl.assertQueryEquals(context, null, "Apple{}.name");
-		ocl.assertQueryEquals(context, "RedApple", "Apple{name='RedApple',color=Color::red}.name");
-		ocl.assertQueryEquals(context, color_red, "Apple{name='RedApple',color=Color::red}.color");
+		ocl.assertValidationErrorQuery(ocl.getContextType(context), "Apple{stem=null}.label", "Missing initializers: color");
+		ocl.assertValidationErrorQuery(ocl.getContextType(context), "Apple{name=null}.label", "Unexpected initializers: name");
+		ocl.assertQueryEquals(context, null, "Apple{color=null,label=null,stem=null}.label");
+		ocl.assertQueryEquals(context, "RedApple", "Apple{color=Color::red,label='RedApple',stem=null}.label");
+		ocl.assertQueryEquals(context, color_red, "Apple{color=Color::red,label='RedApple',stem=null}.color");
 		if (!useCodeGen) {		// FIXME CG Shadow objects
-			ocl.assertQueryFalse(context, "Apple{name='RedApple',color=Color::red} = Apple{name='RedApple',color=Color::red}");
-			ocl.assertQueryFalse(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnApple',color=Color::red} in thisApple = thatApple");
-			ocl.assertQueryFalse(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnApple',color=Color::red} in thisApple = thatApple");
+			ocl.assertQueryFalse(context, "Apple{color=Color::red,label='RedApple',stem=null} = Apple{color=Color::red,label='RedApple',stem=null}");
+			ocl.assertQueryFalse(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple = thatApple");
+			ocl.assertQueryFalse(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple = thatApple");
 		}
-		ocl.assertQueryTrue(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnApple',color=Color::red} in thisApple.name = thatApple.name");
-		ocl.assertQueryTrue(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnApple',color=Color::red} in thisApple.color = thatApple.color");
-		ocl.assertQueryTrue(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnApple',color=Color::red} in thisApple.name = thatApple.name and thisApple.color = thatApple.color");
+		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple.label = thatApple.label");
+		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple.color = thatApple.color");
+		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple.label = thatApple.label and thisApple.color = thatApple.color");
 		if (!useCodeGen) {		// FIXME CG Shadow objects
-			ocl.assertQueryFalse(context, "let thisApple = Apple{name='ThisApple',color=Color::red}, thatApple = Apple{name='ThatApple',color=Color::red} in thisApple.name = thatApple.name and thisApple.color = thatApple.color");
-			ocl.assertQueryFalse(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnApple',color=Color::black} in thisApple.name = thatApple.name and thisApple.color = thatApple.color");
+			ocl.assertQueryFalse(context, "let thisApple = Apple{stem=null,label='ThisApple',color=Color::red}, thatApple = Apple{stem=null,label='ThatApple',color=Color::red} in thisApple.label = thatApple.label and thisApple.color = thatApple.color");
+			ocl.assertQueryFalse(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::black} in thisApple.label = thatApple.label and thisApple.color = thatApple.color");
 		}
         ocl.dispose();
 	}

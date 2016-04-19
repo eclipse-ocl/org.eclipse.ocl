@@ -226,17 +226,17 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.getEnvironmentFactory().setSafeNavigationValidationSeverity(StatusCodes.Severity.WARNING);
 		org.eclipse.ocl.pivot.Class pkg1Type = ocl.getMetamodelManager().getASClass("Package");
         // complete form
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "ownedPackages->any(p : ocl::Package | p?.name = 'bob')");
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "ownedPackages?->any(p : ocl::Package | p.name = 'bob')");
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "ownedPackages?->any(p : ocl::Package[1] | p.name = 'bob')");
-    	ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(p : ocl::Package[1] | p.name = 'bob')",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IteratorExp_c_c_UnsafeSourceCanNotBeNull, "self.ownedPackages->any(p : Package[1] | p.name.=('bob'))");
-		ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(p : ocl::Package | p.name = 'bob')",
+    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op->any(p : ocl::Package | p?.name = 'bob')");
+    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op?->any(p : ocl::Package | p.name = 'bob')");
+    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op?->any(p : ocl::Package[1] | p.name = 'bob')");
+    	ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package)[*|?] = ownedPackages in op->any(p : ocl::Package[1] | p.name = 'bob')",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IteratorExp_c_c_UnsafeSourceCanNotBeNull, "op->any(p : Package[1] | p.name.=('bob'))");
+		ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package)[*|?] = ownedPackages in op->any(p : ocl::Package | p.name = 'bob')",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull, "p.name");
 
         // shorter form
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "ownedPackages->any(p | p?.name = 'bob')");
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "ownedPackages?->any(p | p.name = 'bob')");
+    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op->any(p | p?.name = 'bob')");
+    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op?->any(p | p.name = 'bob')");
 //		ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(p | p.name = 'bob')",
 //			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "UnsafeSourceMustBeNotNull", "p.name");
 //		ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages?->any(p | p?.name = 'bob')",
@@ -245,10 +245,10 @@ public class IteratorsTest4 extends PivotTestSuite
         // shortest form
 //    	ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(name = 'bob')",
 //    		PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "UnsafeSourceMustBeNotNull", "1_.name");
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "ownedPackages?->any(name = 'bob')");
+    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op?->any(name = 'bob')");
 
         // negative
-        ocl.assertQueryNotSame(ocl.pkg1, ocl.bob, "ownedPackages?->any(name = 'pkg2')");
+        ocl.assertQueryNotSame(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op?->any(name = 'pkg2')");
 //        ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(name = 'pkg2')",
 //			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "UnsafeSourceMustBeNotNull", "1_.name");
 
@@ -260,9 +260,9 @@ public class IteratorsTest4 extends PivotTestSuite
         ocl.assertQueryNull(null, "Sequence{null}->any(s | s = null)");
         ocl.assertQueryNull(null, "Sequence{null, null}->any(s | s = null)");
 
-        ocl.assertQueryDefined(ocl.pkg1, "ownedPackages->any(true)");
-        ocl.assertQueryInvalid(ocl.pkg1, "ownedPackages->any(false)");			// OMG Issue 18504
-        ocl.assertQueryDefined(ocl.pkg1, "ownedPackages?->any(true)");
+        ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package)[*|?] = ownedPackages in op->any(true)");
+        ocl.assertQueryInvalid(ocl.pkg1, "let op : Set(Package)[*|?] = ownedPackages in op->any(false)");			// OMG Issue 18504
+        ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package)[*|?] = ownedPackages in op?->any(true)");
 		ocl.dispose();
     }
 
@@ -407,7 +407,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
         ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
         	metamodelManager.getASClass("Package"), "ownedPackages.unknownAttribute",
-        	PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Package)", "unknownAttribute");
+        	PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Package[*|1])", "unknownAttribute");
 		ocl.dispose();
    }
 
@@ -421,7 +421,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
     	ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
     		metamodelManager.getASClass("Package"), "ownedPackages.unknownOperation(self)",
-        	PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Package)", "unknownOperation", PivotConstants.SELF_NAME);
+        	PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Package[*|1])", "unknownOperation", PivotConstants.SELF_NAME);
 		ocl.dispose();
    }
 
