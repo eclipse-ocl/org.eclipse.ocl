@@ -10,6 +10,9 @@ inv UniqueName: true -- _'context'.ownedRule->excluding(self)->forAll(name <> se
 context Element
 def: allOwnedElements() : Set(Element) =
 	self->closure(oclContents()->selectByKind(Element))
+	
+--context Element
+--def: formatNames(prefix : String, names : Set(NamedElement)[*|1]) : String = names->sortedBy(name)->iterate(p; acc:String=prefix|acc +' ' + p.name)
 
 --FIXME oclContainer() suspect on DomainElements
 --def: owner : Element = oclContainer()
@@ -54,19 +57,13 @@ context Operation
 inv CompatibleReturn: bodyExpression <> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(bodyExpression)
 inv LoadableImplementation:
 	true
-inv UniquePreconditionName: ownedPreconditions->isUnique(p | p?.name)
-inv UniquePostconditionName: ownedPostconditions->isUnique(p | p?.name)
+inv UniquePreconditionName: ownedPreconditions->isUnique(name)
+inv UniquePostconditionName: ownedPostconditions->isUnique(name)
 
 context Feature
 inv TypeIsNotInvalid : type <> OclInvalid
 
-context VariableDeclaration
-inv TypeIsNotInvalid : type <> OclInvalid
-
 context CollectionLiteralPart
-inv TypeIsNotInvalid : type <> OclInvalid
-
-context ShadowPart
 inv TypeIsNotInvalid : type <> OclInvalid
 
 context CallExp
@@ -78,20 +75,8 @@ inv TypeIsNotInvalid : type <> OclInvalid
 context LetExp
 inv TypeIsNotInvalid : type <> OclInvalid
 
-context ShadowExp
-inv TypeIsNotInvalid : type <> OclInvalid
-
-context StateExp
-inv TypeIsNotInvalid : type <> OclInvalid
-
-context VariableExp
-inv TypeIsNotInvalid : type <> OclInvalid
-
 context Class
-inv UniqueInvariantName: ownedInvariants->isUnique(p | p?.name)
-
-context Variable
-inv CompatibleInitialiserType: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+inv UniqueInvariantName: ownedInvariants->isUnique(name)
 
 context IteratorExp
 inv ClosureBodyTypeIsConformanttoIteratorType:
@@ -265,25 +250,25 @@ inv SourceIsCollection: ownedSource?.type.oclIsKindOf(CollectionType)
 
 context LoopExp
 /** The loop variable of an iterator expression has no init expression. */
-inv NoInitializers: self.ownedIterators->forAll(p | p?.ownedInit->isEmpty())
+inv NoInitializers: self.ownedIterators->forAll(ownedInit->isEmpty())
 
 context IteratorExp
 /** The type of each iterator variable must be the type of the elements of the source collection. */
-inv IteratorTypeIsSourceElementType: self.ownedIterators->forAll(p | ownedSource?.type.oclAsType(CollectionType).elementType.conformsTo(p?.type))
+inv IteratorTypeIsSourceElementType: self.ownedIterators->forAll(p | ownedSource?.type.oclAsType(CollectionType).elementType.conformsTo(p.type))
 /** Safe navigation is not necessary when the source collection is null-free. */
 inv SafeSourceCanBeNull: isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree
 /** Safe navigation is not necessary when an iterator can be null. */
-inv SafeIteratorIsRequired: isSafe implies ownedIterators?->forAll(isRequired)
+inv SafeIteratorIsRequired: isSafe implies ownedIterators->forAll(isRequired)
 /** Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free. */
-inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators?->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree
+inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree
 
 context IterateExp
 /** Safe navigation is not necessary when the source collection is null-free. */
 inv SafeSourceCanBeNull: isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree
 /** Safe navigation is not necessary when an iterator can be null. */
-inv SafeIteratorIsRequired: isSafe implies ownedIterators?->forAll(isRequired)
+inv SafeIteratorIsRequired: isSafe implies ownedIterators->forAll(isRequired)
 /** Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free. */
-inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators?->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree
+inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree
 
 /** FeatureCallExp
 No additional well-formedness rules. */
@@ -312,6 +297,10 @@ No additional well-formedness rules. */
 /** If the message is a call operation action, the operation must be an operation of the type of the target expression. */
 --inv: calledOperation->notEmpty() implies
 --target.type.allOperations()->includes(calledOperation.operation)
+
+--context MapLiteralPart
+--inv CompatibleInitialiserType: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+--inv TypeIsNotInvalid : type <> OclInvalid
 
 context MessageExp
 /** An OCL message has either a called operation or a sent signal. */
@@ -370,6 +359,46 @@ inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSourc
 inv UnsafeSourceCanNotBeNull: (ownedSource <> null) and not isSafe implies ownedSource?.isRequired
 
 --inv StaticSourceIsNull: referredProperty.isStatic implies source.oclAsType(Type).conformsTo(getSpecializedReferredPropertyOwningType())
+
+--context Class
+--def: allProperties() : Set(Property)[*|1] = self->closure(superClasses)?.ownedProperties->asSet()
+
+context ShadowExp
+inv ClassHasNoStringValueInitializer: not type.oclIsKindOf(DataType) implies value = null
+inv InitializesAllClassProperties: if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''} else 
+	let partProperties = ownedParts.referredProperty->asSet() in
+	let allProperties = type.oclAsType(Class)->closure(superClasses)?.ownedProperties->asSet() in
+	let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name.startsWith('ocl')) in
+	let requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite?.isComposite) in
+	let extraProperties : Set(NamedElement)[*|1] = partProperties->excludingAll(classProperties) in
+	let missingProperties : Set(NamedElement)[*|1] = requiredClassProperties->excludingAll(partProperties) in
+	if extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String='Unexpected initializers:'|acc +' ' + p.name)}
+	else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}
+	else Tuple{status:Boolean[1]=true, message:String[1]=''}
+	endif endif endif.status
+inv DataTypeHasStringValueInitializer: type.oclIsKindOf(DataType) implies value <> null
+inv DataTypeHasNoPartInitializers: type.oclIsKindOf(DataType) implies ownedParts->isEmpty()
+inv TypeIsNotInvalid : type <> OclInvalid
+
+context ShadowPart
+inv CompatibleInitialiserType: ownedInit.type?.conformsTo(type)
+inv TypeIsNotInvalid : type <> OclInvalid
+
+context StateExp
+inv TypeIsNotInvalid : type <> OclInvalid
+
+context TupleLiteralPart
+inv CompatibleInitialiserType: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+inv TypeIsNotInvalid : type <> OclInvalid
+
+context Variable
+inv CompatibleInitialiserType: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+
+context VariableDeclaration
+inv TypeIsNotInvalid : type <> OclInvalid
+
+context VariableExp
+inv TypeIsNotInvalid : type <> OclInvalid
 
 context Element
 def: getValue(stereotype : Type, propertyName : String) : Element[?] = null
