@@ -12,7 +12,9 @@ package org.eclipse.ocl.examples.build.fragments;
 
 import java.util.Set;
 
+import org.eclipse.jface.text.ITextHover;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocumentationProvider;
+import org.eclipse.ocl.xtext.markup.ui.hover.MarkupCompositeHover;
 import org.eclipse.ocl.xtext.markup.ui.hover.MarkupHover;
 import org.eclipse.ocl.xtext.markup.ui.hover.MarkupHoverProvider;
 import org.eclipse.xtext.Grammar;
@@ -34,6 +36,7 @@ public class MarkupHoverFragment  extends DefaultGeneratorFragment
 		bindFactory.addTypeToType(IEObjectHover.class.getName(), MarkupHover.class.getName());
 		bindFactory.addTypeToType(IEObjectHoverProvider.class.getName(), MarkupHoverProvider.class.getName());
 		bindFactory.addTypeToType(IEObjectDocumentationProvider.class.getName(), BaseDocumentationProvider.class.getName());
+		bindFactory.addTypeToType(ITextHover.class.getName(), MarkupCompositeHover.class.getName());
 		return bindFactory.getBindings();
 	}
 }
