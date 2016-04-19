@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
  * An Invocation identifies a unique invocation of a Mapping and the objects/values bound to its guard variables.
  * 
  * @noimplement clients should derive from AbstractInvocation
- * @since 1.1
+ * at-since 1.1
  */
 public interface Invocation extends ExecutionVisitable
 {

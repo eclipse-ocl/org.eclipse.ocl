@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
 import org.eclipse.ocl.pivot.evaluation.tx.TypedModelInstance;
 
 /**
- * @since 1.1
+ * at-since 1.1
  */
 public final class TypedModelInstanceLabelGenerator extends AbstractLabelGenerator<TypedModelInstance>
 {

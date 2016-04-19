@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.evaluation.tx.TypedModelInstance;
 
 /**
  * ModelObjectsOfKindOperation realises the Model::objectsOfKind() library operation.
- * @since 1.1
+ * at-since 1.1
  */
 public class ModelObjectsOfKindOperation extends AbstractBinaryOperation
 {

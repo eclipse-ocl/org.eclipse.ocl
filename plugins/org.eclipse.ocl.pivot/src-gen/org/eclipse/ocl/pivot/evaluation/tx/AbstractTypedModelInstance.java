@@ -22,7 +22,7 @@ package org.eclipse.ocl.pivot.evaluation.tx;
  * The abstract implementation of a typed model instance provides the mandatory shared functionality for maintaining
  * a run-time representation of a typed model.
  * 
- * @since 1.1
+ * at-since 1.1
  */
 public abstract class AbstractTypedModelInstance implements TypedModelInstance
 {	

@@ -45,7 +45,7 @@ import org.eclipse.ocl.pivot.evaluation.tx.ObjectManager;
 import org.eclipse.ocl.pivot.evaluation.tx.SlotState;
 
 /**
- * @since 1.1
+ * at-since 1.1
  */
 public class LazyObjectManager extends AbstractObjectManager
 {

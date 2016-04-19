@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * A TransformationInstance reifies an executing transformation as a useable
  * transformation model instance during the execution of a transformation.
  * 
- * @since 1.1
+ * at-since 1.1
  * @noimplement clients should derive from AbstractTransformationInstance
  */
 public interface TransformationInstance

@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * maintaining a blocked list of invocations that have failed and a waiting list of invocations
  * ready to be reattempted.
  * 
- * @since 1.1
+ * at-since 1.1
  * @noimplement clients should derive from AbstractInvocationManager
  */
 public interface InvocationManager extends ExecutionVisitable

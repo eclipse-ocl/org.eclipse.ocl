@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.internal.evaluation.tx.AbstractTransformerInternal;
  * The abstract implementation of an auto-generated transformation provides the mandatory shared functionality for maintaining
  * models and deferring invocation of not-ready mapping invocations.
  * 
- * @since 1.1
+ * at-since 1.1
  */
 public abstract class AbstractTransformer extends AbstractTransformerInternal
 {	
