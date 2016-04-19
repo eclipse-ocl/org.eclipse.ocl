@@ -597,6 +597,7 @@ public class PrettyPrinter
 						prefix = ", ";
 					}
 				}
+				append(")");
 				if (typeRef instanceof CollectionType) {
 					CollectionType collectionType = (CollectionType)typeRef;
 					Number lower = collectionType.getLower();
@@ -606,7 +607,6 @@ public class PrettyPrinter
 						appendMultiplicity(lower, upper, isNullFree);
 					}
 				}
-				append(")");
 			}
 		}
 		finally {
