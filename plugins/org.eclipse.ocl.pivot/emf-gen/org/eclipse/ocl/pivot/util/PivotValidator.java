@@ -632,12 +632,52 @@ public class PivotValidator
 	public static final int PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 57;
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Class Has No String Value Initializer' of 'Shadow Exp'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SHADOW_EXP__VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER = 58;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Data Type Has No Part Initializers' of 'Shadow Exp'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS = 59;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Data Type Has String Value Initializer' of 'Shadow Exp'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER = 60;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Initializes All Class Properties' of 'Shadow Exp'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SHADOW_EXP__VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES = 61;
+
+	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Shadow Exp'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 58;
+	public static final int SHADOW_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 62;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Shadow Part'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SHADOW_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 63;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Shadow Part'.
@@ -645,7 +685,7 @@ public class PivotValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_INVALID = 59;
+	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_INVALID = 64;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'State Exp'.
@@ -653,7 +693,23 @@ public class PivotValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int STATE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 60;
+	public static final int STATE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 65;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Tuple Literal Part'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 66;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Tuple Literal Part'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID = 67;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Variable'.
@@ -661,7 +717,7 @@ public class PivotValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 61;
+	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 68;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Declaration'.
@@ -669,7 +725,7 @@ public class PivotValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 62;
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 69;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Exp'.
@@ -677,7 +733,7 @@ public class PivotValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 63;
+	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 70;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -685,7 +741,7 @@ public class PivotValidator
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 63;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 70;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -3293,8 +3349,56 @@ public class PivotValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(shadowExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateShadowExp_validateClassHasNoStringValueInitializer(shadowExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateShadowExp_validateDataTypeHasNoPartInitializers(shadowExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateShadowExp_validateDataTypeHasStringValueInitializer(shadowExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateShadowExp_validateInitializesAllClassProperties(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowExp_validateTypeIsNotInvalid(shadowExp, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the validateClassHasNoStringValueInitializer constraint of '<em>Shadow Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateShadowExp_validateClassHasNoStringValueInitializer(ShadowExp shadowExp, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return shadowExp.validateClassHasNoStringValueInitializer(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateDataTypeHasNoPartInitializers constraint of '<em>Shadow Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateShadowExp_validateDataTypeHasNoPartInitializers(ShadowExp shadowExp, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return shadowExp.validateDataTypeHasNoPartInitializers(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateDataTypeHasStringValueInitializer constraint of '<em>Shadow Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateShadowExp_validateDataTypeHasStringValueInitializer(ShadowExp shadowExp, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return shadowExp.validateDataTypeHasStringValueInitializer(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateInitializesAllClassProperties constraint of '<em>Shadow Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateShadowExp_validateInitializesAllClassProperties(ShadowExp shadowExp, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return shadowExp.validateInitializesAllClassProperties(diagnostics, context);
 	}
 
 	/**
@@ -3324,8 +3428,20 @@ public class PivotValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(shadowPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(shadowPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(shadowPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateShadowPart_validateCompatibleInitialiserType(shadowPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowPart_validateTypeIsNotInvalid(shadowPart, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the validateCompatibleInitialiserType constraint of '<em>Shadow Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateShadowPart_validateCompatibleInitialiserType(ShadowPart shadowPart, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return shadowPart.validateCompatibleInitialiserType(diagnostics, context);
 	}
 
 	/**
@@ -3466,8 +3582,31 @@ public class PivotValidator
 		if (result || diagnostics != null) result &= validate_UniqueID(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(tupleLiteralPart, diagnostics, context);
-		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(tupleLiteralPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTupleLiteralPart_validateTypeIsNotInvalid(tupleLiteralPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateTupleLiteralPart_validateCompatibleInitialiserType(tupleLiteralPart, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the validateCompatibleInitialiserType constraint of '<em>Tuple Literal Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateTupleLiteralPart_validateCompatibleInitialiserType(TupleLiteralPart tupleLiteralPart, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return tupleLiteralPart.validateCompatibleInitialiserType(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateTypeIsNotInvalid constraint of '<em>Tuple Literal Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateTupleLiteralPart_validateTypeIsNotInvalid(TupleLiteralPart tupleLiteralPart, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return tupleLiteralPart.validateTypeIsNotInvalid(diagnostics, context);
 	}
 
 	/**

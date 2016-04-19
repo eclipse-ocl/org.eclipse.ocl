@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -142,6 +143,69 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.SHADOW_PART__REFERRED_PROPERTY, oldReferredProperty, referredProperty));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean validateCompatibleInitialiserType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
+	{
+		/**
+		 * 
+		 * inv validateCompatibleInitialiserType:
+		 *   let
+		 *     severity : Integer[1] = 'ShadowPart::CompatibleInitialiserType'.getSeverity()
+		 *   in
+		 *     if severity <= 0
+		 *     then true
+		 *     else
+		 *       let status : OclAny[1] = ownedInit.type?.conformsTo(type)
+		 *       in
+		 *         'ShadowPart::CompatibleInitialiserType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
+		 *     endif
+		 */
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ShadowPart_c_c_CompatibleInitialiserType);
+		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+		/*@NonInvalid*/ boolean symbol_1;
+		if (le) {
+		    symbol_1 = ValueUtil.TRUE_VALUE;
+		}
+		else {
+		    /*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
+		    try {
+		        @SuppressWarnings("null")
+		        final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedInit = this.getOwnedInit();
+		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedInit.getType();
+		        /*@Caught*/ @Nullable Object CAUGHT_type;
+		        try {
+		            CAUGHT_type = type;
+		        }
+		        catch (Exception e) {
+		            CAUGHT_type = ValueUtil.createInvalidValue(e);
+		        }
+		        final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_type == null;
+		        /*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
+		        if (symbol_0 == Boolean.TRUE) {
+		            safe_conformsTo_source = null;
+		        }
+		        else {
+		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
+		            final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+		            safe_conformsTo_source = conformsTo;
+		        }
+		        CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
+		    }
+		    catch (Exception e) {
+		        CAUGHT_safe_conformsTo_source = ValueUtil.createInvalidValue(e);
+		    }
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowPart_c_c_CompatibleInitialiserType, this, null, diagnostics, context, null, severity_0, CAUGHT_safe_conformsTo_source, PivotTables.INT_0).booleanValue();
+		    symbol_1 = logDiagnostic;
+		}
+		return Boolean.TRUE == symbol_1;
 	}
 
 	/**
@@ -438,6 +502,8 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case PivotPackage.SHADOW_PART___COMPATIBLE_BODY__VALUESPECIFICATION:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
+			case PivotPackage.SHADOW_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP:
+				return validateCompatibleInitialiserType((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.SHADOW_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}

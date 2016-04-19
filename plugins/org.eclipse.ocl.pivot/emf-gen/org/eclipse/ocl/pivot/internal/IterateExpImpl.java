@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
-import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
@@ -56,7 +55,6 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -557,7 +555,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		 *     then true
 		 *     else
 		 *       let status : OclAny[?] = not isSafe and
-		 *         ownedIterators?->exists(isRequired) implies
+		 *         ownedIterators->exists(isRequired) implies
 		 *         ownedSource?.type.oclAsType(CollectionType).isNullFree
 		 *       in
 		 *         'IterateExp::UnsafeSourceCanNotBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -589,9 +587,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		            try {
 		                final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 		                final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue safe_null_sources = (OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(BOXED_ownedIterators, null);
 		                /*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.FALSE_VALUE;
-		                @NonNull Iterator<Object> ITERATOR__1 = safe_null_sources.iterator();
+		                @NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
 		                /*@Thrown*/ boolean exists;
 		                while (true) {
 		                    if (!ITERATOR__1.hasNext()) {
@@ -829,7 +826,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		 *     then true
 		 *     else
 		 *       let status : OclAny[?] = isSafe implies
-		 *         ownedIterators?->forAll(isRequired)
+		 *         ownedIterators->forAll(isRequired)
 		 *       in
 		 *         'IterateExp::SafeIteratorIsRequired'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -857,9 +854,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		        try {
 		            final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 		            final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue safe_null_sources = (OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(BOXED_ownedIterators, null);
 		            /*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-		            @NonNull Iterator<Object> ITERATOR__1 = safe_null_sources.iterator();
+		            @NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
 		            /*@Thrown*/ boolean forAll;
 		            while (true) {
 		                if (!ITERATOR__1.hasNext()) {

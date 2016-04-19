@@ -673,6 +673,22 @@
     <genClasses ecoreClass="Pivot.ecore#//ShadowExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//ShadowExp/ownedParts"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//ShadowExp/value"/>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateClassHasNoStringValueInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateClassHasNoStringValueInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateClassHasNoStringValueInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateDataTypeHasNoPartInitializers">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateDataTypeHasNoPartInitializers/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateDataTypeHasNoPartInitializers/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateDataTypeHasStringValueInitializer">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateDataTypeHasStringValueInitializer/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateDataTypeHasStringValueInitializer/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateInitializesAllClassProperties">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateInitializesAllClassProperties/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateInitializesAllClassProperties/context"/>
+      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//ShadowExp/validateTypeIsNotInvalid">
         <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateTypeIsNotInvalid/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//ShadowExp/validateTypeIsNotInvalid/context"/>
@@ -681,6 +697,10 @@
     <genClasses ecoreClass="Pivot.ecore#//ShadowPart">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//ShadowPart/ownedInit"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#//ShadowPart/referredProperty"/>
+      <genOperations ecoreOperation="Pivot.ecore#//ShadowPart/validateCompatibleInitialiserType">
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowPart/validateCompatibleInitialiserType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//ShadowPart/validateCompatibleInitialiserType/context"/>
+      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//ShadowPart/validateTypeIsNotInvalid">
         <genParameters ecoreParameter="Pivot.ecore#//ShadowPart/validateTypeIsNotInvalid/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//ShadowPart/validateTypeIsNotInvalid/context"/>
@@ -777,6 +797,14 @@
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#//TupleLiteralPart">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//TupleLiteralPart/ownedInit"/>
+      <genOperations ecoreOperation="Pivot.ecore#//TupleLiteralPart/validateCompatibleInitialiserType">
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateCompatibleInitialiserType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateCompatibleInitialiserType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//TupleLiteralPart/validateTypeIsNotInvalid">
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateTypeIsNotInvalid/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateTypeIsNotInvalid/context"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#//TupleType"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#//Type">

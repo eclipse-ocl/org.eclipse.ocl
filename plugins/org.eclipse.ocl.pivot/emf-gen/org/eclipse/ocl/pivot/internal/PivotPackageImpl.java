@@ -3626,9 +3626,53 @@ public class PivotPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EOperation getShadowExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	public EOperation getShadowExp__ValidateClassHasNoStringValueInitializer__DiagnosticChain_Map()
 	{
 		return shadowExpEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getShadowExp__ValidateDataTypeHasNoPartInitializers__DiagnosticChain_Map()
+	{
+		return shadowExpEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map()
+	{
+		return shadowExpEClass.getEOperations().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getShadowExp__ValidateInitializesAllClassProperties__DiagnosticChain_Map()
+	{
+		return shadowExpEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getShadowExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	{
+		return shadowExpEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -3670,9 +3714,20 @@ public class PivotPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EOperation getShadowPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	public EOperation getShadowPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map()
 	{
 		return shadowPartEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getShadowPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	{
+		return shadowPartEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -4051,6 +4106,28 @@ public class PivotPackageImpl
 	public EReference getTupleLiteralPart_OwnedInit()
 	{
 		return (EReference)tupleLiteralPartEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map()
+	{
+		return tupleLiteralPartEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	{
+		return tupleLiteralPartEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -6879,11 +6956,16 @@ public class PivotPackageImpl
 		shadowExpEClass = createEClass(SHADOW_EXP);
 		createEReference(shadowExpEClass, SHADOW_EXP__OWNED_PARTS);
 		createEAttribute(shadowExpEClass, SHADOW_EXP__VALUE);
+		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP);
+		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS__DIAGNOSTICCHAIN_MAP);
+		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP);
+		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP);
 		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
 
 		shadowPartEClass = createEClass(SHADOW_PART);
 		createEReference(shadowPartEClass, SHADOW_PART__OWNED_INIT);
 		createEReference(shadowPartEClass, SHADOW_PART__REFERRED_PROPERTY);
+		createEOperation(shadowPartEClass, SHADOW_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP);
 		createEOperation(shadowPartEClass, SHADOW_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
 
 		signalEClass = createEClass(SIGNAL);
@@ -6975,6 +7057,8 @@ public class PivotPackageImpl
 
 		tupleLiteralPartEClass = createEClass(TUPLE_LITERAL_PART);
 		createEReference(tupleLiteralPartEClass, TUPLE_LITERAL_PART__OWNED_INIT);
+		createEOperation(tupleLiteralPartEClass, TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP);
+		createEOperation(tupleLiteralPartEClass, TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
 
 		tupleTypeEClass = createEClass(TUPLE_TYPE);
 
@@ -8132,6 +8216,42 @@ public class PivotPackageImpl
 		initEReference(getShadowExp_OwnedParts(), this.getShadowPart(), null, "ownedParts", null, 0, -1, ShadowExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getShadowExp_Value(), this.getString(), "value", null, 0, 1, ShadowExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		op = initEOperation(getShadowExp__ValidateClassHasNoStringValueInitializer__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateClassHasNoStringValueInitializer", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getShadowExp__ValidateDataTypeHasNoPartInitializers__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateDataTypeHasNoPartInitializers", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateDataTypeHasStringValueInitializer", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getShadowExp__ValidateInitializesAllClassProperties__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateInitializesAllClassProperties", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
 		op = initEOperation(getShadowExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateTypeIsNotInvalid", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(ecorePackage.getEMap());
@@ -8144,6 +8264,15 @@ public class PivotPackageImpl
 		initEClass(shadowPartEClass, ShadowPart.class, "ShadowPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getShadowPart_OwnedInit(), this.getOCLExpression(), null, "ownedInit", null, 1, 1, ShadowPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getShadowPart_ReferredProperty(), this.getProperty(), null, "referredProperty", null, 1, 1, ShadowPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getShadowPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateCompatibleInitialiserType", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getShadowPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateTypeIsNotInvalid", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -8251,6 +8380,24 @@ public class PivotPackageImpl
 
 		initEClass(tupleLiteralPartEClass, TupleLiteralPart.class, "TupleLiteralPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getTupleLiteralPart_OwnedInit(), this.getOCLExpression(), null, "ownedInit", null, 0, 1, TupleLiteralPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateCompatibleInitialiserType", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateTypeIsNotInvalid", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(tupleTypeEClass, TupleType.class, "TupleType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -8395,6 +8542,8 @@ public class PivotPackageImpl
 		createASMetamodelAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
+		// http://www.eclipse.org/OCL/Collection
+		createCollectionAnnotations();
 	}
 
 	/**
@@ -8428,6 +8577,584 @@ public class PivotPackageImpl
 		   source, 
 		   new String[] 
 		   {
+		   });
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Collection</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createCollectionAnnotations()
+	{
+		String source = "http://www.eclipse.org/OCL/Collection"; //$NON-NLS-1$	
+		addAnnotation
+		  (getAnnotation_OwnedContents(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getAnnotation_OwnedDetails(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getAnnotation_References(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getAssociationClass_UnownedAttributes(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getClass_Extenders(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getClass_OwnedBehaviors(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getClass_OwnedInvariants(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getClass_OwnedOperations(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getClass_OwnedProperties(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getClass_SuperClasses(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getCollectionLiteralExp_OwnedParts(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getComment_AnnotatedElements(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getCompleteClass_PartialClasses(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getCompleteModel_OwnedCompletePackages(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getCompleteModel_PartialModels(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getCompletePackage_OwnedCompleteClasses(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getCompletePackage_OwnedCompletePackages(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getCompletePackage_PartialPackages(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getConnectionPointReference_Entries(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getConnectionPointReference_Exits(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getConstraint_ConstrainedElements(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getConstraint_RedefinedConstraints(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getDetail_Values(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getDynamicType_OwnedDynamicProperties(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getElement__AllOwnedElements(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getElement_AnnotatingComments(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getElement_OwnedAnnotations(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getElement_OwnedComments(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getElement_OwnedExtensions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getEnumeration_OwnedLiterals(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getExpressionInOCL_OwnedParameters(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getInstanceSpecification_Classes(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getInstanceSpecification_OwnedSlots(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getIteration_OwnedAccumulators(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getIteration_OwnedIterators(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getLambdaType_ParameterType(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getLibrary_OwnedPrecedences(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getLoopExp_OwnedIterators(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getMapLiteralExp_OwnedParts(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getMessageExp_OwnedArguments(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getModel_OwnedImports(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getModel_OwnedPackages(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getNamespace_OwnedConstraints(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getNavigationCallExp_Qualifiers(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getOperation_OwnedParameters(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getOperation_OwnedPostconditions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getOperation_OwnedPreconditions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getOperation_RaisedExceptions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getOperation_RedefinedOperations(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getOperationCallExp_OwnedArguments(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getPackage_ImportedPackages(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getPackage_OwnedClasses(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getPackage_OwnedInstances(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getPackage_OwnedPackages(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getPackage_OwnedProfileApplications(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getPrimitiveType_Coercions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getProfile_ProfileApplications(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getProperty_Keys(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getProperty_RedefinedProperties(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getProperty_SubsettedProperty(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getRegion_OwnedSubvertexes(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getRegion_OwnedTransitions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getShadowExp_OwnedParts(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getSlot_OwnedValues(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getState_OwnedConnectionPoints(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getState_OwnedConnections(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getState_OwnedDeferrableTriggers(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getState_OwnedRegions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getStateMachine_ExtendedStateMachines(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getStateMachine_OwnedConnectionPoints(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getStateMachine_OwnedRegions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getStateMachine_SubmachineStates(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getStereotype_OwnedExtenders(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getTemplateBinding_OwnedSubstitutions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getTemplateParameter_ConstrainingClasses(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getTemplateSignature_OwnedParameters(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getTemplateableElement_OwnedBindings(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getTransition_OwnedTriggers(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getTupleLiteralExp_OwnedParts(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getVertex_IncomingTransitions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });	
+		addAnnotation
+		  (getVertex_OutgoingTransitions(), 
+		   source, 
+		   new String[] 
+		   {
+			 "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 } //PivotPackageImpl

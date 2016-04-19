@@ -79,6 +79,34 @@ public interface ShadowExp extends OCLExpression
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	boolean validateClassHasNoStringValueInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateDataTypeHasNoPartInitializers(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateDataTypeHasStringValueInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateInitializesAllClassProperties(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	boolean validateTypeIsNotInvalid(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	@Override

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import java.util.Map;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 
 /**
@@ -54,6 +56,21 @@ public interface TupleLiteralPart
 	 * @generated
 	 */
 	void setOwnedInit(OCLExpression value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateCompatibleInitialiserType(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	boolean validateTypeIsNotInvalid(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	TuplePartId getPartId();
 } // TupleLiteralPart

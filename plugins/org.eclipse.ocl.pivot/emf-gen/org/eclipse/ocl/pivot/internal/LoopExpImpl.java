@@ -309,8 +309,7 @@ public abstract class LoopExpImpl
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[?] = self.ownedIterators->forAll(p |
-		 *           p?.ownedInit->isEmpty())
+		 *         status : OclAny[?] = self.ownedIterators->forAll(ownedInit->isEmpty())
 		 *       in
 		 *         'LoopExp::NoInitializers'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -319,9 +318,9 @@ public abstract class LoopExpImpl
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_LoopExp_c_c_NoInitializers);
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_1;
+		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_1 = ValueUtil.TRUE_VALUE;
+		    symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
 		    /*@Caught*/ @NonNull Object CAUGHT_status;
@@ -329,10 +328,10 @@ public abstract class LoopExpImpl
 		        final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 		        final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 		        /*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-		        @Nullable Iterator<Object> ITERATOR_p = BOXED_ownedIterators.iterator();
+		        @NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
 		        /*@Thrown*/ boolean status;
 		        while (true) {
-		            if (!ITERATOR_p.hasNext()) {
+		            if (!ITERATOR__1.hasNext()) {
 		                if (accumulator == ValueUtil.TRUE_VALUE) {
 		                    status = ValueUtil.TRUE_VALUE;
 		                }
@@ -341,23 +340,15 @@ public abstract class LoopExpImpl
 		                }
 		                break;
 		            }
-		            /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Variable p = (Variable)ITERATOR_p.next();
+		            @SuppressWarnings("null")
+		            /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Variable _1 = (Variable)ITERATOR__1.next();
 		            /**
-		             * p?.ownedInit->isEmpty()
+		             * ownedInit->isEmpty()
 		             */
 		            /*@Caught*/ @NonNull Object CAUGHT_isEmpty;
 		            try {
-		                final /*@NonInvalid*/ @NonNull Object symbol_0 = p == null;
-		                /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression safe_ownedInit_source;
-		                if (symbol_0 == Boolean.TRUE) {
-		                    safe_ownedInit_source = null;
-		                }
-		                else {
-		                    assert p != null;
-		                    final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = p.getOwnedInit();
-		                    safe_ownedInit_source = ownedInit;
-		                }
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OCLExpression, safe_ownedInit_source);
+		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = _1.getOwnedInit();
+		                final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OCLExpression, ownedInit);
 		                final /*@Thrown*/ boolean isEmpty = CollectionIsEmptyOperation.INSTANCE.evaluate(oclAsSet).booleanValue();
 		                CAUGHT_isEmpty = isEmpty;
 		            }
@@ -385,9 +376,9 @@ public abstract class LoopExpImpl
 		        CAUGHT_status = ValueUtil.createInvalidValue(e);
 		    }
 		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_LoopExp_c_c_NoInitializers, this, null, diagnostics, context, null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_1 = logDiagnostic;
+		    symbol_0 = logDiagnostic;
 		}
-		return Boolean.TRUE == symbol_1;
+		return Boolean.TRUE == symbol_0;
 	}
 
 	/**

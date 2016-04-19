@@ -18625,13 +18625,49 @@ public interface PivotPackage
 	int SHADOW_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Class Has No String Value Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_EXP___VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Validate Data Type Has No Part Initializers</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Validate Data Type Has String Value Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 2;
+
+	/**
+	 * The operation id for the '<em>Validate Initializes All Class Properties</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 3;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 0;
+	int SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Shadow Exp</em>' class.
@@ -18640,7 +18676,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int SHADOW_EXP_OPERATION_COUNT = OCL_EXPRESSION_OPERATION_COUNT + 1;
+	int SHADOW_EXP_OPERATION_COUNT = OCL_EXPRESSION_OPERATION_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.ShadowPartImpl <em>Shadow Part</em>}' class.
@@ -18779,13 +18815,22 @@ public interface PivotPackage
 	int SHADOW_PART___COMPATIBLE_BODY__VALUESPECIFICATION = TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Compatible Initialiser Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SHADOW_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 0;
+	int SHADOW_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Shadow Part</em>' class.
@@ -18794,7 +18839,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int SHADOW_PART_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 1;
+	int SHADOW_PART_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -21256,13 +21301,22 @@ public interface PivotPackage
 	int TUPLE_LITERAL_PART___COMPATIBLE_BODY__VALUESPECIFICATION = VARIABLE_DECLARATION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Compatible Initialiser Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
+	int TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION_OPERATION_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Tuple Literal Part</em>' class.
@@ -21271,7 +21325,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TUPLE_LITERAL_PART_OPERATION_COUNT = VARIABLE_DECLARATION_OPERATION_COUNT + 0;
+	int TUPLE_LITERAL_PART_OPERATION_COUNT = VARIABLE_DECLARATION_OPERATION_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -25315,6 +25369,46 @@ public interface PivotPackage
 	EAttribute getShadowExp_Value();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ShadowExp#validateClassHasNoStringValueInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Class Has No String Value Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Class Has No String Value Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ShadowExp#validateClassHasNoStringValueInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getShadowExp__ValidateClassHasNoStringValueInitializer__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ShadowExp#validateDataTypeHasNoPartInitializers(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Data Type Has No Part Initializers</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Data Type Has No Part Initializers</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ShadowExp#validateDataTypeHasNoPartInitializers(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getShadowExp__ValidateDataTypeHasNoPartInitializers__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ShadowExp#validateDataTypeHasStringValueInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Data Type Has String Value Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Data Type Has String Value Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ShadowExp#validateDataTypeHasStringValueInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ShadowExp#validateInitializesAllClassProperties(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Initializes All Class Properties</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Initializes All Class Properties</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ShadowExp#validateInitializesAllClassProperties(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getShadowExp__ValidateInitializesAllClassProperties__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ShadowExp#validateTypeIsNotInvalid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Invalid</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -25355,6 +25449,16 @@ public interface PivotPackage
 	 * @generated
 	 */
 	EReference getShadowPart_ReferredProperty();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ShadowPart#validateCompatibleInitialiserType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Compatible Initialiser Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Compatible Initialiser Type</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ShadowPart#validateCompatibleInitialiserType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getShadowPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ShadowPart#validateTypeIsNotInvalid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Invalid</em>}' operation.
@@ -25741,6 +25845,26 @@ public interface PivotPackage
 	 * @generated
 	 */
 	EReference getTupleLiteralPart_OwnedInit();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.TupleLiteralPart#validateCompatibleInitialiserType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Compatible Initialiser Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Compatible Initialiser Type</em>' operation.
+	 * @see org.eclipse.ocl.pivot.TupleLiteralPart#validateCompatibleInitialiserType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.TupleLiteralPart#validateTypeIsNotInvalid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Invalid</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Type Is Not Invalid</em>' operation.
+	 * @see org.eclipse.ocl.pivot.TupleLiteralPart#validateTypeIsNotInvalid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TupleType <em>Tuple Type</em>}'.
@@ -30029,6 +30153,38 @@ public interface PivotPackage
 		EAttribute SHADOW_EXP__VALUE = eINSTANCE.getShadowExp_Value();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Class Has No String Value Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SHADOW_EXP___VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getShadowExp__ValidateClassHasNoStringValueInitializer__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Data Type Has No Part Initializers</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getShadowExp__ValidateDataTypeHasNoPartInitializers__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Data Type Has String Value Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Initializes All Class Properties</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP = eINSTANCE.getShadowExp__ValidateInitializesAllClassProperties__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Type Is Not Invalid</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -30061,6 +30217,14 @@ public interface PivotPackage
 		 * @generated
 		 */
 		EReference SHADOW_PART__REFERRED_PROPERTY = eINSTANCE.getShadowPart_ReferredProperty();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Compatible Initialiser Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SHADOW_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getShadowPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Type Is Not Invalid</b></em>' operation.
@@ -30365,6 +30529,22 @@ public interface PivotPackage
 		 * @generated
 		 */
 		EReference TUPLE_LITERAL_PART__OWNED_INIT = eINSTANCE.getTupleLiteralPart_OwnedInit();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Compatible Initialiser Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Type Is Not Invalid</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TupleTypeImpl <em>Tuple Type</em>}' class.
