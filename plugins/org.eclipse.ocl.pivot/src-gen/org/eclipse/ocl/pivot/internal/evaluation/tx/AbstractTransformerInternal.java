@@ -62,7 +62,7 @@ import org.eclipse.ocl.pivot.evaluation.tx.Transformer;
  * The abstract implementation of an auto-generated transformation provides the shared infrastructure for maintaining
  * models and deferring invocation of not-ready mapping invocations.
  * 
- * @since 1.1
+ * at-since 1.1
  */
 public abstract class AbstractTransformerInternal extends AbstractModelManager implements Transformer, ExecutionVisitable
 {	
@@ -597,22 +597,35 @@ public abstract class AbstractTransformerInternal extends AbstractModelManager i
 
     /**
      * The default handler for an exception during mapping execution rethrows an InvocationFailedException so that the
-     * caller may organize a re-exection when the reqired memory access can succeed. All other execptions are just
-     * absorbed since they may represent a predicate failure.
+     * caller may organize a re-exection when the reqired memory access can succeed. Errors are rethrown and should
+     * propagate to the transformation invoker, except for AssertionError which is is absorbed if the user has configured
+     * AbstractTransformer.EXCEPTIONS to observe them on the console. All other exceptions are just absorbed since they
+     * may represent a predicate failure.
      */
     protected boolean handleExecutionFailure(@NonNull String mappingName, @NonNull Throwable e) throws InvocationFailedException {
-    	if (e instanceof InvocationFailedException) {
+    	if (e instanceof InvocationFailedException) {		// Normal case - premature access needs a retry later
     		throw (InvocationFailedException)e;
     	}
-		// Mapping failures are just mappings that never happened.
-    	if (e instanceof InvalidValueException) {		// Multiway branch to facilitate debugger breakpoints.
-    		AbstractTransformer.EXCEPTIONS.println("Execution failure in " + mappingName + " : " + e);
+    	else if (e instanceof AssertionError) {				// Debug case - assertion errors are diagnostic not catastrophic
+    		AbstractTransformer.EXCEPTIONS.println("Execution failure in '" + mappingName + "' : " + e);
+        	if (!AbstractTransformer.EXCEPTIONS.isActive()) {
+        		throw (AssertionError)e;					// But if the user isn't watching them they are fatal
+    		}
     	}
-    	else if (e instanceof NullPointerException) {
-    		AbstractTransformer.EXCEPTIONS.println("Execution failure in " + mappingName + " : " + e);
+    	else if (e instanceof Error) {						// Real errors are fatal
+    		AbstractTransformer.EXCEPTIONS.println("Execution failure in '" + mappingName + "' : " + e);
+    		throw (Error)e;
     	}
-    	else {
-    		AbstractTransformer.EXCEPTIONS.println("Execution failure in " + mappingName + " : " + e);
+    	else { 												// Other failures are just mappings whose predicates were not satisfied.
+    		if (e instanceof InvalidValueException) {		// Multiway branch to facilitate debugger breakpoints.
+	    		AbstractTransformer.EXCEPTIONS.println("Execution failure in '" + mappingName + "' : " + e);
+	    	}
+	    	else if (e instanceof NullPointerException) {
+	    		AbstractTransformer.EXCEPTIONS.println("Execution failure in '" + mappingName + "' : " + e);
+	    	}
+	    	else {
+	    		AbstractTransformer.EXCEPTIONS.println("Execution failure in '" + mappingName + "' : " + e);
+	    	}
     	}
     	return false;
 	}

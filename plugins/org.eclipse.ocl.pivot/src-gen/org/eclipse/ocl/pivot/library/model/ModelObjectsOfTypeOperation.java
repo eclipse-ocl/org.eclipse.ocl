@@ -33,7 +33,7 @@ import org.eclipse.ocl.pivot.evaluation.tx.TypedModelInstance;
 
 /**
  * ModelObjectsOfTypeOperation realises the Model::objectsOfType() library operation.
- * @since 1.1
+ * at-since 1.1
  */
 public class ModelObjectsOfTypeOperation extends AbstractBinaryOperation
 {

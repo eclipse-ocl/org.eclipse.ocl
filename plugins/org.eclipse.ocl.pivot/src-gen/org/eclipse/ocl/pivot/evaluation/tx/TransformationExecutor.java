@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 /**
  * A TransformationExecutor supervises the execution of an auto-generated transformation.
  * 
- * @since 1.1
+ * at-since 1.1
  * @noimplement
  */
 public interface TransformationExecutor extends Executor

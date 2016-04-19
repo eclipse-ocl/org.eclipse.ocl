@@ -30,7 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * The abstract implementation of a SlotState provides the mandatory shared functionality for maintaining
  * the state of an object slot.
  * 
- * @since 1.1
+ * at-since 1.1
  */
 public abstract class AbstractSlotState implements SlotState
 {

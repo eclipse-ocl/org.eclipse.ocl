@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * A SlotState identifies the assigned/not assigned state of an Object slot.
  * 
- * @since 1.1
+ * at-since 1.1
  * @noimplement clients should derive from AbstractSlotState
  */
 public interface SlotState extends ExecutionVisitable

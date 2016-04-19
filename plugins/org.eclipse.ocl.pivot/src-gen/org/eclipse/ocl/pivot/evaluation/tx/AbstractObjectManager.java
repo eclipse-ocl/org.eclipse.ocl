@@ -26,7 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * AbstractObjectManager provides the mandatory shared functionality for an object state manager.
- * @since 1.1
+ * at-since 1.1
  */
 public abstract class AbstractObjectManager implements ObjectManager
 {

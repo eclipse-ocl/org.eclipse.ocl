@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * AbstractInvocationManager provides the mandatory shared functionality for a mapping invocation manager.
- * @since 1.1
+ * at-since 1.1
  */
 public abstract class AbstractInvocationManager implements InvocationManager
 {
