@@ -56,7 +56,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 	/**
 	 *	The shared immutable instance of the org.eclipse.ocl.xtext.oclstdlib.OCLstdlib Grammar model.
 	 */
-	public static final @SuppressWarnings("null")@NonNull Grammar GRAMMAR = (Grammar)INSTANCE.getContents().get(0);
+	public static final @NonNull Grammar GRAMMAR = (Grammar)INSTANCE.getContents().get(0);
 
 	/**
 	 *	The name of the language supported by this grammar.
