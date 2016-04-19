@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.evaluation.tx.SlotState;
 
 /**
  * AbstractInvocation provides the shared implementation of the intrusive blocked/waiting linked list functionality.
- * @since 1.1
+ * at-since 1.1
  */
 public abstract class AbstractInvocationInternal implements Invocation
 {

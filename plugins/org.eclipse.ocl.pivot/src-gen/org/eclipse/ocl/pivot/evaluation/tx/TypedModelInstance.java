@@ -27,7 +27,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * A TypedModelInstance makes an input or output model of an executing transformation
  * accessible as a model instance.
  * 
- * @since 1.1
+ * at-since 1.1
  * @noimplement clients should derive from AbstractTypedModelInstance
  */
 public interface TypedModelInstance

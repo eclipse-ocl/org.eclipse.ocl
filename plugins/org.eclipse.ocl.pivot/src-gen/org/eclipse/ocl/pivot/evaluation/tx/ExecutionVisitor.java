@@ -27,7 +27,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * @since 1.1
+ * at-since 1.1
  */
 public interface ExecutionVisitor<R>
 {

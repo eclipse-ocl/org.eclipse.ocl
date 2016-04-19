@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * ExecutionVisitable defines the common visitable capability of all run-time execution objects.
  * 
  * @noimplement clients should derive from some AbstractXXX class
- * @since 1.1
+ * at-since 1.1
  */
 public interface ExecutionVisitable
 { 

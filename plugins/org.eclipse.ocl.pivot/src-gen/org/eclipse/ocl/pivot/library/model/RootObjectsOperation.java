@@ -33,7 +33,7 @@ import org.eclipse.ocl.pivot.evaluation.tx.TypedModelInstance;
 
 /**
  * RootObjectsOperation realises the Model::rootObjects() library operation.
- * @since 1.1
+ * at-since 1.1
  */
 public class RootObjectsOperation extends AbstractUnaryOperation
 {

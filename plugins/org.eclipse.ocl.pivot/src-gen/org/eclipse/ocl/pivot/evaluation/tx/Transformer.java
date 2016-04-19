@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
  * A Transformer provides the core support to execute an auto-generated transformation
  * between models.
  * 
- * @since 1.1
+ * at-since 1.1
  * @noimplement clients should derive from AbstractTransformer
  */
 public interface Transformer extends ModelManager//, ExecutionVisitable

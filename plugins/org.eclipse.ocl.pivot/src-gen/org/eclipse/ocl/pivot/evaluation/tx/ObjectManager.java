@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * 
  * assigned should be invoked to invocation that a property whose access is guarded is now assigned.
  * 
- * @since 1.1
+ * at-since 1.1
  * @noimplement clients should derive from AbstractObjectManager
  */
 public interface ObjectManager extends ExecutionVisitable

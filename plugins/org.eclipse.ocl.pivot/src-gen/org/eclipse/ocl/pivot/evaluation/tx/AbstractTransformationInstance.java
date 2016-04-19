@@ -22,7 +22,7 @@ package org.eclipse.ocl.pivot.evaluation.tx;
  * The abstract implementation of a transformation instance provides the mandatory shared functionality for maintaining
  * a run-time representation of a transformation.
  * 
- * @since 1.1
+ * at-since 1.1
  */
 public abstract class AbstractTransformationInstance implements TransformationInstance
 {	

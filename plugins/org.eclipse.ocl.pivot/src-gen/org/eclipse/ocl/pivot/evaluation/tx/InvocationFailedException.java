@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * access a Property before its value has been assigned. The InvocationManager should catch the exception
  * and mark the invocation for a retry once the Property has been assigned.
  * 
- * @since 1.1
+ * at-since 1.1
  */
 @SuppressWarnings("serial")
 public class InvocationFailedException extends InvalidValueException
