@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.eclipse.ocl.examples.validity;singleton:=true
-Bundle-Version: 2.0.100.qualifier
+Bundle-Version: 2.1.0.qualifier
 Bundle-Activator: org.eclipse.ocl.examples.validity.plugin.OCLValidityPlugin$Implementation
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.filesystem;bundle-version="[1.2.0,2.0.0)",
@@ -14,10 +14,10 @@ Require-Bundle: org.eclipse.core.filesystem;bundle-version="[1.2.0,2.0.0)",
  org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.ui.ide;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.uml2.uml;bundle-version="[4.0.0,6.0.0)",
- org.eclipse.ocl.examples.emf.validation.validity;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
- org.eclipse.ocl.examples.emf.validation.validity.ui,
- org.eclipse.ocl.examples.debug,
- org.eclipse.ocl.examples.xtext.console,
+ org.eclipse.ocl.examples.emf.validation.validity;bundle-version="[2.1.0,3.0.0)";visibility:=reexport,
+ org.eclipse.ocl.examples.emf.validation.validity.ui;bundle-version="[2.1.0,3.0.0)",
+ org.eclipse.ocl.examples.debug;bundle-version="[2.1.0,3.0.0)",
+ org.eclipse.ocl.examples.xtext.console;bundle-version="[4.1.0,5.0.0)",
  org.eclipse.ocl.xtext.completeocl;bundle-version="[1.0.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

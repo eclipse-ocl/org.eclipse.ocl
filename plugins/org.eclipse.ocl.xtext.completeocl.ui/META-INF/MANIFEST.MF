@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-Version: 1.0.100.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: org.eclipse.ocl.xtext.completeocl.ui;singleton:=true
 Require-Bundle: org.eclipse.uml2.uml;bundle-version="[4.0.0,6.0.0)",
  org.eclipse.ocl.xtext.completeocl;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
