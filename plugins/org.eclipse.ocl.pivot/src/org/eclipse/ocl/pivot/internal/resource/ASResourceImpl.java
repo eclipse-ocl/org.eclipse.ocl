@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -54,6 +55,15 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			defaultSaveOptions = XMIUtil.createSaveOptions();
 		}
 		return defaultSaveOptions;
+	}
+
+	@Override
+	protected EObject getEObjectByID(String id) {
+	    if (idToEObjectMap == null) {				// Lazy xmi:id creation need by generated ASResources
+			AS2XMIid as2xmIid = new AS2XMIid();
+			as2xmIid.assignIds(this, null);
+	    }
+		return super.getEObjectByID(id);
 	}
 
 	@Override
