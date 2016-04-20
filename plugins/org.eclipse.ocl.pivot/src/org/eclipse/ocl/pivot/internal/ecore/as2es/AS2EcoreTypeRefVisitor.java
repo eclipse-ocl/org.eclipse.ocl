@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
@@ -115,7 +114,7 @@ public class AS2EcoreTypeRefVisitor
 				return eClassifier;
 			}
 			if (metamodelManager.isTypeServeable(pivotType)) {
-				Iterable<Class> partialClasses = metamodelManager.getPartialClasses(pivotType);
+				Iterable<org.eclipse.ocl.pivot.Class> partialClasses = metamodelManager.getPartialClasses(pivotType);
 				for (org.eclipse.ocl.pivot.Class type : partialClasses) {
 					if (type instanceof PivotObjectImpl) {
 						EObject eTarget = ((PivotObjectImpl)type).getESObject();
@@ -151,7 +150,7 @@ public class AS2EcoreTypeRefVisitor
 			if (eClassifier1 != null) {
 				return eClassifier1;
 			}
-			Iterable<Class> partialClasses = metamodelManager.getPartialClasses(pivotType);
+			Iterable<org.eclipse.ocl.pivot.Class> partialClasses = metamodelManager.getPartialClasses(pivotType);
 			for (org.eclipse.ocl.pivot.Class type : partialClasses) {
 				if (type instanceof PivotObjectImpl) {
 					EObject eTarget = ((PivotObjectImpl)type).getESObject();
@@ -214,32 +213,37 @@ public class AS2EcoreTypeRefVisitor
 			return eClassifier;
 		}
 		CompleteClass completeClass = metamodelManager.getCompleteClass(pivotType);
-		for (org.eclipse.ocl.pivot.Class aType : completeClass.getPartialClasses()) {
-			if (!(aType instanceof PrimitiveType)) {
+		List<org.eclipse.ocl.pivot.Class> partialClasses = completeClass.getPartialClasses();
+		for (org.eclipse.ocl.pivot.Class aType : partialClasses) {
+			if (!(aType instanceof PrimitiveType)) {		// FIXME This loop appears to be unnecessary
 				eClassifier = context.getCreated(EDataType.class, pivotType);
 				if (eClassifier != null) {
 					return eClassifier;
 				}
 			}
 		}
-		if (pivotType == standardLibrary.getBooleanType()) {
-			return EcorePackage.Literals.EBOOLEAN;
+		org.eclipse.ocl.pivot.Package standardLibraryPackage = standardLibrary.getPackage();
+		for (org.eclipse.ocl.pivot.Class aType : partialClasses) {
+			org.eclipse.ocl.pivot.Package pivotPackage = aType.getOwningPackage();
+			if (pivotPackage == standardLibraryPackage) {
+				if (aType == standardLibrary.getStringType()) {
+					return EcorePackage.Literals.ESTRING;
+				}
+				else if (aType == standardLibrary.getBooleanType()) {
+					return EcorePackage.Literals.EBOOLEAN;
+				}
+				else if (aType == standardLibrary.getIntegerType()) {
+					return EcorePackage.Literals.EBIG_INTEGER;
+				}
+				else if (aType == standardLibrary.getRealType()) {
+					return EcorePackage.Literals.EBIG_DECIMAL;
+				}
+				else if (aType == standardLibrary.getUnlimitedNaturalType()) {
+					return EcorePackage.Literals.EBIG_INTEGER;
+				}
+			}
 		}
-		else if (pivotType == standardLibrary.getIntegerType()) {
-			return EcorePackage.Literals.EBIG_INTEGER;
-		}
-		else if (pivotType == standardLibrary.getRealType()) {
-			return EcorePackage.Literals.EBIG_DECIMAL;
-		}
-		else if (pivotType == standardLibrary.getStringType()) {
-			return EcorePackage.Literals.ESTRING;
-		}
-		else if (pivotType == standardLibrary.getUnlimitedNaturalType()) {
-			return EcorePackage.Literals.EBIG_INTEGER;
-		}
-		else {
-			throw new IllegalArgumentException("Unsupported primitive type '" + pivotType + "' in AS2Ecore TypeRef pass");
-		}
+		throw new IllegalArgumentException("Unsupported primitive type '" + pivotType + "' in AS2Ecore TypeRef pass");
 	}
 
 	@Override

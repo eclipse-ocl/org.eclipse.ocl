@@ -924,6 +924,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
     	StandardLibrary standardLibrary = ocl.getStandardLibrary();
     	org.eclipse.ocl.pivot.Class primitiveType = useCodeGen ? standardLibrary.getClassType() : ocl.getMetamodelManager().getASClass("PrimitiveType");
+    	org.eclipse.ocl.pivot.Class classType = useCodeGen ? standardLibrary.getClassType() : ocl.getMetamodelManager().getASClass("Class");
     	assert primitiveType != null;
     	CollectionTypeId bagTypeId = TypeId.BAG.getSpecializedId(TypeId.OCL_ANY);
     	CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(TypeId.OCL_ANY);
@@ -931,7 +932,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 			ocl.assertQueryEquals(null, ValueUtil.createSetOfEach(setTypeId, standardLibrary.getStringType()), "'string'.oclTypes()");
 			ocl.assertQueryEquals(null, ValueUtil.createSetOfEach(setTypeId, standardLibrary.getOclVoidType()), "self.oclTypes()");
 	    	ocl.assertQueryEquals(null, ValueUtil.createBagOfEach(bagTypeId, primitiveType), "3.oclTypes().oclType()");
-	    	ocl.assertQueryEquals(null, ValueUtil.createBagOfEach(bagTypeId, standardLibrary.getClassType()), "3.oclTypes().oclType().oclType()");
+	    	ocl.assertQueryEquals(null, ValueUtil.createBagOfEach(bagTypeId, classType), "3.oclTypes().oclType().oclType()");
 	    	ocl.assertQueryEquals(null, ValueUtil.createSetOfEach(setTypeId, primitiveType), "Boolean.oclTypes()");
 	    	//    	ocl.assertQueryEquals(null, ValueUtil.createSetOfEach(setTypeId, primitiveType.getName()), "Boolean.oclTypes().name");
     	}
