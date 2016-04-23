@@ -108,10 +108,13 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public static boolean isNullFree(@NonNull ETypedElement eObject) {
-		boolean isNullFree = false;
+		boolean isNullFree;
 		EAnnotation eAnnotation = eObject.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 		if (eAnnotation != null) {
 			isNullFree = Boolean.valueOf(eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE));
+		}
+		else {
+			isNullFree = true;		// UML collections are always null-free.Make it the undeclared default.
 		}
 		return isNullFree;
 	}

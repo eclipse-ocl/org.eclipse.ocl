@@ -15,15 +15,9 @@
         eType="#//LoyaltyProgram" eOpposite="#//LoyaltyProgram/levels"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="availableServices" ordered="false"
         upperBound="-1" eType="#//Service" eOpposite="#//Service/level">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="Membership" ordered="false"
         upperBound="-1" eType="#//Membership" eOpposite="#//Membership/currentLevel">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Gender">
@@ -68,9 +62,6 @@
         eType="#//Membership" eOpposite="#//Membership/account"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transactions" ordered="false"
         upperBound="-1" eType="#//Transaction" eOpposite="#//Transaction/account">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Earning" eSuperTypes="#//Transaction"/>
@@ -79,15 +70,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="numberOfCustomers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="deliveredServices" ordered="false"
         upperBound="-1" eType="#//Service" eOpposite="#//Service/partner">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="programs" ordered="false"
         lowerBound="1" upperBound="-1" eType="#//LoyaltyProgram" eOpposite="#//LoyaltyProgram/partners">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Burning" eSuperTypes="#//Transaction"/>
@@ -112,9 +97,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="lines" ordered="false"
         upperBound="-1" eType="#//TransactionReportLine" eOpposite="#//TransactionReportLine/report">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="card" lowerBound="1" eType="#//CustomerCard"/>
   </eClassifiers>
@@ -139,9 +121,6 @@
         eType="#//Membership" eOpposite="#//Membership/card"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transactions" ordered="false"
         upperBound="-1" eType="#//Transaction" eOpposite="#//Transaction/card">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Date">
@@ -178,81 +157,42 @@
   <eClassifiers xsi:type="ecore:EClass" name="Container_RandL">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_Customer" upperBound="-1"
         eType="#//Customer" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_Date" upperBound="-1"
         eType="#//Date" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_CustomerCard"
         upperBound="-1" eType="#//CustomerCard" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_Membership" upperBound="-1"
         eType="#//Membership" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_Service" upperBound="-1"
         eType="#//Service" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_LoyaltyProgram"
         upperBound="-1" eType="#//LoyaltyProgram" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_Earning" upperBound="-1"
         eType="#//Earning" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_LoyaltyAccount"
         upperBound="-1" eType="#//LoyaltyAccount" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_ServiceLevel"
         upperBound="-1" eType="#//ServiceLevel" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_TransactionReport"
         upperBound="-1" eType="#//TransactionReport" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_ProgramPartner"
         upperBound="-1" eType="#//ProgramPartner" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_Burning" upperBound="-1"
         eType="#//Burning" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref_RandL_TransactionReportLine"
         upperBound="-1" eType="#//TransactionReportLine" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Service">
@@ -274,9 +214,6 @@
         eType="#//ProgramPartner" eOpposite="#//ProgramPartner/deliveredServices"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transactions" ordered="false"
         upperBound="-1" eType="#//Transaction" eOpposite="#//Transaction/generatedBy">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="level" lowerBound="1" eType="#//ServiceLevel"
         eOpposite="#//ServiceLevel/availableServices"/>
@@ -295,21 +232,12 @@
         eType="#//Date" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="programs" ordered="false"
         upperBound="-1" eType="#//LoyaltyProgram" eOpposite="#//LoyaltyProgram/participants">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="cards" ordered="false"
         upperBound="-1" eType="#//CustomerCard" eOpposite="#//CustomerCard/owner">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="memberships" upperBound="-1"
         eType="#//Membership">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TransactionReportLine">
@@ -332,9 +260,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LoyaltyProgram">
     <eOperations name="selectPopularPartners" ordered="false" upperBound="-1" eType="#//ProgramPartner">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
       <eParameters name="d" lowerBound="1" eType="#//Date"/>
     </eOperations>
     <eOperations name="addService">
@@ -363,27 +288,15 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="partners" ordered="false"
         lowerBound="1" upperBound="-1" eType="#//ProgramPartner" eOpposite="#//ProgramPartner/programs">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="levels" lowerBound="1"
         upperBound="-1" eType="#//ServiceLevel" eOpposite="#//ServiceLevel/program">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="participants" upperBound="-1"
         eType="#//Customer" eOpposite="#//Customer/programs">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="memberships" upperBound="-1"
         eType="#//Membership">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>

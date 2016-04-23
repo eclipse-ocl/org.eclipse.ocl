@@ -874,7 +874,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		
 		private @NonNull Boolean isNullFree(@Nullable EObject eObject) {
 			if (eObject == null) {
-				return ValueUtil.FALSE_VALUE;
+				return ValueUtil.TRUE_VALUE;
 			}
 			else if ((eObject instanceof org.eclipse.uml2.uml.Class) || (eObject instanceof org.eclipse.uml2.uml.Package)) {
 				org.eclipse.uml2.uml.NamedElement umlElement = (org.eclipse.uml2.uml.NamedElement)eObject;

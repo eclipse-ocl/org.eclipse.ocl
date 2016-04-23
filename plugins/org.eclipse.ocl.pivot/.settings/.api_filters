@@ -442,9 +442,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/TupleLiteralPart.java">
-        <filter id="0"/>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/TupleLiteralPart.java" type="org.eclipse.ocl.pivot.TupleLiteralPart">
         <filter id="403804204">
             <message_arguments>
@@ -459,11 +456,6 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotPackageImpl.java" type="org.eclipse.ocl.pivot.internal.PivotPackageImpl">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="createCollectionAnnotations()"/>
-            </message_arguments>
-        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="getShadowExp__ValidateClassHasNoStringValueInitializer__DiagnosticChain_Map()"/>

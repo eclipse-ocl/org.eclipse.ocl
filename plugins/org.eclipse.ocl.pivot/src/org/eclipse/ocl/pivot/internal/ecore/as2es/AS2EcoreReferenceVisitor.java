@@ -259,12 +259,12 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 				logger.error("Illegal upper bound", e);
 			}
 			EAnnotation eAnnotation = eTypedElement.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
-			if (collectionType.isIsNullFree()) {
+			if (!collectionType.isIsNullFree()) {
 				if (eAnnotation == null) {
 					eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 					eAnnotation.setSource(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 				}
-				eAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, "true");
+				eAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, "false");
 				eTypedElement.getEAnnotations().add(eAnnotation);
 			}
 			else {
