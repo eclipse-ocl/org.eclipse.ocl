@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.build.xtend;
 import java.io.File;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -162,6 +163,12 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	@Override
 	protected @NonNull Map<org.eclipse.ocl.pivot.Package, List<CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
 		return super.getSortedCollectionTypes(root, collectionTypeComparator);
+	}
+	
+	@Override
+	protected @NonNull Map<org.eclipse.ocl.pivot.Package, List<PrimitiveType>> getSortedPrimitiveTypes(@NonNull Model root) {
+		Map<org.eclipse.ocl.pivot.Package, List<PrimitiveType>> pkge2primitiveTypes = new HashMap<org.eclipse.ocl.pivot.Package, List<PrimitiveType>>();
+		return pkge2primitiveTypes;
 	}
 
 	@Override
