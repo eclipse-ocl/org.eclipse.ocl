@@ -19,10 +19,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.as2cs.AliasAnalysis;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementWithURICS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
@@ -210,6 +212,21 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 			//System.out.println(ruleName + " 2=> " + semanticObject.eClass().getName());
 		}
 		else {
+			if (target instanceof org.eclipse.ocl.pivot.Package) {
+				EObject semanticRoot = EcoreUtil.getRootContainer(semanticObject);
+				if (semanticRoot instanceof RootPackageCS) {
+					for (ImportCS csImport : ((RootPackageCS)semanticRoot).getOwnedImports()) {
+						Element asElement = csImport.getPivot();
+						if  (asElement instanceof Import) {
+							Import asImport = (Import)asElement;
+							String aliasName = asImport.getName();
+							if ((aliasName != null) && (asImport.getImportedNamespace() == target)) {
+								return aliasName;
+							}
+						}
+					}
+				}
+			}
 			// Always UnrestrictedName => ReferenceCS
 			//System.out.println(ruleName + " 3=> " + semanticObject.eClass().getName());
 			Iterable<IEObjectDescription> elements = scope.getElements(target);
