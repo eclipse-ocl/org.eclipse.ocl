@@ -251,7 +251,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<Object, Cod
 //		}
 //		else {
 			if (cgIn.isConstant()) {
-				context.replace(cgLetExp, cgIn.getNamedValue(), "Null let-expression");
+				context.replace(cgLetExp, cgIn, "Null let-expression");
 			}
 //		}
 		return null;
