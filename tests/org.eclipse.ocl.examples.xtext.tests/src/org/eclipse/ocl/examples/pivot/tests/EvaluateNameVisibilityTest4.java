@@ -559,6 +559,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 * @throws ParserException 
 	 */
 	@Test public void test_uml_primitives_399378() throws ParserException {
+//		TestCaseAppender.INSTANCE.uninstall();
 		TestOCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
 		UML2AS.initialize(resourceSet);

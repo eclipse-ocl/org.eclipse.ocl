@@ -54,6 +54,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 //import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.util.UMLSwitch;
@@ -514,13 +515,16 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 						doneWarnings = new HashSet<EClass>();
 					}
 					EClass eClass = eObject.eClass();
+					String message = "No pivot representation of " + eClass.getName() + " " + LabelUtil.getLabel(eObject) + " created.";
+					converter.error(message);
 					if (doneWarnings.add(eClass)) {
-						logger.warn("Failed to create a pivot representation of a UML '" + eClass.getName() + "'");
+						logger.warn(message);
 					}
 				}
 			}
 		}
 	}
+
 	private <T extends Element> void doSwitchAllOptional(@NonNull Class<T> pivotClass, /*@NonNull*/ Collection<T> pivotElements, /*@NonNull*/ List<? extends EObject> eObjects) {
 		assert pivotElements != null;
 		assert eObjects != null;
