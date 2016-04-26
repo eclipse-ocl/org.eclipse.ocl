@@ -87,7 +87,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<Object, Cod
 		CGValuedElement cgCondition = context.getExpression(cgIfExp.getCondition());
 		CGInvalid cgInvalidValue = cgCondition.getInvalidValue();
 		if (cgInvalidValue != null) {
-			CGUtil.replace(cgIfExp, cgInvalidValue);
+			CGUtil.replace(cgIfExp, context.createCGConstantExp(cgInvalidValue));
 		}
 		else if (cgCondition.isNull()) {
 			context.setConstant(cgIfExp, context.getInvalid("Null cgCondition"));

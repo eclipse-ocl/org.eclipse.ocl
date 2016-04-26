@@ -20,9 +20,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
@@ -110,12 +110,20 @@ public class CodeGenAnalyzer
 		fieldingAnalyzer.analyze(cgRoot, false);
 	}
 
-	public @NonNull CGConstantExp createCGConstantExp(@NonNull OCLExpression element, @NonNull CGConstant constant) {
-		CGConstantExp cgLiteralExp = CGModelFactory.eINSTANCE.createCGConstantExp();
-		cgLiteralExp.setAst(element);
-		cgLiteralExp.setReferredConstant(constant);
-		cgLiteralExp.setTypeId(getTypeId(element.getTypeId()));
-		return cgLiteralExp;
+	public @NonNull CGValuedElement createCGConstantExp(@NonNull CGConstant cgConstant) {
+		CGConstantExp cgConstantExp = CGModelFactory.eINSTANCE.createCGConstantExp();
+		cgConstantExp.setAst(cgConstant.getAst());
+		cgConstantExp.setReferredConstant(cgConstant);
+		cgConstantExp.setTypeId(cgConstant.getTypeId());
+		return cgConstantExp;
+	}
+
+	public @NonNull CGConstantExp createCGConstantExp(@NonNull OCLExpression element, @NonNull CGConstant cgConstant) {
+		CGConstantExp cgConstantExp = CGModelFactory.eINSTANCE.createCGConstantExp();
+		cgConstantExp.setAst(element);
+		cgConstantExp.setReferredConstant(cgConstant);
+		cgConstantExp.setTypeId(getTypeId(element.getTypeId()));
+		return cgConstantExp;
 	}
 
 	protected @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
