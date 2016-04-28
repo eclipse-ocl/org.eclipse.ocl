@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -33,6 +34,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -57,6 +59,26 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	
 	private class OrphanCompleteClassImpl extends CompleteClassImpl
 	{
+		@Override
+		public boolean conformsTo(final @NonNull CompleteClass thatCompleteClass) {
+			final org.eclipse.ocl.pivot.@NonNull Class thisClass = getPrimaryClass();
+			final org.eclipse.ocl.pivot.@NonNull Class thatClass = thatCompleteClass.getPrimaryClass();
+			CompleteEnvironmentImpl completeEnvironmentImpl = new CompleteEnvironmentImpl()		// FIXME avoid this horrible fudge
+			{
+				@Override
+				public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type asType) {
+					if (asType == thisClass) {
+						return OrphanCompleteClassImpl.this;
+					}
+					if (asType == thatClass) {
+						return (@NonNull CompleteClassInternal) thatCompleteClass;
+					}
+					return super.getCompleteClass(asType);
+				} 
+			};
+			return completeEnvironmentImpl.conformsTo(thisClass, TemplateParameterSubstitutions.EMPTY, thatClass, TemplateParameterSubstitutions.EMPTY);
+		}
+		
 		@Override
 		public @NonNull CompletePackageInternal getOwningCompletePackage() {
 			return OrphanCompletePackageImpl.this;
