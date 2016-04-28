@@ -38,11 +38,6 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Detail;
-import org.eclipse.ocl.pivot.MapLiteralExp;
-import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.ShadowExp;
-import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
@@ -59,6 +54,9 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
+import org.eclipse.ocl.pivot.MapLiteralPart;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.MessageExp;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -76,7 +74,10 @@ import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
+import org.eclipse.ocl.pivot.ShadowExp;
+import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StateExp;
+import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -88,7 +89,6 @@ import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
-import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.UnspecifiedValueExp;
@@ -366,6 +366,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 					prefix = ",";
 				}
 			}
+			append(")");
 			if (collectionType != null) {
 				Number lower = collectionType.getLower();
 				Number upper = collectionType.getUpper();
@@ -375,7 +376,6 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 					StringUtil.appendMultiplicity(context, lowerValue, upperValue, collectionType.isIsNullFree());
 				}
 			}
-			append(")");
 		}
 	}
 
@@ -573,9 +573,16 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	@Override
 	public @Nullable String visitCompleteClass(@NonNull CompleteClass object) {
-		appendName(object);
+		List<org.eclipse.ocl.pivot.Class> partialClasses = object.getPartialClasses();
+		int size = partialClasses.size();
+		if (size > 0) {
+			partialClasses.get(0).accept(this);
+		}
+		else {
+			appendName(object);
+		}
 		append("*");
-		append(object.getPartialClasses().size());
+		append(size);
 		return null;
 	}
 

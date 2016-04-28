@@ -1633,7 +1633,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Sequence{2,null,3,1}", "Sequence{1,3,null,2}->reverse()");
 		ocl.assertQueryResults(null, "Sequence{21,20,19,18,17,16,15,14,13,24,23,22,4,15,14,12,11,10,9,null,8,7,6,5,4,3,4,3,2,1}", "Sequence{1..4,3..8,null,9..12,14..15,4,22..24,13..21}->reverse()");
 		ocl.assertQueryResults(null, "Sequence{Set{1..3},Sequence{1..3},OrderedSet{1,3},Bag{1,1,1}}", "Sequence{Bag{1,1,1},OrderedSet{1,3},Sequence{1..3},Set{1..3}}->reverse()");
-		ocl.assertSemanticErrorQuery(null, "Set{}->reverse()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(OclVoid[*|1])", "reverse");
+		ocl.assertSemanticErrorQuery(null, "Set{}->reverse()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(OclVoid)[*|1]", "reverse");
 		ocl.dispose();
 	}
 

@@ -407,7 +407,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
         ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
         	metamodelManager.getASClass("Package"), "ownedPackages.unknownAttribute",
-        	PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Package[*|1])", "unknownAttribute");
+        	PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Package)[*|1]", "unknownAttribute");
 		ocl.dispose();
    }
 
@@ -421,7 +421,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
     	ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
     		metamodelManager.getASClass("Package"), "ownedPackages.unknownOperation(self)",
-        	PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Package[*|1])", "unknownOperation", PivotConstants.SELF_NAME);
+        	PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Package)[*|1]", "unknownOperation", PivotConstants.SELF_NAME);
 		ocl.dispose();
    }
 
@@ -986,35 +986,35 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
         ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,		// FIXME Bug 296990
         	null, "Sequence{'a', 'b', 'c'}->exists(e1, e2, e3 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "exists", "e1, e2, e3| e1 = e2");
+        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)[*|1]", "exists", "e1, e2, e3| e1 = e2");
 
         ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,		// FIXME Bug 296990
         	null, "Sequence{'a', 'b', 'c'}->forAll(e1, e2, e3 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "forAll", "e1, e2, e3| e1 = e2");
+        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)[*|1]", "forAll", "e1, e2, e3| e1 = e2");
 
         ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
         	null, "Sequence{'a', 'b', 'c'}->collect(e1, e2 | Tuple{a : String = e1, b : String = e2})",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "collect", "e1, e2| Tuple{a : String = e1, b : String = e2}");
+        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)[*|1]", "collect", "e1, e2| Tuple{a : String = e1, b : String = e2}");
 
         ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
         	null, "Sequence{'a', 'b', 'c'}->any(e1, e2 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "any", "e1, e2| e1 = e2");
+        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)[*|1]", "any", "e1, e2| e1 = e2");
 
         ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
         	null, "Sequence{'a', 'b', 'c'}->one(e1, e2 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "one", "e1, e2| e1 = e2");
+        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)[*|1]", "one", "e1, e2| e1 = e2");
 
         ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
         	null, "Sequence{'a', 'b', 'c'}->select(e1, e2 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "select", "e1, e2| e1 = e2");
+        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)[*|1]", "select", "e1, e2| e1 = e2");
 
         ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
         	null, "Sequence{'a', 'b', 'c'}->reject(e1, e2 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "reject", "e1, e2| e1 = e2");
+        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)[*|1]", "reject", "e1, e2| e1 = e2");
 
         ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
         	null, "Sequence{'a', 'b', 'c'}->isUnique(e1, e2 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String[*|1])", "isUnique", "e1, e2| e1 = e2");
+        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)[*|1]", "isUnique", "e1, e2| e1 = e2");
 		ocl.dispose();
     }
 

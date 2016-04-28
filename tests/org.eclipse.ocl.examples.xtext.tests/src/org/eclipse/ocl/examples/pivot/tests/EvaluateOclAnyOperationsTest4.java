@@ -766,10 +766,10 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
     	ocl.assertQueryEquals(null, completeEnvironment.getSetType(standardLibrary.getIntegerType(), false, null, null), "Set{1}->oclType()");
     	ocl.assertQueryResults(null, "Bag{'Integer'}", "Set{1}.oclType().name");
     	ocl.assertQueryEquals(null, "Set", "Set{1}->oclType().name");
-    	ocl.assertSemanticErrorQuery(null, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer[*|1])", "allInstances");
-    	ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer[*|1])", "allInstances");
-    	ocl.assertSemanticErrorQuery(null, "Set{1}.oclType().allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Class[*|1])", "allInstances");
-    	ocl.assertSemanticErrorQuery(null, "Set{1}->oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Integer[*|1])", "allInstances", "");
+    	ocl.assertSemanticErrorQuery(null, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer)[*|1]", "allInstances");
+    	ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer)[*|1]", "allInstances");
+    	ocl.assertSemanticErrorQuery(null, "Set{1}.oclType().allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Class)[*|1]", "allInstances");
+    	ocl.assertSemanticErrorQuery(null, "Set{1}->oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Integer)[*|1]", "allInstances", "");
     	ocl.assertQueryResults(null, "Set{}", "Set.oclType().allInstances()");
     	ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Set{1}->oclType().elementType");
 		ocl.dispose();
