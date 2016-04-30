@@ -276,6 +276,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			name = "X_" + name2external.size();
 		}
 		if (name2external.containsKey(name)) {
+			if (reference instanceof PrimitiveType) {
+				return;
+			}
 			for (int i = 0; true; i++) {
 				String suffixedName = name + "_" + i;
 				if (!name2external.containsKey(suffixedName)) {
