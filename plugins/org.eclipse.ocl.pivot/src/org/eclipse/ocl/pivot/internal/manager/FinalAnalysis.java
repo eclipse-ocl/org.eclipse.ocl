@@ -61,11 +61,14 @@ public class FinalAnalysis
 			assert subCompleteClasses != null;
 			for (@NonNull Operation domainOperation : superCompleteClass.getOperations(null)) {
 				String opName = domainOperation.getName();
+				if (("ast".equals(opName) && "NameExpCS".equals(superCompleteClass.getName()))) {
+					domainOperation.getName();
+				}
 				ParametersId parametersId = domainOperation.getParametersId();
 				LibraryFeature domainImplementation = metamodelManager.getImplementation(domainOperation);
 				Set<@NonNull Operation> overrides = operation2overrides.get(domainOperation);
 				for (@NonNull CompleteClass subCompleteClass : subCompleteClasses) {
-					if (subCompleteClass != superCompleteClass) {
+//					if (subCompleteClass != superCompleteClass) {
 						for (@NonNull Operation subOperation : subCompleteClass.getOperations(null)) {
 							if (opName.equals(subOperation.getName()) && parametersId.equals(subOperation.getParametersId())) {
 								LibraryFeature subImplementation = metamodelManager.getImplementation(subOperation);
@@ -80,7 +83,7 @@ public class FinalAnalysis
 								}
 							}
 						}
-					}
+//					}
 				}
 				operation2overrides.put(domainOperation, overrides);
 			}
@@ -93,6 +96,9 @@ public class FinalAnalysis
 	 * @since 1.1
 	 */
 	public @NonNull Iterable<@NonNull Operation> getOverrides(@NonNull Operation operation) {
+		if ("ast".equals(operation.getName())) {
+			operation.getName();
+		}
 		Set<@NonNull Operation> overrides = operation2overrides.get(operation);
 		return overrides != null ? overrides : Collections.singletonList(operation);
 	}
@@ -104,6 +110,9 @@ public class FinalAnalysis
 	 * @since 1.1
 	 */
 	public @NonNull Iterable<@NonNull Operation> getOverrides(@NonNull Operation operation, @NonNull CompleteClass completeClass) {
+		if ("ast".equals(operation.getName())) {
+			operation.getName();
+		}
 		Set<@NonNull Operation> overrides = operation2overrides.get(operation);
 		if (overrides == null) {
 			return Collections.singletonList(operation);

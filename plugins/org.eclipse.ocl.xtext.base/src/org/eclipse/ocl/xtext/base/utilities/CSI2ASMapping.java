@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
+import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
@@ -354,7 +355,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	 */
 	protected final @NonNull Map<BaseCSResource, ASResource> cs2asResourceMap = new HashMap<BaseCSResource, ASResource>();
 
-	protected final @NonNull Map<BaseCSResource, CS2AS> cs2as2as = new HashMap<BaseCSResource, CS2AS>();
+	protected final @NonNull Map<BaseCSResource, CS2AS> cs2as2as = new HashMap<BaseCSResource, CS2AS>();	// FIXME cs2cs2as
 
 	/**
 	 * The map from CS element (identified by URI) to pivot element at the end of the last update. This map enables
@@ -377,6 +378,13 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	 * Available CS2AS converters.
 	 */
 //	private @Nullable List<CS2AS> cs2ases = null;
+
+	/**
+	 * The first CS2AS conversion that mediates nested conversions.
+	 */
+	private @Nullable CS2ASConversion primaryCS2ASConversion = null;
+
+	private @Nullable List<@NonNull BaseCSResource> cs2asConversionResources = null;
 	
 	private CSI2ASMapping(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
@@ -396,6 +404,20 @@ public class CSI2ASMapping implements ICSI2ASMapping
 //			cs2ases = cs2ases2 = new ArrayList<CS2AS>();
 //		}
 //		cs2ases2.add(cs2as); 
+	}
+
+	public @NonNull CS2ASConversion addCS2ASConversion(@NonNull CS2ASConversion cs2asConversion) {
+		List<@NonNull BaseCSResource> cs2asConversionResources2 = cs2asConversionResources;
+		if (cs2asConversionResources2 == null) {
+			cs2asConversionResources = cs2asConversionResources2 = new ArrayList<@NonNull BaseCSResource>();
+			primaryCS2ASConversion = cs2asConversion;
+		}
+		BaseCSResource csResource = cs2asConversion.getConverter().getCSResource();
+		if (!cs2asConversionResources2.contains(csResource)) {
+			cs2asConversionResources2.add(csResource);
+		}
+		assert primaryCS2ASConversion != null;
+		return primaryCS2ASConversion;
 	}
 	
 	public Set<CSI> computeCSIs(@NonNull BaseCSResource csResource) {
@@ -462,6 +484,10 @@ public class CSI2ASMapping implements ICSI2ASMapping
 
 	public @Nullable CS2AS getCS2AS(@NonNull BaseCSResource csResource) {
 		return cs2as2as.get(csResource);
+	}
+
+	public @NonNull List<@NonNull BaseCSResource> getCS2ASConversionResources() {
+		return ClassUtil.nonNullState(cs2asConversionResources);
 	}
 
 	/**
@@ -547,6 +573,13 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		as2cs = null;
 		cs2asResourceMap.remove(csResource); 
 		cs2as2as.remove(csResource);
+	}
+
+	public void removeCS2ASConversion(@NonNull CS2ASConversion cs2asConversion) {
+		if (cs2asConversion == primaryCS2ASConversion) {
+			primaryCS2ASConversion = null;
+			cs2asConversionResources = null;
+		}
 	}
 
 	/**

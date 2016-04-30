@@ -21,10 +21,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Detail;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
@@ -46,6 +48,7 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
@@ -89,8 +92,75 @@ import org.eclipse.ocl.xtext.basecs.WildcardTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.util.AbstractExtendingBaseCSVisitor;
 import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 
-public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Continuation<?>, @NonNull CS2ASConversion>
+public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<@Nullable Continuation<?>, @NonNull CS2ASConversion>
 {
+	protected static class ImportCSContinuation extends SingleContinuation<ImportCS>
+	{
+		public ImportCSContinuation(@NonNull CS2ASConversion context, @NonNull ImportCS csElement) {
+			super(context, null, null, csElement);
+		}
+
+		@Override
+		public BasicContinuation<?> execute() {
+			Import pivotElement = PivotUtil.getPivot(Import.class, csElement);
+			if (pivotElement != null) {
+				URI importURI = context.getImportedURI(csElement);
+				Resource importedResource = context.getImportedResource(csElement);
+				if (importedResource instanceof BaseCSResource) {
+					BaseCSResource csResource = (BaseCSResource)importedResource;
+					CS2AS cs2as = csResource.getCS2AS();
+					importedResource = cs2as.getASResource();
+				}
+				if (importedResource != null) {
+					EObject importedElement;
+					String uriFragment = importURI.fragment();
+					if (uriFragment == null) {
+						importedElement = importedResource.getContents().get(0);
+					}
+					else {
+						importedElement = importedResource.getEObject(uriFragment);
+					}
+					PathElementCS csPathElement = context.geImportedPathElementCS(csElement);
+					csPathElement.setReferredElement((Element) importedElement);
+				}
+				/*			String name = environmentView.getName();
+				if (name != null) {				// Looking for a specific name
+					importModel(targetElement, environmentView);
+					Element importedElement2 = importedElement;
+					if (importedElement2 != null) {
+						Resource importedResource = importedElement2.eResource();
+						if (importedResource != null) {
+							List<Resource.Diagnostic> errors = importedResource.getErrors();
+							if (errors.size() == 0) {
+								environmentView.addElement(name, importedElement2);		// The name we imported must be a good name for the element
+							}
+						}
+					}
+				}
+				else {							// looking for all possible names
+					Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
+					for (String key : ePackageNsURIToGenModelLocationMap.keySet()) {
+						environmentView.addElement(key, environmentView.getStandardLibrary().getOclVoidType());
+					}
+					// FIXME platform:/resource/... and local file names
+				} */
+				
+				
+				
+				
+				
+				Namespace namespace = csElement.getReferredNamespace();
+				if ((namespace != null) && !namespace.eIsProxy()) {			
+					Namespace oldNamespace = pivotElement.getImportedNamespace();
+					if (namespace != oldNamespace) {
+						pivotElement.setImportedNamespace(namespace);
+					}
+				}
+			}
+			return null;								// FIXME: CS2AS.computeRootContainmentFeatures may allow the above now
+		}
+	}
+
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 
@@ -349,23 +419,16 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	}
 
 	@Override
-	public Continuation<?> visitImportCS(@NonNull ImportCS csElement) {
-		Import pivotElement = refreshNamedElement(Import.class, PivotPackage.Literals.IMPORT, csElement);
-		PathNameCS pathName = csElement.getOwnedPathName();
+	public Continuation<?> visitImportCS(@NonNull ImportCS csImport) {
+		refreshNamedElement(Import.class, PivotPackage.Literals.IMPORT, csImport);
+		PathNameCS pathName = csImport.getOwnedPathName();
 		if (pathName != null) {
-			CS2AS.setElementType(pathName, PivotPackage.Literals.NAMESPACE, csElement, null);
+			CS2AS.setElementType(pathName, PivotPackage.Literals.NAMESPACE, csImport, null);
 		}
-		if (csElement.isIsAll() && (csElement.getName() != null)) {
-			context.addDiagnostic(csElement, "An all-package import cannot have an associated alias name");
+		if (csImport.isIsAll() && (csImport.getName() != null)) {
+			context.addDiagnostic(csImport, "An all-package import cannot have an associated alias name");
 		}
-		Namespace namespace = csElement.getReferredNamespace();
-		if ((namespace != null) && !namespace.eIsProxy()) {			
-			Namespace oldNamespace = pivotElement.getImportedNamespace();
-			if (namespace != oldNamespace) {
-				pivotElement.setImportedNamespace(namespace);
-			}
-		}
-		return null;								// FIXME: CS2AS.computeRootContainmentFeatures may allow the above now
+		return new ImportCSContinuation(context, csImport);
 	}
 
 	@Override

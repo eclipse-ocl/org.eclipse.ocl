@@ -101,6 +101,8 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 
 	@Test public void testConstruct_let() {		
 		TestOCL ocl = createOCL();
+		ocl.assertQueryEquals(null, 5 * 7 * 9, "let a : Integer = 5, b : Real = 7, c : UnlimitedNatural = 9 in a * b * c.toInteger()");
+//
 		ocl.assertQueryEquals(null, 3, "let a : Integer = 1 in a + 2");
 		ocl.assertQueryEquals(null, 7, "1 + let a : Integer = 2 in a * 3");
 		ocl.assertQueryEquals(null, 4/2+5*3, "4/2 + let a : Integer = 5 in a * 3");

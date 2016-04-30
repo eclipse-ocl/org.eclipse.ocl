@@ -82,14 +82,17 @@ import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementRefCS;
+import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.OperationCS;
 import org.eclipse.ocl.xtext.basecs.PackageCS;
 import org.eclipse.ocl.xtext.basecs.ParameterCS;
+import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
+import org.eclipse.ocl.xtext.basecs.RootCS;
 import org.eclipse.ocl.xtext.basecs.TemplateBindingCS;
 import org.eclipse.ocl.xtext.basecs.TemplateParameterSubstitutionCS;
 import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
@@ -136,17 +139,16 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	private final @NonNull BaseCSVisitor<Continuation<?>> postOrderVisitor;
 	private final @NonNull BaseCSVisitor<Continuation<?>> preOrderVisitor;
 
-	private @NonNull InterDependency<TemplateSignatureContinuation> typesHaveSignatures = new InterDependency<TemplateSignatureContinuation>("All unspecialized signatures defined", null);
+	private @NonNull InterDependency<@NonNull TemplateSignatureContinuation> typesHaveSignatures = new InterDependency<@NonNull TemplateSignatureContinuation>("All unspecialized signatures defined", null);
 
-	private @NonNull InterDependency<OperatorExpContinuation<?>> operatorsHavePrecedence = new InterDependency<OperatorExpContinuation<?>>("All operator precedences defined", null);
-
+	private @NonNull InterDependency<@NonNull OperatorExpContinuation<?>> operatorsHavePrecedence = new InterDependency<@NonNull OperatorExpContinuation<?>>("All operator precedences defined", null);
 	/**
 	 * A typed cache for use by derived conversions.
 	 */
 	private final @NonNull Map<CacheKey<?>, Object> intermediateCache = new HashMap<CacheKey<?>, Object>();
 
-	private Map<String, org.eclipse.ocl.pivot.Package> oldPackagesByName = null;
-	private Map<String, org.eclipse.ocl.pivot.Package> oldPackagesByQualifiedName = null;	// WIP lose this since using nsURIs
+	private Map<String, org.eclipse.ocl.pivot.@NonNull Package> oldPackagesByName = null;
+	private Map<String, org.eclipse.ocl.pivot.@NonNull Package> oldPackagesByQualifiedName = null;	// WIP lose this since using nsURIs
 
 	/**
 	 * The handler for any generated diagnostics. If null (which is deprecated) diagnostics are inserted
@@ -156,6 +158,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	private final IDiagnosticConsumer diagnosticsConsumer;
 	
 	private boolean hasFailed = false;
+//	private @Nullable CS2ASConversion primaryCS2ASConversion = null; 		// Non-null while conversion in progress.
 	
 	public CS2ASConversion(@NonNull CS2AS converter, @NonNull IDiagnosticConsumer diagnosticsConsumer) {
 		super(converter.getEnvironmentFactory());
@@ -175,7 +178,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		csElement.setPivot(invalidLiteralExp);
 		return invalidLiteralExp;
 	}
-
+	
 	public void addDiagnostic(@NonNull ModelElementCS csElement, @NonNull Diagnostic diagnostic) {
 		INode node = NodeModelUtils.getNode(csElement);
 		Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, diagnostic.getMessage());
@@ -556,6 +559,30 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	
 	public final @NonNull CS2AS getConverter() {
 		return converter;
+	}
+
+	/*public*/ @Nullable Resource getImportedResource(@NonNull ImportCS csImport) {
+		URI baseURI = csImport.eResource().getURI();
+		URI importURI = getImportedURI(csImport);
+		URI resolvedURI = importURI.trimFragment().resolve(baseURI);
+		return metamodelManager.getImportedResource(resolvedURI);
+	}
+
+	/*public*/ @NonNull URI getImportedURI(@NonNull ImportCS csImport) {
+		PathElementCS csPathElement = geImportedPathElementCS(csImport);
+		String importText = ClassUtil.nonNullState(ElementUtil.getText(csPathElement)).trim();
+		if (importText.startsWith("'")) {
+			importText = importText.substring(1);
+		}
+		if (importText.endsWith("'")) {
+			importText = importText.substring(0, importText.length()-1);
+		}
+		return URI.createURI(importText, false);
+	}
+
+	/*public*/ @NonNull PathElementCS geImportedPathElementCS(@NonNull ImportCS csImport) {
+		PathNameCS csPathName = ClassUtil.nonNullState(csImport.getOwnedPathName());
+		return ClassUtil.nonNullState(csPathName.getOwnedPathElements().get(0));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1264,144 +1291,185 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	/**
 	 * Sequence the update passes to make the pivot match the CS.
 	 */
-	public boolean update(@NonNull BaseCSResource csResource) {
-		resetPivotMappings(csResource);
-		oldPackagesByName = new HashMap<String, org.eclipse.ocl.pivot.Package>();
-		oldPackagesByQualifiedName = new HashMap<String, org.eclipse.ocl.pivot.Package>();
-		ASResource asResource = converter.csi2asMapping.getASResource(csResource);
-		if (asResource != null) {
-			for (EObject eObject : asResource.getContents()) {
-				if (eObject instanceof Model) {
-					List<org.eclipse.ocl.pivot.Package> nestedPackage = ((Model)eObject).getOwnedPackages();
-					gatherOldPackages(nestedPackage);
+	public boolean update(@NonNull BaseCSResource aCSResource) {
+		assert aCSResource == converter.getCSResource();
+		resetPivotMappings(aCSResource);
+		CS2ASConversion primaryCS2ASConversion = converter.csi2asMapping.addCS2ASConversion(this);
+		/**
+		 * Resolve all the imports provoking recursive loads.
+		 */
+		for (EObject eObject : aCSResource.getContents()) {
+			if (eObject instanceof RootCS) {
+				for (@NonNull ImportCS csImport : ClassUtil.nullFree(((RootCS)eObject).getOwnedImports())) {
+					getImportedResource(csImport);
 				}
 			}
 		}
-		List<BasicContinuation<?>> continuations = new ArrayList<BasicContinuation<?>>();
-		//
-		//	Perform the post-order containment traversal to:
-		//
-		//	Create the Piviotable.pivot elements for all 1:1 CS to pivot relationships.
-		//	Create the parent-child containment hierarchy.
-		//	Configure derived CS properties such as PathNameCS.elementType
-		//	Queue continuations to compute simple references
-		//
-		//	The containment pass may only access the pivot elements of immediate children.
-		//
-		for (EObject eObject : csResource.getContents()) {
-			if (eObject instanceof ElementCS) {
-				visitContainment((ElementCS)eObject, continuations);
-			}
+		/**
+		 * Nested conversions are performed by the outer conversion.
+		 */
+		if (primaryCS2ASConversion != this) {
+			return false;
 		}
-		//
-		//	Put all orphan root pivot elements in their resources.
-		//
-		installRootContents(csResource);
-		//
-		//
-		//
-		while (continuations.size() > 0) {
-			List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
-			if (moreContinuations == null) {
+		try {
+			Iterable<@NonNull BaseCSResource> csResources = converter.csi2asMapping.getCS2ASConversionResources();
+			for (@NonNull BaseCSResource csResource : csResources) {
+				oldPackagesByName = new HashMap<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package>();
+				oldPackagesByQualifiedName = new HashMap<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package>();
+				ASResource asResource = converter.csi2asMapping.getASResource(csResource);
+				if (asResource != null) {
+					for (EObject eObject : asResource.getContents()) {
+						if (eObject instanceof Model) {
+							List<org.eclipse.ocl.pivot.Package> nestedPackage = ((Model)eObject).getOwnedPackages();
+							gatherOldPackages(nestedPackage);
+						}
+					}
+				}
+			}
+			List<BasicContinuation<?>> continuations = new ArrayList<BasicContinuation<?>>();
+			//
+			//	Perform the post-order containment traversal to:
+			//
+			//	Create the Piviotable.pivot elements for all 1:1 CS to pivot relationships.
+			//	Create the parent-child containment hierarchy.
+			//	Configure derived CS properties such as PathNameCS.elementType
+			//	Queue continuations to compute simple references
+			//
+			//	The containment pass may only access the pivot elements of immediate children.
+			//
+			for (@NonNull BaseCSResource csResource : csResources) {
+				for (EObject eObject : csResource.getContents()) {
+					if (eObject instanceof ElementCS) {
+						visitContainment((ElementCS)eObject, continuations);
+					}
+				}
+			}
+			//
+			//	Put all orphan root pivot elements in their resources.
+			//
+			for (@NonNull BaseCSResource csResource : csResources) {
+				installRootContents(csResource);
+			}
+			//
+			//
+			//
+			while (continuations.size() > 0) {
+				List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
+				if (moreContinuations == null) {
+					for (BaseCSResource csResource : csResources) {
+						if (!checkForNoErrors(csResource)) {
+							return false;
+						}
+					}
+					diagnoseContinuationFailure(continuations);
+					break;
+				}
+				continuations = moreContinuations;
+			}
+			
+			//
+			//	Perform the pre-order traversal to resolve specializations and references.
+			//
+			for (@NonNull BaseCSResource csResource : csResources) {
+				for (EObject eObject : csResource.getContents()) {
+					if (eObject instanceof ElementCS) {
+						visitInPreOrder((ElementCS)eObject, continuations);
+					}
+				}
+			}
+			//
+			//	Perform pre-order continuations to establish package, class containment and classifier template signatures.
+			//
+//			Collections.reverse(continuations);
+			while (continuations.size() > 0) {
+				List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
+				if (moreContinuations == null) {
+					for (BaseCSResource csResource : csResources) {
+						if (!checkForNoErrors(csResource)) {
+							return false;
+						}
+					}
+					diagnoseContinuationFailure(continuations);
+					break;
+				}
+				continuations = moreContinuations;
+			}
+			//
+			//	Load the library. 
+			//
+			@SuppressWarnings("unused")
+			AnyType oclAnyType = metamodelManager.getStandardLibrary().getOclAnyType();
+			//
+			//	Perform the post-order traversal to create and install the bulk of non-package/class
+			//	elements.
+			//
+			for (@NonNull BaseCSResource csResource : csResources) {
+				for (EObject eObject : csResource.getContents()) {
+					if (eObject instanceof ElementCS) {
+						visitInPostOrder((ElementCS)eObject, continuations);
+					}
+				}
 				boolean hasNoErrors = checkForNoErrors(csResource);
 				if (!hasNoErrors) {
 					return false;
 				}
-				diagnoseContinuationFailure(continuations);
-				break;
 			}
-			continuations = moreContinuations;
-		}
-		//
-		//	Perform the pre-order traversal to resolve specializations and references.
-		//
-		for (EObject eObject : csResource.getContents()) {
-			if (eObject instanceof ElementCS) {
-				visitInPreOrder((ElementCS)eObject, continuations);
+			//
+			//	Perform post-order continuations to establish complex dependencies.
+			//
+			while (continuations.size() > 0) {
+				List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
+				if (moreContinuations == null) {
+					diagnoseContinuationFailure(continuations);
+					break;
+				}
+				continuations = moreContinuations;
 			}
-		}
-		//
-		//	Perform pre-order continuations to establish package, class containment and classifier template signatures.
-		//
-//		Collections.reverse(continuations);
-		while (continuations.size() > 0) {
-			List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
-			if (moreContinuations == null) {
-				boolean hasNoErrors = checkForNoErrors(csResource);
-				if (!hasNoErrors) {
+			//
+			//	Put all orphan root pivot elements in their resources.
+			//
+			for (@NonNull BaseCSResource csResource : csResources) {
+				installRootContents(csResource);		// FIXME ExpressionInOCL very late
+				boolean hasNoMoreErrors = checkForNoErrors(csResource);
+				if (!hasNoMoreErrors) {
 					return false;
 				}
-				diagnoseContinuationFailure(continuations);
-				break;
 			}
-			continuations = moreContinuations;
-		}
-		//
-		//	Load the library. 
-		//
-		@SuppressWarnings("unused")
-		AnyType oclAnyType = metamodelManager.getStandardLibrary().getOclAnyType();
-		//
-		//	Perform the post-order traversal to create and install the bulk of non-package/class
-		//	elements.
-		//
-		for (EObject eObject : csResource.getContents()) {
-			if (eObject instanceof ElementCS) {
-				visitInPostOrder((ElementCS)eObject, continuations);
+			//
+			//
+			//	Prune obsolete packages
+			//
+			Set<org.eclipse.ocl.pivot.Package> newPackages = new HashSet<org.eclipse.ocl.pivot.Package>();
+			for (@NonNull BaseCSResource csResource : csResources) {
+				gatherNewPackages(newPackages, csResource);
 			}
-		}
-		boolean hasNoErrors = checkForNoErrors(csResource);
-		if (!hasNoErrors) {
-			return false;
-		}
-		//
-		//	Perform post-order continuations to establish complex dependencies.
-		//
-		while (continuations.size() > 0) {
-			List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
-			if (moreContinuations == null) {
-				diagnoseContinuationFailure(continuations);
-				break;
-			}
-			continuations = moreContinuations;
-		}
-		//
-		//	Put all orphan root pivot elements in their resources.
-		//
-		installRootContents(csResource);		// FIXME ExpressionInOCL very late
-		//
-		boolean hasNoMoreErrors = checkForNoErrors(csResource);
-		if (!hasNoMoreErrors) {
-			return false;
-		}
-		//
-		//	Prune obsolete packages
-		//
-		Set<org.eclipse.ocl.pivot.Package> newPackages = new HashSet<org.eclipse.ocl.pivot.Package>();
-		gatherNewPackages(newPackages, csResource);
-		Set<org.eclipse.ocl.pivot.Package> obsoletePackages = new HashSet<org.eclipse.ocl.pivot.Package>(oldPackagesByQualifiedName.values());
-//		for (org.eclipse.ocl.pivot.Package oldPackage : obsoletePackages) {
-//			System.out.println("Old package @" + Integer.toHexString(oldPackage.hashCode()) + " " + oldPackage.eResource().getURI() + " " + oldPackage.getName());
-//		}
-//		for (org.eclipse.ocl.pivot.Package newPackage : newPackages) {
-//			System.out.println("New package @" + Integer.toHexString(newPackage.hashCode()) + " " + newPackage.eResource().getURI() + " " + newPackage.getName());
-//		}
-		obsoletePackages.removeAll(newPackages);
-		for (org.eclipse.ocl.pivot.Package obsoletePackage : obsoletePackages) {
-			EObject eContainer = obsoletePackage.eContainer();
-			if (eContainer != null) {
-				EReference eContainmentFeature = obsoletePackage.eContainmentFeature();
-				if (eContainmentFeature.isMany()) {
-					List<?> siblings = (List<?>) eContainer.eGet(eContainmentFeature);
-//					System.out.println("Kill package @" + Integer.toHexString(obsoletePackage.hashCode()) + " " + obsoletePackage.eResource().getURI() + " " + obsoletePackage.getName());
-					siblings.remove(obsoletePackage);
-				}
-				else {
-					eContainer.eSet(eContainmentFeature, null);
+			Set<org.eclipse.ocl.pivot.@NonNull Package> obsoletePackages = new HashSet<org.eclipse.ocl.pivot.@NonNull Package>(oldPackagesByQualifiedName.values());
+//			for (org.eclipse.ocl.pivot.Package oldPackage : obsoletePackages) {
+//				System.out.println("Old package @" + Integer.toHexString(oldPackage.hashCode()) + " " + oldPackage.eResource().getURI() + " " + oldPackage.getName());
+//			}
+//			for (org.eclipse.ocl.pivot.Package newPackage : newPackages) {
+//				System.out.println("New package @" + Integer.toHexString(newPackage.hashCode()) + " " + newPackage.eResource().getURI() + " " + newPackage.getName());
+//			}
+			obsoletePackages.removeAll(newPackages);
+			for (org.eclipse.ocl.pivot.@NonNull Package obsoletePackage : obsoletePackages) {
+				EObject eContainer = obsoletePackage.eContainer();
+				if (eContainer != null) {
+					EReference eContainmentFeature = obsoletePackage.eContainmentFeature();
+					if (eContainmentFeature.isMany()) {
+						List<?> siblings = (List<?>) eContainer.eGet(eContainmentFeature);
+//						System.out.println("Kill package @" + Integer.toHexString(obsoletePackage.hashCode()) + " " + obsoletePackage.eResource().getURI() + " " + obsoletePackage.getName());
+						siblings.remove(obsoletePackage);
+					}
+					else {
+						eContainer.eSet(eContainmentFeature, null);
+					}
 				}
 			}
+			return true;
 		}
-		return true;
+		finally {
+			converter.csi2asMapping.removeCS2ASConversion(this);
+		}
 	}
 
 	protected void visitContainment(@NonNull ElementCS csElement, @NonNull List<BasicContinuation<?>> continuations) {

@@ -51,7 +51,7 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 		private Throwable throwable = null;
 	
 		public ScopeView computeLookup(ImportCS targetElement, EnvironmentView environmentView, ScopeView scopeView) {
-			String name = environmentView.getName();
+/*			String name = environmentView.getName();
 			if (name != null) {				// Looking for a specific name
 				importModel(targetElement, environmentView);
 				Element importedElement2 = importedElement;
@@ -71,7 +71,7 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 					environmentView.addElement(key, environmentView.getStandardLibrary().getOclVoidType());
 				}
 				// FIXME platform:/resource/... and local file names
-			}
+			} */
 			return null;
 		}
 	

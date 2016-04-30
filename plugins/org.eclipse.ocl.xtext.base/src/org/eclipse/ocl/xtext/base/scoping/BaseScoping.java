@@ -35,7 +35,7 @@ public class BaseScoping
 	public static void init() {
 		Map<EClassifier, Attribution> registry = Attribution.REGISTRY;
 		registry.put(BaseCSPackage.Literals.ELEMENT_CS, ElementCSAttribution.INSTANCE);
-		registry.put(BaseCSPackage.Literals.IMPORT_CS, ImportCSAttribution.INSTANCE);	// return new ImportAttribution();		// WIP static instance
+//		registry.put(BaseCSPackage.Literals.IMPORT_CS, ImportCSAttribution.INSTANCE);	// return new ImportAttribution();		// WIP static instance
 		registry.put(BaseCSPackage.Literals.PATH_ELEMENT_CS, PathElementCSAttribution.INSTANCE);
 		registry.put(BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS, PivotableElementCSAttribution.INSTANCE);
 		CS2AS.addUnresolvedProxyMessageProvider(ImportCSAttribution.INSTANCE);

@@ -17,6 +17,9 @@ createPlatformResourceURI
 createURI
  (Ljava/lang/String;)Lorg/eclipse/emf/common/util/URI;
  (Ljava/lang/String;)L1org/eclipse/emf/common/util/URI;
+createURI
+ (Ljava/lang/String;Z)Lorg/eclipse/emf/common/util/URI;
+ (Ljava/lang/String;Z)L1org/eclipse/emf/common/util/URI;
 deresolve
  (Lorg/eclipse/emf/common/util/URI;ZZZ)Lorg/eclipse/emf/common/util/URI;
  (Lorg/eclipse/emf/common/util/URI;ZZZ)L1org/eclipse/emf/common/util/URI;

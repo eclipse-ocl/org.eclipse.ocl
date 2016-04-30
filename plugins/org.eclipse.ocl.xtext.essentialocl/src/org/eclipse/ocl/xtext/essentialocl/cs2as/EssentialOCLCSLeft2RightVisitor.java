@@ -586,6 +586,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		Operation exampleOperation = getExampleOperation(invocations, sourceExp, csRoundBracketedClause);
 		if (exampleOperation != null) {
+			if ("ast".equals(exampleOperation.getName())) {
+				exampleOperation.getName();
+			}
 			if (sourceExp == null) {
 				sourceExp = createImplicitSourceVariableExp(csNameExp, exampleOperation.getOwningClass());
 			}

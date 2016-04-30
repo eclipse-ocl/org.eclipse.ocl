@@ -611,7 +611,7 @@ public abstract class CS2AS extends AbstractConversion
 //			System.out.println("CS " + csResource.getClass().getName() + "@" + csResource.hashCode() + " " + csResource.getURI());
 //		}
 		CS2ASConversion conversion = createConversion(diagnosticsConsumer, csResource);
-		conversion.update(csResource);
+		boolean isOk = conversion.update(csResource);
 //		System.out.println("---------------------------------------------------------------------------");
 //		Collection<? extends Resource> pivotResources = cs2asResourceMap.values();
 //		for (Entry<? extends Resource, ? extends Resource> entry : cs2asResourceMap.entrySet()) {
@@ -632,8 +632,10 @@ public abstract class CS2AS extends AbstractConversion
 		if (javaClassScope != null) {
 			javaClassScope.installContents(csResource);
 		}
-		conversion.garbageCollect(cs2asResourceMap);
-		csi2asMapping.update();
+		if (isOk) {
+			conversion.garbageCollect(cs2asResourceMap);
+			csi2asMapping.update();
+		}
 //		printDiagnostic("CS2AS.update end", false, 0);
 	}
 }

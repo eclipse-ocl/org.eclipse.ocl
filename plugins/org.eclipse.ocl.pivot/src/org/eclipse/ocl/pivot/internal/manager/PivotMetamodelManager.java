@@ -1323,6 +1323,54 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		return implementation;
 	}
+
+	/**
+	 * Load the Resource referenced by URI. If the URI references an AS REsourcevthe ASResource is returned from the
+	 * AS ResourceSet. Otherwise a CS resource is loaded, without conversion to AS form, in the CS resourceSet. This
+	 * supports the requirement to acquire the imported resource without any nested CS2AS conversion when importing
+	 * during an overall CS2AS conversion.
+	 * 
+	 * @since 1.1
+	 */
+	public @Nullable Resource getImportedResource(@NonNull URI uri) {
+		assert uri.fragment() == null;
+		URI resourceURI = uri.trimFragment();
+		if (PivotUtilInternal.isASURI(resourceURI)) {
+			return asResourceSet.getResource(uri, true);
+		}
+		ResourceSet externalResourceSet = environmentFactory.getResourceSet();
+		EPackage.Registry packageRegistry = externalResourceSet.getPackageRegistry();
+		String uriString = resourceURI.toString();
+		//
+		//	URI may be explicit namespace URI
+		//
+		EPackage ePackage = packageRegistry.getEPackage(uriString);
+		if (ePackage != null) {
+			return ePackage.eResource();
+		}
+		//
+		//	URI may be an OCL Standard Library
+		//
+		if (uriString.equals(standardLibrary.getDefaultStandardLibraryURI())) {
+			if (asLibraryResource != null) {
+				return asLibraryResource;
+			}
+			else {
+				return standardLibrary.loadDefaultLibrary(uriString);
+			}
+		}
+		else {
+			StandardLibraryContribution contribution = StandardLibraryContribution.REGISTRY.get(uriString);
+			if (contribution != null) {
+				return contribution.getResource();
+			}
+		}
+		External2AS external2as = external2asMap.get(resourceURI);
+		if (external2as != null) {
+			return external2as.getResource();
+		}
+		return externalResourceSet.getResource(resourceURI, true);
+	}
 	
 	public @NonNull ImplementationManager getImplementationManager() {
 		ImplementationManager implementationManager2 = implementationManager;
