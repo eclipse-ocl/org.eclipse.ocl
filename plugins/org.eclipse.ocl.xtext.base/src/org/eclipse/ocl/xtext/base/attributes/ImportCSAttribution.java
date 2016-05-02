@@ -113,7 +113,7 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 				return;
 			}
 			try {
-				importedElement = environmentFactory.getMetamodelManager().loadResource(uri2, target.getName(), null);				
+				importedElement = environmentFactory.getMetamodelManager().loadResource(uri2, null, null);				
 				Resource importedResource = importedElement.eResource();
 				if (importedResource != null) {
 					List<Resource.Diagnostic> errors = importedResource.getErrors();
