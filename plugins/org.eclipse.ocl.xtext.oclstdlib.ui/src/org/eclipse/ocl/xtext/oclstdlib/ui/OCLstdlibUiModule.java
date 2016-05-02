@@ -13,12 +13,10 @@
  */
 package org.eclipse.ocl.xtext.oclstdlib.ui;
 
-import org.eclipse.ocl.xtext.base.ui.model.DeferredDocumentProvider;
 import org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator;
 import org.eclipse.ocl.xtext.oclstdlib.ui.refactoring.OCLstdlibReferenceUpdater;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.editor.model.IResourceForEditorInputFactory;
-import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -48,9 +46,5 @@ public class OCLstdlibUiModule extends AbstractOCLstdlibUiModule
 	@Override
 	public Class<? extends IResourceForEditorInputFactory> bindIResourceForEditorInputFactory() {
 		return OCLstdlibJavaClassPathResourceForIEditorInputFactory.class;
-	}
-
-	public Class<? extends XtextDocumentProvider> bindXtextDocumentProvider() {
-		return DeferredDocumentProvider.class;
 	}
 }

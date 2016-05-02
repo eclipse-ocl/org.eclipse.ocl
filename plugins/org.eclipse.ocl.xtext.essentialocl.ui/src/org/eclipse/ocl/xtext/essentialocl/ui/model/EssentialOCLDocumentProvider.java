@@ -13,6 +13,10 @@ package org.eclipse.ocl.xtext.essentialocl.ui.model;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.ui.model.BaseDocumentProvider;
 
+/**
+ * @deprecated no longer used - retained for API compatibility
+ */
+@Deprecated
 public class EssentialOCLDocumentProvider extends BaseDocumentProvider
 {
 	@Override

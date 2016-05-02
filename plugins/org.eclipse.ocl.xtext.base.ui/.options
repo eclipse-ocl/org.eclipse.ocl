@@ -1,5 +1,9 @@
 # Debugging options for the org.eclipse.ocl.xtext.base.ui plug-in
 
+# Turn on tracing of the deferred editor job
+# @deprecated - deferred editor job no longer used
+org.eclipse.ocl.xtext.base.ui/editor/deferred=false
+
 # Turn on tracing of outline node creation
 org.eclipse.ocl.xtext.base.ui/outline/create=false
 

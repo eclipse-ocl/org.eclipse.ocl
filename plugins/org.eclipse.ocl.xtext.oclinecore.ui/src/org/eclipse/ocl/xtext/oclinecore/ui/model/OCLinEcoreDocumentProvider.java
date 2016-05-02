@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.ui.model;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -43,7 +44,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
-import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.model.BaseCSorASDocumentProvider;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreUiModule;
@@ -60,9 +61,7 @@ import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
 import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSyntaxException;
-import org.xml.sax.InputSource;
 
 /**
  * OCLinEcoreDocumentProvider orchestrates the load and saving of optional XMI content
@@ -142,7 +141,7 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 			}
 		}
 		else {
-			superDoSaveDocument(monitor, element, document, overwrite);
+			super.doSaveDocument(monitor, element, document, overwrite);
 		}
 	}
 
@@ -157,34 +156,39 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 	}
 
 	@Override
-	protected void setDocumentText(@NonNull XtextDocument document, @NonNull String sourceText) throws CoreException {
+	protected void setDocumentContent(IDocument document, InputStream inputStream, String encoding) throws CoreException {
 		boolean reload = false;
-		@NonNull String displayText = sourceText;
+//		@NonNull String displayText = sourceText;
 		try {
-			String xmlEncoding = URIConverter.ReadableInputStream.getEncoding(sourceText);
+//			String xmlEncoding = URIConverter.ReadableInputStream.getEncoding(sourceText);
+			if (!inputStream.markSupported()) {
+				inputStream = createResettableInputStream(inputStream);
+			}
+			boolean isXML = isXML(inputStream, encoding);		
 			String persistAs = PERSIST_AS_OCLINECORE;
-			if (xmlEncoding != null) {
-				ResourceSet resourceSet = getEnvironmentFactory().getResourceSet();
-				StandaloneProjectMap projectMap = ProjectMap.getAdapter(resourceSet);
+			if (isXML) {
+				ResourceSet esResourceSet = getEnvironmentFactory().getResourceSet();
+				StandaloneProjectMap projectMap = StandaloneProjectMap.getAdapter(esResourceSet);
 				StandaloneProjectMap.IConflictHandler conflictHandler = StandaloneProjectMap.MapToFirstConflictHandlerWithLog.INSTANCE; //null; 			// FIXME
-				projectMap.configure(resourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, conflictHandler);
+				projectMap.configure(esResourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, conflictHandler);
 				StandaloneProjectMap.IProjectDescriptor pivotPackageDescriptor = projectMap.getProjectDescriptor(PivotConstantsInternal.PLUGIN_ID);
 				if (pivotPackageDescriptor != null) {
-					pivotPackageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadBothStrategy.INSTANCE, conflictHandler);	
+					pivotPackageDescriptor.configure(esResourceSet, StandaloneProjectMap.LoadBothStrategy.INSTANCE, conflictHandler);	
 				}
 				URI uri = uriMap.get(document);
-				XMLResource xmiResource = (XMLResource) resourceSet.getResource(uri, false);
+				XMLResource xmiResource = (XMLResource) esResourceSet.getResource(uri, false);
 				if ((xmiResource == null) || (xmiResource.getResourceSet() == null)) {	// Skip built-ins and try again as a file read.
-					xmiResource = (XMLResource) resourceSet.createResource(uri, null);					
+					xmiResource = (XMLResource) esResourceSet.createResource(uri, null);					
 				}
 				else {
 					xmiResource.unload();
 					reload = true;
 				}
-				xmiResource.load(new InputSource(new StringReader(sourceText)), null);
-				EcoreUtil.resolveAll(resourceSet);
+//				xmiResource.load(new InputSource(new StringReader(sourceText)), null);
+				xmiResource.load(inputStream, null);
+				EcoreUtil.resolveAll(esResourceSet);
 				List<Resource.Diagnostic> allErrors = null;
-				for (Resource resource : resourceSet.getResources()) {
+				for (Resource resource : esResourceSet.getResources()) {
 					List<Resource.Diagnostic> errors = resource.getErrors();
 					if (errors.size() > 0) {
 						if (allErrors == null) {
@@ -199,7 +203,7 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 						s.append("\n");
 						s.append(diagnostic.toString());
 					}
-					throw new CoreException(new Status(IStatus.ERROR, OCLinEcoreUiModule.PLUGIN_ID, s.toString()));
+					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, s.toString()));
 				}
 				ASResource asResource = null;
 				EList<EObject> contents = xmiResource.getContents();
@@ -231,40 +235,47 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 					// FIXME general extensibility
 				}
 				if (asResource == null) {
-					throw new CoreException(new Status(IStatus.ERROR, OCLinEcoreUiModule.PLUGIN_ID, "Failed to load"));
+					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, "Failed to load"));
 				}
 //				
-				ResourceSetImpl csResourceSet = (ResourceSetImpl)resourceSet;
+				ResourceSetImpl csResourceSet = (ResourceSetImpl)getOCL().getResourceSet();
 				csResourceSet.getPackageRegistry().put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
-				URI oclinecoreURI = xmiResource.getURI().appendFileExtension("oclinecore");
-				CSResource csResource = (CSResource) resourceSet.getResource(oclinecoreURI, false);
+				URI textURI = xmiResource.getURI().appendFileExtension(getFileExtension());
+				CSResource csResource = (CSResource) csResourceSet.getResource(textURI, false);
 				if (csResource == null) {
-					csResource = (CSResource) resourceSet.createResource(oclinecoreURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
+					csResource = (CSResource) csResourceSet.createResource(textURI, getCScontentType());
 				    Map<URI, Resource> map = csResourceSet.getURIResourceMap();
-				    map.put(oclinecoreURI, csResource);
+				    map.put(textURI, csResource);
 					csResource.setURI(xmiResource.getURI());
 				}
 				//
 				//	ResourceSet contains
 				//		Ecore XMI resource with *.ecore URI, possibly in URIResourceMap as *.ecore
-				//		OCLinEcore CS resource with *.ecore URI, in URIResourceMap as *.ecore.oclinecore
+				//		QVTimperative CS resource with *.ecore URI, in URIResourceMap as *.ecore.oclinecore
 				//
-				csResource.updateFrom(asResource, getEnvironmentFactory());
-				StringWriter writer = new StringWriter();
+				csResource.updateFrom(asResource, getOCL().getEnvironmentFactory());
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//				StringWriter writer = new StringWriter();
 				try {
-					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
+//					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
+					csResource.save(outputStream, null);
+					inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 				} catch (InvalidConcreteSyntaxException e) {
 					diagnoseErrors((XtextResource) csResource, e);
 				} catch (XtextSerializationException e) {
 					diagnoseErrors((XtextResource) csResource, e);
 				}
 				csResource.unload();
+//				@SuppressWarnings("null")@NonNull String string = writer.toString();
+//				displayText = string;
+////				CS2ASResourceAdapter resourceAdapter = ((BaseCSResource)csResource).getCS2ASAdapter();
+////				resourceAdapter.dispose();
 				((BaseCSResource)csResource).dispose();
-				resourceSet.getResources().remove(csResource);
-				@SuppressWarnings("null")@NonNull String string = writer.toString();
-				displayText = string;
+				csResourceSet.getResources().remove(csResource);
+				inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 			}
-			else if (sourceText.length() <= 0) {		// Empty document
+//			else if (sourceText.length() <= 0) {		// Empty document
+			else if (inputStream.available() == 0) {		// Empty document
 				URI uri = ClassUtil.nonNullState(uriMap.get(document));
 				Resource.Factory factory = Resource.Factory.Registry.INSTANCE.getFactory(uri);
 				if (factory instanceof EcoreResourceFactoryImpl) {
@@ -280,7 +291,8 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 				if (lastSegment == null) {
 					lastSegment = "Default";
 				}
-				displayText = createTestDocument(uri, lastSegment);
+				String testDocument = createTestDocument(uri, lastSegment);
+				inputStream = new ByteArrayInputStream(testDocument.getBytes());				
 			}
 			loadedAsMap.put(document, persistAs);
 			saveAsMap.put(document, persistAs);
@@ -288,7 +300,36 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 			throw new CoreException(new Status(IStatus.ERROR, OCLinEcoreUiModule.PLUGIN_ID, "Failed to load", e));
 		} catch (IOException e) {
 			throw new CoreException(new Status(IStatus.ERROR, OCLinEcoreUiModule.PLUGIN_ID, "Failed to load", e));
+/*		} catch (Throwable e) {
+			Runnable displayRefresh = new Runnable() {
+				@Override
+				public void run() {
+					StringWriter stringWriter = new StringWriter();
+					PrintWriter pw = new PrintWriter(stringWriter);
+					e.printStackTrace(pw);
+					String string = stringWriter.toString().replace("\r", "");
+					MessageDialog.openError(null, BaseUIMessages.LoadError_Title, string);
+				}
+			};
+			Display.getDefault().asyncExec(displayRefresh);
+			displayText = "/* Load failed * /";
+*/		}
+/*
+ * 		This fails to setup Xtext correctly: No state leads to NPE from EcoreUtil.resolveAll.
+ * 
+  		if (reload) {		
+			final InputStream finalInputStream = inputStream; 
+			((XtextDocument)document).modify(new IUnitOfWork<Object, XtextResource>() {
+
+				public Object exec(XtextResource state) throws Exception {
+					QVTimperativeDocumentProvider.super.setDocumentContent(document, finalInputStream, encoding);
+					return null;
+				}
+			});
 		}
-		superSetDocumentText(document, displayText);
+		else { */
+		superSetDocumentContent(document, inputStream, encoding);
+//		superSetDocumentText(document, displayText);
+//		}
 	}
 }

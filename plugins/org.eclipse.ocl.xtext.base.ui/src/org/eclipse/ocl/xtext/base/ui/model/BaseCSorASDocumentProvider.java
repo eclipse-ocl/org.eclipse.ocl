@@ -11,11 +11,11 @@
 package org.eclipse.ocl.xtext.base.ui.model;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,14 +33,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ocl.pivot.Model;
@@ -53,15 +51,12 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.BaseUiPluginHelper;
-import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSyntaxException;
-import org.xml.sax.InputSource;
 
 /**
  * QVTimperativeDocumentProvider orchestrates the load and saving of optional XMI content
@@ -88,6 +83,21 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 	protected Map<IDocument,String> saveAsMap = new HashMap<IDocument,String>();
 
 	protected Map<IDocument, URI> uriMap = new HashMap<IDocument, URI>();		// Helper for setDocumentContent
+
+	public static @NonNull InputStream createResettableInputStream(@NonNull InputStream inputStream) throws IOException {
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		try {
+			byte[] buffer = new byte[16384];
+			int len;
+			while ((len = inputStream.read(buffer, 0, buffer.length)) > 0) {
+				outputStream.write(buffer, 0, len);
+			}
+			return new ByteArrayInputStream(outputStream.toByteArray());
+		}
+		finally {
+			outputStream.close();
+		}
+	}
 
 	protected void diagnoseErrors(XtextResource xtextResource, Exception e) throws CoreException {
 		List<Diagnostic> diagnostics = xtextResource.validateConcreteSyntax();
@@ -125,7 +135,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				}
 				IDocument saveDocument = new Document();
 				saveDocument.set(xmlWriter.toString());
-				superDoSaveDocument(monitor, element, saveDocument, overwrite);
+				super.doSaveDocument(monitor, element, saveDocument, overwrite);
 				loadedAsMap.put(document, saveAs);
 			} catch (Exception e) {
 				BaseUiPluginHelper helper = BaseUiPluginHelper.INSTANCE;
@@ -136,7 +146,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 			}
 		}
 		else {
-			superDoSaveDocument(monitor, element, document, overwrite);
+			super.doSaveDocument(monitor, element, document, overwrite);
 		}
 	}
 
@@ -232,6 +242,18 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 		}
 	}
 
+	protected boolean isXML(@NonNull InputStream inputStream, String encoding) throws IOException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, encoding));
+		try {
+			String line = reader.readLine();
+			inputStream.reset();
+			return (line != null) && line.startsWith("<?xml");
+		}
+		finally {
+			reader.close();
+		}
+	}
+
 	@Override
 	protected void loadResource(XtextResource resource, String document, String encoding) throws CoreException {
 		assert resource != null;
@@ -247,12 +269,16 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 	}
 
 	@Override
-	protected void setDocumentText(@NonNull XtextDocument document, @NonNull String sourceText) throws CoreException {
-		@NonNull String displayText = sourceText;
+	protected void setDocumentContent(IDocument document, InputStream inputStream, String encoding) throws CoreException {
+//		@NonNull String displayText = sourceText;
 		try {
-			String xmlEncoding = URIConverter.ReadableInputStream.getEncoding(sourceText);
+//			String xmlEncoding = URIConverter.ReadableInputStream.getEncoding(sourceText);
+			if (!inputStream.markSupported()) {
+				inputStream = createResettableInputStream(inputStream);
+			}
+			boolean isXML = isXML(inputStream, encoding);		
 			String persistAs = PERSIST_AS_TEXT;
-			if (xmlEncoding != null) {
+			if (isXML) {
 				ResourceSet asResourceSet = getOCL().getMetamodelManager().getASResourceSet();
 				StandaloneProjectMap projectMap = StandaloneProjectMap.getAdapter(asResourceSet);
 				StandaloneProjectMap.IConflictHandler conflictHandler = StandaloneProjectMap.MapToFirstConflictHandlerWithLog.INSTANCE; //null; 			// FIXME
@@ -269,7 +295,8 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				else {
 					xmiResource.unload();
 				}
-				xmiResource.load(new InputSource(new StringReader(sourceText)), null);
+//				xmiResource.load(new InputSource(new StringReader(sourceText)), null);
+				xmiResource.load(inputStream, null);
 				EcoreUtil.resolveAll(asResourceSet);
 				List<Resource.Diagnostic> allErrors = null;
 				for (Resource resource : asResourceSet.getResources()) {
@@ -320,19 +347,26 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				//		QVTimperative CS resource with *.ecore URI, in URIResourceMap as *.ecore.oclinecore
 				//
 				csResource.updateFrom(asResource, getOCL().getEnvironmentFactory());
-				StringWriter writer = new StringWriter();
+				ByteArrayOutputStream outputStream =new ByteArrayOutputStream();
+//				StringWriter writer = new StringWriter();
 				try {
-					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
+//					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
+					inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 				} catch (InvalidConcreteSyntaxException e) {
 					diagnoseErrors((XtextResource) csResource, e);
 				} catch (XtextSerializationException e) {
 					diagnoseErrors((XtextResource) csResource, e);
 				}
 				csResource.unload();
-				@SuppressWarnings("null")@NonNull String string = writer.toString();
-				displayText = string;
+//				@SuppressWarnings("null")@NonNull String string = writer.toString();
+//				displayText = string;
+////				CS2ASResourceAdapter resourceAdapter = ((BaseCSResource)csResource).getCS2ASAdapter();
+////				resourceAdapter.dispose();
+				csResourceSet.getResources().remove(csResource);
+				inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 			}
-			else if (sourceText.length() <= 0) {		// Empty document
+//			else if (sourceText.length() <= 0) {		// Empty document
+			else if (inputStream.available() == 0) {		// Empty document
 				URI uri = ClassUtil.nonNullState(uriMap.get(document));
 				Resource.Factory factory = Resource.Factory.Registry.INSTANCE.getFactory(uri);
 				if (factory instanceof OCLASResourceFactory) {
@@ -345,7 +379,8 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				if (lastSegment == null) {
 					lastSegment = "Default";
 				}
-				displayText = createTestDocument(uri, lastSegment);
+				String testDocument = createTestDocument(uri, lastSegment);
+				inputStream = new ByteArrayInputStream(testDocument.getBytes());				
 			}
 			loadedAsMap.put(document, persistAs);
 			saveAsMap.put(document, persistAs);
@@ -353,7 +388,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 //			throw new CoreException(new Status(IStatus.ERROR, OCLExamplesCommonPlugin.PLUGIN_ID, "Failed to load", e));
 		} catch (IOException e) {
 			throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, "Failed to load", e));
-		} catch (Throwable e) {
+/*		} catch (Throwable e) {
 			Runnable displayRefresh = new Runnable() {
 				@Override
 				public void run() {
@@ -365,9 +400,25 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				}
 			};
 			Display.getDefault().asyncExec(displayRefresh);
-			displayText = "/* Load failed */";
+			displayText = "/* Load failed * /";
+*/		}
+/*
+ * 		This fails to setup Xtext correctly: No state leads to NPE from EcoreUtil.resolveAll.
+ * 
+  		if (reload) {		
+			final InputStream finalInputStream = inputStream; 
+			((XtextDocument)document).modify(new IUnitOfWork<Object, XtextResource>() {
+
+				public Object exec(XtextResource state) throws Exception {
+					QVTimperativeDocumentProvider.super.setDocumentContent(document, finalInputStream, encoding);
+					return null;
+				}
+			});
 		}
-		superSetDocumentText(document, displayText);
+		else { */
+		super.setDocumentContent(document, inputStream, encoding);
+//		superSetDocumentText(document, displayText);
+//		}
 	}
 
 	public void setExportDelegateURI(Object element, String uri) {
@@ -384,7 +435,13 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 		super.doSaveDocument(monitor, element, document, overwrite);
 	}
 
-	protected void superSetDocumentText(@NonNull XtextDocument document, @NonNull String displayText) throws CoreException {
-		super.setDocumentText(document, displayText);
+	/**
+	 * @deprecated no longer used - does nothing - retained for API compatibility
+	 */
+	@Deprecated
+	protected void superSetDocumentText(@NonNull XtextDocument document, @NonNull String displayText) throws CoreException {}
+
+	protected void superSetDocumentContent(IDocument document, InputStream inputStream, String encoding) throws CoreException {
+		super.setDocumentContent(document, inputStream, encoding);
 	}
 }
