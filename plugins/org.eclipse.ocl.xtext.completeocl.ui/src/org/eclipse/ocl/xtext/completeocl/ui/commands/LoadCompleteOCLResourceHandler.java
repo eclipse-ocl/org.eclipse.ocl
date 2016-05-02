@@ -164,7 +164,14 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 				CompleteOCLLoader helper = new CompleteOCLLoader(oclAdapter.getEnvironmentFactory()) {
 					@Override
 					protected boolean error(@NonNull String primaryMessage, @Nullable String detailMessage) {
-						return ResourceDialog.this.error(primaryMessage, detailMessage);
+						Display.getDefault().asyncExec(new Runnable()
+						{
+							@Override
+							public void run() {
+								ResourceDialog.this.error(primaryMessage, detailMessage);
+							}
+						});
+						return false;
 					}
 				};
 
@@ -183,7 +190,13 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 					}
 					catch (Throwable e) {
 						IStatus status = new Status(IStatus.ERROR, CompleteOCLUiModule.PLUGIN_ID, e.getLocalizedMessage(), e);
-						ErrorDialog.openError(parent, "OCL->Load Document Failure", "Failed to load '" + oclURI + "'", status);
+						Display.getDefault().asyncExec(new Runnable()
+						{
+							@Override
+							public void run() {
+								ErrorDialog.openError(parent, "OCL->Load Document Failure", "Failed to load '" + oclURI + "'", status);
+							}
+						});
 						return false;
 					}
 				}
