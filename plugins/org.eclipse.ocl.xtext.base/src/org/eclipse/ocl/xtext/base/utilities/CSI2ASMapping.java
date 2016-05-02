@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.utilities;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,24 +20,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.xmi.XMIException;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
+import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping.MultipleCS2ASConversion;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
+import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
+import org.eclipse.ocl.xtext.basecs.PathElementCS;
+import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.RootCS;
 
 /**
  * The CSI2ASMapping maintains the mapping between CS elements or rather their CSIs
@@ -348,6 +361,110 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		}
 	}
 	
+	public class MultipleCS2ASConversion
+	{
+		/**
+		 * The first CS2AS conversion that mediates nested conversions.
+		 */
+		private final @NonNull CS2ASConversion primaryCS2ASConversion;
+
+		private final @NonNull List<@NonNull BaseCSResource> cs2asConversionResources = new ArrayList<@NonNull BaseCSResource>();
+
+		private final @NonNull Map<@NonNull ImportCS, @NonNull Resource> csImport2asResource = new HashMap<@NonNull ImportCS, @NonNull Resource>();
+
+		public MultipleCS2ASConversion(@NonNull CS2ASConversion primaryCS2ASConversion) {
+			this.primaryCS2ASConversion = primaryCS2ASConversion;
+			addCS2ASConversion(primaryCS2ASConversion);
+		}
+		
+		public void addCS2ASConversion(@NonNull CS2ASConversion cs2asConversion) {
+			BaseCSResource csResource = cs2asConversion.getConverter().getCSResource();
+			if (!cs2asConversionResources.contains(csResource)) {
+				cs2asConversionResources.add(csResource);
+			}
+			/**
+			 * Resolve all the imports provoking recursive loads.
+			 */
+			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+			for (EObject eObject : csResource.getContents()) {
+				if (eObject instanceof RootCS) {
+					for (@NonNull ImportCS csImport : ClassUtil.nullFree(((RootCS)eObject).getOwnedImports())) {
+						BaseCSResource csImportingResource = (BaseCSResource)csImport.eResource();
+						URI resolvedURI = csImportingResource.resolve(getImportedURI(csImport).trimFragment());
+						Resource importedResource = null;
+						try {
+							importedResource = metamodelManager.getImportedResource(resolvedURI);
+							assert importedResource != null;
+							if (importedResource instanceof BaseCSResource) {
+								importedResource = ((BaseCSResource)importedResource).getASResource();
+							}
+							else if (!(importedResource instanceof ASResource)) {
+								Element asElement = null;
+								List<EObject> importedContents = importedResource.getContents();
+								if (importedContents.size() > 0) {
+									asElement = metamodelManager.getASOf(Element.class, importedContents.get(0));
+								}
+								if (asElement != null) {
+									importedResource = asElement.eResource();
+//									throw new WrappedException(new IOException("Failed to import pivot of " + importedResource));
+								}
+							}
+						}
+						catch (ParserException e) {
+							importedResource.getErrors().add(new XMIException(e));
+						}
+						catch (Exception e) {
+							if (importedResource == null) {
+								importedResource = new XMIResourceImpl(resolvedURI);
+							}
+							importedResource.getErrors().add(new XMIException(e instanceof Resource.IOWrappedException ? (Exception)e.getCause() : e));
+						}
+						if (importedResource == null) {
+							importedResource = new XMIResourceImpl(resolvedURI);
+							importedResource.getErrors().add(new XMIException("Faoled to import " + importedResource));
+						}
+						csImport2asResource.put(csImport, importedResource);
+//						private @Nullable Map<ImportCS, ASResource> csImport2asResource = new HashMap<ImportCS, ASResource>();
+//						assert (asImportedResource == null) || (asImportedResource.getResourceSet() != null);
+					}
+				}
+			}
+		}
+
+		public @NonNull List<@NonNull BaseCSResource> getCS2ASConversionResources() {
+			return ClassUtil.nonNullState(cs2asConversionResources);
+		}
+
+		/*public*/ @NonNull PathElementCS geImportedPathElementCS(@NonNull ImportCS csImport) {
+			PathNameCS csPathName = ClassUtil.nonNullState(csImport.getOwnedPathName());
+			return ClassUtil.nonNullState(csPathName.getOwnedPathElements().get(0));
+		}
+
+		public @NonNull Resource getImportedResource(@NonNull ImportCS csImport) {
+			Map<@NonNull ImportCS, @NonNull Resource> csImport2asResource2 = csImport2asResource;
+			assert csImport2asResource2 != null;
+			Resource asResource = csImport2asResource2 .get(csImport);
+			assert asResource != null;
+			return asResource;
+		}
+
+		/*public*/ @NonNull URI getImportedURI(@NonNull ImportCS csImport) {
+			PathElementCS csPathElement = geImportedPathElementCS(csImport);
+			String importText = ClassUtil.nonNullState(ElementUtil.getText(csPathElement)).trim();
+			if (importText.startsWith("'")) {
+				importText = importText.substring(1);
+			}
+			if (importText.endsWith("'")) {
+				importText = importText.substring(0, importText.length()-1);
+			}
+			return URI.createURI(importText, false);
+		}
+
+//		public boolean isPrimaryCS2ASConversion(@NonNull CS2ASConversion cs2asConversion) {
+//			return cs2asConversion == primaryCS2ASConversion;
+//		}
+	}
+	
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	
 	/**
@@ -382,9 +499,7 @@ public class CSI2ASMapping implements ICSI2ASMapping
 	/**
 	 * The first CS2AS conversion that mediates nested conversions.
 	 */
-	private @Nullable CS2ASConversion primaryCS2ASConversion = null;
-
-	private @Nullable List<@NonNull BaseCSResource> cs2asConversionResources = null;
+	private @Nullable MultipleCS2ASConversion multipleCS2ASConversion = null;
 	
 	private CSI2ASMapping(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
@@ -406,18 +521,16 @@ public class CSI2ASMapping implements ICSI2ASMapping
 //		cs2ases2.add(cs2as); 
 	}
 
-	public @NonNull CS2ASConversion addCS2ASConversion(@NonNull CS2ASConversion cs2asConversion) {
-		List<@NonNull BaseCSResource> cs2asConversionResources2 = cs2asConversionResources;
-		if (cs2asConversionResources2 == null) {
-			cs2asConversionResources = cs2asConversionResources2 = new ArrayList<@NonNull BaseCSResource>();
-			primaryCS2ASConversion = cs2asConversion;
+	public @Nullable MultipleCS2ASConversion addCS2ASConversion(@NonNull CS2ASConversion cs2asConversion) {
+		MultipleCS2ASConversion multipleCS2ASConversion2 = multipleCS2ASConversion;
+		if (multipleCS2ASConversion2 == null) {
+			multipleCS2ASConversion = multipleCS2ASConversion2 = new MultipleCS2ASConversion(cs2asConversion);
+			return multipleCS2ASConversion2;
 		}
-		BaseCSResource csResource = cs2asConversion.getConverter().getCSResource();
-		if (!cs2asConversionResources2.contains(csResource)) {
-			cs2asConversionResources2.add(csResource);
+		else {
+			multipleCS2ASConversion2.addCS2ASConversion(cs2asConversion);
+			return null;
 		}
-		assert primaryCS2ASConversion != null;
-		return primaryCS2ASConversion;
 	}
 	
 	public Set<CSI> computeCSIs(@NonNull BaseCSResource csResource) {
@@ -484,10 +597,6 @@ public class CSI2ASMapping implements ICSI2ASMapping
 
 	public @Nullable CS2AS getCS2AS(@NonNull BaseCSResource csResource) {
 		return cs2as2as.get(csResource);
-	}
-
-	public @NonNull List<@NonNull BaseCSResource> getCS2ASConversionResources() {
-		return ClassUtil.nonNullState(cs2asConversionResources);
 	}
 
 	/**
@@ -558,6 +667,10 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		return csi2as;
 	}
 
+	public @NonNull MultipleCS2ASConversion getMultipleCS2ASConversion() {
+		return ClassUtil.nonNullState(multipleCS2ASConversion);
+	}
+
 	/**
 	 * Install the Pivot element corresponding to a given CS element.
 	 */
@@ -575,10 +688,16 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		cs2as2as.remove(csResource);
 	}
 
-	public void removeCS2ASConversion(@NonNull CS2ASConversion cs2asConversion) {
-		if (cs2asConversion == primaryCS2ASConversion) {
-			primaryCS2ASConversion = null;
-			cs2asConversionResources = null;
+	public @Nullable List<@NonNull BaseCSResource> removeCS2ASConversion(@NonNull CS2ASConversion cs2asConversion) {
+		MultipleCS2ASConversion multipleCS2ASConversion2 = multipleCS2ASConversion;
+		assert multipleCS2ASConversion2 != null;
+		if (cs2asConversion == multipleCS2ASConversion2.primaryCS2ASConversion) {
+			List<@NonNull BaseCSResource> cs2asConversionResources2 = multipleCS2ASConversion2.cs2asConversionResources;
+			multipleCS2ASConversion = null;
+			return cs2asConversionResources2;
+		}
+		else {
+			return null;
 		}
 	}
 

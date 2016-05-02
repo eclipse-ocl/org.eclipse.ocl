@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
@@ -270,6 +272,23 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	@Override
 	public <R> R accept(@NonNull BaseCSVisitor<R> visitor) {
 		return visitor.visitImportCS(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public @Nullable Namespace basicGetReferredNamespace() {
+		if (ownedPathName == null) {
+			return null;
+		}
+		Element referredElement = ownedPathName.basicGetReferredElement();
+		if ((referredElement == null) || (referredElement.eIsProxy())) {
+			return null;
+		}
+		return (Namespace)referredElement;
 	}
 
 	/**

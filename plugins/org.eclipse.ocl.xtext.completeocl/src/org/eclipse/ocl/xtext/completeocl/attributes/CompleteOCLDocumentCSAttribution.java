@@ -31,7 +31,7 @@ public class CompleteOCLDocumentCSAttribution extends AbstractRootCSAttribution
 		CompleteOCLDocumentCS targetElement = (CompleteOCLDocumentCS)target;
 		EnvironmentFactoryInternal environmentFactory = environmentView.getEnvironmentFactory();
 		for (ImportCS anImport : targetElement.getOwnedImports()) {
-			Namespace namespace = anImport.getReferredNamespace();
+			Namespace namespace = anImport.basicGetReferredNamespace();
 			if ((namespace != null) && !namespace.eIsProxy()) {
 				String importName = anImport.getName();
 				if (importName != null) {

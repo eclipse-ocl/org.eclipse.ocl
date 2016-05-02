@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2as;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -77,6 +78,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSPreOrderVisitor.OperatorExpContinuation;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSPreOrderVisitor.TemplateSignatureContinuation;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping.MultipleCS2ASConversion;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -158,6 +160,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	private final IDiagnosticConsumer diagnosticsConsumer;
 	
 	private boolean hasFailed = false;
+	
 //	private @Nullable CS2ASConversion primaryCS2ASConversion = null; 		// Non-null while conversion in progress.
 	
 	public CS2ASConversion(@NonNull CS2AS converter, @NonNull IDiagnosticConsumer diagnosticsConsumer) {
@@ -559,30 +562,6 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	
 	public final @NonNull CS2AS getConverter() {
 		return converter;
-	}
-
-	/*public*/ @Nullable Resource getImportedResource(@NonNull ImportCS csImport) {
-		URI baseURI = csImport.eResource().getURI();
-		URI importURI = getImportedURI(csImport);
-		URI resolvedURI = importURI.trimFragment().resolve(baseURI);
-		return metamodelManager.getImportedResource(resolvedURI);
-	}
-
-	/*public*/ @NonNull URI getImportedURI(@NonNull ImportCS csImport) {
-		PathElementCS csPathElement = geImportedPathElementCS(csImport);
-		String importText = ClassUtil.nonNullState(ElementUtil.getText(csPathElement)).trim();
-		if (importText.startsWith("'")) {
-			importText = importText.substring(1);
-		}
-		if (importText.endsWith("'")) {
-			importText = importText.substring(0, importText.length()-1);
-		}
-		return URI.createURI(importText, false);
-	}
-
-	/*public*/ @NonNull PathElementCS geImportedPathElementCS(@NonNull ImportCS csImport) {
-		PathNameCS csPathName = ClassUtil.nonNullState(csImport.getOwnedPathName());
-		return ClassUtil.nonNullState(csPathName.getOwnedPathElements().get(0));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1294,25 +1273,15 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public boolean update(@NonNull BaseCSResource aCSResource) {
 		assert aCSResource == converter.getCSResource();
 		resetPivotMappings(aCSResource);
-		CS2ASConversion primaryCS2ASConversion = converter.csi2asMapping.addCS2ASConversion(this);
-		/**
-		 * Resolve all the imports provoking recursive loads.
-		 */
-		for (EObject eObject : aCSResource.getContents()) {
-			if (eObject instanceof RootCS) {
-				for (@NonNull ImportCS csImport : ClassUtil.nullFree(((RootCS)eObject).getOwnedImports())) {
-					getImportedResource(csImport);
-				}
-			}
-		}
+		MultipleCS2ASConversion multipleCS2ASConversion = converter.csi2asMapping.addCS2ASConversion(this);
 		/**
 		 * Nested conversions are performed by the outer conversion.
 		 */
-		if (primaryCS2ASConversion != this) {
+		if (multipleCS2ASConversion == null) {
 			return false;
 		}
 		try {
-			Iterable<@NonNull BaseCSResource> csResources = converter.csi2asMapping.getCS2ASConversionResources();
+			Iterable<@NonNull BaseCSResource> csResources = multipleCS2ASConversion.getCS2ASConversionResources();
 			for (@NonNull BaseCSResource csResource : csResources) {
 				oldPackagesByName = new HashMap<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package>();
 				oldPackagesByQualifiedName = new HashMap<@NonNull String, org.eclipse.ocl.pivot.@NonNull Package>();
@@ -1468,7 +1437,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			return true;
 		}
 		finally {
-			converter.csi2asMapping.removeCS2ASConversion(this);
+//			converter.csi2asMapping.removeCS2ASConversion(this);
 		}
 	}
 

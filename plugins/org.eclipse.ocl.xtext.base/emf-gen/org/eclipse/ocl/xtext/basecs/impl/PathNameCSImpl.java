@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -362,7 +363,8 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public Element basicGetReferredElement()
+	@Override
+	public @Nullable Element basicGetReferredElement()
 	{
 		if (ownedPathElements == null) {
 			return null;
@@ -371,7 +373,11 @@ public class PathNameCSImpl extends ElementCSImpl implements PathNameCS
 		if (iMax <= 0) {
 			return null;
 		}
-		return ownedPathElements.get(iMax-1).basicGetReferredElement();
+		PathElementCS csPathElement = ((InternalEList<PathElementCS>)ownedPathElements).basicGet(iMax-1);
+		if ((csPathElement == null) || csPathElement.eIsProxy()) {
+			return null;
+		}
+		return csPathElement.basicGetReferredElement();
 	}
 
 	/**

@@ -11,7 +11,9 @@
 package org.eclipse.ocl.xtext.basecs;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 
@@ -147,5 +149,7 @@ public interface PathNameCS extends ElementCS, Pivotable
 	 * @generated
 	 */
 	void setScopeFilter(ScopeFilter value);
+
+	@Nullable Element basicGetReferredElement();
 
 } // QualifiedElementRefCS

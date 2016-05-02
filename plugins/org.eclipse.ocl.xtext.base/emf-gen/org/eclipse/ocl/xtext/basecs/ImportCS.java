@@ -11,6 +11,7 @@
 
 package org.eclipse.ocl.xtext.basecs;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Namespace;
 
 
@@ -100,5 +101,7 @@ public interface ImportCS extends NamespaceCS {
 	 * @generated
 	 */
 	void setIsAll(boolean value);
+
+	@Nullable Namespace basicGetReferredNamespace();
 
 } // ImportCS

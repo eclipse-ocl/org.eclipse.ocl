@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
@@ -47,8 +48,10 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping.MultipleCS2ASConversion;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
@@ -104,24 +107,48 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<@Nu
 		public BasicContinuation<?> execute() {
 			Import pivotElement = PivotUtil.getPivot(Import.class, csElement);
 			if (pivotElement != null) {
-				URI importURI = context.getImportedURI(csElement);
-				Resource importedResource = context.getImportedResource(csElement);
+				MultipleCS2ASConversion multipleCS2ASConversion = context.getConverter().getMultipleCS2ASConversion();
+				Resource importedResource = multipleCS2ASConversion.getImportedResource(csElement);
+//				BaseCSResource csImportingResource = (BaseCSResource)csElement.eResource();
+//				csImportingResource.getCS2AS();
+//				context.converter.csi2asMapping.p
+//				URI importURI = context.getImportedURI(csElement);
+//				BaseCSResource csResource = (BaseCSResource)csElement.eResource();
+//				URI resolvedURI = csResource.resolve(importURI);
+//				ASResource importedResource2 = context.getImportedResource(csElement);
+//				Resource importedResource = context.getMetamodelManager().getImportedResource(resolvedURI.trimFragment());		// FIXME re-use
+//				ASResource importedResource2 = csResource.getASResource();
+//				Resource importedResource = context.getImportedResource(csElement);
+				List<Diagnostic> importedErrors = importedResource.getErrors();
+				if (importedErrors.size() > 0) {
+					for (Diagnostic diagnostic : importedErrors) {
+						context.addDiagnostic(csElement, diagnostic.toString());
+					}
+				}
+				
 				if (importedResource instanceof BaseCSResource) {
-					BaseCSResource csResource = (BaseCSResource)importedResource;
-					CS2AS cs2as = csResource.getCS2AS();
+					BaseCSResource csImportedResource = (BaseCSResource)importedResource;
+					CS2AS cs2as = csImportedResource.getCS2AS();
 					importedResource = cs2as.getASResource();
 				}
-				if (importedResource != null) {
+				if (importedResource instanceof ASResource) {
 					EObject importedElement;
-					String uriFragment = importURI.fragment();
+					String uriFragment = null;//importURI.fragment();
 					if (uriFragment == null) {
-						importedElement = importedResource.getContents().get(0);
+						List<EObject> importedContents = importedResource.getContents();
+						importedElement = importedContents.size() > 0 ? importedContents.get(0) : null;
 					}
 					else {
 						importedElement = importedResource.getEObject(uriFragment);
 					}
-					PathElementCS csPathElement = context.geImportedPathElementCS(csElement);
-					csPathElement.setReferredElement((Element) importedElement);
+//					PathElementCS csPathElement = context.geImportedPathElementCS(csElement);
+//					csPathElement.setReferredElement((Element) importedElement);
+					if ((importedElement instanceof Namespace) && !importedElement.eIsProxy()) {			
+						Namespace oldNamespace = pivotElement.getImportedNamespace();
+						if (importedElement != oldNamespace) {
+							pivotElement.setImportedNamespace((Namespace) importedElement);
+						}
+					}
 				}
 				/*			String name = environmentView.getName();
 				if (name != null) {				// Looking for a specific name
@@ -147,6 +174,13 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<@Nu
 				
 				
 				
+//				for (ImportCS csImport : csImports) {
+//					Import pivotElement = PivotUtil.getPivot(Import.class, csImport);
+//					if (pivotElement != null) {
+//						pivotElement.setImportedNamespace(csImport.getReferredNamespace());		// FIXME too soon
+//					}
+//					newImports.add(pivotElement);
+//				}
 				
 				
 				Namespace namespace = csElement.getReferredNamespace();
@@ -501,23 +535,8 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<@Nu
 	@Override
 	public Continuation<?> visitRootPackageCS(@NonNull RootPackageCS csElement) {
 		importPackages(csElement);
-		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.MODEL;
-		Model root = refreshRootPackage(Model.class, eClass, csElement);
-		EList<ImportCS> csImports = csElement.getOwnedImports();
-		if (csImports.size() > 0) {
-			List<Import> newImports = new ArrayList<Import>(csImports.size());
-			for (ImportCS csImport : csImports) {
-				Import pivotElement = PivotUtil.getPivot(Import.class, csImport);
-				if (pivotElement != null) {
-					pivotElement.setImportedNamespace(csImport.getReferredNamespace());
-				}
-				newImports.add(pivotElement);
-			}
-			context.refreshList(root.getOwnedImports(), newImports);
-		}
-		else {
-			root.getOwnedImports().clear();
-		}
+		Model root = refreshRootPackage(Model.class, PivotPackage.Literals.MODEL, csElement);
+		context.refreshPivotList(Import.class, root.getOwnedImports(), csElement.getOwnedImports());
 		return null;
 	}
 

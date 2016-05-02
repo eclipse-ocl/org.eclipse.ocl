@@ -50,6 +50,7 @@ import org.eclipse.ocl.xtext.base.scoping.BaseScopeView;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.CSI;
 import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
+import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping.MultipleCS2ASConversion;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementRefCS;
@@ -442,6 +443,10 @@ public abstract class CS2AS extends AbstractConversion
 		return csi2asMapping.get(csElement);
 	}
 
+	public @NonNull MultipleCS2ASConversion getMultipleCS2ASConversion() {
+		return csi2asMapping.getMultipleCS2ASConversion();
+	}
+
 	public @Nullable <T extends Element> T getPivotElement(@NonNull Class<T> pivotClass, @NonNull ModelElementCS csElement) {
 		Element pivotElement = csi2asMapping.get(csElement);
 		if (pivotElement == null) {
@@ -612,6 +617,7 @@ public abstract class CS2AS extends AbstractConversion
 //		}
 		CS2ASConversion conversion = createConversion(diagnosticsConsumer, csResource);
 		boolean isOk = conversion.update(csResource);
+		List<@NonNull BaseCSResource> cs2asConversionResources = csi2asMapping.removeCS2ASConversion(conversion);
 //		System.out.println("---------------------------------------------------------------------------");
 //		Collection<? extends Resource> pivotResources = cs2asResourceMap.values();
 //		for (Entry<? extends Resource, ? extends Resource> entry : cs2asResourceMap.entrySet()) {
@@ -625,14 +631,16 @@ public abstract class CS2AS extends AbstractConversion
 			Element deadPivot = oldCSI2AS.get(deadCSI);	// WIP
 //			metamodelManager.kill(deadPivot);
 		} */
-		Map<BaseCSResource, ASResource> cs2asResourceMap = new HashMap<BaseCSResource, ASResource>();
-		ASResource asResource = csi2asMapping.getASResource(csResource);
-		cs2asResourceMap.put(csResource, asResource);
+//		ASResource asResource = csi2asMapping.getASResource(csResource);
 		AbstractJavaClassScope javaClassScope = AbstractJavaClassScope.findAdapter(csResource);
 		if (javaClassScope != null) {
 			javaClassScope.installContents(csResource);
 		}
-		if (isOk) {
+		if (cs2asConversionResources != null) {
+			Map<@NonNull BaseCSResource, @NonNull ASResource> cs2asResourceMap = new HashMap<@NonNull BaseCSResource, @NonNull ASResource>();
+			for (@NonNull BaseCSResource csResource: cs2asConversionResources) {
+				cs2asResourceMap.put(csResource, csResource.getASResource());
+			}
 			conversion.garbageCollect(cs2asResourceMap);
 			csi2asMapping.update();
 		}
