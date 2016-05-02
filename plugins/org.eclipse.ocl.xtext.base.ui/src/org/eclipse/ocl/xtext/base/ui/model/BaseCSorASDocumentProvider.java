@@ -347,10 +347,12 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				//		QVTimperative CS resource with *.ecore URI, in URIResourceMap as *.ecore.oclinecore
 				//
 				csResource.updateFrom(asResource, getOCL().getEnvironmentFactory());
-				ByteArrayOutputStream outputStream =new ByteArrayOutputStream();
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+				inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 //				StringWriter writer = new StringWriter();
 				try {
 //					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
+					csResource.save(outputStream, null);
 					inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 				} catch (InvalidConcreteSyntaxException e) {
 					diagnoseErrors((XtextResource) csResource, e);
@@ -363,7 +365,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 ////				CS2ASResourceAdapter resourceAdapter = ((BaseCSResource)csResource).getCS2ASAdapter();
 ////				resourceAdapter.dispose();
 				csResourceSet.getResources().remove(csResource);
-				inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+//				inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 			}
 //			else if (sourceText.length() <= 0) {		// Empty document
 			else if (inputStream.available() == 0) {		// Empty document
