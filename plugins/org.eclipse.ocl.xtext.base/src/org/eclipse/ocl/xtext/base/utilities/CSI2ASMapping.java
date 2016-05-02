@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.utilities;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -42,7 +39,6 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
-import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping.MultipleCS2ASConversion;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
@@ -435,11 +431,6 @@ public class CSI2ASMapping implements ICSI2ASMapping
 			return ClassUtil.nonNullState(cs2asConversionResources);
 		}
 
-		/*public*/ @NonNull PathElementCS geImportedPathElementCS(@NonNull ImportCS csImport) {
-			PathNameCS csPathName = ClassUtil.nonNullState(csImport.getOwnedPathName());
-			return ClassUtil.nonNullState(csPathName.getOwnedPathElements().get(0));
-		}
-
 		public @NonNull Resource getImportedResource(@NonNull ImportCS csImport) {
 			Map<@NonNull ImportCS, @NonNull Resource> csImport2asResource2 = csImport2asResource;
 			assert csImport2asResource2 != null;
@@ -449,7 +440,8 @@ public class CSI2ASMapping implements ICSI2ASMapping
 		}
 
 		/*public*/ @NonNull URI getImportedURI(@NonNull ImportCS csImport) {
-			PathElementCS csPathElement = geImportedPathElementCS(csImport);
+			PathNameCS csPathName = ClassUtil.nonNullState(csImport.getOwnedPathName());
+			PathElementCS csPathElement = ClassUtil.nonNullState(csPathName.getOwnedPathElements().get(0));
 			String importText = ClassUtil.nonNullState(ElementUtil.getText(csPathElement)).trim();
 			if (importText.startsWith("'")) {
 				importText = importText.substring(1);

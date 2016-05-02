@@ -40,6 +40,7 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
+import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.ParameterCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.completeoclcs.ClassifierContextDeclCS;
@@ -385,6 +386,20 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		contextProperty.setIsResolveProxies(false);
 		ExpressionInOCL pivotSpecification = PivotUtil.getPivot(ExpressionInOCL.class, csElement.getOwnedSpecification());
 		contextProperty.setOwnedExpression(pivotSpecification);
+		return null;
+	}
+
+	@Override
+	public Continuation<?> visitImportCS(@NonNull ImportCS csImport) {
+		refreshNamedElement(Import.class, PivotPackage.Literals.IMPORT, csImport);
+		PathNameCS pathName = csImport.getOwnedPathName();
+		if (pathName != null) {
+			CS2AS.setElementType(pathName, PivotPackage.Literals.NAMESPACE, csImport, null);
+		}
+		if (csImport.isIsAll() && (csImport.getName() != null)) {
+			context.addDiagnostic(csImport, "An all-package import cannot have an associated alias name");
+		}
+		resolveImport(csImport);
 		return null;
 	}
 
