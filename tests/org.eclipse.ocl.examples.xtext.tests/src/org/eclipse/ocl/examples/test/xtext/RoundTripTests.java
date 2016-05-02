@@ -518,6 +518,31 @@ public class RoundTripTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testGenericsRoundTrip_492800() throws IOException, InterruptedException {
+		String testFile = 
+				"package example : example = 'http://www.example.org/generics/opposite'\n" + 
+				"{\n" + 
+				"	abstract class Interface(T extends Event)\n" + 
+				"	{\n" + 
+				"		property events#interface : T[*] { ordered composes };\n" + 
+				"		attribute name : String[1];\n" + 
+				"	}\n" + 
+				"	class CallInterface extends Interface(CallEvent);\n" + 
+				"	class ReplyInterface extends Interface(ReplyEvent);\n" + 
+				"	abstract class Event\n" + 
+				"	{\n" + 
+				"		property interface#events : Interface(Event)[?];\n" + 
+				"		attribute name : String[1];\n" + 
+				"	}\n" + 
+				"	abstract class CallEvent extends Event;\n" + 
+				"	class ReplyEvent extends Event;\n" + 
+				"}";
+		createOCLinEcoreFile("Bug492800.oclinecore", testFile);
+		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
+		doRoundTripFromOCLinEcore(ocl, "Bug492800");
+		ocl.dispose();
+	}
+
 	public void testInvariantCommentsRoundTrip_410682() throws IOException, InterruptedException {
 		String testFile = 
 				"package b : bb = 'bbb'\n" +

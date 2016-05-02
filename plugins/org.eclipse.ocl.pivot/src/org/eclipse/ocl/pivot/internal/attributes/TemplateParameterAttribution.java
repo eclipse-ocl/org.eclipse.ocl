@@ -12,10 +12,11 @@ package org.eclipse.ocl.pivot.internal.attributes;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class TemplateParameterAttribution extends AbstractAttribution
 {
@@ -23,12 +24,12 @@ public class TemplateParameterAttribution extends AbstractAttribution
 
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
-//		TemplateParameter targetClass = (TemplateParameter) target;
-		StandardLibraryInternal standardLibrary = environmentView.getStandardLibrary();
-		org.eclipse.ocl.pivot.Class type = standardLibrary.getOclAnyType(); // WIP use lowerbound
-		environmentView.addAllOperations(type, null);
-		environmentView.addAllProperties(type, null);
-		environmentView.addAllStates(type);
+		TemplateParameter targetClass = (TemplateParameter) target;
+		for (org.eclipse.ocl.pivot.@NonNull Class constrainingClass : ClassUtil.nullFree(targetClass.getConstrainingClasses())) {
+			environmentView.addAllOperations(constrainingClass, null);
+			environmentView.addAllProperties(constrainingClass, null);
+			environmentView.addAllStates(constrainingClass);
+		}
 		return null;
 	}
 }

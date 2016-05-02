@@ -15,10 +15,12 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 
 public class PropertyAttribution extends AbstractAttribution
@@ -35,6 +37,11 @@ public class PropertyAttribution extends AbstractAttribution
 			}
 			if (type instanceof org.eclipse.ocl.pivot.Class) {
 				environmentView.addAllProperties((org.eclipse.ocl.pivot.Class)type, FeatureFilter.SELECT_NON_STATIC);
+			}
+			else if (type instanceof TemplateParameter) {
+				for (org.eclipse.ocl.pivot.@NonNull Class constrainingClass : ClassUtil.nullFree(((TemplateParameter)type).getConstrainingClasses())) {
+					environmentView.addAllProperties(constrainingClass, FeatureFilter.SELECT_NON_STATIC);
+				}
 			}
 		}
 		return scopeView.getParent();
