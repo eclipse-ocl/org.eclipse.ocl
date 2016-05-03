@@ -68,6 +68,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor.IProjectDescriptorExtension;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -231,6 +232,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	
 	public Ecore2AS(@NonNull Resource ecoreResource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(environmentFactory);
+		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(ecoreResource) + " " + ecoreResource.getURI());	
 		this.ecoreResource = ecoreResource;
 		this.environmentFactory.addExternal2AS(this);
 	}
@@ -331,22 +333,31 @@ public class Ecore2AS extends AbstractExternal2AS
 	public @NonNull Model getASModel() {
 		Model pivotModel2 = pivotModel;
 		if (pivotModel2 == null) {
-			loadImports(ecoreResource);
-			pivotModel2 = pivotModel = importObjects(ClassUtil.nonNullEMF(ecoreResource.getContents()), createPivotURI());
-			@SuppressWarnings("null") @NonNull Resource asResource = pivotModel2.eResource();
-			AliasAdapter ecoreAdapter = AliasAdapter.findAdapter(ecoreResource);
-			if (ecoreAdapter != null) {
-				Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
-				AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
-				Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
-				for (EObject eObject : ecoreAliasMap.keySet()) {
-					String alias = ecoreAliasMap.get(eObject);
-					Element element = newCreateMap.get(eObject);
-					pivotAliasMap.put(element, alias);
-				}
+			URI asURI = createPivotURI();
+			Resource asResource = metamodelManager.getASResourceSet().getResource(asURI, false);
+			if (asResource != null) {
+				pivotModel2 = pivotModel = loadEcore(asResource);
+//rredundant				metamodelManager.installResource(asResource);
+				installImports();
 			}
-			metamodelManager.installResource(asResource);
-			installImports();
+			else {
+				loadImports(ecoreResource);
+				pivotModel2 = pivotModel = importObjects(ClassUtil.nonNullEMF(ecoreResource.getContents()), asURI);
+				asResource = pivotModel2.eResource();
+				AliasAdapter ecoreAdapter = AliasAdapter.findAdapter(ecoreResource);
+				if (ecoreAdapter != null) {
+					Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
+					AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
+					Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
+					for (EObject eObject : ecoreAliasMap.keySet()) {
+						String alias = ecoreAliasMap.get(eObject);
+						Element element = newCreateMap.get(eObject);
+						pivotAliasMap.put(element, alias);
+					}
+				}
+				metamodelManager.installResource(asResource);
+				installImports();
+			}
 		}
 		return pivotModel2;
 	}
@@ -592,6 +603,63 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		return true;
 	}
+
+	private @NonNull Model loadEcore(@NonNull Resource asResource) {
+		newCreateMap = new HashMap<@NonNull EObject, @NonNull Element>();
+		Model asModel = null;
+		for (@NonNull TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
+			EObject eObject = tit.next();
+			if (eObject instanceof Model) {
+				assert asModel == null;
+				asModel = (Model)eObject;
+			}
+			if ((eObject instanceof Element) && (eObject instanceof PivotObjectImpl)) {
+				PivotObjectImpl asElement = (PivotObjectImpl)eObject;
+				EObject esObject = asElement.getESObject();
+				if (esObject != null) {
+					newCreateMap.put(esObject, (Element)asElement);
+				}
+			}
+		}
+//		loadEcoreEPackages(ClassUtil.nullFree(asModel.getOwnedPackages()), (List<@NonNull EPackage>)(Object)ClassUtil.nullFree(ecoreResource.getContents()));
+		assert asModel != null;
+		return asModel;
+	}
+
+/*	private void loadEcoreEClassifiers(@NonNull List<org.eclipse.ocl.pivot.@NonNull Class> asClasses, @NonNull List<@NonNull EClassifier> eClassifiers) {
+		for (@NonNull EClassifier eClassifier : eClassifiers) {
+			org.eclipse.ocl.pivot.Class asClass = NameUtil.getNameable(asClasses, eClassifier.getName());
+			if (asClass == null) {
+				
+			}
+			if (asClass != null) {
+				newCreateMap.put(eClassifier, asClass);
+				if (asClass instanceof PivotObjectImpl) {
+					((PivotObjectImpl)asClass).setESObject(eClassifier);
+				}
+			}
+			else {
+				System.out.println("Missing AS Class for " + LabelUtil.getLabel(eClassifier));
+			}
+		}
+	}
+
+	private void loadEcoreEPackages(@NonNull List<org.eclipse.ocl.pivot.@NonNull Package> asPackages, @NonNull List<@NonNull EPackage> ePackages) {
+		for (@NonNull EPackage ePackage : ePackages) {
+			org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(asPackages, ePackage.getName());
+			if (asPackage != null) {
+				newCreateMap.put(ePackage, asPackage);
+				if (asPackage instanceof PivotObjectImpl) {
+					((PivotObjectImpl)asPackage).setESObject(ePackage);
+				}
+				loadEcoreEPackages(ClassUtil.nullFree(asPackage.getOwnedPackages()), ClassUtil.nullFree(ePackage.getESubpackages()));
+				loadEcoreEClassifiers(ClassUtil.nullFree(asPackage.getOwnedClasses()), ClassUtil.nullFree(ePackage.getEClassifiers()));
+			}
+			else {
+				System.out.println("Missing AS Package for " + LabelUtil.getLabel(ePackage));
+			}
+		}
+	} */
 
 	/**
 	 * Load all transitively referenced *.ecore files and identify any EPackages identified

@@ -799,4 +799,11 @@ public class PackageImpl
 	public String toString() {
 		return super.toString();
 	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer,
+			int newContainerFeatureID) {
+		// TODO Auto-generated method stub
+		super.eBasicSetContainer(newContainer, newContainerFeatureID);
+	}
 } //PackageImpl

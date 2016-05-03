@@ -66,7 +66,7 @@ import org.eclipse.ocl.pivot.utilities.Pivotable;
 public class PivotUtilInternal //extends PivotUtil
 {	
 	private static final Logger logger = Logger.getLogger(PivotUtilInternal.class);
-	public static boolean noDebug = true;
+	public static boolean noDebug = false;
 	private static long startTime = System.currentTimeMillis();
 	
 	public static void debugPrintln(@Nullable Object string) {

@@ -23,7 +23,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 public class ASResourceImpl extends XMIResourceImpl implements ASResource
@@ -36,7 +38,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
-//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));	
+		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " " + uri);	
 	}
 
 	@Override
