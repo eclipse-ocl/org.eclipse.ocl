@@ -236,6 +236,9 @@ public class ClassUtil
 	public static <T> @NonNull List<@NonNull T> nullFree(@Nullable List<T> nullFreeList) {
 		return nullFreeList != null ? nullFreeList : Collections.emptyList();
 	}
+	/**
+	 * @since 1.1
+	 */
 	@SuppressWarnings({"null", "unchecked"})
 	public static <T> @NonNull EList<@NonNull T> nullFree(@Nullable EList<T> nullFreeList) {
 		return nullFreeList != null ? nullFreeList : (EList<T>) ECollections.EMPTY_ELIST;
