@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
@@ -60,7 +61,7 @@ public class OCLmetamodel extends ASResourceImpl
 	public static final @NonNull String PIVOT_URI = "http://www.eclipse.org/ocl/2015/Pivot";
 
 	public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-		OCLmetamodel resource = new OCLmetamodel(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI)));
+		OCLmetamodel resource = new OCLmetamodel(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION)));
 		Contents contents = new Contents(standardLibrary.getPackage(), name, nsPrefix, nsURI);
 		Model model = contents.getModel();
 		resource.getContents().add(model);
@@ -76,7 +77,7 @@ public class OCLmetamodel extends ASResourceImpl
 	public static @NonNull OCLmetamodel getDefault() {
 		OCLmetamodel metamodel = INSTANCE;
 		if (metamodel == null) {
-			metamodel = INSTANCE = new OCLmetamodel(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI)));
+			metamodel = INSTANCE = new OCLmetamodel(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION)));
 			Contents contents = new Contents(OCLstdlib.getDefaultPackage(), "pivot", "pivot", PIVOT_URI);
 			metamodel.getContents().add(contents.getModel());
 		}
@@ -115,7 +116,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 		protected Contents(@NonNull Package standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 			super(standardLibrary);
-			root = createModel("http://www.eclipse.org/ocl/2015/Pivot");
+			root = createModel("http://www.eclipse.org/ocl/2015/Pivot" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 			pivot = createPackage("pivot", "pivot", "http://www.eclipse.org/ocl/2015/Pivot", IdManager.METAMODEL);
 			orphanage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null);
 			installPackages();
