@@ -85,7 +85,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		String changedLower = null;
 		String changedUpper = null;
 		for (@SuppressWarnings("null")@NonNull Property redefinedProperty : pivotProperty.getRedefinedProperties()) {
-			EStructuralFeature eRedefined = context.getCreated(EStructuralFeature.class, redefinedProperty);
+			EStructuralFeature eRedefined = getCreated(EStructuralFeature.class, redefinedProperty);
 			if (eRedefined != null) {
 				if (eRedefinesAnnotation == null) {
 					eRedefinesAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
@@ -163,7 +163,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 				EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 				eAnnotation.setSource(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 				for (@SuppressWarnings("null")@NonNull Property redefinedProperty2 :  pivotProperty.getRedefinedProperties()) {
-					EStructuralFeature eRedefined = context.getCreated(EStructuralFeature.class, redefinedProperty2);
+					EStructuralFeature eRedefined = getCreated(EStructuralFeature.class, redefinedProperty2);
 					if (eRedefined != null) {
 						eAnnotation.getReferences().add(eRedefined);
 					}
@@ -184,6 +184,28 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			}
 			// else error
 		}
+	}
+
+	private <T extends EObject> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull Element pivotElement) {
+		@Nullable T eModelElement = context.getCreated(requiredClass, pivotElement);
+		if (eModelElement != null) {
+			return eModelElement;
+		}
+		Element primaryElement = context.getMetamodelManager().getPrimaryElement(pivotElement);
+		if (!(primaryElement instanceof PivotObjectImpl)) {
+			return null;
+		}
+		EObject eObject = ((PivotObjectImpl)primaryElement).getESObject();
+		if (eObject == null) {
+			return null;
+		}
+		if (!requiredClass.isAssignableFrom(eObject.getClass())) {
+			logger.error("Ecore " + eObject.getClass().getName() + "' element is not a '" + requiredClass.getName() + "'"); //$NON-NLS-1$
+			return null;
+		}
+		@SuppressWarnings("unchecked")
+		T castElement = (T) eObject;
+		return castElement;
 	}
 
 	public <T extends EClassifier> void safeVisitAll(Class<?> javaClass, List<EGenericType> eGenericTypes, List<T> eTypes, List<? extends Type> asTypes) {
@@ -293,17 +315,14 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	@Override
 	public EObject visitAnnotation(@NonNull Annotation pivotAnnotation) {
-		EAnnotation eAnnotation = context.getCreated(EAnnotation.class, pivotAnnotation);
+		EAnnotation eAnnotation = getCreated(EAnnotation.class, pivotAnnotation);
 		if (eAnnotation == null) {
 			return null;
 		}
 		eAnnotation.getReferences().clear();
 		for (Element pivotReference : pivotAnnotation.getReferences()) {
 			if (pivotReference != null) {
-				EObject target = context.getCreated(EObject.class, pivotReference);
-				if ((target == null) && (pivotReference instanceof PivotObjectImpl)) {
-					target = ((PivotObjectImpl)pivotReference).getESObject();
-				}
+				EObject target = getCreated(EObject.class, pivotReference);
 				if (target != null) {
 					eAnnotation.getReferences().add(target);
 				}
@@ -314,7 +333,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	@Override
 	public EObject visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
-		EClass eClass = context.getCreated(EClass.class, pivotClass);
+		EClass eClass = getCreated(EClass.class, pivotClass);
 		if (eClass == null) {
 			return null;
 		}
@@ -324,7 +343,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	@Override
 	public @Nullable EObject visitCollectionType(@NonNull CollectionType pivotClass) {
-		EClass eClass = context.getCreated(EClass.class, pivotClass);
+		EClass eClass = getCreated(EClass.class, pivotClass);
 		if (eClass == null) {
 			return null;
 		}
@@ -334,10 +353,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	@Override
 	public EObject visitConstraint(@NonNull Constraint pivotConstraint) {
-		EOperation eOperation = context.getCreated(EOperation.class, pivotConstraint);
+		EOperation eOperation = getCreated(EOperation.class, pivotConstraint);
 		EAnnotation eRedefinesAnnotation = null;
 		for (@SuppressWarnings("null")@NonNull Constraint redefinedConstraint : pivotConstraint.getRedefinedConstraints()) {
-			EOperation eRedefined = context.getCreated(EOperation.class, redefinedConstraint);
+			EOperation eRedefined = getCreated(EOperation.class, redefinedConstraint);
 			if (eRedefined != null) {
 				if (eRedefinesAnnotation == null) {
 					eRedefinesAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
@@ -354,20 +373,20 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	@Override
 	public EObject visitDataType(@NonNull DataType pivotDataType) {
-		EDataType eDataType = context.getCreated(EDataType.class, pivotDataType);
+		EDataType eDataType = getCreated(EDataType.class, pivotDataType);
 		return eDataType;
 	}
 
 	@Override
 	public EObject visitOperation(@NonNull Operation pivotOperation) {
-		EOperation eOperation = context.getCreated(EOperation.class, pivotOperation);
+		EOperation eOperation = getCreated(EOperation.class, pivotOperation);
 		if (eOperation == null) {
 			return null;
 		}
 		safeVisitAll(EClassifier.class, eOperation.getEGenericExceptions(), eOperation.getEExceptions(), pivotOperation.getRaisedExceptions());
 		EAnnotation eRedefinesAnnotation = null;
 		for (@SuppressWarnings("null")@NonNull Operation redefinedOperation : pivotOperation.getRedefinedOperations()) {
-			EOperation eRedefined = context.getCreated(EOperation.class, redefinedOperation);
+			EOperation eRedefined = getCreated(EOperation.class, redefinedOperation);
 			if (eRedefined != null) {
 				if (eRedefinesAnnotation == null) {
 					eRedefinesAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
@@ -384,7 +403,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	@Override
 	public EObject visitPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
-		EPackage ePackage = context.getCreated(EPackage.class, pivotPackage);
+		EPackage ePackage = getCreated(EPackage.class, pivotPackage);
 		if (ePackage == null) {
 			return null;
 		}
@@ -403,7 +422,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		if (pivotProperty.isIsImplicit()) {
 			return null;
 		}
-		EStructuralFeature eStructuralFeature = context.getCreated(EStructuralFeature.class, pivotProperty);
+		EStructuralFeature eStructuralFeature = getCreated(EStructuralFeature.class, pivotProperty);
 		if (eStructuralFeature == null) {
 			return null;
 		}
@@ -415,7 +434,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					// FIXME Use EAnnotations for non-navigable opposites as identified by an Association
 				}
 				else {
-					EReference eOpposite = context.getCreated(EReference.class, pivotOpposite);
+					EReference eOpposite = getCreated(EReference.class, pivotOpposite);
 					if (eOpposite != null) {
 						eReference.setEOpposite(eOpposite);
 					}
@@ -423,7 +442,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			}
 			for (Property pivotKey : pivotProperty.getKeys()) {
 				if (pivotKey != null) {
-					EAttribute eAttribute = context.getCreated(EAttribute.class, pivotKey);
+					EAttribute eAttribute = getCreated(EAttribute.class, pivotKey);
 					if (eAttribute != null) {
 						eReference.getEKeys().add(eAttribute);
 					}
@@ -445,7 +464,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	@Override
 	public EObject visitTemplateParameter(@NonNull TemplateParameter pivotTemplateParameter) {
-		ETypeParameter eTypeParameter = context.getCreated(ETypeParameter.class, pivotTemplateParameter);
+		ETypeParameter eTypeParameter = getCreated(ETypeParameter.class, pivotTemplateParameter);
 		if (eTypeParameter == null) {
 			return null;
 		}
@@ -460,7 +479,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	@Override
 	public EObject visitTypedElement(@NonNull TypedElement pivotTypedElement) {
-		ETypedElement eTypedElement = context.getCreated(ETypedElement.class, pivotTypedElement);
+		ETypedElement eTypedElement = getCreated(ETypedElement.class, pivotTypedElement);
 		if (eTypedElement != null) {
 			Type pivotType = pivotTypedElement.getType();
 			if (pivotType == null) {
