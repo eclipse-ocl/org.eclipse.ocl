@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
@@ -71,6 +72,10 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 	
 	public static final @NonNull String ACCUMULATOR_PREFIX = "a"; //$NON-NLS-1$
 	public static final @NonNull String BODYCONDITION_PREFIX = "c="; //$NON-NLS-1$
+	/**
+	 * @since 1.1
+	 */
+	public static final @NonNull String ENUMERATION_LITERAL_PREFIX = "e."; //$NON-NLS-1$
 	public static final @NonNull String INVARIANT_PREFIX = "ci"; //$NON-NLS-1$
 	public static final @NonNull String ITERATION_PREFIX = "i."; //$NON-NLS-1$
 	public static final @NonNull String ITERATOR_PREFIX = "i"; //$NON-NLS-1$
@@ -256,6 +261,21 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 	@Override
 	public @Nullable Boolean visitElement(@NonNull Element object) {
 		return null;
+	}
+
+	/**
+	 * @since 1.1
+	 */
+	@Override
+	public Boolean visitEnumerationLiteral(@NonNull EnumerationLiteral object) {
+		String name = object.getName();
+		if (name != null) {
+			s.append(ENUMERATION_LITERAL_PREFIX);
+			appendParent(object);
+			appendName(name);
+			return true;
+		}
+		return true;
 	}
 
 	@Override
