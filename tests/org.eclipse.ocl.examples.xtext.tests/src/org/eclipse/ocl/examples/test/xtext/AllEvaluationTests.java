@@ -12,7 +12,7 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import org.eclipse.ocl.examples.pivot.tests.EvaluateBooleanOperationsTest4;
-import org.eclipse.ocl.examples.pivot.tests.EvaluateClassifierOperationsTest;
+import org.eclipse.ocl.examples.pivot.tests.EvaluateClassifierOperationsTest4;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateCollectionOperationsTest4;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateConstructsTest4;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateMapOperationsTest4;
@@ -33,7 +33,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 	EvaluateBooleanOperationsTest4.class,
-	EvaluateClassifierOperationsTest.class,
+	EvaluateClassifierOperationsTest4.class,
 	EvaluateCollectionOperationsTest4.class,
 	EvaluateConstructsTest4.class,
 	EvaluateMapOperationsTest4.class,
