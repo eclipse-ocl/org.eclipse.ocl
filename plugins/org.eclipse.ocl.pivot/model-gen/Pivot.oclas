@@ -39,8 +39,8 @@
           opposite="#p.pivot.AssociationClass.AssociationClassCallExp" type="#T.pivot.AssociationClass"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:Enumeration" xmi:id="T.pivot.AssociativityKind" name="AssociativityKind" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#T.ocl.OclEnumeration">
-      <ownedLiterals name="left"/>
-      <ownedLiterals name="right" value="1"/>
+      <ownedLiterals xmi:id="e.pivot.AssociativityKind.left" name="left"/>
+      <ownedLiterals xmi:id="e.pivot.AssociativityKind.right" name="right" value="1"/>
     </ownedClasses>
     <ownedClasses xmi:id="T.pivot.BagType" name="BagType" superClasses="#T.pivot.CollectionType"/>
     <ownedClasses xmi:id="T.pivot.Behavior" isAbstract="true" name="Behavior" superClasses="#T.pivot.Class">
@@ -123,11 +123,11 @@
           type="#T.pivot.OCLExpression"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:Enumeration" xmi:id="T.pivot.CollectionKind" name="CollectionKind" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#T.ocl.OclEnumeration">
-      <ownedLiterals name="Collection"/>
-      <ownedLiterals name="Set" value="1"/>
-      <ownedLiterals name="OrderedSet" value="2"/>
-      <ownedLiterals name="Bag" value="3"/>
-      <ownedLiterals name="Sequence" value="4"/>
+      <ownedLiterals xmi:id="e.pivot.CollectionKind.Collection" name="Collection"/>
+      <ownedLiterals xmi:id="e.pivot.CollectionKind.Set" name="Set" value="1"/>
+      <ownedLiterals xmi:id="e.pivot.CollectionKind.OrderedSet" name="OrderedSet" value="2"/>
+      <ownedLiterals xmi:id="e.pivot.CollectionKind.Bag" name="Bag" value="3"/>
+      <ownedLiterals xmi:id="e.pivot.CollectionKind.Sequence" name="Sequence" value="4"/>
     </ownedClasses>
     <ownedClasses xmi:id="T.pivot.CollectionLiteralExp" name="CollectionLiteralExp" superClasses="#T.pivot.LiteralExp">
       <ownedInvariants xmi:id="cipivot.CollectionLiteralExp.validateBagKindIsBag" isCallable="true" name="validateBagKindIsBag">
@@ -947,16 +947,16 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:Enumeration" xmi:id="T.pivot.PseudostateKind" name="PseudostateKind" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#T.ocl.OclEnumeration">
       <ownedComments body="PseudostateKind is an Enumeration type that is used to differentiate various kinds of Pseudostates."/>
-      <ownedLiterals name="initial"/>
-      <ownedLiterals name="deepHistory" value="1"/>
-      <ownedLiterals name="shallowHistory" value="2"/>
-      <ownedLiterals name="join" value="3"/>
-      <ownedLiterals name="fork" value="4"/>
-      <ownedLiterals name="junction" value="5"/>
-      <ownedLiterals name="choice" value="6"/>
-      <ownedLiterals name="entryPoint" value="7"/>
-      <ownedLiterals name="exitPoint" value="8"/>
-      <ownedLiterals name="terminate" value="9"/>
+      <ownedLiterals xmi:id="e.pivot.PseudostateKind.initial" name="initial"/>
+      <ownedLiterals xmi:id="e.pivot.PseudostateKind.deepHistory" name="deepHistory" value="1"/>
+      <ownedLiterals xmi:id="e.pivot.PseudostateKind.shallowHistory" name="shallowHistory" value="2"/>
+      <ownedLiterals xmi:id="e.pivot.PseudostateKind.join" name="join" value="3"/>
+      <ownedLiterals xmi:id="e.pivot.PseudostateKind.fork" name="fork" value="4"/>
+      <ownedLiterals xmi:id="e.pivot.PseudostateKind.junction" name="junction" value="5"/>
+      <ownedLiterals xmi:id="e.pivot.PseudostateKind.choice" name="choice" value="6"/>
+      <ownedLiterals xmi:id="e.pivot.PseudostateKind.entryPoint" name="entryPoint" value="7"/>
+      <ownedLiterals xmi:id="e.pivot.PseudostateKind.exitPoint" name="exitPoint" value="8"/>
+      <ownedLiterals xmi:id="e.pivot.PseudostateKind.terminate" name="terminate" value="9"/>
     </ownedClasses>
     <ownedClasses xmi:id="T.pivot.RealLiteralExp" name="RealLiteralExp" superClasses="#T.pivot.NumericLiteralExp">
       <ownedProperties xmi:id="p.pivot.RealLiteralExp.realSymbol" name="realSymbol" type="#Real"/>
@@ -1263,13 +1263,13 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:Enumeration" xmi:id="T.pivot.TransitionKind" name="TransitionKind" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#T.ocl.OclEnumeration">
       <ownedComments body="TransitionKind is an Enumeration type used to differentiate the various kinds of Transitions."/>
-      <ownedLiterals name="internal">
+      <ownedLiterals xmi:id="e.pivot.TransitionKind.internal" name="internal">
         <ownedComments body="Implies that the Transition, if triggered, occurs without exiting or entering the source State (i.e., it does not cause a state change). This means that the entry or exit condition of the source State will not be invoked. An internal Transition can be taken even if the SateMachine is in one or more Regions nested within the associated State."/>
       </ownedLiterals>
-      <ownedLiterals name="local" value="1">
+      <ownedLiterals xmi:id="e.pivot.TransitionKind.local" name="local" value="1">
         <ownedComments body="Implies that the Transition, if triggered, will not exit the composite (source) State, but it will exit and re-enter any state within the composite State that is in the current state configuration."/>
       </ownedLiterals>
-      <ownedLiterals name="external" value="2">
+      <ownedLiterals xmi:id="e.pivot.TransitionKind.external" name="external" value="2">
         <ownedComments body="Implies that the Transition, if triggered, will exit the composite (source) State."/>
       </ownedLiterals>
     </ownedClasses>
