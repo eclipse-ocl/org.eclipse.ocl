@@ -133,6 +133,7 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.LibrarySimpleOperation;
 import org.eclipse.ocl.pivot.library.LibraryUntypedOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -190,23 +191,62 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	/**
-		 * Append the code for an EcorePropertyCall. If source is null, the code for the source will also be appended.
-		 * If source is non-null the caller has already appended it.
-		 */
-		protected @NonNull Boolean appendCGEcorePropertyCallExp(@NonNull CGEcorePropertyCallExp cgPropertyCallExp, @Nullable CGValuedElement source) {
-			Property asProperty = cgPropertyCallExp.getReferredProperty();
-			assert asProperty.getESObject() == ClassUtil.nonNullState(cgPropertyCallExp.getEStructuralFeature());
-			//
-			if (source == null) {
-				source = getExpression(cgPropertyCallExp.getSource());
-				if (!js.appendLocalStatements(source)) {
-					return false;
-				}
+	 * Append the code for an EcorePropertyCall. If source is null, the code for the source will also be appended.
+	 * If source is non-null the caller has already appended it.
+	 */
+	protected @NonNull Boolean appendCGEcorePropertyCallExp(@NonNull CGEcorePropertyCallExp cgPropertyCallExp, @Nullable CGValuedElement source) {
+		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getReferredProperty());
+		assert getESObject(asProperty) == ClassUtil.nonNullState(cgPropertyCallExp.getEStructuralFeature());
+		//
+		if (source == null) {
+			source = getExpression(cgPropertyCallExp.getSource());
+			if (!js.appendLocalStatements(source)) {
+				return false;
 			}
-			//
-			doEcoreGet(cgPropertyCallExp, source, asProperty);
-			return true;
 		}
+		//
+		Boolean ecoreIsRequired = context.isNonNull(asProperty);
+		appendSuppressWarningsNull(cgPropertyCallExp, ecoreIsRequired);
+//		js.append("/* " + ecoreIsRequired + " " + isRequired + " */\n");
+		js.appendDeclaration(cgPropertyCallExp);
+		js.append(" = ");
+		appendEcoreGet(source, asProperty);
+		js.append(";\n");
+		return true;
+	}
+
+	protected void appendEcoreGet(@NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+		CGTypeId cgTypeId = analyzer.getTypeId(asProperty.getOwningClass().getTypeId());
+		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
+		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(elementId);
+//		EStructuralFeature eStructuralFeature = ClassUtil.nonNullState(cgPropertyCallExp.getEStructuralFeature());
+		EStructuralFeature eStructuralFeature = ClassUtil.nonNullState(getESObject(asProperty));
+		String getAccessor;
+		if (eStructuralFeature == OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER) {
+			getAccessor = "eContainer";
+		}
+		else {
+			getAccessor = genModelHelper.getGetAccessor(eStructuralFeature);
+		}
+		Class<?> requiredJavaClass = requiredTypeDescriptor.hasJavaClass();
+		Method leastDerivedMethod = requiredJavaClass != null ? context.getLeastDerivedMethod(requiredJavaClass, getAccessor) : null;
+		Class<?> unboxedSourceClass;
+		if (leastDerivedMethod != null) {
+			unboxedSourceClass = leastDerivedMethod.getDeclaringClass();
+		}
+		else {
+			unboxedSourceClass = requiredJavaClass;
+		}
+		if ((unboxedSourceClass != null) && (unboxedSourceClass != Object.class)) {
+			js.appendAtomicReferenceTo(unboxedSourceClass, cgSource);
+		}
+		else {
+			js.appendAtomicReferenceTo(cgSource);
+		}
+		js.append(".");
+		js.append(getAccessor);
+		js.append("()");
+	}
 
 	protected void appendGlobalPrefix() {}
 
@@ -461,44 +501,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	protected void doClassStatics(@NonNull CGClass cgClass) {}
 
-	protected void doEcoreGet(@NonNull CGValuedElement cgResult, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
-		CGTypeId cgTypeId = analyzer.getTypeId(asProperty.getOwningClass().getTypeId());
-		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
-		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(elementId);
-//		EStructuralFeature eStructuralFeature = ClassUtil.nonNullState(cgPropertyCallExp.getEStructuralFeature());
-		EStructuralFeature eStructuralFeature = (EStructuralFeature) ClassUtil.nonNullState(asProperty.getESObject());
-		String getAccessor;
-		if (eStructuralFeature == OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER) {
-			getAccessor = "eContainer";
-		}
-		else {
-			getAccessor = genModelHelper.getGetAccessor(eStructuralFeature);
-		}
-		Class<?> requiredJavaClass = requiredTypeDescriptor.hasJavaClass();
-		Method leastDerivedMethod = requiredJavaClass != null ? context.getLeastDerivedMethod(requiredJavaClass, getAccessor) : null;
-		Class<?> unboxedSourceClass;
-		if (leastDerivedMethod != null){
-			unboxedSourceClass = leastDerivedMethod.getDeclaringClass();
-		}
-		else {
-			unboxedSourceClass = requiredJavaClass;
-		}
-		Boolean ecoreIsRequired = context.isNonNull(asProperty);
-		appendSuppressWarningsNull(cgResult, ecoreIsRequired);
-//		js.append("/* " + ecoreIsRequired + " " + isRequired + " */\n");
-		js.appendDeclaration(cgResult);
-		js.append(" = ");
-		if ((unboxedSourceClass != null) && (unboxedSourceClass != Object.class)) {
-			js.appendAtomicReferenceTo(unboxedSourceClass, cgSource);
-		}
-		else {
-			js.appendAtomicReferenceTo(cgSource);
-		}
-		js.append(".");
-		js.append(getAccessor);
-		js.append("();\n");
-	}
-
 	public void generateGlobals(@NonNull Iterable<? extends CGValuedElement> sortedElements) {
 		for (CGValuedElement cgElement : sortedElements) {
 			cgElement.accept(this);
@@ -515,6 +517,25 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	public @NonNull CG getCodeGenerator() {
 		return context;
+	}
+
+	protected @Nullable EStructuralFeature getESObject(@NonNull Property asProperty) {
+		EObject esObject = asProperty.getESObject();
+		if (esObject instanceof EStructuralFeature) {
+			return (EStructuralFeature)esObject;
+		}
+		Property oppositeProperty = asProperty.getOpposite();
+		if (oppositeProperty == null) {
+			return null;
+		}
+		if (!oppositeProperty.isIsComposite()) {
+			PivotMetamodelManager metamodelManager = analyzer.getCodeGenerator().getEnvironmentFactory().getMetamodelManager();
+			LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
+			if (!(libraryProperty instanceof OclElementOclContainerProperty)) {
+				return null;
+			}
+		}
+		return OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER;
 	}
 
 	protected @NonNull CGValuedElement getExpression(@Nullable CGValuedElement cgExpression) {
