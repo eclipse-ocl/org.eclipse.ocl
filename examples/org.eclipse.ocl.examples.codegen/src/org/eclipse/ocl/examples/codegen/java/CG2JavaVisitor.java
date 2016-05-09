@@ -195,26 +195,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		 */
 		protected @NonNull Boolean appendCGEcorePropertyCallExp(@NonNull CGEcorePropertyCallExp cgPropertyCallExp, @Nullable CGValuedElement source) {
 			Property asProperty = cgPropertyCallExp.getReferredProperty();
-			CGTypeId cgTypeId = analyzer.getTypeId(asProperty.getOwningClass().getTypeId());
-			ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
-			TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(elementId);
-			EStructuralFeature eStructuralFeature = ClassUtil.nonNullState(cgPropertyCallExp.getEStructuralFeature());
-			String getAccessor;
-			if (eStructuralFeature == OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER) {
-				getAccessor = "eContainer";
-			}
-			else {
-				getAccessor = genModelHelper.getGetAccessor(eStructuralFeature);
-			}
-			Class<?> requiredJavaClass = requiredTypeDescriptor.hasJavaClass();
-			Method leastDerivedMethod = requiredJavaClass != null ? context.getLeastDerivedMethod(requiredJavaClass, getAccessor) : null;
-			Class<?> unboxedSourceClass;
-			if (leastDerivedMethod != null){
-				unboxedSourceClass = leastDerivedMethod.getDeclaringClass();
-			}
-			else {
-				unboxedSourceClass = requiredJavaClass;
-			}
+			assert asProperty.getESObject() == ClassUtil.nonNullState(cgPropertyCallExp.getEStructuralFeature());
 			//
 			if (source == null) {
 				source = getExpression(cgPropertyCallExp.getSource());
@@ -223,20 +204,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				}
 			}
 			//
-			Boolean ecoreIsRequired = context.isNonNull(asProperty);
-			appendSuppressWarningsNull(cgPropertyCallExp, ecoreIsRequired);
-	//		js.append("/* " + ecoreIsRequired + " " + isRequired + " */\n");
-			js.appendDeclaration(cgPropertyCallExp);
-			js.append(" = ");
-			if ((unboxedSourceClass != null) && (unboxedSourceClass != Object.class)) {
-				js.appendAtomicReferenceTo(unboxedSourceClass, source);
-			}
-			else {
-				js.appendAtomicReferenceTo(source);
-			}
-			js.append(".");
-			js.append(getAccessor);
-			js.append("();\n");
+			doEcoreGet(cgPropertyCallExp, source, asProperty);
 			return true;
 		}
 
@@ -492,6 +460,44 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	protected void doClassStatics(@NonNull CGClass cgClass) {}
+
+	protected void doEcoreGet(@NonNull CGValuedElement cgResult, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+		CGTypeId cgTypeId = analyzer.getTypeId(asProperty.getOwningClass().getTypeId());
+		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
+		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(elementId);
+//		EStructuralFeature eStructuralFeature = ClassUtil.nonNullState(cgPropertyCallExp.getEStructuralFeature());
+		EStructuralFeature eStructuralFeature = (EStructuralFeature) ClassUtil.nonNullState(asProperty.getESObject());
+		String getAccessor;
+		if (eStructuralFeature == OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER) {
+			getAccessor = "eContainer";
+		}
+		else {
+			getAccessor = genModelHelper.getGetAccessor(eStructuralFeature);
+		}
+		Class<?> requiredJavaClass = requiredTypeDescriptor.hasJavaClass();
+		Method leastDerivedMethod = requiredJavaClass != null ? context.getLeastDerivedMethod(requiredJavaClass, getAccessor) : null;
+		Class<?> unboxedSourceClass;
+		if (leastDerivedMethod != null){
+			unboxedSourceClass = leastDerivedMethod.getDeclaringClass();
+		}
+		else {
+			unboxedSourceClass = requiredJavaClass;
+		}
+		Boolean ecoreIsRequired = context.isNonNull(asProperty);
+		appendSuppressWarningsNull(cgResult, ecoreIsRequired);
+//		js.append("/* " + ecoreIsRequired + " " + isRequired + " */\n");
+		js.appendDeclaration(cgResult);
+		js.append(" = ");
+		if ((unboxedSourceClass != null) && (unboxedSourceClass != Object.class)) {
+			js.appendAtomicReferenceTo(unboxedSourceClass, cgSource);
+		}
+		else {
+			js.appendAtomicReferenceTo(cgSource);
+		}
+		js.append(".");
+		js.append(getAccessor);
+		js.append("();\n");
+	}
 
 	public void generateGlobals(@NonNull Iterable<? extends CGValuedElement> sortedElements) {
 		for (CGValuedElement cgElement : sortedElements) {

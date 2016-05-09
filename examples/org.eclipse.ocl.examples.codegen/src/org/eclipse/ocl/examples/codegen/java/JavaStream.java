@@ -891,7 +891,7 @@ public class JavaStream
 		append(".TRUE_VALUE");
 	}
 
-	protected void appendTypeDeclaration(@NonNull CGValuedElement cgElement) {
+	public void appendTypeDeclaration(@NonNull CGValuedElement cgElement) {
 		boolean isPrimitive = isPrimitive(cgElement);
 		boolean isRequired = !isPrimitive && !cgElement.isAssertedNonNull() && cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
 		appendIsCaught(cgElement.isNonInvalid(), cgElement.isCaught());
