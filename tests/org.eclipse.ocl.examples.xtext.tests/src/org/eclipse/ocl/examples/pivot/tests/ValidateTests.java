@@ -181,6 +181,85 @@ public class ValidateTests extends AbstractValidateTests
 		ocl1.dispose();
 	}
 
+	public void testValidate_Bug492801_xmi() throws IOException, InterruptedException {
+		String testModel = 
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
+				"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" + 
+				"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"example\" nsURI=\"http://www.example.org/generics/validate\" nsPrefix=\"example\">\n" + 
+				"  <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" + 
+				"    <details key=\"invocationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
+				"    <details key=\"settingDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
+				"    <details key=\"validationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
+				"  </eAnnotations>\n" + 
+				"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Interface\" abstract=\"true\">\n" + 
+				"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" + 
+				"      <details key=\"constraints\" value=\"HasEvents\"/>\n" + 
+				"    </eAnnotations>\n" + 
+				"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\">\n" + 
+				"      <details key=\"HasEvents\" value=\"self.events->size() > 0\"/>\n" + 
+				"    </eAnnotations>\n" + 
+				"    <eTypeParameters name=\"T\">\n" + 
+				"      <eBounds eClassifier=\"#//Event\"/>\n" + 
+				"    </eTypeParameters>\n" + 
+				"    <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"events\" upperBound=\"-1\"\n" + 
+				"        containment=\"true\">\n" + 
+				"      <eGenericType eTypeParameter=\"#//Interface/T\"/>\n" + 
+				"    </eStructuralFeatures>\n" + 
+				"    <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"name\" lowerBound=\"1\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString\"/>\n" + 
+				"  </eClassifiers>\n" + 
+				"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"CallInterface\">\n" + 
+				"    <eGenericSuperTypes eClassifier=\"#//Interface\">\n" + 
+				"      <eTypeArguments eClassifier=\"#//CallEvent\"/>\n" + 
+				"    </eGenericSuperTypes>\n" + 
+				"  </eClassifiers>\n" + 
+				"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"ReplyInterface\">\n" + 
+				"    <eGenericSuperTypes eClassifier=\"#//Interface\">\n" + 
+				"      <eTypeArguments eClassifier=\"#//ReplyEvent\"/>\n" + 
+				"    </eGenericSuperTypes>\n" + 
+				"  </eClassifiers>\n" + 
+				"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Event\">\n" + 
+				"    <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"name\" lowerBound=\"1\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString\"/>\n" + 
+				"  </eClassifiers>\n" + 
+				"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"CallEvent\" eSuperTypes=\"#//Event\"/>\n" + 
+				"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"ReplyEvent\" eSuperTypes=\"#//Event\"/>\n" + 
+				"</ecore:EPackage>\n";
+		String testDocument = 
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
+				"<example:CallInterface\n" + 
+				"    xmi:version=\"2.0\"\n" + 
+				"    xmlns:xmi=\"http://www.omg.org/XMI\"\n" + 
+				"    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" + 
+				"    xmlns:example=\"http://www.example.org/generics/validate\"\n" + 
+				"    xsi:schemaLocation=\"http://www.example.org/generics/validate Bug492801.ecore\"\n" + 
+				"    name=\"inter\">\n" + 
+				"  <events xsi:type=\"example:CallEvent\"\n" + 
+				"      name=\"a\"/>\n" + 
+				"</example:CallInterface>\n";
+		createOCLinEcoreFile("Bug492801.ecore", testModel);
+		createOCLinEcoreFile("Bug492801.xmi", testDocument);
+		OCL ocl1 = createOCL();
+		@NonNull List<Diagnostic> diagnostics = doValidateXMI(ocl1, "Bug492801",
+			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_Property_c_c_CompatibleDefaultExpression, "temp::Tester::total"));
+		Object property = diagnostics.get(0).getData().get(0);
+		assert property != null;
+		assertEquals(PivotPackage.Literals.PROPERTY, ((EObject)property).eClass());
+		ModelElementCS csElement = ElementUtil.getCsElement((Element) property);
+		ICompositeNode node = NodeModelUtils.getNode(csElement);
+		assert node != null;
+		assertEquals(7, node.getStartLine());
+		assertEquals(10, node.getEndLine());
+		ocl1.dispose();
+	}
+
+	public @NonNull List<Diagnostic> doValidateXMI(OCL ocl, String stem, String... validationDiagnostics) throws IOException {
+		String inputName = stem + ".xmi";
+		URI inputURI = getProjectFileURI(inputName);
+		Resource xmiResource = ocl.getResourceSet().getResource(inputURI, true);
+		assertNoResourceErrors("Load failed", xmiResource);
+		assertNoUnresolvedProxies("Unresolved proxies", xmiResource);
+		return assertValidationDiagnostics("Pivot validation errors", xmiResource, validationDiagnostics);
+	}
+
 	public void testValidate_Pivot_ecore() throws IOException, InterruptedException {
 		//
 		//	Create model
