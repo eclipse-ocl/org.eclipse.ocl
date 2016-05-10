@@ -115,19 +115,22 @@ public class ValidateCommand extends ValidateAction
 			result = DiagnosticDialog.open(activeWorkbenchWindow.getShell(), title, message, diagnostic);
 		}
 
-		ResourceSet resourceSet = domain.getResourceSet();
-		// The following lines replace the simple inherited assumption of resourceSet.getResources().get(0)
+		ResourceSet resourceSet = null;
 		Resource resource = null;
-		if (eclipseResourcesUtil != null) {
-			List<?> data = diagnostic.getData();
-			if ((data != null) && (data.size() >= 1)) {
-				Object object = data.get(0);
-				if (object instanceof EObject) {
-					resource = ((EObject)object).eResource();
+		if (domain != null) {
+			resourceSet = domain.getResourceSet();
+			// The following lines replace the simple inherited assumption of resourceSet.getResources().get(0)
+			if (eclipseResourcesUtil != null) {
+				List<?> data = diagnostic.getData();
+				if ((data != null) && (data.size() >= 1)) {
+					Object object = data.get(0);
+					if (object instanceof EObject) {
+						resource = ((EObject)object).eResource();
+					}
 				}
-			}
-			if (resource == null) {
-				resource = resourceSet.getResources().get(0);
+				if (resource == null) {
+					resource = resourceSet.getResources().get(0);
+				}
 			}
 		}
 		if (resource != null) {
@@ -161,7 +164,7 @@ public class ValidateCommand extends ValidateAction
 			resource = null;
 		}
 
-		if (resource == null) {
+		if ((resourceSet != null) && (resource == null)) {
 			// If no markers are produced the decorator won't be able to respond
 			// to marker resource deltas, so inform it directly.
 			//
@@ -248,6 +251,9 @@ public class ValidateCommand extends ValidateAction
 		if (workbenchPart instanceof IEditingDomainProvider) {
 			domain = ((IEditingDomainProvider) workbenchPart).getEditingDomain();
 		}
+		else {
+			domain = null;
+		}
 	}
 
 	@Override
@@ -268,5 +274,16 @@ public class ValidateCommand extends ValidateAction
 		}
 		selectedObjects = EcoreUtil.filterDescendants(selectedObjects);
 		return !selectedObjects.isEmpty();
+	}
+
+	@Override
+	protected Diagnostic validate(IProgressMonitor progressMonitor) {
+		if ((selectedObjects == null) || selectedObjects.isEmpty()) {
+			return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, "No objects selected", null);
+		}
+		if (domain == null) {
+			return new BasicDiagnostic(Diagnostic.ERROR, EObjectValidator.DIAGNOSTIC_SOURCE, 0, "No editing domain available for editor", null);
+		}
+		return super.validate(progressMonitor);
 	}
 }
