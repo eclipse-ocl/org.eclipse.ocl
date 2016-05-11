@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -352,7 +353,24 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 //				StringWriter writer = new StringWriter();
 				try {
 //					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
-					csResource.save(outputStream, null);
+					try {
+						csResource.save(outputStream, null);
+					}
+					catch (RuntimeException e) {
+						Resource csResource2 = new XMIResourceFactoryImpl().createResource(csResource.getURI().appendFileExtension("xmi"));
+						csResource2.getContents().addAll(csResource.getContents());
+						csResource2.save(outputStream, null);
+						csResource.getContents().addAll(csResource2.getContents());
+						BaseUiPluginHelper helper = BaseUiPluginHelper.INSTANCE;
+						String title = helper.getString("_UI_SerializationFailure_title", true);
+						String message = helper.getString("_UI_SerializationFailure_message", true);
+						Status errorStatus = helper.createErrorStatus(e);
+						ErrorDialog.openError(null, title, message, errorStatus);
+//						helper.log("2" + title, errorStatus);
+//						inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+//						super.setDocumentContent(document, inputStream, encoding);
+//						throw e;
+					}
 					inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 				} catch (InvalidConcreteSyntaxException e) {
 					diagnoseErrors((XtextResource) csResource, e);

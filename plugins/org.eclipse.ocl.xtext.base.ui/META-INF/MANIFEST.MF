@@ -31,3 +31,4 @@ Export-Package: org.eclipse.ocl.xtext.base.ui,
  org.eclipse.ocl.xtext.base.ui.wizards
 Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
 Bundle-Activator: org.eclipse.ocl.xtext.base.ui.internal.BaseActivator
+Bundle-ActivationPolicy: lazy
