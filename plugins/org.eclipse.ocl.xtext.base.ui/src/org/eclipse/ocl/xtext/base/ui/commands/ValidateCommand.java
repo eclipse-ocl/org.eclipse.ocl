@@ -46,10 +46,13 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.xtext.base.ui.utilities.BaseUIUtil;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ISetSelectionTarget;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 
 public class ValidateCommand extends ValidateAction
 {
@@ -252,6 +255,11 @@ public class ValidateCommand extends ValidateAction
 			domain = ((IEditingDomainProvider) workbenchPart).getEditingDomain();
 		}
 		else {
+			IEditorPart activeEditor = BaseUIUtil.getActiveEditor(workbenchPart.getSite());
+//			if (activeEditor == null) {
+//				return null;
+//			}
+			Object selectedObject = BaseUIUtil.getSelectedObject(null, workbenchPart.getSite());
 			domain = null;
 		}
 	}

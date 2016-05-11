@@ -61,6 +61,27 @@ public class BaseUIUtil
 		}
 	}
 
+	public static @Nullable IEditorPart getActiveEditor(@Nullable IWorkbenchSite site) {
+		try {
+			if (site == null) {
+				return null;
+			}
+			IWorkbenchWindow workbenchWindow = site.getWorkbenchWindow();
+			if (workbenchWindow == null) {
+				return null;
+			}
+			IWorkbenchPage activePage = workbenchWindow.getActivePage();
+			if (activePage == null) {
+				return null;
+			}
+			IEditorPart activeEditor = activePage.getActiveEditor();
+			return activeEditor;
+		}
+		catch (Exception e) {
+			return  null;
+		}
+	}
+
 	public static @Nullable ISelection getActiveSelection(@Nullable IWorkbenchSite site) {
 		try {
 			if (site == null) {
