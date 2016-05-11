@@ -52,7 +52,10 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ISetSelectionTarget;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 public class ValidateCommand extends ValidateAction
 {
@@ -254,7 +257,19 @@ public class ValidateCommand extends ValidateAction
 		if (workbenchPart instanceof IEditingDomainProvider) {
 			domain = ((IEditingDomainProvider) workbenchPart).getEditingDomain();
 		}
-		else {
+		else if (workbenchPart instanceof XtextEditor) {
+			IXtextDocument document = ((XtextEditor)workbenchPart).getDocument();
+			if (document != null) {
+				document.readOnly(new IUnitOfWork<Object, XtextResource>(){
+
+					@Override
+					public Object exec(XtextResource state) throws Exception {
+						if (state != null) {
+							
+						}
+						return null;
+					}});
+		}
 			IEditorPart activeEditor = BaseUIUtil.getActiveEditor(workbenchPart.getSite());
 //			if (activeEditor == null) {
 //				return null;

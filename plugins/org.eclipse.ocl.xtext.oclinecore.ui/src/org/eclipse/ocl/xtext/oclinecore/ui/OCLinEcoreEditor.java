@@ -10,14 +10,27 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.ui;
 
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.ocl.xtext.base.ui.BaseEditor;
 import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 
-public class OCLinEcoreEditor extends BaseEditor
+public class OCLinEcoreEditor extends BaseEditor implements IEditingDomainProvider
 {
 	public static final String EDITOR_ID = OCLinEcoreActivator.ORG_ECLIPSE_OCL_XTEXT_OCLINECORE_OCLINECORE;
 
+	/**
+	 * This keeps track of the editing domain that is used to track all changes to the model.
+	 */
+	protected AdapterFactoryEditingDomain editingDomain;
+
 	public OCLinEcoreEditor() {
 		super();
+	}
+
+	@Override
+	public EditingDomain getEditingDomain() {
+		return editingDomain;
 	}
 }
