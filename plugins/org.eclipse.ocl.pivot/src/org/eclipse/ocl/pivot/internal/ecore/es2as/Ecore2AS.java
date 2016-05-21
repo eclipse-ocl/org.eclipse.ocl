@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
+import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
@@ -499,7 +500,10 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 			pivotModel = pivotModel2;
 //			installImports();
-			update(asResource, ecoreContents);
+			newCreateMap = synthesizeCreateMap(asResource);
+			if (newCreateMap == null) {
+				update(asResource, ecoreContents);
+			}
 //		}
 //		catch (Exception e) {
 //			if (errors == null) {
@@ -512,6 +516,31 @@ public class Ecore2AS extends AbstractExternal2AS
 			asResource.getErrors().addAll(ClassUtil.nullFree(errors2));
 		}
 		return pivotModel2;
+	}
+
+	private @Nullable Map<@NonNull EObject, @NonNull Element> synthesizeCreateMap(@NonNull ASResource asResource) {
+		if (asResource instanceof OCLmetamodel) {					// FIXME polymorphize as a cached derived ASResourceImpl capability
+			Map<@NonNull EObject, @NonNull Element> newCreateMap = new HashMap<@NonNull EObject, @NonNull Element>();
+			for (TreeIterator<EObject> tit = pivotModel.eAllContents(); tit.hasNext(); ) {
+				EObject eObject = tit.next();
+				if (eObject instanceof Element) {
+					Element asElement = (Element)eObject;
+					EObject esObject = asElement.getESObject();
+					if (esObject != null) {
+						newCreateMap.put(esObject, asElement);
+					}
+				}
+			}
+			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.BOOLEAN), standardLibrary.getBooleanType());
+			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.INTEGER), standardLibrary.getIntegerType());
+			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.REAL), standardLibrary.getRealType());
+			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.STRING), standardLibrary.getStringType());
+			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.UNLIMITED_NATURAL), standardLibrary.getUnlimitedNaturalType());
+			return newCreateMap;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public void initializeEcore2ASMap() {
