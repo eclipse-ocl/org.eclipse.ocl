@@ -148,6 +148,10 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	protected String getEcoreLiteral(@NonNull EnumerationLiteral elem) {
 		return nameQueries.getEcoreLiteral(elem);
 	}
+	
+	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Package elem) {
+		return nameQueries.getEcoreLiteral(elem);
+	}
 
 	@Override
 	protected @NonNull Set<PrimitiveType> getAllPrimitiveTypes(@NonNull Model root) {

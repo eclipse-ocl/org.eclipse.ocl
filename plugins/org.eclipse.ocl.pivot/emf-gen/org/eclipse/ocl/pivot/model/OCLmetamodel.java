@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
@@ -118,7 +119,9 @@ public class OCLmetamodel extends ASResourceImpl
 			super(standardLibrary);
 			root = createModel("http://www.eclipse.org/ocl/2015/Pivot");
 			pivot = createPackage("pivot", "pivot", "http://www.eclipse.org/ocl/2015/Pivot", IdManager.METAMODEL);
+			((PivotObjectImpl)pivot).setESObject(PivotPackage.eINSTANCE);
 			orphanage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null);
+			((PivotObjectImpl)orphanage).setESObject(null);
 			installPackages();
 			installClassTypes();
 			installEnumerations();

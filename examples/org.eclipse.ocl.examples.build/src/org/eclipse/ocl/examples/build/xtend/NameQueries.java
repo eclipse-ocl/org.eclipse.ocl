@@ -105,6 +105,15 @@ public class NameQueries
 		return "\"" + type.getName() + "\"";
 	}
 	
+	public @NonNull String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Package pkge) {
+		String nsURI = ClassUtil.nonNullModel(pkge.getURI());
+		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);
+		if (genPackage != null) {
+			return /*genPackage.getInterfacePackageName() +*/ genPackage.getPackageInterfaceName() + ".eINSTANCE";
+		}
+		return "null";
+	}
+	
 	public @Nullable String getEcoreQualifiedPackageInterfaceName(org.eclipse.ocl.pivot.@NonNull Package pkge) {
 		String nsURI = ClassUtil.nonNullModel(pkge.getURI());
 		GenPackage genPackage = ClassUtil.nonNullState(metamodelManager).getGenPackage(nsURI);

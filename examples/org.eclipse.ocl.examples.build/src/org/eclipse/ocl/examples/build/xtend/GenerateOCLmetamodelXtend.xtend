@@ -95,6 +95,7 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.model.OCLstdlib;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
+			import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 			import org.eclipse.ocl.pivot.utilities.PivotUtil;
 			«IF ((externalPackages != null) && !externalPackages.isEmpty())»
 			
@@ -194,6 +195,7 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
 						«FOR pkge : root.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()»);
+						((PivotObjectImpl)«pkge.getSymbolName()»).setESObject(«getEcoreLiteral(pkge)»);
 						«ENDFOR»
 						«root.installPackages()»
 						«root.installClassTypes()»
