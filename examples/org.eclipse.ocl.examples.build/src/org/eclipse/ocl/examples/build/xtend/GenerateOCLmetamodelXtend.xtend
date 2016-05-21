@@ -94,6 +94,7 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.library.LibraryFeature;
 			import org.eclipse.ocl.pivot.model.OCLstdlib;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
+			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			import org.eclipse.ocl.pivot.utilities.PivotUtil;
 			«IF ((externalPackages != null) && !externalPackages.isEmpty())»
 			
@@ -121,7 +122,7 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				public static final @NonNull String PIVOT_URI = "«uri»";
 			
 				public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-					«javaClassName» resource = new «javaClassName»(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI)));
+					«javaClassName» resource = new «javaClassName»(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION)));
 					Contents contents = new Contents(standardLibrary.getPackage(), name, nsPrefix, nsURI);
 					Model model = contents.getModel();
 					resource.getContents().add(model);
@@ -137,7 +138,7 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				public static @NonNull «javaClassName» getDefault() {
 					«javaClassName» metamodel = INSTANCE;
 					if (metamodel == null) {
-						metamodel = INSTANCE = new «javaClassName»(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI)));
+						metamodel = INSTANCE = new «javaClassName»(ClassUtil.nonNullEMF(URI.createURI(PIVOT_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION)));
 						Contents contents = new Contents(OCLstdlib.getDefaultPackage(), "«pkg.name»", "«pkg.nsPrefix»", PIVOT_URI);
 						metamodel.getContents().add(contents.getModel());
 					}

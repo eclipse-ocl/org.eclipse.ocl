@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
@@ -36,6 +37,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
+		assert PivotUtilInternal.isASURI(uri);
 //		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));	
 	}
 
@@ -77,6 +79,12 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			throw new IllegalStateException("Non-Model at root of '" + getURI() + "'");
 		}
 		return (Model)eObject;
+	}
+
+	@Override
+	public void setURI(URI uri) {
+		assert PivotUtilInternal.isASURI(uri);
+		super.setURI(uri);
 	}
 
 	@Override

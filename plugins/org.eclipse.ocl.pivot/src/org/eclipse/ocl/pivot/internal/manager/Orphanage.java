@@ -358,7 +358,7 @@ public class Orphanage extends PackageImpl
 		}
 	}
 
-	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.nonNullEMF(URI.createURI(PivotConstants.ORPHANAGE_URI));
+	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.nonNullEMF(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
 	private static Orphanage INSTANCE = null;
 	
 	public static void disposeInstance() {
