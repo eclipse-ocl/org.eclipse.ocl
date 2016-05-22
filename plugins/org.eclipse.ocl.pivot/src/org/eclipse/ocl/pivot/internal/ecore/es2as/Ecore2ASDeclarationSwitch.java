@@ -229,32 +229,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		@SuppressWarnings("null") @NonNull EDataType eObject2 = eObject;
 		Class<?> instanceClass = eObject2.getInstanceClass();
 		String newName = technology.getOriginalName(eObject2);
-		boolean isPrimitive = false;
-		if ("Boolean".equals(newName) && ((instanceClass == Boolean.class) || (instanceClass == boolean.class))) {
-			isPrimitive = true;
-		}
-		else if ("Integer".equals(newName) && ((instanceClass == Number.class) || (instanceClass == BigInteger.class)
-				|| (instanceClass == Long.class) || (instanceClass == long.class)
-				|| (instanceClass == Integer.class) || (instanceClass == int.class)
-				|| (instanceClass == Short.class) || (instanceClass == short.class)
-				|| (instanceClass == Byte.class) || (instanceClass == byte.class))) {
-			isPrimitive = true;
-		}
-		else if ("Real".equals(newName) && ((instanceClass == Number.class) || (instanceClass == BigDecimal.class)
-				|| (instanceClass == Double.class) || (instanceClass == double.class)
-				|| (instanceClass == Float.class) || (instanceClass == float.class))) {
-			isPrimitive = true;
-		}
-		else if ("String".equals(newName) && (instanceClass == String.class)) {
-			isPrimitive = true;
-		} 
-		else if ("UnlimitedNatural".equals(newName) && ((instanceClass == Number.class) || (instanceClass == BigInteger.class)
-				|| (instanceClass == Long.class) || (instanceClass == long.class)
-				|| (instanceClass == Integer.class) || (instanceClass == int.class)
-				|| (instanceClass == Short.class) || (instanceClass == short.class)
-				|| (instanceClass == Byte.class) || (instanceClass == byte.class))) {
-			isPrimitive = true;
-		}
+		boolean isPrimitive = isPivotPrimitive(newName, instanceClass);		// Detect PrimitiveType if loading Pivot.ecore
 		DataType pivotElement;
 		if (isPrimitive) {
 			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eObject2);
@@ -780,6 +755,38 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		for (EObject eObject : eObjects) {
 			doSwitch(eObject);
 		}
+	}
+
+	/**
+	 * Return true if newName and instanceClass resemble a Pivot PrimitiveType.
+	 */
+	private boolean isPivotPrimitive(String newName, Class<?> instanceClass) {
+		if ("Boolean".equals(newName) && ((instanceClass == Boolean.class) || (instanceClass == boolean.class))) {
+			return true;
+		}
+		else if ("Integer".equals(newName) && ((instanceClass == Number.class) || (instanceClass == BigInteger.class)
+				|| (instanceClass == Long.class) || (instanceClass == long.class)
+				|| (instanceClass == Integer.class) || (instanceClass == int.class)
+				|| (instanceClass == Short.class) || (instanceClass == short.class)
+				|| (instanceClass == Byte.class) || (instanceClass == byte.class))) {
+			return true;
+		}
+		else if ("Real".equals(newName) && ((instanceClass == Number.class) || (instanceClass == BigDecimal.class)
+				|| (instanceClass == Double.class) || (instanceClass == double.class)
+				|| (instanceClass == Float.class) || (instanceClass == float.class))) {
+			return true;
+		}
+		else if ("String".equals(newName) && (instanceClass == String.class)) {
+			return true;
+		} 
+		else if ("UnlimitedNatural".equals(newName) && ((instanceClass == Number.class) || (instanceClass == BigInteger.class)
+				|| (instanceClass == Long.class) || (instanceClass == long.class)
+				|| (instanceClass == Integer.class) || (instanceClass == int.class)
+				|| (instanceClass == Short.class) || (instanceClass == short.class)
+				|| (instanceClass == Byte.class) || (instanceClass == byte.class))) {
+			return true;
+		}
+		return false;
 	}
 
 	protected List<EAnnotation> refreshTypeConstraints(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull EClassifier eClassifier, @Nullable List<EAnnotation> excludedAnnotations) {
