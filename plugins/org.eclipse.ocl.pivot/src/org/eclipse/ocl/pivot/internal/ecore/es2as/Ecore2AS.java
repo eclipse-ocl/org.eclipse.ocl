@@ -251,7 +251,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (eObject instanceof EDataType) {
 			Type pivotType = getEcore2ASMap().get(eObject);
 			if (pivotType != null) {  		// If eObject is a known synonym such as EString
-//				assert pivotElement == pivotType;	// remap to the library type
+//				assert asElement == pivotType;	// remap to the library type
 			}
 		}
 		Element oldElement = newCreateMap.put(eObject, asElement);
@@ -271,7 +271,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (eObject instanceof EDataType) {
 			Type pivotType = getEcore2ASMap().get(eObject);
 			if (pivotType != null) {  		// If eObject is a known synonym such as EString
-				pivotElement1 = pivotType;	// remap to the library type
+//				pivotElement1 = pivotType;	// remap to the library type
 			}
 		}
 //		Element pivotElement2 = pivotElement;
@@ -778,23 +778,32 @@ public class Ecore2AS extends AbstractExternal2AS
 				}
 			}
 		}
-		if (pivotElement == null) {
-			EFactory eFactoryInstance = pivotEClass.getEPackage().getEFactoryInstance();
-			pivotElement = eFactoryInstance.create(pivotEClass);
+		if (pivotElement == null) {			
+//			if (eModelElement instanceof EDataType) {
+//				Type pivotType = getEcore2ASMap().get(eModelElement);
+//				if (pivotType != null) {  		// If eObject is a known synonym such as EString
+//					EFactory eFactoryInstance = pivotType.eClass().getEPackage().getEFactoryInstance();
+//					pivotElement = eFactoryInstance.create(pivotType.eClass());
+//				}
+//			}
+			if (pivotElement == null) {			
+				EFactory eFactoryInstance = pivotEClass.getEPackage().getEFactoryInstance();
+				pivotElement = eFactoryInstance.create(pivotEClass);
+			}
 		}
 		if (!pivotClass.isAssignableFrom(pivotElement.getClass())) {
 			throw new ClassCastException();
 		}
 		@SuppressWarnings("unchecked")
 		T castElement = (T) pivotElement;
-		Element oldElement = newCreateMap.get(eModelElement);
-		addCreated(eModelElement, castElement);
+		Element oldElement = newCreateMap.put(eModelElement, castElement);
+//		addCreated(eModelElement, castElement);
 		assert oldElement == null;
 		return castElement;
 	}
 	
 	protected Type resolveDataType(@NonNull EDataType eClassifier) {
-		Type pivotType = getEcore2ASMap().get(eClassifier);
+		Type pivotType = null; //getEcore2ASMap().get(eClassifier);
 		if (pivotType == null) {
 			pivotType = getASType(eClassifier);
 		}
