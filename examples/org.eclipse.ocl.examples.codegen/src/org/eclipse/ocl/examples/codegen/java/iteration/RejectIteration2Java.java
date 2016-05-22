@@ -26,7 +26,7 @@ public class RejectIteration2Java extends AbstractAccumulation2Java
 	@Override
 	public boolean appendUpdate(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGValuedElement cgBody = getBody(cgIterationCallExp);
-		if (cgBody.getASTypeId() == TypeId.BOOLEAN) { 
+		if (js.getBehavioralASTypeId(cgBody) == TypeId.BOOLEAN) { 
 			CGIterator cgAccumulator = getAccumulator(cgIterationCallExp);
 			CGIterator cgIterator = getIterator(cgIterationCallExp);
 			js.append("if (");

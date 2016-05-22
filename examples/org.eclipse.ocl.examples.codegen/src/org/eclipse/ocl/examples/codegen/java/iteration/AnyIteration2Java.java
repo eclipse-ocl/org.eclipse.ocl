@@ -27,7 +27,7 @@ public class AnyIteration2Java extends AbstractIteration2Java
 	@Override
 	public boolean appendUpdate(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGValuedElement cgBody = getBody(cgIterationCallExp);
-		if (cgBody.getASTypeId() == TypeId.BOOLEAN) { 
+		if (js.getBehavioralASTypeId(cgBody) == TypeId.BOOLEAN) { 
 			CGIterator cgIterator = getIterator(cgIterationCallExp);
 			js.append("if (");
 			js.appendValueName(cgBody);

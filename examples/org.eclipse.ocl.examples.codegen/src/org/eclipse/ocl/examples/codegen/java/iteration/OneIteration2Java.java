@@ -35,7 +35,7 @@ public class OneIteration2Java extends AbstractAccumulation2Java
 	@Override
 	public boolean appendUpdate(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGValuedElement cgBody = getBody(cgIterationCallExp);
-		if (cgBody.getASTypeId() == TypeId.BOOLEAN) { 
+		if (js.getBehavioralASTypeId(cgBody) == TypeId.BOOLEAN) { 
 			CGIterator cgAccumulator = getAccumulator(cgIterationCallExp);
 			js.append("if (");
 			js.appendValueName(cgBody);

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.java.iteration;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
@@ -26,7 +27,7 @@ public class SelectIteration2Java extends AbstractAccumulation2Java
 	@Override
 	public boolean appendUpdate(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGValuedElement cgBody = getBody(cgIterationCallExp);
-		if (cgBody.getASTypeId() == TypeId.BOOLEAN) { 
+		if (js.getBehavioralASTypeId(cgBody) == TypeId.BOOLEAN) { 
 			CGIterator cgAccumulator = getAccumulator(cgIterationCallExp);
 			CGIterator cgIterator = getIterator(cgIterationCallExp);
 			js.append("if (");

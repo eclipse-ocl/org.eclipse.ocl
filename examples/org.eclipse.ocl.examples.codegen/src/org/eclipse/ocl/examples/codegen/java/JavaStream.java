@@ -42,10 +42,13 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -953,6 +956,17 @@ public class JavaStream
 			String valueName = cg2java.getValueName(cgElement);
 			append(valueName);
 		}
+	}
+
+	public @Nullable TypeId getBehavioralASTypeId(@NonNull CGValuedElement cgElement) {
+		Element asElement = cgElement.getAst();
+		if (asElement instanceof TypedElement) {
+			Type asType = PivotUtilInternal.getBehavioralType((TypedElement)asElement);
+			if (asType != null) {
+				return asType.getTypeId();
+			}
+		}
+		return cgElement.getASTypeId();
 	}
 
 	public @NonNull CodeGenerator getCodeGenerator() {
