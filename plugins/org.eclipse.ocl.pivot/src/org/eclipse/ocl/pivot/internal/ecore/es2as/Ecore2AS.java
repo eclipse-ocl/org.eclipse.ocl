@@ -236,15 +236,25 @@ public class Ecore2AS extends AbstractExternal2AS
 		this.environmentFactory.addExternal2AS(this);
 	}
 	
-	protected void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
-		@SuppressWarnings("unused")
-		Element oldElement = newCreateMap.put(eObject, pivotElement);
+	protected void addCreated(@NonNull EObject eObject, @NonNull Element asElement) {
+		addCreated(newCreateMap, eObject, asElement);
 //		if (eObject instanceof ENamedElement) {
 //			assert (oldElement == null) || (oldElement == pivotElement) || ((oldElement instanceof DataType) && (((DataType)oldElement).getBehavioralType() == pivotElement));
 //		}
 //		else {
 //			assert oldElement == null;
 //		}
+	}
+
+	private void addCreated(@NonNull Map<@NonNull EObject, @NonNull Element> newCreateMap,
+			@NonNull EObject eObject, @NonNull Element asElement) {
+		if (eObject instanceof EDataType) {
+			Type pivotType = getEcore2ASMap().get(eObject);
+			if (pivotType != null) {  		// If eObject is a known synonym such as EString
+//				assert pivotElement == pivotType;	// remap to the library type
+			}
+		}
+		Element oldElement = newCreateMap.put(eObject, asElement);
 	}
 
 	@Override
@@ -311,7 +321,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				if (allConverters.add(converter)) {
 					converter.getASModel();
 					for (Map.Entry<@NonNull EObject, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
-						newCreateMap.put(entry.getKey(), entry.getValue());
+						addCreated(entry.getKey(), entry.getValue());
 					}
 				}
 			}
@@ -379,7 +389,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	//					allEClassifiers.addAll(converter.allEClassifiers);
 	//					allNames.addAll(converter.allNames);
 						for (Map.Entry<@NonNull EObject, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
-							newCreateMap.put(entry.getKey(), entry.getValue());
+							addCreated(entry.getKey(), entry.getValue());
 						}
 					}
 				}
@@ -463,14 +473,14 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (libraryEPackage != null) {
 			newCreateMap = new HashMap<@NonNull EObject, @NonNull Element>();
 			org.eclipse.ocl.pivot.Package asLibrary = standardLibrary.getPackage();
-			newCreateMap.put(libraryEPackage, asLibrary);
+			addCreated(libraryEPackage, asLibrary);
 			List<org.eclipse.ocl.pivot.Class> ownedType = asLibrary.getOwnedClasses();
 //			int prefix = LibraryConstants.ECORE_STDLIB_PREFIX.length();
 			for (@SuppressWarnings("null")@NonNull EClassifier eClassifier : libraryEPackage.getEClassifiers()) {
 				String name = environmentFactory.getTechnology().getOriginalName(eClassifier); //.substring(prefix);
 				Type asType = NameUtil.getNameable(ownedType, name);
 				if (asType != null) {
-					newCreateMap.put(eClassifier, asType);
+					addCreated(eClassifier, asType);
 				}
 			}
 			Model containingRoot = PivotUtil.getContainingModel(asLibrary);
@@ -527,15 +537,15 @@ public class Ecore2AS extends AbstractExternal2AS
 					Element asElement = (Element)eObject;
 					EObject esObject = asElement.getESObject();
 					if (esObject != null) {
-						newCreateMap.put(esObject, asElement);
+						addCreated(newCreateMap, esObject, asElement);
 					}
 				}
 			}
-			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.BOOLEAN), standardLibrary.getBooleanType());
-			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.INTEGER), standardLibrary.getIntegerType());
-			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.REAL), standardLibrary.getRealType());
-			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.STRING), standardLibrary.getStringType());
-			newCreateMap.put(ClassUtil.nonNullEMF(PivotPackage.Literals.UNLIMITED_NATURAL), standardLibrary.getUnlimitedNaturalType());
+			addCreated(newCreateMap, ClassUtil.nonNullEMF(PivotPackage.Literals.BOOLEAN), standardLibrary.getBooleanType());
+			addCreated(newCreateMap, ClassUtil.nonNullEMF(PivotPackage.Literals.INTEGER), standardLibrary.getIntegerType());
+			addCreated(newCreateMap, ClassUtil.nonNullEMF(PivotPackage.Literals.REAL), standardLibrary.getRealType());
+			addCreated(newCreateMap, ClassUtil.nonNullEMF(PivotPackage.Literals.STRING), standardLibrary.getStringType());
+			addCreated(newCreateMap, ClassUtil.nonNullEMF(PivotPackage.Literals.UNLIMITED_NATURAL), standardLibrary.getUnlimitedNaturalType());
 			return newCreateMap;
 		}
 		else {
@@ -777,7 +787,8 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		@SuppressWarnings("unchecked")
 		T castElement = (T) pivotElement;
-		Element oldElement = newCreateMap.put(eModelElement, castElement);
+		Element oldElement = newCreateMap.get(eModelElement);
+		addCreated(eModelElement, castElement);
 		assert oldElement == null;
 		return castElement;
 	}
@@ -849,7 +860,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			pivotType = resolveSimpleType(eClassifier);
 		}
 		if (pivotType != null) {
-			newCreateMap.put(eGenericType, pivotType);
+			addCreated(eGenericType, pivotType);
 		}
 		return pivotType;
 	}
@@ -931,7 +942,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		for (@NonNull EGenericType eGenericType : genericTypes) {
 			Type pivotType = resolveType(resolvedSpecializations, eGenericType);
 			if (pivotType != null) {
-				newCreateMap.put(eGenericType, pivotType);
+				addCreated(eGenericType, pivotType);
 			}
 		}
 		for (EObject eObject : referencers) {
