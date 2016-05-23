@@ -32,7 +32,7 @@
 		<delete dir="${output}" />
 		<mkdir dir="${output}" />
 
-		<javadoc destdir="${output}" Encoding="ISO-8859-1" classpathref="javadoc-classpath" maxmemory="1024m" source="1.7" 
+		<javadoc destdir="${output}" Encoding="ISO-8859-1" classpathref="javadoc-classpath" maxmemory="1024m" source="1.8" 
 				useexternalfile="true" author="true" version="true" use="true" windowtitle="${projectName} Documentation"
 				executable="${javadoc}"
 				>
@@ -48,6 +48,8 @@
 				<exclude name="**/org/eclipse/ocl/examples/modelregistry/**"/>
 				<exclude name="**/org/eclipse/ocl/examples/project/**"/>
 				<exclude name="**/org/eclipse/ocl/examples/xtext2lpg/**"/>
+				<exclude name="**/org.eclipse.ocl.examples.xtext2lpg/**"/>
+				<exclude name="**/org.eclipse.equinox.p2.repository/**"/>
 			</fileset>
 			<excludepackage name="org.osgi.framework"/>
 			<tag name="extends"></tag>

@@ -340,6 +340,7 @@
 	</target>
 	
 	<target name="-publish.javadoc" if="publish.javadoc">
+		<mkdir dir="${project.javadoc.directory}" />
 		<echo>Remove existing javadoc from ${project.javadoc.directory}</echo>
 		<delete verbose="true">
 			<fileset dir="${project.javadoc.directory}"/>
