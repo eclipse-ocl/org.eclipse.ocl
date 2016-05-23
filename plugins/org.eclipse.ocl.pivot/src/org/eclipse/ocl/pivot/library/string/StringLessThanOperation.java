@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 
 /**
- * StringLessThanOperation realises the String::<() library operation.
+ * StringLessThanOperation realises the String::&lt;() library operation.
  */
 public class StringLessThanOperation extends AbstractSimpleBinaryOperation
 {

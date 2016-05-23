@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * <b>Note</b> that this implementation violates the contract of the
  * {@link Map} API as follows:
+ * </p>
  * <ul>
  *   <li>the {@link Map#entrySet()} method does not return entries
  *       for any keys that have not already been queried via the
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>concomitant to the above item, the {@link Map#keySet()}
  *       and {@link Map#values()} methods also are not complete</li>
  * </ul>
+ * <p>
  * In practice, this does not matter because this map is only used for providing
  * class extents to the OCL engine, and it only does look-up by key.
  * Moreover, this isn't strictly a violation of any contract because there is

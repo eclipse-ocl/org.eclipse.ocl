@@ -36,7 +36,7 @@ import org.eclipse.ocl.examples.impactanalyzer.util.Tuple.Pair;
  * 
  * Variable values are valid only in a scope, called a "dynamic scope." While syntactically the variable's static scope is limited
  * to a certain {@link OCLExpression}, e.g., the {@link LetExp#getIn() in} expression of a
- * <code>let<code> expression for the variable defined by the <code>let</code> expression, the same expression may be evaluated
+ * <code>let</code> expression for the variable defined by the <code>let</code> expression, the same expression may be evaluated
  * several times during the evaluation of some other expression. Each evaluation of the static scope expression represents a
  * dynamic scope for the variables whose static scope is being evaluated.
  * <p>
@@ -68,7 +68,7 @@ import org.eclipse.ocl.examples.impactanalyzer.util.Tuple.Pair;
  * iterator variable expression to the {@link LoopExp}'s source expression, all kinds of in-between expressions that are containers to
  * the iterator variable expression are left as well. Therefore, the common container of the from/to expressions needs to be
  * determined, and all variables whose static scope is any of from, or any of from's direct or transitive containers that
- * are still contained (directly or transitively) in the common container of from/to, are considered out of scope.<p>
+ * are still contained (directly or transitively) in the common container of from/to, are considered out of scope.</p>
  * 
  * @author Axel Uhl (D043530)
  * 

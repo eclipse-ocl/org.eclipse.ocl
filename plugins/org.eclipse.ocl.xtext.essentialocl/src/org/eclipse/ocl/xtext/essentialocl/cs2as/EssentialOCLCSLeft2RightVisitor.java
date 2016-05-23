@@ -272,7 +272,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		return variableExp;
 	}
 	
-	/**
+	/*
 	 * let iterations = invocations->selectByKind(Iteration)->select(owningClass <> null) in
 	 * let bestIteratorSize = iterations->collect(ownedIterators->size())->min() in
 	 * let bestSizeIterations = iterations->select(ownedIterators->size() = bestIteratorSize) in
@@ -561,7 +561,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	/**
-	 * Resolve an invocation such as name() or source.name(...)  or source->name(...) to the best candidate from invocations.
+	 * Resolve an invocation such as name() or source.name(...)  or source-&gt;name(...) to the best candidate from invocations.
 	 * <p>
 	 * sourceExp is null for an implicit source invocation.
 	 * <p>
@@ -689,7 +689,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	/**
-	 * Resolve an invocation such as source.name  or source->name
+	 * Resolve an invocation such as source.name  or source-&gt;name
 	 */
 	protected @NonNull OCLExpression resolveExplicitSourceNavigation(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp) {
 		PathNameCS ownedPathName = ClassUtil.nonNullState(csNameExp.getOwnedPathName());
@@ -755,7 +755,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	/**
-	 * Resolve an invocation such as name() or source.name(...)  or source->name(...)
+	 * Resolve an invocation such as name() or source.name(...)  or source-&gt;name(...)
 	 */
 	protected @NonNull OCLExpression resolveInvocation(@Nullable OCLExpression sourceExp, @NonNull RoundBracketedClauseCS csRoundBracketedClause) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();

@@ -69,7 +69,7 @@ public class AbstractVisitor<T>
      * its source and qualifiers (if any).  Note that in the case of a opposite property
      * call expression as a qualifier of an association class call, the
      * opposite property call does not have a source and, therefore, the
-     * <code>sourceResult</tt> will be <code>null</code> in that case.
+     * <code>sourceResult</code> will be <code>null</code> in that case.
      * 
      * @param callExp the opposite property call expression
      * @param sourceResult the result of visiting the expression's source

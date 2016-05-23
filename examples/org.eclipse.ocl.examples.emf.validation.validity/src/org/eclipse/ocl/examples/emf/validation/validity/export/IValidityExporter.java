@@ -31,7 +31,6 @@ public interface IValidityExporter extends IValidityExporterDescriptor
 	 *            The Root Node to export
 	 * @param fileName
 	 * 			The target file name or null if not known and not to be reported
-	 * @throws IOException 
 	 */
 	@NonNull String export(@NonNull RootNode rootNode, @Nullable String fileName);
 

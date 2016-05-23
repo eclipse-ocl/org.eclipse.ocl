@@ -96,7 +96,7 @@ public class ClassUtil
 	/**
 	 * Return the non-null adapterClass if iAdfaptable has an adapterClass adapter.
 	 * 
-	 * This method just delegates to IAdaptable.getAdapter() but avoids the hazard from the unconstrained Class<T> declaration.
+	 * This method just delegates to IAdaptable.getAdapter() but avoids the hazard from the unconstrained Class&lt;T&gt; declaration.
 	 * 
 	 * @since 1.1
 	 */

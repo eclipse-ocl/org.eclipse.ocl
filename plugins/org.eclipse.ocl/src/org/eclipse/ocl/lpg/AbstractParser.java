@@ -130,8 +130,8 @@ public abstract class AbstractParser {
 	 * specific parser invocation method.
 	 * 
      * When repair count is 0, no Error token recoveries occur.
-     * When repair count is > 0, it limits the number of Error token recoveries.
-     * When repair count is < 0, the number of error token recoveries is unlimited.
+     * When repair count is &gt; 0, it limits the number of Error token recoveries.
+     * When repair count is &lt; 0, the number of error token recoveries is unlimited.
      * 
 	 * @param defaultRepairCount
 	 *            the default repair count

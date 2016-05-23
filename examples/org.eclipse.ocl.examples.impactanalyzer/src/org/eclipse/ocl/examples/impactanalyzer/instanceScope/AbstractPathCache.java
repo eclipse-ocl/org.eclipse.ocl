@@ -55,7 +55,7 @@ public abstract class AbstractPathCache<StepType> {
      * 
      * <pre>
      *     let a:Tuple{x1:X=self.myX1, x2:X=self.myX2} in
-     *     Set{a.x1, a.x2}->collect(x | x.name)
+     *     Set{a.x1, a.x2}-&gt;collect(x | x.name)
      * </pre>
      * 
      * If this expression is analyzed for an attribute change event of an <tt>X.name</tt>, the iterator variable <tt>x</tt> is
@@ -72,7 +72,7 @@ public abstract class AbstractPathCache<StepType> {
      * literal part names on the "stack" as the one cached.
      * <p>
      * 
-     * The <tt>List<String></tt> element of the key pair may be <tt>null</tt>. It <em>must</em> be <tt>null</tt> instead of
+     * The <tt>List&lt;String&gt;</tt> element of the key pair may be <tt>null</tt>. It <em>must</em> be <tt>null</tt> instead of
      * passing an empty list to avoid ambiguities.
      */
     private final Map<Pair<OCLExpression, List<String>>, StepType> subexpressionToPath = new HashMap<Pair<OCLExpression, List<String>>, StepType>();
@@ -116,9 +116,9 @@ public abstract class AbstractPathCache<StepType> {
     /**
      * Also adds <code>path</code> to {@link #allSteps}. If the source type is <code>null</code> and the step is not
      * absolute, this path cache registers as a listener on the step (see
-     * {@link StepType#addSourceTypeChangeListener(SourceTypeChangeListener)}. If the target type is <code>null</code>, this
+     * <code>StepType.addSourceTypeChangeListener(SourceTypeChangeListener)</code>. If the target type is <code>null</code>, this
      * path cache registers as target type listener on the step (see
-     * {@link StepType#addTargetTypeChangeListener(TargetTypeChangeListener)}. If the step is not marked as always empty,
+     * <code>StepType.addTargetTypeChangeListener(TargetTypeChangeListener)</code>. If the step is not marked as always empty,
      * this path cache registers as listener for a change in the step's always-empty setting. If any of these change events are
      * received, the respective step is re-hashed into {@link #allSteps}.
      */

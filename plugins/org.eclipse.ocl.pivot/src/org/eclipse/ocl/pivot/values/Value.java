@@ -73,7 +73,7 @@ public interface Value
 	 * <p>
 	 * Java-null for a null OCL value
 	 * <p>
-	 * Objects for other things, List<?> for collections
+	 * Objects for other things, List&lt;?&gt; for collections
 	 * 
 	 * @generated NOT
 	 */

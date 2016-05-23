@@ -968,7 +968,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	/**
 	 * Callback for an OperationCallExp visit.
 	 * 
-	 * Look at the source to determine operator ( -> or . )
+	 * Look at the source to determine operator ( -&gt; or . )
 	 * 
 	 * @param oc
 	 *            the operation call expression

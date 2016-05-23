@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLQueryDelegateFactory;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
-import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Query;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -63,9 +62,6 @@ public class OCLQueryDelegate implements QueryDelegate
 	 *            name and types of variables used in my expression
 	 * @param expression
 	 *            the expression that I handle
-	 * 
-	 * @throws ParserException
-	 *             if the expression is invalid
 	 */
 	public OCLQueryDelegate(@NonNull OCLDelegateDomain delegateDomain, @NonNull EClassifier context, @Nullable Map<String, EClassifier> parameters, @NonNull String expression) {
 		this.delegateDomain = delegateDomain;

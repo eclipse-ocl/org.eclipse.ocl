@@ -325,7 +325,7 @@ public class OCLinEcoreTablesUtils
 		/**
 		 * Rewrite double imports to suit the EMF generators. If importManager is null, as is the case
 		 * since it is not obvious how to re-use the ImportManager between the OCL pre-generate and the Ecore generate
-		 * sessions, an import such as <%x.y.@p.q z%> is chnaged to x.y.@<%p.q%> z so that the @p.q gets handler by
+		 * sessions, an import such as &lt;%x.y.@p.q z%&gt; is chnaged to x.y.@&lt;%p.q%&gt; z so that the @p.q gets handler by
 		 * the Ecore ImportmManager. If importManager is non-null both imports are shortened.
 		 */
 		public @NonNull String rewriteManagedImports(@NonNull String source)

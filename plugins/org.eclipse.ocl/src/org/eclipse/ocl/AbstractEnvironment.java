@@ -53,7 +53,7 @@ import org.eclipse.ocl.utilities.TypedElement;
  *   <li>determination of implicit source variables for operation calls,
  *       attribute navigations, etc.</li>
  *   <li>tracking of operation bodies and attribute initializers/derivations</li>
- *   <li>storage of additional attributes and operations</tt>
+ *   <li>storage of additional attributes and operations</li>
  * </ul>
  * <p>
  * along with some subclass hook methods and convenience methods.

@@ -183,8 +183,8 @@ public interface AbstractNode extends EObject {
 	@NonNull AbstractNode @NonNull [] getVisibleChildren();
 	
 	/**
-	 * Update the grayed status of this node and all its descendants, returning >0 if this node and its children are consistently enabled,
-	 * <0 is consistently disbaled and 0 otherwise.  
+	 * Update the grayed status of this node and all its descendants, returning &gt;0 if this node and its children are consistently enabled,
+	 * &lt;0 is consistently disbaled and 0 otherwise.  
 	 */
 	int refreshGrayed();
 	

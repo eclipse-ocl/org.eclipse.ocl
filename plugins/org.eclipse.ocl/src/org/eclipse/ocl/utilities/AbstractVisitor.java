@@ -174,7 +174,7 @@ public abstract class AbstractVisitor<T, C, O, P, EL, PM, S, COA, SSA, CT>
      * its source and qualifiers (if any).  Note that in the case of a property
      * call expression as a qualifier of an association class call, the
      * property call does not have a source and, therefore, the
-     * <code>sourceResult</tt> will be <code>null</code> in that case.
+     * <code>sourceResult</code> will be <code>null</code> in that case.
      * 
      * @param callExp the property call expression, if there is a source
      * @param sourceResult the result of visiting the expression's source

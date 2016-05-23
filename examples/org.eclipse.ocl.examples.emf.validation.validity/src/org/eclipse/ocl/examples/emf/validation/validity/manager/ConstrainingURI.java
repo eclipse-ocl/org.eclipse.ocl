@@ -23,7 +23,6 @@ public final class ConstrainingURI implements Comparable<ConstrainingURI>
 {
 	/**
 	 * It is possible to have multiple "identical" contexts defined in an OCL file :
-	 * <p>
 	 * <pre>
 	 * context EClass
 	 *   inv invariant1 : not name.oclIsUndefined()
@@ -31,7 +30,6 @@ public final class ConstrainingURI implements Comparable<ConstrainingURI>
 	 * context EClass
 	 *   inv invariant2 : if interface then name.startsWith('I') else true endif;
 	 * </pre>
-	 * </p>
 	 * 
 	 * In such a case, the URI of the first will be <code>http://www.eclipse.org/emf/2002/Ecore#//EClass</code> while the URI of the second will be <code>http://www.eclipse.org/emf/2002/Ecore#//EClass.1</code>. We wish to "regroup" both invariants
 	 * under the same context in the validity results.

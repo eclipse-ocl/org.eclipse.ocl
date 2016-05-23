@@ -61,7 +61,6 @@ public abstract class AbstractIteration extends AbstractFeature implements Libra
 	 * <p>
 	 * Derived classes may override this method to change the iteration algorithm or override
 	 * the call-backs to customize the default iteration.
-	 * @throws Exception 
 	 */
 	@Override
 	public @Nullable Object evaluateIteration(@NonNull IterationManager iterationManager) {
@@ -102,7 +101,6 @@ public abstract class AbstractIteration extends AbstractFeature implements Libra
 	 * 
 	 * @param iterationManager the iteration context
 	 * @return non-CARRY_ON premature result of iteration, or CARRY_ON if complete
-	 * @throws Exception 
 	 */
 	protected abstract @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager);
 }

@@ -602,7 +602,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 	}
 
 	/**
-	 * @Deprecated no longer used
+	 * @deprecated no longer used
 	 */
 	@Deprecated
 	public org.eclipse.uml2.uml.@Nullable Property getOtherEnd(@NonNull List<org.eclipse.uml2.uml.Property> umlMemberEnds, org.eclipse.uml2.uml.@NonNull Property umlProperty) {

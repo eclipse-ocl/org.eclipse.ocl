@@ -147,7 +147,7 @@ public class ToStringVisitor<C, O, P, EL, PM, S, COA, SSA, CT>
 	/**
 	 * Callback for an OperationCallExp visit.
 	 * 
-	 * Look at the source to determine operator ( -> or . )
+	 * Look at the source to determine operator ( -&gt; or . )
 	 * @param oc the operation call expression
 	 * @return string
 	 */

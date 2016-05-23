@@ -97,7 +97,7 @@ public class OCLResource
 	 * 
 	 * @throws RuntimeException if anything goes wrong in parsing
 	 * @throws IOException if anything goes wrong in saving
-	 * @throws OCLParsingException if anything goes wrong in parsing
+	 * @throws ParserException if anything goes wrong in parsing
 	 */
 	public static void save(String path, OCLDocument document, String expression)
 			throws IOException, ParserException {

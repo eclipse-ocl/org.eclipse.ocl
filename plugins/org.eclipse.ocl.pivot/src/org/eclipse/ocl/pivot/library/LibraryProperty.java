@@ -28,9 +28,6 @@ public interface LibraryProperty extends LibraryFeature
 	 */
 	public interface LibraryPropertyExtension extends LibraryProperty
 	{
-		/**
-		 * @throws Exception 
-		 */
 		@Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue);
 	}
 

@@ -67,7 +67,7 @@ public interface TypeDescriptor
 
 	/**
 	 * Append cgValue to js casting an internally typed Ecore value to requiredClassName. This is primarily used to
-	 * cast a {@link List<...>} to an {@link EList<...>}. The default just appends the value name of cgValue.
+	 * cast a List&lt;...&gt; to an EList&lt;...&gt;. The default just appends the value name of cgValue.
 	 */
 	void appendEcoreValue(@NonNull JavaStream js, @NonNull String requiredClassName, @NonNull CGValuedElement cgValue);
 
@@ -114,7 +114,7 @@ public interface TypeDescriptor
 	@NonNull EcoreDescriptor getEcoreDescriptor(@NonNull CodeGenerator codeGenerator, @Nullable Class<?> instanceClass);
 
 	/**
-	 * Return the basic Java class for this descriptor. e.g. {@link List<?>} for an unboxed collection.
+	 * Return the basic Java class for this descriptor. e.g. List&lt;?&gt; for an unboxed collection.
 	 */
 	@NonNull Class<?> getJavaClass();
 
@@ -131,7 +131,7 @@ public interface TypeDescriptor
 	@NonNull UnboxedDescriptor getUnboxedDescriptor(@NonNull CodeGenerator codeGenerator);
 
 	/**
-	 * Return the basic Java class for this descriptor. e.g. {@link List<?>} for an unboxed collection.
+	 * Return the basic Java class for this descriptor. e.g. List&lt;?&gt; for an unboxed collection.
 	 * Returns null for no Java class known.
 	 */
 	@Nullable Class<?> hasJavaClass();

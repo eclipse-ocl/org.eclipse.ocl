@@ -82,14 +82,14 @@ public class HTMLBuffer
 	}
 	
 	/**
-	 * End a colored font by emitting a </font> tag.
+	 * End a colored font by emitting a &lt;/font&gt; tag.
 	 */
 	public void endFontColor() {
 		appendUntag("font"); 
 	}
 	
 	/**
-	 * End a tagged font by emitting a </fontName> tag.
+	 * End a tagged font by emitting a &lt;/fontName&gt; tag.
 	 */
 	public void endFontName(String fontName) {
 		appendUntag(fontName); 
@@ -104,7 +104,7 @@ public class HTMLBuffer
 	}
 	
 	/**
-	 * End a paragraph by emitting a </p> tag, unless no paragraph is active.
+	 * End a paragraph by emitting a &lt;/p&gt; tag, unless no paragraph is active.
 	 */
 	public void endParagraph() {
 		if (inPara) {
@@ -114,7 +114,7 @@ public class HTMLBuffer
 	}
 
 	/**
-	 * End underlining by emitting a </u> tag.
+	 * End underlining by emitting a &lt;/u&gt; tag.
 	 */
 	public void endUnderline() {
 		appendUntag("u");
@@ -126,14 +126,14 @@ public class HTMLBuffer
 	}
 	
 	/**
-	 * Start a colored font by emitting a <font color="colorName"> tag.
+	 * Start a colored font by emitting a &lt;font color="colorName"&gt; tag.
 	 */
 	public void startFontColor(String colorName) {
 		appendTag("font color=\"" + colorName + "\""); 
 	}
 	
 	/**
-	 * Start a tagged font by emitting a <fontName> tag.
+	 * Start a tagged font by emitting a &lt;fontName&gt; tag.
 	 */
 	public void startFontName(String fontName) {
 		appendTag(fontName); 
@@ -148,7 +148,7 @@ public class HTMLBuffer
 	}
 	
 	/**
-	 * Start a paragraph by emitting a <p> tag, unless a paragraph is already active.
+	 * Start a paragraph by emitting a &lt;p&gt; tag, unless a paragraph is already active.
 	 */
 	public void startParagraph() {
 		if (!inPara) {
@@ -158,7 +158,7 @@ public class HTMLBuffer
 	}
 
 	/**
-	 * Start underlining by emitting a <u> tag.
+	 * Start underlining by emitting a &lt;u&gt; tag.
 	 */
 	public void startUnderline() {
 		appendTag("u");

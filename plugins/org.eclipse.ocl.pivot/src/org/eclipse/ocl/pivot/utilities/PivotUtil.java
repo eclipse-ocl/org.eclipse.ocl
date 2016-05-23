@@ -950,7 +950,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * Return true if type uses an aggregate (->) rather than object (.) navigation operator.
+	 * Return true if type uses an aggregate (-&gt;) rather than object (.) navigation operator.
 	 */
 	public static boolean isAggregate(Type type) {
 		return (type instanceof CollectionType) || (type instanceof MapType);

@@ -27,7 +27,7 @@ import org.eclipse.ocl.ecore.TupleLiteralExp;
 
 /**
  * The AnnotatedEObject is a delegate of an {@link EObject} that adds support for {@link String} annotations.
- * Additionally it holds a {@link Stack}<{@link EStructuralFeature}> to enable the backtracking of {@link TupleLiteralExp}
+ * Additionally it holds a {@link Stack}&lt;{@link EStructuralFeature}&gt; to enable the backtracking of {@link TupleLiteralExp}
  * 
  * @author martin.hanysz
  *

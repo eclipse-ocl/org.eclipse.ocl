@@ -4132,7 +4132,7 @@ public abstract class AbstractOCLAnalyzer<PK, C, O, P, EL, PM, S, COA, SSA, CT, 
 	}
 
 	/**
-	 * OperationCallExpCS for an ->
+	 * OperationCallExpCS for an -&gt;
 	 * 
 	 * @param operationCallExpCS
 	 *            the <code>OperationCallExpCS</code> <code>CSTNode</code>

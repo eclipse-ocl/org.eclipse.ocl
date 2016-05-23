@@ -47,7 +47,6 @@ public class ClosureIteration extends AbstractIteration
 
 	/**
 	 * Recursively evaluates the iterator body expression.
-	 * @throws Exception 
 	 */
     @Override
 	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {

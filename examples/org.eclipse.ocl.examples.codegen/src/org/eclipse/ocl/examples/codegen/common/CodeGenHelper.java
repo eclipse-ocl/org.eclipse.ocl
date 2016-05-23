@@ -26,7 +26,7 @@ public interface CodeGenHelper
 	@NonNull String getCopyright(@NonNull String indentation);
 	
 	/**
-	 * Return the <%...%> escaped name for a type.
+	 * Return the &lt;%...%&gt; escaped name for a type.
 	 */
 	@Nullable LibraryOperation loadClass(@NonNull ExpressionInOCL query, @NonNull File targetFolder,
 			@NonNull String packageName, @NonNull String className, boolean saveSource) throws Exception;

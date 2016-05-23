@@ -55,7 +55,6 @@ public interface IterationManager
 	 * <br>
 	 * This is used by non-iterate iteration that intervene between the body evaluation
 	 * and accumulator update.
-	 * @throws Exception 
 	 */
 	@Nullable Object evaluateBody();
 	
@@ -88,13 +87,12 @@ public interface IterationManager
 	boolean hasCurrent();
 
 	/**
-	 * Update the accumulator witrh the result of a body iteration.
+	 * Update the accumulator with the result of a body iteration.
 	 * <br>
 	 * This implements the body of an iterate iteration for which the accumulator value may
 	 * be assigned to a completely independent value.
 	 * 
 	 * Returns null for the iteration to continue, non-null to terminate.
-	 * @throws Exception 
 	 * @throws InvalidValueException 
 	 */
 	@Nullable Object updateAccumulator(Object newValue);
