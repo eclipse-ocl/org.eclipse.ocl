@@ -20,11 +20,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.CollectionLiteralExpCS#getCollectionType <em>Collection Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.CollectionLiteralExpCS#getCollectionLiteralParts <em>Collection Literal Parts</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getCollectionLiteralExpCS()
  * @model

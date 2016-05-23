@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.CSTNode#getStartOffset <em>Start Offset</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.CSTNode#getEndOffset <em>End Offset</em>}</li>
@@ -29,7 +30,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.ocl.cst.CSTNode#getEndToken <em>End Token</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.CSTNode#getAst <em>Ast</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getCSTNode()
  * @model abstract="true"

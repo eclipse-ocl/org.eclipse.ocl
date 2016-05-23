@@ -18,12 +18,12 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.PrePostOrBodyDeclCS#getKind <em>Kind</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.PrePostOrBodyDeclCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.PrePostOrBodyDeclCS#getExpressionCS <em>Expression CS</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getPrePostOrBodyDeclCS()
  * @model

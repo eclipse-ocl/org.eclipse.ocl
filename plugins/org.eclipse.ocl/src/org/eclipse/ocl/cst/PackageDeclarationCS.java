@@ -20,12 +20,12 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.PackageDeclarationCS#getPathNameCS <em>Path Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.PackageDeclarationCS#getContextDecls <em>Context Decls</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.PackageDeclarationCS#getPackageDeclarationCS <em>Package Declaration CS</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getPackageDeclarationCS()
  * @model

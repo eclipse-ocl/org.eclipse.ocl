@@ -18,12 +18,12 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.DefExpressionCS#getOperationCS <em>Operation CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.DefExpressionCS#getVariableCS <em>Variable CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.DefExpressionCS#getExpressionCS <em>Expression CS</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getDefExpressionCS()
  * @model

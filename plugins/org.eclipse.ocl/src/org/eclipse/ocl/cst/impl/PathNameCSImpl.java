@@ -33,7 +33,6 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.PathNameCSImpl#getSimpleNames <em>Simple Names</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

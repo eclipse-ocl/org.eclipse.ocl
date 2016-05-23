@@ -20,13 +20,13 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.MessageExpCS#getTarget <em>Target</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.MessageExpCS#getKind <em>Kind</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.MessageExpCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.MessageExpCS#getArguments <em>Arguments</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getMessageExpCS()
  * @model

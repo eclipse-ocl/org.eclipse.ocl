@@ -26,7 +26,6 @@ import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.PrimitiveLiteralExpCSImpl#getSymbol <em>Symbol</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

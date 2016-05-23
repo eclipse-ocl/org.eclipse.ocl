@@ -32,7 +32,6 @@ import org.eclipse.ocl.cst.VariableCS;
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.TupleTypeCSImpl#getVariables <em>Variables</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

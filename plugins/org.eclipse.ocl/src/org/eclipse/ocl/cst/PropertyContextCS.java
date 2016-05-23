@@ -20,13 +20,13 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.PropertyContextCS#getPathNameCS <em>Path Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.PropertyContextCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.PropertyContextCS#getTypeCS <em>Type CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.PropertyContextCS#getConstraints <em>Constraints</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getPropertyContextCS()
  * @model

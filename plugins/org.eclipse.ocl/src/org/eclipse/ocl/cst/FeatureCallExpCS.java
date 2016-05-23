@@ -20,12 +20,12 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.FeatureCallExpCS#getPathNameCS <em>Path Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.FeatureCallExpCS#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.FeatureCallExpCS#getIsMarkedPreCS <em>Is Marked Pre CS</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getFeatureCallExpCS()
  * @model

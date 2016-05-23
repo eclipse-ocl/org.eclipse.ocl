@@ -18,12 +18,12 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.LoopExpCS#getVariable1 <em>Variable1</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.LoopExpCS#getVariable2 <em>Variable2</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.LoopExpCS#getBody <em>Body</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getLoopExpCS()
  * @model

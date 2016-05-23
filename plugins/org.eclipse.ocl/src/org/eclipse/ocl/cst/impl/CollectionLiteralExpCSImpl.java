@@ -36,7 +36,6 @@ import org.eclipse.ocl.cst.CollectionTypeIdentifierEnum;
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionLiteralExpCSImpl#getCollectionType <em>Collection Type</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionLiteralExpCSImpl#getCollectionLiteralParts <em>Collection Literal Parts</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

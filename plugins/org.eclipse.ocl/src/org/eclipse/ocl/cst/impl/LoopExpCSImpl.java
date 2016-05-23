@@ -32,7 +32,6 @@ import org.eclipse.ocl.cst.VariableCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.LoopExpCSImpl#getVariable2 <em>Variable2</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.LoopExpCSImpl#getBody <em>Body</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

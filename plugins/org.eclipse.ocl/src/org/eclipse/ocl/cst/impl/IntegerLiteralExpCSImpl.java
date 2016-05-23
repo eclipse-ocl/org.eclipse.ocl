@@ -28,7 +28,6 @@ import org.eclipse.ocl.cst.IntegerLiteralExpCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.IntegerLiteralExpCSImpl#getExtendedIntegerSymbol <em>Extended Integer Symbol</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.IntegerLiteralExpCSImpl#getLongSymbol <em>Long Symbol</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

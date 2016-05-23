@@ -18,10 +18,10 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.InvOrDefCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getInvOrDefCS()
  * @model abstract="true"

@@ -18,12 +18,12 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.CallExpCS#getSource <em>Source</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.CallExpCS#getAccessor <em>Accessor</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.CallExpCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getCallExpCS()
  * @model

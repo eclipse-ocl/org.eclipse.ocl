@@ -38,7 +38,6 @@ import org.eclipse.ocl.cst.VariableExpCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.VariableExpCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.VariableExpCSImpl#getIsMarkedPreCS <em>Is Marked Pre CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

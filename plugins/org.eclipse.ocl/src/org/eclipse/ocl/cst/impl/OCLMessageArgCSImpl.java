@@ -31,7 +31,6 @@ import org.eclipse.ocl.cst.TypeCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.OCLMessageArgCSImpl#getTypeCS <em>Type CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.OCLMessageArgCSImpl#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

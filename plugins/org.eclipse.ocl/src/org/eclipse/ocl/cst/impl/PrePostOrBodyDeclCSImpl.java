@@ -33,7 +33,6 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.PrePostOrBodyDeclCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.PrePostOrBodyDeclCSImpl#getExpressionCS <em>Expression CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

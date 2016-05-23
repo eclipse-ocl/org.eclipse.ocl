@@ -18,11 +18,11 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.OCLMessageArgCS#getTypeCS <em>Type CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.OCLMessageArgCS#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getOCLMessageArgCS()
  * @model extendedMetaData="name='OclMessageArgCS'"

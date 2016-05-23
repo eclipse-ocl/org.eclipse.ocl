@@ -28,7 +28,6 @@ import org.eclipse.ocl.cst.SimpleTypeEnum;
  *   <li>{@link org.eclipse.ocl.cst.impl.SimpleNameCSImpl#getValue <em>Value</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.SimpleNameCSImpl#getType <em>Type</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

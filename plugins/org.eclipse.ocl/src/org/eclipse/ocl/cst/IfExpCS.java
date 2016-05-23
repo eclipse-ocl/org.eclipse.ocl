@@ -18,12 +18,12 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.IfExpCS#getThenExpression <em>Then Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.IfExpCS#getElseExpression <em>Else Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.IfExpCS#getCondition <em>Condition</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getIfExpCS()
  * @model

@@ -40,7 +40,6 @@ import org.eclipse.ocl.cst.VariableCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.OperationCSImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.OperationCSImpl#getTypeCS <em>Type CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

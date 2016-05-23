@@ -18,11 +18,11 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.IntegerLiteralExpCS#getIntegerSymbol <em>Integer Symbol</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.IntegerLiteralExpCS#getLongSymbol <em>Long Symbol</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getIntegerLiteralExpCS()
  * @model features="extendedIntegerSymbol" 

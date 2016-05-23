@@ -20,12 +20,12 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.VariableExpCS#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.VariableExpCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.VariableExpCS#getIsMarkedPreCS <em>Is Marked Pre CS</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getVariableExpCS()
  * @model

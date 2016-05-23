@@ -18,12 +18,12 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.VariableCS#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.VariableCS#getTypeCS <em>Type CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.VariableCS#getInitExpression <em>Init Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getVariableCS()
  * @model

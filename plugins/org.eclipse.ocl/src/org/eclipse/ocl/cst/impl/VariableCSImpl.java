@@ -32,7 +32,6 @@ import org.eclipse.ocl.cst.VariableCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.VariableCSImpl#getTypeCS <em>Type CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.VariableCSImpl#getInitExpression <em>Init Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

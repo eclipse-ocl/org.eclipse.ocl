@@ -40,7 +40,6 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.MessageExpCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.MessageExpCSImpl#getArguments <em>Arguments</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

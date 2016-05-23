@@ -18,11 +18,11 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.CollectionTypeCS#getCollectionTypeIdentifier <em>Collection Type Identifier</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.CollectionTypeCS#getTypeCS <em>Type CS</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getCollectionTypeCS()
  * @model

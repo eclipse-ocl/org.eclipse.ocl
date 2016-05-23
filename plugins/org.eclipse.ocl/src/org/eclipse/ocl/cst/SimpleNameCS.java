@@ -18,11 +18,11 @@ package org.eclipse.ocl.cst;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.SimpleNameCS#getValue <em>Value</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.SimpleNameCS#getType <em>Type</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getSimpleNameCS()
  * @model

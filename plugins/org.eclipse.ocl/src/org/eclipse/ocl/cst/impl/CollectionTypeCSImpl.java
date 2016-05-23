@@ -31,7 +31,6 @@ import org.eclipse.ocl.cst.TypeCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionTypeCSImpl#getCollectionTypeIdentifier <em>Collection Type Identifier</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionTypeCSImpl#getTypeCS <em>Type CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -20,11 +20,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.OperationContextDeclCS#getOperationCS <em>Operation CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.OperationContextDeclCS#getPrePostOrBodyDecls <em>Pre Post Or Body Decls</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getOperationContextDeclCS()
  * @model

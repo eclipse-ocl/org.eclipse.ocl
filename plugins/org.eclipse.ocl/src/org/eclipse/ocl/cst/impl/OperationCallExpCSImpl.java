@@ -26,7 +26,6 @@ import org.eclipse.ocl.cst.OperationCallExpCS;
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.OperationCallExpCSImpl#getIsAtomic <em>Is Atomic</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -32,7 +32,6 @@ import org.eclipse.ocl.cst.PackageDeclarationCS;
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.OCLDocumentCSImpl#getPackageDeclarations <em>Package Declarations</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

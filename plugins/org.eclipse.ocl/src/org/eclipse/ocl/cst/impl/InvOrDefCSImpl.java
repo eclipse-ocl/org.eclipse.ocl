@@ -29,7 +29,6 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.InvOrDefCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

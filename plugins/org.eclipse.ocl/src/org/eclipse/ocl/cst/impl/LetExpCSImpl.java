@@ -36,7 +36,6 @@ import org.eclipse.ocl.cst.VariableCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.LetExpCSImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.LetExpCSImpl#getInExpression <em>In Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

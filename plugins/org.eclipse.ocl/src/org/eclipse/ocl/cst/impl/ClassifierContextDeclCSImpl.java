@@ -38,7 +38,6 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.ClassifierContextDeclCSImpl#getConstraints <em>Constraints</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.ClassifierContextDeclCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

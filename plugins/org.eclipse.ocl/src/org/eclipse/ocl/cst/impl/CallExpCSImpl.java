@@ -33,7 +33,6 @@ import org.eclipse.ocl.cst.SimpleNameCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.CallExpCSImpl#getAccessor <em>Accessor</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.CallExpCSImpl#getSimpleNameCS <em>Simple Name CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

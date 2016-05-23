@@ -29,7 +29,6 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.CollectionRangeCSImpl#getLastExpressionCS <em>Last Expression CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

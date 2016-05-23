@@ -29,7 +29,6 @@ import org.eclipse.ocl.cst.PrimitiveLiteralExpCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.BooleanLiteralExpCSImpl#getSymbol <em>Symbol</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.BooleanLiteralExpCSImpl#getBooleanSymbol <em>Boolean Symbol</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -20,12 +20,12 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.ClassifierContextDeclCS#getPathNameCS <em>Path Name CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.ClassifierContextDeclCS#getConstraints <em>Constraints</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.ClassifierContextDeclCS#getSimpleNameCS <em>Simple Name CS</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.ocl.cst.CSTPackage#getClassifierContextDeclCS()
  * @model

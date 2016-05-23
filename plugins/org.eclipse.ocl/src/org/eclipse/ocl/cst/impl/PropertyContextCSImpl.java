@@ -40,7 +40,6 @@ import org.eclipse.ocl.cst.TypeCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.PropertyContextCSImpl#getTypeCS <em>Type CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.PropertyContextCSImpl#getConstraints <em>Constraints</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

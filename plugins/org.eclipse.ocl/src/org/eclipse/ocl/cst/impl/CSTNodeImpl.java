@@ -33,7 +33,6 @@ import org.eclipse.ocl.cst.CSTPackage;
  *   <li>{@link org.eclipse.ocl.cst.impl.CSTNodeImpl#getEndToken <em>End Token</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.CSTNodeImpl#getAst <em>Ast</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

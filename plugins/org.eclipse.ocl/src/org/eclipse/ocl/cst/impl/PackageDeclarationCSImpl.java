@@ -37,7 +37,6 @@ import org.eclipse.ocl.cst.PathNameCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.PackageDeclarationCSImpl#getContextDecls <em>Context Decls</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.PackageDeclarationCSImpl#getPackageDeclarationCS <em>Package Declaration CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

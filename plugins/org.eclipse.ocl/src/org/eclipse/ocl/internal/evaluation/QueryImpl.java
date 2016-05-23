@@ -39,11 +39,11 @@ import org.eclipse.ocl.util.ProblemAware;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.internal.evaluation.QueryImpl#getExtentMap <em>Extent Map</em>}</li>
  *   <li>{@link org.eclipse.ocl.internal.evaluation.QueryImpl#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

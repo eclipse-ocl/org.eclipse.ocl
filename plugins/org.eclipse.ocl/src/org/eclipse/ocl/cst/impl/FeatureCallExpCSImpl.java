@@ -38,7 +38,6 @@ import org.eclipse.ocl.cst.PathNameCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.FeatureCallExpCSImpl#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.FeatureCallExpCSImpl#getIsMarkedPreCS <em>Is Marked Pre CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

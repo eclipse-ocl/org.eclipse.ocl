@@ -36,7 +36,6 @@ import org.eclipse.ocl.cst.PrePostOrBodyDeclCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.OperationContextDeclCSImpl#getOperationCS <em>Operation CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.OperationContextDeclCSImpl#getPrePostOrBodyDecls <em>Pre Post Or Body Decls</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

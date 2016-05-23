@@ -26,7 +26,6 @@ import org.eclipse.ocl.cst.RealLiteralExpCS;
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.RealLiteralExpCSImpl#getRealSymbol <em>Real Symbol</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

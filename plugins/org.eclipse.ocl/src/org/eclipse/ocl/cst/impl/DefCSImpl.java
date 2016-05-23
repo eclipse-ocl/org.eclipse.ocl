@@ -30,7 +30,6 @@ import org.eclipse.ocl.cst.DefExpressionCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.DefCSImpl#getDefExpressionCS <em>Def Expression CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.DefCSImpl#isStatic <em>Static</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

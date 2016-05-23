@@ -33,7 +33,6 @@ import org.eclipse.ocl.cst.VariableCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.DefExpressionCSImpl#getVariableCS <em>Variable CS</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.DefExpressionCSImpl#getExpressionCS <em>Expression CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

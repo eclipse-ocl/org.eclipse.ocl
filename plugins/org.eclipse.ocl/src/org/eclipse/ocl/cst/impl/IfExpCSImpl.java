@@ -31,7 +31,6 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.IfExpCSImpl#getElseExpression <em>Else Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.IfExpCSImpl#getCondition <em>Condition</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

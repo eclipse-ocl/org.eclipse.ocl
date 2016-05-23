@@ -28,7 +28,6 @@ import org.eclipse.ocl.cst.StringLiteralExpCS;
  *   <li>{@link org.eclipse.ocl.cst.impl.StringLiteralExpCSImpl#getStringSymbol <em>String Symbol</em>}</li>
  *   <li>{@link org.eclipse.ocl.cst.impl.StringLiteralExpCSImpl#getUnescapedStringSymbol <em>Unescaped String Symbol</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

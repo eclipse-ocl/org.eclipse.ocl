@@ -29,7 +29,6 @@ import org.eclipse.ocl.cst.OCLExpressionCS;
  * <ul>
  *   <li>{@link org.eclipse.ocl.cst.impl.InitOrDerValueCSImpl#getExpressionCS <em>Expression CS</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
