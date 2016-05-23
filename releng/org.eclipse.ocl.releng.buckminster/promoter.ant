@@ -322,6 +322,7 @@
 	</target>
 	
 	<target name="-publish.doc" if="publish.doc">
+		<mkdir dir="${project.doc.directory}" />
 		<echo>Remove existing doc from ${project.doc.directory}</echo>
 		<delete verbose="true">
 			<fileset dir="${project.doc.directory}"/>
