@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * @noreference This class is not intended to be referenced by clients.
  * <!-- end-user-doc -->
  * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibFactory
- * @model kind="package"
  * @generated
  */
 public class OCLstdlibPackage extends EPackageImpl {
@@ -976,7 +975,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Comparable</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclAny"
 	 * @generated
 	 */
 	public EClass getOclComparable() {
@@ -990,7 +988,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Element</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclAny"
 	 * @generated
 	 */
 	public EClass getOclElement() {
@@ -1034,7 +1031,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Any</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object"
 	 * @generated
 	 */
 	public EClass getOclAny() {
@@ -1048,7 +1044,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Invalid</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclVoid"
 	 * @generated
 	 */
 	public EClass getOclInvalid() {
@@ -1062,7 +1057,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Lambda</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclAny"
 	 * @generated
 	 */
 	public EClass getOclLambda() {
@@ -1076,7 +1070,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Message</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclAny"
 	 * @generated
 	 */
 	public EClass getOclMessage() {
@@ -1090,7 +1083,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl State</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclAny"
 	 * @generated
 	 */
 	public EClass getOclState() {
@@ -1104,7 +1096,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Stereotype</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclType"
 	 * @generated
 	 */
 	public EClass getOclStereotype() {
@@ -1118,7 +1109,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Summable</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclAny"
 	 * @generated
 	 */
 	public EClass getOclSummable() {
@@ -1132,7 +1122,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Tuple</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclAny"
 	 * @generated
 	 */
 	public EClass getOclTuple() {
@@ -1146,7 +1135,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Type</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclElement"
 	 * @generated
 	 */
 	public EClass getOclType() {
@@ -1160,7 +1148,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ocl Void</em>'.
 	 * @see java.lang.Object
-	 * @model instanceClass="java.lang.Object" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclAny"
 	 * @generated
 	 */
 	public EClass getOclVoid() {
@@ -1174,7 +1161,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ordered Collection</em>'.
 	 * @see java.util.Collection
-	 * @model instanceClass="java.util.Collection" typeParameters="T" superTypes="org.eclipse.ocl.pivot.oclstdlib.Collection<T>"
 	 * @generated
 	 */
 	public EClass getOrderedCollection() {
@@ -1188,7 +1174,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Boolean</em>'.
 	 * @see java.lang.Boolean
-	 * @model instanceClass="java.lang.Boolean"
 	 * @generated
 	 */
 	public EDataType getBoolean() {
@@ -1201,7 +1186,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Integer</em>'.
 	 * @see org.eclipse.ocl.pivot.values.IntegerValue
-	 * @model instanceClass="org.eclipse.ocl.pivot.values.IntegerValue"
 	 * @generated
 	 */
 	public EDataType getInteger() {
@@ -1214,7 +1198,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Real</em>'.
 	 * @see org.eclipse.ocl.pivot.values.RealValue
-	 * @model instanceClass="org.eclipse.ocl.pivot.values.RealValue"
 	 * @generated
 	 */
 	public EDataType getReal() {
@@ -1227,7 +1210,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>String</em>'.
 	 * @see java.lang.String
-	 * @model instanceClass="java.lang.String"
 	 * @generated
 	 */
 	public EDataType getString() {
@@ -1240,7 +1222,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
 	 * @see org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
-	 * @model instanceClass="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"
 	 * @generated
 	 */
 	public EDataType getUnlimitedNatural() {
@@ -1253,7 +1234,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Bag</em>'.
 	 * @see org.eclipse.ocl.pivot.values.Bag
-	 * @model instanceClass="org.eclipse.ocl.pivot.values.Bag" typeParameters="T" superTypes="org.eclipse.ocl.pivot.oclstdlib.Collection<T>"
 	 * @generated
 	 */
 	public EClass getBag() {
@@ -1266,7 +1246,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Collection</em>'.
 	 * @see java.util.Collection
-	 * @model instanceClass="java.util.Collection" typeParameters="T" superTypes="org.eclipse.ocl.pivot.oclstdlib.OclAny"
 	 * @generated
 	 */
 	public EClass getCollection() {
@@ -1321,7 +1300,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Ordered Set</em>'.
 	 * @see org.eclipse.ocl.pivot.values.OrderedSet
-	 * @model instanceClass="org.eclipse.ocl.pivot.values.OrderedSet" typeParameters="T" superTypes="org.eclipse.ocl.pivot.oclstdlib.OrderedCollection<T> org.eclipse.ocl.pivot.oclstdlib.UniqueCollection<T>"
 	 * @generated
 	 */
 	public EClass getOrderedSet() {
@@ -1334,7 +1312,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Sequence</em>'.
 	 * @see java.util.List
-	 * @model instanceClass="java.util.List" typeParameters="T" superTypes="org.eclipse.ocl.pivot.oclstdlib.OrderedCollection<T>"
 	 * @generated
 	 */
 	public EClass getSequence() {
@@ -1347,7 +1324,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Set</em>'.
 	 * @see java.util.Set
-	 * @model instanceClass="java.util.Set" typeParameters="T" superTypes="org.eclipse.ocl.pivot.oclstdlib.UniqueCollection<T>"
 	 * @generated
 	 */
 	public EClass getSet() {
@@ -1360,7 +1336,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Unique Collection</em>'.
 	 * @see java.util.Collection
-	 * @model instanceClass="java.util.Collection" typeParameters="T" superTypes="org.eclipse.ocl.pivot.oclstdlib.Collection<T>"
 	 * @generated
 	 */
 	public EClass getUniqueCollection() {
