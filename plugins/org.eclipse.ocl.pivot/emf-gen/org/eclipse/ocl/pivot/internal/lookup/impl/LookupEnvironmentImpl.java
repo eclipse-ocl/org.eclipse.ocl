@@ -146,7 +146,7 @@ public class LookupEnvironmentImpl extends MinimalEObjectImpl.Container implemen
 	 * @generated
 	 */
 	@Override
-	public <NE extends NamedElement> LookupEnvironment addElements(final @NonNull Collection<NE> elements) {
+	public <NE extends NamedElement> LookupEnvironment addElements(final Collection<NE> elements) {
 		/**
 		 * LookupEnvironment{namedElements = namedElements->includingAll(elements)}
 		 */

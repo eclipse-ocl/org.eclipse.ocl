@@ -29,8 +29,6 @@ import org.eclipse.emf.ecore.EReference;
  * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  * @see org.eclipse.ocl.pivot.internal.lookup.LookupFactory
- * @model kind="package"
- *        annotation="http://www.eclipse.org/OCL/Import null='platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore'"
  * @generated
  */
 public interface LookupPackage extends EPackage {
@@ -274,7 +272,6 @@ public interface LookupPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Executor</em>'.
 	 * @see org.eclipse.ocl.pivot.evaluation.Executor
-	 * @model instanceClass="org.eclipse.ocl.pivot.evaluation.Executor"
 	 * @generated
 	 */
 	EClass getExecutor();
