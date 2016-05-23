@@ -79,7 +79,7 @@
                                 <xsl:text>Christian Damus, Adolfo Sánchez-Barbudo Herrera, Axel Uhl, Edward Willink and contributors</xsl:text>
                             </fo:block>
                             <fo:block font-family="Helvetica" font-size="12pt" padding="10mm">
-                                <xsl:text>Copyright 2002 - 2015</xsl:text>
+                                <xsl:text>Copyright 2002 - 2016</xsl:text>
                             </fo:block>
                         </fo:table-cell>
                     </fo:table-row>

@@ -225,21 +225,21 @@
 			</p>
 <p>
 				
-<code class="code">intersection(u : UniqueCollection(T)) : Set(T)</code>
-			
-</p>
-<p>The intersection of 
-				<code class="code">self</code> and a unique collection; the set of all elements that are in both 
-				<code class="code">self</code> and u.
-			</p>
-<p>
-				
 <code class="code">intersection(c : Collection(T)) : Bag(T)</code>
 			
 </p>
 <p>The intersection of 
 				<code class="code">self</code> and bag; the bag of all elements that are in both 
 				<code class="code">self</code> and c.
+			</p>
+<p>
+				
+<code class="code">intersection(u : UniqueCollection(T)) : Set(T)</code>
+			
+</p>
+<p>The intersection of 
+				<code class="code">self</code> and a unique collection; the set of all elements that are in both 
+				<code class="code">self</code> and u.
 			</p>
 <p>
 				
@@ -294,7 +294,7 @@
 			</p>
 <p>
 				
-<code class="code">product(T2)(c2 : Collection(T2)) : Set(Tuple(first:T[1], second:T2[1])[*|1])</code>
+<code class="code">product(T2)(c2 : Collection(T2)) : Set(Tuple(first:T[1], second:T2[1]))[*|1]</code>
 			
 </p>
 <p>The cartesian product operation of 
@@ -302,12 +302,12 @@
 			</p>
 <p>
 				
-<code class="code">selectByKind(TT)(type : TT[?]) : Collection(TT[*|1])</code>
+<code class="code">selectByKind(TT)(type : TT[?]) : Collection(TT)[*|1]</code>
 			
 </p>
 <p>
 				
-<code class="code">selectByType(TT)(type : TT[?]) : Collection(TT[*|1])</code>
+<code class="code">selectByType(TT)(type : TT[?]) : Collection(TT)[*|1]</code>
 			
 </p>
 <p>

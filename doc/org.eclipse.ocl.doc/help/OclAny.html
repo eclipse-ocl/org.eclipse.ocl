@@ -82,7 +82,7 @@
 <p></p>
 <p>
 				
-<code class="code">oclAsSet() : Set(OclSelf[*|1])</code>
+<code class="code">oclAsSet() : Set(OclSelf)[*|1]</code>
 			
 </p>
 <p>Returns a Set with 
@@ -97,12 +97,21 @@
 </p>
 <p>Evaluates to 
 				<code class="code">self</code>, where 
-				<code class="code">self</code> is of the type identified by T.
-				The type T may be any classifier defined in the UML model;
+				<code class="code">self</code> is of the type identified by 
+				<code class="code">TT</code>.
+				The type 
+				<code class="code">TT</code> may be any classifier defined by OCL or a user metamodel;
 				if the actual type of 
-				<code class="code">self</code> at evaluation time does not conform to T,
+				<code class="code">self</code> at evaluation time does not conform to 
+				<code class="code">TT</code>,
 				then the oclAsType operation evaluates to 
 				<code class="code">invalid</code>.
+			</p>
+<p>If 
+				<code class="code">self</code> is a multiply classified instance, the current classification used for OCL navigation
+				is changed to the classification to which 
+				<code class="code">TT</code> conforms. The oclAsType call is not well-formed if
+				the classification is ambiguous.
 			</p>
 <p>In the case of feature redefinition, casting an object to a supertype of its actual type
 				does not access the supertype&rsquo;s definition of the feature;
@@ -141,9 +150,12 @@
 </p>
 <p>Evaluates to 
 				<code class="code">true</code> if the type of 
-				<code class="code">self</code> conforms to t.
+				<code class="code">self</code> conforms to 
+				<code class="code">type</code>.
 				That is, 
-				<code class="code">self</code> is of type t or a subtype of t.
+				<code class="code">self</code> is of type 
+				<code class="code">type</code> or a subtype of 
+				<code class="code">type</code>.
 			</p>
 <p>
 				
@@ -162,7 +174,9 @@
 </p>
 <p>Evaluates to 
 				<code class="code">true</code> if 
-				<code class="code">self</code> is of the type t but not a subtype of t
+				<code class="code">self</code> is of the type 
+				<code class="code">type</code> but not a subtype of 
+				<code class="code">type</code>.
 			</p>
 <p>
 				
@@ -192,8 +206,24 @@
 <code class="code">oclType() : OclSelf[1]</code>
 			
 </p>
-<p>Evaluates to the type of which 
-				<code class="code">self</code> is an instance.
+<p>Evaluates to the most derived type of which 
+				<code class="code">self</code> is currently an instance. If 
+				<code class="code">self</code> is an instance of a multiply
+				classified type, the return is the most derived type of the current classification which is established when the instance is
+				passed to OCL, or re-established by an 
+				<code class="code">oclAsType()</code> call.
+			</p>
+<p>
+				
+<code class="code">oclTypes() : Set(OclSelf)</code>
+			
+</p>
+<p>Evaluates to all of the most derived type of which 
+				<code class="code">self</code> is an instance. The return from 
+				<code class="code">oclTypes()</code>
+				is normally equivalent to that from 
+				<code class="code">oclType()</code> unless 
+				<code class="code">self</code> is an instance of multiply classified type.
 			</p>
 <p>
 				

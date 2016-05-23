@@ -193,7 +193,7 @@ def:&nbsp;regexMatch(pattern&nbsp;:&nbsp;String)&nbsp;:&nbsp;String&nbsp;=<br>
 				</p>
 <p>First, let&rsquo;s start by defining a specialization of the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/EcoreEnvironment.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/EcoreEnvironment.html" target="_new">
 						<code class="code">EcoreEnvironment</code>
 					</a> . The constructor that is used to initialize the root environment of an 
 					<code class="code">OCL</code>
@@ -264,7 +264,7 @@ def:&nbsp;regexMatch(pattern&nbsp;:&nbsp;String)&nbsp;:&nbsp;String&nbsp;=<br>
 <p></p>
 <p>Next, we will define the corresponding specialization of the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/EcoreEvaluationEnvironment.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/EcoreEvaluationEnvironment.html" target="_new">
 						<code class="code">EcoreEvaluationEnvironment</code>
 					</a> that will know how to evaluate calls to this custom operation:
 				</p>
@@ -306,7 +306,7 @@ def:&nbsp;regexMatch(pattern&nbsp;:&nbsp;String)&nbsp;:&nbsp;String&nbsp;=<br>
 <p></p>
 <p>Finally, we define a specialization of the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
 						<code class="code">EcoreEnvironmentFactory</code>
 					</a> that creates our custom environments:
 				</p>
@@ -475,7 +475,7 @@ System.out.printf("%s&nbsp;valid&nbsp;SSN:&nbsp;%b%n",&nbsp;person,&nbsp;ocl.che
 </div>
 </div>
 <p>The default 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
 						<code class="code">EcoreEnvironmentFactory</code>
 					</a> produces environments which can find references that have an annotation with source 
 					<code class="code">http://schema.omg.org/spec/MOF/2.0/emof.xml</code>
@@ -488,12 +488,12 @@ System.out.printf("%s&nbsp;valid&nbsp;SSN:&nbsp;%b%n",&nbsp;person,&nbsp;ocl.che
 				</p>
 <p>The logic used to find these &ldquo;hidden&rdquo; opposites and to navigate them is provided by implementations
 					of the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/OppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/OppositeEndFinder.html" target="_new">
 						<code class="code">OppositeEndFinder</code>
 					</a> interface. By default, the 
 					<code class="code">EcoreEnvironmentFactory</code> uses the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html" target="_new">
 						<code class="code">DefaultOppositeEndFinder</code>
 					</a> implementation. It performs the lookup of annotated references by maintaining a cache based on
 					the Ecore package registry. Successful navigation of those &ldquo;hidden&rdquo; opposites requires an
@@ -508,11 +508,11 @@ System.out.printf("%s&nbsp;valid&nbsp;SSN:&nbsp;%b%n",&nbsp;person,&nbsp;ocl.che
 					</a> has a significant downside: it responds to &ldquo;hidden&rdquo; opposite navigation requests only based on what has so far been loaded by EMF. If the set of resources held by an underlying EMF storage system contains more resources than have so far been loaded into the resource set, non-loaded content from that storage system won&rsquo;t be considered by the 
 					<code class="code">ECrossReferenceAdapter</code>. Given a store with reasonable search capabilities it is desirable to take advantage of these capabilities also to perform reverse navigation of those &ldquo;hidden&rdquo; opposites. To achieve this, a specific implementation of the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/OppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/OppositeEndFinder.html" target="_new">
 						<code class="code">OppositeEndFinder</code>
 					</a> interface can be provided. It may be a specialization of
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html" target="_new">
 						<code class="code">DefaultOppositeEndFinder</code>
 					</a>, e.g., when the reference lookup based on the Ecore package registry is sufficient and only the navigation behavior shall be redefined:
 				</p>

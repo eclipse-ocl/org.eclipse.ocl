@@ -3,7 +3,7 @@ h1. API Reference
 
 h2. Javadoc
 
-The Javadoc for Eclipse OCL 6.0.0 (Mars) APIs may be found by following the "OCL 6.0.0 API Reference":http://download.eclipse.org/ocl/javadoc/6.0.0/ link.
+The Javadoc for Eclipse OCL 6.1.0 (Mars) APIs may be found by following the "OCL 6.1.0 API Reference":http://download.eclipse.org/ocl/javadoc/6.1.0/ link.
 
 h2. Extension points
 

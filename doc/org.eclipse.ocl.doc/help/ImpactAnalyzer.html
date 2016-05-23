@@ -27,12 +27,12 @@
 				invalidated constraints after a change it would be necessary to re-evaluate all invariants
 				on all their context objects regardless their resource. This does not scale sufficiently well.</p>
 <p>The 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/examples/impactanalyzer/ImpactAnalyzerFactory.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/examples/impactanalyzer/ImpactAnalyzerFactory.html" target="_new">
 					<code class="code">ImpactAnalyzerFactory</code>
 				</a> interface allows tool builders to efficiently determine a much smaller set of model elements on which re-evaluation of expressions is necessary after a change.
 			</p>
 <p>Given an 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/OCLExpression.html" target="_new">OCL expression</a>, the factory can be used to create an impact analyzer for a single expression as follows:
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/OCLExpression.html" target="_new">OCL expression</a>, the factory can be used to create an impact analyzer for a single expression as follows:
 			</p>
 <div class="literallayout">
 <p>
@@ -93,8 +93,8 @@ eventManager.subscribe(filter,&nbsp;new&nbsp;AdapterImpl()&nbsp;{<br>
 			
 </p>
 <p>The 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/examples/eventmanager/EventManagerFactory.html" target="_new">event manager factory</a> and the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/examples/eventmanager/EventManager.html" target="_new">event managers</a> it produces lay the scalable foundation for the re-evaluation process. Even if it has to manage many subscriptions, its performance does not degrade as it would if the change notification filters were evaluated one after the other. With this it becomes possible to register many OCL expressions for change impact analysis as shown above. The figure below shows a typical default configuration of an event manager, as a UML instance collaboration diagram.
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/examples/eventmanager/EventManagerFactory.html" target="_new">event manager factory</a> and the 
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/examples/eventmanager/EventManager.html" target="_new">event managers</a> it produces lay the scalable foundation for the re-evaluation process. Even if it has to manage many subscriptions, its performance does not degrade as it would if the change notification filters were evaluated one after the other. With this it becomes possible to register many OCL expressions for change impact analysis as shown above. The figure below shows a typical default configuration of an event manager, as a UML instance collaboration diagram.
 			</p>
 <p>
 				
@@ -211,8 +211,8 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 </div>
 <p>The impact analyzer can be created in several different configurations as explained in
 					detail in the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/examples/impactanalyzer/ImpactAnalyzerFactory.html" target="_new">Javadocs</a> . Particularly noteworthy is the relationship between the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/opposites/OppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/examples/impactanalyzer/ImpactAnalyzerFactory.html" target="_new">Javadocs</a> . Particularly noteworthy is the relationship between the 
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/opposites/OppositeEndFinder.html" target="_new">
 						<code class="code">OppositeEndFinder</code>
 					</a> and the way an 
 					<code class="code">allInstance</code> expression is evaluated. Both depend on a notion of lookup 
@@ -221,7 +221,7 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 					<code class="code">allInstances</code> and reverse navigation when there is no explicit opposite property.
 				</p>
 <p>For this purpose, Eclipse OCL has introduced the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/opposites/OppositeEndFinder.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/opposites/OppositeEndFinder.html" target="_new">
 						<code class="code">OppositeEndFinder</code>
 					</a> interface through which reverse navigations
 					of references and 
@@ -238,11 +238,11 @@ private&nbsp;Revalidator&nbsp;revalidator;		//&nbsp;&nbsp;from&nbsp;collecting&n
 					<code class="code">allInstances</code> evaluation is most likely
 					inconsistent with the scope definitions of that opposite end finder. To avoid such problems,
 					a 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/examples/impactanalyzer/util/OCL.html" target="_new">specific OCL factory</a> can create OCL instances that ensure consistency between opposite navigation and 
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/examples/impactanalyzer/util/OCL.html" target="_new">specific OCL factory</a> can create OCL instances that ensure consistency between opposite navigation and 
 					<code class="code">allInstances</code> evaluation.
 				</p>
 <p>Other configuration options (see 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/examples/impactanalyzer/configuration/ActivationOption.html)" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/examples/impactanalyzer/configuration/ActivationOption.html)" target="_new">
 						<code class="code">ActivationOption</code>
 					</a> concern the specific algorithm used for tracing back from a change notification to the set of context objects for which the expression
 					may have changed its value. The default selection has proven to be the fastest for a set

@@ -2,7 +2,7 @@ h1. Overview and Getting Started
 
 For a quick demonstration of OCL enrichment of an Ecore meta-model with computed constraints go to "Getting Started":#GettingStarted.
 
-A PDF version of this documentation is available at "OCL 6.0.0 Documentation":http://download.eclipse.org/ocl/doc/6.0.0/ocl.pdf.
+A PDF version of this documentation is available at "OCL 6.1.0 Documentation":http://download.eclipse.org/ocl/doc/6.1.0/ocl.pdf.
 
 h2. What is OCL?
 

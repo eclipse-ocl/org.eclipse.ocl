@@ -403,7 +403,7 @@ h3(#OCLinEcoreTutorial-genmodel). Generating Java Code
 We have shown how OCL may be used to enrich Ecore meta-models, how model instances can be created
 and validated and how expressions can be evaluated, all without generating any Java code.
 
-Exactly the same facilities are available if you do generate Java code and as a result you gain some speed benefits. By default, in the Eclipse OCL 6.0.0 (Mars) release the generated Java code for OCL is interpreted and so the speed gains occur only for the EMF models.
+Exactly the same facilities are available if you do generate Java code and as a result you gain some speed benefits. By default, in the Eclipse OCL 6.1.0 (Neon) release the generated Java code for OCL is interpreted and so the speed gains occur only for the EMF models.
 In the "Code Generation Tutorial":#CodeGenerationTutorial, a preliminary release of 
 the OCL to Java code generator is described, giving an approximately five-fold speed improvement
 and eliminating the need for run-time compilation.

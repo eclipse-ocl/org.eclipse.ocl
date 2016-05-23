@@ -3,7 +3,7 @@ h1(#ProgrammersGuide). Classic Ecore/UML Programmers Guide
 The Ecore/UML Programmers Guide describes the ways in which the Ecore or UML bindings of Eclipse OCL can be used from Java programs.
 
 The Ecore binding has been available since Eclipse OCL 1.0.0 (Callisto). The UML binding was added in 1.1.0 (Europa). Both will remain for as long as necessary. Examples quality prototypes of the new UML-aligned Pivot binding were first available in 3.1.0 (Indigo). The Pivot binding 
-will become the preferred binding in 6.0.0 (Mars). The Pivot binding is described in a separate "Pivot Programmers Guide":#PivotProgrammersGuide.
+became the preferred binding in 6.0.0 (Mars). The Pivot binding is described in a separate "Pivot Programmers Guide":#PivotProgrammersGuide.
 
 The OCL Parser/Interpreter provides an implementation of the "Object Constraint Language 2.4":http://www.omg.org/spec/OCL specification for EMF-based metamodels and models.  It offers OCL
 constraint and query parsing and evaluation, model-based validation, and

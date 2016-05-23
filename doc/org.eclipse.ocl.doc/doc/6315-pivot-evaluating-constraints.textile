@@ -5,19 +5,19 @@ In "Parsing Constraints":#PivotParsingConstraints, we saw how to use
 the @OCL@ Facade to parse a textual OCL constraint or query expressions to give its
 @ExpressionInOCL@ compiled representation. Parsing constraints is interesting,
 but evaluating them using the 
-"@Query@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/pivot/utilities/Query.html
+"@Query@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/pivot/utilities/Query.html
 API is much more useful. 
 
 h3. The OCL Query
 
 The
-"@Query@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/pivot/utilities/Query.html
+"@Query@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/pivot/utilities/Query.html
 class wraps the minimal @ExpressionInOCL@ parse result to provide evaluation capabilities.
 
 !{width:60%}images/6315-query.png(OCL Query API)!
 
 The @Query@ encapsulates an
-"@EvaluationEnvironment@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/pivot/evaluation/EvaluationEnvironment.html
+"@EvaluationEnvironment@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/pivot/evaluation/EvaluationEnvironment.html
 providing the run-time values of context variables to the OCL interpreter.  These
 context variables are set and retrieved using the following methods:
 
@@ -39,9 +39,9 @@ An important consideration for OCL evaluation is the
 extent of a classifier. For data types, this is a simple problem:  the extent
 of an @Enumeration@ is well defined and the extents of
 other kinds of @DataType@==s== are undefined.  For
-@Class@ extents, the @OCL@ handle references a "@ModelManager@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/pivot/evaluation/ModelManager.html
+@Class@ extents, the @OCL@ handle references a "@ModelManager@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/pivot/evaluation/ModelManager.html
 that provides access to the user's models. The default
-"@PivotModelManager@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/pivot/internal/evaluation/PivotModelManager.html
+"@PivotModelManager@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/pivot/internal/evaluation/PivotModelManager.html
 lazily computes the extent of a class from the EMF @ResourceSet@
 containing the context element of the evaluation.
 

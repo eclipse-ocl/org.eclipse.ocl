@@ -11,13 +11,13 @@ h3. The OCL Query
 
 Like the @OCLHelper@ for parsing constraints, the OCL
 facade object provides
-"@Query@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/Query.html
+"@Query@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/Query.html
 objects for evaluating constraints and query expressions.
 
 !images/5115-query.png(OCL Query API)!
 
 The @Query@ encapsulates an
-"@EvaluationEnvironment@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/EvaluationEnvironment.html
+"@EvaluationEnvironment@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/EvaluationEnvironment.html
 providing the run-time values of context variables to the OCL interpreter.  These
 context variables are set and retrieved using the following methods:
 
@@ -40,11 +40,11 @@ other kinds of @DataType@ s are undefined.  For
 @Class@ extents, the @EvaluationEnvironment@
 provides support for an extent map, mapping classes to the sets of their
 instances, as determined by the client.  A client sets the extent map using the
-"@OCL.setExtentMap()@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/OCL.html#setExtentMap(java.util.Map)
+"@OCL.setExtentMap()@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/OCL.html#setExtentMap(java.util.Map)
 method.  The default extent map, if none is provided by the client, lazily
 computes the extent of a class from the EMF @Resource@
 containing the context element of the evaluation. An alternative extent map can be
-found in "@org.eclipse.ocl.ecore.opposites.ExtentMap@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/opposites/ExtentMap.html.
+found in "@org.eclipse.ocl.ecore.opposites.ExtentMap@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/opposites/ExtentMap.html.
 
 So, after optionally setting values of context variables (other than
 @self@; the @Query@ takes care

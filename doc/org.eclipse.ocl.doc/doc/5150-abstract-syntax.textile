@@ -12,7 +12,7 @@ _Visitor_ design pattern.
 
 h3. The Visitable and Visitor Interfaces
 
-All of the metaclasses in the Abstract Syntax Model (nodes in the AST) that can be visited implement the "@Visitable@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/utilities/Visitable.html interface.  It define a single operation @accept(Visitor)@. This method delegates to the appropriate @visitXyz(Xyz)@ method of the "@Visitor@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/utilities/Visitor.html . The direct implementors of the @Visitable@ interface are the @OCLExpression@ and those metaclasses of the @Expressions@ package that do not conform to @OCLExpression@:
+All of the metaclasses in the Abstract Syntax Model (nodes in the AST) that can be visited implement the "@Visitable@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/utilities/Visitable.html interface.  It define a single operation @accept(Visitor)@. This method delegates to the appropriate @visitXyz(Xyz)@ method of the "@Visitor@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/utilities/Visitor.html . The direct implementors of the @Visitable@ interface are the @OCLExpression@ and those metaclasses of the @Expressions@ package that do not conform to @OCLExpression@:
 
 * @Variable@
 * @CollectionLiteralPart@
@@ -25,12 +25,12 @@ elements in models.
 
 The OCL parser, internally, defines a few implementations of visitors, including
 a @ValidationVisitor@ for validating OCL expressions and an
-"@EvaluationVisitor@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/EvaluationVisitor.html for evaluating OCL expressions.
+"@EvaluationVisitor@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/EvaluationVisitor.html for evaluating OCL expressions.
 
 h3. Implementing a Visitor
 
 The best way to implement a visitor is to extend the
-"@AbstractVisitor@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/utilities/AbstractVisitor.html class.  It provides a @result@ variable of the generic
+"@AbstractVisitor@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/utilities/AbstractVisitor.html class.  It provides a @result@ variable of the generic
 type parameter type @T@ to store the result computed
 by the visitor (optional) and a convenient pattern of selective method overrides
 to process only those nodes of interest for the task at hand.

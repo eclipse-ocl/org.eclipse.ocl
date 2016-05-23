@@ -295,11 +295,13 @@
 <topic href="help/OclAny.html" label="OclAny"></topic>
 <topic href="help/OclComparable.html" label="OclComparable"></topic>
 <topic href="help/OclElement.html" label="OclElement"></topic>
+<topic href="help/OclEnumeration.html" label="OclEnumeration"></topic>
 <topic href="help/OclInvalid.html" label="OclInvalid"></topic>
 <topic href="help/OclLambda.html" label="OclLambda"></topic>
 <topic href="help/OclMessage.html" label="OclMessage"></topic>
 <topic href="help/OclSelf.html" label="OclSelf"></topic>
 <topic href="help/OclState.html" label="OclState"></topic>
+<topic href="help/OclStereotype.html" label="OclStereotype"></topic>
 <topic href="help/OclSummable.html" label="OclSummable"></topic>
 <topic href="help/OclTuple.html" label="OclTuple"></topic>
 <topic href="help/OclType.html" label="OclType"></topic>

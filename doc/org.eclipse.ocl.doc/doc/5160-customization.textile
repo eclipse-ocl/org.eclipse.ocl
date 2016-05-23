@@ -114,7 +114,7 @@ that knows how to look up this operation, and an @EvaluationEnvironment@
 that knows how it is implemented.
 
 First, let's start by defining a specialization of the
-"@EcoreEnvironment@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/EcoreEnvironment.html . The constructor that is used to initialize the root environment of an @OCL@
+"@EcoreEnvironment@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/EcoreEnvironment.html . The constructor that is used to initialize the root environment of an @OCL@
 instance will add our @regexMatch@ additional operation to the
 @String@ primitive type.  The constructor that is used to create
 nested environments copies the operation from its parent.
@@ -174,7 +174,7 @@ class MyEnvironment extends EcoreEnvironment {
 p. 
 
 Next, we will define the corresponding specialization of the
-"@EcoreEvaluationEnvironment@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/EcoreEvaluationEnvironment.html that will know how to evaluate calls to this custom operation:
+"@EcoreEvaluationEnvironment@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/EcoreEvaluationEnvironment.html that will know how to evaluate calls to this custom operation:
 
 bc.. 
 class MyEvaluationEnvironment extends EcoreEvaluationEnvironment {
@@ -208,7 +208,7 @@ class MyEvaluationEnvironment extends EcoreEvaluationEnvironment {
 p. 
 
 Finally, we define a specialization of the
-"@EcoreEnvironmentFactory@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html that creates our custom environments:
+"@EcoreEnvironmentFactory@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html that creates our custom environments:
 
 bc.. 
 class MyEnvironmentFactory extends EcoreEnvironmentFactory {
@@ -328,7 +328,7 @@ using @putAll@ as shown above.
 
 h3. Customizing Hidden Opposite Lookup and Navigation
 
-The default "@EcoreEnvironmentFactory@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html produces environments which can find references that have an annotation with source @http://schema.omg.org/spec/MOF/2.0/emof.xml@
+The default "@EcoreEnvironmentFactory@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html produces environments which can find references that have an annotation with source @http://schema.omg.org/spec/MOF/2.0/emof.xml@
 that have a detail with key @Property.oppositeRoleName@. In the class that is the type of the reference,
 and all its subclasses, for OCL this annotation defines an otherwise "hidden" opposite property which can be used
 in OCL expressions. This can be convenient when it is not possible or desirable to define an explicit
@@ -336,14 +336,14 @@ opposite reference, e.g., because the class that would have to own the opposite 
 modified or the serialization of that class must not be changed.
 
 The logic used to find these "hidden" opposites and to navigate them is provided by implementations
-of the "@OppositeEndFinder@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/OppositeEndFinder.html interface. By default, the @EcoreEnvironmentFactory@ uses the
-"@DefaultOppositeEndFinder@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html implementation. It performs the lookup of annotated references by maintaining a cache based on
+of the "@OppositeEndFinder@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/OppositeEndFinder.html interface. By default, the @EcoreEnvironmentFactory@ uses the
+"@DefaultOppositeEndFinder@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html implementation. It performs the lookup of annotated references by maintaining a cache based on
 the Ecore package registry. Successful navigation of those "hidden" opposites requires an
 "@ECrossReferenceAdapter@":http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/util/ECrossReferenceAdapter.html to be registered for the containment hierarchy or the resource or resource set that should be used as the scope of the navigation.
 
 Obviously, "@ECrossReferenceAdapter@":http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/util/ECrossReferenceAdapter.html has a significant downside: it responds to "hidden" opposite navigation requests only based on what has so far been loaded by EMF. If the set of resources held by an underlying EMF storage system contains more resources than have so far been loaded into the resource set, non-loaded content from that storage system won't be considered by the @ECrossReferenceAdapter@. Given a store with reasonable search capabilities it is desirable to take advantage of these capabilities also to perform reverse navigation of those "hidden" opposites. To achieve this, a specific implementation of the
-"@OppositeEndFinder@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/OppositeEndFinder.html interface can be provided. It may be a specialization of
-"@DefaultOppositeEndFinder@":http://download.eclipse.org/ocl/javadoc/6.0.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html, e.g., when the reference lookup based on the Ecore package registry is sufficient and only the navigation behavior shall be redefined:
+"@OppositeEndFinder@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/OppositeEndFinder.html interface can be provided. It may be a specialization of
+"@DefaultOppositeEndFinder@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/DefaultOppositeEndFinder.html, e.g., when the reference lookup based on the Ecore package registry is sufficient and only the navigation behavior shall be redefined:
 
 bc.. 
 class MyOppositeEndFinder extends DefaultOppositeEndFinder {

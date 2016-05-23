@@ -7,7 +7,7 @@
 <link rel="home" href="index.html" title="OCL Documentation">
 <link rel="up" href="StandardLibrary.html" title="The OCL Standard Library">
 <link rel="prev" href="OclComparable.html" title="OclComparable">
-<link rel="next" href="OclInvalid.html" title="OclInvalid">
+<link rel="next" href="OclEnumeration.html" title="OclEnumeration">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <h1 xmlns:l="http://docbook.sourceforge.net/xmlns/l10n/1.0">
@@ -39,15 +39,84 @@
 </p>
 <p>
 				
+<span class="bold"><strong>Attributes</strong></span>
+			
+</p>
+<p>
+				
+<code class="code">OclElement : Bag(OclElement)</code>
+			
+</p>
+<p>
+				
+<code class="code">OclElement : Bag(OclElement)</code>
+			
+</p>
+<p>
+				
+<code class="code">oclContents : Set(OclElement)[*|1]</code>
+			
+</p>
+<p>The composed contents of self.</p>
+<p>
+				
+<span class="bold"><strong>Associations</strong></span>
+			
+</p>
+<p>
+				
+<code class="code">oclContainer : OclElement[?]</code>
+			
+</p>
+<p>The object for which self is a composed content or null if there is no such object.</p>
+<p>
+				
 <span class="bold"><strong>Operations</strong></span>
 			
 </p>
 <p>
 				
-<code class="code">allInstances() : Set(OclSelf[*|1])</code>
+<code class="code">allInstances() : Set(OclSelf)[*|1]</code>
 			
 </p>
 <p>Return a set of all instances of the type and derived types of self.</p>
+<p>
+				
+<code class="code">oclAsModelType(TT)(type : TT[?]) : TT[1] invalidating</code>
+			
+</p>
+<p>Evaluates to 
+				<code class="code">self</code>, where 
+				<code class="code">self</code> is of the model type identified by 
+				<code class="code">TT</code>.
+			</p>
+<p>Most model elements have metamodel types for use with oclAsType, but no model type and so the return is 
+				<code class="code">invalid</code>.
+			</p>
+<p>Model elements such as UML&rsquo;s InstnaceSpecification that do support distinct model and metamodel types return 
+				<code class="code">self</code>
+				with the cast type 
+				<code class="code">TT</code> that may be used for further navigation.
+				If the actual model type of 
+				<code class="code">self</code> at evaluation time does not conform to 
+				<code class="code">TT</code>,
+				then the oclAsType operation evaluates to 
+				<code class="code">invalid</code>.
+			</p>
+<p>If 
+				<code class="code">self</code> is a multiply classified instance, the current classification used for OCL navigation
+				is changed to the classification to which 
+				<code class="code">TT</code> conforms. The oclAsModelType call is not well-formed if
+				the classification is ambiguous.
+			</p>
+<div class="literallayout">
+<p>
+<code class="code">post&nbsp;IsSelf:&nbsp;result&nbsp;=&nbsp;self<br>
+
+</code>
+</p>
+</div>
+<p></p>
 <p>
 				
 <code class="code">oclContainer() : OclElement[?]</code>
@@ -56,10 +125,60 @@
 <p>Returns the object for which self is a composed content or null if there is no such object.</p>
 <p>
 				
-<code class="code">oclContents() : Set(OclElement[*|1])</code>
+<code class="code">oclContents() : Set(OclElement)[*|1]</code>
 			
 </p>
 <p>Returns the composed contents of self.</p>
+<p>
+				
+<code class="code">oclIsModelKindOf(type : OclType[?]) : Boolean[1]</code>
+			
+</p>
+<p>Evaluates to 
+				<code class="code">true</code> if the type of 
+				<code class="code">self</code> conforms to the model type 
+				<code class="code">type</code>.
+				That is, 
+				<code class="code">self</code> is of type 
+				<code class="code">type</code> or a subtype of 
+				<code class="code">type</code>.
+			</p>
+<p>The return is normally 
+				<code class="code">false</code> since few model elements have model types. UML&rsquo;s InstanceSpecification::classifier provides
+				a multiple classification for a model type.
+			</p>
+<p>
+				
+<code class="code">oclModelType() : OclSelf[1]</code>
+			
+</p>
+<p>Evaluates to the most derived model type of which 
+				<code class="code">self</code> is currently an instance. If 
+				<code class="code">self</code> is an instance of a multiply
+				classified model type, the return is the most derived type of the current classification which is established
+				by an 
+				<code class="code">oclAsModelType()</code> call.
+			</p>
+<p>The return is normally 
+				<code class="code">invalid</code> since few model elements have model types. UML&rsquo;s InstanceSpecification::classifier provides
+				a multiple classification for a model type.
+			</p>
+<p>
+				
+<code class="code">oclModelTypes() : Set(OclSelf)</code>
+			
+</p>
+<p>Evaluates to all of the most derived model types of which 
+				<code class="code">self</code> is an instance. The return from 
+				<code class="code">oclModelTypes()</code>
+				is normally equivalent to that from 
+				<code class="code">oclModelType()</code> unless 
+				<code class="code">self</code> is an instance of multiply classified model type.
+			</p>
+<p>The return is normally 
+				<code class="code">invalid</code> since few model elements have model types. UML&rsquo;s InstanceSpecification::classifier provides
+				a multiple classification for a model type.
+			</p>
 </div>
 </body>
 </html>
