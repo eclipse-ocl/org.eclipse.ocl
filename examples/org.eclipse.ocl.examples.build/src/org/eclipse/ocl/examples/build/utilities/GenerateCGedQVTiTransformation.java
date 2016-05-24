@@ -47,6 +47,7 @@ public  class GenerateCGedQVTiTransformation extends AbstractWorkflowComponent
 	protected String traceabilityPropName = "ast";
 	protected Map<?, ?> savingOptions;
 	private final @NonNull Map<String, String> packageRenameMap = new HashMap<String, String>();
+	protected boolean debug = false;
 
 	/**
 	 * Defines a package rename only from some package to another package.
@@ -82,6 +83,7 @@ public  class GenerateCGedQVTiTransformation extends AbstractWorkflowComponent
 			parametersMap.put("traceabilityPropName", traceabilityPropName);
 			parametersMap.put("packageRenames", packageRenameMap);
 			parametersMap.put("log", LOG);
+			parametersMap.put("debug", debug);
 			//
 			LOG.info("Transforming " + oclFileURI + " to " + javaFolder + javaPackage);
 			tx.execute(ClassUtil.nonNullState(resourceSet), modelMap, parametersMap);
@@ -162,6 +164,12 @@ public  class GenerateCGedQVTiTransformation extends AbstractWorkflowComponent
 		this.traceabilityPropName = tracePropName;
 	}
 	
+	/**
+	 * An optional flag to activate debugging (default is false)
+	 */
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
 	
 	
 }
