@@ -669,7 +669,7 @@ public class LoadTests extends XtextTestCase
 		String ecoreName = "Expression" + ".saved.ecore";
 		URI ecoreURI = getProjectFileURI(ecoreName);
 		Map<String,Object> options = new HashMap<String,Object>();
-		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
+//		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
 		ecoreResource.save(null);
 		ocl.dispose();
@@ -807,7 +807,7 @@ public class LoadTests extends XtextTestCase
 		String ecoreName = "oclstdlib" + ".saved.ecore";
 		URI ecoreURI = getProjectFileURI(ecoreName);
 		Map<String,Object> options = new HashMap<String,Object>();
-		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
+//		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
 		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
 		ecoreResource.save(null);
 		ocl.dispose();
@@ -1149,6 +1149,7 @@ public class LoadTests extends XtextTestCase
 	}
 	
 	public void testLoad_Internationalized_profile_uml() throws IOException, InterruptedException, ParserException {
+		UMLStandaloneSetup.init();
 		OCL ocl = createOCL();
 //		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/MOF/20110701", UMLPackage.eINSTANCE);
 //		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/UML/20120801", UMLPackage.eINSTANCE);

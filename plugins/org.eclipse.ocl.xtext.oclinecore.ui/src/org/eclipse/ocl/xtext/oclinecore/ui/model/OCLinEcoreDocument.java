@@ -125,7 +125,7 @@ public class OCLinEcoreDocument extends BaseDocument
 							CS2AS cs2as = ((BaseCSResource)resource).findCS2AS();
 							if (cs2as != null) {
 								Map<String,Object> options = new HashMap<String,Object>();
-								options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
+//								options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
 								options.put(OCLConstants.OCL_DELEGATE_URI, exportDelegateURI);
 								XMLResource ecoreResource = AS2Ecore.createResource(cs2as.getEnvironmentFactory(), asResource, ecoreURI, options);
 								ecoreResource.save(writer, null);

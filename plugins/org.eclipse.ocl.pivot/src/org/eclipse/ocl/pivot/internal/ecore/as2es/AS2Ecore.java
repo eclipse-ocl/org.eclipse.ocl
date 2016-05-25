@@ -42,8 +42,10 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -54,7 +56,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 public class AS2Ecore extends AbstractConversion
 {
@@ -265,7 +266,11 @@ public class AS2Ecore extends AbstractConversion
 	protected final @NonNull AS2EcoreDeclarationVisitor pass1;	
 	protected final @NonNull AS2EcoreReferenceVisitor pass2;
 	protected final @NonNull URI ecoreURI;
-	protected final @Nullable String primitiveTypesUriPrefix;
+	/**
+	 * @deprecated Introduction of OCLstdlibPackage eliminates the need for primitive proxies.
+	 */
+	@Deprecated
+	protected final @Nullable String primitiveTypesUriPrefix = null;
 	
 	public AS2Ecore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull URI ecoreURI, @Nullable Map<String,Object> options) {
 		super(environmentFactory);
@@ -274,7 +279,7 @@ public class AS2Ecore extends AbstractConversion
 		this.pass1 = new AS2EcoreDeclarationVisitor(this);	
 		this.pass2 = new AS2EcoreReferenceVisitor(this);
 		this.ecoreURI = ecoreURI;
-		this.primitiveTypesUriPrefix = getString(options, PivotConstants.PRIMITIVE_TYPES_URI_PREFIX);
+//		this.primitiveTypesUriPrefix = getString(options, PivotConstants.PRIMITIVE_TYPES_URI_PREFIX);
 	}
 
 	protected @Nullable Object convert(@NonNull Element pivotObject) {
@@ -361,8 +366,12 @@ public class AS2Ecore extends AbstractConversion
 		return options;
 	}
 
+	/**
+	 * @deprecated Introduction of OCLstdlibPackage eliminates the need for primitive proxies.
+	 */
+	@Deprecated
 	public String getPrimitiveTypesUriPrefix() {
-		return primitiveTypesUriPrefix;
+		return null;
 	}
 
 	/**
@@ -403,13 +412,16 @@ public class AS2Ecore extends AbstractConversion
 	}
 
 	public void putCreated(@NonNull Element pivotElement, @NonNull EModelElement eModelElement) {
+		assert !(pivotElement instanceof PrimitiveType);
+//		assert !(pivotElement.eContainer() instanceof Library);
 		Element primaryElement = metamodelManager.getPrimaryElement(pivotElement);
 //		System.out.println("Put1 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
 		EModelElement oldPivot = createMap.put(pivotElement, eModelElement);
 		assert oldPivot == null;
 		if ((pivotElement != primaryElement) && !createMap.containsKey(primaryElement)) {
 //			System.out.println("Put2 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
-			createMap.put(primaryElement, eModelElement);
+//			assert !(primaryElement instanceof PrimitiveType);
+//			createMap.put(primaryElement, eModelElement);
 		}
 	}
 

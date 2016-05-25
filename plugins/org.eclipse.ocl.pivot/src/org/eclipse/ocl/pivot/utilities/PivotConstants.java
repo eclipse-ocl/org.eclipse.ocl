@@ -50,7 +50,10 @@ public interface PivotConstants
 	 * String-valued URI prefix of a package defining the primitive types. Proxy references to
 	 * e.g. OCL's String rather than Ecore's EString are constructed by just appending 'String' to
 	 * the prefix.
+	 * 
+	 * @deprecated Introduction of OCLstdlibPackage eliminates the need for primitive proxies.
 	 */
+	@Deprecated
 	static final @NonNull String PRIMITIVE_TYPES_URI_PREFIX = "PRIMITIVE_TYPES_URI_PREFIX";
 
 	/**

@@ -13,15 +13,12 @@ package org.eclipse.ocl.pivot.internal.ecore.as2es;
 
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -204,48 +201,27 @@ public class AS2EcoreTypeRefVisitor
 		if (eClassifier != null) {
 			return eClassifier;
 		}
-		String uri = context.getPrimitiveTypesUriPrefix();
-		if (uri != null) {
-			URI proxyURI = URI.createURI(uri + pivotType.getName());
-			eClassifier = EcoreFactory.eINSTANCE.createEDataType();
-			((InternalEObject) eClassifier).eSetProxyURI(proxyURI);
-			context.putCreated(pivotType, eClassifier);
-			return eClassifier;
-		}
+//		String uri = context.getPrimitiveTypesUriPrefix();
+//		if (uri != null) {
+//			URI proxyURI = URI.createURI(uri + pivotType.getName());
+//			eClassifier = EcoreFactory.eINSTANCE.createEDataType();
+//			((InternalEObject) eClassifier).eSetProxyURI(proxyURI);
+//			context.putCreated(pivotType, eClassifier);
+//			return eClassifier;
+//		}
 		CompleteClass completeClass = metamodelManager.getCompleteClass(pivotType);
 		List<org.eclipse.ocl.pivot.Class> partialClasses = completeClass.getPartialClasses();
-		for (org.eclipse.ocl.pivot.Class aType : partialClasses) {
-			if (!(aType instanceof PrimitiveType)) {		// FIXME This loop appears to be unnecessary
-				eClassifier = context.getCreated(EDataType.class, pivotType);
-				if (eClassifier != null) {
-					return eClassifier;
-				}
-			}
-		}
-		org.eclipse.ocl.pivot.Package standardLibraryPackage = standardLibrary.getPackage();
 		for (org.eclipse.ocl.pivot.Class aType : partialClasses) {
 			EObject esObject = aType.getESObject();
 			if (esObject != null) {
 				return esObject;
 			}
-			org.eclipse.ocl.pivot.Package pivotPackage = aType.getOwningPackage();
-			if (pivotPackage == standardLibraryPackage) {
-				if (aType == standardLibrary.getStringType()) {
-					return OCLstdlibPackage.Literals.STRING;
-				}
-				else if (aType == standardLibrary.getBooleanType()) {
-					return OCLstdlibPackage.Literals.BOOLEAN;
-				}
-				else if (aType == standardLibrary.getIntegerType()) {
-					return OCLstdlibPackage.Literals.INTEGER;
-				}
-				else if (aType == standardLibrary.getRealType()) {
-					return OCLstdlibPackage.Literals.REAL;
-				}
-				else if (aType == standardLibrary.getUnlimitedNaturalType()) {
-					return OCLstdlibPackage.Literals.UNLIMITED_NATURAL;
-				}
-			}
+//			if (!(aType instanceof PrimitiveType)) {		// FIXME This loop appears to be unnecessary
+//				eClassifier = context.getCreated(EDataType.class, pivotType);
+//				if (eClassifier != null) {
+//					return eClassifier;
+//				}
+//			}
 		}
 		throw new IllegalArgumentException("Unsupported primitive type '" + pivotType + "' in AS2Ecore TypeRef pass");
 	}

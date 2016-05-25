@@ -229,7 +229,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		@SuppressWarnings("null") @NonNull EDataType eObject2 = eObject;
 		Class<?> instanceClass = eObject2.getInstanceClass();
 		String newName = technology.getOriginalName(eObject2);
-		boolean isPrimitive = isPivotPrimitive(newName, instanceClass);		// Detect PrimitiveType if loading Pivot.ecore
+		boolean isPrimitive = false; //isPivotPrimitive(newName, instanceClass);		// Detect PrimitiveType if loading Pivot.ecore
 		DataType pivotElement;
 		if (isPrimitive) {
 			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eObject2);

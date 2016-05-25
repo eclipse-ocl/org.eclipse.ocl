@@ -15,8 +15,10 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
@@ -32,7 +34,10 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -406,5 +411,11 @@ public class PrimitiveTypeImpl
 		String name2 = getName();
 		assert name2 != null;
 		return IdManager.getPrimitiveTypeId(name2);
+	}
+
+	@Override
+	public void setESObject(@Nullable EObject newTarget) {
+		assert (getESObject() == null) || (getESObject() == newTarget) || (eContainer() != OCLstdlib.getDefaultPackage());
+		super.setESObject(newTarget);
 	}
 } //PrimitiveTypeImpl

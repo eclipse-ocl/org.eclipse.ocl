@@ -502,4 +502,14 @@ public class DataTypeImpl
 		org.eclipse.ocl.pivot.Class behavioralType = getBehavioralClass();
 		return standardLibrary.getInheritance(behavioralType != null ? behavioralType : this);
 	}
+
+	@Override
+	public void setName(String newName) {
+		if ("String".equals(newName)) {
+			super.setName(newName);
+		}
+		else {
+			super.setName(newName);
+		}
+	}
 } //DataTypeImpl
