@@ -49,12 +49,15 @@ public class ModelAttribution extends AbstractAttribution
 			if (!environmentView.hasFinalResult()) {
 				environmentView.addRootPackages();
 				if (!environmentView.hasFinalResult()) {
-					Resource eResource = targetModel.eResource();
-					if (eResource != null) {
-						URI baseURI = eResource.getURI();
-			           	if (baseURI != null) {
-			           		environmentView.addImportedElement(baseURI);
-			           	}
+					String name = environmentView.getName();
+					if ((name != null) && name.contains("#")) {
+						Resource eResource = targetModel.eResource();
+						if (eResource != null) {
+							URI baseURI = eResource.getURI();
+				           	if (baseURI != null) {
+				           		environmentView.addImportedElement(baseURI);
+				           	}
+						}
 					}
 				}
 			}
