@@ -14,8 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -98,6 +101,26 @@ public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS
 		qRef.setPivot(object);
 		return qRef;
 */	}
+
+/*	@Override
+	public ElementCS visitDataType(@NonNull DataType object) {
+		EObject esObject = object.getESObject();
+		if (esObject == EcorePackage.Literals.EBIG_DECIMAL) {
+			return visitPrimitiveType(context.getStandardLibrary().getRealType());
+		}
+		else if (esObject == EcorePackage.Literals.EBIG_INTEGER) {
+			return visitPrimitiveType(context.getStandardLibrary().getIntegerType());
+		}
+		else if (esObject == EcorePackage.Literals.EBOOLEAN) {
+			return visitPrimitiveType(context.getStandardLibrary().getBooleanType());
+		}
+		else if (esObject == EcorePackage.Literals.ESTRING) {
+			return visitPrimitiveType(context.getStandardLibrary().getStringType());
+		}
+		else {
+			return super.visitDataType(object);
+		}
+	} */
 
 	@Override
 	public ElementCS visitPrimitiveType(@NonNull PrimitiveType object) {

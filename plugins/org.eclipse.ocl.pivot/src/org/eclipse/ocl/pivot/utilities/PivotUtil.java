@@ -86,6 +86,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -469,6 +470,10 @@ public class PivotUtil
 	public static @NonNull PrimitiveType createPrimitiveType(@NonNull String name) {
 		PrimitiveType pivotType = PivotFactory.eINSTANCE.createPrimitiveType();
 		pivotType.setName(name);
+		EObject eObject = OCLstdlibPackage.eINSTANCE.getEClassifier(name);		// FIXME move to call parameter
+		if (eObject != null) {
+			((PivotObjectImpl)pivotType).setESObject(eObject);
+		}
 		return pivotType;
 	}
 	

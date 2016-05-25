@@ -359,9 +359,6 @@ public class SerializeTests extends XtextTestCase
 			"    <details key=\"settingDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
 			"    <details key=\"validationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
 			"  </eAnnotations>\n" + 
-			"  <eAnnotations source=\"http://www.eclipse.org/OCL/Import\">\n" + 
-			"    <details key=\"ecore\" value=\"http://www.eclipse.org/emf/2002/Ecore\"/>\n" + 
-			"  </eAnnotations>\n" + 
 			"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"A\">\n" + 
 			"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" + 
 			"      <details key=\"constraints\" value=\"inv2\"/>\n" + 

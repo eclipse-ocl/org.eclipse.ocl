@@ -224,22 +224,26 @@ public class AS2EcoreTypeRefVisitor
 		}
 		org.eclipse.ocl.pivot.Package standardLibraryPackage = standardLibrary.getPackage();
 		for (org.eclipse.ocl.pivot.Class aType : partialClasses) {
+			EObject esObject = aType.getESObject();
+			if (esObject != null) {
+				return esObject;
+			}
 			org.eclipse.ocl.pivot.Package pivotPackage = aType.getOwningPackage();
 			if (pivotPackage == standardLibraryPackage) {
 				if (aType == standardLibrary.getStringType()) {
-					return EcorePackage.Literals.ESTRING;
+					return OCLstdlibPackage.Literals.STRING;
 				}
 				else if (aType == standardLibrary.getBooleanType()) {
-					return EcorePackage.Literals.EBOOLEAN;
+					return OCLstdlibPackage.Literals.BOOLEAN;
 				}
 				else if (aType == standardLibrary.getIntegerType()) {
-					return EcorePackage.Literals.EBIG_INTEGER;
+					return OCLstdlibPackage.Literals.INTEGER;
 				}
 				else if (aType == standardLibrary.getRealType()) {
-					return EcorePackage.Literals.EBIG_DECIMAL;
+					return OCLstdlibPackage.Literals.REAL;
 				}
 				else if (aType == standardLibrary.getUnlimitedNaturalType()) {
-					return EcorePackage.Literals.EBIG_INTEGER;
+					return OCLstdlibPackage.Literals.UNLIMITED_NATURAL;
 				}
 			}
 		}

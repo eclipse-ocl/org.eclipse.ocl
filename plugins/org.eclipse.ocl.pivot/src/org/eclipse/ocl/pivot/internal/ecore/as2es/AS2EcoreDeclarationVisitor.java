@@ -686,30 +686,32 @@ public class AS2EcoreDeclarationVisitor
 			for (Import anImport : imports) {
 				Namespace importedNamespace = anImport.getImportedNamespace();
 				if (importedNamespace != null) {
-					if (importAnnotation == null) {
-						importAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-						importAnnotation.setSource(PivotConstants.IMPORT_ANNOTATION_SOURCE);
-					}
 					EObject eTarget = importedNamespace.getESObject();
-					if (eTarget != null) {
-						URI uri = null;
-						if ((eTarget instanceof EPackage) && ClassUtil.isRegistered(eTarget.eResource())) {
-	 						String nsURI = ((EPackage)eTarget).getNsURI();
-							if (nsURI != null) {
-								uri = URI.createURI(nsURI);
+					if (eTarget != EcorePackage.eINSTANCE) { 
+						if (importAnnotation == null) {
+							importAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+							importAnnotation.setSource(PivotConstants.IMPORT_ANNOTATION_SOURCE);
+						}
+						if (eTarget != null) {
+							URI uri = null;
+							if ((eTarget instanceof EPackage) && ClassUtil.isRegistered(eTarget.eResource())) {
+		 						String nsURI = ((EPackage)eTarget).getNsURI();
+								if (nsURI != null) {
+									uri = URI.createURI(nsURI);
+								}
 							}
+							if (uri == null) {
+								uri = EcoreUtil.getURI(eTarget);
+							}
+							URI uri2 = uri.deresolve(ecoreURI, true, true, true);
+							importAnnotation.getDetails().put(anImport.getName(), uri2.toString());
 						}
-						if (uri == null) {
-							uri = EcoreUtil.getURI(eTarget);
+						else if (importedNamespace instanceof org.eclipse.ocl.pivot.Package) {
+							importAnnotation.getDetails().put(anImport.getName(), ((org.eclipse.ocl.pivot.Package)importedNamespace).getURI());
 						}
-						URI uri2 = uri.deresolve(ecoreURI, true, true, true);
-						importAnnotation.getDetails().put(anImport.getName(), uri2.toString());
-					}
-					else if (importedNamespace instanceof org.eclipse.ocl.pivot.Package) {
-						importAnnotation.getDetails().put(anImport.getName(), ((org.eclipse.ocl.pivot.Package)importedNamespace).getURI());
-					}
-					else {
-						importAnnotation.getDetails().put(anImport.getName(), importedNamespace.toString());
+						else {
+							importAnnotation.getDetails().put(anImport.getName(), importedNamespace.toString());
+						}
 					}
 				}
 			}

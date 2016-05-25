@@ -12,6 +12,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Entity">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name2" ordered="false" eType="ecore:EDataType http://www.eclipse.org/ocl/2015/Library#//String"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AType" eSuperTypes="#//Entity">
     <eOperations name="referenced" ordered="false" eType="#//BType">
