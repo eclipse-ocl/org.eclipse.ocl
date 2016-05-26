@@ -70,9 +70,9 @@ public class ASM5JavaAnnotationReader
 		InputStream classStream = null;		
 		try {
 			final int flags = ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES | ClassReader.SKIP_CODE;
-			ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+			ClassLoader methodClassLoader = method.getDeclaringClass().getClassLoader();
 			String classFileName = className.replace('.', '/') + ".class";
-			classStream = contextClassLoader.getResourceAsStream(classFileName);		
+			classStream = methodClassLoader.getResourceAsStream(classFileName);		
 			final ClassReader cr = new ClassReader(classStream) {
 
 				@Override
