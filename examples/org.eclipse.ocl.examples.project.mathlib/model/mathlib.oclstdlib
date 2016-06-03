@@ -1,0 +1,34 @@
+/**
+This examples library demonstrates how a custom library may be decalred.
+
+It defines a few standard mathematical operations. 
+
+It should not be assumed that an official OCL maths library will be identical.
+**/
+
+/**
+ * Import the OCL Standard Library so that this library can use it.
+ */
+import 'http://www.eclipse.org/ocl/2015/Library';
+
+/**
+ * Define this library with a name, a namespace prefix and a namespace URI.
+ */
+library mathlib : mathlib = 'http://www.eclipse.org/ocl/examples/mathlib'
+{
+
+type Math {
+	static operation sin(v : Real[1]) : Real[1] => 'org.eclipse.ocl.examples.project.mathlib.MathSinOperation';	
+}
+
+/**
+The standard type defines the Real primitive type to which we add some extra mathematical operations.
+**/
+type Real : PrimitiveType {
+	/**
+	The sin value of oclText[self].
+	**/
+	operation sin() : Real[1] => 'org.eclipse.ocl.examples.project.mathlib.RealSinOperation';
+}
+
+}

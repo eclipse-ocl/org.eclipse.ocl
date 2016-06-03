@@ -35,6 +35,14 @@
             icon="$nl$/icons/OCLModelFile.gif">
          <description>%CompleteOCL_Tutorial_description</description>
       </wizard>
+     <wizard id="org.eclipse.ocl.examples.mathlib"           
+            category="org.eclipse.ui.Examples/org.eclipse.ocl.examples.category"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            project="true"
+            name="%MathLib_Tutorial_name"
+            icon="$nl$/icons/OCLModelFile.gif">
+         <description>%MathLib_Tutorial_description</description>
+      </wizard>
      <wizard id="org.eclipse.ocl.examples.oclinecoretutorial"           
             category="org.eclipse.ui.Examples/org.eclipse.ocl.examples.category"
             class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
@@ -92,6 +100,15 @@
          <projectDescriptor name="org.eclipse.emf.examples.library.editor"
                contentURI="zips/libraryEditor.zip"
                description="%_UI_LibraryEditorProjector_desc"/>
+      </example>
+      <example id="org.eclipse.ocl.examples.project.MathLib"
+            wizardID="org.eclipse.ocl.examples.mathlib"
+            pageImage="$nl$/icons/OCLModelFile.gif">
+         <projectDescriptor name="org.eclipse.ocl.examples.project.mathlib"
+               contentURI="zips/mathlib.zip"
+               description="%MathLib_Tutorial_description"/>
+         <fileToOpen location="org.eclipse.ocl.examples.project.mathlib/model/mathlib.oclstdlib"
+               editorID="org.eclipse.ocl.examples.xtext.oclstdlib.OCLstdlib"/>
       </example>
       <example id="org.eclipse.ocl.examples.project.OCLinEcore"
             wizardID="org.eclipse.ocl.examples.oclinecoretutorial"

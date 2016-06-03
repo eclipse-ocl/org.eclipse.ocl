@@ -24,6 +24,11 @@
 			<patternset refid="zip.excludes"/>
 		</zip>
 		
+		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.mathlib" property="projectDir"/>
+		<zip destfile="zips/mathlib.zip" basedir="${projectDir}">
+			<patternset refid="zip.excludes"/>
+		</zip>
+		
 		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.oclinecoretutorial" property="projectDir"/>
 		
 		<zip destfile="zips/oclinecoretutorial.zip" basedir="${projectDir}">
