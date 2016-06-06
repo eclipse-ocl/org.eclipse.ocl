@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-SymbolicName: org.eclipse.ocl.examples.project.stringlib;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.ocl.pivot;bundle-version="[1.0.0,2.0.0)"
+Export-Package: org.eclipse.ocl.examples.project.stringlib

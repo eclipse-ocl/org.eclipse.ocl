@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.test.xtext;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
@@ -67,6 +68,11 @@ public class ImportTests extends XtextTestCase
 	protected @NonNull TestOCL createOCL() {
 		TestCaseAppender.INSTANCE.uninstall();
 		return new TestOCL("ImportTests", getName(), new BasicProjectManager());
+	}
+
+	protected @NonNull TestOCL createOCLWithClassPath() {
+		TestCaseAppender.INSTANCE.uninstall();
+		return new TestOCL("ImportTests", getName(), OCL.CLASS_PATH);
 	}
 
 	protected void createTestImport_OCLinEcore_Bug353793_Files()
@@ -416,6 +422,33 @@ public class ImportTests extends XtextTestCase
 		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedImport_ERROR_, "NoSuchFile1", StringUtil.bind(template2, getProjectFileURI("NoSuchFile1").toFileString())));
 		bag.add(StringUtil.bind(PivotMessagesInternal.UnresolvedImport_ERROR_, "NoSuchFile2.oclstdlib", StringUtil.bind(template2, getProjectFileURI("NoSuchFile2.oclstdlib").toFileString())));
 		doBadLoadFromString(ocl, "string.oclstdlib", testFile, bag);
+		ocl.dispose();
+	}
+	
+/*	public void testImport_OCLstdlib_mathlib_eval() throws Exception {
+		BaseLinkingService.DEBUG_RETRY.setState(true);
+		TestOCL ocl = createOCLWithClassPath();
+		URI libraryURI = URI.createPlatformResourceURI("org.eclipse.ocl.examples.project.mathlib/model/mathlib.oclstdlib", true);
+		ocl.getMetamodelManager().loadResource(libraryURI, null, null);
+		ocl.assertQueryEquals(null, 0.9974949866040544, "1.5 . sin()", 0.000000000000001);
+		ocl.dispose();
+	}
+	
+	public void testImport_OCLstdlib_mathlib_eval2() throws Exception {
+		BaseLinkingService.DEBUG_RETRY.setState(true);
+		TestOCL ocl = createOCLWithClassPath();
+		URI libraryURI = URI.createPlatformResourceURI("org.eclipse.ocl.examples.project.mathlib/model/mathlib.oclstdlib", true);
+		ocl.getMetamodelManager().loadResource(libraryURI, null, null);
+		ocl.assertQueryEquals(null, 0.9974949866040544, "_'http://www.eclipse.org/ocl/examples/mathlib'::Math::sin(1.5)", 0.000000000000001);
+		ocl.dispose();
+	} */
+	
+	public void testImport_OCLstdlib_stringlib_eval() throws Exception {
+		BaseLinkingService.DEBUG_RETRY.setState(true);
+		TestOCL ocl = createOCLWithClassPath();
+		URI libraryURI = URI.createPlatformResourceURI("org.eclipse.ocl.examples.project.stringlib/model/stringlib.oclstdlib", true);
+		ocl.getMetamodelManager().loadResource(libraryURI, null, null);
+		ocl.assertQueryResults(null, "Sequence{'boo','and','foo'}", "'boo:and:foo'.split(':')");
 		ocl.dispose();
 	}
 	

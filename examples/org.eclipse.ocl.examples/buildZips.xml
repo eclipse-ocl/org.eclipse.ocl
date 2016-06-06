@@ -14,20 +14,20 @@
 			<patternset refid="zip.excludes"/>
 		</zip>
 		
-		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.empty" property="projectDir"/>
-		<zip destfile="zips/empty.zip" basedir="${projectDir}">
-			<patternset refid="zip.excludes"/>
-		</zip>
-		
 		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.completeocltutorial" property="projectDir"/>
 		<zip destfile="zips/completeocltutorial.zip" basedir="${projectDir}">
 			<patternset refid="zip.excludes"/>
 		</zip>
 		
-		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.mathlib" property="projectDir"/>
-		<zip destfile="zips/mathlib.zip" basedir="${projectDir}">
+		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.empty" property="projectDir"/>
+		<zip destfile="zips/empty.zip" basedir="${projectDir}">
 			<patternset refid="zip.excludes"/>
 		</zip>
+		
+		<!--eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.mathlib" property="projectDir"/>
+		<zip destfile="zips/mathlib.zip" basedir="${projectDir}">
+			<patternset refid="zip.excludes"/>
+		</zip-->
 		
 		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.oclinecoretutorial" property="projectDir"/>
 		
@@ -37,6 +37,11 @@
 		
 		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.royalandloyal" property="projectDir"/>
 		<zip destfile="zips/royalandloyal.zip" basedir="${projectDir}">
+			<patternset refid="zip.excludes"/>
+		</zip>
+		
+		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.stringlib" property="projectDir"/>
+		<zip destfile="zips/stringlib.zip" basedir="${projectDir}">
 			<patternset refid="zip.excludes"/>
 		</zip>
 

@@ -1,0 +1,30 @@
+/**
+This examples library demonstrates how a custom library may be declared.
+
+It defines a few additional operations for the String type. 
+**/
+
+/**
+ * Import the OCL Standard Library so that this library can use it.
+ */
+import ocl : 'http://www.eclipse.org/ocl/2015/Library';
+
+/**
+ * Define this library with a name, a namespace prefix and a namespace URI.
+ */
+library stringlib : stringlib = 'http://www.eclipse.org/ocl/examples/stringlib'
+{
+
+/**
+The standard library defines the String primitive type. We define additional operations in another
+String primitive type that forms an additional partial type for the complete type of the String
+primitive type.
+**/
+type String : PrimitiveType {
+	/**
+	Returns the sequence of strings resulting from a split oclText[self] at the regular expression pattern.
+	**/
+	operation split(pattern : String[1]) : ocl::Sequence(String[1]) => 'org.eclipse.ocl.examples.project.stringlib.StringSplitOperation';
+}
+
+}

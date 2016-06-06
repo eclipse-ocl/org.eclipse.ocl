@@ -35,14 +35,14 @@
             icon="$nl$/icons/OCLModelFile.gif">
          <description>%CompleteOCL_Tutorial_description</description>
       </wizard>
-     <wizard id="org.eclipse.ocl.examples.mathlib"           
+     <!--wizard id="org.eclipse.ocl.examples.mathlib"           
             category="org.eclipse.ui.Examples/org.eclipse.ocl.examples.category"
             class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
             project="true"
-            name="%MathLib_Tutorial_name"
+            name="%MathLib_name"
             icon="$nl$/icons/OCLModelFile.gif">
-         <description>%MathLib_Tutorial_description</description>
-      </wizard>
+         <description>%MathLib_description</description>
+      </wizard-->
      <wizard id="org.eclipse.ocl.examples.oclinecoretutorial"           
             category="org.eclipse.ui.Examples/org.eclipse.ocl.examples.category"
             class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
@@ -58,6 +58,14 @@
             name="%Royal_and_Loyal_name"
             icon="$nl$/icons/OCLModelFile.gif">
          <description>%Royal_and_Loyal_description</description>
+      </wizard>
+     <wizard id="org.eclipse.ocl.examples.stringlib"           
+            category="org.eclipse.ui.Examples/org.eclipse.ocl.examples.category"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            project="true"
+            name="%StringLib_name"
+            icon="$nl$/icons/OCLModelFile.gif">
+         <description>%StringLib_description</description>
       </wizard>
       <wizard id="org.eclipse.ocl.examples.empty"           
             category="org.eclipse.ui.Examples/org.eclipse.ocl.examples.category"
@@ -101,15 +109,15 @@
                contentURI="zips/libraryEditor.zip"
                description="%_UI_LibraryEditorProjector_desc"/>
       </example>
-      <example id="org.eclipse.ocl.examples.project.MathLib"
+      <!--example id="org.eclipse.ocl.examples.project.MathLib"
             wizardID="org.eclipse.ocl.examples.mathlib"
             pageImage="$nl$/icons/OCLModelFile.gif">
          <projectDescriptor name="org.eclipse.ocl.examples.project.mathlib"
                contentURI="zips/mathlib.zip"
-               description="%MathLib_Tutorial_description"/>
+               description="%MathLib_description"/>
          <fileToOpen location="org.eclipse.ocl.examples.project.mathlib/model/mathlib.oclstdlib"
                editorID="org.eclipse.ocl.examples.xtext.oclstdlib.OCLstdlib"/>
-      </example>
+      </example-->
       <example id="org.eclipse.ocl.examples.project.OCLinEcore"
             wizardID="org.eclipse.ocl.examples.oclinecoretutorial"
             pageImage="$nl$/icons/OCLModelFile.gif">
@@ -127,6 +135,15 @@
                description="%Royal_and_Loyal_description"/>
          <fileToOpen location="org.eclipse.ocl.examples.project.royalandloyal/oclsrc/RoyalAndLoyal/RoyalAndLoyal.ocl"
                editorID="org.eclipse.ocl.examples.xtext.completeocl.CompleteOCL"/>
+      </example>
+      <example id="org.eclipse.ocl.examples.project.StringLib"
+            wizardID="org.eclipse.ocl.examples.stringlib"
+            pageImage="$nl$/icons/OCLModelFile.gif">
+         <projectDescriptor name="org.eclipse.ocl.examples.project.stringlib"
+               contentURI="zips/stringlib.zip"
+               description="%StringLib_description"/>
+         <fileToOpen location="org.eclipse.ocl.examples.project.stringlib/model/stringlib.oclstdlib"
+               editorID="org.eclipse.ocl.examples.xtext.oclstdlib.OCLstdlib"/>
       </example>
    </extension>
 </plugin>
