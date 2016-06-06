@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
@@ -447,6 +448,8 @@ public class ImportTests extends XtextTestCase
 		BaseLinkingService.DEBUG_RETRY.setState(true);
 		TestOCL ocl = createOCLWithClassPath();
 		URI libraryURI = URI.createPlatformResourceURI("org.eclipse.ocl.examples.project.stringlib/model/stringlib.oclstdlib", true);
+		ClassLoader classLoader = getClass().getClassLoader();
+		((PivotMetamodelManager)ocl.getMetamodelManager()).getImplementationManager().addClassLoader(classLoader);	// FIXME workaround for Bug 495529
 		ocl.getMetamodelManager().loadResource(libraryURI, null, null);
 		ocl.assertQueryResults(null, "Sequence{'boo','and','foo'}", "'boo:and:foo'.split(':')");
 		ocl.dispose();
