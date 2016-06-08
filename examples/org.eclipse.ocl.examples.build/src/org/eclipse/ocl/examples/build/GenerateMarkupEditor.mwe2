@@ -128,12 +128,6 @@ Workflow {
 		javaPackageName = "${markupProjectName}"
 		grammarFileStem = "Markup"
 	}
-	component = BackportToXtext_2_3_1 {
-		directory = "${markupRuntimeProject}/src-gen"
-	}
-	component = BackportToXtext_2_3_1 {
-		directory = "${markupRuntimeProject}.ui/src-gen"
-	}
 	component = ConvertToUnixLineEndings {
 		directory = "${markupRuntimeProject}/src-gen"
 	}

@@ -163,12 +163,6 @@ Workflow {
 		javaPackageName = "${completeOCLprojectName}"
 		grammarFileStem = "CompleteOCL"
 	}
-	component = BackportToXtext_2_3_1 {
-		directory = "${completeOCLruntimeProject}/src-gen"
-	}
-	component = BackportToXtext_2_3_1 {
-		directory = "${completeOCLruntimeProject}.ui/src-gen"
-	}
 	component = ConvertToUnixLineEndings {
 		directory = "${completeOCLruntimeProject}/src-gen"
 	}

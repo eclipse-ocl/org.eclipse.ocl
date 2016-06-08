@@ -165,12 +165,6 @@ Workflow {
 		javaPackageName = "${baseProjectName}"
 		grammarFileStem = "Base"
 	}
-	component = BackportToXtext_2_3_1 {
-		directory = "${baseRuntimeProject}/src-gen"
-	}
-	component = BackportToXtext_2_3_1 {
-		directory = "${baseRuntimeProject}.ui/src-gen"
-	}
 	component = ConvertToUnixLineEndings {
 		directory = "${baseRuntimeProject}/src-gen"
 	}

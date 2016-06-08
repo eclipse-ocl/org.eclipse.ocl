@@ -163,12 +163,6 @@ Workflow {
 		javaPackageName = "${oclInEcoreProjectName}"
 		grammarFileStem = "OCLinEcore"
 	}
-	component = BackportToXtext_2_3_1 {
-		directory = "${oclInEcoreRuntimeProject}/src-gen"
-	}
-	component = BackportToXtext_2_3_1 {
-		directory = "${oclInEcoreRuntimeProject}.ui/src-gen"
-	}
 	component = ConvertToUnixLineEndings {
 		directory = "${oclInEcoreRuntimeProject}/src-gen"
 	}

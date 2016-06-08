@@ -171,12 +171,6 @@ Workflow {
 		javaPackageName = "${oclstdlibProjectName}"
 		grammarFileStem = "OCLstdlib"
 	}
-	component = BackportToXtext_2_3_1 {
-		directory = "${oclstdlibRuntimeProject}/src-gen"
-	}
-	component = BackportToXtext_2_3_1 {
-		directory = "${oclstdlibRuntimeProject}.ui/src-gen"
-	}
 	component = ConvertToUnixLineEndings {
 		directory = "${oclstdlibRuntimeProject}/src-gen"
 	}
