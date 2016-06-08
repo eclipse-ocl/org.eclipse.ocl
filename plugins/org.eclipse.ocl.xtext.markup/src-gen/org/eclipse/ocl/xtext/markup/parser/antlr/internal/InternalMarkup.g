@@ -103,7 +103,7 @@ ruleMarkup returns [EObject current=null]
        			$current, 
        			"elements",
         		lv_elements_0_0, 
-        		"MarkupElement");
+        		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -426,7 +426,7 @@ ruleBulletElement returns [EObject current=null]
        			$current, 
        			"level",
         		lv_level_3_0, 
-        		"INT");
+        		"org.eclipse.ocl.xtext.markup.Markup.INT");
 	    }
 
 )
@@ -447,7 +447,7 @@ ruleBulletElement returns [EObject current=null]
        			$current, 
        			"elements",
         		lv_elements_5_0, 
-        		"MarkupElement");
+        		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -524,7 +524,7 @@ ruleFontElement returns [EObject current=null]
        			$current, 
        			"elements",
         		lv_elements_2_0, 
-        		"MarkupElement");
+        		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -576,7 +576,7 @@ ruleFigureElement returns [EObject current=null]
        			$current, 
        			"def",
         		lv_def_2_0, 
-        		"ID");
+        		"org.eclipse.ocl.xtext.markup.Markup.ID");
 	    }
 
 )
@@ -598,7 +598,7 @@ ruleFigureElement returns [EObject current=null]
        			$current, 
        			"src",
         		lv_src_4_0, 
-        		"STRING");
+        		"org.eclipse.ocl.xtext.markup.Markup.STRING");
 	    }
 
 )
@@ -620,7 +620,7 @@ ruleFigureElement returns [EObject current=null]
        			$current, 
        			"alt",
         		lv_alt_6_0, 
-        		"STRING");
+        		"org.eclipse.ocl.xtext.markup.Markup.STRING");
 	    }
 
 )
@@ -642,7 +642,7 @@ ruleFigureElement returns [EObject current=null]
        			$current, 
        			"requiredWidth",
         		lv_requiredWidth_8_0, 
-        		"INT");
+        		"org.eclipse.ocl.xtext.markup.Markup.INT");
 	    }
 
 )
@@ -664,7 +664,7 @@ ruleFigureElement returns [EObject current=null]
        			$current, 
        			"requiredHeight",
         		lv_requiredHeight_10_0, 
-        		"INT");
+        		"org.eclipse.ocl.xtext.markup.Markup.INT");
 	    }
 
 )
@@ -772,7 +772,7 @@ ruleFootnoteElement returns [EObject current=null]
        			$current, 
        			"elements",
         		lv_elements_3_0, 
-        		"MarkupElement");
+        		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -833,7 +833,7 @@ ruleHeadingElement returns [EObject current=null]
        			$current, 
        			"level",
         		lv_level_3_0, 
-        		"INT");
+        		"org.eclipse.ocl.xtext.markup.Markup.INT");
 	    }
 
 )
@@ -854,7 +854,7 @@ ruleHeadingElement returns [EObject current=null]
        			$current, 
        			"elements",
         		lv_elements_5_0, 
-        		"MarkupElement");
+        		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -898,7 +898,7 @@ ruleNewLineElement returns [EObject current=null]
        			$current, 
        			"text",
         		lv_text_0_0, 
-        		"NL");
+        		"org.eclipse.ocl.xtext.markup.Markup.NL");
 	    }
 
 )
@@ -949,7 +949,7 @@ ruleNullElement returns [EObject current=null]
        			$current, 
        			"elements",
         		lv_elements_2_0, 
-        		"MarkupElement");
+        		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1009,7 +1009,7 @@ ruleOCLCodeElement returns [EObject current=null]
        			$current, 
        			"elements",
         		lv_elements_3_0, 
-        		"MarkupElement");
+        		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1069,7 +1069,7 @@ ruleOCLEvalElement returns [EObject current=null]
        			$current, 
        			"elements",
         		lv_elements_3_0, 
-        		"MarkupElement");
+        		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1129,7 +1129,7 @@ ruleOCLTextElement returns [EObject current=null]
        			$current, 
        			"elements",
         		lv_elements_3_0, 
-        		"MarkupElement");
+        		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1174,7 +1174,7 @@ ruleTextElement returns [EObject current=null]
        			$current, 
        			"text",
         		lv_text_0_1, 
-        		"ID");
+        		"org.eclipse.ocl.xtext.markup.Markup.ID");
 	    }
 
     |		lv_text_0_2=RULE_WORD
@@ -1189,7 +1189,7 @@ ruleTextElement returns [EObject current=null]
        			$current, 
        			"text",
         		lv_text_0_2, 
-        		"WORD");
+        		"org.eclipse.ocl.xtext.markup.Markup.WORD");
 	    }
 
     |		lv_text_0_3=RULE_INT
@@ -1204,7 +1204,7 @@ ruleTextElement returns [EObject current=null]
        			$current, 
        			"text",
         		lv_text_0_3, 
-        		"INT");
+        		"org.eclipse.ocl.xtext.markup.Markup.INT");
 	    }
 
     |		lv_text_0_4=RULE_WS
@@ -1219,7 +1219,7 @@ ruleTextElement returns [EObject current=null]
        			$current, 
        			"text",
         		lv_text_0_4, 
-        		"WS");
+        		"org.eclipse.ocl.xtext.markup.Markup.WS");
 	    }
 
     |		lv_text_0_5=	':' 
@@ -1275,7 +1275,7 @@ ruleTextElement returns [EObject current=null]
        			$current, 
        			"text",
         		lv_text_1_0, 
-        		"MarkupKeyword");
+        		"org.eclipse.ocl.xtext.markup.Markup.MarkupKeyword");
 	        afterParserOrEnumRuleCall();
 	    }
 

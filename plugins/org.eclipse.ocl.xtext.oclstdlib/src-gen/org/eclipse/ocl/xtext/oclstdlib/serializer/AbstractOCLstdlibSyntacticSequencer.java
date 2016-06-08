@@ -53,7 +53,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if(ruleCall.getRule() == grammarAccess.getUnrestrictedNameRule())
+		if (ruleCall.getRule() == grammarAccess.getUnrestrictedNameRule())
 			return getUnrestrictedNameToken(semanticObject, ruleCall, node);
 		return "";
 	}
@@ -73,21 +73,21 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_LibCoercionCS_SemicolonKeyword_7_1_or___LeftCurlyBracketKeyword_7_0_0_RightCurlyBracketKeyword_7_0_2__.equals(syntax))
+			if (match_LibCoercionCS_SemicolonKeyword_7_1_or___LeftCurlyBracketKeyword_7_0_0_RightCurlyBracketKeyword_7_0_2__.equals(syntax))
 				emit_LibCoercionCS_SemicolonKeyword_7_1_or___LeftCurlyBracketKeyword_7_0_0_RightCurlyBracketKeyword_7_0_2__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_LibIterationCS_SemicolonKeyword_14_1_or___LeftCurlyBracketKeyword_14_0_0_RightCurlyBracketKeyword_14_0_2__.equals(syntax))
+			else if (match_LibIterationCS_SemicolonKeyword_14_1_or___LeftCurlyBracketKeyword_14_0_0_RightCurlyBracketKeyword_14_0_2__.equals(syntax))
 				emit_LibIterationCS_SemicolonKeyword_14_1_or___LeftCurlyBracketKeyword_14_0_0_RightCurlyBracketKeyword_14_0_2__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_LibOperationCS_SemicolonKeyword_13_1_or___LeftCurlyBracketKeyword_13_0_0_RightCurlyBracketKeyword_13_0_2__.equals(syntax))
+			else if (match_LibOperationCS_SemicolonKeyword_13_1_or___LeftCurlyBracketKeyword_13_0_0_RightCurlyBracketKeyword_13_0_2__.equals(syntax))
 				emit_LibOperationCS_SemicolonKeyword_13_1_or___LeftCurlyBracketKeyword_13_0_0_RightCurlyBracketKeyword_13_0_2__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_LibOperationCS_UnrestrictedNameParserRuleCall_13_0_1_1_1_q.equals(syntax))
+			else if (match_LibOperationCS_UnrestrictedNameParserRuleCall_13_0_1_1_1_q.equals(syntax))
 				emit_LibOperationCS_UnrestrictedNameParserRuleCall_13_0_1_1_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_LibPackageCS___SemicolonKeyword_4_1_2_PrecedenceKeyword_4_1_0__q.equals(syntax))
+			else if (match_LibPackageCS___SemicolonKeyword_4_1_2_PrecedenceKeyword_4_1_0__q.equals(syntax))
 				emit_LibPackageCS___SemicolonKeyword_4_1_2_PrecedenceKeyword_4_1_0__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_LibPropertyCS_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_2__.equals(syntax))
+			else if (match_LibPropertyCS_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_2__.equals(syntax))
 				emit_LibPropertyCS_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_2__(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q.equals(syntax))
+			else if (match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q.equals(syntax))
 				emit_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q.equals(syntax))
+			else if (match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q.equals(syntax))
 				emit_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
@@ -95,7 +95,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 
 	/**
 	 * Ambiguous syntax:
-	 *     ';' | ('{' '}')
+	 *     ('{' '}') | ';'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     implementation=[JavaClassCS|SINGLE_QUOTED_STRING] (ambiguity) (rule end)
@@ -107,7 +107,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ';' | ('{' '}')
+	 *     ('{' '}') | ';'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     implementation=[JavaClassCS|SINGLE_QUOTED_STRING] (ambiguity) (rule end)
@@ -166,7 +166,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ';' | ('{' '}')
+	 *     ('{' '}') | ';'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     implementation=[JavaClassCS|SINGLE_QUOTED_STRING] (ambiguity) (rule end)

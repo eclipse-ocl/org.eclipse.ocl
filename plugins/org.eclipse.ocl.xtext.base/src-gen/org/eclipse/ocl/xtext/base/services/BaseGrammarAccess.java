@@ -25,7 +25,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	public class MultiplicityBoundsCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MultiplicityBoundsCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.MultiplicityBoundsCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cLowerBoundAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cLowerBoundLOWERParserRuleCall_0_0 = (RuleCall)cLowerBoundAssignment_0.eContents().get(0);
@@ -35,10 +35,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cUpperBoundUPPERParserRuleCall_1_1_0 = (RuleCall)cUpperBoundAssignment_1_1.eContents().get(0);
 		
 		//MultiplicityBoundsCS:
-		//	lowerBound=LOWER (".." upperBound=UPPER)?;
+		//	lowerBound=LOWER ('..' upperBound=UPPER)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//lowerBound=LOWER (".." upperBound=UPPER)?
+		//lowerBound=LOWER ('..' upperBound=UPPER)?
 		public Group getGroup() { return cGroup; }
 
 		//lowerBound=LOWER
@@ -47,10 +47,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//LOWER
 		public RuleCall getLowerBoundLOWERParserRuleCall_0_0() { return cLowerBoundLOWERParserRuleCall_0_0; }
 
-		//(".." upperBound=UPPER)?
+		//('..' upperBound=UPPER)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//".."
+		//'..'
 		public Keyword getFullStopFullStopKeyword_1_0() { return cFullStopFullStopKeyword_1_0; }
 
 		//upperBound=UPPER
@@ -61,7 +61,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class MultiplicityCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MultiplicityCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.MultiplicityCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
@@ -74,16 +74,16 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//MultiplicityCS:
-		//	"[" (MultiplicityBoundsCS | MultiplicityStringCS) ("|?" | isNullFree?="|1")? "]";
+		//	'[' (MultiplicityBoundsCS | MultiplicityStringCS) ('|?' | isNullFree?='|1')? ']';
 		@Override public ParserRule getRule() { return rule; }
 
-		//"[" (MultiplicityBoundsCS | MultiplicityStringCS) ("|?" | isNullFree?="|1")? "]"
+		//'[' (MultiplicityBoundsCS | MultiplicityStringCS) ('|?' | isNullFree?='|1')? ']'
 		public Group getGroup() { return cGroup; }
 
-		//"["
+		//'['
 		public Keyword getLeftSquareBracketKeyword_0() { return cLeftSquareBracketKeyword_0; }
 
-		//MultiplicityBoundsCS | MultiplicityStringCS
+		//(MultiplicityBoundsCS | MultiplicityStringCS)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
 		//MultiplicityBoundsCS
@@ -92,24 +92,24 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//MultiplicityStringCS
 		public RuleCall getMultiplicityStringCSParserRuleCall_1_1() { return cMultiplicityStringCSParserRuleCall_1_1; }
 
-		//("|?" | isNullFree?="|1")?
+		//('|?' | isNullFree?='|1')?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
-		//"|?"
+		//'|?'
 		public Keyword getVerticalLineQuestionMarkKeyword_2_0() { return cVerticalLineQuestionMarkKeyword_2_0; }
 
-		//isNullFree?="|1"
+		//isNullFree?='|1'
 		public Assignment getIsNullFreeAssignment_2_1() { return cIsNullFreeAssignment_2_1; }
 
-		//"|1"
+		//'|1'
 		public Keyword getIsNullFree1Keyword_2_1_0() { return cIsNullFree1Keyword_2_1_0; }
 
-		//"]"
+		//']'
 		public Keyword getRightSquareBracketKeyword_3() { return cRightSquareBracketKeyword_3; }
 	}
 
 	public class MultiplicityStringCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MultiplicityStringCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.MultiplicityStringCS");
 		private final Assignment cStringBoundsAssignment = (Assignment)rule.eContents().get(1);
 		private final Alternatives cStringBoundsAlternatives_0 = (Alternatives)cStringBoundsAssignment.eContents().get(0);
 		private final Keyword cStringBoundsAsteriskKeyword_0_0 = (Keyword)cStringBoundsAlternatives_0.eContents().get(0);
@@ -117,27 +117,27 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cStringBoundsQuestionMarkKeyword_0_2 = (Keyword)cStringBoundsAlternatives_0.eContents().get(2);
 		
 		//MultiplicityStringCS:
-		//	stringBounds=("*" | "+" | "?");
+		//	stringBounds=('*' | '+' | '?');
 		@Override public ParserRule getRule() { return rule; }
 
-		//stringBounds=("*" | "+" | "?")
+		//stringBounds=('*' | '+' | '?')
 		public Assignment getStringBoundsAssignment() { return cStringBoundsAssignment; }
 
-		//"*" | "+" | "?"
+		//('*' | '+' | '?')
 		public Alternatives getStringBoundsAlternatives_0() { return cStringBoundsAlternatives_0; }
 
-		//"*"
+		//'*'
 		public Keyword getStringBoundsAsteriskKeyword_0_0() { return cStringBoundsAsteriskKeyword_0_0; }
 
-		//"+"
+		//'+'
 		public Keyword getStringBoundsPlusSignKeyword_0_1() { return cStringBoundsPlusSignKeyword_0_1; }
 
-		//"?"
+		//'?'
 		public Keyword getStringBoundsQuestionMarkKeyword_0_2() { return cStringBoundsQuestionMarkKeyword_0_2; }
 	}
 
 	public class PathNameCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PathNameCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.PathNameCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cOwnedPathElementsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cOwnedPathElementsFirstPathElementCSParserRuleCall_0_0 = (RuleCall)cOwnedPathElementsAssignment_0.eContents().get(0);
@@ -147,10 +147,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0 = (RuleCall)cOwnedPathElementsAssignment_1_1.eContents().get(0);
 		
 		//PathNameCS:
-		//	ownedPathElements+=FirstPathElementCS ("::" ownedPathElements+=NextPathElementCS)*;
+		//	ownedPathElements+=FirstPathElementCS ('::' ownedPathElements+=NextPathElementCS)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ownedPathElements+=FirstPathElementCS ("::" ownedPathElements+=NextPathElementCS)*
+		//ownedPathElements+=FirstPathElementCS ('::' ownedPathElements+=NextPathElementCS)*
 		public Group getGroup() { return cGroup; }
 
 		//ownedPathElements+=FirstPathElementCS
@@ -159,10 +159,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//FirstPathElementCS
 		public RuleCall getOwnedPathElementsFirstPathElementCSParserRuleCall_0_0() { return cOwnedPathElementsFirstPathElementCSParserRuleCall_0_0; }
 
-		//("::" ownedPathElements+=NextPathElementCS)*
+		//('::' ownedPathElements+=NextPathElementCS)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//"::"
+		//'::'
 		public Keyword getColonColonKeyword_1_0() { return cColonColonKeyword_1_0; }
 
 		//ownedPathElements+=NextPathElementCS
@@ -173,13 +173,13 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class FirstPathElementCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FirstPathElementCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.FirstPathElementCS");
 		private final Assignment cReferredElementAssignment = (Assignment)rule.eContents().get(1);
 		private final CrossReference cReferredElementNamedElementCrossReference_0 = (CrossReference)cReferredElementAssignment.eContents().get(0);
 		private final RuleCall cReferredElementNamedElementUnrestrictedNameParserRuleCall_0_1 = (RuleCall)cReferredElementNamedElementCrossReference_0.eContents().get(1);
 		
-		//FirstPathElementCS returns PathElementCS:
-		//	referredElement=[pivot::NamedElement|UnrestrictedName];
+		//FirstPathElementCS PathElementCS:
+		//	referredElement=[pivot::NamedElement|UnrestrictedName]
 		@Override public ParserRule getRule() { return rule; }
 
 		//referredElement=[pivot::NamedElement|UnrestrictedName]
@@ -193,13 +193,13 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class NextPathElementCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "NextPathElementCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.NextPathElementCS");
 		private final Assignment cReferredElementAssignment = (Assignment)rule.eContents().get(1);
 		private final CrossReference cReferredElementNamedElementCrossReference_0 = (CrossReference)cReferredElementAssignment.eContents().get(0);
 		private final RuleCall cReferredElementNamedElementUnreservedNameParserRuleCall_0_1 = (RuleCall)cReferredElementNamedElementCrossReference_0.eContents().get(1);
 		
-		//NextPathElementCS returns PathElementCS:
-		//	referredElement=[pivot::NamedElement|UnreservedName];
+		//NextPathElementCS PathElementCS:
+		//	referredElement=[pivot::NamedElement|UnreservedName]
 		@Override public ParserRule getRule() { return rule; }
 
 		//referredElement=[pivot::NamedElement|UnreservedName]
@@ -213,7 +213,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class TemplateBindingCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TemplateBindingCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.TemplateBindingCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cOwnedSubstitutionsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_0_0 = (RuleCall)cOwnedSubstitutionsAssignment_0.eContents().get(0);
@@ -225,11 +225,11 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOwnedMultiplicityMultiplicityCSParserRuleCall_2_0 = (RuleCall)cOwnedMultiplicityAssignment_2.eContents().get(0);
 		
 		//TemplateBindingCS:
-		//	ownedSubstitutions+=TemplateParameterSubstitutionCS ("," ownedSubstitutions+=TemplateParameterSubstitutionCS)*
+		//	ownedSubstitutions+=TemplateParameterSubstitutionCS (',' ownedSubstitutions+=TemplateParameterSubstitutionCS)*
 		//	ownedMultiplicity=MultiplicityCS?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ownedSubstitutions+=TemplateParameterSubstitutionCS ("," ownedSubstitutions+=TemplateParameterSubstitutionCS)*
+		//ownedSubstitutions+=TemplateParameterSubstitutionCS (',' ownedSubstitutions+=TemplateParameterSubstitutionCS)*
 		//ownedMultiplicity=MultiplicityCS?
 		public Group getGroup() { return cGroup; }
 
@@ -239,10 +239,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//TemplateParameterSubstitutionCS
 		public RuleCall getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_0_0() { return cOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_0_0; }
 
-		//("," ownedSubstitutions+=TemplateParameterSubstitutionCS)*
+		//(',' ownedSubstitutions+=TemplateParameterSubstitutionCS)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//","
+		//','
 		public Keyword getCommaKeyword_1_0() { return cCommaKeyword_1_0; }
 
 		//ownedSubstitutions+=TemplateParameterSubstitutionCS
@@ -259,7 +259,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class TemplateParameterSubstitutionCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TemplateParameterSubstitutionCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.TemplateParameterSubstitutionCS");
 		private final Assignment cOwnedActualParameterAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cOwnedActualParameterTypeRefCSParserRuleCall_0 = (RuleCall)cOwnedActualParameterAssignment.eContents().get(0);
 		
@@ -275,7 +275,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class TemplateSignatureCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TemplateSignatureCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.TemplateSignatureCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cOwnedParametersAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -287,13 +287,13 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//TemplateSignatureCS:
-		//	"(" ownedParameters+=TypeParameterCS ("," ownedParameters+=TypeParameterCS)* ")";
+		//	'(' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* ')';
 		@Override public ParserRule getRule() { return rule; }
 
-		//"(" ownedParameters+=TypeParameterCS ("," ownedParameters+=TypeParameterCS)* ")"
+		//'(' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* ')'
 		public Group getGroup() { return cGroup; }
 
-		//"("
+		//'('
 		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
 
 		//ownedParameters+=TypeParameterCS
@@ -302,10 +302,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeParameterCS
 		public RuleCall getOwnedParametersTypeParameterCSParserRuleCall_1_0() { return cOwnedParametersTypeParameterCSParserRuleCall_1_0; }
 
-		//("," ownedParameters+=TypeParameterCS)*
+		//(',' ownedParameters+=TypeParameterCS)*
 		public Group getGroup_2() { return cGroup_2; }
 
-		//","
+		//','
 		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
 
 		//ownedParameters+=TypeParameterCS
@@ -314,12 +314,12 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//TypeParameterCS
 		public RuleCall getOwnedParametersTypeParameterCSParserRuleCall_2_1_0() { return cOwnedParametersTypeParameterCSParserRuleCall_2_1_0; }
 
-		//")"
+		//')'
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
 	public class TypeParameterCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeParameterCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.TypeParameterCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameUnrestrictedNameParserRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
@@ -333,10 +333,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOwnedExtendsTypedRefCSParserRuleCall_1_2_1_0 = (RuleCall)cOwnedExtendsAssignment_1_2_1.eContents().get(0);
 		
 		//TypeParameterCS:
-		//	name=UnrestrictedName ("extends" ownedExtends+=TypedRefCS ("&&" ownedExtends+=TypedRefCS)*)?;
+		//	name=UnrestrictedName ('extends' ownedExtends+=TypedRefCS ('&&' ownedExtends+=TypedRefCS)*)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//name=UnrestrictedName ("extends" ownedExtends+=TypedRefCS ("&&" ownedExtends+=TypedRefCS)*)?
+		//name=UnrestrictedName ('extends' ownedExtends+=TypedRefCS ('&&' ownedExtends+=TypedRefCS)*)?
 		public Group getGroup() { return cGroup; }
 
 		//name=UnrestrictedName
@@ -345,10 +345,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//UnrestrictedName
 		public RuleCall getNameUnrestrictedNameParserRuleCall_0_0() { return cNameUnrestrictedNameParserRuleCall_0_0; }
 
-		//("extends" ownedExtends+=TypedRefCS ("&&" ownedExtends+=TypedRefCS)*)?
+		//('extends' ownedExtends+=TypedRefCS ('&&' ownedExtends+=TypedRefCS)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//"extends"
+		//'extends'
 		public Keyword getExtendsKeyword_1_0() { return cExtendsKeyword_1_0; }
 
 		//ownedExtends+=TypedRefCS
@@ -357,10 +357,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//TypedRefCS
 		public RuleCall getOwnedExtendsTypedRefCSParserRuleCall_1_1_0() { return cOwnedExtendsTypedRefCSParserRuleCall_1_1_0; }
 
-		//("&&" ownedExtends+=TypedRefCS)*
+		//('&&' ownedExtends+=TypedRefCS)*
 		public Group getGroup_1_2() { return cGroup_1_2; }
 
-		//"&&"
+		//'&&'
 		public Keyword getAmpersandAmpersandKeyword_1_2_0() { return cAmpersandAmpersandKeyword_1_2_0; }
 
 		//ownedExtends+=TypedRefCS
@@ -371,7 +371,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class TypeRefCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeRefCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.TypeRefCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cTypedRefCSParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cWildcardTypeRefCSParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
@@ -391,7 +391,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class TypedRefCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypedRefCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.TypedRefCS");
 		private final RuleCall cTypedTypeRefCSParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//TypedRefCS:
@@ -403,7 +403,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class TypedTypeRefCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypedTypeRefCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.TypedTypeRefCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cOwnedPathNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cOwnedPathNamePathNameCSParserRuleCall_0_0 = (RuleCall)cOwnedPathNameAssignment_0.eContents().get(0);
@@ -414,10 +414,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//TypedTypeRefCS:
-		//	ownedPathName=PathNameCS ("(" ownedBinding=TemplateBindingCS ")")?;
+		//	ownedPathName=PathNameCS ('(' ownedBinding=TemplateBindingCS ')')?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ownedPathName=PathNameCS ("(" ownedBinding=TemplateBindingCS ")")?
+		//ownedPathName=PathNameCS ('(' ownedBinding=TemplateBindingCS ')')?
 		public Group getGroup() { return cGroup; }
 
 		//ownedPathName=PathNameCS
@@ -426,10 +426,10 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//PathNameCS
 		public RuleCall getOwnedPathNamePathNameCSParserRuleCall_0_0() { return cOwnedPathNamePathNameCSParserRuleCall_0_0; }
 
-		//("(" ownedBinding=TemplateBindingCS ")")?
+		//('(' ownedBinding=TemplateBindingCS ')')?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//"("
+		//'('
 		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
 
 		//ownedBinding=TemplateBindingCS
@@ -438,38 +438,38 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//TemplateBindingCS
 		public RuleCall getOwnedBindingTemplateBindingCSParserRuleCall_1_1_0() { return cOwnedBindingTemplateBindingCSParserRuleCall_1_1_0; }
 
-		//")"
+		//')'
 		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
 	}
 
 	public class UnreservedNameElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnreservedName");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.UnreservedName");
 		private final RuleCall cUnrestrictedNameParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//// Intended to be overridden
-		// UnreservedName returns ecore::EString:
+		//UnreservedName:
 		//	UnrestrictedName;
 		@Override public ParserRule getRule() { return rule; }
 
-		//UnrestrictedName
+		//// Intended to be overridden
+		// UnrestrictedName
 		public RuleCall getUnrestrictedNameParserRuleCall() { return cUnrestrictedNameParserRuleCall; }
 	}
 
 	public class UnrestrictedNameElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnrestrictedName");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.UnrestrictedName");
 		private final RuleCall cIdentifierParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//// Intended to be overridden
-		// UnrestrictedName returns ecore::EString:
+		//UnrestrictedName:
 		//	Identifier;
 		@Override public ParserRule getRule() { return rule; }
 
-		//Identifier
+		//// Intended to be overridden
+		// Identifier
 		public RuleCall getIdentifierParserRuleCall() { return cIdentifierParserRuleCall; }
 	}
 
 	public class WildcardTypeRefCSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WildcardTypeRefCS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.WildcardTypeRefCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cWildcardTypeRefCSAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cQuestionMarkKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -479,22 +479,22 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOwnedExtendsTypedRefCSParserRuleCall_2_1_0 = (RuleCall)cOwnedExtendsAssignment_2_1.eContents().get(0);
 		
 		//WildcardTypeRefCS:
-		//	{WildcardTypeRefCS} "?" ("extends" ownedExtends=TypedRefCS)?;
+		//	{WildcardTypeRefCS} '?' ('extends' ownedExtends=TypedRefCS)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{WildcardTypeRefCS} "?" ("extends" ownedExtends=TypedRefCS)?
+		//{WildcardTypeRefCS} '?' ('extends' ownedExtends=TypedRefCS)?
 		public Group getGroup() { return cGroup; }
 
 		//{WildcardTypeRefCS}
 		public Action getWildcardTypeRefCSAction_0() { return cWildcardTypeRefCSAction_0; }
 
-		//"?"
+		//'?'
 		public Keyword getQuestionMarkKeyword_1() { return cQuestionMarkKeyword_1; }
 
-		//("extends" ownedExtends=TypedRefCS)?
+		//('extends' ownedExtends=TypedRefCS)?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"extends"
+		//'extends'
 		public Keyword getExtendsKeyword_2_0() { return cExtendsKeyword_2_0; }
 
 		//ownedExtends=TypedRefCS
@@ -505,7 +505,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class IDElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ID");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.ID");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cSIMPLE_IDTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cESCAPED_IDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
@@ -525,7 +525,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class IdentifierElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Identifier");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.Identifier");
 		private final RuleCall cIDParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//Identifier:
@@ -537,12 +537,12 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class LOWERElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LOWER");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.LOWER");
 		private final RuleCall cINTTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		/// * A lowerbounded integer is used to define the lowerbound of a collection multiplicity. The value may not be the unlimited value. * /
-		//LOWER returns ecore::EInt:
-		//	INT;
+		//LOWER ecore::EInt:
+		//	INT
 		@Override public ParserRule getRule() { return rule; }
 
 		//INT
@@ -550,7 +550,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class NUMBER_LITERALElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "NUMBER_LITERAL");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.NUMBER_LITERAL");
 		private final RuleCall cINTTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		/// * A number may be an integer or floating point value. The declaration here appears to be that for just an integer. This is to avoid
@@ -558,23 +558,21 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		// * practical implementation should give high priority to a successful parse of INT ('.' INT)? (('e' | 'E') ('+' | '-')? INT)? than
 		// * to the unsuccessful partial parse of INT '..'. The type of the INT terminal is String to allow the floating point syntax to be used.
 		// * /
-		//// Not terminal to allow parser backtracking to sort out "5..7"
-		//
-		//// EssentialOCLTokenSource pieces this together ('.' INT)? (('e' | 'E') ('+' | '-')? INT)?;
-		// NUMBER_LITERAL returns
-		//BigNumber:
-		//	INT;
+		//NUMBER_LITERAL BigNumber:
+		//	INT
 		@Override public ParserRule getRule() { return rule; }
 
-		//INT
+		//// Not terminal to allow parser backtracking to sort out "5..7"
+		// INT
 		public RuleCall getINTTerminalRuleCall() { return cINTTerminalRuleCall; }
 	}
 
 	public class StringLiteralElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StringLiteral");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.StringLiteral");
 		private final RuleCall cSINGLE_QUOTED_STRINGTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//StringLiteral:
+		//// EssentialOCLTokenSource pieces this together ('.' INT)? (('e' | 'E') ('+' | '-')? INT)?;
+		// StringLiteral:
 		//	SINGLE_QUOTED_STRING;
 		@Override public ParserRule getRule() { return rule; }
 
@@ -583,28 +581,28 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class UPPERElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UPPER");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.UPPER");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cINTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final Keyword cAsteriskKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
 		
 		/// * An upperbounded integer is used to define the upperbound of a collection multiplicity. The value may be the unlimited value. * /
-		//UPPER returns ecore::EInt:
-		//	INT | "*";
+		//UPPER ecore::EInt:
+		//	INT | '*'
 		@Override public ParserRule getRule() { return rule; }
 
-		//INT | "*"
+		//INT | '*'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//INT
 		public RuleCall getINTTerminalRuleCall_0() { return cINTTerminalRuleCall_0; }
 
-		//"*"
+		//'*'
 		public Keyword getAsteriskKeyword_1() { return cAsteriskKeyword_1; }
 	}
 
 	public class URIElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "URI");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.URI");
 		private final RuleCall cSINGLE_QUOTED_STRINGTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//URI:
@@ -680,18 +678,18 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		this.pStringLiteral = new StringLiteralElements();
 		this.pUPPER = new UPPERElements();
 		this.pURI = new URIElements();
-		this.tESCAPED_CHARACTER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ESCAPED_CHARACTER");
-		this.tLETTER_CHARACTER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "LETTER_CHARACTER");
-		this.tDOUBLE_QUOTED_STRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "DOUBLE_QUOTED_STRING");
-		this.tSINGLE_QUOTED_STRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "SINGLE_QUOTED_STRING");
-		this.tML_SINGLE_QUOTED_STRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ML_SINGLE_QUOTED_STRING");
-		this.tSIMPLE_ID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "SIMPLE_ID");
-		this.tESCAPED_ID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ESCAPED_ID");
-		this.tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT");
-		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ML_COMMENT");
-		this.tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "SL_COMMENT");
-		this.tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "WS");
-		this.tANY_OTHER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ANY_OTHER");
+		this.tESCAPED_CHARACTER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.ESCAPED_CHARACTER");
+		this.tLETTER_CHARACTER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.LETTER_CHARACTER");
+		this.tDOUBLE_QUOTED_STRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.DOUBLE_QUOTED_STRING");
+		this.tSINGLE_QUOTED_STRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.SINGLE_QUOTED_STRING");
+		this.tML_SINGLE_QUOTED_STRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.ML_SINGLE_QUOTED_STRING");
+		this.tSIMPLE_ID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.SIMPLE_ID");
+		this.tESCAPED_ID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.ESCAPED_ID");
+		this.tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.INT");
+		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.ML_COMMENT");
+		this.tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.SL_COMMENT");
+		this.tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.WS");
+		this.tANY_OTHER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.ANY_OTHER");
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -718,7 +716,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//MultiplicityBoundsCS:
-	//	lowerBound=LOWER (".." upperBound=UPPER)?;
+	//	lowerBound=LOWER ('..' upperBound=UPPER)?;
 	public MultiplicityBoundsCSElements getMultiplicityBoundsCSAccess() {
 		return pMultiplicityBoundsCS;
 	}
@@ -728,7 +726,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MultiplicityCS:
-	//	"[" (MultiplicityBoundsCS | MultiplicityStringCS) ("|?" | isNullFree?="|1")? "]";
+	//	'[' (MultiplicityBoundsCS | MultiplicityStringCS) ('|?' | isNullFree?='|1')? ']';
 	public MultiplicityCSElements getMultiplicityCSAccess() {
 		return pMultiplicityCS;
 	}
@@ -738,7 +736,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MultiplicityStringCS:
-	//	stringBounds=("*" | "+" | "?");
+	//	stringBounds=('*' | '+' | '?');
 	public MultiplicityStringCSElements getMultiplicityStringCSAccess() {
 		return pMultiplicityStringCS;
 	}
@@ -748,7 +746,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PathNameCS:
-	//	ownedPathElements+=FirstPathElementCS ("::" ownedPathElements+=NextPathElementCS)*;
+	//	ownedPathElements+=FirstPathElementCS ('::' ownedPathElements+=NextPathElementCS)*;
 	public PathNameCSElements getPathNameCSAccess() {
 		return pPathNameCS;
 	}
@@ -757,8 +755,8 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		return getPathNameCSAccess().getRule();
 	}
 
-	//FirstPathElementCS returns PathElementCS:
-	//	referredElement=[pivot::NamedElement|UnrestrictedName];
+	//FirstPathElementCS PathElementCS:
+	//	referredElement=[pivot::NamedElement|UnrestrictedName]
 	public FirstPathElementCSElements getFirstPathElementCSAccess() {
 		return pFirstPathElementCS;
 	}
@@ -767,8 +765,8 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		return getFirstPathElementCSAccess().getRule();
 	}
 
-	//NextPathElementCS returns PathElementCS:
-	//	referredElement=[pivot::NamedElement|UnreservedName];
+	//NextPathElementCS PathElementCS:
+	//	referredElement=[pivot::NamedElement|UnreservedName]
 	public NextPathElementCSElements getNextPathElementCSAccess() {
 		return pNextPathElementCS;
 	}
@@ -778,7 +776,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TemplateBindingCS:
-	//	ownedSubstitutions+=TemplateParameterSubstitutionCS ("," ownedSubstitutions+=TemplateParameterSubstitutionCS)*
+	//	ownedSubstitutions+=TemplateParameterSubstitutionCS (',' ownedSubstitutions+=TemplateParameterSubstitutionCS)*
 	//	ownedMultiplicity=MultiplicityCS?;
 	public TemplateBindingCSElements getTemplateBindingCSAccess() {
 		return pTemplateBindingCS;
@@ -799,7 +797,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TemplateSignatureCS:
-	//	"(" ownedParameters+=TypeParameterCS ("," ownedParameters+=TypeParameterCS)* ")";
+	//	'(' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* ')';
 	public TemplateSignatureCSElements getTemplateSignatureCSAccess() {
 		return pTemplateSignatureCS;
 	}
@@ -809,7 +807,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeParameterCS:
-	//	name=UnrestrictedName ("extends" ownedExtends+=TypedRefCS ("&&" ownedExtends+=TypedRefCS)*)?;
+	//	name=UnrestrictedName ('extends' ownedExtends+=TypedRefCS ('&&' ownedExtends+=TypedRefCS)*)?;
 	public TypeParameterCSElements getTypeParameterCSAccess() {
 		return pTypeParameterCS;
 	}
@@ -839,7 +837,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypedTypeRefCS:
-	//	ownedPathName=PathNameCS ("(" ownedBinding=TemplateBindingCS ")")?;
+	//	ownedPathName=PathNameCS ('(' ownedBinding=TemplateBindingCS ')')?;
 	public TypedTypeRefCSElements getTypedTypeRefCSAccess() {
 		return pTypedTypeRefCS;
 	}
@@ -848,8 +846,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypedTypeRefCSAccess().getRule();
 	}
 
-	//// Intended to be overridden
-	// UnreservedName returns ecore::EString:
+	//UnreservedName:
 	//	UnrestrictedName;
 	public UnreservedNameElements getUnreservedNameAccess() {
 		return pUnreservedName;
@@ -859,8 +856,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		return getUnreservedNameAccess().getRule();
 	}
 
-	//// Intended to be overridden
-	// UnrestrictedName returns ecore::EString:
+	//UnrestrictedName:
 	//	Identifier;
 	public UnrestrictedNameElements getUnrestrictedNameAccess() {
 		return pUnrestrictedName;
@@ -871,7 +867,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//WildcardTypeRefCS:
-	//	{WildcardTypeRefCS} "?" ("extends" ownedExtends=TypedRefCS)?;
+	//	{WildcardTypeRefCS} '?' ('extends' ownedExtends=TypedRefCS)?;
 	public WildcardTypeRefCSElements getWildcardTypeRefCSAccess() {
 		return pWildcardTypeRefCS;
 	}
@@ -901,8 +897,8 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * A lowerbounded integer is used to define the lowerbound of a collection multiplicity. The value may not be the unlimited value. * /
-	//LOWER returns ecore::EInt:
-	//	INT;
+	//LOWER ecore::EInt:
+	//	INT
 	public LOWERElements getLOWERAccess() {
 		return pLOWER;
 	}
@@ -916,12 +912,8 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	// * practical implementation should give high priority to a successful parse of INT ('.' INT)? (('e' | 'E') ('+' | '-')? INT)? than
 	// * to the unsuccessful partial parse of INT '..'. The type of the INT terminal is String to allow the floating point syntax to be used.
 	// * /
-	//// Not terminal to allow parser backtracking to sort out "5..7"
-	//
-	//// EssentialOCLTokenSource pieces this together ('.' INT)? (('e' | 'E') ('+' | '-')? INT)?;
-	// NUMBER_LITERAL returns
-	//BigNumber:
-	//	INT;
+	//NUMBER_LITERAL BigNumber:
+	//	INT
 	public NUMBER_LITERALElements getNUMBER_LITERALAccess() {
 		return pNUMBER_LITERAL;
 	}
@@ -930,7 +922,8 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		return getNUMBER_LITERALAccess().getRule();
 	}
 
-	//StringLiteral:
+	//// EssentialOCLTokenSource pieces this together ('.' INT)? (('e' | 'E') ('+' | '-')? INT)?;
+	// StringLiteral:
 	//	SINGLE_QUOTED_STRING;
 	public StringLiteralElements getStringLiteralAccess() {
 		return pStringLiteral;
@@ -941,8 +934,8 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * An upperbounded integer is used to define the upperbound of a collection multiplicity. The value may be the unlimited value. * /
-	//UPPER returns ecore::EInt:
-	//	INT | "*";
+	//UPPER ecore::EInt:
+	//	INT | '*'
 	public UPPERElements getUPPERAccess() {
 		return pUPPER;
 	}
@@ -962,37 +955,37 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal fragment ESCAPED_CHARACTER:
-	//	"\\" ("b" | "t" | "n" | "f" | "r" | "u" | "\"" | "\'" | "\\");
+	//	'\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\');
 	public TerminalRule getESCAPED_CHARACTERRule() {
 		return tESCAPED_CHARACTER;
 	} 
 
 	//terminal fragment LETTER_CHARACTER:
-	//	"a".."z" | "A".."Z" | "_";
+	//	'a'..'z' | 'A'..'Z' | '_';
 	public TerminalRule getLETTER_CHARACTERRule() {
 		return tLETTER_CHARACTER;
 	} 
 
 	//terminal DOUBLE_QUOTED_STRING:
-	//	"\"" (ESCAPED_CHARACTER | !("\\" | "\""))* "\"";
+	//	'"' (ESCAPED_CHARACTER | !('\\' | '"'))* '"';
 	public TerminalRule getDOUBLE_QUOTED_STRINGRule() {
 		return tDOUBLE_QUOTED_STRING;
 	} 
 
 	//terminal SINGLE_QUOTED_STRING:
-	//	"\'" (ESCAPED_CHARACTER | !("\\" | "\'"))* "\'";
+	//	"'" (ESCAPED_CHARACTER | !('\\' | "'"))* "'";
 	public TerminalRule getSINGLE_QUOTED_STRINGRule() {
 		return tSINGLE_QUOTED_STRING;
 	} 
 
 	//terminal ML_SINGLE_QUOTED_STRING:
-	//	"/\'"->"\'/";
+	//	"/'"->"'/";
 	public TerminalRule getML_SINGLE_QUOTED_STRINGRule() {
 		return tML_SINGLE_QUOTED_STRING;
 	} 
 
 	//terminal SIMPLE_ID:
-	//	LETTER_CHARACTER (LETTER_CHARACTER | "0".."9")*;
+	//	LETTER_CHARACTER (LETTER_CHARACTER | '0'..'9')*;
 	public TerminalRule getSIMPLE_IDRule() {
 		return tSIMPLE_ID;
 	} 
@@ -1003,29 +996,26 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		return tESCAPED_ID;
 	} 
 
-	//// String to allow diverse re-use
-	// // multiple leading zeroes occur as floating point fractional part
-	// terminal INT:
-	//	"0".."9"+;
+	//terminal INT:
+	//	'0'..'9'+;
 	public TerminalRule getINTRule() {
 		return tINT;
 	} 
 
-	/// * A multi-line comment supports a comment that may span more than one line using familiar slash-star...star-slash comment delimiters * /
 	//terminal ML_COMMENT:
-	//	"/ *"->"* /";
+	//	'/ *'->'* /';
 	public TerminalRule getML_COMMENTRule() {
 		return tML_COMMENT;
 	} 
 
-	/// * A single-line comment supports a comment that terminates at the end of the line * / terminal SL_COMMENT:
-	//	"--" !("\n" | "\r")* ("\r"? "\n")?;
+	//terminal SL_COMMENT:
+	//	'--' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return tSL_COMMENT;
 	} 
 
-	/// * Whitespace may occur between any pair of tokens * / terminal WS:
-	//	(" " | "\t" | "\r" | "\n")+;
+	//terminal WS:
+	//	' ' | '\t' | '\r' | '\n'+;
 	public TerminalRule getWSRule() {
 		return tWS;
 	} 

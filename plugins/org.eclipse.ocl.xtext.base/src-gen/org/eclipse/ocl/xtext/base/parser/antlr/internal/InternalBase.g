@@ -103,7 +103,7 @@ ruleMultiplicityBoundsCS returns [EObject current=null]
        			$current, 
        			"lowerBound",
         		lv_lowerBound_0_0, 
-        		"LOWER");
+        		"org.eclipse.ocl.xtext.base.Base.LOWER");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -125,7 +125,7 @@ ruleMultiplicityBoundsCS returns [EObject current=null]
        			$current, 
        			"upperBound",
         		lv_upperBound_2_0, 
-        		"UPPER");
+        		"org.eclipse.ocl.xtext.base.Base.UPPER");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -301,7 +301,7 @@ rulePathNameCS returns [EObject current=null]
        			$current, 
        			"ownedPathElements",
         		lv_ownedPathElements_0_0, 
-        		"FirstPathElementCS");
+        		"org.eclipse.ocl.xtext.base.Base.FirstPathElementCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -323,7 +323,7 @@ rulePathNameCS returns [EObject current=null]
        			$current, 
        			"ownedPathElements",
         		lv_ownedPathElements_2_0, 
-        		"NextPathElementCS");
+        		"org.eclipse.ocl.xtext.base.Base.NextPathElementCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -440,7 +440,7 @@ ruleTemplateBindingCS returns [EObject current=null]
        			$current, 
        			"ownedSubstitutions",
         		lv_ownedSubstitutions_0_0, 
-        		"TemplateParameterSubstitutionCS");
+        		"org.eclipse.ocl.xtext.base.Base.TemplateParameterSubstitutionCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -462,7 +462,7 @@ ruleTemplateBindingCS returns [EObject current=null]
        			$current, 
        			"ownedSubstitutions",
         		lv_ownedSubstitutions_2_0, 
-        		"TemplateParameterSubstitutionCS");
+        		"org.eclipse.ocl.xtext.base.Base.TemplateParameterSubstitutionCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -480,7 +480,7 @@ ruleTemplateBindingCS returns [EObject current=null]
        			$current, 
        			"ownedMultiplicity",
         		lv_ownedMultiplicity_3_0, 
-        		"MultiplicityCS");
+        		"org.eclipse.ocl.xtext.base.Base.MultiplicityCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -519,7 +519,7 @@ ruleTemplateParameterSubstitutionCS returns [EObject current=null]
        			$current, 
        			"ownedActualParameter",
         		lv_ownedActualParameter_0_0, 
-        		"TypeRefCS");
+        		"org.eclipse.ocl.xtext.base.Base.TypeRefCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -560,7 +560,7 @@ ruleTypeParameterCS returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"UnrestrictedName");
+        		"org.eclipse.ocl.xtext.base.Base.UnrestrictedName");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -582,7 +582,7 @@ ruleTypeParameterCS returns [EObject current=null]
        			$current, 
        			"ownedExtends",
         		lv_ownedExtends_2_0, 
-        		"TypedRefCS");
+        		"org.eclipse.ocl.xtext.base.Base.TypedRefCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -604,7 +604,7 @@ ruleTypeParameterCS returns [EObject current=null]
        			$current, 
        			"ownedExtends",
         		lv_ownedExtends_4_0, 
-        		"TypedRefCS");
+        		"org.eclipse.ocl.xtext.base.Base.TypedRefCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -722,7 +722,7 @@ ruleTypedTypeRefCS returns [EObject current=null]
        			$current, 
        			"ownedPathName",
         		lv_ownedPathName_0_0, 
-        		"PathNameCS");
+        		"org.eclipse.ocl.xtext.base.Base.PathNameCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -744,7 +744,7 @@ ruleTypedTypeRefCS returns [EObject current=null]
        			$current, 
        			"ownedBinding",
         		lv_ownedBinding_2_0, 
-        		"TemplateBindingCS");
+        		"org.eclipse.ocl.xtext.base.Base.TemplateBindingCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -868,7 +868,7 @@ ruleWildcardTypeRefCS returns [EObject current=null]
        			$current, 
        			"ownedExtends",
         		lv_ownedExtends_3_0, 
-        		"TypedRefCS");
+        		"org.eclipse.ocl.xtext.base.Base.TypedRefCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
