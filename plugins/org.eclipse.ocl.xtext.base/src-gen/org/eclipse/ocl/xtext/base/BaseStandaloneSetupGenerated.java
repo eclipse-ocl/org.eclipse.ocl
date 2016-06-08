@@ -34,7 +34,7 @@ public class BaseStandaloneSetupGenerated implements ISetup {
 				"xmi", new org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl());
 		if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("xtextbin"))
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-				"xtextbin", new org.eclipse.ocl.xtext.base.services.BinaryGrammarResourceFactoryImpl());
+				"xtextbin", new org.eclipse.xtext.resource.impl.BinaryGrammarResourceFactoryImpl());
 		if (!EPackage.Registry.INSTANCE.containsKey(org.eclipse.xtext.XtextPackage.eNS_URI))
 			EPackage.Registry.INSTANCE.put(org.eclipse.xtext.XtextPackage.eNS_URI, org.eclipse.xtext.XtextPackage.eINSTANCE);
 
