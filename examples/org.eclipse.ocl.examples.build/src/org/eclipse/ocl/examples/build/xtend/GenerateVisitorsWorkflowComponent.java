@@ -189,7 +189,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 
 	protected @NonNull GenPackage getGenPackage(@NonNull Resource genModelResource) {
 		GenModel genModel = getGenModel(genModelResource);
-		List<GenPackage> genPackages = genModel.getAllGenPackagesWithConcreteClasses();
+		List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
 		GenPackage genPackage = genPackages.isEmpty() ? null : genPackages.get(0); // We assume we want the first one;
 		if (genPackage == null) {
 			throw new IllegalStateException("No '" + genModelResource.getURI() + "' GenPackage");
