@@ -4,5 +4,5 @@ org.eclipse.xtext.grammar.BidirectionalReference=warning
 org.eclipse.xtext.grammar.DuplicateEnumLiteral=warning
 org.eclipse.xtext.grammar.InvalidMetaModelName=warning
 org.eclipse.xtext.grammar.InvalidPackageReference.external=ignore
-org.eclipse.xtext.grammar.InvalidPackageReference.notOnClasspath=warning
+org.eclipse.xtext.grammar.InvalidPackageReference.notOnClasspath=ignore
 org.eclipse.xtext.grammar.InvalidTerminalRuleName=warning

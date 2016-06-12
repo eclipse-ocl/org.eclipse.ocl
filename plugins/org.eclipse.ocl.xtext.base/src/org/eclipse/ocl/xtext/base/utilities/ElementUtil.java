@@ -508,7 +508,7 @@ public class ElementUtil
 		return getQualifier(qualifiers, "unique", "!unique", true);
 	}
 
-	public static void setLastPathElement(@NonNull PathNameCS ownedPathName,@NonNull Element asElement) {
+	public static void setLastPathElement(@NonNull PathNameCS ownedPathName, @NonNull Element asElement) {
 		List<PathElementCS> ownedPathElements = ownedPathName.getOwnedPathElements();
 		int size = ownedPathElements.size();
 		if (size > 0) {
