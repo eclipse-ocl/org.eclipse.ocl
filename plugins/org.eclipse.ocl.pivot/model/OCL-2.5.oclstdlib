@@ -1667,7 +1667,7 @@ type UnlimitedNatural : PrimitiveType conformsTo OclComparable {
 	**/
 	operation oclAsType(TT)(type : typeof(TT)) : TT invalidating => 'org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation';
 	/**
-	Converts oclText[self] to an Integer value unless oclText[self] is oclText[unlimited] in which oclText[self] is converted to oclText[invalid].
+	Converts oclText[self] to an Integer value unless oclText[self] is e[unlimited] in which case oclText[self] is converted to oclText[invalid].
 	**/
 	operation toInteger() : Integer[1] invalidating => 'org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation';
 }
