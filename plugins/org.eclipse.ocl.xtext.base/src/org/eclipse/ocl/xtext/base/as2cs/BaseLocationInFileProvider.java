@@ -42,11 +42,11 @@ public class BaseLocationInFileProvider extends DefaultLocationInFileProvider
 	protected EStructuralFeature getIdentifierFeature(EObject obj) {
 		final EClass eClass = obj.eClass();
 		EStructuralFeature result = eClass.getEStructuralFeature("ownedPathName");
-		if (result != null) {
+		if ((result != null) && result.isRequired()) {
 			return result;
 		}
 		else {
-			return super.getIdentifierFeature( obj);	// Never happens "name" or "id" used
+			return super.getIdentifierFeature( obj);	// "name" (or "id") used by QVTd's QualifiedPackageCS, TransformationCS 
 		}
 	}
 
