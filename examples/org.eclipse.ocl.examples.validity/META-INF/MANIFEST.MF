@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.eclipse.ocl.examples.validity;singleton:=true
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 2.1.100.qualifier
 Bundle-Activator: org.eclipse.ocl.examples.validity.plugin.OCLValidityPlugin$Implementation
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.filesystem;bundle-version="[1.2.0,2.0.0)",

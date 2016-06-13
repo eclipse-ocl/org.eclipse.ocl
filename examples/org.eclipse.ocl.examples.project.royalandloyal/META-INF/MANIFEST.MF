@@ -2,4 +2,4 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Royalandloyal
 Bundle-SymbolicName: org.eclipse.ocl.examples.project.royalandloyal
-Bundle-Version: 1.0.100.qualifier
+Bundle-Version: 1.0.200.qualifier

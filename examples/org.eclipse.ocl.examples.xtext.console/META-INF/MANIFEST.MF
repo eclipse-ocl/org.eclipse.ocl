@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Plugin.name
 Bundle-SymbolicName: org.eclipse.ocl.examples.xtext.console;singleton:=true
-Bundle-Version: 4.1.0.qualifier
+Bundle-Version: 4.2.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.ocl.examples.xtext.console.XtextConsolePlugin
 Bundle-Vendor: %Plugin.providerName
@@ -19,7 +19,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.ui.navigator;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.ui.forms;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.uml2.uml;bundle-version="[4.0.0,6.0.0)",
- org.eclipse.ocl.xtext.essentialocl.ui;bundle-version="[1.1.0,2.0.0)";visibility:=reexport,
+ org.eclipse.ocl.xtext.essentialocl.ui;bundle-version="[1.2.0,2.0.0)";visibility:=reexport,
  org.eclipse.ocl.examples.debug;bundle-version="[2.1.0,3.0.0)",
  org.eclipse.ocl.examples.debug.vm.ui;bundle-version="[2.1.0,3.0.0)"
 Eclipse-LazyStart: true

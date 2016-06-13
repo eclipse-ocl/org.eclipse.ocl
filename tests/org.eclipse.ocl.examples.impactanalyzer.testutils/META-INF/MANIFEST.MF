@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Testutils
 Bundle-SymbolicName: org.eclipse.ocl.examples.impactanalyzer.testutils
-Bundle-Version: 3.3.300.qualifier
+Bundle-Version: 3.3.400.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.emf.ecore,

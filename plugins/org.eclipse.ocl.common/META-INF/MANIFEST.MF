@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.ocl.common;singleton:=true
 Bundle-Localization: plugin
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 1.4.100.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.ocl.common,
  org.eclipse.ocl.common.delegate,
