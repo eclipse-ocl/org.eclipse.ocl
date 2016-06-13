@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.ocl.all.sdk"
       label="%featureName"
-      version="5.2.100.qualifier"
+      version="5.2.200.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.ocl.all"
       license-feature="org.eclipse.license"
