@@ -506,10 +506,12 @@ public class JavaStream
 	}
 
 	public void appendClassReference(@NonNull CGClass cgClass) {
+		StringBuilder s = new StringBuilder();
 		CGPackage cgPackage = cgClass.getContainingPackage();
-		String packageName = cgPackage.getName();
-		if (packageName != null) {
-			appendClassReference(packageName + "." + cgClass.getName());
+		if ((cgPackage != null) && (cgPackage.getName() != null)) {
+			appendQualifyingPackage(s, cgPackage);
+			s.append(cgClass.getName());
+			appendClassReference(s.toString());
 			List<CGClass> cgTemplateParameters = cgClass.getTemplateParameters();
 			if (cgTemplateParameters.size() > 0) {
 				append("<");
@@ -805,6 +807,18 @@ public class JavaStream
 				appendClassReference(qualifiedPackageName + "." + tablesClassName);
 				append(".Operations._" + type.getName() + "__" + AbstractGenModelHelper.encodeName(anOperation));
 			}
+		}
+	}
+
+	private void appendQualifyingPackage(@NonNull StringBuilder s, @NonNull CGPackage cgPackage) {
+		CGPackage cgParentPackage = cgPackage.getContainingPackage();
+		if (cgParentPackage != null) {
+			appendQualifyingPackage(s, cgParentPackage);
+		}
+		String packageName = cgPackage.getName();
+		if (packageName != null) {
+			s.append(packageName);
+			s.append(".");
 		}
 	}
 
