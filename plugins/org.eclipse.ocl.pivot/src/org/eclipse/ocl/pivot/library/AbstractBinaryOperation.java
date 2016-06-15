@@ -51,4 +51,17 @@ public abstract class AbstractBinaryOperation extends AbstractOperation implemen
 	public @Nullable /*@Thrown*/ Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, argumentValue);
 	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		if (boxedSourceAndArgumentValues.length == 2) {
+			return evaluate(executor, callExp.getTypeId(), boxedSourceAndArgumentValues[0], boxedSourceAndArgumentValues[1]);
+		}
+		else {
+			return super.evaluate(executor, callExp, boxedSourceAndArgumentValues);
+		}
+	}
 }

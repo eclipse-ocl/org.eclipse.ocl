@@ -52,4 +52,17 @@ public abstract class AbstractUntypedUnaryOperation extends AbstractUnaryOperati
 	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceValue) {
 		return evaluate(getExecutor(evaluator), sourceValue);
 	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		if (boxedSourceAndArgumentValues.length == 1) {
+			return evaluate(executor, boxedSourceAndArgumentValues[0]);
+		}
+		else {
+			return super.evaluate(executor, callExp, boxedSourceAndArgumentValues);
+		}
+	}
 }

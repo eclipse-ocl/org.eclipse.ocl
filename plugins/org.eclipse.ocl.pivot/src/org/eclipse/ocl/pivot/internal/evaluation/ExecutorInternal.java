@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -36,6 +37,13 @@ public interface ExecutorInternal extends Executor
 	@Nullable Object getValueOf(@NonNull TypedElement referredVariable);
 	@NonNull EvaluationEnvironment initializeEvaluationEnvironment(@NonNull NamedElement executableObject);
 	@Nullable Object internalExecuteNavigationCallExp(@NonNull NavigationCallExp propertyCallExp, @NonNull Property referredProperty, @Nullable Object sourceValue);
+	/**
+	 * @since 1.3
+	 */
+	public interface ExecutorInternalExtension extends ExecutorInternal
+	{
+		@Nullable Object internalExecuteOperationCallExp(@NonNull OperationCallExp operationCallExp, @Nullable Object @NonNull [] sourceAndArgumentValues);
+	}
 	
 //	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject);
 }

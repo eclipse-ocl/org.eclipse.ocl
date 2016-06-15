@@ -43,23 +43,28 @@ public class ConstrainedOperation extends AbstractOperation
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
 		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
-		@Nullable Object[] argumentValues = new @Nullable Object[arguments.size()];
+		@Nullable Object[] boxedSourceAndArgumentValues = new @Nullable Object[1+arguments.size()];
+		boxedSourceAndArgumentValues[0]= sourceValue;
 		for (int i = 0; i < arguments.size(); i++) {
 			OCLExpression argument = arguments.get(i);
 			assert argument != null;
-			argumentValues[i] = executor.evaluate(argument);
+			boxedSourceAndArgumentValues[1+i] = executor.evaluate(argument);
 		}
-		return evaluate(executor, callExp, sourceValue, argumentValues);
+		return evaluate(executor, callExp, boxedSourceAndArgumentValues);
 	}
 
-	private @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue, @Nullable Object @NonNull ... argumentValues) {
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
 		PivotUtil.checkExpression(expressionInOCL);
 		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(expressionInOCL, callExp);
-		nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(expressionInOCL.getOwnedContext()), sourceValue);
+		nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(expressionInOCL.getOwnedContext()), boxedSourceAndArgumentValues[0]);
 		List<Variable> parameters = expressionInOCL.getOwnedParameters();
 		if (!parameters.isEmpty()) {
 			for (int i = 0; i < parameters.size(); i++) {
-				Object value = argumentValues[i];
+				Object value = boxedSourceAndArgumentValues[i+1];
 				nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(parameters.get(i)), value);
 			}
 		}

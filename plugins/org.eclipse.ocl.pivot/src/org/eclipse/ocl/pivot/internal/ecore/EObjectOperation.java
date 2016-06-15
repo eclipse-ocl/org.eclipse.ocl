@@ -79,4 +79,33 @@ public class EObjectOperation extends AbstractOperation
 			executor.popEvaluationEnvironment();
 		}
 	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		if (specification.getOwnedBody() == null) {		
+			try {
+				MetamodelManager metamodelManager = executor.getMetamodelManager();
+				metamodelManager.parseSpecification(specification);
+			} catch (ParserException e) {
+				throw new InvalidValueException(e, "parse failure", executor.getEvaluationEnvironment(), boxedSourceAndArgumentValues[0], callExp);
+			}
+		}
+		ExpressionInOCL query = specification;
+		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(query, callExp);
+		nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(query.getOwnedContext()), boxedSourceAndArgumentValues[0]);
+		List<Variable> parameterVariables = query.getOwnedParameters();
+		int iMax = Math.min(parameterVariables.size(), boxedSourceAndArgumentValues.length-1);
+		for (int i = 0; i < iMax; i++) {
+			nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(parameterVariables.get(i)), boxedSourceAndArgumentValues[i+1]);
+		}
+		try {
+			return executor.evaluate(ClassUtil.nonNullPivot(query.getOwnedBody()));
+		}
+		finally {
+			executor.popEvaluationEnvironment();
+		}
+	}
 }

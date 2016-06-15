@@ -52,6 +52,19 @@ public abstract class AbstractUntypedTernaryOperation extends AbstractTernaryOpe
 		return evaluate(evaluator, sourceValue, firstArgumentValue, secondArgumentValue);
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		if (boxedSourceAndArgumentValues.length == 3) {
+			return evaluate(executor, boxedSourceAndArgumentValues[0], boxedSourceAndArgumentValues[1], boxedSourceAndArgumentValues[2]);
+		}
+		else {
+			return super.evaluate(executor, callExp, boxedSourceAndArgumentValues);
+		}
+	}
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override

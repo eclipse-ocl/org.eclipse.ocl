@@ -62,6 +62,19 @@ public abstract class AbstractSimpleUnaryOperation extends AbstractUntypedUnaryO
 		return evaluate(sourceValue);
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		if (boxedSourceAndArgumentValues.length == 1) {
+			return evaluate(boxedSourceAndArgumentValues[0]);
+		}
+		else {
+			return super.evaluate(executor, callExp, boxedSourceAndArgumentValues);
+		}
+	}
+
 	// Redundant declaration needed for API compatibility.
 	@Override
 	public abstract @Nullable /*@Thrown*/ Object evaluate(@Nullable Object sourceValue);

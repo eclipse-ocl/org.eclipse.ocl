@@ -48,11 +48,9 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
-import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StateExp;
@@ -75,13 +73,10 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager;
 import org.eclipse.ocl.pivot.library.EvaluatorSingleIterationManager;
-import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
-import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -91,7 +86,6 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -140,8 +134,10 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		return value;
 	}
 
+	/** @deprecated No longer used */
+	@Deprecated
 	public @NonNull LibraryFeature lookupImplementation(org.eclipse.ocl.pivot.@NonNull Class dynamicType, @NonNull Operation staticOperation) {
-		CompleteInheritance inheritance = metamodelManager.getInheritance(dynamicType);
+		CompleteInheritance inheritance = environmentFactory.getMetamodelManager().getInheritance(dynamicType);
 		return inheritance.getPivotClass().lookupImplementation(standardLibrary, staticOperation);
 	}
 
@@ -577,15 +573,22 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		}
 		Operation apparentOperation = operationCallExp.getReferredOperation();
 		assert apparentOperation != null;
-		//
-		//	Resolve source value
-		//
- 		Object sourceValue;
-		OCLExpression source = operationCallExp.getOwnedSource();
 		boolean isValidating = apparentOperation.isIsValidating();
-		if (isValidating) {
+		//
+		//	Resolve source value catching invalid values for validating operations.
+		//
+		OCLExpression source = operationCallExp.getOwnedSource();
+		Object sourceValue;
+		if (source == null) {							// Static functions may have null source
+			sourceValue = null;
+		}
+		else if (!isValidating) {
+			sourceValue = source.accept(undecoratedVisitor);
+ 		}
+		else {
 			try {
 				sourceValue = source.accept(undecoratedVisitor);
+				assert ValueUtil.isBoxed(sourceValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
 			}
 			catch (EvaluationHaltedException e) {
 				throw e;
@@ -594,76 +597,39 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 				sourceValue = e;	// FIXME ?? propagate part of environment
 			}
 		}
-		else {
-			sourceValue = source.accept(undecoratedVisitor);
-		}
-		if (operationCallExp.isIsSafe() && (sourceValue == null)) {
+		//
+		//	Safe navigation of null source return null.
+		//
+ 		if ((sourceValue == null) && operationCallExp.isIsSafe()) {
 			return null;
 		}
 		//
-		//	Resolve source dispatch type
+		//	Resolve argument values catching invalid values for validating operations.
 		//
-		List<Parameter> ownedParameters = apparentOperation.getOwnedParameters();
-		if ((ownedParameters.size() == 1) && (ownedParameters.get(0).getType() instanceof SelfType)) {
-			//
-			//	Resolve and dispatch OclSelf operation
-			//
-			List<OCLExpression> arguments = operationCallExp.getOwnedArguments();
-			Object onlyArgument = arguments.get(0).accept(undecoratedVisitor);
-			Operation actualOperation;
-			if (apparentOperation.isIsStatic()) {
-				actualOperation = apparentOperation;
-			}
+		List<@NonNull OCLExpression> arguments = ClassUtil.nullFree(operationCallExp.getOwnedArguments());
+		@Nullable Object[] sourceAndArgumentValues = new @Nullable Object[1+arguments.size()];
+		int argumentIndex = 0;
+		sourceAndArgumentValues[argumentIndex++] = sourceValue;
+		for (@NonNull OCLExpression argument : arguments) {
+			Object argValue;
+			if (!isValidating) {
+				argValue = argument.accept(undecoratedVisitor);
+	 		}
 			else {
-				org.eclipse.ocl.pivot.Class actualSourceType = idResolver.getStaticTypeOf(sourceValue);
-				if (onlyArgument != null) {
-					org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticTypeOf(onlyArgument);
-					actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
+				try {
+					argValue = argument.accept(undecoratedVisitor);
+					assert ValueUtil.isBoxed(argValue);	// Make sure Integer/Real are boxed, invalid is an exception, null is null
 				}
-				actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
+				catch (EvaluationHaltedException e) {
+					throw e;
+				}
+				catch (InvalidValueException e) {
+					argValue = e;	// FIXME ?? propagate part of environment
+				}
 			}
-			LibraryBinaryOperation.LibraryBinaryOperationExtension implementation = (LibraryBinaryOperation.LibraryBinaryOperationExtension) metamodelManager.getImplementation(actualOperation);
-			try {
-				Object result = implementation.evaluate(context, operationCallExp.getTypeId(), sourceValue, onlyArgument);
-				assert !(result instanceof NullValue);
-				return result;
-			}
-			catch (InvalidValueException e) {
-				throw e;
-			}
-			catch (Exception e) {
-				// This is a backstop. Library operations should catch their own exceptions
-				//  and produce a better reason as a result.
-				throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, sourceValue, operationCallExp);
-			}
-	 	}
-		else {
-			//
-			//	Resolve and dispatch regular operation
-			//
-			Operation actualOperation;
-			if (apparentOperation.isIsStatic()) {
-				actualOperation = apparentOperation;
-			}
-			else {
-				org.eclipse.ocl.pivot.Class actualSourceType = idResolver.getStaticTypeOf(sourceValue);
-				actualOperation = actualSourceType.lookupActualOperation(standardLibrary, apparentOperation);
-			}
-			LibraryOperation.LibraryOperationExtension implementation = (LibraryOperation.LibraryOperationExtension) metamodelManager.getImplementation(actualOperation);
-			try {
-				Object result = implementation.dispatch(context, operationCallExp, sourceValue);
-				assert !(result instanceof NullValue);
-				return result;
-			}
-			catch (InvalidValueException e) {
-				throw e;
-			}
-			catch (Exception e) {
-				// This is a backstop. Library operations should catch their own exceptions
-				//  and produce a better reason as a result.
-				throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceValue), operationCallExp);
-			}
+			sourceAndArgumentValues[argumentIndex++] = argValue;
 		}
+		return context.internalExecuteOperationCallExp(operationCallExp, sourceAndArgumentValues);
 	}
 
 	/**

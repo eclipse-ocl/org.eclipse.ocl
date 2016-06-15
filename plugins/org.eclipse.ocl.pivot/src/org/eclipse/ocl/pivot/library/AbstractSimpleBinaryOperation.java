@@ -65,6 +65,19 @@ public abstract class AbstractSimpleBinaryOperation extends AbstractUntypedBinar
 		return evaluate(sourceValue, argumentValue);
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		if (boxedSourceAndArgumentValues.length == 2) {
+			return evaluate(boxedSourceAndArgumentValues[0], boxedSourceAndArgumentValues[1]);
+		}
+		else {
+			return super.evaluate(executor, callExp, boxedSourceAndArgumentValues);
+		}
+	}
+
 	// Redundant declaration avoids @Override dilemma for 1.5/1.6
 	@Override
 	public abstract @Nullable /*@Thrown*/ Object evaluate(@Nullable Object sourceValue, @Nullable Object argumentValue);

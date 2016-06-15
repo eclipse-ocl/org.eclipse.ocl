@@ -38,6 +38,13 @@ public interface LibraryOperation extends LibraryFeature
 		 */
 		@Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue);
 	}
+	/**
+	 * @since 1.3
+	 */
+	public interface LibraryOperationExtension2 extends LibraryOperationExtension
+	{
+		@Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
+	}
 	
 	/** @deprecated use Executor */
 	@Deprecated

@@ -85,9 +85,16 @@ public class EInvokeOperation extends AbstractOperation
 		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, boxedArgumentValues); 
 	}
 
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		return evaluate(executor, callExp.getTypeId(), boxedSourceAndArgumentValues);
+	}
+
 	/**
 	 * @since 1.1
 	 */
+	/** @deprecated use boxedSourceAndArgumentValues */
+	@Deprecated
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue,
 			@Nullable Object... boxedArgumentValues) {
 		EObject eObject = asNavigableObject(sourceValue, eOperation, executor);
@@ -98,6 +105,30 @@ public class EInvokeOperation extends AbstractOperation
 		int iMax = Math.min(boxedArgumentValues.length, eParameters.size());
 		for (int i = 0; i < iMax; i++) {
 			Object argumentValue = boxedArgumentValues[i];
+			EParameter eParameter = eParameters.get(i);
+			ecoreValues[i] = idResolver.ecoreValueOf(eParameter.getEType().getInstanceClass(), argumentValue);
+		}
+		EList<Object> ecoreArguments = new EcoreEList.UnmodifiableEList<Object>(null, null, iMax, ecoreValues);
+		try {
+			Object eResult = eObject.eInvoke(eOperation, ecoreArguments);
+			return getResultValue(executor, returnTypeId, eResult);
+		} catch (InvocationTargetException e) {
+			return createInvalidValue(e);
+		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		EObject eObject = asNavigableObject(boxedSourceAndArgumentValues[0], eOperation, executor);
+//		EList<Object> ecoreArguments = executor.getIdResolver().ecoreValuesOfEach(null, boxedArgumentValues);
+		IdResolver idResolver = executor.getIdResolver();
+		EList<EParameter> eParameters = eOperation.getEParameters();
+		Object[] ecoreValues = new Object[boxedSourceAndArgumentValues.length-1];
+		int iMax = Math.min(boxedSourceAndArgumentValues.length-1, eParameters.size());
+		for (int i = 0; i < iMax; i++) {
+			Object argumentValue = boxedSourceAndArgumentValues[1+i];
 			EParameter eParameter = eParameters.get(i);
 			ecoreValues[i] = idResolver.ecoreValueOf(eParameter.getEType().getInstanceClass(), argumentValue);
 		}

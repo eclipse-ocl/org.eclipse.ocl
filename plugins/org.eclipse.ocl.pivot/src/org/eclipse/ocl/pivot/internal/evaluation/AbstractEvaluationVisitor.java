@@ -46,9 +46,11 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * </p>
  */
 public abstract class AbstractEvaluationVisitor
-	extends AbstractExtendingVisitor<@Nullable Object, @NonNull ExecutorInternal> implements EvaluationVisitor.EvaluationVisitorExtension
+	extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull ExecutorInternalExtension> implements EvaluationVisitor.EvaluationVisitorExtension
 {
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	/** @deprecated Use environmentFactory.getMetamodelManager() */
+	@Deprecated
 	protected final @NonNull PivotMetamodelManager metamodelManager;	
 	/**
 	 * @since 1.1
@@ -66,7 +68,7 @@ public abstract class AbstractEvaluationVisitor
 	/** @deprecated Use getExecutor().getEvaluationEnvirinment() */
 	@Deprecated
 	protected final @NonNull EvaluationEnvironment evaluationEnvironment;
-	/** @deprecated Use getExecutor().getEvaluationEnvirinment() */
+	/** @deprecated Use environmentFactory.getEvaluationEnvirinment() */
 	@Deprecated
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
 	/** @deprecated Use getExecutor().getModelManager() */
@@ -83,7 +85,7 @@ public abstract class AbstractEvaluationVisitor
 	 * @since 1.1
 	 */
 	protected AbstractEvaluationVisitor(@NonNull ExecutorInternal executor) {
-        super(executor);
+        super((ExecutorInternal.ExecutorInternalExtension) executor);
         this.environmentFactory = executor.getEnvironmentFactory();
         this.metamodelManager = environmentFactory.getMetamodelManager();
         this.idResolver = environmentFactory.getIdResolver();

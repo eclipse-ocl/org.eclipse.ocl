@@ -62,7 +62,8 @@ public abstract class AbstractPolyOperation extends AbstractOperation implements
 	}
 
 	/** @deprecated use Executor 
-	 * @since 1.1*/
+	 * @since 1.1
+	 */
 	@Deprecated
 	@Override
 	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
@@ -70,7 +71,8 @@ public abstract class AbstractPolyOperation extends AbstractOperation implements
 	}
 
 	/** @deprecated use Executor 
-	 * @since 1.1*/
+	 * @since 1.1
+	 */
 	@Deprecated
 	@Override
 	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId,
@@ -79,11 +81,30 @@ public abstract class AbstractPolyOperation extends AbstractOperation implements
 	}
 
 	/** @deprecated use Executor 
-	 * @since 1.1*/
+	 * @since 1.1
+	 */
 	@Deprecated
 	@Override
 	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId,
 			@Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
 		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, firstArgumentValue, secondArgumentValue);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		TypeId typeId = callExp.getTypeId();
+		if (boxedSourceAndArgumentValues.length == 1) {
+			return evaluate(executor, typeId, boxedSourceAndArgumentValues[0]);
+		}
+		if (boxedSourceAndArgumentValues.length == 2) {
+			return evaluate(executor, typeId, boxedSourceAndArgumentValues[0], boxedSourceAndArgumentValues[1]);
+		}
+		if (boxedSourceAndArgumentValues.length == 3) {
+			return evaluate(executor, typeId, boxedSourceAndArgumentValues[0], boxedSourceAndArgumentValues[1], boxedSourceAndArgumentValues[2]);
+		}
+		return evaluate(executor, typeId, boxedSourceAndArgumentValues);
 	}
 }

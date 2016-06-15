@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.evaluation;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -20,7 +21,11 @@ import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -34,15 +39,18 @@ import org.eclipse.ocl.pivot.ids.IdResolver.IdResolverExtension;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.labels.ILabelGenerator;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.NullValue;
 
 /**
  * @since 1.1
  */
-public abstract class AbstractExecutor implements ExecutorInternal
+public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInternalExtension
 {	
 	// This is the same as HashMap's default initial capacity
 	private static final int DEFAULT_REGEX_CACHE_LIMIT = 16;
@@ -59,6 +67,10 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	private /*@LazyNonNull*/ EvaluationEnvironment.EvaluationEnvironmentExtension rootEvaluationEnvironment = null;
 	private /*@LazyNonNull*/ EvaluationEnvironment.EvaluationEnvironmentExtension evaluationEnvironment = null;
 	private /*@LazyNonNull*/ EvaluationVisitor.EvaluationVisitorExtension evaluationVisitor;
+	/**
+	 * @since 1.3
+	 */
+	protected final IdResolver.@NonNull IdResolverExtension idResolver;
 
 	/**
 	 * Lazily-created cache of reusable regex patterns to avoid
@@ -71,6 +83,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.modelManager = null;
+		this.idResolver = (IdResolverExtension)environmentFactory.getIdResolver();
 	}
 
 	/**
@@ -80,6 +93,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory, @NonNull ModelManager modelManager) {
 		this.environmentFactory = environmentFactory;
 		this.modelManager = modelManager;
+		this.idResolver = (IdResolverExtension)environmentFactory.getIdResolver();
 	}
 	
 	@Override
@@ -189,7 +203,7 @@ public abstract class AbstractExecutor implements ExecutorInternal
 
 	@Override
 	public IdResolver.@NonNull IdResolverExtension getIdResolver() {
-		return (IdResolverExtension) environmentFactory.getIdResolver();
+		return idResolver;
 	}
 
 	@Override
@@ -247,17 +261,17 @@ public abstract class AbstractExecutor implements ExecutorInternal
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value) {
-		return environmentFactory.getIdResolver().getStaticTypeOf(value);
+		return idResolver.getStaticTypeOf(value);
 	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Object... values) {
-		return environmentFactory.getIdResolver().getStaticTypeOf(value, values);
+		return idResolver.getStaticTypeOf(value, values);
 	}
  
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
-		return environmentFactory.getIdResolver().getStaticTypeOf(value, values);
+		return idResolver.getStaticTypeOf(value, values);
 	}
     
 	@Override
@@ -289,6 +303,57 @@ public abstract class AbstractExecutor implements ExecutorInternal
 			// This is a backstop. Library operations should catch their own exceptions
 			//  and produce a better reason as a result.
 			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, referredProperty, sourceValue, navigationCallExp);
+		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public Object internalExecuteOperationCallExp(@NonNull OperationCallExp operationCallExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+		Operation apparentOperation = operationCallExp.getReferredOperation();
+		assert apparentOperation != null;
+		//
+		//	Resolve source type.
+		//
+		org.eclipse.ocl.pivot.Class actualSourceType = null;
+		if (!apparentOperation.isIsStatic()) {
+			actualSourceType = idResolver.getStaticTypeOf(sourceAndArgumentValues[0]);
+		}
+		//
+		//	Refine source type to common type of source and a first OclSelf argument.
+		//
+		List<Parameter> asParameters = apparentOperation.getOwnedParameters();
+		if ((asParameters.size() == 1) && (asParameters.get(0).getType() instanceof SelfType) && (actualSourceType != null)) {
+			org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticTypeOf(sourceAndArgumentValues[1]);
+			actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
+		}
+		//
+		//	Resolve dynamic/actual operation and implementation
+		//
+		Operation actualOperation;
+		if (actualSourceType != null) {
+			actualOperation = actualSourceType.lookupActualOperation(environmentFactory.getStandardLibrary(), apparentOperation);
+		}
+		else {
+			actualOperation = apparentOperation;
+		}
+		LibraryOperation.LibraryOperationExtension2 implementation = (LibraryOperation.LibraryOperationExtension2) environmentFactory.getMetamodelManager().getImplementation(actualOperation);
+		//
+		//	Dispatch operation
+		//
+		try {
+			Object result = implementation.evaluate(this, operationCallExp, sourceAndArgumentValues);
+			assert !(result instanceof NullValue);
+			return result;
+		}
+		catch (InvalidValueException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			// This is a backstop. Library operations should catch their own exceptions
+			//  and produce a better reason as a result.
+			throw new InvalidValueException(e, PivotMessagesInternal.FailedToEvaluate_ERROR_, apparentOperation, ILabelGenerator.Registry.INSTANCE.labelFor(sourceAndArgumentValues[0]), operationCallExp);
 		}
 	}
 
