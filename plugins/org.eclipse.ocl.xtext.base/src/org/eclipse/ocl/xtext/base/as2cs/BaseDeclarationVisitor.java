@@ -208,7 +208,7 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 		return csElement;
 	}
 
-	@Override
+	@Override // FIXME BUG 496148 this is biased to use of e.g. {ordered} for OCLinEcore
 	public ElementCS visitOperation(@NonNull Operation object) {
 		OperationCS csElement = context.refreshTypedElement(OperationCS.class, BaseCSPackage.Literals.OPERATION_CS, object);
 		TemplateSignature ownedTemplateSignature = object.getOwnedSignature();
@@ -234,7 +234,7 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 	}
 
 	@Override
-	public ElementCS visitParameter(@NonNull Parameter object) {
+	public ElementCS visitParameter(@NonNull Parameter object) { // FIXME BUG 496148 this is biased to use of e.g. {ordered} for OCLinEcore
 		ParameterCS csElement = context.refreshTypedElement(ParameterCS.class, BaseCSPackage.Literals.PARAMETER_CS, object);
 		return csElement;
 	}

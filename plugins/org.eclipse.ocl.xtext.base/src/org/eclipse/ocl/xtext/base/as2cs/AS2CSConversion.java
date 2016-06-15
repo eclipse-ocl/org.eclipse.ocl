@@ -457,6 +457,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		}
 	}
 
+	// FIXME BUG 496148 this is biased to use of e.g. {ordered} for OCLinEcore
 	public <@NonNull T extends StructuralFeatureCS> T refreshStructuralFeature(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull Property object) {
 		T csElement = refreshTypedElement(csClass, csEClass, object);
 		refreshQualifiers(csElement.getQualifiers(), "derived", object.isIsDerived());
@@ -468,7 +469,8 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		csElement.setDefault(object.getDefaultValueString());
 		return csElement;
 	}
-	
+
+	// FIXME BUG 496148 this is biased to use of e.g. {ordered} for OCLinEcore
 	public <@NonNull T extends TypedElementCS> T refreshTypedElement(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull TypedElement object) {
 		T csElement = refreshNamedElement(csClass, csEClass, object);
 		final Type type = object.getType();
@@ -535,7 +537,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				if (stringValue != null) {
 					MultiplicityStringCS csMultiplicity = BaseCSFactory.eINSTANCE.createMultiplicityStringCS();
 					csMultiplicity.setStringBounds(stringValue);
-					csMultiplicity.setIsNullFree(isNullFree);;
+					csMultiplicity.setIsNullFree(isNullFree);
 					csTypeRef.setOwnedMultiplicity(csMultiplicity);
 				}
 				else {
