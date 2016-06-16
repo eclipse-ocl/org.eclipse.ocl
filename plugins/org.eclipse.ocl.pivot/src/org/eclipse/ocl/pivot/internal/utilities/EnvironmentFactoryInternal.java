@@ -113,8 +113,9 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	 * Create a ParserContext that may be used to parse OCL expressions in the given context,
 	 * which may be an EClassifier/EOperation/EStructuralFeature or Type/Operation/Property.
 	 * Returns a ModelContext if no more specfic context can be determined if none can be created.
+	 * @throws ParserException 
 	 */
-	@NonNull ParserContext createParserContext(@Nullable EObject context);
+	@NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException;
 
 	void detach(Object object);
 
