@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -261,6 +263,23 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(train1, ValueUtil.createSetOfEach(setTypeId, application1, application2), "TestProfile::Train.allInstances()");	
 		ocl.assertQueryEquals(train1, ValueUtil.createSetOfEach(setTypeId, application1, application2), "self.extension_Train.oclType().allInstances()");	
 		ocl.assertQueryResults(train1, "Bag{'Train1','Train2'}", "TestProfile::Train.allInstances().base_Class.name");	
+		ocl.dispose();
+	}
+	
+	/**
+	 * Tests uses of allInstances on a signal
+	 */
+	@Test public void test_signal_allinstances_Bug496210() throws Exception {
+		UMLStandaloneSetup.init();
+		MyOCL ocl = createOCL();
+		URI umlURI = getProjectFileURI("Bug496210.uml");
+		Resource umlResource = ocl.getResourceSet().getResource(umlURI, true);
+		EObject umlClass1 = ClassUtil.nonNullState(umlResource.getEObject("Class1"));
+		ExpressionInOCL expr1 = ocl.createInvariant(umlClass1, "Class1.allInstances()->size()");
+		assertEquals("test::Class1.allInstances()->size()", expr1.toString());
+		EObject umlSignal2 = ClassUtil.nonNullState(umlResource.getEObject("Signal2"));
+		ExpressionInOCL expr2 = ocl.createInvariant(umlSignal2, "Signal2.allInstances()->size()");
+		assertEquals("test::Signal2.allInstances()->size()", expr2.toString());
 		ocl.dispose();
 	}
 }
