@@ -11,12 +11,10 @@
 
 package org.eclipse.ocl.pivot.internal.helper;
 
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -50,37 +48,26 @@ public class OCLHelperImpl implements OCLHelper
 	 * 
 	 * @param ocl the OCL environment
 	 */
-	public OCLHelperImpl(@NonNull OCL ocl, @Nullable EObject context) {
+	public OCLHelperImpl(@NonNull OCL ocl, @Nullable EObject context) throws ParserException {
         this.ocl = ocl;
 		this.context = context;
-        if (context instanceof org.eclipse.ocl.pivot.Class) {
-        	contextClass = (org.eclipse.ocl.pivot.Class)context;
+		Element asContext;
+		if (context instanceof Element) {
+			asContext =  (Element)context;
+		}
+		else {
+			asContext = getMetamodelManager().getASOf(Element.class, context);
+		}
+        if (asContext instanceof org.eclipse.ocl.pivot.Class) {
+        	contextClass = (org.eclipse.ocl.pivot.Class)asContext;
         }
-        else if (context instanceof Operation) {
-        	contextOperation = (Operation)context;
+        else if (asContext instanceof Operation) {
+        	contextOperation = (Operation)asContext;
         	contextClass = contextOperation.getOwningClass();
         }
-        else if (context instanceof Property) {
-        	contextProperty = (Property)context;
+        else if (asContext instanceof Property) {
+        	contextProperty = (Property)asContext;
         	contextClass = contextProperty.getOwningClass();
-        }
-        else if (context instanceof EClassifier) {
-        	contextClass = getMetamodelManager().getASOfEcore(org.eclipse.ocl.pivot.Class.class, context);
-        }
-        else if (context instanceof EOperation) {
-        	contextOperation = getMetamodelManager().getASOfEcore(Operation.class, context);
-        	if (contextOperation != null) {
-        		contextClass = contextOperation.getOwningClass();
-        	}
-        }
-        else if (context instanceof EStructuralFeature) {
-        	contextProperty = getMetamodelManager().getASOfEcore(Property.class, context);
-        	if (contextProperty != null) {
-        		contextClass = contextProperty.getOwningClass();
-        	}
-        }
-        else if (context instanceof EStructuralFeature) {
-        	contextClass = null;
         }
 	}
 
