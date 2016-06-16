@@ -273,7 +273,7 @@ public class OCL
 	 * 
 	 * @return a new helper object
 	 */
-    public @NonNull OCLHelper createOCLHelper(@Nullable EObject contextElement) {
+    public @NonNull OCLHelper createOCLHelper(@Nullable EObject contextElement) throws ParserException {
         return new OCLHelperImpl(this, contextElement);
      }
 
