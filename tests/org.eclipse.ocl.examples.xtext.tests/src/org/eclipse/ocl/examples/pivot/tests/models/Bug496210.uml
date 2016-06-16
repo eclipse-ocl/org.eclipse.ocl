@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:prof="http:///schemas/prof/__5fFYDMiEeaHiN-gpWS8bA/1" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <uml:Model xmi:id="_1ItqcDMiEeaHiN-gpWS8bA" name="test">
+    <packagedElement xmi:type="uml:Class" xmi:id="Class2" name="Class2"/>
+    <packagedElement xmi:type="uml:Signal" xmi:id="Signal2" name="Signal2"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="Class1" name="Class1"/>
+    <packagedElement xmi:type="uml:Signal" xmi:id="Signal1" name="Signal1"/>
+  </uml:Model>
+</xmi:XMI>
