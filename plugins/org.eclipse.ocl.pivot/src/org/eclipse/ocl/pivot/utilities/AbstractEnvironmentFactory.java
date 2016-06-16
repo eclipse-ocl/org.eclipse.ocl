@@ -23,11 +23,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -328,18 +325,25 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public @NonNull ParserContext createParserContext(@Nullable EObject context) {
+	public @NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException {
     	PivotMetamodelManager metamodelManager = getMetamodelManager();
-		if (context instanceof org.eclipse.ocl.pivot.Class) {
-			return new ClassContext(this, null, (org.eclipse.ocl.pivot.Class)context, null);
+		Element asContext;
+		if (context instanceof Element) {
+			asContext =  (Element)context;
+		}
+		else {
+			asContext = metamodelManager.getASOf(Element.class, context);
+		}
+		if (asContext instanceof org.eclipse.ocl.pivot.Class) {
+			return new ClassContext(this, null, (org.eclipse.ocl.pivot.Class)asContext, null);
         }
-        else if (context instanceof Operation) {
-    		return new OperationContext(this, null, (Operation)context, null);
+        else if (asContext instanceof Operation) {
+    		return new OperationContext(this, null, (Operation)asContext, null);
         }
-        else if (context instanceof Property) {
-        	return new PropertyContext(this, null, (Property)context);
+        else if (asContext instanceof Property) {
+        	return new PropertyContext(this, null, (Property)asContext);
         }
-        else if (context instanceof EClassifier) {
+/*        else if (context instanceof EClassifier) {
         	org.eclipse.ocl.pivot.Class contextClass = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, context);
         	return new ClassContext(this, null, contextClass, null);
         }
@@ -354,7 +358,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
     		if (asProperty != null) {
     			return new PropertyContext(this, null, asProperty);
     		}
-        }
+        } */
         return new ModelContext(this, null);
 	}
 
