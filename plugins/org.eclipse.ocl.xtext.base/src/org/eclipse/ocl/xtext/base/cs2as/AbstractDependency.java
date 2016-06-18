@@ -16,7 +16,7 @@ public abstract class AbstractDependency<T> implements Dependency
 	
 	public AbstractDependency(T element) {
 		this.element = element;
-		assert element != null;
+//		assert element != null; -- happens for references to unresolved proxy types
 	}
 
 	@Override
