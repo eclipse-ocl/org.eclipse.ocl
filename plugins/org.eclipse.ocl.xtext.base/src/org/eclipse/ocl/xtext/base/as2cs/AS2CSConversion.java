@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -630,6 +631,10 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		BaseReferenceVisitor referenceVisitor = getReferenceVisitor(eClass, scope);
 		if ((referenceVisitor == null) || !(eObject instanceof Visitable)) {
 			logger.warn("Unsupported reference " + eObject.eClass().getName());
+			return null;
+		}
+		if (eObject.eIsProxy()) {
+			logger.warn("Unresolved reference " + ((BasicEObjectImpl)eObject).eProxyURI());
 			return null;
 		}
 		ElementCS csElement = ((Visitable)eObject).accept(referenceVisitor);
