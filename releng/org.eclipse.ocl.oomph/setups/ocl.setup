@@ -91,7 +91,7 @@
           <repository
               url="http://download.eclipse.org/releases/neon"/>
           <repository
-              url="http://download.eclipse.org/modeling/mdt/papyrus/updates/milestones/1.2"/>
+              url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/neon"/>
         </repositoryList>
         <repositoryList
             name="Mars">
