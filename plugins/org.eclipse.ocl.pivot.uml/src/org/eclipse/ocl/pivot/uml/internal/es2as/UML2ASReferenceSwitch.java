@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
+import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -312,12 +313,14 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 								asThis2ThatProperty.setIsRequired(getEndIsRequired(umlThis2ThatProperty));
 								asThis2ThatProperty.setIsImplicit(umlThis2ThatProperty.getOwningAssociation() != null);
 								asThis2ThatProperty.setOpposite(asThat2ThisProperty);
+								((PivotObjectImpl)asThis2ThatProperty).setESObject(umlThis2ThatProperty);
 								converter.addProperty(asThisClass, asThis2ThatProperty);
 								asAssociationClassProperties.put(umlThis2ThatProperty, umlThat2ThisProperty, asThis2ThatProperty);
 								//
 								asThat2ThisProperty.setIsRequired(getEndIsRequired(umlThat2ThisProperty));
 								asThat2ThisProperty.setIsImplicit(umlThat2ThisProperty.getOwningAssociation() != null);
 								asThat2ThisProperty.setOpposite(asThis2ThatProperty);
+								((PivotObjectImpl)asThat2ThisProperty).setESObject(umlThat2ThisProperty);
 								converter.addProperty(asThatClass, asThat2ThisProperty);
 								asAssociationClassProperties.put(umlThat2ThisProperty, umlThis2ThatProperty, asThat2ThisProperty);
 							}
