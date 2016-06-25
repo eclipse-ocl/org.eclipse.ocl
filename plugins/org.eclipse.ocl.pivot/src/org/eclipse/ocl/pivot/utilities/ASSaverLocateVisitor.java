@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -129,6 +130,16 @@ public class ASSaverLocateVisitor extends AbstractExtendingVisitor<Object, ASSav
 	}
 
 	@Override
+	public Object visitTemplateParameter(@NonNull TemplateParameter object) {
+		for (org.eclipse.ocl.pivot.Class constrainingType : object.getConstrainingClasses()) {
+			if ((constrainingType != null) && context.addSpecializingElement(object, constrainingType)) {
+				break;
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public Object visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution object) {
 		Type actual = object.getActual();
 		org.eclipse.ocl.pivot.Class referredClass = actual != null ? actual.isClass() : null;
@@ -139,21 +150,20 @@ public class ASSaverLocateVisitor extends AbstractExtendingVisitor<Object, ASSav
 	}
 
 	@Override
+	public Object visitTypeExp(@NonNull TypeExp object) {
+		Type referredType = object.getReferredType();
+		if (referredType instanceof org.eclipse.ocl.pivot.Class) {
+			context.addSpecializingElement(object, (org.eclipse.ocl.pivot.Class)referredType);
+		}
+		return super.visitTypeExp(object);
+	}
+
+	@Override
 	public Object visitTypedElement(@NonNull TypedElement object) {
 		Type referredType = object.getType();
 		org.eclipse.ocl.pivot.Class referredClass = referredType != null ? referredType.isClass() : null;
 		if (referredClass != null) {
 			context.addSpecializingElement(object, referredClass);
-		}
-		return null;
-	}
-
-	@Override
-	public Object visitTemplateParameter(@NonNull TemplateParameter object) {
-		for (org.eclipse.ocl.pivot.Class constrainingType : object.getConstrainingClasses()) {
-			if ((constrainingType != null) && context.addSpecializingElement(object, constrainingType)) {
-				break;
-			}
 		}
 		return null;
 	}

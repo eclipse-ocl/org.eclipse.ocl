@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -136,19 +137,6 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 	}
 
 	@Override
-	public Object visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution object) {
-		Type referredType = ClassUtil.nonNullModel(object.getActual());
-		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
-		if (referredClass != null) {
-			Type resolvedType = context.resolveType(referredClass);
-			if (resolvedType != referredType) {
-				object.setActual(resolvedType);
-			}
-		}
-		return null;
-	}
-
-	@Override
 	public Object visitTemplateParameter(@NonNull TemplateParameter object) {
 		List<org.eclipse.ocl.pivot.Class> constrainingTypes = object.getConstrainingClasses();
 		for (int i = 0; i < constrainingTypes.size(); i++) {
@@ -162,8 +150,35 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 	}
 
 	@Override
+	public Object visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution object) {
+		Type referredType = ClassUtil.nonNullModel(object.getActual());
+		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
+		if (referredClass != null) {
+			Type resolvedType = context.resolveType(referredClass);
+			if (resolvedType != referredType) {
+				object.setActual(resolvedType);
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public Object visitType(@NonNull Type object) {
 		return null;
+	}
+
+	@Override
+	public Object visitTypeExp(@NonNull TypeExp object) {
+		Type referredType = ClassUtil.nonNullEMF(object.getReferredType());
+		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
+		if (referredClass != null) {
+			Type resolvedType = context.resolveType(referredClass);
+			if (resolvedType != referredType) {
+				object.setReferredType(resolvedType);
+				object.setTypeValue(resolvedType);
+			}
+		}
+		return super.visitTypeExp(object);
 	}
 
 	@Override
