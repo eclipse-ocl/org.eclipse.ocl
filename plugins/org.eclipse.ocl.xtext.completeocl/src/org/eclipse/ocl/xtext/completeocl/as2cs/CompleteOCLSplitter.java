@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.completeocl.as2cs;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,8 +49,8 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public class CompleteOCLSplitter
 {
 	public static @Nullable ASResource separate(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource) {
-		List<Constraint> allConstraints = new ArrayList<Constraint>();
-		List<LanguageExpression> allExpressionInOCLs = new ArrayList<LanguageExpression>();
+		List<@NonNull Constraint> allConstraints = new ArrayList<@NonNull Constraint>();
+		List<@NonNull LanguageExpression> allExpressionInOCLs = new ArrayList<@NonNull LanguageExpression>();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			if (eObject instanceof Constraint) {
@@ -73,11 +72,11 @@ public class CompleteOCLSplitter
 				tit.prune();
 			}
 		}
-		if (allConstraints.isEmpty()) {
+		if (allConstraints.isEmpty() && allExpressionInOCLs.isEmpty()) {
 			return null;
 		}
-		URI uri = asResource.getURI();
-		@SuppressWarnings("null")@NonNull URI oclURI = PivotUtilInternal.getNonASURI(uri).appendFileExtension("ocl");
+		URI uri = ClassUtil.nonNullState(asResource.getURI());
+		URI oclURI = PivotUtilInternal.getNonASURI(uri).appendFileExtension("ocl");
 		URI oclASuri = PivotUtilInternal.getASURI(oclURI);	// xxx.ocl.ocl.oclas
 		ASResource oclResource = (ASResource) asResource.getResourceSet().createResource(oclASuri, ASResource.COMPLETE_OCL_CONTENT_TYPE);	
 		if (oclResource != null) {
@@ -98,7 +97,7 @@ public class CompleteOCLSplitter
 	{
 		protected final @NonNull PivotMetamodelManager metamodelManager;
 		protected final @NonNull Resource separateResource;
-		private final @NonNull Map<NamedElement, NamedElement> map = new HashMap<NamedElement, NamedElement>();
+		private final @NonNull Map<@NonNull NamedElement, @NonNull NamedElement> map = new HashMap<@NonNull NamedElement, @NonNull NamedElement>();
 
 		public Separator(@NonNull PivotMetamodelManager metamodelManager, @NonNull Resource separateResource) {
 			this.metamodelManager = metamodelManager;
@@ -107,7 +106,7 @@ public class CompleteOCLSplitter
 
 		@Override
 		public EObject caseClass(org.eclipse.ocl.pivot.Class object) {
-			org.eclipse.ocl.pivot.Package parent = object.getOwningPackage();
+			org.eclipse.ocl.pivot.Package parent = ClassUtil.nonNullState(object.getOwningPackage());
 			org.eclipse.ocl.pivot.Package separateParent = getSeparate(parent);
 			List<org.eclipse.ocl.pivot.@NonNull Class> separateSiblings = ClassUtil.nullFree(separateParent.getOwnedClasses());
 			return cloneNamedElement(separateSiblings, object);
@@ -115,7 +114,7 @@ public class CompleteOCLSplitter
 
 		@Override
 		public EObject caseConstraint(Constraint object) {
-			NamedElement parent = (NamedElement) object.eContainer();
+			NamedElement parent = (NamedElement) ClassUtil.nonNullState(object.eContainer());
 			NamedElement separateParent = getSeparate(parent);
 			EStructuralFeature eContainingFeature = object.eContainingFeature();
 			PivotUtilInternal.resetContainer(object);		// Avoid a child-stealing detection
@@ -131,7 +130,7 @@ public class CompleteOCLSplitter
 
 		@Override
 		public EObject caseExpressionInOCL(ExpressionInOCL object) {
-			NamedElement parent = (NamedElement) object.eContainer();
+			NamedElement parent = (NamedElement) ClassUtil.nonNullState(object.eContainer());
 			NamedElement separateParent = getSeparate(parent);
 			if (separateParent instanceof Operation) {
 				PivotUtilInternal.resetContainer(object);
@@ -162,7 +161,7 @@ public class CompleteOCLSplitter
 
 		@Override
 		public EObject caseOperation(Operation object) {
-			org.eclipse.ocl.pivot.Class parent = object.getOwningClass();
+			org.eclipse.ocl.pivot.Class parent = ClassUtil.nonNullState(object.getOwningClass());
 			org.eclipse.ocl.pivot.Class separateParent = getSeparate(parent);
 			List<Operation> separateSiblings = separateParent.getOwnedOperations();
 			@SuppressWarnings("serial")
@@ -196,13 +195,10 @@ public class CompleteOCLSplitter
 			if (separateParent instanceof Model) {
 				separateSiblings = ((Model)separateParent).getOwnedPackages();
 			}
-			else if (separateParent != null) {
+			else {
 				separateSiblings = ((org.eclipse.ocl.pivot.Package)separateParent).getOwnedPackages();
 			}
-			else {
-				separateSiblings = Collections.emptyList();
-			}
-			org.eclipse.ocl.pivot.Package separateObject = NameUtil.getNameable(separateSiblings, name);
+			org.eclipse.ocl.pivot.Package separateObject = NameUtil.getNameable(ClassUtil.nullFree(separateSiblings), name);
 			if (separateObject == null) {
 				separateObject = (org.eclipse.ocl.pivot.Package) object.eClass().getEPackage().getEFactoryInstance().create(object.eClass());
 				separateObject.setName(name);
@@ -215,7 +211,7 @@ public class CompleteOCLSplitter
 
 		@Override
 		public EObject caseProperty(Property object) {
-			org.eclipse.ocl.pivot.Class parent = object.getOwningClass();
+			org.eclipse.ocl.pivot.Class parent = ClassUtil.nonNullState(object.getOwningClass());
 			org.eclipse.ocl.pivot.Class separateParent = getSeparate(parent);
 			List<Property> separateSiblings = separateParent.getOwnedProperties();
 			@SuppressWarnings("serial")
@@ -250,6 +246,12 @@ public class CompleteOCLSplitter
 			}
 			return separateObject;
 		}
+		
+		@Override
+		public @NonNull EObject doSwitch(EObject eObject)
+		{
+			return ClassUtil.nonNullState(super.doSwitch(eObject));
+		}
 
 		public NamedElement getElementByName(Iterable<? extends EObject> elements, String name) {
 			if (elements == null)
@@ -260,7 +262,7 @@ public class CompleteOCLSplitter
 			return null;				
 		}
 
-		protected <T extends NamedElement> T getSeparate(T element) {
+		protected <@NonNull T extends NamedElement> T getSeparate(T element) {
 			NamedElement separate = map.get(element);
 			if (separate == null) {
 				separate = (NamedElement) doSwitch(element);
@@ -271,7 +273,7 @@ public class CompleteOCLSplitter
 			return castSeparate;
 		}		
 
-		protected org.eclipse.ocl.pivot.Package getSeparatePackage(org.eclipse.ocl.pivot.Package element) {
+		protected org.eclipse.ocl.pivot.Package getSeparatePackage(org.eclipse.ocl.pivot.@NonNull Package element) {
 			org.eclipse.ocl.pivot.Package separate = (org.eclipse.ocl.pivot.Package) map.get(element);
 			if (separate == null) {
 				separate = (org.eclipse.ocl.pivot.Package) doSwitch(element);
