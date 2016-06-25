@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
@@ -63,40 +64,39 @@ import org.eclipse.xtext.util.EmfFormatter;
 /**
  * Test that an Ecore file can be loaded as OCLinEcore then saved back as Ecore.
  */
-@SuppressWarnings("null")
 public class RoundTripTests extends XtextTestCase
 {
-	public Resource createEcoreFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, ASResource asResource, URI ecoreURI) throws IOException {
+	public @NonNull Resource createEcoreFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI ecoreURI) throws IOException {
 		Resource ecoreResource = AS2Ecore.createResource(environmentFactory, asResource, ecoreURI, null);
 		assertNoResourceErrors("To Ecore errors", ecoreResource);
-		if (ecoreURI != null) {
+//		if (ecoreURI != null) {
 			ecoreResource.save(null);
-		}
+//		}
 		return ecoreResource;
 	}
-	public ASResource createPivotFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, Resource ecoreResource) throws IOException {
+	public @NonNull ASResource createPivotFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource ecoreResource) throws IOException {
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 		Model pivotModel = ecore2as.getASModel();
-		ASResource asResource = (ASResource) pivotModel.eResource();
+		ASResource asResource = (ASResource) ClassUtil.nonNullState(pivotModel.eResource());
 		assertNoResourceErrors("Ecore2AS failed", asResource);
 		assertNoValidationErrors("Ecore2AS invalid", asResource);
 		return asResource;
 	}
-	public ASResource createPivotFromXtext(@NonNull EnvironmentFactoryInternal environmentFactory, BaseCSResource xtextResource, int expectedContentCount) throws IOException {
+	public @NonNull ASResource createPivotFromXtext(@NonNull EnvironmentFactoryInternal environmentFactory, BaseCSResource xtextResource, int expectedContentCount) throws IOException {
 		try {
 			ASResource asResource = xtextResource.getASResource();
 			assertNoResourceErrors("To Pivot errors", xtextResource);
 			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 			List<EObject> pivotContents = asResource.getContents();
 			assertEquals(expectedContentCount, pivotContents.size());
-			assertNoValidationErrors("Pivot validation errors", pivotContents.get(0));
+			assertNoValidationErrors("Pivot validation errors", ClassUtil.nonNullState(pivotContents.get(0)));
 			return asResource;
 		}
 		finally {
 			xtextResource.dispose();
 		}
 	}
-	public BaseCSResource createXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, ASResource asResource, URI xtextURI) throws IOException {
+	public BaseCSResource createXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		XtextResource xtextResource = (XtextResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		((BaseCSResource) xtextResource).updateFrom(asResource, environmentFactory);
@@ -110,12 +110,12 @@ public class RoundTripTests extends XtextTestCase
 //		ProjectMap.initializeURIResourceMap(resourceSet2);
 		ProjectMap.initializeURIResourceMap(null);
 //		UMLUtils.initializeContents(resourceSet2);
-		BaseCSResource xtextResource = (BaseCSResource) resourceSet.getResource(xtextURI, true);
+		BaseCSResource xtextResource = (BaseCSResource) ClassUtil.nonNullState(resourceSet.getResource(xtextURI, true));
 		assertNoResourceErrors("Load failed", xtextResource);
 		return xtextResource;
 	}
 	
-	public CSResource createCompleteOCLXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, ASResource asResource, URI xtextURI) throws IOException {
+	public CSResource createCompleteOCLXtextFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI xtextURI) throws IOException {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		CSResource xtextResource = (CSResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		xtextResource.updateFrom(asResource, environmentFactory);
@@ -135,8 +135,8 @@ public class RoundTripTests extends XtextTestCase
 				return;
 			}			
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			
-				StandaloneProjectMap.IProjectDescriptor projectDescriptor = projectMap.getProjectDescriptor("org.eclipse.uml2.uml");
-				projectDescriptor.initializeURIMap(URIConverter.URI_MAP);		// *.ecore2xml must be global
+				StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.nonNullState(projectMap.getProjectDescriptor("org.eclipse.uml2.uml"));
+				projectDescriptor.initializeURIMap(ClassUtil.nonNullState(URIConverter.URI_MAP));		// *.ecore2xml must be global
 			}
 //			UMLUtils.initializeContentHandlers(resourceSet);
 //			UMLUtils.initializeContents(resourceSet);
@@ -148,7 +148,8 @@ public class RoundTripTests extends XtextTestCase
 			environmentFactory1.adapt(resourceSet);
 			BaseCSResource xtextResource1 = createXtextFromURI(environmentFactory1, inputURI);
 			ASResource pivotResource1 = createPivotFromXtext(environmentFactory1, xtextResource1, 1);
-			ASResource pivotResource2 = CompleteOCLSplitter.separate(environmentFactory1, pivotResource1);
+			pivotResource1.save(null);
+			ASResource pivotResource2 = ClassUtil.nonNullState(CompleteOCLSplitter.separate(environmentFactory1, pivotResource1));
 			@SuppressWarnings("unused")
 			CSResource xtextResource2 = createCompleteOCLXtextFromPivot(environmentFactory1, pivotResource2, outputURI);
 			ocl1.dispose();
@@ -195,7 +196,7 @@ public class RoundTripTests extends XtextTestCase
 		URI pivotURI = getProjectFileURI(pivotName);
 		URI outputURI = getProjectFileURI(outputName);
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
-		Resource inputResource = resourceSet.getResource(inputURI, true);
+		Resource inputResource = ClassUtil.nonNullState(resourceSet.getResource(inputURI, true));
 		assertNoResourceErrors("Ecore load", inputResource);
 		assertNoValidationErrors("Ecore load", inputResource);
 		
@@ -241,7 +242,7 @@ public class RoundTripTests extends XtextTestCase
 		if (referenceURI != null) {
 			ResourceSetImpl resourceSet2 = new ResourceSetImpl();
 			StandaloneProjectMap.getAdapter(resourceSet).initializeResourceSet(resourceSet2);
-			Resource referenceResource = resourceSet2.getResource(referenceURI, true);
+			Resource referenceResource = ClassUtil.nonNullState(resourceSet2.getResource(referenceURI, true));
 			TestUtil.assertSameModel(referenceResource, outputResource);
 		}
 	}
@@ -301,7 +302,7 @@ public class RoundTripTests extends XtextTestCase
 		URI inputURI = getProjectFileURI(inputName);
 		URI pivotURI = getProjectFileURI(pivotName);
 		URI outputURI = getProjectFileURI(outputName);
-		Resource inputResource = resourceSet.getResource(inputURI, true);
+		Resource inputResource = ClassUtil.nonNullState(resourceSet.getResource(inputURI, true));
 		assertNoResourceErrors("UML load", inputResource);
 		assertNoValidationErrors("UML load", inputResource);
 		
@@ -315,12 +316,13 @@ public class RoundTripTests extends XtextTestCase
 		asResource.save(null);
 		assertNoValidationErrors("UML2AS invalid", asResource);
 		
-		List<? extends EObject> outputObjects = new ArrayList<EObject>(AS2UML.createResource(environmentFactory, asResource));
+		List<? extends @NonNull EObject> outputObjects = new ArrayList<@NonNull EObject>(AS2UML.createResource(environmentFactory, asResource));
 		@SuppressWarnings("unchecked")
-		List<? extends org.eclipse.uml2.uml.NamedElement> castOutputObjects = (List<? extends org.eclipse.uml2.uml.NamedElement>)outputObjects;
+		List<? extends org.eclipse.uml2.uml.@NonNull NamedElement> castOutputObjects = (List<? extends org.eclipse.uml2.uml.@NonNull NamedElement>)outputObjects;
 		outputObjects.remove(getNamedElement(castOutputObjects, "orphanage"));
 		if (outputObjects.size() == 1) {
-			outputObjects = ((org.eclipse.uml2.uml.Package)outputObjects.get(0)).getNestedPackages();
+			org.eclipse.uml2.uml.Package outputPackages = ClassUtil.nonNullState(((org.eclipse.uml2.uml.Package)outputObjects.get(0)));
+			outputObjects = ClassUtil.nullFree(outputPackages.getNestedPackages());
 		}
 		Resource outputResource = resourceSet.createResource(outputURI);
 		outputResource.getContents().addAll(outputObjects);
@@ -331,7 +333,7 @@ public class RoundTripTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public static <T extends org.eclipse.uml2.uml.NamedElement> T getNamedElement(Collection<T> elements, String name) {
+	public static <T extends org.eclipse.uml2.uml.NamedElement> @Nullable T getNamedElement(Collection<T> elements, String name) {
 		if (elements == null)
 			return null;
 		for (T element : elements)
@@ -629,8 +631,8 @@ public class RoundTripTests extends XtextTestCase
 //		String stem = uri.trimFileExtension().lastSegment();
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		StandaloneProjectMap.IProjectDescriptor projectDescriptor = getProjectMap().getProjectDescriptor("org.eclipse.emf.ecore");
-		StandaloneProjectMap.IPackageDescriptor packageDescriptor = projectDescriptor.getPackageDescriptor(URI.createURI(EcorePackage.eNS_URI));
+		StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.nonNullState(getProjectMap().getProjectDescriptor("org.eclipse.emf.ecore"));
+		StandaloneProjectMap.IPackageDescriptor packageDescriptor = ClassUtil.nonNullState(projectDescriptor.getPackageDescriptor(URI.createURI(EcorePackage.eNS_URI)));
 		packageDescriptor.configure(environmentFactory.getResourceSet(), StandaloneProjectMap.LoadGeneratedPackageStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
 		doRoundTripFromEcore(environmentFactory, uri, uri, null); //null);				// FIXME Compare is not quite right
 		ocl.dispose();

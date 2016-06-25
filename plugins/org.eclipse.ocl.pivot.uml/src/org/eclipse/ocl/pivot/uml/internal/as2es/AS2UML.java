@@ -27,11 +27,12 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class AS2UML extends AbstractConversion
 {
-	public static List<EObject> createResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource) {
-		List<@NonNull EObject> pivotModels = asResource.getContents();
+	public static @NonNull List<@NonNull EObject> createResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource) {
+		List<@NonNull EObject> pivotModels = ClassUtil.nullFree(asResource.getContents());
 		AS2UML converter = new AS2UML(environmentFactory);
 		return converter.convertAll(pivotModels);
 	}
@@ -71,11 +72,14 @@ public class AS2UML extends AbstractConversion
 		return eObject;
 	}
 
-	protected @NonNull List<EObject> convertAll(@NonNull List<? extends EObject> pivotObjects) {
-		List<EObject> eObjects = new ArrayList<EObject>();
+	protected @NonNull List<@NonNull EObject> convertAll(@NonNull List<? extends EObject> pivotObjects) {
+		List<@NonNull EObject> eObjects = new ArrayList<@NonNull EObject>();
 		for (EObject pivotObject : pivotObjects) {
 			if (pivotObject instanceof Element) {
-				eObjects.add(pass1.safeVisit((Visitable) pivotObject));
+				EModelElement convertedEObject = pass1.safeVisit((Visitable) pivotObject);
+				if (convertedEObject != null) {
+					eObjects.add(convertedEObject);
+				}
 			}
 		}
 		for (Element eKey : deferMap) {
