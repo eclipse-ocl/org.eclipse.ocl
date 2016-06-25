@@ -599,6 +599,12 @@ public class RoundTripTests extends XtextTestCase
 		doRoundTripFromEcore("Bug492960");
 	}
 
+	public void testCompleteOCLRoundTrip_Bug496768() throws IOException, InterruptedException {
+		OCL ocl = OCL.newInstance(getProjectMap());
+		doRoundTripFromCompleteOCL(ocl, getProjectFileURI("Bug496768.ocl"));
+		ocl.dispose();
+	}
+
 	public void testCompleteOCLRoundTrip_Fruit() throws IOException, InterruptedException {
 		UMLStandaloneSetup.init();
 		OCL ocl = OCL.newInstance(getProjectMap());

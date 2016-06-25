@@ -1,0 +1,8 @@
+import 'Bug496768.ecore'
+
+package names
+
+context Named::r : Real
+init: Set(String){'g"'}->oclAsType(Set(Named))->size()
+
+endpackage
