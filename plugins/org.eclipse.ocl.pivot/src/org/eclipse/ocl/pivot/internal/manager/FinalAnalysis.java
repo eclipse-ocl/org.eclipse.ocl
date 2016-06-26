@@ -113,7 +113,7 @@ public class FinalAnalysis
 		CompleteInheritance requiredInheritance = completeClass.getCompleteInheritance();
 		for (@NonNull Operation override : overrides) {
 			CompleteInheritance overrideInheritance = override.getInheritance(standardLibrary);
-			if ((overrideInheritance != null) && overrideInheritance.isSuperInheritanceOf(requiredInheritance)) {
+			if ((overrideInheritance != null) && requiredInheritance.isSuperInheritanceOf(overrideInheritance)) {
 				results.add(override);
 			}
 		}
