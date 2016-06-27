@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -519,6 +520,9 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			return (Variable)element;
 		}
 		else if ((element instanceof Variable) && (element.eContainer() instanceof LetExp)) {
+			return (Variable)element;
+		}
+		else if ((element instanceof Variable) && (element.eContainer() instanceof ExpressionInOCL)) {
 			return (Variable)element;
 		}
 		// ?? Constraint, Signal, ...
