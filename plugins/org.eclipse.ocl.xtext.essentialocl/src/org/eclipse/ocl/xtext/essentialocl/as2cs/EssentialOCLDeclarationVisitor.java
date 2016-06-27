@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.essentialocl.as2cs;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
@@ -101,6 +102,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.NullLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.NumberLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.PrefixExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.RoundBracketedClauseCS;
+import org.eclipse.ocl.xtext.essentialoclcs.SelfExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ShadowPartCS;
 import org.eclipse.ocl.xtext.essentialoclcs.StringLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralExpCS;
@@ -736,6 +738,17 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	public @Nullable ElementCS visitVariableExp(@NonNull VariableExp asVariableExp) {
 		VariableDeclaration asVariable = asVariableExp.getReferredVariable();
 		if (asVariable != null) {
+			if (PivotConstants.SELF_NAME.equals(asVariable.getName())) {
+				EObject eContainer = asVariable.eContainer();
+				if (eContainer instanceof ExpressionInOCL) {
+					ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)eContainer;
+					if (asVariable == asExpressionInOCL.getOwnedContext()) {
+						SelfExpCS csSelfExp = EssentialOCLCSFactory.eINSTANCE.createSelfExpCS();
+						csSelfExp.setPivot(asVariableExp);
+						return csSelfExp;
+					}
+				}
+			}
 			return createNameExpCS(asVariable);
 		}
 		else {
