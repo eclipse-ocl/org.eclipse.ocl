@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
@@ -151,16 +150,18 @@ public class CompleteOCLEObjectValidator extends PivotEObjectValidator
 	@Override
 	protected boolean validatePivot(@NonNull EClassifier eClassifier, @Nullable Object object,
 			@Nullable DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if ((ecore2as == null) && (object instanceof EObject)) {
+		if (ecore2as == null) {
 			initialize();	
-			Resource eResource = ((EObject)object).eResource();
-			if (eResource != null) {
-				ResourceSet resourceSet = eResource.getResourceSet();
-				if (resourceSet != null) {
-					install(resourceSet, environmentFactory);
-				}
-			}
 		}
-		return super.validatePivot(eClassifier, object, diagnostics, context);
+		ResourceSet resourceSet = getResourceSet(eClassifier, object, diagnostics);
+		if (resourceSet != null) {
+			ValidationAdapter validationAdapter = ValidationAdapter.findAdapter(resourceSet);
+			if (validationAdapter == null) {
+				validationAdapter = install(resourceSet, environmentFactory);
+			}
+			boolean allOk = validationAdapter.validate(eClassifier, object, complementingModels, diagnostics, context);
+			return allOk || (diagnostics != null);
+		}
+		return true;
 	}
 }
