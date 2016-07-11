@@ -380,11 +380,29 @@
       </workingSet>
     </setupTask>
     <setupTask
-        xsi:type="pde:APIBaselineTask"
-        name="OCL APIBaseLine"
-        version="Mars"
-        location="${installation.location/baseline-ocl}"
-        remoteURI="${ocl.git.clone.location|uri}/releng/org.eclipse.ocl.oomph/ApiBaseLine/ApiBaseLine-Mars.zip"/>
+        xsi:type="pde:APIBaselineFromTargetTask"
+        name="OCL API Base Line"
+        targetName="API Base Line"/>
+    <setupTask
+        xsi:type="setup.targlets:TargletTask"
+        targetName="API Base Line"
+        activateTarget="false">
+      <targlet
+          name="OCL API Base Line">
+        <requirement
+            name="org.eclipse.ocl.examples.feature.group"/>
+        <repositoryList
+            name="Oxygen">
+          <repository
+              url="http://download.eclipse.org/releases/neon"/>
+        </repositoryList>
+        <repositoryList
+            name="Neon">
+          <repository
+              url="http://download.eclipse.org/releases/mars"/>
+        </repositoryList>
+      </targlet>
+    </setupTask>
     <stream
         name="master"
         label="Master (Neon)">
