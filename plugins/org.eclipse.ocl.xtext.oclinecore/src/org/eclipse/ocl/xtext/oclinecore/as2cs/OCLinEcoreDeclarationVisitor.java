@@ -51,7 +51,7 @@ public class OCLinEcoreDeclarationVisitor extends EssentialOCLDeclarationVisitor
 	}
 
 	@Override
-	public void postProcess(@NonNull BaseCSResource csResource, @NonNull Map<Namespace, List<String>> importedNamespaces) {
+	public void postProcess(@NonNull BaseCSResource csResource, @NonNull Map<@NonNull Namespace, @NonNull List<@NonNull String>> importedNamespaces) {
 		EObject eObject = csResource.getContents().get(0);
 		if (eObject instanceof TopLevelCS) {
 			context.createImports((TopLevelCS) eObject, importedNamespaces);
@@ -62,7 +62,7 @@ public class OCLinEcoreDeclarationVisitor extends EssentialOCLDeclarationVisitor
 	public ElementCS visitAnnotation(@NonNull Annotation object) {
 		if (PivotConstants.SYSML_ANNOTATION_SOURCE.equals(object.getName())) {
 			SysMLCS csElement = context.refreshElement(SysMLCS.class, OCLinEcoreCSPackage.Literals.SYS_MLCS, object);
-//			context.refreshList(csElement.getOwnedAnnotation(), context.visitDeclarations(AnnotationCS.class, object.getOwnedAnnotation(), null));
+			//			context.refreshList(csElement.getOwnedAnnotation(), context.visitDeclarations(AnnotationCS.class, object.getOwnedAnnotation(), null));
 			context.refreshList(csElement.getOwnedDetails(), context.visitDeclarations(DetailCS.class, object.getOwnedDetails(), null));
 			return csElement;
 		}
@@ -78,7 +78,7 @@ public class OCLinEcoreDeclarationVisitor extends EssentialOCLDeclarationVisitor
 		refreshConstraint(csElement, object);
 		return csElement;
 	}
-	
+
 	@Override
 	public ElementCS visitModel(@NonNull Model object) {
 		TopLevelCS csElement = context.refreshElement(TopLevelCS.class, OCLinEcoreCSPackage.Literals.TOP_LEVEL_CS, object);

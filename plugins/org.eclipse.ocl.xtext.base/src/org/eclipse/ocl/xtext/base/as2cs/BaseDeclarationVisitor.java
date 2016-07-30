@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.AttributeCS;
@@ -68,7 +69,7 @@ import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
 import org.eclipse.ocl.xtext.basecs.TypeParameterCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 
-public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, AS2CSConversion>
+public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, @NonNull AS2CSConversion>
 {
 	public BaseDeclarationVisitor(@NonNull AS2CSConversion context) {
 		super(context);		// NB this class is stateless since separate instances exist per CS package
@@ -77,7 +78,7 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 	/**
 	 * After the visit to all elements, perform any post-processing such as installing imports.
 	 */
-	public void postProcess(@NonNull BaseCSResource csResource, @NonNull Map<Namespace, List<String>> importedNamespaces) {}
+	public void postProcess(@NonNull BaseCSResource csResource, @NonNull Map<@NonNull Namespace, @NonNull List<@NonNull String>> importedNamespaces) {}
 
 	@Override
 	public ElementCS visitAnnotation(org.eclipse.ocl.pivot.@NonNull Annotation object) {
@@ -110,33 +111,33 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 		StructuredClassCS csElement = context.refreshClassifier(StructuredClassCS.class, BaseCSPackage.Literals.STRUCTURED_CLASS_CS, object);
 		context.refreshList(csElement.getOwnedProperties(), context.visitDeclarations(StructuralFeatureCS.class, object.getOwnedProperties(),
 			new AS2CS.Predicate<Property>()
-			{
-				@Override
-				public boolean filter(@NonNull Property element) {
-					return !element.isIsImplicit();
-				}
-			}));
+		{
+			@Override
+			public boolean filter(@NonNull Property element) {
+				return !element.isIsImplicit();
+			}
+		}));
 		context.refreshList(csElement.getOwnedOperations(), context.visitDeclarations(OperationCS.class, object.getOwnedOperations(), null));
 		final Type oclElementType = context.getStandardLibrary().getOclElementType();
 		context.refreshList(csElement.getOwnedSuperTypes(), context.visitReferences(TypedRefCS.class, object.getSuperClasses(),
 			new AS2CS.Predicate<Type>()
-			{
-				@Override
-				public boolean filter(@NonNull Type element) {
-					return element != oclElementType;
-				}
-			}));
+		{
+			@Override
+			public boolean filter(@NonNull Type element) {
+				return element != oclElementType;
+			}
+		}));
 		csElement.setIsAbstract(object.isIsAbstract());
 		csElement.setIsInterface(object.isIsInterface());
 		context.setScope(savedScope);
 		return csElement;
 	}
 
-//	@Override
-//	public ElementCS visitComment(Comment object) {
-//		ParameterCS pivotElement = context.refreshNamedElement(ParameterCS.class, BaseCSPackage.Literals.COMMENT_CS, object);
-//		return null;
-//	}
+	//	@Override
+	//	public ElementCS visitComment(Comment object) {
+	//		ParameterCS pivotElement = context.refreshNamedElement(ParameterCS.class, BaseCSPackage.Literals.COMMENT_CS, object);
+	//		return null;
+	//	}
 
 	@Override
 	public ElementCS visitConstraint(@NonNull Constraint object) {
@@ -261,8 +262,9 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 		}
 		else {
 			ReferenceCS csReference = context.refreshStructuralFeature(ReferenceCS.class, BaseCSPackage.Literals.REFERENCE_CS, object);
-			context.refreshQualifiers(csReference.getQualifiers(), "composes", object.isIsComposite());
-			context.refreshQualifiers(csReference.getQualifiers(), "resolve", "!resolve", object.isIsResolveProxies() ? null : Boolean.FALSE);
+			List<@NonNull String> qualifiers = ClassUtil.nullFree(csReference.getQualifiers());
+			context.refreshQualifiers(qualifiers, "composes", object.isIsComposite());
+			context.refreshQualifiers(qualifiers, "resolve", "!resolve", object.isIsResolveProxies() ? null : Boolean.FALSE);
 			Property opposite = object.getOpposite();
 			if (opposite != null) {
 				if (!opposite.isIsImplicit()) {

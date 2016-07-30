@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
@@ -37,6 +36,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
@@ -87,10 +87,10 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 		//		return collectionTypeCS;
 	}
 
-	protected void gatherPackages(@NonNull List<org.eclipse.ocl.pivot.Package> allPackages, @NonNull List<org.eclipse.ocl.pivot.Package> nestedPackages) {
+	protected void gatherPackages(@NonNull List<org.eclipse.ocl.pivot.@NonNull Package> allPackages, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> nestedPackages) {
 		allPackages.addAll(nestedPackages);
-		for (org.eclipse.ocl.pivot.Package nestedPackage : nestedPackages) {
-			List<org.eclipse.ocl.pivot.Package> nestedNestedPackages = nestedPackage.getOwnedPackages();
+		for (org.eclipse.ocl.pivot.@NonNull Package nestedPackage : nestedPackages) {
+			List<org.eclipse.ocl.pivot.@NonNull Package> nestedNestedPackages = ClassUtil.nullFree(nestedPackage.getOwnedPackages());
 			assert nestedNestedPackages != null;
 			gatherPackages(allPackages, nestedNestedPackages);
 		}
@@ -106,7 +106,7 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 	}
 
 	@Override
-	public void postProcess(@NonNull BaseCSResource csResource, @NonNull Map<Namespace, List<String>> importedNamespaces) {
+	public void postProcess(@NonNull BaseCSResource csResource, @NonNull Map<@NonNull Namespace, @NonNull List<@NonNull String>> importedNamespaces) {
 		EObject eObject = csResource.getContents().get(0);
 		if (eObject instanceof CompleteOCLDocumentCS) {
 			context.createImports((CompleteOCLDocumentCS) eObject, importedNamespaces);
@@ -158,7 +158,7 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 			Resource resource = object.eResource();
 			AliasAnalysis adapter = resource != null ? AliasAnalysis.getAdapter(resource) : null;
 			if (adapter != null) {
-				for (@SuppressWarnings("null")@NonNull CompletePackage aliased : adapter.getAliases()) {
+				for (@NonNull CompletePackage aliased : adapter.getAliases()) {
 					org.eclipse.ocl.pivot.Package primary = aliased.getPrimaryPackage();
 					if (primary != null) {
 						String alias = adapter.getAlias(primary, null);
@@ -224,22 +224,19 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 	public ElementCS visitPackage(org.eclipse.ocl.pivot.@NonNull Package object) {
 		ElementCS csElement = null;
 		assert object.eContainer() != null;
-		List<ContextDeclCS> contexts = new ArrayList<ContextDeclCS>();
-		for (org.eclipse.ocl.pivot.Class type : object.getOwnedClasses()) {
-			assert type != null;
+		List<@NonNull ContextDeclCS> contexts = new ArrayList<>();
+		for (org.eclipse.ocl.pivot.@NonNull Class type : ClassUtil.nullFree(object.getOwnedClasses())) {
 			ClassifierContextDeclCS classifierContext = context.visitDeclaration(ClassifierContextDeclCS.class, type);
 			if (classifierContext !=  null) {
 				contexts.add(classifierContext);
 			}
-			for (Operation operation : type.getOwnedOperations()) {
-				assert operation != null;
+			for (@NonNull Operation operation : ClassUtil.nullFree(type.getOwnedOperations())) {
 				OperationContextDeclCS operationContext = context.visitDeclaration(OperationContextDeclCS.class, operation);
 				if (operationContext !=  null) {
 					contexts.add(operationContext);
 				}
 			}
-			for (Property property : type.getOwnedProperties()) {
-				assert property != null;
+			for (@NonNull Property property : ClassUtil.nullFree(type.getOwnedProperties())) {
 				PropertyContextDeclCS propertyContext = context.visitDeclaration(PropertyContextDeclCS.class, property);
 				if (propertyContext !=  null) {
 					contexts.add(propertyContext);
@@ -307,8 +304,8 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 		ElementCS csElement;
 		assert object.eContainer() == null;
 		CompleteOCLDocumentCS csDocument = context.refreshElement(CompleteOCLDocumentCS.class, CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS, object);
-		List<org.eclipse.ocl.pivot.Package> allPackages = new ArrayList<org.eclipse.ocl.pivot.Package>();
-		List<Package> nestedPackages = object.getOwnedPackages();
+		List<org.eclipse.ocl.pivot.@NonNull Package> allPackages = new ArrayList<>();
+		List<org.eclipse.ocl.pivot.@NonNull Package> nestedPackages = ClassUtil.nullFree(object.getOwnedPackages());
 		assert nestedPackages != null;
 		gatherPackages(allPackages, nestedPackages);
 		context.refreshList(csDocument.getOwnedPackages(), context.visitDeclarations(PackageDeclarationCS.class, allPackages, null));

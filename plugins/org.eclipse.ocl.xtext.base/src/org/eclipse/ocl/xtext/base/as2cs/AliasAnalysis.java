@@ -19,7 +19,6 @@ import java.util.Set;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -36,6 +35,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 import org.eclipse.ocl.xtext.basecs.RootPackageCS;
@@ -44,7 +44,7 @@ import org.eclipse.ocl.xtext.basecs.RootPackageCS;
  * An AliasAnalysis is dynamically created to support the serialization
  * of cross-references following a Pivot to CS conversion. It ensures the
  * resource-wide uniqueness of aliases for package names.
- * 
+ *
  * Uniqueness is achieved with respect to all names to avoid the complexity
  * of considering which name usages are not actually conflicting.
  */
@@ -77,26 +77,26 @@ public class AliasAnalysis extends AdapterImpl
 			}
 		}
 		AliasAnalysis aliasAnalysis = new AliasAnalysis(resource, environmentFactory);
-		Set<org.eclipse.ocl.pivot.Package> localPackages = new HashSet<org.eclipse.ocl.pivot.Package>();
-		Set<org.eclipse.ocl.pivot.Package> otherPackages = new HashSet<org.eclipse.ocl.pivot.Package>();
+		Set<org.eclipse.ocl.pivot.@NonNull Package> localPackages = new HashSet<>();
+		Set<org.eclipse.ocl.pivot.@NonNull Package> otherPackages = new HashSet<>();
 		aliasAnalysis.computePackages(localPackages, otherPackages);
 		aliasAnalysis.computeAliases(localPackages, otherPackages);
 		return aliasAnalysis;
 	}
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	
+
 	/**
 	 * Mapping of all named elements from the name to the name usage,
 	 * which is non-null for a uniquely named element, or
 	 * null for a shared name.
 	 */
-	private @NonNull Map<String, Object> allNames = new HashMap<String, Object>();
-	
+	private @NonNull Map<@NonNull String, @Nullable Object> allNames = new HashMap<>();
+
 	/**
 	 * The known or assigned package aliases/
 	 */
-	private @NonNull Map<CompletePackage, String> allAliases = new HashMap<CompletePackage, String>();
+	private @NonNull Map<@NonNull CompletePackage, @Nullable String> allAliases = new HashMap<>();
 
 	public AliasAnalysis(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		resource.eAdapters().add(this);
@@ -106,27 +106,23 @@ public class AliasAnalysis extends AdapterImpl
 	/**
 	 * Assign a unique alias to each localPackage then to each otherPackage.
 	 */
-	private void computeAliases(@NonNull Set<org.eclipse.ocl.pivot.Package> localPackages,
-			@NonNull Set<org.eclipse.ocl.pivot.Package> otherPackages) {		
+	private void computeAliases(@NonNull Set<org.eclipse.ocl.pivot.@NonNull Package> localPackages,
+			@NonNull Set<org.eclipse.ocl.pivot.@NonNull Package> otherPackages) {
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		for (org.eclipse.ocl.pivot.Package localPackage : localPackages) {
-			if (localPackage != null) {
-				CompletePackage primaryPackage = metamodelManager.getCompletePackage(localPackage);
-				if ((primaryPackage.getNsPrefix() != null) || (primaryPackage.getOwningCompletePackage() == null)) {
-					if (!allAliases.containsKey(primaryPackage)) {
-						String alias = computeAlias(primaryPackage);
-						allAliases.put(primaryPackage, alias);
-					}
-				}
-			}
-		}
-		for (org.eclipse.ocl.pivot.Package otherPackage : otherPackages) {
-			if (otherPackage != null) {
-				CompletePackage primaryPackage = metamodelManager.getCompletePackage(otherPackage);
+		for (org.eclipse.ocl.pivot.@NonNull Package localPackage : localPackages) {
+			CompletePackage primaryPackage = metamodelManager.getCompletePackage(localPackage);
+			if ((primaryPackage.getNsPrefix() != null) || (primaryPackage.getOwningCompletePackage() == null)) {
 				if (!allAliases.containsKey(primaryPackage)) {
 					String alias = computeAlias(primaryPackage);
 					allAliases.put(primaryPackage, alias);
 				}
+			}
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Package otherPackage : otherPackages) {
+			CompletePackage primaryPackage = metamodelManager.getCompletePackage(otherPackage);
+			if (!allAliases.containsKey(primaryPackage)) {
+				String alias = computeAlias(primaryPackage);
+				allAliases.put(primaryPackage, alias);
 			}
 		}
 	}
@@ -147,7 +143,7 @@ public class AliasAnalysis extends AdapterImpl
 	/**
 	 * Determine a unique alias for primaryPackage/
 	 */
-	private String computeAlias(@NonNull CompletePackage primaryPackage) {
+	private @NonNull String computeAlias(@NonNull CompletePackage primaryPackage) {
 		String nsPrefix = primaryPackage.getNsPrefix();
 		String aliasBase = nsPrefix != null ? nsPrefix : getDefaultAlias(primaryPackage.getName());
 		int index = 0;
@@ -167,11 +163,11 @@ public class AliasAnalysis extends AdapterImpl
 	 * defined within the target resource all all otherPackages. Nested packages
 	 * of localPackages are excluded from localPackages.
 	 */
-	private void computePackages(@NonNull Set<org.eclipse.ocl.pivot.Package> localPackages,
-			@NonNull Set<org.eclipse.ocl.pivot.Package> otherPackages) {
+	private void computePackages(@NonNull Set<org.eclipse.ocl.pivot.@NonNull Package> localPackages,
+			@NonNull Set<org.eclipse.ocl.pivot.@NonNull Package> otherPackages) {
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		for (TreeIterator<EObject> tit = ((Resource)target).getAllContents(); tit.hasNext(); ) {
-			EObject eObject = tit.next();
+		assert target != null;
+		for (EObject eObject : new TreeIterable((Resource)target)) {
 			if (eObject instanceof ImportCS) {
 				String name = ((ImportCS)eObject).getName();
 				Namespace namespace = ((ImportCS)eObject).getReferredNamespace();
@@ -195,7 +191,7 @@ public class AliasAnalysis extends AdapterImpl
 						domainNamedElement = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)eObject);
 					}
 					else {
-//						domainNamedElement = metamodelManager.getPrimaryElement((NamedElement)eObject);
+						//						domainNamedElement = metamodelManager.getPrimaryElement((NamedElement)eObject);
 					}
 				}
 				String name = domainNamedElement.getName();
@@ -224,7 +220,7 @@ public class AliasAnalysis extends AdapterImpl
 			}
 		}
 		otherPackages.removeAll(localPackages);
-		Set<org.eclipse.ocl.pivot.Package> nestedPackages = new HashSet<org.eclipse.ocl.pivot.Package>();
+		Set<org.eclipse.ocl.pivot.Package> nestedPackages = new HashSet<>();
 		for (org.eclipse.ocl.pivot.Package localPackage : localPackages) {
 			EObject eContainer = localPackage.eContainer();
 			if (eContainer instanceof org.eclipse.ocl.pivot.Package) {
@@ -236,7 +232,7 @@ public class AliasAnalysis extends AdapterImpl
 		}
 		localPackages.removeAll(nestedPackages);
 	}
-	
+
 	public void dispose() {
 		target.eAdapters().remove(this);
 	}
@@ -255,7 +251,7 @@ public class AliasAnalysis extends AdapterImpl
 			if (alias != null) {
 				return alias;
 			}
-/*			MetamodelManager metamodelManager = ElementUtil.findMetamodelManager((Resource)getTarget());
+			/*			MetamodelManager metamodelManager = ElementUtil.findMetamodelManager((Resource)getTarget());
 			if (metamodelManager != null) {
 				eObject = metamodelManager.getPrimaryElement(eObject);
 				return allAliases.get(eObject);
@@ -269,7 +265,7 @@ public class AliasAnalysis extends AdapterImpl
 					hint = hint + "_" + counter;
 				}
 				allNames.put(hint, completePackage);
-				allAliases.put(completePackage, hint);				
+				allAliases.put(completePackage, hint);
 				return hint;
 			}
 		}
@@ -279,10 +275,10 @@ public class AliasAnalysis extends AdapterImpl
 	/**
 	 * Return the alias for eObject.
 	 */
-	public @NonNull Iterable<CompletePackage> getAliases() {
+	public @NonNull Iterable<@NonNull CompletePackage> getAliases() {
 		return allAliases.keySet();
 	}
-	
+
 	protected @NonNull String getDefaultAlias(@Nullable String name) {
 		if (name == null) {
 			return "anon";			// Never happens
@@ -308,12 +304,12 @@ public class AliasAnalysis extends AdapterImpl
 		return s.toString();
 	}
 
-	public @NonNull List<PathElement> getPath(@NonNull Element eObject) {
+	public @NonNull List<@NonNull PathElement> getPath(@NonNull Element eObject) {
 		EObject eContainer = eObject.eContainer();
 		if (eContainer == null) {
-			return new ArrayList<PathElement>();
+			return new ArrayList<>();
 		}
-		List<PathElement> result = getPath((Element) eContainer);
+		List<@NonNull PathElement> result = getPath((Element) eContainer);
 		if (eObject instanceof NamedElement) {
 			result.add(new PathElement(((NamedElement)eObject).getName(), eObject));
 		}
@@ -325,7 +321,7 @@ public class AliasAnalysis extends AdapterImpl
 		}
 		return result;
 	}
-	
+
 	@Override
 	public boolean isAdapterForType(Object type) {
 		return type == AliasAnalysis.class;
