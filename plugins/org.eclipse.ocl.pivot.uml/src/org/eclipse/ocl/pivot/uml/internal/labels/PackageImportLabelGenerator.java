@@ -26,7 +26,8 @@ public final class PackageImportLabelGenerator extends AbstractLabelGenerator<Pa
 
 	@Override
 	public void buildLabelFor(@NonNull Builder labelBuilder, @NonNull PackageImport object) {
-		String name = object.getImportedPackage().getName();
+		org.eclipse.uml2.uml.Package importedPackage = object.getImportedPackage();
+		String name = importedPackage != null ? importedPackage.getName() : null;
 		if (name != null)
 			labelBuilder.appendString(name);
 		else {
