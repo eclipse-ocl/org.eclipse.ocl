@@ -4,7 +4,7 @@
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.ocl.all.sdk.feature.group" version="5.2.0.v20160523-1914"/>
 <unit id="org.eclipse.ocl.examples.feature.group" version="6.1.0.v20160526-1513"/>
-<repository location="http://download.eclipse.org/releases/mars"/>
+<repository location="http://download.eclipse.org/releases/neon"/>
 </location>
 </locations>
 </target>
