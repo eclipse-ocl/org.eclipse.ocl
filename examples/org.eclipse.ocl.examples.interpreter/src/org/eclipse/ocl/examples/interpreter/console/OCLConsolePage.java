@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -874,26 +875,27 @@ public class OCLConsolePage
         public TargetMetamodel getTargetMetamodel() {
             return TargetMetamodel.Ecore;
         }
+
+		private EcoreEnvironmentFactory createEnvironmentFactory() {
+			Resource eResource = context.eResource();
+			ResourceSet resourceSet = eResource != null ? eResource.getResourceSet() : null;
+			EPackage.Registry packageRegistry = resourceSet != null ? resourceSet.getPackageRegistry() : null;
+			EPackage.Registry compositeRegistry = packageRegistry != null ? new DelegatingPackageRegistry(packageRegistry,
+			        EPackage.Registry.INSTANCE) : EPackage.Registry.INSTANCE;
+			return new EcoreEnvironmentFactory(compositeRegistry);
+		}
         
 	    @SuppressWarnings("unchecked")
 	    public OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> createOCL(ModelingLevel level) {
-            return OCL.newInstance(
-                new EcoreEnvironmentFactory(
-                    new DelegatingPackageRegistry(
-                            context.eResource().getResourceSet().getPackageRegistry(),
-                            EPackage.Registry.INSTANCE)));
+			EcoreEnvironmentFactory envFactory = createEnvironmentFactory();
+			return OCL.newInstance(envFactory);
 	    }
 	    
         @SuppressWarnings("unchecked")
         public OCL<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> createOCL(ModelingLevel level,
                 Resource res) {
-            
-            return OCL.newInstance(
-                new EcoreEnvironmentFactory(
-                    new DelegatingPackageRegistry(
-                            context.eResource().getResourceSet().getPackageRegistry(),
-                            EPackage.Registry.INSTANCE)),
-                res);
+			EcoreEnvironmentFactory envFactory = createEnvironmentFactory();
+			return OCL.newInstance(envFactory, res);
         }
         
 	    public Object getContextClassifier(EObject object) {
