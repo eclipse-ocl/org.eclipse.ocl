@@ -95,7 +95,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.Class caseClassifier(org.eclipse.uml2.uml.Classifier umlClassifier) {
+	public Object caseClassifier(org.eclipse.uml2.uml.Classifier umlClassifier) {
 		assert umlClassifier != null;
 		org.eclipse.ocl.pivot.Class asClass = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlClassifier);
 		List<org.eclipse.ocl.pivot.Class> asSuperClasses = new ArrayList<org.eclipse.ocl.pivot.Class>();
@@ -116,6 +116,11 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 			converter.refreshList(asClass.getSuperClasses(), asSuperClasses);
 		}
 		return asClass;
+	}
+
+	@Override
+	public Object caseDataType(org.eclipse.uml2.uml.DataType umlDataType) {
+		return super.caseClassifier(umlDataType);		// Redundant override needed for API compatibility
 	}
 
 	@Override
