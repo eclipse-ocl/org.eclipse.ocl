@@ -33,7 +33,7 @@ public class AS2CS extends AbstractConversion
 {	
 	public static interface Factory {
 		@NonNull BaseDeclarationVisitor createDeclarationVisitor(@NonNull AS2CSConversion converter);
-//		@NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope);
+		@NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope);
 		@NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope);
 
 		/**
@@ -49,7 +49,7 @@ public class AS2CS extends AbstractConversion
 			return new BaseDeclarationVisitor(converter);
 		}
 	
-//		@Override
+		@Override
 		public @NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
 			return createReferenceVisitor(converter, scope);
 		}

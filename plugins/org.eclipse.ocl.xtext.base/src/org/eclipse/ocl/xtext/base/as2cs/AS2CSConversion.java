@@ -254,8 +254,8 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			BaseReferenceVisitor expressionVisitor = expressionVisitorMap.get(eClass);
 			if ((expressionVisitor == null) && !expressionVisitorMap.containsKey(eClass)) {
 				Factory factory = converter.getFactory(eClass);
-				if (factory instanceof AS2CS.AbstractFactory) {
-					expressionVisitor = ((AS2CS.AbstractFactory)factory).createExpressionVisitor(this, null);
+				if (factory != null) {
+					expressionVisitor = factory.createExpressionVisitor(this, null);
 				}
 				else {
 					expressionVisitor = defaultExpressionVisitor;
@@ -266,8 +266,8 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		}
 		else {
 			Factory factory = converter.getFactory(eClass);
-			if (factory instanceof AS2CS.AbstractFactory) {
-				return ((AS2CS.AbstractFactory)factory).createExpressionVisitor(this, scope);
+			if (factory != null) {
+				return factory.createExpressionVisitor(this, scope);
 			}
 			else {
 				return defaultExpressionVisitor;
