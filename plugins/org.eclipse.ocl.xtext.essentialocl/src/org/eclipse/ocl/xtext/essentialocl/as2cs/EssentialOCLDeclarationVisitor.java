@@ -66,7 +66,9 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
@@ -372,7 +374,17 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	public @Nullable ElementCS visitCollectionLiteralExp(@NonNull CollectionLiteralExp asCollectionLiteralExp) {
 		CollectionLiteralExpCS csCollectionLiteralExp = EssentialOCLCSFactory.eINSTANCE.createCollectionLiteralExpCS();
 		csCollectionLiteralExp.setPivot(asCollectionLiteralExp);
-		csCollectionLiteralExp.setOwnedType((CollectionTypeCS) createTypeRefCS(asCollectionLiteralExp.getType()));
+		
+		Type asCollectionType = ClassUtil.nonNullState(asCollectionLiteralExp.getType());
+		CollectionTypeCS csCollectionType = context.visitReference(CollectionTypeCS.class, asCollectionType, null);
+//		Type asElementType = asCollectionType.getElementType();
+//		TypedRefCS csElementTypeRef = createTypeRefCS(asElementType);
+//		CollectionTypeCS csCollectionType = EssentialOCLCSFactory.eINSTANCE.createCollectionTypeCS();
+//		csCollectionType.setName(asCollectionType.getName());
+////		csCollectionType.setOwnedMultiplicity(value);
+//		csCollectionType.setOwnedType(csElementTypeRef);
+//		csCollectionType.setPivot(asCollectionType);
+		csCollectionLiteralExp.setOwnedType(csCollectionType);
 		List<CollectionLiteralPartCS> csOwnedParts = csCollectionLiteralExp.getOwnedParts();
 		for (CollectionLiteralPart asPart : asCollectionLiteralExp.getOwnedParts()) {
 			csOwnedParts.add(context.visitDeclaration(CollectionLiteralPartCS.class, asPart));
@@ -420,7 +432,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 
 	@Override
 	public ElementCS visitExpressionInOCL(@NonNull ExpressionInOCL object) {
-		OCLExpression bodyExpression = object.getOwnedBody();
+/*		OCLExpression bodyExpression = object.getOwnedBody();
 		if (bodyExpression != null) {
 			ExpSpecificationCS csElement = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, object);
 			String body = PrettyPrinter.print(bodyExpression);
@@ -432,7 +444,30 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			ExpSpecificationCS csElement = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, object);
 			csElement.setExprString(body);
 			return csElement;
+		} */
+		OCLExpression bodyExpression = object.getOwnedBody();
+		if (bodyExpression == null) {
+			try {
+				context.getMetamodelManager().parseSpecification(object);
+				bodyExpression = object.getOwnedBody();
+			} catch (ParserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		if (bodyExpression != null) {
+			ExpSpecificationCS csElement = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, object);
+			csElement.setOwnedExpression(createExpCS(bodyExpression));
+			return csElement;
+		}
+		String body = object.getBody();
+		if (body != null) {
+			ExpSpecificationCS csElement = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, object);
+			csElement.setExprString(body);
+			return csElement;
+		}
+//		ExpSpecificationCS csElement = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, object);
+//		csElement.setOwnedExpression(createExpCS(object.getOwnedBody()));
 		return null;
 	}
 
