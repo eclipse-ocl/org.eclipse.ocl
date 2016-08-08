@@ -40,13 +40,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/pivot/uml/internal/es2as/UML2ASReferenceSwitch.java" type="org.eclipse.ocl.pivot.uml.internal.es2as.UML2ASReferenceSwitch">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="caseClassifier(Classifier)"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/pivot/uml/internal/validation/LoadableConstraintProvider.java" type="org.eclipse.ocl.pivot.uml.internal.validation.LoadableConstraintProvider">
         <filter id="643846161">
             <message_arguments>
