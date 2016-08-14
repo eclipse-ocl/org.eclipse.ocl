@@ -81,11 +81,11 @@ import org.eclipse.ocl.pivot.values.ObjectValue;
  */
 public abstract class AbstractEnvironmentFactory extends AbstractCustomizable implements EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension
 {
-    private boolean traceEvaluation;
-    protected final @NonNull ProjectManager projectManager;
-    protected final @NonNull ResourceSet externalResourceSet;
-    protected final boolean externalResourceSetWasNull;
-    private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager;
+	private boolean traceEvaluation;
+	protected final @NonNull ProjectManager projectManager;
+	protected final @NonNull ResourceSet externalResourceSet;
+	protected final boolean externalResourceSetWasNull;
+	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
 	private final @NonNull StandardLibraryInternal standardLibrary;
 	private @Nullable ICSI2ASMapping csi2asMapping;
@@ -95,20 +95,20 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private final @NonNull CompleteModelInternal completeModel;
 
 	private /*@LazyNonNull*/ IdResolver idResolver;
-    
-    /**
-     * Count of the number of OCL instances that are using the EnvironmentFactory. auto-disposes on count down to zero.
-     * -ve once disposed.
-     */
-    private int attachCount = 0;
 
-    //    private List<WeakReference<Object>> attachers = null;;
-    
-    private @NonNull Technology technology = ASResourceFactoryRegistry.INSTANCE.getTechnology();
-    
-    /**
-     * Configuration of validation preferences.
-     */
+	/**
+	 * Count of the number of OCL instances that are using the EnvironmentFactory. auto-disposes on count down to zero.
+	 * -ve once disposed.
+	 */
+	private int attachCount = 0;
+
+	//    private List<WeakReference<Object>> attachers = null;;
+
+	private @NonNull Technology technology = ASResourceFactoryRegistry.INSTANCE.getTechnology();
+
+	/**
+	 * Configuration of validation preferences.
+	 */
 	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
 
 	/**
@@ -126,7 +126,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		else {
 			this.externalResourceSetWasNull = true;
 			this.externalResourceSet = externalResourceSet = new ResourceSetImpl();
-			projectManager.initializeResourceSet(externalResourceSet);			
+			projectManager.initializeResourceSet(externalResourceSet);
 			externalResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emof", new EMOFResourceFactoryImpl()); //$NON-NLS-1$
 			ASResourceFactoryRegistry.INSTANCE.configureResourceSet(externalResourceSet);
 		}
@@ -135,8 +135,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		this.completeEnvironment = createCompleteEnvironment();
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 		this.completeModel = completeEnvironment.getOwnedCompleteModel();
+		PivotUtil.initializeLoadOptionsToSupportSelfReferences(getResourceSet());
 	}
-	
+
 	@Override
 	public @NonNull EnvironmentFactoryAdapter adapt(@NonNull Notifier notifier) {
 		List<Adapter> eAdapters = ClassUtil.nonNullEMF(notifier.eAdapters());
@@ -191,10 +192,10 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			throw new IllegalStateException(getClass().getName() + " disposed");
 		}
 		attachCount++;
-//		if (attachers == null) {
-//			attachers = new ArrayList<WeakReference<Object>>();
-//		}
-//		attachers.add(new WeakReference<Object>(object));
+		//		if (attachers == null) {
+		//			attachers = new ArrayList<WeakReference<Object>>();
+		//		}
+		//		attachers.add(new WeakReference<Object>(object));
 	}
 
 	protected @Nullable PivotMetamodelManager basicGetMetamodelManager() {
@@ -252,7 +253,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		// can determine a more appropriate context from the context
 		// variable of the expression, to account for stereotype constraints
-//		context = HelperUtil.getConstraintContext(rootEnvironment, context, expression);
+		//		context = HelperUtil.getConstraintContext(rootEnvironment, context, expression);
 		ExecutorInternal executor = createExecutor(modelManager);
 		EvaluationEnvironment evaluationEnvironment = executor.initializeEvaluationEnvironment(expression);
 		Variable contextVariable = expression.getOwnedContext();
@@ -268,7 +269,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		return executor.getEvaluationVisitor();
 	}
-	
+
 	@Override
 	public @NonNull EvaluationVisitor createEvaluationVisitor(@NonNull EvaluationEnvironment evaluationEnvironment) {
 		ExecutorInternal executor = ((EvaluationEnvironment.EvaluationEnvironmentExtension)evaluationEnvironment).getExecutor();
@@ -326,7 +327,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public @NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException {
-    	PivotMetamodelManager metamodelManager = getMetamodelManager();
+		PivotMetamodelManager metamodelManager = getMetamodelManager();
 		Element asContext;
 		if (context instanceof Element) {
 			asContext =  (Element)context;
@@ -336,14 +337,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		if (asContext instanceof org.eclipse.ocl.pivot.Class) {
 			return new ClassContext(this, null, (org.eclipse.ocl.pivot.Class)asContext, null);
-        }
-        else if (asContext instanceof Operation) {
-    		return new OperationContext(this, null, (Operation)asContext, null);
-        }
-        else if (asContext instanceof Property) {
-        	return new PropertyContext(this, null, (Property)asContext);
-        }
-/*        else if (context instanceof EClassifier) {
+		}
+		else if (asContext instanceof Operation) {
+			return new OperationContext(this, null, (Operation)asContext, null);
+		}
+		else if (asContext instanceof Property) {
+			return new PropertyContext(this, null, (Property)asContext);
+		}
+		/*        else if (context instanceof EClassifier) {
         	org.eclipse.ocl.pivot.Class contextClass = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, context);
         	return new ClassContext(this, null, contextClass, null);
         }
@@ -359,7 +360,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
     			return new PropertyContext(this, null, asProperty);
     		}
         } */
-        return new ModelContext(this, null);
+		return new ModelContext(this, null);
 	}
 
 	/**
@@ -382,7 +383,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		return map;
 	}
-	
+
 	@Override
 	public synchronized void detach(Object object) {
 		if (attachCount < 0) {
@@ -391,14 +392,14 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (attachCount == 0) {
 			throw new IllegalStateException(getClass().getName() + " not attached");
 		}
-//		if (attachers != null) {
-//			for (WeakReference<Object> attacher : attachers) {
-//				if (attacher.get() == object) {
-//					attachers.remove(attacher);
-//					break;
-//				}
-//			}
-//		}
+		//		if (attachers != null) {
+		//			for (WeakReference<Object> attacher : attachers) {
+		//				if (attacher.get() == object) {
+		//					attachers.remove(attacher);
+		//					break;
+		//				}
+		//			}
+		//		}
 		if (--attachCount <= 0) {
 			dispose();
 		}
@@ -422,10 +423,10 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		EList<Adapter> externalResourceSetAdapters = externalResourceSet.eAdapters();
 		if (externalResourceSetWasNull || isGlobal) {
-//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
+			//			System.out.println("dispose CS " + ClassUtil.debugSimpleName(externalResourceSet));
 			projectManager.unload(externalResourceSet);
 			externalResourceSetAdapters.remove(projectManager);
-//			StandaloneProjectMap.dispose(externalResourceSet2);
+			//			StandaloneProjectMap.dispose(externalResourceSet2);
 			externalResourceSet.setPackageRegistry(null);
 			externalResourceSet.setResourceFactoryRegistry(null);
 			externalResourceSet.setURIConverter(null);
@@ -434,15 +435,15 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			}
 			for (Resource resource : new ArrayList<Resource>(externalResourceSet.getResources())) {
 				if (Thread.currentThread().getContextClassLoader() == null) {		// If finalizing, avoid NPE from EPackageRegistryImpl$Delegator.deegateRegistry()
-				    // This guard is needed to ensure that clear doesn't make the resource become loaded.
-				    //
-				    if (!resource.getContents().isEmpty())
-				    {
-				    	resource.getContents().clear();
-				    }
-				    resource.getErrors().clear();
-				    resource.getWarnings().clear();
-/*				    if (idToEObjectMap != null)
+					// This guard is needed to ensure that clear doesn't make the resource become loaded.
+					//
+					if (!resource.getContents().isEmpty())
+					{
+						resource.getContents().clear();
+					}
+					resource.getErrors().clear();
+					resource.getWarnings().clear();
+					/*				    if (idToEObjectMap != null)
 				    {
 				      idToEObjectMap.clear();
 				    }
@@ -456,7 +457,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				    {
 				      eObjectToExtensionMap.clear();
 				    } */
-					
+
 				}
 				else {
 					resource.unload();
@@ -464,7 +465,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				resource.eAdapters().clear();
 			}
 			externalResourceSetAdapters.clear();
-//			externalResourceSet = null;
+			//			externalResourceSet = null;
 		}
 		else {
 			for (Adapter adapter : externalResourceSetAdapters) {
@@ -496,25 +497,25 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@SuppressWarnings("unchecked")
 	public <T> @Nullable T getAdapter(java.lang.Class<T> adapterType) {
 		@Nullable T result;
-		
+
 		if (adapterType.isAssignableFrom(getClass())) {
 			result = (T) this;
 		} else {
 			result = null;
 		}
-		
+
 		return result;
 	}
 
 	/**
-     * Obtains client metamodel's classifier for the specified
-     * <code>context</code> object, which may be an instance of a classifier
-     * in the user model or may actually be a classifier in the user model.
-     * 
-     * @param context a context object or classifier
-     * @return the user model's classifier for this context object, or the
-     *     context itself if it is a classifier
-     */
+	 * Obtains client metamodel's classifier for the specified
+	 * <code>context</code> object, which may be an instance of a classifier
+	 * in the user model or may actually be a classifier in the user model.
+	 *
+	 * @param context a context object or classifier
+	 * @return the user model's classifier for this context object, or the
+	 *     context itself if it is a classifier
+	 */
 	protected org.eclipse.ocl.pivot.@NonNull Class getClassifier(@NonNull Object context) {
 		PivotMetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class dClass = getIdResolver().getStaticTypeOf(context);
@@ -584,7 +585,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	public @NonNull ProjectManager getProjectManager() {
 		return projectManager;
 	}
-	
+
 	@Override
 	public @NonNull ResourceSet getResourceSet() {
 		return externalResourceSet;
@@ -610,23 +611,23 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	/**
-     * Queries whether tracing of evaluation is enabled.  Tracing
-     * logs the progress of evaluation to the console, which may
-     * be of use in diagnosing problems.
-     * <p>
-     * In an Eclipse environment, tracing is also enabled by turning on the
-     * <tt>org.eclipse.ocl/debug/evaluation</tt> debug option. 
-     * </p>
-     * 
-     * @return whether evaluation tracing is enabled
-     * 
-     * @see #setEvaluationTracingEnabled(boolean)
+	 * Queries whether tracing of evaluation is enabled.  Tracing
+	 * logs the progress of evaluation to the console, which may
+	 * be of use in diagnosing problems.
+	 * <p>
+	 * In an Eclipse environment, tracing is also enabled by turning on the
+	 * <tt>org.eclipse.ocl/debug/evaluation</tt> debug option.
+	 * </p>
+	 *
+	 * @return whether evaluation tracing is enabled
+	 *
+	 * @see #setEvaluationTracingEnabled(boolean)
 	 * @since 1.1
-     */
+	 */
 	@Override
 	public boolean isEvaluationTracingEnabled() {
-        return traceEvaluation;
-    }
+		return traceEvaluation;
+	}
 
 	@Override
 	public EPackage loadEPackage(@NonNull EPackage ePackage) {
@@ -644,9 +645,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 			return bestFactory.importFromResource(this, resource, uri);
 		}
 		throw new ParserException("Cannot create pivot from '" + uri + "'");
-//		logger.warn("Cannot convert to pivot for package with URI '" + uri + "'");
+		//		logger.warn("Cannot convert to pivot for package with URI '" + uri + "'");
 	}
-	
+
 	public void resetSeverities() {
 		validationKey2severity = null;
 	}
@@ -655,24 +656,24 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	public void setCSI2ASMapping(ICSI2ASMapping csi2asMapping) {
 		this.csi2asMapping = csi2asMapping;
 	}
-	
-    /**
-     * Sets whether tracing of evaluation is enabled.  Tracing logs
-     * the progress of parsing to the console, which may be of use in diagnosing
-     * problems.
-     * <p>
-     * In an Eclipse environment, tracing is also enabled by turning on the
-     * <tt>org.eclipse.ocl/debug/evaluation</tt> debug option. 
-     * </p>
-     * 
-     * param b whether evaluation tracing is enabled
-     * 
-     * @see #isEvaluationTracingEnabled()
-     */
-    @Override
+
+	/**
+	 * Sets whether tracing of evaluation is enabled.  Tracing logs
+	 * the progress of parsing to the console, which may be of use in diagnosing
+	 * problems.
+	 * <p>
+	 * In an Eclipse environment, tracing is also enabled by turning on the
+	 * <tt>org.eclipse.ocl/debug/evaluation</tt> debug option.
+	 * </p>
+	 *
+	 * param b whether evaluation tracing is enabled
+	 *
+	 * @see #isEvaluationTracingEnabled()
+	 */
+	@Override
 	public void setEvaluationTracingEnabled(boolean b) {
-        traceEvaluation = b;
-    }
+		traceEvaluation = b;
+	}
 
 	@Override
 	public void setProject(@Nullable IProject project) {}
