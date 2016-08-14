@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -47,7 +47,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	protected final @NonNull CGPackage cgPackage;
 	protected ExpressionInOCL expInOcl;
 	protected Feature feature;
-	
+
 	public OCLinEcoreCG2JavaVisitor(@NonNull OCLinEcoreCodeGenerator codeGenerator,
 			@NonNull GenPackage genPackage, @NonNull CGPackage cgPackage) {
 		super(codeGenerator);
@@ -114,13 +114,13 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		}
 		else {
 			TypeDescriptor typeDescriptor = context.getTypeDescriptor(cgBody);
-//			String className = typeDescriptor.getClassName();
-//			Class<?> javaClass = typeDescriptor.getJavaClass();
+			//			String className = typeDescriptor.getClassName();
+			//			Class<?> javaClass = typeDescriptor.getJavaClass();
 			js.append("return ");
-//			if (returnClassName.contains("<")) {
-//				js.append("(" + returnClassName + ")");
-//			}
-//			js.appendValueName(cgBody);
+			//			if (returnClassName.contains("<")) {
+			//				js.append("(" + returnClassName + ")");
+			//			}
+			//			js.appendValueName(cgBody);
 			typeDescriptor.appendEcoreValue(js, returnClassName, cgBody);
 		}
 		js.append(";");
@@ -148,13 +148,13 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		if (genClassifierName == null) {
 			genClassifierName = "";
 		}
-//		String constraintLiteralName = CodeGenUtil.upperName(genClassifierName) + "__" + CodeGenUtil.upperName(ecoreConstraintName != null ? ecoreConstraintName : "");
-//		String validatorClass = genModelHelper.getQualifiedValidatorClassName(genPackage);
+		//		String constraintLiteralName = CodeGenUtil.upperName(genClassifierName) + "__" + CodeGenUtil.upperName(ecoreConstraintName != null ? ecoreConstraintName : "");
+		//		String validatorClass = genModelHelper.getQualifiedValidatorClassName(genPackage);
 
 		js.appendCommentWithOCL(null, asConstraint);
-		
-		
-/*		CGVariable cgEvaluator = null;
+
+
+		/*		CGVariable cgEvaluator = null;
 		for (CGValuedElement cgElement = cgBody; cgElement instanceof CGLetExp; cgElement = ((CGLetExp)cgElement).getIn()) {
 			CGLetExp cgLetExp = (CGLetExp)cgBody;
 			CGVariable cgVariable = cgLetExp.getInit();
@@ -174,7 +174,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			js.appendClassReference(PivotUtilInternal.class);
 			js.append(".getEvaluator(this);\n");
 		} */
-/*		if (cgBody instanceof CGLetExp) {
+		/*		if (cgBody instanceof CGLetExp) {
 			CGLetExp cgLetExp = (CGLetExp)cgBody;
 			CGVariable cgInit = cgLetExp.getInit();
 			CGValuedElement cgIn = cgLetExp.getIn();
@@ -204,20 +204,20 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		} */
 		//
 		js.appendLocalStatements(cgBody);
-//		CGInvalid cgInvalidValue = cgBody.getInvalidValue();
-//		if (cgInvalidValue  != null) {
-//			js.append("throw new ");
-//			js.appendValueName(cgInvalidValue);
-//		}
-//		else {
-			js.append("return Boolean.TRUE == ");
-			js.appendValueName(cgBody);
-//		    js.appendEcoreValue("boolean", cgBody);
-//		}
+		//		CGInvalid cgInvalidValue = cgBody.getInvalidValue();
+		//		if (cgInvalidValue  != null) {
+		//			js.append("throw new ");
+		//			js.appendValueName(cgInvalidValue);
+		//		}
+		//		else {
+		js.append("return Boolean.TRUE == ");
+		js.appendValueName(cgBody);
+		//		    js.appendEcoreValue("boolean", cgBody);
+		//		}
 		js.append(";");
 		return toString();
 
-/*		if (js.appendLocalStatements(cgBody)) {		// FieldingAnalyzer override ensures this is caught
+		/*		if (js.appendLocalStatements(cgBody)) {		// FieldingAnalyzer override ensures this is caught
 			if (cgBody.isTrue()) {
 				js.append("return true;");
 			}
@@ -291,8 +291,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return toString(); */
 	}
 
-	protected String getFragmentURI(@NonNull Element element) {
-		return EcoreUtil.getURI(element).fragment().toString();
+	protected @NonNull String getFragmentURI(@NonNull Element element) {
+		return String.valueOf(EcoreUtil.getURI(element).fragment());
 	}
 
 	protected @NonNull OCLinEcoreGlobalContext getGlobalContext() {
@@ -302,7 +302,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	protected @NonNull OCLinEcoreLocalContext getLocalContext() {
 		return ClassUtil.nonNullState((OCLinEcoreLocalContext) localContext);
 	}
-	
+
 	protected String getRuleName(@NonNull Constraint constraint) {
 		String name = constraint.getName();
 		return name != null ? name : "";

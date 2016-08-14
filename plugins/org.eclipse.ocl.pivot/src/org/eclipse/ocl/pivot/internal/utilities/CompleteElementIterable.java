@@ -34,7 +34,7 @@ public abstract class CompleteElementIterable<O,I> implements Iterable<I>
 		private final java.util.Iterator<? extends O> outerIterator;
 		private java.util.Iterator<I> innerIterator;
 		private @Nullable I nextValue;
-		
+
 		public Iterator(@NonNull Iterable<? extends O> iterables) {
 			outerIterator = iterables.iterator();
 			innerIterator = null;
@@ -68,13 +68,13 @@ public abstract class CompleteElementIterable<O,I> implements Iterable<I>
 		@Override
 		public boolean hasNext() {
 			return nextValue != null;
-//			if (innerIterator == null) {
-//				return false;
-//			}
-//			if (innerIterator.hasNext()) {
-//				return true;
-//			}
-//			return advance();
+			//			if (innerIterator == null) {
+			//				return false;
+			//			}
+			//			if (innerIterator.hasNext()) {
+			//				return true;
+			//			}
+			//			return advance();
 		}
 
 		@Override
@@ -90,7 +90,7 @@ public abstract class CompleteElementIterable<O,I> implements Iterable<I>
 			finally {
 				advance();
 			}
-//			return innerIterator != null ? getInnerValue(innerIterator.next()) : null;
+			//			return innerIterator != null ? getInnerValue(innerIterator.next()) : null;
 		}
 
 		@Override
@@ -98,23 +98,23 @@ public abstract class CompleteElementIterable<O,I> implements Iterable<I>
 			throw new IllegalStateException();
 		}
 	}
-	
+
 	protected final @NonNull Iterable<? extends O> iterables;
-	
+
 	public CompleteElementIterable(@NonNull Iterable<? extends O> iterables) {
 		this.iterables = iterables;
 	}
-	
+
 	/**
 	 * Return the iterables for an inner iteration over the iterable. A null
 	 * return may be used to indicate no inner iterations are necessary.
-	 * 
+	 *
 	 * @param iterable
 	 * @return the inner iterable or null for none.
 	 */
 	protected abstract Iterable<I> getInnerIterable(@NonNull O iterable);
 
-	protected I getInnerValue(@NonNull I element) {
+	protected @Nullable I getInnerValue(@NonNull I element) {
 		return element;
 	}
 

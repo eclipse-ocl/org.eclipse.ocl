@@ -61,13 +61,13 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  * An EnvironmentView provides a selective view of the environment visible at
  * some CS node.
- * 
+ *
  * The selection corresponds to an Environment lookup method as defined by the
  * OCL specification computed in accordance with the the Inherited Attributes.
- * 
+ *
  * The selective view is normally for just the single name required by the
  * lookUp, but may be for all names when a Completion Assist is required.
- * 
+ *
  * The EnvironmentView is computed on demand, rather than cached, since only
  * small parts of the overall environment are needed and caches may not remain
  * valid for long given the rapid recreation of CS nodes that occurs while
@@ -77,14 +77,14 @@ public class EnvironmentView
 {
 	public static abstract class Disambiguator</*@NonNull*/ T> implements Comparator<T>
 	{
-	    @Override
+		@Override
 		public int compare(/*@NonNull*/ T o1, /*@NonNull*/ T o2) {
-		    throw new UnsupportedOperationException();
-	    }
-	    
-	    public abstract int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull T o1, @NonNull T o2);
+			throw new UnsupportedOperationException();
+		}
+
+		public abstract int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull T o1, @NonNull T o2);
 	}
-	
+
 	private static final class ImplicitDisambiguator extends Disambiguator<@NonNull Object>
 	{
 		@Override
@@ -92,14 +92,14 @@ public class EnvironmentView
 			boolean match1IsImplicit = (match1 instanceof Property) && ((Property)match1).isIsImplicit();
 			boolean match2IsImplicit = (match2 instanceof Property) && ((Property)match2).isIsImplicit();
 			if (!match1IsImplicit) {
-				return match2IsImplicit ? 1 : 0;				// match2 inferior			
+				return match2IsImplicit ? 1 : 0;				// match2 inferior
 			}
 			else {
-				return match2IsImplicit ? 0 : -1;				// match1 inferior			
+				return match2IsImplicit ? 0 : -1;				// match1 inferior
 			}
 		}
 	}
-	
+
 	private static final class MetamodelMergeDisambiguator extends Disambiguator<@NonNull Feature>
 	{
 		@Override
@@ -129,10 +129,10 @@ public class EnvironmentView
 		@Override
 		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Operation match1, @NonNull Operation match2) {
 			if (isRedefinitionOf(match1, match2)) {
-				return 1;				// match2 inferior			
+				return 1;				// match2 inferior
 			}
 			if (isRedefinitionOf(match2, match1)) {
-				return -1;				// match1 inferior			
+				return -1;				// match1 inferior
 			}
 			return 0;
 		}
@@ -161,7 +161,7 @@ public class EnvironmentView
 			CompletePackageInternal completePackage1 = completeModel.getCompletePackage(match1);
 			CompletePackageInternal completePackage2 = completeModel.getCompletePackage(match2);
 			if (completePackage1 == completePackage2) {
-				return 1;				// match2 inferior			
+				return 1;				// match2 inferior
 			}
 			return 0;
 		}
@@ -172,10 +172,10 @@ public class EnvironmentView
 		@Override
 		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property match1, @NonNull Property match2) {
 			if (isRedefinitionOf(match1, match2)) {
-				return 1;				// match2 inferior			
+				return 1;				// match2 inferior
 			}
 			if (isRedefinitionOf(match2, match1)) {
-				return -1;				// match1 inferior			
+				return -1;				// match1 inferior
 			}
 			return 0;
 		}
@@ -195,14 +195,14 @@ public class EnvironmentView
 			return false;
 		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	private static final class MyList extends ArrayList<Object> {}
-	
+
 	private static final Logger logger = Logger.getLogger(EnvironmentView.class);
-	
-	private static @NonNull LinkedHashMap<Class<?>, List<Comparator<Object>>> disambiguatorMap =	// FIXME narrow API to Disambiguator
-			new LinkedHashMap<Class<?>, List<Comparator<Object>>>();
+
+	private static @NonNull LinkedHashMap<@NonNull Class<?>, @NonNull List<@NonNull Comparator<@NonNull Object>>> disambiguatorMap =	// FIXME narrow API to Disambiguator
+			new LinkedHashMap<>();
 
 	static {
 		addDisambiguator(Object.class, new ImplicitDisambiguator());
@@ -211,38 +211,38 @@ public class EnvironmentView
 		addDisambiguator(org.eclipse.ocl.pivot.Package.class, new MergedPackageDisambiguator());
 		addDisambiguator(Property.class, new PropertyDisambiguator());
 	}
-	
+
 	public static synchronized <T> void addDisambiguator(/*@NonNull*/ Class<T> targetClass, @NonNull Comparator<T> disambiguator) {
-		List<Comparator<Object>> disambiguators = disambiguatorMap.get(targetClass);
+		assert targetClass != null;
+		List<@NonNull Comparator<@NonNull Object>> disambiguators = disambiguatorMap.get(targetClass);
 		if (disambiguators == null) {
-			disambiguators = new ArrayList<Comparator<Object>>();
+			disambiguators = new ArrayList<>();
 			disambiguatorMap.put(targetClass, disambiguators);
 		}
 		@SuppressWarnings("unchecked")
-		Comparator<Object> castDisambiguator = (Comparator<Object>) disambiguator;
+		Comparator<@NonNull Object> castDisambiguator = (Comparator<@NonNull Object>) disambiguator;
 		disambiguators.add(castDisambiguator);
 	}
 
-	@SuppressWarnings("null")
-	public static @NonNull Iterable<Class<?>> getDisambiguatorKeys() {
+	public static @NonNull Iterable<@NonNull Class<?>> getDisambiguatorKeys() {
 		return disambiguatorMap.keySet();
 	}
 
-	public static @Nullable List<Comparator<Object>> getDisambiguators(@NonNull Class<?> key) {
+	public static @Nullable List<@NonNull Comparator<@NonNull Object>> getDisambiguators(@NonNull Class<?> key) {
 		return disambiguatorMap.get(key);
 	}
-		
+
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull EStructuralFeature reference;
 	private EClassifier requiredType;
 	private boolean isQualifier;
 	protected final @Nullable String name;
 
-	private final @NonNull Map<String, Object> contentsByName = new HashMap<String, Object>(); // Single Object or MyList
+	private final @NonNull Map<@NonNull String, Object> contentsByName = new HashMap<>(); // Single Object or MyList
 
 	private int contentsSize = 0; // Deep size of contentsByName;
 
-	private List<ScopeFilter> matchers = null;	// Prevailing filters for matching
+	private List<@NonNull ScopeFilter> matchers = null;	// Prevailing filters for matching
 
 	public EnvironmentView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EStructuralFeature reference, @Nullable String name) {
 		this.environmentFactory = environmentFactory;
@@ -307,16 +307,16 @@ public class EnvironmentView
 			String name2 = name;
 			if (name2 != null) {
 				for (@NonNull Operation operation : completeClass.getOperations(featureFilter, name2)) {
-//					if ((operation != null) /*&& (operation.isStatic() == selectStatic)*/) {
-						addElement(name2, operation);
-//					}
+					//					if ((operation != null) /*&& (operation.isStatic() == selectStatic)*/) {
+					addElement(name2, operation);
+					//					}
 				}
 			}
 			else {
 				for (@NonNull Operation operation : completeClass.getOperations(featureFilter)) {
-//					if ((operation != null) /*&& (operation.isStatic() == selectStatic)*/) {
-						addNamedElement(operation);
-//					}
+					//					if ((operation != null) /*&& (operation.isStatic() == selectStatic)*/) {
+					addNamedElement(operation);
+					//					}
 				}
 			}
 		}
@@ -401,10 +401,10 @@ public class EnvironmentView
 			}
 		}
 	}
-	
+
 	public void addAllProperties(org.eclipse.ocl.pivot.@NonNull Class type, @Nullable FeatureFilter featureFilter) {
 		if (accepts(PivotPackage.Literals.PROPERTY)
-			&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want properties when looking for NAMESPACE
+				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want properties when looking for NAMESPACE
 			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
 			CompleteClass completeClass = environmentFactory.getMetamodelManager().getCompleteClass(type);
 			String name2 = name;
@@ -423,7 +423,7 @@ public class EnvironmentView
 			}
 		}
 	}
-	
+
 	public void addAllStates(@NonNull Type type) {
 		if (accepts(PivotPackage.Literals.STATE)) {
 			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
@@ -497,7 +497,7 @@ public class EnvironmentView
 
 	/**
 	 * Add an element with an elementName to the view
-	 * 
+	 *
 	 * @param elementName
 	 *            name of element
 	 * @param element
@@ -535,14 +535,14 @@ public class EnvironmentView
 			element = ((CompletePackage)element).getPrimaryPackage();
 		}
 		else if (element instanceof org.eclipse.ocl.pivot.Package) {
-//			element = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package) element).getPivotPackage();
+			//			element = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package) element).getPivotPackage();
 		}
-//		else if (element instanceof org.eclipse.ocl.pivot.Package) {
-//			element = ((PackageServer) element).getPrimaryPackage();		// FIXME lose casts
-//		}
-//		else if (element instanceof TypeServer) {
-//			element = ((TypeServer) element).getPrimaryType();		// FIXME lose casts
-//		}
+		//		else if (element instanceof org.eclipse.ocl.pivot.Package) {
+		//			element = ((PackageServer) element).getPrimaryPackage();		// FIXME lose casts
+		//		}
+		//		else if (element instanceof TypeServer) {
+		//			element = ((TypeServer) element).getPrimaryType();		// FIXME lose casts
+		//		}
 		else if (element instanceof EObject) {
 			element = environmentFactory.getMetamodelManager().getPrimaryElement((EObject) element);		// FIXME lose casts
 		}
@@ -550,7 +550,7 @@ public class EnvironmentView
 			return;
 		}
 		if ((name != null) && (matchers != null)) {
-			for (ScopeFilter filter : matchers) {
+			for (@NonNull ScopeFilter filter : matchers) {
 				if (!filter.matches(this, element)) {
 					return;
 				}
@@ -637,20 +637,20 @@ public class EnvironmentView
 
 	public void addFilter(@NonNull ScopeFilter filter) {
 		if (matchers == null) {
-			matchers = new ArrayList<ScopeFilter>();
+			matchers = new ArrayList<>();
 		}
 		matchers.add(filter);
 	}
 
 	public void addImportedElement(@NonNull URI baseURI) {
-    	if (PivotUtilInternal.isASURI(baseURI)) {
-    		baseURI = PivotUtilInternal.getNonASURI(baseURI);
-    	}
+		if (PivotUtilInternal.isASURI(baseURI)) {
+			baseURI = PivotUtilInternal.getNonASURI(baseURI);
+		}
 		String name = getName();
 		if (name != null) {
 			@NonNull URI uri = URI.createURI(name).resolve(baseURI);
 			try {
-				Element importedElement = environmentFactory.getMetamodelManager().loadResource(uri, null, null);				
+				Element importedElement = environmentFactory.getMetamodelManager().loadResource(uri, null, null);
 				if (importedElement != null) {
 					addElement(name, importedElement);
 				}
@@ -723,7 +723,7 @@ public class EnvironmentView
 		ScopeView pivotScopeView = new PivotScopeView(environmentFactory, target, child, false);
 		return computeLookups(pivotScopeView);
 	}
-	
+
 	public int computeLookups(@NonNull ScopeView scopeView) {
 		ScopeView aScope = scopeView;
 		try {
@@ -757,7 +757,7 @@ public class EnvironmentView
 		if (contentsSize != 1) {
 			logger.warn("Unhandled ambiguous content for '" + name + "'");
 		}
-		for (Map.Entry<String, Object> entry : contentsByName.entrySet()) {
+		for (Map.Entry<@NonNull String, Object> entry : contentsByName.entrySet()) {
 			Object value = entry.getValue();
 			if (value instanceof MyList) {
 				MyList values = (MyList) value;
@@ -770,7 +770,7 @@ public class EnvironmentView
 		return null;
 	}
 
-	public @NonNull Set<Map.Entry<String, Object>> getEntries() {
+	public @NonNull Set<Map.Entry<@NonNull String, Object>> getEntries() {
 		return contentsByName.entrySet();
 	}
 
@@ -778,9 +778,9 @@ public class EnvironmentView
 		return environmentFactory;
 	}
 
-//	public @NonNull MetamodelManager getMetamodelManager() {
-//		return metamodelManager;
-//	}
+	//	public @NonNull MetamodelManager getMetamodelManager() {
+	//		return metamodelManager;
+	//	}
 
 	public @Nullable String getName() {
 		return name;
@@ -816,7 +816,7 @@ public class EnvironmentView
 		}
 		return true;
 	}
-	
+
 	public boolean isQualifier() {
 		return isQualifier;
 	}
@@ -830,7 +830,7 @@ public class EnvironmentView
 	public int resolveDuplicates() {
 		if ((contentsSize > 1) && (getName() != null)) {
 			int newSize = 0;
-			for (Map.Entry<String, Object> entry : contentsByName.entrySet()) {
+			for (Map.Entry<@NonNull String, Object> entry : contentsByName.entrySet()) {
 				Object listOrValue = entry.getValue();
 				if (listOrValue instanceof MyList) {
 					MyList values = (MyList) listOrValue;
@@ -844,7 +844,9 @@ public class EnvironmentView
 							int verdict = 0;
 							for (Class<?> key : disambiguatorMap.keySet()) {
 								if (key.isAssignableFrom(iClass) && key.isAssignableFrom(jClass)) {
-									for (Comparator<Object> comparator : disambiguatorMap.get(key)) {
+									List<Comparator<Object>> comparators = disambiguatorMap.get(key);
+									assert comparators != null;
+									for (Comparator<Object> comparator : comparators) {
 										if (comparator instanceof Disambiguator<?>) {
 											verdict = ((Disambiguator<@NonNull Object>)comparator).compare(environmentFactory, iValue, jValue);
 										}
@@ -898,7 +900,7 @@ public class EnvironmentView
 		StringBuilder s = new StringBuilder();
 		s.append(reference.getName());
 		s.append(" : "); //$NON-NLS-1$
-//		s.append(reference.getEType().getName());
+		//		s.append(reference.getEType().getName());
 		if (requiredType != null) {
 			s.append(requiredType.getName());
 		}
@@ -911,7 +913,7 @@ public class EnvironmentView
 		}
 		s.append("\" {"); //$NON-NLS-1$
 		String prefix = ""; //$NON-NLS-1$
-		for (String contentName : contentsByName.keySet()) {
+		for (@NonNull String contentName : contentsByName.keySet()) {
 			s.append(prefix);
 			s.append(contentName);
 			Object content = contentsByName.get(contentName);

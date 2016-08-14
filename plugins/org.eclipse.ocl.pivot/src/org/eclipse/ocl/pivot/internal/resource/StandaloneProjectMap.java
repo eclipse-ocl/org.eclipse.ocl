@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     E.D.Willink - initial API and implementation
- * 
+ *
  * The standalone functionality is heavily influenced by org.eclipse.emf.mwe.utils.StandaloneSetup.
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
@@ -120,9 +120,9 @@ import org.xml.sax.helpers.DefaultHandler;
  * <tt>new ProjectMap().initializeResourceSet(aResourceSet);</tt> <br>
  * or <tt>ProjectMap.getAdapter(aResourceSet);</tt> <br>
  * Thereafter EMF accesses to projects and bundles should just work.
- * 
+ *
  * <h4>Standalone Environment</h4>
- * 
+ *
  * A resolvable location is a physical location such as
  * <ul>
  * <li>
@@ -168,9 +168,9 @@ import org.xml.sax.helpers.DefaultHandler;
  * <tt>platform:/resource/<i>project</i></tt> URI mapping for each project and a
  * <tt>platform:/resource/<i>bundle</i></tt> to
  * <tt>platform:/plugin/<i>bundle</i></tt> URI mapping for each bundle.
- * 
+ *
  * <h4>Static Instances and Re-Use</h4>
- * 
+ *
  * No static <tt>INSTANCE</tt> is provided because different class loaders or
  * dynamic class path changes may result in stale content. Standalone
  * applications are strongly advised to create their own static instance in a
@@ -181,9 +181,9 @@ import org.xml.sax.helpers.DefaultHandler;
  * {@link #initializeResourceSet(ResourceSet)} if not already invoked and to
  * install the ProjectMap as a ResourceSet adapter allowing an invocation of
  * {@link #findAdapter(ResourceSet)} to find it for subsequent re-use.
- * 
+ *
  * <h4>Conflicts</h4>
- * 
+ *
  * Use of both generated and dynamically loaded models normally results in
  * obscure metamodel schizophrenia problems SyadaloneProjectMap allows a
  * ResourceLoadStrategy to be independently specified for each resource to select
@@ -197,18 +197,18 @@ import org.xml.sax.helpers.DefaultHandler;
  * Conflicts can only be diagnosed if the StandaloneProjectMap is aware of the conflict,
  * so useGeneratedResource must be invoked if a GeneratedPackage is used without being
  * loaded in the ResourceSet.
- * 
+ *
  * <h4>Shared Model</h4>
- * 
+ *
  * The classpath is analyzed to identify an IProjectDescriptor per project/bundle within which
  * a plugin.xml is analyzed to identify generated_package extension points leading to a
  * an IResourceDescriptor per genmodel and an IPackageDescriptor per nsURI/className within
  * the IResorceDescriptor. There is usually only one nsURI per genmodel but the greater
  * generality has to be accommodated. The foregoing constitute a shared model that can be re-used
  * by multiple applications, so long as the classpath content is unchanged.
- * 
+ *
  * <h4>Per-ResourceSet Model</h4>
- * 
+ *
  * The actual state is maintained on a per-ResourceSet basis with an IResourceLoadStatus and
  * one or more IPackageDescriptors for in use IResourceDescriptors and IPackageDescriptors. The
  * IResourceLoadStatus is confugured with an IResourceLoadStrategy and an IConflictHandler.
@@ -230,21 +230,21 @@ public class StandaloneProjectMap implements ProjectManager
 	public static final @NonNull TracingOption PROJECT_MAP_RESOLVE = new TracingOption(PLUGIN_ID, "projectMap/resolve");
 
 	{
-//		PROJECT_MAP_ADD_EPACKAGE.setState(true);
-//		PROJECT_MAP_ADD_GEN_MODEL.setState(true);
-//		PROJECT_MAP_ADD_GENERATED_PACKAGE.setState(true);
-//		PROJECT_MAP_ADD_URI_MAP.setState(true);
-//		PROJECT_MAP_CONFIGURE.setState(true);
-//		PROJECT_MAP_INSTALL.setState(true);
-//		PROJECT_MAP_RESOLVE.setState(true);
+		//		PROJECT_MAP_ADD_EPACKAGE.setState(true);
+		//		PROJECT_MAP_ADD_GEN_MODEL.setState(true);
+		//		PROJECT_MAP_ADD_GENERATED_PACKAGE.setState(true);
+		//		PROJECT_MAP_ADD_URI_MAP.setState(true);
+		//		PROJECT_MAP_CONFIGURE.setState(true);
+		//		PROJECT_MAP_INSTALL.setState(true);
+		//		PROJECT_MAP_RESOLVE.setState(true);
 	}
-	
+
 	/**
 	 * EPackageDescriptor is an EPackage.Descriptor that loads the appropriate EPackage to resolve a Namespace URI reference
 	 * to a generated or dynamically loaded EPackage in accordance with the configured ResourceLoadStrategy.
 	 */
 	protected static class EPackageDescriptor implements EPackage.Descriptor
-	{	
+	{
 		protected final @NonNull IPackageLoadStatus packageLoadStatus;	// The PackageLoadStatus of the required package.
 
 		protected EPackageDescriptor(@NonNull IPackageLoadStatus packageLoadStatus, EPackage.@NonNull Registry packageRegistry) {
@@ -305,7 +305,7 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	protected static abstract class AbstractResourceLoadStrategy implements IResourceLoadStrategy
-	{			
+	{
 		@Override
 		public void addedDynamicResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Resource resource) {
 			throw new UnsupportedOperationException();
@@ -356,7 +356,7 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void loadedDynamicResource(@NonNull IResourceLoadStatus packageLoadStatus, @NonNull Resource resource) {}
-		
+
 		@Override
 		public String toString() {
 			return getClass().getSimpleName();
@@ -377,12 +377,12 @@ public class StandaloneProjectMap implements ProjectManager
 			throw new UnsupportedOperationException();
 		}
 	}
-	
+
 	/**
 	 * The LoadedStrategy re-uses the already loaded EPackage.
 	 */
 	private static final class LoadedStrategy extends AbstractResourceLoadStrategy
-	{		
+	{
 		@Override
 		public void addedDynamicResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Resource resource) {
 			resourceLoadStatus.setResource(resource);
@@ -395,7 +395,7 @@ public class StandaloneProjectMap implements ProjectManager
 		public @Nullable EPackage basicGetEPackage(@NonNull IPackageLoadStatus packageLoadStatus) {
 			return getEPackage(packageLoadStatus);
 		}
-		
+
 		@Override
 		public @Nullable EPackage getEPackage(@NonNull IPackageLoadStatus packageLoadStatus) {
 			return packageLoadStatus.getFirstEPackage();
@@ -404,7 +404,7 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public void unloadedResource(@NonNull IResourceLoadStatus packageLoadStatus) {}
 	}
-	
+
 	/**
 	 * The LoadedAsGeneratedPackageStrategy re-uses the already loaded EPackage for namespace URI accesses,
 	 * and invokes the conflict handler for platform URI accesses.
@@ -415,14 +415,14 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void addedDynamicResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Resource resource) {
-//			throw new UnsupportedOperationException();
+			//			throw new UnsupportedOperationException();
 		}
 
 		@Override
 		public @Nullable EPackage basicGetEPackage(@NonNull IPackageLoadStatus packageLoadStatus) {
 			return getEPackage(packageLoadStatus);
 		}
-		
+
 		@Override
 		public @Nullable EPackage getEPackage(@NonNull IPackageLoadStatus packageLoadStatus) {
 			EPackage ePackage = packageLoadStatus.getFirstEPackage();
@@ -440,7 +440,7 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public void useGeneratedResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Resource resource) {}
 	}
-	
+
 	/**
 	 * The LoadedFirstAsDynamicResourceStrategy supports the using-model behaviour following a LoadFirstStrategy
 	 * that loaded a model.
@@ -456,13 +456,13 @@ public class StandaloneProjectMap implements ProjectManager
 		public @Nullable EPackage basicGetEPackage(@NonNull IPackageLoadStatus packageLoadStatus) {
 			return getEPackage(packageLoadStatus);
 		}
-		
+
 		@Override
 		public @Nullable EPackage getEPackage(@NonNull IPackageLoadStatus packageLoadStatus) {
 			EPackage ePackage = packageLoadStatus.getConflictingGeneratedPackage();
 			return returnEPackage(packageLoadStatus, ePackage);
 		}
-		
+
 		@Override
 		public void loadedDynamicResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Resource resource) {}
 
@@ -483,7 +483,7 @@ public class StandaloneProjectMap implements ProjectManager
 	public static final class LoadBothStrategy extends AbstractResourceLoadStrategy
 	{
 		public static final @NonNull IResourceLoadStrategy INSTANCE = new LoadBothStrategy();
-		
+
 		@Override
 		public void addedDynamicResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Resource resource) {
 			resourceLoadStatus.setResource(resource);
@@ -572,7 +572,7 @@ public class StandaloneProjectMap implements ProjectManager
 		public void handleConflictingDynamicResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull EPackage ePackage) {
 			resourceLoadStatus.getConflictingDynamicResource(ePackage);
 		}
-		
+
 		@Override
 		public @Nullable EPackage getEPackage(@NonNull IPackageLoadStatus packageLoadStatus) {
 			return loadEPackage(packageLoadStatus, false);
@@ -593,14 +593,14 @@ public class StandaloneProjectMap implements ProjectManager
 	public static final class LoadFirstStrategy extends AbstractResourceLoadStrategy
 	{
 		public static final @NonNull IResourceLoadStrategy INSTANCE = new LoadFirstStrategy();
-		
+
 		@Override
 		public void addedDynamicResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Resource resource) {
 			resourceLoadStatus.configureResourceSetURIResourceMap(resource);
 			resourceLoadStatus.setResourceLoadStrategy(LoadedFirstAsDynamicResourceStrategy.INSTANCE);
 			resourceLoadStatus.setResource(resource);
 		}
-		
+
 		@Override
 		public void addedGeneratedPackage(@NonNull IPackageLoadStatus packageLoadStatus, @NonNull EPackage ePackage) {
 			IResourceLoadStatus resourceLoadStatus = packageLoadStatus.getResourceLoadStatus();
@@ -640,7 +640,7 @@ public class StandaloneProjectMap implements ProjectManager
 	public static final class LoadDynamicResourceStrategy extends AbstractResourceLoadStrategy
 	{
 		public static final @NonNull IResourceLoadStrategy INSTANCE = new LoadDynamicResourceStrategy();
-		
+
 		@Override
 		public void addedDynamicResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Resource resource) {
 			resourceLoadStatus.setResource(resource);
@@ -648,7 +648,7 @@ public class StandaloneProjectMap implements ProjectManager
 			resourceLoadStatus.configureEPackageRegistry(resource);
 			resourceLoadStatus.setResourceLoadStrategy(LoadedStrategy.INSTANCE);
 		}
-		
+
 		@Override
 		public @Nullable EPackage getEPackage(@NonNull IPackageLoadStatus packageLoadStatus) {
 			return loadModel(packageLoadStatus);
@@ -657,19 +657,19 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public void unloadedResource(@NonNull IResourceLoadStatus packageLoadStatus) {}
 	}
-	
+
 	public static abstract class AbstractResourceLoadStatus implements IResourceLoadStatus, Adapter
 	{
 		protected final @NonNull IResourceDescriptor resourceDescriptor;
 		protected @Nullable ResourceSet resourceSet;
 		private final @NonNull Map<URI, PackageLoadStatus> nsURI2packageLoadStatus = new HashMap<URI, PackageLoadStatus>();
 		protected final EPackage.@NonNull Registry packageRegistry;
-		
+
 		/**
 		 * The optional handler for namespace/platform or platform/namespace metamodel schizophrenia.
 		 */
 		protected @Nullable IConflictHandler conflictHandler = MapToFirstConflictHandlerWithLog.INSTANCE;
-		
+
 		/**
 		 * The strategy to be used to resolve further URI to EPackage mappings.
 		 */
@@ -703,7 +703,7 @@ public class StandaloneProjectMap implements ProjectManager
 				nsURI2packageLoadStatus.put(packageDescriptor.getNsURI(), new PackageLoadStatus(this, packageDescriptor));
 			}
 		}
-		
+
 		@Override
 		public void configureEPackageRegistry(@NonNull Resource resource) {
 			ResourceSet resourceSet2 = resourceSet;
@@ -742,7 +742,7 @@ public class StandaloneProjectMap implements ProjectManager
 				resourceDescriptor.configureResourceSetURIResourceMap(resourceSet2, resource);
 			}
 		}
-		
+
 		@Override
 		public void dispose() {
 			resourceSet = null;
@@ -918,7 +918,7 @@ public class StandaloneProjectMap implements ProjectManager
 			}
 			resourceLoadStrategy.loadedDynamicResource(this, newResource);
 		}
-		
+
 		@Override
 		public void notifyChanged(Notification notification) {
 			if (notification.getNotifier() == target) {
@@ -969,7 +969,7 @@ public class StandaloneProjectMap implements ProjectManager
 					resource.load(inputStream, null);						// FIXME BUG 465326 this can load what was only created
 				} catch (Exception exception) {
 					handleLoadException(resource, ClassUtil.nonNullEMF(resource.getURI().toString()), exception);
-				} 
+				}
 			}
 		}
 
@@ -1007,7 +1007,7 @@ public class StandaloneProjectMap implements ProjectManager
 			}
 		}
 	}
-	
+
 	public static final class SinglePackageResourceLoadStatus extends AbstractResourceLoadStatus
 	{
 		public SinglePackageResourceLoadStatus(@NonNull SinglePackageResourceDescriptor packageDescriptor, @Nullable ResourceSet resourceSet) {
@@ -1015,7 +1015,7 @@ public class StandaloneProjectMap implements ProjectManager
 			install();
 		}
 	}
-	
+
 	/**
 	 * A DelegatedMultiplePackageResource may be installed in a ResourceSet.uriResourceMap so that the
 	 * appropriate generated EPackage is resolved as the fragment of a dynamically loaded
@@ -1028,7 +1028,7 @@ public class StandaloneProjectMap implements ProjectManager
 		protected final @NonNull IResourceLoadStatus resourceLoadStatus;
 		protected final @NonNull Iterable<PackageLoadStatus> packageLoadStatuses;
 		private final @NonNull Map<String, @NonNull EPackage> fragment2ePackage = new HashMap<String, @NonNull EPackage>();
-		
+
 		public DelegatedMultiplePackageResource(@NonNull URI uri, @NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Iterable<PackageLoadStatus> packageLoadStatuses) {
 			super(uri);
 			this.resourceLoadStatus = resourceLoadStatus;
@@ -1056,7 +1056,7 @@ public class StandaloneProjectMap implements ProjectManager
 					if (uriFragment.startsWith(uri)) {
 						ePackage = fragment2ePackage.get(uri);
 						assert ePackage != null;
-//							String uriSuffix = uriFragment.substring(uri.length());
+						//							String uriSuffix = uriFragment.substring(uri.length());
 						Resource resource = ePackage.eResource();
 						eObject = resource.getEObject(uriFragment);
 						if (eObject != null) {
@@ -1085,7 +1085,7 @@ public class StandaloneProjectMap implements ProjectManager
 			}
 		}
 	}
-	
+
 	/**
 	 * A DelegatedSinglePackageResource may be installed in a ResourceSet.uriResourceMap so that the
 	 * generated EPackage is resolved as a dynamically loaded resource.
@@ -1095,12 +1095,12 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	public static class DelegatedSinglePackageResource extends ResourceImpl
 	{
-		private static @NonNull EList<EObject> EMPTY_LIST = new BasicEList.UnmodifiableEList<EObject>(0, new Object[]{});
-		
+		private static @NonNull EList<@NonNull EObject> EMPTY_LIST = new BasicEList.UnmodifiableEList<@NonNull EObject>(0, new Object[]{});
+
 		protected final @NonNull IPackageLoadStatus packageLoadStatus;
 		private final @Nullable EPackage ePackage;
 		private final @Nullable Resource eResource;
-		
+
 		public DelegatedSinglePackageResource(@NonNull URI uri, @NonNull IPackageLoadStatus packageLoadStatus) {
 			super(uri);
 			this.packageLoadStatus = packageLoadStatus;
@@ -1110,7 +1110,7 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
-		public EList<@NonNull EObject> getContents() {
+		public @NonNull EList<@NonNull EObject> getContents() {
 			return eResource != null ? eResource.getContents() : EMPTY_LIST;
 		}
 
@@ -1137,7 +1137,7 @@ public class StandaloneProjectMap implements ProjectManager
 			return eResource != null ? eResource : this;
 		}
 	}
-	
+
 	public static class MultiplePackageResourceLoadStatus extends AbstractResourceLoadStatus
 	{
 		public MultiplePackageResourceLoadStatus(@NonNull MultiplePackageResourceDescriptor resourceDescriptor, @Nullable ResourceSet resourceSet) {
@@ -1145,14 +1145,14 @@ public class StandaloneProjectMap implements ProjectManager
 			install();
 		}
 	}
-	
+
 	public static final class PackageLoadStatus implements IPackageLoadStatus
 	{
 		protected final @NonNull AbstractResourceLoadStatus resourceLoadStatus;
 		protected final @NonNull IPackageDescriptor packageDescriptor;
-		
+
 		protected final @NonNull EPackageDescriptor namespaceURIDescriptor;
-		
+
 		/**
 		 * The EPackage resulting from the first loadEPackageByModelURI/loadEPackageByNsURI
 		 */
@@ -1173,7 +1173,7 @@ public class StandaloneProjectMap implements ProjectManager
 			this.packageDescriptor = packageDescriptor;
 			this.namespaceURIDescriptor = new EPackageDescriptor(this, resourceLoadStatus.getPackageRegistry());
 		}
-		
+
 		@Override
 		public void configureEPackageRegistry(@NonNull ResourceSet resourceSet) {
 			URI nsURI = packageDescriptor.getNsURI();
@@ -1186,7 +1186,7 @@ public class StandaloneProjectMap implements ProjectManager
 				}
 			}
 		}
-		
+
 		@Override
 		public void dispose() {
 			namespaceURIDescriptor.uninstall(resourceLoadStatus.getPackageRegistry());
@@ -1309,13 +1309,13 @@ public class StandaloneProjectMap implements ProjectManager
 	 * ProjectMap, which performs classpath scans, so it is assumed that
 	 * everything is visible. Re-use in a larger context may require a new
 	 * ProjectMap to be created.
-	 * 
+	 *
 	 * If a PackageDescriptor is installed under multiple URIs, the resource
 	 * created by the first load is shared by all subsequent resolutions.
-	 * 
+	 *
 	 * If a PackageDescriptor is set to useModel, the *.ecore file is loaded to
 	 * provide the EPackage, rather than the Java className.
-	 * 
+	 *
 	 * A PackageDescriptor maintains the declared context of a package which may be shared by
 	 * many ResourceSets. In contrast a PackageStatus maintains the actual state of a package
 	 * for a particular EPackage.Registry, each of which may have a distinct ResourceLoadStrategy
@@ -1324,42 +1324,42 @@ public class StandaloneProjectMap implements ProjectManager
 	public static abstract class AbstractResourceDescriptor implements IResourceDescriptor
 	{
 		/**
-		 * The bundle/project in which this package is defined (e.g. for org.eclipse.emf.ecore). 
+		 * The bundle/project in which this package is defined (e.g. for org.eclipse.emf.ecore).
 		 */
 		protected final @NonNull IProjectDescriptor projectDescriptor;
 
 		/**
-		 * The project-relative URI of the GenModel for the EPackage (e.g. model/Ecore.genmodel). 
+		 * The project-relative URI of the GenModel for the EPackage (e.g. model/Ecore.genmodel).
 		 */
 		protected final @NonNull URI genModelURI;
-		
+
 		/**
-		 * The filespace URI of the EPackage (e.g. file:/C:/Eclipse/plugins/org.eclipse.emf.ecore/model/Ecore.ecore). 
+		 * The filespace URI of the EPackage (e.g. file:/C:/Eclipse/plugins/org.eclipse.emf.ecore/model/Ecore.ecore).
 		 */
 		private @Nullable URI locationURI = null;
-		
+
 		/**
-		 * The platform resource URI of the EPackage (e.g. platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore). 
+		 * The platform resource URI of the EPackage (e.g. platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore).
 		 */
 		private @Nullable  URI platformResourceURI = null;
-		
+
 		/**
-		 * The platform plugin URI of the EPackage (e.g. platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore). 
+		 * The platform plugin URI of the EPackage (e.g. platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore).
 		 */
 		private @Nullable  URI platformPluginURI = null;
 
 		/**
-		 * The package descriptors for each of the multiple packages in the genmodel. 
+		 * The package descriptors for each of the multiple packages in the genmodel.
 		 */
 		protected final @NonNull List<IPackageDescriptor> packageDescriptors = new ArrayList<IPackageDescriptor>();
-		
+
 		private boolean hasEcoreModel = false;
-		
+
 		/**
 		 * The IResourceLoadStatus for each ResourceSet (null is the global 'ResourceSet' 'containing' all Java'd packages).
 		 */
 		private final @NonNull WeakHashMap<ResourceSet, IResourceLoadStatus> resourceSet2resourceLoadStatus = new WeakHashMap<ResourceSet, IResourceLoadStatus>();
-		
+
 		protected AbstractResourceDescriptor(@NonNull IProjectDescriptor projectDescriptor, @NonNull URI genModelURI, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
 			this.projectDescriptor = projectDescriptor;
 			this.genModelURI = genModelURI;
@@ -1377,7 +1377,7 @@ public class StandaloneProjectMap implements ProjectManager
 			}
 			projectDescriptor.addResourceDescriptor(this);
 		}
-		
+
 		@Override
 		public void addedDynamicResource(@NonNull ResourceSet resourceSet, @NonNull Resource resource) {
 			IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.get(resourceSet);
@@ -1389,7 +1389,7 @@ public class StandaloneProjectMap implements ProjectManager
 				resourceLoadStrategy.addedDynamicResource(resourceLoadStatus, resource);
 			}
 		}
-		
+
 		@Override
 		public void addedGeneratedPackage(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage) {
 			IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.get(resourceSet);
@@ -1410,7 +1410,7 @@ public class StandaloneProjectMap implements ProjectManager
 				resourceLoadStrategy.configure(resourceLoadStatus, conflictHandler);
 			}
 		}
-		
+
 		@Override
 		public void configureResourceSetURIResourceMap(@NonNull ResourceSet resourceSet, @NonNull Resource resource) {
 			Map<URI, Resource> uriResourceMap;
@@ -1445,12 +1445,12 @@ public class StandaloneProjectMap implements ProjectManager
 		public @NonNull URI getLocationURI() {
 			return ClassUtil.nonNullState(locationURI);
 		}
-		
+
 		@Override
 		public @NonNull List<? extends IPackageDescriptor> getPackageDescriptors() {
 			return packageDescriptors;
 		}
-		
+
 		@Override
 		public @NonNull URI getPlatformPluginURI() {
 			return ClassUtil.nonNullState(platformPluginURI);
@@ -1537,13 +1537,13 @@ public class StandaloneProjectMap implements ProjectManager
 	 * ProjectMap, which performs classpath scans, so it is assumed that
 	 * everything is visible. Re-use in a larger context may require a new
 	 * ProjectMap to be created.
-	 * 
+	 *
 	 * If a PackageDescriptor is installed under multiple URIs, the resource
 	 * created by the first load is shared by all subsequent resolutions.
-	 * 
+	 *
 	 * If a PackageDescriptor is set to useModel, the *.ecore file is loaded to
 	 * provide the EPackage, rather than the Java className.
-	 * 
+	 *
 	 * A PackageDescriptor maintains the declared context of a package which may be shared by
 	 * many ResourceSets. In contrast a PackageStatus maintains the actual state of a package
 	 * for a particular EPackage.Registry, each of which may have a distinct ResourceLoadStrategy
@@ -1557,15 +1557,15 @@ public class StandaloneProjectMap implements ProjectManager
 		protected final @NonNull IResourceDescriptor resourceDescriptor;
 
 		/**
-		 * The namespace URI of the EPackage (e.g. http://www.eclipse.org/emf/2002/Ecore). 
+		 * The namespace URI of the EPackage (e.g. http://www.eclipse.org/emf/2002/Ecore).
 		 */
 		protected final @NonNull URI namespaceURI;
 
 		/**
-		 * The Java class name of the compiled EPackage (e.g. org.eclipse.emf.ecore.EcorePackage). 
+		 * The Java class name of the compiled EPackage (e.g. org.eclipse.emf.ecore.EcorePackage).
 		 */
 		protected final @Nullable String className;
-		
+
 		public PackageDescriptor(@NonNull IResourceDescriptor resourceDescriptor, @NonNull URI nsURI, @Nullable String className) {
 			this.resourceDescriptor = resourceDescriptor;
 			this.namespaceURI = nsURI;
@@ -1590,7 +1590,7 @@ public class StandaloneProjectMap implements ProjectManager
 		public @NonNull URI getNsURI() {
 			return namespaceURI;
 		}
-		
+
 		public @NonNull List<? extends IPackageDescriptor> getPackageDescriptors() {
 			return Collections.singletonList(this);
 		}
@@ -1606,8 +1606,8 @@ public class StandaloneProjectMap implements ProjectManager
 			s.append(namespaceURI);
 			s.append(" => ");
 			s.append(className);
-//			s.append(", ");
-//			s.append(genModelURI);
+			//			s.append(", ");
+			//			s.append(genModelURI);
 			return s.toString();
 		}
 	}
@@ -1618,13 +1618,13 @@ public class StandaloneProjectMap implements ProjectManager
 	 * ProjectMap, which performs classpath scans, so it is assumed that
 	 * everything is visible. Re-use in a larger context may require a new
 	 * ProjectMap to be created.
-	 * 
+	 *
 	 * If a PackageDescriptor is installed under multiple URIs, the resource
 	 * created by the first load is shared by all subsequent resolutions.
-	 * 
+	 *
 	 * If a PackageDescriptor is set to useModel, the *.ecore file is loaded to
 	 * provide the EPackage, rather than the Java className.
-	 * 
+	 *
 	 * A PackageDescriptor maintains the declared context of a package which may be shared by
 	 * many ResourceSets. In contrast a PackageStatus maintains the actual state of a package
 	 * for a particular EPackage.Registry, each of which may have a distinct ResourceLoadStrategy
@@ -1644,15 +1644,15 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public String toString() {
 			StringBuilder s = new StringBuilder();
-//			s.append(namespaceURI);
-//			s.append(" => ");
-//			s.append(className);
-//			s.append(", ");
+			//			s.append(namespaceURI);
+			//			s.append(" => ");
+			//			s.append(className);
+			//			s.append(", ");
 			s.append(genModelURI);
-//			if (ecorePackageURI != null) {
-//				s.append(", ");
-//				s.append(ecorePackageURI);
-//			}
+			//			if (ecorePackageURI != null) {
+			//				s.append(", ");
+			//				s.append(ecorePackageURI);
+			//			}
 			return s.toString();
 		}
 	}
@@ -1663,13 +1663,13 @@ public class StandaloneProjectMap implements ProjectManager
 	 * ProjectMap, which performs classpath scans, so it is assumed that
 	 * everything is visible. Re-use in a larger context may require a new
 	 * ProjectMap to be created.
-	 * 
+	 *
 	 * If a PackageDescriptor is installed under multiple URIs, the resource
 	 * created by the first load is shared by all subsequent resolutions.
-	 * 
+	 *
 	 * If a PackageDescriptor is set to useModel, the *.ecore file is loaded to
 	 * provide the EPackage, rather than the Java className.
-	 * 
+	 *
 	 * A PackageDescriptor maintains the declared context of a package which may be shared by
 	 * many ResourceSets. In contrast a PackageStatus maintains the actual state of a package
 	 * for a particular EPackage.Registry, each of which may have a distinct ResourceLoadStrategy
@@ -1677,7 +1677,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	public static final class MultiplePackageResourceDescriptor extends AbstractResourceDescriptor
 	{
-		
+
 		public MultiplePackageResourceDescriptor(@NonNull ProjectDescriptor projectDescriptor, @NonNull URI genModelURI, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
 			super(projectDescriptor, genModelURI, nsURI2className);
 		}
@@ -1700,13 +1700,13 @@ public class StandaloneProjectMap implements ProjectManager
 				isFirst = false;
 			}
 			s.append("} => ");
-//			s.append(className);
-//			s.append(", ");
+			//			s.append(className);
+			//			s.append(", ");
 			s.append(genModelURI);
-//			if (ecorePackageURI != null) {
-//				s.append(", ");
-//				s.append(ecorePackageURI);
-//			}
+			//			if (ecorePackageURI != null) {
+			//				s.append(", ");
+			//				s.append(ecorePackageURI);
+			//			}
 			return s.toString();
 		}
 	}
@@ -1904,8 +1904,8 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			 int size = elements.size();
-			 if (genPackagesTag.equals(qName)) {
+			int size = elements.size();
+			if (genPackagesTag.equals(qName)) {
 				if ((size == 1) && genmodelTag.equals(elements.elementAt(0))) {
 					String ecorePackage = attributes.getValue(ecorePackageAttribute);
 					if (ecorePackage != null) {
@@ -1996,7 +1996,7 @@ public class StandaloneProjectMap implements ProjectManager
 				}
 			}
 		}
-		
+
 		@Override
 		public @NonNull IResourceDescriptor createResourceDescriptor(@NonNull String genModel, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
 			URI absoluteGenModelURI = URI.createURI(genModel).resolve(locationURI);
@@ -2134,14 +2134,14 @@ public class StandaloneProjectMap implements ProjectManager
 			return name + " => " + locationURI.toString();
 		}
 	}
-	
+
 	/**
 	 * MapToFirstConflictHandler resolves conflicts by returning the first loaded EPackage.
 	 */
 	public static class MapToFirstConflictHandler implements IConflictHandler
 	{
 		public static final @NonNull IConflictHandler INSTANCE = new MapToFirstConflictHandler();
-		
+
 		@Override
 		public @Nullable EPackage handleConflictingGeneratedPackage(@NonNull IPackageLoadStatus packageLoadStatus, @NonNull Resource resource) {
 			return packageLoadStatus.getFirstEPackage();
@@ -2152,14 +2152,14 @@ public class StandaloneProjectMap implements ProjectManager
 			return ePackage;
 		}
 	}
-	
+
 	/**
 	 * MapToFirstConflictHandler resolves conflicts by returning the first loaded EPackage.
 	 */
 	public static class MapToFirstConflictHandlerWithLog implements IConflictHandler
 	{
 		public static final @NonNull IConflictHandler INSTANCE = new MapToFirstConflictHandlerWithLog();
-		
+
 		@Override
 		public @Nullable EPackage handleConflictingGeneratedPackage(@NonNull IPackageLoadStatus packageLoadStatus, @NonNull Resource resource) {
 			EPackage firstEPackage = packageLoadStatus.getFirstEPackage();
@@ -2179,7 +2179,7 @@ public class StandaloneProjectMap implements ProjectManager
 			return ePackage;
 		}
 	}
-	
+
 	/**
 	 * Return any StandaloneProjectMap already installed as an adapter on a
 	 * <tt>resourceSet</tt>. Returns null if there is no such adapter.
@@ -2198,7 +2198,7 @@ public class StandaloneProjectMap implements ProjectManager
 		StandaloneProjectMap adapter = findAdapter(resourceSet);
 		if (adapter == null) {
 			adapter = new StandaloneProjectMap(false);
-//			resourceSet.eAdapters().add(adapter);
+			//			resourceSet.eAdapters().add(adapter);
 			adapter.initializeResourceSet(resourceSet);
 		}
 		return adapter;
@@ -2224,8 +2224,8 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	public static Resource.Factory.Registry getResourceFactoryRegistry(@Nullable ResourceSet resourceSet) {
 		return resourceSet != null
-			? resourceSet.getResourceFactoryRegistry()
-			: Resource.Factory.Registry.INSTANCE;
+				? resourceSet.getResourceFactoryRegistry()
+					: Resource.Factory.Registry.INSTANCE;
 	}
 
 	/**
@@ -2307,7 +2307,7 @@ public class StandaloneProjectMap implements ProjectManager
 		if (liveStandaloneProjectMaps != null) {
 			liveStandaloneProjectMaps.put(this, null);
 			PivotUtilInternal.debugPrintln("Create " + getClass().getSimpleName()
-				+ "@" + Integer.toHexString(System.identityHashCode(this)));	
+				+ "@" + Integer.toHexString(System.identityHashCode(this)));
 		}
 	}
 
@@ -2346,15 +2346,15 @@ public class StandaloneProjectMap implements ProjectManager
 	protected void finalize() throws Throwable {
 		if (liveStandaloneProjectMaps != null) {
 			PivotUtilInternal.debugPrintln("Finalize " + getClass().getSimpleName()
-				+ "@" + Integer.toHexString(System.identityHashCode(this)));		
+				+ "@" + Integer.toHexString(System.identityHashCode(this)));
 			List<StandaloneProjectMap> keySet = new ArrayList<StandaloneProjectMap>(liveStandaloneProjectMaps.keySet());
 			if (!keySet.isEmpty()) {
 				StringBuilder s = new StringBuilder();
 				s.append(" live");
 				for (StandaloneProjectMap projectMap : keySet) {
-					s.append(" @" + Integer.toHexString(System.identityHashCode(projectMap)));		
+					s.append(" @" + Integer.toHexString(System.identityHashCode(projectMap)));
 				}
-				System.out.println(s);		
+				System.out.println(s);
 			}
 		}
 	}
@@ -2534,7 +2534,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 * {@link ResourceSet#getURIConverter()} are initialized so that
 	 * <tt>platform:/resource/<i>project</i></tt> and
 	 * <tt>platform:/plugin/<i>project</i></tt> are useable..
-	 * 
+	 *
 	 * A null ResourceSet may be used to provoke initialization of the global
 	 * EPackage.Registry.INSTANCE and URIConverter.URI_MAP.
 	 */
@@ -2578,7 +2578,7 @@ public class StandaloneProjectMap implements ProjectManager
 	@Override
 	public boolean isAdapterForType(Object type) {
 		return (type instanceof Class<?>)
-			&& ((Class<?>) type).isAssignableFrom(StandaloneProjectMap.class);
+				&& ((Class<?>) type).isAssignableFrom(StandaloneProjectMap.class);
 	}
 
 	@Override
@@ -2638,7 +2638,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 * entries in the ResourceSet's uriResourceMap and install a listener to detect when the Resource is loaded.
 	 */
 	protected void notifyAddedDynamicResource(@NonNull ResourceSet resourceSet, @NonNull Resource resource) {
-//		resource.eAdapters().add(this);
+		//		resource.eAdapters().add(this);
 		if (resourceSet instanceof ResourceSetImpl) {
 			Map<URI, IResourceDescriptor> uri2resource2 = uri2resource;
 			if (uri2resource2 != null) {

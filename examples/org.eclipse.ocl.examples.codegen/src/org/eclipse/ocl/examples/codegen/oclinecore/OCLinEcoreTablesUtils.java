@@ -83,32 +83,31 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.xtext.util.Strings;
 
 public class OCLinEcoreTablesUtils
-{	
-	public Comparator<ParameterTypes> templateBindingNameComparator = new Comparator<ParameterTypes>()
+{
+	public Comparator<@NonNull ParameterTypes> templateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
 	{
 		@Override
-		public int compare(ParameterTypes o1, ParameterTypes o2) {
-			assert o1 != null && o2 != null;
+		public int compare(@NonNull ParameterTypes o1, @NonNull ParameterTypes o2) {
 			String n1 = getTemplateBindingsName(o1);
 			String n2 = getTemplateBindingsName(o2);
 			return n1.compareTo(n2);
 		}
 	};
 
-	public static Comparator<Nameable> nameComparator = new Comparator<Nameable>()
+	public static Comparator<@NonNull Nameable> nameComparator = new Comparator<@NonNull Nameable>()
 	{
 		@Override
-		public int compare(Nameable o1, Nameable o2) {
+		public int compare(@NonNull Nameable o1, @NonNull Nameable o2) {
 			String n1 = String.valueOf(o1.getName());
 			String n2 = String.valueOf(o2.getName());
 			return n1.compareTo(n2);
 		}
 	};
 
-	public static final @NonNull Comparator<Property> propertyComparator = new Comparator<Property>()
+	public static final @NonNull Comparator<@NonNull Property> propertyComparator = new Comparator<@NonNull Property>()
 	{
 		@Override
-		public int compare(Property p1, Property p2) {
+		public int compare(@NonNull Property p1, @NonNull Property p2) {
 			boolean b1 = p1.isIsImplicit();
 			boolean b2 = p2.isIsImplicit();
 			if (b1 != b2) {
@@ -142,12 +141,11 @@ public class OCLinEcoreTablesUtils
 			}
 		}
 	};
-	
-	public static Comparator<Operation> signatureComparator = new Comparator<Operation>()
+
+	public static Comparator<@NonNull Operation> signatureComparator = new Comparator<@NonNull Operation>()
 	{
 		@Override
-		public int compare(Operation o1, Operation o2) {
-			assert o1 != null && o2 != null;
+		public int compare(@NonNull Operation o1, @NonNull Operation o2) {
 			String n1 = String.valueOf(getSignature(o1));
 			String n2 = String.valueOf(getSignature(o2));
 			return n1.compareTo(n2);
@@ -161,7 +159,7 @@ public class OCLinEcoreTablesUtils
 			if (eClassifier != null) {
 				return genPackage;
 			}
-		}		
+		}
 		return null;
 	}
 
@@ -172,7 +170,7 @@ public class OCLinEcoreTablesUtils
 			if (eClassifier != null) {
 				return genPackage;
 			}
-		}		
+		}
 		return null;
 	}
 
@@ -206,9 +204,9 @@ public class OCLinEcoreTablesUtils
 			return name;
 		}
 	}
-	
+
 	public static @NonNull Boolean isBuiltInType(@NonNull Type type) {
-//		System.out.println(ClassUtil.debugSimpleName(type) + " + " + ClassUtil.debugSimpleName(type.getTypeId()) + " + " + type.getTypeId());
+		//		System.out.println(ClassUtil.debugSimpleName(type) + " + " + ClassUtil.debugSimpleName(type.getTypeId()) + " + " + type.getTypeId());
 		return type.getTypeId() instanceof BuiltInTypeId;
 	}
 
@@ -219,15 +217,15 @@ public class OCLinEcoreTablesUtils
 		assert genPackage != null;
 		return genPackage;
 	}
-	
+
 	public static class CodeGenString
 	{
 		private final @NonNull StringBuilder s = new StringBuilder();
-		private @NonNull Map<@NonNull String, @Nullable String> classReferences = new HashMap<@NonNull String, @Nullable String>();
-		
-		protected final @NonNull Map<Type, String> typeNameMap = new HashMap<Type, String>();
-		protected final @NonNull Set<String> typeNameUse = new HashSet<String>();
-		
+		private @NonNull Map<@NonNull String, @Nullable String> classReferences = new HashMap<>();
+
+		protected final @NonNull Map<Type, String> typeNameMap = new HashMap<>();
+		protected final @NonNull Set<String> typeNameUse = new HashSet<>();
+
 		public void append(@Nullable String string) {
 			if (string != null) {
 				s.append(string);
@@ -245,9 +243,9 @@ public class OCLinEcoreTablesUtils
 		}
 
 		public void appendClassReference(@NonNull Class<?> referencedClass) {
-//			s.append("<%");
+			//			s.append("<%");
 			s.append(referencedClass.getSimpleName());
-//			s.append("%>");
+			//			s.append("%>");
 			addClassReference(referencedClass);
 		}
 
@@ -260,9 +258,9 @@ public class OCLinEcoreTablesUtils
 				s.append(key);
 			}
 			else {
-//				s.append("<%");
+				//				s.append("<%");
 				s.append(referencedClass);
-//				s.append("%>");
+				//				s.append("%>");
 			}
 			addClassReference(key, referencedClass);
 		}
@@ -291,12 +289,12 @@ public class OCLinEcoreTablesUtils
 
 		/**
 		 * Append the encoded name of a type with a suffix if disambiguation acros packages is required.
-		 * @param metamodelManager 
+		 * @param metamodelManager
 		 */
 		public void appendUnscopedTypeName(@NonNull PivotMetamodelManager metamodelManager, @NonNull Type theType) {
 			s.append(getTypeName(metamodelManager.getPrimaryType(theType)));
 		}
-		
+
 		private @NonNull String getTypeName(@NonNull Type theType) {
 			String name = typeNameMap.get(theType);
 			if (name != null) {
@@ -317,7 +315,7 @@ public class OCLinEcoreTablesUtils
 		}
 
 		public @NonNull List<String> getClassReferences() {
-			List<String> names = new ArrayList<String>(classReferences.values());
+			List<String> names = new ArrayList<>(classReferences.values());
 			Collections.sort(names);
 			return names;
 		}
@@ -331,7 +329,7 @@ public class OCLinEcoreTablesUtils
 		public @NonNull String rewriteManagedImports(@NonNull String source)
 		{
 			return ImportUtils.resolveImports(source, classReferences, true);
-/*			int iMax = source.length();
+			/*			int iMax = source.length();
 			int iStart = 0;
 			StringBuilder s = new StringBuilder();
 			while (true) {
@@ -385,7 +383,7 @@ public class OCLinEcoreTablesUtils
 			@SuppressWarnings("null")@NonNull String string = s.toString();
 			return string; */
 		}
-		
+
 		@Override
 		public @NonNull String toString() {
 			return s.toString();
@@ -405,10 +403,10 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-//			TemplateParameter owningTemplateParameter = type.isTemplateParameter();
-//			if (owningTemplateParameter == null) {
-				type.accept(emitQualifiedLiteralVisitor);
-/*			}
+			//			TemplateParameter owningTemplateParameter = type.isTemplateParameter();
+			//			if (owningTemplateParameter == null) {
+			type.accept(emitQualifiedLiteralVisitor);
+			/*			}
 			else if (owningTemplateParameter.getSignature().getTemplate() instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class containerType = (org.eclipse.ocl.pivot.Class) owningTemplateParameter.getSignature().getTemplate();
 				assert containerType != null;
@@ -445,7 +443,7 @@ public class OCLinEcoreTablesUtils
 				}
 			} */
 			return null;
-		}		
+		}
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
@@ -502,7 +500,7 @@ public class OCLinEcoreTablesUtils
 			}
 			s.append(")");
 			return null;
-		}		
+		}
 
 		@Override
 		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter type) {
@@ -543,7 +541,7 @@ public class OCLinEcoreTablesUtils
 				}
 			}
 			return null;
-		}		
+		}
 	}
 
 	public class EmitLiteralVisitor extends AbstractExtendingVisitor<Object, Object>
@@ -562,12 +560,12 @@ public class OCLinEcoreTablesUtils
 			s.append("Types.");
 			s.appendScopedTypeName(type);
 			return null;
-		}		
+		}
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
 			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(type);
-//			s.appendClassReference(getQualifiedTablesClassName(unspecializedType));
+			//			s.appendClassReference(getQualifiedTablesClassName(unspecializedType));
 			s.append("Types.");
 			s.appendScopedTypeName(unspecializedType);
 			return null;
@@ -585,7 +583,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitEnumerationLiteral(@NonNull EnumerationLiteral enumerationLiteral) {
 			Enumeration enumeration = ClassUtil.nonNullModel(enumerationLiteral.getOwningEnumeration());
-//			s.appendClassReference(getQualifiedTablesClassName(enumeration));
+			//			s.appendClassReference(getQualifiedTablesClassName(enumeration));
 			s.append("EnumerationLiterals.");
 			s.appendScopedTypeName(enumeration);
 			s.append("__");
@@ -596,7 +594,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType type) {
 			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(type);
-//			s.appendClassReference(getQualifiedTablesClassName(unspecializedType));
+			//			s.appendClassReference(getQualifiedTablesClassName(unspecializedType));
 			s.append("Types.");
 			s.appendScopedTypeName(unspecializedType);
 			return null;
@@ -636,9 +634,9 @@ public class OCLinEcoreTablesUtils
 		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter type) {
 			s.append("null");
 			return null;
-		}		
+		}
 	}
-	
+
 	public class EmitQualifiedLiteralVisitor extends EmitLiteralVisitor
 	{
 		protected EmitQualifiedLiteralVisitor(@NonNull Object context) {
@@ -656,7 +654,7 @@ public class OCLinEcoreTablesUtils
 			s.append(".Types.");
 			s.appendScopedTypeName(type);
 			return null;
-		}		
+		}
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType object) {
@@ -706,10 +704,10 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitTupleType(@NonNull TupleType type) {
 			s.appendClassReference(getQualifiedTablesClassName(type));
-			s.append(".tuple_type_");			// 
+			s.append(".tuple_type_");			//
 			s.appendUnscopedTypeName(metamodelManager, type);
 			return null;
-//			[ast.getTablesClassName(genPackage).getPrefixedSymbolName('tuple_type_')/][/template]
+			//			[ast.getTablesClassName(genPackage).getPrefixedSymbolName('tuple_type_')/][/template]
 		}
 	}
 
@@ -722,9 +720,9 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull DeclareParameterTypeVisitor declareParameterTypeVisitor = new DeclareParameterTypeVisitor(s);
 	protected final @NonNull EmitLiteralVisitor emitLiteralVisitor = new EmitLiteralVisitor(s);
 	protected final @NonNull EmitQualifiedLiteralVisitor emitQualifiedLiteralVisitor = new EmitQualifiedLiteralVisitor(s);
-	protected final @NonNull Iterable<org.eclipse.ocl.pivot.Class> activeClassesSortedByName;
-	protected final @NonNull Map<ParameterTypes, String> templateBindingsNames = new HashMap<ParameterTypes, String>();
-	
+	protected final @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByName;
+	protected final @NonNull Map<@NonNull ParameterTypes, String> templateBindingsNames = new HashMap<>();
+
 
 	protected OCLinEcoreTablesUtils(@NonNull GenPackage genPackage) {
 		this.genPackage = genPackage;
@@ -739,19 +737,19 @@ public class OCLinEcoreTablesUtils
 		activeClassesSortedByName = getActiveClassesSortedByName(pPackage);
 	}
 
-	protected @NonNull Iterable<org.eclipse.ocl.pivot.Class> getActiveClassesSortedByName(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
-		List<org.eclipse.ocl.pivot.Class> sortedClasses = new ArrayList<org.eclipse.ocl.pivot.Class>(getActiveTypes(pPackage));
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getActiveClassesSortedByName(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = new ArrayList<>(getActiveTypes(pPackage));
 		Collections.sort(sortedClasses, nameComparator);
 		return sortedClasses;
 	}
-	
-	protected @NonNull Set<? extends org.eclipse.ocl.pivot.Class> getActiveTypes(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
+
+	protected @NonNull Set<? extends org.eclipse.ocl.pivot.@NonNull Class> getActiveTypes(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
 		Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
 		Type elementType = metamodelManager.getASClass("Element");
 		if (oclstdlibPackage == pPackage) {
 			VoidType oclVoidType = metamodelManager.getStandardLibrary().getOclVoidType();
-			Set<org.eclipse.ocl.pivot.Class> types = new HashSet<org.eclipse.ocl.pivot.Class>();
+			Set<org.eclipse.ocl.pivot.@NonNull Class> types = new HashSet<>();
 			for (org.eclipse.ocl.pivot.Class type : oclstdlibPackage.getOwnedClasses()) {
 				assert type != null;
 				CompleteClass completeClass = metamodelManager.getCompleteClass(type);
@@ -762,7 +760,7 @@ public class OCLinEcoreTablesUtils
 			return types;
 		}
 		else if (pivotMetamodel == pPackage) {
-			Set<org.eclipse.ocl.pivot.Class> types = new HashSet<org.eclipse.ocl.pivot.Class>();
+			Set<org.eclipse.ocl.pivot.@NonNull Class> types = new HashSet<>();
 			for (org.eclipse.ocl.pivot.Class type : pivotMetamodel.getOwnedClasses()) {
 				assert type != null;
 				boolean pruned = false;
@@ -772,7 +770,7 @@ public class OCLinEcoreTablesUtils
 					org.eclipse.ocl.pivot.Package partialPackage = partialClass.getOwningPackage();
 					if (partialPackage == oclstdlibPackage) {
 						if ((elementType != null) && !completeClass.conformsTo(elementType)) {
-//							System.out.println("Prune " + type.getName());
+							//							System.out.println("Prune " + type.getName());
 							pruned = true;
 						}
 					}
@@ -784,38 +782,38 @@ public class OCLinEcoreTablesUtils
 					types.add((org.eclipse.ocl.pivot.Class)myType);
 				}
 			}
-//			if (oclstdlibPackage != null) {
-//				for (DomainType type : oclstdlibPackage.getOwnedType()) {
-//					types.remove(type.getName());
-//				}
-//			}
+			//			if (oclstdlibPackage != null) {
+			//				for (DomainType type : oclstdlibPackage.getOwnedType()) {
+			//					types.remove(type.getName());
+			//				}
+			//			}
 			return types;
 		}
 		else {
-			return new HashSet<org.eclipse.ocl.pivot.Class>(pPackage.getOwnedClasses());
+			return new HashSet<>(ClassUtil.nullFree(pPackage.getOwnedClasses()));
 		}
 	}
 
-	protected @NonNull Iterable<org.eclipse.ocl.pivot.Class> getAllProperSupertypesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllProperSupertypesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
 		org.eclipse.ocl.pivot.Class theClass = metamodelManager.getPrimaryClass(pClass);
-		Map<org.eclipse.ocl.pivot.Class, Integer> results = new HashMap<org.eclipse.ocl.pivot.Class, Integer>();
+		Map<org.eclipse.ocl.pivot.@NonNull Class, Integer> results = new HashMap<>();
 		getAllSuperClasses(results, theClass);
-		List<org.eclipse.ocl.pivot.Class> sortedClasses = new ArrayList<org.eclipse.ocl.pivot.Class>(results.keySet());
+		List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = new ArrayList<>(results.keySet());
 		sortedClasses.remove(theClass);
 		Collections.sort(sortedClasses, nameComparator);
 		return sortedClasses;
 	}
 
-	protected @NonNull List<org.eclipse.ocl.pivot.Class> getAllSupertypesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
-		Map<org.eclipse.ocl.pivot.Class, Integer> results = new HashMap<org.eclipse.ocl.pivot.Class, Integer>();
+	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getAllSupertypesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
+		Map<org.eclipse.ocl.pivot.@NonNull Class, Integer> results = new HashMap<>();
 		getAllSuperClasses(results, pClass);
-		List<org.eclipse.ocl.pivot.Class> sortedClasses = new ArrayList<org.eclipse.ocl.pivot.Class>(results.keySet());
+		List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = new ArrayList<>(results.keySet());
 		Collections.sort(sortedClasses, nameComparator);
 		return sortedClasses;
 	}
-	
+
 	@SuppressWarnings("null")
-	protected int getAllSuperClasses(@NonNull Map<org.eclipse.ocl.pivot.Class, Integer> results, org.eclipse.ocl.pivot.@NonNull Class aClass) {
+	protected int getAllSuperClasses(@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, Integer> results, org.eclipse.ocl.pivot.@NonNull Class aClass) {
 		org.eclipse.ocl.pivot.Class theClass = metamodelManager.getPrimaryClass(aClass);
 		Integer depth = results.get(theClass);
 		if (depth != null) {
@@ -835,7 +833,7 @@ public class OCLinEcoreTablesUtils
 		results.put(theClass, myDepth);
 		return myDepth;
 	}
-	
+
 	protected org.eclipse.ocl.pivot.@Nullable Package getExtendedPackage(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
 		Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
@@ -853,7 +851,7 @@ public class OCLinEcoreTablesUtils
 	public @NonNull GenPackage getGenPackage() {
 		return genPackage;
 	}
-	
+
 	protected @Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Class type) {
 		org.eclipse.ocl.pivot.Package pPackage = type.getOwningPackage();
 		assert pPackage != null;
@@ -887,7 +885,7 @@ public class OCLinEcoreTablesUtils
 		}
 		return getGenPackage(pPackage);
 	}
-	
+
 	protected @Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		EPackage firstEPackage = genPackage.getEcorePackage();
 		if (firstEPackage.getName().equals(asPackage.getName())) {
@@ -895,12 +893,12 @@ public class OCLinEcoreTablesUtils
 		}
 		List<GenPackage> usedGenPackages = genPackage.getGenModel().getUsedGenPackages();
 		assert usedGenPackages != null;
-//		String nsURI = asPackage.getNsURI();
-//		String name = asType.getName();
-//		GenPackage usedGenPackage = getNsURIGenPackage(usedGenPackages, nsURI, name);
-//		if (usedGenPackage != null) {
-//			return usedGenPackage;
-//		}		
+		//		String nsURI = asPackage.getNsURI();
+		//		String name = asType.getName();
+		//		GenPackage usedGenPackage = getNsURIGenPackage(usedGenPackages, nsURI, name);
+		//		if (usedGenPackage != null) {
+		//			return usedGenPackage;
+		//		}
 		Resource genModelResource = genPackage.eResource();
 		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
 		assert genModelResourceSet != null;
@@ -944,25 +942,25 @@ public class OCLinEcoreTablesUtils
 			return operation.getImplementationClass() + ".INSTANCE";
 		}
 		else {
-//		    List<Constraint> constraints = operation.getOwnedRule();
-//			if (constraints.size() > 0) {
-//				return getQualifiedBodiesClassName(ClassUtil.nonNullModel(operation.getOwningType())) + "._" + operation.getName() + "_" + constraints.get(0).getStereotype() + "_.INSTANCE";
-//			}
-//			else {
-				return "null";
-//			}
+			//		    List<Constraint> constraints = operation.getOwnedRule();
+			//			if (constraints.size() > 0) {
+			//				return getQualifiedBodiesClassName(ClassUtil.nonNullModel(operation.getOwningType())) + "._" + operation.getName() + "_" + constraints.get(0).getStereotype() + "_.INSTANCE";
+			//			}
+			//			else {
+			return "null";
+			//			}
 		}
 	}
 
-	protected @NonNull Iterable<Operation> getLocalOperationsSortedBySignature(org.eclipse.ocl.pivot.@NonNull Class pClass) {
+	protected @NonNull Iterable<@NonNull Operation> getLocalOperationsSortedBySignature(org.eclipse.ocl.pivot.@NonNull Class pClass) {
 		// cls.getOperations()->sortedBy(op2 : Operation | op2.getSignature())
-		List<Operation> sortedOperations = new ArrayList<Operation>(getOperations(pClass));
+		List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
 		Collections.sort(sortedOperations, signatureComparator);
 		return sortedOperations;
 	}
 
-	protected @NonNull List<Property> getLocalPropertiesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
-		List<Property> sortedProperties = new ArrayList<Property>();
+	protected @NonNull List<@NonNull Property> getLocalPropertiesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
+		List<@NonNull Property> sortedProperties = new ArrayList<>();
 		for (/*@NonNull*/ Property property : getProperties(pClass)) {
 			assert property != null;
 			if (isProperty(property)) {
@@ -972,13 +970,13 @@ public class OCLinEcoreTablesUtils
 		Collections.sort(sortedProperties, propertyComparator);
 		return sortedProperties;
 	}
-	
-	protected @NonNull LinkedHashSet<Operation> getOperations(org.eclipse.ocl.pivot.@NonNull Class type) {
-		LinkedHashSet<Operation> operations = new LinkedHashSet<Operation>();
-		for (Operation operation : metamodelManager.getMemberOperations(type, false)) {
+
+	protected @NonNull LinkedHashSet<@NonNull Operation> getOperations(org.eclipse.ocl.pivot.@NonNull Class type) {
+		LinkedHashSet<@NonNull Operation> operations = new LinkedHashSet<>();
+		for (@NonNull Operation operation : metamodelManager.getMemberOperations(type, false)) {
 			operations.add(operation);
 		}
-		for (Operation operation : metamodelManager.getMemberOperations(type, true)) {
+		for (@NonNull Operation operation : metamodelManager.getMemberOperations(type, true)) {
 			operations.add(operation);
 		}
 		return operations;
@@ -986,7 +984,7 @@ public class OCLinEcoreTablesUtils
 
 	protected @NonNull Operation getOverloadOp(org.eclipse.ocl.pivot.@NonNull Class pClass, @NonNull Operation baseOp) {
 		String baseSignature = getSignature(baseOp);
-		Map<org.eclipse.ocl.pivot.Class, @NonNull Integer> results = new HashMap<org.eclipse.ocl.pivot.Class, @NonNull Integer>();
+		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> results = new HashMap<>();
 		getAllSuperClasses(results, pClass);
 		int bestDepth = -1;
 		Operation best = null;
@@ -1003,7 +1001,7 @@ public class OCLinEcoreTablesUtils
 		assert best != null;
 		return best;
 	}
-	
+
 	protected org.eclipse.ocl.pivot.Package getPivotPackage(@NonNull GenPackage genPackage) {
 		EPackage ePackage = genPackage.getEcorePackage();
 		Resource ecoreResource = ePackage.eResource();
@@ -1020,10 +1018,10 @@ public class OCLinEcoreTablesUtils
 		}
 		return asPackage;
 	}
-	
-	protected @NonNull LinkedHashSet<Property> getProperties(org.eclipse.ocl.pivot.@NonNull Class type) {
-		Set<String> names = new HashSet<String>();
-		LinkedHashSet<Property> properties = new LinkedHashSet<Property>();
+
+	protected @NonNull LinkedHashSet<@NonNull Property> getProperties(org.eclipse.ocl.pivot.@NonNull Class type) {
+		Set<String> names = new HashSet<>();
+		LinkedHashSet<@NonNull Property> properties = new LinkedHashSet<>();
 		for (@SuppressWarnings("null")@NonNull Property property : metamodelManager.getMemberProperties(type, true)) {
 			names.add(property.getName());
 			properties.add(metamodelManager.getPrimaryProperty(property));
@@ -1035,7 +1033,7 @@ public class OCLinEcoreTablesUtils
 		}
 		return properties;
 	}
-	
+
 	protected @NonNull String getQualifiedTablesClassName(org.eclipse.ocl.pivot.@NonNull Class type) {
 		GenPackage genPackage = getGenPackage(type);
 		if (genPackage != null) {
@@ -1045,7 +1043,7 @@ public class OCLinEcoreTablesUtils
 			return "UnknownMetamodelTables";
 		}
 	}
-	
+
 	protected @NonNull String getQualifiedTablesClassName(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
 		GenPackage genPackage = getGenPackage(pPackage);
 		if (genPackage != null) {
@@ -1055,7 +1053,7 @@ public class OCLinEcoreTablesUtils
 			return "UnknownMetamodelTables";
 		}
 	}
-	
+
 	protected @NonNull String getSharedLibrary() {
 		org.eclipse.ocl.pivot.Package thisPackage = getPivotPackage(genPackage);
 		if (thisPackage != null) {
@@ -1068,7 +1066,7 @@ public class OCLinEcoreTablesUtils
 				}
 			}
 		}
-/*		TypeServer typeServer = metamodelManager.getTypeServer(booleanType);
+		/*		TypeServer typeServer = metamodelManager.getTypeServer(booleanType);
 		for (DomainType type : typeServer.getPartialTypes()) {
 			org.eclipse.ocl.pivot.Package asPackage = type.getPackage();
 			if ((asPackage != null) && (asPackage != thisPackage)) {
@@ -1080,7 +1078,7 @@ public class OCLinEcoreTablesUtils
 		} */
 		return "";
 	}
-	
+
 	public static @NonNull String getSignature(@NonNull Operation anOperation) {
 		org.eclipse.ocl.pivot.Class owningType = anOperation.getOwningClass();
 		if (owningType == null) {
@@ -1163,7 +1161,7 @@ public class OCLinEcoreTablesUtils
 			getTemplateBindingsName(s, ClassUtil.nonNullModel(lambdaType.getResultType()));
 		}
 	}
-	
+
 	/**
 	 * Return  true if property has an Ecore counterpart. Non-navigable opposites may have a Property
 	 * but no Ecore EReference.
@@ -1222,7 +1220,7 @@ public class OCLinEcoreTablesUtils
 		Property opposite = prop.getOpposite();
 		return (opposite != null) && hasEcore(opposite);
 	}
-	
+
 	/**
 	 * Return true if type has an Ecore counterpart. The Standard Library genmodel has
 	 * no Ecore types, unless the Pivot model is also in use.
@@ -1241,14 +1239,14 @@ public class OCLinEcoreTablesUtils
 		}
 		return false;
 	}
-	
+
 	protected void mergeLibrary(org.eclipse.ocl.pivot.@NonNull Package primaryPackage) {
-//		primaryPackage.setName("ocl");
-		List<org.eclipse.ocl.pivot.Class> primaryTypes = primaryPackage.getOwnedClasses();
-		for (Library library : metamodelManager.getLibraries()) {
-			Map<org.eclipse.ocl.pivot.Class,org.eclipse.ocl.pivot.Class> typeMap = new HashMap<org.eclipse.ocl.pivot.Class,org.eclipse.ocl.pivot.Class>();
-			ArrayList<org.eclipse.ocl.pivot.Class> libraryTypes = new ArrayList<org.eclipse.ocl.pivot.Class>(library.getOwnedClasses());
-			for (org.eclipse.ocl.pivot.Class secondaryType : libraryTypes) {
+		//		primaryPackage.setName("ocl");
+		List<org.eclipse.ocl.pivot.@NonNull Class> primaryTypes = ClassUtil.nullFree(primaryPackage.getOwnedClasses());
+		for (@NonNull Library library : metamodelManager.getLibraries()) {
+			Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> typeMap = new HashMap<>();
+			List<org.eclipse.ocl.pivot.@NonNull Class> libraryTypes = new ArrayList<>(ClassUtil.nullFree(library.getOwnedClasses()));
+			for (org.eclipse.ocl.pivot.@NonNull Class secondaryType : libraryTypes) {
 				org.eclipse.ocl.pivot.Class primaryType = NameUtil.getNameable(primaryTypes, secondaryType.getName());
 				if (primaryType != null) {
 					typeMap.put(secondaryType, primaryType);
@@ -1257,11 +1255,11 @@ public class OCLinEcoreTablesUtils
 					primaryTypes.add(secondaryType);
 				}
 			}
-			for (org.eclipse.ocl.pivot.Class secondaryType : libraryTypes) {
+			for (org.eclipse.ocl.pivot.@NonNull Class secondaryType : libraryTypes) {
 				org.eclipse.ocl.pivot.Class primaryType = typeMap.get(secondaryType);
 				if (primaryType != null) {
-					List<org.eclipse.ocl.pivot.Class> primarySuperClasses = primaryType.getSuperClasses();
-					for (org.eclipse.ocl.pivot.Class secondarySuperClass : secondaryType.getSuperClasses()) {
+					List<org.eclipse.ocl.pivot.@NonNull Class> primarySuperClasses = ClassUtil.nullFree(primaryType.getSuperClasses());
+					for (org.eclipse.ocl.pivot.@NonNull Class secondarySuperClass : ClassUtil.nullFree(secondaryType.getSuperClasses())) {
 						org.eclipse.ocl.pivot.Class primarySuperClass = typeMap.get(secondarySuperClass);
 						if (primarySuperClass == null) {
 							primarySuperClasses.add(secondarySuperClass);
@@ -1275,8 +1273,8 @@ public class OCLinEcoreTablesUtils
 				}
 			}
 		}
-		for (org.eclipse.ocl.pivot.Class primaryType : primaryTypes) {
-			List<org.eclipse.ocl.pivot.Class> primarySuperClasses = primaryType.getSuperClasses();
+		for (org.eclipse.ocl.pivot.@NonNull Class primaryType : primaryTypes) {
+			List<org.eclipse.ocl.pivot.@NonNull Class> primarySuperClasses = ClassUtil.nullFree(primaryType.getSuperClasses());
 			Type classType = NameUtil.getNameable(primarySuperClasses, TypeId.CLASS_NAME);
 			Type metaclass = NameUtil.getNameable(primarySuperClasses, "Classifier");
 			if ((classType != null) && (metaclass != null)) {

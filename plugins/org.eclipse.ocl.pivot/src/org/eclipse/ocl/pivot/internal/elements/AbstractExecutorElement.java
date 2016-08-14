@@ -52,7 +52,7 @@ public class AbstractExecutorElement implements Element
 	}
 
 	@Override
-	public TreeIterator<EObject> eAllContents() {
+	public @NonNull TreeIterator<@NonNull EObject> eAllContents() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -150,7 +150,7 @@ public class AbstractExecutorElement implements Element
 	public EObject getESObject() {
 		throw new UnsupportedOperationException();
 	}
-		
+
 	@Override
 	public EObject getETarget() {
 		throw new UnsupportedOperationException();
