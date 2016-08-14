@@ -1,45 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot.uml" version="2">
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.lookup.AllResultsEnvironment">
-        <filter id="305422471">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.lookup.AllResultsEnvironment"/>
-                <message_argument value="org.eclipse.ocl.pivot.uml_1.0.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.lookup.SingleResultEnvironment">
-        <filter id="305422471">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.lookup.SingleResultEnvironment"/>
-                <message_argument value="org.eclipse.ocl.pivot.uml_1.0.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.lookup.SingleResultEnvironmentImpl">
-        <filter id="305422471">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.lookup.SingleResultEnvironmentImpl"/>
-                <message_argument value="org.eclipse.ocl.pivot.uml_1.0.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ocl.pivot.internal.lookup.impl.EnvironmentImpl">
-        <filter id="305422471">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.lookup.impl.EnvironmentImpl"/>
-                <message_argument value="org.eclipse.ocl.pivot.uml_1.0.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/uml/internal/es2as/UML2ASDeclarationSwitch.java" type="org.eclipse.ocl.pivot.uml.internal.es2as.UML2ASDeclarationSwitch">
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.uml.internal.es2as.UML2ASDeclarationSwitch"/>
-                <message_argument value="caseProperty(Property)"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/pivot/uml/internal/es2as/UML2ASReferenceSwitch.java" type="org.eclipse.ocl.pivot.uml.internal.es2as.UML2ASReferenceSwitch">
         <filter id="1143996420">
             <message_arguments>
