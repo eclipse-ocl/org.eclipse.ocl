@@ -1,0 +1,4 @@
+class java/io/File
+toURI
+ ()Ljava/net/URI;
+ ()L1java/net/URI;
