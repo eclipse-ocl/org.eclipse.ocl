@@ -39,33 +39,38 @@ public class OCLVMLaunchConfigurationDelegate extends VMLaunchConfigurationDeleg
 {
 	public static final IStatus MODIFIED_SOURCE_STATUS = OCLDebugCore.INSTANCE.createError("", 300, null); //$NON-NLS-1$
 
+	@Override
 	protected @NonNull OCLDebugTarget createDebugTarget(@NonNull IVMVirtualMachineShell vm, @NonNull VMVirtualProcess process) {
 		return new OCLDebugTarget(process, vm);
 	}
 
+	@Override
 	protected @NonNull DebuggableRunnerFactory createDebuggableRunnerFactory(EPackage.@NonNull Registry packageRegistry,
 			@NonNull List<String> modelURIs, @Nullable String traceURI) {
 		return new OCLDebuggableRunnerFactory(packageRegistry, modelURIs, null);
 	}
-	
+
+	@Override
 	protected @NonNull OCLEvaluationContext createEvaluationContext(@NonNull ILaunchConfiguration configuration) throws CoreException {
 		Map<String, Object> attributes = configuration.getAttributes();
 		Object contextObject = attributes.get(CONTEXT_OBJECT);
 		Object expressionObject = attributes.get(EXPRESSION_OBJECT);
 		if (((contextObject == null) || (contextObject instanceof EObject)) && (expressionObject instanceof ExpressionInOCL)) {
-			return new OCLEvaluationContext((ExpressionInOCL)expressionObject, (EObject)contextObject);			
+			return new OCLEvaluationContext((ExpressionInOCL)expressionObject, (EObject)contextObject);
 		}
 		String expressionUri = configuration.getAttribute(CONSTRAINT_URI, "");
-		@SuppressWarnings("null")@NonNull URI expressionURI = URI.createURI(expressionUri, true);
+		@NonNull URI expressionURI = URI.createURI(expressionUri, true);
 		String contextUri = configuration.getAttribute(CONTEXT_URI, "");
-		@SuppressWarnings("null")@NonNull URI contextURI = URI.createURI(contextUri, true);
+		@NonNull URI contextURI = URI.createURI(contextUri, true);
 		return new OCLEvaluationContext(expressionURI, contextURI);
 	}
 
+	@Override
 	protected @NonNull OCLVMVirtualMachine createVirtualMachine(@NonNull OCLEvaluationContext evaluationContext, @NonNull DebuggableRunner runner) {
 		return new OCLVMVirtualMachine(runner, evaluationContext);
 	}
 
+	@Override
 	protected @NonNull OCLVirtualProcess createVirtualProcess(@NonNull ILaunch launch, @NonNull IVMVirtualMachineShell vm) {
 		return new OCLVirtualProcess(launch, vm);
 	}

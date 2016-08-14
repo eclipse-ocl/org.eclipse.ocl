@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   E.D.Willink - initial API and implementation 
+ *   E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.ui.wizards;
 
@@ -33,13 +33,13 @@ public class OCLinEcoreFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 		if (uris.size() > 0) {
 			URI newURI = URI.createPlatformResourceURI(newFile.getFullPath().toString(), true);
 			for (URI uri : uris) {
-				@SuppressWarnings("null")@NonNull URI deresolvedURI = uri.deresolve(newURI);
+				@NonNull URI deresolvedURI = uri.deresolve(newURI);
 				s.append("import '" + ValueUtil.oclToString(deresolvedURI) + "';\n");
 			}
 			s.append("\n");
 		}
 	}
-	
+
 	@Override
 	protected @NonNull OCLinEcoreFileDialog createDialog(@NonNull AbstractFileNewWizardPage wizardPage, @Nullable IResource initialSelection) {
 		return new OCLinEcoreFileDialog(this, wizardPage, initialSelection);
@@ -55,7 +55,7 @@ public class OCLinEcoreFileNewWizard extends AbstractOCLinEcoreFileNewWizard
 	public @NonNull String getNewFileLabel() {
 		return OCLinEcoreUIMessages.NewWizardPage_fileNameLabel;
 	}
-	
+
 	@SuppressWarnings("null")
 	@Override
 	public @NonNull String getPageDescription() {

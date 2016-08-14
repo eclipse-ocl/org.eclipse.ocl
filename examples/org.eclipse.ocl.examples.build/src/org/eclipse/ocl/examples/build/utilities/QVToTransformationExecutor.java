@@ -47,13 +47,13 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 public class QVToTransformationExecutor extends AbstractWorkflowComponent
 {
 	private static final Logger logger = Logger.getLogger(QVToTransformationExecutor.class);
-	
-	private ResourceSet resourceSet = null;	
-	private String uri = null;	
+
+	private ResourceSet resourceSet = null;
+	private String uri = null;
 	private List<String> blackboxes = new ArrayList<String>();
 	private List<String> ins = new ArrayList<String>();
 	private Map<String, Object> configs = new HashMap<String, Object>();
-	private String out = null;	
+	private String out = null;
 	private String trace = null;
 	private String encoding = "UTF-8"; //$NON-NLS-1$
 	private boolean validate = true;
@@ -66,11 +66,11 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 		final Object value = uriMap.getTo();
 		configs.put(key, value);
 	}
-	
+
 	public void addBlackbox(String className) {
 		blackboxes.add(className);
 	}
-	
+
 	public void addIn(String fileName) {
 		ins.add(fileName);
 	}
@@ -81,7 +81,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 			issues.addError(this, "uri not specified.");
 		}
 	}
-	
+
 	public String getEncoding() {
 		return encoding;
 	}
@@ -110,9 +110,9 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 	}
 
 	/**
-	 * Clients may override to do any configuration 
+	 * Clients may override to do any configuration
 	 * properties initialization
-	 * 
+	 *
 	 * @return creates a context to be used by the transformation
 	 */
 	protected void initializeConfigurationProperties(ExecutionContextImpl context) {
@@ -135,7 +135,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 				issues.addError(this, "Failed to load blackbox '" + className + "'", className, e, null);
 				return;
 			}
-//			TransformationExecutorBlackboxRegistry.INSTANCE.registerModules(blackbox);
+			//			TransformationExecutorBlackboxRegistry.INSTANCE.registerModules(blackbox);
 		}
 		TransformationExecutor transformationExecutor = new TransformationExecutor(txURI);
 		Diagnostic diagnostic = transformationExecutor.loadTransformation();
@@ -149,7 +149,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 			issues.addError(this, s.toString(), txURI, null, null);
 			return;
 		}
-		
+
 		ResourceSet resourceSet = getResourceSet();
 		List<@NonNull ModelExtent> modelExtents = new ArrayList<@NonNull ModelExtent>();
 		for (String in : ins) {
@@ -162,21 +162,21 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 			}
 			modelExtents.add(new BasicModelExtent(inResource.getContents()));
 		}
-		
+
 		if (out != null) {
 			modelExtents.add(new BasicModelExtent());
 		}
 
-//		String traceUri = trace != null ? URI.createPlatformResourceURI(trace, true).toString() : null;
-		
-		
+		//		String traceUri = trace != null ? URI.createPlatformResourceURI(trace, true).toString() : null;
+
+
 		StringBufferLog qvtoLog = new StringBufferLog();
 		try {
 			logger.info("Executing transformation '" + uri + "'");
 			ExecutionContextImpl executionContext = new ExecutionContextImpl();
 			executionContext.setLog(qvtoLog);
 			initializeConfigurationProperties(executionContext);
-//			executionContext.setMonitor();
+			//			executionContext.setMonitor();
 			ExecutionDiagnostic executionDiagnostic = transformationExecutor.execute(executionContext, modelExtents.toArray(new ModelExtent[modelExtents.size()]));
 			if (executionDiagnostic.getSeverity() != Diagnostic.OK) {
 				StringBuilder s = new StringBuilder();
@@ -194,7 +194,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 			issues.addError(this, "Failed to launch transformation", txURI, e, null);
 			return;
 		}
-		
+
 		if (out != null) {
 			URI outURI = URI.createURI(out, true);
 			try {
@@ -206,7 +206,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 					logger.info("Creating output:  '" + outURI);
 				}
 				XMLResource outResource = (XMLResource) resourceSet.createResource(outURI, null);
-				outResource.getContents().addAll(modelExtents.get(modelExtents.size()-1).getContents());
+				outResource.getContents().addAll(ClassUtil.nullFree(modelExtents.get(modelExtents.size()-1).getContents()));
 				outResource.setEncoding(getEncoding());
 				Map<Object, Object> options = XMIUtil.createSaveOptions();
 				options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
@@ -219,10 +219,10 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 			} catch (IOException e) {
 				issues.addError(this, "Failed to save ", outURI, e, null);
 				return;
-			}	
+			}
 		}
 	}
-	
+
 	public void setEncoding(String encoding) {
 		this.encoding = encoding;
 	}
@@ -233,7 +233,7 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 	public void setOut(String out) {
 		this.out = out;
 	}
-	
+
 	/**
 	 * @param resourceSet the ResourceSet to re-use
 	 */
@@ -254,14 +254,14 @@ public class QVToTransformationExecutor extends AbstractWorkflowComponent
 	public void setUri(String uri) {
 		this.uri = uri;
 	}
-	
+
 	/**
 	 * @param validate True to validate the output model
 	 */
 	public void setValidate(boolean validate) {
 		this.validate = validate;
 	}
-	
+
 	public static void validate(@NonNull Resource resource) throws IOException {
 		for (EObject eObject : resource.getContents()) {
 			Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);

@@ -79,7 +79,7 @@ import junit.framework.TestCase;
 public class TestUtil
 {
 	public static void assertNoResourceErrors(@NonNull String prefix, @NonNull Resource resource) {
-		@SuppressWarnings("null")@NonNull EList<Diagnostic> errors = resource.getErrors();
+		@NonNull EList<Diagnostic> errors = resource.getErrors();
 		String message = PivotUtil.formatResourceDiagnostics(errors, prefix, "\n\t");
 		if (message != null)
 			TestCase.fail(message);
@@ -110,16 +110,16 @@ public class TestUtil
 
 	public static void createClassPath(@NonNull IProject project, @NonNull String @Nullable [] srcPaths) throws IOException, CoreException {
 		StringBuilder s = new StringBuilder();
-		s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"); 
+		s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		s.append("<classpath>\n");
 		s.append("	<classpathentry kind=\"con\" path=\"org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7\"/>\n");
 		s.append("	<classpathentry kind=\"con\" path=\"org.eclipse.pde.core.requiredPlugins\"/>\n");
 		if (srcPaths != null) {
 			for (String srcPath : srcPaths) {
-				s.append("	<classpathentry kind=\"src\" path=\"" + srcPath+ "\"/>\n"); 
+				s.append("	<classpathentry kind=\"src\" path=\"" + srcPath+ "\"/>\n");
 			}
 		}
-		s.append("	<classpathentry kind=\"output\" path=\"bin\"/>\n"); 
+		s.append("	<classpathentry kind=\"output\" path=\"bin\"/>\n");
 		s.append("</classpath>\n");
 		TestUtil.createIFile(project, ".classpath", s.toString());
 	}
@@ -129,7 +129,7 @@ public class TestUtil
 		writer.append(fileContent);
 		writer.close();
 	}
-	
+
 	public static @NonNull IFile createIFile(@NonNull IContainer container, @NonNull String fileName, @NonNull String fileContents) throws IOException, CoreException {
 		InputStream inputStream = new URIConverter.ReadableInputStream(fileContents, "UTF-8");
 		IFile iFile = container.getFile(new Path(fileName));
@@ -147,7 +147,7 @@ public class TestUtil
 		}
 		return folder;
 	}
-	
+
 	public static @NonNull IProject createJavaProject(@NonNull String projectName) throws CoreException {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
@@ -177,9 +177,9 @@ public class TestUtil
 		folder.create(true, false, null);
 		IFile file = folder.getFile("MANIFEST.MF");
 		StringBuilder s = new StringBuilder();
-		s.append("Manifest-Version: 1.0\n"); 
+		s.append("Manifest-Version: 1.0\n");
 		s.append("Bundle-ManifestVersion: 2\n");
-		s.append("Bundle-Name: " + projectName + "\n"); 
+		s.append("Bundle-Name: " + projectName + "\n");
 		s.append("Bundle-SymbolicName: " + projectName + ";singleton:=true\n");
 		s.append("Bundle-Version: 0.0.0.qualifier\n");
 		s.append("Bundle-Localization: plugin\n");
@@ -208,16 +208,16 @@ public class TestUtil
 		if (additionalBundles != null) {
 			file = project.getFile("build.properties");
 			s = new StringBuilder();
-//			if (additionalBundles != null) {
-				s.append("additional.bundles =");
-				String prefix = " ";
-				for (String additionalBundle : additionalBundles) {
-					s.append(prefix);
-					s.append(additionalBundle);
-					prefix = ",\\\n\t";
-				}
-				s.append("\n");
-//			}
+			//			if (additionalBundles != null) {
+			s.append("additional.bundles =");
+			String prefix = " ";
+			for (String additionalBundle : additionalBundles) {
+				s.append(prefix);
+				s.append(additionalBundle);
+				prefix = ",\\\n\t";
+			}
+			s.append("\n");
+			//			}
 			String buildPropertiesContents = s.toString();
 			file.create(new ByteArrayInputStream(buildPropertiesContents.getBytes()), true, null);
 		}
@@ -241,12 +241,12 @@ public class TestUtil
 	 * garbage collection is enabled.
 	 */
 	public static void doCompleteOCLSetup() {
-    	if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			CompleteOCLStandaloneSetup.doSetup();
-    	}
-    	else {
-    		Guice.createInjector(new org.eclipse.ocl.xtext.completeocl.CompleteOCLRuntimeModule());
-    	}
+		}
+		else {
+			Guice.createInjector(new org.eclipse.ocl.xtext.completeocl.CompleteOCLRuntimeModule());
+		}
 	}
 
 	/**
@@ -259,7 +259,7 @@ public class TestUtil
 			EssentialOCLStandaloneSetup.doSetup();
 		}
 		else {
-    		Guice.createInjector(new org.eclipse.ocl.xtext.essentialocl.EssentialOCLRuntimeModule());
+			Guice.createInjector(new org.eclipse.ocl.xtext.essentialocl.EssentialOCLRuntimeModule());
 		}
 	}
 
@@ -269,12 +269,12 @@ public class TestUtil
 	 * garbage collection is enabled.
 	 */
 	public static void doOCLinEcoreSetup() {
-    	if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
-    		OCLinEcoreStandaloneSetup.doSetup();
-    	}
-    	else {
-    		Guice.createInjector(new org.eclipse.ocl.xtext.oclinecore.OCLinEcoreRuntimeModule());
-    	}
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			OCLinEcoreStandaloneSetup.doSetup();
+		}
+		else {
+			Guice.createInjector(new org.eclipse.ocl.xtext.oclinecore.OCLinEcoreRuntimeModule());
+		}
 	}
 
 	/**
@@ -283,23 +283,23 @@ public class TestUtil
 	 * garbage collection is enabled.
 	 */
 	public static void doOCLstdlibSetup() {
-    	if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			OCLstdlibStandaloneSetup.doSetup();			// FIXME BUG 382058
-    	}
-    	else {
-    		Guice.createInjector(new org.eclipse.ocl.xtext.oclstdlib.OCLstdlibRuntimeModule());
-    	}
+		}
+		else {
+			Guice.createInjector(new org.eclipse.ocl.xtext.oclstdlib.OCLstdlibRuntimeModule());
+		}
 	}
 
 	/**
-	 * Return a File identifying the qualifiedName with respect to loadedClass' loader. 
+	 * Return a File identifying the qualifiedName with respect to loadedClass' loader.
 	 */
 	public static @NonNull File getFile(@NonNull Class<?> loadedClass, @NonNull String classRelativeName) {
-		URL projectURL = getTestResource(loadedClass, classRelativeName);	
+		URL projectURL = getTestResource(loadedClass, classRelativeName);
 		TestCase.assertNotNull(projectURL);
 		return new File(projectURL.getFile());
 	}
-	
+
 	public static @NonNull URI getFileURI(@NonNull Class<?> loadedClass, @NonNull String classRelativeName) {
 		File file = getFile(loadedClass, classRelativeName);
 		@SuppressWarnings("null")@NonNull URI uri = URI.createFileURI(file.toString());

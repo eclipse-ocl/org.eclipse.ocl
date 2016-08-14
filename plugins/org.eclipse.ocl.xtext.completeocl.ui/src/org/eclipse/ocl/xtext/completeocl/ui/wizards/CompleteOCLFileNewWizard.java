@@ -75,7 +75,7 @@ public class CompleteOCLFileNewWizard extends AbstractFileNewWizard
 				try {
 					Resource resource = resourceSet.getResource(uri, true);
 					URI newURI = URI.createPlatformResourceURI(newFile.getFullPath().toString(), true);
-					@SuppressWarnings("null")@NonNull URI deresolvedURI = uri.deresolve(newURI);
+					URI deresolvedURI = uri.deresolve(newURI);
 					s.append("import '" + ValueUtil.oclToString(deresolvedURI) + "'\n");
 					if (firstPropertyName == null) {
 						for (EObject eObject : resource.getContents()) {
@@ -131,7 +131,7 @@ public class CompleteOCLFileNewWizard extends AbstractFileNewWizard
 						}
 					}
 				}
-				catch (Throwable e) {} 
+				catch (Throwable e) {}
 			}
 			s.append("\n");
 		}
@@ -174,7 +174,7 @@ public class CompleteOCLFileNewWizard extends AbstractFileNewWizard
 	public @NonNull String getNewFileLabel() {
 		return CompleteOCLUIMessages.NewWizardPage_fileNameLabel;
 	}
-	
+
 	@SuppressWarnings("null")
 	@Override
 	public @NonNull String getPageDescription() {

@@ -39,15 +39,15 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
  * @generated NOT
  */
 public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Object>
-{	
+{
 	private <K,V> boolean checkElementsAreValues(Iterable<Map.Entry<K, V>> elements) {
 		for (Map.Entry<K, V> element : elements) {
 			assert ValueUtil.isBoxed(element.getKey());
 			assert ValueUtil.isBoxed(element.getValue());
-//			if (element instanceof Collection<?>) {
-//				assert isNormalized((Iterable<?>)element);
-//				assert checkElementsAreValues((Iterable<?>)element);
-//			}
+			//			if (element instanceof Collection<?>) {
+			//				assert isNormalized((Iterable<?>)element);
+			//				assert checkElementsAreValues((Iterable<?>)element);
+			//			}
 		}
 		return true;
 	}
@@ -61,7 +61,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		}
 		return new MapValueImpl(typeId, boxedValues);
 	}
-	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -75,7 +75,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	protected @NonNull MapTypeId typeId;
 	protected @NonNull Map<Object, Object> boxedValues;
 	private int hashCode = 0;
-	
+
 	public MapValueImpl(@NonNull MapTypeId typeId, @NonNull Map<Object, Object> boxedValues) {
 		this.typeId = typeId;
 		this.boxedValues = boxedValues;
@@ -89,8 +89,8 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 
 	@Override
 	public @Nullable <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass) {
-//		EMap<Object, Object> eMap = new BasicEMap<Object, Object>();
-//		return eMap;
+		//		EMap<Object, Object> eMap = new BasicEMap<Object, Object>();
+		//		return eMap;
 		throw new UnsupportedOperationException();
 	}
 
@@ -116,7 +116,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		}
 		Object object = boxedValues.get(value);
 		if ((object == null) && !boxedValues.containsKey(value)) {
-        	throw new InvalidValueException(PivotMessages.IndexNotInUse, value);
+			throw new InvalidValueException(PivotMessages.IndexNotInUse, value);
 		}
 		return object;
 	}
@@ -171,7 +171,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		Object keyValue = boxedValues.get(key);
 		if (keyValue == null) {
 			if (!boxedValues.containsKey(value)) {
-	        	return true;
+				return true;
 			}
 			return value != null;
 		}
@@ -182,54 +182,54 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 
 	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
-    	Set<Object> keySet = boxedValues.keySet();
-        for (Object e1 : c.iterable()) {
+		Set<Object> keySet = boxedValues.keySet();
+		for (Object e1 : c.iterable()) {
 			if (e1 == null) {
-		        for (Object e2 : keySet) {
-		            if (e2 == null) {
-		            	return false;
-		            }
-		        }
-        	}
-        	else {
-		        for (Object e2 : keySet) {
-		            if (e1.equals(e2)) {
-		            	return false;
-		            }
-		        }
-        	}
-        } 
-        return true;
+				for (Object e2 : keySet) {
+					if (e2 == null) {
+						return false;
+					}
+				}
+			}
+			else {
+				for (Object e2 : keySet) {
+					if (e1.equals(e2)) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public @NonNull Boolean excludesMap(@NonNull MapValue m) {
-    	Set<Object> keySet = boxedValues.keySet();
-        for (Object e1 : m.getKeys()) {
+		Set<Object> keySet = boxedValues.keySet();
+		for (Object e1 : m.getKeys()) {
 			if (e1 == null) {
-		        for (Object e2 : keySet) {
-		            if (e2 == null) {
-		            	Object thisValue = at(e2);
-		            	Object thatValue = m.at(e2);
-		            	if (ClassUtil.safeEquals(thisValue,  thatValue)) {
-			            	return false;
-		            	}
-		            }
-		        }
-        	}
-        	else {
-		        for (Object e2 : keySet) {
-		            if (e1.equals(e2)) {
-		            	Object thisValue = at(e2);
-		            	Object thatValue = m.at(e2);
-		            	if (ClassUtil.safeEquals(thisValue,  thatValue)) {
-			            	return false;
-		            	}
-		            }
-		        }
-        	}
-        } 
-        return true;
+				for (Object e2 : keySet) {
+					if (e2 == null) {
+						Object thisValue = at(e2);
+						Object thatValue = m.at(e2);
+						if (ClassUtil.safeEquals(thisValue,  thatValue)) {
+							return false;
+						}
+					}
+				}
+			}
+			else {
+				for (Object e2 : keySet) {
+					if (e1.equals(e2)) {
+						Object thisValue = at(e2);
+						Object thatValue = m.at(e2);
+						if (ClassUtil.safeEquals(thisValue,  thatValue)) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -237,12 +237,12 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		if (thatValue instanceof InvalidValueException) {
 			throw (InvalidValueException)thatValue;
 		}
-        for (Object thisValue : boxedValues.values()) {
+		for (Object thisValue : boxedValues.values()) {
 			if (ClassUtil.safeEquals(thisValue, thatValue)) {
 				return false;
-        	}
-        } 
-        return true;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -254,7 +254,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		newBoxedValues.remove(key);
 		return new MapValueImpl(typeId, newBoxedValues);
 	}
-	
+
 	@Override
 	public @NonNull MapValue excluding(@Nullable Object key, @Nullable Object value) {
 		if (key instanceof InvalidValueException) {
@@ -270,7 +270,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		}
 		return new MapValueImpl(typeId, newBoxedValues);
 	}
-	
+
 	@Override
 	public @NonNull MapValue excludingAll(@NonNull CollectionValue c) {
 		Map<Object, Object> newBoxedValues = new HashMap<Object, Object>(boxedValues);
@@ -322,15 +322,13 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 				if (hashCode == 0) {
 					long hash = 0x3333333333333333L;
 					for (Map.Entry<Object,Object> entry : boxedValues.entrySet()) {
-						if (entry != null) {
-							Object key = entry.getKey();
-							if (key != null) {
-								hash += 3 * key.hashCode();
-							}
-							Object value = entry.getValue();
-							if (value != null) {
-								hash += 5 * value.hashCode();
-							}
+						Object key = entry.getKey();
+						if (key != null) {
+							hash += 3 * key.hashCode();
+						}
+						Object value = entry.getValue();
+						if (value != null) {
+							hash += 5 * value.hashCode();
 						}
 					}
 					hashCode = (int) hash;
@@ -365,7 +363,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		Object keyValue = boxedValues.get(key);
 		if (keyValue == null) {
 			if (!boxedValues.containsKey(value)) {
-	        	return false;
+				return false;
 			}
 			return value == null;
 		}
@@ -376,66 +374,66 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 
 	@Override
 	public @NonNull Boolean includesAll(@NonNull CollectionValue c) {
-    	Set<Object> keySet = boxedValues.keySet();
-        for (Object e1 : c.iterable()) {
-        	boolean gotIt = false;
+		Set<Object> keySet = boxedValues.keySet();
+		for (Object e1 : c.iterable()) {
+			boolean gotIt = false;
 			if (e1 == null) {
-		        for (Object e2 : keySet) {
-		            if (e2 == null) {
-		            	gotIt = true;
-		            	break;
-		            }
-		        }
-        	}
-        	else {
-		        for (Object e2 : keySet) {
-		            if (e1.equals(e2)) {
-		            	gotIt = true;
-		            	break;
-		            }
-		        }
-        	}
-        	if (!gotIt) {
-        		return false;
-        	}
-        } 
-        return true;
+				for (Object e2 : keySet) {
+					if (e2 == null) {
+						gotIt = true;
+						break;
+					}
+				}
+			}
+			else {
+				for (Object e2 : keySet) {
+					if (e1.equals(e2)) {
+						gotIt = true;
+						break;
+					}
+				}
+			}
+			if (!gotIt) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public @NonNull Boolean includesMap(@NonNull MapValue m) {
-    	Set<Object> keySet = boxedValues.keySet();
-        for (Object e1 : m.getKeys()) {
-        	boolean gotIt = false;
+		Set<Object> keySet = boxedValues.keySet();
+		for (Object e1 : m.getKeys()) {
+			boolean gotIt = false;
 			if (e1 == null) {
-		        for (Object e2 : keySet) {
-		            if (e2 == null) {
-		            	Object thisValue = at(e2);
-		            	Object thatValue = m.at(e2);
-		            	if (ClassUtil.safeEquals(thisValue,  thatValue)) {
-			            	gotIt = true;
-			            	break;
-		            	}
-		            }
-		        }
-        	}
-        	else {
-		        for (Object e2 : keySet) {
-		            if (e1.equals(e2)) {
-		            	Object thisValue = at(e2);
-		            	Object thatValue = m.at(e2);
-		            	if (ClassUtil.safeEquals(thisValue,  thatValue)) {
-			            	gotIt = true;
-			            	break;
-		            	}
-		            }
-		        }
-        	}
-        	if (!gotIt) {
-        		return false;
-        	}
-        } 
-        return true;
+				for (Object e2 : keySet) {
+					if (e2 == null) {
+						Object thisValue = at(e2);
+						Object thatValue = m.at(e2);
+						if (ClassUtil.safeEquals(thisValue,  thatValue)) {
+							gotIt = true;
+							break;
+						}
+					}
+				}
+			}
+			else {
+				for (Object e2 : keySet) {
+					if (e1.equals(e2)) {
+						Object thisValue = at(e2);
+						Object thatValue = m.at(e2);
+						if (ClassUtil.safeEquals(thisValue,  thatValue)) {
+							gotIt = true;
+							break;
+						}
+					}
+				}
+			}
+			if (!gotIt) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -443,12 +441,12 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		if (thatValue instanceof InvalidValueException) {
 			throw (InvalidValueException)thatValue;
 		}
-        for (Object thisValue : boxedValues.values()) {
+		for (Object thisValue : boxedValues.values()) {
 			if (ClassUtil.safeEquals(thisValue, thatValue)) {
 				return true;
-        	}
-        } 
-        return false;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -526,6 +524,6 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 			}
 			isFirst = false;
 		}
-		s.append("}");		
+		s.append("}");
 	}
 }

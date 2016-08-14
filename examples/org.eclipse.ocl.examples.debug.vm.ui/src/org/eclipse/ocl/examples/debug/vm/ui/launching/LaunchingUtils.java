@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.Text;
 public class LaunchingUtils
 {
 	/**
-	 * Load a DebugUI class to ensure the PerspectiveManager is ready to create a Perspective 
+	 * Load a DebugUI class to ensure the PerspectiveManager is ready to create a Perspective
 	 */
 	public static void loadPerspectiveManager() {
 		DebugUITools.class.getName();
@@ -60,7 +60,7 @@ public class LaunchingUtils
 				String filterPath = fileDialog.getFilterPath();
 				String fileName = fileDialog.getFileName();
 				if (fileName != null) {
-					uriField.setText(URI.createFileURI(filterPath + File.separator + fileName).toString());
+					uriField.setText(String.valueOf(URI.createFileURI(filterPath + File.separator + fileName)));
 				}
 			}
 		});
@@ -101,7 +101,7 @@ public class LaunchingUtils
 					}
 				}
 				if (file != null) {
-					uriField.setText(URI.createPlatformResourceURI(file.getFullPath().toString(), true).toString());
+					uriField.setText(String.valueOf(URI.createPlatformResourceURI(file.getFullPath().toString(), true)));
 				}
 			}
 
@@ -109,7 +109,7 @@ public class LaunchingUtils
 				String text = uriField.getText();
 				try {
 					URI context = text != null ? URI.createURI(text) : null;
-//					return context != null && context.isPlatformResource() ? URI.createURI(".").resolve(context).path().substring(9) : null;
+					//					return context != null && context.isPlatformResource() ? URI.createURI(".").resolve(context).path().substring(9) : null;
 					if ((context == null) || !context.isPlatformResource()) {
 						return null;
 					}

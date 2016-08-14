@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -22,8 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -350,7 +347,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	private /*final*/ /*@NonNull*/ String nsPrefix;
 	private /*final*/ /*@NonNull*/ String nsURI;
-/**
+	/**
 	 * The cached value of the '{@link #getOwnedCompleteClasses() <em>Owned Complete Classes</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -399,13 +396,13 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	public void assertSamePackage(org.eclipse.ocl.pivot.Package pivotPackage) {
 		assert pivotPackage != null;
 		if (getOwningCompletePackage() == null) {
-//		if ((this instanceof OrphanCompletePackage) || (this instanceof ParentCompletePackage) || (this instanceof PrimitiveCompletePackage)) {
+			//		if ((this instanceof OrphanCompletePackage) || (this instanceof ParentCompletePackage) || (this instanceof PrimitiveCompletePackage)) {
 			org.eclipse.ocl.pivot.Package parentPackage = pivotPackage.getOwningPackage();
-//			assert parentPackage == null;
+			//			assert parentPackage == null;
 			String typeBasedNsURI = pivotPackage.getURI();
 			String serverBasedNsURI = getURI();
 			if (typeBasedNsURI == null) {
-//				assert serverBasedNsURI == null;
+				//				assert serverBasedNsURI == null;
 			}
 			else {
 				CompleteModelInternal completeModel = getCompleteModel();
@@ -420,7 +417,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	}
 
 	protected void didAddNestedPackage(@NonNull CompleteModel completeModel, org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
-/*		CompletePackage completePackage = null;
+		/*		CompletePackage completePackage = null;
 		String name = pivotPackage.getName();
 //		String packageURI = pivotPackage.getURI();
 //		if (packageURI != null) {										// Explicit packageURI for explicit package (merge)
@@ -437,12 +434,12 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		if (ownedCompleteClasses != null) {
 			ownedCompleteClasses.didAddPackage(pivotPackage);
 		}
-//		completePackage.addTrackedPackage(pivotPackage);
-//		for (org.eclipse.ocl.pivot.Package nestedPackage : pivotPackage.getOwnedPackages()) {
-//			if (nestedPackage != null) {
-//				addPackage(completePackage, nestedPackage);
-//			}
-//		}
+		//		completePackage.addTrackedPackage(pivotPackage);
+		//		for (org.eclipse.ocl.pivot.Package nestedPackage : pivotPackage.getOwnedPackages()) {
+		//			if (nestedPackage != null) {
+		//				addPackage(completePackage, nestedPackage);
+		//			}
+		//		}
 	}
 
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
@@ -480,18 +477,18 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllClasses() {
-		return Iterables.transform(ClassUtil.nullFree(getOwnedCompleteClasses()), new Function<@NonNull CompleteClass, org.eclipse.ocl.pivot.@NonNull Class>()
-			{
-				@Override
-				public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull CompleteClass input) {
-					return input.getPrimaryClass();
-				}
-			});
+		return Iterables.transform(ClassUtil.<CompleteClass>nullFree(getOwnedCompleteClasses()), new Function<@NonNull CompleteClass, org.eclipse.ocl.pivot.@NonNull Class>()
+		{
+			@Override
+			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull CompleteClass input) {
+				return input.getPrimaryClass();
+			}
+		});
 	}
 
 	@Override
@@ -546,7 +543,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	public CompleteClassInternal getOwnedCompleteClass(String name) {
 		return getOwnedCompleteClasses().getOwnedCompleteClass(name);
 	}
-	
+
 	@Override
 	public CompletePackageInternal getOwnedCompletePackage(@Nullable String name) {
 		return getOwnedCompletePackages().getOwnedCompletePackage(name);
@@ -689,12 +686,12 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 				return partialPackage;
 			}
 		}
-//		assert false;
+		//		assert false;
 		// If there are no pivot packages (e.g. for an orphan) return the metamodel to avoid an NPE constructing a CompleteInheritance
 		Package partialPackage = getCompleteModel().getStandardLibrary().getOclAnyType().getOwningPackage();
 		return ClassUtil.nonNullState(partialPackage);
 	}
-	
+
 	@Override
 	public @NonNull CompletePackageInternal getRootCompletePackage() {
 		for (EObject eContainer = eContainer(); eContainer instanceof CompletePackageInternal; eContainer = eContainer.eContainer()) {

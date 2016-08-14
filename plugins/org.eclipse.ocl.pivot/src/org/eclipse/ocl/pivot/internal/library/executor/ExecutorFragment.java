@@ -30,15 +30,15 @@ import com.google.common.collect.Lists;
  */
 public class ExecutorFragment extends AbstractFragment
 {
-	private ExecutorOperation[] operations;
-	private ExecutorProperty[] properties;
+	private @NonNull ExecutorOperation[] operations;
+	private @NonNull ExecutorProperty[] properties;
 
 	public ExecutorFragment(@NonNull ExecutorType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
 		super(derivedInheritance, baseInheritance);
 		this.operations = null;
 		this.properties = null;
 	}
-	
+
 	@Override
 	public @NonNull LibraryFeature getImplementation(@NonNull Operation staticOperation) {
 		int index = staticOperation.getIndex();
@@ -46,7 +46,7 @@ public class ExecutorFragment extends AbstractFragment
 			return ClassUtil.nonNullState(operations[index].implementation);
 		}
 		else {
-			throw new UnsupportedOperationException();		// WIP 
+			throw new UnsupportedOperationException();		// WIP
 		}
 	}
 
@@ -62,21 +62,19 @@ public class ExecutorFragment extends AbstractFragment
 	}
 
 	@Override
-	@SuppressWarnings("null")
 	public @NonNull List<Operation> getLocalOperations() {
 		assert operations != null;
 		return Lists.<Operation>newArrayList(operations);
 	}
-	
+
 	@Override
-	@SuppressWarnings("null")
 	public @NonNull List<Property> getLocalProperties() {
 		assert properties != null;
 		return Lists.<Property>newArrayList(properties);
 	}
 
-	public @NonNull List<org.eclipse.ocl.pivot.Class> getSuperClasses() {
-		throw new UnsupportedOperationException();		// WIP 
+	public @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses() {
+		throw new UnsupportedOperationException();		// WIP
 	}
 
 	public void initOperations(@NonNull ExecutorOperation @NonNull [] operations) {

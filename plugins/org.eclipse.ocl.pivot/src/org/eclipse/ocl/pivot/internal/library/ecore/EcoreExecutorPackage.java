@@ -37,12 +37,12 @@ public class EcoreExecutorPackage extends ExecutorPackage
 
 	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage) {
 		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), IdManager.getPackageId(ePackage));
-		this.ePackage = ePackage;		
+		this.ePackage = ePackage;
 	}
 
 	public EcoreExecutorPackage(@NonNull EPackage ePackage, @NonNull PackageId packageId) {
 		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), packageId);
-		this.ePackage = ePackage;		
+		this.ePackage = ePackage;
 	}
 
 	@Override
@@ -80,7 +80,6 @@ public class EcoreExecutorPackage extends ExecutorPackage
 		return standardLibrary.getPackage(eSuperPackage);
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public @NonNull List<org.eclipse.ocl.pivot.Class> getOwnedClasses() {
 		if (types != null) {
@@ -105,7 +104,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 		}
 		return null;
 	}
-	
+
 	public void init(@Nullable ExecutorStandardLibrary standardLibrary, @NonNull ExecutorType @NonNull [] types) {
 		assert this.standardLibrary == null;
 		assert this.types == null;
@@ -115,8 +114,8 @@ public class EcoreExecutorPackage extends ExecutorPackage
 			standardLibrary.addPackage(this, null);
 		}
 	}
-	
-/*	public void init2(EcoreExecutorPackage execPackage, ExecutorType[] types) {
+
+	/*	public void init2(EcoreExecutorPackage execPackage, ExecutorType[] types) {
 		ExecutorStandardLibrary standardLibrary = execPackage.standardLibrary;
 		assert this.standardLibrary == null;
 		assert this.types == null;
@@ -126,8 +125,8 @@ public class EcoreExecutorPackage extends ExecutorPackage
 			standardLibrary.addPackage(this, execPackage);
 		}
 	} */
-	
-//	public ExecutorType lookupType(int classIndex) {
-//		return types[classIndex];
-//	}
+
+	//	public ExecutorType lookupType(int classIndex) {
+	//		return types[classIndex];
+	//	}
 }

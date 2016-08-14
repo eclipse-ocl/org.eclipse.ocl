@@ -56,13 +56,13 @@ public class PDEUtils
 		IResource underlyingResource = activeModel.getUnderlyingResource();
 		if (underlyingResource != null) {
 			String projectPath = underlyingResource.getProject().getFullPath().toString() + "/";
-			@NonNull URI projectURI = URI.createPlatformResourceURI(projectPath, true);
+			URI projectURI = URI.createPlatformResourceURI(projectPath, true);
 			return projectURI;
 		}
 		else {
 			BundleDescription bundleDescription = activeModel.getBundleDescription();
 			String bundlePath = bundleDescription.getSymbolicName() + "/";
-			@NonNull URI bundleURI = URI.createPlatformPluginURI(bundlePath, true);
+			URI bundleURI = URI.createPlatformPluginURI(bundlePath, true);
 			return bundleURI;
 		}
 	}

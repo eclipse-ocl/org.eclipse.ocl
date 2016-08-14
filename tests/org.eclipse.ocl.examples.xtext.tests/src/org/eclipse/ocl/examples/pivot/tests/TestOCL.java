@@ -77,7 +77,7 @@ public class TestOCL extends OCLInternal
 {
 	protected final @NonNull String testPackageName;
 	protected final @NonNull String testName;
-	
+
 	public TestOCL(@NonNull String testPackageName, @NonNull String testName, @NonNull ProjectManager projectManager) {
 		super(ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null));
 		NoHttpURIHandlerImpl.install(getResourceSet());
@@ -88,46 +88,46 @@ public class TestOCL extends OCLInternal
 	public void addSupertype(org.eclipse.ocl.pivot.@NonNull Class aClass, org.eclipse.ocl.pivot.@NonNull Class superClass) {
 		aClass.getSuperClasses().add(superClass);
 	}
-    
+
 	/**
 	 * Assert that an expression cannot be used as an invariant, because an exception is thrown
 	 * with a diagnostic of severity containing a message that is the result of messageTemplate
 	 * resolved by bindings.
 	 */
 	public void assertBadInvariant(@NonNull Class<?> exception, int severity, org.eclipse.ocl.pivot.@Nullable Class contextType,
-    		@NonNull String expression, /*@NonNull*/ String messageTemplate, Object... bindings) {
+			@NonNull String expression, /*@NonNull*/ String messageTemplate, Object... bindings) {
 		CSResource resource = null;
-        try {
-    		ParserContext semanticContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+		try {
+			ParserContext semanticContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
 			resource = semanticContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), resource);
 			TestCase.fail("Should not have parsed \"" + expression + "\"");
-        } catch (ParserException e) {
-        	TestCase.assertEquals("Exception for \"" + expression + "\"", exception, e.getClass());
-        	if (resource != null) {
-        		Resource.Diagnostic diagnostic = getDiagnostic(resource);
-    			assertNoException(diagnostic, ClassCastException.class);
-            	assertNoException(diagnostic, NullPointerException.class);
-//            	assertEquals("Severity for \"" + expression + "\"", severity, diagnostic.getSeverity());
-            	String expectedMessage = StringUtil.bind(messageTemplate, bindings);
-            	TestCase.assertEquals("Message for \"" + expression + "\"", expectedMessage, diagnostic.getMessage());
-        	}
-        } catch (IOException e) {
-        	TestCase.fail(e.getMessage());
+		} catch (ParserException e) {
+			TestCase.assertEquals("Exception for \"" + expression + "\"", exception, e.getClass());
+			if (resource != null) {
+				Resource.Diagnostic diagnostic = getDiagnostic(resource);
+				assertNoException(diagnostic, ClassCastException.class);
+				assertNoException(diagnostic, NullPointerException.class);
+				//            	assertEquals("Severity for \"" + expression + "\"", severity, diagnostic.getSeverity());
+				String expectedMessage = StringUtil.bind(messageTemplate, bindings);
+				TestCase.assertEquals("Message for \"" + expression + "\"", expectedMessage, diagnostic.getMessage());
+			}
+		} catch (IOException e) {
+			TestCase.fail(e.getMessage());
 		} finally {
 			if (resource != null) {
 				EnvironmentFactoryAdapter.disposeAll(resource);
 			}
-		}	   
-    }
+		}
+	}
 
 	/**
 	 * Assert that an expression cannot be used as a query, because an exception is thrown
 	 * with a diagnostic of severity containing a message that is the result of messageTemplate
 	 * resolved by bindings.
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-    @SuppressWarnings("null")
+	@SuppressWarnings("null")
 	public void assertBadQuery(@NonNull Class<?> exception, int severity, org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression, /*@NonNull*/ String messageTemplate, Object... bindings) {
 		BaseCSResource csResource = null;
 		try {
@@ -151,7 +151,7 @@ public class TestOCL extends OCLInternal
 			}
 		}
 	}
-	
+
 	/**
 	 * Assert that an expression can be parsed as an invariant for a context and return the invariant.
 	 */
@@ -196,22 +196,22 @@ public class TestOCL extends OCLInternal
 	/**
 	 * Asserts that a exception of the specified kind is not signalled by
 	 * the a given diagnostic or (recursively) its children.
-	 * 
+	 *
 	 * @param diagnostic a diagnostic
 	 * @param excType an exception that must not be indicated by the diagnostic
 	 */
-    public void assertNoException(Resource.Diagnostic diagnostic, java.lang.Class<? extends Throwable> excType) {
-    	if (diagnostic instanceof ExceptionDiagnostic) {
-	    	if (excType.isInstance(((ExceptionDiagnostic)diagnostic).getException())) {
-	    		TestCase.fail("Diagnostic signals a(n) " + excType.getSimpleName());
-	    	}
-	    	
-//	    	for (Diagnostic nested : diagnostic.getChildren()) {
-//	    		assertNoException(nested, excType);
-//	    	}
-    	}
-    }
-    
+	public void assertNoException(Resource.Diagnostic diagnostic, java.lang.Class<? extends Throwable> excType) {
+		if (diagnostic instanceof ExceptionDiagnostic) {
+			if (excType.isInstance(((ExceptionDiagnostic)diagnostic).getException())) {
+				TestCase.fail("Diagnostic signals a(n) " + excType.getSimpleName());
+			}
+
+			//	    	for (Diagnostic nested : diagnostic.getChildren()) {
+			//	    		assertNoException(nested, excType);
+			//	    	}
+		}
+	}
+
 	/**
 	 * Asserts that two objects are equal using OCL semantics. If they are not
 	 * an AssertionFailedError is thrown with the given message.
@@ -228,7 +228,7 @@ public class TestOCL extends OCLInternal
 		}
 		PivotTestSuite.failNotEquals(message, expected, actual);
 	}
-    
+
 	/**
 	 * Asserts that two objects are not equal using OCL semantics. If they are not
 	 * an AssertionFailedError is thrown with the given message.
@@ -276,10 +276,10 @@ public class TestOCL extends OCLInternal
 	public @Nullable Object assertQueryEquals(@Nullable Object context, @Nullable Object expected, @NonNull String expression) {
 		try {
 			Object expectedValue = expected instanceof Value ? expected : getIdResolver().boxedValueOf(expected);
-//    		typeManager.addLockedElement(expectedValue.getType());
-    		Object value = evaluate(null, context, expression);
-//    		String expectedAsString = String.valueOf(expected);
-//    		String valueAsString = String.valueOf(value);
+			//    		typeManager.addLockedElement(expectedValue.getType());
+			Object value = evaluate(null, context, expression);
+			//    		String expectedAsString = String.valueOf(expected);
+			//    		String valueAsString = String.valueOf(value);
 			assertOCLEquals(expression, expectedValue, value);
 			PivotTestSuite.appendLog(testName, context, expression, null, expectedValue != null ? expectedValue.toString() : null, null);
 			return value;
@@ -366,16 +366,16 @@ public class TestOCL extends OCLInternal
 	public Object assertQueryInvalid(Object context, @NonNull String expression, String reason, Class<?> exceptionClass) {
 		try {
 			Object value = evaluateWithoutValidation(null, context, expression);
-//    		if (!ValuesUtil.isInvalid(value)) {
-    			TestCase.fail(expression + " expected: invalid but was: " + value);
-//    		}
-//    		InvalidValue invalidValue = (InvalidValue)value;
-//              fail("Expected invalid for \"" + expression + "\"");
-    	} catch (InvalidValueException e) {
-    		Throwable ex = e;
-    		Throwable cause = e.getCause();
-//    		Exception cause = invalidValue.getException();
-//    		Throwable ex = cause;
+			//    		if (!ValuesUtil.isInvalid(value)) {
+			TestCase.fail(expression + " expected: invalid but was: " + value);
+			//    		}
+			//    		InvalidValue invalidValue = (InvalidValue)value;
+			//              fail("Expected invalid for \"" + expression + "\"");
+		} catch (InvalidValueException e) {
+			Throwable ex = e;
+			Throwable cause = e.getCause();
+			//    		Exception cause = invalidValue.getException();
+			//    		Throwable ex = cause;
 			String message = e.getMessage();
 			if (cause != null) {
 				ex = cause;
@@ -399,10 +399,10 @@ public class TestOCL extends OCLInternal
 			if (reason != null) {
 				TestCase.assertEquals("Invalid Value Reason", reason, e.getMessage());
 			}
-//    		failOn(expression, e);
-    	}
-    	return null;
-    }
+			//    		failOn(expression, e);
+		}
+		return null;
+	}
 
 	/**
 	 * Assert that the result of evaluating an expression as a query is not equal to expected.
@@ -411,10 +411,10 @@ public class TestOCL extends OCLInternal
 	public @Nullable Object assertQueryNotEquals(@Nullable Object context, @Nullable Object expected, @NonNull String expression) {
 		try {
 			Object expectedValue = expected instanceof Value ? expected : getIdResolver().boxedValueOf(expected);
-//    		typeManager.addLockedElement(expectedValue.getType());
-    		Object value = evaluate(null, context, expression);
-//    		String expectedAsString = String.valueOf(expected);
-//    		String valueAsString = String.valueOf(value);
+			//    		typeManager.addLockedElement(expectedValue.getType());
+			Object value = evaluate(null, context, expression);
+			//    		String expectedAsString = String.valueOf(expected);
+			//    		String valueAsString = String.valueOf(value);
 			assertOCLNotEquals(expression, expectedValue, value);
 			PivotTestSuite.appendLog(testName, context, expression, null, expectedValue != null ? expectedValue.toString() : null, null);
 			return value;
@@ -423,7 +423,7 @@ public class TestOCL extends OCLInternal
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Assert that the result of evaluating an expression as a query is not the same as expected.
 	 * @return the evaluation result
@@ -461,7 +461,7 @@ public class TestOCL extends OCLInternal
 	 */
 	public @Nullable Object assertQueryOCLEquals(@Nullable Object context, @Nullable Object expected, @NonNull String expression) {
 		try {
-    		Object value = evaluate(null, context, expression);
+			Object value = evaluate(null, context, expression);
 			assertOCLEquals(expression, expected, value);
 			PivotTestSuite.appendLog(testName, context, expression, null, expected != null ? expected.toString() : null, null);
 			return value;
@@ -477,7 +477,7 @@ public class TestOCL extends OCLInternal
 	 */
 	public @Nullable Object assertQueryOCLNotEquals(@Nullable Object context, @Nullable Object expected, @NonNull String expression) {
 		try {
-    		Object value = evaluate(null, context, expression);
+			Object value = evaluate(null, context, expression);
 			assertOCLNotEquals(expression, expected, value);
 			PivotTestSuite.appendLog(testName, context, expression, null, expected != null ? expected.toString() : null, null);
 			return value;
@@ -495,7 +495,7 @@ public class TestOCL extends OCLInternal
 	 * If either the expected result or the expression result is a double, we'll
 	 * compare the two with a margin of 0.001.
 	 * </p>
-	 * 
+	 *
 	 * @param expectedResult
 	 *            Object with which the query's result is to be compared.
 	 * @param expression
@@ -547,12 +547,12 @@ public class TestOCL extends OCLInternal
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Creates a query given the expression that is to be evaluated, then
 	 * asserts its result contains all elements included in
 	 * <code>expectedResult</code>.
-	 * 
+	 *
 	 * @param expectedResult
 	 *            Collection with which the query's result is to be compared.
 	 * @param expression
@@ -578,7 +578,7 @@ public class TestOCL extends OCLInternal
 	 * Creates a query given the expression that is to be evaluated, then
 	 * asserts its result contains all elements included in
 	 * <code>expectedResult</code>.
-	 * 
+	 *
 	 * @param expectedResultExpression
 	 *            Expression which is to be evaluated to determine the expected
 	 *            result.
@@ -600,14 +600,14 @@ public class TestOCL extends OCLInternal
 	}
 
 	public void assertSemanticErrorQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression, String messageTemplate, Object... bindings) {
-		assertBadQuery(SemanticException.class, Diagnostic.ERROR, contextType, expression, messageTemplate, bindings);	   
+		assertBadQuery(SemanticException.class, Diagnostic.ERROR, contextType, expression, messageTemplate, bindings);
 	}
 
-   	/**
-   	 * Assert that the expression is free of syntactic and semantic errors when parsed
-   	 * for evaluation on an object of contextType. No evaluation is performed since no
-   	 * object of contextType need exist. 
-   	 */
+	/**
+	 * Assert that the expression is free of syntactic and semantic errors when parsed
+	 * for evaluation on an object of contextType. No evaluation is performed since no
+	 * object of contextType need exist.
+	 */
 	public void assertValidQuery(org.eclipse.ocl.pivot.@NonNull Class contextType, @NonNull String expression) throws Exception {
 		ExpressionInOCL query = createQuery(contextType, expression);
 		PivotTestCase.assertNoValidationErrors(expression, query);
@@ -617,17 +617,17 @@ public class TestOCL extends OCLInternal
 	 * Assert that an expression cannot be used as a query, because an exception is thrown
 	 * with a diagnostic of severity containing a message that is the result of messageTemplate
 	 * resolved by bindings.
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-    public void assertValidationErrorQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression,
-		   String messageTemplate, Object... bindings) {
+	public void assertValidationErrorQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression,
+			String messageTemplate, Object... bindings) {
 		BaseCSResource csResource = null;
 		try {
-	   		ParserContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
-	   		csResource = (BaseCSResource) classContext.createBaseResource(expression);
+			ParserContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+			csResource = (BaseCSResource) classContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
 			Resource asResource = csResource.getASResource();
-	       	String expectedMessage = StringUtil.bind(messageTemplate, bindings);
+			String expectedMessage = StringUtil.bind(messageTemplate, bindings);
 			PivotTestSuite.assertValidationDiagnostics("Validating", asResource, new String[] {expectedMessage});
 			PivotTestSuite.appendLog(testName, contextType, expression, expectedMessage, null, null);
 		} catch (Exception e) {
@@ -639,7 +639,7 @@ public class TestOCL extends OCLInternal
 		}
 	}
 
-    public boolean check(Object context, @NonNull String expression) throws ParserException {
+	public boolean check(Object context, @NonNull String expression) throws ParserException {
 		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class contextType = getContextType(context);
 		ExpressionInOCL constraint = createInvariant(contextType, expression);
@@ -654,13 +654,13 @@ public class TestOCL extends OCLInternal
 		}
 	}
 
-    public void createDocument(String text) {
+	public void createDocument(String text) {
 		throw new UnsupportedOperationException();
-//		try {
-//			ocl.parse(new OCLInput(text));
-//       } catch (Exception e) {
-//           fail("Failed to parse: " + e.getLocalizedMessage());
-//       }
+		//		try {
+		//			ocl.parse(new OCLInput(text));
+		//       } catch (Exception e) {
+		//           fail("Failed to parse: " + e.getLocalizedMessage());
+		//       }
 	}
 
 	public void createGeneralization(org.eclipse.ocl.pivot.Class special, org.eclipse.ocl.pivot.Class general) {
@@ -732,45 +732,45 @@ public class TestOCL extends OCLInternal
 		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 		ExpressionInOCL query = parserContext.parse(classContext, expression);
 		PivotTestSuite.assertNoValidationErrors(expression, query);
-        try {
-        	return evaluate(query, context);
+		try {
+			return evaluate(query, context);
 		} finally {
 			metamodelManager.getASResourceSet().getResources().remove(query.eResource());
 		}
-    }
-    
+	}
+
 	public @Nullable Object evaluate(@NonNull ExpressionInOCL expr, @Nullable Object self) throws Exception {
 		Object result = null;
-		
-//    	try {
-			if (!PivotTestSuite.useCodeGen) {
-				result = super.evaluate(self, expr);
-			}
-			else {
-				ProjectManager projectMap = environmentFactory.getProjectManager();
-				ResourceSet resourceSet = getResourceSet();
-				projectMap.initializeResourceSet(resourceSet);
-				resourceSet.getPackageRegistry().put(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
-				resourceSet.getPackageRegistry().put(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
 
-				CodeGenHelper genModelHelper = getCodeGenHelper(getEnvironmentFactory());
+		//    	try {
+		if (!PivotTestSuite.useCodeGen) {
+			result = super.evaluate(self, expr);
+		}
+		else {
+			ProjectManager projectMap = environmentFactory.getProjectManager();
+			ResourceSet resourceSet = getResourceSet();
+			projectMap.initializeResourceSet(resourceSet);
+			resourceSet.getPackageRegistry().put(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
+			resourceSet.getPackageRegistry().put(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
 
-				File targetFolder = new File("../" + PivotTestSuite.ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS + "/src-gen");
-				targetFolder.mkdir();
-				String packageName = testPackageName;
-				String className = "TestClass" + PivotTestSuite.testCounter++;
-				File dir = new File(targetFolder, packageName);
-				dir.mkdir();
-				LibraryUnaryOperation.LibraryUnaryOperationExtension testInstance = (LibraryUnaryOperation.LibraryUnaryOperationExtension) genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
-				assert testInstance != null;
-				Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY);
-				OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();
-				callExp.setType(expr.getType());
-				result = testInstance.evaluate(executor, callExp.getTypeId(), self);
-			}
-//    	} catch (Exception e) {
-//    		fail("Evaluation failed: " + e.getLocalizedMessage());
-//    	}
+			CodeGenHelper genModelHelper = getCodeGenHelper(getEnvironmentFactory());
+
+			File targetFolder = new File("../" + PivotTestSuite.ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS + "/src-gen");
+			targetFolder.mkdir();
+			String packageName = testPackageName;
+			String className = "TestClass" + PivotTestSuite.testCounter++;
+			File dir = new File(targetFolder, packageName);
+			dir.mkdir();
+			LibraryUnaryOperation.LibraryUnaryOperationExtension testInstance = (LibraryUnaryOperation.LibraryUnaryOperationExtension) genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
+			assert testInstance != null;
+			Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY);
+			OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();
+			callExp.setType(expr.getType());
+			result = testInstance.evaluate(executor, callExp.getTypeId(), self);
+		}
+		//    	} catch (Exception e) {
+		//    		fail("Evaluation failed: " + e.getLocalizedMessage());
+		//    	}
 
 		return result;
 	}
@@ -779,41 +779,40 @@ public class TestOCL extends OCLInternal
 		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class contextType = getContextType(context);
 		ExpressionInOCL query = createQuery(contextType, expression);
-        try {
-    		return evaluate(context, query);
+		try {
+			return evaluate(context, query);
 		} finally {
 			metamodelManager.getASResourceSet().getResources().remove(query.eResource());
 		}
-    }
+	}
 
 	public @Nullable Object evaluateWithoutValidation(@Nullable Object unusedHelper, @Nullable Object context, @NonNull String expression) throws Exception {
 		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class contextType = getContextType(context);
 		ExpressionInOCL query = createQuery(contextType, expression);
-        try {
-        	return evaluate(query, context);
+		try {
+			return evaluate(query, context);
 		} finally {
 			metamodelManager.getASResourceSet().getResources().remove(query.eResource());
 		}
-    }
+	}
 
-	@SuppressWarnings("null")
 	public CodeGenHelper getCodeGenHelper(@NonNull EnvironmentFactoryInternal environmentFactory) throws IOException {
 		URI genModelURI = URI.createPlatformResourceURI(
-				"/org.eclipse.ocl.pivot/model/Pivot.genmodel",
-				true);
-    	ResourceSet resourceSet = getResourceSet();
+			"/org.eclipse.ocl.pivot/model/Pivot.genmodel",
+			true);
+		ResourceSet resourceSet = getResourceSet();
 		Resource genModelResource = resourceSet.getResource(genModelURI, true);
 		String errorsString = PivotUtil.formatResourceDiagnostics(
-				genModelResource.getErrors(), "Loading " + genModelURI, "\n");
+			genModelResource.getErrors(), "Loading " + genModelURI, "\n");
 		if (errorsString != null) {
 			// issues.addError(this, errorsString, null, null, null);
 			return null;
 		}
 		GenModel genModel = (GenModel) genModelResource.getContents().get(0);
 		return new JavaGenModelCodeGenHelper(genModel, environmentFactory);
-//    	return new GenModelCodeGenHelper(genModel, metamodelManager);
-    }
+		//    	return new GenModelCodeGenHelper(genModel, metamodelManager);
+	}
 
 	public @NonNull Type getCollectionType(@NonNull String collectionName, @NonNull Type type, boolean isNullFree) {
 		MetamodelManagerInternal metamodelManager = getMetamodelManager();
@@ -823,17 +822,17 @@ public class TestOCL extends OCLInternal
 	}
 
 	/**
-     * Obtains the diagnostic describing the problem in the last failed parse,
-     * asserting that it is not <code>null</code>.
-     * 
-     * @return the diagnostic
-     */
-    public Resource.Diagnostic getDiagnostic(@NonNull Resource resource) {
-    	org.eclipse.emf.ecore.resource.Resource.Diagnostic diagnostic = resource.getErrors().get(0);
+	 * Obtains the diagnostic describing the problem in the last failed parse,
+	 * asserting that it is not <code>null</code>.
+	 *
+	 * @return the diagnostic
+	 */
+	public Resource.Diagnostic getDiagnostic(@NonNull Resource resource) {
+		org.eclipse.emf.ecore.resource.Resource.Diagnostic diagnostic = resource.getErrors().get(0);
 		return diagnostic;
-    }
+	}
 
-    public @NonNull Value getEmptyBagValue() {
+	public @NonNull Value getEmptyBagValue() {
 		return getIdResolver().createBagOfEach(TypeId.BAG.getSpecializedId(TypeId.OCL_VOID));
 	}
 
@@ -853,9 +852,9 @@ public class TestOCL extends OCLInternal
 		MetamodelManagerInternal metamodelManager = getMetamodelManager();
 		return ClassUtil.nonNullState(metamodelManager.getASmetamodel());
 	}
-	
+
 	@SuppressWarnings("null")
-	public void loadEPackage(@NonNull String alias, /*@NonNull*/ EPackage ePackage) {		
+	public void loadEPackage(@NonNull String alias, /*@NonNull*/ EPackage ePackage) {
 		Element ecoreElement = Ecore2AS.importFromEcore(getEnvironmentFactory(), alias, ePackage);
 		getMetamodelManager().addGlobalNamespace(alias, (Namespace) ecoreElement);
 	}
@@ -865,11 +864,11 @@ public class TestOCL extends OCLInternal
 	 */
 	public org.eclipse.ocl.pivot.@NonNull Package registerPackage(org.eclipse.ocl.pivot.@NonNull Package pkg, @NonNull String nsPrefix, @NonNull String nsUri) {
 		pkg.setNsPrefix(nsPrefix);
-        pkg.setURI(nsUri);
+		pkg.setURI(nsUri);
 		Resource resource = new ResourceImpl(URI.createURI(nsUri));
-        resource.getContents().add(pkg);
-        getResourceSet().getResources().add(resource);					// FIXME UML needs this
-        getResourceSet().getPackageRegistry().put(nsUri, pkg);			//  whereas Ecore needs this
-        return pkg;
+		resource.getContents().add(pkg);
+		getResourceSet().getResources().add(resource);					// FIXME UML needs this
+		getResourceSet().getPackageRegistry().put(nsUri, pkg);			//  whereas Ecore needs this
+		return pkg;
 	}
 }

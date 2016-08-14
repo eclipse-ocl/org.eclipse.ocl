@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *   		references WizardNewFileCreationPage, ResourceDialog and ExtendedLoadResourceDialog
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui.wizards;
@@ -41,7 +41,7 @@ public abstract class AbstractFileDialog extends ExtendedLoadResourceDialog
 	public static final String PREFIX = BaseUiPluginHelper.PLUGIN_ID + "."; //$NON-NLS-1$
 
 	private static final String NEW_FILE_WIZARD_PAGE = PREFIX
-		+ BaseUIMessages.NewWizardPage_newFileWizardContextId; //$NON-NLS-1$
+			+ BaseUIMessages.NewWizardPage_newFileWizardContextId;
 
 	// the current resource selection
 	protected final @Nullable IResource initialSelection;
@@ -100,9 +100,9 @@ public abstract class AbstractFileDialog extends ExtendedLoadResourceDialog
 	 * <br>
 	 * The current file name will include the file extension if the
 	 * preconditions are met.
-	 * 
+	 *
 	 * @see WizardNewFileCreationPage#setFileExtension(String)
-	 * 
+	 *
 	 * @return the file name, its anticipated initial value, or
 	 *         <code>null</code> if no file name is known
 	 */
@@ -143,7 +143,7 @@ public abstract class AbstractFileDialog extends ExtendedLoadResourceDialog
 				IPath fullPath = resourceSelection2.getFullPath();
 				if (uriField != null) {
 					URI uri = URI.createPlatformResourceURI(fullPath.toString(), true);
-					uriField.setText(uri.toString());
+					uriField.setText(String.valueOf(uri));
 				}
 				IPath removeFileExtension = fullPath.removeFileExtension();
 				IPath addFileExtension = removeFileExtension.addFileExtension(wizard.getNewFileExtension());
@@ -176,7 +176,7 @@ public abstract class AbstractFileDialog extends ExtendedLoadResourceDialog
 
 	/**
 	 * Returns true if this selected resource would be filtered from view.
-	 * 
+	 *
 	 * {@link IWorkspace#validateFiltered(IResource)}
 	 */
 	protected boolean isFilteredByParent() {
@@ -188,8 +188,8 @@ public abstract class AbstractFileDialog extends ExtendedLoadResourceDialog
 		if (resourceName == null)
 			return false;
 		if (resourceName.length() > 0) {
-//			IPath newFolderPath = containerPath.append(resourceName);
-//			IFile newFileHandle = createFileHandle(newFolderPath);
+			//			IPath newFolderPath = containerPath.append(resourceName);
+			//			IFile newFileHandle = createFileHandle(newFolderPath);
 			IFile newFileHandle = getNewFile();
 			IWorkspace workspace = newFileHandle.getWorkspace();
 			return !workspace.validateFiltered(newFileHandle).isOK();
@@ -209,7 +209,7 @@ public abstract class AbstractFileDialog extends ExtendedLoadResourceDialog
 			int problemType = group.getProblemType();
 			String problemMessage = group.getProblemMessage();
 			if (problemType == ResourceAndContainerGroup.PROBLEM_RESOURCE_EMPTY
-				|| problemType == ResourceAndContainerGroup.PROBLEM_CONTAINER_EMPTY) {
+					|| problemType == ResourceAndContainerGroup.PROBLEM_CONTAINER_EMPTY) {
 				wizardPage.setMessage(problemMessage);
 				wizardPage.setErrorMessage(null);
 			} else {

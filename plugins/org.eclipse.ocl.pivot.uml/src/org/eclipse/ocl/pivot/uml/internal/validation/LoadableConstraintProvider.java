@@ -73,48 +73,48 @@ public abstract class LoadableConstraintProvider extends XmlConstraintProvider
 	private static OCL ocl = null;		// FIXME use CG'd constraints to allow this to be weak
 
 	public static @NonNull OCL getOCL() {
-    	OCL ocl2 = ocl;
+		OCL ocl2 = ocl;
 		if (ocl2 == null) {
-    		synchronized (LoadableConstraintProvider.class) {
-    	    	ocl2 = ocl;
-    	    	if (ocl2 == null) {
-    	    		ocl = ocl2 = OCL.newInstance();
-    	    	}
-    		}
-    	}
+			synchronized (LoadableConstraintProvider.class) {
+				ocl2 = ocl;
+				if (ocl2 == null) {
+					ocl = ocl2 = OCL.newInstance();
+				}
+			}
+		}
 		return ocl2;
 	}
 
 	protected LoadableConstraintProvider() {
 	}
-	
+
 	protected void installConstraint(@NonNull Constraint constraint, @NonNull Set<Category> categories) {
-        MetamodelManager metamodelManager = ocl.getMetamodelManager();
-        for (/*@NonNull*/ Element constrainedElement : constraint.getConstrainedElements()) {
-    		if (constrainedElement != null) {
-    			EModelElement targetElement = metamodelManager.getEcoreOfPivot(EModelElement.class, constrainedElement);
-                if (targetElement != null) {
-        			int code = 99;
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		for (/*@NonNull*/ Element constrainedElement : constraint.getConstrainedElements()) {
+			if (constrainedElement != null) {
+				EModelElement targetElement = metamodelManager.getEcoreOfPivot(EModelElement.class, constrainedElement);
+				if (targetElement != null) {
+					int code = 99;
 					LoadableConstraintDescriptor<?> desc = null;
-        			if (targetElement instanceof EClassifier) {
-    					desc = new LoadableConstraintDescriptor.Ecore((EClassifier)targetElement, constraint, code);     				
-        			}
-        			else if (targetElement instanceof Stereotype) {
-    					desc = new LoadableConstraintDescriptor.UML((Stereotype)targetElement, constraint, code);     				
-        			}
-        			else {
-        				logger.error("Unknown constrainedElement type : " + targetElement);
-        			}
+					if (targetElement instanceof EClassifier) {
+						desc = new LoadableConstraintDescriptor.Ecore((EClassifier)targetElement, constraint, code);
+					}
+					else if (targetElement instanceof Stereotype) {
+						desc = new LoadableConstraintDescriptor.UML((Stereotype)targetElement, constraint, code);
+					}
+					else {
+						logger.error("Unknown constrainedElement type : " + targetElement);
+					}
 					if (desc != null) {
-	        			for (Category category : categories) {
-	        				category.addConstraint(desc);
-	        			}
-	        			Collection<IModelConstraint> constraints = getConstraints();
-	        			constraints.add(desc);
-	 				}
-                }
-    		}
-        }
+						for (Category category : categories) {
+							category.addConstraint(desc);
+						}
+						Collection<IModelConstraint> constraints = getConstraints();
+						constraints.add(desc);
+					}
+				}
+			}
+		}
 	}
 
 	protected void installContents(Iterable<? extends EObject> eContents, @NonNull Set<Category> categories) {
@@ -125,12 +125,12 @@ public abstract class LoadableConstraintProvider extends XmlConstraintProvider
 			if (!(eObject instanceof EAnnotation) && !(eObject instanceof Annotation)) {
 				installContents(eObject.eContents(), categories);
 			}
-		}		
+		}
 	}
 
 	protected void installDescriptor(@NonNull XmlConstraintDescriptor descriptor, String namespaceIdentifier, @NonNull Set<Category> categories) {
 		String path = descriptor.getParameterValue("path");
-		@NonNull URI uri = URI.createPlatformPluginURI("/" + namespaceIdentifier + "/" + path, true);
+		URI uri = URI.createPlatformPluginURI("/" + namespaceIdentifier + "/" + path, true);
 		load(getOCL().getEnvironmentFactory(), uri, categories);
 	}
 

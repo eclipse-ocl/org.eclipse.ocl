@@ -64,7 +64,7 @@ public class EssentialOCLProposalProvider extends AbstractEssentialOCLProposalPr
 	private static final int BOOST_ITERATION = 5;
 	private static final int BOOST_TYPE = 0;
 	private static final int BOOST_PACKAGE = -5;
-	
+
 	public class ClassSensitiveProposalCreator extends DefaultProposalCreator
 	{
 		public ClassSensitiveProposalCreator(ContentAssistContext contentAssistContext, String ruleName, IQualifiedNameConverter qualifiedNameConverter) {
@@ -82,9 +82,9 @@ public class EssentialOCLProposalProvider extends AbstractEssentialOCLProposalPr
 			}
 			return proposal;
 		}
-		
+
 	}
-	
+
 	protected static Image collectionTypeImage = null;
 	private static Image primitiveTypeImage = null;
 
@@ -125,7 +125,7 @@ public class EssentialOCLProposalProvider extends AbstractEssentialOCLProposalPr
 		EObject currentModel = context.getCurrentModel();
 		if ((currentModel instanceof Pivotable) && ((Pivotable)currentModel).getPivot() == null) {
 			Resource eResource = currentModel.eResource();
-			@SuppressWarnings("null")@NonNull List<Diagnostic> errors = eResource.getErrors();
+			@NonNull List<Diagnostic> errors = eResource.getErrors();
 			@SuppressWarnings("unused") int errorsSize = errors.size();
 			if ((eResource instanceof BaseCSResource) && ElementUtil.hasSyntaxError(errors)) {
 				//
@@ -141,12 +141,12 @@ public class EssentialOCLProposalProvider extends AbstractEssentialOCLProposalPr
 					/* Never let an Exception leak out to abort Xtext */
 					exception.getClass();					// Just a debug breakpoint opportunity.
 				}
-//				assert errorsSize == errors.size();
+				//				assert errorsSize == errors.size();
 			}
-//			System.out.println("createProposals: for " + context.getPreviousModel().eClass().getName() + "  then " + currentModel.eClass().getName() + " with \"" + context.getPrefix() + "\"");
+			//			System.out.println("createProposals: for " + context.getPreviousModel().eClass().getName() + "  then " + currentModel.eClass().getName() + " with \"" + context.getPrefix() + "\"");
 		}
 		super.createProposals(context, acceptor);
-	} 
+	}
 
 	protected EObject getPathScope(EObject model, ContentAssistContext context) {
 		int offset = context.getOffset();
@@ -209,7 +209,7 @@ public class EssentialOCLProposalProvider extends AbstractEssentialOCLProposalPr
 		return new ClassSensitiveProposalCreator(contentAssistContext, ruleName, getQualifiedNameConverter());
 	}
 
-/*	@Override
+	/*	@Override
 	protected void invokeMethod(String methodName, ICompletionProposalAcceptor acceptor, Object... params) {
 		System.out.println("  invokeMethod: " + methodName);
 		super.invokeMethod(methodName, acceptor, params);
@@ -238,7 +238,7 @@ public class EssentialOCLProposalProvider extends AbstractEssentialOCLProposalPr
 			ruleName = ((RuleCall) crossReference.getTerminal()).getRule().getName();
 		}
 		lookupCrossReference(currentModel, reference, acceptor, filter,
-				getProposalFactory(ruleName, contentAssistContext));
+			getProposalFactory(ruleName, contentAssistContext));
 	}
 
 	@Override
@@ -246,7 +246,7 @@ public class EssentialOCLProposalProvider extends AbstractEssentialOCLProposalPr
 			ICompletionProposalAcceptor acceptor,
 			Predicate<IEObjectDescription> filter,
 			Function<IEObjectDescription, ICompletionProposal> proposalFactory) {
-//		System.out.println("    lookupCrossReference: " + reference.getEContainingClass().getName() + "::" + reference.getName());
+		//		System.out.println("    lookupCrossReference: " + reference.getEContainingClass().getName() + "::" + reference.getName());
 		super.lookupCrossReference(model, reference, acceptor, filter, proposalFactory);
 	}
 

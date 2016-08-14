@@ -67,19 +67,19 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	private Set<EClass> doneWarnings = null;
-	
+
 	public UML2ASUseSwitch(@NonNull UML2AS converter) {
 		this.converter = converter;
 		this.environmentFactory = converter.getEnvironmentFactory();
 		this.standardLibrary = converter.getStandardLibrary();
 	}
-	
-//	@Override
-//	public Object caseEAnnotation(EAnnotation eObject) {
-//		Annotation pivotElement = converter.getCreated(Annotation.class, eObject);
-//		doSwitchAll(Element.class, pivotElement.getReference(), eObject.getReferences());
-//		return pivotElement;
-//	}
+
+	//	@Override
+	//	public Object caseEAnnotation(EAnnotation eObject) {
+	//		Annotation pivotElement = converter.getCreated(Annotation.class, eObject);
+	//		doSwitchAll(Element.class, pivotElement.getReference(), eObject.getReferences());
+	//		return pivotElement;
+	//	}
 
 	@Override
 	public Object caseAssociation(org.eclipse.uml2.uml.Association umlAssociation) {
@@ -88,7 +88,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 		if (asAssociationClass != null) {
 			markRedefinitions(umlAssociation);
 			List<org.eclipse.uml2.uml.Constraint> invariants = umlAssociation.getOwnedRules();
-			doSwitchAll(Constraint.class, ClassUtil.nullFree(asAssociationClass.getOwnedInvariants()), invariants);
+			doSwitchAll(Constraint.class, ClassUtil.<Constraint>nullFree(asAssociationClass.getOwnedInvariants()), invariants);
 			copyConstraints(asAssociationClass, umlAssociation, invariants);
 		}
 		return asAssociationClass;
@@ -107,13 +107,13 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 		org.eclipse.ocl.pivot.Class pivotElement = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlClass);
 		if (pivotElement != null) {
 			List<org.eclipse.uml2.uml.Constraint> invariants = umlClass.getOwnedRules();
-			doSwitchAll(Constraint.class, ClassUtil.nullFree(pivotElement.getOwnedInvariants()), invariants);
+			doSwitchAll(Constraint.class, ClassUtil.<Constraint>nullFree(pivotElement.getOwnedInvariants()), invariants);
 			copyConstraints(pivotElement, umlClass, invariants);
 		}
 		return pivotElement;
 	}
 
-/*	@Override
+	/*	@Override
 	public Constraint caseConstraint(org.eclipse.uml2.uml.Constraint umlConstraint) {
 		assert umlConstraint != null;
 		Constraint pivotElement = converter.getCreated(Constraint.class, umlConstraint);
@@ -129,7 +129,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 		org.eclipse.ocl.pivot.Class pivotElement = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlClassifier);
 		if (pivotElement != null) {
 			List<org.eclipse.uml2.uml.Constraint> invariants = umlClassifier.getOwnedRules();
-			doSwitchAll(Constraint.class, ClassUtil.nullFree(pivotElement.getOwnedInvariants()), invariants);
+			doSwitchAll(Constraint.class, ClassUtil.<Constraint>nullFree(pivotElement.getOwnedInvariants()), invariants);
 			copyConstraints(pivotElement, umlClassifier, invariants);
 		}
 		return pivotElement;
@@ -143,13 +143,13 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 		Object pivotSpecification = umlSpecification != null ? doSwitch(umlSpecification) : null;
 		pivotElement.setOwnedSpecification((ExpressionInOCL) pivotSpecification);
 		converter.copyNamedElement(pivotElement, umlConstraint);
-//		if (!umlConstraint.getConstrainedElements().isEmpty()) {
-//			converter.queueReference(umlConstraint);	// Defer
-//		}
-//		else {
-//			pivotElement.getConstrainedElement().clear();
-//		}
-		doSwitchAllOptional(Element.class, ClassUtil.nullFree(pivotElement.getConstrainedElements()), umlConstraint.getConstrainedElements());
+		//		if (!umlConstraint.getConstrainedElements().isEmpty()) {
+		//			converter.queueReference(umlConstraint);	// Defer
+		//		}
+		//		else {
+		//			pivotElement.getConstrainedElement().clear();
+		//		}
+		doSwitchAllOptional(Element.class, ClassUtil.<Element>nullFree(pivotElement.getConstrainedElements()), umlConstraint.getConstrainedElements());
 		return pivotElement;
 	}
 
@@ -320,8 +320,8 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 		assert umlOperation != null;
 		Operation pivotElement = converter.getCreated(Operation.class, umlOperation);
 		if (pivotElement != null) {
-			doSwitchAll(Type.class, ClassUtil.nullFree(pivotElement.getRaisedExceptions()), umlOperation.getRaisedExceptions());
-			doSwitchAll(Operation.class, ClassUtil.nullFree(pivotElement.getRedefinedOperations()), umlOperation.getRedefinedOperations());
+			doSwitchAll(Type.class, ClassUtil.<Type>nullFree(pivotElement.getRaisedExceptions()), umlOperation.getRaisedExceptions());
+			doSwitchAll(Operation.class, ClassUtil.<Operation>nullFree(pivotElement.getRedefinedOperations()), umlOperation.getRedefinedOperations());
 			for (org.eclipse.uml2.uml.Parameter umlParameter : umlOperation.getOwnedParameters()) {
 				org.eclipse.uml2.uml.ParameterDirectionKind direction = umlParameter.getDirection();
 				if (direction == org.eclipse.uml2.uml.ParameterDirectionKind.RETURN_LITERAL) {
@@ -331,8 +331,8 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			List<org.eclipse.uml2.uml.Constraint> preconditions = umlOperation.getPreconditions();
 			org.eclipse.uml2.uml.Constraint bodyCondition = umlOperation.getBodyCondition();
 			List<org.eclipse.uml2.uml.Constraint> postconditions = umlOperation.getPostconditions();
-			doSwitchAll(Constraint.class, ClassUtil.nullFree(pivotElement.getOwnedPreconditions()), preconditions);
-			doSwitchAll(Constraint.class, ClassUtil.nullFree(pivotElement.getOwnedPostconditions()), postconditions);
+			doSwitchAll(Constraint.class, ClassUtil.<Constraint>nullFree(pivotElement.getOwnedPreconditions()), preconditions);
+			doSwitchAll(Constraint.class, ClassUtil.<Constraint>nullFree(pivotElement.getOwnedPostconditions()), postconditions);
 			Constraint constraint = bodyCondition != null ? (Constraint) doSwitch(bodyCondition) : null;
 			LanguageExpression specification = null;
 			if (constraint != null) {
@@ -352,8 +352,8 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			else {
 				exclusions = Collections.emptyList();
 			}
-//			copyNamespace(pivotElement, umlOperation, exclusions);
-//			copyNamedElement(pivotElement, umlOperation);
+			//			copyNamespace(pivotElement, umlOperation, exclusions);
+			//			copyNamedElement(pivotElement, umlOperation);
 			copyConstraints(pivotElement, umlOperation, exclusions);
 		}
 		return pivotElement;
@@ -364,24 +364,24 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 		assert umlPackage != null;
 		org.eclipse.ocl.pivot.Package pivotElement = converter.getCreated(org.eclipse.ocl.pivot.Package.class, umlPackage);
 		if (pivotElement != null) {
-			doSwitchAll(org.eclipse.ocl.pivot.Package.class, ClassUtil.nullFree(pivotElement.getImportedPackages()), umlPackage.getImportedPackages());
+			doSwitchAll(org.eclipse.ocl.pivot.Package.class, ClassUtil.<org.eclipse.ocl.pivot.Package>nullFree(pivotElement.getImportedPackages()), umlPackage.getImportedPackages());
 			copyConstraints(pivotElement, umlPackage, null);
 		}
 		return pivotElement;
 	}
 
-//	@Override
-//	public ProfileApplication caseProfileApplication(org.eclipse.uml2.uml.ProfileApplication umlProfileApplication) {
-//		resolved during installStereotypes
-//	}
+	//	@Override
+	//	public ProfileApplication caseProfileApplication(org.eclipse.uml2.uml.ProfileApplication umlProfileApplication) {
+	//		resolved during installStereotypes
+	//	}
 
 	@Override
 	public Property caseProperty(org.eclipse.uml2.uml.Property umlProperty) {
 		assert umlProperty != null;
 		Property pivotElement = converter.getCreated(Property.class, umlProperty);
 		if (pivotElement != null) {
-			doSwitchAll(Property.class, ClassUtil.nullFree(pivotElement.getRedefinedProperties()), umlProperty.getRedefinedProperties());
-	//		doSwitchAll(Property.class, pivotElement.getSubsettedProperty(), umlProperty.getSubsettedProperties());
+			doSwitchAll(Property.class, ClassUtil.<Property>nullFree(pivotElement.getRedefinedProperties()), umlProperty.getRedefinedProperties());
+			//		doSwitchAll(Property.class, pivotElement.getSubsettedProperty(), umlProperty.getSubsettedProperties());
 			ExpressionInOCL asExpression = null;
 			//
 			//	Synthesize xxx() for idiomatic UML xxx property default.
@@ -392,13 +392,13 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 				if (umlClass != null) {
 					for (org.eclipse.uml2.uml.Operation umlOperation : umlClass.getOwnedOperations()) {
 						if (propertyName.equals(umlOperation.getName()) && (umlOperation.getOwnedParameters().size() == 1)) {
-						{
-							org.eclipse.uml2.uml.Constraint bodyCondition = umlOperation.getBodyCondition();
-							if (bodyCondition != null) {
-								List<org.eclipse.uml2.uml.Element> constrainedElement = bodyCondition.getConstrainedElements();
-								if ((constrainedElement.size() >= 2)
-									 && (constrainedElement.get(0) == umlOperation)
-									 && (constrainedElement.get(1) == umlProperty)) {
+							{
+								org.eclipse.uml2.uml.Constraint bodyCondition = umlOperation.getBodyCondition();
+								if (bodyCondition != null) {
+									List<org.eclipse.uml2.uml.Element> constrainedElement = bodyCondition.getConstrainedElements();
+									if ((constrainedElement.size() >= 2)
+											&& (constrainedElement.get(0) == umlOperation)
+											&& (constrainedElement.get(1) == umlProperty)) {
 										asExpression = PivotFactory.eINSTANCE.createExpressionInOCL();
 										asExpression.setBody(propertyName + "()");
 										asExpression.setIsRequired(pivotElement.isIsRequired());
@@ -471,13 +471,13 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 	}
 
 	protected void copyConstraints(@NonNull Namespace pivotElement, org.eclipse.uml2.uml.@NonNull Namespace umlNamespace,
-			@Nullable List<org.eclipse.uml2.uml.Constraint> exclusions) {	
+			@Nullable List<org.eclipse.uml2.uml.Constraint> exclusions) {
 		List<org.eclipse.uml2.uml.Constraint> ownedRules = umlNamespace.getOwnedRules();
 		if ((exclusions != null) && (exclusions.size() > 0)) {
 			ownedRules = new ArrayList<org.eclipse.uml2.uml.Constraint>(ownedRules);
 			ownedRules.removeAll(exclusions);
 		}
-		doSwitchAll(Constraint.class, ClassUtil.nullFree(pivotElement.getOwnedConstraints()), ownedRules);
+		doSwitchAll(Constraint.class, ClassUtil.<Constraint>nullFree(pivotElement.getOwnedConstraints()), ownedRules);
 	}
 
 	public Object doInPackageSwitch(EObject eObject) {
@@ -501,9 +501,9 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 					}
 				}
 				if (pivotElement == null) {
-//					if (!(eObject instanceof org.eclipse.uml2.uml.Constraint)) {
-//						System.out.println("Use switching " + eObject);
-//					}
+					//					if (!(eObject instanceof org.eclipse.uml2.uml.Constraint)) {
+					//						System.out.println("Use switching " + eObject);
+					//					}
 					@SuppressWarnings("unchecked")T doSwitchResult = (T) doSwitch(eObject);
 					pivotElement = doSwitchResult;
 				}
@@ -541,9 +541,9 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 					}
 				}
 				if (pivotElement == null) {
-//					if (!(eObject instanceof org.eclipse.uml2.uml.Constraint)) {
-//						System.out.println("Use switching " + eObject);
-//					}
+					//					if (!(eObject instanceof org.eclipse.uml2.uml.Constraint)) {
+					//						System.out.println("Use switching " + eObject);
+					//					}
 					@SuppressWarnings("unchecked")T doSwitchResult = (T) doSwitch(eObject);
 					pivotElement = doSwitchResult;
 				}

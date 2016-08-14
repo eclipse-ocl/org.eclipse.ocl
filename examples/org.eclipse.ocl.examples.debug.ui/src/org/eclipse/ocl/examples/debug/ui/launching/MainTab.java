@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -68,7 +69,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 		}
 	}
 
-	protected class ContextPathModifyListener implements ModifyListener 
+	protected class ContextPathModifyListener implements ModifyListener
 	{
 		@Override
 		public void modifyText(ModifyEvent e) {
@@ -76,13 +77,13 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 				return;
 			}
 			String modelName = modelPath.getText();
-			@SuppressWarnings("null")@NonNull URI contextURI = URI.createURI(modelName, true);
+			URI contextURI = URI.createURI(modelName, true);
 			URI elementsURI = contextURI.trimFragment();
 			try {
 				Resource resource = getEnvironmentFactory().getResourceSet().getResource(elementsURI, true);
-		        if (resource == null) {
-		        	throw new IOException("There was an error loading the model file. ");
-		        }
+				if (resource == null) {
+					throw new IOException("There was an error loading the model file. ");
+				}
 				List<String> elements = new ArrayList<String>();
 				for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
 					EObject eObject = tit.next();
@@ -90,7 +91,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 					URI uri = EcoreUtil.getURI(eObject);
 					elements.add(displayString);
 					element2uri.put(displayString, uri);
-					}
+				}
 				Collections.sort(elements);
 				elementCombo.setItems(elements.toArray(new String[elements.size()]));
 			}
@@ -120,24 +121,24 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 				return;
 			}
 			String oclName = oclPath.getText();
-			@SuppressWarnings("null")@NonNull URI oclURI = URI.createURI(oclName, true);
+			URI oclURI = URI.createURI(oclName, true);
 			try {
 				Model root = null;
-		        BaseCSResource xtextResource = null;
-		        xtextResource = (BaseCSResource) getEnvironmentFactory().getResourceSet().getResource(oclURI, true);
-		        if (xtextResource != null) {
-	    			ASResource asResource = xtextResource.getASResource();
-	    			for (EObject eContent : asResource.getContents()) {
-	    	    		root = (Model)eContent;
-	    				break;
-	    			}
-		        } else {
-		        	// TODO Can I get the parsing errors?
-		        	//return null;
-		        }
-		        if (root == null) {
-		        	throw new IOException("There was an error loading the OCL file. ");
-		        }
+				BaseCSResource xtextResource = null;
+				xtextResource = (BaseCSResource) getEnvironmentFactory().getResourceSet().getResource(oclURI, true);
+				if (xtextResource != null) {
+					ASResource asResource = xtextResource.getASResource();
+					for (EObject eContent : asResource.getContents()) {
+						root = (Model)eContent;
+						break;
+					}
+				} else {
+					// TODO Can I get the parsing errors?
+					//return null;
+				}
+				if (root == null) {
+					throw new IOException("There was an error loading the OCL file. ");
+				}
 				List<String> expressions = new ArrayList<String>();
 				for (TreeIterator<EObject> tit = root.eAllContents(); tit.hasNext(); ) {
 					EObject eObject = tit.next();
@@ -193,9 +194,10 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 			return false;
 		}
 		setErrorMessage(null);
-		return true;			
+		return true;
 	}
 
+	@Override
 	@SuppressWarnings("null")
 	public void createControl(Composite parent) {
 		Composite control = createForm(parent);
@@ -234,18 +236,18 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 		oclBrowseWS.setText("Browse Workspace...");
 		oclBrowseFile = new Button(oclGroup, SWT.NONE);
 		oclBrowseFile.setText("Browse File...");
-		
+
 		expressionGroup = new Group(control, SWT.NONE);
 		expressionGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		GridLayout gl_expressionGroup = new GridLayout(2, false);
 		gl_expressionGroup.marginWidth = 0;
 		gl_expressionGroup.marginHeight = 0;
 		expressionGroup.setLayout(gl_expressionGroup);
-		
+
 		Label expressionLabel = new Label(expressionGroup, SWT.READ_ONLY);
 		expressionLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		expressionLabel.setText("Expression");
-		
+
 		expressionCombo = new Combo(expressionGroup, SWT.NONE);
 		expressionCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		new Label(control, SWT.NONE);
@@ -255,13 +257,13 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 		modelGroup.setText("Model");
 		modelGroup.setLayout(new GridLayout(4, false));
 		new Label(modelGroup, SWT.NONE);
-		
+
 		modelPath = new Text(modelGroup, SWT.BORDER);
 		modelPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+
 		modelBrowseWS = new Button(modelGroup, SWT.NONE);
 		modelBrowseWS.setText("Browse Workspace...");
-		
+
 		modelBrowseFile = new Button(modelGroup, SWT.NONE);
 		modelBrowseFile.setText("Browse File...");
 
@@ -271,10 +273,10 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 		gl_elementGroup.marginWidth = 0;
 		gl_elementGroup.marginHeight = 0;
 		elementGroup.setLayout(gl_elementGroup);
-		
+
 		Label elementLabel = new Label(elementGroup, SWT.NONE);
 		elementLabel.setText("Element");
-		
+
 		elementCombo = new Combo(elementGroup, SWT.READ_ONLY);
 		elementCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		return control;
@@ -292,6 +294,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 		return OCLDebugUIPlugin.getDefault().createImage("icons/OCLModelFile.gif");
 	}
 
+	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		assert !initializing;
 		try {
@@ -301,7 +304,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 				URI constraintURI = URI.createURI(constraintUri);
 				@NonNull URI oclASURI = constraintURI.trimFragment();
 				URI oclNonASURI = PivotUtilInternal.getNonASURI(oclASURI);
-				oclPath.setText(oclNonASURI.toString());
+				oclPath.setText(String.valueOf(oclNonASURI));
 				EObject eObject = getEnvironmentFactory().getMetamodelManager().getASResourceSet().getEObject(constraintURI, true);
 				if (eObject instanceof Constraint) {
 					LanguageExpression specification = ((Constraint) eObject).getOwnedSpecification();
@@ -316,12 +319,12 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 				}
 			}
 			else {
-				oclPath.setText(configuration.getAttribute(OCL_KEY, ""));
+				oclPath.setText(ClassUtil.nonNullState(configuration.getAttribute(OCL_KEY, "")));
 			}
 			String contextUri = configuration.getAttribute(CONTEXT_URI, "");
 			if (contextUri.length() > 0) {
 				URI contextURI = URI.createURI(contextUri);
-				modelPath.setText(contextURI.trimFragment().toString());
+				modelPath.setText(String.valueOf(contextURI.trimFragment()));
 				EObject eObject = getEnvironmentFactory().getResourceSet().getEObject(contextURI, true);
 				if (eObject  != null) {
 					String displayString = LabelUtil.getLabel(eObject);
@@ -330,7 +333,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 				}
 			}
 			else {
-				modelPath.setText(configuration.getAttribute(MODEL_URI, ""));
+				modelPath.setText(ClassUtil.nonNullState(configuration.getAttribute(MODEL_URI, "")));
 			}
 		} catch (CoreException e) {
 			//Ignore
@@ -340,6 +343,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 		}
 	}
 
+	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
 		int expressionIndex = expressionCombo.getSelectionIndex();
 		if ((0 <= expressionIndex) && (expressionIndex < expressionCombo.getItemCount())) {
@@ -365,6 +369,7 @@ public class MainTab extends AbstractMainTab implements OCLLaunchConstants
 		}
 	}
 
+	@Override
 	protected void setDefaults(@NonNull ILaunchConfigurationWorkingCopy configuration, @NonNull IFile iFile) {
 		configuration.setAttribute(OCL_KEY, iFile.getFullPath().toString());
 	}

@@ -102,11 +102,11 @@ import junit.framework.TestCase;
  * result.
  */
 public class UsageTests
-		extends PivotTestSuite// XtextTestCase
+extends PivotTestSuite// XtextTestCase
 {
 
 	private static final class JavaSourceFileObject
-			extends SimpleJavaFileObject {
+	extends SimpleJavaFileObject {
 
 		private JavaSourceFileObject(java.net.URI uri) {
 			super(uri, Kind.SOURCE);
@@ -134,7 +134,7 @@ public class UsageTests
 
 	/**
 	 * Checks all resources in a resource set for any errors or warnings.
-	 * 
+	 *
 	 * @param resourceSet
 	 * @throws ConfigurationException
 	 *             if any error present
@@ -185,7 +185,7 @@ public class UsageTests
 				if (file.isDirectory()) {
 					getCompilationUnits(compilationUnits, file);
 				} else if (file.isFile()) {
-//					System.out.println("Compiling " + file);
+					//					System.out.println("Compiling " + file);
 					compilationUnits.add(new JavaSourceFileObject(file.toURI()));
 				}
 			}
@@ -198,9 +198,9 @@ public class UsageTests
 			if (member instanceof IContainer) {
 				getCompilationUnits(compilationUnits, (IContainer) member);
 			} else if ((member instanceof IFile)
-				&& member.getFileExtension().equals("java")) {
+					&& member.getFileExtension().equals("java")) {
 				java.net.URI locationURI = member.getLocationURI();
-//				System.out.println("Compiling " + locationURI);
+				//				System.out.println("Compiling " + locationURI);
 				compilationUnits.add(new JavaSourceFileObject(locationURI));
 			}
 		}
@@ -213,8 +213,8 @@ public class UsageTests
 		// AcceleoNature.class.getName(); // Pull in the plugin for Hudson
 		TestUtil.doOCLinEcoreSetup();
 		configurePlatformResources();
-//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-//			.put("pivot", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+		//			.put("pivot", new XMIResourceFactoryImpl()); //$NON-NLS-1$
 	}
 
 	@Override
@@ -244,14 +244,16 @@ public class UsageTests
 					projectPath = bundle.getLocation();
 				}
 			}
-			
+
 			if (projectPath != null) {
 				if (projectPath.startsWith("reference:")) {
 					projectPath = projectPath.substring(10);
 				}
 				URI uri = URI.createURI(projectPath);
 				if (uri.isFile()) {
-					projectPath =  uri.toFileString().replace("\\", "/");
+					String fileString = uri.toFileString();
+					assert fileString != null;
+					projectPath =  fileString.replace("\\", "/");
 				}
 				assert projectPath != null;
 				if (projectPath.endsWith("/")) {
@@ -268,7 +270,7 @@ public class UsageTests
 		}
 		return s.toString();
 	}
-	
+
 	public @NonNull String createGenModelContent(@NonNull String testProjectPath, @NonNull String fileName, @Nullable String usedGenPackages) {
 		StringBuilder s = new StringBuilder();
 		s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -315,7 +317,7 @@ public class UsageTests
 
 	protected @NonNull URI createModels(@NonNull String testProjectName, @NonNull String testFileStem,
 			@Nullable String oclinecoreFile, @NonNull String genmodelFile)
-			throws CoreException, IOException {
+					throws CoreException, IOException {
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			IProject project = TestUtil.createJavaProject(testProjectName);
 			TestUtil.createManifest(project, testProjectName, null, null, null);
@@ -343,10 +345,10 @@ public class UsageTests
 		List<String> compilationOptions = new ArrayList<String>();
 		compilationOptions.add("-d");
 		compilationOptions.add("bin");
-//		compilationOptions.add("-source");
-//		compilationOptions.add("1.5");
-//		compilationOptions.add("-target");
-//		compilationOptions.add("1.5");
+		//		compilationOptions.add("-source");
+		//		compilationOptions.add("1.5");
+		//		compilationOptions.add("-target");
+		//		compilationOptions.add("1.5");
 		compilationOptions.add("-g");
 		List<JavaFileObject> compilationUnits = new ArrayList<JavaFileObject>();
 		Object context = null;
@@ -359,7 +361,9 @@ public class UsageTests
 				String binURI = URIUtil.toUnencodedString(locationURI) + "/bin";
 				URI uri = URI.createURI(binURI);
 				if (uri.isFile()) {
-					binURI = uri.toFileString().replace("\\", "/");
+					String fileString = uri.toFileString();
+					assert fileString != null;
+					binURI = fileString.replace("\\", "/");
 				}
 				compilationOptions.set(1, binURI);
 				new File(locationURI.getPath() + "/bin").mkdirs();
@@ -377,7 +381,7 @@ public class UsageTests
 		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		StandardJavaFileManager stdFileManager = compiler
-			.getStandardFileManager(null, Locale.getDefault(), null);
+				.getStandardFileManager(null, Locale.getDefault(), null);
 
 		// System.out.printf("%6.3f getTask\n", 0.001 *
 		// (System.currentTimeMillis()-base));
@@ -439,12 +443,12 @@ public class UsageTests
 				project.open(null);
 			}
 		}
-//		MetamodelManager metamodelManager2 = new MetamodelManager();
-//		metamodelManager = metamodelManager2;
-//		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor( org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR);
+		//		MetamodelManager metamodelManager2 = new MetamodelManager();
+		//		metamodelManager = metamodelManager2;
+		//		GeneratorAdapterFactory.Descriptor.Registry.INSTANCE.addDescriptor( org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, OCLinEcoreGeneratorAdapterFactory.DESCRIPTOR);
 		URI fileURI = genmodelURI; //getProjectFileURI(testFileStem + ".genmodel");
 		// System.out.println("Generating Ecore Model using '" + fileURI + "'");
-//		metamodelManager2.dispose();
+		//		metamodelManager2.dispose();
 		ResourceSet resourceSet = ocl.getResourceSet();
 		ProjectManager projectMap = ocl.getProjectManager();
 		projectMap.configure(resourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, StandaloneProjectMap.MapToFirstConflictHandler.INSTANCE);
@@ -491,7 +495,7 @@ public class UsageTests
 		// genModel.setValidateModel(true);
 		genModel.setBundleManifest(false); // New manifests should be generated manually
 		genModel.setUpdateClasspath(false); // New class-paths should be generated manually
-//		genModel.setComplianceLevel(GenJDKLevel.JDK50_LITERAL);
+		//		genModel.setComplianceLevel(GenJDKLevel.JDK50_LITERAL);
 		// genModel.setRootExtendsClass("org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container");
 		Diagnostic diagnostic = genModel.diagnose();
 		if (diagnostic.getSeverity() != Diagnostic.OK) {
@@ -501,7 +505,7 @@ public class UsageTests
 		/*
 		 * JavaModelManager.getJavaModelManager().initializePreferences(); new
 		 * JavaCorePreferenceInitializer().initializeDefaultPreferences();
-		 * 
+		 *
 		 * GenJDKLevel genSDKcomplianceLevel = genModel.getComplianceLevel();
 		 * String complianceLevel = JavaCore.VERSION_1_5; switch
 		 * (genSDKcomplianceLevel) { case JDK60_LITERAL: complianceLevel =
@@ -512,7 +516,7 @@ public class UsageTests
 		 * JavaCore.setComplianceOptions(complianceLevel, defaultOptions); //
 		 * JavaCore.setOptions(defaultOptions);
 		 */
-		
+
 		String oldGenModelStr = EmfFormatter.objToStr(genModel);
 		Generator generator = GenModelUtil.createGenerator(genModel);
 		Monitor monitor = new BasicMonitor();
@@ -524,7 +528,7 @@ public class UsageTests
 		genModel.reconcile();			// Delete the GenOperations
 		String newGenModelStr = EmfFormatter.objToStr(genModel);
 		TestCase.assertEquals(oldGenModelStr, newGenModelStr);
-//		metamodelManager.dispose();
+		//		metamodelManager.dispose();
 	}
 
 	public void testBug370824() throws Exception {
@@ -533,13 +537,13 @@ public class UsageTests
 		String testProjectName = "bug370824";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
 		String oclinecoreFile = "package bug370824 : bug370824 = 'http://bug370824'\n"
-			+ "{\n"
-			+ "    class Clase1\n"
-			+ "    {\n"
-			+ "        invariant : self.name.size() > 0;\n"
-			+ "        attribute name : String[?] { ordered };\n"
-			+ "    }\n"
-			+ "}\n";
+				+ "{\n"
+				+ "    class Clase1\n"
+				+ "    {\n"
+				+ "        invariant : self.name.size() > 0;\n"
+				+ "        attribute name : String[?] { ordered };\n"
+				+ "    }\n"
+				+ "}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, "Bug370824", null);
 		URI genModelURI = createModels(testProjectName, testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(testProjectPath, genModelURI);
@@ -552,16 +556,16 @@ public class UsageTests
 		String testProjectName = "bug409650";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
 		String oclinecoreFile = "package bug409650 : bug409650 = 'http://bug409650'\n"
-			+ "{\n"
-			+ "    class Clase1\n"
-			+ "    {\n"
-			+ "        invariant : self.name.size() > 0;\n"
-			+ "        attribute name : String[?] { ordered };\n"
-			+ "        operation copy(b : Boolean) : Boolean { body: b; }\n"
-			+ "        operation complement(b : Boolean) : Boolean { body: not b; }\n"
-			+ "        operation myPrefixedName(s1 : String, s2 : String) : String { body: s1 + name + s2; }\n"
-			+ "        operation me() : Clase1 { body: self.oclAsType(Clase1); }\n"
-			+ "    }\n" + "}\n";
+				+ "{\n"
+				+ "    class Clase1\n"
+				+ "    {\n"
+				+ "        invariant : self.name.size() > 0;\n"
+				+ "        attribute name : String[?] { ordered };\n"
+				+ "        operation copy(b : Boolean) : Boolean { body: b; }\n"
+				+ "        operation complement(b : Boolean) : Boolean { body: not b; }\n"
+				+ "        operation myPrefixedName(s1 : String, s2 : String) : String { body: s1 + name + s2; }\n"
+				+ "        operation me() : Clase1 { body: self.oclAsType(Clase1); }\n"
+				+ "    }\n" + "}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, "Bug409650", null);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);
@@ -570,7 +574,7 @@ public class UsageTests
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) { // FIXME find out how to get dynamic project onto classpath
 			String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
 			EPackage ePackage = doLoadPackage(qualifiedPackageName);
-//			System.out.println("Loaded " + ePackage);
+			//			System.out.println("Loaded " + ePackage);
 			EClass eClass = (EClass) ePackage.getEClassifier("Clase1");
 			EStructuralFeature eStructuralFeature = eClass.getEStructuralFeature("name");
 			EFactory eFactory = ePackage.getEFactoryInstance();
@@ -593,48 +597,48 @@ public class UsageTests
 		String testProjectName = "bug412736";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
-			+ "package bug412736 : bug412736 = 'http://bug412736'\n"
-			+ "{\n"
-			+ "    datatype ENumber : 'java.lang.Number' { serializable };\n"
-			+ "    class EcoreDataTypes\n"
-			+ "    {\n"
-			+ "        attribute eBigDecimal : ecore::EBigDecimal { derived readonly volatile } { derivation: negEBigDecimal(1); }\n"
-			+ "        attribute eBigInteger : ecore::EBigInteger { derived readonly volatile } { derivation: negEBigInteger(1); }\n"
-			+ "        attribute eBooleanObject : ecore::EBooleanObject { derived readonly volatile } { derivation: notEBooleanObject(true); }\n"
-			+ "        attribute eBoolean : ecore::EBoolean { derived readonly volatile } { derivation: notEBoolean(true); }\n"
-			+ "        attribute eCharacterObject : ecore::ECharacterObject { derived readonly volatile } { derivation: negECharacterObject(1); }\n"
-			+ "        attribute eChar : ecore::EChar { derived readonly volatile } { derivation: negEChar(1); }\n"
-			+ "        attribute eDoubleObject : ecore::EDoubleObject { derived readonly volatile } { derivation: negEDoubleObject(1); }\n"
-			+ "        attribute eDouble : ecore::EDouble { derived readonly volatile } { derivation: negEDouble(1); }\n"
-			+ "        attribute eFloatObject : ecore::EFloatObject { derived readonly volatile } { derivation: negEFloatObject(1); }\n"
-			+ "        attribute eFloat : ecore::EFloat { derived readonly volatile } { derivation: negEFloat(1); }\n"
-			+ "        attribute eIntegerObject : ecore::EIntegerObject { derived readonly volatile } { derivation: negEIntegerObject(1); }\n"
-			+ "        attribute eInt : ecore::EInt { derived readonly volatile } { derivation: negEInt(1); }\n"
-			+ "        attribute eLongObject : ecore::ELongObject { derived readonly volatile } { derivation: negELongObject(1); }\n"
-			+ "        attribute eLong : ecore::ELong { derived readonly volatile } { derivation: negELong(1); }\n"
-//			+ "        attribute eNumber : ENumber { derived readonly volatile } { derivation: negENumber(ENumber{'1'}); }\n"
-			+ "        attribute eShortObject : ecore::EShortObject { derived readonly volatile } { derivation: negEShortObject(1); }\n"
-			+ "        attribute eShort : ecore::EShort { derived readonly volatile } { derivation: negEShort(1); }\n"
-			+ "        attribute eString : ecore::EString { derived readonly volatile } { derivation: upCase('abc'); }\n"
-			+ "        operation negEBigDecimal(b : ecore::EBigDecimal) : ecore::EBigDecimal { body: -b; }\n"
-			+ "        operation negEBigInteger(b : ecore::EBigInteger) : ecore::EBigInteger { body: -b; }\n"
-			+ "        operation negEChar(b : ecore::EChar) : ecore::EChar { body: -b; }\n"
-			+ "        operation negECharacterObject(b : ecore::ECharacterObject) : ecore::ECharacterObject { body: -b; }\n"
-			+ "        operation negEDouble(b : ecore::EDouble) : ecore::EDouble { body: -b; }\n"
-			+ "        operation negEDoubleObject(b : ecore::EDoubleObject) : ecore::EDoubleObject { body: -b; }\n"
-			+ "        operation negEFloat(b : ecore::EFloat) : ecore::EFloat { body: -b; }\n"
-			+ "        operation negEFloatObject(b : ecore::EFloatObject) : ecore::EFloatObject { body: -b; }\n"
-			+ "        operation negEInt(b : ecore::EInt) : ecore::EInt { body: -b; }\n"
-			+ "        operation negEIntegerObject(b : ecore::EIntegerObject) : ecore::EIntegerObject { body: -b; }\n"
-			+ "        operation negELong(b : ecore::ELong) : ecore::ELong { body: -b; }\n"
-			+ "        operation negELongObject(b : ecore::ELongObject) : ecore::ELongObject { body: -b; }\n"
-//			+ "        operation negENumber(b : ENumber) : ENumber { body: (-(b.oclAsType(Integer))).oclAsType(ENumber); }\n"
-			+ "        operation negEShort(b : ecore::EShort) : ecore::EShort { body: -b; }\n"
-			+ "        operation negEShortObject(b : ecore::EShortObject) : ecore::EShortObject { body: -b; }\n"
-			+ "        operation notEBoolean(b : ecore::EBoolean) : ecore::EBoolean { body: not b; }\n"
-			+ "        operation notEBooleanObject(b : ecore::EBooleanObject) : ecore::EBooleanObject { body: not b; }\n"
-			+ "        operation upCase(b : ecore::EString) : ecore::EString { body: b.toUpper(); }\n"
-			+ "    }\n" + "}\n";
+				+ "package bug412736 : bug412736 = 'http://bug412736'\n"
+				+ "{\n"
+				+ "    datatype ENumber : 'java.lang.Number' { serializable };\n"
+				+ "    class EcoreDataTypes\n"
+				+ "    {\n"
+				+ "        attribute eBigDecimal : ecore::EBigDecimal { derived readonly volatile } { derivation: negEBigDecimal(1); }\n"
+				+ "        attribute eBigInteger : ecore::EBigInteger { derived readonly volatile } { derivation: negEBigInteger(1); }\n"
+				+ "        attribute eBooleanObject : ecore::EBooleanObject { derived readonly volatile } { derivation: notEBooleanObject(true); }\n"
+				+ "        attribute eBoolean : ecore::EBoolean { derived readonly volatile } { derivation: notEBoolean(true); }\n"
+				+ "        attribute eCharacterObject : ecore::ECharacterObject { derived readonly volatile } { derivation: negECharacterObject(1); }\n"
+				+ "        attribute eChar : ecore::EChar { derived readonly volatile } { derivation: negEChar(1); }\n"
+				+ "        attribute eDoubleObject : ecore::EDoubleObject { derived readonly volatile } { derivation: negEDoubleObject(1); }\n"
+				+ "        attribute eDouble : ecore::EDouble { derived readonly volatile } { derivation: negEDouble(1); }\n"
+				+ "        attribute eFloatObject : ecore::EFloatObject { derived readonly volatile } { derivation: negEFloatObject(1); }\n"
+				+ "        attribute eFloat : ecore::EFloat { derived readonly volatile } { derivation: negEFloat(1); }\n"
+				+ "        attribute eIntegerObject : ecore::EIntegerObject { derived readonly volatile } { derivation: negEIntegerObject(1); }\n"
+				+ "        attribute eInt : ecore::EInt { derived readonly volatile } { derivation: negEInt(1); }\n"
+				+ "        attribute eLongObject : ecore::ELongObject { derived readonly volatile } { derivation: negELongObject(1); }\n"
+				+ "        attribute eLong : ecore::ELong { derived readonly volatile } { derivation: negELong(1); }\n"
+				//			+ "        attribute eNumber : ENumber { derived readonly volatile } { derivation: negENumber(ENumber{'1'}); }\n"
+				+ "        attribute eShortObject : ecore::EShortObject { derived readonly volatile } { derivation: negEShortObject(1); }\n"
+				+ "        attribute eShort : ecore::EShort { derived readonly volatile } { derivation: negEShort(1); }\n"
+				+ "        attribute eString : ecore::EString { derived readonly volatile } { derivation: upCase('abc'); }\n"
+				+ "        operation negEBigDecimal(b : ecore::EBigDecimal) : ecore::EBigDecimal { body: -b; }\n"
+				+ "        operation negEBigInteger(b : ecore::EBigInteger) : ecore::EBigInteger { body: -b; }\n"
+				+ "        operation negEChar(b : ecore::EChar) : ecore::EChar { body: -b; }\n"
+				+ "        operation negECharacterObject(b : ecore::ECharacterObject) : ecore::ECharacterObject { body: -b; }\n"
+				+ "        operation negEDouble(b : ecore::EDouble) : ecore::EDouble { body: -b; }\n"
+				+ "        operation negEDoubleObject(b : ecore::EDoubleObject) : ecore::EDoubleObject { body: -b; }\n"
+				+ "        operation negEFloat(b : ecore::EFloat) : ecore::EFloat { body: -b; }\n"
+				+ "        operation negEFloatObject(b : ecore::EFloatObject) : ecore::EFloatObject { body: -b; }\n"
+				+ "        operation negEInt(b : ecore::EInt) : ecore::EInt { body: -b; }\n"
+				+ "        operation negEIntegerObject(b : ecore::EIntegerObject) : ecore::EIntegerObject { body: -b; }\n"
+				+ "        operation negELong(b : ecore::ELong) : ecore::ELong { body: -b; }\n"
+				+ "        operation negELongObject(b : ecore::ELongObject) : ecore::ELongObject { body: -b; }\n"
+				//			+ "        operation negENumber(b : ENumber) : ENumber { body: (-(b.oclAsType(Integer))).oclAsType(ENumber); }\n"
+				+ "        operation negEShort(b : ecore::EShort) : ecore::EShort { body: -b; }\n"
+				+ "        operation negEShortObject(b : ecore::EShortObject) : ecore::EShortObject { body: -b; }\n"
+				+ "        operation notEBoolean(b : ecore::EBoolean) : ecore::EBoolean { body: not b; }\n"
+				+ "        operation notEBooleanObject(b : ecore::EBooleanObject) : ecore::EBooleanObject { body: not b; }\n"
+				+ "        operation upCase(b : ecore::EString) : ecore::EString { body: b.toUpper(); }\n"
+				+ "    }\n" + "}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, "Bug412736", null);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);
@@ -654,7 +658,7 @@ public class UsageTests
 			ocl.assertQueryTrue(eObject, "eFloat = eFloatObject");
 			ocl.assertQueryTrue(eObject, "eInt = eIntegerObject");
 			ocl.assertQueryTrue(eObject, "eLong = eLongObject");
-//			ocl.assertQueryTrue(eObject, "eNumber = eFloat");				-- waiting for BUG 370087
+			//			ocl.assertQueryTrue(eObject, "eNumber = eFloat");				-- waiting for BUG 370087
 			ocl.assertQueryTrue(eObject, "eShort = eShortObject");
 			ocl.assertQueryTrue(eObject, "eString = 'ABC'");
 		}
@@ -669,21 +673,21 @@ public class UsageTests
 		String testProjectName = "bug412685";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
-			+ "package bug412685 : bug412685 = 'http://bug412685'\n"
-			+ "{\n"
-			+ "    enum Color { serializable } {\n"
-			+ "    	literal BLACK;\n"
-			+ "    	literal WHITE;\n"
-			+ "    }\n"
-			+ "    class EnumTypes\n"
-			+ "    {\n"
-			+ "        attribute eBlack : Color = 'BLACK' { readonly };\n"
-			+ "        attribute eWhite : Color = 'WHITE' { readonly };\n"
-			+ "        attribute eColor : Color { derived readonly volatile } { derivation: otherColor(Color::BLACK); }\n"
-			+ "        operation opaqueColor(eColor : Color) : OclAny { body: eColor; }\n"
-			+ "        operation otherColor(eColor : Color) : Color { body: if eColor = Color::BLACK then Color::WHITE else Color::BLACK endif; }\n"
-			+ "    }\n"
-			+ "}\n";
+				+ "package bug412685 : bug412685 = 'http://bug412685'\n"
+				+ "{\n"
+				+ "    enum Color { serializable } {\n"
+				+ "    	literal BLACK;\n"
+				+ "    	literal WHITE;\n"
+				+ "    }\n"
+				+ "    class EnumTypes\n"
+				+ "    {\n"
+				+ "        attribute eBlack : Color = 'BLACK' { readonly };\n"
+				+ "        attribute eWhite : Color = 'WHITE' { readonly };\n"
+				+ "        attribute eColor : Color { derived readonly volatile } { derivation: otherColor(Color::BLACK); }\n"
+				+ "        operation opaqueColor(eColor : Color) : OclAny { body: eColor; }\n"
+				+ "        operation otherColor(eColor : Color) : Color { body: if eColor = Color::BLACK then Color::WHITE else Color::BLACK endif; }\n"
+				+ "    }\n"
+				+ "}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, null);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectName, testFileStem, oclinecoreFile, genmodelFile);
@@ -712,17 +716,17 @@ public class UsageTests
 		String testProjectName = "bug471201";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
-			+ "package bug471201 : bug471201 = 'http://bug471201'\n"
-			+ "{\n"
-			+ "    class NamedElement {}\n"
-			+ "    class LookupEnvironment\n"
-			+ "    {\n"
-			+ "		operation(NE extends NamedElement) addElements(elements : NE[*] { ordered }) : LookupEnvironment[1]\n" 
-			+"		{\n"
-			+ "			body: if elements->notEmpty() then addElements(OrderedSet(NamedElement){}) else self endif;\n"
-			+ "		}\n"
-			+ "    }\n"
-			+ "}\n";
+				+ "package bug471201 : bug471201 = 'http://bug471201'\n"
+				+ "{\n"
+				+ "    class NamedElement {}\n"
+				+ "    class LookupEnvironment\n"
+				+ "    {\n"
+				+ "		operation(NE extends NamedElement) addElements(elements : NE[*] { ordered }) : LookupEnvironment[1]\n"
+				+"		{\n"
+				+ "			body: if elements->notEmpty() then addElements(OrderedSet(NamedElement){}) else self endif;\n"
+				+ "		}\n"
+				+ "    }\n"
+				+ "}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, null);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectName, testFileStem, oclinecoreFile, genmodelFile);
@@ -733,23 +737,23 @@ public class UsageTests
 
 	public void testCSE() throws Exception {
 		TestOCL ocl = createOCL();
-//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
-//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
-//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
-//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
-//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+		//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 		String testFileStem = "CSEs";
 		String testProjectName = "cses";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
-			+ "package cses : cses = 'http://cses'\n"
-			+ "{\n"
-			+ "    class CSEs\n"
-			+ "    {\n"
-//			+ "        attribute a : ecore::EInt = '3' { readonly };\n"
-			+ "        operation test(a : ecore::EInt, b : ecore::EInt, c : ecore::EInt) : ecore::EInt { body: if a + b + c > 0 then a + b + c else a + b endif; }\n"
-			+ "    }\n"
-			+ "}\n";
+				+ "package cses : cses = 'http://cses'\n"
+				+ "{\n"
+				+ "    class CSEs\n"
+				+ "    {\n"
+				//			+ "        attribute a : ecore::EInt = '3' { readonly };\n"
+				+ "        operation test(a : ecore::EInt, b : ecore::EInt, c : ecore::EInt) : ecore::EInt { body: if a + b + c > 0 then a + b + c else a + b endif; }\n"
+				+ "    }\n"
+				+ "}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, null);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);
@@ -762,19 +766,19 @@ public class UsageTests
 			EFactory eFactory = ePackage.getEFactoryInstance();
 			//
 			EObject eObject = eFactory.create(eClass);
-//			OCLHelper helper = getHelper();
-//			org.eclipse.ocl.pivot.Class contextType = helper.getOCL().getMetamodelManager().getType(idResolver.getStaticTypeOf(eObject));
-//			helper.setContext(contextType);
-//			ExpressionInOCL query = helper.createQuery("test(3, 2, 1)");
-//			ocl.assertCallCount(query, null, 2);
-//			ocl.assertCallCount(query, NumericPlusOperation.INSTANCE, 2);
+			//			OCLHelper helper = getHelper();
+			//			org.eclipse.ocl.pivot.Class contextType = helper.getOCL().getMetamodelManager().getType(idResolver.getStaticTypeOf(eObject));
+			//			helper.setContext(contextType);
+			//			ExpressionInOCL query = helper.createQuery("test(3, 2, 1)");
+			//			ocl.assertCallCount(query, null, 2);
+			//			ocl.assertCallCount(query, NumericPlusOperation.INSTANCE, 2);
 			ocl.assertQueryEquals(eObject, 6, "test(3, 2, 1)");
 			ocl.assertQueryEquals(eObject, -5, "test(3, -8, 1)");
 		}
 		ocl.dispose();
 	}
 
-/*	private void assertCallCount(ExpressionInOCL query, @Nullable LibraryOperation calledOperation, int expectedCount) {
+	/*	private void assertCallCount(ExpressionInOCL query, @Nullable LibraryOperation calledOperation, int expectedCount) {
 		List<CGOperationCallExp> calls = new ArrayList<CGOperationCallExp>();
 		for (TreeIterator<EObject> tit = query.getBodyExpression().eAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
@@ -796,30 +800,30 @@ public class UsageTests
 	} */
 	public void testEvaluators() throws Exception {
 		TestOCL ocl = createOCL();
-//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
-//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
-//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
-//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
-//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
-//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+		//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+		//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 		String testFileStem = "Evaluators";
 		String testProjectName = "evaluators";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
 		String oclinecoreFile = "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
-			+ "package evaluators : evaluators = 'http://evaluators'\n"
-			+ "{\n"
-			+ "    class Evaluators\n"
-			+ "    {\n"
-			+ "        attribute name : String[?];\n"
-			+ "        operation test() : String { body: \n"
-			+ "        let severity : String[1] = 'testString'.replaceFirst('xx', 'yy') \n"
-			+ "        in if severity = '' \n"
-			+ "        then '' \n"
-			+ "        else \n"
-			+ "        'testString'.replaceAll('z1','z2') \n"
-			+ "        endif; }\n"
-			+ "    }\n"
-			+ "}\n";
+				+ "package evaluators : evaluators = 'http://evaluators'\n"
+				+ "{\n"
+				+ "    class Evaluators\n"
+				+ "    {\n"
+				+ "        attribute name : String[?];\n"
+				+ "        operation test() : String { body: \n"
+				+ "        let severity : String[1] = 'testString'.replaceFirst('xx', 'yy') \n"
+				+ "        in if severity = '' \n"
+				+ "        then '' \n"
+				+ "        else \n"
+				+ "        'testString'.replaceAll('z1','z2') \n"
+				+ "        endif; }\n"
+				+ "    }\n"
+				+ "}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, null);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);
@@ -840,12 +844,12 @@ public class UsageTests
 	public void testSysML_QUDV() throws Exception {
 		TestOCL ocl = createOCL();
 		try {
-	//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
-	//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
-	//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
-	//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
-	//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
-	//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+			//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
+			//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+			//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+			//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+			//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+			//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 			String testProjectName = "SysML_ValueTypes_QUDV";
 			String testProjectPath = /*EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName :*/ ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
 			if (EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -867,7 +871,7 @@ public class UsageTests
 			@NonNull URI genModelURI = URI.createPlatformResourceURI("/" + ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS + "/model/SysML_ValueTypes_QUDV.genmodel", true);
 			if (!ocl.getResourceSet().getURIConverter().exists(genModelURI, null)) {
 				return;
-			}			
+			}
 			doGenModel(testProjectPath, genModelURI);
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) { // FIXME find out how to get dynamic project onto classpath
 				doCompile(testProjectName);
@@ -899,12 +903,12 @@ public class UsageTests
 	public void testCodegenCompany() throws Exception {
 		TestOCL ocl = createOCL();
 		try {
-	//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
-	//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
-	//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
-	//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
-	//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
-	//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+			//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
+			//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+			//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+			//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+			//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+			//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 			String testProjectName = "codegen/company";
 			String testProjectPath = /*EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName :*/ ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
 			if (EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -926,7 +930,7 @@ public class UsageTests
 			@NonNull URI genModelURI = URI.createPlatformResourceURI("/" + ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS + "/model/CodeGenCompany.genmodel", true);
 			if (!ocl.getResourceSet().getURIConverter().exists(genModelURI, null)) {
 				return;
-			}			
+			}
 			doGenModel(testProjectPath, genModelURI);
 			if (!EMFPlugin.IS_ECLIPSE_RUNNING) { // FIXME find out how to get dynamic project onto classpath
 				doCompile(testProjectName);
@@ -939,7 +943,7 @@ public class UsageTests
 
 	protected EPackage doLoadPackage(@NonNull String qualifiedModelPackageName) throws Exception {
 		Class<?> testClass = Class.forName(qualifiedModelPackageName);
-//		System.out.println("Loaded " + testClass.getName());
+		//		System.out.println("Loaded " + testClass.getName());
 		Object eInstance = testClass.getDeclaredField("eINSTANCE").get(null);
 		return (EPackage) eInstance;
 	}
@@ -962,14 +966,14 @@ public class UsageTests
 			IIntroManager introManager = workbench.getIntroManager();
 			introManager.closeIntro(introManager.getIntro());
 			TestUIUtil.flushEvents();
-			
+
 			String testProjectName = "Open_Pivot";
 			ResourceSet resourceSet1 = new ResourceSetImpl();
 			Resource resource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			resource.setURI(URI.createPlatformResourceURI(testProjectName + "/" + "Pivot.oclas", true));
 			resource.save(outputStream, null);
-			
+
 			IWorkspace workspace = ResourcesPlugin.getWorkspace();
 			IProject project = workspace.getRoot().getProject(testProjectName);
 			if (!project.exists()) {
@@ -978,10 +982,10 @@ public class UsageTests
 			project.open(null);
 			IFile file = project.getFile("Pivot.oclas");
 			file.create(new ByteArrayInputStream(outputStream.toByteArray()), true, null);
-			
-//			Bundle bundle = Platform.getBundle("org.eclipse.ocl.pivot");
-//			String location = bundle.getLocation() + "/model-gen/Pivot.oclas";
-//			java.net.URI uri = new java.net.URI(location.substring(location.indexOf("file:")));
+
+			//			Bundle bundle = Platform.getBundle("org.eclipse.ocl.pivot");
+			//			String location = bundle.getLocation() + "/model-gen/Pivot.oclas";
+			//			java.net.URI uri = new java.net.URI(location.substring(location.indexOf("file:")));
 			IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
 			EcoreEditor openEditor = (EcoreEditor) IDE.openEditor(activePage, file, "org.eclipse.emf.ecore.presentation.ReflectiveEditorID", true);
 			TestUIUtil.flushEvents();
@@ -991,10 +995,10 @@ public class UsageTests
 			Resource resource2 = ClassUtil.nonNullState(resources.get(0));
 			assertNoResourceErrors("Load", resource2);
 			assertNoValidationErrors("Validate", resource2);
-//			for (int i = 0; i < 1000; i++){
-//				flushEvents();
-//				Thread.sleep(100);
-//			}
+			//			for (int i = 0; i < 1000; i++){
+			//				flushEvents();
+			//				Thread.sleep(100);
+			//			}
 			openEditor.dispose();
 		}
 		ocl.dispose();
@@ -1013,22 +1017,22 @@ public class UsageTests
 			IIntroManager introManager = workbench.getIntroManager();
 			introManager.closeIntro(introManager.getIntro());
 			TestUIUtil.flushEvents();
-			
+
 			String testProjectName = "Open_Bug469251_uml";
-/*			ResourceSet resourceSet1 = new ResourceSetImpl();
+			/*			ResourceSet resourceSet1 = new ResourceSetImpl();
 			getProjectFile().("Bug469251.uml");
 			Resource resource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			resource.setURI(URI.createPlatformResourceURI(testProjectName + "/" + "Bug469251.uml", true));
 			resource.save(outputStream, null); */
-			
+
 			IProject iProject = TestUIUtil.createIProject(testProjectName);
 			@SuppressWarnings("unused")IFile profileFile = TestUIUtil.copyIFile(iProject.getFile("Bug469251.profile.uml"), getProjectFileURI("Bug469251.profile.uml"), null);
 			IFile modelFile = TestUIUtil.copyIFile(iProject.getFile("Bug469251.uml"), getProjectFileURI("Bug469251.uml"), null);
-			
-//			Bundle bundle = Platform.getBundle("org.eclipse.ocl.pivot");
-//			String location = bundle.getLocation() + "/model-gen/Pivot.oclas";
-//			java.net.URI uri = new java.net.URI(location.substring(location.indexOf("file:")));
+
+			//			Bundle bundle = Platform.getBundle("org.eclipse.ocl.pivot");
+			//			String location = bundle.getLocation() + "/model-gen/Pivot.oclas";
+			//			java.net.URI uri = new java.net.URI(location.substring(location.indexOf("file:")));
 			IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
 			UMLEditor umlEditor = (UMLEditor) IDE.openEditor(activePage, modelFile, "org.eclipse.uml2.uml.editor.presentation.UMLEditorID", true);
 			TestUIUtil.flushEvents();
@@ -1077,12 +1081,12 @@ public class UsageTests
 		String testProjectName = "bug414855";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
 		String oclinecoreFile =
-			"import pivot : 'http://www.eclipse.org/ocl/2015/Pivot#/';\n"
-			+ "package bug414855 : bug414855 = 'http://bug414855'\n"
-			+ "{\n"
-			+ "    datatype MyString : 'java.lang.String' { serializable };\n"
-			+ "    class ClassExtension extends pivot::Class {}\n"
-			+ "}\n";
+				"import pivot : 'http://www.eclipse.org/ocl/2015/Pivot#/';\n"
+						+ "package bug414855 : bug414855 = 'http://bug414855'\n"
+						+ "{\n"
+						+ "    datatype MyString : 'java.lang.String' { serializable };\n"
+						+ "    class ClassExtension extends pivot::Class {}\n"
+						+ "}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, "platform:/plugin/org.eclipse.ocl.pivot/model/Pivot.genmodel#//pivot");
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);
@@ -1090,28 +1094,28 @@ public class UsageTests
 		doCompile(testProjectName);
 		ocl.dispose();
 	}
-	
+
 	public void testBug415782() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug415782";
 		String testProjectName = "bug415782";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
-		String oclinecoreFile = 
-			  "import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
-			+ "package bug415782 : bug415782 = 'http://bug415782'\n"
-			+ "{\n"		
-			+ "    class MyClass\n"
-			+ "    {\n"
-			+ "    	   attribute manyDates : ecore::EDate[*] { ordered };\n"
-			+ "        attribute aBool : Boolean;\n"
-			+ "        operation anOp() : MyClass {"
-			+ "             body : MyClass {"
-			+ "               manyDates = OrderedSet{},\n"
-			+ "               aBool = manyDates->isEmpty()\n"
-			+ "             };"
-			+ "        }\n"
-			+ "    }\n"
-			+ "}\n";
+		String oclinecoreFile =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
+						+ "package bug415782 : bug415782 = 'http://bug415782'\n"
+						+ "{\n"
+						+ "    class MyClass\n"
+						+ "    {\n"
+						+ "    	   attribute manyDates : ecore::EDate[*] { ordered };\n"
+						+ "        attribute aBool : Boolean;\n"
+						+ "        operation anOp() : MyClass {"
+						+ "             body : MyClass {"
+						+ "               manyDates = OrderedSet{},\n"
+						+ "               aBool = manyDates->isEmpty()\n"
+						+ "             };"
+						+ "        }\n"
+						+ "    }\n"
+						+ "}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, null);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);
@@ -1119,39 +1123,39 @@ public class UsageTests
 		doCompile(testProjectName);
 		ocl.dispose();
 	}
-	
+
 	public void testBug416421() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStemA = "Bug416421A";
 		String testProjectNameA = "bug416421A";
 		String testProjectPathA = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectNameA : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
-		String oclinecoreFileA = 
-				  "package bug416421A : bug416421A = 'example.org/bug416421A'\n"
-				+ "{\n"
-				+ "	class ClassA\n"
-				+ "	{\n"
-				+ "		operation getFalse() : Boolean\n"
-				+ "		{\n"
-				+ "			body: false;\n"
-				+ "		}\n"
-				+ "	}\n"
-				+ "}\n";
+		String oclinecoreFileA =
+				"package bug416421A : bug416421A = 'example.org/bug416421A'\n"
+						+ "{\n"
+						+ "	class ClassA\n"
+						+ "	{\n"
+						+ "		operation getFalse() : Boolean\n"
+						+ "		{\n"
+						+ "			body: false;\n"
+						+ "		}\n"
+						+ "	}\n"
+						+ "}\n";
 		String genmodelFileA = createGenModelContent(testProjectPathA, testFileStemA, null);
 		String testFileStemB = "Bug416421B";
 		String testProjectNameB = "bug416421B";
 		String testProjectPathB = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectNameB : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
-		String oclinecoreFileB = 
-				  "import bug416421A : 'Bug416421A.ecore#/';\n"
-				+ "package bug416421B : bug416421B = 'example.org/bug416421B'\n"
-				+ "{\n"
-				+ "	class ClassB extends bug416421A::ClassA\n"
-				+ "	{\n"
-				+ "		operation getTrue() : Boolean\n"
-				+ "		{\n"
-				+ "			body: true;\n"
-				+ "		}\n"
-				+ "	}\n"
-				+ "}\n";
+		String oclinecoreFileB =
+				"import bug416421A : 'Bug416421A.ecore#/';\n"
+						+ "package bug416421B : bug416421B = 'example.org/bug416421B'\n"
+						+ "{\n"
+						+ "	class ClassB extends bug416421A::ClassA\n"
+						+ "	{\n"
+						+ "		operation getTrue() : Boolean\n"
+						+ "		{\n"
+						+ "			body: true;\n"
+						+ "		}\n"
+						+ "	}\n"
+						+ "}\n";
 		String genmodelFileB = createGenModelContent(testProjectPathB, testFileStemB, "Bug416421A.genmodel#//bug416421A");
 		doDelete(testProjectNameA);
 		doDelete(testProjectNameB);
@@ -1164,44 +1168,44 @@ public class UsageTests
 		doCompile(testProjectNameB, testProjectNameA);
 		ocl.dispose();
 	}
-	
+
 	public void testBug458722() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug458722";
 		String testProjectName = "bug458722";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
-		String oclinecoreFile = 
-			  "import ecore : 'http://www.eclipse.org/emf/2002/Ecore';\n" + 
-			  "\n" + 
-			  "package bug458722 : bug458722 = 'http://www.example.com/bug458722/rootPackage/2.0'\n" + 
-			  "{\n" + 
-			  "	package subPackage : subPackage = 'http://www.example.com/bug458722/subPackage/2.0'\n" + 
-			  "	{\n" + 
-			  "		class SubElement\n" + 
-			  "		{\n" + 
-			  "			operation op(tokens : String[*] { ordered !unique }) : Boolean\n" + 
-			  "			{\n" + 
-			  "				body: \n" + 
-			  "				\n" + 
-			  "				if tokens->at(1) = '1'\n" + 
-			  "				then\n" + 
-			  "					op2(tokens)\n" + 
-			  "			    else\n" + 
-			  "			    	true\n" + 
-			  "			    endif;\n" + 
-			  "			}\n" + 
-			  "			operation op2(tokens : String[*] { ordered !unique }) : Boolean\n" + 
-			  "			{\n" + 
-			  "				body: \n" + 
-			  "				true;\n" + 
-			  "			}\n" + 
-			  "		}\n" + 
-			  "	}\n" + 
-			  "	abstract class Element\n" + 
-			  "	{\n" + 
-			  "		attribute name : String = '';\n" + 
-			  "	}\n" + 
-			  "}\n";
+		String oclinecoreFile =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore';\n" +
+						"\n" +
+						"package bug458722 : bug458722 = 'http://www.example.com/bug458722/rootPackage/2.0'\n" +
+						"{\n" +
+						"	package subPackage : subPackage = 'http://www.example.com/bug458722/subPackage/2.0'\n" +
+						"	{\n" +
+						"		class SubElement\n" +
+						"		{\n" +
+						"			operation op(tokens : String[*] { ordered !unique }) : Boolean\n" +
+						"			{\n" +
+						"				body: \n" +
+						"				\n" +
+						"				if tokens->at(1) = '1'\n" +
+						"				then\n" +
+						"					op2(tokens)\n" +
+						"			    else\n" +
+						"			    	true\n" +
+						"			    endif;\n" +
+						"			}\n" +
+						"			operation op2(tokens : String[*] { ordered !unique }) : Boolean\n" +
+						"			{\n" +
+						"				body: \n" +
+						"				true;\n" +
+						"			}\n" +
+						"		}\n" +
+						"	}\n" +
+						"	abstract class Element\n" +
+						"	{\n" +
+						"		attribute name : String = '';\n" +
+						"	}\n" +
+						"}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, null);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);
@@ -1209,38 +1213,38 @@ public class UsageTests
 		doCompile(testProjectName);
 		ocl.dispose();
 	}
-	
+
 	public void testBug458723() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug458723";
 		String testProjectName = "bug458723";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
-		String oclinecoreFile = 
-			  "import ecore : 'http://www.eclipse.org/emf/2002/Ecore';\n" + 
-			  "\n" + 
-			  "package bug458723 : bug458723 = 'http://www.example.com/bug458723/rootPackage/1.0'\n" + 
-			  "{\n" + 
-			  "    package subPackage : subPackage = 'http://www.example.com/bug458723/subPackage/1.0'\n" + 
-			  "    {\n" + 
-			  "        class Element extends bug458723::Element\n" + 
-			  "        {\n" + 
-			  "\n" + 
-			  "            /*\n" + 
-			  "             * Error also occurs with Bag(OclAny) in signature without\n" + 
-			  "{!unique}\n" + 
-			  "             */\n" + 
-			  "            operation op() : ocl::OclAny[*] { !unique }\n" + 
-			  "            {\n" + 
-			  "                body: \n" + 
-			  "                Bag{};\n" + 
-			  "            }\n" + 
-			  "        }\n" + 
-			  "    }\n" + 
-			  "    abstract class Element\n" + 
-			  "    {\n" + 
-			  "        attribute name : String = '';\n" + 
-			  "    }\n" + 
-			  "}\n";
+		String oclinecoreFile =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore';\n" +
+						"\n" +
+						"package bug458723 : bug458723 = 'http://www.example.com/bug458723/rootPackage/1.0'\n" +
+						"{\n" +
+						"    package subPackage : subPackage = 'http://www.example.com/bug458723/subPackage/1.0'\n" +
+						"    {\n" +
+						"        class Element extends bug458723::Element\n" +
+						"        {\n" +
+						"\n" +
+						"            /*\n" +
+						"             * Error also occurs with Bag(OclAny) in signature without\n" +
+						"{!unique}\n" +
+						"             */\n" +
+						"            operation op() : ocl::OclAny[*] { !unique }\n" +
+						"            {\n" +
+						"                body: \n" +
+						"                Bag{};\n" +
+						"            }\n" +
+						"        }\n" +
+						"    }\n" +
+						"    abstract class Element\n" +
+						"    {\n" +
+						"        attribute name : String = '';\n" +
+						"    }\n" +
+						"}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, null);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);
@@ -1248,44 +1252,44 @@ public class UsageTests
 		doCompile(testProjectName);
 		ocl.dispose();
 	}
-	
+
 	public void testBug458724() throws Exception {
 		TestOCL ocl = createOCL();
 		String testFileStem = "Bug458724";
 		String testProjectName = "bug458724";
 		String testProjectPath = EMFPlugin.IS_ECLIPSE_RUNNING ? testProjectName : ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS;
-		String oclinecoreFile = 
-			  "import ecore : 'http://www.eclipse.org/emf/2002/Ecore';\n" + 
-			  "\n" + 
-			  "package bug458724 : bug458724 = 'http://www.example.com/bug458724/rootPackage/2.0'\n" + 
-			  "{\n" + 
-			  "    class Element\n" + 
-			  "    {\n" + 
-			  "        attribute name : String = '';\n" + 
-			  "        invariant\n" + 
-			  "        elementNameNotReservedWord: \n" + 
-			  "            let name: String = self.name.toLower() in\n" + 
-			  "            name <> 'reserved_1' and\n" + 
-			  "            name <> 'reserved_2' and\n" + 
-			  "            name <> 'reserved_3' and\n" + 
-			  "            name <> 'reserved_4' and\n" + 
-			  "            name <> 'reserved_5' and\n" + 
-			  "            name <> 'reserved_6' and\n" + 
-			  "            name <> 'reserved_7' and\n" + 
-			  "            name <> 'reserved_8' and\n" + 
-			  "            name <> 'reserved_9' and\n" + 
-			  "            name <> 'reserved_10' and\n" + 
-			  "            name <> 'reserved_11' and\n" + 
-			  "            name <> 'reserved_12' and\n" + 
-			  "            name <> 'reserved_13' and\n" + 
-			  "            name <> 'reserved_14' and\n" + 
-			  "            name <> 'reserved_15' and\n" + 
-			  "            name <> 'reserved_16' and\n" + 
-			  "            name <> 'reserved_17' and\n" + 
-			  "            name <> 'reserved_18' and\n" + 
-			  "            name <> 'reserved_19';\n" + 
-			  "    }\n" + 
-			  "}\n";
+		String oclinecoreFile =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore';\n" +
+						"\n" +
+						"package bug458724 : bug458724 = 'http://www.example.com/bug458724/rootPackage/2.0'\n" +
+						"{\n" +
+						"    class Element\n" +
+						"    {\n" +
+						"        attribute name : String = '';\n" +
+						"        invariant\n" +
+						"        elementNameNotReservedWord: \n" +
+						"            let name: String = self.name.toLower() in\n" +
+						"            name <> 'reserved_1' and\n" +
+						"            name <> 'reserved_2' and\n" +
+						"            name <> 'reserved_3' and\n" +
+						"            name <> 'reserved_4' and\n" +
+						"            name <> 'reserved_5' and\n" +
+						"            name <> 'reserved_6' and\n" +
+						"            name <> 'reserved_7' and\n" +
+						"            name <> 'reserved_8' and\n" +
+						"            name <> 'reserved_9' and\n" +
+						"            name <> 'reserved_10' and\n" +
+						"            name <> 'reserved_11' and\n" +
+						"            name <> 'reserved_12' and\n" +
+						"            name <> 'reserved_13' and\n" +
+						"            name <> 'reserved_14' and\n" +
+						"            name <> 'reserved_15' and\n" +
+						"            name <> 'reserved_16' and\n" +
+						"            name <> 'reserved_17' and\n" +
+						"            name <> 'reserved_18' and\n" +
+						"            name <> 'reserved_19';\n" +
+						"    }\n" +
+						"}\n";
 		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, null);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);

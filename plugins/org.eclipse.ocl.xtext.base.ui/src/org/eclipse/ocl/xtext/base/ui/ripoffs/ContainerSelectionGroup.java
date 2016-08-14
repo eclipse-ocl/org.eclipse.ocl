@@ -7,9 +7,9 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
- *     Igor Fedorenko <igorfie@yahoo.com> - 
+ *     Igor Fedorenko <igorfie@yahoo.com> -
  *     		Fix for Bug 136921 [IDE] New File dialog locks for 20 seconds
- *     
+ *
  * This file is copied  from org.eclipse.ui.internal.ide.misc.ContainerSelectionGroup
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui.ripoffs;
@@ -77,7 +77,7 @@ public class ContainerSelectionGroup extends Composite {
 
 	/**
 	 * Creates a new instance of the widget.
-	 * 
+	 *
 	 * @param parent
 	 *            The parent widget of the group.
 	 * @param listener
@@ -94,7 +94,7 @@ public class ContainerSelectionGroup extends Composite {
 
 	/**
 	 * Creates a new instance of the widget.
-	 * 
+	 *
 	 * @param parent
 	 *            The parent widget of the group.
 	 * @param listener
@@ -113,7 +113,7 @@ public class ContainerSelectionGroup extends Composite {
 
 	/**
 	 * Creates a new instance of the widget.
-	 * 
+	 *
 	 * @param parent
 	 *            The parent widget of the group.
 	 * @param listener
@@ -131,13 +131,13 @@ public class ContainerSelectionGroup extends Composite {
 			boolean allowNewContainerName, String message,
 			boolean showClosedProjects) {
 		this(parent, listener, allowNewContainerName, message,
-				showClosedProjects, SIZING_SELECTION_PANE_HEIGHT,
-				SIZING_SELECTION_PANE_WIDTH);
+			showClosedProjects, SIZING_SELECTION_PANE_HEIGHT,
+			SIZING_SELECTION_PANE_WIDTH);
 	}
 
 	/**
 	 * Creates a new instance of the widget.
-	 * 
+	 *
 	 * @param parent
 	 *            The parent widget of the group.
 	 * @param listener
@@ -174,7 +174,7 @@ public class ContainerSelectionGroup extends Composite {
 	/**
 	 * The container selection has changed in the tree view. Update the
 	 * container name field value and notify all listeners.
-	 * 
+	 *
 	 * @param container
 	 *            The container that changed
 	 */
@@ -185,8 +185,7 @@ public class ContainerSelectionGroup extends Composite {
 			if (container == null) {
 				containerNameField.setText("");//$NON-NLS-1$
 			} else {
-				String text = TextProcessor.process(container.getFullPath()
-						.makeRelative().toString());
+				String text = String.valueOf(TextProcessor.process(container.getFullPath().makeRelative().toString()));
 				containerNameField.setText(text);
 				containerNameField.setToolTipText(text);
 			}
@@ -203,17 +202,17 @@ public class ContainerSelectionGroup extends Composite {
 
 	/**
 	 * Creates the contents of the composite.
-	 * 
+	 *
 	 * @param message
 	 */
 	public void createContents(String message) {
 		createContents(message, SIZING_SELECTION_PANE_HEIGHT,
-				SIZING_SELECTION_PANE_WIDTH);
+			SIZING_SELECTION_PANE_WIDTH);
 	}
 
 	/**
 	 * Creates the contents of the composite.
-	 * 
+	 *
 	 * @param message
 	 * @param heightHint
 	 * @param widthHint
@@ -235,7 +234,7 @@ public class ContainerSelectionGroup extends Composite {
 			containerNameField.setLayoutData(gd);
 			containerNameField.addListener(SWT.Modify, listener);
 			containerNameField.setFont(this.getFont());
-//			BidiUtils.applyBidiProcessing(containerNameField, StructuredTextTypeHandlerFactory.FILE);	-- first available on Kepler
+			//			BidiUtils.applyBidiProcessing(containerNameField, StructuredTextTypeHandlerFactory.FILE);	-- first available on Kepler
 		} else {
 			// filler...
 			new Label(this, SWT.NONE);
@@ -247,7 +246,7 @@ public class ContainerSelectionGroup extends Composite {
 
 	/**
 	 * Returns a new drill down viewer for this dialog.
-	 * 
+	 *
 	 * @param heightHint
 	 *            height hint for the drill down composite
 	 */
@@ -266,7 +265,7 @@ public class ContainerSelectionGroup extends Composite {
 		cp.showClosedProjects(showClosedProjects);
 		treeViewer.setContentProvider(cp);
 		treeViewer.setLabelProvider(WorkbenchLabelProvider
-				.getDecoratingWorkbenchLabelProvider());
+			.getDecoratingWorkbenchLabelProvider());
 		treeViewer.setComparator(new ViewerComparator());
 		treeViewer.setUseHashlookup(true);
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -275,7 +274,7 @@ public class ContainerSelectionGroup extends Composite {
 				IStructuredSelection selection = (IStructuredSelection) event
 						.getSelection();
 				containerSelectionChanged((IContainer) selection
-						.getFirstElement()); // allow null
+					.getFirstElement()); // allow null
 			}
 		});
 		treeViewer.addDoubleClickListener(new IDoubleClickListener() {
@@ -305,13 +304,13 @@ public class ContainerSelectionGroup extends Composite {
 	 * Returns the currently entered container name. Null if the field is empty.
 	 * Note that the container may not exist yet if the user entered a new
 	 * container name in the field.
-	 * 
+	 *
 	 * @return IPath
 	 */
 	public IPath getContainerFullPath() {
 		if (allowNewContainerName) {
 			String pathName = containerNameField.getText();
-			if (pathName == null || pathName.length() < 1) {
+			if (pathName.length() < 1) {
 				return null;
 			}
 			// The user may not have made this absolute so do it for them
@@ -338,7 +337,7 @@ public class ContainerSelectionGroup extends Composite {
 
 	/**
 	 * Sets the selected existing container.
-	 * 
+	 *
 	 * @param container
 	 */
 	public void setSelectedContainer(IContainer container) {

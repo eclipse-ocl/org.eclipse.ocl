@@ -11,9 +11,9 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
-import junit.framework.TestCase;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.EMFPlugin;
@@ -32,6 +32,8 @@ import org.osgi.framework.Bundle;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
+import junit.framework.TestCase;
 
 /**
  * Tests the CompleteOCLRegistry.
@@ -73,14 +75,14 @@ public class RegistryTests extends TestCase
 			}
 		}
 	}
-	
+
 	public void testCompleteOCLRegistry_Rebuild() {
 		@NonNull URI uriA = URI.createURI("A");
-		@SuppressWarnings("null")@NonNull Set<URI> setOf = Sets.newHashSet();
-		@SuppressWarnings("null")@NonNull Set<URI> setOf_A = Sets.newHashSet(uriA);
-		@SuppressWarnings("null")@NonNull ArrayList<String> listOf_a1 = Lists.newArrayList("a1");
-		@SuppressWarnings("null")@NonNull ArrayList<String> listOf_a2 = Lists.newArrayList("a2");
-		@SuppressWarnings("null")@NonNull ArrayList<String> listOf_a1_a2 = Lists.newArrayList("a1", "a2");
+		@NonNull Set<@NonNull URI> setOf = new HashSet<>();
+		@NonNull Set<@NonNull URI> setOf_A = Sets.newHashSet(uriA);
+		@NonNull ArrayList<@NonNull String> listOf_a1 = Lists.newArrayList("a1");
+		@NonNull ArrayList<@NonNull String> listOf_a2 = Lists.newArrayList("a2");
+		@NonNull ArrayList<@NonNull String> listOf_a1_a2 = Lists.newArrayList("a1", "a2");
 		Registration reg_A_a1 = new Registration(uriA, listOf_a1);
 		Registration reg_A_a2 = new Registration(uriA, listOf_a2);
 		Registration reg_A_a1_a2 = new Registration(uriA, listOf_a1_a2);
@@ -114,15 +116,15 @@ public class RegistryTests extends TestCase
 		assertEquals(setOf, registry.getResourceURIs(listOf_a2));
 		assertEquals(setOf, registry.getResourceURIs(listOf_a1_a2));
 	}
-	
+
 	/**
 	 * Confirm that registrations are counted so after adding twice, it remains till removed twice.
 	 */
 	public void testCompleteOCLRegistry_Rebuild_Counted() {
 		@NonNull URI uriA = URI.createURI("A");
-		@SuppressWarnings("null")@NonNull Set<URI> setOf = Sets.newHashSet();
-		@SuppressWarnings("null")@NonNull Set<URI> setOf_A = Sets.newHashSet(uriA);
-		@SuppressWarnings("null")@NonNull ArrayList<String> listOf_a1 = Lists.newArrayList("a1");
+		@NonNull Set<@NonNull URI> setOf = new HashSet<>();
+		@NonNull Set<@NonNull URI> setOf_A = Sets.newHashSet(uriA);
+		@NonNull List<@NonNull String> listOf_a1 = Lists.newArrayList("a1");
 		Registration reg_A_a1 = new Registration(uriA, listOf_a1);
 		//
 		CompleteOCLRegistry registry = new CompleteOCLRegistry();

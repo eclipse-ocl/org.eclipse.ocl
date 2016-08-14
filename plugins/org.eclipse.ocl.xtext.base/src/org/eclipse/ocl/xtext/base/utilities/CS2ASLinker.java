@@ -33,44 +33,44 @@ import org.eclipse.xtext.linking.lazy.LazyLinker;
  */
 public class CS2ASLinker extends LazyLinker
 {
-    public static class DiagnosticWrappedException extends WrappedException implements Resource.Diagnostic
-    {
-      private static final long serialVersionUID = 1L;
+	public static class DiagnosticWrappedException extends WrappedException implements Resource.Diagnostic
+	{
+		private static final long serialVersionUID = 1L;
 
-      public DiagnosticWrappedException(Exception exception)
-      {
-        super(exception);
-      }
+		public DiagnosticWrappedException(Exception exception)
+		{
+			super(exception);
+		}
 
-      @Override
-	public String getLocation()
-      {
-        return "unknown";			// FIXME
-      }
+		@Override
+		public String getLocation()
+		{
+			return "unknown";			// FIXME
+		}
 
-      @Override
-	public int getColumn()
-      {
-        return 0;
-      }
+		@Override
+		public int getColumn()
+		{
+			return 0;
+		}
 
-      @Override
-	public int getLine()
-      {
-        return 0;
-      }
-    }
+		@Override
+		public int getLine()
+		{
+			return 0;
+		}
+	}
 
 	@Override
 	protected void afterModelLinked(EObject model, IDiagnosticConsumer diagnosticsConsumer) {
 		Resource eResource = model.eResource();		// FIXME Try to do a narrower refresh
-//		PivotUtilInternal.debugPrintln("afterModelLinking " + NameUtil.debugSimpleName(eResource));	
-//		System.out.println(Thread.currentThread().getName() + " afterModelLinked " + getClass().getSimpleName() + "@" + hashCode()
-//			+ " " + eResource.getClass().getSimpleName() + "@" + eResource.hashCode() + " " + eResource.getURI());		
+		//		PivotUtilInternal.debugPrintln("afterModelLinking " + NameUtil.debugSimpleName(eResource));
+		//		System.out.println(Thread.currentThread().getName() + " afterModelLinked " + getClass().getSimpleName() + "@" + hashCode()
+		//			+ " " + eResource.getClass().getSimpleName() + "@" + eResource.hashCode() + " " + eResource.getURI());
 		if ((diagnosticsConsumer != null) && eResource instanceof BaseCSResource) {
-			@SuppressWarnings("null") @NonNull List<Diagnostic> errors = eResource.getErrors();
+			@NonNull List<Diagnostic> errors = eResource.getErrors();
 			if (!ElementUtil.hasSyntaxError(errors)) {
-//				System.out.println("Starting to refreshPivotMappings for " + eResource.getURI());
+				//				System.out.println("Starting to refreshPivotMappings for " + eResource.getURI());
 				BaseCSResource csResource = (BaseCSResource) eResource;
 				try {
 					CS2AS cs2as = csResource.getCS2AS();
@@ -82,7 +82,7 @@ public class CS2ASLinker extends LazyLinker
 						}
 					}
 					cs2as.update(diagnosticsConsumer);
-/*					Resource asResource = resourceAdapter.getPivotResource(csResource);
+					/*					Resource asResource = resourceAdapter.getPivotResource(csResource);
 					ResourceSet resourceSet = csResource.getResourceSet();
 					if (resourceSet instanceof ResourceSetImpl) {
 						ResourceSetImpl resourceSetImpl = (ResourceSetImpl) resourceSet;
@@ -95,20 +95,20 @@ public class CS2ASLinker extends LazyLinker
 					} */
 				}
 				catch (Exception exception) {	// Never let an Exception leak out to abort Xtext
-				    Exception cause = exception instanceof Resource.IOWrappedException ? (Exception)exception.getCause() : exception;
-//			    	DiagnosticWrappedException wrappedException = new DiagnosticWrappedException(cause);
-//					eResource.getErrors().add(wrappedException);
-				    if (cause instanceof IllegalLibraryException) {
-				    	errors.add(new LibraryDiagnostic(cause));
-				    }
-				    else {
-				    	errors.add(new ExceptionDiagnostic(cause));
-				    	BasePlugin.error(0, csResource.getEditorName() + " Editor linking error", cause);
-				    }
+					Exception cause = exception instanceof Resource.IOWrappedException ? (Exception)exception.getCause() : exception;
+					//			    	DiagnosticWrappedException wrappedException = new DiagnosticWrappedException(cause);
+					//					eResource.getErrors().add(wrappedException);
+					if (cause instanceof IllegalLibraryException) {
+						errors.add(new LibraryDiagnostic(cause));
+					}
+					else {
+						errors.add(new ExceptionDiagnostic(cause));
+						BasePlugin.error(0, csResource.getEditorName() + " Editor linking error", cause);
+					}
 				}
-//				System.out.println("Finished refreshPivotMappings for " + eResource.getURI());
+				//				System.out.println("Finished refreshPivotMappings for " + eResource.getURI());
 			}
 		}
-//		PivotUtilInternal.debugPrintln("afterModelLinked " + NameUtil.debugSimpleName(eResource));	
+		//		PivotUtilInternal.debugPrintln("afterModelLinked " + NameUtil.debugSimpleName(eResource));
 	}
 }

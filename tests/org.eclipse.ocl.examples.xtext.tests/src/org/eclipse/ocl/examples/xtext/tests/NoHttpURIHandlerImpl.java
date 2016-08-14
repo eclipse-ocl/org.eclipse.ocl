@@ -43,7 +43,7 @@ public final class NoHttpURIHandlerImpl extends URIHandlerImpl
 
 	@Override
 	public boolean canHandle(URI uri) {
-		return uri.scheme().equals("http");
+		return "http".equals(uri.scheme());
 	}
 
 	@Override

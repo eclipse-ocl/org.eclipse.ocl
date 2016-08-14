@@ -62,34 +62,34 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
-{				
+{
 	private static final Logger logger = Logger.getLogger(Ecore2ASReferenceSwitch.class);
 
-    /**
-     * The key that identifies opposite role names in an annotation
-     */
-    public static final String PROPERTY_OPPOSITE_ROLE_NAME_KEY = "Property.oppositeRoleName"; //$NON-NLS-1$
-    public static final Object PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY = "Property.oppositeUnique"; //$NON-NLS-1$
-    public static final Object PROPERTY_OPPOSITE_ROLE_ORDERED_KEY = "Property.oppositeOrdered"; //$NON-NLS-1$
-    public static final Object PROPERTY_OPPOSITE_ROLE_LOWER_KEY = "Property.oppositeLower"; //$NON-NLS-1$
-    public static final Object PROPERTY_OPPOSITE_ROLE_UPPER_KEY = "Property.oppositeUpper"; //$NON-NLS-1$
+	/**
+	 * The key that identifies opposite role names in an annotation
+	 */
+	public static final String PROPERTY_OPPOSITE_ROLE_NAME_KEY = "Property.oppositeRoleName"; //$NON-NLS-1$
+	public static final Object PROPERTY_OPPOSITE_ROLE_UNIQUE_KEY = "Property.oppositeUnique"; //$NON-NLS-1$
+	public static final Object PROPERTY_OPPOSITE_ROLE_ORDERED_KEY = "Property.oppositeOrdered"; //$NON-NLS-1$
+	public static final Object PROPERTY_OPPOSITE_ROLE_LOWER_KEY = "Property.oppositeLower"; //$NON-NLS-1$
+	public static final Object PROPERTY_OPPOSITE_ROLE_UPPER_KEY = "Property.oppositeUpper"; //$NON-NLS-1$
 
-    protected final @NonNull Ecore2AS converter;
+	protected final @NonNull Ecore2AS converter;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
-	
+
 	public Ecore2ASReferenceSwitch(@NonNull Ecore2AS converter) {
 		this.converter = converter;
 		this.metamodelManager = converter.getMetamodelManager();
 		this.standardLibrary = metamodelManager.getStandardLibrary();
 	}
-	
+
 	@Override
 	public Object caseEAnnotation(EAnnotation eObject) {
 		@SuppressWarnings("null") @NonNull EAnnotation eObject2 = eObject;
 		Annotation pivotElement = converter.getCreated(Annotation.class, eObject2);
 		if (pivotElement != null) {
-			doSwitchAll(Element.class, ClassUtil.nullFree(pivotElement.getReferences()), eObject2.getReferences());
+			doSwitchAll(Element.class, ClassUtil.<Element>nullFree(pivotElement.getReferences()), eObject2.getReferences());
 		}
 		return null;
 	}
@@ -99,7 +99,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		@SuppressWarnings("null") @NonNull EClass eObject2 = eObject;
 		org.eclipse.ocl.pivot.Class pivotElement = converter.getCreated(org.eclipse.ocl.pivot.Class.class, eObject2);
 		if (pivotElement != null) {
-			doSwitchAll(org.eclipse.ocl.pivot.Class.class, ClassUtil.nullFree(pivotElement.getSuperClasses()), eObject2.getEGenericSuperTypes());
+			doSwitchAll(org.eclipse.ocl.pivot.Class.class, ClassUtil.<org.eclipse.ocl.pivot.Class>nullFree(pivotElement.getSuperClasses()), eObject2.getEGenericSuperTypes());
 			if (pivotElement.getSuperClasses().isEmpty()) {
 				org.eclipse.ocl.pivot.Class oclElementType = standardLibrary.getOclElementType();
 				pivotElement.getSuperClasses().add(oclElementType);
@@ -175,7 +175,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						}
 					}
 				}
-				doSwitchAll(Type.class, ClassUtil.nullFree(pivotElement.getRaisedExceptions()), eObject2.getEGenericExceptions());
+				doSwitchAll(Type.class, ClassUtil.<Type>nullFree(pivotElement.getRaisedExceptions()), eObject2.getEGenericExceptions());
 			}
 			return pivotElement;
 		}
@@ -183,9 +183,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 
 	@Override
 	public Object caseEReference(EReference eObject) {
-//		Property pivotElement = converter.getCreated(Property.class, eObject);		
+		//		Property pivotElement = converter.getCreated(Property.class, eObject);
 		Property pivotElement = caseEStructuralFeature(eObject);
-		doSwitchAll(Property.class, ClassUtil.nullFree(pivotElement.getKeys()), eObject.getEKeys());
+		doSwitchAll(Property.class, ClassUtil.<Property>nullFree(pivotElement.getKeys()), eObject.getEKeys());
 		Property oppositeProperty = null;
 		EReference eOpposite = eObject.getEOpposite();
 		if (eOpposite != null) {
@@ -292,9 +292,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		if (oppositeProperty != null) {
 			pivotElement.setOpposite(oppositeProperty);
 		}
-//		else if (eObject.eContainer() instanceof EClass) {		// Skip annotation references
-//			metamodelManager.installPropertyDeclaration(pivotElement);
-//		}
+		//		else if (eObject.eContainer() instanceof EClass) {		// Skip annotation references
+		//			metamodelManager.installPropertyDeclaration(pivotElement);
+		//		}
 		return null;
 	}
 
@@ -410,14 +410,14 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 							pivotElement.setType(pivotType);
 							pivotElement.setIsRequired(isRequired);
 						}
-					}	
+					}
 				}
 			}
-//			Object boxedDefaultValue = null;
+			//			Object boxedDefaultValue = null;
 			String defaultValueLiteral = null;
 			if (eObject.eIsSet(EcorePackage.Literals.ESTRUCTURAL_FEATURE__DEFAULT_VALUE_LITERAL)) {
 				defaultValueLiteral = eObject.getDefaultValueLiteral();
-/*				EClassifier eType = eObject.getEType();
+				/*				EClassifier eType = eObject.getEType();
 				if (eType instanceof EEnum) {
 					EEnum eEnum = (EEnum)eType;
 					EEnumLiteral unboxedValue = eEnum.getEEnumLiteral(defaultValueLiteral);
@@ -496,7 +496,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		@SuppressWarnings("null") @NonNull ETypeParameter eObject2 = eObject;
 		TemplateParameter pivotElement = converter.getCreated(TemplateParameter.class, eObject2);
 		if (pivotElement != null) {
-			doSwitchAll(org.eclipse.ocl.pivot.Class.class, ClassUtil.nullFree(pivotElement.getConstrainingClasses()), eObject2.getEBounds());
+			doSwitchAll(org.eclipse.ocl.pivot.Class.class, ClassUtil.<org.eclipse.ocl.pivot.Class>nullFree(pivotElement.getConstrainingClasses()), eObject2.getEBounds());
 		}
 		return null;
 	}

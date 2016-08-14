@@ -28,7 +28,7 @@ public interface PivotConstantsInternal
 	static final @NonNull String PLUGIN_ID = PivotPlugin.PLUGIN_ID;
 	static final @NonNull String PIVOT_ECORE = PLUGIN_ID + "/model/Pivot.ecore";
 	static final @NonNull URI GEN_MODEL_URI = URI.createPlatformPluginURI("/" + PLUGIN_ID + "/model/Pivot.genmodel", true); //$NON-NLS-1$
-	
+
 	static final @SuppressWarnings("null")@NonNull String DOCUMENTATION_ANNOTATION_SOURCE = GenModelPackage.eNS_URI;
 	static final @NonNull String DOCUMENTATION_ANNOTATION_KEY = "documentation";
 
@@ -37,8 +37,8 @@ public interface PivotConstantsInternal
 	 */
 	static final @NonNull String DUPLICATES_ANNOTATION_SOURCE = "duplicates"; // UMLUtil.ANNOTATION__DUPLICATES
 	static final @NonNull String REDEFINES_ANNOTATION_SOURCE = "redefines"; // UMLUtil.ANNOTATION__REDEFINES
-//	static final @NonNull String SUBSETS_ANNOTATION_SOURCE = "subsets"; // UMLUtil.ANNOTATION__SUBSETS
-//	static final @NonNull String UNION_ANNOTATION_SOURCE = "union"; // UMLUtil.ANNOTATION__UNION
+	//	static final @NonNull String SUBSETS_ANNOTATION_SOURCE = "subsets"; // UMLUtil.ANNOTATION__SUBSETS
+	//	static final @NonNull String UNION_ANNOTATION_SOURCE = "union"; // UMLUtil.ANNOTATION__UNION
 
 	/**
 	 * The default values for a totally blind implicit opposite are determined by what it is safe to use for a fully deduced opposite.
@@ -99,7 +99,7 @@ public interface PivotConstantsInternal
 	static final @NonNull String TUPLE_SIGNATURE_SUFFIX = "}"; //$NON-NLS-1$
 	static final @NonNull String UNRESOLVED_PROXY_MARKER = "<<unresolved-proxy>>"; //$NON-NLS-1$
 	static final @NonNull String WILDCARD_INDICATOR = "?"; //$NON-NLS-1$
-	
+
 	static final @NonNull String MONIKER_IF_EXP = "if";
 	static final @NonNull String MONIKER_INVALID_LITERAL_EXP = "invalid";
 	static final @NonNull String MONIKER_LET_EXP = "let";
@@ -111,10 +111,10 @@ public interface PivotConstantsInternal
 	static final @NonNull String MONIKER_UNLIMITED_NATURAL_LITERAL_EXP = "*";
 
 	static final @NonNull String MONIKER_EXP_CHILD_PREFIX = "x";
-	
+
 	static final @NonNull String LIBRARY_MONIKER_PREFIX = "$";
 	static final @NonNull String OLD_ORPHANAGE_URI = "http://www.eclipse.org/ocl/3.1.0/orphanage";
-	
+
 	static final @NonNull String UNKNOWN_TYPE_TEXT = "unknown-type";
 
 	static final @NonNull String WILDCARD_NAME = "wildcard";
@@ -125,6 +125,6 @@ public interface PivotConstantsInternal
 	static final @NonNull String POSTCONDITION_ROLE = "postcondition";
 	static final @NonNull String PRECONDITION_ROLE = "precondition";
 	static final @NonNull String UNKNOWN_ROLE = "<<unknown>>";
-	
+
 	public static @NonNull Map<EStructuralFeature,String> roleNames = new HashMap<EStructuralFeature,String>();
 }

@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.values.OrderedSet;
 public class OrderedSetImpl<E> extends LinkedHashSet<E> implements OrderedSet<E>
 {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 3297491641047187175L;
 
@@ -39,14 +39,14 @@ public class OrderedSetImpl<E> extends LinkedHashSet<E> implements OrderedSet<E>
 	public boolean equals(Object o) {
 		// This is probably a bug fix on LinkedHashSet that should consider ordering for equals
 		if (o == this) {
-		    return true;
+			return true;
 		}
 		if (!(o instanceof OrderedSet)) {
-		    return false;
+			return false;
 		}
 		OrderedSet<?> that = (OrderedSet<?>) o;
 		if (that.size() != size())
-		    return false;
+			return false;
 		Iterator<?> thisIterator = this.iterator();
 		Iterator<?> thatIterator = that.iterator();
 		while (thisIterator.hasNext()) {
@@ -63,6 +63,6 @@ public class OrderedSetImpl<E> extends LinkedHashSet<E> implements OrderedSet<E>
 				}
 			}
 		}
-        return true;
-    }
+		return true;
+	}
 }

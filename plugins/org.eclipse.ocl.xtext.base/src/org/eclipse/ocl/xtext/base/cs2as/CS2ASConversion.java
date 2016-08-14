@@ -110,24 +110,24 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import com.google.common.collect.Iterables;
 
 public class CS2ASConversion extends AbstractBase2ASConversion
-{	
+{
 	private static final Logger logger = Logger.getLogger(CS2ASConversion.class);
 	public static final @NonNull TracingOption CONTINUATION = new TracingOption("org.eclipse.ocl.xtext.base", "continuation");  //$NON-NLS-1$//$NON-NLS-2$
 
 	public static class CacheKey<T>
 	{
 		protected final @NonNull String name;
-		
+
 		public CacheKey(@NonNull String name) {
 			this.name = name;
 		}
-		
+
 		@Override
 		public String toString() { return name; }
 	}
-	
+
 	protected final @NonNull CS2AS converter;
-	
+
 	/**
 	 * The Visitors
 	 */
@@ -154,9 +154,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 */
 	@SuppressWarnings("unused")
 	private final IDiagnosticConsumer diagnosticsConsumer;
-	
+
 	private boolean hasFailed = false;
-	
+
 	public CS2ASConversion(@NonNull CS2AS converter, @NonNull IDiagnosticConsumer diagnosticsConsumer) {
 		super(converter.getEnvironmentFactory());
 		this.converter = converter;
@@ -203,7 +203,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	public boolean checkForNoErrors(@NonNull BaseCSResource csResource) {
-		@SuppressWarnings("null") @NonNull List<Resource.Diagnostic> errors = csResource.getErrors();
+		@NonNull List<Resource.Diagnostic> errors = csResource.getErrors();
 		if (ElementUtil.hasSyntaxError(errors)) {
 			return false;
 		}
@@ -240,7 +240,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					s.append("BLOCKED ");
 					dependency.canExecute();			// FIXME debugging
 				}
-				s.append(dependency);					
+				s.append(dependency);
 			}
 			continuation.canExecute();			// FIXME debugging
 			if (++i >= 10) {
@@ -251,7 +251,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		logger.error("Failed to complete continuations" + s.toString());		// FIXME
 	}
 
-/*	private void enforceConformance(AnyType oclAny) {
+	/*	private void enforceConformance(AnyType oclAny) {
 		Collection<? extends Resource> pivotResources = converter.getPivotResources();
 		Collection<Notifier> allPivotResources = new ArrayList<Notifier>(pivotResources);
 		allPivotResources.add(metamodelManager.getOrphanPackage());
@@ -280,7 +280,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 	} */
 
-/*	protected List<String> getDocumentationStrings1(CompositeNode node) {
+	/*	protected List<String> getDocumentationStrings1(CompositeNode node) {
 		List<LeafNode> documentationNodes = CS2AS.getDocumentationNodes(node);
 		if (documentationNodes == null) {
 			return null;
@@ -292,13 +292,13 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 		return documentationStrings;
 	} */
-	
+
 	/**
 	 * Prune the pivots to eliminate:
 	 * - redundant orphans - e.g. obsolete specializations
 	 * - redundant elements - e.g. pivots that are not needed as a result of a CS update
 	 * - dependent caches that reference any of the above
-	 *  
+	 *
 	 * Wanted pivot elements are
 	 * - all elements in all libraries
 	 * - all elements locked via MetamodelManager.addLockedElement()
@@ -309,13 +309,13 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 *     this is what we're cleaning up
 	 */
 	public void garbageCollect(@NonNull Map<? extends Resource, ? extends ASResource> cs2asResourceMap) {
-//		org.eclipse.ocl.pivot.Class orphanClass = metamodelManager.getOrphanClass();
-//		org.eclipse.ocl.pivot.Package orphanPackage = metamodelManager.getOrphanPackage();
-//		Resource orphanResource = orphanPackage.eResource();
+		//		org.eclipse.ocl.pivot.Class orphanClass = metamodelManager.getOrphanClass();
+		//		org.eclipse.ocl.pivot.Package orphanPackage = metamodelManager.getOrphanPackage();
+		//		Resource orphanResource = orphanPackage.eResource();
 		final Collection<Notifier> prunableResources = new ArrayList<Notifier>(cs2asResourceMap.values());
-//		prunableResources.add(orphanResource);
+		//		prunableResources.add(orphanResource);
 		Collection<Notifier> allPivotResources = new ArrayList<Notifier>(metamodelManager.getASResourceSet().getResources());
-//		allPivotResources.removeAll(prunableResources);					// Dead elements in orphanage or pivot of CS can be pruned
+		//		allPivotResources.removeAll(prunableResources);					// Dead elements in orphanage or pivot of CS can be pruned
 		EObject lockingObject = metamodelManager.getLockingObject();
 		if (lockingObject != null) {
 			allPivotResources.add(lockingObject);						// Locked elements are not dead
@@ -331,14 +331,14 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			protected boolean crossReference(EObject eObject, EReference eReference, EObject crossReferencedEObject) {
 				Resource eResource = crossReferencedEObject.eResource();
 				boolean isPrunable = prunableResources.contains(eResource);
-//				if (isPrunable && prunableResources.contains(eObject.eResource())) {
-//					PivotUtil.debugObjectUsage("prunable xref ", crossReferencedEObject);
-//					PivotUtil.debugObjectUsage(" from " + eReference.getName() + " ", eObject);
-//				}
-//				else {
-//					PivotUtil.debugObjectUsage("unprunable xref ", crossReferencedEObject);
-//					PivotUtil.debugObjectUsage(" from " + eReference.getName() + " ", eObject);
-//				}
+				//				if (isPrunable && prunableResources.contains(eObject.eResource())) {
+				//					PivotUtil.debugObjectUsage("prunable xref ", crossReferencedEObject);
+				//					PivotUtil.debugObjectUsage(" from " + eReference.getName() + " ", eObject);
+				//				}
+				//				else {
+				//					PivotUtil.debugObjectUsage("unprunable xref ", crossReferencedEObject);
+				//					PivotUtil.debugObjectUsage(" from " + eReference.getName() + " ", eObject);
+				//				}
 				return isPrunable;
 			}
 
@@ -346,15 +346,15 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			protected void handleCrossReference(EObject eObject) {
 				try {
 					super.handleCrossReference(eObject);
-				    InternalEObject internalEObject = (InternalEObject)eObject;
+					InternalEObject internalEObject = (InternalEObject)eObject;
 					for (EObject eContent : eObject.eContents()) {
 						EReference eReference = (EReference) eContent.eContainingFeature();
-				        add(internalEObject, eReference, eContent);
+						add(internalEObject, eReference, eContent);
 					}
 				}
 				catch (Exception e) {}
 			}
-			
+
 			@Override
 			protected boolean resolve() {
 				return false;		// Don't start creating specializations to resolve proxies
@@ -370,20 +370,20 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				EObject eObject = setting.getEObject();
 				Resource eResource = eObject.eResource();
 				if (!prunableResources.contains(eResource)) {
-//					PivotUtil.debugObjectUsage("externally refd ", referencedOrphan);
+					//					PivotUtil.debugObjectUsage("externally refd ", referencedOrphan);
 					wantedOrphans.add(referencedOrphan);
 					wantIt = true;
 					break;
 				}
 			}
 			if (!wantIt) {
-//				if ((referencedOrphan != orphanPackage) && (referencedOrphan != orphanClass)) {
-//					PivotUtil.debugObjectUsage("externally unrefd ", referencedOrphan);
-					suspects.add(entry);
-//				}
-//				else {
-//					PivotUtil.debugObjectUsage("unkillable ", referencedOrphan);
-//				}
+				//				if ((referencedOrphan != orphanPackage) && (referencedOrphan != orphanClass)) {
+				//					PivotUtil.debugObjectUsage("externally unrefd ", referencedOrphan);
+				suspects.add(entry);
+				//				}
+				//				else {
+				//					PivotUtil.debugObjectUsage("unkillable ", referencedOrphan);
+				//				}
 			}
 		}
 		while (!suspects.isEmpty()) {
@@ -396,15 +396,15 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				for (EStructuralFeature.Setting setting : referencesToOrphan) {
 					EObject eObject = setting.getEObject();
 					if (wantedOrphans.contains(eObject)) {
-//						PivotUtil.debugObjectUsage(pass + " internally refd ", referencedOrphan);
-//						PivotUtil.debugObjectUsage("     by ", eObject);
+						//						PivotUtil.debugObjectUsage(pass + " internally refd ", referencedOrphan);
+						//						PivotUtil.debugObjectUsage("     by ", eObject);
 						wantedOrphans.add(referencedOrphan);
 						wantIt = true;
 						break;
 					}
 				}
 				if (!wantIt) {
-//					PivotUtil.debugObjectUsage(pass + " internally unrefd ", referencedOrphan);
+					//					PivotUtil.debugObjectUsage(pass + " internally unrefd ", referencedOrphan);
 					suspects.add(entry);
 				}
 			}
@@ -422,14 +422,14 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				}
 			}
 			if (!wantIt) {
-//				PivotUtil.debugObjectUsage("kill ", referencedOrphan);
+				//				PivotUtil.debugObjectUsage("kill ", referencedOrphan);
 				Collection<EStructuralFeature.Setting> referencesToOrphan = entry.getValue();
 				if (referencesToOrphan != null) {
 					for (EStructuralFeature.Setting setting : referencesToOrphan) {
 						EObject eObject = setting.getEObject();
 						EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
 						if (!eStructuralFeature.isDerived()) {
-//							PivotUtil.debugObjectUsage(" non-derived " + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + " : ", eObject);
+							//							PivotUtil.debugObjectUsage(" non-derived " + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + " : ", eObject);
 							if (eStructuralFeature.isMany()) {
 								@SuppressWarnings("unchecked")
 								Collection<Object> list = (Collection<Object>) eObject.eGet(eStructuralFeature);
@@ -440,8 +440,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 							}
 						}
 						else {
-//							PivotUtil.debugObjectUsage(" derived " + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + " : ", eObject);
-//							System.out.println("  derived " + eObject.getClass().getName() + "@" + eObject.hashCode() + " " + eStructuralFeature.getName());
+							//							PivotUtil.debugObjectUsage(" derived " + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + " : ", eObject);
+							//							System.out.println("  derived " + eObject.getClass().getName() + "@" + eObject.hashCode() + " " + eStructuralFeature.getName());
 						}
 					}
 				}
@@ -450,28 +450,28 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					PivotUtil.debugObjectUsage("  container ", eContainer);
 					referencedOrphan.eSet(referencedOrphan.eContainingFeature(), null);
 				}
-//WIP			metamodelManager.kill(referencedOrphan);
+				//WIP			metamodelManager.kill(referencedOrphan);
 			}
 		}
-//		for (MonikeredElement element : oldMoniker2asMap.values()) {
-//			if (element.eResource() == null) {
-//				PivotUtil.debugObjectUsage("Final Old residue ", element);
-				// This is a bit late: a notification of non-containment would be sharper.
-//				metamodelManager.kill(element);
-//			}
-//		}
-//		for (MonikeredElement element : newMoniker2asMap.values()) {
-//			if (element.eResource() == null) {
-//				PivotUtil.debugObjectUsage("Final New residue ", element);
-//			}
-//		}
-//		for (Type orphanType : orphanPackage.getOwnedType()) {
-//			if (!PivotUtil.debugWellContainedness(orphanType)) {
-//				for (Setting setting : referencesToOrphans.get(orphanType)) {
-//					PivotUtil.debugObjectUsage("Dangling reference " + setting.getEStructuralFeature().getName() + " ", setting.getEObject());				
-//				}
-//			}
-//		}
+		//		for (MonikeredElement element : oldMoniker2asMap.values()) {
+		//			if (element.eResource() == null) {
+		//				PivotUtil.debugObjectUsage("Final Old residue ", element);
+		// This is a bit late: a notification of non-containment would be sharper.
+		//				metamodelManager.kill(element);
+		//			}
+		//		}
+		//		for (MonikeredElement element : newMoniker2asMap.values()) {
+		//			if (element.eResource() == null) {
+		//				PivotUtil.debugObjectUsage("Final New residue ", element);
+		//			}
+		//		}
+		//		for (Type orphanType : orphanPackage.getOwnedType()) {
+		//			if (!PivotUtil.debugWellContainedness(orphanType)) {
+		//				for (Setting setting : referencesToOrphans.get(orphanType)) {
+		//					PivotUtil.debugObjectUsage("Dangling reference " + setting.getEStructuralFeature().getName() + " ", setting.getEObject());
+		//				}
+		//			}
+		//		}
 	}
 
 	protected void gatherNewPackage(@NonNull Set<org.eclipse.ocl.pivot.Package> newPackages, @NonNull EObject pivot) {
@@ -486,7 +486,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	/**
 	 * Add any packages and nested packages pivoted by csResource to newPackages. This
-	 * is invoked at the end of an update to identify redundant packages. 
+	 * is invoked at the end of an update to identify redundant packages.
 	 */
 	protected void gatherNewPackages(@NonNull Set<org.eclipse.ocl.pivot.Package> newPackages, @NonNull Resource csResource) {
 		for (TreeIterator<EObject> tit = csResource.getAllContents(); tit.hasNext(); ) {
@@ -519,12 +519,12 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					}
 				}
 			}
-		}	
+		}
 	}
 
 	/**
 	 * Add any packages and nested packages in eObjects to oldPackages. This
-	 * is invoked at the start of an update to cache the packages for re-use. 
+	 * is invoked at the start of an update to cache the packages for re-use.
 	 */
 	protected void gatherOldPackages(@NonNull List<? extends org.eclipse.ocl.pivot.Package> pkgs) {
 		for (org.eclipse.ocl.pivot.Package pkg : pkgs) {
@@ -553,7 +553,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			gatherOldPackages(nestedPackage);
 		}
 	}
-	
+
 	public final @NonNull CS2AS getConverter() {
 		return converter;
 	}
@@ -589,7 +589,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		s.append(name);
 		return s.toString();
 	}
-	
+
 	protected @NonNull String getQualifiedName(@NonNull StringBuilder s, @NonNull PackageCS csPackage) {
 		EObject eContainer = csPackage.eContainer();
 		if (eContainer instanceof PackageCS) {
@@ -615,13 +615,13 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	protected @NonNull List<TemplateBindingCS> getTemplateBindings(@NonNull ElementCS csElement) {
 		List<TemplateBindingCS> csTemplateBindings;
-//		EObject container = csElement.eContainer();
-//		if (container instanceof ElementCS) {			
-//			csTemplateBindings = getTemplateBindings((ElementCS) container);
-//		}
-//		else {
-			csTemplateBindings = new ArrayList<TemplateBindingCS>();
-//		}
+		//		EObject container = csElement.eContainer();
+		//		if (container instanceof ElementCS) {
+		//			csTemplateBindings = getTemplateBindings((ElementCS) container);
+		//		}
+		//		else {
+		csTemplateBindings = new ArrayList<TemplateBindingCS>();
+		//		}
 		if (csElement instanceof TypedTypeRefCS) {
 			TypedTypeRefCS csTemplateableElement = (TypedTypeRefCS)csElement;
 			TemplateBindingCS csTemplateBinding = csTemplateableElement.getOwnedBinding();
@@ -631,11 +631,11 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 		return csTemplateBindings;
 	}
-	
+
 	protected @NonNull List<TemplateSignature> getTemplateSignatures(@NonNull Element pivotElement) {
 		List<TemplateSignature> pivotTemplateSignatures;
 		EObject container = pivotElement.eContainer();
-		if (container instanceof Element) {			
+		if (container instanceof Element) {
 			pivotTemplateSignatures = getTemplateSignatures((Element) container);
 		}
 		else {
@@ -658,9 +658,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public void handleVisitNamedElement(@NonNull NamedElementCS csNamedElement, @NonNull NamedElement pivotElement) {
 		List<Element> pivotAnnotations = pivotElement.getOwnedAnnotations();
 		List<AnnotationElementCS> csAnnotations = csNamedElement.getOwnedAnnotations();
-//		if ((csAnnotations.size() <= 1) && (pivotAnnotations.size() <= 1)) {
-			refreshPivotList(Annotation.class, pivotAnnotations, csAnnotations);
-/*		}
+		//		if ((csAnnotations.size() <= 1) && (pivotAnnotations.size() <= 1)) {
+		refreshPivotList(Annotation.class, pivotAnnotations, csAnnotations);
+		/*		}
 		else {
 			HashSet<String> names = new HashSet<String>();
 			HashMap<String, List<Annotation>> pivotMap = new HashMap<String, List<Annotation>>();
@@ -706,7 +706,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		assert eReference != null;
 		converter.installPivotReference(csElement, newPivotElement, eReference);
 	}
-	
+
 	public void installPivotUsage(@NonNull ModelElementCS csElement, @NonNull Element newPivotElement) {
 		converter.installPivotUsage(csElement, newPivotElement);
 	}
@@ -817,7 +817,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * blocked by unsatisfied dependencies, others of which may be further
 	 * continuations resulting from only partial progress. Returns null if
 	 * none of the continuations could execute.
-	 * 
+	 *
 	 * @param continuations
 	 * @return continuations still to perform, null if stuck.
 	 */
@@ -920,7 +920,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	public void refreshContextVariable(@NonNull ExpressionInOCL pivotSpecification) {
-//		System.out.println(ClassUtil.debugSimpleName(pivotSpecification) + " " + pivotSpecification);
+		//		System.out.println(ClassUtil.debugSimpleName(pivotSpecification) + " " + pivotSpecification);
 		EObject eContainer = pivotSpecification.eContainer();
 		EStructuralFeature eContainingFeature = pivotSpecification.eContainingFeature();
 		if (eContainingFeature == PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION) {
@@ -1006,7 +1006,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	/**
 	 * Return a pivotEClass instance cast to pivotClass registered for csElement.getCSI().
 	 * <p>An existing element is re-used else an new instance is created.
-	 * <p>The pivot element is installed as the original object of csElement. 
+	 * <p>The pivot element is installed as the original object of csElement.
 	 */
 	public @NonNull <T extends Element> T refreshModelElement(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, @Nullable ModelElementCS csElement) {
 		assert pivotEClass != null;
@@ -1043,9 +1043,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 			else {
 				isRequired = true;
-//				if (pivotType != null) {
-//					pivotType = metamodelManager.getCollectionType(ElementUtil.isOrdered(csTypedElement), ElementUtil.isUnique(csTypedElement), pivotType, ValueUtil.integerValueOf(lower), ValueUtil.unlimitedNaturalValueOf(upper));
-//				}
+				//				if (pivotType != null) {
+				//					pivotType = metamodelManager.getCollectionType(ElementUtil.isOrdered(csTypedElement), ElementUtil.isUnique(csTypedElement), pivotType, ValueUtil.integerValueOf(lower), ValueUtil.unlimitedNaturalValueOf(upper));
+				//				}
 			}
 		}
 		if (pivotType == null) {
@@ -1080,9 +1080,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			EObject eObject = tit.next();
 			if (eObject instanceof Pivotable) {
 				Pivotable pivotable = (Pivotable)eObject;
-//				Element pivot = pivotable.getPivot();
+				//				Element pivot = pivotable.getPivot();
 				pivotable.resetPivot();
-			}				
+			}
 		}
 	}
 
@@ -1099,7 +1099,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * by moving/adding/removing existing entries. Once matched each TemplateBinding.signature
 	 * references the corresponding TemplateSignature, and each TemplateBinding.parameterSubstitution.formal
 	 * references the corresponding TemplateSignature.ownedParameter.
-	 * 
+	 *
 	 * @param templateBindings
 	 * @param templateSignatures
 	 */
@@ -1125,20 +1125,20 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 							templateBindings.add(i, templateBindings.remove(j));
 						}
 						templateBinding = oldTemplateBinding;
-	//					registerPivotElement(csTemplateBinding, templateBinding);
-	//					installPivotElement(csTemplateBinding, templateBinding);
+						//					registerPivotElement(csTemplateBinding, templateBinding);
+						//					installPivotElement(csTemplateBinding, templateBinding);
 						break;
 					}
 				}
 				if (templateBinding == null) {
-	//				templateBinding = refreshElement(TemplateBinding.class, PivotPackage.Literals.TEMPLATE_BINDING, csTemplateBinding);
+					//				templateBinding = refreshElement(TemplateBinding.class, PivotPackage.Literals.TEMPLATE_BINDING, csTemplateBinding);
 					templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
 					assert templateBinding != null;
 					if (i < oldMax) {
 						templateBindings.add(i, templateBinding);
 					}
 					else {
-						templateBindings.add(templateBinding);					
+						templateBindings.add(templateBinding);
 					}
 				}
 				installPivotReference(csTemplateBinding, templateBinding, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
@@ -1185,7 +1185,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				}
 			}
 			if (templateParameterSubstitution == null) {
-//				templateParameterSubstitution = refreshElement(TemplateParameterSubstitution.class, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION, csTemplateParameterSubstitution);
+				//				templateParameterSubstitution = refreshElement(TemplateParameterSubstitution.class, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION, csTemplateParameterSubstitution);
 				templateParameterSubstitution = PivotFactory.eINSTANCE.createTemplateParameterSubstitution();
 				templateParameterSubstitution.setFormal(templateParameter);
 				if (i < oldMax) {
@@ -1216,7 +1216,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		TemplateBindingCS ownedTemplateBinding = csElement.getOwnedBinding();
 		assert ownedTemplateBinding != null;
 		org.eclipse.ocl.pivot.Class unspecializedPivotElement = (org.eclipse.ocl.pivot.Class)csElement.getReferredType();	// FIXME cast
-//		logger.trace("Specializing " + moniker); //$NON-NLS-1$
+		//		logger.trace("Specializing " + moniker); //$NON-NLS-1$
 		if ((unspecializedPivotElement == null) || unspecializedPivotElement.eIsProxy()) {
 			String moniker = csElement.toString();
 			logger.error("Nothing to specialize as " + moniker); //$NON-NLS-1$
@@ -1323,7 +1323,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//
 		//	Perform pre-order continuations to establish package, class containment and classifier template signatures.
 		//
-//		Collections.reverse(continuations);
+		//		Collections.reverse(continuations);
 		while (continuations.size() > 0) {
 			List<BasicContinuation<?>> moreContinuations = progressContinuations(continuations);
 			if (moreContinuations == null) {
@@ -1337,7 +1337,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			continuations = moreContinuations;
 		}
 		//
-		//	Load the library. 
+		//	Load the library.
 		//
 		@SuppressWarnings("unused")
 		AnyType oclAnyType = metamodelManager.getStandardLibrary().getOclAnyType();
@@ -1380,12 +1380,12 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		Set<org.eclipse.ocl.pivot.Package> newPackages = new HashSet<org.eclipse.ocl.pivot.Package>();
 		gatherNewPackages(newPackages, csResource);
 		Set<org.eclipse.ocl.pivot.Package> obsoletePackages = new HashSet<org.eclipse.ocl.pivot.Package>(oldPackagesByQualifiedName.values());
-//		for (org.eclipse.ocl.pivot.Package oldPackage : obsoletePackages) {
-//			System.out.println("Old package @" + Integer.toHexString(oldPackage.hashCode()) + " " + oldPackage.eResource().getURI() + " " + oldPackage.getName());
-//		}
-//		for (org.eclipse.ocl.pivot.Package newPackage : newPackages) {
-//			System.out.println("New package @" + Integer.toHexString(newPackage.hashCode()) + " " + newPackage.eResource().getURI() + " " + newPackage.getName());
-//		}
+		//		for (org.eclipse.ocl.pivot.Package oldPackage : obsoletePackages) {
+		//			System.out.println("Old package @" + Integer.toHexString(oldPackage.hashCode()) + " " + oldPackage.eResource().getURI() + " " + oldPackage.getName());
+		//		}
+		//		for (org.eclipse.ocl.pivot.Package newPackage : newPackages) {
+		//			System.out.println("New package @" + Integer.toHexString(newPackage.hashCode()) + " " + newPackage.eResource().getURI() + " " + newPackage.getName());
+		//		}
 		obsoletePackages.removeAll(newPackages);
 		for (org.eclipse.ocl.pivot.Package obsoletePackage : obsoletePackages) {
 			EObject eContainer = obsoletePackage.eContainer();
@@ -1393,7 +1393,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				EReference eContainmentFeature = obsoletePackage.eContainmentFeature();
 				if (eContainmentFeature.isMany()) {
 					List<?> siblings = (List<?>) eContainer.eGet(eContainmentFeature);
-//					System.out.println("Kill package @" + Integer.toHexString(obsoletePackage.hashCode()) + " " + obsoletePackage.eResource().getURI() + " " + obsoletePackage.getName());
+					//					System.out.println("Kill package @" + Integer.toHexString(obsoletePackage.hashCode()) + " " + obsoletePackage.eResource().getURI() + " " + obsoletePackage.getName());
 					siblings.remove(obsoletePackage);
 				}
 				else {

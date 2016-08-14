@@ -76,15 +76,15 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 			return null;
 		}
 		TypedRefCS typeRef = context.visitReference(TypedRefCS.class, type, null);
-//		int upper = object.getUpper().intValue();
-//		if (upper == 1) {
-			return typeRef;
-//		}
-//		int lower = object.getLower().intValue();
-//		CollectionTypeCS collectionTypeCS = EssentialOCLCSFactory.eINSTANCE.createCollectionTypeCS();
-//		collectionTypeCS.setOwnedType(typeRef);
-//		collectionTypeCS.setName(ElementUtil.getCollectionName(object.isOrdered(), object.isUnique()));
-//		return collectionTypeCS;
+		//		int upper = object.getUpper().intValue();
+		//		if (upper == 1) {
+		return typeRef;
+		//		}
+		//		int lower = object.getLower().intValue();
+		//		CollectionTypeCS collectionTypeCS = EssentialOCLCSFactory.eINSTANCE.createCollectionTypeCS();
+		//		collectionTypeCS.setOwnedType(typeRef);
+		//		collectionTypeCS.setName(ElementUtil.getCollectionName(object.isOrdered(), object.isUnique()));
+		//		return collectionTypeCS;
 	}
 
 	protected void gatherPackages(@NonNull List<org.eclipse.ocl.pivot.Package> allPackages, @NonNull List<org.eclipse.ocl.pivot.Package> nestedPackages) {
@@ -151,7 +151,7 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 			//
 			PivotMetamodelManager metamodelManager = context.getMetamodelManager();
 			PrettyPrintOptions.Global prettyPrintOptions = PrettyPrinter.createOptions(null); //metamodelManager.getPrimaryElement(namespace));
-			@SuppressWarnings("null")@NonNull ArrayList<String> newArrayList = Lists.newArrayList("body", "context", "def", "endpackage", "inv", "package", "post", "inv");
+			@NonNull List<@NonNull String> newArrayList = Lists.newArrayList("body", "context", "def", "endpackage", "inv", "package", "post", "inv");
 			prettyPrintOptions.addReservedNames(newArrayList);	// FIXME use grammar
 			prettyPrintOptions.setEnvironmentFactory(metamodelManager.getEnvironmentFactory());
 			prettyPrintOptions.setLinelength(80);
@@ -169,7 +169,7 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 				}
 			}
 			// FIXME BUG 419132 Need to do this in a deferred pass
-			String expr = PrettyPrinter.print(specification, prettyPrintOptions);		
+			String expr = PrettyPrinter.print(specification, prettyPrintOptions);
 			csSpec.setExprString("\t" + expr.trim().replaceAll("\\r", "").replaceAll("\\n", "\n\t\t"));
 		}
 		else {
@@ -206,7 +206,7 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 		org.eclipse.ocl.pivot.Class savedScope = context.setScope(modelType);
 		OperationContextDeclCS csContext = context.refreshElement(OperationContextDeclCS.class, CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS, object);
 		refreshPathNamedElement(csContext, object, modelPackage);
-//		csContext.getNamespace().add(owningType);
+		//		csContext.getNamespace().add(owningType);
 		csContext.setOwnedType(convertTypeRef(object));
 		org.eclipse.ocl.pivot.Package owningPackage = object.getOwningClass().getOwningPackage();
 		if (owningPackage != null) {
@@ -248,7 +248,7 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 		}
 		if (contexts.size() > 0) {
 			PackageDeclarationCS csPackage = context.refreshElement(PackageDeclarationCS.class, CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS, object);
-//			context.refreshList(csPackage.getOwnedType(), context.visitDeclarations(ClassifierCS.class, object.getOwnedType(), null));
+			//			context.refreshList(csPackage.getOwnedType(), context.visitDeclarations(ClassifierCS.class, object.getOwnedType(), null));
 			refreshPathNamedElement(csPackage, object, PivotUtil.getContainingNamespace(object));
 			importPackage(object);
 			context.refreshList(csPackage.getOwnedContexts(), contexts);
@@ -259,7 +259,7 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 
 	@Override
 	public ElementCS visitParameter(@NonNull Parameter object) {
-//		VariableCS csElement = context.refreshNamedElement(VariableCS.class, EssentialOCLCSPackage.Literals.VARIABLE_CS, object);
+		//		VariableCS csElement = context.refreshNamedElement(VariableCS.class, EssentialOCLCSPackage.Literals.VARIABLE_CS, object);
 		ParameterCS csElement = context.refreshNamedElement(ParameterCS.class, BaseCSPackage.Literals.PARAMETER_CS, object);
 		csElement.setOwnedType(convertTypeRef(object));
 		return csElement;
@@ -276,11 +276,11 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 		PropertyContextDeclCS csContext = context.refreshElement(PropertyContextDeclCS.class, CompleteOCLCSPackage.Literals.PROPERTY_CONTEXT_DECL_CS, object);
 		if (modelPackage != null) {
 			refreshPathNamedElement(csContext, object, modelPackage);
-	//		csContext.getNamespace().add(owningType);
+			//		csContext.getNamespace().add(owningType);
 			csContext.setOwnedType(convertTypeRef(object));
 			importPackage(modelPackage);
 			// FIXME derivationInvariants here rather than in Classifier
-//			context.refreshList(csContext.getRules(), context.visitDeclarations(ContextConstraintCS.class, ownedRule, null));
+			//			context.refreshList(csContext.getRules(), context.visitDeclarations(ContextConstraintCS.class, ownedRule, null));
 			context.refreshList(csContext.getOwnedDefaultExpressions(), context.visitDeclarationAsList(ExpSpecificationCS.class, object.getOwnedExpression()));
 			context.setScope(savedScope);
 		}
@@ -310,7 +310,7 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 		List<org.eclipse.ocl.pivot.Package> allPackages = new ArrayList<org.eclipse.ocl.pivot.Package>();
 		List<Package> nestedPackages = object.getOwnedPackages();
 		assert nestedPackages != null;
-		gatherPackages(allPackages, nestedPackages); 
+		gatherPackages(allPackages, nestedPackages);
 		context.refreshList(csDocument.getOwnedPackages(), context.visitDeclarations(PackageDeclarationCS.class, allPackages, null));
 		csElement = csDocument;
 		return csElement;

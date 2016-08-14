@@ -40,7 +40,7 @@ import com.google.common.collect.Lists;
 
 /**
  * PivotResourceValidator extends CS Resource validation to the referenced Pivot resources and attempts
- * to indicate Pivot validation problems in the appropriate CS context. 
+ * to indicate Pivot validation problems in the appropriate CS context.
  */
 public class PivotResourceValidator extends ResourceValidatorImpl
 {
@@ -78,60 +78,60 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 	public static final String HAS_SYNTAX_ERRORS = "has_syntax_errors";
 
 	protected ValidationDiagnostic createDefaultDiagnostic(Diagnostician diagnostician, EObject pivotObject) {
-//		Object objectLabel = diagnostician.getObjectLabel(pivotObject);
-//		return new ValidationDiagnostic(EcorePlugin.INSTANCE.getString("_UI_DiagnosticRoot_diagnostic",
-//			new Object[] { objectLabel }), new Object[] { pivotObject });
+		//		Object objectLabel = diagnostician.getObjectLabel(pivotObject);
+		//		return new ValidationDiagnostic(EcorePlugin.INSTANCE.getString("_UI_DiagnosticRoot_diagnostic",
+		//			new Object[] { objectLabel }), new Object[] { pivotObject });
 		return new ValidationDiagnostic();
 	}
 
 	protected void issueFromDiagnostics(IAcceptor<Issue> acceptor, ValidationDiagnostic diagnostic) {
 		for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
-//			System.out.println(" issueFromEValidatorDiagnostic " + childDiagnostic);
+			//			System.out.println(" issueFromEValidatorDiagnostic " + childDiagnostic);
 			issueFromEValidatorDiagnostic(childDiagnostic, acceptor);
 		}
 	}
 
 	protected void performValidation(IAcceptor<Issue> acceptor, Resource asResource, CancelIndicator monitor) {
-//		System.out.println(Thread.currentThread().getName() + " performValidation " + NameUtil.debugSimpleName(asResource));
+		//		System.out.println(Thread.currentThread().getName() + " performValidation " + NameUtil.debugSimpleName(asResource));
 		Diagnostician diagnostician = getDiagnostician();
 		Map<Object, Object> context = LabelUtil.createDefaultContext(diagnostician);
-//		List<Resource> resources = asResource.getResourceSet().getResources();
-//		for (int i = 0; i < resources.size(); i++) {
-			Resource pResource = asResource; //resources.get(i);
-//			if (PivotConstants.ORPHANAGE_URI.equals(String.valueOf(pResource.getURI()))) {
-//				continue;		// GC may not have eliminated all the dangling references
-//			}
-//			System.out.println(" performValidation " + pResource.getURI() + " on " + Thread.currentThread().getName());
-			removeValidationDiagnostics(pResource.getErrors());
-			removeValidationDiagnostics(pResource.getWarnings());
-			List<EObject> contents = pResource.getContents();
-			for (int j = 0; j < contents.size(); j++) {		// Beware concurrent unload
-				try {
-					if (monitor.isCanceled())
-						return;
-					EObject pObject = contents.get(j);
-					ValidationDiagnostic diagnostic = createDefaultDiagnostic(diagnostician, pObject);
-				    diagnostician.validate(pObject, diagnostic, context);
-					if (!diagnostic.getChildren().isEmpty()) {
-						if (diagnostic.getSeverity() == Diagnostic.ERROR) {
-							pResource.getErrors().add(diagnostic);
-						}
-						else if (diagnostic.getSeverity() == Diagnostic.WARNING) {
-							pResource.getWarnings().add(diagnostic);
-						}
-						issueFromDiagnostics(acceptor, diagnostic);
+		//		List<Resource> resources = asResource.getResourceSet().getResources();
+		//		for (int i = 0; i < resources.size(); i++) {
+		Resource pResource = asResource; //resources.get(i);
+		//			if (PivotConstants.ORPHANAGE_URI.equals(String.valueOf(pResource.getURI()))) {
+		//				continue;		// GC may not have eliminated all the dangling references
+		//			}
+		//			System.out.println(" performValidation " + pResource.getURI() + " on " + Thread.currentThread().getName());
+		removeValidationDiagnostics(pResource.getErrors());
+		removeValidationDiagnostics(pResource.getWarnings());
+		List<EObject> contents = pResource.getContents();
+		for (int j = 0; j < contents.size(); j++) {		// Beware concurrent unload
+			try {
+				if (monitor.isCanceled())
+					return;
+				EObject pObject = contents.get(j);
+				ValidationDiagnostic diagnostic = createDefaultDiagnostic(diagnostician, pObject);
+				diagnostician.validate(pObject, diagnostic, context);
+				if (!diagnostic.getChildren().isEmpty()) {
+					if (diagnostic.getSeverity() == Diagnostic.ERROR) {
+						pResource.getErrors().add(diagnostic);
 					}
-				} catch (RuntimeException e) {
-					if (!monitor.isCanceled()) {
-						log.error(e.getMessage(), e);
+					else if (diagnostic.getSeverity() == Diagnostic.WARNING) {
+						pResource.getWarnings().add(diagnostic);
 					}
+					issueFromDiagnostics(acceptor, diagnostic);
+				}
+			} catch (RuntimeException e) {
+				if (!monitor.isCanceled()) {
+					log.error(e.getMessage(), e);
 				}
 			}
-//		}
+		}
+		//		}
 	}
 
 	protected void removeValidationDiagnostics(List<Resource.Diagnostic> diagnostics) {
-//		System.out.println(Thread.currentThread().getName() + " removeValidationDiagnostics ");
+		//		System.out.println(Thread.currentThread().getName() + " removeValidationDiagnostics ");
 		for (int i = diagnostics.size()-1; i >= 0; i--) {
 			Resource.Diagnostic diagnostic = diagnostics.get(i);
 			if (diagnostic instanceof ValidationDiagnostic) {
@@ -140,7 +140,7 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 		}
 	}
 
-/*	protected void reuseValidation(IAcceptor<Issue> acceptor, Resource asResource, CancelIndicator monitor) {
+	/*	protected void reuseValidation(IAcceptor<Issue> acceptor, Resource asResource, CancelIndicator monitor) {
 //		System.out.println(Thread.currentThread().getName() + " reuseValidation " + NameUtil.debugSimpleName(asResource));
 		ResourceSet resourceSet = asResource.getResourceSet();
 		if (resourceSet != null) {
@@ -163,15 +163,15 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 	// FIXME BUG 389675 Remove duplication with respect to inherited method
 	@Override
 	public List<Issue> validate(Resource resource, final CheckMode mode, CancelIndicator mon) {
-//		System.out.println(Thread.currentThread().getName() + " validate start " + NameUtil.debugSimpleName(resource));
-//		System.out.println(new Date() + " Validate " + mode + " : " + csResource.getURI() + " on " + Thread.currentThread().getName());
+		//		System.out.println(Thread.currentThread().getName() + " validate start " + NameUtil.debugSimpleName(resource));
+		//		System.out.println(new Date() + " Validate " + mode + " : " + csResource.getURI() + " on " + Thread.currentThread().getName());
 		final CancelIndicator monitor = mon == null ? CancelIndicator.NullImpl : mon;
 		resolveProxies(resource, monitor);
 		if (monitor.isCanceled())
 			return Collections.emptyList();
 
 		final List<Issue> result = Lists.newArrayListWithExpectedSize(resource.getErrors().size()
-				+ resource.getWarnings().size());
+			+ resource.getWarnings().size());
 		try {
 			IAcceptor<Issue> acceptor = createAcceptor(result);
 			// Syntactical and linking errors
@@ -205,19 +205,19 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 					Map<Object, Object> options = LabelUtil.createDefaultContext(diagnostician);
 					options.put(CheckMode.KEY, mode);
 					options.put(CancelableDiagnostician.CANCEL_INDICATOR, monitor);
-					// disable concrete syntax validation, since a semantic model that has been parsed 
+					// disable concrete syntax validation, since a semantic model that has been parsed
 					// from the concrete syntax always complies with it - otherwise there are parse errors.
 					options.put(ConcreteSyntaxEValidator.DISABLE_CONCRETE_SYNTAX_EVALIDATOR, Boolean.TRUE);
 					// see EObjectValidator.getRootEValidator(Map<Object, Object>)
 					boolean hasSyntaxError = false;
 					if (resource instanceof XtextResource) {
-						options.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, ((XtextResource) resource).getLanguageName());						
+						options.put(AbstractInjectableValidator.CURRENT_LANGUAGE_NAME, ((XtextResource) resource).getLanguageName());
 						if (resource instanceof BaseCSResource) {
 							BaseCSResource csResource = (BaseCSResource)resource;
-							@SuppressWarnings("null") @NonNull List<Resource.Diagnostic> errors = csResource.getErrors();
+							@NonNull List<Resource.Diagnostic> errors = csResource.getErrors();
 							hasSyntaxError = ElementUtil.hasSyntaxError(errors);
 							if (hasSyntaxError) {
-								options.put(PivotResourceValidator.HAS_SYNTAX_ERRORS, Boolean.TRUE);						
+								options.put(PivotResourceValidator.HAS_SYNTAX_ERRORS, Boolean.TRUE);
 							}
 						}
 					}
@@ -248,15 +248,15 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 			if (cs2as != null) {
 				Resource asResource = cs2as.getASResource();
 				IAcceptor<Issue> acceptor = createAcceptor(result);
-//				if (mode.shouldCheck(CheckType.EXPENSIVE)) {
-					performValidation(acceptor, asResource, monitor);
-//				}
-//				else {
-//					reuseValidation(acceptor, asResource, monitor);
-//				}
+				//				if (mode.shouldCheck(CheckType.EXPENSIVE)) {
+				performValidation(acceptor, asResource, monitor);
+				//				}
+				//				else {
+				//					reuseValidation(acceptor, asResource, monitor);
+				//				}
 			}
 		}
-//		System.out.println(Thread.currentThread().getName() + " validate end " + NameUtil.debugSimpleName(resource));
+		//		System.out.println(Thread.currentThread().getName() + " validate end " + NameUtil.debugSimpleName(resource));
 		return result;
 	}
 

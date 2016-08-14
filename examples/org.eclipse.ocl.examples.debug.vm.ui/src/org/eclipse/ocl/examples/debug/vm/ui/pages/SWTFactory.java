@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Text;
 public class SWTFactory {
 	/**
 	 * Creates a new text widget
-	 * 
+	 *
 	 * @param parent
 	 *            the parent composite to add this text widget to
 	 * @param style
@@ -53,13 +53,13 @@ public class SWTFactory {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = hspan;
 		t.setLayoutData(gd);
-		t.setText(text);
+		t.setText(String.valueOf(text));
 		return t;
 	}
 
 	/**
 	 * Creates a Composite widget
-	 * 
+	 *
 	 * @param parent
 	 *            the parent composite to add this composite to
 	 * @param columns
@@ -95,7 +95,7 @@ public class SWTFactory {
 
 	/**
 	 * Creates a check box button using the parents' font
-	 * 
+	 *
 	 * @param parent
 	 *            the parent to add the button to
 	 * @param label
@@ -128,7 +128,7 @@ public class SWTFactory {
 
 	/**
 	 * Creates a new label widget
-	 * 
+	 *
 	 * @param parent
 	 *            the parent composite to add this label widget to
 	 * @param text
@@ -149,14 +149,14 @@ public class SWTFactory {
 
 	/**
 	 * Creates and returns a new radio button with the given label.
-	 * 
+	 *
 	 * @param parent
 	 *            parent control
 	 * @param label
 	 *            button label or <code>null</code>
 	 * @param hspan
 	 *            the number of columns to span in the parent composite
-	 * 
+	 *
 	 * @return a new radio button
 	 */
 	public static Button createRadioButton(Composite parent, String label,
@@ -175,7 +175,7 @@ public class SWTFactory {
 
 	/**
 	 * Creates a Group widget
-	 * 
+	 *
 	 * @param parent
 	 *            the parent composite to add this group to
 	 * @param text
@@ -207,7 +207,7 @@ public class SWTFactory {
 	 * Sets width and height hint for the button control. <b>Note:</b> This is a
 	 * NOP if the button's layout data is not an instance of
 	 * <code>GridData</code>.
-	 * 
+	 *
 	 * @param button
 	 *            button for which to set the dimension hint
 	 */

@@ -34,9 +34,9 @@ public class VMBreakpointManager
 	protected final @NonNull VMVirtualMachine vmVirtualMachine;
 	private final @NonNull UnitManager fUnitManager;
 	private final @NonNull Map<EObject, VMBreakpoint> fElement2Breakpoint = new HashMap<EObject, VMBreakpoint>();
-	
-    // FIXME - Simulates an fBreakpointID that does not come from the VM client
-    // based on the knowledge that marker long fBreakpointID is used (positive number)
+
+	// FIXME - Simulates an fBreakpointID that does not come from the VM client
+	// based on the knowledge that marker long fBreakpointID is used (positive number)
 	// this one will be negative long
 	private long fPrivateBreakpointID = 0;
 
@@ -51,111 +51,111 @@ public class VMBreakpointManager
 
 	public @NonNull VMDebugCore getDebugCore() {
 		return vmVirtualMachine.getDebugCore();
-	}    
-			
+	}
+
 	public @NonNull UnitManager getUnitManager() {
 		return fUnitManager;
 	}
-	
+
 	public synchronized @NonNull List<VMBreakpoint> getBreakpoints(Element e) {
 		VMBreakpoint breakpoint = fElement2Breakpoint.get(e);
 		return (breakpoint != null) ? Collections.singletonList(breakpoint) : Collections.<VMBreakpoint>emptyList();
 	}
-	
-	
+
+
 	public synchronized @Nullable VMBreakpoint createBreakpoint(VMNewBreakpointData data) {
-    	// FIXME - raise CoreEXxc... for invalid uris
-    	URI uri = URI.createURI(data.getTargetURI());
-    	
-    	// FIXME - a temp hack to get correct source URI when running a separate VM
-    	if(uri.isPlatformResource() && isPlatformDeployed()) {
-    		uri = URI.createPlatformPluginURI(uri.toPlatformString(true), true);
-    	} 
+		// FIXME - raise CoreEXxc... for invalid uris
+		URI uri = URI.createURI(data.getTargetURI());
 
-    	if(fUnitManager.getCompiledModule(uri) == null) {
-    		// FIXME - unify on using encoded form, only UI should receive decoded
-    		uri = URI.createURI(URI.decode(uri.toString()));
-    	}
-    	
-    	int line = data.getLine();
-    	Element targetElement = getBreakpointableElement(uri, line);
-        if(targetElement == null) {
-            return null;
-        }
+		// FIXME - a temp hack to get correct source URI when running a separate VM
+		if (uri.isPlatformResource() && isPlatformDeployed()) {
+			uri = URI.createPlatformPluginURI(uri.toPlatformString(true), true);
+		}
 
-        VMBreakpoint vmBreakpoint = new VMBreakpoint(targetElement, data, false);
-        fElement2Breakpoint.put(targetElement, vmBreakpoint);
-        return vmBreakpoint;
-    }
+		if (fUnitManager.getCompiledModule(uri) == null) {
+			// FIXME - unify on using encoded form, only UI should receive decoded
+			uri = URI.createURI(URI.decode(uri.toString()));
+		}
 
-    
-    public synchronized @NonNull VMBreakpoint createVMPrivateBreakpoint(URI unitURI, @NonNull Element element, int line, boolean isTemporary) throws CoreException {
-    	@SuppressWarnings("null")@NonNull String string = unitURI.toString();
-		VMBreakpoint breakpoint = new VMBreakpoint(element, --fPrivateBreakpointID, line, string, isTemporary);        
-        fElement2Breakpoint.put(element, breakpoint);
-        return breakpoint;
-    }
+		int line = data.getLine();
+		Element targetElement = getBreakpointableElement(uri, line);
+		if(targetElement == null) {
+			return null;
+		}
+
+		VMBreakpoint vmBreakpoint = new VMBreakpoint(targetElement, data, false);
+		fElement2Breakpoint.put(targetElement, vmBreakpoint);
+		return vmBreakpoint;
+	}
+
+
+	public synchronized @NonNull VMBreakpoint createVMPrivateBreakpoint(URI unitURI, @NonNull Element element, int line, boolean isTemporary) throws CoreException {
+		@SuppressWarnings("null")@NonNull String string = unitURI.toString();
+		VMBreakpoint breakpoint = new VMBreakpoint(element, --fPrivateBreakpointID, line, string, isTemporary);
+		fElement2Breakpoint.put(element, breakpoint);
+		return breakpoint;
+	}
 
 	public synchronized VMBreakpoint[] getAllBreakpoints() {
 		return fElement2Breakpoint.values().toArray(new VMBreakpoint[fElement2Breakpoint.size()]);
 	}
-    
+
 	public synchronized Element getBreakpointableElement(@NonNull URI targetURI, int lineNumber) {
-        LineNumberProvider lineNumberProvider = fUnitManager.getLineNumberProvider(targetURI);
-        if (lineNumberProvider == null) {
-        	return null;
-        }
+		LineNumberProvider lineNumberProvider = fUnitManager.getLineNumberProvider(targetURI);
+		if (lineNumberProvider == null) {
+			return null;
+		}
 		CompiledUnit unit = fUnitManager.getCompiledModule(targetURI);
-        if (unit == null) {
-        	return null;
-        }
-        List<Element> elements = vmVirtualMachine.getRunnerFactory().getValidBreakpointLocator().getBreakpointableElementsForLine(unit, lineNumberProvider, lineNumber);
-        if (elements.isEmpty()) {
-            return null;
-        }
-        
-        return elements.get(0);
-    }
-	
+		if (unit == null) {
+			return null;
+		}
+		List<Element> elements = vmVirtualMachine.getRunnerFactory().getValidBreakpointLocator().getBreakpointableElementsForLine(unit, lineNumberProvider, lineNumber);
+		if (elements.isEmpty()) {
+			return null;
+		}
 
-    public boolean removeBreakpoint(@NonNull VMBreakpoint breakpoint) {
-    	return removeBreakpoint(breakpoint.getID());
-    }
-		
-    public synchronized boolean removeBreakpoint(long breakpointID) {
-        for(Map.Entry<EObject, VMBreakpoint> entry : fElement2Breakpoint.entrySet()) {
-            VMBreakpoint next = entry.getValue();
-            if(breakpointID == next.getID()) {
-                fElement2Breakpoint.remove(entry.getKey());
-                return true;
-            }
-        }
-        return false;
-    }
+		return elements.get(0);
+	}
 
- 
-    public synchronized boolean changeBreakpoint(long breakpointID, @Nullable VMBreakpointData data) {
-    	VMNewBreakpointData newBreakpointData = null;
-    	
-        for(Map.Entry<EObject, VMBreakpoint> entry : fElement2Breakpoint.entrySet()) {
-            VMBreakpoint next = entry.getValue();
-            if(breakpointID == next.getID()) {
-            	fElement2Breakpoint.remove(entry.getKey());
-            	if (data != null) {
-            		newBreakpointData = new VMNewBreakpointData(data, breakpointID, next.getLineNumber(), next.getUri());
-            	}
-            	break;
-            }
-        }	
-        
-        if(newBreakpointData != null) {
-        	createBreakpoint(newBreakpointData);
-        	return true;
-        }
-        
-        return false;
-    }
-    
+
+	public boolean removeBreakpoint(@NonNull VMBreakpoint breakpoint) {
+		return removeBreakpoint(breakpoint.getID());
+	}
+
+	public synchronized boolean removeBreakpoint(long breakpointID) {
+		for(Map.Entry<EObject, VMBreakpoint> entry : fElement2Breakpoint.entrySet()) {
+			VMBreakpoint next = entry.getValue();
+			if(breakpointID == next.getID()) {
+				fElement2Breakpoint.remove(entry.getKey());
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	public synchronized boolean changeBreakpoint(long breakpointID, @Nullable VMBreakpointData data) {
+		VMNewBreakpointData newBreakpointData = null;
+
+		for(Map.Entry<EObject, VMBreakpoint> entry : fElement2Breakpoint.entrySet()) {
+			VMBreakpoint next = entry.getValue();
+			if(breakpointID == next.getID()) {
+				fElement2Breakpoint.remove(entry.getKey());
+				if (data != null) {
+					newBreakpointData = new VMNewBreakpointData(data, breakpointID, next.getLineNumber(), next.getUri());
+				}
+				break;
+			}
+		}
+
+		if(newBreakpointData != null) {
+			createBreakpoint(newBreakpointData);
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean isPlatformDeployed() {
 		CompiledUnit mainUnit = getUnitManager().getMainUnit();
 		return mainUnit.getURI().isPlatformPlugin();

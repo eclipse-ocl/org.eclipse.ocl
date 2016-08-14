@@ -86,9 +86,9 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 			return null;
 		}
 	}
-	
+
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	
+
 	public BaseCSPostOrderVisitor(@NonNull CS2ASConversion context) {
 		super(context);
 		this.metamodelManager= context.getMetamodelManager();
@@ -103,14 +103,14 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 	}
 
 	protected <CST extends ModelElementCS, P extends NamedElement> BasicContinuation<?> refreshList(@NonNull NamedElement pivotParent, @NonNull EStructuralFeature pivotFeature,
-		final @NonNull Class<P> pivotClass, final @NonNull List<P> pivotElements, @NonNull List<CST> csElements) {
+			final @NonNull Class<P> pivotClass, final @NonNull List<P> pivotElements, @NonNull List<CST> csElements) {
 		if (csElements.isEmpty()) {
 			context.refreshPivotList(pivotClass, pivotElements, csElements);
 			return null;
 		}
 		else {
 			return new ListCompletion<CST, P>(context, pivotParent, pivotFeature, csElements,
-				new Dependency[]{new PivotDependencies(csElements)}, pivotClass, pivotElements);
+					new Dependency[]{new PivotDependencies(csElements)}, pivotClass, pivotElements);
 		}
 	}
 
@@ -164,7 +164,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 		Detail pivotElement = PivotUtil.getPivot(Detail.class, csDetail);
 		if (pivotElement != null) {
 			context.handleVisitNamedElement(csDetail, pivotElement);
-//			refreshPivotList(Detail.class, pivotElement.getOwnedDetail(), csDocumentation.getOwnedDetail());
+			//			refreshPivotList(Detail.class, pivotElement.getOwnedDetail(), csDocumentation.getOwnedDetail());
 			List<String> newValues = csDetail.getValues();
 			List<String> pivotValues = pivotElement.getValues();
 			pivotValues.clear();
@@ -235,7 +235,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 	public Continuation<?> visitOperationCS(@NonNull OperationCS csElement) {
 		Operation pivotOperation = PivotUtil.getPivot(Operation.class, csElement);
 		if (pivotOperation != null) {
-			context.refreshList(Type.class, ClassUtil.nullFree(pivotOperation.getRaisedExceptions()), csElement.getOwnedExceptions());
+			context.refreshList(Type.class, ClassUtil.<Type>nullFree(pivotOperation.getRaisedExceptions()), csElement.getOwnedExceptions());
 			TypedRefCS ownedType = csElement.getOwnedType();
 			boolean isTypeof = false;
 			if (ownedType  instanceof TypedTypeRefCS) {
@@ -254,7 +254,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 		}
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable
 	Continuation<?> visitPackageOwnerCS(@NonNull PackageOwnerCS object) {
@@ -287,8 +287,8 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 			}
 			pivotElement.setOpposite(pivotOpposite);
 			context.refreshList(pivotElement.getKeys(), csReference.getReferredKeys());
-//			BasicContinuation<?> continuation = visitTypedElementCS(csReference);
-//			assert continuation == null;
+			//			BasicContinuation<?> continuation = visitTypedElementCS(csReference);
+			//			assert continuation == null;
 			if (pivotOpposite == null) {
 				metamodelManager.installPropertyDeclaration(pivotElement);
 			}
@@ -315,7 +315,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 	public Continuation<?> visitTemplateParameterSubstitutionCS(@NonNull TemplateParameterSubstitutionCS csTemplateParameterSubstitution) {
 		return null;
 	}
-	
+
 	@Override
 	public Continuation<?> visitTemplateSignatureCS(@NonNull TemplateSignatureCS csTemplateSignature) {
 		return null;

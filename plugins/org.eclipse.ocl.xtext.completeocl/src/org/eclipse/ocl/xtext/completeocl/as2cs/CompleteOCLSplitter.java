@@ -44,7 +44,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
- * 
+ *
  */
 public class CompleteOCLSplitter
 {
@@ -78,7 +78,7 @@ public class CompleteOCLSplitter
 		URI uri = ClassUtil.nonNullState(asResource.getURI());
 		URI oclURI = PivotUtilInternal.getNonASURI(uri).appendFileExtension("ocl");
 		URI oclASuri = PivotUtilInternal.getASURI(oclURI);	// xxx.ocl.ocl.oclas
-		ASResource oclResource = (ASResource) asResource.getResourceSet().createResource(oclASuri, ASResource.COMPLETE_OCL_CONTENT_TYPE);	
+		ASResource oclResource = (ASResource) asResource.getResourceSet().createResource(oclASuri, ASResource.COMPLETE_OCL_CONTENT_TYPE);
 		if (oclResource != null) {
 			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			Separator separator = new Separator(metamodelManager, oclResource);
@@ -92,7 +92,7 @@ public class CompleteOCLSplitter
 		}
 		return oclResource;
 	}
-	
+
 	public static class Separator extends PivotSwitch<@Nullable EObject>
 	{
 		protected final @NonNull PivotMetamodelManager metamodelManager;
@@ -154,7 +154,7 @@ public class CompleteOCLSplitter
 				separateObject = PivotFactory.eINSTANCE.createModel();
 				separateObject.setExternalURI(separateResource.getURI().toString());
 				separateSiblings.add(separateObject);
-//				metamodelManager.addRoot(separateObject);
+				//				metamodelManager.addRoot(separateObject);
 			}
 			return separateObject;
 		}
@@ -172,10 +172,10 @@ public class CompleteOCLSplitter
 					if (eReference == PivotPackage.Literals.OPERATION__OWNED_PARAMETERS) {
 						super.copyContainment(eReference, eObject, copyEObject);
 					}
-				}				
+				}
 			};
 			Operation clone = (Operation) copier.copy(object);
-		    copier.copyReferences();
+			copier.copyReferences();
 			separateSiblings.add(clone);
 			return clone;
 		}
@@ -198,7 +198,7 @@ public class CompleteOCLSplitter
 			else {
 				separateSiblings = ((org.eclipse.ocl.pivot.Package)separateParent).getOwnedPackages();
 			}
-			org.eclipse.ocl.pivot.Package separateObject = NameUtil.getNameable(ClassUtil.nullFree(separateSiblings), name);
+			org.eclipse.ocl.pivot.Package separateObject = NameUtil.getNameable(ClassUtil.<org.eclipse.ocl.pivot.Package>nullFree(separateSiblings), name);
 			if (separateObject == null) {
 				separateObject = (org.eclipse.ocl.pivot.Package) object.eClass().getEPackage().getEFactoryInstance().create(object.eClass());
 				separateObject.setName(name);
@@ -222,18 +222,18 @@ public class CompleteOCLSplitter
 				}
 			};
 			Property clone = (Property) copier.copy(object);
-		    copier.copyReferences();
+			copier.copyReferences();
 			separateSiblings.add(clone);
 			return clone;
 		}
 
-//		@Override
-//		public EObject caseType(Type object) {
-//			org.eclipse.ocl.pivot.Package parent = object.getPackage();
-//			org.eclipse.ocl.pivot.Package separateParent = getSeparate(parent);
-//			List<org.eclipse.ocl.pivot.Class> separateSiblings = separateParent.getOwnedType();
-//			return cloneNamedElement(separateSiblings, object);
-//		}
+		//		@Override
+		//		public EObject caseType(Type object) {
+		//			org.eclipse.ocl.pivot.Package parent = object.getPackage();
+		//			org.eclipse.ocl.pivot.Package separateParent = getSeparate(parent);
+		//			List<org.eclipse.ocl.pivot.Class> separateSiblings = separateParent.getOwnedType();
+		//			return cloneNamedElement(separateSiblings, object);
+		//		}
 
 		protected <@NonNull T extends NamedElement> T cloneNamedElement(List<T> separateSiblings, T object) {
 			String name = object.getName();
@@ -246,7 +246,7 @@ public class CompleteOCLSplitter
 			}
 			return separateObject;
 		}
-		
+
 		@Override
 		public @NonNull EObject doSwitch(EObject eObject)
 		{
@@ -259,7 +259,7 @@ public class CompleteOCLSplitter
 			for (EObject element : elements)
 				if ((element instanceof NamedElement) && ClassUtil.safeEquals(name, ((NamedElement)element).getName()))
 					return (NamedElement)element;
-			return null;				
+			return null;
 		}
 
 		protected <@NonNull T extends NamedElement> T getSeparate(T element) {
@@ -271,7 +271,7 @@ public class CompleteOCLSplitter
 			@SuppressWarnings("unchecked")
 			T castSeparate = (T) separate;
 			return castSeparate;
-		}		
+		}
 
 		protected org.eclipse.ocl.pivot.Package getSeparatePackage(org.eclipse.ocl.pivot.@NonNull Package element) {
 			org.eclipse.ocl.pivot.Package separate = (org.eclipse.ocl.pivot.Package) map.get(element);
