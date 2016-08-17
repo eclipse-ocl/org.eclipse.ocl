@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -56,15 +56,18 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	{
 		return PivotPackage.Literals.ORPHAN_COMPLETE_PACKAGE;
 	}
-	
+
 	private class OrphanCompleteClassImpl extends CompleteClassImpl
 	{
 		@Override
 		public boolean conformsTo(final @NonNull CompleteClass thatCompleteClass) {
 			final org.eclipse.ocl.pivot.@NonNull Class thisClass = getPrimaryClass();
 			final org.eclipse.ocl.pivot.@NonNull Class thatClass = thatCompleteClass.getPrimaryClass();
-			CompleteEnvironmentImpl completeEnvironmentImpl = new CompleteEnvironmentImpl()		// FIXME avoid this horrible fudge
-			{
+			CompleteEnvironmentImpl completeEnvironmentImpl = new CompleteEnvironmentImpl()	{	// FIXME avoid this horrible fudge
+				{
+					this.ownedCompleteModel = getCompleteModel();
+				}
+
 				@Override
 				public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type asType) {
 					if (asType == thisClass) {
@@ -74,20 +77,20 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 						return (@NonNull CompleteClassInternal) thatCompleteClass;
 					}
 					return super.getCompleteClass(asType);
-				} 
+				}
 			};
 			return completeEnvironmentImpl.conformsTo(thisClass, TemplateParameterSubstitutions.EMPTY, thatClass, TemplateParameterSubstitutions.EMPTY);
 		}
-		
+
 		@Override
 		public @NonNull CompletePackageInternal getOwningCompletePackage() {
 			return OrphanCompletePackageImpl.this;
 		}
 	}
-	
+
 	private @NonNull Map<org.eclipse.ocl.pivot.Class, WeakReference<OrphanCompleteClassImpl>> class2orphanCompleteClass
-		= new WeakHashMap<org.eclipse.ocl.pivot.Class, WeakReference<OrphanCompleteClassImpl>>();	
-	
+	= new WeakHashMap<org.eclipse.ocl.pivot.Class, WeakReference<OrphanCompleteClassImpl>>();
+
 	protected OrphanCompletePackageImpl()
 	{
 		super();
@@ -119,7 +122,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		}
 		boolean isUnspecialized = elementType == templateParameters.get(0);
 		if (isUnspecialized) {
-			return containerType;	
+			return containerType;
 		}
 		org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal completeClass = getCompleteModel().getCompleteClass(containerType);
 		@SuppressWarnings("unchecked")
