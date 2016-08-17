@@ -138,7 +138,7 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 	@Override
 	public Object visitOperation(@NonNull Operation object) {
 		if (context.showNames()) {
-			context.appendParent(context.getScope(), object, "::");
+			context.appendParent(context.getScope(), object, object.isIsValidating() ? "[?]::" : "::");
 			context.appendName(object);
 		}
 		else {
