@@ -19,6 +19,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.internal.context.ClassContext;
+import org.eclipse.ocl.pivot.internal.context.OperationContext;
+import org.eclipse.ocl.pivot.internal.context.PropertyContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
@@ -26,7 +31,9 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.HTMLBuffer;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.OCLHelper;
+import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.markupcs.BulletElement;
 import org.eclipse.ocl.xtext.markupcs.CompoundElement;
 import org.eclipse.ocl.xtext.markupcs.FigureElement;
@@ -254,23 +261,38 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 	}
 
 	protected @NonNull ExpressionInOCL createQuery(@NonNull String oclString) throws ParserException {
-		org.eclipse.ocl.pivot.Class pivotType = null;
+		EObject parserContext2 = null;
 		OCL ocl = environmentFactory.createOCL();
 		try {
-			if (context instanceof EObject) {
+			if (context instanceof Operation) {
+				Operation operationContext = (Operation)context;
+				ParserContext parserContext = new OperationContext(ocl.getEnvironmentFactory(), null, operationContext, PivotConstants.RESULT_NAME);
+				return parserContext.parse(operationContext.getOwningClass(), oclString);
+			}
+			else if (context instanceof Property) {
+				Property propertyContext = (Property)context;
+				ParserContext parserContext = new PropertyContext(ocl.getEnvironmentFactory(), null, propertyContext);
+				return parserContext.parse(propertyContext.getOwningClass(), oclString);
+			}
+			else if (context instanceof org.eclipse.ocl.pivot.Class) {
+				org.eclipse.ocl.pivot.Class classContext = (org.eclipse.ocl.pivot.Class)context;
+				ParserContext parserContext = new ClassContext(ocl.getEnvironmentFactory(), null, classContext, null);
+				return parserContext.parse(classContext, oclString);
+			}
+			else if (context instanceof EObject) {			// Legacy code probably obsolete
 				EClass eClass = ((EObject)context).eClass();
 				String name = eClass.getName();
 				assert name != null;
-				pivotType = environmentFactory.getMetamodelManager().getASClass(name);
-				if (pivotType == null) {
+				parserContext2 = environmentFactory.getMetamodelManager().getASClass(name);
+				if (parserContext2 == null) {
 					Resource resource = eClass.eResource();
 					if (resource != null) {
 						Ecore2AS ecore2as = Ecore2AS.getAdapter(resource, environmentFactory);
-						pivotType = ecore2as.getCreated(org.eclipse.ocl.pivot.Class.class, eClass);
+						parserContext2 = ecore2as.getCreated(org.eclipse.ocl.pivot.Class.class, eClass);
 					}
 				}
 			}
-			OCLHelper helper = ocl.createOCLHelper(pivotType);
+			OCLHelper helper = ocl.createOCLHelper(parserContext2);
 			return helper.createQuery(oclString);
 		}
 		finally {
