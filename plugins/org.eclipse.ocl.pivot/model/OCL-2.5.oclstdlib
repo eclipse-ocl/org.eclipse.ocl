@@ -180,12 +180,24 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	static operation allInstances() : Set(OclSelf[2|1]) => 'org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation';
 	/**
 	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
+	Otherwise oclText[true].
+	**/
+	operation and2(b : Boolean[?]) : Boolean[?] precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2'
+	{
+		body: if self = false then false
+		      else if b = false then false
+		      else true
+		      endif endif;
+	}
+	/**
+	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
 	Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .
 	Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].
 	Otherwise oclText[true].
 	**/
 	operation and(b : Boolean[?]) : Boolean[?] validating invalidating precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation'
 	{
+	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
 		body: if self.oclIsInvalid() then
 		        if b.oclIsInvalid() then self
 		        else if b = false then false
@@ -198,6 +210,17 @@ type Boolean : PrimitiveType conformsTo OclAny {
 		      else if b = null then null
 		      else true
 		      endif endif endif endif endif endif;
+	}
+	/**
+	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
+	Otherwise oclText[false].
+	**/
+	operation implies2(b : Boolean[?]) : Boolean[?] precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2'
+	{
+		body: if self = false then true
+		      else if b = true then true
+		      else false
+		      endif endif;
 	}
 	/**
 	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
@@ -222,15 +245,34 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	}
 	/**
 	oclText[true] if oclText[self] is oclText[false].
+	Otherwise oclText[false].
+	**/
+	operation not2() : Boolean[1] precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2'
+	{
+		body: if self then false else true endif;
+	}
+	/**
+	oclText[true] if oclText[self] is oclText[false].
 	oclText[false] if oclText[self] is oclText[true].
 	oclText[null] if oclText[self] is oclText[null].
 	Otherwise oclText[invalid].
 	**/
-	operation not() : Boolean[?] precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation'
+	operation not() : Boolean[?] validating precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation'
 	{
 		body: if self.oclIsInvalid() then self
 		      else if self = null then null
 		      else self = false
+		      endif endif;
+	}
+	/**
+	oclText[true] if either oclText[self] or oclText[b] is oclText[true].
+	Otherwise oclText[false]. 
+	**/
+	operation or2(b : Boolean[?]) : Boolean[?] precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2'
+	{
+		body: if self = true then true
+			  else if b = true then true
+		      else false
 		      endif endif;
 	}
 	/**
@@ -258,6 +300,14 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	Converts oclText[self] to a string value.
 	**/
 	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	/**
+	oclText[true] if oclText[self] <> oclText[b]
+	Otherwise oclText[false].
+	**/
+	operation xor2(b : Boolean[?]) : Boolean[?] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2'
+	{
+		body: self <> b;
+	}
 	/**
 	oclText[true] if oclText[self] is oclText[true] and oclText[b] is oclText[false], or if oclText[self] is oclText[false] and oclText[b] is oclText[true].
 	oclText[false] if oclText[self] is oclText[true] and oclText[b] is oclText[true], or if oclText[self] is oclText[false] and oclText[b] is oclText[false].

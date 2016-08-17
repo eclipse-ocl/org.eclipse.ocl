@@ -499,6 +499,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	protected void declareOperations() {
 		s.append("	/**\n");
 		s.append("	 *	The operation descriptors for each operation of each type.\n");
+		s.append("	 *\n");
+		s.append("	 * @noextend This class is not intended to be subclassed by clients.\n");
+		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
+		s.append("	 * @noreference This class is not intended to be referenced by clients.\n");
 		s.append("	 */\n");
 		s.append("	public static class Operations {\n");
 		appendInitializationStart("Operations");
@@ -564,6 +568,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		s.append("	/**\n");
 		s.append("	 *	The parameter lists shared by operations.\n");
+		s.append("	 *\n");
+		s.append("	 * @noextend This class is not intended to be subclassed by clients.\n");
+		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
+		s.append("	 * @noreference This class is not intended to be referenced by clients.\n");
 		s.append("	 */\n");
 		s.append("	public static class Parameters {\n");
 		appendInitializationStart("Parameters");
@@ -596,6 +604,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	protected void declareProperties() {
 		s.append("	/**\n");
 		s.append("	 *	The property descriptors for each property of each type.\n");
+		s.append("	 *\n");
+		s.append("	 * @noextend This class is not intended to be subclassed by clients.\n");
+		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
+		s.append("	 * @noreference This class is not intended to be referenced by clients.\n");
 		s.append("	 */\n");
 		s.append("	public static class Properties {\n");
 		appendInitializationStart("Properties");

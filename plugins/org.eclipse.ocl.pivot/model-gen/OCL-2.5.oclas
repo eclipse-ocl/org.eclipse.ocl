@@ -35,85 +35,36 @@
           isStatic="true" name="allInstances" type="#//@ownedPackages.1/@ownedClasses.134">
         <ownedComments body="Returns oclText[Set{false, true}]."/>
       </ownedOperations>
-      <ownedOperations xmi:id="o.ocl.Boolean.and..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation"
-          isInvalidating="true" isRequired="false" isValidating="true" name="and" precedence="#Z.AND" type="#Boolean">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then&#xA;&#x9;&#x9;        if b.oclIsInvalid() then self&#xA;&#x9;&#x9;        else if b = false then false&#xA;&#x9;&#x9;        else self&#xA;&#x9;&#x9;        endif endif&#xA;&#x9;&#x9;      else if self = false then false&#xA;&#x9;&#x9;      else if b.oclIsInvalid() then b&#xA;&#x9;&#x9;      else if b = false then false&#xA;&#x9;&#x9;      else if self = null then null&#xA;&#x9;&#x9;      else if b = null then null&#xA;&#x9;&#x9;      else true&#xA;&#x9;&#x9;      endif endif endif endif endif endif"
-            isRequired="false" type="#Boolean">
-          <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
-            <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
+      <ownedOperations xmi:id="o.ocl.Boolean.and2..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2"
+          isRequired="false" name="and2" precedence="#Z.AND" type="#Boolean">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = false then false&#xA;&#x9;&#x9;      else if b = false then false&#xA;&#x9;&#x9;      else true&#xA;&#x9;&#x9;      endif endif"
+            type="#Boolean">
+          <ownedBody xsi:type="pivot:IfExp" type="#Boolean">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
+              <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
               <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedContext"
                   type="#Boolean"/>
             </ownedCondition>
-            <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
+            <ownedElse xsi:type="pivot:IfExp" type="#Boolean">
               <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
                 <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
-                <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedContext"
-                    type="#Boolean"/>
-              </ownedCondition>
-              <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
-                <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
-                  <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedParameters.0"
-                      type="#Boolean"/>
-                </ownedCondition>
-                <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
-                  <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
-                    <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
-                    <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedParameters.0"
-                        type="#Boolean"/>
-                  </ownedCondition>
-                  <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
-                    <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
-                      <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
-                      <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedContext"
-                          type="#Boolean"/>
-                    </ownedCondition>
-                    <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
-                      <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf"
-                          type="#Boolean">
-                        <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
-                        <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedParameters.0"
-                            type="#Boolean"/>
-                      </ownedCondition>
-                      <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
-                      <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
-                    </ownedElse>
-                    <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
-                  </ownedElse>
-                  <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
-                </ownedElse>
-                <ownedThen xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedParameters.0"
-                    type="#Boolean"/>
-              </ownedElse>
-              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
-            </ownedElse>
-            <ownedThen xsi:type="pivot:IfExp" type="#Boolean">
-              <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
                 <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedParameters.0"
                     type="#Boolean"/>
               </ownedCondition>
-              <ownedElse xsi:type="pivot:IfExp" type="#Boolean">
-                <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
-                  <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
-                  <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedParameters.0"
-                      type="#Boolean"/>
-                </ownedCondition>
-                <ownedElse xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedContext"
-                    type="#Boolean"/>
-                <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
-              </ownedElse>
-              <ownedThen xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.3/@bodyExpression/@ownedContext"
-                  type="#Boolean"/>
-            </ownedThen>
+              <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
           </ownedBody>
           <ownedContext name="self" type="#Boolean"/>
-          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.and..ocl.Boolean" type="#Boolean"/>
+          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.and2..ocl.Boolean" type="#Boolean"/>
         </bodyExpression>
-        <ownedComments body="oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[true].&#xA;"/>
-        <ownedParameters xmi:id="p0o.ocl.Boolean.and..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
+        <ownedComments body="oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[true].&#xA;"/>
+        <ownedParameters xmi:id="p0o.ocl.Boolean.and2..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
       </ownedOperations>
-      <ownedOperations xmi:id="o.ocl.Boolean.implies..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation"
-          isInvalidating="true" isRequired="false" isValidating="true" name="implies" precedence="#Z.IMPLIES" type="#Boolean">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then&#xA;&#x9;&#x9;        if b.oclIsInvalid() then self&#xA;&#x9;&#x9;        else if b = true then true&#xA;&#x9;&#x9;        else self&#xA;&#x9;&#x9;        endif endif&#xA;&#x9;&#x9;      else if self = false then true&#xA;&#x9;&#x9;      else if b.oclIsInvalid() then b&#xA;&#x9;&#x9;      else if b = true then true&#xA;&#x9;&#x9;      else if self = null then null&#xA;&#x9;&#x9;      else if b = null then b&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif endif endif endif endif endif"
+      <ownedOperations xmi:id="o.ocl.Boolean.and..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation"
+          isInvalidating="true" isRequired="false" isValidating="true" name="and" precedence="#Z.AND" type="#Boolean">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then&#xA;&#x9;&#x9;        if b.oclIsInvalid() then self&#xA;&#x9;&#x9;        else if b = false then false&#xA;&#x9;&#x9;        else self&#xA;&#x9;&#x9;        endif endif&#xA;&#x9;&#x9;      else if self = false then false&#xA;&#x9;&#x9;      else if b.oclIsInvalid() then b&#xA;&#x9;&#x9;      else if b = false then false&#xA;&#x9;&#x9;      else if self = null then null&#xA;&#x9;&#x9;      else if b = null then null&#xA;&#x9;&#x9;      else true&#xA;&#x9;&#x9;      endif endif endif endif endif endif"
             isRequired="false" type="#Boolean">
           <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
             <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
@@ -133,7 +84,7 @@
                 </ownedCondition>
                 <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
                   <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
-                    <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                    <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
                     <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.4/@bodyExpression/@ownedParameters.0"
                         type="#Boolean"/>
                   </ownedCondition>
@@ -150,18 +101,17 @@
                         <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.4/@bodyExpression/@ownedParameters.0"
                             type="#Boolean"/>
                       </ownedCondition>
-                      <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
-                      <ownedThen xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.4/@bodyExpression/@ownedParameters.0"
-                          type="#Boolean"/>
+                      <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                      <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
                     </ownedElse>
                     <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
                   </ownedElse>
-                  <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                  <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
                 </ownedElse>
                 <ownedThen xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.4/@bodyExpression/@ownedParameters.0"
                     type="#Boolean"/>
               </ownedElse>
-              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
             </ownedElse>
             <ownedThen xsi:type="pivot:IfExp" type="#Boolean">
               <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
@@ -170,56 +120,59 @@
               </ownedCondition>
               <ownedElse xsi:type="pivot:IfExp" type="#Boolean">
                 <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
-                  <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                  <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
                   <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.4/@bodyExpression/@ownedParameters.0"
                       type="#Boolean"/>
                 </ownedCondition>
                 <ownedElse xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.4/@bodyExpression/@ownedContext"
                     type="#Boolean"/>
-                <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
               </ownedElse>
               <ownedThen xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.4/@bodyExpression/@ownedContext"
                   type="#Boolean"/>
             </ownedThen>
           </ownedBody>
           <ownedContext name="self" type="#Boolean"/>
-          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.implies..ocl.Boolean" type="#Boolean"/>
+          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.and..ocl.Boolean" type="#Boolean"/>
         </bodyExpression>
-        <ownedComments body="oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
-        <ownedParameters xmi:id="p0o.ocl.Boolean.implies..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
+        <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
+          <ownedDetails name="ClassGroup">
+            <values>Primitive</values>
+          </ownedDetails>
+        </ownedAnnotations>
+        <ownedComments body="oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[true].&#xA;"/>
+        <ownedParameters xmi:id="p0o.ocl.Boolean.and..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
       </ownedOperations>
-      <ownedOperations xmi:id="o.ocl.Boolean.not" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation" isRequired="false"
-          name="not" precedence="#Z.UNARY" type="#Boolean">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then self&#xA;&#x9;&#x9;      else if self = null then null&#xA;&#x9;&#x9;      else self = false&#xA;&#x9;&#x9;      endif endif"
-            isRequired="false" type="#Boolean">
-          <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
-            <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
+      <ownedOperations xmi:id="o.ocl.Boolean.implies2..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2"
+          isRequired="false" name="implies2" precedence="#Z.IMPLIES" type="#Boolean">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = false then true&#xA;&#x9;&#x9;      else if b = true then true&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif endif"
+            type="#Boolean">
+          <ownedBody xsi:type="pivot:IfExp" type="#Boolean">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
+              <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
               <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.5/@bodyExpression/@ownedContext"
                   type="#Boolean"/>
             </ownedCondition>
-            <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
+            <ownedElse xsi:type="pivot:IfExp" type="#Boolean">
               <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
-                <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
-                <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.5/@bodyExpression/@ownedContext"
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.5/@bodyExpression/@ownedParameters.0"
                     type="#Boolean"/>
               </ownedCondition>
-              <ownedElse xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
-                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
-                <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.5/@bodyExpression/@ownedContext"
-                    type="#Boolean"/>
-              </ownedElse>
-              <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
+              <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
             </ownedElse>
-            <ownedThen xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.5/@bodyExpression/@ownedContext"
-                type="#Boolean"/>
+            <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
           </ownedBody>
           <ownedContext name="self" type="#Boolean"/>
+          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.implies2..ocl.Boolean" type="#Boolean"/>
         </bodyExpression>
-        <ownedComments body="oclText[true] if oclText[self] is oclText[false].&#xA;oclText[false] if oclText[self] is oclText[true].&#xA;oclText[null] if oclText[self] is oclText[null].&#xA;Otherwise oclText[invalid].&#xA;"/>
+        <ownedComments body="oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
+        <ownedParameters xmi:id="p0o.ocl.Boolean.implies2..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
       </ownedOperations>
-      <ownedOperations xmi:id="o.ocl.Boolean.or..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation"
-          isInvalidating="true" isRequired="false" isValidating="true" name="or" precedence="#Z.OR" type="#Boolean">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then&#xA;&#x9;&#x9;        if b.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;    else if b = true then true&#xA;&#x9;&#x9;        else self&#xA;&#x9;&#x9;        endif endif&#xA;&#x9;&#x9;      else if self = true then true&#xA;&#x9;&#x9;&#x9;  else if b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  else if b = true then true&#xA;&#x9;&#x9;&#x9;  else if self = null then null&#xA;&#x9;&#x9;&#x9;  else if b = null then null&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif endif endif endif endif endif"
+      <ownedOperations xmi:id="o.ocl.Boolean.implies..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation"
+          isInvalidating="true" isRequired="false" isValidating="true" name="implies" precedence="#Z.IMPLIES" type="#Boolean">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then&#xA;&#x9;&#x9;        if b.oclIsInvalid() then self&#xA;&#x9;&#x9;        else if b = true then true&#xA;&#x9;&#x9;        else self&#xA;&#x9;&#x9;        endif endif&#xA;&#x9;&#x9;      else if self = false then true&#xA;&#x9;&#x9;      else if b.oclIsInvalid() then b&#xA;&#x9;&#x9;      else if b = true then true&#xA;&#x9;&#x9;      else if self = null then null&#xA;&#x9;&#x9;      else if b = null then b&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif endif endif endif endif endif"
             isRequired="false" type="#Boolean">
           <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
             <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
@@ -228,7 +181,7 @@
             </ownedCondition>
             <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
               <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
-                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
                 <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.6/@bodyExpression/@ownedContext"
                     type="#Boolean"/>
               </ownedCondition>
@@ -257,7 +210,8 @@
                             type="#Boolean"/>
                       </ownedCondition>
                       <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
-                      <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
+                      <ownedThen xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.6/@bodyExpression/@ownedParameters.0"
+                          type="#Boolean"/>
                     </ownedElse>
                     <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
                   </ownedElse>
@@ -288,6 +242,151 @@
             </ownedThen>
           </ownedBody>
           <ownedContext name="self" type="#Boolean"/>
+          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.implies..ocl.Boolean" type="#Boolean"/>
+        </bodyExpression>
+        <ownedComments body="oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
+        <ownedParameters xmi:id="p0o.ocl.Boolean.implies..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="o.ocl.Boolean.not2" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2" name="not2"
+          precedence="#Z.UNARY" type="#Boolean">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self then false else true endif" type="#Boolean">
+          <ownedBody xsi:type="pivot:IfExp" type="#Boolean">
+            <ownedCondition xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.7/@bodyExpression/@ownedContext"
+                type="#Boolean"/>
+            <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+            <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
+          </ownedBody>
+          <ownedContext name="self" type="#Boolean"/>
+        </bodyExpression>
+        <ownedComments body="oclText[true] if oclText[self] is oclText[false].&#xA;Otherwise oclText[false].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="o.ocl.Boolean.not" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation" isRequired="false"
+          isValidating="true" name="not" precedence="#Z.UNARY" type="#Boolean">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then self&#xA;&#x9;&#x9;      else if self = null then null&#xA;&#x9;&#x9;      else self = false&#xA;&#x9;&#x9;      endif endif"
+            isRequired="false" type="#Boolean">
+          <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
+            <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
+              <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedContext"
+                  type="#Boolean"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
+                <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
+                <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedContext"
+                    type="#Boolean"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
+                <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedContext"
+                    type="#Boolean"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedContext"
+                type="#Boolean"/>
+          </ownedBody>
+          <ownedContext name="self" type="#Boolean"/>
+        </bodyExpression>
+        <ownedComments body="oclText[true] if oclText[self] is oclText[false].&#xA;oclText[false] if oclText[self] is oclText[true].&#xA;oclText[null] if oclText[self] is oclText[null].&#xA;Otherwise oclText[invalid].&#xA;"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="o.ocl.Boolean.or2..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2"
+          isRequired="false" name="or2" precedence="#Z.OR" type="#Boolean">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = true then true&#xA;&#x9;&#x9;&#x9;  else if b = true then true&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif endif"
+            type="#Boolean">
+          <ownedBody xsi:type="pivot:IfExp" type="#Boolean">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
+              <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+              <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.9/@bodyExpression/@ownedContext"
+                  type="#Boolean"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" type="#Boolean">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.9/@bodyExpression/@ownedParameters.0"
+                    type="#Boolean"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+          </ownedBody>
+          <ownedContext name="self" type="#Boolean"/>
+          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.or2..ocl.Boolean" type="#Boolean"/>
+        </bodyExpression>
+        <ownedComments body="oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
+        <ownedParameters xmi:id="p0o.ocl.Boolean.or2..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="o.ocl.Boolean.or..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation"
+          isInvalidating="true" isRequired="false" isValidating="true" name="or" precedence="#Z.OR" type="#Boolean">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then&#xA;&#x9;&#x9;        if b.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;    else if b = true then true&#xA;&#x9;&#x9;        else self&#xA;&#x9;&#x9;        endif endif&#xA;&#x9;&#x9;      else if self = true then true&#xA;&#x9;&#x9;&#x9;  else if b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  else if b = true then true&#xA;&#x9;&#x9;&#x9;  else if self = null then null&#xA;&#x9;&#x9;&#x9;  else if b = null then null&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif endif endif endif endif endif"
+            isRequired="false" type="#Boolean">
+          <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
+            <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
+              <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedContext"
+                  type="#Boolean"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedContext"
+                    type="#Boolean"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
+                <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
+                  <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedParameters.0"
+                      type="#Boolean"/>
+                </ownedCondition>
+                <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
+                  <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
+                    <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                    <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedParameters.0"
+                        type="#Boolean"/>
+                  </ownedCondition>
+                  <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
+                    <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
+                      <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
+                      <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedContext"
+                          type="#Boolean"/>
+                    </ownedCondition>
+                    <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
+                      <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf"
+                          type="#Boolean">
+                        <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
+                        <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedParameters.0"
+                            type="#Boolean"/>
+                      </ownedCondition>
+                      <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
+                      <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
+                    </ownedElse>
+                    <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
+                  </ownedElse>
+                  <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                </ownedElse>
+                <ownedThen xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedParameters.0"
+                    type="#Boolean"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:IfExp" type="#Boolean">
+              <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
+                <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedParameters.0"
+                    type="#Boolean"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:IfExp" type="#Boolean">
+                <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
+                  <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+                  <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedParameters.0"
+                      type="#Boolean"/>
+                </ownedCondition>
+                <ownedElse xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedContext"
+                    type="#Boolean"/>
+                <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.10/@bodyExpression/@ownedContext"
+                  type="#Boolean"/>
+            </ownedThen>
+          </ownedBody>
+          <ownedContext name="self" type="#Boolean"/>
           <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.or..ocl.Boolean" type="#Boolean"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
@@ -297,46 +396,61 @@
           name="toString" type="#String">
         <ownedComments body="Converts oclText[self] to a string value.&#xA;"/>
       </ownedOperations>
+      <ownedOperations xmi:id="o.ocl.Boolean.xor2..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2"
+          isRequired="false" name="xor2" precedence="#Z.XOR" type="#Boolean">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self &lt;> b" type="#Boolean">
+          <ownedBody xsi:type="pivot:OperationCallExp" name="&lt;>" referredOperation="#o.ocl.Boolean.%60%%62%..ocl.OclSelf" type="#Boolean">
+            <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.12/@bodyExpression/@ownedParameters.0"
+                type="#Boolean"/>
+            <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.12/@bodyExpression/@ownedContext"
+                type="#Boolean"/>
+          </ownedBody>
+          <ownedContext name="self" type="#Boolean"/>
+          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.xor2..ocl.Boolean" type="#Boolean"/>
+        </bodyExpression>
+        <ownedComments body="oclText[true] if oclText[self] &lt;> oclText[b]&#xA;Otherwise oclText[false].&#xA;"/>
+        <ownedParameters xmi:id="p0o.ocl.Boolean.xor2..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
+      </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Boolean.xor..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation"
           isRequired="false" name="xor" precedence="#Z.XOR" type="#Boolean">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then self&#xA;&#x9;&#x9;      else if b.oclIsInvalid() then b&#xA;&#x9;&#x9;      else if self = null then null&#xA;&#x9;&#x9;      else if b = null then null&#xA;&#x9;&#x9;      else self &lt;> b&#xA;&#x9;&#x9;      endif endif endif endif"
             isRequired="false" type="#Boolean">
           <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
             <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
-              <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedContext"
+              <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.13/@bodyExpression/@ownedContext"
                   type="#Boolean"/>
             </ownedCondition>
             <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
               <ownedCondition xsi:type="pivot:OperationCallExp" referredOperation="#o.ocl.OclAny.oclIsInvalid" type="#Boolean">
-                <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedParameters.0"
+                <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.13/@bodyExpression/@ownedParameters.0"
                     type="#Boolean"/>
               </ownedCondition>
               <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
                 <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
                   <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
-                  <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedContext"
+                  <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.13/@bodyExpression/@ownedContext"
                       type="#Boolean"/>
                 </ownedCondition>
                 <ownedElse xsi:type="pivot:IfExp" isRequired="false" type="#Boolean">
                   <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#o.ocl.Boolean.%61%..ocl.OclSelf" type="#Boolean">
                     <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
-                    <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedParameters.0"
+                    <ownedSource xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.13/@bodyExpression/@ownedParameters.0"
                         type="#Boolean"/>
                   </ownedCondition>
                   <ownedElse xsi:type="pivot:OperationCallExp" name="&lt;>" referredOperation="#o.ocl.Boolean.%60%%62%..ocl.OclSelf" type="#Boolean">
-                    <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedParameters.0"
+                    <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.13/@bodyExpression/@ownedParameters.0"
                         type="#Boolean"/>
-                    <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedContext"
+                    <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.13/@bodyExpression/@ownedContext"
                         type="#Boolean"/>
                   </ownedElse>
                   <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
                 </ownedElse>
                 <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#T.ocl.OclVoid"/>
               </ownedElse>
-              <ownedThen xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedParameters.0"
+              <ownedThen xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.13/@bodyExpression/@ownedParameters.0"
                   type="#Boolean"/>
             </ownedElse>
-            <ownedThen xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedContext"
+            <ownedThen xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.13/@bodyExpression/@ownedContext"
                 type="#Boolean"/>
           </ownedBody>
           <ownedContext name="self" type="#Boolean"/>
@@ -680,7 +794,7 @@
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.UnlimitedNatural.toInteger" implementationClass="org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation"
           isInvalidating="true" name="toInteger" type="#Integer">
-        <ownedComments body="Converts oclText[self] to an Integer value unless oclText[self] is oclText[unlimited] in which oclText[self] is converted to oclText[invalid].&#xA;"/>
+        <ownedComments body="Converts oclText[self] to an Integer value unless oclText[self] is e[unlimited] in which case oclText[self] is converted to oclText[invalid].&#xA;"/>
       </ownedOperations>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="Bag" elementType="#t.ocl..BagT" name="Bag" superClasses="#//@ownedPackages.1/@ownedClasses.47">

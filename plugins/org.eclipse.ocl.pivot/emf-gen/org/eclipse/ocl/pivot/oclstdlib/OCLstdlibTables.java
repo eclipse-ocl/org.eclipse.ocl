@@ -349,6 +349,10 @@ public class OCLstdlibTables
 
 	/**
 	 *	The parameter lists shared by operations.
+	 *
+	 * @noextend This class is not intended to be subclassed by clients.
+	 * @noinstantiate This class is not intended to be instantiated by clients.
+	 * @noreference This class is not intended to be referenced by clients.
 	 */
 	public static class Parameters {
 		static {
@@ -447,6 +451,10 @@ public class OCLstdlibTables
 
 	/**
 	 *	The operation descriptors for each operation of each type.
+	 *
+	 * @noextend This class is not intended to be subclassed by clients.
+	 * @noinstantiate This class is not intended to be instantiated by clients.
+	 * @noreference This class is not intended to be referenced by clients.
 	 */
 	public static class Operations {
 		static {
@@ -501,8 +509,18 @@ public class OCLstdlibTables
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _Boolean__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Boolean,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Boolean__and2 = new ExecutorOperation("and2", Parameters._Boolean, Types._Boolean,
+			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2.INSTANCE);
+		public static final @NonNull ExecutorOperation _Boolean__implies2 = new ExecutorOperation("implies2", Parameters._Boolean, Types._Boolean,
+			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2.INSTANCE);
+		public static final @NonNull ExecutorOperation _Boolean__not2 = new ExecutorOperation("not2", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Boolean,
+			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2.INSTANCE);
+		public static final @NonNull ExecutorOperation _Boolean__or2 = new ExecutorOperation("or2", Parameters._Boolean, Types._Boolean,
+			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2.INSTANCE);
 		public static final @NonNull ExecutorOperation _Boolean__toString = new ExecutorOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Boolean,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _Boolean__xor2 = new ExecutorOperation("xor2", Parameters._Boolean, Types._Boolean,
+			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _Collection___lt__gt_ = new ExecutorOperation("<>", Parameters._OclSelf, Types._Collection,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
@@ -1054,6 +1072,10 @@ public class OCLstdlibTables
 
 	/**
 	 *	The property descriptors for each property of each type.
+	 *
+	 * @noextend This class is not intended to be subclassed by clients.
+	 * @noinstantiate This class is not intended to be instantiated by clients.
+	 * @noreference This class is not intended to be referenced by clients.
 	 */
 	public static class Properties {
 		static {
@@ -1438,7 +1460,12 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Boolean__or /* _'or'(Boolean[?]) */,
 			OCLstdlibTables.Operations._Boolean__xor /* _'xor'(Boolean[?]) */,
 			OCLstdlibTables.Operations._Boolean__allInstances /* allInstances() */,
-			OCLstdlibTables.Operations._Boolean__toString /* toString() */
+			OCLstdlibTables.Operations._Boolean__and2 /* and2(Boolean[?]) */,
+			OCLstdlibTables.Operations._Boolean__implies2 /* implies2(Boolean[?]) */,
+			OCLstdlibTables.Operations._Boolean__not2 /* not2() */,
+			OCLstdlibTables.Operations._Boolean__or2 /* or2(Boolean[?]) */,
+			OCLstdlibTables.Operations._Boolean__toString /* toString() */,
+			OCLstdlibTables.Operations._Boolean__xor2 /* xor2(Boolean[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Boolean__OclAny = {
 			OCLstdlibTables.Operations._Boolean___lt__gt_ /* _'<>'(OclSelf[?]) */,
