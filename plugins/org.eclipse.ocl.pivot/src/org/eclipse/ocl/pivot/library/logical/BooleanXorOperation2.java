@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 
 /**
  * BooleanXorOperation2 realises the 2-valued Boolean::xor() library operation.
- * 
+ *
  * @since 1.3
  */
 public class BooleanXorOperation2 extends AbstractSimpleBinaryOperation
@@ -24,7 +24,7 @@ public class BooleanXorOperation2 extends AbstractSimpleBinaryOperation
 	public static final @NonNull BooleanXorOperation2 INSTANCE = new BooleanXorOperation2();
 
 	@Override
-	public @Nullable Boolean evaluate(@Nullable Object left, @Nullable Object right) {
+	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {
 		if (left != right) {
 			return TRUE_VALUE;
 		}

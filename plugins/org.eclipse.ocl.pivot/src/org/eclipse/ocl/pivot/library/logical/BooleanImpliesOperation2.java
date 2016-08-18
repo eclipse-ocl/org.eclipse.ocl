@@ -16,14 +16,15 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 
 /**
  * BooleanImpliesOperation2 realises the 2-valued implies() library operation.
- * 
+ *
  * @since 1.3
  */
 public class BooleanImpliesOperation2 extends AbstractSimpleBinaryOperation
 {
 	public static final @NonNull BooleanImpliesOperation2 INSTANCE = new BooleanImpliesOperation2();
+
 	@Override
-	public @Nullable Boolean evaluate(@Nullable Object left, @Nullable Object right) {
+	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {
 		if ((left == Boolean.FALSE) || (right == Boolean.TRUE)) {
 			return TRUE_VALUE;
 		}

@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 
 /**
  * BooleanNotOperation2 realises the 2-valued not() library operation.
- * 
+ *
  * @since 1.3
  */
 public class BooleanNotOperation2 extends AbstractSimpleUnaryOperation
@@ -24,7 +24,7 @@ public class BooleanNotOperation2 extends AbstractSimpleUnaryOperation
 	public static final @NonNull BooleanNotOperation2 INSTANCE = new BooleanNotOperation2();
 
 	@Override
-	public @Nullable Boolean evaluate(@Nullable Object argument) {
+	public @NonNull Boolean evaluate(@Nullable Object argument) {
 		if (argument == Boolean.FALSE) {
 			return TRUE_VALUE;
 		}

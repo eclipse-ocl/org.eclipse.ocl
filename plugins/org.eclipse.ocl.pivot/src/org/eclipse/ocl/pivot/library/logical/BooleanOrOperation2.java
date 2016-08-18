@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 
 /**
  * BooleanOrOperation2 realises the 2-valued or() library operation.
- * 
+ *
  * @since 1.3
  */
 public class BooleanOrOperation2 extends AbstractSimpleBinaryOperation
@@ -24,7 +24,7 @@ public class BooleanOrOperation2 extends AbstractSimpleBinaryOperation
 	public static final @NonNull BooleanOrOperation2 INSTANCE = new BooleanOrOperation2();
 
 	@Override
-	public @Nullable Boolean evaluate(@Nullable Object left, @Nullable Object right) {
+	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {
 		if ((left == Boolean.TRUE) || (right == Boolean.TRUE)) {
 			return TRUE_VALUE;
 		}

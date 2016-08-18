@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 
 /**
  * BooleanAndOperation2 realises the 2-valued and() library operation.
- * 
+ *
  * @since 1.3
  */
 public class BooleanAndOperation2 extends AbstractSimpleBinaryOperation
@@ -24,7 +24,7 @@ public class BooleanAndOperation2 extends AbstractSimpleBinaryOperation
 	public static final @NonNull BooleanAndOperation2 INSTANCE = new BooleanAndOperation2();
 
 	@Override
-	public @Nullable Boolean evaluate(@Nullable Object left, @Nullable Object right) {
+	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {
 		if ((left == Boolean.FALSE) || (right == Boolean.FALSE)) {
 			return FALSE_VALUE;
 		}
