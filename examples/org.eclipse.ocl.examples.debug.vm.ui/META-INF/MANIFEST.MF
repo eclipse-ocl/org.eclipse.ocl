@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: org.eclipse.ocl.examples.debug.vm.ui;singleton:=true
-Bundle-Version: 2.1.100.qualifier
+Bundle-Version: 2.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.ocl.examples.debug.vm.ui,
  org.eclipse.ocl.examples.debug.vm.ui.actions,
