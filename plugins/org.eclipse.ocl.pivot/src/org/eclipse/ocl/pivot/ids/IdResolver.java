@@ -110,6 +110,10 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull Type getCollectionType(@NonNull CollectionTypeId typeId);
 
+	/**
+	 * Compute the type of value according to its content. Beware that this can be very expensive for collections and so
+	 * should only be used where it really is necessary to compute a content-dependent type.
+	 */
 	@NonNull Type getDynamicTypeOf(@Nullable Object value);
 
 	@Nullable Type getDynamicTypeOf(@NonNull Object @NonNull ... values);

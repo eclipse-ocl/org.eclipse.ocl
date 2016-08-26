@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 
 /**
  * AbstractOperation defines the minimal functionality of all Operation implementations. Each implemented
@@ -59,8 +59,8 @@ public abstract class AbstractOperation extends AbstractFeature implements Libra
 	 * @since 1.3
 	 */
 	protected final @Nullable Object cachedEvaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues) {
-		if (executor instanceof ExecutorInternalExtension) {
-			return ((ExecutorInternalExtension)executor).getCachedEvaluationResult(this, caller, sourceAndArgumentValues);
+		if (executor instanceof ExecutorInternal.ExecutorInternalExtension) {
+			return ((ExecutorInternal.ExecutorInternalExtension)executor).getCachedEvaluationResult(this, caller, sourceAndArgumentValues);
 		}
 		else {
 			return basicEvaluate(executor, caller, sourceAndArgumentValues);
@@ -77,8 +77,8 @@ public abstract class AbstractOperation extends AbstractFeature implements Libra
 	 */
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues) {
-		if (executor instanceof ExecutorInternalExtension) {
-			return ((ExecutorInternalExtension)executor).getCachedEvaluationResult(this, caller, sourceAndArgumentValues);
+		if (executor instanceof ExecutorInternal.ExecutorInternalExtension) {
+			return ((ExecutorInternal.ExecutorInternalExtension)executor).getCachedEvaluationResult(this, caller, sourceAndArgumentValues);
 		}
 		else {
 			return basicEvaluate(executor, caller, sourceAndArgumentValues);

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -66,7 +67,7 @@ public class EvaluationCache
 		}
 	}
 
-	protected final ExecutorInternal.@NonNull ExecutorInternalExtension executor;
+	protected final @NonNull Executor executor;
 
 	/**
 	 * Map from implementation, source, arguments hashCode to one or more evaluations with that hashCode. Single map entries use the
@@ -78,7 +79,7 @@ public class EvaluationCache
 
 	protected final boolean debugEvaluations = EVALUATIONS.isActive();
 
-	public EvaluationCache(ExecutorInternal.@NonNull ExecutorInternalExtension executor) {
+	public EvaluationCache(@NonNull Executor executor) {
 		this.executor = executor;
 	}
 
@@ -152,7 +153,7 @@ public class EvaluationCache
 				twoOrMoreEvaluations.add(theEvaluation);
 			}
 			if (debugEvaluations) {
-				EVALUATIONS.println("new:" + theEvaluation);
+//				EVALUATIONS.println("new:" + theEvaluation);
 			}
 			return theEvaluation.getResult();
 		}

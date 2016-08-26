@@ -34,6 +34,7 @@ public interface Executor extends Evaluator
 	public interface ExecutorExtension extends Executor
 	{
 		@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable TypedElement caller);
+		void resetCaches();
 	}
 	void add(@NonNull TypedElement referredVariable, @Nullable Object value);
 	@Override
@@ -44,7 +45,6 @@ public interface Executor extends Evaluator
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 	@Override
 	@NonNull EvaluationEnvironment getEvaluationEnvironment();
-	//	@NonNull EvaluationVisitor getEvaluationVisitor();
 	@Override
 	@NonNull IdResolver getIdResolver();
 	@Override

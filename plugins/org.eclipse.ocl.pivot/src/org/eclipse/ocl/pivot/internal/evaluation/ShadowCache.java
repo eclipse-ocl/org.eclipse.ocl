@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -74,7 +75,7 @@ public class ShadowCache
 		}
 	}
 
-	protected final ExecutorInternal.@NonNull ExecutorInternalExtension executor;
+	protected final @NonNull Executor executor;
 
 	/**
 	 * Map from implementation, source, arguments hashCode to one or more evaluations with that hashCode. Single map entries use the
@@ -86,7 +87,7 @@ public class ShadowCache
 
 	protected final boolean debugShadows = SHADOWS.isActive();
 
-	public ShadowCache(ExecutorInternal.@NonNull ExecutorInternalExtension executor) {
+	public ShadowCache(@NonNull Executor executor) {
 		this.executor = executor;
 	}
 
