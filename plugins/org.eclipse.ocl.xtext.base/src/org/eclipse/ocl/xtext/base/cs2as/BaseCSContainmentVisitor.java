@@ -405,7 +405,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		pivotElement.setBodyExpression(PivotUtil.getPivot(ExpressionInOCL.class, csBodyExpression));
 		List<String> qualifiers = csElement.getQualifiers();
 		assert qualifiers != null;
-		pivotElement.setIsTransient(ElementUtil.getQualifier(qualifiers, "transient", "!transient", true));
+		pivotElement.setIsTransient(ElementUtil.getQualifier(qualifiers, "transient", "!transient", false));
 		return null;
 	}
 

@@ -514,8 +514,6 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
 		copyTemplateSignature(pivotElement,eTypeParameters);
 		doSwitchAll(eOperation.getEGenericExceptions());
-		String isTransientString = EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_IS_TRANSIENT);
-		pivotElement.setIsTransient((isTransientString != null) && Boolean.getBoolean(isTransientString));
 		converter.queueReference(eOperation);				// For superclasses
 		return pivotElement;
 	}
@@ -596,6 +594,15 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 					copyAnnotationComment(constraint, oclAnnotation, key);
 				}
 			}
+		}
+		EAnnotation isTransientAnnotation = eOperation.getEAnnotation(PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE);
+		if (isTransientAnnotation != null) {
+			if (excludedAnnotations == null) {
+				excludedAnnotations = new ArrayList<EAnnotation>();
+			}
+			excludedAnnotations.add(isTransientAnnotation);
+			String isTransientString = isTransientAnnotation.getDetails().get(PivotConstantsInternal.OPERATION_IS_TRANSIENT);
+			pivotElement.setIsTransient((isTransientString != null) && Boolean.parseBoolean(isTransientString));
 		}
 		return excludedAnnotations;
 	}

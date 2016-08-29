@@ -70,16 +70,6 @@ public interface PivotConstants
 	static final @NonNull String COLLECTION_IS_NULL_FREE = "nullFree";
 
 	/**
-	 * EOperation annotation identifying that anoperation is transient (not-cached).
-	 * @since 1.3
-	 */
-	static final @NonNull String OPERATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Operation";
-	/**
-	 * @since 1.3
-	 */
-	static final @NonNull String OPERATION_IS_TRANSIENT = "isTransient";
-
-	/**
 	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.
 	 * No details are defined for this EAnnotation.
 	 * <p>

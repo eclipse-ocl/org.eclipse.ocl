@@ -23,6 +23,9 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
+/**
+ * @noimplement This interface is not intended to be implemented by clients.
+ */
 public interface PivotConstantsInternal
 {
 	static final @NonNull String PLUGIN_ID = PivotPlugin.PLUGIN_ID;
@@ -67,6 +70,16 @@ public interface PivotConstantsInternal
 	static final boolean ANNOTATED_IMPLICIT_OPPOSITE_ORDERED = false;
 	static final boolean ANNOTATED_IMPLICIT_OPPOSITE_UNIQUE = true;
 	static final @NonNull UnlimitedNaturalValue ANNOTATED_IMPLICIT_OPPOSITE_UPPER_VALUE = ValueUtil.UNLIMITED_ONE_VALUE;
+
+	/**
+	 * EOperation annotation identifying that anoperation is transient (not-cached).
+	 * @since 1.3
+	 */
+	static final @NonNull String OPERATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Pivot/Operation";
+	/**
+	 * @since 1.3
+	 */
+	static final @NonNull String OPERATION_IS_TRANSIENT = "isTransient";
 
 	@Deprecated // Tuples are now used for rich invariants
 	static final @NonNull String MESSAGE_ANNOTATION_DETAIL_SUFFIX = "$message";

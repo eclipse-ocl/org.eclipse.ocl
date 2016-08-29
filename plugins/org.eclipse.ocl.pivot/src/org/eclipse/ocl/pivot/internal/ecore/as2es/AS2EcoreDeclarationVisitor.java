@@ -748,9 +748,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 		if (pivotOperation.isIsTransient()) {
 			EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			eAnnotation.setSource(PivotConstants.OPERATION_ANNOTATION_SOURCE);
+			eAnnotation.setSource(PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE);
 			EMap<String, String> details = eAnnotation.getDetails();
-			details.put(PivotConstants.OPERATION_IS_TRANSIENT, "true");
+			details.put(PivotConstantsInternal.OPERATION_IS_TRANSIENT, "true");
 			eOperation.getEAnnotations().add(eAnnotation);
 		}
 		return eOperation;
