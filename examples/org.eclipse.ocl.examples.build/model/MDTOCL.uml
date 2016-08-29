@@ -89,7 +89,7 @@
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6N_n7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-Class-isInterface" name="isInterface" type="MDTOCL-MDT_OCL_Ecore-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N8n7VEeOu79LxSz8Ylw" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N8n7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Ecore-DataType" name="DataType">
@@ -103,13 +103,13 @@
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Ecore-EnumerationLiteral" name="EnumerationLiteral">
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-EnumerationLiteral-value" name="value" type="MDTOCL-MDT_OCL_Ecore-Integer">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6N9X7VEeOu79LxSz8Ylw"/>
-          <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6N9n7VEeOu79LxSz8Ylw" value="0"/>
+          <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6N9n7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:PrimitiveType" xmi:id="MDTOCL-MDT_OCL_Ecore-Integer" name="Integer"/>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Ecore-Property" name="Property">
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-Property-isID" name="isID" type="MDTOCL-MDT_OCL_Ecore-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N937VEeOu79LxSz8Ylw" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N937VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-Property-keys" name="keys" type="MDTOCL-MDT_OCL_Ecore-Property">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6N-H7VEeOu79LxSz8Ylw"/>
@@ -119,20 +119,20 @@
           <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N-n7VEeOu79LxSz8Ylw" value="true"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-Property-isTransient" name="isTransient" type="MDTOCL-MDT_OCL_Ecore-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N-37VEeOu79LxSz8Ylw" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N-37VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-Property-isUnsettable" name="isUnsettable" type="MDTOCL-MDT_OCL_Ecore-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N_H7VEeOu79LxSz8Ylw" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N_H7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-Property-isVolatile" name="isVolatile" type="MDTOCL-MDT_OCL_Ecore-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N_X7VEeOu79LxSz8Ylw" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N_X7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:PrimitiveType" xmi:id="MDTOCL-MDT_OCL_Ecore-String" name="String"/>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Ecore-Type" name="Type" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Ecore-Constraint" name="Constraint">
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Ecore-Constraint-isCallable" name="isCallable" type="MDTOCL-MDT_OCL_Ecore-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N_37VEeOu79LxSz8Ylw" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6N_37VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
       </packagedElement>
     </packagedElement>
@@ -225,10 +225,10 @@
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Precedences-NamedElement" name="NamedElement" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Precedences-Operation" name="Operation">
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Precedences-Operation-isInvalidating" name="isInvalidating" type="MDTOCL-MDT_OCL_Precedences-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6OB37VEeOu79LxSz8Ylw" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6OB37VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Precedences-Operation-isValidating" name="isValidating" type="MDTOCL-MDT_OCL_Precedences-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6OCH7VEeOu79LxSz8Ylw" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_Xp6OCH7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Precedences-Operation-precedence" name="precedence" type="MDTOCL-MDT_OCL_Precedences-Precedence">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6OCX7VEeOu79LxSz8Ylw"/>
@@ -247,7 +247,7 @@
           <defaultValue xmi:type="uml:InstanceValue" xmi:id="_XOGPIIkHEeSBZI5ewYKP9Q" instance="_5uMlIMlAEd-bx742yyafXQ"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Precedences-Precedence-order" name="order" type="MDTOCL-MDT_OCL_PrimitiveTypes-Integer">
-          <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6ODn7VEeOu79LxSz8Ylw" value="0"/>
+          <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_Xp6ODn7VEeOu79LxSz8Ylw"/>
         </ownedAttribute>
       </packagedElement>
     </packagedElement>
@@ -337,10 +337,10 @@
         <generalization xmi:id="_Xp6OI37VEeOu79LxSz8Ylw" general="__SVv8BqBEeSM9LreJtBwBg"/>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Stereotypes-ElementExtension-base" name="base" type="MDTOCL-MDT_OCL_Stereotypes-Element" association="MDTOCL-MDT_OCL_Stereotypes-A_base_extension"/>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Stereotypes-ElementExtension-isApplied" name="isApplied" type="MDTOCL-MDT_OCL_Stereotypes-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_j3pkwcJCEeOQaItKldfYpg" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_j3pkwcJCEeOQaItKldfYpg"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Stereotypes-ElementExtension-isRequired" name="isRequired" type="MDTOCL-MDT_OCL_Stereotypes-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_BWwV4cZbEeOTV8sx3nKyiA" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_BWwV4cZbEeOTV8sx3nKyiA"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Stereotypes-ElementExtension-stereotype" name="stereotype" type="MDTOCL-MDT_OCL_Stereotypes-Stereotype"/>
       </packagedElement>
@@ -363,7 +363,7 @@
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_2zQSkrqAEeOj4te9p7yCCw" value="1"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Stereotypes-TypeExtension-isRequired" name="isRequired" type="MDTOCL-MDT_OCL_Stereotypes-Boolean">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_csryULqAEeOj4te9p7yCCw" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_csryULqAEeOj4te9p7yCCw"/>
         </ownedAttribute>
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Stereotypes-TypeExtension-stereotype" name="owningStereotype" type="MDTOCL-MDT_OCL_Stereotypes-Stereotype" association="MDTOCL-MDT_OCL_Stereotypes-A_extensionOfs_stereotype">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_krHogbqAEeOj4te9p7yCCw" value="1"/>
@@ -388,13 +388,17 @@
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_ZT_t8C9dEeSc2LncrXmagQ" name="Operation">
-        <ownedAttribute xmi:id="_SmDkYS9fEeSc2LncrXmagQ" name="isTypeof" type="_iauzUOLYEeGCOa0Md3lQkQ">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_SmDkYi9fEeSc2LncrXmagQ" value="false"/>
+        <ownedAttribute xmi:id="_SmDkYS9fEeSc2LncrXmagQ" name="isTransient" type="_iauzUOLYEeGCOa0Md3lQkQ">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Vnm5gG3NEea6eqM5X_iPSw"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_SmDkYi9fEeSc2LncrXmagQ"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_HyinIG3NEea6eqM5X_iPSw" name="isTypeof" type="_iauzUOLYEeGCOa0Md3lQkQ">
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_HyinIW3NEea6eqM5X_iPSw"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_UUTg0C9dEeSc2LncrXmagQ" name="Parameter">
         <ownedAttribute xmi:id="_0hXaMC-JEeSc2LncrXmagQ" name="isTypeof" type="_iauzUOLYEeGCOa0Md3lQkQ">
-          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_0hXaMS-JEeSc2LncrXmagQ" value="false"/>
+          <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_0hXaMS-JEeSc2LncrXmagQ"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_4hPfAC9bEeSc2LncrXmagQ" name="Type" isAbstract="true"/>
