@@ -707,7 +707,15 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)? 
 	 *         qualifiers+='derived'? 
 	 *         (
-	 *             (qualifiers+='!derived' | qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique')? 
+	 *             (
+	 *                 qualifiers+='!derived' | 
+	 *                 qualifiers+='ordered' | 
+	 *                 qualifiers+='!ordered' | 
+	 *                 qualifiers+='transient' | 
+	 *                 qualifiers+='!transient' | 
+	 *                 qualifiers+='unique' | 
+	 *                 qualifiers+='!unique'
+	 *             )? 
 	 *             qualifiers+='derived'?
 	 *         )* 
 	 *         (

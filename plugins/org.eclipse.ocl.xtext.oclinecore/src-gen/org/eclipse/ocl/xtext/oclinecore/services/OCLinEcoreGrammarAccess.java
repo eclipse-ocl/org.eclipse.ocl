@@ -1671,9 +1671,13 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cQualifiersAssignment_9_1_0_3 = (Assignment)cAlternatives_9_1_0.eContents().get(3);
 		private final Keyword cQualifiersOrderedKeyword_9_1_0_3_0 = (Keyword)cQualifiersAssignment_9_1_0_3.eContents().get(0);
 		private final Assignment cQualifiersAssignment_9_1_0_4 = (Assignment)cAlternatives_9_1_0.eContents().get(4);
-		private final Keyword cQualifiersUniqueKeyword_9_1_0_4_0 = (Keyword)cQualifiersAssignment_9_1_0_4.eContents().get(0);
+		private final Keyword cQualifiersTransientKeyword_9_1_0_4_0 = (Keyword)cQualifiersAssignment_9_1_0_4.eContents().get(0);
 		private final Assignment cQualifiersAssignment_9_1_0_5 = (Assignment)cAlternatives_9_1_0.eContents().get(5);
-		private final Keyword cQualifiersUniqueKeyword_9_1_0_5_0 = (Keyword)cQualifiersAssignment_9_1_0_5.eContents().get(0);
+		private final Keyword cQualifiersTransientKeyword_9_1_0_5_0 = (Keyword)cQualifiersAssignment_9_1_0_5.eContents().get(0);
+		private final Assignment cQualifiersAssignment_9_1_0_6 = (Assignment)cAlternatives_9_1_0.eContents().get(6);
+		private final Keyword cQualifiersUniqueKeyword_9_1_0_6_0 = (Keyword)cQualifiersAssignment_9_1_0_6.eContents().get(0);
+		private final Assignment cQualifiersAssignment_9_1_0_7 = (Assignment)cAlternatives_9_1_0.eContents().get(7);
+		private final Keyword cQualifiersUniqueKeyword_9_1_0_7_0 = (Keyword)cQualifiersAssignment_9_1_0_7.eContents().get(0);
 		private final Keyword cCommaKeyword_9_1_1 = (Keyword)cGroup_9_1.eContents().get(1);
 		private final Keyword cRightCurlyBracketKeyword_9_2 = (Keyword)cGroup_9.eContents().get(2);
 		private final Alternatives cAlternatives_10 = (Alternatives)cGroup.eContents().get(10);
@@ -1701,18 +1705,20 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//	ownedSignature=TemplateSignatureCS? name=UnrestrictedName '(' (ownedParameters+=ParameterCS (','
 		//	ownedParameters+=ParameterCS)*)? ')' (':' ownedType=TypedMultiplicityRefCS)? ('throws' ownedExceptions+=TypedRefCS
 		//	(',' ownedExceptions+=TypedRefCS)*)? ('{' ((qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' |
-		//	qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique') ','?)+ '}')? ('{'
-		//	(ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PreconditionConstraintCS | 'body' UnrestrictedName? ':'
-		//	ownedBodyExpressions+=SpecificationCS? ';' | ownedPostconditions+=PostconditionConstraintCS)* '}' | ';')
+		//	qualifiers+='!ordered' | qualifiers+='transient' | qualifiers+='!transient' | qualifiers+='unique' |
+		//	qualifiers+='!unique') ','?)+ '}')? ('{' (ownedAnnotations+=AnnotationElementCS |
+		//	ownedPreconditions+=PreconditionConstraintCS | 'body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS?
+		//	';' | ownedPostconditions+=PostconditionConstraintCS)* '}' | ';')
 		@Override public ParserRule getRule() { return rule; }
 
 		//(qualifiers+='static' qualifiers+='definition'? | qualifiers+='definition' qualifiers+='static'?)? 'operation'
 		//ownedSignature=TemplateSignatureCS? name=UnrestrictedName '(' (ownedParameters+=ParameterCS (','
 		//ownedParameters+=ParameterCS)*)? ')' (':' ownedType=TypedMultiplicityRefCS)? ('throws' ownedExceptions+=TypedRefCS
 		//(',' ownedExceptions+=TypedRefCS)*)? ('{' ((qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' |
-		//qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique') ','?)+ '}')? ('{'
-		//(ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PreconditionConstraintCS | 'body' UnrestrictedName? ':'
-		//ownedBodyExpressions+=SpecificationCS? ';' | ownedPostconditions+=PostconditionConstraintCS)* '}' | ';')
+		//qualifiers+='!ordered' | qualifiers+='transient' | qualifiers+='!transient' | qualifiers+='unique' |
+		//qualifiers+='!unique') ','?)+ '}')? ('{' (ownedAnnotations+=AnnotationElementCS |
+		//ownedPreconditions+=PreconditionConstraintCS | 'body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS? ';'
+		//| ownedPostconditions+=PostconditionConstraintCS)* '}' | ';')
 		public Group getGroup() { return cGroup; }
 
 		//(qualifiers+='static' qualifiers+='definition'? | qualifiers+='definition' qualifiers+='static'?)?
@@ -1827,18 +1833,18 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getOwnedExceptionsTypedRefCSParserRuleCall_8_2_1_0() { return cOwnedExceptionsTypedRefCSParserRuleCall_8_2_1_0; }
 
 		//('{' ((qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' | qualifiers+='!ordered' |
-		//qualifiers+='unique' | qualifiers+='!unique') ','?)+ '}')?
+		//qualifiers+='transient' | qualifiers+='!transient' | qualifiers+='unique' | qualifiers+='!unique') ','?)+ '}')?
 		public Group getGroup_9() { return cGroup_9; }
 
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_9_0() { return cLeftCurlyBracketKeyword_9_0; }
 
-		//((qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique'
-		//| qualifiers+='!unique') ','?)+
+		//((qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' | qualifiers+='!ordered' |
+		//qualifiers+='transient' | qualifiers+='!transient' | qualifiers+='unique' | qualifiers+='!unique') ','?)+
 		public Group getGroup_9_1() { return cGroup_9_1; }
 
-		//(qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique'
-		//| qualifiers+='!unique')
+		//(qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' | qualifiers+='!ordered' |
+		//qualifiers+='transient' | qualifiers+='!transient' | qualifiers+='unique' | qualifiers+='!unique')
 		public Alternatives getAlternatives_9_1_0() { return cAlternatives_9_1_0; }
 
 		//qualifiers+='derived'
@@ -1865,17 +1871,29 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 		//'!ordered'
 		public Keyword getQualifiersOrderedKeyword_9_1_0_3_0() { return cQualifiersOrderedKeyword_9_1_0_3_0; }
 
-		//qualifiers+='unique'
+		//qualifiers+='transient'
 		public Assignment getQualifiersAssignment_9_1_0_4() { return cQualifiersAssignment_9_1_0_4; }
 
-		//'unique'
-		public Keyword getQualifiersUniqueKeyword_9_1_0_4_0() { return cQualifiersUniqueKeyword_9_1_0_4_0; }
+		//'transient'
+		public Keyword getQualifiersTransientKeyword_9_1_0_4_0() { return cQualifiersTransientKeyword_9_1_0_4_0; }
 
-		//qualifiers+='!unique'
+		//qualifiers+='!transient'
 		public Assignment getQualifiersAssignment_9_1_0_5() { return cQualifiersAssignment_9_1_0_5; }
 
+		//'!transient'
+		public Keyword getQualifiersTransientKeyword_9_1_0_5_0() { return cQualifiersTransientKeyword_9_1_0_5_0; }
+
+		//qualifiers+='unique'
+		public Assignment getQualifiersAssignment_9_1_0_6() { return cQualifiersAssignment_9_1_0_6; }
+
+		//'unique'
+		public Keyword getQualifiersUniqueKeyword_9_1_0_6_0() { return cQualifiersUniqueKeyword_9_1_0_6_0; }
+
+		//qualifiers+='!unique'
+		public Assignment getQualifiersAssignment_9_1_0_7() { return cQualifiersAssignment_9_1_0_7; }
+
 		//'!unique'
-		public Keyword getQualifiersUniqueKeyword_9_1_0_5_0() { return cQualifiersUniqueKeyword_9_1_0_5_0; }
+		public Keyword getQualifiersUniqueKeyword_9_1_0_7_0() { return cQualifiersUniqueKeyword_9_1_0_7_0; }
 
 		//','?
 		public Keyword getCommaKeyword_9_1_1() { return cCommaKeyword_9_1_1; }
@@ -3515,9 +3533,10 @@ public class OCLinEcoreGrammarAccess extends AbstractGrammarElementFinder {
 	//	ownedSignature=TemplateSignatureCS? name=UnrestrictedName '(' (ownedParameters+=ParameterCS (','
 	//	ownedParameters+=ParameterCS)*)? ')' (':' ownedType=TypedMultiplicityRefCS)? ('throws' ownedExceptions+=TypedRefCS
 	//	(',' ownedExceptions+=TypedRefCS)*)? ('{' ((qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' |
-	//	qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique') ','?)+ '}')? ('{'
-	//	(ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PreconditionConstraintCS | 'body' UnrestrictedName? ':'
-	//	ownedBodyExpressions+=SpecificationCS? ';' | ownedPostconditions+=PostconditionConstraintCS)* '}' | ';')
+	//	qualifiers+='!ordered' | qualifiers+='transient' | qualifiers+='!transient' | qualifiers+='unique' |
+	//	qualifiers+='!unique') ','?)+ '}')? ('{' (ownedAnnotations+=AnnotationElementCS |
+	//	ownedPreconditions+=PreconditionConstraintCS | 'body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS?
+	//	';' | ownedPostconditions+=PostconditionConstraintCS)* '}' | ';')
 	public OperationCSElements getOperationCSAccess() {
 		return pOperationCS;
 	}

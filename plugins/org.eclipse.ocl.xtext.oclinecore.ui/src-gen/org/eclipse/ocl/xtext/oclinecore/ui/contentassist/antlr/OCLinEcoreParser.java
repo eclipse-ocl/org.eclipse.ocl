@@ -397,6 +397,8 @@ public class OCLinEcoreParser extends AbstractContentAssistParser {
 					put(grammarAccess.getOperationCSAccess().getQualifiersAssignment_9_1_0_3(), "rule__OperationCS__QualifiersAssignment_9_1_0_3");
 					put(grammarAccess.getOperationCSAccess().getQualifiersAssignment_9_1_0_4(), "rule__OperationCS__QualifiersAssignment_9_1_0_4");
 					put(grammarAccess.getOperationCSAccess().getQualifiersAssignment_9_1_0_5(), "rule__OperationCS__QualifiersAssignment_9_1_0_5");
+					put(grammarAccess.getOperationCSAccess().getQualifiersAssignment_9_1_0_6(), "rule__OperationCS__QualifiersAssignment_9_1_0_6");
+					put(grammarAccess.getOperationCSAccess().getQualifiersAssignment_9_1_0_7(), "rule__OperationCS__QualifiersAssignment_9_1_0_7");
 					put(grammarAccess.getOperationCSAccess().getOwnedAnnotationsAssignment_10_0_1_0(), "rule__OperationCS__OwnedAnnotationsAssignment_10_0_1_0");
 					put(grammarAccess.getOperationCSAccess().getOwnedPreconditionsAssignment_10_0_1_1(), "rule__OperationCS__OwnedPreconditionsAssignment_10_0_1_1");
 					put(grammarAccess.getOperationCSAccess().getOwnedBodyExpressionsAssignment_10_0_1_2_3(), "rule__OperationCS__OwnedBodyExpressionsAssignment_10_0_1_2_3");
