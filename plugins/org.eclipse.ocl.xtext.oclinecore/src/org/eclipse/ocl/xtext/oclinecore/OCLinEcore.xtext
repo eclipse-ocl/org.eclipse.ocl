@@ -189,6 +189,7 @@ OperationCS returns base::OperationCS:
 	('throws' ownedExceptions+=TypedRefCS (',' ownedExceptions+=TypedRefCS)*)?
 	('{'((qualifiers+='derived' | qualifiers+='!derived' |
 		  qualifiers+='ordered' | qualifiers+='!ordered' |
+		  qualifiers+='transient' | qualifiers+='!transient' |
 		  qualifiers+='unique' | qualifiers+='!unique'
 		) ','? )+
 	'}')?
