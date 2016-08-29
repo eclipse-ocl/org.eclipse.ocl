@@ -221,6 +221,8 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 		List<LanguageExpression> bodyExpressions = object.getBodyExpression() != null ? Collections.singletonList(object.getBodyExpression()) : Collections.<LanguageExpression>emptyList();
 		context.refreshList(csElement.getOwnedBodyExpressions(), context.visitDeclarations(SpecificationCS.class, bodyExpressions, null));
 		context.refreshList(csElement.getOwnedPostconditions(), context.visitDeclarations(ConstraintCS.class, object.getOwnedPostconditions(), null));
+		List<@NonNull String> qualifiers = ClassUtil.nullFree(csElement.getQualifiers());
+		context.refreshQualifiers(qualifiers, "transient", "!transient", object.isIsTransient() ? Boolean.TRUE : null);
 		return csElement;
 	}
 

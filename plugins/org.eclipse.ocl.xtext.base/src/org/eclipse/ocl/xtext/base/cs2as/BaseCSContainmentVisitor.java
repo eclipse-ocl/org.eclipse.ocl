@@ -114,7 +114,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	protected Continuation<?> refreshClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull StructuredClassCS csElement) {
 		pivotElement.setIsAbstract(csElement.isIsAbstract());
 		pivotElement.setIsInterface(csElement.isIsInterface());
-//		pivotElement.setIsStatic(qualifiers.contains("static"));
+		//		pivotElement.setIsStatic(qualifiers.contains("static"));
 		context.refreshPivotList(Property.class, pivotElement.getOwnedProperties(), csElement.getOwnedProperties());
 		context.refreshPivotList(Operation.class, pivotElement.getOwnedOperations(), csElement.getOwnedOperations());
 		refreshClassifier(pivotElement, csElement);
@@ -158,7 +158,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		if (name == null) {
 			throw new IllegalStateException("Null name");
 		}
-/*		if ((name == null) && (csElement.eContainer() == null)) {
+		/*		if ((name == null) && (csElement.eContainer() == null)) {
 			Resource csResource = csElement.eResource();
 			if (csResource != null) {
 				URI csURI = csResource.getURI();
@@ -210,7 +210,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 			throw new IllegalStateException("Null resource for root package");
 		}
 		Object pivotObject = context.getConverter().getPivotElement(csElement);
-//		Object pivotObject = csElement.getPivot();
+		//		Object pivotObject = csElement.getPivot();
 		if (pivotObject == null) {
 			Resource asResource = context.getConverter().getASResource();
 			for (EObject oldRoot : asResource.getContents()) {
@@ -250,18 +250,18 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		return pivotElement;
 	}
 
-	
+
 	/**
 	 * Method used to refresh every {@link RootPackageCS} element.
-	 * 
-	 * There are some Roots which may own packages like those created in OCLinEcore or StdLin documents 
+	 *
+	 * There are some Roots which may own packages like those created in OCLinEcore or StdLin documents
 	 */
 	protected @NonNull <@NonNull T extends Model> T refreshRootPackage(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, @NonNull RootPackageCS csElement) {
 		@NonNull T pivotElement = refreshRoot(pivotClass, pivotEClass, csElement);
 		context.refreshPivotList(org.eclipse.ocl.pivot.Package.class, pivotElement.getOwnedPackages(), csElement.getOwnedPackages());
 		return pivotElement;
 	}
-	
+
 	@Override
 	public Continuation<?> visitAnnotationCS(@NonNull AnnotationCS csElement) {
 		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.ANNOTATION;
@@ -320,7 +320,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 
 	@Override
 	public Continuation<?> visitElementCS(@NonNull ElementCS csElement) {
-// FIXME		return visiting(csElement);
+		// FIXME		return visiting(csElement);
 		System.out.println("Unsupported " + csElement.eClass().getName() + " for CS2AS Containment pass");
 		return null;
 	}
@@ -359,7 +359,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 			context.addDiagnostic(csElement, "An all-package import cannot have an associated alias name");
 		}
 		Namespace namespace = csElement.getReferredNamespace();
-		if ((namespace != null) && !namespace.eIsProxy()) {			
+		if ((namespace != null) && !namespace.eIsProxy()) {
 			Namespace oldNamespace = pivotElement.getImportedNamespace();
 			if (namespace != oldNamespace) {
 				pivotElement.setImportedNamespace(namespace);
@@ -403,6 +403,9 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		List<SpecificationCS> csBodyExpressions = csElement.getOwnedBodyExpressions();
 		SpecificationCS csBodyExpression = csBodyExpressions.size() > 0 ? csBodyExpressions.get(0) : null;
 		pivotElement.setBodyExpression(PivotUtil.getPivot(ExpressionInOCL.class, csBodyExpression));
+		List<String> qualifiers = csElement.getQualifiers();
+		assert qualifiers != null;
+		pivotElement.setIsTransient(ElementUtil.getQualifier(qualifiers, "transient", "!transient", true));
 		return null;
 	}
 

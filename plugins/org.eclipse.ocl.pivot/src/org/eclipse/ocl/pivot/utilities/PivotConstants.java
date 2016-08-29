@@ -13,6 +13,9 @@ package org.eclipse.ocl.pivot.utilities;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.OCLConstants;
 
+/**
+ * @noimplement This interface is not intended to be implemented by clients.
+ */
 public interface PivotConstants
 {
 	/**
@@ -23,17 +26,17 @@ public interface PivotConstants
 	 * intended to be used by client code.
 	 */
 	static final @NonNull String AS_METAMODEL_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/ASMetamodel";
-	
+
 	/**
 	 * The Package name of the shared metamodel.
 	 */
 	static final @NonNull String METAMODEL_NAME = "$metamodel$";
-	
+
 	/**
 	 * The Package name of the shared types metamodel.
 	 */
 	static final @NonNull String TYPES_METAMODEL_NAME = "$types$";	// FIXME Use extension point
-	
+
 	/**
 	 * The Package name of the shared uml metamodel.
 	 */
@@ -45,7 +48,7 @@ public interface PivotConstants
 	static final @NonNull String OCLSTDLIB_FILE_EXTENSION = "oclstdlib";
 	static final @NonNull String OCL_AS_FILE_EXTENSION = "oclas";
 	static final @NonNull String DOT_OCL_AS_FILE_EXTENSION = "." + OCL_AS_FILE_EXTENSION;
-	
+
 	/**
 	 * String-valued URI prefix of a package defining the primitive types. Proxy references to
 	 * e.g. OCL's String rather than Ecore's EString are constructed by just appending 'String' to
@@ -65,7 +68,17 @@ public interface PivotConstants
 	 */
 	static final @NonNull String COLLECTION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Collection";
 	static final @NonNull String COLLECTION_IS_NULL_FREE = "nullFree";
-	
+
+	/**
+	 * EOperation annotation identifying that anoperation is transient (not-cached).
+	 * @since 1.3
+	 */
+	static final @NonNull String OPERATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Operation";
+	/**
+	 * @since 1.3
+	 */
+	static final @NonNull String OPERATION_IS_TRANSIENT = "isTransient";
+
 	/**
 	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.
 	 * No details are defined for this EAnnotation.
@@ -92,10 +105,10 @@ public interface PivotConstants
 	static final @NonNull String ORPHANAGE_PREFIX = "orphanage";
 	static final @NonNull String ORPHANAGE_URI = "http://www.eclipse.org/ocl/2015/Orphanage";
 	static final @NonNull String PRIMITIVES_URI = "http://www.eclipse.org/ocl/2015/Primitives";
-	
+
 	static final @NonNull String OCL_LANGUAGE = "OCL";			// More visible UMLUtil.Language_OCL
 	static final @NonNull String OCL_NAME = "ocl";
-	
+
 	static final @NonNull String MESSAGE_PART_NAME = "message";
 	static final @NonNull String SEVERITY_PART_NAME = "severity";
 	static final @NonNull String STATUS_PART_NAME = "status";
