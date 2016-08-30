@@ -14,11 +14,6 @@ package org.eclipse.ocl.examples.test.xtext;
 import java.io.File;
 import java.util.Arrays;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
-
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -51,30 +46,35 @@ import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import junit.textui.TestRunner;
+
 /**
  * Tests for the Xtext editor support.
  */
 @SuppressWarnings("nls")
 public class AllXtextTests
-	extends TestCase {
+extends TestCase {
 
 	public AllXtextTests() {
 		super("");
 	}
 
 	public static Test suite() {
-//		if (System.getProperty("standalone") != null) {
-			// running tests stand-alone:  must set up the environment registry
-//			Environment.Registry.INSTANCE.registerEnvironment(
-//					EcoreEnvironmentFactory.INSTANCE.createEnvironment());
-//		}
+		//		if (System.getProperty("standalone") != null) {
+		// running tests stand-alone:  must set up the environment registry
+		//			Environment.Registry.INSTANCE.registerEnvironment(
+		//					EcoreEnvironmentFactory.INSTANCE.createEnvironment());
+		//		}
 
-    	String testSuiteName = System.getProperty("testSuiteName", "Xtext Editor Support");
-    	String testLogFile = System.getProperty("testLogFile", null);
-    	if (testLogFile != null) {
-    		PivotTestCase.createTestLog(new File(testLogFile));
-    	}
-		TestSuite result = new TestSuite(testSuiteName);			
+		String testSuiteName = System.getProperty("testSuiteName", "Xtext Editor Support");
+		String testLogFile = System.getProperty("testLogFile", null);
+		if (testLogFile != null) {
+			PivotTestCase.createTestLog(new File(testLogFile));
+		}
+		TestSuite result = new TestSuite(testSuiteName);
 		result.addTestSuite(MonikerTests.class);
 		result.addTestSuite(PivotTests.class);
 		result.addTestSuite(OCLstdlibTests.class);
@@ -118,6 +118,7 @@ public class AllXtextTests
 		result.addTestSuite(ValidateTests.class);
 		result.addTestSuite(PivotDocumentationExamples.class);
 		result.addTestSuite(OCLinEcoreTutorialExamples.class);
+		result.addTestSuite(OCLCompilerTests.class);
 		result.addTestSuite(UsageTests.class);
 		result.addTestSuite(StandaloneExecutionTests.class);
 		result.addTestSuite(StandaloneParserTests.class);
@@ -129,7 +130,7 @@ public class AllXtextTests
 			result.addTestSuite(EditorTests.class);
 			result.addTestSuite(FileNewWizardTest.class);
 			result.addTestSuite(PluginLabelTests.class);
-//			result.addTestSuite(DebuggerTests.class);
+			//			result.addTestSuite(DebuggerTests.class);
 		}
 		else {
 			result.addTestSuite(StandaloneLabelTests.class);
@@ -139,11 +140,11 @@ public class AllXtextTests
 	}
 
 	public Object run(Object args)
-		throws Exception {
+			throws Exception {
 
 		TestRunner.run(suite());
-    	PivotTestCase.closeTestLog();
+		PivotTestCase.closeTestLog();
 		return Arrays
-			.asList(new String[] {"Please see raw test suite output for details."});
+				.asList(new String[] {"Please see raw test suite output for details."});
 	}
 }

@@ -11,5 +11,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="**/*.launch" kind="src" path="src"/>
+	<classpathentry kind="src" path="src-gen"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

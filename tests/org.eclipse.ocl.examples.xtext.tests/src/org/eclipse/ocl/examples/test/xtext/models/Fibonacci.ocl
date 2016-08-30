@@ -1,0 +1,21 @@
+import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/'
+
+--package ecore
+--context ELong
+--def: fibonacci() : Integer =
+--	if self <= 0 then 0
+--	else if self = 1 then 1
+--	else 
+--	(self-2).oclAsType(ELong).fibonacci() + (self-1).oclAsType(ELong).fibonacci()
+--	endif endif
+
+package ocl
+context _Integer
+def: fibonacci() : Integer =
+	if self <= 0 then 0
+	else if self = 1 then 1
+	else 
+	(self-2).fibonacci() + (self-1).fibonacci()
+	endif endif
+
+endpackage
