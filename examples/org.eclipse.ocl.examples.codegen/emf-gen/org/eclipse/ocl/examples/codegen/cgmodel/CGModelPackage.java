@@ -2181,13 +2181,31 @@ public interface CGModelPackage extends EPackage {
 	int CG_CLASS__TEMPLATE_PARAMETERS = CG_NAMED_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
+	 * The feature id for the '<em><b>Classes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CLASS__CLASSES = CG_NAMED_ELEMENT_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Containing Class</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CLASS__CONTAINING_CLASS = CG_NAMED_ELEMENT_FEATURE_COUNT + 8;
+
+	/**
 	 * The number of structural features of the '<em>CG Class</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CG_CLASS_FEATURE_COUNT = CG_NAMED_ELEMENT_FEATURE_COUNT + 7;
+	int CG_CLASS_FEATURE_COUNT = CG_NAMED_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -9109,6 +9127,28 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGClass_TemplateParameters();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getClasses <em>Classes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Classes</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getClasses()
+	 * @see #getCGClass()
+	 * @generated
+	 */
+	EReference getCGClass_Classes();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getContainingClass <em>Containing Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Containing Class</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getContainingClass()
+	 * @see #getCGClass()
+	 * @generated
+	 */
+	EReference getCGClass_ContainingClass();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp <em>CG Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11248,6 +11288,22 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_CLASS__TEMPLATE_PARAMETERS = eINSTANCE.getCGClass_TemplateParameters();
+
+		/**
+		 * The meta object literal for the '<em><b>Classes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_CLASS__CLASSES = eINSTANCE.getCGClass_Classes();
+
+		/**
+		 * The meta object literal for the '<em><b>Containing Class</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_CLASS__CONTAINING_CLASS = eINSTANCE.getCGClass_ContainingClass();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCallExpImpl <em>CG Call Exp</em>}' class.

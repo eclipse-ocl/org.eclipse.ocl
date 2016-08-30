@@ -88,8 +88,8 @@
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGClass" eSuperTypes="#//CGNamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="containingPackage" lowerBound="1"
-        eType="#//CGPackage" resolveProxies="false" eOpposite="#//CGPackage/classes"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containingPackage" eType="#//CGPackage"
+        resolveProxies="false" eOpposite="#//CGPackage/classes"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="operations" ordered="false"
         upperBound="-1" eType="#//CGOperation" containment="true" resolveProxies="false"
         eOpposite="#//CGOperation/containingClass"/>
@@ -112,6 +112,11 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="templateParameters" unique="false"
         upperBound="-1" eType="#//CGClass" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="classes" ordered="false"
+        upperBound="-1" eType="#//CGClass" containment="true" resolveProxies="false"
+        eOpposite="#//CGClass/containingClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containingClass" eType="#//CGClass"
+        resolveProxies="false" eOpposite="#//CGClass/classes"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGCollectionExp" eSuperTypes="#//CGValuedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parts" upperBound="-1"

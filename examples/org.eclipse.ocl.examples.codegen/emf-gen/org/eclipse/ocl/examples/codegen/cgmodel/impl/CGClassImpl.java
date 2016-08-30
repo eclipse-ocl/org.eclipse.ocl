@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -48,6 +48,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGClassImpl#getSuperTypes <em>Super Types</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGClassImpl#isInterface <em>Interface</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGClassImpl#getTemplateParameters <em>Template Parameters</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGClassImpl#getClasses <em>Classes</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGClassImpl#getContainingClass <em>Containing Class</em>}</li>
  * </ul>
  *
  * @generated
@@ -122,6 +124,16 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 	 * @ordered
 	 */
 	protected EList<CGClass> templateParameters;
+
+	/**
+	 * The cached value of the '{@link #getClasses() <em>Classes</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getClasses()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<CGClass> classes;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -288,6 +300,62 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 	 * @generated
 	 */
 	@Override
+	public List<CGClass> getClasses() {
+		if (classes == null) {
+			classes = new EObjectContainmentWithInverseEList<CGClass>(CGClass.class, this, CGModelPackage.CG_CLASS__CLASSES, CGModelPackage.CG_CLASS__CONTAINING_CLASS);
+		}
+		return classes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CGClass getContainingClass() {
+		if (eContainerFeatureID() != CGModelPackage.CG_CLASS__CONTAINING_CLASS) return null;
+		return (CGClass)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetContainingClass(CGClass newContainingClass, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newContainingClass, CGModelPackage.CG_CLASS__CONTAINING_CLASS, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setContainingClass(CGClass newContainingClass) {
+		if (newContainingClass != eInternalContainer() || (eContainerFeatureID() != CGModelPackage.CG_CLASS__CONTAINING_CLASS && newContainingClass != null)) {
+			if (EcoreUtil.isAncestor(this, newContainingClass))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newContainingClass != null)
+				msgs = ((InternalEObject)newContainingClass).eInverseAdd(this, CGModelPackage.CG_CLASS__CLASSES, CGClass.class, msgs);
+			msgs = basicSetContainingClass(newContainingClass, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CLASS__CONTAINING_CLASS, newContainingClass, newContainingClass));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		return super.toString();
 	}
@@ -309,6 +377,12 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOperations()).basicAdd(otherEnd, msgs);
 			case CGModelPackage.CG_CLASS__PROPERTIES:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getProperties()).basicAdd(otherEnd, msgs);
+			case CGModelPackage.CG_CLASS__CLASSES:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getClasses()).basicAdd(otherEnd, msgs);
+			case CGModelPackage.CG_CLASS__CONTAINING_CLASS:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetContainingClass((CGClass)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -329,6 +403,10 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 				return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
 			case CGModelPackage.CG_CLASS__INVARIANTS:
 				return ((InternalEList<?>)getInvariants()).basicRemove(otherEnd, msgs);
+			case CGModelPackage.CG_CLASS__CLASSES:
+				return ((InternalEList<?>)getClasses()).basicRemove(otherEnd, msgs);
+			case CGModelPackage.CG_CLASS__CONTAINING_CLASS:
+				return basicSetContainingClass(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -343,6 +421,8 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 		switch (eContainerFeatureID()) {
 			case CGModelPackage.CG_CLASS__CONTAINING_PACKAGE:
 				return eInternalContainer().eInverseRemove(this, CGModelPackage.CG_PACKAGE__CLASSES, CGPackage.class, msgs);
+			case CGModelPackage.CG_CLASS__CONTAINING_CLASS:
+				return eInternalContainer().eInverseRemove(this, CGModelPackage.CG_CLASS__CLASSES, CGClass.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -369,6 +449,10 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 				return isInterface();
 			case CGModelPackage.CG_CLASS__TEMPLATE_PARAMETERS:
 				return getTemplateParameters();
+			case CGModelPackage.CG_CLASS__CLASSES:
+				return getClasses();
+			case CGModelPackage.CG_CLASS__CONTAINING_CLASS:
+				return getContainingClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -408,6 +492,13 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 				getTemplateParameters().clear();
 				getTemplateParameters().addAll((Collection<? extends CGClass>)newValue);
 				return;
+			case CGModelPackage.CG_CLASS__CLASSES:
+				getClasses().clear();
+				getClasses().addAll((Collection<? extends CGClass>)newValue);
+				return;
+			case CGModelPackage.CG_CLASS__CONTAINING_CLASS:
+				setContainingClass((CGClass)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -441,6 +532,12 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 			case CGModelPackage.CG_CLASS__TEMPLATE_PARAMETERS:
 				getTemplateParameters().clear();
 				return;
+			case CGModelPackage.CG_CLASS__CLASSES:
+				getClasses().clear();
+				return;
+			case CGModelPackage.CG_CLASS__CONTAINING_CLASS:
+				setContainingClass((CGClass)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -467,6 +564,10 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 				return interface_ != INTERFACE_EDEFAULT;
 			case CGModelPackage.CG_CLASS__TEMPLATE_PARAMETERS:
 				return templateParameters != null && !templateParameters.isEmpty();
+			case CGModelPackage.CG_CLASS__CLASSES:
+				return classes != null && !classes.isEmpty();
+			case CGModelPackage.CG_CLASS__CONTAINING_CLASS:
+				return getContainingClass() != null;
 		}
 		return super.eIsSet(featureID);
 	}

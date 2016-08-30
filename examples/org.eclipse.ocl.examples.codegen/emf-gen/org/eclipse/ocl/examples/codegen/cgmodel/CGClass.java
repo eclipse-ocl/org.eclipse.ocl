@@ -30,6 +30,8 @@ import org.eclipse.jdt.annotation.NonNull;
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getSuperTypes <em>Super Types</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#isInterface <em>Interface</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getTemplateParameters <em>Template Parameters</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getClasses <em>Classes</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getContainingClass <em>Containing Class</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGClass()
@@ -138,6 +140,50 @@ public interface CGClass extends CGNamedElement {
 	 * @generated
 	 */
 	List<CGClass> getTemplateParameters();
+
+	/**
+	 * Returns the value of the '<em><b>Classes</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass}.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getContainingClass <em>Containing Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Classes</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Classes</em>' containment reference list.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGClass_Classes()
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getContainingClass
+	 * @generated
+	 */
+	List<CGClass> getClasses();
+
+	/**
+	 * Returns the value of the '<em><b>Containing Class</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getClasses <em>Classes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Containing Class</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Containing Class</em>' container reference.
+	 * @see #setContainingClass(CGClass)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGClass_ContainingClass()
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getClasses
+	 * @generated
+	 */
+	CGClass getContainingClass();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getContainingClass <em>Containing Class</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Containing Class</em>' container reference.
+	 * @see #getContainingClass()
+	 * @generated
+	 */
+	void setContainingClass(CGClass value);
 
 	/**
 	 * Returns the value of the '<em><b>Containing Package</b></em>' container reference.
