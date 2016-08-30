@@ -2259,6 +2259,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
+		// FIXME This code is not used by any JUnit test
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
 			localContext = localContext2;
