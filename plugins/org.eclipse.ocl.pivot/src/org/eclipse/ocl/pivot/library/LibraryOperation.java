@@ -44,8 +44,10 @@ public interface LibraryOperation extends LibraryFeature
 	public interface LibraryOperationExtension2 extends LibraryOperationExtension
 	{
 		@Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
+
+		boolean isCached();
 	}
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Nullable Object dispatch(@NonNull Evaluator evaluator, @NonNull OperationCallExp callExp, @Nullable Object sourceValue);

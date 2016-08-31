@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.evaluation;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -51,13 +52,52 @@ import org.eclipse.ocl.pivot.values.NullValue;
  * @since 1.1
  */
 public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInternalExtension
-{	
+{
+	private final class EvaluationConstructor extends AbstractEvaluationConstructor
+	{
+		protected final LibraryOperation.@NonNull LibraryOperationExtension2 implementation;
+		protected final @NonNull OperationCallExp operationCallExp;
+
+		public EvaluationConstructor(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @NonNull OperationCallExp operationCallExp) {
+			super(AbstractExecutor.this.idResolver);
+			this.implementation = implementation;
+			this.operationCallExp = operationCallExp;
+		}
+
+		@Override
+		protected @NonNull Evaluation newInstance(@Nullable Object @NonNull [] theseValues) {
+			Object result = implementation.evaluate(AbstractExecutor.this, operationCallExp, theseValues);
+			return new EvaluationResult(result, theseValues);
+		}
+	}
+
+	private static final class EvaluationResult implements Evaluation
+	{
+		private @Nullable Object result;
+		private @Nullable Object @NonNull [] theseValues;
+
+		public EvaluationResult(@Nullable Object result, @Nullable Object @NonNull [] theseValues) {
+			this.result = result;
+			this.theseValues = theseValues;
+		}
+
+		@Override
+		public @Nullable Object getResult() {
+			return result;
+		}
+
+		@Override
+		public boolean isEqual(@NonNull IdResolver idResolver, @Nullable Object @NonNull [] thoseValues) {
+			return theseValues.equals(thoseValues);
+		}
+	}
+
 	// This is the same as HashMap's default initial capacity
 	private static final int DEFAULT_REGEX_CACHE_LIMIT = 16;
 
 	// this is the same as HashMap's default load factor
 	private static final float DEFAULT_REGEX_CACHE_LOAD_FACTOR = 0.75f;
-	
+
 	protected final EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	/**
 	 * @deprecated implement modelManager in derived class
@@ -76,9 +116,11 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	 * Lazily-created cache of reusable regex patterns to avoid
 	 * repeatedly parsing the same regexes.
 	 */
-	private /*@LazyNonNull*/ Map<String, Pattern> regexPatterns = null;
+	private /*@LazyNonNull*/ Map<@NonNull String, @NonNull Pattern> regexPatterns = null;
 
 	private EvaluationLogger logger = IndentingLogger.OUT;
+
+	private /*@LazyNonNull*/ Map<LibraryOperation.@NonNull LibraryOperationExtension, Evaluation.@NonNull Constructor> implementation2constructor = new HashMap<>();
 
 	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
 		this.environmentFactory = environmentFactory;
@@ -95,7 +137,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		this.modelManager = modelManager;
 		this.idResolver = (IdResolverExtension)environmentFactory.getIdResolver();
 	}
-	
+
 	@Override
 	public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {
 		evaluationEnvironment.add(referredVariable, value);
@@ -103,13 +145,13 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	protected EvaluationVisitor.@NonNull EvaluationVisitorExtension createEvaluationVisitor() {
 		EvaluationVisitor.EvaluationVisitorExtension result = new BasicEvaluationVisitor(this);
-	    
-	    if (environmentFactory.isEvaluationTracingEnabled()) {
-	        // decorate the evaluation visitor with tracing support
-	        result = new TracingEvaluationVisitor(result);
-	    }
-	    
-	    return result;
+
+		if (environmentFactory.isEvaluationTracingEnabled()) {
+			// decorate the evaluation visitor with tracing support
+			result = new TracingEvaluationVisitor(result);
+		}
+
+		return result;
 	}
 
 	/**
@@ -117,41 +159,41 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	 * implementation creates an access-ordered LRU cache with a limit of 16
 	 * entries. Subclasses may override to create a map with whatever different
 	 * performance characteristics may be required.
-	 * 
+	 *
 	 * @return the new regular-expression matcher cache
-	 * 
+	 *
 	 * @see #getRegexPattern(String)
 	 */
-	protected @NonNull Map<String, Pattern> createRegexCache() {
-		return new java.util.LinkedHashMap<String, Pattern>(
-			DEFAULT_REGEX_CACHE_LIMIT, DEFAULT_REGEX_CACHE_LOAD_FACTOR, true) {
+	protected @NonNull Map<@NonNull String, @NonNull Pattern> createRegexCache() {
+		return new java.util.LinkedHashMap<@NonNull String, @NonNull Pattern>(
+				DEFAULT_REGEX_CACHE_LIMIT, DEFAULT_REGEX_CACHE_LOAD_FACTOR, true) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected boolean removeEldestEntry(
-					Map.Entry<String, Pattern> eldest) {
+					Map.Entry<@NonNull String, @NonNull Pattern> eldest) {
 				return size() > DEFAULT_REGEX_CACHE_LIMIT;
 			}
 		};
 	}
-	
+
 	protected EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
 		return new BasicEvaluationEnvironment(evaluationEnvironment, executableObject, callingObject);
 	}
-	
+
 	/** @deprecated Evaluator no longer nests */
 	@Deprecated
-	@Override	
+	@Override
 	public @NonNull Evaluator createNestedEvaluator() {
 		return this;
 	}
 
 	protected EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension createRootEvaluationEnvironment(@NonNull NamedElement executableObject) {
 		return new BasicEvaluationEnvironment(this, executableObject);
-	} 
-	
-	@Override	
+	}
+
+	@Override
 	public void dispose() {}
 
 	@Override
@@ -163,7 +205,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	public @NonNull CompleteEnvironment getCompleteEnvironment() {
 		return environmentFactory.getCompleteEnvironment();
 	}
-	
+
 	@Override
 	public int getDiagnosticSeverity(int severityPreference, @Nullable Object resultValue) {
 		if (resultValue == null) {
@@ -196,10 +238,10 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		return evaluationVisitor2;
 	}
 
-//	@Override
-//	public @NonNull ExecutorInternal getExecutor() {
-//		return this;
-//	}
+	//	@Override
+	//	public @NonNull ExecutorInternal getExecutor() {
+	//		return this;
+	//	}
 
 	@Override
 	public IdResolver.@NonNull IdResolverExtension getIdResolver() {
@@ -231,14 +273,14 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		synchronized (regexPatterns) {
 			Pattern pattern = regexPatterns.get(regex);
 			if (pattern == null) {
-//				System.out.println("Compile " + regex);
+				//				System.out.println("Compile " + regex);
 				pattern = Pattern.compile(regex);
 				assert pattern != null;
 				regexPatterns.put(regex, pattern);
 			}
-//			else {
-//				System.out.println("Re-use " + regex);
-//			}
+			//			else {
+			//				System.out.println("Re-use " + regex);
+			//			}
 			return pattern;
 		}
 	}
@@ -268,15 +310,15 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Object... values) {
 		return idResolver.getStaticTypeOf(value, values);
 	}
- 
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values) {
 		return idResolver.getStaticTypeOf(value, values);
 	}
-    
+
 	@Override
 	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
-        return evaluationEnvironment.getValueOf(referredVariable);
+		return evaluationEnvironment.getValueOf(referredVariable);
 	}
 
 	@Override
@@ -343,7 +385,18 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		//	Dispatch operation
 		//
 		try {
-			Object result = implementation.evaluate(this, operationCallExp, sourceAndArgumentValues);
+			Object result;
+			if (implementation.isCached()) {
+				Evaluation.Constructor evaluationConstructor = implementation2constructor.get(implementation);
+				if (evaluationConstructor ==  null) {
+					evaluationConstructor = new EvaluationConstructor(implementation, operationCallExp);
+					implementation2constructor.put(implementation, evaluationConstructor);
+				}
+				result = evaluationConstructor.getUniqueEvaluationResult(sourceAndArgumentValues);
+			}
+			else {
+				result = implementation.evaluate(this, operationCallExp, sourceAndArgumentValues);
+			}
 			assert !(result instanceof NullValue);
 			return result;
 		}
