@@ -79,4 +79,9 @@ public class ConstrainedOperation extends AbstractOperation
 		}
 		return evaluate(executor, callExp, boxedSourceAndArgumentValues);
 	}
+
+	@Override
+	public @NonNull String toString() {
+		return String.valueOf(expressionInOCL.eContainer());
+	}
 }

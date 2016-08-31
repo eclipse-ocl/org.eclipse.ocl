@@ -45,9 +45,10 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	}
 
 	public @Nullable CGParameter createExecutorParameter() {
-		CGParameter executorParameter = CGModelFactory.eINSTANCE.createCGParameter();
-		setNames2(executorParameter, JavaConstants.EXECUTOR_NAME, JavaConstants.EXECUTOR_TYPE_ID);
-		return executorParameter;
+		CGParameter evaluatorParameter = CGModelFactory.eINSTANCE.createCGParameter();
+		setNames2(evaluatorParameter, JavaConstants.EXECUTOR_NAME, JavaConstants.EXECUTOR_TYPE_ID);
+		evaluatorParameter.setRequired(true);
+		return evaluatorParameter;
 	}
 
 	public @Nullable CGValuedElement createExecutorVariable() {
@@ -76,6 +77,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	public @Nullable CGParameter createTypeIdParameter() {
 		CGParameter typeIdParameter = CGModelFactory.eINSTANCE.createCGParameter();
 		setNames2(typeIdParameter, JavaConstants.TYPE_ID_NAME, JavaConstants.TYPE_ID_TYPE_ID);
+		typeIdParameter.setRequired(true);
 		return typeIdParameter;
 	}
 

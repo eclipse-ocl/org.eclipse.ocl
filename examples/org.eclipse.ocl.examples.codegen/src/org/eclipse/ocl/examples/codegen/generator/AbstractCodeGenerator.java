@@ -4,14 +4,16 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.generator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -31,6 +33,8 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull NameManager nameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
+	private /*@LazyNonNull*/ Set<@NonNull Operation> constrainedOperations = null;
+
 	private /*@LazyNonNull*/ CodeGenOptions options = null;
 	//
 	private /*@LazyNonNull*/ List<Exception> problems = null;
@@ -52,15 +56,18 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return environmentFactory;
+	public boolean addConstrainedOperation(@NonNull Operation constrainedOperation) {
+		if (constrainedOperations == null) {
+			constrainedOperations = new HashSet<>();
+		}
+		return constrainedOperations.add(constrainedOperation);
 	}
-	
+
 	@Override
 	public void addProblem(@NonNull Exception problem) {
 		List<Exception> problems2 = problems;
 		if (problems2 == null) {
-			problems = problems2 = new ArrayList<Exception>();
+			problems = problems2 = new ArrayList<>();
 		}
 		problems2.add(problem);
 	}
@@ -78,9 +85,18 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		return new CodeGenOptions();
 	}
 
+	protected @Nullable Iterable<@NonNull Operation> getConstrainedOperations() {
+		return constrainedOperations;
+	}
+
 	@Override
 	public @NonNull String getDefaultIndent() {
 		return defaultIndent;
+	}
+
+	@Override
+	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		return environmentFactory;
 	}
 
 	@Override
@@ -142,6 +158,6 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		DomainOperation localOperation = inheritance.lookupLocalOperation(metamodelManager, name, arguments);
 		return localOperation != null;
 	} */
-	
-//	protected abstract void resetLocals();
+
+	//	protected abstract void resetLocals();
 }

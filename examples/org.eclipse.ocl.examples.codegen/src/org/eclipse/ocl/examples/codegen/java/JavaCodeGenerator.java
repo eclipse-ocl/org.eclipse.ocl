@@ -23,12 +23,16 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -203,6 +207,17 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	public @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor() {
 		return new CG2JavaPreVisitor(getGlobalContext());
+	}
+
+	protected void createConstrainedOperations(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGClass cgClass) {
+		Iterable<@NonNull Operation> constrainedOperations = getConstrainedOperations();
+		if (constrainedOperations != null) {
+			for (@NonNull Operation constrainedOperation : constrainedOperations) {		// FIXME recurse for nested calls
+				CGNamedElement cgOperation = constrainedOperation.accept(as2cgVisitor);
+				cgClass.getOperations().add((CGOperation)cgOperation);
+			}
+		}
+
 	}
 
 	@Override

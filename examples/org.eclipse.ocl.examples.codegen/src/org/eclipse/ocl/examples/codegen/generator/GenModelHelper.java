@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -32,7 +32,10 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public interface GenModelHelper
 {
+	/** @deprecated use count argument */
+	@Deprecated
 	@NonNull Class<?> getAbstractOperationClass(@NonNull List<?> parameters);
+	@NonNull Class<?> getAbstractOperationClass(int parameterCount);
 	@Nullable Class<?> getEcoreFactoryClass(@NonNull EPackage ePackage);
 	@NonNull Class<?> getEcoreInterfaceClass(org.eclipse.ocl.pivot.@NonNull Class owningType) throws GenModelException;
 	@Nullable String getEcoreInterfaceClassName(@NonNull EClass eClass);
@@ -42,7 +45,7 @@ public interface GenModelHelper
 	@Nullable String getEcoreLiteralName(@NonNull EStructuralFeature eStructuralFeature);
 	@Nullable String getEcoreClassName(org.eclipse.ocl.pivot.@NonNull Class type);
 	@NonNull EnvironmentFactory getEnvironmentFactory();
-//	@Nullable GenClass getGenClass(org.eclipse.ocl.pivot.@NonNull Class type);
+	//	@Nullable GenClass getGenClass(org.eclipse.ocl.pivot.@NonNull Class type);
 	@Nullable GenClassifier getGenClassifier(org.eclipse.ocl.pivot.@NonNull Class type);
 	@NonNull GenFeature getGenFeature(@NonNull EStructuralFeature eStructuralFeature) throws GenModelException;
 	@Nullable GenOperation getGenOperation(@NonNull Operation operation);
@@ -63,11 +66,11 @@ public interface GenModelHelper
 	@Nullable String getQualifiedFactoryInstanceAccessor(@NonNull EPackage ePackage);
 	@Nullable String getQualifiedFactoryInstanceAccessor(org.eclipse.ocl.pivot.@NonNull Class type);
 	@Nullable String getQualifiedPackageInterfaceName(@NonNull EPackage ePackage);
-//	@Nullable String getQualifiedLiteraleName(@NonNull EPackage ePackage);
-//	@Nullable String getQualifiedOperationImplementationName(@NonNull CodeGenSnippet snippet, @NonNull Operation anOperation, @NonNull String stereotype);
-//	@Nullable String getQualifiedPropertyImplementationName(@NonNull CodeGenSnippet snippet, @NonNull Property aProperty, @NonNull String stereotype);
-//	@Nullable String getQualifiedLiteralName(@NonNull CodeGenSnippet snippet, @NonNull Operation anOperation);
-//	@Nullable String getQualifiedLiteralName(@NonNull CodeGenSnippet snippet, @NonNull Property aProperty);
+	//	@Nullable String getQualifiedLiteraleName(@NonNull EPackage ePackage);
+	//	@Nullable String getQualifiedOperationImplementationName(@NonNull CodeGenSnippet snippet, @NonNull Operation anOperation, @NonNull String stereotype);
+	//	@Nullable String getQualifiedPropertyImplementationName(@NonNull CodeGenSnippet snippet, @NonNull Property aProperty, @NonNull String stereotype);
+	//	@Nullable String getQualifiedLiteralName(@NonNull CodeGenSnippet snippet, @NonNull Operation anOperation);
+	//	@Nullable String getQualifiedLiteralName(@NonNull CodeGenSnippet snippet, @NonNull Property aProperty);
 	@NonNull String getQualifiedValidatorClassName(@NonNull GenPackage genPackage);
 	@NonNull String getSetAccessor(@NonNull EStructuralFeature eStructuralFeature);
 	@NonNull String getTablesClassName(@NonNull GenPackage genPackage);

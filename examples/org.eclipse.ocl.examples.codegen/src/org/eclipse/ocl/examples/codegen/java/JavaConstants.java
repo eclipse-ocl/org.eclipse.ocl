@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -25,37 +25,39 @@ import org.eclipse.ocl.pivot.internal.library.UnboxedOppositeNavigationProperty;
 public class JavaConstants
 {
 	/**
-	 * Map from a Java class to the corresponding JavaTypeId. 
+	 * Map from a Java class to the corresponding JavaTypeId.
 	 */
 	private static @NonNull WeakHashMapOfWeakReference<Class<?>, JavaTypeId> javaTypes =
-		new WeakHashMapOfWeakReference<Class<?>, JavaTypeId>()
-		{
-			@Override
-			protected @NonNull JavaTypeId newId(@NonNull Class<?> javaClass) {
-				return new JavaTypeId(javaClass);
-			}
-		};
+			new WeakHashMapOfWeakReference<Class<?>, JavaTypeId>()
+	{
+		@Override
+		protected @NonNull JavaTypeId newId(@NonNull Class<?> javaClass) {
+			return new JavaTypeId(javaClass);
+		}
+	};
 
 	public static final @NonNull String E_NAME = "e";
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
+	public static final @NonNull String EVALUATION_CACHE_NAME = "evaluationCache";
 	public static final @NonNull String EXECUTOR_NAME = "executor";
 	public static final @NonNull String ID_RESOLVER_NAME = "idResolver";
 	public static final @NonNull String INSTANCE_NAME = "INSTANCE";
+	public static final @NonNull String SELF_NAME = "self";
 	public static final @NonNull String STANDARD_LIBRARY_NAME = "standardLibrary";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
-	
+
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);
 	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(Property.class);
 	public static final @NonNull TypeId EXECUTOR_TYPE_ID = getJavaTypeId(Executor.class);
 	public static final @NonNull TypeId ID_RESOLVER_TYPE_ID = getJavaTypeId(IdResolver.class);
-//	public static final @NonNull TypeId SELF_TYPE_ID = getJavaTypeId(Object.class);
+	//	public static final @NonNull TypeId SELF_TYPE_ID = getJavaTypeId(Object.class);
 	public static final @NonNull TypeId STANDARD_LIBRARY_TYPE_ID = getJavaTypeId(StandardLibrary.class);
 	public static final @NonNull TypeId TYPE_ID_TYPE_ID = getJavaTypeId(TypeId.class);
 	public static final @NonNull TypeId UNBOXED_COMPOSITION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedCompositionProperty.class);
 	public static final @NonNull TypeId UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedExplicitNavigationProperty.class);
 	public static final @NonNull TypeId UNBOXED_OPPOSITE_NAVIGATION_PROPERTY_TYPE_ID = getJavaTypeId(UnboxedOppositeNavigationProperty.class);
-	
+
 	/**
 	 * Return the named Java typeId.
 	 */

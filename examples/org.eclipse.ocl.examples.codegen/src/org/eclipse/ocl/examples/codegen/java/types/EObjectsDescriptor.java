@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -33,7 +33,7 @@ public class EObjectsDescriptor extends AbstractCollectionDescriptor implements 
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull Class<?> javaClass;
 	protected final @NonNull Class<?> oldJavaClass;
-	
+
 	public EObjectsDescriptor(@NonNull CollectionTypeId collectionTypeId, @NonNull EClassifier eClassifier, @NonNull Class<?> javaClass) {
 		super(collectionTypeId);
 		this.eClassifier = eClassifier;
@@ -43,7 +43,7 @@ public class EObjectsDescriptor extends AbstractCollectionDescriptor implements 
 
 	@Override
 	public void append(@NonNull JavaStream javaStream, @Nullable Boolean isRequired) {
-		javaStream.appendClassReference(List.class, javaClass != oldJavaClass, oldJavaClass);
+		javaStream.appendClassReference(isRequired, List.class, javaClass != oldJavaClass, oldJavaClass);
 	}
 
 	@Override

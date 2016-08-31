@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImple
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -79,7 +80,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		super(genPackage);
 		GenModel genModel = ClassUtil.nonNullState(genPackage.getGenModel());
 		this.useNullAnnotations = OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel);
-		this.importManager = new ImportManager(genPackage.getReflectionPackageName());
+		this.importManager = new ImportManager(getTablesPackageName());
+	}
+
+	public OCLinEcoreTables(@NonNull PivotMetamodelManager metamodelManager, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		super(metamodelManager, asPackage);
+		this.useNullAnnotations = true; //OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel);
+		this.importManager = new ImportManager(getTablesPackageName());
 	}
 
 	protected void appendConstants(@NonNull String constants) {
@@ -242,7 +249,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append(" = new ");
 					s.appendClassReference(EcoreExecutorEnumerationLiteral.class);
 					s.append("(");
-					s.append(genPackage.getPrefix() + "Package.Literals.");
+					s.append(getGenPackagePrefix() + "Package.Literals.");
 					appendUpperName(pClass);
 					s.append(".getEEnumLiteral(");
 					s.appendString(ClassUtil.nonNullModel(enumerationLiteral.getName()));
@@ -658,7 +665,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						else { */
 						s.appendClassReference(EcoreExecutorProperty.class);
 						s.append("(");
-						s.append(genPackage.getPrefix());
+						s.append(getGenPackagePrefix());
 						s.append("Package.Literals." );
 						appendUpperName(owningType);
 						s.append("__" );
@@ -678,7 +685,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 							s.append(", " + i + ", new ");
 							s.appendClassReference(EcoreLibraryOppositeProperty.class);
 							s.append("(");
-							s.append(genPackage.getPrefix());
+							s.append(getGenPackagePrefix());
 							s.append("Package.Literals." );
 							appendUpperName(ClassUtil.nonNullModel(opposite.getOwningClass()));
 							s.append("__" );
@@ -730,7 +737,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		else {
 			s.append("new ");
 			s.appendClassReference(typeClass);
-			s.append("(" + genPackage.getPrefix() + "Package.Literals.");
+			s.append("(" + getGenPackagePrefix() + "Package.Literals.");
 			appendUpperName(pClass);
 		}
 		s.append(", PACKAGE, ");
@@ -780,7 +787,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		 */\n");
 		s.append("		static {\n");
 		s.append("			PACKAGE.init(LIBRARY, types);\n");
-		org.eclipse.ocl.pivot.Package extendedPackage = getExtendedPackage(pPackage);
+		org.eclipse.ocl.pivot.Package extendedPackage = getExtendedPackage(asPackage);
 		if (extendedPackage != null) {
 			s.append("			LIBRARY.addExtension(");
 			s.appendClassReference(getQualifiedTablesClassName(extendedPackage));
@@ -955,7 +962,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected String deresolveFileName(@Nullable String uri) {
-		if (uri != null) {
+		if ((uri != null) && (genPackage != null)) {
 			String modelProjectDirectory = genPackage.getGenModel().getModelProjectDirectory();
 			int index = uri.indexOf(modelProjectDirectory);
 			if (index >= 0) {
@@ -969,13 +976,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		if (constants != null) {
 			constants = s.rewriteManagedImports(constants);
 		}
-		String tablesClassName = getTablesClassName(genPackage);
+		String tablesClassName = getTablesClassName();
 		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations = computeFragmentOperations();
 		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties = computeFragmentProperties();
 		List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations = paginateFragmentOperations(fragmentOperations);
 		List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>>> paginatedFragmentProperties = paginateFragmentProperties(fragmentProperties);
 		s.append("/**\n");
-		s.append(" * " + tablesClassName + " provides the dispatch tables for the " + pPackage.getName() + " for use by the OCL dispatcher.\n");
+		s.append(" * " + tablesClassName + " provides the dispatch tables for the " + asPackage.getName() + " for use by the OCL dispatcher.\n");
 		s.append(" *\n");
 		s.append(" * In order to ensure correct static initialization, a top level class element must be accessed\n");
 		s.append(" * before any nested class element. Therefore an access to PACKAGE.getClass() is recommended.\n");
@@ -997,8 +1004,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.appendClassReference(EcoreExecutorPackage.class);
 		s.append(" PACKAGE = new ");
 		s.appendClassReference(EcoreExecutorPackage.class);
-		s.append("(" + genPackage.getPrefix() + "Package.eINSTANCE");
-		if (pPackage.getPackageId() == IdManager.METAMODEL) {
+		s.append("(" + getGenPackagePrefix() + "Package.eINSTANCE");
+		if (asPackage.getPackageId() == IdManager.METAMODEL) {
 			s.append(", ");
 			s.appendClassReference(IdManager.class);
 			s.append(".METAMODEL");
@@ -1066,6 +1073,18 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		return s.toString();
 	}
 
+	protected String getGenPackagePrefix() {
+		return genPackage != null ? genPackage.getPrefix() : "/*getGenPackagePrefix*/";
+	}
+
+	public @NonNull String getTablesClassName() {
+		return genPackage != null ? getTablesClassName(genPackage) : "/*getTablesClassName*/";
+	}
+
+	protected String getTablesPackageName() {
+		return genPackage != null ? genPackage.getReflectionPackageName() : "/*getTablesPackageName*/";
+	}
+
 	protected @NonNull List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginateFragmentOperations(@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> fragmentOperations) {
 		List<@NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>>> paginatedFragmentOperations = new ArrayList<>();
 		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Operation>>> pageOfFragmentOperations = null;
@@ -1109,7 +1128,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	@Override
 	public @NonNull String toString() {
-		String copyright = genPackage.getCopyright(" * ");
+		String copyright = genPackage != null ? genPackage.getCopyright(" * ") : "";
 		StringBuilder s1 = new StringBuilder();
 		s1.append("/*******************************************************************************\n");
 		if (copyright != null) {
@@ -1120,21 +1139,23 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s1.append(" *************************************************************************\n");
 		s1.append(" * This code is 100% auto-generated\n");
 		s1.append(" * from:\n");
-		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package dPackage : metamodelManager.getPartialPackages(pPackage, false)) {
+		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package dPackage : metamodelManager.getPartialPackages(asPackage, false)) {
 			EObject eRoot = ((EObject)dPackage).eContainer();
 			if (eRoot instanceof Model) {
 				s1.append(" *   " + deresolveFileName(((Model)eRoot).getExternalURI()) + "\n");
 			}
 		}
 		s1.append(" * using:\n");
-		s1.append(" *   " + deresolveFileName(genPackage.eResource().getURI().toString()) + "\n");
+		if (genPackage != null) {
+			s1.append(" *   " + deresolveFileName(genPackage.eResource().getURI().toString()) + "\n");
+		}
 		s1.append(" *   " + getClass().getName() + "\n");
 		s1.append(" *\n");
 		s1.append(" * Do not edit it.\n");
 		s1.append(" *******************************************************************************/\n");
 
 		s1.append("package ");
-		s1.append(genPackage.getReflectionPackageName());
+		s1.append(getTablesPackageName());
 		s1.append(";\n");
 
 		s1.append("\n");

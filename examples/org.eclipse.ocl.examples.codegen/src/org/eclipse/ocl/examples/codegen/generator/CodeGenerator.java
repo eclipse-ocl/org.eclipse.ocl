@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 
 public interface CodeGenerator
 {
+	boolean addConstrainedOperation(@NonNull Operation constrainedOperation);
 	void addProblem(@NonNull Exception e);
 	@NonNull AnalysisVisitor createAnalysisVisitor();
 	@NonNull BoxingAnalyzer createBoxingAnalyzer();

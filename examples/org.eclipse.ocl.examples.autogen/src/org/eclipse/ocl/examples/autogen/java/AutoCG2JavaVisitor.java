@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *   Adolfo Sanchez-Barbudo Herrera (University of York) - Lookup Environment/Visitor
@@ -30,7 +30,7 @@ public abstract class AutoCG2JavaVisitor<@NonNull CG extends AutoCodeGenerator> 
 	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull CGPackage cgPackage;
 	protected final @Nullable List<CGValuedElement> sortedGlobals;
-	
+
 	public AutoCG2JavaVisitor(@NonNull CG codeGenerator, @NonNull CGPackage cgPackage,
 			@Nullable List<CGValuedElement> sortedGlobals) {
 		super(codeGenerator);
@@ -40,26 +40,32 @@ public abstract class AutoCG2JavaVisitor<@NonNull CG extends AutoCodeGenerator> 
 	}
 
 	@Override
-	final protected void doClassMethods(@NonNull CGClass cgClass) {
+	final protected boolean doClassMethods(@NonNull CGClass cgClass, boolean needsBlankLine) {
 		doConstructor(cgClass);
 		doMoreClassMethods(cgClass);
-		super.doClassMethods(cgClass);
+		return super.doClassMethods(cgClass, needsBlankLine);
 	}
-	
+
 	protected void doMoreClassMethods(@NonNull CGClass cgClass) {
 		// doNothing
 	}
 
 	@Override
-	protected void doClassStatics(@NonNull CGClass cgClass) {
-		if (sortedGlobals != null) {
-			for (CGValuedElement cgElement : sortedGlobals) {
+	protected boolean doClassStatics(@NonNull CGClass cgClass, boolean needsBlankLine) {
+		@Nullable
+		List<CGValuedElement> sortedGlobals2 = sortedGlobals;
+		if (sortedGlobals2 != null) {
+			if (needsBlankLine) {
+				js.append("\n");
+			}
+			for (CGValuedElement cgElement : sortedGlobals2) {
 				assert cgElement.isGlobal();
 				cgElement.accept(this);
 			}
-			js.append("\n");
+			needsBlankLine = true;
 		}
+		return needsBlankLine;
 	}
-	
+
 	protected abstract void doConstructor(@NonNull CGClass cgClass);
 }

@@ -711,43 +711,55 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
+	private static @NonNull PivotMetamodelManager getMetamodelManager(@NonNull GenPackage genPackage) {
+		Resource genModelResource = genPackage.eResource();
+		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
+		assert genModelResourceSet != null;
+		EnvironmentFactoryAdapter resourceSetAdapter = OCLInternal.adapt(genModelResourceSet);
+		return resourceSetAdapter.getMetamodelManager();
+	}
+
 	protected final @NonNull CodeGenString s = new CodeGenString();
-	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
+	protected final @Nullable GenPackage genPackage;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
-	protected final org.eclipse.ocl.pivot.@NonNull Package pPackage;
+	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final @NonNull DeclareParameterTypeVisitor declareParameterTypeVisitor = new DeclareParameterTypeVisitor(s);
 	protected final @NonNull EmitLiteralVisitor emitLiteralVisitor = new EmitLiteralVisitor(s);
 	protected final @NonNull EmitQualifiedLiteralVisitor emitQualifiedLiteralVisitor = new EmitQualifiedLiteralVisitor(s);
 	protected final @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByName;
 	protected final @NonNull Map<@NonNull ParameterTypes, String> templateBindingsNames = new HashMap<>();
 
-
 	protected OCLinEcoreTablesUtils(@NonNull GenPackage genPackage) {
-		this.genPackage = genPackage;
-		Resource genModelResource = genPackage.eResource();
-		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
-		assert genModelResourceSet != null;
-		EnvironmentFactoryAdapter resourceSetAdapter = OCLInternal.adapt(genModelResourceSet);
-		this.metamodelManager = resourceSetAdapter.getMetamodelManager();
+		this.metamodelManager = getMetamodelManager(genPackage);
 		this.environmentFactory = metamodelManager.getEnvironmentFactory();
 		this.standardLibrary = environmentFactory.getStandardLibrary();
-		this.pPackage = ClassUtil.nonNullModel(getPivotPackage(genPackage));
-		activeClassesSortedByName = getActiveClassesSortedByName(pPackage);
+		this.genPackage = genPackage;
+		this.asPackage = ClassUtil.nonNullModel(getPivotPackage(genPackage));
+		activeClassesSortedByName = getActiveClassesSortedByName(asPackage);
 	}
 
-	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getActiveClassesSortedByName(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
-		List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = new ArrayList<>(getActiveTypes(pPackage));
+	protected OCLinEcoreTablesUtils(@NonNull PivotMetamodelManager metamodelManager, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		this.metamodelManager = metamodelManager;
+		this.environmentFactory = metamodelManager.getEnvironmentFactory();
+		this.standardLibrary = environmentFactory.getStandardLibrary();
+		this.genPackage = null;
+		this.asPackage = asPackage;
+		activeClassesSortedByName = getActiveClassesSortedByName(asPackage);
+	}
+
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getActiveClassesSortedByName(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = new ArrayList<>(getActiveTypes(asPackage));
 		Collections.sort(sortedClasses, nameComparator);
 		return sortedClasses;
 	}
 
-	protected @NonNull Set<? extends org.eclipse.ocl.pivot.@NonNull Class> getActiveTypes(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
+	protected @NonNull Set<? extends org.eclipse.ocl.pivot.@NonNull Class> getActiveTypes(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
 		Type elementType = metamodelManager.getASClass("Element");
-		if (oclstdlibPackage == pPackage) {
+		if (oclstdlibPackage == asPackage) {
 			VoidType oclVoidType = metamodelManager.getStandardLibrary().getOclVoidType();
 			Set<org.eclipse.ocl.pivot.@NonNull Class> types = new HashSet<>();
 			for (org.eclipse.ocl.pivot.Class type : oclstdlibPackage.getOwnedClasses()) {
@@ -759,7 +771,7 @@ public class OCLinEcoreTablesUtils
 			}
 			return types;
 		}
-		else if (pivotMetamodel == pPackage) {
+		else if (pivotMetamodel == asPackage) {
 			Set<org.eclipse.ocl.pivot.@NonNull Class> types = new HashSet<>();
 			for (org.eclipse.ocl.pivot.Class type : pivotMetamodel.getOwnedClasses()) {
 				assert type != null;
@@ -774,7 +786,7 @@ public class OCLinEcoreTablesUtils
 							pruned = true;
 						}
 					}
-					else if (partialPackage == pPackage) {
+					else if (partialPackage == asPackage) {
 						myType = type;
 					}
 				}
@@ -790,7 +802,7 @@ public class OCLinEcoreTablesUtils
 			return types;
 		}
 		else {
-			return new HashSet<>(ClassUtil.nullFree(pPackage.getOwnedClasses()));
+			return new HashSet<>(ClassUtil.nullFree(asPackage.getOwnedClasses()));
 		}
 	}
 
@@ -834,13 +846,13 @@ public class OCLinEcoreTablesUtils
 		return myDepth;
 	}
 
-	protected org.eclipse.ocl.pivot.@Nullable Package getExtendedPackage(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
+	protected org.eclipse.ocl.pivot.@Nullable Package getExtendedPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
-		if (oclstdlibPackage == pPackage) {
+		if (oclstdlibPackage == asPackage) {
 			return null;
 		}
-		else if (pivotMetamodel == pPackage) {
+		else if (pivotMetamodel == asPackage) {
 			return oclstdlibPackage;
 		}
 		else {
@@ -848,20 +860,20 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
-	public @NonNull GenPackage getGenPackage() {
+	public @Nullable GenPackage getGenPackage() {
 		return genPackage;
 	}
 
 	protected @Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Class type) {
-		org.eclipse.ocl.pivot.Package pPackage = type.getOwningPackage();
-		assert pPackage != null;
+		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
+		assert asPackage != null;
 		Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Class elementType = metamodelManager.getASClass("Element");
 		if ((elementType != null) && (oclstdlibPackage != null)) {
 			VoidType oclVoidType = metamodelManager.getStandardLibrary().getOclVoidType();
 			org.eclipse.ocl.pivot.Package pivotMetamodel = elementType.getOwningPackage();
 			assert pivotMetamodel != null;
-			if (oclstdlibPackage == pPackage) {
+			if (oclstdlibPackage == asPackage) {
 				CompleteClass completeClass = metamodelManager.getCompleteClass(type);
 				if (isElementType(completeClass, elementType, oclVoidType)) {
 					return getGenPackage(pivotMetamodel);
@@ -870,7 +882,7 @@ public class OCLinEcoreTablesUtils
 					return getGenPackage(oclstdlibPackage);
 				}
 			}
-			else if (pivotMetamodel == pPackage) {
+			else if (pivotMetamodel == asPackage) {
 				CompleteClass completeClass = metamodelManager.getCompleteClass(type);
 				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 					org.eclipse.ocl.pivot.Package partialPackage = partialClass.getOwningPackage();
@@ -883,25 +895,34 @@ public class OCLinEcoreTablesUtils
 				return getGenPackage(pivotMetamodel);
 			}
 		}
-		return getGenPackage(pPackage);
+		return getGenPackage(asPackage);
 	}
 
 	protected @Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		EPackage firstEPackage = genPackage.getEcorePackage();
-		if (firstEPackage.getName().equals(asPackage.getName())) {
-			return genPackage;
+		List<GenPackage> usedGenPackages;
+		ResourceSet genModelResourceSet;
+		GenPackage genPackage2 = genPackage;
+		if (genPackage2 != null) {
+			EPackage firstEPackage = genPackage2.getEcorePackage();
+			if (firstEPackage.getName().equals(asPackage.getName())) {
+				return genPackage2;
+			}
+			usedGenPackages = genPackage2.getGenModel().getUsedGenPackages();
+			assert usedGenPackages != null;
+			//		String nsURI = asPackage.getNsURI();
+			//		String name = asType.getName();
+			//		GenPackage usedGenPackage = getNsURIGenPackage(usedGenPackages, nsURI, name);
+			//		if (usedGenPackage != null) {
+			//			return usedGenPackage;
+			//		}
+			Resource genModelResource = genPackage2.eResource();
+			genModelResourceSet = genModelResource.getResourceSet();
+			assert genModelResourceSet != null;
 		}
-		List<GenPackage> usedGenPackages = genPackage.getGenModel().getUsedGenPackages();
-		assert usedGenPackages != null;
-		//		String nsURI = asPackage.getNsURI();
-		//		String name = asType.getName();
-		//		GenPackage usedGenPackage = getNsURIGenPackage(usedGenPackages, nsURI, name);
-		//		if (usedGenPackage != null) {
-		//			return usedGenPackage;
-		//		}
-		Resource genModelResource = genPackage.eResource();
-		ResourceSet genModelResourceSet = genModelResource.getResourceSet();
-		assert genModelResourceSet != null;
+		else {
+			usedGenPackages = Collections.emptyList();
+			genModelResourceSet = environmentFactory.getResourceSet();
+		}
 		org.eclipse.ocl.pivot.Package metamodelPackage = metamodelManager.getASmetamodel();
 		org.eclipse.ocl.pivot.Package libraryPackage = metamodelManager.getLibraries().get(0);
 		if (asPackage == libraryPackage) {
@@ -920,18 +941,18 @@ public class OCLinEcoreTablesUtils
 		}
 		String nsURI = asPackage.getURI();
 		if (nsURI != null) {
-			GenPackage genPackage2 = metamodelManager.getGenPackage(nsURI);
-			if (genPackage2 != null) {
-				return genPackage2;
+			GenPackage genPackage3 = metamodelManager.getGenPackage(nsURI);
+			if (genPackage3 != null) {
+				return genPackage3;
 			}
 			for (GenPackage usedGenPackage : usedGenPackages) {
 				if (usedGenPackage != null) {
 					metamodelManager.addGenPackage(usedGenPackage);
 				}
 			}
-			genPackage2 = metamodelManager.getGenPackage(nsURI);
-			if (genPackage2 != null) {
-				return genPackage2;
+			genPackage3 = metamodelManager.getGenPackage(nsURI);
+			if (genPackage3 != null) {
+				return genPackage3;
 			}
 		}
 		throw new IllegalStateException("No GenPackage for '" + nsURI + "'");
@@ -1044,8 +1065,8 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
-	protected @NonNull String getQualifiedTablesClassName(org.eclipse.ocl.pivot.@NonNull Package pPackage) {
-		GenPackage genPackage = getGenPackage(pPackage);
+	protected @NonNull String getQualifiedTablesClassName(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		GenPackage genPackage = getGenPackage(asPackage);
 		if (genPackage != null) {
 			return genPackage.getReflectionPackageName() + "." + getTablesClassName(genPackage);
 		}
@@ -1055,27 +1076,29 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected @NonNull String getSharedLibrary() {
-		org.eclipse.ocl.pivot.Package thisPackage = getPivotPackage(genPackage);
-		if (thisPackage != null) {
-			PrimitiveType booleanType = standardLibrary.getBooleanType();
-			org.eclipse.ocl.pivot.Package libraryPackage = booleanType.getOwningPackage();
-			if (libraryPackage != null) {
-				GenPackage gPackage = getGenPackage(libraryPackage);
-				if (gPackage != null) {
-					return gPackage.getReflectionPackageName() + "." + gPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
+		if (genPackage != null) {
+			org.eclipse.ocl.pivot.Package thisPackage = getPivotPackage(genPackage);
+			if (thisPackage != null) {
+				PrimitiveType booleanType = standardLibrary.getBooleanType();
+				org.eclipse.ocl.pivot.Package libraryPackage = booleanType.getOwningPackage();
+				if (libraryPackage != null) {
+					GenPackage gPackage = getGenPackage(libraryPackage);
+					if (gPackage != null) {
+						return gPackage.getReflectionPackageName() + "." + gPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
+					}
 				}
 			}
+			/*		TypeServer typeServer = metamodelManager.getTypeServer(booleanType);
+			for (DomainType type : typeServer.getPartialTypes()) {
+				org.eclipse.ocl.pivot.Package asPackage = type.getPackage();
+				if ((asPackage != null) && (asPackage != thisPackage)) {
+					GenPackage gPackage = getGenPackage(genPackage, asPackage);
+					if (gPackage != null) {
+						return getInterfacePackageName(gPackage) + "." + gPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
+					}
+				}
+			} */
 		}
-		/*		TypeServer typeServer = metamodelManager.getTypeServer(booleanType);
-		for (DomainType type : typeServer.getPartialTypes()) {
-			org.eclipse.ocl.pivot.Package asPackage = type.getPackage();
-			if ((asPackage != null) && (asPackage != thisPackage)) {
-				GenPackage gPackage = getGenPackage(genPackage, asPackage);
-				if (gPackage != null) {
-					return getInterfacePackageName(gPackage) + "." + gPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
-				}
-			}
-		} */
 		return "";
 	}
 
@@ -1094,10 +1117,6 @@ public class OCLinEcoreTablesUtils
 		else {
 			return qualifiedSignature;	// FIXME with PrettyPrintOptions
 		}
-	}
-
-	public @NonNull String getTablesClassName() {
-		return getTablesClassName(genPackage);
 	}
 
 	protected @NonNull String getTablesClassName(@NonNull GenPackage genPackage) {
@@ -1167,6 +1186,10 @@ public class OCLinEcoreTablesUtils
 	 * but no Ecore EReference.
 	 */
 	protected @NonNull Boolean hasEcore(@NonNull Property property) {
+		GenPackage genPackage2 = genPackage;
+		if (genPackage2 == null) {
+			return false;
+		}
 		org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
 		if (owningType == null) {
 			return false;
@@ -1175,7 +1198,7 @@ public class OCLinEcoreTablesUtils
 		if (typeName == null) {
 			return false;
 		}
-		GenClass genClass = getNamedElement1(genPackage.getGenClasses(), typeName);
+		GenClass genClass = getNamedElement1(genPackage2.getGenClasses(), typeName);
 		if (genClass == null) {
 			return false;
 		}
@@ -1190,8 +1213,12 @@ public class OCLinEcoreTablesUtils
 		return true;
 	}
 
-	protected @NonNull Boolean hasSharedLibrary() {
-		org.eclipse.ocl.pivot.Package thisPackage = getPivotPackage(genPackage);
+	protected boolean hasSharedLibrary() {
+		GenPackage genPackage2 = genPackage;
+		if (genPackage2 == null) {
+			return false;
+		}
+		org.eclipse.ocl.pivot.Package thisPackage = getPivotPackage(genPackage2);
 		PrimitiveType booleanType = standardLibrary.getBooleanType();
 		org.eclipse.ocl.pivot.Package libraryPackage = booleanType.getOwningPackage();
 		return thisPackage != libraryPackage;
@@ -1226,15 +1253,18 @@ public class OCLinEcoreTablesUtils
 	 * no Ecore types, unless the Pivot model is also in use.
 	 */
 	protected @NonNull Boolean hasEcore(@NonNull Type type) {
-		String typeName = type.getName();
-		if (typeName != null) {
-			GenClass genClass = getNamedElement1(genPackage.getGenClasses(), typeName);
-			if (genClass != null) {
-				return true;
-			}
-			GenEnum genEnum = getNamedElement1(genPackage.getGenEnums(), typeName);
-			if (genEnum != null) {
-				return true;
+		GenPackage genPackage2 = genPackage;
+		if (genPackage2 != null) {
+			String typeName = type.getName();
+			if (typeName != null) {
+				GenClass genClass = getNamedElement1(genPackage2.getGenClasses(), typeName);
+				if (genClass != null) {
+					return true;
+				}
+				GenEnum genEnum = getNamedElement1(genPackage2.getGenEnums(), typeName);
+				if (genEnum != null) {
+					return true;
+				}
 			}
 		}
 		return false;

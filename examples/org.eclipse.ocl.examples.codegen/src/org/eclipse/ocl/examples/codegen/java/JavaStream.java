@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -122,12 +122,12 @@ public class JavaStream
 		}
 		return createOptions;
 	}
-	
+
 	public static interface SubStream
 	{
 		void append();
 	}
-	
+
 	protected @NonNull JavaCodeGenerator codeGenerator;
 	protected @NonNull CG2JavaVisitor<@NonNull ?> cg2java;
 	protected @NonNull CodeGenAnalyzer analyzer;
@@ -138,7 +138,7 @@ public class JavaStream
 	private @NonNull StringBuilder s = new StringBuilder();
 	private @NonNull Stack<String> indentationStack = new Stack<String>();
 	private @NonNull String defaultIndentationString = "    ";
-	
+
 	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor<@NonNull ?> cg2java) {
 		this.codeGenerator = codeGenerator;
 		this.cg2java = cg2java;
@@ -177,9 +177,9 @@ public class JavaStream
 		CGInvalid cgInvalidValue = cgExpression.getInvalidValue();
 		if (cgInvalidValue != null) {
 			append("throw ");
-//			append("(");
-//			appendClassReference(InvalidValueException.class);
-//			append(")");
+			//			append("(");
+			//			appendClassReference(InvalidValueException.class);
+			//			append(")");
 			appendValueName(cgInvalidValue);
 			append(";\n");
 			return false;
@@ -400,6 +400,16 @@ public class JavaStream
 		}
 	}
 
+	public void appendClassReference(@Nullable Boolean isRequired, @Nullable Class<?> javaClass, boolean useExtends, @NonNull Class<?>... typeParameters) {
+		if (javaClass != null) {
+			appendClassReference(isRequired, javaClass.getName());
+			appendTypeParameters(useExtends, typeParameters);
+		}
+		else {
+			appendClassReference(isRequired, Object.class);
+		}
+	}
+
 	public void appendClassReference(@Nullable Class<?> javaClass, boolean useExtends, @NonNull Class<?>... typeParameters) {
 		if (javaClass != null) {
 			appendClassReference(javaClass.getName());
@@ -420,7 +430,7 @@ public class JavaStream
 		}
 	}
 
-/*	public void appendClassReference(@Nullable String className, boolean useExtends, @NonNull Class<?>... typeParameters) {
+	/*	public void appendClassReference(@Nullable String className, boolean useExtends, @NonNull Class<?>... typeParameters) {
 		if (className != null) {
 			appendClassReference(className);
 			appendTypeParameters(useExtends, typeParameters);
@@ -429,7 +439,7 @@ public class JavaStream
 			appendClassReference(Object.class);
 		}
 	} */
-	
+
 	/**
 	 * @deprecated Provide isRequired argument.
 	 */
@@ -451,13 +461,13 @@ public class JavaStream
 					}
 					TypeDescriptor typeDescriptor = typeDescriptors[i];
 					typeDescriptor.append(this, null);
-//					Class<?> javaClass2 = typeDescriptor.getJavaClass();
-//					if ((javaClass2 != null) && (javaClass2 != Object.class)) {
-//						appendClassReference(javaClass2, new Class<?>[]{});
-//					}
-//					else {
-//						appendClassReference(typeDescriptor.getClassName());
-//					}
+					//					Class<?> javaClass2 = typeDescriptor.getJavaClass();
+					//					if ((javaClass2 != null) && (javaClass2 != Object.class)) {
+					//						appendClassReference(javaClass2, new Class<?>[]{});
+					//					}
+					//					else {
+					//						appendClassReference(typeDescriptor.getClassName());
+					//					}
 				}
 				append(">");
 			}
@@ -545,7 +555,7 @@ public class JavaStream
 		if (element != null) {
 			PrettyPrintOptions.Global createOptions = createOptions(element);
 			append(PrettyPrinter.print(element, createOptions).replace("*/",  "* /") + "\n");
-//			append("«IF expInOcl.messageExpression != null»«(expInOcl.messageExpression as StringLiteralExp).stringSymbol»«ENDIF»\n");
+			//			append("«IF expInOcl.messageExpression != null»«(expInOcl.messageExpression as StringLiteralExp).stringSymbol»«ENDIF»\n");
 		}
 		popIndentation();
 		append(" */\n");
@@ -597,9 +607,9 @@ public class JavaStream
 		else if (!returnClassName.equals(javaClass.getName())) {
 			if (javaClass == Boolean.class) {
 				appendValueName(cgValue);
-//				if ("boolean".equals(returnClassName) || "java.lang.Boolean".equals(returnClassName)) {
-//					append(".booleanValue()");
-//				}
+				//				if ("boolean".equals(returnClassName) || "java.lang.Boolean".equals(returnClassName)) {
+				//					append(".booleanValue()");
+				//				}
 			}
 			else if (javaClass == Number.class) {						// Real or Integer or UnlimitedNatural (source isn't a Character but target may be)
 				if ("java.math.BigDecimal".equals(returnClassName)) {
@@ -789,9 +799,9 @@ public class JavaStream
 	 * Inline and global contributions are excluded.
 	 */
 	public boolean appendLocalStatements(@NonNull CGValuedElement cgElement) {
-//		if (!cgElement.isInlineable() && !cgElement.isConstant() && !cgElement.isGlobal()) {			// Exclude global constants and inline constants
+		//		if (!cgElement.isInlineable() && !cgElement.isConstant() && !cgElement.isGlobal()) {			// Exclude global constants and inline constants
 		if (!cgElement.isInlined()			// Exclude inline constants
-		 && !cgElement.isGlobal()) {			// Exclude global constant expressions
+				&& !cgElement.isGlobal()) {			// Exclude global constant expressions
 			return cgElement.accept(cg2java) == Boolean.TRUE;
 		}
 		return true;
@@ -955,11 +965,11 @@ public class JavaStream
 		else if (cgElement.isInlined()) {
 			cgElement.accept(cg2java);
 		}
-//		else if (cgElement.isInlined() && (cgElement.isInvalid() || cgElement.isNull() || cgElement.isTrue() || cgElement.isFalse() || !cgElement.isGlobal())) {	// FIXME
-//			CGValuedElement cgValue = cgElement;
-//			for (CGValuedElement cgNext; (cgNext = cgValue.getReferredValuedElement()) != cgValue; cgValue = cgNext) {}
-//			cgValue.accept(cg2java);
-//		}
+		//		else if (cgElement.isInlined() && (cgElement.isInvalid() || cgElement.isNull() || cgElement.isTrue() || cgElement.isFalse() || !cgElement.isGlobal())) {	// FIXME
+		//			CGValuedElement cgValue = cgElement;
+		//			for (CGValuedElement cgNext; (cgNext = cgValue.getReferredValuedElement()) != cgValue; cgValue = cgNext) {}
+		//			cgValue.accept(cg2java);
+		//		}
 		else {
 			if (cgElement.isGlobal()) {
 				cg2java.appendGlobalPrefix();
@@ -996,7 +1006,7 @@ public class JavaStream
 			return (javaClass == boolean.class) || ((javaClass == Boolean.class) && cgValue.isNonNull());
 		}
 	}
-	
+
 	public boolean isUseNullAnnotations() {
 		return useNullAnnotations;
 	}
@@ -1061,7 +1071,7 @@ public class JavaStream
 	public void resetStream() {
 		s.setLength(0);
 	}
-	
+
 	@Override
 	public @NonNull String toString() {
 		return s.toString();

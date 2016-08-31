@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -12,8 +12,11 @@ package org.eclipse.ocl.examples.codegen.analyzer;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -97,14 +100,14 @@ import org.eclipse.ocl.pivot.values.RealValue;
 
 /**
  * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
- * named without collisions. 
+ * named without collisions.
  */
 public class NameManager
 {
 	public static final String BAG_NAME_HINT_PREFIX = "BAG";
 	public static final String COLLECTION_NAME_HINT_PREFIX = "COL";
 	public static final String DEFAULT_NAME_PREFIX = "symbol";
-//	public static final String ID_NAME_HINT_PREFIX = "TID";
+	//	public static final String ID_NAME_HINT_PREFIX = "TID";
 	public static final String EXPRESSION_IN_OCL_NAME_HINT_PREFIX = PivotConstants.RESULT_NAME;
 	public static final String INTEGER_NAME_HINT_PREFIX = "INT_";
 	public static final String INVALID_NAME_HINT_PREFIX = "IVE_";
@@ -121,7 +124,7 @@ public class NameManager
 	public static final int STRING_NAME_HINT_LIMIT = 64;
 	public static final String TYPE_NAME_HINT_PREFIX = "TYP_";
 	public static final String VARIABLE_DECLARATION_NAME_HINT_PREFIX = "";
-	
+
 	/**
 	 * Names that will not be allocated to temporary variables.
 	 * <p>
@@ -142,7 +145,7 @@ public class NameManager
 		reservedJavaNames.add("Map");
 		reservedJavaNames.add("Package");
 		reservedJavaNames.add("String");
-		
+
 		reservedJavaNames.add("boolean");
 		reservedJavaNames.add("byte");
 		reservedJavaNames.add("char");
@@ -152,7 +155,7 @@ public class NameManager
 		reservedJavaNames.add("long");
 		reservedJavaNames.add("short");
 		reservedJavaNames.add("void");
-		
+
 		reservedJavaNames.add("abstract");		// FIXME Exploit CodeGenUtil.getJavaReservedWords()
 		reservedJavaNames.add("assert");
 		reservedJavaNames.add("break");
@@ -336,7 +339,7 @@ public class NameManager
 			return "UNSPid_";
 		}
 	};
-	
+
 	protected static void appendJavaCharacters(StringBuilder s, String string) {
 		for (int i = 0; i < string.length(); i++) {
 			char c = string.charAt(i);
@@ -462,13 +465,13 @@ public class NameManager
 		}
 		return s.toString();
 	}
-	
+
 	public class Context {
 		private final @Nullable Context context;					// Pushed context
 		private final @NonNull Map<String, Object> name2object;		// User of each name, null if name ambiguous
 		private final @NonNull Map<Object, String> object2name;		// Unambiguous name for each object, null if not determined
 		private Map<String, Integer> name2counter;					// Auto-generation counter for each colliding name
-//		private boolean frozen = false;								// Set true once pushed
+		//		private boolean frozen = false;								// Set true once pushed
 
 		public Context() {
 			this.context = null;
@@ -482,7 +485,7 @@ public class NameManager
 			this.name2object = new HashMap<String, Object>(context.name2object);
 			this.object2name = new HashMap<Object, String>(context.object2name);
 			this.name2counter = context.name2counter != null ? new HashMap<String, Integer>(context.name2counter) : null;
-//			context.frozen = true;
+			//			context.frozen = true;
 		}
 
 		public @NonNull Context createNestedContext() {
@@ -492,7 +495,7 @@ public class NameManager
 		public @NonNull Context getContext() {
 			return ClassUtil.nonNullState(context);
 		}
-		
+
 		protected @NonNull String getGlobalUniqueName(@Nullable Object anObject, @Nullable String... nameHints) {
 			if (context != null) {
 				return context.getGlobalUniqueName(anObject, nameHints);
@@ -567,7 +570,7 @@ public class NameManager
 				name2counter = new HashMap<String, Integer>();
 			}
 			Integer counter = name2counter.get(lastResort);
-			int count = counter != null ? counter : 0;			
+			int count = counter != null ? counter : 0;
 			for ( ; true; count++) {
 				String attempt = lastResort + "_" + Integer.toString(count);
 				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
@@ -576,17 +579,18 @@ public class NameManager
 					return attempt;
 				}
 			}
+
 		}
 
 		private void install(@NonNull String name, @Nullable Object anObject) {
-//FIXME			assert !frozen;
+			//FIXME			assert !frozen;
 			assert !(anObject instanceof RealValue) || (anObject instanceof InvalidValue);
 			name2object.put(name, anObject);
 			if (anObject != null) {
 				object2name.put(anObject, name);
 			}
 		}
-		
+
 		private boolean isNative(@NonNull CGValuedElement cgElement) {
 			TypeId asTypeId = cgElement.getASTypeId();
 			if (asTypeId instanceof NestedTypeId) {
@@ -597,7 +601,7 @@ public class NameManager
 			}
 			return false;
 		}
-		
+
 		/**
 		 * Reserve name for use by anObject. If anObject is null, the reservation is for an unspecified object not for the null value.
 		 *
@@ -609,6 +613,22 @@ public class NameManager
 			assert (oldElement == null) || (oldElement == anObject);
 			return validJavaIdentifier;
 		} */
+
+		@Override
+		public @NonNull String toString() {
+			StringBuilder s = new StringBuilder();
+			List<String> names = new ArrayList<>(name2object.keySet());
+			Collections.sort(names);
+			for (String name : names) {
+				if (s.length() > 0) {
+					s.append("\n");
+				}
+				s.append(name);
+				s.append(" = ");
+				s.append(name2object.get(name));
+			}
+			return s.toString();
+		}
 	}
 
 	private @NonNull Context context = new Context();
@@ -669,7 +689,7 @@ public class NameManager
 	/**
 	 * Return a suggestion for the name of anObject.
 	 * <p>
-	 * The returned name is not guaranteed to be unique. Uniqueness is enforced when the hint is passed to getSymbolName(). 
+	 * The returned name is not guaranteed to be unique. Uniqueness is enforced when the hint is passed to getSymbolName().
 	 */
 	public @Nullable String getNameHint(@NonNull Object anObject) {
 		if (anObject instanceof CGValuedElement) {
@@ -807,10 +827,10 @@ public class NameManager
 			Type referredType = ((TypeExp)anObject).getType();
 			return referredType != null ? getTypeNameHint(referredType) : null;
 		}
-//		else if (anObject instanceof TypeValue) {
-//			DomainType referredType = ((TypeValue)anObject).getInstanceType();
-//			return getTypeNameHint(referredType);
-//		}
+		//		else if (anObject instanceof TypeValue) {
+		//			DomainType referredType = ((TypeValue)anObject).getInstanceType();
+		//			return getTypeNameHint(referredType);
+		//		}
 		else if (anObject instanceof UnlimitedNaturalLiteralExp) {
 			Number numberSymbol = ((UnlimitedNaturalLiteralExp)anObject).getUnlimitedNaturalSymbol();
 			return numberSymbol != null ? getNumericNameHint(numberSymbol) : null;
@@ -890,7 +910,7 @@ public class NameManager
 		String string = ClassUtil.nonNullModel(aVariableDeclaration.getName());
 		return VARIABLE_DECLARATION_NAME_HINT_PREFIX + getValidJavaIdentifier(string, VARIABLE_DECLARATION_NAME_HINT_PREFIX.length() > 0, aVariableDeclaration);
 	}
-	
+
 	/**
 	 * Reserve name for use by anObject. If anObject is null, the reservation is for an unspecified object not for the null value.
 	 */
