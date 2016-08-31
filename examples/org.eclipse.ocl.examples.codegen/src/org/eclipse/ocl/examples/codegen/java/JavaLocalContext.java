@@ -29,14 +29,14 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 /**
  * A JavaLocalContext maintains the Java-specific context for generation of coide from a CGOperation.
  */
-public class JavaLocalContext<CG extends JavaCodeGenerator> extends AbstractJavaContext<CG> implements LocalContext
+public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends AbstractJavaContext<CG> implements LocalContext
 {
-	protected final @NonNull JavaGlobalContext<? extends CG> globalContext;
-	protected final @Nullable JavaLocalContext<? extends CG> parentContext;
+	protected final @NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext;
+	protected final @Nullable JavaLocalContext<@NonNull ? extends CG> parentContext;
 	protected @NonNull CGElement cgScope;
 	protected NameManager.@NonNull Context nameManagerContext;
 
-	public JavaLocalContext(@NonNull JavaGlobalContext<? extends CG> globalContext, @NonNull CGElement cgScope) {
+	public JavaLocalContext(@NonNull JavaGlobalContext<@NonNull ? extends CG> globalContext, @NonNull CGElement cgScope) {
 		super(globalContext.getCodeGenerator());
 		this.globalContext = globalContext;
 		this.parentContext = null;

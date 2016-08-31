@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -31,14 +31,14 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 /**
  * A JavaGlobalContext maintains the Java-specific global context for generation of code.
  */
-public class JavaGlobalContext<CG extends JavaCodeGenerator> extends AbstractJavaContext<CG> implements GlobalContext
+public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends AbstractJavaContext<CG> implements GlobalContext
 {
 	protected final @NonNull NameManager nameManager;
-	
-	private @NonNull Map<CGElement, JavaLocalContext<? extends CG>> localContexts = new HashMap<CGElement, JavaLocalContext<? extends CG>>();
-	private @NonNull Set<CGValuedElement> globals = new HashSet<CGValuedElement>();
-	private @NonNull Set<String> imports = new HashSet<String>();
-	
+
+	private @NonNull Map<@NonNull CGElement, @NonNull JavaLocalContext<@NonNull ? extends CG>> localContexts = new HashMap<>();
+	private @NonNull Set<@NonNull CGValuedElement> globals = new HashSet<>();
+	private @NonNull Set<@NonNull String> imports = new HashSet<>();
+
 	protected final @NonNull String eName;
 	protected final @NonNull String evaluateName;
 	protected final @NonNull String instanceName;
@@ -61,7 +61,7 @@ public class JavaGlobalContext<CG extends JavaCodeGenerator> extends AbstractJav
 		imports.add(className);
 	}
 
-	protected @NonNull JavaLocalContext<? extends CG> createNestedContext(@NonNull CGElement cgScope) {
+	protected @NonNull JavaLocalContext<@NonNull ? extends CG> createNestedContext(@NonNull CGElement cgScope) {
 		return new JavaLocalContext<CG>(this, cgScope);
 	}
 

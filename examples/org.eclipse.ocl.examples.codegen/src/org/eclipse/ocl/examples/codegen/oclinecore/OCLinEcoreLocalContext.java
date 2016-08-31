@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 /**
  * A JavaLocalContext maintains the Java-specific context for generation of code from a CGOperation.
  */
-public class OCLinEcoreLocalContext extends JavaLocalContext<OCLinEcoreCodeGenerator>
+public class OCLinEcoreLocalContext extends JavaLocalContext<@NonNull OCLinEcoreCodeGenerator>
 {
 	protected final @Nullable String contextName;
 	protected final @Nullable String diagnosticsName;

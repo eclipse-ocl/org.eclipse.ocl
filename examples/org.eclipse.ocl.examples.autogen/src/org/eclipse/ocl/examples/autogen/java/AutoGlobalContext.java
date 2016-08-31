@@ -15,12 +15,12 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 
-public class AutoGlobalContext<CG extends AutoCodeGenerator> extends JavaGlobalContext<CG> {
+public class AutoGlobalContext<@NonNull CG extends AutoCodeGenerator> extends JavaGlobalContext<CG> {
 
-	public AutoGlobalContext(@NonNull CG codeGenerator, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	public AutoGlobalContext(CG codeGenerator, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		super(codeGenerator);
 	}
-	
+
 	@Override
 	protected @NonNull AutoLocalContext<CG> createNestedContext(@NonNull CGElement cgScope) {
 		return new AutoLocalContext<CG>(this, cgScope);

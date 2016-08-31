@@ -58,7 +58,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
-	protected final @NonNull JavaGlobalContext<JUnitCodeGenerator> globalContext = new JavaGlobalContext<JUnitCodeGenerator>(this);
+	protected final @NonNull JavaGlobalContext<@NonNull JUnitCodeGenerator> globalContext = new JavaGlobalContext<>(this);
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 
 	protected JUnitCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, boolean useNullAnnotations) {
@@ -131,7 +131,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull JavaGlobalContext<JUnitCodeGenerator> getGlobalContext() {
+	public @NonNull JavaGlobalContext<@NonNull JUnitCodeGenerator> getGlobalContext() {
 		return globalContext;
 	}
 }

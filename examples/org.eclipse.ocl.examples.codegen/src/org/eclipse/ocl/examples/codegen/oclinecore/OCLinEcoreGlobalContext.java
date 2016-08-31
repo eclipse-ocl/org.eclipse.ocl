@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -18,10 +18,10 @@ import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 /**
  * A JavaGlobalContext maintains the Java-specific global context for generation of code.
  */
-public class OCLinEcoreGlobalContext extends JavaGlobalContext<OCLinEcoreCodeGenerator>
+public class OCLinEcoreGlobalContext extends JavaGlobalContext<@NonNull OCLinEcoreCodeGenerator>
 {
 	protected final @NonNull GenPackage genPackage;
-	
+
 	public OCLinEcoreGlobalContext(@NonNull OCLinEcoreCodeGenerator codeGenerator, @NonNull GenPackage genPackage) {
 		super(codeGenerator);
 		this.genPackage = genPackage;
@@ -32,7 +32,7 @@ public class OCLinEcoreGlobalContext extends JavaGlobalContext<OCLinEcoreCodeGen
 		return new OCLinEcoreLocalContext(this, cgScope);
 	}
 
-/*	public @NonNull CGParameter createSelfParameter(@NonNull Variable contextVariable) {
+	/*	public @NonNull CGParameter createSelfParameter(@NonNull Variable contextVariable) {
 		CGTextParameter cgTextParameter = CGModelFactory.eINSTANCE.createCGTextParameter();
 		cgTextParameter.setName(contextVariable.getName());
 		cgTextParameter.setValueName(getSelfName());
