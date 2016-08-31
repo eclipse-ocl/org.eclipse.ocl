@@ -24,9 +24,9 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * AbstractPolyOperation supports arguments with a variety of argument lengths operations.
  */
 public abstract class AbstractPolyOperation extends AbstractOperation implements
-	LibraryUnaryOperation.LibraryUnaryOperationExtension,
-	LibraryBinaryOperation.LibraryBinaryOperationExtension,
-	LibraryTernaryOperation.LibraryTernaryOperationExtension 
+LibraryUnaryOperation.LibraryUnaryOperationExtension,
+LibraryBinaryOperation.LibraryBinaryOperationExtension,
+LibraryTernaryOperation.LibraryTernaryOperationExtension
 {
 	/**
 	 * @since 1.1
@@ -61,7 +61,7 @@ public abstract class AbstractPolyOperation extends AbstractOperation implements
 		return evaluate(executor, typeId, sourceValue, argumentValues);
 	}
 
-	/** @deprecated use Executor 
+	/** @deprecated use Executor
 	 * @since 1.1
 	 */
 	@Deprecated
@@ -70,7 +70,7 @@ public abstract class AbstractPolyOperation extends AbstractOperation implements
 		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
-	/** @deprecated use Executor 
+	/** @deprecated use Executor
 	 * @since 1.1
 	 */
 	@Deprecated
@@ -80,7 +80,7 @@ public abstract class AbstractPolyOperation extends AbstractOperation implements
 		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, argVal);
 	}
 
-	/** @deprecated use Executor 
+	/** @deprecated use Executor
 	 * @since 1.1
 	 */
 	@Deprecated
@@ -94,7 +94,7 @@ public abstract class AbstractPolyOperation extends AbstractOperation implements
 	 * @since 1.3
 	 */
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
 		TypeId typeId = callExp.getTypeId();
 		if (boxedSourceAndArgumentValues.length == 1) {
 			return evaluate(executor, typeId, boxedSourceAndArgumentValues[0]);

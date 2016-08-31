@@ -36,8 +36,8 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  */
 public class EInvokeOperation extends AbstractOperation
 {
-	protected final @NonNull EOperation eOperation;	
-	
+	protected final @NonNull EOperation eOperation;
+
 	public EInvokeOperation(@NonNull EOperation eOperation) {
 		this.eOperation = eOperation;
 		EClassifier eType = eOperation.getEType();
@@ -78,15 +78,15 @@ public class EInvokeOperation extends AbstractOperation
 		}
 		return evaluate(executor, typeId, sourceValue, argumentValues);
 	}
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object @NonNull ... boxedArgumentValues) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, boxedArgumentValues); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, boxedArgumentValues);
 	}
 
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
 		return evaluate(executor, callExp.getTypeId(), boxedSourceAndArgumentValues);
 	}
 
@@ -98,7 +98,7 @@ public class EInvokeOperation extends AbstractOperation
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue,
 			@Nullable Object... boxedArgumentValues) {
 		EObject eObject = asNavigableObject(sourceValue, eOperation, executor);
-//		EList<Object> ecoreArguments = executor.getIdResolver().ecoreValuesOfEach(null, boxedArgumentValues);
+		//		EList<Object> ecoreArguments = executor.getIdResolver().ecoreValuesOfEach(null, boxedArgumentValues);
 		IdResolver idResolver = executor.getIdResolver();
 		EList<EParameter> eParameters = eOperation.getEParameters();
 		Object[] ecoreValues = new Object[boxedArgumentValues.length];
@@ -122,7 +122,7 @@ public class EInvokeOperation extends AbstractOperation
 	 */
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
 		EObject eObject = asNavigableObject(boxedSourceAndArgumentValues[0], eOperation, executor);
-//		EList<Object> ecoreArguments = executor.getIdResolver().ecoreValuesOfEach(null, boxedArgumentValues);
+		//		EList<Object> ecoreArguments = executor.getIdResolver().ecoreValuesOfEach(null, boxedArgumentValues);
 		IdResolver idResolver = executor.getIdResolver();
 		EList<EParameter> eParameters = eOperation.getEParameters();
 		Object[] ecoreValues = new Object[boxedSourceAndArgumentValues.length-1];
@@ -144,7 +144,7 @@ public class EInvokeOperation extends AbstractOperation
 	/** @deprecated use Executor */
 	@Deprecated
 	protected @Nullable Object getResultValue(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object eResult) {
-		return evaluate(getExecutor(evaluator), returnTypeId, eResult); 
+		return evaluate(getExecutor(evaluator), returnTypeId, eResult);
 	}
 
 	/**

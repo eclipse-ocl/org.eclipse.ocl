@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * type-id invocation to the type-id-less form.
  */
 public abstract class AbstractUntypedBinaryOperation extends AbstractBinaryOperation
-	implements LibraryUntypedBinaryOperation.LibraryUntypedBinaryOperationExtension
+implements LibraryUntypedBinaryOperation.LibraryUntypedBinaryOperationExtension
 {
 	/** @deprecated use Executor */
 	@Deprecated
@@ -69,7 +69,7 @@ public abstract class AbstractUntypedBinaryOperation extends AbstractBinaryOpera
 	 * @since 1.3
 	 */
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
 		if (boxedSourceAndArgumentValues.length == 2) {
 			return evaluate(executor, boxedSourceAndArgumentValues[0], boxedSourceAndArgumentValues[1]);
 		}

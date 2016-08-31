@@ -22,23 +22,25 @@ import org.eclipse.ocl.pivot.internal.evaluation.BasicEvaluationEnvironment;
 
 public abstract class AbstractVMEvaluationEnvironment extends BasicEvaluationEnvironment implements VMEvaluationEnvironment
 {
-//	protected final @NonNull IVMContext vmContext;
+	//	protected final @NonNull IVMContext vmContext;
 	private final @NonNull Stack<StepperEntry> stepperStack = new Stack<StepperEntry>();
-	
+
 	protected AbstractVMEvaluationEnvironment(@NonNull VMExecutor vmExecutor, @NonNull NamedElement executableObject) {
 		super(vmExecutor, executableObject);
-//		this.vmContext = vmExecutor.getVMContext();
+		//		this.vmContext = vmExecutor.getVMContext();
 	}
 
 	protected AbstractVMEvaluationEnvironment(@NonNull VMEvaluationEnvironment evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
 		super(evaluationEnvironment, executableObject, callingObject);
-//		this.vmContext = evaluationEnvironment.getVMContext();
+		//		this.vmContext = evaluationEnvironment.getVMContext();
 	}
 
+	@Override
 	public @NonNull VariableFinder createVariableFinder(boolean isStoreValues) {
 		return new VariableFinder(this, isStoreValues);
 	}
 
+	@Override
 	public @Nullable VMEvaluationEnvironment getVMParentEvaluationEnvironment() {
 		return (VMEvaluationEnvironment) parent;
 	}
@@ -48,8 +50,8 @@ public abstract class AbstractVMEvaluationEnvironment extends BasicEvaluationEnv
 		return stepperStack;
 	}
 
-//	@Override
-//	public @NonNull IVMContext getVMContext() {
-//		return vmContext;
-//	}
+	//	@Override
+	//	public @NonNull IVMContext getVMContext() {
+	//		return vmContext;
+	//	}
 }

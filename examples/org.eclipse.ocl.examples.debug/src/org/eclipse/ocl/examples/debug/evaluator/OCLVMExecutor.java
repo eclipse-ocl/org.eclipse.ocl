@@ -36,50 +36,50 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 
 public class OCLVMExecutor extends BasicOCLExecutor implements VMExecutor
 {
-    private static @NonNull EObject loadContext(@NonNull EnvironmentFactory environmentFactory, @NonNull URI contextURI) throws IOException {
-        EObject eObject = environmentFactory.getResourceSet().getEObject(contextURI, true);
-        if (eObject == null) {
-            throw new IOException("Nothing loadable as '" + contextURI + "'");
-        }
-        return eObject;
+	private static @NonNull EObject loadContext(@NonNull EnvironmentFactory environmentFactory, @NonNull URI contextURI) throws IOException {
+		EObject eObject = environmentFactory.getResourceSet().getEObject(contextURI, true);
+		if (eObject == null) {
+			throw new IOException("Nothing loadable as '" + contextURI + "'");
+		}
+		return eObject;
 	}
-    
-    private static @NonNull ExpressionInOCL loadExpression(@NonNull EnvironmentFactory environmentFactory, @NonNull URI constraintURI, boolean keepDebug) throws IOException, ParserException {
+
+	private static @NonNull ExpressionInOCL loadExpression(@NonNull EnvironmentFactory environmentFactory, @NonNull URI constraintURI, boolean keepDebug) throws IOException, ParserException {
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-        EObject eObject = metamodelManager.getASResourceSet().getEObject(constraintURI, true);
-        return loadExpression(environmentFactory, eObject, constraintURI);
+		EObject eObject = metamodelManager.getASResourceSet().getEObject(constraintURI, true);
+		return loadExpression(environmentFactory, eObject, constraintURI);
 	}
-    
+
 	private static @NonNull ExpressionInOCL loadExpression(@NonNull EnvironmentFactory environmentFactory, EObject eObject, URI constraintURI) throws IOException, ParserException {
 		if (eObject == null) {
-            throw new IOException("Nothing loadable as '" + constraintURI + "'");
-        }
-        if (!(eObject instanceof Constraint)) {
-            throw new IOException("Constraint rather than " + eObject.eClass().getName() + " expected as '" + constraintURI + "'");
-        }
-        LanguageExpression specification = ((Constraint)eObject).getOwnedSpecification();
-    	if (specification == null) {
-            throw new IOException("Missing OCL expression " + eObject.eClass().getName() + " expected as '" + constraintURI + "'");
-    	}
+			throw new IOException("Nothing loadable as '" + constraintURI + "'");
+		}
+		if (!(eObject instanceof Constraint)) {
+			throw new IOException("Constraint rather than " + eObject.eClass().getName() + " expected as '" + constraintURI + "'");
+		}
+		LanguageExpression specification = ((Constraint)eObject).getOwnedSpecification();
+		if (specification == null) {
+			throw new IOException("Missing OCL expression " + eObject.eClass().getName() + " expected as '" + constraintURI + "'");
+		}
 		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		return metamodelManager.parseSpecification(specification);
 	}
 
-    protected final @NonNull IVMContext vmContext;
+	protected final @NonNull IVMContext vmContext;
 	protected final @NonNull ExpressionInOCL expressionInOCL;
 	protected final @Nullable EObject context;
 	private boolean suspendOnStartup = false;
 	private long envId = 0;
-	
-    public OCLVMExecutor(IVMContext vmContext, @NonNull URI oclURI, @Nullable URI contextURI) throws IOException, ParserException {
-    	this(vmContext, loadExpression(vmContext.getEnvironmentFactory(), oclURI, vmContext.keepDebug()), contextURI != null ? loadContext(vmContext.getEnvironmentFactory(), contextURI) : null);
-    }
-	
+
+	public OCLVMExecutor(IVMContext vmContext, @NonNull URI oclURI, @Nullable URI contextURI) throws IOException, ParserException {
+		this(vmContext, loadExpression(vmContext.getEnvironmentFactory(), oclURI, vmContext.keepDebug()), contextURI != null ? loadContext(vmContext.getEnvironmentFactory(), contextURI) : null);
+	}
+
 	public OCLVMExecutor(@NonNull IVMContext vmContext, @NonNull ExpressionInOCL expressionInOCL, @Nullable EObject context) {
 		super(vmContext.getEnvironmentFactory(), new OCLVMModelManager(vmContext.getEnvironmentFactory().getMetamodelManager()));
 		this.vmContext = vmContext;
-    	this.expressionInOCL = expressionInOCL;
-    	this.context = context;
+		this.expressionInOCL = expressionInOCL;
+		this.context = context;
 	}
 
 	@Override
@@ -99,8 +99,9 @@ public class OCLVMExecutor extends BasicOCLExecutor implements VMExecutor
 		return new OCLVMRootEvaluationEnvironment(this, (ExpressionInOCL)executableObject, ++envId);
 	}
 
+	@Override
 	public Object execute() {
-        initializeEvaluationEnvironment(expressionInOCL);
+		initializeEvaluationEnvironment(expressionInOCL);
 		getRootEvaluationEnvironment();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
@@ -109,7 +110,7 @@ public class OCLVMExecutor extends BasicOCLExecutor implements VMExecutor
 		OCLVMEvaluationVisitor visitor = (OCLVMEvaluationVisitor) getEvaluationVisitor();
 		VMEvaluationStepper vmStepper = visitor.getVMEvaluationStepper();
 		vmStepper.start(suspendOnStartup);
-        return expressionInOCL.accept(visitor);
+		return expressionInOCL.accept(visitor);
 	}
 
 	@Override

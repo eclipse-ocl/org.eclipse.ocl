@@ -39,7 +39,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.Value;
 
 public abstract class ExecutorManager implements Executor
-{	
+{
 	// This is the same as HashMap's default initial capacity
 	private static final int DEFAULT_REGEX_CACHE_LIMIT = 16;
 
@@ -78,10 +78,10 @@ public abstract class ExecutorManager implements Executor
 			throw new UnsupportedOperationException();
 		}
 
-//		@Override
-//		public @NonNull ExecutorInternal getExecutor() {
-//			throw new UnsupportedOperationException();
-//		}
+		//		@Override
+		//		public @NonNull ExecutorInternal getExecutor() {
+		//			throw new UnsupportedOperationException();
+		//		}
 
 		@Override
 		public @NonNull ModelManager getModelManager() {
@@ -93,10 +93,10 @@ public abstract class ExecutorManager implements Executor
 			return null;
 		}
 
-//		@Override
-//		public EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParent() {
-//			return null;
-//		}
+		//		@Override
+		//		public EvaluationEnvironment.@Nullable EvaluationEnvironmentExtension getParent() {
+		//			return null;
+		//		}
 
 		@Override
 		public <@Nullable T> T getValue(@NonNull Option<T> option) {
@@ -149,32 +149,32 @@ public abstract class ExecutorManager implements Executor
 	protected final @NonNull CompleteEnvironment environment;
 	protected final @NonNull StandardLibrary standardLibrary;
 
-    /**
-     * Set true by {@link #setCanceled} to terminate execution at next call to {@link #getValuefactory()}.
-     */
+	/**
+	 * Set true by {@link #setCanceled} to terminate execution at next call to {@link #getValuefactory()}.
+	 */
 	private boolean isCanceled = false;
-	
+
 	/**
 	 * Lazily-created cache of reusable regex patterns to avoid
 	 * repeatedly parsing the same regexes.
 	 */
 	private /*@LazyNonNull*/ Map<String, Pattern> regexPatterns = null;
-	
+
 	public ExecutorManager(@NonNull CompleteEnvironment environment) {
 		this.environment = environment;
 		this.standardLibrary = environment.getOwnedStandardLibrary();
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
 	@Override
 	public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {}
 
-	/** @deprecated Evaluator no longer nests 
+	/** @deprecated Evaluator no longer nests
 	 * @since 1.1*/
 	@Deprecated
-	@Override	
+	@Override
 	public @NonNull Evaluator createNestedEvaluator() {
 		return this;
 	}
@@ -184,14 +184,14 @@ public abstract class ExecutorManager implements Executor
 	 * implementation creates an access-ordered LRU cache with a limit of 16
 	 * entries. Subclasses may override to create a map with whatever different
 	 * performance characteristics may be required.
-	 * 
+	 *
 	 * @return the new regular-expression matcher cache
-	 * 
+	 *
 	 * @see #getRegexPattern(String)
 	 */
 	protected @NonNull Map<String, Pattern> createRegexCache() {
 		return new java.util.LinkedHashMap<String, Pattern>(
-			DEFAULT_REGEX_CACHE_LIMIT, DEFAULT_REGEX_CACHE_LOAD_FACTOR, true) {
+				DEFAULT_REGEX_CACHE_LIMIT, DEFAULT_REGEX_CACHE_LOAD_FACTOR, true) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -209,11 +209,11 @@ public abstract class ExecutorManager implements Executor
 	@Override
 	public @NonNull Value evaluate(@NonNull OCLExpression body) {
 		throw new UnsupportedOperationException();
-//		try {
-//			return ((LibraryUnaryOperation)body).evaluate(this, null, null);		// WIP
-//		} catch (InvalidValueException e) {
-//			return throwInvalidEvaluation(e);
-//		}
+		//		try {
+		//			return ((LibraryUnaryOperation)body).evaluate(this, null, null);		// WIP
+		//		} catch (InvalidValueException e) {
+		//			return throwInvalidEvaluation(e);
+		//		}
 	}
 
 	public Value evaluateIteration(Type returnType, CollectionValue sourceVal, TypedElement accumulator,
@@ -226,7 +226,7 @@ public abstract class ExecutorManager implements Executor
 	public @NonNull CompleteEnvironment getCompleteEnvironment() {
 		return environment;
 	}
-	
+
 	@Override
 	public int getDiagnosticSeverity(int severityPreference, @Nullable Object resultValue) {
 		if (resultValue == null) {
@@ -257,14 +257,14 @@ public abstract class ExecutorManager implements Executor
 		throw new UnsupportedOperationException();
 	}
 
-//	@Override
-//	public @NonNull Executor getExecutor() {
-//		return this;
-//	}
+	//	@Override
+	//	public @NonNull Executor getExecutor() {
+	//		return this;
+	//	}
 
-//	public @NonNull IdResolver getIdResolver() {
-//		return standardLibrary.getIdResolver();
-//	}
+	//	public @NonNull IdResolver getIdResolver() {
+	//		return standardLibrary.getIdResolver();
+	//	}
 
 	@Override
 	public @Nullable EvaluationLogger getLogger() {
@@ -294,22 +294,22 @@ public abstract class ExecutorManager implements Executor
 		synchronized (regexPatterns) {
 			Pattern pattern = regexPatterns.get(regex);
 			if (pattern == null) {
-//				System.out.println("Compile " + regex);
+				//				System.out.println("Compile " + regex);
 				pattern = Pattern.compile(regex);
 				assert pattern != null;
 				regexPatterns.put(regex, pattern);
 			}
-//			else {
-//				System.out.println("Re-use " + regex);
-//			}
+			//			else {
+			//				System.out.println("Re-use " + regex);
+			//			}
 			return pattern;
 		}
 	}
 
-//	@Override
-//	public @NonNull EvaluationEnvironment getRootEvaluationEnvironment() {
-//		return nullEvaluationEnvironment;
-//	}
+	//	@Override
+	//	public @NonNull EvaluationEnvironment getRootEvaluationEnvironment() {
+	//		return nullEvaluationEnvironment;
+	//	}
 
 	@Override
 	public int getSeverity(@Nullable Object validationKey) {
@@ -336,17 +336,17 @@ public abstract class ExecutorManager implements Executor
 		return getIdResolver().getStaticTypeOf(value, values);
 	}
 
-//	public @NonNull ValueFactory getValueFactory() {
-//		if (isCanceled) {
-//			throw new EvaluationHaltedException("Canceled"); //$NON-NLS-1$
-//		}
-//		return valueFactory;
-//	}
+	//	public @NonNull ValueFactory getValueFactory() {
+	//		if (isCanceled) {
+	//			throw new EvaluationHaltedException("Canceled"); //$NON-NLS-1$
+	//		}
+	//		return valueFactory;
+	//	}
 
-//	@Override
-//	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
-//		return null;
-//	}
+	//	@Override
+	//	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
+	//		return null;
+	//	}
 
 	@Override
 	public boolean isCanceled() {
@@ -382,8 +382,8 @@ public abstract class ExecutorManager implements Executor
 	 */
 	@Override
 	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {}
-	
-/*	public DomainType typeOf(Value value, Value... values) {
+
+	/*	public DomainType typeOf(Value value, Value... values) {
 		DomainStandardLibrary standardLibrary = valueFactory.getStandardLibrary();
 		DomainType type = value.getType(standardLibrary);
 		for (Value anotherValue : values) {
@@ -393,12 +393,12 @@ public abstract class ExecutorManager implements Executor
 		return type;
 	} */
 
-//	public @NonNull NullValue throwInvalidEvaluation(InvalidValueException e) {
-//		throw new InvalidEvaluationException(null, e);
-//	}
+	//	public @NonNull NullValue throwInvalidEvaluation(InvalidValueException e) {
+	//		throw new InvalidEvaluationException(null, e);
+	//	}
 
-//	public @NonNull NullValue throwInvalidEvaluation(Throwable e, DomainExpression expression, Object context,
-//			String message, Object... bindings) {
-//		throw new InvalidEvaluationException(null, NLS.bind(message, bindings), e, expression, context);
-//	}
+	//	public @NonNull NullValue throwInvalidEvaluation(Throwable e, DomainExpression expression, Object context,
+	//			String message, Object... bindings) {
+	//		throw new InvalidEvaluationException(null, NLS.bind(message, bindings), e, expression, context);
+	//	}
 }

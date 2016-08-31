@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.library;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -22,7 +23,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * type-id invocation to the type-id-less form.
  */
 public abstract class AbstractUntypedUnaryOperation extends AbstractUnaryOperation
-	implements LibraryUntypedUnaryOperation.LibraryUntypedUnaryOperationExtension
+implements LibraryUntypedUnaryOperation.LibraryUntypedUnaryOperationExtension
 {
 	/** @deprecated use Executor */
 	@Deprecated
@@ -57,7 +58,7 @@ public abstract class AbstractUntypedUnaryOperation extends AbstractUnaryOperati
 	 * @since 1.3
 	 */
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
 		if (boxedSourceAndArgumentValues.length == 1) {
 			return evaluate(executor, boxedSourceAndArgumentValues[0]);
 		}

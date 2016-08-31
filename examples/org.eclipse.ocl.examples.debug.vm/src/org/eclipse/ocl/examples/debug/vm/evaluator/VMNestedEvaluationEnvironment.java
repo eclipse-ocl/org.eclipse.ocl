@@ -20,16 +20,18 @@ import org.eclipse.ocl.pivot.OCLExpression;
 public abstract class VMNestedEvaluationEnvironment extends AbstractVMEvaluationEnvironment
 {
 	protected final @NonNull VMEvaluationEnvironment rootVMEvaluationEnvironment;
-	
+
 	public VMNestedEvaluationEnvironment(@NonNull VMEvaluationEnvironment vmEvaluationEnvironment, @NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
 		super(vmEvaluationEnvironment, executableObject, callingObject);
 		rootVMEvaluationEnvironment = vmEvaluationEnvironment.getVMRootEvaluationEnvironment();
 	}
 
+	@Override
 	public @NonNull VMDebugCore getDebugCore() {
 		return rootVMEvaluationEnvironment.getDebugCore();
 	}
 
+	@Override
 	public @NonNull NamedElement getDebuggableElement() {
 		return rootVMEvaluationEnvironment.getDebuggableElement();
 	}

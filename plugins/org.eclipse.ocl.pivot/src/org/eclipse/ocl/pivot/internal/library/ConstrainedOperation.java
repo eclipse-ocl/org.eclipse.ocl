@@ -32,11 +32,11 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public class ConstrainedOperation extends AbstractOperation
 {
 	protected final @NonNull ExpressionInOCL expressionInOCL;
-	
+
 	public ConstrainedOperation(@NonNull ExpressionInOCL expressionInOCL) {
 		this.expressionInOCL = expressionInOCL;
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -57,7 +57,7 @@ public class ConstrainedOperation extends AbstractOperation
 	 * @since 1.3
 	 */
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
 		PivotUtil.checkExpression(expressionInOCL);
 		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(expressionInOCL, callExp);
 		nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(expressionInOCL.getOwnedContext()), boxedSourceAndArgumentValues[0]);

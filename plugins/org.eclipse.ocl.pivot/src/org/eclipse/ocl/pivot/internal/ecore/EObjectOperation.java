@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
-/** 
+/**
  * An EObjectOperation provides the standard LibraryOperation to implement an EOperation defined by an OCL specification.
  * The specification is resolved lazily and so an invalid specification may throw an InvalidValueException at run-time.
  */
@@ -49,7 +49,7 @@ public class EObjectOperation extends AbstractOperation
 	 */
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		if (specification.getOwnedBody() == null) {		
+		if (specification.getOwnedBody() == null) {
 			try {
 				MetamodelManager metamodelManager = executor.getMetamodelManager();
 				metamodelManager.parseSpecification(specification);
@@ -84,8 +84,8 @@ public class EObjectOperation extends AbstractOperation
 	 * @since 1.3
 	 */
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
-		if (specification.getOwnedBody() == null) {		
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		if (specification.getOwnedBody() == null) {
 			try {
 				MetamodelManager metamodelManager = executor.getMetamodelManager();
 				metamodelManager.parseSpecification(specification);

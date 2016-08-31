@@ -27,9 +27,9 @@ public class OCLVMNestedEvaluationEnvironment extends VMNestedEvaluationEnvironm
 {
 	private @NonNull Element myCurrentIP;
 	private @NonNull NamedElement myOperation;		// Redundant if final
-    private final int myStackDepth;
+	private final int myStackDepth;
 	private final long id;
-    
+
 	public OCLVMNestedEvaluationEnvironment(@NonNull OCLVMEvaluationEnvironment evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable OCLExpression callingObject, long id) {
 		super(evaluationEnvironment, executableObject, callingObject);
 		myStackDepth = evaluationEnvironment.getDepth() + 1;
@@ -48,15 +48,16 @@ public class OCLVMNestedEvaluationEnvironment extends VMNestedEvaluationEnvironm
 		return myCurrentIP;
 	}
 
+	@Override
 	public @NonNull UnitLocation getCurrentLocation() {
-//		if (myCurrentIP == null) {
-//			return null;
-//		}
-//		else {
+		//		if (myCurrentIP == null) {
+		//			return null;
+		//		}
+		//		else {
 		int startPosition = ASTBindingHelper.getStartPosition(myCurrentIP);
 		int endPosition = ASTBindingHelper.getEndPosition(myCurrentIP);
-			return new UnitLocation(startPosition, endPosition, this, myCurrentIP); 
-//		}
+		return new UnitLocation(startPosition, endPosition, this, myCurrentIP);
+		//		}
 	}
 
 	@Override
@@ -89,14 +90,17 @@ public class OCLVMNestedEvaluationEnvironment extends VMNestedEvaluationEnvironm
 		return (OCLVMRootEvaluationEnvironment) rootVMEvaluationEnvironment;
 	}
 
+	@Override
 	public boolean isDeferredExecution() {
 		return getVMRootEvaluationEnvironment().isDeferredExecution();
 	}
-    
-    public void processDeferredTasks() {
-    	getVMRootEvaluationEnvironment().processDeferredTasks();
-    }
 
+	@Override
+	public void processDeferredTasks() {
+		getVMRootEvaluationEnvironment().processDeferredTasks();
+	}
+
+	@Override
 	public @NonNull Element setCurrentIP(@NonNull Element element) {
 		Element prevValue = myCurrentIP;
 		myCurrentIP = element;
@@ -108,6 +112,7 @@ public class OCLVMNestedEvaluationEnvironment extends VMNestedEvaluationEnvironm
 		this.myOperation = operation;
 	}
 
+	@Override
 	public void throwVMException(@NonNull VMRuntimeException exception) throws VMRuntimeException {
 		try {
 			getVMRootEvaluationEnvironment().saveThrownException(exception);
@@ -115,7 +120,7 @@ public class OCLVMNestedEvaluationEnvironment extends VMNestedEvaluationEnvironm
 		} catch (Exception e) {
 			getDebugCore().error("Failed to build VM stack trace", e); //$NON-NLS-1$
 		}
-		
+
 		throw exception;
 	}
 }
