@@ -1,4 +1,4 @@
-import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/'
+--import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/'
 
 --package ecore
 --context ELong

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,10 +27,12 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.completeocl.CompleteOCLCodeGenerator;
 import org.eclipse.ocl.examples.codegen.dynamic.OCL2JavaFileObject;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTables;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
@@ -119,8 +122,8 @@ public class OCLCompilerTests extends XtextTestCase
 			return asResource;
 		}
 
-		protected @NonNull Class<? extends Transformer> generateCode(@NonNull Model asDocument, @NonNull String rootPackageNames) throws Exception {
-			CompleteOCLCodeGenerator cg = new CompleteOCLCodeGenerator(getEnvironmentFactory(), asDocument, rootPackageNames);
+		protected @NonNull Class<? extends Transformer> generateCode(@NonNull Model asDocument, @NonNull String rootPackageNames, @NonNull String rootClassName) throws Exception {
+			CompleteOCLCodeGenerator cg = new CompleteOCLCodeGenerator(getEnvironmentFactory(), asDocument, rootPackageNames, rootClassName);
 			//			QVTiCodeGenOptions options = cg.getOptions();
 			//			options.setUseNullAnnotations(true);
 			//			options.setPackagePrefix("cg_qvtimperative_tests");
@@ -197,7 +200,27 @@ public class OCLCompilerTests extends XtextTestCase
 		//		URI outputModelURI = getProjectFileURI("Tree2TallTree/Tree2TallTree.xmi");
 		//		URI referenceModelURI = getProjectFileURI("Tree2TallTree/TallTreeValidate.xmi");
 		Model asModel = myOCL.loadDocument(documentURI); //, genModelURI);
-		Class<? extends Transformer> txClass = myOCL.generateCode(asModel, "fibonacci");
+
+		OCLinEcoreTables oclinEcoreTables = new OCLinEcoreTables((PivotMetamodelManager)myOCL.getMetamodelManager(), asModel.getOwnedPackages().get(0))
+		{
+
+			@Override
+			public @NonNull String getTablesClassName() {
+				return "FibonacciTables";
+			}
+
+			@Override
+			protected String getTablesPackageName() {
+				return "fibonacci";
+			}
+
+		};
+		oclinEcoreTables.generateTablesClass(null);
+		String generateTablesClass = oclinEcoreTables.toString();
+		FileWriter fw = new FileWriter("../org.eclipse.ocl.examples.xtext.tests/src-gen/fibonacci/FibonacciTables.java");
+		fw.append(generateTablesClass);
+		fw.close();
+		Class<? extends Transformer> txClass = myOCL.generateCode(asModel, "fibonacci", "Fibonacci");
 		//		Transformer tx = myOCL.createTransformer(txClass);
 		//		myOCL.loadInput(tx, "tree", inputModelURI);
 		//		tx.run();

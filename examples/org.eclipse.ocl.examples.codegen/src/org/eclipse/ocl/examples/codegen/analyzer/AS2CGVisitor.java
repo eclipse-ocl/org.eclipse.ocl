@@ -381,14 +381,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
 			CGParameter cgParameter = getParameter(contextVariable, null);
-			//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
-			//			cgParameter.setRequired(contextVariable.isIsRequired());
 			cgOperation.getParameters().add(cgParameter);
 		}
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {
 			CGParameter cgParameter = getParameter(parameterVariable, null);
-			//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
-			//			cgParameter.setRequired(parameterVariable.isIsRequired());
 			cgOperation.getParameters().add(cgParameter);
 		}
 	}
@@ -1056,6 +1052,21 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				|| (libraryProperty instanceof StereotypeProperty)
 				|| (libraryProperty instanceof ConstrainedProperty)
 				|| (libraryProperty instanceof EObjectProperty);
+	}
+
+	protected @NonNull CGValuedElement libraryOperationCall(@NonNull OperationCallExp element,
+			CGValuedElement cgSource, @NonNull Operation finalOperation, @NonNull ConstrainedOperation libraryOperation) {
+		@NonNull CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
+		cgOperationCallExp.setSource(cgSource);
+		//		cgOperationCallExp.setThisIsSelf(false);
+		for (OCLExpression pArgument : element.getOwnedArguments()) {
+			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
+			cgOperationCallExp.getArguments().add(cgArgument);
+		}
+		setAst(cgOperationCallExp, element);
+		cgOperationCallExp.setReferredOperation(finalOperation);
+		cgOperationCallExp.setLibraryOperation(libraryOperation);
+		return cgOperationCallExp;
 	}
 
 	protected @NonNull CGValuedElement nativeOperationCall(@NonNull OperationCallExp element,

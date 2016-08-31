@@ -15,6 +15,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -35,39 +36,31 @@ public class CompleteOCLCG2JavaVisitor extends CG2JavaVisitor<@NonNull CompleteO
 	}
 
 	@Override
+	protected boolean doClassStatics(@NonNull CGClass cgClass, boolean needsBlankLine) {
+		if (cgClass.getContainingPackage() != null) {
+			@Nullable
+			List<CGValuedElement> sortedGlobals2 = sortedGlobals;
+			if (sortedGlobals2 != null) {
+				if (needsBlankLine) {
+					js.append("\n");
+				}
+				boolean gotOne = false;
+				for (CGValuedElement cgElement : sortedGlobals2) {
+					assert cgElement.isGlobal();
+					cgElement.accept(this);
+					gotOne = true;
+				}
+				if (gotOne) {
+					js.append("\n");
+					needsBlankLine = false;
+				}
+			}
+		}
+		return super.doClassStatics(cgClass, needsBlankLine);
+	}
+
+	@Override
 	public @NonNull Set<String> getAllImports() {
 		return globalContext.getImports();
 	}
-
-	/*	@Override
-	public @NonNull Boolean visitCGClass(@NonNull CGClass cgClass) {
-		js.appendClassHeader(cgClass.getContainingPackage());
-		Class<?> baseClass = genModelHelper.getAbstractOperationClass(expInOcl.getOwnedParameters());
-		String title = cgClass.getName() + " provides the Java implementation for\n";
-		js.appendCommentWithOCL(title, expInOcl);
-		String className = cgClass.getName();
-		js.append("@SuppressWarnings(\"nls\")\n");
-		js.append("public class " + className + " extends ");
-		js.appendClassReference(baseClass);
-		js.append("\n");
-		js.append("{\n");
-		js.pushIndentation(null);
-		if (sortedGlobals != null) {
-			generateGlobals(sortedGlobals);
-		}
-		js.append("\n");
-		if (expInOcl.getOwnedContext() != null) {
-			for (CGOperation cgOperation : cgClass.getOperations()) {
-				cgOperation.accept(this);
-			}
-		}
-		else {
-			js.append("/*\n");
-			js.append("«IF expInOcl.messageExpression != null»«(expInOcl.messageExpression as StringLiteralExp).stringSymbol»«ENDIF»\n");
-			js.append("* /\n");
-		}
-		js.popIndentation();
-		js.append("}\n");
-		return true;
-	} */
 }

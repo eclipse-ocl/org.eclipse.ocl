@@ -40,16 +40,19 @@ public class CompleteOCLCodeGenerator extends JavaCodeGenerator
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final @NonNull Model document;
 	protected final @NonNull String rootPackageNames;
+	protected final @NonNull String rootClassName;
 	private/* @LazyNonNull*/ CGPackage cgPackage;
 	private/* @LazyNonNull*/ String javaSourceCode = null;
-	protected final @NonNull JavaGlobalContext<@NonNull CompleteOCLCodeGenerator> globalContext = new JavaGlobalContext<>(this);
+	protected final @NonNull CompleteOCLGlobalContext globalContext = new CompleteOCLGlobalContext(this);
 
-	public CompleteOCLCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Model asDocument, @NonNull String rootPackageNames) {
+	public CompleteOCLCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Model asDocument,
+			@NonNull String rootPackageNames, @NonNull String rootClassName) {
 		super(environmentFactory);
 		//		getOptions().setUseNullAnnotations(useNullAnnotations);
 		this.cgAnalyzer = new CodeGenAnalyzer(this);
 		this.document = asDocument;
 		this.rootPackageNames = rootPackageNames;
+		this.rootClassName = rootClassName;
 	}
 
 	private void appendSegmentName(@NonNull StringBuilder s, CGPackage sPackage) {
@@ -64,15 +67,19 @@ public class CompleteOCLCodeGenerator extends JavaCodeGenerator
 		return new CompleteOCLAS2CGVisitor(analyzer/*, gContext*/);
 	}
 
+	@Override
+	public @NonNull CompleteOCLCG2JavaPreVisitor createCG2JavaPreVisitor() {
+		return new CompleteOCLCG2JavaPreVisitor(getGlobalContext());
+	}
+
 	protected @NonNull CompleteOCLCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable List<CGValuedElement> sortedGlobals) {
 		return new CompleteOCLCG2JavaVisitor(this, cgPackage, sortedGlobals);
 	}
 
 	protected @NonNull String createClassFileContent() {
 		String javaSourceCode2;
-		CompleteOCLAS2CGVisitor pivot2CGVisitor = createAS2CGVisitor(cgAnalyzer, getGlobalContext());
-		CGPackage cgDocument = (CGPackage) ClassUtil.nonNullState(document.accept(pivot2CGVisitor));
-		cgDocument.setName(rootPackageNames);
+		CompleteOCLAS2CGVisitor as2CGVisitor = createAS2CGVisitor(cgAnalyzer, getGlobalContext());
+		CGPackage cgDocument = as2CGVisitor.createCGDocument(document, rootPackageNames, rootClassName);
 		cgPackage = cgDocument;
 		optimize(cgDocument);
 		List<CGValuedElement> sortedGlobals = prepareGlobals();
@@ -98,7 +105,7 @@ public class CompleteOCLCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull JavaGlobalContext<@NonNull CompleteOCLCodeGenerator> getGlobalContext() {
+	public @NonNull CompleteOCLGlobalContext getGlobalContext() {
 		return globalContext;
 	}
 
