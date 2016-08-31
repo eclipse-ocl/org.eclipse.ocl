@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -99,9 +99,9 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 		else if (typeId instanceof PrimitiveTypeId) {
 			;
 		}
-//		else if (typeId instanceof JavaTypeId) {
-//			;
-//		}
+		//		else if (typeId instanceof JavaTypeId) {
+		//			;
+		//		}
 		else {
 			CGElementId elementId = analyzer.getElementId(typeId);
 			CGElementId cgTypeId = elementId;
@@ -110,9 +110,9 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 			if (elementId instanceof CGTypeId) {
 				cgConstantExp.setTypeId((CGTypeId) elementId);
 			}
-//			if (cgElement != null) {
-				cgElement.getOwns().add(cgConstantExp);		// FIXME suppress/detect duplicates
-//			}
+			//			if (cgElement != null) {
+			cgElement.getOwns().add(cgConstantExp);		// FIXME suppress/detect duplicates
+			//			}
 			if (typeId instanceof CollectionTypeId) {
 				addOwnedTypeId(cgConstantExp, ((CollectionTypeId)typeId).getElementTypeId());
 			}
@@ -122,7 +122,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 				}
 			}
 			else if (typeId instanceof NestedTypeId) {
-				addOwnedTypeId(cgConstantExp, ((NestedTypeId)typeId).getParent());			
+				addOwnedTypeId(cgConstantExp, ((NestedTypeId)typeId).getParent());
 			}
 		}
 	}
@@ -157,12 +157,12 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 		return codeGenerator;
 	}
 
-	protected @Nullable CGValuedElement installEvaluatorVariable(@NonNull CGValuedElement cgValuedElement) {
-		CGValuedElement evaluatorVariable = localContext.createEvaluatorVariable();
-		if (evaluatorVariable != null) {
-			cgValuedElement.getOwns().add(evaluatorVariable);
+	protected @Nullable CGValuedElement installExecutorVariable(@NonNull CGValuedElement cgValuedElement) {
+		CGValuedElement executorVariable = localContext.createExecutorVariable();
+		if (executorVariable != null) {
+			cgValuedElement.getOwns().add(executorVariable);
 		}
-		return evaluatorVariable;
+		return executorVariable;
 	}
 
 	protected @Nullable CGValuedElement installIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
@@ -220,10 +220,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 	public @Nullable Object visitCGCollectionPart(@NonNull CGCollectionPart cgCollectionPart) {
 		boolean isRange = cgCollectionPart.isRange();
 		if (cgCollectionPart.isConstant() && isRange) {
-//			context.addGlobal(cgCollectionPart);
+			//			context.addGlobal(cgCollectionPart);
 		}
 		if (isRange) {
-//			context.getFinalVariable(cgCollectionPart);
+			//			context.getFinalVariable(cgCollectionPart);
 		}
 		return super.visitCGCollectionPart(cgCollectionPart);
 	}
@@ -255,7 +255,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 		if (ecoreValue != null) {
 			TypeDescriptor boxedTypeDescriptor = codeGenerator.getTypeDescriptor(ecoreValue);
 			if (boxedTypeDescriptor.isAssignableTo(Iterable.class)
-			 || boxedTypeDescriptor.isAssignableTo(EnumerationLiteralId.class)) {
+					|| boxedTypeDescriptor.isAssignableTo(EnumerationLiteralId.class)) {
 				installIdResolverVariable(cgEcoreExp);
 			}
 		}
@@ -303,11 +303,11 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 
 	@Override
 	public @Nullable Object visitCGExecutorOperationCallExp(@NonNull CGExecutorOperationCallExp cgExecutorOperationCallExp) {
-//		Operation referredOperation = cgExecutorOperationCallExp.getReferredOperation();
-//		OperationId operationId = referredOperation.getOperationId();
-//		CGExecutorOperation cgExecutorOperation = analyzer.getExecutorOperation(operationId);
-//		cgExecutorOperation.accept(this);
-//		localContext.getOuterContext().addLocalVariable(cgExecutorOperation);
+		//		Operation referredOperation = cgExecutorOperationCallExp.getReferredOperation();
+		//		OperationId operationId = referredOperation.getOperationId();
+		//		CGExecutorOperation cgExecutorOperation = analyzer.getExecutorOperation(operationId);
+		//		cgExecutorOperation.accept(this);
+		//		localContext.getOuterContext().addLocalVariable(cgExecutorOperation);
 		return super.visitCGExecutorOperationCallExp(cgExecutorOperationCallExp);
 	}
 
@@ -324,14 +324,14 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 		if (cgExecutorProperty != null) {
 			cgExecutorProperty.accept(this);
 		}
-//		Property referredProperty = cgExecutorPropertyCallExp.getReferredProperty();
-//		PropertyId propertyId = referredProperty.getPropertyId();
-//		CGExecutorProperty cgExecutorProperty = cgExecutorPropertyCallExp.getExecutorProperty();
-//		CGExecutorProperty cgExecutorProperty = analyzer.createExecutorProperty(referredProperty);
-//		cgExecutorPropertyCallExp.getUses().add(cgExecutorProperty);
-//		cgExecutorProperty.accept(this);
-//		localContext.getOuterContext().addLocalVariable(cgExecutorProperty);
-//		cgExecutorProperty.getDependsOn().add(installIdResolverVariable());
+		//		Property referredProperty = cgExecutorPropertyCallExp.getReferredProperty();
+		//		PropertyId propertyId = referredProperty.getPropertyId();
+		//		CGExecutorProperty cgExecutorProperty = cgExecutorPropertyCallExp.getExecutorProperty();
+		//		CGExecutorProperty cgExecutorProperty = analyzer.createExecutorProperty(referredProperty);
+		//		cgExecutorPropertyCallExp.getUses().add(cgExecutorProperty);
+		//		cgExecutorProperty.accept(this);
+		//		localContext.getOuterContext().addLocalVariable(cgExecutorProperty);
+		//		cgExecutorProperty.getDependsOn().add(installIdResolverVariable());
 		return super.visitCGExecutorOppositePropertyCallExp(cgExecutorPropertyCallExp);
 	}
 
@@ -350,14 +350,14 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 		if (cgExecutorProperty != null) {
 			cgExecutorProperty.accept(this);
 		}
-//		Property referredProperty = cgExecutorPropertyCallExp.getReferredProperty();
-//		PropertyId propertyId = referredProperty.getPropertyId();
-//		CGExecutorProperty cgExecutorProperty = cgExecutorPropertyCallExp.getExecutorProperty();
-//		CGExecutorProperty cgExecutorProperty = analyzer.createExecutorProperty(referredProperty);
-//		cgExecutorPropertyCallExp.getUses().add(cgExecutorProperty);
-//		cgExecutorProperty.accept(this);
-//		localContext.getOuterContext().addLocalVariable(cgExecutorProperty);
-//		cgExecutorProperty.getDependsOn().add(installIdResolverVariable());
+		//		Property referredProperty = cgExecutorPropertyCallExp.getReferredProperty();
+		//		PropertyId propertyId = referredProperty.getPropertyId();
+		//		CGExecutorProperty cgExecutorProperty = cgExecutorPropertyCallExp.getExecutorProperty();
+		//		CGExecutorProperty cgExecutorProperty = analyzer.createExecutorProperty(referredProperty);
+		//		cgExecutorPropertyCallExp.getUses().add(cgExecutorProperty);
+		//		cgExecutorProperty.accept(this);
+		//		localContext.getOuterContext().addLocalVariable(cgExecutorProperty);
+		//		cgExecutorProperty.getDependsOn().add(installIdResolverVariable());
 		return super.visitCGExecutorPropertyCallExp(cgExecutorPropertyCallExp);
 	}
 
@@ -407,7 +407,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 	public @Nullable Object visitCGLetExp(@NonNull CGLetExp cgLetExp) {
 		CGValuedElement in = cgLetExp.getIn();
 		if (in != null) {
-//			context.getFinalVariable(in);
+			//			context.getFinalVariable(in);
 		}
 		return super.visitCGLetExp(cgLetExp);
 	}
@@ -421,10 +421,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 	@Override
 	public @Nullable Object visitCGLibraryIterationCallExp(@NonNull CGLibraryIterationCallExp cgLibraryIterationCallExp) {
 		installStandardLibraryVariable(cgLibraryIterationCallExp);
-//		TypeId asTypeId = cgLibraryIterationCallExp.getASTypeId();
-//		if (asTypeId != null) {
-//			addOwnedTypeId(cgLibraryIterationCallExp, asTypeId);
-//		}
+		//		TypeId asTypeId = cgLibraryIterationCallExp.getASTypeId();
+		//		if (asTypeId != null) {
+		//			addOwnedTypeId(cgLibraryIterationCallExp, asTypeId);
+		//		}
 		return super.visitCGLibraryIterationCallExp(cgLibraryIterationCallExp);
 	}
 
@@ -432,7 +432,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 	public @Nullable Object visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
 		LibraryOperation libraryOperation = cgOperationCallExp.getLibraryOperation();
 		if (!(libraryOperation instanceof LibrarySimpleOperation)) {
-			installEvaluatorVariable(cgOperationCallExp);
+			installExecutorVariable(cgOperationCallExp);
 			if (!(libraryOperation instanceof LibraryUntypedOperation)) {
 				TypeId asTypeId = cgOperationCallExp.getASTypeId();
 				if (asTypeId != null) {
@@ -445,23 +445,23 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 
 	@Override
 	public @Nullable Object visitCGLibraryPropertyCallExp(@NonNull CGLibraryPropertyCallExp cgPropertyCallExp) {
-//		LibraryProperty libraryProperty = cgPropertyCallExp.getLibraryProperty();
+		//		LibraryProperty libraryProperty = cgPropertyCallExp.getLibraryProperty();
 		try {
-			installEvaluatorVariable(cgPropertyCallExp);
+			installExecutorVariable(cgPropertyCallExp);
 			return super.visitCGLibraryPropertyCallExp(cgPropertyCallExp);
 		}
 		finally {
-//			installEvaluatorParameter(cgPropertyCallExp);
-//			if (!(libraryOperation instanceof LibraryUntypedOperation)) {
-				CGTypeId cgTypeId = cgPropertyCallExp.getTypeId();
-				if (cgTypeId != null) {
-//					context.addGlobal(cgTypeId);
-				}
-				TypeId asTypeId = cgPropertyCallExp.getASTypeId();
-				if (asTypeId != null) {
-					addOwnedTypeId(cgPropertyCallExp, asTypeId);
-				}
-//			}
+			//			installEvaluatorParameter(cgPropertyCallExp);
+			//			if (!(libraryOperation instanceof LibraryUntypedOperation)) {
+			CGTypeId cgTypeId = cgPropertyCallExp.getTypeId();
+			if (cgTypeId != null) {
+				//					context.addGlobal(cgTypeId);
+			}
+			TypeId asTypeId = cgPropertyCallExp.getASTypeId();
+			if (asTypeId != null) {
+				addOwnedTypeId(cgPropertyCallExp, asTypeId);
+			}
+			//			}
 		}
 	}
 
@@ -514,12 +514,12 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 		if (cgType != null) {
 			cgType.accept(this);
 		}
-//		CGExecutorType cgType = cgTypeExp.getExecutorType();
-//		String name = cgType.getValueName();
-//		if (name == null) {		
-//			name = localContext.getNameManagerContext().getSymbolName(cgType);
-//			cgType.setValueName(name);
-//		}
+		//		CGExecutorType cgType = cgTypeExp.getExecutorType();
+		//		String name = cgType.getValueName();
+		//		if (name == null) {
+		//			name = localContext.getNameManagerContext().getSymbolName(cgType);
+		//			cgType.setValueName(name);
+		//		}
 		return super.visitCGTypeExp(cgTypeExp);
 	}
 
@@ -538,11 +538,11 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 		cgExecutorConstructorPart.accept(this);
 		TypeId javaPropertyTypeId = JavaConstants.PROPERTY_TYPE_ID;
 		cgExecutorConstructorPart.setTypeId(analyzer.getTypeId(javaPropertyTypeId));
-//		localContext.addLocalVariable(cgExecutorConstructorPart);
+		//		localContext.addLocalVariable(cgExecutorConstructorPart);
 		installIdResolverVariable(cgExecutorConstructorPart);
 		cgShadowPart.getOwns().add(cgExecutorConstructorPart);
 		cgShadowPart.getDependsOn().add(cgExecutorConstructorPart);
-//		cgShadowPart.getDependsOn().add(cgShadowPart.getShadowExp());
+		//		cgShadowPart.getDependsOn().add(cgShadowPart.getShadowExp());
 		return super.visitCGShadowPart(cgShadowPart);
 	}
 
@@ -558,7 +558,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 		CGValuedElement source = analyzer.getExpression(cgUnboxExp.getSource());
 		TypeDescriptor boxedTypeDescriptor = codeGenerator.getTypeDescriptor(source);
 		if (boxedTypeDescriptor.isAssignableTo(CollectionValue.class)
-		 || boxedTypeDescriptor.isAssignableTo(EnumerationLiteralId.class)) {
+				|| boxedTypeDescriptor.isAssignableTo(EnumerationLiteralId.class)) {
 			installIdResolverVariable(cgUnboxExp);
 		}
 		return super.visitCGUnboxExp(cgUnboxExp);

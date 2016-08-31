@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -57,7 +57,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 			completeEnvironment.setCodeGeneration(savedIsCodeGenerator);
 		}
 	}
-	
+
 	protected final @NonNull JavaGlobalContext<JUnitCodeGenerator> globalContext = new JavaGlobalContext<JUnitCodeGenerator>(this);
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 
@@ -86,9 +86,9 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		JavaLocalContext<?> localContext = globalContext.getLocalContext(cgOperation);
 		if (localContext != null) {
-			CGParameter evaluatorParameter = localContext.createEvaluatorParameter();
-			if (evaluatorParameter != null) {
-				cgParameters.add(evaluatorParameter);
+			CGParameter executorParameter = localContext.createExecutorParameter();
+			if (executorParameter != null) {
+				cgParameters.add(executorParameter);
 			}
 			CGParameter typeIdParameter = localContext.createTypeIdParameter();
 			if (typeIdParameter != null) {

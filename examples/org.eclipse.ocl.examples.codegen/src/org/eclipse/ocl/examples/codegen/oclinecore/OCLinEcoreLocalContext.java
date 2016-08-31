@@ -50,12 +50,12 @@ public class OCLinEcoreLocalContext extends JavaLocalContext<OCLinEcoreCodeGener
 	}
 
 	@Override
-	public @Nullable CGParameter createEvaluatorParameter() {
+	public @Nullable CGParameter createExecutorParameter() {
 		return null;
 	}
 
 	@Override
-	public @Nullable CGValuedElement createEvaluatorVariable() {
+	public @Nullable CGValuedElement createExecutorVariable() {
 		CGText evaluator = CGModelFactory.eINSTANCE.createCGText();
 		setNames2(evaluator, JavaConstants.EXECUTOR_NAME, JavaConstants.EXECUTOR_TYPE_ID);
 		String utilClassName = ImportUtils.getAffixedName(PivotUtilInternal.class);
@@ -65,7 +65,7 @@ public class OCLinEcoreLocalContext extends JavaLocalContext<OCLinEcoreCodeGener
 
 	@Override
 	public @NonNull CGValuedElement createIdResolverVariable() {
-		CGValuedElement evaluator = createEvaluatorVariable();
+		CGValuedElement evaluator = createExecutorVariable();
 		CGValuedElement idResolverVariable = super.createIdResolverVariable();
 		idResolverVariable.getOwns().add(evaluator);
 		return idResolverVariable;

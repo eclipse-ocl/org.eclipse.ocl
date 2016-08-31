@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -44,23 +44,23 @@ public class JavaLocalContext<CG extends JavaCodeGenerator> extends AbstractJava
 		this.nameManagerContext = codeGenerator.getNameManager().createNestedContext();
 	}
 
-	public @Nullable CGParameter createEvaluatorParameter() {
-		CGParameter evaluatorParameter = CGModelFactory.eINSTANCE.createCGParameter();
-		setNames2(evaluatorParameter, JavaConstants.EXECUTOR_NAME, JavaConstants.EXECUTOR_TYPE_ID);
-		return evaluatorParameter;
+	public @Nullable CGParameter createExecutorParameter() {
+		CGParameter executorParameter = CGModelFactory.eINSTANCE.createCGParameter();
+		setNames2(executorParameter, JavaConstants.EXECUTOR_NAME, JavaConstants.EXECUTOR_TYPE_ID);
+		return executorParameter;
 	}
 
-	public @Nullable CGValuedElement createEvaluatorVariable() {
+	public @Nullable CGValuedElement createExecutorVariable() {
 		return null;
-	} 
-	
+	}
+
 	public @NonNull CGValuedElement createIdResolverVariable() {
-//		CGValuedElement evaluatorParameter = createEvaluatorParameter();
+		//		CGValuedElement evaluatorParameter = createEvaluatorParameter();
 		CGText idResolver = CGModelFactory.eINSTANCE.createCGText();
 		setNames2(idResolver, JavaConstants.ID_RESOLVER_NAME, JavaConstants.ID_RESOLVER_TYPE_ID);
-//		idResolver.setTextValue(evaluatorParameter.getValueName() + ".getIdResolver()");
+		//		idResolver.setTextValue(evaluatorParameter.getValueName() + ".getIdResolver()");
 		idResolver.setTextValue(JavaConstants.EXECUTOR_NAME + ".getIdResolver()");
-//		idResolver.getOwns().add(evaluatorParameter);
+		//		idResolver.getOwns().add(evaluatorParameter);
 		return idResolver;
 	}
 
@@ -86,7 +86,7 @@ public class JavaLocalContext<CG extends JavaCodeGenerator> extends AbstractJava
 	public @NonNull CGValuedElement getIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
 		return getOwned(cgValuedElement, JavaConstants.ID_RESOLVER_NAME);
 	}
-	
+
 	@Override
 	public NameManager.@NonNull Context getNameManagerContext() {
 		return nameManagerContext;
@@ -137,13 +137,13 @@ public class JavaLocalContext<CG extends JavaCodeGenerator> extends AbstractJava
 		if (valueName != null) {
 			return valueName;
 		}
-/*		if (cgValue != cgValue.getValue()) {
+		/*		if (cgValue != cgValue.getValue()) {
 			CGValuedElement cgValue2 = cgValue.getValue();
 			String valueName2 = cgElement.getValueName();
 			String valueName3 = cgValue.getValueName();
 			assert false;
 		} */
-//FIXME		assert cgValue == cgValue.getValue();
+		//FIXME		assert cgValue == cgValue.getValue();
 		cgValue = cgValue.getNamedValue();
 		valueName = cgValue.getValueName();
 		if (valueName == null) {
@@ -177,9 +177,9 @@ public class JavaLocalContext<CG extends JavaCodeGenerator> extends AbstractJava
 	}
 
 	protected void setNames2(@NonNull CGValuedElement cgValuedElement, @NonNull String nameHint, @NonNull TypeId typeId) {
-//		String name = nameManagerContext.getSymbolName(null, nameHint);
+		//		String name = nameManagerContext.getSymbolName(null, nameHint);
 		cgValuedElement.setName(nameHint);
-//		cgValuedElement.setValueName(name);
+		//		cgValuedElement.setValueName(name);
 		cgValuedElement.setTypeId(analyzer.getTypeId(typeId));
 		if (cgValuedElement instanceof CGVariable) {
 			CGVariable cgVariable = (CGVariable)cgValuedElement;
