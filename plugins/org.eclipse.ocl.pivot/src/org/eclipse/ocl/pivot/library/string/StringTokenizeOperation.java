@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -140,12 +141,12 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 	}
 
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
-		return cachedEvaluate(executor, callExp, boxedSourceAndArgumentValues);
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		return cachedEvaluate(executor, caller, boxedSourceAndArgumentValues);
 	}
 
 	@Override
-	public @Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+	public @Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues) {
 		String delims = DELIMS;
 		boolean returnDelims = false;
 
@@ -166,7 +167,7 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 			//			Object firstArgument = executor.evaluate(argument0);
 			delims = asString(argument0);
 		}
-		return evaluate(executor, (CollectionTypeId)ClassUtil.nonNullPivot(callExp.getType()).getTypeId(), sourceAndArgumentValues[0], delims, returnDelims);
+		return evaluate(executor, (CollectionTypeId)ClassUtil.nonNullPivot(caller.getTypeId()), sourceAndArgumentValues[0], delims, returnDelims);
 
 
 

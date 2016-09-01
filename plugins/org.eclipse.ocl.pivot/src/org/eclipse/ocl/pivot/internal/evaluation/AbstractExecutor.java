@@ -139,8 +139,19 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		};
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	protected EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable TypedElement caller) {
+		return new BasicEvaluationEnvironment(evaluationEnvironment, executableObject, caller);
+	}
+
+	/**
+	 * @ddeoredcated use TypedElement argument
+	 */
+	@Deprecated
 	protected EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
-		return new BasicEvaluationEnvironment(evaluationEnvironment, executableObject, callingObject);
+		return createNestedEvaluationEnvironment(evaluationEnvironment, executableObject, (TypedElement)callingObject);
 	}
 
 	/** @deprecated Evaluator no longer nests */
@@ -167,11 +178,11 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	 */
 	@Override
 	public @Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation,
-			@NonNull OCLExpression callExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+			@NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues) {
 		if (evaluationCache == null) {
 			evaluationCache = new EvaluationCache(this);
 		}
-		return evaluationCache.getCachedEvaluationResult(implementation, callExp, sourceAndArgumentValues);
+		return evaluationCache.getCachedEvaluationResult(implementation, caller, sourceAndArgumentValues);
 	}
 
 	@Override
@@ -382,12 +393,24 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		evaluationEnvironment = ClassUtil.nonNullState(evaluationEnvironment.getParentEvaluationEnvironment());
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
-	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
+	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable TypedElement caller) {
 		EvaluationEnvironment.EvaluationEnvironmentExtension evaluationEnvironment2 = ClassUtil.nonNullState(evaluationEnvironment);
-		EvaluationEnvironment.EvaluationEnvironmentExtension nestedEvaluationEnvironment = createNestedEvaluationEnvironment(evaluationEnvironment2, executableObject, callingObject);
+		EvaluationEnvironment.EvaluationEnvironmentExtension nestedEvaluationEnvironment = createNestedEvaluationEnvironment(evaluationEnvironment2, executableObject, caller);
 		evaluationEnvironment = nestedEvaluationEnvironment;
 		return nestedEvaluationEnvironment;
+	}
+
+	/**
+	 * @deprecated use TypedElement argument
+	 */
+	@Deprecated
+	@Override
+	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
+		return pushEvaluationEnvironment(executableObject, (TypedElement)callingObject);
 	}
 
 	@Override

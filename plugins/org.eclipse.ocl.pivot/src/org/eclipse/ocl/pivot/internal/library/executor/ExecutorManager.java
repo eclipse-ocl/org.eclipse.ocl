@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
-import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -38,7 +38,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.Value;
 
-public abstract class ExecutorManager implements Executor
+public abstract class ExecutorManager implements ExecutorExtension
 {
 	// This is the same as HashMap's default initial capacity
 	private static final int DEFAULT_REGEX_CACHE_LIMIT = 16;
@@ -371,9 +371,19 @@ public abstract class ExecutorManager implements Executor
 
 	/**
 	 * @since 1.1
+	 * @deprecated use TypedElement argument
 	 */
+	@Deprecated
 	@Override
 	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
+		return nullEvaluationEnvironment;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable TypedElement caller) {
 		return nullEvaluationEnvironment;
 	}
 

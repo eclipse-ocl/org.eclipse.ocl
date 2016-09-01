@@ -28,6 +28,13 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
  */
 public interface Executor extends Evaluator
 {
+	/**
+	 * @since 1.3
+	 */
+	public interface ExecutorExtension extends Executor
+	{
+		@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable TypedElement caller);
+	}
 	void add(@NonNull TypedElement referredVariable, @Nullable Object value);
 	@Override
 	@Nullable Object evaluate(@NonNull OCLExpression body);
@@ -58,6 +65,10 @@ public interface Executor extends Evaluator
 	@Override
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values);
 	void popEvaluationEnvironment();
+	/**
+	 * @deprecated use TypedElement argument in ExecutorInternalExtension
+	 */
+	@Deprecated
 	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable OCLExpression callingObject);
 	void replace(@NonNull TypedElement referredVariable, @Nullable Object value);
 	@Override

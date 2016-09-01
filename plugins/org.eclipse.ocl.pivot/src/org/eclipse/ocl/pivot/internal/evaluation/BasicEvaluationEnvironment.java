@@ -47,8 +47,14 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	protected final @Nullable EvaluationEnvironment parent;					// parent in environment hierarchy, null at root
 	protected final @NonNull NamedElement executableObject;
 	/**
-	 * @since 1.1
+	 * @since 1.3
 	 */
+	protected final @Nullable TypedElement caller;
+	/**
+	 * @since 1.1
+	 * @deprecated use caller
+	 */
+	@Deprecated
 	protected final @Nullable OCLExpression callingObject;
 	private final @NonNull Map<TypedElement, Object> variableValues = new HashMap<TypedElement, Object>();
 	/** @deprecated use an executor */
@@ -69,6 +75,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 		this.environmentFactory = executor.getEnvironmentFactory();
 		this.parent = null;
 		this.executableObject = executableObject;
+		this.caller = null;
 		this.callingObject = null;
 		this.modelManager = executor.getModelManager();
 	}
@@ -80,15 +87,25 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	}
 
 	/**
-	 * @since 1.1
+	 * @since 1.3
 	 */
-	public BasicEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension parent, @NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
+	public BasicEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension parent, @NonNull NamedElement executableObject, @Nullable TypedElement caller) {
 		this.executor = parent.getExecutor();
 		this.environmentFactory = parent.getEnvironmentFactory();
 		this.parent = parent;
 		this.executableObject = executableObject;
-		this.callingObject = callingObject;
+		this.caller = caller;
+		this.callingObject = caller instanceof OCLExpression ? (OCLExpression)caller : null;
 		this.modelManager = executor.getModelManager();
+	}
+
+	/**
+	 * @since 1.1
+	 * @deprecated use TypedElement argument.
+	 */
+	@Deprecated
+	public BasicEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension parent, @NonNull NamedElement executableObject, @Nullable OCLExpression caller) {
+		this(parent, executableObject, (TypedElement)caller);
 	}
 
 	/**

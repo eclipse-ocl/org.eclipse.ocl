@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -80,7 +80,7 @@ public class EvaluationCache
 		this.executor = executor;
 	}
 
-	public @Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @NonNull OCLExpression callExp, @Nullable Object @NonNull ... sourceAndArgumentValues) {
+	public @Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @NonNull TypedElement caller, @Nullable Object @NonNull ... sourceAndArgumentValues) {
 		IdResolver.@NonNull IdResolverExtension idResolver = (IdResolver.IdResolverExtension) executor.getIdResolver();
 		int hashCode = implementation.hashCode();
 		for (@Nullable Object sourceAndArgumentValue : sourceAndArgumentValues) {
@@ -113,7 +113,7 @@ public class EvaluationCache
 		//
 		//	Must resynchronize after newInstance creation and execution in case the execution is recursive.
 		//
-		Object result = implementation.basicEvaluate(executor, callExp, sourceAndArgumentValues);
+		Object result = implementation.basicEvaluate(executor, caller, sourceAndArgumentValues);
 		EvaluationResult theEvaluation = new EvaluationResult(implementation, sourceAndArgumentValues, result);
 		synchronized (hashCode2evaluations) {
 			Object zeroOrMoreEvaluations = hashCode2evaluations.get(hashCode);
