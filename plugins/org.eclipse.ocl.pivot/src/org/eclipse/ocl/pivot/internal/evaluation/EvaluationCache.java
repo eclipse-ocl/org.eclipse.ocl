@@ -33,9 +33,9 @@ public class EvaluationCache
 	 */
 	private static final class EvaluationResult
 	{
-		private LibraryOperation.@NonNull LibraryOperationExtension2 implementation;
-		private @Nullable Object @NonNull [] theseValues;
-		private @Nullable Object result;
+		private final LibraryOperation.@NonNull LibraryOperationExtension2 implementation;
+		private final @Nullable Object @NonNull [] theseValues;
+		private final @Nullable Object result;
 
 		public EvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @Nullable Object @NonNull [] theseValues, @Nullable Object result) {
 			this.implementation = implementation;
@@ -78,6 +78,10 @@ public class EvaluationCache
 
 	public EvaluationCache(ExecutorInternal.@NonNull ExecutorInternalExtension executor) {
 		this.executor = executor;
+	}
+
+	public void dispose() {
+		hashCode2evaluations.clear();
 	}
 
 	public @Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @NonNull TypedElement caller, @Nullable Object @NonNull ... sourceAndArgumentValues) {

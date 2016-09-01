@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.evaluation;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -26,6 +28,8 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.ShadowExp;
+import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -81,7 +85,15 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	private EvaluationLogger logger = IndentingLogger.OUT;
 
+	/**
+	 * Lazily created cache of the results of cacheable operation call evaluations.
+	 */
 	private /*@LazyNonNull*/ EvaluationCache evaluationCache = null;
+
+	/**
+	 * Lazily created cache of the shadow objects.
+	 */
+	private /*@LazyNonNull*/ ShadowCache shadowCache = null;
 
 	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
 		this.environmentFactory = environmentFactory;
@@ -166,7 +178,9 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	}
 
 	@Override
-	public void dispose() {}
+	public void dispose() {
+		resetCaches();
+	}
 
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
@@ -383,6 +397,63 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		}
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object internalExecuteShadowExp(@NonNull ShadowExp asShadowExp) {
+		if (shadowCache == null) {
+			shadowCache = new ShadowCache(this);
+		}
+		org.eclipse.ocl.pivot.Class asClass = ClassUtil.nonNullState(asShadowExp.getType());
+		String value = asShadowExp.getValue();
+		Object object;
+		if (value == null) {
+			List<ShadowPart> asShadowParts = asShadowExp.getOwnedParts();
+			int iMax = asShadowParts.size();
+			@Nullable Object @NonNull [] values = new @Nullable Object[iMax];
+			for (int i = 0 ; i < iMax; i++) {
+				ShadowPart asShadowPart = asShadowParts.get(i);
+				assert asShadowPart != null;
+				values[i] = asShadowPart;
+			}
+			Arrays.sort(values, new Comparator<@Nullable Object>()
+			{
+				@Override
+				public int compare(@Nullable Object o1, @Nullable Object o2) {
+					ShadowPart s1 = (ShadowPart)o1;
+					ShadowPart s2 = (ShadowPart)o2;
+					assert (s1 != null) && (s2 != null);
+					Property p1 = s1.getReferredProperty();
+					Property p2 = s2.getReferredProperty();
+					String n1 = p1.getName();
+					String n2 = p2.getName();
+					return ClassUtil.safeCompareTo(n1, n2);
+				}
+			});
+			@NonNull Property @NonNull [] asProperties = new @NonNull Property[iMax];
+			for (int i = 0 ; i < iMax; i++) {
+				ShadowPart asShadowPart = (ShadowPart) values[i];
+				assert asShadowPart != null;
+				Property asProperty = asShadowPart.getReferredProperty();
+				assert asProperty != null;
+				asProperties[i] = asProperty;
+				Object boxedValue = null;
+				OCLExpression initExpression = asShadowPart.getOwnedInit();
+				if (initExpression != null) {
+					boxedValue = getEvaluationVisitor().evaluate(initExpression);
+				}
+				values[i] = boxedValue;
+			}
+			object = shadowCache.getCachedShadowObject(asClass, asProperties, values);
+		}
+		else {
+			object = asClass.createInstance(value);
+		}
+		return object;
+		//		return object != null ? ValueUtil.createObjectValue(type.getTypeId(), object) : null;
+	}
+
 	@Override
 	public boolean isCanceled() {
 		return evaluationVisitor.isCanceled();
@@ -416,6 +487,21 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {
 		evaluationEnvironment.replace(referredVariable, value);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public void resetCaches() {
+		if (evaluationCache != null) {
+			evaluationCache.dispose();
+			evaluationCache = null;
+		}
+		if (shadowCache != null) {
+			shadowCache.dispose();
+			shadowCache = null;
+		}
 	}
 
 	@Override

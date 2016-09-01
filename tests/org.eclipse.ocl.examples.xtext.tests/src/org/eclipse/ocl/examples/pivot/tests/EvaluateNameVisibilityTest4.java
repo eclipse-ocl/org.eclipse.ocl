@@ -87,16 +87,16 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	protected @NonNull String getTestPackageName() {
 		return "EvaluateNameVisibility";
 	}
-	
+
 	@BeforeClass public static void resetCounter() throws Exception {
 		PivotTestSuite.resetCounter();
-    }
+	}
 
 	@Override
-    @Before public void setUp() throws Exception {
+	@Before public void setUp() throws Exception {
 		UMLStandaloneSetup.init();
-        super.setUp();
-    }
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
@@ -136,50 +136,50 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryEquals(standardLibrary.getPackage(), 1, "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type->size()");
 		ocl.assertQueryEquals(standardLibrary.getPackage(), 1, "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type?->size()");
 		ocl.assertQueryEquals(standardLibrary.getPackage(), 1, "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type?->size()?->size()");
-        ocl.dispose();
+		ocl.dispose();
 	}
 
-    @Test public void test_implicit_source() {
+	@Test public void test_implicit_source() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-        if (!useCodeGen) {			// FIXME CG consistent boxing
-        	ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedClasses?->select(name = 'Integer') = Set{Integer}");
-            ocl.assertQueryTrue(standardLibrary.getPackage(), "let name : String = 'String' in ownedClasses?->select(name = 'Integer') = Set{Integer}");
-            ocl.assertQueryTrue(-1, "let type : Class = oclType() in type.owningPackage?.ownedClasses?->select(name = type.name) = Set{Integer}");
-        }
-        ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedPackages->select(oclIsKindOf(Integer))->isEmpty()");
-        ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedPackages->select(oclIsKindOf(Package))->isEmpty()");	// Fails unless implicit Package disambiguated away by argument type expectation
-        ocl.dispose();
-    }
+		if (!useCodeGen) {			// FIXME CG consistent boxing
+			ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedClasses?->select(name = 'Integer') = Set{Integer}");
+			ocl.assertQueryTrue(standardLibrary.getPackage(), "let name : String = 'String' in ownedClasses?->select(name = 'Integer') = Set{Integer}");
+			ocl.assertQueryTrue(-1, "let type : Class = oclType() in type.owningPackage?.ownedClasses?->select(name = type.name) = Set{Integer}");
+		}
+		ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedPackages->select(oclIsKindOf(Integer))->isEmpty()");
+		ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedPackages->select(oclIsKindOf(Package))->isEmpty()");	// Fails unless implicit Package disambiguated away by argument type expectation
+		ocl.dispose();
+	}
 
-    @Test public void test_safe_aggregate_navigation() {
+	@Test public void test_safe_aggregate_navigation() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-        ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer')", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
-        ocl.assertQueryResults(standardLibrary.getPackage(), "Set{Integer}", "ownedClasses?->select(name = 'Integer')");
-        if (!useCodeGen) {		// FIXME boxing
-        	ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedClasses?->select(name = 'Integer') = Set{Integer}");
-        }
-        ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer') = Set{Integer}", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
-        ocl.assertQueryResults(standardLibrary.getPackage(), "Set{Integer}", "ownedClasses->including(null)?->select(name = 'Integer')");
-        ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedClasses->including(null)?->select(name = 'Integer')?.name = Bag{'Integer'}");
-        ocl.assertQueryResults(standardLibrary.getPackage(), "Bag{'Integer', null}", "ownedClasses?->select(name = 'Integer')->including(null)->collect(c | c?.name)");
-        ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer').name = Bag{'Integer'}", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
-        ocl.dispose();
-    }
+		ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer')", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
+		ocl.assertQueryResults(standardLibrary.getPackage(), "Set{Integer}", "ownedClasses?->select(name = 'Integer')");
+		if (!useCodeGen) {		// FIXME boxing
+			ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedClasses?->select(name = 'Integer') = Set{Integer}");
+		}
+		ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer') = Set{Integer}", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
+		ocl.assertQueryResults(standardLibrary.getPackage(), "Set{Integer}", "ownedClasses->including(null)?->select(name = 'Integer')");
+		ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedClasses->including(null)?->select(name = 'Integer')?.name = Bag{'Integer'}");
+		ocl.assertQueryResults(standardLibrary.getPackage(), "Bag{'Integer', null}", "ownedClasses?->select(name = 'Integer')->including(null)->collect(c | c?.name)");
+		ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer').name = Bag{'Integer'}", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
+		ocl.dispose();
+	}
 
-    @Test public void test_iterator_scope() {
+	@Test public void test_iterator_scope() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, 6, "Set{1, 2, 3 }->iterate(i : Integer; sum : Integer = 0 | sum + i)");
 		ocl.assertQueryInvalid(null, "let s : Set(String) = invalid in Set{'a'}->union(s)");
-        ocl.dispose();
+		ocl.dispose();
 	}
 
 	@Test public void test_compatibility_names() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, 6, "Set{1, 2, 3 }->_iterate(i : Integer; sum : Integer = 0 | _sum + _i)");
 		ocl.assertQueryInvalid(null, "let s : Set(String) = invalid in Set{'a'}->_union(_s)");
-        ocl.dispose();
+		ocl.dispose();
 	}
 
 	@Test public void test_self_scope() {
@@ -188,7 +188,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		CollectionLiteralExp coll = (CollectionLiteralExp) query.getOwnedBody();
 		CollectionItem item = (CollectionItem) coll.getOwnedParts().get(0);
 		ocl.assertQueryTrue(item, "type = ownedItem.type");
-//		ocl.assertQueryInvalid(null, "type = item.type");		// A2.2 def'n of invalid = invalid
+		//		ocl.assertQueryInvalid(null, "type = item.type");		// A2.2 def'n of invalid = invalid
 		ocl.assertQueryInvalid(null, "let item : CollectionItem = null in item.type = item");		// A2.2 def'n of invalid = invalid
 		ocl.assertQueryInvalid(null, "let item : CollectionItem = invalid in item.type = item");		// A2.2 def'n of invalid = invalid
 		ocl.dispose();
@@ -199,7 +199,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
 		ocl.assertQueryTrue(context, "let myName : String = name in myName.oclIsKindOf(String) and myName = null");
-        ocl.dispose();
+		ocl.dispose();
 	}
 
 	/**
@@ -207,8 +207,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 */
 	@Test public void test_double_exists_407817() {
 		TestOCL ocl = createOCL();
-		String textQuery = 
-			    "Set{'a','1'}->exists(s | Set{1,2}->exists(i | i.toString() = s.toUpper()))";
+		String textQuery =
+				"Set{'a','1'}->exists(s | Set{1,2}->exists(i | i.toString() = s.toUpper()))";
 		ocl.assertQueryTrue(null, textQuery);
 		ocl.dispose();
 	}
@@ -221,7 +221,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
 		ocl.assertQueryEquals(context, null, "if true then name else name endif");
-        ocl.dispose();
+		ocl.dispose();
 	}
 
 	/**
@@ -230,63 +230,63 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	@Test public void test_cg_let_implies() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		String textQuery = 
-			    "let bodyConstraint : Constraint = null\n" + 
-			    "in bodyConstraint <> null implies\n" +
-			    "bodyConstraint?.ownedSpecification = null";
+		String textQuery =
+				"let bodyConstraint : Constraint = null\n" +
+						"in bodyConstraint <> null implies\n" +
+						"bodyConstraint?.ownedSpecification = null";
 		org.eclipse.ocl.pivot.Class testType = standardLibrary.getIntegerType();
 		assert testType.getOwnedInvariants().isEmpty();
 		ocl.assertQueryTrue(testType, textQuery);
-//		ocl.assertQueryTrue(ValuesUtil.createTypeValue(metamodelManager.getMetaclass(testType)), textQuery);
-        ocl.dispose();
+		//		ocl.assertQueryTrue(ValuesUtil.createTypeValue(metamodelManager.getMetaclass(testType)), textQuery);
+		ocl.dispose();
 	}
-	
+
 	@Test public void test_let_implies_let_implies() {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		String textQuery = 
-			    "let bodyConstraint : Constraint = oclType().ownedInvariants?->any(name = 'body')\n" + 
-			    "in bodyConstraint <> null implies\n" +
-			    "let bodySpecification : ValueSpecification = bodyConstraint?.ownedSpecification\n" +
-			    "in bodySpecification <> null and\n" +
-			    "bodySpecification?.oclIsKindOf(ExpressionInOCL) implies\n" +
-			    "true";
-//	    "CompatibleBody(bodySpecification)";
+		String textQuery =
+				"let bodyConstraint : Constraint = oclType().ownedInvariants?->any(name = 'body')\n" +
+						"in bodyConstraint <> null implies\n" +
+						"let bodySpecification : ValueSpecification = bodyConstraint?.ownedSpecification\n" +
+						"in bodySpecification <> null and\n" +
+						"bodySpecification?.oclIsKindOf(ExpressionInOCL) implies\n" +
+						"true";
+		//	    "CompatibleBody(bodySpecification)";
 		org.eclipse.ocl.pivot.Class testType = standardLibrary.getIntegerType();
 		assert testType.getOwnedInvariants().isEmpty();
 		ocl.assertQueryTrue(-1, textQuery);
-        ocl.dispose();
+		ocl.dispose();
 	}
-	
+
 	@Test public void test_no_self() throws ParserException {
 		TestOCL ocl = createOCL();
 		ocl.assertSemanticErrorQuery(null, "self->any(true)", "The context of ''self'' is unspecified");
-        ocl.dispose();
+		ocl.dispose();
 	}
-	
+
 	@Test public void test_cg_implies_calls() throws ParserException {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ExpressionInOCL query = ocl.createQuery(standardLibrary.getOclVoidType(), "self->any(true)");
-		String textQuery = 
-			    "name = 'closure' implies\n" +
-			    "type.oclAsType(CollectionType).elementType = null";
+		String textQuery =
+				"name = 'closure' implies\n" +
+						"type.oclAsType(CollectionType).elementType = null";
 		ocl.assertQueryTrue(query.getOwnedBody(), textQuery);
-        ocl.dispose();
+		ocl.dispose();
 	}
-	
+
 	@Test public void test_cg_caught_if() throws ParserException {
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ExpressionInOCL query = ocl.createQuery(standardLibrary.getOclVoidType(), "self->any(true)");
-		String textQuery = 
-			    "name = 'closure' implies\n" +
-			    "if self.ownedSource?.type.oclIsKindOf(SequenceType) or self.ownedSource?.type.oclIsKindOf(OrderedSetType)"
-			    + "then self.type.oclIsKindOf(OrderedSetType) else self.type.oclIsKindOf(SetType) endif";
+		String textQuery =
+				"name = 'closure' implies\n" +
+						"if self.ownedSource?.type.oclIsKindOf(SequenceType) or self.ownedSource?.type.oclIsKindOf(OrderedSetType)"
+						+ "then self.type.oclIsKindOf(OrderedSetType) else self.type.oclIsKindOf(SetType) endif";
 		ocl.assertQueryTrue(query.getOwnedBody(), textQuery);
-        ocl.dispose();
+		ocl.dispose();
 	}
-	
+
 	@Test public void test_cg_loop_source_self_or() throws ParserException, IOException {
 		TestOCL ocl = createOCL();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -294,11 +294,11 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		}
 		String metamodelText =
 				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
-				"package pkg : pkg = 'pkg' {\n" +
-				"  class A {\n" +
-				"    invariant True : true;\n" +
-				"  }\n" +
-				"}\n";
+						"package pkg : pkg = 'pkg' {\n" +
+						"  class A {\n" +
+						"    invariant True : true;\n" +
+						"  }\n" +
+						"}\n";
 		Resource metamodel = cs2as(ocl, metamodelText);
 		Model pivotModel = (Model) metamodel.getContents().get(0);
 		org.eclipse.ocl.pivot.Package pivotPackage = pivotModel.getOwnedPackages().get(0);
@@ -308,8 +308,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryTrue(pivotConstraint, textQuery);
 		ocl.dispose();
 	}
-	
-/*	@Test public void test_cg_derived_operation() throws ParserException, IOException {
+
+	/*	@Test public void test_cg_derived_operation() throws ParserException, IOException {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			OCLinEcoreStandaloneSetup.doSetup();
 			OCLDelegateDomain.initialize(null);
@@ -331,22 +331,22 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		String textQuery = "self.derivedDerivedOperation(3)";
 		assertQueryEquals(testObject, 594, textQuery);
 	} */
-	
+
 	@Test public void test_cg_derived_property() throws ParserException, IOException {
 		TestOCL ocl = createOCL();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			OCLinEcoreStandaloneSetup.doSetup();
-//			OCLDelegateDomain.initialize(null);
+			//			OCLDelegateDomain.initialize(null);
 		}
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		String metamodelText =
 				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
-				"package pkg : pkg = 'pkg' {\n" +
-				"  class A {\n" +
-				"    property derivedInteger : Integer { derivation: 99; }\n" +
-				"    property derivedDerivedInteger : Integer { derivation: 2 * derivedInteger;}\n" +
-				"  }\n" +
-				"}\n";
+						"package pkg : pkg = 'pkg' {\n" +
+						"  class A {\n" +
+						"    property derivedInteger : Integer { derivation: 99; }\n" +
+						"    property derivedDerivedInteger : Integer { derivation: 2 * derivedInteger;}\n" +
+						"  }\n" +
+						"}\n";
 		Resource metamodel = cs2as(ocl, metamodelText);
 		Model pivotModel = (Model) metamodel.getContents().get(0);
 		org.eclipse.ocl.pivot.Package pivotPackage = pivotModel.getOwnedPackages().get(0);
@@ -357,32 +357,32 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryEquals(testObject, 198, textQuery);
 		ocl.dispose();
 	}
-	
+
 	@Test public void test_cg_name_occlusion_401692() throws ParserException, IOException {
 		TestOCL ocl = createOCL();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			OCLinEcoreStandaloneSetup.doSetup();
-//			OCLDelegateDomain.initialize(null);
+			//			OCLDelegateDomain.initialize(null);
 		}
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		String metamodelText =
-				"package scope = 'abc'\n" + 
-				"{\n" + 
-				"	class A\n" + 
-				"	{\n" + 
-				"		attribute d : String;\n" + 
-				"		attribute e : String;\n" + 
-				"	}\n" + 
-				"	class B\n" + 
-				"	{\n" + 
-				"		operation findA(e : String) : A[?]\n" + 
-				"		{\n" + 
-				"			body:\n" + 
-				"				let found : OrderedSet(A) = as?->select(a : A | a.d = e) in if found->size() > 0 then found->first() else null endif;\n" + 
-				"		}\n" + 
-				"		property as : A[*] { ordered composes };\n" + 
-				"	}\n" + 
-				"}\n";
+				"package scope = 'abc'\n" +
+						"{\n" +
+						"	class A\n" +
+						"	{\n" +
+						"		attribute d : String;\n" +
+						"		attribute e : String;\n" +
+						"	}\n" +
+						"	class B\n" +
+						"	{\n" +
+						"		operation findA(e : String) : A[?]\n" +
+						"		{\n" +
+						"			body:\n" +
+						"				let found : OrderedSet(A) = as?->select(a : A | a.d = e) in if found->size() > 0 then found->first() else null endif;\n" +
+						"		}\n" +
+						"		property as : A[*] { ordered composes };\n" +
+						"	}\n" +
+						"}\n";
 		Resource metamodel = cs2as(ocl, metamodelText);
 		Model pivotModel = (Model) metamodel.getContents().get(0);
 		org.eclipse.ocl.pivot.Package pivotPackage = pivotModel.getOwnedPackages().get(0);
@@ -410,25 +410,25 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		//
 		ocl.assertQueryEquals(testObjectB, testObjectA1, "self.findA('d1')");
 		ocl.assertQueryEquals(testObjectB, null, "self.findA('e2')");
-        ocl.dispose();
+		ocl.dispose();
 	}
-	
+
 	@Test public void test_cg_tuple_access() throws ParserException, IOException {
 		TestOCL ocl = createOCL();
-//		getHelper().setContext(metamodelManager.getOclVoidType());
-		String textQuery = 
+		//		getHelper().setContext(metamodelManager.getOclVoidType());
+		String textQuery =
 				"let\n" +
-				"  table : Set(Tuple(range : Sequence(Integer), size : String)) = Set{\n" +
-				"    Tuple{range = Sequence{0..49}, size = 'small'},\n" +
-				"    Tuple{range = Sequence{50..999}, size = 'medium'},\n" +
-				"    Tuple{range = Sequence{1000..1000000}, size = 'large'}\n" +
-				"  }\n" +
-				"in\n" +
-				"  table?->any(range->includes(200000))?.size";
+						"  table : Set(Tuple(range : Sequence(Integer), size : String)) = Set{\n" +
+						"    Tuple{range = Sequence{0..49}, size = 'small'},\n" +
+						"    Tuple{range = Sequence{50..999}, size = 'medium'},\n" +
+						"    Tuple{range = Sequence{1000..1000000}, size = 'large'}\n" +
+						"  }\n" +
+						"in\n" +
+						"  table?->any(range->includes(200000))?.size";
 		ocl.assertQueryEquals(null, "large", textQuery);
-        ocl.dispose();
+		ocl.dispose();
 	}
-	
+
 	/**
 	 * Tests the basic name accesses
 	 */
@@ -443,8 +443,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		//
 		EObject redApple = fruitEFactory.create(apple);
 		redApple.eSet(fruit_color, color_red);
-//		EObject greenApple = fruitEFactory.create(apple);
-//		greenApple.eSet(fruit_color, color_green);
+		//		EObject greenApple = fruitEFactory.create(apple);
+		//		greenApple.eSet(fruit_color, color_green);
 		EObject aTree = fruitEFactory.create(tree);
 		@SuppressWarnings("unchecked")
 		List<Object> treeFruits = (List<Object>) aTree.eGet(tree_fruits);
@@ -466,10 +466,10 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		//	type/property ambiguity is resolved to type.
 		//
 		ocl.assertQueryInvalid(redApple, "self.oclAsType(Tree)");
-//		ocl.assertQueryEquals(aTree, ValuesUtil.createOrderedSetValue(null, redApple), "self.oclAsType(Tree).fruits");
-        ocl.dispose();
+		//		ocl.assertQueryEquals(aTree, ValuesUtil.createOrderedSetValue(null, redApple), "self.oclAsType(Tree).fruits");
+		ocl.dispose();
 	}
-	
+
 	/**
 	 * Tests the nested name accesses
 	 */
@@ -490,7 +490,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		@SuppressWarnings("unchecked")
 		List<Object> treeFruits = (List<Object>) appleTree.eGet(tree_fruits);
 		treeFruits.add(redApple);
-//		
+		//
 		ocl.assertQueryEquals(redApple, "RedApple", "self.name");
 		ocl.assertQueryEquals(redApple, "RedApple", "self.Fruit::name");
 		ocl.assertQueryEquals(redApple, "RedApple", "self.Apple::name");
@@ -506,18 +506,18 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertSemanticErrorQuery(appleType, "self->oclAsType(Set(fruit::badapple::BadApple))", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "badapple");
 		ocl.assertSemanticErrorQuery(appleType, "self->oclAsType(Set(badfruit::badapple::BadApple))", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "badfruit");
 		ocl.assertQueryInvalid(redApple, "self->oclAsType(Set(fruit::apple::EatingApple))");
-		ocl.assertQueryInvalid(redApple, "self->oclAsType(Set(fruit::Tree))");		
+		ocl.assertQueryInvalid(redApple, "self->oclAsType(Set(fruit::Tree))");
 		//
 		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, appleTree), "Tree.allInstances()");
 		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, appleTree), "fruit::Tree.allInstances()");
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "fruit::Tree.allInstances()");
-//
+		//
 		metamodelManager.addGlobalNamespace("zz", fruitPackage);
 		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, appleTree), "zz::Tree.allInstances()");
-//
-		ocl.assertQueryEquals(redApple, idResolver.createBagOfEach(null, redApple), "Fruit.allInstances().oclAsType(Apple)");		
-		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, redApple), "Fruit.allInstances()->oclAsType(Set(Apple))");		
-        ocl.dispose();
+		//
+		ocl.assertQueryEquals(redApple, idResolver.createBagOfEach(null, redApple), "Fruit.allInstances().oclAsType(Apple)");
+		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(null, redApple), "Fruit.allInstances()->oclAsType(Set(Apple))");
+		ocl.dispose();
 	}
 
 	@Test public void test_reservedNames() {
@@ -525,8 +525,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryTrue(null, "Boolean.allInstances()->forAll(_'if' | _'if' <> null)");
 		ocl.assertQueryTrue(null, "let _'if' = true in _'if'");
 		ocl.dispose();
-    }
-	
+	}
+
 	/**
 	 * Tests construction of a type instance with property values
 	 */
@@ -539,27 +539,34 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryEquals(context, null, "Apple{color=null,label=null,stem=null}.label");
 		ocl.assertQueryEquals(context, "RedApple", "Apple{color=Color::red,label='RedApple',stem=null}.label");
 		ocl.assertQueryEquals(context, color_red, "Apple{color=Color::red,label='RedApple',stem=null}.color");
-		if (!useCodeGen) {		// FIXME CG Shadow objects
-			ocl.assertQueryFalse(context, "Apple{color=Color::red,label='RedApple',stem=null} = Apple{color=Color::red,label='RedApple',stem=null}");
-			ocl.assertQueryFalse(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple = thatApple");
-			ocl.assertQueryFalse(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple = thatApple");
-		}
+
+
+		//		ocl.assertQueryTrue(context, "Apple{name='RedApple',color=Color::red} = Apple{name='RedApple',color=Color::red}");
+		//		ocl.assertQueryTrue(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnApple',color=Color::red} in thisApple = thatApple");
+		//		ocl.assertQueryFalse(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnApple',color=Color::black} in thisApple = thatApple");
+		//		ocl.assertQueryFalse(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnotherApple',color=Color::red} in thisApple = thatApple");
+
+
+
+
+
+		ocl.assertQueryTrue(context, "Apple{color=Color::red,label='RedApple',stem=null} = Apple{color=Color::red,label='RedApple',stem=null}");
+		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{label='AnApple',color=Color::red,stem=null} in thisApple = thatApple");
+		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,color=Color::red,label='AnApple'} in thisApple = thatApple");
 		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple.label = thatApple.label");
 		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple.color = thatApple.color");
 		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple.label = thatApple.label and thisApple.color = thatApple.color");
-		if (!useCodeGen) {		// FIXME CG Shadow objects
-			ocl.assertQueryFalse(context, "let thisApple = Apple{stem=null,label='ThisApple',color=Color::red}, thatApple = Apple{stem=null,label='ThatApple',color=Color::red} in thisApple.label = thatApple.label and thisApple.color = thatApple.color");
-			ocl.assertQueryFalse(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::black} in thisApple.label = thatApple.label and thisApple.color = thatApple.color");
-		}
-        ocl.dispose();
+		ocl.assertQueryFalse(context, "let thisApple = Apple{stem=null,label='ThisApple',color=Color::red}, thatApple = Apple{stem=null,label='ThatApple',color=Color::red} in thisApple.label = thatApple.label and thisApple.color = thatApple.color");
+		ocl.assertQueryFalse(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::black} in thisApple.label = thatApple.label and thisApple.color = thatApple.color");
+		ocl.dispose();
 	}
-	
+
 	/**
 	 * Tests construction of a type instance with property values
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	@Test public void test_uml_primitives_399378() throws ParserException {
-//		TestCaseAppender.INSTANCE.uninstall();
+		//		TestCaseAppender.INSTANCE.uninstall();
 		TestOCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
 		UML2AS.initialize(resourceSet);
@@ -570,69 +577,69 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		org.eclipse.ocl.pivot.Class treeClass = NameUtil.getNameable(fruitPackage.getOwnedClasses(), "Tree");
 		ExpressionInOCL query = ocl.createQuery(treeClass, "self.height>20");
 		assertNotNull(query);
-        ocl.dispose();
+		ocl.dispose();
 	}
-	
+
 	@Test public void test_dynamic_dispatch_411154() throws ParserException, IOException {
 		if (useCodeGen) return;
 		TestOCL ocl = createOCL();
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			OCLinEcoreStandaloneSetup.doSetup();
-//			OCLDelegateDomain.initialize(null);
+			//			OCLDelegateDomain.initialize(null);
 		}
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		String metamodelText =
 				"package Bug411154 : pfx = 'Bug411154.ecore'\n" +
-				"{\n" +
-				"	class Domain {\n" +
-				"		property types : T1[*] { ordered composes };\n" +
-				"		property t1_2a : T1;\n" +
-				"		property t1_3a : T1;\n" +
-				"		property t1_3b : T1;\n" +
-				"		property t1_4 : T1;\n" +
-				"		property t2a_2a : T2a;\n" +
-				"		property t2a_3a : T2a;\n" +
-				"		property t2b_2b : T2b;\n" +
-				"		property t3a : T3a;\n" +
-				"	}\n" +
-				"	abstract class T1 {\n" +
-				"		operation op1() : String { body: 'T1::op1'; }\n" +
-				"		operation op4() : String { body: 'T1::op4'; }\n" +
-				"		operation op5() : String { body: 'T1::op5'; }\n" +
-				"		operation op6() : String { body: 'T1::op6'; }\n" +
-				"	}\n" +
-				"	class T2a extends T1 {\n" +
-				"		operation op1() : String { body: 'T2a::op1'; }\n" +
-				"		operation op2() : String { body: 'T2a::op2'; }\n" +
-				"		operation op4() : String { body: 'T2a::op4'; }\n" +
-				"		operation op6() : String { body: 'T2a::op6'; }\n" +
-				"		operation op7() : String { body: 'T2a::op7'; }\n" +
-				"		operation op9() : String { body: 'T2a::op9'; }\n" +
-				"	}\n" +
-				"	class T2b extends T1 {\n" +
-				"		operation op6() : String { body: 'T2b::op6'; }\n" +
-				"		operation op7() : String { body: 'T2b::op7'; }\n" +
-				"		operation op9() : String { body: 'T2b::op9'; }\n" +
-				"	}\n" +
-				"	class T3a extends T2a,T2b {\n" +
-				"		operation op1() : String { body: 'T3a::op1'; }\n" +
-				"		operation op2() : String { body: 'T3a::op2'; }\n" +
-				"		operation op3() : String { body: 'T3a::op3'; }\n" +
-				"		operation op6() : String { body: 'T3a::op6'; }\n" +
-				"		operation op7() : String { body: 'T3a::op7'; }\n" +
-				"	}\n" +
-				"	class T3b extends T2a,T2b {\n" +
-				"	}\n" +
-				"	class T4 extends T3a,T3b {\n" +
-				"		operation op6() : String { body: 'T4::op6'; }\n" +
-				"		operation op7() : String { body: 'T4::op7'; }\n" +
-				"	}\n" +
-				"}\n";
+						"{\n" +
+						"	class Domain {\n" +
+						"		property types : T1[*] { ordered composes };\n" +
+						"		property t1_2a : T1;\n" +
+						"		property t1_3a : T1;\n" +
+						"		property t1_3b : T1;\n" +
+						"		property t1_4 : T1;\n" +
+						"		property t2a_2a : T2a;\n" +
+						"		property t2a_3a : T2a;\n" +
+						"		property t2b_2b : T2b;\n" +
+						"		property t3a : T3a;\n" +
+						"	}\n" +
+						"	abstract class T1 {\n" +
+						"		operation op1() : String { body: 'T1::op1'; }\n" +
+						"		operation op4() : String { body: 'T1::op4'; }\n" +
+						"		operation op5() : String { body: 'T1::op5'; }\n" +
+						"		operation op6() : String { body: 'T1::op6'; }\n" +
+						"	}\n" +
+						"	class T2a extends T1 {\n" +
+						"		operation op1() : String { body: 'T2a::op1'; }\n" +
+						"		operation op2() : String { body: 'T2a::op2'; }\n" +
+						"		operation op4() : String { body: 'T2a::op4'; }\n" +
+						"		operation op6() : String { body: 'T2a::op6'; }\n" +
+						"		operation op7() : String { body: 'T2a::op7'; }\n" +
+						"		operation op9() : String { body: 'T2a::op9'; }\n" +
+						"	}\n" +
+						"	class T2b extends T1 {\n" +
+						"		operation op6() : String { body: 'T2b::op6'; }\n" +
+						"		operation op7() : String { body: 'T2b::op7'; }\n" +
+						"		operation op9() : String { body: 'T2b::op9'; }\n" +
+						"	}\n" +
+						"	class T3a extends T2a,T2b {\n" +
+						"		operation op1() : String { body: 'T3a::op1'; }\n" +
+						"		operation op2() : String { body: 'T3a::op2'; }\n" +
+						"		operation op3() : String { body: 'T3a::op3'; }\n" +
+						"		operation op6() : String { body: 'T3a::op6'; }\n" +
+						"		operation op7() : String { body: 'T3a::op7'; }\n" +
+						"	}\n" +
+						"	class T3b extends T2a,T2b {\n" +
+						"	}\n" +
+						"	class T4 extends T3a,T3b {\n" +
+						"		operation op6() : String { body: 'T4::op6'; }\n" +
+						"		operation op7() : String { body: 'T4::op7'; }\n" +
+						"	}\n" +
+						"}\n";
 		Resource metamodel = cs2as(ocl, metamodelText);
 		Model pivotModel = (Model) metamodel.getContents().get(0);
 		org.eclipse.ocl.pivot.Package pivotPackage = pivotModel.getOwnedPackages().get(0);
 		org.eclipse.ocl.pivot.Class pivotTypeDomain = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "Domain");
-//		org.eclipse.ocl.pivot.Class pivotTypeT1 = ClassUtil.getNamedElement(pivotPackage.getOwnedType(), "T1");
+		//		org.eclipse.ocl.pivot.Class pivotTypeT1 = ClassUtil.getNamedElement(pivotPackage.getOwnedType(), "T1");
 		org.eclipse.ocl.pivot.Class pivotTypeT2a = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "T2a");
 		org.eclipse.ocl.pivot.Class pivotTypeT2b = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "T2b");
 		org.eclipse.ocl.pivot.Class pivotTypeT3a = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "T3a");
@@ -640,7 +647,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		org.eclipse.ocl.pivot.Class pivotTypeT4 = NameUtil.getNameable(pivotPackage.getOwnedClasses(), "T4");
 		EPackage ePackage = metamodelManager.getEcoreOfPivot(EPackage.class, pivotPackage);
 		EClass eClassDomain = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeDomain);
-//		EClass eClassT1 = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeT1);
+		//		EClass eClassT1 = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeT1);
 		EClass eClassT2a = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeT2a);
 		EClass eClassT2b = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeT2b);
 		EClass eClassT3a = metamodelManager.getEcoreOfPivot(EClass.class, pivotTypeT3a);
@@ -751,6 +758,6 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryEquals(testObjectDomain, "T3a::op3", "t3a.op3()");
 		ocl.assertQueryEquals(testObjectDomain, "T2a::op4", "t3a.op4()");
 		ocl.assertQueryEquals(testObjectDomain, "T1::op5", "t3a.op5()");
-        ocl.dispose();
+		ocl.dispose();
 	}
 }

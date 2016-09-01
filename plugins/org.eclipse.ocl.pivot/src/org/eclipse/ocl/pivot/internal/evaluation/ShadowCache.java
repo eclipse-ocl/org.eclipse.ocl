@@ -1,0 +1,174 @@
+package org.eclipse.ocl.pivot.internal.evaluation;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
+
+/**
+ * An ShadowCache caches the results of each distinct operation implementation and source and argument value
+ * for re-use if the same implementation is re-attempted.
+ *
+ * The cache is normally accessed as a consequence of AbstractOperation.evaluate redirecting to the cache.
+ * A call-back to AbstractOperation.basicEvaluate occurs when evaluation is actually necessary.
+ *
+ * The cache is bypassed for derived implementations that override AbstractOperation.evaluate.
+ *
+ * @since 1.3
+ */
+public class ShadowCache
+{
+	public static final @NonNull TracingOption SHADOWS = new TracingOption(PivotPlugin.PLUGIN_ID, "shadows");
+
+	/**
+	 * An ShadowResult maintains the cached result of the invocation of implementation with theseValues.
+	 */
+	private static final class ShadowResult
+	{
+		private final org.eclipse.ocl.pivot.@NonNull Class thisClass;
+		private final @NonNull Property @NonNull [] theseProperties;
+		private final @Nullable Object @NonNull [] theseValues;
+		private final @NonNull Object instance;
+
+		public ShadowResult(org.eclipse.ocl.pivot.@NonNull Class thisClass, @NonNull Property @NonNull [] theseProperties, @Nullable Object @NonNull [] theseValues, @NonNull Object instance) {
+			this.thisClass = thisClass;
+			this.theseProperties = theseProperties;
+			this.theseValues = theseValues;
+			this.instance = instance;
+			assert theseValues.length == theseProperties.length;
+		}
+
+		public @NonNull Object getInstance() {
+			return instance;
+		}
+
+		public boolean isEqual(@NonNull IdResolver idResolver, org.eclipse.ocl.pivot.@NonNull Class thatClass, @NonNull Property @NonNull [] thoseProperties, @Nullable Object @NonNull [] thoseValues) {
+			if (thisClass != thatClass) {
+				return false;
+			}
+			int iMax = thoseValues.length;
+			if (iMax != theseValues.length) {
+				return false;
+			}
+			assert thoseValues.length == thoseProperties.length;
+			for (int i = 0; i < iMax; i++) {
+				if (theseProperties[i] != thoseProperties[i]) {
+					return false;
+				}
+				if (!idResolver.oclEquals(theseValues[i], thoseValues[i])) {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+
+	protected final ExecutorInternal.@NonNull ExecutorInternalExtension executor;
+
+	/**
+	 * Map from implementation, source, arguments hashCode to one or more evaluations with that hashCode. Single map entries use the
+	 * ShadowResult directly as the entry. Colliding entries use a List<@NonNull ShadowResult> for the collisions.
+	 * <br>
+	 * This map is used to inhibit repeated evaluations.
+	 */
+	private final @NonNull Map<@NonNull Integer, @NonNull Object> hashCode2shadows = new HashMap<>();
+
+	protected final boolean debugShadows = SHADOWS.isActive();
+
+	public ShadowCache(ExecutorInternal.@NonNull ExecutorInternalExtension executor) {
+		this.executor = executor;
+	}
+
+	public void dispose() {
+		hashCode2shadows.clear();
+	}
+
+	public @Nullable Object getCachedShadowObject(org.eclipse.ocl.pivot.@NonNull Class thisClass, @NonNull Property @NonNull [] theseProperties, @Nullable Object @NonNull [] theseValues) {
+		IdResolver.@NonNull IdResolverExtension idResolver = (IdResolver.IdResolverExtension) executor.getIdResolver();
+		int hashCode = thisClass.hashCode();
+		assert theseValues.length == theseProperties.length;
+		int iMax = theseValues.length;
+		for (int i = 0; i < iMax; i++) {
+			hashCode = 3 * hashCode + idResolver.oclHashCode(theseValues[i]);
+		}
+		synchronized (hashCode2shadows) {
+			Object zeroOrMoreShadows = hashCode2shadows.get(hashCode);
+			ShadowResult oneShadow = null;
+			if (zeroOrMoreShadows instanceof ShadowResult) {
+				oneShadow = (ShadowResult)zeroOrMoreShadows;
+				if (oneShadow.isEqual(idResolver, thisClass, theseProperties, theseValues)) {
+					if (debugShadows) {
+						SHADOWS.println("old:" + oneShadow);
+					}
+					return oneShadow.getInstance();
+				}
+			}
+			else if (zeroOrMoreShadows instanceof List<?>) {
+				@SuppressWarnings("unchecked")@NonNull List<@NonNull ShadowResult> zeroOrMoreShadows2 = (List<@NonNull ShadowResult>)zeroOrMoreShadows;
+				for (@NonNull ShadowResult aShadow : zeroOrMoreShadows2) {
+					if (aShadow.isEqual(idResolver, thisClass, theseProperties, theseValues)) {
+						if (debugShadows) {
+							SHADOWS.println("old:" + aShadow);
+						}
+						return aShadow.getInstance();
+					}
+				}
+			}
+		}
+		//
+		//	Must resynchronize after newInstance creation and execution in case the execution is recursive.
+		//
+		EObject eObject = thisClass.createInstance();
+		for (int i = 0 ; i < iMax; i++) {
+			Property referredProperty = theseProperties[i];
+			Class<?> instanceClass = PivotUtil.getEcoreInstanceClass(referredProperty);
+			Object ecoreValue = idResolver.ecoreValueOf(instanceClass, theseValues[i]);
+			referredProperty.initValue(eObject, ecoreValue);
+		}
+		ShadowResult theShadow = new ShadowResult(thisClass, theseProperties, theseValues, eObject);
+		synchronized (hashCode2shadows) {
+			Object zeroOrMoreShadows = hashCode2shadows.get(hashCode);
+			if (zeroOrMoreShadows == null) {
+				hashCode2shadows.put(hashCode, theShadow);
+			}
+			else if (zeroOrMoreShadows instanceof ShadowResult) {
+				ShadowResult oneShadow = (ShadowResult)zeroOrMoreShadows;
+				if (oneShadow.isEqual(idResolver, thisClass, theseProperties,theseValues)) {
+					if (debugShadows) {
+						SHADOWS.println("old:" + oneShadow);
+					}
+					return oneShadow.getInstance();
+				}
+				List<@NonNull ShadowResult> twoOrMoreShadows = new ArrayList<>(4);
+				twoOrMoreShadows.add(oneShadow);
+				twoOrMoreShadows.add(theShadow);
+				hashCode2shadows.put(hashCode, twoOrMoreShadows);
+			}
+			else if (zeroOrMoreShadows instanceof List<?>) {
+				@SuppressWarnings("unchecked")@NonNull List<@NonNull ShadowResult> twoOrMoreShadows = (List<@NonNull ShadowResult>)zeroOrMoreShadows;
+				for (@NonNull ShadowResult aShadow : twoOrMoreShadows) {
+					if (aShadow.isEqual(idResolver, thisClass, theseProperties, theseValues)) {
+						if (debugShadows) {
+							SHADOWS.println("old:" + aShadow);
+						}
+						return aShadow.getInstance();
+					}
+				}
+				twoOrMoreShadows.add(theShadow);
+			}
+			if (debugShadows) {
+				SHADOWS.println("new:" + theShadow);
+			}
+			return theShadow.getInstance();
+		}
+	}
+}
