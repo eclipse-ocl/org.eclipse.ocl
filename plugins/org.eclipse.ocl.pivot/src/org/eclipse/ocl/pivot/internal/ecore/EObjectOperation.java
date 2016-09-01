@@ -86,7 +86,7 @@ public class EObjectOperation extends AbstractOperation
 	 * @since 1.3
 	 */
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+	public @Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull TypedElement caller, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
 		if (specification.getOwnedBody() == null) {
 			try {
 				MetamodelManager metamodelManager = executor.getMetamodelManager();
