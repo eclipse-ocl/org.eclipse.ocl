@@ -27,6 +27,9 @@ org.eclipse.ocl.pivot/projectMap/resolve=false
 # Trace maintenance of CompleteClasses 
 org.eclipse.ocl.pivot/completeClasses=false
 
+# Trace maintenance of cached evaluations 
+org.eclipse.ocl.pivot/evaluations=false
+
 # Trace maintenance of CompletePackages 
 org.eclipse.ocl.pivotcompletePackages=false
 

@@ -38,26 +38,11 @@ public class ConstrainedOperation extends AbstractOperation
 	}
 
 	/**
-	 * @since 1.1
-	 */
-	@Override
-	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
-		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
-		@Nullable Object[] boxedSourceAndArgumentValues = new @Nullable Object[1+arguments.size()];
-		boxedSourceAndArgumentValues[0]= sourceValue;
-		for (int i = 0; i < arguments.size(); i++) {
-			OCLExpression argument = arguments.get(i);
-			assert argument != null;
-			boxedSourceAndArgumentValues[1+i] = executor.evaluate(argument);
-		}
-		return evaluate(executor, callExp, boxedSourceAndArgumentValues);
-	}
-
-	/**
 	 * @since 1.3
 	 */
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+	public @Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+
 		PivotUtil.checkExpression(expressionInOCL);
 		EvaluationEnvironment nestedEvaluationEnvironment = executor.pushEvaluationEnvironment(expressionInOCL, callExp);
 		nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(expressionInOCL.getOwnedContext()), boxedSourceAndArgumentValues[0]);
@@ -76,5 +61,21 @@ public class ConstrainedOperation extends AbstractOperation
 		finally {
 			executor.popEvaluationEnvironment();
 		}
+	}
+
+	/**
+	 * @since 1.1
+	 */
+	@Override
+	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
+		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
+		@Nullable Object[] boxedSourceAndArgumentValues = new @Nullable Object[1+arguments.size()];
+		boxedSourceAndArgumentValues[0]= sourceValue;
+		for (int i = 0; i < arguments.size(); i++) {
+			OCLExpression argument = arguments.get(i);
+			assert argument != null;
+			boxedSourceAndArgumentValues[1+i] = executor.evaluate(argument);
+		}
+		return evaluate(executor, callExp, boxedSourceAndArgumentValues);
 	}
 }

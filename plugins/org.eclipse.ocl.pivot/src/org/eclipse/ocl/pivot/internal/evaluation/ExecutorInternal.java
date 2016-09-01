@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -22,6 +23,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 
 /**
  * @since 1.1
@@ -42,8 +44,9 @@ public interface ExecutorInternal extends Executor
 	 */
 	public interface ExecutorInternalExtension extends ExecutorInternal
 	{
+		@Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] sourceAndArgumentValues);
 		@Nullable Object internalExecuteOperationCallExp(@NonNull OperationCallExp operationCallExp, @Nullable Object @NonNull [] sourceAndArgumentValues);
 	}
-	
-//	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject);
+
+	//	@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject);
 }

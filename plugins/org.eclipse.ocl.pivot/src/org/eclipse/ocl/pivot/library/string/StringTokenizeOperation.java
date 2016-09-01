@@ -24,13 +24,14 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractPolyOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 
 /**
  * StringTokenizeOperation realises the String::tokenize() library operations.
  */
-public class StringTokenizeOperation extends AbstractPolyOperation 
+public class StringTokenizeOperation extends AbstractPolyOperation
 {
 	public static final @NonNull StringTokenizeOperation INSTANCE = new StringTokenizeOperation();
 	private static final @NonNull String DELIMS = " \t\n\r\f"; //$NON-NLS-1$
@@ -58,12 +59,12 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 		}
 		return evaluate(executor, (CollectionTypeId)typeId, sourceValue, delims, returnDelims);
 	}
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable SequenceValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
 	/**
@@ -73,12 +74,12 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 	public @NonNull SequenceValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		return evaluate(executor, (CollectionTypeId)returnTypeId, sourceValue, DELIMS, false);
 	}
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable SequenceValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, argumentValue); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, argumentValue);
 	}
 
 	/**
@@ -89,13 +90,13 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 		String delims = asString(argumentValue);
 		return evaluate(executor, (CollectionTypeId)returnTypeId, sourceValue, delims, false);
 	}
-	
-	/** @deprecated use Executor 
+
+	/** @deprecated use Executor
 	 * @since 1.1*/
 	@Deprecated
 	@Override
 	public @Nullable SequenceValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, firstArgumentValue, secondArgumentValue); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, firstArgumentValue, secondArgumentValue);
 	}
 
 	/**
@@ -108,7 +109,7 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 		return evaluate(executor, (CollectionTypeId)returnTypeId, sourceValue, delims, returnDelims);
 	}
 
-/*	public @NonNull SequenceValue evaluate(@NonNull Executor executor, @NonNull DomainCallExp callExp, @Nullable Object sourceValue, @NonNull Object... argumentValues) {
+	/*	public @NonNull SequenceValue evaluate(@NonNull Executor executor, @NonNull DomainCallExp callExp, @Nullable Object sourceValue, @NonNull Object... argumentValues) {
 		String delims = DELIMS;
 		boolean returnDelims = false;
 		if (argumentValues.length > 0) {
@@ -137,4 +138,54 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 		}
 		return createSequenceValue(returnTypeId, results);
 	}
+
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+		return cachedEvaluate(executor, callExp, boxedSourceAndArgumentValues);
+	}
+
+	@Override
+	public @Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+		String delims = DELIMS;
+		boolean returnDelims = false;
+
+
+		if (sourceAndArgumentValues.length > 1) {
+			if (sourceAndArgumentValues.length > 2) {
+				if (sourceAndArgumentValues.length > 3) {
+					throw new InvalidValueException(PivotMessages.InvalidArgument, sourceAndArgumentValues[3]);
+				}
+				Object argument1 = sourceAndArgumentValues[2];
+				//				assert argument1 != null;
+				returnDelims = asBoolean(argument1);
+				//				Object secondArgument = executor.evaluate(argument1);
+				//				returnDelims = asBoolean(secondArgument);
+			}
+			Object argument0 = sourceAndArgumentValues[1];
+			//			assert argument0 != null;
+			//			Object firstArgument = executor.evaluate(argument0);
+			delims = asString(argument0);
+		}
+		return evaluate(executor, (CollectionTypeId)ClassUtil.nonNullPivot(callExp.getType()).getTypeId(), sourceAndArgumentValues[0], delims, returnDelims);
+
+
+
+
+
+		/*		if (sourceAndArgumentValues.length > 1) {
+			if (sourceAndArgumentValues.length > 2) {
+				if (sourceAndArgumentValues.length > 3) {
+					throw new InvalidValueException(PivotMessages.InvalidArgument, sourceAndArgumentValues[3]);
+				}
+				Object argumentValue1 = sourceAndArgumentValues[2];
+				assert argumentValue1 != null;
+				returnDelims = asBoolean(argumentValue1);
+			}
+			Object argumentValue0 = sourceAndArgumentValues[1];
+			assert argumentValue0 != null;
+			delims = asString(argumentValue0);
+		}
+		return evaluate(executor, (CollectionTypeId)ClassUtil.nonNullPivot(callExp.getType()).getTypeId(), sourceAndArgumentValues[0], delims, returnDelims);
+		//		return super.basicEvaluate(executor, callExp, sourceAndArgumentValues);
+		 */	}
 }

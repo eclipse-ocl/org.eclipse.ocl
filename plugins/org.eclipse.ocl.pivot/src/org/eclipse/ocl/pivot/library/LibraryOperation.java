@@ -44,9 +44,15 @@ public interface LibraryOperation extends LibraryFeature
 	 */
 	public interface LibraryOperationExtension2 extends LibraryOperationExtension
 	{
+		/**
+		 * Return the cached evaluation from sourceAndArgumentValues, using newInstance(sourceAndArgumentValues) to
+		 * create a new evaluation instance if necessary.
+		 */
+		@Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
+
 		@Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues);
 
-		boolean isCached();
+		//		boolean isCached();
 	}
 
 	/** @deprecated use Executor */

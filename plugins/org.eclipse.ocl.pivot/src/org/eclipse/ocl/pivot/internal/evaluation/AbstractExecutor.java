@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.evaluation;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -53,44 +52,6 @@ import org.eclipse.ocl.pivot.values.NullValue;
  */
 public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInternalExtension
 {
-	private final class EvaluationConstructor extends AbstractEvaluationConstructor
-	{
-		protected final LibraryOperation.@NonNull LibraryOperationExtension2 implementation;
-		protected final @NonNull OperationCallExp operationCallExp;
-
-		public EvaluationConstructor(LibraryOperation.@NonNull LibraryOperationExtension2 implementation, @NonNull OperationCallExp operationCallExp) {
-			super(AbstractExecutor.this.idResolver);
-			this.implementation = implementation;
-			this.operationCallExp = operationCallExp;
-		}
-
-		@Override
-		protected @NonNull Evaluation newInstance(@Nullable Object @NonNull [] theseValues) {
-			Object result = implementation.evaluate(AbstractExecutor.this, operationCallExp, theseValues);
-			return new EvaluationResult(result, theseValues);
-		}
-	}
-
-	private static final class EvaluationResult implements Evaluation
-	{
-		private @Nullable Object result;
-		private @Nullable Object @NonNull [] theseValues;
-
-		public EvaluationResult(@Nullable Object result, @Nullable Object @NonNull [] theseValues) {
-			this.result = result;
-			this.theseValues = theseValues;
-		}
-
-		@Override
-		public @Nullable Object getResult() {
-			return result;
-		}
-
-		@Override
-		public boolean isEqual(@NonNull IdResolver idResolver, @Nullable Object @NonNull [] thoseValues) {
-			return theseValues.equals(thoseValues);
-		}
-	}
 
 	// This is the same as HashMap's default initial capacity
 	private static final int DEFAULT_REGEX_CACHE_LIMIT = 16;
@@ -120,7 +81,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 
 	private EvaluationLogger logger = IndentingLogger.OUT;
 
-	private /*@LazyNonNull*/ Map<LibraryOperation.@NonNull LibraryOperationExtension, Evaluation.@NonNull Constructor> implementation2constructor = new HashMap<>();
+	private /*@LazyNonNull*/ EvaluationCache evaluationCache = null;
 
 	protected AbstractExecutor(EnvironmentFactoryInternal.@NonNull EnvironmentFactoryInternalExtension environmentFactory) {
 		this.environmentFactory = environmentFactory;
@@ -199,6 +160,18 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
 		return evaluationVisitor.evaluate(body);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation,
+			@NonNull OCLExpression callExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+		if (evaluationCache == null) {
+			evaluationCache = new EvaluationCache(this);
+		}
+		return evaluationCache.getCachedEvaluationResult(implementation, callExp, sourceAndArgumentValues);
 	}
 
 	@Override
@@ -385,18 +358,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		//	Dispatch operation
 		//
 		try {
-			Object result;
-			if (implementation.isCached()) {
-				Evaluation.Constructor evaluationConstructor = implementation2constructor.get(implementation);
-				if (evaluationConstructor ==  null) {
-					evaluationConstructor = new EvaluationConstructor(implementation, operationCallExp);
-					implementation2constructor.put(implementation, evaluationConstructor);
-				}
-				result = evaluationConstructor.getUniqueEvaluationResult(sourceAndArgumentValues);
-			}
-			else {
-				result = implementation.evaluate(this, operationCallExp, sourceAndArgumentValues);
-			}
+			Object result = implementation.evaluate(this, operationCallExp, sourceAndArgumentValues);
 			assert !(result instanceof NullValue);
 			return result;
 		}

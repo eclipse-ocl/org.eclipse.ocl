@@ -55,15 +55,15 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 	protected @NonNull String getTestPackageName() {
 		return "EvaluateStringOperations";
 	}
-	
+
 	@BeforeClass public static void resetCounter() throws Exception {
 		PivotTestSuite.resetCounter();
-    }
+	}
 
-    @Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-    }
+	@Override
+	@Before public void setUp() throws Exception {
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
@@ -449,12 +449,12 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 
 	@Test public void testStringSize() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryEquals(null, Integer.valueOf(4), "'test'.size()"); //$NON-NLS-2$
-		ocl.assertQueryEquals(null, Integer.valueOf(0), "''.size()"); //$NON-NLS-2$
+		ocl.assertQueryEquals(null, Integer.valueOf(4), "'test'.size()");
+		ocl.assertQueryEquals(null, Integer.valueOf(0), "''.size()");
 		// invalid
-		ocl.assertQueryInvalid(null, "let s : String = invalid in s.size()"); //$NON-NLS-2$
+		ocl.assertQueryInvalid(null, "let s : String = invalid in s.size()");
 		// null
-		ocl.assertQueryInvalid(null, "let s : String = null in s.size()"); //$NON-NLS-2$
+		ocl.assertQueryInvalid(null, "let s : String = null in s.size()");
 		ocl.dispose();
 	}
 
@@ -577,13 +577,13 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 
 	@Test public void testStringToLowerCase() {
 		TestOCL ocl = createOCL();
-//		checkForUTF8Encoding()		
+		//		checkForUTF8Encoding()
 		ocl.assertQueryEquals(null, "4", "'4'.toLowerCase()"); //$NON-NLS-2$
 		ocl.assertQueryEquals(null, "mixed", "'MiXeD'.toLowerCase()"); //$NON-NLS-2$
 		ocl.assertQueryEquals(null, "upper", "'UPPER'.toLowerCase()"); //$NON-NLS-2$
 		// Ensures word-final sigma and regular sigmas are converted as needed
 		// TODO re-enable once the Unicode problems on Hudson have been resolved
-//		ocl.assertQueryEquals(null, "ὀδυσσεύς", "'ὈΔΥΣΣΕΎΣ'.toLowerCase()");
+		//		ocl.assertQueryEquals(null, "ὀδυσσεύς", "'ὈΔΥΣΣΕΎΣ'.toLowerCase()");
 		// invalid
 		ocl.assertQueryInvalid(null, "let s : String = invalid in s.toLowerCase()");
 		// null
@@ -615,18 +615,18 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 
 	@Test public void testStringToUpperCase() {
 		TestOCL ocl = createOCL();
-//		checkForUTF8Encoding();
+		//		checkForUTF8Encoding();
 		ocl.assertQueryEquals(null, "4", "'4'.toUpperCase()");
 		ocl.assertQueryEquals(null, "MIXED", "'MiXeD'.toUpperCase()");
 		ocl.assertQueryEquals(null, "LOWER", "'lower'.toUpperCase()");
-		
+
 		// Ensures word-final sigma and regular sigmas are converted as needed
 		// TODO re-enable once the Unicode problems on Hudson have been resolved
-//		ocl.assertQueryEquals(null, "ὈΔΥΣΣΕΎΣ", "'ὀδυσσεύς'.toUpperCase()");
-		
+		//		ocl.assertQueryEquals(null, "ὈΔΥΣΣΕΎΣ", "'ὀδυσσεύς'.toUpperCase()");
+
 		// Sharp s should be mapped to a double S upper case
 		// TODO re-enable once the Unicode problems on Hudson have been resolved
-//		ocl.assertQueryEquals(null, "SS", "'ß'.toUpperCase()");
+		//		ocl.assertQueryEquals(null, "SS", "'ß'.toUpperCase()");
 		// invalid
 		ocl.assertQueryInvalid(null, "let s : String = invalid in s.toUpperCase()");
 		// null
@@ -660,7 +660,9 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "let s : String = null in ''.tokenize(s)");
 		ocl.assertQueryInvalid(null, "let s : String = null in ''.tokenize(s,true)");
 		ocl.assertQueryInvalid(null, "let b : Boolean = null in ''.tokenize('',b)");
-		//
+		// cached
+		ocl.assertQueryTrue(null, "'1.2.3.4'.tokenize('.')='1.2.3.4'.tokenize('.')");
+
 		ocl.assertSemanticErrorQuery(null, "''.tokenize('',false,null)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "String", "tokenize", "'',false,null");
 		ocl.dispose();
 	}

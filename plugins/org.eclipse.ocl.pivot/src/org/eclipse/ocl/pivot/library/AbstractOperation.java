@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
 
 /**
  * AbstractOperation defines the minimal functionality of all Operation implementations. Each implemented
@@ -38,18 +39,58 @@ public abstract class AbstractOperation extends AbstractFeature implements Libra
 	}
 
 	/**
+	 * Return the evaluation from sourceAndArgumentValues using the executor for context wrt a callExp context.
+	 *
+	 * Derived calsses should override basicEvalute to evaluate a cacheable result, or evaluate to bypass caching.
+	 *
 	 * @since 1.3
 	 */
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] boxedSourceAndArgumentValues) {
+	public @Nullable Object basicEvaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
 		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Return the evaluation from sourceAndArgumentValues using the executor for context wrt a callExp context.
+	 * The implementation attempts to re-use a cached result which is initially provided by basicEvaluate.
+	 *
+	 * This method may be invoked by derived classes that have inherited an unwanted override of evaluate.
+	 *
+	 * @since 1.3
+	 */
+	protected final @Nullable Object cachedEvaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+		if (executor instanceof ExecutorInternalExtension) {
+			return ((ExecutorInternalExtension)executor).getCachedEvaluationResult(this, callExp, sourceAndArgumentValues);
+		}
+		else {
+			return basicEvaluate(executor, callExp, sourceAndArgumentValues);
+		}
+	}
+
+	/**
+	 * Return the evaluation from sourceAndArgumentValues using the executor for context wrt a callExp context.
+	 * The default implementation attempts to re-use a cached result which is initially provided by basicEvaluate.
+	 *
+	 * basicEvaluate should be overridden if caching is required, evaluate if caching is to be bypassed.
+	 *
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull OCLExpression callExp, @Nullable Object @NonNull [] sourceAndArgumentValues) {
+		if (executor instanceof ExecutorInternalExtension) {
+			return ((ExecutorInternalExtension)executor).getCachedEvaluationResult(this, callExp, sourceAndArgumentValues);
+		}
+		else {
+			return basicEvaluate(executor, callExp, sourceAndArgumentValues);
+		}
 	}
 
 	/**
 	 * @since 1.3
 	 */
-	@Override
-	public boolean isCached() {
-		return true;
-	}
+	//	@Override
+	//	public boolean isCached() {
+	//		return true;
+	//	}
+
 }
