@@ -539,17 +539,6 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryEquals(context, null, "Apple{color=null,label=null,stem=null}.label");
 		ocl.assertQueryEquals(context, "RedApple", "Apple{color=Color::red,label='RedApple',stem=null}.label");
 		ocl.assertQueryEquals(context, color_red, "Apple{color=Color::red,label='RedApple',stem=null}.color");
-
-
-		//		ocl.assertQueryTrue(context, "Apple{name='RedApple',color=Color::red} = Apple{name='RedApple',color=Color::red}");
-		//		ocl.assertQueryTrue(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnApple',color=Color::red} in thisApple = thatApple");
-		//		ocl.assertQueryFalse(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnApple',color=Color::black} in thisApple = thatApple");
-		//		ocl.assertQueryFalse(context, "let thisApple = Apple{name='AnApple',color=Color::red}, thatApple = Apple{name='AnotherApple',color=Color::red} in thisApple = thatApple");
-
-
-
-
-
 		ocl.assertQueryTrue(context, "Apple{color=Color::red,label='RedApple',stem=null} = Apple{color=Color::red,label='RedApple',stem=null}");
 		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{label='AnApple',color=Color::red,stem=null} in thisApple = thatApple");
 		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,color=Color::red,label='AnApple'} in thisApple = thatApple");
