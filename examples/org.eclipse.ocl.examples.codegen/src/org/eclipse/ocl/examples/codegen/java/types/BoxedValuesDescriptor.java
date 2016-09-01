@@ -44,7 +44,7 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 	}
 
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 //		if (collectionDescriptor != null) {
 			js.append("final ");

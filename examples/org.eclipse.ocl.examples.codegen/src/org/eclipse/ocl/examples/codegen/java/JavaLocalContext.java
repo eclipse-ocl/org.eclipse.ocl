@@ -79,7 +79,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return typeIdParameter;
 	}
 
-	public @NonNull JavaGlobalContext<? extends CG> getGlobalContext() {
+	public @NonNull JavaGlobalContext<@NonNull ? extends CG> getGlobalContext() {
 		return globalContext;
 	}
 
@@ -92,7 +92,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		return nameManagerContext;
 	}
 
-	public @NonNull JavaLocalContext<? extends CG> getOuterContext() {
+	public @NonNull JavaLocalContext<@NonNull ? extends CG> getOuterContext() {
 		return parentContext != null ? parentContext.getOuterContext() : this;
 	}
 

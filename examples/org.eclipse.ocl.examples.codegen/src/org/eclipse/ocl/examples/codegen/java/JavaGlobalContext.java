@@ -91,8 +91,8 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	}
 
 	@Override
-	public @Nullable JavaLocalContext<? extends CG> getLocalContext(@NonNull CGElement cgElement) {
-		JavaLocalContext<? extends CG> localContext = localContexts.get(cgElement);
+	public @Nullable JavaLocalContext<@NonNull ? extends CG> getLocalContext(@NonNull CGElement cgElement) {
+		JavaLocalContext<@NonNull ? extends CG> localContext = localContexts.get(cgElement);
 		if (localContext == null) {
 			CGElement cgScope = cgElement;
 			CGIterationCallExp cgIterationScope = null;
@@ -135,7 +135,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	}
 
 	public @NonNull String getValueName(@NonNull CGValuedElement cgValuedElement) {
-		JavaLocalContext<? extends CG> localContext = getLocalContext(cgValuedElement);
+		JavaLocalContext<@NonNull ? extends CG> localContext = getLocalContext(cgValuedElement);
 		if ((localContext != null) && !cgValuedElement.isGlobal()) {
 			return localContext.getValueName(cgValuedElement);
 		}

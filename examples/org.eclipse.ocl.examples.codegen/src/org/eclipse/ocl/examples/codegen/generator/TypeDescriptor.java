@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -39,7 +39,7 @@ public interface TypeDescriptor
 	/**
 	 * Append the appropriate statements to js to create the boxed value for cgBboxExp from its unboxedValue.
 	 */
-	@NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext,
+	@NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue);
 
 	/**
@@ -50,10 +50,10 @@ public interface TypeDescriptor
 	/**
 	 * Append a conversion to an Ecore value.
 	 */
-	@NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext,
+	@NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement ecoreValue);
 
-	
+
 	/**
 	 * Append a cgElement to js wrapped in a cast to this type
 	 */
@@ -62,7 +62,7 @@ public interface TypeDescriptor
 	/**
 	 * Append the appropriate statements to js to create the ecore value for cgEcoreExp from its boxedValue.
 	 */
-	@NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext2,
+	@NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext2,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue);
 
 	/**
@@ -86,14 +86,14 @@ public interface TypeDescriptor
 	/**
 	 * Append the appropriate statements to js to create the unboxed value for cgUnboxExp from its boxedValue.
 	 */
-	@NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext,
+	@NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue);
 
 	/**
 	 * Return a non-null Collection type descriptor if this type descriptor describes a Collection.
 	 */
 	@Nullable CollectionDescriptor asCollectionDescriptor();
-	
+
 	/**
 	 * Return the fully qualified Java class name described by this type. In the case of collection types, this method returns
 	 * the class name of the collection elements.

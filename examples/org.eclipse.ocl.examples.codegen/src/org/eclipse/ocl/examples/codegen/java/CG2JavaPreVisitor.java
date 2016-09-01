@@ -78,14 +78,14 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  * A CG2JavaPreVisitor prepares for Java code generation by performing a tree traversal
  * to gather all imports and global constants.
  */
-public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, JavaGlobalContext<? extends JavaCodeGenerator>>
+public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, JavaGlobalContext<@NonNull ? extends JavaCodeGenerator>>
 {
 	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
-	protected JavaLocalContext<?> localContext;
+	protected JavaLocalContext<@NonNull ?> localContext;
 
-	public CG2JavaPreVisitor(@NonNull JavaGlobalContext<? extends JavaCodeGenerator> javaContext) {
+	public CG2JavaPreVisitor(@NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> javaContext) {
 		super(javaContext);
 		this.codeGenerator = javaContext.getCodeGenerator();
 		this.analyzer = codeGenerator.getAnalyzer();
@@ -386,7 +386,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, J
 				cgInit.accept(this);
 			}
 		}
-		JavaLocalContext<?> savedLocalContext = localContext;
+		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
 		localContext = context.getLocalContext(cgIterationCallExp);
 		try {
 			CGValuedElement cgBody = cgIterationCallExp.getBody();

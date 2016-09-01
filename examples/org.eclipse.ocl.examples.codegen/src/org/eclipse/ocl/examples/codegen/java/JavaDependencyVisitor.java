@@ -24,10 +24,10 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 
 public class JavaDependencyVisitor extends DependencyVisitor
 {	
-	protected final @NonNull JavaGlobalContext<?> globalContext;
-	protected final JavaLocalContext<?> localContext;
+	protected final @NonNull JavaGlobalContext<@NonNull ?> globalContext;
+	protected final JavaLocalContext<@NonNull ?> localContext;
 
-	public JavaDependencyVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull JavaGlobalContext<?> globalContext, @NonNull GlobalPlace globalPlace) {
+	public JavaDependencyVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull JavaGlobalContext<@NonNull ?> globalContext, @NonNull GlobalPlace globalPlace) {
         super(analyzer, globalPlace);
         this.globalContext = globalContext;
         this.localContext = null;

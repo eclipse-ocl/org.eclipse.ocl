@@ -29,7 +29,7 @@ public class RealObjectDescriptor extends UnboxedValueDescriptor implements Unbo
 	}
 
 	@Override
-	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
 		if (!unboxedValue.isNonNull()) {
@@ -45,7 +45,7 @@ public class RealObjectDescriptor extends UnboxedValueDescriptor implements Unbo
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
 		if (!unboxedValue.isNonNull()) {

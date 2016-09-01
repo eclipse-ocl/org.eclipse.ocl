@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -39,7 +39,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 	}
 
 	@Override
-	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
@@ -61,8 +61,8 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement nonEcoreValue) {
-//		TypeId typeId = nonEcoreValue.getASTypeId();
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement nonEcoreValue) {
+		//		TypeId typeId = nonEcoreValue.getASTypeId();
 		EClassifier eClassifier = cgEcoreExp.getEcoreClassifier();
 		Class<?> instanceClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
 		EcoreDescriptor ecoreDescriptor = js.getCodeGenerator().getEcoreDescriptor(getElementId().getElementTypeId(), instanceClass);
@@ -74,7 +74,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 		}
 		js.appendAtomicReferenceTo(IdResolver.IdResolverExtension.class, localContext.getIdResolverVariable(cgEcoreExp));
 		js.append(".ecoreValueOfAll(");
-//		js.appendIdReference(typeId);
+		//		js.appendIdReference(typeId);
 		js.appendClassReference(ecoreDescriptor);
 		js.append(".class, ");
 		js.appendReferenceTo(Iterable.class, nonEcoreValue);
@@ -92,7 +92,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 	public @Nullable CollectionDescriptor asCollectionDescriptor() {
 		return this;
 	}
-	
+
 	@Override
 	public @NonNull CollectionTypeId getElementId() {
 		return (CollectionTypeId)super.getElementId();

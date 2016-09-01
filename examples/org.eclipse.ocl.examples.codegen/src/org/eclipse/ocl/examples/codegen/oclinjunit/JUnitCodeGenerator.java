@@ -84,7 +84,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CGValuedElement cgBody = (CGValuedElement) ClassUtil.nonNullState(expInOcl.accept(as2cgVisitor));
 		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
-		JavaLocalContext<?> localContext = globalContext.getLocalContext(cgOperation);
+		JavaLocalContext<@NonNull ?> localContext = globalContext.getLocalContext(cgOperation);
 		if (localContext != null) {
 			CGParameter executorParameter = localContext.createExecutorParameter();
 			if (executorParameter != null) {

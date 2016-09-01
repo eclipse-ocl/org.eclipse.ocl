@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -53,7 +53,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	protected static class NamedFuture {
 		private NamedFuture() {}
 	}
-	
+
 	/**
 	 * Convert an AS javaClass to its underlying Domain interface.
 	 * Obsolete FIXME Avoid two-level AS interfaces
@@ -63,13 +63,13 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	protected final @NonNull ElementId elementId;
-	
+
 	public AbstractDescriptor(@NonNull ElementId elementId) {
 		this.elementId = elementId;
 	}
 
 	@Override
-	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
@@ -81,33 +81,33 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			throw new UnsupportedOperationException(getClass().getSimpleName() + " should be AbstractCollectionDescriptor");
 		}
 		else if (isAssignableTo(BigInteger.class)
-				  || isAssignableTo(Long.class)
-				  || isAssignableTo(Integer.class)
-				  || isAssignableTo(Short.class)
-				  || isAssignableTo(Byte.class)
-				  || isAssignableTo(Character.class)
-				  || isAssignableTo(long.class)
-				  || isAssignableTo(int.class)
-				  || isAssignableTo(short.class)
-				  || isAssignableTo(byte.class)
-				  || isAssignableTo(char.class)) {
-				js.appendClassReference(ValueUtil.class);
-				js.append(".integerValueOf(");
-				js.appendReferenceTo(unboxedValue);
-				js.append(")");
+				|| isAssignableTo(Long.class)
+				|| isAssignableTo(Integer.class)
+				|| isAssignableTo(Short.class)
+				|| isAssignableTo(Byte.class)
+				|| isAssignableTo(Character.class)
+				|| isAssignableTo(long.class)
+				|| isAssignableTo(int.class)
+				|| isAssignableTo(short.class)
+				|| isAssignableTo(byte.class)
+				|| isAssignableTo(char.class)) {
+			js.appendClassReference(ValueUtil.class);
+			js.append(".integerValueOf(");
+			js.appendReferenceTo(unboxedValue);
+			js.append(")");
 		}
 		else if ((getJavaClass() == Object.class) && (typeId == TypeId.INTEGER)) {
 			throw new UnsupportedOperationException(getClass().getSimpleName() + " should be IntegerObjectDescriptor");
 		}
 		else if (isAssignableTo(BigDecimal.class)
-				  || isAssignableTo(Double.class)
-				  || isAssignableTo(Float.class)
-				  || isAssignableTo(double.class)
-				  || isAssignableTo(float.class)) {
-				js.appendClassReference(ValueUtil.class);
-				js.append(".realValueOf(");
-				js.appendReferenceTo(unboxedValue);
-				js.append(")");
+				|| isAssignableTo(Double.class)
+				|| isAssignableTo(Float.class)
+				|| isAssignableTo(double.class)
+				|| isAssignableTo(float.class)) {
+			js.appendClassReference(ValueUtil.class);
+			js.append(".realValueOf(");
+			js.appendReferenceTo(unboxedValue);
+			js.append(")");
 		}
 		else if (isAssignableTo(Number.class)) {
 			if (typeId == TypeId.REAL){
@@ -157,7 +157,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
@@ -169,26 +169,26 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			throw new UnsupportedOperationException(getClass().getSimpleName() + " should be AbstractCollectionDescriptor");
 		}
 		else if (isAssignableTo(BigInteger.class)
-				  || isAssignableTo(Long.class)
-				  || isAssignableTo(Integer.class)
-				  || isAssignableTo(Short.class)
-				  || isAssignableTo(Byte.class)
-				  || isAssignableTo(Character.class)) {
-				js.appendClassReference(ValueUtil.class);
-				js.append(".integerValueOf(");
-				js.appendReferenceTo(unboxedValue);
-				js.append(")");
+				|| isAssignableTo(Long.class)
+				|| isAssignableTo(Integer.class)
+				|| isAssignableTo(Short.class)
+				|| isAssignableTo(Byte.class)
+				|| isAssignableTo(Character.class)) {
+			js.appendClassReference(ValueUtil.class);
+			js.append(".integerValueOf(");
+			js.appendReferenceTo(unboxedValue);
+			js.append(")");
 		}
 		else if ((getJavaClass() == Object.class) && (typeId == TypeId.INTEGER)) {
 			throw new UnsupportedOperationException(getClass().getSimpleName() + " should be IntegerObjectDescriptor");
 		}
 		else if (isAssignableTo(BigDecimal.class)
-				  || isAssignableTo(Double.class)
-				  || isAssignableTo(Float.class)) {
-				js.appendClassReference(ValueUtil.class);
-				js.append(".realValueOf(");
-				js.appendReferenceTo(unboxedValue);
-				js.append(")");
+				|| isAssignableTo(Double.class)
+				|| isAssignableTo(Float.class)) {
+			js.appendClassReference(ValueUtil.class);
+			js.append(".realValueOf(");
+			js.appendReferenceTo(unboxedValue);
+			js.append(")");
 		}
 		else if (isAssignableTo(Number.class)) {
 			if (typeId == TypeId.REAL){
@@ -240,10 +240,10 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Override
-	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext,
+	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		return getEcoreDescriptor(js.getCodeGenerator(), null).appendEcore(js, localContext, cgEcoreExp, boxedValue);
-/*		UnboxedDescriptor unboxedTypeDescriptor = getUnboxedDescriptor(js.getCodeGenerator());
+		/*		UnboxedDescriptor unboxedTypeDescriptor = getUnboxedDescriptor(js.getCodeGenerator());
 		CollectionDescriptor collectionDescriptor = unboxedTypeDescriptor.asCollectionDescriptor();
 		if (collectionDescriptor != null) {
 			throw new UnsupportedOperationException(getClass().getSimpleName() + " should be UnboxedValuesDescriptor");
@@ -291,12 +291,12 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			js.append(".getTypeId()");
 			if (!nullSafe) {
 				js.append(") : ");
-//				js.appendThrowBooleanInvalidValueException("null input for \"" + (notEquals ? "<>" : "=") + "\" operation");
+				//				js.appendThrowBooleanInvalidValueException("null input for \"" + (notEquals ? "<>" : "=") + "\" operation");
 				js.append(notEquals ? "true" : "false");
-//				js.append("true");
+				//				js.append("true");
 			}
 		}
-/*		else if (zzisBoxedElement(thisValue) && zzisBoxedElement(thatValue)) {		// FIXME Is this needed ?
+		/*		else if (zzisBoxedElement(thisValue) && zzisBoxedElement(thatValue)) {		// FIXME Is this needed ?
 			js.appendValueName(thisValue);
 			js.append(notEquals ? " != " : " == ");
 			js.appendValueName(thatValue);
@@ -337,7 +337,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 		UnboxedDescriptor unboxedTypeDescriptor = getUnboxedDescriptor(js.getCodeGenerator());
 		CollectionDescriptor collectionDescriptor = unboxedTypeDescriptor.asCollectionDescriptor();
@@ -373,7 +373,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	public @Nullable EClassifier getEClassifier() {
 		return null;
 	}
-	
+
 	public @NonNull ElementId getElementId() {
 		return elementId;
 	}
@@ -407,18 +407,18 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		Type oclTypeType = metamodelManager.getStandardLibrary().getOclTypeType();
 		return metamodelManager.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
 	}
-	
+
 	@Override
 	public boolean isPrimitive() {			// FIXME move to derived classes
 		Class<?> javaClass = getJavaClass();
 		if ((javaClass == boolean.class)
-		 || (javaClass == byte.class)
-		 || (javaClass == char.class)
-		 || (javaClass == double.class)
-		 || (javaClass == float.class)
-		 || (javaClass == int.class)
-		 || (javaClass == long.class)
-		 || (javaClass == short.class)) {
+				|| (javaClass == byte.class)
+				|| (javaClass == char.class)
+				|| (javaClass == double.class)
+				|| (javaClass == float.class)
+				|| (javaClass == int.class)
+				|| (javaClass == long.class)
+				|| (javaClass == short.class)) {
 			return true;
 		}
 		return false;

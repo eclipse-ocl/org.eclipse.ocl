@@ -45,7 +45,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor //imp
 //	}
 	
 	@Override
-	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext,
+	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = (");

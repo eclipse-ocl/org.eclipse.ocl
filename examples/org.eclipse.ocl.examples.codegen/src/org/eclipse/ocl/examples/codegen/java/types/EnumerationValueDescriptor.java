@@ -36,7 +36,7 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 	}
 	
 	@Override
-	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext,
+	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = (");
@@ -60,7 +60,7 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 	}
 	
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<?> localContext,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull JavaLocalContext<@NonNull ?> localContext,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 		js.appendDeclaration(cgUnboxExp);
 		js.append(" = ");

@@ -51,12 +51,14 @@ public class EvaluationCache
 			if (this.implementation != implementation) {
 				return false;
 			}
-			int iMax = thoseValues.length;
-			if (iMax != theseValues.length) {
+			Object [] theseValues2 = theseValues; // JDT 4.5 cannot handle @Nullable
+			Object [] thoseValues2 = thoseValues;
+			int iMax = thoseValues2.length;
+			if (iMax != theseValues2.length) {
 				return false;
 			}
 			for (int i = 0; i < iMax; i++) {
-				if (!idResolver.oclEquals(theseValues[i], thoseValues[i])) {
+				if (!idResolver.oclEquals(theseValues2[i], thoseValues2[i])) {
 					return false;
 				}
 			}

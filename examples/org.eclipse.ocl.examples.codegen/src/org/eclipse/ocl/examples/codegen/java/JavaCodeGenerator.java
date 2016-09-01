@@ -267,7 +267,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 	
 	@Override
-	public abstract @NonNull JavaGlobalContext<? extends JavaCodeGenerator> getGlobalContext();
+	public abstract @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> getGlobalContext();
 
 	@Override
 	public @NonNull GlobalPlace getGlobalPlace() {
