@@ -70,15 +70,17 @@ import com.google.common.collect.Lists;
 public class PivotHelper
 {
 	protected final @NonNull EnvironmentFactory environmentFactory;
+	protected final @NonNull StandardLibrary standardLibrary;
 
 	public PivotHelper(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
+		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}
 
 	public @NonNull BooleanLiteralExp createBooleanLiteralExp(boolean booleanSymbol) {
 		BooleanLiteralExp asBoolean = PivotFactory.eINSTANCE.createBooleanLiteralExp();
 		asBoolean.setBooleanSymbol(booleanSymbol);
-		asBoolean.setType(environmentFactory.getStandardLibrary().getBooleanType());
+		asBoolean.setType(standardLibrary.getBooleanType());
 		asBoolean.setIsRequired(true);
 		return asBoolean;
 	}
@@ -104,7 +106,7 @@ public class PivotHelper
 		CollectionRange collectionRange = PivotFactory.eINSTANCE.createCollectionRange();
 		collectionRange.setOwnedFirst(asFirst);
 		collectionRange.setOwnedLast(asLast);
-		collectionRange.setType(environmentFactory.getStandardLibrary().getIntegerType());
+		collectionRange.setType(standardLibrary.getIntegerType());
 		collectionRange.setIsRequired(true);
 		return collectionRange;
 	}
@@ -131,14 +133,14 @@ public class PivotHelper
 	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull Number integerSymbol) {
 		IntegerLiteralExp asInteger = PivotFactory.eINSTANCE.createIntegerLiteralExp();
 		asInteger.setIntegerSymbol(integerSymbol);
-		asInteger.setType(environmentFactory.getStandardLibrary().getIntegerType());
+		asInteger.setType(standardLibrary.getIntegerType());
 		asInteger.setIsRequired(true);
 		return asInteger;
 	}
 
 	public @NonNull InvalidLiteralExp createInvalidExpression(/*Object object, String boundMessage, Throwable e*/) {
 		InvalidLiteralExp invalidLiteralExp = PivotFactory.eINSTANCE.createInvalidLiteralExp();
-		invalidLiteralExp.setType(environmentFactory.getStandardLibrary().getOclInvalidType());
+		invalidLiteralExp.setType(standardLibrary.getOclInvalidType());
 		//		invalidLiteralExp.setObject(object);
 		//		invalidLiteralExp.setReason(boundMessage);
 		//		invalidLiteralExp.setThrowable(e);
@@ -215,7 +217,7 @@ public class PivotHelper
 
 	public @NonNull NullLiteralExp createNullLiteralExp() {
 		NullLiteralExp asNull = PivotFactory.eINSTANCE.createNullLiteralExp();
-		asNull.setType(environmentFactory.getStandardLibrary().getOclVoidType());
+		asNull.setType(standardLibrary.getOclVoidType());
 		asNull.setIsRequired(false);
 		return asNull;
 	}
@@ -224,7 +226,6 @@ public class PivotHelper
 		Type asType = ClassUtil.nonNullState(asSourceExpression.getType());
 		CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(asType);
 		int argumentCount = asArguments != null ? asArguments.length : 0;
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		int bestMatches = -1;
 		Operation bestOperation = null;
 		for (@NonNull Operation asOperation : completeClass.getOperations(FeatureFilter.SELECT_NON_STATIC, opName)) {
@@ -326,7 +327,7 @@ public class PivotHelper
 	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull Number realSymbol) {
 		RealLiteralExp asReal = PivotFactory.eINSTANCE.createRealLiteralExp();
 		asReal.setRealSymbol(realSymbol);
-		asReal.setType(environmentFactory.getStandardLibrary().getRealType());
+		asReal.setType(standardLibrary.getRealType());
 		asReal.setIsRequired(true);
 		return asReal;
 	}
@@ -351,7 +352,7 @@ public class PivotHelper
 	public @NonNull StringLiteralExp createStringLiteralExp(@NonNull String stringSymbol) {
 		StringLiteralExp asString = PivotFactory.eINSTANCE.createStringLiteralExp();
 		asString.setStringSymbol(stringSymbol);
-		asString.setType(environmentFactory.getStandardLibrary().getStringType());
+		asString.setType(standardLibrary.getStringType());
 		asString.setIsRequired(true);
 		return asString;
 	}
@@ -377,7 +378,7 @@ public class PivotHelper
 		TypeExp asTypeExp = PivotFactory.eINSTANCE.createTypeExp();
 		asTypeExp.setIsRequired(true);
 		asTypeExp.setReferredType(type);
-		asTypeExp.setType(environmentFactory.getStandardLibrary().getClassType());
+		asTypeExp.setType(standardLibrary.getClassType());
 		asTypeExp.setTypeValue(type);
 		return asTypeExp;
 	}
@@ -385,7 +386,7 @@ public class PivotHelper
 	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull Number unlimitedNaturalSymbol) {
 		UnlimitedNaturalLiteralExp asUnlimitedNatural = PivotFactory.eINSTANCE.createUnlimitedNaturalLiteralExp();
 		asUnlimitedNatural.setUnlimitedNaturalSymbol(unlimitedNaturalSymbol);
-		asUnlimitedNatural.setType(environmentFactory.getStandardLibrary().getUnlimitedNaturalType());
+		asUnlimitedNatural.setType(standardLibrary.getUnlimitedNaturalType());
 		asUnlimitedNatural.setIsRequired(true);
 		return asUnlimitedNatural;
 	}
