@@ -393,6 +393,12 @@ public abstract class ExecutorManager implements ExecutorExtension
 	@Override
 	public void replace(@NonNull TypedElement referredVariable, @Nullable Object value) {}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public void resetCaches() {}
+
 	/*	public DomainType typeOf(Value value, Value... values) {
 		DomainStandardLibrary standardLibrary = valueFactory.getStandardLibrary();
 		DomainType type = value.getType(standardLibrary);
