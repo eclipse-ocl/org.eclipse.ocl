@@ -220,6 +220,12 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 				if (diff != 0) {
 					return diff;
 				}
+				String t1 = String.valueOf(o1.getTypeId());
+				String t2 = String.valueOf(o2.getTypeId());
+				diff = t1.compareTo(t2);
+				if (diff != 0) {
+					return diff;
+				}
 				String s1 = String.valueOf(o1);
 				String s2 = String.valueOf(o2);
 				return s1.compareTo(s2);
