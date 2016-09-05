@@ -632,7 +632,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			return "throw new UnsupportedOperationException();";
 		}};
 
-		public static MethodSpec getPlace = new MyMethodSpec(CGElement.class, "@Nullable " + classRef(AbstractPlace.class) + " getPlace(@NonNull " + classRef(Map.class) + "<" + classRef(CGElement.class) + "," + classRef(AbstractPlace.class) + "> element2place)", null,
+		public static MethodSpec getPlace = new MyMethodSpec(CGElement.class, "@Nullable " + classRef(AbstractPlace.class) + " getPlace(@NonNull " + classRef(Map.class) + "<@Nullable " + classRef(CGElement.class) + ", @NonNull " + classRef(AbstractPlace.class) + "> element2place)", null,
 				"Returns the place for this element, updating and reusing element2place as required.\nAll parent elements have entries in element2place.\nNo child elements have entries in element2place.\nThe global place is accessible as the null element.")
 		{
 			@Override

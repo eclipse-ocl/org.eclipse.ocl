@@ -193,7 +193,7 @@ public class CGTextParameterImpl extends CGParameterImpl implements CGTextParame
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return ControlPlace.createControlPlace(element2place, this);
 	}
 

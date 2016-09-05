@@ -260,7 +260,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return StackPlace.createStackPlace(element2place, this);
 	}
 

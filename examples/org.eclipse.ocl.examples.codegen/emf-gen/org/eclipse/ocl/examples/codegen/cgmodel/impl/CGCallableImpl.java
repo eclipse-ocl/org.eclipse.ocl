@@ -251,7 +251,7 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return OuterStackPlace.createOuterStackPlace(element2place, this);
 	}
 

@@ -289,7 +289,7 @@ public class CGPropertyImpl extends CGValuedElementImpl implements CGProperty {
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return OuterStackPlace.createOuterStackPlace(element2place, this);
 	}
 

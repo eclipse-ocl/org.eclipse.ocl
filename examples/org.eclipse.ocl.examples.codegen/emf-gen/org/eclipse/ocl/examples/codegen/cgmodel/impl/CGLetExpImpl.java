@@ -281,7 +281,7 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return LetPlaces.createLetPlaces(element2place, this);
 	}
 

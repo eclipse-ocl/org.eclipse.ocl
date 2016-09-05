@@ -302,7 +302,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return InnerStackPlace.createInnerStackPlace(element2place, this);
 	}
 

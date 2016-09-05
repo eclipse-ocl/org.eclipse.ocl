@@ -78,7 +78,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return evaluateName;
 	}
 
-	public @NonNull Collection<CGValuedElement> getGlobals() {
+	public @NonNull Collection<@NonNull CGValuedElement> getGlobals() {
 		return globals;
 	}
 

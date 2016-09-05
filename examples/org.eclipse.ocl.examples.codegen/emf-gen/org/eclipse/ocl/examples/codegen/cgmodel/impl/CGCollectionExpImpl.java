@@ -207,7 +207,7 @@ public class CGCollectionExpImpl extends CGValuedElementImpl implements CGCollec
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return LocalPlace.createLocalPlace(element2place, this);
 	}
 

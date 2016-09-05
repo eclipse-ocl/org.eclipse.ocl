@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -93,7 +93,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		initPrimitive(long.class, Long.class);
 		initPrimitive(short.class, Short.class);
 	}
-	
+
 	private static final @NonNull AbstractCGModelResourceFactory CG_RESOURCE_FACTORY = new AbstractCGModelResourceFactory();
 
 	/**
@@ -181,12 +181,12 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	private /*@LazyNonNull*/ Id2EClassVisitor id2EClassVisitor = null;
-//	protected final @NonNull Id2JavaInterfaceVisitor id2JavaInterfaceVisitor;
+	//	protected final @NonNull Id2JavaInterfaceVisitor id2JavaInterfaceVisitor;
 	private /*@LazyNonNull*/ Id2BoxedDescriptorVisitor id2BoxedDescriptorVisitor = null;
 	private /*@LazyNonNull*/ GlobalPlace globalPlace = null;
 	private @NonNull Map<ElementId, BoxedDescriptor> boxedDescriptors = new HashMap<ElementId, BoxedDescriptor>();
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
-	
+
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(environmentFactory);
 	}
@@ -265,7 +265,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		BoxedDescriptor boxedDescriptor = getBoxedDescriptor(elementId);
 		return boxedDescriptor.getEcoreDescriptor(this, instanceClass);
 	}
-	
+
 	@Override
 	public abstract @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> getGlobalContext();
 
@@ -488,14 +488,14 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	/**
 	 * After overall optimization, return a sorted list of global declarations.
 	 */
-	public @Nullable List<CGValuedElement> prepareGlobals() {
+	public @Nullable List<@NonNull CGValuedElement> prepareGlobals() {
 		DependencyVisitor dependencyVisitor = createDependencyVisitor();
-		Collection<CGValuedElement> globals = getGlobalContext().getGlobals();
-		for (CGValuedElement cgGlobal : globals) {
+		Collection<@NonNull CGValuedElement> globals = getGlobalContext().getGlobals();
+		for (@NonNull CGValuedElement cgGlobal : globals) {
 			assert cgGlobal.isGlobal();
 		}
 		dependencyVisitor.visitAll(globals);
-		List<CGValuedElement> sortedGlobals = getGlobalPlace().getSortedGlobals(dependencyVisitor);
+		List<@NonNull CGValuedElement> sortedGlobals = getGlobalPlace().getSortedGlobals(dependencyVisitor);
 		return sortedGlobals;
 	}
 }

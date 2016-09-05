@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.cse;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -25,7 +26,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  */
 public class IfPlaces
 {
-	public static @NonNull LocalPlace createIfPlaces(@NonNull Map<CGElement, AbstractPlace> element2place, @NonNull CGIfExp cgIfExp) {
+	public static @NonNull LocalPlace createIfPlaces(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGIfExp cgIfExp) {
 		ControlPlace ifPlace = ControlPlace.getControlPlace(element2place, cgIfExp);
 		CGValuedElement cgThenExp = cgIfExp.getThenExpression();
 		CGValuedElement cgElseExp = cgIfExp.getElseExpression();
@@ -37,32 +38,32 @@ public class IfPlaces
 		}
 		return ifPlace;
 	}
-	
+
 	/**
 	 * A ThenPlace describes the then forest of CG trees for an IF expression.
 	 */
 	public static class ThenPlace extends ControlPlace
 	{
 		protected final @NonNull ElsePlace elsePlace;
-		
+
 		private ThenPlace(@NonNull LocalPlace ifPlace, @NonNull CGValuedElement cgThenExp, @NonNull CGValuedElement cgElseExp) {
 			super(ifPlace, cgThenExp);
 			elsePlace = new ElsePlace(ifPlace, this, cgElseExp);
 		}
 	}
-	
+
 	/**
 	 * An ElsePlace describes the else forest of CG trees for an IF expression.
 	 */
 	public static class ElsePlace extends ControlPlace
 	{
 		protected final @NonNull ThenPlace thenPlace;
-		
+
 		private ElsePlace(@NonNull LocalPlace ifPlace, @NonNull ThenPlace thenPlace, @NonNull CGValuedElement cgElseExp) {
 			super(ifPlace, cgElseExp);
 			this.thenPlace = thenPlace;
 		}
-		
+
 		@Override
 		public void pushUp() {
 			super.pushUp();
@@ -72,7 +73,7 @@ public class IfPlaces
 			HashedAnalyses intersection = HashedAnalyses.intersection(thenSet, elseSet);
 			if (intersection != null) {
 				ControlPlace parentPlace = getControlPlace(getParentPlace());
-				for (@SuppressWarnings("null")@NonNull AbstractAnalysis commonAnalysis : intersection) {
+				for (@NonNull AbstractAnalysis commonAnalysis : intersection) {
 					AbstractAnalysis thenAnalysis = thenSet.remove(commonAnalysis);
 					AbstractAnalysis elseAnalysis = elseSet.remove(commonAnalysis);
 					if ((thenAnalysis != null) &&  (elseAnalysis != null)) {

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.cse;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -22,7 +23,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  */
 public class ThrowPlace extends ControlPlace
 {
-	public static @NonNull LocalPlace createThrowPlace(@NonNull Map<CGElement, AbstractPlace> element2place, @NonNull CGThrowExp cgThrowExp) {
+	public static @NonNull LocalPlace createThrowPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGThrowExp cgThrowExp) {
 		ControlPlace throwPlace = ControlPlace.getControlPlace(element2place, cgThrowExp);
 		CGValuedElement cgThrownExp = cgThrowExp.getSource();
 		if (cgThrownExp != null) {
@@ -31,7 +32,7 @@ public class ThrowPlace extends ControlPlace
 		}
 		return throwPlace;
 	}
-	
+
 	private ThrowPlace(@NonNull LocalPlace throwPlace, @NonNull CGValuedElement cgThrownExp) {
 		super(throwPlace, cgThrownExp);
 	}

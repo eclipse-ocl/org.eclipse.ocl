@@ -363,7 +363,7 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return IfPlaces.createIfPlaces(element2place, this);
 	}
 

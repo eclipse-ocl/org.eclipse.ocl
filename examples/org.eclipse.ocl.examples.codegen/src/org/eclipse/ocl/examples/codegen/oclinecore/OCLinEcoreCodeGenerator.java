@@ -4,13 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.oclinecore;
 
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
@@ -92,7 +91,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	protected final @NonNull OCLinEcoreGlobalContext globalContext;
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final @NonNull GenPackage genPackage;
-	
+
 	protected OCLinEcoreCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull GenPackage genPackage) {
 		super(environmentFactory);
 		GenModel genModel = ClassUtil.nonNullModel(genPackage.getGenModel());
@@ -102,12 +101,12 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		this.cgAnalyzer = new CodeGenAnalyzer(this);
 		this.genPackage = genPackage;
 		this.globalContext = new OCLinEcoreGlobalContext(this, genPackage);
-//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
-//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
-//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
-//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
-//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
-//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
+		//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
+		//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
+		//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 	}
 
 	@Override
@@ -127,7 +126,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		for (Map.Entry<String, String> entry : results.entrySet()) {
 			uri2body.put(entry.getKey(), entry.getValue());
 		}
-		List<CGValuedElement> sortedGlobals = prepareGlobals();
+		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 		String constantsText = cg2java.generateConstants(sortedGlobals);
 		constantsTexts.put(genPackage, constantsText);
 	}

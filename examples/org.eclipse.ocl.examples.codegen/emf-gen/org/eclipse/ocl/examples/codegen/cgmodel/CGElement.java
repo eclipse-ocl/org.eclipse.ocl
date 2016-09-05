@@ -65,7 +65,7 @@ public interface CGElement extends EObject {
 	 * @generated
 	 */
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$2
-	@Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place);
+	@Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place);
 
 	/**
 	 * Returns true if this node may have its own symbol name context.

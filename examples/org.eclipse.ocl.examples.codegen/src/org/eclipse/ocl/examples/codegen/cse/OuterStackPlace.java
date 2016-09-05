@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -18,17 +18,17 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 
 public class OuterStackPlace extends StackPlace
 {
-	public static @Nullable OuterStackPlace createOuterStackPlace(@NonNull Map<CGElement, AbstractPlace> element2place, @NonNull CGElement cgStackElement) {
+	public static @Nullable OuterStackPlace createOuterStackPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGElement cgStackElement) {
 		GlobalPlace globalPlace = getGlobalPlace(element2place);
 		OuterStackPlace stackPlace = new OuterStackPlace(globalPlace, cgStackElement);
 		return stackPlace;
 	}
-	
+
 	protected OuterStackPlace(@NonNull GlobalPlace globalPlace, @NonNull CGElement stackElement) {
 		super(globalPlace, stackElement);
 		globalPlace.addStackPlace(this);
 	}
-	
+
 	@Override
 	public @NonNull GlobalPlace getParentPlace() {
 		return globalPlace;

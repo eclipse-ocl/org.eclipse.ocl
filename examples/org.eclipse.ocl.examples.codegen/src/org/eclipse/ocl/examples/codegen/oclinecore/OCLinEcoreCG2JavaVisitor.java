@@ -11,7 +11,6 @@
 package org.eclipse.ocl.examples.codegen.oclinecore;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier;
@@ -127,7 +126,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return toString();
 	}
 
-	public @NonNull String generateConstants(List<CGValuedElement> sortedGlobals) {
+	public @NonNull String generateConstants(Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		js.resetStream();
 		js.pushIndentation(null);
 		if (sortedGlobals != null) {

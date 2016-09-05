@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *   Adolfo Sanchez-Barbudo Herrera (University of York) - Lookup Environment/Visitor
@@ -59,8 +59,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AutoCodeGenerator extends JavaCodeGenerator
 {
-//	private static final Logger logger = Logger.getLogger(AutoCodeGenerator.class);
-	
+	//	private static final Logger logger = Logger.getLogger(AutoCodeGenerator.class);
+
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final org.eclipse.ocl.pivot.@Nullable Package asSuperPackage;
@@ -86,9 +86,9 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		this.asSuperPackage = asSuperPackage;
 		this.genPackage = genPackage;
 		this.superGenPackage = superGenPackage;
-		this.baseGenPackage = baseGenPackage != null ? baseGenPackage 
-							: superGenPackage != null ? superGenPackage
-							: genPackage;
+		this.baseGenPackage = baseGenPackage != null ? baseGenPackage
+			: superGenPackage != null ? superGenPackage
+				: genPackage;
 	}
 
 	protected @NonNull String getProjectPrefix() {
@@ -96,34 +96,34 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		assert prefix != null;
 		return prefix;
 	}
-	
+
 	protected @Nullable String getSuperProjectPrefix() {
 		if (superGenPackage != null) {
 			String prefix = superGenPackage.getPrefix();
 			assert prefix != null;
 			return prefix;
-		} 
+		}
 		return null;
 	}
-	
+
 	protected @NonNull String getBasePrefix() {
 		String prefix = baseGenPackage.getPrefix();
 		assert prefix != null;
 		return prefix;
 	}
-	
-	
+
+
 	protected @NonNull AS2CGVisitor createAS2CGVisitor() {
 		return new AS2CGVisitor(cgAnalyzer);
 	}
-	
+
 	@Override
 	public abstract @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor();
 
-	protected abstract @NonNull AutoCG2JavaVisitor<@NonNull ? extends AutoCodeGenerator> createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable List<CGValuedElement> sortedGlobals);
+	protected abstract @NonNull AutoCG2JavaVisitor<@NonNull ? extends AutoCodeGenerator> createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable List</*@NonNull*/ CGValuedElement> sortedGlobals);
 
 	protected abstract @NonNull List<CGPackage> createCGPackages() throws ParserException;
-	
+
 	protected org.eclipse.ocl.pivot.@NonNull Package createASPackage(@NonNull String packageName) {
 		String nsURI = "java://"+packageName;		// java: has no significance other than diagnostic readability
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.createPackage(packageName, "viz", nsURI, IdManager.getRootPackageId(nsURI));
@@ -138,7 +138,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		asPackage.getOwnedClasses().add(asVisitorClass);
 		return asVisitorClass;
 	}
-	
+
 	@Override
 	protected @NonNull AutoCodeGenOptions createOptions() {
 		return new AutoCodeGenOptions();
@@ -147,9 +147,9 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 
 
 	public @NonNull String generateClassFile(@NonNull CGPackage cgPackage) {
-		
+
 		optimize(cgPackage);
-		List<CGValuedElement> sortedGlobals = prepareGlobals();
+		List<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 		AutoCG2JavaVisitor<@NonNull ?> generator = createCG2JavaVisitor(cgPackage, sortedGlobals);
 		generator.safeVisit(cgPackage);
 		Set<String> allImports = generator.getAllImports();
@@ -158,7 +158,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull CodeGenAnalyzer getAnalyzer() {		
+	public @NonNull CodeGenAnalyzer getAnalyzer() {
 		return cgAnalyzer;
 	}
 
@@ -193,7 +193,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		}
 		return cgClass;
 	}
-	
+
 	protected @Nullable CGClass getExternalClass(org.eclipse.ocl.pivot.@NonNull Class aClass) {
 		return getExternalClass(genModelHelper.getEcoreInterfaceClass(aClass));
 	}
@@ -220,9 +220,9 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	protected @NonNull String getSourceFileName(String javaClassName) {
 		return genModel.getModelDirectory() + "/" + getSourcePackageName().replace('.', '/') + "/" + javaClassName;
 	}
-	
+
 	abstract protected @NonNull String getSourcePackageName();
-	
+
 	public void saveSourceFile() {
 		try {
 			@NonNull
@@ -233,7 +233,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 				System.out.println("Creating " + uri);
 				String javaCodeSource = generateClassFile(cgPackage);;
 				try {
-					
+
 					System.out.println("Saving " + uri);
 					OutputStream outputStream = URIConverter.INSTANCE.createOutputStream(uri);
 					Writer writer = new OutputStreamWriter(outputStream);
@@ -247,10 +247,10 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 			throw new IllegalStateException("Failed to process '" + asPackage.getName() + "'", e);
 		}
 	}
-	
+
 	/**
 	 * Helper method that might be used by derived generators
-	 * 
+	 *
 	 * @param op
 	 * @return
 	 */
@@ -262,17 +262,17 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 			throw new IllegalStateException(e);
 		}
 	}
-	
+
 	/**
 	 * Any code generator should an IdResolverVariables.
-	 * 
+	 *
 	 * Derived classes must provide it
-	 * 
+	 *
 	 * @return the CG IdResolver variable
 	 */
 	abstract public @NonNull CGValuedElement getIdResolverVariable();
-	
-	protected @NonNull Property createNativeProperty(@NonNull String name, @NonNull Type asElementType, 
+
+	protected @NonNull Property createNativeProperty(@NonNull String name, @NonNull Type asElementType,
 			boolean isReadOnly, boolean isRequired) {
 		Property asProperty = PivotUtil.createProperty(name, asElementType);
 		asProperty.setImplementation(NativeProperty.INSTANCE);
@@ -281,7 +281,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		return asProperty;
 	}
 
-	protected @NonNull Property createNativeProperty(@NonNull String name, @NonNull Class<?> javaClass, 
+	protected @NonNull Property createNativeProperty(@NonNull String name, @NonNull Class<?> javaClass,
 			boolean isReadOnly, boolean isRequired) {
 		Package javaPackage = javaClass.getPackage();
 		@SuppressWarnings("null")@NonNull String packageName = javaPackage.getName();

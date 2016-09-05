@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
@@ -25,7 +26,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  */
 public class CatchPlace extends ControlPlace
 {
-	public static @NonNull LocalPlace createCatchPlace(@NonNull Map<CGElement, AbstractPlace> element2place, @NonNull CGCatchExp cgCatchExp) {
+	public static @NonNull LocalPlace createCatchPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGCatchExp cgCatchExp) {
 		ControlPlace catchPlace = ControlPlace.getControlPlace(element2place, cgCatchExp);
 		CGValuedElement cgCaughtExp = cgCatchExp.getSource();
 		if (cgCaughtExp != null) {
@@ -34,27 +35,27 @@ public class CatchPlace extends ControlPlace
 		}
 		return catchPlace;
 	}
-	
+
 	private CatchPlace(@NonNull LocalPlace catchPlace, @NonNull CGValuedElement cgCaughtExp) {
 		super(catchPlace, cgCaughtExp);
 	}
-	
+
 	@Override
 	public void pushUp() {
 		super.pushUp();
 		HashedAnalyses mySet = getHashedAnalyses();
 		ControlPlace parentPlace = getControlPlace(getParentPlace());
-		List<AbstractAnalysis> pushUps = null;
-		for (@SuppressWarnings("null")@NonNull AbstractAnalysis commonAnalysis : mySet) {
+		List<@NonNull AbstractAnalysis> pushUps = null;
+		for (@NonNull AbstractAnalysis commonAnalysis : mySet) {
 			if (commonAnalysis.getPrimaryElement() instanceof CGText) {
 				if (pushUps == null) {
-					pushUps = new ArrayList<AbstractAnalysis>();
+					pushUps = new ArrayList<>();
 				}
 				pushUps.add(commonAnalysis);
 			}
 		}
 		if (pushUps != null) {
-			for (@SuppressWarnings("null")@NonNull AbstractAnalysis commonAnalysis : pushUps) {
+			for (@NonNull AbstractAnalysis commonAnalysis : pushUps) {
 				mySet.remove(commonAnalysis);
 				parentPlace.addAnalysis(commonAnalysis);
 			}

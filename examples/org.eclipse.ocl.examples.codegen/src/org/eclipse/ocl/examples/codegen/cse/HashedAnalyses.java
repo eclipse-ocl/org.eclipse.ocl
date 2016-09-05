@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -24,13 +24,13 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 /**
- * HashedAnalyses maintains a Map from Structural Hash Code to Collection of structurally distinct 
+ * HashedAnalyses maintains a Map from Structural Hash Code to Collection of structurally distinct
  * AbstractAnalysis instances; distinct from all others according to an isStructurallyEqualTo comparison.
  * <p>
  * The map is initially populated with SimpleAnalysis instances, which may evolve to SharedAnalysis
  * instances as additional structurally idenmtical AbstractAnalysis instnaces are added.
  */
-public class HashedAnalyses implements Iterable<AbstractAnalysis>
+public class HashedAnalyses implements Iterable<@NonNull AbstractAnalysis>
 {
 	public static @Nullable HashedAnalyses intersection(@NonNull HashedAnalyses iHash2Analyses, @NonNull HashedAnalyses jHash2Analyses) {
 		Multimap<Integer, AbstractAnalysis> intersection = null;
@@ -52,17 +52,17 @@ public class HashedAnalyses implements Iterable<AbstractAnalysis>
 		}
 		return intersection != null ? new HashedAnalyses(intersection) : null;
 	}
-	
+
 	public static <V> void printIndented(@NonNull Appendable appendable, @NonNull Multimap<Integer,V> map, @NonNull String indentation, @NonNull String title) {
 		try {
-		List<Integer> keys = new ArrayList<Integer>(map.keySet());
-		Collections.sort(keys);
-		for (Integer key : keys) {
+			List<Integer> keys = new ArrayList<Integer>(map.keySet());
+			Collections.sort(keys);
+			for (Integer key : keys) {
 				appendable.append(indentation + title + " " + key + "\n");
-			for (V analysis : map.get(key)) {
-				appendable.append(indentation + "\t" + analysis.toString() + "\n");
+				for (V analysis : map.get(key)) {
+					appendable.append(indentation + "\t" + analysis.toString() + "\n");
+				}
 			}
-		}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -125,17 +125,17 @@ public class HashedAnalyses implements Iterable<AbstractAnalysis>
 		}
 		return null;
 	}
-	
+
 	public boolean isEmpty() {
 		return map.size() <= 0;
 	}
 
 	@Override
 	@SuppressWarnings("null")
-	public @NonNull Iterator<AbstractAnalysis> iterator() {
+	public @NonNull Iterator<@NonNull AbstractAnalysis> iterator() {
 		return map.values().iterator();
 	}
-	
+
 	public @Nullable AbstractAnalysis remove(@NonNull AbstractAnalysis thatAnalysis) {
 		int hash = thatAnalysis.getStructuralHashCode();
 		Collection<AbstractAnalysis> theseAnalyses = map.get(hash);

@@ -74,7 +74,7 @@ public class CGThrowExpImpl extends CGCallExpImpl implements CGThrowExp {
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return ThrowPlace.createThrowPlace(element2place, this);
 	}
 

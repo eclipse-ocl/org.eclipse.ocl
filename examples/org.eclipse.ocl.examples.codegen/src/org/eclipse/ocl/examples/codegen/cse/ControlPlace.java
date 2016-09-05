@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
@@ -34,7 +35,7 @@ import com.google.common.collect.Multimap;
  */
 public class ControlPlace extends LocalPlace
 {
-	public static @NonNull AbstractPlace createControlPlace(@NonNull Map<CGElement, AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
+	public static @NonNull AbstractPlace createControlPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
 		if (cgElement.isGlobal()) {
 			return ClassUtil.nonNullState(element2place.get(null));
 		}
@@ -48,7 +49,7 @@ public class ControlPlace extends LocalPlace
 		}
 	}
 
-	public static @NonNull ControlPlace getControlPlace(@NonNull Map<CGElement, AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
+	public static @NonNull ControlPlace getControlPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
 		AbstractPlace place = element2place.get(cgElement);
 		if (place instanceof ControlPlace) {
 			return (ControlPlace) place;
@@ -94,7 +95,7 @@ public class ControlPlace extends LocalPlace
 	public @NonNull HashedAnalyses getHashedAnalyses() {
 		return hashedAnalyses;
 	}
-	
+
 	@Override
 	public @NonNull LocalPlace getParentPlace() {
 		return parentPlace;
@@ -103,7 +104,7 @@ public class ControlPlace extends LocalPlace
 	public @NonNull SimpleAnalysis getSimpleAnalysis() {
 		SimpleAnalysis controlAnalysis2 = controlAnalysis;
 		if (controlAnalysis2 == null) {
-//			System.out.println(ClassUtil.debugSimpleName(placedElement));
+			//			System.out.println(ClassUtil.debugSimpleName(placedElement));
 			controlAnalysis2 = globalPlace.getSimpleAnalysis(placedElement);
 			assert controlAnalysis2 != null;
 			controlAnalysis = controlAnalysis2;
@@ -115,7 +116,7 @@ public class ControlPlace extends LocalPlace
 	public @NonNull StackPlace getStackPlace() {
 		return parentPlace.getStackPlace();
 	}
-	
+
 	@Override
 	public void printHierarchy(@NonNull Appendable appendable, @NonNull String indentation) {
 		TracingOption.println(appendable, indentation + this);
@@ -136,9 +137,9 @@ public class ControlPlace extends LocalPlace
 	@Override
 	public void prune() {
 		if (!hashedAnalyses.isEmpty()) {
-			List<AbstractAnalysis> removals = null;
-			@SuppressWarnings("null")@NonNull Multimap<Integer, CommonAnalysis> depth2commonAnalyses = HashMultimap.create();
-			for (AbstractAnalysis analysis : hashedAnalyses) {
+			List<@NonNull AbstractAnalysis> removals = null;
+			@SuppressWarnings("null")@NonNull Multimap<@NonNull Integer, @NonNull CommonAnalysis> depth2commonAnalyses = HashMultimap.create();
+			for (@NonNull AbstractAnalysis analysis : hashedAnalyses) {
 				if (analysis instanceof CommonAnalysis) {
 					CommonAnalysis commonAnalysis = (CommonAnalysis)analysis;
 					int depth = commonAnalysis.getMinDepth();
@@ -146,13 +147,13 @@ public class ControlPlace extends LocalPlace
 				}
 				else {
 					if (removals == null) {
-						removals = new ArrayList<AbstractAnalysis>();
+						removals = new ArrayList<>();
 					}
 					removals.add(analysis);
 				}
 			}
 			if (removals != null) {
-				for (@SuppressWarnings("null")@NonNull AbstractAnalysis removal : removals) {
+				for (@NonNull AbstractAnalysis removal : removals) {
 					hashedAnalyses.remove(removal);
 				}
 			}
@@ -161,8 +162,8 @@ public class ControlPlace extends LocalPlace
 
 	@Override
 	public void pullUp() {
-		List<AbstractAnalysis> removals = null;
-		for (@SuppressWarnings("null")@NonNull AbstractAnalysis analysis : hashedAnalyses) {
+		List<@NonNull AbstractAnalysis> removals = null;
+		for (@NonNull AbstractAnalysis analysis : hashedAnalyses) {
 			for (AbstractPlace localPlace = this; !((localPlace = localPlace.getParentPlace()) instanceof GlobalPlace); ) {
 				if (localPlace instanceof ControlPlace) {
 					ControlPlace controlPlace = (ControlPlace) localPlace;
@@ -171,7 +172,7 @@ public class ControlPlace extends LocalPlace
 					if (parentAnalysis != null) {
 						controlPlace.addAnalysis(analysis);
 						if (removals == null) {
-							removals = new ArrayList<AbstractAnalysis>();
+							removals = new ArrayList<>();
 						}
 						removals.add(analysis);
 						break;
@@ -180,7 +181,7 @@ public class ControlPlace extends LocalPlace
 			}
 		}
 		if (removals != null) {
-			for (@SuppressWarnings("null")@NonNull AbstractAnalysis removal : removals) {
+			for (@NonNull AbstractAnalysis removal : removals) {
 				hashedAnalyses.remove(removal);
 			}
 		}
@@ -194,12 +195,12 @@ public class ControlPlace extends LocalPlace
 		//	This is a pragmatic fudge to share "evaluator"
 		//
 		if (!hashedAnalyses.isEmpty()) {
-			List<AbstractAnalysis> pushUps = null;
+			List<@NonNull AbstractAnalysis> pushUps = null;
 			for (AbstractAnalysis analysis : hashedAnalyses) {
 				CGValuedElement primaryElement = analysis.getPrimaryElement();
 				if (primaryElement instanceof CGText) {
 					if (pushUps == null) {
-						pushUps = new ArrayList<AbstractAnalysis>();
+						pushUps = new ArrayList<>();
 					}
 					pushUps.add(analysis);
 				}
@@ -208,7 +209,7 @@ public class ControlPlace extends LocalPlace
 				LocalPlace parentPlace = getParentPlace();
 				if (parentPlace instanceof ControlPlace) {
 					ControlPlace controlParentPlace = (ControlPlace)parentPlace;
-					for (@SuppressWarnings("null")@NonNull AbstractAnalysis analysis : pushUps) {
+					for (@NonNull AbstractAnalysis analysis : pushUps) {
 						hashedAnalyses.remove(analysis);
 						controlParentPlace.addAnalysis(analysis);
 					}
@@ -222,28 +223,28 @@ public class ControlPlace extends LocalPlace
 		super.rewrite();
 		CodeGenAnalyzer analyzer = globalPlace.getAnalyzer();
 		if (!hashedAnalyses.isEmpty()) {
-			Map<CGValuedElement, AbstractAnalysis> locals = new HashMap<CGValuedElement, AbstractAnalysis>();
-			for (AbstractAnalysis analysis : hashedAnalyses) {
+			Map<@NonNull CGValuedElement, @NonNull AbstractAnalysis> locals = new HashMap<>();
+			for (@NonNull AbstractAnalysis analysis : hashedAnalyses) {
 				locals.put(analysis.getPrimaryElement(), analysis);
 			}
 			DependencyVisitor dependencyVisitor = analyzer.getCodeGenerator().createDependencyVisitor();
-			HashSet<CGValuedElement> allElements = new HashSet<CGValuedElement>(locals.keySet());
+			HashSet<@NonNull CGValuedElement> allElements = new HashSet<>(locals.keySet());
 			dependencyVisitor.visitAll(allElements);
-			List<CGValuedElement> sortedDependencies = dependencyVisitor.getSortedDependencies(false);
-			for (CGValuedElement primaryElement : sortedDependencies) {
+			Iterable<@NonNull CGValuedElement> sortedDependencies = dependencyVisitor.getSortedDependencies(false);
+			for (@NonNull CGValuedElement primaryElement : sortedDependencies) {
 				AbstractAnalysis abstractAnalysis = locals.get(primaryElement);
 				if (abstractAnalysis instanceof CommonAnalysis) {
 					((CommonAnalysis)abstractAnalysis).rewrite(analyzer, placedElement);
 				}
 			}
- 		}
+		}
 	}
 
 	@Override
 	public String toString() {
 		SimpleAnalysis controlAnalysis2 = controlAnalysis;
 		if (controlAnalysis2 == null) {
-//			System.out.println(ClassUtil.debugSimpleName(placedElement));
+			//			System.out.println(ClassUtil.debugSimpleName(placedElement));
 			controlAnalysis2 = globalPlace.getSimpleAnalysis(placedElement);
 		}
 		return getClass().getSimpleName() + ": " + String.valueOf(controlAnalysis2);

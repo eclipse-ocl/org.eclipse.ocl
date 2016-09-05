@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -26,13 +26,13 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -74,17 +74,17 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * Traverses the AST adding any internode dependencies to ensure correct declaration ordering.
  */
 public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, CodeGenAnalyzer>
-{	
+{
 	private static final int TOUCHED = -1;
 	protected static final int NOT_AVAILABLE = -2;
-		
-	private @NonNull Map<CGValuedElement, Set<CGValuedElement>> directDependencies = new HashMap<CGValuedElement, Set<CGValuedElement>>();
+
+	private @NonNull Map<@NonNull CGValuedElement, @NonNull Set<@NonNull CGValuedElement>> directDependencies = new HashMap<>();
 	protected @NonNull Id2DependencyVisitor id2DependencyVisitor = new Id2DependencyVisitor();
 	protected final @NonNull GlobalPlace globalPlace;
 
 	public DependencyVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull GlobalPlace globalPlace) {
-        super(analyzer);
-        this.globalPlace = globalPlace;
+		super(analyzer);
+		this.globalPlace = globalPlace;
 	}
 
 	protected void addDependency(@Nullable CGValuedElement cgElement, @Nullable CGValuedElement dependsOn) {
@@ -93,21 +93,21 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 		if ((cgElement != null) && (cgElement != dependsOn)) {
 			if (!cgElement.isGlobal() || (dependsOn == null) || dependsOn.isGlobal()) {
 				CGValuedElement cgPrimaryElement = getPrimaryElement(cgElement);
-				Set<CGValuedElement> dependencies = directDependencies.get(cgPrimaryElement);
-				List<CGValuedElement> dependsOns = cgPrimaryElement.getDependsOn();
+				Set<@NonNull CGValuedElement> dependencies = directDependencies.get(cgPrimaryElement);
+				List<@NonNull CGValuedElement> dependsOns = ClassUtil.nullFree(cgPrimaryElement.getDependsOn());
 				if (dependencies == null) {
-					dependencies = new HashSet<CGValuedElement>();
+					dependencies = new HashSet<>();
 					directDependencies.put(cgPrimaryElement, dependencies);
-					for (CGValuedElement cgDependent : new ArrayList<CGValuedElement>(dependsOns)) {
+					for (@NonNull CGValuedElement cgDependent : new ArrayList<>(dependsOns)) {
 						addDependency(cgPrimaryElement, cgDependent);
 					}
-					for (EStructuralFeature eFeature : cgPrimaryElement.eClass().getEAllStructuralFeatures()) {
+					for (@NonNull EStructuralFeature eFeature : ClassUtil.nullFree(cgPrimaryElement.eClass().getEAllStructuralFeatures())) {
 						if (eFeature instanceof EReference) {
 							EReference eReference = (EReference)eFeature;
 							if (!eReference.isDerived() && !eReference.isTransient() && !eReference.isVolatile()) {
 								Object childOrChildren = cgPrimaryElement.eGet(eReference);
 								if (eReference.isMany()) {
-									for (Object child : new ArrayList<Object>((List<?>)childOrChildren)) {
+									for (@NonNull Object child : new ArrayList<>((List<@NonNull ?>)childOrChildren)) {
 										if (child instanceof CGValuedElement) {
 											addDependency(cgPrimaryElement, (CGValuedElement)child);
 										}
@@ -148,10 +148,14 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 	}
 
 	private int computeDepths(@NonNull CGValuedElement cgElement, @NonNull Map<CGValuedElement, Integer> dependencyDepths, boolean isGlobal) {
-		if (isGlobal) assert cgElement.isGlobal();
+		if (isGlobal) {
+			assert cgElement.isGlobal();
+		}
 		@NonNull CGValuedElement cgPrimaryElement = getPrimaryElement(cgElement);
-		if (isGlobal) assert cgPrimaryElement.isGlobal();
-		Set<CGValuedElement> dependencies = directDependencies.get(cgPrimaryElement);
+		if (isGlobal) {
+			assert cgPrimaryElement.isGlobal();
+		}
+		Set<@NonNull CGValuedElement> dependencies = directDependencies.get(cgPrimaryElement);
 		if (dependencies == null) {
 			int depth = getRootDepth(cgPrimaryElement);
 			dependencyDepths.put(cgPrimaryElement, depth);
@@ -166,7 +170,7 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 		}
 		dependencyDepths.put(cgPrimaryElement, TOUCHED);			// Mark already here
 		int maxDepth = 0;
-		for (@SuppressWarnings("null")@NonNull CGValuedElement dependency : dependencies) {
+		for (@NonNull CGValuedElement dependency : dependencies) {
 			int depth = computeDepths(dependency, dependencyDepths, isGlobal);
 			if (depth > maxDepth) {
 				maxDepth = depth;
@@ -176,7 +180,7 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 		dependencyDepths.put(cgPrimaryElement, myDepth);
 		return myDepth;
 	}
-	
+
 	public @NonNull CGValuedElement getPrimaryElement(@NonNull CGValuedElement cgElement) {
 		SimpleAnalysis simpleAnalysis = globalPlace.getSimpleAnalysis(cgElement);
 		if (simpleAnalysis != null) {
@@ -184,7 +188,7 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 		}
 		return cgElement;
 	}
-	
+
 	public int getRootDepth(@NonNull CGValuedElement cgElement) {
 		if (cgElement instanceof CGIterator) {
 			return NOT_AVAILABLE;
@@ -192,22 +196,24 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 		return 0;
 	}
 
-	public @NonNull List<CGValuedElement> getSortedDependencies(boolean isGlobal) {
-		final Map<CGValuedElement, @NonNull Integer> dependencyDepths = new HashMap<CGValuedElement, @NonNull Integer>();
-		for (@SuppressWarnings("null")@NonNull CGValuedElement cgElement : directDependencies.keySet()) {
+	public @NonNull List<@NonNull CGValuedElement> getSortedDependencies(boolean isGlobal) {
+		final Map<@NonNull CGValuedElement, @NonNull Integer> dependencyDepths = new HashMap<>();
+		for (@NonNull CGValuedElement cgElement : directDependencies.keySet()) {
 			computeDepths(cgElement, dependencyDepths, isGlobal);
 		}
-		List<CGValuedElement> sortedList = new ArrayList<CGValuedElement>();
-		for (CGValuedElement cgElement : dependencyDepths.keySet()) {
+		List<@NonNull CGValuedElement> sortedList = new ArrayList<>();
+		for (@NonNull CGValuedElement cgElement : dependencyDepths.keySet()) {
 			if (!cgElement.isInlined() && (cgElement.getThisValue() == cgElement)) {
-				if (isGlobal) assert cgElement.isGlobal();
+				if (isGlobal) {
+					assert cgElement.isGlobal();
+				}
 				sortedList.add(cgElement);
 			}
 		}
-		Collections.sort(sortedList, new Comparator<CGValuedElement>()
+		Collections.sort(sortedList, new Comparator<@NonNull CGValuedElement>()
 		{
 			@Override
-			public int compare(CGValuedElement o1, CGValuedElement o2) {
+			public int compare(@NonNull CGValuedElement o1, @NonNull CGValuedElement o2) {
 				Integer d1 = dependencyDepths.get(o1);
 				Integer d2 = dependencyDepths.get(o2);
 				assert (d1 != null) && (d2 != null);
@@ -245,12 +251,10 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 		}
 	}
 
-	public void visitAll(@Nullable Iterable<? extends CGNamedElement> cgElements) {
+	public void visitAll(@Nullable Iterable<@NonNull ? extends CGNamedElement> cgElements) {
 		if (cgElements != null) {
-			for (CGNamedElement cgElement : cgElements) {
-				if (cgElement != null) {
-					visit(cgElement);
-				}
+			for (@NonNull CGNamedElement cgElement : cgElements) {
+				visit(cgElement);
 			}
 		}
 	}
@@ -320,8 +324,8 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 
 	@Override
 	public @Nullable Object visitCGShadowPart(@NonNull CGShadowPart cgShadowPart) {
-//		CGTupleExp cgTupleExp = cgShadowPart.getTupleExp();
-//		addDependency(cgTupleExp, cgTuplePart);
+		//		CGTupleExp cgTupleExp = cgShadowPart.getTupleExp();
+		//		addDependency(cgTupleExp, cgTuplePart);
 		addDependency(cgShadowPart, cgShadowPart.getInit());
 		return super.visitCGShadowPart(cgShadowPart);
 	}
@@ -357,7 +361,7 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 			addElementIdDependency(id, id.getParent());
 			return null;
 		}
-		
+
 		@Override
 		public @Nullable Object visitCollectionTypeId(final @NonNull CollectionTypeId id) {
 			if (id instanceof SpecializedId) {
@@ -369,36 +373,36 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 			}
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitDataTypeId(final @NonNull DataTypeId id) {
 			addElementIdDependency(id, id.getParent());
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitEnumerationId(final @NonNull EnumerationId id) {
 			addElementIdDependency(id, id.getParent());
 			return null;
 		}
-		
+
 		@Override
 		public @Nullable Object visitEnumerationLiteralId(final @NonNull EnumerationLiteralId id) {
 			addElementIdDependency(id, id.getParentId());
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitInvalidId(@NonNull OclInvalidTypeId id) {
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitLambdaTypeId(@NonNull LambdaTypeId id) {
 			// TODO Auto-generated method stub
 			return visiting(id);
 		}
-		
+
 		@Override
 		public @Nullable Object visitMapTypeId(final @NonNull MapTypeId id) {
 			if (id instanceof SpecializedId) {
@@ -410,23 +414,23 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 			}
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitNestedPackageId(final @NonNull NestedPackageId id) {
 			addElementIdDependency(id, id.getParent());
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitNsURIPackageId(final @NonNull NsURIPackageId id) {
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitNullId(@NonNull OclVoidTypeId id) {
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitOperationId(final @NonNull OperationId id) {
 			addElementIdDependency(id, id.getParent());
@@ -435,40 +439,40 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 			}
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitPrimitiveTypeId(@NonNull PrimitiveTypeId id) {
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitPropertyId(final @NonNull PropertyId id) {
 			addElementIdDependency(id, id.getParent());
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitRootPackageId(final @NonNull RootPackageId id) {
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitTemplateBinding(@NonNull TemplateBinding id) {
 			// TODO Auto-generated method stub
 			return visiting(id);
 		}
-	
+
 		@Override
 		public @Nullable Object visitTemplateParameterId(@NonNull TemplateParameterId id) {
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitTemplateableTypeId(@NonNull TemplateableTypeId id) {
 			// TODO Auto-generated method stub
 			return visiting(id);
 		}
-	
+
 		@Override
 		public @Nullable Object visitTuplePartId(final @NonNull TuplePartId id) {
 			addElementIdDependency(id, id.getTypeId());
@@ -482,13 +486,13 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 			}
 			return null;
 		}
-	
+
 		@Override
 		public @Nullable Object visitUnspecifiedId(@NonNull UnspecifiedId id) {
 			// TODO Auto-generated method stub
 			return visiting(id);
 		}
-		
+
 		public @Nullable Object visiting(@NonNull ElementId id) {
 			throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + id.getClass().getName());
 		}

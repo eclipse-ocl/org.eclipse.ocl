@@ -83,7 +83,7 @@ public class CGCatchExpImpl extends CGCallExpImpl implements CGCatchExp {
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<CGElement,AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return CatchPlace.createCatchPlace(element2place, this);
 	}
 

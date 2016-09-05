@@ -117,7 +117,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	protected @NonNull String generate(@NonNull ExpressionInOCL expInOcl, @NonNull String packageName, @NonNull String className) {
 		CGPackage cgPackage = createCGPackage(expInOcl, packageName, className);
 		optimize(cgPackage);
-		List<CGValuedElement> sortedGlobals = prepareGlobals();
+		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 		JUnitCG2JavaClassVisitor cg2JavaClassVisitor = new JUnitCG2JavaClassVisitor(this, expInOcl, sortedGlobals);
 		cg2JavaClassVisitor.safeVisit(cgPackage);
 		Set<String> allImports = cg2JavaClassVisitor.getAllImports();

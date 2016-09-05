@@ -4,13 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.oclinjunit;
 
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -27,10 +26,10 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeGenerator>
 {
 	protected final @NonNull ExpressionInOCL expInOcl;
-	protected final @Nullable List<CGValuedElement> sortedGlobals;
-	
+	protected final @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals;
+
 	public JUnitCG2JavaClassVisitor(@NonNull JUnitCodeGenerator codeGenerator,
-			@NonNull ExpressionInOCL expInOcl, @Nullable List<CGValuedElement> sortedGlobals) {
+			@NonNull ExpressionInOCL expInOcl, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
 		super(codeGenerator);
 		this.expInOcl = expInOcl;
 		this.sortedGlobals = sortedGlobals;
