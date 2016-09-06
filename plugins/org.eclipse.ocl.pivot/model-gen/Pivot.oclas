@@ -691,6 +691,7 @@
       <ownedProperties xmi:id="p.pivot.Operation.bodyExpression" isComposite="true" isRequired="false" name="bodyExpression" opposite="#p.pivot.LanguageExpression.Operation"
           type="#T.pivot.LanguageExpression"/>
       <ownedProperties xmi:id="p.pivot.Operation.isInvalidating" defaultValueString="false" name="isInvalidating" type="#Boolean"/>
+      <ownedProperties xmi:id="p.pivot.Operation.isTransient" defaultValueString="false" isRequired="false" name="isTransient" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.Operation.isTypeof" defaultValueString="false" name="isTypeof" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.Operation.isValidating" defaultValueString="false" name="isValidating" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.Operation.ownedParameters" isComposite="true" name="ownedParameters" opposite="#p.pivot.Parameter.owningOperation"

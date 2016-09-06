@@ -41,14 +41,11 @@ import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
-import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * <!-- begin-user-doc -->
@@ -64,8 +61,8 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * @generated
  */
 public class PropertyCallExpImpl
-		extends NavigationCallExpImpl
-		implements PropertyCallExp {
+extends NavigationCallExpImpl
+implements PropertyCallExp {
 
 	/**
 	 * The cached value of the '{@link #getReferredProperty() <em>Referred Property</em>}' reference.
@@ -436,12 +433,12 @@ public class PropertyCallExpImpl
 		Property referredProperty = getReferredProperty();
 		org.eclipse.ocl.pivot.Class referencedType = referredProperty.getOwningClass();
 		if (TemplateSpecialisation.needsSpecialisation(referencedType)) {
-		    Executor executor = PivotUtilInternal.getExecutor(this);
+			Executor executor = PivotUtilInternal.getExecutor(this);
 			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getCompleteEnvironment());
 			Type resultType = getType();
-//			if (resultType instanceof DomainMetaclass) {
-//				resultType = ((DomainMetaclass)resultType).getInstanceType();
-//			}
+			//			if (resultType instanceof DomainMetaclass) {
+			//				resultType = ((DomainMetaclass)resultType).getInstanceType();
+			//			}
 			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
 			if (referencedType != null) {
 				return templateSpecialization.getSpecialisation(referencedType);
@@ -451,8 +448,8 @@ public class PropertyCallExpImpl
 			return referencedType;
 		}
 		else {
-		    Executor executor = PivotUtilInternal.getExecutor(this);
-		    return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
+			Executor executor = PivotUtilInternal.getExecutor(this);
+			return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
 		}
 	}
 
@@ -468,7 +465,7 @@ public class PropertyCallExpImpl
 		Type referencedType = referredProperty.getType();
 		Type specializedType = referencedType;
 		if ((referencedType != null) && TemplateSpecialisation.needsSpecialisation(referencedType)) {
-		    Executor executor = PivotUtilInternal.getExecutor(this);
+			Executor executor = PivotUtilInternal.getExecutor(this);
 			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getCompleteEnvironment());
 			Type resultType = getType();
 			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
@@ -478,8 +475,8 @@ public class PropertyCallExpImpl
 			return (org.eclipse.ocl.pivot.Class)specializedType;
 		}
 		else {
-		    Executor executor = PivotUtilInternal.getExecutor(this);
-		    return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
+			Executor executor = PivotUtilInternal.getExecutor(this);
+			return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
 		}
 	}
 
@@ -492,7 +489,7 @@ public class PropertyCallExpImpl
 	public boolean validateNonStaticSourceTypeIsConformant(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateNonStaticSourceTypeIsConformant:
 		 *   let
 		 *     severity : Integer[1] = 'PropertyCallExp::NonStaticSourceTypeIsConformant'.getSeverity()
@@ -512,80 +509,80 @@ public class PropertyCallExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_2;
 		if (le) {
-		    symbol_2 = ValueUtil.TRUE_VALUE;
+			symbol_2 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @Nullable Object CAUGHT_not;
-		        try {
-		            /*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
-		            try {
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Property referredProperty = this.getReferredProperty();
-		                /*@Caught*/ @Nullable Object CAUGHT_referredProperty;
-		                try {
-		                    CAUGHT_referredProperty = referredProperty;
-		                }
-		                catch (Exception e) {
-		                    CAUGHT_referredProperty = ValueUtil.createInvalidValue(e);
-		                }
-		                final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_referredProperty == null;
-		                /*@Thrown*/ java.lang.@Nullable Boolean safe_isStatic_source;
-		                if (symbol_0 == Boolean.TRUE) {
-		                    safe_isStatic_source = null;
-		                }
-		                else {
-		                    assert referredProperty != null;
-		                    final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
-		                    safe_isStatic_source = isStatic;
-		                }
-		                CAUGHT_safe_isStatic_source = safe_isStatic_source;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_safe_isStatic_source = ValueUtil.createInvalidValue(e);
-		            }
-		            final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isStatic_source);
-		            CAUGHT_not = not;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_not = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @NonNull Object CAUGHT_conformsTo;
-		        try {
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-		            /*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-		            try {
-		                CAUGHT_ownedSource = ownedSource;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-		            }
-		            final /*@NonInvalid*/ @NonNull Object symbol_1 = CAUGHT_ownedSource == null;
-		            /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
-		            if (symbol_1 == Boolean.TRUE) {
-		                safe_type_source = null;
-		            }
-		            else {
-		                assert ownedSource != null;
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
-		                safe_type_source = type;
-		            }
-		            @SuppressWarnings("null")
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
-		            final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
-		            CAUGHT_conformsTo = conformsTo;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_not, CAUGHT_conformsTo);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_2 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @Nullable Object CAUGHT_not;
+				try {
+					/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
+					try {
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Property referredProperty = this.getReferredProperty();
+						/*@Caught*/ @Nullable Object CAUGHT_referredProperty;
+						try {
+							CAUGHT_referredProperty = referredProperty;
+						}
+						catch (Exception e) {
+							CAUGHT_referredProperty = ValueUtil.createInvalidValue(e);
+						}
+						final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_referredProperty == null;
+						/*@Thrown*/ java.lang.@Nullable Boolean safe_isStatic_source;
+						if (symbol_0 == Boolean.TRUE) {
+							safe_isStatic_source = null;
+						}
+						else {
+							assert referredProperty != null;
+							final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
+							safe_isStatic_source = isStatic;
+						}
+						CAUGHT_safe_isStatic_source = safe_isStatic_source;
+					}
+					catch (Exception e) {
+						CAUGHT_safe_isStatic_source = ValueUtil.createInvalidValue(e);
+					}
+					final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isStatic_source);
+					CAUGHT_not = not;
+				}
+				catch (Exception e) {
+					CAUGHT_not = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
+				try {
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+					/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
+					try {
+						CAUGHT_ownedSource = ownedSource;
+					}
+					catch (Exception e) {
+						CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
+					}
+					final /*@NonInvalid*/ @NonNull Object symbol_1 = CAUGHT_ownedSource == null;
+					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
+					if (symbol_1 == Boolean.TRUE) {
+						safe_type_source = null;
+					}
+					else {
+						assert ownedSource != null;
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
+						safe_type_source = type;
+					}
+					@SuppressWarnings("null")
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
+					final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
+					CAUGHT_conformsTo = conformsTo;
+				}
+				catch (Exception e) {
+					CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_not, CAUGHT_conformsTo);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_2 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_2;
 	}
@@ -599,7 +596,7 @@ public class PropertyCallExpImpl
 	public boolean validateSafeSourceCanBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSafeSourceCanBeNull:
 		 *   let
 		 *     severity : Integer[1] = 'PropertyCallExp::SafeSourceCanBeNull'.getSeverity()
@@ -617,77 +614,77 @@ public class PropertyCallExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_1;
 		if (le) {
-		    symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @Nullable Object CAUGHT_and;
-		        try {
-		            /*@Caught*/ @NonNull Object CAUGHT_ne;
-		            try {
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-		                final /*@Thrown*/ boolean ne = ownedSource != null;
-		                CAUGHT_ne = ne;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_ne = ValueUtil.createInvalidValue(e);
-		            }
-		            /*@Caught*/ @Nullable Object CAUGHT_isSafe;
-		            try {
-		                final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-		                CAUGHT_isSafe = isSafe;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-		            }
-		            final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, CAUGHT_isSafe);
-		            CAUGHT_and = and;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_and = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @Nullable Object CAUGHT_not;
-		        try {
-		            /*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
-		            try {
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-		                /*@Caught*/ @Nullable Object CAUGHT_ownedSource_0;
-		                try {
-		                    CAUGHT_ownedSource_0 = ownedSource_0;
-		                }
-		                catch (Exception e) {
-		                    CAUGHT_ownedSource_0 = ValueUtil.createInvalidValue(e);
-		                }
-		                final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource_0 == null;
-		                /*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
-		                if (symbol_0 == Boolean.TRUE) {
-		                    safe_isRequired_source = null;
-		                }
-		                else {
-		                    assert ownedSource_0 != null;
-		                    final /*@Thrown*/ boolean isRequired = ownedSource_0.isIsRequired();
-		                    safe_isRequired_source = isRequired;
-		                }
-		                CAUGHT_safe_isRequired_source = safe_isRequired_source;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_safe_isRequired_source = ValueUtil.createInvalidValue(e);
-		            }
-		            final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isRequired_source);
-		            CAUGHT_not = not;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_not = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_not);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_1 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @Nullable Object CAUGHT_and;
+				try {
+					/*@Caught*/ @NonNull Object CAUGHT_ne;
+					try {
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+						final /*@Thrown*/ boolean ne = ownedSource != null;
+						CAUGHT_ne = ne;
+					}
+					catch (Exception e) {
+						CAUGHT_ne = ValueUtil.createInvalidValue(e);
+					}
+					/*@Caught*/ @Nullable Object CAUGHT_isSafe;
+					try {
+						final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+						CAUGHT_isSafe = isSafe;
+					}
+					catch (Exception e) {
+						CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
+					}
+					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, CAUGHT_isSafe);
+					CAUGHT_and = and;
+				}
+				catch (Exception e) {
+					CAUGHT_and = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @Nullable Object CAUGHT_not;
+				try {
+					/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
+					try {
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+						/*@Caught*/ @Nullable Object CAUGHT_ownedSource_0;
+						try {
+							CAUGHT_ownedSource_0 = ownedSource_0;
+						}
+						catch (Exception e) {
+							CAUGHT_ownedSource_0 = ValueUtil.createInvalidValue(e);
+						}
+						final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource_0 == null;
+						/*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
+						if (symbol_0 == Boolean.TRUE) {
+							safe_isRequired_source = null;
+						}
+						else {
+							assert ownedSource_0 != null;
+							final /*@Thrown*/ boolean isRequired = ownedSource_0.isIsRequired();
+							safe_isRequired_source = isRequired;
+						}
+						CAUGHT_safe_isRequired_source = safe_isRequired_source;
+					}
+					catch (Exception e) {
+						CAUGHT_safe_isRequired_source = ValueUtil.createInvalidValue(e);
+					}
+					final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isRequired_source);
+					CAUGHT_not = not;
+				}
+				catch (Exception e) {
+					CAUGHT_not = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_not);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
 	}
@@ -701,7 +698,7 @@ public class PropertyCallExpImpl
 	public boolean validateUnsafeSourceCanNotBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateUnsafeSourceCanNotBeNull:
 		 *   let
 		 *     severity : Integer[1] = 'PropertyCallExp::UnsafeSourceCanNotBeNull'.getSeverity()
@@ -719,77 +716,77 @@ public class PropertyCallExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_1;
 		if (le) {
-		    symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @Nullable Object CAUGHT_and;
-		        try {
-		            /*@Caught*/ @NonNull Object CAUGHT_ne;
-		            try {
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-		                final /*@Thrown*/ boolean ne = ownedSource != null;
-		                CAUGHT_ne = ne;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_ne = ValueUtil.createInvalidValue(e);
-		            }
-		            /*@Caught*/ @Nullable Object CAUGHT_not;
-		            try {
-		                /*@Caught*/ @Nullable Object CAUGHT_isSafe;
-		                try {
-		                    final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-		                    CAUGHT_isSafe = isSafe;
-		                }
-		                catch (Exception e) {
-		                    CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-		                }
-		                final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isSafe);
-		                CAUGHT_not = not;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_not = ValueUtil.createInvalidValue(e);
-		            }
-		            final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, CAUGHT_not);
-		            CAUGHT_and = and;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_and = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
-		        try {
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-		            /*@Caught*/ @Nullable Object CAUGHT_ownedSource_0;
-		            try {
-		                CAUGHT_ownedSource_0 = ownedSource_0;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_ownedSource_0 = ValueUtil.createInvalidValue(e);
-		            }
-		            final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource_0 == null;
-		            /*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
-		            if (symbol_0 == Boolean.TRUE) {
-		                safe_isRequired_source = null;
-		            }
-		            else {
-		                assert ownedSource_0 != null;
-		                final /*@Thrown*/ boolean isRequired = ownedSource_0.isIsRequired();
-		                safe_isRequired_source = isRequired;
-		            }
-		            CAUGHT_safe_isRequired_source = safe_isRequired_source;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_safe_isRequired_source = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_safe_isRequired_source);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_1 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @Nullable Object CAUGHT_and;
+				try {
+					/*@Caught*/ @NonNull Object CAUGHT_ne;
+					try {
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+						final /*@Thrown*/ boolean ne = ownedSource != null;
+						CAUGHT_ne = ne;
+					}
+					catch (Exception e) {
+						CAUGHT_ne = ValueUtil.createInvalidValue(e);
+					}
+					/*@Caught*/ @Nullable Object CAUGHT_not;
+					try {
+						/*@Caught*/ @Nullable Object CAUGHT_isSafe;
+						try {
+							final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+							CAUGHT_isSafe = isSafe;
+						}
+						catch (Exception e) {
+							CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
+						}
+						final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isSafe);
+						CAUGHT_not = not;
+					}
+					catch (Exception e) {
+						CAUGHT_not = ValueUtil.createInvalidValue(e);
+					}
+					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, CAUGHT_not);
+					CAUGHT_and = and;
+				}
+				catch (Exception e) {
+					CAUGHT_and = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
+				try {
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+					/*@Caught*/ @Nullable Object CAUGHT_ownedSource_0;
+					try {
+						CAUGHT_ownedSource_0 = ownedSource_0;
+					}
+					catch (Exception e) {
+						CAUGHT_ownedSource_0 = ValueUtil.createInvalidValue(e);
+					}
+					final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource_0 == null;
+					/*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
+					if (symbol_0 == Boolean.TRUE) {
+						safe_isRequired_source = null;
+					}
+					else {
+						assert ownedSource_0 != null;
+						final /*@Thrown*/ boolean isRequired = ownedSource_0.isIsRequired();
+						safe_isRequired_source = isRequired;
+					}
+					CAUGHT_safe_isRequired_source = safe_isRequired_source;
+				}
+				catch (Exception e) {
+					CAUGHT_safe_isRequired_source = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_safe_isRequired_source);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
 	}
@@ -803,7 +800,7 @@ public class PropertyCallExpImpl
 	public boolean validateCompatibleResultType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateCompatibleResultType:
 		 *   let
 		 *     severity : Integer[1] = 'PropertyCallExp::CompatibleResultType'.getSeverity()
@@ -821,22 +818,22 @@ public class PropertyCallExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @NonNull Object CAUGHT_status;
-		    try {
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-		        @SuppressWarnings("null")
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyType = this.getSpecializedReferredPropertyType();
-		        final /*@Thrown*/ boolean status = (type != null) ? (type.getTypeId() == getSpecializedReferredPropertyType.getTypeId()) : false;
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_CompatibleResultType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				@SuppressWarnings("null")
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyType = this.getSpecializedReferredPropertyType();
+				final /*@Thrown*/ boolean status = (type != null) ? (type.getTypeId() == getSpecializedReferredPropertyType.getTypeId()) : false;
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_CompatibleResultType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}

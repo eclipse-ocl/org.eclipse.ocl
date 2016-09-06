@@ -36,7 +36,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @generated
  */
 public interface PivotPackage
-		extends EPackage
+extends EPackage
 {
 
 	/**
@@ -11480,13 +11480,23 @@ public interface PivotPackage
 	int OPERATION__IS_INVALIDATING = FEATURE_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Is Transient</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION__IS_TRANSIENT = FEATURE_FEATURE_COUNT + 6;
+
+	/**
 	 * The feature id for the '<em><b>Is Typeof</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION__IS_TYPEOF = FEATURE_FEATURE_COUNT + 6;
+	int OPERATION__IS_TYPEOF = FEATURE_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Is Validating</b></em>' attribute.
@@ -11495,7 +11505,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION__IS_VALIDATING = FEATURE_FEATURE_COUNT + 7;
+	int OPERATION__IS_VALIDATING = FEATURE_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Owned Parameters</b></em>' containment reference list.
@@ -11504,7 +11514,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION__OWNED_PARAMETERS = FEATURE_FEATURE_COUNT + 8;
+	int OPERATION__OWNED_PARAMETERS = FEATURE_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Owned Postconditions</b></em>' containment reference list.
@@ -11513,7 +11523,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION__OWNED_POSTCONDITIONS = FEATURE_FEATURE_COUNT + 9;
+	int OPERATION__OWNED_POSTCONDITIONS = FEATURE_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Owned Preconditions</b></em>' containment reference list.
@@ -11522,7 +11532,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION__OWNED_PRECONDITIONS = FEATURE_FEATURE_COUNT + 10;
+	int OPERATION__OWNED_PRECONDITIONS = FEATURE_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Owning Class</b></em>' container reference.
@@ -11531,7 +11541,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION__OWNING_CLASS = FEATURE_FEATURE_COUNT + 11;
+	int OPERATION__OWNING_CLASS = FEATURE_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Precedence</b></em>' reference.
@@ -11540,7 +11550,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION__PRECEDENCE = FEATURE_FEATURE_COUNT + 12;
+	int OPERATION__PRECEDENCE = FEATURE_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Raised Exceptions</b></em>' reference list.
@@ -11549,7 +11559,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION__RAISED_EXCEPTIONS = FEATURE_FEATURE_COUNT + 13;
+	int OPERATION__RAISED_EXCEPTIONS = FEATURE_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Redefined Operations</b></em>' reference list.
@@ -11558,7 +11568,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION__REDEFINED_OPERATIONS = FEATURE_FEATURE_COUNT + 14;
+	int OPERATION__REDEFINED_OPERATIONS = FEATURE_FEATURE_COUNT + 15;
 
 	/**
 	 * The number of structural features of the '<em>Operation</em>' class.
@@ -11567,7 +11577,7 @@ public interface PivotPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OPERATION_FEATURE_COUNT = FEATURE_FEATURE_COUNT + 15;
+	int OPERATION_FEATURE_COUNT = FEATURE_FEATURE_COUNT + 16;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -11804,8 +11814,19 @@ public interface PivotPackage
 	int ITERATION__IS_INVALIDATING = OPERATION__IS_INVALIDATING;
 
 	/**
+	 * The feature id for the '<em><b>Is Transient</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__IS_TRANSIENT = OPERATION__IS_TRANSIENT;
+
+	/**
 	 * The feature id for the '<em><b>Is Typeof</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 * @since 1.3
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
@@ -27129,6 +27150,18 @@ public interface PivotPackage
 	EAttribute getOperation_IsInvalidating();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.Operation#isIsTransient <em>Is Transient</em>}'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Transient</em>'.
+	 * @see org.eclipse.ocl.pivot.Operation#isIsTransient()
+	 * @see #getOperation()
+	 * @generated
+	 */
+	EAttribute getOperation_IsTransient();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.Operation#isIsTypeof <em>Is Typeof</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -31543,6 +31576,15 @@ public interface PivotPackage
 		 * @generated
 		 */
 		EAttribute OPERATION__IS_INVALIDATING = eINSTANCE.getOperation_IsInvalidating();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Transient</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * @since 1.3
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute OPERATION__IS_TRANSIENT = eINSTANCE.getOperation_IsTransient();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Typeof</b></em>' attribute feature.

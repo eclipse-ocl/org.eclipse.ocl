@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -328,7 +328,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 		return eDynamicIsSet(featureID);
 	}
-	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -380,17 +380,17 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	/**
-	 * Map from each partial Class to the CompleteClass that supervises its merge. CompleteClass are created lazily. 
+	 * Map from each partial Class to the CompleteClass that supervises its merge. CompleteClass are created lazily.
 	 */
 	private /*final @NonNull*/ CompleteEnvironmentInternal completeEnvironment;
 
 	/**
-	 * Map from complete to/from package URI. 
+	 * Map from complete to/from package URI.
 	 */
 	private final @NonNull CompleteURIs completeURIs = new CompleteURIs(this);
-	
+
 	protected /*final @NonNull*/ EnvironmentFactoryInternal environmentFactory;
-	
+
 	private Orphanage orphanage = null;
 
 	@Override
@@ -401,7 +401,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * Partial models such as the OCL Standard Library have their own distinct package URI. These partial
 	 * models are merged by mapping the package URI to a complete URI. DomainConstants.METAMODEL_NAME is the
-	 * complete URI for all contributions merged as the overall OCL metamodel. 
+	 * complete URI for all contributions merged as the overall OCL metamodel.
 	 */
 	@Override
 	public void addPackageURI2completeURI(@NonNull String packageURI, @NonNull String newCompleteURI) {
@@ -428,12 +428,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		ownedCompletePackages.didAddPackage(pivotPackage);
 	}
-	
+
 	@Override
 	public void didAddPartialModel(@NonNull Model partialModel) {
 		completeURIs.didAddPartialModel(partialModel);
 	}
-	
+
 	@Override
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		completeEnvironment.didRemoveClass(pivotType);
@@ -451,7 +451,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public void didRemoveNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		ownedCompletePackages.didRemovePackage(pivotPackage);
 	}
-	
+
 	@Override
 	public void didRemovePartialModel(@NonNull Model partialModel) {
 		completeURIs.didRemovePartialModel(partialModel);
@@ -497,7 +497,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull CollectionType getCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return completeEnvironment.getCollectionType(completeClass, TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper));
 	}
-	
+
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
 		return completeEnvironment.getCompleteClass(pivotType);
@@ -528,7 +528,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull CompleteURIs getCompleteURIs() {
 		return completeURIs;
 	}
-	
+
 	@Override
 	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
 		return completeEnvironment.getLambdaType(typeName, contextType, parameterTypes, resultType, null);
@@ -653,7 +653,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		assert partialModels != null;
 		return partialModels;
 	}
-	
+
 	@Override
 	public @NonNull PrimitiveCompletePackageImpl getPrimitiveCompletePackage()
 	{
@@ -688,7 +688,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		completePackage = getOwnedCompletePackage(completeURIorName);
 		return completePackage != null ? completePackage.getPrimaryPackage() : null;
 	}
-	
+
 	@Override
 	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions) {
 		return completeEnvironment.getSpecializedType(type, substitutions);
@@ -698,7 +698,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull StandardLibraryInternal getStandardLibrary() {
 		return completeEnvironment.getOwnedStandardLibrary();
 	}
-	
+
 	@Override
 	public @NonNull TupleTypeManager getTupleManager() {
 		return completeEnvironment.getTupleManager();
@@ -719,7 +719,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return this;
 	}
 
-/*	public void removedType(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
+	/*	public void removedType(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		CompleteClass completeClass = class2completeClass.get(pivotType);
 		if (completeClass != null) {
 //			completeClass.dispose();

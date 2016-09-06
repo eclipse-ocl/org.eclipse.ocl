@@ -20,131 +20,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.ocl.pivot.Annotation;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.AssociationClass;
-import org.eclipse.ocl.pivot.AssociationClassCallExp;
-import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.Behavior;
-import org.eclipse.ocl.pivot.BooleanLiteralExp;
-import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CallOperationAction;
-import org.eclipse.ocl.pivot.CollectionItem;
-import org.eclipse.ocl.pivot.CollectionKind;
-import org.eclipse.ocl.pivot.CollectionLiteralExp;
-import org.eclipse.ocl.pivot.CollectionLiteralPart;
-import org.eclipse.ocl.pivot.CollectionRange;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.ConnectionPointReference;
-import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Detail;
-import org.eclipse.ocl.pivot.DynamicBehavior;
-import org.eclipse.ocl.pivot.DynamicElement;
-import org.eclipse.ocl.pivot.DynamicProperty;
-import org.eclipse.ocl.pivot.DynamicType;
-import org.eclipse.ocl.pivot.DynamicValueSpecification;
-import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.EnumLiteralExp;
-import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.Feature;
-import org.eclipse.ocl.pivot.FeatureCallExp;
-import org.eclipse.ocl.pivot.FinalState;
-import org.eclipse.ocl.pivot.IfExp;
-import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.InstanceSpecification;
-import org.eclipse.ocl.pivot.IntegerLiteralExp;
-import org.eclipse.ocl.pivot.InvalidLiteralExp;
-import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.IterateExp;
-import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.IteratorExp;
-import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.LanguageExpression;
-import org.eclipse.ocl.pivot.LetExp;
-import org.eclipse.ocl.pivot.Library;
-import org.eclipse.ocl.pivot.LiteralExp;
-import org.eclipse.ocl.pivot.LoopExp;
-import org.eclipse.ocl.pivot.MapLiteralExp;
-import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.MessageExp;
-import org.eclipse.ocl.pivot.MessageType;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.NullLiteralExp;
-import org.eclipse.ocl.pivot.NumericLiteralExp;
-import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.OppositePropertyCallExp;
-import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.OrphanCompletePackage;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
-import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
-import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Profile;
-import org.eclipse.ocl.pivot.ProfileApplication;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.Pseudostate;
-import org.eclipse.ocl.pivot.PseudostateKind;
-import org.eclipse.ocl.pivot.RealLiteralExp;
-import org.eclipse.ocl.pivot.ReferringElement;
-import org.eclipse.ocl.pivot.Region;
-import org.eclipse.ocl.pivot.SelfType;
-import org.eclipse.ocl.pivot.SendSignalAction;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.ShadowExp;
-import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.Signal;
-import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.State;
-import org.eclipse.ocl.pivot.StateExp;
-import org.eclipse.ocl.pivot.StateMachine;
-import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.TemplateableElement;
-import org.eclipse.ocl.pivot.Transition;
-import org.eclipse.ocl.pivot.TransitionKind;
-import org.eclipse.ocl.pivot.Trigger;
-import org.eclipse.ocl.pivot.TupleLiteralExp;
-import org.eclipse.ocl.pivot.TupleLiteralPart;
-import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypeExp;
-import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
-import org.eclipse.ocl.pivot.UnspecifiedValueExp;
-import org.eclipse.ocl.pivot.ValueSpecification;
-import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.Vertex;
-import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -159,8 +35,8 @@ import org.eclipse.ocl.pivot.utilities.Pivotable;
  * @generated
  */
 public class PivotPackageImpl
-		extends EPackageImpl
-		implements PivotPackage  {
+extends EPackageImpl
+implements PivotPackage  {
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1149,7 +1025,7 @@ public class PivotPackageImpl
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link PivotPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -1176,19 +1052,20 @@ public class PivotPackageImpl
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put
-			(thePivotPackage, 
-			 new EValidator.Descriptor()
-			 {
-				 public EValidator getEValidator()
-				 {
-					 return PivotValidator.INSTANCE;
-				 }
-			 });
+		(thePivotPackage,
+			new EValidator.Descriptor()
+		{
+			@Override
+			public EValidator getEValidator()
+			{
+				return PivotValidator.INSTANCE;
+			}
+		});
 
 		// Mark meta-data to indicate it can't be changed
 		thePivotPackage.freeze();
 
-  
+
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(PivotPackage.eNS_URI, thePivotPackage);
 		return thePivotPackage;
@@ -5345,7 +5222,7 @@ public class PivotPackageImpl
 	@Override
 	public EReference getOperation_OwningClass()
 	{
-		return (EReference)operationEClass.getEStructuralFeatures().get(7);
+		return (EReference)operationEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -5356,7 +5233,7 @@ public class PivotPackageImpl
 	@Override
 	public EReference getOperation_RaisedExceptions()
 	{
-		return (EReference)operationEClass.getEStructuralFeatures().get(9);
+		return (EReference)operationEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -5367,7 +5244,7 @@ public class PivotPackageImpl
 	@Override
 	public EReference getOperation_RedefinedOperations()
 	{
-		return (EReference)operationEClass.getEStructuralFeatures().get(10);
+		return (EReference)operationEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -5394,11 +5271,12 @@ public class PivotPackageImpl
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.3
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public EAttribute getOperation_IsTypeof()
+	public EAttribute getOperation_IsTransient()
 	{
 		return (EAttribute)operationEClass.getEStructuralFeatures().get(2);
 	}
@@ -5409,7 +5287,7 @@ public class PivotPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EAttribute getOperation_IsValidating()
+	public EAttribute getOperation_IsTypeof()
 	{
 		return (EAttribute)operationEClass.getEStructuralFeatures().get(3);
 	}
@@ -5420,9 +5298,9 @@ public class PivotPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getOperation_OwnedParameters()
+	public EAttribute getOperation_IsValidating()
 	{
-		return (EReference)operationEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)operationEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -5431,7 +5309,7 @@ public class PivotPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getOperation_OwnedPostconditions()
+	public EReference getOperation_OwnedParameters()
 	{
 		return (EReference)operationEClass.getEStructuralFeatures().get(5);
 	}
@@ -5442,7 +5320,7 @@ public class PivotPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getOperation_OwnedPreconditions()
+	public EReference getOperation_OwnedPostconditions()
 	{
 		return (EReference)operationEClass.getEStructuralFeatures().get(6);
 	}
@@ -5453,8 +5331,19 @@ public class PivotPackageImpl
 	 * @generated
 	 */
 	@Override
+	public EReference getOperation_OwnedPreconditions()
+	{
+		return (EReference)operationEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EReference getOperation_Precedence() {
-		return (EReference)operationEClass.getEStructuralFeatures().get(8);
+		return (EReference)operationEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -6828,6 +6717,7 @@ public class PivotPackageImpl
 		operationEClass = createEClass(OPERATION);
 		createEReference(operationEClass, OPERATION__BODY_EXPRESSION);
 		createEAttribute(operationEClass, OPERATION__IS_INVALIDATING);
+		createEAttribute(operationEClass, OPERATION__IS_TRANSIENT);
 		createEAttribute(operationEClass, OPERATION__IS_TYPEOF);
 		createEAttribute(operationEClass, OPERATION__IS_VALIDATING);
 		createEReference(operationEClass, OPERATION__OWNED_PARAMETERS);
@@ -7983,6 +7873,7 @@ public class PivotPackageImpl
 		initEClass(operationEClass, Operation.class, "Operation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getOperation_BodyExpression(), this.getLanguageExpression(), null, "bodyExpression", null, 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getOperation_IsInvalidating(), this.getBoolean(), "isInvalidating", "false", 1, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getOperation_IsTransient(), this.getBoolean(), "isTransient", "false", 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(getOperation_IsTypeof(), this.getBoolean(), "isTypeof", "false", 1, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(getOperation_IsValidating(), this.getBoolean(), "isValidating", "false", 1, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(getOperation_OwnedParameters(), this.getParameter(), this.getParameter_OwningOperation(), "ownedParameters", null, 0, -1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -8551,13 +8442,13 @@ public class PivotPackageImpl
 	 */
 	protected void createASMetamodelAnnotations()
 	{
-		String source = "http://www.eclipse.org/OCL/ASMetamodel"; //$NON-NLS-1$	
+		String source = "http://www.eclipse.org/OCL/ASMetamodel"; //$NON-NLS-1$
 		addAnnotation
-		  (this, 
-		   source, 
-		   new String[] 
-		   {
-		   });
+		(this,
+			source,
+			new String[]
+					{
+					});
 	}
 
 	/**
@@ -8568,12 +8459,12 @@ public class PivotPackageImpl
 	 */
 	protected void createEcoreAnnotations()
 	{
-		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$	
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation
-		  (this, 
-		   source, 
-		   new String[] 
-		   {
-		   });
+		(this,
+			source,
+			new String[]
+					{
+					});
 	}
 } //PivotPackageImpl

@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.Operation#getBodyExpression <em>Body Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.Operation#isIsInvalidating <em>Is Invalidating</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.Operation#isIsTransient <em>Is Transient</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.Operation#isIsTypeof <em>Is Typeof</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.Operation#isIsValidating <em>Is Validating</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.Operation#getOwnedParameters <em>Owned Parameters</em>}</li>
@@ -219,6 +220,34 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	void setIsInvalidating(boolean value);
 
 	/**
+	 * Returns the value of the '<em><b>Is Transient</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Transient</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Transient</em>' attribute.
+	 * @see #setIsTransient(boolean)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getOperation_IsTransient()
+	 * @generated
+	 */
+	boolean isIsTransient();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.Operation#isIsTransient <em>Is Transient</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Transient</em>' attribute.
+	 * @see #isIsTransient()
+	 * @generated
+	 */
+	void setIsTransient(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Is Typeof</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
@@ -336,12 +365,12 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	@Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary);
 
 	@NonNull OperationId getOperationId();
-	
+
 	/**
 	 * Return the unique identity of the ordered list of parameters of this operation.
 	 */
 	@NonNull ParametersId getParametersId();
-	
+
 	/**
 	 * Return the ordered list of parameters of this operation.
 	 */

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -347,7 +347,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		super();
 		partialClasses = new PartialClasses(this);
 	}
-	
+
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitCompleteClass(this);
@@ -449,7 +449,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	public @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
 		throw new UnsupportedOperationException("Not a map");
 	}
-	
+
 	public @NonNull Iterable<Operation> getMemberOperations() {
 		return partialClasses.getOperations();
 	}
@@ -518,7 +518,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 			}
 		});
 	}
-	
+
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses() {
 		CompleteInheritance inheritance = getCompleteInheritance();
@@ -569,13 +569,13 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	public @NonNull Iterable<@NonNull State> getStates(@Nullable String name) {
 		return partialClasses.getStates(name);
 	}
-	
+
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
 		return partialClasses.getSuperCompleteClasses();
 	}
-	
-/*	public boolean isSuperClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {
+
+	/*	public boolean isSuperClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {
 		CompleteClass unspecializedSecondType = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(secondType.getPivotClass()));	// FIXME cast
 		if (unspecializedFirstType == unspecializedSecondType) {
 			return true;

@@ -1097,6 +1097,7 @@
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyExpression" eType="#//LanguageExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInvalidating" lowerBound="1" eType="#//Boolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isTransient" eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isTypeof" lowerBound="1" eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isValidating" lowerBound="1" eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParameters" upperBound="-1" eType="#//Parameter" containment="true" eOpposite="#//Parameter/owningOperation">

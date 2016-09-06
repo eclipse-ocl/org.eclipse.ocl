@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Operation.java" type="org.eclipse.ocl.pivot.Operation">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Operation"/>
+                <message_argument value="isIsTransient()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Operation"/>
+                <message_argument value="setIsTransient(boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION_FEATURE_COUNT"/>
+                <message_argument value="28"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__IS_TYPEOF"/>
+                <message_argument value="17"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__IS_VALIDATING"/>
+                <message_argument value="18"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__OWNED_ACCUMULATORS"/>
+                <message_argument value="26"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__OWNED_ITERATORS"/>
+                <message_argument value="27"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__OWNED_PARAMETERS"/>
+                <message_argument value="19"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__OWNED_POSTCONDITIONS"/>
+                <message_argument value="20"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__OWNED_PRECONDITIONS"/>
+                <message_argument value="21"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__OWNING_CLASS"/>
+                <message_argument value="22"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__PRECEDENCE"/>
+                <message_argument value="23"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__RAISED_EXCEPTIONS"/>
+                <message_argument value="24"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION__REDEFINED_OPERATIONS"/>
+                <message_argument value="25"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_FEATURE_COUNT"/>
+                <message_argument value="26"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION__IS_TYPEOF"/>
+                <message_argument value="17"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION__IS_VALIDATING"/>
+                <message_argument value="18"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION__OWNED_PARAMETERS"/>
+                <message_argument value="19"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION__OWNED_POSTCONDITIONS"/>
+                <message_argument value="20"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION__OWNED_PRECONDITIONS"/>
+                <message_argument value="21"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION__OWNING_CLASS"/>
+                <message_argument value="22"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION__PRECEDENCE"/>
+                <message_argument value="23"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION__RAISED_EXCEPTIONS"/>
+                <message_argument value="24"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION__REDEFINED_OPERATIONS"/>
+                <message_argument value="25"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="OPERATION__IS_TRANSIENT"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/OperationImpl.java" type="org.eclipse.ocl.pivot.internal.OperationImpl">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.OperationImpl"/>
+                <message_argument value="IS_TYPEOF_EFLAG"/>
+                <message_argument value="2048"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.OperationImpl"/>
+                <message_argument value="IS_VALIDATING_EFLAG"/>
+                <message_argument value="4096"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

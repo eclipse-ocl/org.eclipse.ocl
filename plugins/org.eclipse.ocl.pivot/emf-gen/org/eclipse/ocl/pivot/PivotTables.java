@@ -2355,20 +2355,21 @@ public class PivotTables
 
 		public static final @NonNull ExecutorProperty _Operation__bodyExpression = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__BODY_EXPRESSION, Types._Operation, 0);
 		public static final @NonNull ExecutorProperty _Operation__isInvalidating = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__IS_INVALIDATING, Types._Operation, 1);
-		public static final @NonNull ExecutorProperty _Operation__isTypeof = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__IS_TYPEOF, Types._Operation, 2);
-		public static final @NonNull ExecutorProperty _Operation__isValidating = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__IS_VALIDATING, Types._Operation, 3);
-		public static final @NonNull ExecutorProperty _Operation__ownedParameters = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__OWNED_PARAMETERS, Types._Operation, 4);
-		public static final @NonNull ExecutorProperty _Operation__ownedPostconditions = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS, Types._Operation, 5);
-		public static final @NonNull ExecutorProperty _Operation__ownedPreconditions = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS, Types._Operation, 6);
-		public static final @NonNull ExecutorProperty _Operation__owningClass = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__OWNING_CLASS, Types._Operation, 7);
-		public static final @NonNull ExecutorProperty _Operation__precedence = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__PRECEDENCE, Types._Operation, 8);
-		public static final @NonNull ExecutorProperty _Operation__raisedExceptions = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__RAISED_EXCEPTIONS, Types._Operation, 9);
-		public static final @NonNull ExecutorProperty _Operation__redefinedOperations = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__REDEFINED_OPERATIONS, Types._Operation, 10);
-		public static final @NonNull ExecutorProperty _Operation__CallOperationAction__operation = new ExecutorPropertyWithImplementation("CallOperationAction", Types._Operation, 11, new EcoreLibraryOppositeProperty(PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION));
-		public static final @NonNull ExecutorProperty _Operation__MessageType__referredOperation = new ExecutorPropertyWithImplementation("MessageType", Types._Operation, 12, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MESSAGE_TYPE__REFERRED_OPERATION));
-		public static final @NonNull ExecutorProperty _Operation__Operation__redefinedOperations = new ExecutorPropertyWithImplementation("Operation", Types._Operation, 13, new EcoreLibraryOppositeProperty(PivotPackage.Literals.OPERATION__REDEFINED_OPERATIONS));
-		public static final @NonNull ExecutorProperty _Operation__OperationCallExp__referredOperation = new ExecutorPropertyWithImplementation("OperationCallExp", Types._Operation, 14, new EcoreLibraryOppositeProperty(PivotPackage.Literals.OPERATION_CALL_EXP__REFERRED_OPERATION));
-		public static final @NonNull ExecutorProperty _Operation__PrimitiveType__coercions = new ExecutorPropertyWithImplementation("PrimitiveType", Types._Operation, 15, new EcoreLibraryOppositeProperty(PivotPackage.Literals.PRIMITIVE_TYPE__COERCIONS));
+		public static final @NonNull ExecutorProperty _Operation__isTransient = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__IS_TRANSIENT, Types._Operation, 2);
+		public static final @NonNull ExecutorProperty _Operation__isTypeof = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__IS_TYPEOF, Types._Operation, 3);
+		public static final @NonNull ExecutorProperty _Operation__isValidating = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__IS_VALIDATING, Types._Operation, 4);
+		public static final @NonNull ExecutorProperty _Operation__ownedParameters = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__OWNED_PARAMETERS, Types._Operation, 5);
+		public static final @NonNull ExecutorProperty _Operation__ownedPostconditions = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS, Types._Operation, 6);
+		public static final @NonNull ExecutorProperty _Operation__ownedPreconditions = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS, Types._Operation, 7);
+		public static final @NonNull ExecutorProperty _Operation__owningClass = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__OWNING_CLASS, Types._Operation, 8);
+		public static final @NonNull ExecutorProperty _Operation__precedence = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__PRECEDENCE, Types._Operation, 9);
+		public static final @NonNull ExecutorProperty _Operation__raisedExceptions = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__RAISED_EXCEPTIONS, Types._Operation, 10);
+		public static final @NonNull ExecutorProperty _Operation__redefinedOperations = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION__REDEFINED_OPERATIONS, Types._Operation, 11);
+		public static final @NonNull ExecutorProperty _Operation__CallOperationAction__operation = new ExecutorPropertyWithImplementation("CallOperationAction", Types._Operation, 12, new EcoreLibraryOppositeProperty(PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION));
+		public static final @NonNull ExecutorProperty _Operation__MessageType__referredOperation = new ExecutorPropertyWithImplementation("MessageType", Types._Operation, 13, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MESSAGE_TYPE__REFERRED_OPERATION));
+		public static final @NonNull ExecutorProperty _Operation__Operation__redefinedOperations = new ExecutorPropertyWithImplementation("Operation", Types._Operation, 14, new EcoreLibraryOppositeProperty(PivotPackage.Literals.OPERATION__REDEFINED_OPERATIONS));
+		public static final @NonNull ExecutorProperty _Operation__OperationCallExp__referredOperation = new ExecutorPropertyWithImplementation("OperationCallExp", Types._Operation, 15, new EcoreLibraryOppositeProperty(PivotPackage.Literals.OPERATION_CALL_EXP__REFERRED_OPERATION));
+		public static final @NonNull ExecutorProperty _Operation__PrimitiveType__coercions = new ExecutorPropertyWithImplementation("PrimitiveType", Types._Operation, 16, new EcoreLibraryOppositeProperty(PivotPackage.Literals.PRIMITIVE_TYPE__COERCIONS));
 
 		public static final @NonNull ExecutorProperty _OperationCallExp__isVirtual = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION_CALL_EXP__IS_VIRTUAL, Types._OperationCallExp, 0);
 		public static final @NonNull ExecutorProperty _OperationCallExp__ownedArguments = new EcoreExecutorProperty(PivotPackage.Literals.OPERATION_CALL_EXP__OWNED_ARGUMENTS, Types._OperationCallExp, 1);
@@ -12507,6 +12508,7 @@ public class PivotTables
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
 			PivotTables.Properties._Feature__isStatic,
+			PivotTables.Properties._Operation__isTransient,
 			PivotTables.Properties._Operation__isTypeof,
 			PivotTables.Properties._Operation__isValidating,
 			PivotTables.Properties._NamedElement__name,
@@ -13194,6 +13196,7 @@ public class PivotTables
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
 			PivotTables.Properties._Feature__isStatic,
+			PivotTables.Properties._Operation__isTransient,
 			PivotTables.Properties._Operation__isTypeof,
 			PivotTables.Properties._Operation__isValidating,
 			PivotTables.Properties._NamedElement__name,

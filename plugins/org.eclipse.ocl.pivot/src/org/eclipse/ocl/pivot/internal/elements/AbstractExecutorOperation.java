@@ -33,6 +33,9 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 
+/**
+ * @since 1.3
+ */
 public class AbstractExecutorOperation extends AbstractExecutorFeature implements Operation
 {
 	public AbstractExecutorOperation(@NonNull String name, @NonNull Type executorType) {
@@ -208,6 +211,22 @@ public class AbstractExecutorOperation extends AbstractExecutorFeature implement
 	@Override
 	@NonNull
 	public TemplateParameters getTypeParameters() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public boolean isIsTransient() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public void setIsTransient(boolean value) {
 		throw new UnsupportedOperationException();
 	}
 }

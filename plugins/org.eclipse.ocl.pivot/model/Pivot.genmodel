@@ -512,6 +512,7 @@
     <genClasses ecoreClass="Pivot.ecore#//Operation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Operation/bodyExpression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Operation/isInvalidating"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Operation/isTransient"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Operation/isTypeof"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#//Operation/isValidating"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#//Operation/ownedParameters"/>

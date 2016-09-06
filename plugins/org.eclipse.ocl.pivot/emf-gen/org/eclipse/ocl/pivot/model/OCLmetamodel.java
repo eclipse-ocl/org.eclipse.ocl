@@ -2009,6 +2009,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_OCLExpression_Variable_ownedInit = createProperty("Variable", _Variable);
 		private final @NonNull Property pr_Operation_bodyExpression = createProperty(PivotPackage.Literals.OPERATION__BODY_EXPRESSION, _LanguageExpression);
 		private final @NonNull Property pr_Operation_isInvalidating = createProperty(PivotPackage.Literals.OPERATION__IS_INVALIDATING, _Boolean);
+		private final @NonNull Property pr_Operation_isTransient = createProperty(PivotPackage.Literals.OPERATION__IS_TRANSIENT, _Boolean);
 		private final @NonNull Property pr_Operation_isTypeof = createProperty(PivotPackage.Literals.OPERATION__IS_TYPEOF, _Boolean);
 		private final @NonNull Property pr_Operation_isValidating = createProperty(PivotPackage.Literals.OPERATION__IS_VALIDATING, _Boolean);
 		private final @NonNull Property pr_Operation_ownedParameters = createProperty(PivotPackage.Literals.OPERATION__OWNED_PARAMETERS, _OrderedSet_Parameter_NullFree);
@@ -3026,6 +3027,9 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_LanguageExpression_Operation_bodyExpression);
 			ownedProperties.add(property = pr_Operation_isInvalidating);
+			property.setIsResolveProxies(true);
+			ownedProperties.add(property = pr_Operation_isTransient);
+			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_Operation_isTypeof);
 			property.setIsResolveProxies(true);

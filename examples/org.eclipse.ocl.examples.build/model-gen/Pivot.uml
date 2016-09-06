@@ -745,6 +745,10 @@
     <ownedAttribute xmi:id="Ppivot.TOperation.PisInvalidating" name="isInvalidating" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TOperation.PisInvalidating.dlV" value="false"/>
     </ownedAttribute>
+    <ownedAttribute xmi:id="Ppivot.TOperation.PisTransient" name="isTransient" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TOperation.PisTransient.lV"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TOperation.PisTransient.dlV" value="false"/>
+    </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TOperation.PisTypeof" name="isTypeof" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TOperation.PisTypeof.dlV" value="false"/>
     </ownedAttribute>

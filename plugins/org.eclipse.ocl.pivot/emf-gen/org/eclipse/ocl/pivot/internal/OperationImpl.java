@@ -83,6 +83,7 @@ import org.eclipse.ocl.pivot.values.SetValue;
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getUnspecializedElement <em>Unspecialized Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getBodyExpression <em>Body Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#isIsInvalidating <em>Is Invalidating</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#isIsTransient <em>Is Transient</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#isIsTypeof <em>Is Typeof</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#isIsValidating <em>Is Validating</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedParameters <em>Owned Parameters</em>}</li>
@@ -97,8 +98,8 @@ import org.eclipse.ocl.pivot.values.SetValue;
  * @generated
  */
 public class OperationImpl
-		extends FeatureImpl
-		implements Operation {
+extends FeatureImpl
+implements Operation {
 
 	/**
 	 * The cached value of the '{@link #getOwnedConstraints() <em>Owned Constraints</em>}' containment reference list.
@@ -171,6 +172,28 @@ public class OperationImpl
 	protected static final int IS_INVALIDATING_EFLAG = 1 << 10;
 
 	/**
+	 * The default value of the '{@link #isIsTransient() <em>Is Transient</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @see #isIsTransient()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_TRANSIENT_EDEFAULT = false;
+
+	/**
+	 * The flag representing the value of the '{@link #isIsTransient() <em>Is Transient</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @see #isIsTransient()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int IS_TRANSIENT_EFLAG = 1 << 11;
+
+	/**
 	 * The default value of the '{@link #isIsTypeof() <em>Is Typeof</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -188,7 +211,7 @@ public class OperationImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int IS_TYPEOF_EFLAG = 1 << 11;
+	protected static final int IS_TYPEOF_EFLAG = 1 << 12;
 
 	/**
 	 * The default value of the '{@link #isIsValidating() <em>Is Validating</em>}' attribute.
@@ -208,7 +231,7 @@ public class OperationImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int IS_VALIDATING_EFLAG = 1 << 12;
+	protected static final int IS_VALIDATING_EFLAG = 1 << 13;
 
 	/**
 	 * The cached value of the '{@link #getOwnedParameters() <em>Owned Parameters</em>}' containment reference list.
@@ -457,7 +480,7 @@ public class OperationImpl
 	@Override
 	public TemplateableElement getUnspecializedElement()
 	{
-//		throw new UnsupportedOperationException();	// FIXME Eliminate this feature once Acceleo bug 349278 fixed
+		//		throw new UnsupportedOperationException();	// FIXME Eliminate this feature once Acceleo bug 349278 fixed
 		return null;
 	}
 
@@ -587,6 +610,33 @@ public class OperationImpl
 		if (newIsInvalidating) eFlags |= IS_INVALIDATING_EFLAG; else eFlags &= ~IS_INVALIDATING_EFLAG;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__IS_INVALIDATING, oldIsInvalidating, newIsInvalidating));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isIsTransient()
+	{
+		return (eFlags & IS_TRANSIENT_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setIsTransient(boolean newIsTransient)
+	{
+		boolean oldIsTransient = (eFlags & IS_TRANSIENT_EFLAG) != 0;
+		if (newIsTransient) eFlags |= IS_TRANSIENT_EFLAG; else eFlags &= ~IS_TRANSIENT_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OPERATION__IS_TRANSIENT, oldIsTransient, newIsTransient));
 	}
 
 	/**
@@ -1078,6 +1128,8 @@ public class OperationImpl
 				return getBodyExpression();
 			case PivotPackage.OPERATION__IS_INVALIDATING:
 				return isIsInvalidating();
+			case PivotPackage.OPERATION__IS_TRANSIENT:
+				return isIsTransient();
 			case PivotPackage.OPERATION__IS_TYPEOF:
 				return isIsTypeof();
 			case PivotPackage.OPERATION__IS_VALIDATING:
@@ -1164,6 +1216,9 @@ public class OperationImpl
 				return;
 			case PivotPackage.OPERATION__IS_INVALIDATING:
 				setIsInvalidating((Boolean)newValue);
+				return;
+			case PivotPackage.OPERATION__IS_TRANSIENT:
+				setIsTransient((Boolean)newValue);
 				return;
 			case PivotPackage.OPERATION__IS_TYPEOF:
 				setIsTypeof((Boolean)newValue);
@@ -1258,6 +1313,9 @@ public class OperationImpl
 			case PivotPackage.OPERATION__IS_INVALIDATING:
 				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
 				return;
+			case PivotPackage.OPERATION__IS_TRANSIENT:
+				setIsTransient(IS_TRANSIENT_EDEFAULT);
+				return;
 			case PivotPackage.OPERATION__IS_TYPEOF:
 				setIsTypeof(IS_TYPEOF_EDEFAULT);
 				return;
@@ -1332,6 +1390,8 @@ public class OperationImpl
 				return bodyExpression != null;
 			case PivotPackage.OPERATION__IS_INVALIDATING:
 				return ((eFlags & IS_INVALIDATING_EFLAG) != 0) != IS_INVALIDATING_EDEFAULT;
+			case PivotPackage.OPERATION__IS_TRANSIENT:
+				return ((eFlags & IS_TRANSIENT_EFLAG) != 0) != IS_TRANSIENT_EDEFAULT;
 			case PivotPackage.OPERATION__IS_TYPEOF:
 				return ((eFlags & IS_TYPEOF_EFLAG) != 0) != IS_TYPEOF_EDEFAULT;
 			case PivotPackage.OPERATION__IS_VALIDATING:
@@ -1471,7 +1531,7 @@ public class OperationImpl
 			return null;
 		}
 	}
-	
+
 	@Override
 	public @NonNull ParametersId getParametersId() {
 		return getOperationId().getParametersId();
@@ -1496,7 +1556,7 @@ public class OperationImpl
 	}
 
 	private OperationId operationId = null;
-	
+
 	@Override
 	public final @NonNull OperationId getOperationId() {
 		OperationId operationId2 = operationId;

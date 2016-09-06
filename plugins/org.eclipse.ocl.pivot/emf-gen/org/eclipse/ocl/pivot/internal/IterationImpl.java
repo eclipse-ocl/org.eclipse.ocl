@@ -213,6 +213,8 @@ public class IterationImpl extends OperationImpl implements Iteration
 				return getBodyExpression();
 			case PivotPackage.ITERATION__IS_INVALIDATING:
 				return isIsInvalidating();
+			case PivotPackage.ITERATION__IS_TRANSIENT:
+				return isIsTransient();
 			case PivotPackage.ITERATION__IS_TYPEOF:
 				return isIsTypeof();
 			case PivotPackage.ITERATION__IS_VALIDATING:
@@ -304,6 +306,9 @@ public class IterationImpl extends OperationImpl implements Iteration
 				return;
 			case PivotPackage.ITERATION__IS_INVALIDATING:
 				setIsInvalidating((Boolean)newValue);
+				return;
+			case PivotPackage.ITERATION__IS_TRANSIENT:
+				setIsTransient((Boolean)newValue);
 				return;
 			case PivotPackage.ITERATION__IS_TYPEOF:
 				setIsTypeof((Boolean)newValue);
@@ -407,6 +412,9 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case PivotPackage.ITERATION__IS_INVALIDATING:
 				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
 				return;
+			case PivotPackage.ITERATION__IS_TRANSIENT:
+				setIsTransient(IS_TRANSIENT_EDEFAULT);
+				return;
 			case PivotPackage.ITERATION__IS_TYPEOF:
 				setIsTypeof(IS_TYPEOF_EDEFAULT);
 				return;
@@ -488,6 +496,8 @@ public class IterationImpl extends OperationImpl implements Iteration
 				return bodyExpression != null;
 			case PivotPackage.ITERATION__IS_INVALIDATING:
 				return ((eFlags & IS_INVALIDATING_EFLAG) != 0) != IS_INVALIDATING_EDEFAULT;
+			case PivotPackage.ITERATION__IS_TRANSIENT:
+				return ((eFlags & IS_TRANSIENT_EFLAG) != 0) != IS_TRANSIENT_EDEFAULT;
 			case PivotPackage.ITERATION__IS_TYPEOF:
 				return ((eFlags & IS_TYPEOF_EFLAG) != 0) != IS_TYPEOF_EDEFAULT;
 			case PivotPackage.ITERATION__IS_VALIDATING:
