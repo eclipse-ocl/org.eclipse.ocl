@@ -196,6 +196,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		rewriteVisitOperationBodies(reDefinitions, envOperation2asOperation);
 		Collection<Operation> asOperations = envOperation2asOperation.values();
 		rewriteOperationCalls(asOperations);
+		asClass.getOwnedOperations().addAll(asOperations);
 		convertOperations(cgClass, asOperations);
 		createConstrainedOperations(as2cgVisitor, cgClass);
 		/*Resource dummyResource = EssentialOCLASResourceFactory.getInstance().createResource(URI.createURI("dummy.essentialocl"));
