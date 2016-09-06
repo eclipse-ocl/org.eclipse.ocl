@@ -452,7 +452,7 @@ public class ConstraintImpl
 		    symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_Constraint_c_c_UniqueName, this, null, diagnostics, context, null, severity_0, ValueUtil.TRUE_VALUE, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_Constraint_c_c_UniqueName, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, PivotTables.INT_0).booleanValue();
 		    symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;

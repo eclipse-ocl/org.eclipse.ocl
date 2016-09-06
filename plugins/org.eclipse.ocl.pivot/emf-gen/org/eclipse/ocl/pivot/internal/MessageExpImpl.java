@@ -338,7 +338,7 @@ public class MessageExpImpl
 		    catch (Exception e) {
 		        CAUGHT_status = ValueUtil.createInvalidValue(e);
 		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_OneCallOrOneSend, this, null, diagnostics, context, null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_OneCallOrOneSend, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
 		    symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
@@ -378,18 +378,25 @@ public class MessageExpImpl
 		else {
 		    /*@Caught*/ @Nullable Object CAUGHT_status;
 		    try {
-		        final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-		        @SuppressWarnings("null")
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedTarget = this.getOwnedTarget();
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedTarget.getType();
-		        final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_0).booleanValue();
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanNotOperation.INSTANCE.evaluate(oclIsKindOf);
+		        /*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
+		        try {
+		            final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+		            @SuppressWarnings("null")
+		            final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedTarget = this.getOwnedTarget();
+		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedTarget.getType();
+		            final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_CollectionType_0).booleanValue();
+		            CAUGHT_oclIsKindOf = oclIsKindOf;
+		        }
+		        catch (Exception e) {
+		            CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
+		        }
+		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf);
 		        CAUGHT_status = status;
 		    }
 		    catch (Exception e) {
 		        CAUGHT_status = ValueUtil.createInvalidValue(e);
 		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection, this, null, diagnostics, context, null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
 		    symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;

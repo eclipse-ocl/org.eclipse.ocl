@@ -212,10 +212,17 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		    try {
 		        /*@Caught*/ @Nullable Object CAUGHT_not;
 		        try {
-		            final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType = idResolver.getClass(PivotTables.CLSSid_DataType, null);
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-		            final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType).booleanValue();
-		            final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(oclIsKindOf);
+		            /*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
+		            try {
+		                final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType = idResolver.getClass(PivotTables.CLSSid_DataType, null);
+		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+		                final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType).booleanValue();
+		                CAUGHT_oclIsKindOf = oclIsKindOf;
+		            }
+		            catch (Exception e) {
+		                CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
+		            }
+		            final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf);
 		            CAUGHT_not = not;
 		        }
 		        catch (Exception e) {
@@ -236,7 +243,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		    catch (Exception e) {
 		        CAUGHT_status = ValueUtil.createInvalidValue(e);
 		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_ClassHasNoStringValueInitializer, this, null, diagnostics, context, null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_ClassHasNoStringValueInitializer, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
 		    symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
@@ -303,7 +310,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		    catch (Exception e) {
 		        CAUGHT_status = ValueUtil.createInvalidValue(e);
 		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_DataTypeHasNoPartInitializers, this, null, diagnostics, context, null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_DataTypeHasNoPartInitializers, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
 		    symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
@@ -368,7 +375,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		    catch (Exception e) {
 		        CAUGHT_status = ValueUtil.createInvalidValue(e);
 		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_DataTypeHasStringValueInitializer, this, null, diagnostics, context, null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_DataTypeHasStringValueInitializer, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
 		    symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
@@ -508,7 +515,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		            };
 		            final @NonNull  ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY_closure_0, oclAsSet, ACC_closure_0);
 		            final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue closure = ClassUtil.nonNullState((SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0));
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue safe_collect_sources = (SetValue)CollectionExcludingOperation.INSTANCE.evaluate(closure, null);
+		            final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue safe_collect_sources = (SetValue)CollectionExcludingOperation.INSTANCE.evaluate(closure, (Object)null);
 		            /*@Thrown*/ BagValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createBagAccumulatorValue(PivotTables.BAG_CLSSid_Property);
 		            @NonNull Iterator<Object> ITERATOR__1_1 = safe_collect_sources.iterator();
 		            /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull BagValue collect_0;
@@ -663,8 +670,15 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		                }
 		                /*@Caught*/ @Nullable Object CAUGHT_not;
 		                try {
-		                    final /*@Thrown*/ boolean isRequired = _1_5.isIsRequired();
-		                    final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isRequired);
+		                    /*@Caught*/ @NonNull Object CAUGHT_isRequired;
+		                    try {
+		                        final /*@Thrown*/ boolean isRequired = _1_5.isIsRequired();
+		                        CAUGHT_isRequired = isRequired;
+		                    }
+		                    catch (Exception e) {
+		                        CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
+		                    }
+		                    final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isRequired);
 		                    CAUGHT_not = not;
 		                }
 		                catch (Exception e) {
@@ -867,7 +881,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		    catch (Exception e) {
 		        CAUGHT_status = ValueUtil.createInvalidValue(e);
 		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_InitializesAllClassProperties, this, null, diagnostics, context, null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_InitializesAllClassProperties, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
 		    symbol_8 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_8;
@@ -913,7 +927,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		    catch (Exception e) {
 		        CAUGHT_status = ValueUtil.createInvalidValue(e);
 		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_TypeIsNotInvalid, this, null, diagnostics, context, null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
 		    symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;

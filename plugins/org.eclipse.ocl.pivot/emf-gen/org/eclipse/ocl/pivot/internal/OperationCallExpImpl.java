@@ -761,7 +761,7 @@ public class OperationCallExpImpl
 		    catch (Exception e) {
 		        CAUGHT_forAll = ValueUtil.createInvalidValue(e);
 		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_ArgumentTypeIsConformant, this, null, diagnostics, context, null, severity_0, CAUGHT_forAll, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_ArgumentTypeIsConformant, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_forAll, PivotTables.INT_0).booleanValue();
 		    symbol_5 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_5;
@@ -826,25 +826,32 @@ public class OperationCallExpImpl
 		        }
 		        /*@Caught*/ @Nullable Object CAUGHT_not;
 		        try {
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-		            /*@Caught*/ @Nullable Object CAUGHT_ownedSource_0;
+		            /*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
 		            try {
-		                CAUGHT_ownedSource_0 = ownedSource_0;
+		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+		                /*@Caught*/ @Nullable Object CAUGHT_ownedSource_0;
+		                try {
+		                    CAUGHT_ownedSource_0 = ownedSource_0;
+		                }
+		                catch (Exception e) {
+		                    CAUGHT_ownedSource_0 = ValueUtil.createInvalidValue(e);
+		                }
+		                final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource_0 == null;
+		                /*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
+		                if (symbol_0 == Boolean.TRUE) {
+		                    safe_isRequired_source = null;
+		                }
+		                else {
+		                    assert ownedSource_0 != null;
+		                    final /*@Thrown*/ boolean isRequired = ownedSource_0.isIsRequired();
+		                    safe_isRequired_source = isRequired;
+		                }
+		                CAUGHT_safe_isRequired_source = safe_isRequired_source;
 		            }
 		            catch (Exception e) {
-		                CAUGHT_ownedSource_0 = ValueUtil.createInvalidValue(e);
+		                CAUGHT_safe_isRequired_source = ValueUtil.createInvalidValue(e);
 		            }
-		            final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource_0 == null;
-		            /*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
-		            if (symbol_0 == Boolean.TRUE) {
-		                safe_isRequired_source = null;
-		            }
-		            else {
-		                assert ownedSource_0 != null;
-		                final /*@Thrown*/ boolean isRequired = ownedSource_0.isIsRequired();
-		                safe_isRequired_source = isRequired;
-		            }
-		            final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(safe_isRequired_source);
+		            final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isRequired_source);
 		            CAUGHT_not = not;
 		        }
 		        catch (Exception e) {
@@ -856,7 +863,7 @@ public class OperationCallExpImpl
 		    catch (Exception e) {
 		        CAUGHT_status = ValueUtil.createInvalidValue(e);
 		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_SafeSourceCanBeNull, this, null, diagnostics, context, null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
 		    symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
@@ -925,7 +932,7 @@ public class OperationCallExpImpl
 		    catch (Exception e) {
 		        CAUGHT_status = ValueUtil.createInvalidValue(e);
 		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_ArgumentCount, this, null, diagnostics, context, null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OperationCallExp_c_c_ArgumentCount, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
 		    symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
