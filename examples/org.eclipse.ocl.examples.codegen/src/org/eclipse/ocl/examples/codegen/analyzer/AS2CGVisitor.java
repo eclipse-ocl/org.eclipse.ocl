@@ -937,7 +937,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 * Return all final operations directly referenced by opaqueExpression, or null if none.
 	 * @since 1.3
 	 */
-	protected @Nullable Set<@NonNull Operation> getReferencedFinalOperations(@NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression specification) {
+	protected @Nullable Iterable<@NonNull Operation> getReferencedFinalOperations(@NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression specification) {
 		ExpressionInOCL prototype = null;
 		try {
 			prototype = metamodelManager.parseSpecification(specification);
@@ -964,6 +964,33 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return referencedOperations;
 	}
 
+	protected @Nullable Iterable<@NonNull Operation> getReferencedNonFinalOperations(@NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression specification) {
+		ExpressionInOCL prototype = null;
+		try {
+			prototype = metamodelManager.parseSpecification(specification);
+		}
+		catch (ParserException e) {
+			// FIXME log error
+			e.printStackTrace();
+		}
+		if (prototype == null) {
+			return null;
+		}
+		Set<@NonNull Operation> referencedOperations = null;
+		for (EObject crossReference : EcoreUtil.ExternalCrossReferencer.find(prototype).keySet()) {
+			if (crossReference instanceof Operation) {
+				Operation operation = (Operation) crossReference;
+				if (!finalAnalysis.isFinal(operation)) {
+					if (referencedOperations == null) {
+						referencedOperations = new HashSet<>();
+					}
+					referencedOperations.add(operation);
+				}
+			}
+		}
+		return referencedOperations;
+	}
+
 	@Deprecated
 	public @NonNull CGParameter getSelfParameter(@NonNull Variable aParameter) {
 		return getParameter(aParameter, null);
@@ -973,8 +1000,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 * Return all final operations transitively referenced by opaqueExpression, or null if none.
 	 * @since 1.3
 	 */
-	protected void getTransitivelyReferencedFinalOperations(@NonNull Set<Operation> alreadyReferencedFinalOperations, @NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression expressionInOCL) {
-		Set<@NonNull Operation> newlyReferencedFinalOperations = getReferencedFinalOperations(finalAnalysis, expressionInOCL);
+	protected void getTransitivelyReferencedFinalOperations(@NonNull Set<@NonNull Operation> alreadyReferencedFinalOperations, @NonNull FinalAnalysis finalAnalysis, @NonNull LanguageExpression expressionInOCL) {
+		Iterable<@NonNull Operation> newlyReferencedFinalOperations = getReferencedFinalOperations(finalAnalysis, expressionInOCL);
 		if (newlyReferencedFinalOperations != null) {
 			for (@NonNull Operation newlyReferencedFinalOperation : newlyReferencedFinalOperations) {
 				if (alreadyReferencedFinalOperations.add(newlyReferencedFinalOperation)) {
@@ -1022,6 +1049,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		getTransitivelyReferencedFinalOperations(referencedFinalOperations, finalAnalysis, specification);
 		if (referencedFinalOperations.contains(callExp.getReferredOperation())) {
 			return null;	// Avoid an infinite inlining recursion.
+		}
+		Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, specification);
+		if (referencedNonFinalOperations != null) {
+			return null;	// Simple heavy heuristic
 		}
 		ExpressionInOCL asClone = createCopy(prototype);
 		OCLExpression asExpression = ClassUtil.nonNullState(asClone.getOwnedBody());

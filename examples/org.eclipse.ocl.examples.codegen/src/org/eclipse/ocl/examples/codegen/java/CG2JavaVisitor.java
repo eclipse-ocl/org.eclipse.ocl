@@ -500,64 +500,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	protected void doCachedOperationBasicEvaluate(@NonNull CGOperation cgOperation) {
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
-		js.append("public ");
-		//				boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
-		//				js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
-		//				js.append(" ");
-		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
-		js.append(" evaluate(");
-		boolean isFirst = true;
-		for (@NonNull CGParameter cgParameter : cgParameters) {
-			if (!isFirst) {
-				js.append(", ");
-			}
-			js.appendDeclaration(cgParameter);
-			isFirst = false;
-		}
-		js.append(") {\n");
-		js.pushIndentation(null);
-		js.append("return (");
-		js.appendClassReference(null, cgOperation);
-		js.append(")");
-		js.append(JavaConstants.EVALUATION_CACHE_NAME);
-		js.append(".getCachedEvaluationResult(this, caller, new ");
-		js.appendIsRequired(false);
-		js.append(" ");
-		js.appendClassReference(Object.class);
-		js.append("[]{");
-		isFirst = true;
-		for (@NonNull CGParameter cgParameter : cgParameters) {
-			if (!isFirst) {
-				js.append(", ");
-			}
-			js.appendValueName(cgParameter);
-			isFirst = false;
-		}
-		js.append("});\n");
-		js.popIndentation();
-		js.append("}\n");
-	}
-
-	protected void doCachedOperationClassInstance(@NonNull Operation asOperation) {
-		String name = getNativeOperationClassName(asOperation);
-		js.append("protected final ");
-		js.appendIsRequired(true);
-		js.append(" ");
-		js.append(name);
-		js.append(" ");
-		js.append(getNativeOperationInstanceName(asOperation));
-		js.append(" = new ");
-		js.append(name);
-		js.append("();\n");
-	}
-
-	protected void doCachedOperationEvaluate(@NonNull CGOperation cgOperation) {
-		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		CGValuedElement body = getExpression(cgOperation.getBody());
 		appendAtOverride(cgOperation);
 		js.append("public ");
 		//				boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 		//				js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+		js.appendIsRequired(false);
 		js.append(" ");
 		js.appendClassReference(Object.class);
 		js.append(" basicEvaluate(");
@@ -587,7 +535,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			if (cgParameter.getASTypeId() instanceof CollectionTypeId) {
 				js.append("@SuppressWarnings(\"unchecked\") ");
 			}
-			else {
+			else if (cgParameter.isRequired()) {
 				js.append("@SuppressWarnings(\"null\") ");
 			}
 			js.appendDeclaration(cgParameter);
@@ -596,6 +544,66 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(")sourceAndArgumentValues[" + i++ + "];\n");
 		}
 		appendReturn(body);
+		js.popIndentation();
+		js.append("}\n");
+	}
+
+	protected void doCachedOperationClassInstance(@NonNull Operation asOperation) {
+		String name = getNativeOperationClassName(asOperation);
+		js.append("protected final ");
+		js.appendIsRequired(true);
+		js.append(" ");
+		js.append(name);
+		js.append(" ");
+		js.append(getNativeOperationInstanceName(asOperation));
+		js.append(" = new ");
+		js.append(name);
+		js.append("();\n");
+	}
+
+	protected void doCachedOperationEvaluate(@NonNull CGOperation cgOperation) {
+		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
+		Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
+		if (cgOperation.getASTypeId() instanceof CollectionTypeId) {
+			js.append("@SuppressWarnings(\"unchecked\")\n");
+		}
+		else if ((isRequiredReturn == Boolean.TRUE) && js.isUseNullAnnotations()) {
+			js.append("@SuppressWarnings(\"null\")\n");
+		}
+		js.append("public ");
+		//				boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
+		//				js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+		//				js.append(" ");
+		js.appendClassReference(isRequiredReturn, cgOperation);
+		js.append(" evaluate(");
+		boolean isFirst = true;
+		for (@NonNull CGParameter cgParameter : cgParameters) {
+			if (!isFirst) {
+				js.append(", ");
+			}
+			js.appendDeclaration(cgParameter);
+			isFirst = false;
+		}
+		js.append(") {\n");
+		js.pushIndentation(null);
+		js.append("return (");
+		js.appendClassReference(isRequiredReturn, cgOperation);
+		js.append(")");
+		js.append(JavaConstants.EVALUATION_CACHE_NAME);
+		js.append(".getCachedEvaluationResult(this, caller, new ");
+		js.appendIsRequired(false);
+		js.append(" ");
+		js.appendClassReference(Object.class);
+		js.append("[]{");
+		isFirst = true;
+		for (@NonNull CGParameter cgParameter : cgParameters) {
+			if (!isFirst) {
+				js.append(", ");
+			}
+			js.appendValueName(cgParameter);
+			isFirst = false;
+		}
+		js.append("});\n");
 		js.popIndentation();
 		js.append("}\n");
 	}
@@ -2149,9 +2157,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append("\n");
 				js.append("{\n");
 				js.pushIndentation(null);
-				doCachedOperationEvaluate(cgOperation);
-				js.append("\n");
 				doCachedOperationBasicEvaluate(cgOperation);
+				js.append("\n");
+				doCachedOperationEvaluate(cgOperation);
 				js.popIndentation();
 				js.append("}\n");
 				//
