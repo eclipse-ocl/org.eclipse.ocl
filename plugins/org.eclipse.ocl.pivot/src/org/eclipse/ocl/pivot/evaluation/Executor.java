@@ -33,7 +33,7 @@ public interface Executor extends Evaluator
 	 */
 	public interface ExecutorExtension extends Executor
 	{
-		@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable TypedElement caller);
+		@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller);
 		void resetCaches();
 	}
 	void add(@NonNull TypedElement referredVariable, @Nullable Object value);

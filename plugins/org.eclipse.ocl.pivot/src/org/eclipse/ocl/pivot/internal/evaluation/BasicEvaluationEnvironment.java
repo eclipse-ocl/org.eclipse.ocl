@@ -49,7 +49,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	/**
 	 * @since 1.3
 	 */
-	protected final @Nullable TypedElement caller;
+	protected final @Nullable Object caller;
 	/**
 	 * @since 1.1
 	 * @deprecated use caller
@@ -89,7 +89,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	/**
 	 * @since 1.3
 	 */
-	public BasicEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension parent, @NonNull NamedElement executableObject, @Nullable TypedElement caller) {
+	public BasicEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension parent, @NonNull NamedElement executableObject, @Nullable Object caller) {
 		this.executor = parent.getExecutor();
 		this.environmentFactory = parent.getEnvironmentFactory();
 		this.parent = parent;

@@ -154,12 +154,12 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	/**
 	 * @since 1.3
 	 */
-	protected EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable TypedElement caller) {
+	protected EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable Object caller) {
 		return new BasicEvaluationEnvironment(evaluationEnvironment, executableObject, caller);
 	}
 
 	/**
-	 * @ddeoredcated use TypedElement argument
+	 * @deprecated use Element argument
 	 */
 	@Deprecated
 	protected EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension createNestedEvaluationEnvironment(EvaluationEnvironment.@NonNull EvaluationEnvironmentExtension evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable OCLExpression callingObject) {
@@ -468,7 +468,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	 * @since 1.3
 	 */
 	@Override
-	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable TypedElement caller) {
+	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller) {
 		EvaluationEnvironment.EvaluationEnvironmentExtension evaluationEnvironment2 = ClassUtil.nonNullState(evaluationEnvironment);
 		EvaluationEnvironment.EvaluationEnvironmentExtension nestedEvaluationEnvironment = createNestedEvaluationEnvironment(evaluationEnvironment2, executableObject, caller);
 		evaluationEnvironment = nestedEvaluationEnvironment;

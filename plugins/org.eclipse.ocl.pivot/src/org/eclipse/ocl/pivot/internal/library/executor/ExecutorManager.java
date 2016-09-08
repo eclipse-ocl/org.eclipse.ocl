@@ -383,7 +383,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 * @since 1.3
 	 */
 	@Override
-	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable TypedElement caller) {
+	public @NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller) {
 		return nullEvaluationEnvironment;
 	}
 

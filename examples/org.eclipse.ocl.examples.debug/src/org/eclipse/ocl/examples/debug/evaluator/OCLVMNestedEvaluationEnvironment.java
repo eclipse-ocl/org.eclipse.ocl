@@ -20,7 +20,6 @@ import org.eclipse.ocl.examples.debug.vm.utils.VMRuntimeException;
 import org.eclipse.ocl.examples.debug.vm.utils.VMStackTraceBuilder;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 
 public class OCLVMNestedEvaluationEnvironment extends VMNestedEvaluationEnvironment implements OCLVMEvaluationEnvironment
@@ -30,7 +29,7 @@ public class OCLVMNestedEvaluationEnvironment extends VMNestedEvaluationEnvironm
 	private final int myStackDepth;
 	private final long id;
 
-	public OCLVMNestedEvaluationEnvironment(@NonNull OCLVMEvaluationEnvironment evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable TypedElement caller, long id) {
+	public OCLVMNestedEvaluationEnvironment(@NonNull OCLVMEvaluationEnvironment evaluationEnvironment, @NonNull NamedElement executableObject, @Nullable Object caller, long id) {
 		super(evaluationEnvironment, executableObject, caller);
 		myStackDepth = evaluationEnvironment.getDepth() + 1;
 		this.id = id;
