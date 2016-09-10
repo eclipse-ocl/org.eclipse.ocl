@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -39,10 +39,10 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 
-public class Id2EClassVisitor implements IdVisitor<EClass>
+public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 {
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	
+
 	protected Id2EClassVisitor(@NonNull PivotMetamodelManager metamodelManager) {
 		this.metamodelManager = metamodelManager;
 	}
@@ -152,7 +152,7 @@ public class Id2EClassVisitor implements IdVisitor<EClass>
 	public @Nullable EClass visitUnspecifiedId(@NonNull UnspecifiedId id) {
 		return visiting(id);
 	}
-	
+
 	public @Nullable EClass visiting(@NonNull ElementId id) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + id.getClass().getName());
 	}

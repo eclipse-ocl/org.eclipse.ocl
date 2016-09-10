@@ -72,16 +72,18 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 {
 	protected static class ClassSupersContinuation extends SingleContinuation<StructuredClassCS>
 	{
-		private static Dependency[] computeDependencies(@NonNull CS2ASConversion context, @NonNull StructuredClassCS csElement) {
+		private static @NonNull Dependency[] computeDependencies(@NonNull CS2ASConversion context, @NonNull StructuredClassCS csElement) {
 			List<TypedRefCS> csSuperTypes = csElement.getOwnedSuperTypes();
 			if (csSuperTypes.isEmpty()) {
 				return null;
 			}
 			List<Dependency> dependencies = new ArrayList<Dependency>();
 			for (TypedRefCS csSuperType : csSuperTypes) {
-				dependencies.add(new PivotDependency(csSuperType));
+				if (csSuperType != null) {
+					dependencies.add(new PivotDependency(csSuperType));
+				}
 			}
-			return dependencies.toArray(new Dependency[dependencies.size()]);
+			return dependencies.toArray(new @NonNull Dependency[dependencies.size()]);
 		}
 
 		public ClassSupersContinuation(@NonNull CS2ASConversion context, org.eclipse.ocl.pivot.Class pivotParent, @NonNull StructuredClassCS csElement) {
@@ -102,20 +104,20 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			return null;
 		}
 	}
-	
+
 	protected static class LambdaContinuation extends SingleContinuation<LambdaTypeCS>
 	{
-		private static Dependency[] computeDependencies(@NonNull CS2ASConversion context, @NonNull LambdaTypeCS csElement) {
+		private static @NonNull Dependency @NonNull [] computeDependencies(@NonNull CS2ASConversion context, @NonNull LambdaTypeCS csElement) {
 			TypedRefCS ownedContextType = ClassUtil.nonNullState(csElement.getOwnedContextType());
 			TypedRefCS ownedResultType = ClassUtil.nonNullState(csElement.getOwnedResultType());
 			List<TypedRefCS> csParameterTypes = csElement.getOwnedParameterTypes();
 			int iMax = csParameterTypes.size();
-			Dependency[] dependencies = new Dependency[2 + iMax];
-			dependencies[0] = context.createTypeIsReferenceableDependency(ownedContextType);
-			dependencies[1] = context.createTypeIsReferenceableDependency(ownedResultType);
+			@NonNull Dependency @NonNull [] dependencies = new @NonNull Dependency[2 + iMax];
+			dependencies[0] = new PivotDependency(ownedContextType);
+			dependencies[1] = new PivotDependency(ownedResultType);
 			for (int i = 0; i < iMax; i++) {
 				TypedRefCS csParameterType = ClassUtil.nonNullState(csParameterTypes.get(i));
-				dependencies[i+2] = context.createTypeIsReferenceableDependency(csParameterType);
+				dependencies[i+2] = new PivotDependency(csParameterType);
 			}
 			return dependencies;
 		}
@@ -157,7 +159,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			return null;
 		}
 	}
-	
+
 	protected static class ParameterContinuation extends SingleContinuation<ParameterCS>
 	{
 		public ParameterContinuation(@NonNull CS2ASConversion context, @NonNull ParameterCS csElement) {
@@ -194,7 +196,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	}
 
 	protected static class PrimitiveTypeRefContinuation extends TypedRefContinuation<PrimitiveTypeRefCS>
-	{		
+	{
 		public PrimitiveTypeRefContinuation(@NonNull CS2ASConversion context, @NonNull PrimitiveTypeRefCS csElement) {
 			super(context, csElement);
 		}
@@ -209,7 +211,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			return null;
 		}
 	}
-	
+
 	protected static class SpecializedTypeRefContinuation1 extends SingleContinuation<TypedTypeRefCS>
 	{
 		public SpecializedTypeRefContinuation1(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
@@ -234,21 +236,20 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : csTemplateBinding.getOwnedSubstitutions()) {
 					TypeRefCS csTemplateParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
 					if (csTemplateParameter != null) {
-						Dependency dependency = context.createTypeIsReferenceableDependency(csTemplateParameter);
-						if (dependency != null) {
-							dependencies.add(dependency);
-						}
+						dependencies.add(new PivotDependency(csTemplateParameter));
 					}
 				}
 				for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : csTemplateBinding.getOwnedSubstitutions()) {
 					TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
-					dependencies.add(new PivotDependency(csActualParameter));	// FIXME may be a redundant duplicate
+					if (csActualParameter != null) {
+						dependencies.add(new PivotDependency(csActualParameter));	// FIXME may be a redundant duplicate
+					}
 				}
 			}
 			dependencies.add(new PivotHasSuperClassesDependency(csElement));
 			return dependencies.toArray(new Dependency[dependencies.size()]);
 		}
-		
+
 		public SpecializedTypeRefContinuation2(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
 			super(context, csElement, computeDependencies(context, csElement));
 			assert csElement.getOwnedBinding() != null;
@@ -291,8 +292,8 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				TemplateBindingCS csTemplateBinding = csElement.getOwnedBinding();
 				if ((csTemplateBinding != null) && ElementUtil.isSpecialization(csTemplateBinding)) {
 					pivotType = (Type) context.specializeTemplates(csElement);
-//					TemplateBinding pivotTemplateBinding = PivotUtil.getPivot(TemplateBinding.class, csTemplateBinding);
-//					pivotType = pivotTemplateBinding.getBoundElement();
+					//					TemplateBinding pivotTemplateBinding = PivotUtil.getPivot(TemplateBinding.class, csTemplateBinding);
+					//					pivotType = pivotTemplateBinding.getBoundElement();
 				}
 				if (pivotType != null) {
 					context.installPivotTypeWithMultiplicity(pivotType, csElement);
@@ -301,7 +302,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			return null;
 		}
 	}
-	
+
 	protected static class TypeParameterContinuation extends SingleContinuation<TypeParameterCS>
 	{
 		public TypeParameterContinuation(@NonNull CS2ASConversion context, @NonNull TypeParameterCS csElement) {
@@ -359,7 +360,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			return null;
 		}
 	}
-	
+
 	protected static class TupleContinuation extends TypedRefContinuation<TupleTypeCS>
 	{
 		public TupleContinuation(@NonNull CS2ASConversion context, @NonNull TupleTypeCS csElement) {
@@ -517,12 +518,12 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	public Continuation<?> visitOperationCS(@NonNull OperationCS csOperation) {
 		return null;
 	}
-	
+
 	@Override
 	public Continuation<?> visitPackageCS(@NonNull PackageCS csPackage) {
 		return null;
 	}
-	
+
 	@Override
 	public Continuation<?> visitPackageOwnerCS(@NonNull PackageOwnerCS object) {
 		return null;

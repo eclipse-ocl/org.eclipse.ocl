@@ -78,7 +78,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  * A CG2JavaPreVisitor prepares for Java code generation by performing a tree traversal
  * to gather all imports and global constants.
  */
-public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<Object, JavaGlobalContext<@NonNull ? extends JavaCodeGenerator>>
+public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator>>
 {
 	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull GenModelHelper genModelHelper;

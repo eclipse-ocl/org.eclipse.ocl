@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -97,10 +97,10 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * <h2>Unboxed Protocol</h2>
  * Ecore Operation/PropertyCall
  */
-public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<Object, CodeGenAnalyzer>
+public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull CodeGenAnalyzer>
 {
 	protected final @NonNull CodeGenerator codeGenerator;
-	
+
 	public BoxingAnalyzer(@NonNull CodeGenAnalyzer analyzer) {
 		super(analyzer);
 		codeGenerator = analyzer.getCodeGenerator();
@@ -183,7 +183,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<Object, Code
 		ElementId elementId = cgTypeId.getElementId();
 		if (elementId != null) {
 			BoxedDescriptor boxedDescriptor = codeGenerator.getBoxedDescriptor(elementId);
-//			EClassifier eClassifier = cgChild.getEcoreClassifier();
+			//			EClassifier eClassifier = cgChild.getEcoreClassifier();
 			Class<?> instanceClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
 			EcoreDescriptor ecoreDescriptor = boxedDescriptor.getEcoreDescriptor(codeGenerator, instanceClass);
 			if (cgChild.isUnboxed()) {
@@ -248,9 +248,9 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<Object, Code
 		CGTypeId cgTypeId = cgChild.getTypeId();
 		ElementId elementId = cgTypeId.getElementId();
 		if (elementId != null) {
-//			boolean maybePrimitive = codeGenerator.maybePrimitive(cgChild);
-//			TypeDescriptor boxedTypeDescriptor = codeGenerator.getTypeDescriptor(elementId, true, maybePrimitive);
-//			TypeDescriptor unboxedTypeDescriptor = codeGenerator.getTypeDescriptor(elementId, false, maybePrimitive);
+			//			boolean maybePrimitive = codeGenerator.maybePrimitive(cgChild);
+			//			TypeDescriptor boxedTypeDescriptor = codeGenerator.getTypeDescriptor(elementId, true, maybePrimitive);
+			//			TypeDescriptor unboxedTypeDescriptor = codeGenerator.getTypeDescriptor(elementId, false, maybePrimitive);
 			TypeDescriptor boxedDescriptor = codeGenerator.getBoxedDescriptor(elementId);
 			TypeDescriptor unboxedDescriptor = boxedDescriptor.getUnboxedDescriptor(codeGenerator);
 			if (cgChild.isEcore()) {
@@ -462,12 +462,12 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<Object, Code
 	@Override
 	public @Nullable Object visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp cgElement) {
 		super.visitCGLibraryOperationCallExp(cgElement);
-//		if (!cgElement.getReferredOperation().isValidating()) {
-//			OperationId operationId = cgElement.getReferredOperation().getOperationId();
-//			if (!hasOclVoidOperation(operationId)) {
-//				guard(cgElement, cgElement.getSource());
-//			}
-//		}
+		//		if (!cgElement.getReferredOperation().isValidating()) {
+		//			OperationId operationId = cgElement.getReferredOperation().getOperationId();
+		//			if (!hasOclVoidOperation(operationId)) {
+		//				guard(cgElement, cgElement.getSource());
+		//			}
+		//		}
 		rewriteAsBoxed(cgElement.getSource());
 		List<CGValuedElement> cgArguments = cgElement.getArguments();
 		int iMax = cgArguments.size();
@@ -513,9 +513,9 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<Object, Code
 	@Override
 	public @Nullable Object visitCGOperation(@NonNull CGOperation cgElement) {
 		super.visitCGOperation(cgElement);
-//		if ("isAttribute".equals(cgElement.getName())) {
-//			System.out.println("visitCGOperation for " + cgElement.getAst().toString());
-//		}
+		//		if ("isAttribute".equals(cgElement.getName())) {
+		//			System.out.println("visitCGOperation for " + cgElement.getAst().toString());
+		//		}
 		if (cgElement.isRequired()) {
 			CGValuedElement body = cgElement.getBody();
 			if (body != null) {

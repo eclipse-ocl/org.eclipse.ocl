@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -408,7 +409,7 @@ public class PivotHelper
 		return asVariable;
 	}
 
-	public @NonNull VariableExp createVariableExp(@NonNull Variable asVariable) {
+	public @NonNull VariableExp createVariableExp(@NonNull VariableDeclaration asVariable) {
 		VariableExp asVariableExp = PivotUtil.createVariableExp(asVariable);
 		return asVariableExp;
 	}

@@ -81,6 +81,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -637,12 +638,20 @@ public class PivotUtil
 		return asVariable;
 	}
 
-	public static @NonNull VariableExp createVariableExp(@NonNull Variable asVariable) {
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull VariableExp createVariableExp(@NonNull VariableDeclaration asVariable) {
 		VariableExp asVariableExp = PivotFactory.eINSTANCE.createVariableExp();
 		asVariableExp.setReferredVariable(asVariable);
 		asVariableExp.setType(asVariable.getType());
 		asVariableExp.setIsRequired(asVariable.isIsRequired());
 		return asVariableExp;
+	}
+	/** @deprecated API preserving redundancy */
+	@Deprecated
+	public static @NonNull VariableExp createVariableExp(@NonNull Variable asVariable) {
+		return createVariableExp((VariableDeclaration)asVariable);
 	}
 
 	public static @NonNull VoidType createVoidType(@NonNull String name) {

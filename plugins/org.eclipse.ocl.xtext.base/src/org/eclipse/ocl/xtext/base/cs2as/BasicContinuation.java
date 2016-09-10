@@ -17,8 +17,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
+import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
@@ -31,22 +33,28 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
  */
 public abstract class BasicContinuation<T> implements Continuation<T>
 {
+	private static final @NonNull Dependency @NonNull [] EMPTY_DEPENDENCIES = new @NonNull Dependency[0];
+
 	static final Logger logger = Logger.getLogger(BasicContinuation.class);
+
+	protected static @NonNull Dependency @NonNull [] createDependencies(@Nullable PivotableElementCS csElement) {
+		return csElement != null ? new @NonNull PivotDependency[]{new PivotDependency(csElement)} : EMPTY_DEPENDENCIES;
+	}
 
 	protected final @NonNull CS2ASConversion context;
 	protected final Element pivotParent;
-	protected final EStructuralFeature pivotFeature;	
+	protected final EStructuralFeature pivotFeature;
 	protected final @NonNull T csElement;
-	protected final Dependency[] dependencies;
-	
+	protected final @NonNull Dependency @NonNull [] dependencies;
+
 	public BasicContinuation(@NonNull CS2ASConversion context,
 			Element pivotParent, EStructuralFeature pivotFeature,
-			@NonNull T csElement, Dependency... dependencies) {
+			@NonNull T csElement, @NonNull Dependency @Nullable ... dependencies) {
 		this.context = context;
 		this.pivotParent = pivotParent;
 		this.pivotFeature = pivotFeature;
 		this.csElement = csElement;
-		this.dependencies = dependencies != null ? dependencies : new Dependency[0];
+		this.dependencies = dependencies != null ? dependencies : EMPTY_DEPENDENCIES;
 		assert csElement != null;
 	}
 
@@ -61,42 +69,42 @@ public abstract class BasicContinuation<T> implements Continuation<T>
 			logger.error(message);
 		}
 	}
-	
+
 	@Override
 	public void addTo(@NonNull List<BasicContinuation<?>> simpleContinuations) {
 		simpleContinuations.add(this);
 	}
 
 	public boolean canExecute() {
-		for (Dependency dependency : dependencies) {
+		for (@NonNull Dependency dependency : dependencies) {
 			if (!dependency.canExecute()) {
 				return false;
 			}
 		}
 		return true;
-	}		
+	}
 
 	public abstract BasicContinuation<?> execute();
 
-	public Dependency[] getDependencies() {
+	public @NonNull Dependency @NonNull [] getDependencies() {
 		return dependencies;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
-		s.append(getClass().getSimpleName());		
-		s.append("@");		
-		s.append(Integer.toHexString(hashCode()));		
-		s.append(" : ");		
+		s.append(getClass().getSimpleName());
+		s.append("@");
+		s.append(Integer.toHexString(hashCode()));
+		s.append(" : ");
 		if (pivotParent != null) {
-			s.append(pivotParent.eClass().getName());		
+			s.append(pivotParent.eClass().getName());
 		}
 		else if (csElement instanceof EObject) {
-			s.append(((EObject) csElement).eClass().getName());		
+			s.append(((EObject) csElement).eClass().getName());
 		}
 		else {
-			s.append("???");		
+			s.append("???");
 		}
 		s.append(".");
 		s.append(pivotFeature != null ? pivotFeature.getName() : "*");

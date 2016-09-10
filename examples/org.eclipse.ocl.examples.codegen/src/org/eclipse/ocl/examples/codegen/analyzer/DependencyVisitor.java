@@ -73,7 +73,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * Traverses the AST adding any internode dependencies to ensure correct declaration ordering.
  */
-public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, CodeGenAnalyzer>
+public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull CodeGenAnalyzer>
 {
 	private static final int TOUCHED = -1;
 	protected static final int NOT_AVAILABLE = -2;
@@ -354,7 +354,7 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<Object, C
 		throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + visitable.getClass().getSimpleName());
 	}
 
-	public class Id2DependencyVisitor implements IdVisitor<Object>
+	public class Id2DependencyVisitor implements IdVisitor<@Nullable Object>
 	{
 		@Override
 		public @Nullable Object visitClassId(final @NonNull ClassId id) {

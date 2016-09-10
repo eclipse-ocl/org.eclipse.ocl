@@ -15,13 +15,14 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NamedElement;
 
 public abstract class MultipleContinuation<T extends EObject> extends BasicContinuation<List<? extends T>>
 {
 	public MultipleContinuation(@NonNull CS2ASConversion context,
 			NamedElement pivotParent, EStructuralFeature pivotFeature,
-			@NonNull List<? extends T> csElements, Dependency... dependencies) {
+			@NonNull List<? extends T> csElements, @NonNull Dependency @Nullable ... dependencies) {
 		super(context, pivotParent, pivotFeature, csElements, dependencies);
 	}
 }

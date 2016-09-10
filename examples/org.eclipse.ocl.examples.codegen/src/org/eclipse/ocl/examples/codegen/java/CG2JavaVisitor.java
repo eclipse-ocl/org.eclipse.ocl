@@ -155,7 +155,7 @@ import org.eclipse.xtext.util.Strings;
  * Visits return true if the generated flow of control flows out of the gebnerated code,
  * false if an uncondituionl exception is thrown.
  */
-public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> extends AbstractExtendingCGModelVisitor<Boolean, CG>
+public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> extends AbstractExtendingCGModelVisitor<@NonNull Boolean, CG>
 {
 	protected final @NonNull JavaGlobalContext<@NonNull ?> globalContext;
 	protected final @NonNull GenModelHelper genModelHelper;
@@ -1911,7 +1911,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	@Override
-	public Boolean visitCGLibraryOperation(@NonNull CGLibraryOperation cgOperation) {
+	public @NonNull Boolean visitCGLibraryOperation(@NonNull CGLibraryOperation cgOperation) {
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
 			localContext = localContext2;

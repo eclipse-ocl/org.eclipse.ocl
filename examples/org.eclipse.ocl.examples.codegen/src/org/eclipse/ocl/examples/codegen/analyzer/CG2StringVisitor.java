@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -96,17 +96,17 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * Converts an OCL expression to a string for debugging. This is not intended to
  * be used by client applications as an AST-to-text transformation.
  */
-public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Object>
-{	
+public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable String, @Nullable Object>
+{
 	private static final Logger logger = Logger.getLogger(CG2StringVisitor.class);
 
 	public static interface Factory extends Adapter {
 		@NonNull CG2StringVisitor createToStringVisitor();
 		@NonNull EPackage getEPackage();
 	}
-	
+
 	private static @NonNull Map<EPackage, Factory> factoryMap = new HashMap<EPackage, Factory>();
-	
+
 	public static synchronized void addFactory(@NonNull Factory factory) {
 		factoryMap.put(factory.getEPackage(), factory);
 	}
@@ -163,7 +163,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 	}
 
 	public static CG2StringVisitor.@NonNull Factory FACTORY = new MyFactory();
-	
+
 	/**
 	 * Indicates where a required element in the AST was <code>null</code>, so
 	 * that it is evident in the debugger that something was missing. We don't
@@ -178,7 +178,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 	 * Initializes me.
 	 */
 	public CG2StringVisitor() {
-        super(Object.class);						// Useless dummy object as context
+		super(Object.class);						// Useless dummy object as context
 	}
 
 	protected void append(Number number) {
@@ -293,7 +293,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 	public String toString() {
 		return result.toString();
 	}
-	
+
 	@Override
 	public @Nullable String visitCGAssertNonNullExp(@NonNull CGAssertNonNullExp cgAssertNonNullExp) {
 		append("$ASSERT_NON_NULL("); //$NON-NLS-1$
@@ -301,7 +301,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		append(")"); //$NON-NLS-1$
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGBoxExp(@NonNull CGBoxExp cgBoxExp) {
 		append("$BOX("); //$NON-NLS-1$
@@ -321,7 +321,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 			if (!isFirst) {
 				append(", ");
 			}
-            safeVisit(variable);
+			safeVisit(variable);
 			isFirst = false;
 		}
 		append(" | ");
@@ -329,7 +329,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		append(")");//$NON-NLS-1$
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGCastExp(@NonNull CGCastExp cgCastExp) {
 		append("$CAST("); //$NON-NLS-1$
@@ -339,7 +339,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		append(")"); //$NON-NLS-1$
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		append("$CATCH("); //$NON-NLS-1$
@@ -357,27 +357,27 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 	@Override
 	public @Nullable String visitCGCollectionExp(@NonNull CGCollectionExp cgCollectionExp) {
 		append(((CollectionLiteralExp)cgCollectionExp.getAst()).getKind() + "{");//$NON-NLS-1$
-        boolean isFirst = true;
+		boolean isFirst = true;
 		for (CGCollectionPart cgPart : cgCollectionExp.getParts()) {
 			if (!isFirst) {
 				append(", ");
 			}
-            safeVisit(cgPart);
+			safeVisit(cgPart);
 			isFirst = false;
 		}
 		append("}");
 		return null;
 	}
-    
-    @Override
+
+	@Override
 	public @Nullable String visitCGCollectionPart(@NonNull CGCollectionPart cgCollectionPart) {
-        safeVisit(cgCollectionPart.getFirst());
-        if (cgCollectionPart.isRange()) {
-        	append(" .. ");
-    		safeVisit(cgCollectionPart.getLast());
-        }
-        return null;
-    }
+		safeVisit(cgCollectionPart.getFirst());
+		if (cgCollectionPart.isRange()) {
+			append(" .. ");
+			safeVisit(cgCollectionPart.getLast());
+		}
+		return null;
+	}
 
 	@Override
 	public @Nullable String visitCGConstant(@NonNull CGConstant cgConstant) {
@@ -401,7 +401,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		safeVisit(cgConstraint.getBody());
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGEcoreExp(@NonNull CGEcoreExp cgEcoreExp) {
 		String simpleName = "null";
@@ -413,13 +413,13 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 			}
 		}
 		append("$ECORE("); //$NON-NLS-1$
-		append(simpleName); //$NON-NLS-1$
+		append(simpleName);
 		append(","); //$NON-NLS-1$
 		safeVisit(cgEcoreExp.getSource());
 		append(")"); //$NON-NLS-1$
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGGuardExp(@NonNull CGGuardExp cgGuardExp) {
 		append("$GUARD("); //$NON-NLS-1$
@@ -451,7 +451,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		}
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGIsEqualExp(@NonNull CGIsEqualExp cgIsEqualExp) {
 		append(cgIsEqualExp.isNotEquals() ? "$isNotEQUAL(" : "$isEQUAL("); //$NON-NLS-1$
@@ -461,7 +461,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		append(")"); //$NON-NLS-1$
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGIsEqual2Exp(@NonNull CGIsEqual2Exp cgIsEqualExp) {
 		append("$isEQUAL2("); //$NON-NLS-1$
@@ -471,7 +471,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		append(")"); //$NON-NLS-1$
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGIsInvalidExp(@NonNull CGIsInvalidExp cgIsInvalidExp) {
 		append("$isINVALID("); //$NON-NLS-1$
@@ -479,7 +479,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		append(")"); //$NON-NLS-1$
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGIsKindOfExp(@NonNull CGIsKindOfExp cgIsKindOfExp) {
 		append("$isKindOf("); //$NON-NLS-1$
@@ -489,7 +489,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		append(")"); //$NON-NLS-1$
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGIsUndefinedExp(@NonNull CGIsUndefinedExp cgIsUndefinedExp) {
 		append("$isUNDEFINED("); //$NON-NLS-1$
@@ -504,9 +504,9 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		safeVisit(source);
 		LoopExp iterationCallExp = (LoopExp) ic.getAst();
 		Iteration iter = iterationCallExp.getReferredIteration();
-	        Type sourceType = source != null ? iterationCallExp.getOwnedSource().getType() : null;
-			append(PivotUtil.getNavigationOperator(false/*iterationCallExp.isIsSafe()*/, PivotUtil.isAggregate(sourceType)));
-			appendName(iter);
+		Type sourceType = source != null ? iterationCallExp.getOwnedSource().getType() : null;
+		append(PivotUtil.getNavigationOperator(false/*iterationCallExp.isIsSafe()*/, PivotUtil.isAggregate(sourceType)));
+		appendName(iter);
 		append("(");
 		String prefix = "";//$NON-NLS-1$
 		for (CGValuedElement argument : ic.getIterators()) {
@@ -521,10 +521,10 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		append(" | ");
 		safeVisit(ic.getBody());
 		append(")");
-//		appendAtPre(oc);
+		//		appendAtPre(oc);
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGLetExp(@NonNull CGLetExp cgLetExp) {
 		append("let "); //$NON-NLS-1$
@@ -559,7 +559,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 				prefix = ", ";//$NON-NLS-1$
 			}
 			append(")");
-//			appendAtPre(oc);
+			//			appendAtPre(oc);
 			return null;
 		}
 		return visitCGOperationCallExp(oc);
@@ -584,25 +584,25 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 	@Override
 	public @Nullable String visitCGMapExp(@NonNull CGMapExp cgMapExp) {
 		append("Map{");//$NON-NLS-1$
-        boolean isFirst = true;
+		boolean isFirst = true;
 		for (CGMapPart cgPart : cgMapExp.getParts()) {
 			if (!isFirst) {
 				append(", ");
 			}
-            safeVisit(cgPart);
+			safeVisit(cgPart);
 			isFirst = false;
 		}
 		append("}");
 		return null;
 	}
-    
-    @Override
+
+	@Override
 	public @Nullable String visitCGMapPart(@NonNull CGMapPart cgMapPart) {
-        safeVisit(cgMapPart.getKey());
-    	append(" <- ");
+		safeVisit(cgMapPart.getKey());
+		append(" <- ");
 		safeVisit(cgMapPart.getValue());
-        return null;
-    }
+		return null;
+	}
 
 	@Override
 	public @Nullable String visitCGModel(@NonNull CGModel cgModel) {
@@ -633,7 +633,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		safeVisit(source);
 		OperationCallExp operationCallExp = (OperationCallExp) oc.getAst();
 		Operation oper = operationCallExp.getReferredOperation();
-	    Type sourceType = source != null ? operationCallExp.getOwnedSource().getType() : null;
+		Type sourceType = source != null ? operationCallExp.getOwnedSource().getType() : null;
 		append(PivotUtil.getNavigationOperator(false/*operationCallExp.isIsSafe()*/, PivotUtil.isAggregate(sourceType)));
 		appendName(oper);
 		append("(");
@@ -644,23 +644,23 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 			prefix = ", ";//$NON-NLS-1$
 		}
 		append(")");
-//		appendAtPre(oc);
+		//		appendAtPre(oc);
 		return null;
 	}
 
 	@Override
 	public @Nullable String visitCGOppositePropertyCallExp(@NonNull CGOppositePropertyCallExp pc) {
-        // source is null when the property call expression is an
-        //    association class navigation qualifier
-        CGValuedElement source = pc.getSource();
+		// source is null when the property call expression is an
+		//    association class navigation qualifier
+		CGValuedElement source = pc.getSource();
 		safeVisit(source);
 		OppositePropertyCallExp propertyCallExp = (OppositePropertyCallExp) pc.getAst();
 		Property oppositeProperty = propertyCallExp.getReferredProperty();
 		Property property = oppositeProperty.getOpposite();
-        Type sourceType = source != null ? propertyCallExp.getOwnedSource().getType() : null;
+		Type sourceType = source != null ? propertyCallExp.getOwnedSource().getType() : null;
 		append(PivotUtil.getNavigationOperator(false/*propertyCallExp.isIsSafe()*/, PivotUtil.isAggregate(sourceType)));
 		appendName(property);
-/*		appendAtPre(pc);
+		/*		appendAtPre(pc);
         List<CGValuedElement> qualifiers = pc.getQualifier();
 		if (!qualifiers.isEmpty()) {
 			append("["); //$NON-NLS-1$
@@ -683,14 +683,14 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 
 	@Override
 	public @Nullable String visitCGPropertyCallExp(@NonNull CGPropertyCallExp pc) {
-        // source is null when the property call expression is an
-        //    association class navigation qualifier
-        CGValuedElement source = pc.getSource();
+		// source is null when the property call expression is an
+		//    association class navigation qualifier
+		CGValuedElement source = pc.getSource();
 		safeVisit(source);
 		PropertyCallExp propertyCallExp = (PropertyCallExp) pc.getAst();
 		if (propertyCallExp != null) {
 			Property property = propertyCallExp.getReferredProperty();
-	        Type sourceType = source != null ? propertyCallExp.getOwnedSource().getType() : null;
+			Type sourceType = source != null ? propertyCallExp.getOwnedSource().getType() : null;
 			append(PivotUtil.getNavigationOperator(false/*propertyCallExp.isIsSafe()*/, PivotUtil.isAggregate(sourceType)));
 			appendName(property);
 		}
@@ -698,7 +698,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 			append("\"<.>\"");
 			appendName((CGNamedElement)null);
 		}
-/*		appendAtPre(pc);
+		/*		appendAtPre(pc);
         List<CGValuedElement> qualifiers = pc.getQualifier();
 		if (!qualifiers.isEmpty()) {
 			append("["); //$NON-NLS-1$
@@ -717,26 +717,26 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 	public @Nullable String visitCGShadowExp(@NonNull CGShadowExp cgShadowExp) {
 		appendName(((ShadowExp)cgShadowExp.getAst()).getType());
 		append("{");//$NON-NLS-1$
-        boolean isFirst = true;
+		boolean isFirst = true;
 		for (CGShadowPart cgPart : cgShadowExp.getParts()) {
 			if (!isFirst) {
 				append(", ");
 			}
-            safeVisit(cgPart);
+			safeVisit(cgPart);
 			isFirst = false;
 		}
 		append("}");
 		return null;
 	}
-    
-    @Override
+
+	@Override
 	public @Nullable String visitCGShadowPart(@NonNull CGShadowPart cgShadowPart) {
 		appendName(((ShadowPart)cgShadowPart.getAst()).getReferredProperty());
-    	append(" <- ");
+		append(" <- ");
 		safeVisit(cgShadowPart.getInit());
-        return null;
-    }
-	
+		return null;
+	}
+
 	@Override
 	public @Nullable String visitCGTextParameter(@NonNull CGTextParameter cgTextParameter) {
 		append(cgTextParameter.getTextValue());
@@ -757,13 +757,13 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		String prefix = "";
 		for (CGTuplePart part : cgTupleExp.getParts()) {
 			append(prefix);
-            safeVisit(part);
+			safeVisit(part);
 			prefix = ", ";//$NON-NLS-1$
 		}
 		append("}");
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGTuplePart(@NonNull CGTuplePart cgTuplePart) {
 		appendName(cgTuplePart);
@@ -779,7 +779,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 		}
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable String visitCGUnboxExp(@NonNull CGUnboxExp cgUnboxExp) {
 		append("$UNBOX("); //$NON-NLS-1$
@@ -791,11 +791,11 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<String, Ob
 	@Override
 	public @Nullable String visitCGValuedElement(@NonNull CGValuedElement cgElement) {
 		appendName(cgElement);
-//		CGTypeId type = cgElement.getTypeId();
-//		append(" : ");
-//		if (type != null) {
-//			appendElementType(cgElement);
-//		}
+		//		CGTypeId type = cgElement.getTypeId();
+		//		append(" : ");
+		//		if (type != null) {
+		//			appendElementType(cgElement);
+		//		}
 		return null;
 	}
 

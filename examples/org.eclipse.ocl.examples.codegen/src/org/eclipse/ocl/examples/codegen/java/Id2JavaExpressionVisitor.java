@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -46,7 +46,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * An Id2JavaExpressionVisitor appends the expression body of an Id declaration.
  */
-public class Id2JavaExpressionVisitor implements IdVisitor<Object>
+public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 {
 	protected final @NonNull JavaStream js;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
@@ -64,7 +64,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<Object>
 		js.append(", " + id.getTemplateParameters() + ")");
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable Object visitCollectionTypeId(@NonNull CollectionTypeId id) {
 		js.appendClassReference(TypeId.class);
@@ -129,7 +129,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<Object>
 		// TODO Auto-generated method stub
 		return visiting(id);
 	}
-	
+
 	@Override
 	public @Nullable Object visitMapTypeId(@NonNull MapTypeId id) {
 		js.appendClassReference(TypeId.class);
@@ -256,7 +256,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<Object>
 		js.append(".getTemplateParameterId(" + id.getIndex() + ")");
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable Object visitTemplateableTypeId(@NonNull TemplateableTypeId id) {
 		// TODO Auto-generated method stub
@@ -292,7 +292,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<Object>
 		// TODO Auto-generated method stub
 		return visiting(id);
 	}
-	
+
 	public @Nullable Object visiting(@NonNull ElementId id) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + id.getClass().getName());
 	}

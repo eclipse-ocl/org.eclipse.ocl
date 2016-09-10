@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.DataType;
@@ -21,9 +22,9 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
 
-public class PivotHasSuperClassesDependency extends AbstractDependency<TypedTypeRefCS>
+public class PivotHasSuperClassesDependency extends AbstractDependency<@NonNull TypedTypeRefCS>
 {
-	public PivotHasSuperClassesDependency(TypedTypeRefCS csElement) {
+	public PivotHasSuperClassesDependency(@NonNull TypedTypeRefCS csElement) {
 		super(csElement);
 	}
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -49,22 +50,22 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 {
 	protected final @NonNull OCLinEcoreGlobalContext globalContext;
-	
+
 	public OCLinEcoreAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull OCLinEcoreGlobalContext globalContext) {
 		super(analyzer);
 		this.globalContext = globalContext;
 		createSeverityOperations(analyzer.getCodeGenerator().getEnvironmentFactory());
 	}
-	
+
 	private void createSeverityOperations(@NonNull EnvironmentFactoryInternal environmentFactory) {
-			// TODO Auto-generated method stub
-			
-		}
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
-	protected void addParameter(@NonNull Variable aParameter, @NonNull CGParameter cgParameter) {
+	protected void addParameter(@NonNull VariableDeclaration aParameter, @NonNull CGParameter cgParameter) {
 		super.addParameter(aParameter, cgParameter);
-		Parameter representedParameter = aParameter.getRepresentedParameter();
+		Parameter representedParameter = (aParameter instanceof Variable) ? ((Variable)aParameter).getRepresentedParameter() : null;
 		if (representedParameter != null) {
 			GenParameter genParameter = genModelHelper.getGenParameter(representedParameter);
 			if (genParameter != null) {
@@ -94,9 +95,9 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			if (oclExpression != null) {
 				try {
 					EObject contextElement = ClassUtil.nonNullState(specification.eContainer());
-	//				if ((specification instanceof ExpressionInOCL) && ((ExpressionInOCL)specification).getOwnedBody() != null) {
-	//					return (ExpressionInOCL)specification;
-	//				}
+					//				if ((specification instanceof ExpressionInOCL) && ((ExpressionInOCL)specification).getOwnedBody() != null) {
+					//					return (ExpressionInOCL)specification;
+					//				}
 					ParserContext parserContext = metamodelManager.createParserContext(specification);
 					if (parserContext == null) {
 						throw new ParserException(PivotMessagesInternal.UnknownContextType_ERROR_, NameUtil.qualifiedNameFor(contextElement), PivotUtilInternal.getSpecificationRole(specification));
@@ -164,10 +165,10 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 						s.append("let severity : Integer = " + severityExpression + " in\n");
 					}
 					else {
-						s.append("let severity : Integer = '" + constraintName + "'.getSeverity() in\n" + 
-						"if severity <= 0 then true\n" + 
-						"else ");
-						
+						s.append("let severity : Integer = '" + constraintName + "'.getSeverity() in\n" +
+								"if severity <= 0 then true\n" +
+								"else ");
+
 					}
 					s.append("let status : OclAny = " + statusExpression + " in\n");
 					if (messageExpression != null) {

@@ -74,7 +74,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 		protected final List<P> pivotElements;
 
 		protected ListCompletion(@NonNull CS2ASConversion context, NamedElement pivotParent, EStructuralFeature pivotFeature,
-				@NonNull List<? extends CST> csElements, Dependency[] dependencies, @NonNull Class<P> pivotClass, List<P> pivotElements) {
+				@NonNull List<? extends CST> csElements, @NonNull Dependency @NonNull [] dependencies, @NonNull Class<P> pivotClass, List<P> pivotElements) {
 			super(context, pivotParent, pivotFeature, csElements, dependencies);
 			this.pivotClass = pivotClass;
 			this.pivotElements = pivotElements;
@@ -102,7 +102,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 		return null;
 	}
 
-	protected <CST extends ModelElementCS, P extends NamedElement> BasicContinuation<?> refreshList(@NonNull NamedElement pivotParent, @NonNull EStructuralFeature pivotFeature,
+	protected <@NonNull CST extends ModelElementCS, P extends NamedElement> BasicContinuation<?> refreshList(@NonNull NamedElement pivotParent, @NonNull EStructuralFeature pivotFeature,
 			final @NonNull Class<P> pivotClass, final @NonNull List<P> pivotElements, @NonNull List<CST> csElements) {
 		if (csElements.isEmpty()) {
 			context.refreshPivotList(pivotClass, pivotElements, csElements);
@@ -110,7 +110,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 		}
 		else {
 			return new ListCompletion<CST, P>(context, pivotParent, pivotFeature, csElements,
-					new Dependency[]{new PivotDependencies(csElements)}, pivotClass, pivotElements);
+					new @NonNull Dependency[]{new PivotDependencies(csElements)}, pivotClass, pivotElements);
 		}
 	}
 

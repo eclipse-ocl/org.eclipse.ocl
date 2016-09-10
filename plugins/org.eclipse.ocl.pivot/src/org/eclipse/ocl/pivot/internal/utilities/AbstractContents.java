@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -66,7 +67,7 @@ public abstract class AbstractContents extends PivotUtil
 	protected @NonNull CollectionType createCollectionType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		return createCollectionType(PivotFactory.eINSTANCE.createCollectionType(), name, lower, upper, templateParameter);
 	}
-	
+
 	protected @NonNull ExpressionInOCL createExpressionInOCL(@NonNull Type type, @NonNull String exprString) {
 		ExpressionInOCL pivotExpression = PivotFactory.eINSTANCE.createExpressionInOCL();
 		pivotExpression.setType(type);
@@ -80,7 +81,7 @@ public abstract class AbstractContents extends PivotUtil
 		asImport.setImportedNamespace(namespace);
 		return asImport;
 	}
-	
+
 	protected @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation, TemplateParameter... templateParameters) {
 		Iteration pivotIteration = createIteration(name, type, implementationClass, implementation);
 		initTemplateParameters(pivotIteration, templateParameters);
@@ -172,6 +173,13 @@ public abstract class AbstractContents extends PivotUtil
 
 	protected @NonNull Property getProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
 		return ClassUtil.nonNullState(NameUtil.getNameable(asClass.getOwnedProperties(), name));
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	protected @NonNull SelfType getSelfType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
+		return (SelfType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
 	protected @NonNull SequenceType getSequenceType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {

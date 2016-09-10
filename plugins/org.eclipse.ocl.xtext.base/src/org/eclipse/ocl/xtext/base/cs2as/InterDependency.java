@@ -13,13 +13,16 @@ package org.eclipse.ocl.xtext.base.cs2as;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InterDependency<T> extends AbstractDependency<Object>
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+public class InterDependency<@NonNull T> extends AbstractDependency<@NonNull Object>
 {
-	private Dependency dependency;
-	private List<T> dependencies = new ArrayList<T>();
-	private List<T> satisfied = new ArrayList<T>();
-	
-	public InterDependency(String reason, Dependency dependency) {
+	private @Nullable Dependency dependency;
+	private List<@NonNull T> dependencies = new ArrayList<>();
+	private List<@NonNull T> satisfied = new ArrayList<>();
+
+	public InterDependency(@NonNull String reason, @Nullable Dependency dependency) {
 		super(reason);
 		this.dependency = dependency;
 	}
@@ -29,7 +32,7 @@ public class InterDependency<T> extends AbstractDependency<Object>
 		assert !dependencies.contains(dependency);
 		dependencies.add(dependency);
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		if ((dependency != null) && !dependency.canExecute()) {
@@ -37,7 +40,7 @@ public class InterDependency<T> extends AbstractDependency<Object>
 		}
 		return satisfied.size() >= dependencies.size();
 	}
-	
+
 	public void setSatisfied(T dependency) {
 		assert dependencies.contains(dependency);
 		assert !satisfied.contains(dependency);
@@ -56,5 +59,5 @@ public class InterDependency<T> extends AbstractDependency<Object>
 		s.append("/");
 		s.append(dependencies.size());
 		return s.toString();
-	}	
+	}
 }

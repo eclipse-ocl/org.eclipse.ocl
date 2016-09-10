@@ -10,13 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2as;
 
-public abstract class AbstractDependency<T> implements Dependency
+import org.eclipse.jdt.annotation.NonNull;
+
+public abstract class AbstractDependency<@NonNull T> implements Dependency
 {
 	protected final T element;
-	
+
 	public AbstractDependency(T element) {
 		this.element = element;
-//		assert element != null; -- happens for references to unresolved proxy types
+		//		assert element != null; -- happens for references to unresolved proxy types
 	}
 
 	@Override
@@ -24,8 +26,8 @@ public abstract class AbstractDependency<T> implements Dependency
 
 	public T getElement() {
 		return element;
-	}		
-	
+	}
+
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + '(' + element + ')';
@@ -48,5 +50,5 @@ public abstract class AbstractDependency<T> implements Dependency
 				return new AbstractDependency<?>[] {};
 			}
 		}
-	}		
+	}
 }

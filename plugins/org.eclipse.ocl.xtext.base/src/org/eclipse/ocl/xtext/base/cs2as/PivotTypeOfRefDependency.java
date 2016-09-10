@@ -10,15 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2as;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
 
-public class PivotTypeOfRefDependency extends AbstractDependency<TypedRefCS>
+public class PivotTypeOfRefDependency extends AbstractDependency<@NonNull TypedRefCS>
 {
-	public PivotTypeOfRefDependency(TypedRefCS csElement) {
+	public PivotTypeOfRefDependency(@NonNull TypedRefCS csElement) {
 		super(csElement);
 	}
 

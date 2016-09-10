@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -79,23 +79,23 @@ public class FieldingAnalyzer
 	 * Perform a tree descent/ascent returning the external variables referenced by the visiting node tree.
 	 * The returned set may be null, is transient and may be reused by the caller.
 	 */
-	public static class AnalysisVisitor extends AbstractExtendingCGModelVisitor<Set<CGVariable>, FieldingAnalyzer>
+	public static class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable Set<@NonNull CGVariable>, @NonNull FieldingAnalyzer>
 	{
 		public AnalysisVisitor(@NonNull FieldingAnalyzer context) {
 			super(context);
 		}
-	
+
 		@Override
-		public @Nullable Set<CGVariable> visiting(@NonNull CGElement visitable) {
+		public @Nullable Set<@NonNull CGVariable> visiting(@NonNull CGElement visitable) {
 			throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + visitable.getClass().getSimpleName());
 		}
-	
+
 		/**
 		 * By default all externals of all children are externals of this node.
 		 */
 		@Override
-		public @Nullable Set<CGVariable> visitCGElement(@NonNull CGElement cgElement) {
-			Set<CGVariable> childExternals = null;
+		public @Nullable Set<@NonNull CGVariable> visitCGElement(@NonNull CGElement cgElement) {
+			Set<@NonNull CGVariable> childExternals = null;
 			for (CGElement cgChild : cgElement.getChildren()) {
 				if (cgChild != null) {
 					Set<CGVariable> childExternal = cgChild.accept(this);
@@ -116,7 +116,7 @@ public class FieldingAnalyzer
 		 * All childExternals of a validating operation are marked as caught variables.
 		 *
 		@Override
-		public @Nullable Set<CGVariable> visitCGIsEqualExp(@NonNull CGIsEqualExp cgElement) {
+		public @Nullable Set<@NonNull CGVariable> visitCGIsEqualExp(@NonNull CGIsEqualExp cgElement) {
 			Set<CGVariable> childExternals = super.visitCGIsEqualExp(cgElement);
 			context.setCaught(childExternals);
 			return childExternals;
@@ -126,8 +126,8 @@ public class FieldingAnalyzer
 		 * All childExternals of a validating operation are marked as caught variables.
 		 */
 		@Override
-		public @Nullable Set<CGVariable> visitCGIsInvalidExp(@NonNull CGIsInvalidExp cgElement) {
-			Set<CGVariable> childExternals = super.visitCGIsInvalidExp(cgElement);
+		public @Nullable Set<@NonNull CGVariable> visitCGIsInvalidExp(@NonNull CGIsInvalidExp cgElement) {
+			Set<@NonNull CGVariable> childExternals = super.visitCGIsInvalidExp(cgElement);
 			context.setCaught(childExternals);
 			return childExternals;
 		}
@@ -136,8 +136,8 @@ public class FieldingAnalyzer
 		 * All childExternals of a validating operation are marked as caught variables.
 		 */
 		@Override
-		public @Nullable Set<CGVariable> visitCGIsUndefinedExp(@NonNull CGIsUndefinedExp cgElement) {
-			Set<CGVariable> childExternals = super.visitCGIsUndefinedExp(cgElement);
+		public @Nullable Set<@NonNull CGVariable> visitCGIsUndefinedExp(@NonNull CGIsUndefinedExp cgElement) {
+			Set<@NonNull CGVariable> childExternals = super.visitCGIsUndefinedExp(cgElement);
 			context.setCaught(childExternals);
 			return childExternals;
 		}
@@ -146,8 +146,8 @@ public class FieldingAnalyzer
 		 * The externals of a LetExp are the externals of the children less the let variable.
 		 */
 		@Override
-		public @Nullable Set<CGVariable> visitCGLetExp(@NonNull CGLetExp cgElement) {
-			Set<CGVariable> childExternals = super.visitCGLetExp(cgElement);
+		public @Nullable Set<@NonNull CGVariable> visitCGLetExp(@NonNull CGLetExp cgElement) {
+			Set<@NonNull CGVariable> childExternals = super.visitCGLetExp(cgElement);
 			CGVariable cgInit = cgElement.getInit();
 			if (childExternals != null) {
 				childExternals.remove(cgInit);
@@ -159,8 +159,8 @@ public class FieldingAnalyzer
 		 * All childExternals of a validating operation are marked as caught variables.
 		 */
 		@Override
-		public @Nullable Set<CGVariable> visitCGOperationCallExp(@NonNull CGOperationCallExp cgElement) {
-			Set<CGVariable> childExternals = super.visitCGOperationCallExp(cgElement);
+		public @Nullable Set<@NonNull CGVariable> visitCGOperationCallExp(@NonNull CGOperationCallExp cgElement) {
+			Set<@NonNull CGVariable> childExternals = super.visitCGOperationCallExp(cgElement);
 			if (cgElement.isValidating()) {
 				context.setCaught(childExternals);
 			}
@@ -171,8 +171,8 @@ public class FieldingAnalyzer
 		 * The externals of a VariableExp are the externals of the referenced variable.
 		 */
 		@Override
-		public @Nullable Set<CGVariable> visitCGVariable(@NonNull CGVariable cgElement) {
-			Set<CGVariable> externals = super.visitCGVariable(cgElement);
+		public @Nullable Set<@NonNull CGVariable> visitCGVariable(@NonNull CGVariable cgElement) {
+			Set<@NonNull CGVariable> externals = super.visitCGVariable(cgElement);
 			context.allExternalVariables.put(cgElement, externals);
 			return externals;
 		}
@@ -181,27 +181,27 @@ public class FieldingAnalyzer
 		 * The externals of a VariableExp are the externals of the referenced variable.
 		 */
 		@Override
-		public @Nullable Set<CGVariable> visitCGVariableExp(@NonNull CGVariableExp cgElement) {
-			Set<CGVariable> childExternal = null;
+		public @Nullable Set<@NonNull CGVariable> visitCGVariableExp(@NonNull CGVariableExp cgElement) {
+			Set<@NonNull CGVariable> childExternal = null;
 			CGVariable cgVariable = cgElement.getReferredVariable();
 			if (cgVariable != null) {
-				childExternal = new HashSet<CGVariable>();
+				childExternal = new HashSet<>();
 				childExternal.add(cgVariable);
 			}
 			return childExternal;
 		}
 	}
-	
+
 	/*
 	 * Perform a tree descent/ascent wrapping all child nodes in CGCatchExp or CGThrowExp to ensure that they satisfy
 	 * the mustBeCaught/mustBeThrown requirement of their usage.
 	 * The return from each child visit is true if isCaught, false if isThrown or isNonInvalid.
 	 */
-	public static class RewriteVisitor extends AbstractExtendingCGModelVisitor<@NonNull Boolean, CodeGenAnalyzer>
+	public static class RewriteVisitor extends AbstractExtendingCGModelVisitor<@NonNull Boolean, @NonNull CodeGenAnalyzer>
 	{
-		protected final @NonNull Set<CGVariable> externalVariables;
-		
-		public RewriteVisitor(@NonNull CodeGenAnalyzer context, @NonNull Set<CGVariable> externalVariables) {
+		protected final @NonNull Set<@NonNull CGVariable> externalVariables;
+
+		public RewriteVisitor(@NonNull CodeGenAnalyzer context, @NonNull Set<@NonNull CGVariable> externalVariables) {
 			super(context);
 			this.externalVariables = externalVariables;
 		}
@@ -242,7 +242,7 @@ public class FieldingAnalyzer
 				}
 			}
 		}
-		
+
 		@Override
 		public @NonNull Boolean safeVisit(@Nullable CGElement cgElement) {
 			return (cgElement != null) && visit(cgElement);
@@ -324,12 +324,12 @@ public class FieldingAnalyzer
 			return false;
 		}
 
-//		@Override
-//		public @NonNull Boolean visitCGIsKindOfExp(@NonNull CGIsKindOfExp cgElement) {
-//			rewriteAsCaught(cgElement.getSource());
-//			cgElement.setCaught(true);
-//			return false;
-//		}
+		//		@Override
+		//		public @NonNull Boolean visitCGIsKindOfExp(@NonNull CGIsKindOfExp cgElement) {
+		//			rewriteAsCaught(cgElement.getSource());
+		//			cgElement.setCaught(true);
+		//			return false;
+		//		}
 
 		@Override
 		public @NonNull Boolean visitCGIsUndefinedExp(@NonNull CGIsUndefinedExp cgElement) {
@@ -376,17 +376,17 @@ public class FieldingAnalyzer
 			return isCaught;
 		}
 
-//		@Override
-//		public @NonNull Boolean visitCGLibraryIterationCallExp(@NonNull CGLibraryIterationCallExp cgElement) {
-//			boolean isCaught = super.visitCGLibraryIterationCallExp(cgElement) == Boolean.TRUE;
-//			if (LibraryConstants.NULL_SATISFIES_INVOLUTION) {
-//				LibraryFeature implementation = cgElement.getReferredIteration().getImplementation();
-//				if ((implementation == ExistsIteration.INSTANCE) || (implementation == ForAllIteration.INSTANCE)) {
-//					rewriteAsCaught(cgElement.getBody());
-//				}
-//			}
-//			return isCaught;
-//		}
+		//		@Override
+		//		public @NonNull Boolean visitCGLibraryIterationCallExp(@NonNull CGLibraryIterationCallExp cgElement) {
+		//			boolean isCaught = super.visitCGLibraryIterationCallExp(cgElement) == Boolean.TRUE;
+		//			if (LibraryConstants.NULL_SATISFIES_INVOLUTION) {
+		//				LibraryFeature implementation = cgElement.getReferredIteration().getImplementation();
+		//				if ((implementation == ExistsIteration.INSTANCE) || (implementation == ForAllIteration.INSTANCE)) {
+		//					rewriteAsCaught(cgElement.getBody());
+		//				}
+		//			}
+		//			return isCaught;
+		//		}
 
 		@Override
 		public @NonNull Boolean visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgElement) {
@@ -397,14 +397,14 @@ public class FieldingAnalyzer
 
 		@Override
 		public @NonNull Boolean visitCGOperationCallExp(@NonNull CGOperationCallExp cgElement) {
-//			Operation referredOperation = cgElement.getReferredOperation();
-//			if (referredOperation != null) {
-//				String name = referredOperation.getName();
-//				System.out.println("visitCGOperationCallExp " + name);
-//				if ("implies".equals(name)) {
-//					System.out.println("Got it");
-//				}
-//			}
+			//			Operation referredOperation = cgElement.getReferredOperation();
+			//			if (referredOperation != null) {
+			//				String name = referredOperation.getName();
+			//				System.out.println("visitCGOperationCallExp " + name);
+			//				if ("implies".equals(name)) {
+			//					System.out.println("Got it");
+			//				}
+			//			}
 			List<CGValuedElement> cgArguments = cgElement.getArguments();
 			int iSize = cgArguments.size();
 			if (cgElement.isValidating()) {
@@ -455,24 +455,24 @@ public class FieldingAnalyzer
 			return isCaught;
 		}
 	}
-	
+
 	protected final @NonNull CodeGenAnalyzer analyzer;
 
 	/**
 	 * The CGVariables that are accessed outside their defining tree.
 	 */
-	private final @NonNull Set<CGVariable> externalVariables = new HashSet<CGVariable>();
+	private final @NonNull Set<@NonNull CGVariable> externalVariables = new HashSet<>();
 
 	/**
 	 * The CGVariables that are accessed by the init of a given CGVariable.
 	 */
-	private final @NonNull Map<CGVariable, Set<CGVariable>> allExternalVariables = new HashMap<CGVariable, Set<CGVariable>>();
-	
+	private final @NonNull Map<@NonNull CGVariable, @Nullable Set<@NonNull CGVariable>> allExternalVariables = new HashMap<>();
+
 	public FieldingAnalyzer(@NonNull CodeGenAnalyzer analyzer) {
 		this.analyzer = analyzer;
 	}
 
-	public void analyze(@NonNull CGElement cgTree, boolean mustBeCaught) {	
+	public void analyze(@NonNull CGElement cgTree, boolean mustBeCaught) {
 		AnalysisVisitor analysisVisitor = createAnalysisVisitor();
 		cgTree.accept(analysisVisitor);
 		RewriteVisitor rewriteVisitor = createRewriteVisitor(externalVariables);
@@ -483,7 +483,7 @@ public class FieldingAnalyzer
 		return new AnalysisVisitor(this);
 	}
 
-	protected @NonNull RewriteVisitor createRewriteVisitor(@NonNull Set<CGVariable> caughtVariables) {
+	protected @NonNull RewriteVisitor createRewriteVisitor(@NonNull Set<@NonNull CGVariable> caughtVariables) {
 		return new RewriteVisitor(analyzer, caughtVariables);
 	}
 
@@ -498,7 +498,7 @@ public class FieldingAnalyzer
 		return false;
 	}
 
-	public void setCaught(@Nullable Set<CGVariable> catchers) {
+	public void setCaught(@Nullable Set<@NonNull CGVariable> catchers) {
 		if (catchers != null) {
 			for (CGVariable catcher : catchers) {
 				if (!catcher.isNonInvalid()) {

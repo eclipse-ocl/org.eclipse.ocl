@@ -12,17 +12,18 @@ package org.eclipse.ocl.xtext.base.cs2as;
 
 import java.util.Collection;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 
-public class PivotDependencies extends AbstractDependency<Collection<? extends ModelElementCS>>
+public class PivotDependencies extends AbstractDependency<@NonNull Collection<@NonNull ? extends ModelElementCS>>
 {
-	public PivotDependencies(Collection<? extends ModelElementCS> csElements) {
+	public PivotDependencies(@NonNull Collection<@NonNull ? extends ModelElementCS> csElements) {
 		super(csElements);
 	}
 
 	@Override
 	public boolean canExecute() {
-		for (ModelElementCS csElement : element) {
+		for (@NonNull ModelElementCS csElement : element) {
 			if (csElement.getPivot() == null) {
 				return false;
 			}

@@ -10,11 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2as;
 
-public class BooleanDependency extends AbstractDependency<Object>
+import org.eclipse.jdt.annotation.NonNull;
+
+public class BooleanDependency extends AbstractDependency<@NonNull Object>
 {
 	private Boolean satisfied = false;
-	
-	public BooleanDependency(String description) {
+
+	public BooleanDependency(@NonNull String description) {
 		super(description);
 	}
 
@@ -22,7 +24,7 @@ public class BooleanDependency extends AbstractDependency<Object>
 	public boolean canExecute() {
 		return satisfied;
 	}
-	
+
 	public void setSatisfied() {
 		satisfied = true;
 	}

@@ -132,7 +132,7 @@ public class NameManager
 	 * <p>
 	 * It is strongly recommended that clients do no more than add additional names.
 	 */
-	public static final Set<String> reservedJavaNames = new HashSet<String>();
+	public static final Set<@NonNull String> reservedJavaNames = new HashSet<>();
 	{
 		reservedJavaNames.add("Boolean");
 		reservedJavaNames.add("Character");
@@ -203,7 +203,7 @@ public class NameManager
 		reservedJavaNames.add("true");
 	}
 
-	public static @NonNull IdVisitor<String> idVisitor = new IdVisitor<String>()
+	public static @NonNull IdVisitor<@NonNull String> idVisitor = new IdVisitor<@NonNull String>()
 	{
 		@Override
 		public @NonNull String visitClassId(@NonNull ClassId id) {

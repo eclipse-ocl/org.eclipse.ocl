@@ -20,12 +20,12 @@ import org.eclipse.ocl.pivot.Element;
 public abstract class SingleContinuation<T extends EObject> extends BasicContinuation<T>
 {
 	public SingleContinuation(@NonNull CS2ASConversion context, Element pivotParent, EStructuralFeature pivotFeature,
-			@NonNull T csElement, Dependency... dependencies) {
+			@NonNull T csElement, @NonNull Dependency... dependencies) {
 		super(context, pivotParent, pivotFeature, csElement, dependencies);
 	}
-	
+
 	public SingleContinuation(@NonNull CS2ASConversion context, Element pivotParent, EStructuralFeature pivotFeature,
-			@NonNull T csElement, @NonNull List<Dependency> dependencies) {
-		super(context, pivotParent, pivotFeature, csElement, dependencies.toArray(new Dependency[dependencies.size()]));
+			@NonNull T csElement, @NonNull List<@NonNull Dependency> dependencies) {
+		super(context, pivotParent, pivotFeature, csElement, dependencies.toArray(new @NonNull Dependency[dependencies.size()]));
 	}
 }

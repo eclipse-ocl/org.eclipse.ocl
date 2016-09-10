@@ -10,12 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2as;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 
-public class PivotDependency extends AbstractDependency<PivotableElementCS>
+public class PivotDependency extends AbstractDependency<@NonNull PivotableElementCS>
 {
-	public PivotDependency(PivotableElementCS csElement) {
+	public PivotDependency(@NonNull PivotableElementCS csElement) {
 		super(csElement);
+		assert  csElement != null;
 	}
 
 	@Override

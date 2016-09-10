@@ -225,7 +225,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		/*
 		 * The AS to CG parameter map assists in construction of ExpressionInOcl before/without an Operation.
 		 */
-		private final @NonNull Map<@NonNull Variable, @NonNull CGParameter> cgParameters = new HashMap<>();
+		private final @NonNull Map<@NonNull VariableDeclaration, @NonNull CGParameter> cgParameters = new HashMap<>();
 
 		private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> cgVariables = new HashMap<>();
 
@@ -237,7 +237,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return cgVariables.get(asVariable);
 		}
 
-		public CGParameter getParameter(@NonNull Variable asVariable) {
+		public CGParameter getParameter(@NonNull VariableDeclaration asVariable) {
 			CGParameter cgVariable = cgParameters.get(asVariable);
 			if (cgVariable != null) {
 				return cgVariable;
@@ -263,7 +263,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 
-		public void putParameter(@NonNull Variable aParameter, @NonNull CGParameter cgParameter) {
+		public void putParameter(@NonNull VariableDeclaration aParameter, @NonNull CGParameter cgParameter) {
 			cgParameters.put(aParameter, cgParameter);
 			cgVariables.put(aParameter, cgParameter);
 		}
@@ -286,8 +286,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		genModelHelper = codeGenerator.getGenModelHelper();
 	}
 
-	protected void addParameter(@NonNull Variable aParameter, @NonNull CGParameter cgParameter) {
-		variablesStack.putParameter(aParameter, cgParameter);
+	protected void addParameter(@NonNull VariableDeclaration asVariable, @NonNull CGParameter cgParameter) {
+		variablesStack.putParameter(asVariable, cgParameter);
 	}
 
 	public @Nullable CGVariable basicGetParameter(@NonNull Variable aParameter) {
@@ -330,7 +330,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgParameter;
 	} */
 
-	public @NonNull CGVariable createCGVariable(@NonNull Variable asVariable) {
+	public @NonNull CGVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = variablesStack.getVariable(asVariable);
 		if (cgVariable == null) {
 			CGFinalVariable cgVariable2 = CGModelFactory.eINSTANCE.createCGFinalVariable();

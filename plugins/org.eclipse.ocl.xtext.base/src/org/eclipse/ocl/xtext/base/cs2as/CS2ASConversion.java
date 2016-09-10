@@ -136,9 +136,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	private final @NonNull BaseCSVisitor<Continuation<?>> postOrderVisitor;
 	private final @NonNull BaseCSVisitor<Continuation<?>> preOrderVisitor;
 
-	private @NonNull InterDependency<TemplateSignatureContinuation> typesHaveSignatures = new InterDependency<TemplateSignatureContinuation>("All unspecialized signatures defined", null);
+	private @NonNull InterDependency<@NonNull TemplateSignatureContinuation> typesHaveSignatures = new InterDependency<>("All unspecialized signatures defined", null);
 
-	private @NonNull InterDependency<OperatorExpContinuation<?>> operatorsHavePrecedence = new InterDependency<OperatorExpContinuation<?>>("All operator precedences defined", null);
+	private @NonNull InterDependency<@NonNull OperatorExpContinuation<?>> operatorsHavePrecedence = new InterDependency<>("All operator precedences defined", null);
 
 	/**
 	 * A typed cache for use by derived conversions.
@@ -210,6 +210,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return true;
 	}
 
+	/** @deprecated no longer used - code null test in caller */
+	@Deprecated
 	public Dependency createTypeIsReferenceableDependency(@NonNull TypeRefCS csTemplateParameter) {
 		if (csTemplateParameter instanceof WildcardTypeRefCS) {
 			return null;
@@ -572,7 +574,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return oldPackagesByName.get(name);
 	}
 
-	public @NonNull InterDependency<OperatorExpContinuation<?>> getOperatorsHavePrecedenceInterDependency() {
+	public @NonNull InterDependency<@NonNull OperatorExpContinuation<?>> getOperatorsHavePrecedenceInterDependency() {
 		return operatorsHavePrecedence;
 	}
 
@@ -651,7 +653,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return pivotTemplateSignatures;
 	}
 
-	public @NonNull InterDependency<TemplateSignatureContinuation> getTypesHaveSignaturesInterDependency() {
+	public @NonNull InterDependency<@NonNull TemplateSignatureContinuation> getTypesHaveSignaturesInterDependency() {
 		return typesHaveSignatures;
 	}
 
