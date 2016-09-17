@@ -33,21 +33,21 @@ public abstract class AbstractDependency<@NonNull T> implements Dependency
 		return getClass().getSimpleName() + '(' + element + ')';
 	}
 
-	public static AbstractDependency<?>[] combine(AbstractDependency<?> dependency1, AbstractDependency<?> dependency2) {
+	public static AbstractDependency<@NonNull ?>[] combine(AbstractDependency<@NonNull ?> dependency1, AbstractDependency<@NonNull ?> dependency2) {
 		if (dependency1 != null) {
 			if (dependency2 != null) {
-				return new AbstractDependency<?>[] {dependency1, dependency2};
+				return new AbstractDependency<@NonNull ?>[] {dependency1, dependency2};
 			}
 			else {
-				return new AbstractDependency<?>[] {dependency1};
+				return new AbstractDependency<@NonNull ?>[] {dependency1};
 			}
 		}
 		else {
 			if (dependency2 != null) {
-				return new AbstractDependency<?>[] {dependency2};
+				return new AbstractDependency<@NonNull ?>[] {dependency2};
 			}
 			else {
-				return new AbstractDependency<?>[] {};
+				return new AbstractDependency<@NonNull ?>[] {};
 			}
 		}
 	}
