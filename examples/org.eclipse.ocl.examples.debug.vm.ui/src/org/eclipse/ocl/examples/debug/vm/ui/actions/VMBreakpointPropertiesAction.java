@@ -30,7 +30,7 @@ import org.eclipse.ui.dialogs.PropertyDialogAction;
  * Presents the standard properties dialog to configure the attributes of an OCL
  * Breakpoint.
  */
-public class VMBreakpointPropertiesAction implements IObjectActionDelegate {
+public abstract class VMBreakpointPropertiesAction implements IObjectActionDelegate {
 
 	private IWorkbenchPart fPart;
 	private VMLineBreakpoint fBreakpoint;
@@ -38,6 +38,7 @@ public class VMBreakpointPropertiesAction implements IObjectActionDelegate {
 	/**
 	 * @see IActionDelegate#run(IAction)
 	 */
+	@Override
 	public void run(IAction action) {
 		if (fBreakpoint != null) {
 			IShellProvider provider;
@@ -45,6 +46,7 @@ public class VMBreakpointPropertiesAction implements IObjectActionDelegate {
 				provider = fPart.getSite();
 			} else {
 				provider = new IShellProvider() {
+					@Override
 					public Shell getShell() {
 						return DebugVMUIPlugin.getActiveWorkbenchShell();
 					}
@@ -52,18 +54,22 @@ public class VMBreakpointPropertiesAction implements IObjectActionDelegate {
 			}
 			PropertyDialogAction propertyAction = new PropertyDialogAction(
 					provider, new ISelectionProvider() {
+						@Override
 						public void addSelectionChangedListener(
 								ISelectionChangedListener listener) {
 						}
 
+						@Override
 						public ISelection getSelection() {
 							return new StructuredSelection(fBreakpoint);
 						}
 
+						@Override
 						public void removeSelectionChangedListener(
 								ISelectionChangedListener listener) {
 						}
 
+						@Override
 						public void setSelection(ISelection selection) {
 						}
 					});
@@ -74,6 +80,7 @@ public class VMBreakpointPropertiesAction implements IObjectActionDelegate {
 	/**
 	 * @see IActionDelegate#selectionChanged(IAction, ISelection)
 	 */
+	@Override
 	public void selectionChanged(IAction action, ISelection selection) {
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection ss = (IStructuredSelection) selection;
@@ -91,7 +98,7 @@ public class VMBreakpointPropertiesAction implements IObjectActionDelegate {
 
 	/**
 	 * Allows the underlying breakpoint for the properties page to be set
-	 * 
+	 *
 	 * @param breakpoint
 	 */
 	public void setBreakpoint(VMLineBreakpoint breakpoint) {
@@ -101,6 +108,7 @@ public class VMBreakpointPropertiesAction implements IObjectActionDelegate {
 	/**
 	 * @see IObjectActionDelegate#setActivePart(IAction, IWorkbenchPart)
 	 */
+	@Override
 	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
 		fPart = targetPart;
 	}

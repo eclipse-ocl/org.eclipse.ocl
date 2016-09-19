@@ -28,7 +28,7 @@
 	               menubarPath="debug"
 	               icon="icons/brkp_obj.gif"/>
 	         <action id="org.eclipse.ocl.examples.debug.ui.OCLBreakpointPropertiesRulerAction"
-	               class="org.eclipse.ocl.examples.debug.vm.ui.actions.VMBreakpointPropertiesRulerActionDelegate"	               
+	               class="org.eclipse.ocl.examples.debug.ui.actions.OCLBreakpointPropertiesRulerActionDelegate"	               
 	               label="%OCLBreakpointProperties.label"
 	               menubarPath="group.properties"/>	         
 	      </viewerContribution>    
@@ -77,9 +77,9 @@
       </viewerContribution-->
  
       <objectContribution id="org.eclipse.ocl.examples.debug.ui.OCLBreakpointObjectActions"
-			objectClass="org.eclipse.ocl.examples.debug.vm.VMBreakpoint">
+			objectClass="org.eclipse.ocl.examples.debug.OCLBreakpoint">
          <action id="org.eclipse.ocl.examples.debug.ui.actions.OCLBreakpointProperties"
-               class="org.eclipse.ocl.examples.debug.vm.ui.actions.VMBreakpointPropertiesAction"
+               class="org.eclipse.ocl.examples.debug.ui.actions.OCLBreakpointPropertiesAction"
                enablesFor="1"
                label="%OCLBreakpointProperties.label"
                menubarPath="additions"/>

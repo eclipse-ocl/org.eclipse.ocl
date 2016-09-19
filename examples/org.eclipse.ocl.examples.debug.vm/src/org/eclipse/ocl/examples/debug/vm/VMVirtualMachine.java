@@ -63,23 +63,25 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 	public static final @NonNull TracingOption VM_EVENT = new TracingOption(DebugVMPlugin.PLUGIN_ID, "vmEvent");
 	public static final @NonNull TracingOption VM_REQUEST = new TracingOption(DebugVMPlugin.PLUGIN_ID, "vmRequest");
 	public static final @NonNull TracingOption VM_RESPONSE = new TracingOption(DebugVMPlugin.PLUGIN_ID, "vmResponse");
-	
+
 	static {
-//		LOCATION.setState(true);
-//		PRE_VISIT.setState(true);
-//		POST_VISIT.setState(true);
-//		VISITOR_STACK.setState(true);
-//		VM_EVENT.setState(true);
-//		VM_REQUEST.setState(true);
-//		VM_RESPONSE.setState(true);
+		//		LOCATION.setState(true);
+		//		PRE_VISIT.setState(true);
+		//		POST_VISIT.setState(true);
+		//		VISITOR_STACK.setState(true);
+		//		VM_EVENT.setState(true);
+		//		VM_REQUEST.setState(true);
+		//		VM_RESPONSE.setState(true);
 	}
 
 	private class DebuggerShell implements IVMDebuggerShell
-	{	
+	{
+		@Override
 		public @NonNull VMBreakpointManager getBreakPointManager() {
 			return VMVirtualMachine.this.fBreakpointManager;
 		}
-		
+
+		@Override
 		public void handleVMEvent(@NonNull VMEvent event) {
 			if (VM_EVENT.isActive()) {
 				VM_EVENT.println("?[" + Thread.currentThread().getName() + "] " + event.toString());
@@ -99,43 +101,48 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 					fExecutor = null;				// Needed to workaround BUG 468902
 					runner = null;					// Needed to workaround BUG 468902
 					fStateMonitor.notify();
-				}				
+				}
 			}
 
 			try {
-				fEvents.add(event);				
+				fEvents.add(event);
 			} catch(IllegalStateException e) {
 				// FIXME
 				System.err.println("Event queue full!!!!");
 			}
-		}	
-		
+		}
+
+		@Override
 		public boolean isSessionStarted() {
 			return fInterpreter != null;
 		}
 
+		@Override
 		public VMRequest peekRequest() {
 			synchronized (fLock) {
 				return fRequests.isEmpty() ? null : fRequests.get(0);
 			}
 		}
-		
+
+		@Override
 		public @Nullable VMRequest popRequest() {
 			synchronized (fLock) {
 				return fRequests.isEmpty() ? null : fRequests.remove(0);
 			}
 		}
-		
+
+		@Override
 		public void sessionStarted(@NonNull VMEvaluationStepper evaluator) {
 			fInterpreter = evaluator;
 		}
-		
+
+		@Override
 		public @Nullable VMRequest waitAndPopRequest(@NonNull VMEvent suspend) throws InterruptedException {
 			// FIXME - should be locked to ensure none can really send a request until
 			// we deliver the event
 			handleVMEvent(suspend);
-			
-			synchronized (fLock) {			
+
+			synchronized (fLock) {
 				while(fRequests.isEmpty()) {
 					fLock.wait();
 				}
@@ -144,10 +151,10 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 					VM_REQUEST.println(">[" + Thread.currentThread().getName() + "] " + request);
 				}
 				return request;
-			}		
+			}
 		}
 	}
-		
+
 	private static int execute(@NonNull VMDebuggableExecutorAdapter executorAdapter, @NonNull VMStartRequest startRequest) {
 		int exitCode = 0;
 		try {
@@ -161,11 +168,11 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 			exitCode = -2;
 			// FIXME Auto-generated catch block
 			e.printStackTrace();
-		}	
-		
+		}
+
 		return exitCode;
-	}	
-	
+	}
+
 	public static @Nullable UnitLocation lookupEnvironmentByID(long id, @NonNull List<UnitLocation> stack) {
 		for (UnitLocation location : stack) {
 			VMEvaluationEnvironment evalEnv = location.getEvalEnv();
@@ -175,13 +182,13 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 		}
 		return null;
 	}
-		
+
 	private final List<VMRequest> fRequests = new ArrayList<VMRequest>();
-	private final BlockingQueue<VMEvent> fEvents = new ArrayBlockingQueue<VMEvent>(50);	
-		
+	private final BlockingQueue<VMEvent> fEvents = new ArrayBlockingQueue<VMEvent>(50);
+
 	private /*final @NonNull*/ DebuggableRunner runner;
 	private final @NonNull IVMDebuggerShell fDebuggerShell;
-	
+
 	private final @NonNull VMBreakpointManager fBreakpointManager;
 	private @Nullable VMEvaluationStepper fInterpreter;
 	private /*final @NonNull*/ VMDebuggableExecutorAdapter fExecutor;
@@ -189,10 +196,10 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 	private boolean fRunning;
 	private boolean fTerminated;
 	private int fExitCode = -3;
-		
+
 	private Object fStateMonitor = new Object();
-	private final Object fLock = new Object();	
-	
+	private final Object fLock = new Object();
+
 	protected VMVirtualMachine(@NonNull DebuggableRunner runner, @NonNull VMDebuggableExecutorAdapter executorAdapter) {
 		this.runner = runner;
 		fExecutor = executorAdapter;
@@ -200,9 +207,10 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 		fBreakpointManager = new VMBreakpointManager(this, executorAdapter.getUnit());
 		fTerminated = false;
 	}
-	
+
 	private @NonNull Runnable createVMRunnable(final @NonNull VMStartRequest startRequest) {
 		return new Runnable() {
+			@Override
 			public void run() {
 				int exitCode = -1;
 				try {
@@ -216,8 +224,12 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 			}
 		};
 	}
-	
-	public @Nullable VMStackFrameData createStackFrame(long frameID, @NonNull List<UnitLocation> stack) {	
+
+	public abstract @NonNull VMBreakpoint createBreakpoint(@NonNull Element element, @NonNull VMNewBreakpointData data, boolean isTemporary);
+
+	public abstract @NonNull VMBreakpoint createBreakpoint(@NonNull Element element, long id, int line, @NonNull String targetURI, boolean isTemporary);
+
+	public @Nullable VMStackFrameData createStackFrame(long frameID, @NonNull List<UnitLocation> stack) {
 		UnitLocation location = lookupEnvironmentByID(frameID, stack);
 		if (location != null) {
 			return createStackFrame(location);
@@ -226,9 +238,9 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 		// invalid stack frame
 		return null;
 	}
-	
+
 	protected abstract @Nullable VMStackFrameData createStackFrame(@NonNull UnitLocation location);
-	
+
 	public IValue evaluate(@NonNull String expressionText, VMDebugTarget debugTarget, long frameID) throws CoreException {
 		VMEvaluationStepper fInterpreter2 = fInterpreter;
 		if (fInterpreter2 == null) {
@@ -236,16 +248,16 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 		}
 
 		Element astNode = fInterpreter2.getCurrentLocation().getElement();
-        if (astNode == null) {
-            return null;
-        }
-        
-        ConditionChecker localChecker = new ConditionChecker(expressionText, astNode);
-        LocalValue lv = new LocalValue();
-        lv.valueObject = localChecker.evaluate(fInterpreter2);
-        lv.valueType = localChecker.getConditionType();
-        
-		return new VMLocalValue(debugTarget, frameID, new @NonNull String @NonNull [] {expressionText}, lv, 
+		if (astNode == null) {
+			return null;
+		}
+
+		ConditionChecker localChecker = new ConditionChecker(expressionText, astNode);
+		LocalValue lv = new LocalValue();
+		lv.valueObject = localChecker.evaluate(fInterpreter2);
+		lv.valueType = localChecker.getConditionType();
+
+		return new VMLocalValue(debugTarget, frameID, new @NonNull String @NonNull [] {expressionText}, lv,
 				fInterpreter2.getVMEvaluationEnvironment());
 	}
 
@@ -256,7 +268,7 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 		}
 		return fInterpreter2.getVMEvaluationEnvironment();
 	}
-	
+
 	public int getExitCode() {
 		return fExitCode;
 	}
@@ -271,7 +283,7 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 
 	private @NonNull VMBreakpointResponse handleBreakPointRequest(@NonNull VMBreakpointRequest request) {
 		ActionKind actionKind = request.getActionKind();
-		
+
 		if(actionKind == VMBreakpointRequest.ActionKind.ADD) {
 			List<VMBreakpointData> allBpData = request.getBreakpointData();
 			if(allBpData != null) {
@@ -280,13 +292,13 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 					if(bpData instanceof VMNewBreakpointData == false) {
 						continue;
 					}
-					
+
 					VMNewBreakpointData newBreakpoint = (VMNewBreakpointData) bpData;
 					VMBreakpoint breakpoint = fBreakpointManager.createBreakpoint(newBreakpoint);
-					
+
 					if(breakpoint != null) {
 						addedBpIDs.add(new Long(newBreakpoint.getID()));
-						
+
 						getDebugCore().getTrace().trace(DebugOptions.VM,
 								"Installing breakpoint: " + " line:" //$NON-NLS-1$ //$NON-NLS-2$
 										+ newBreakpoint.getLine() + " " //$NON-NLS-1$
@@ -298,7 +310,7 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 										+ newBreakpoint.getTargetURI());
 					}
 				}
-				
+
 				return new VMBreakpointResponse(addedBpIDs);
 			}
 		} else if(actionKind == VMBreakpointRequest.ActionKind.REMOVE) {
@@ -306,11 +318,11 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 		} else if(actionKind == VMBreakpointRequest.ActionKind.CHANGE) {
 			fBreakpointManager.changeBreakpoint(request.getBreakpointID(), request.getFirstBreakpointData());
 		}
-		
+
 		// TODO
 		return new VMBreakpointResponse();
 	}
-	
+
 	private @NonNull VMResponse handleStackFrameRequest(@NonNull VMStackFrameRequest request) {
 		VMEvaluationStepper fInterpreter2 = fInterpreter;
 		if (fInterpreter2 != null) {
@@ -320,31 +332,31 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 				VMStackFrameResponse response = new VMStackFrameResponse(frame);
 				if (!locationStack.isEmpty()) {
 					UnitLocation topLocation = locationStack.get(0);
-			    	response.isDeferredExecution = topLocation.isDeferredExecution();
+					response.isDeferredExecution = topLocation.isDeferredExecution();
 				}
 				return response;
 			}
 
 		}
-		
+
 		// FIXME
-		return VMResponse.createERROR(); 
+		return VMResponse.createERROR();
 	}
-	
+
 	private @Nullable VMResponse handleValueDetailRequest(@NonNull VMDetailRequest request) {
 		// FIXME - ensure VM is in SUSPEND state, otherwise report fError
 		VMEvaluationStepper fInterpreter2 = fInterpreter;
 		if (fInterpreter2 != null) {
 			VMEvaluationEnvironment vmEvaluationEnvironment = fInterpreter2.getCurrentLocation().getEvalEnv();
 			VariableFinder variableFinder = VariableFinder.newInstance(vmEvaluationEnvironment, true);
-			String detail = variableFinder.computeDetail(request.getVariableURI());		
+			String detail = variableFinder.computeDetail(request.getVariableURI());
 			return new VMDetailResponse(detail != null ? detail : ""); //$NON-NLS-1$
 		}
 		else {
 			return null;
 		}
 	}
-	
+
 	private @Nullable VMResponse handleVariableRequest(@NonNull VMVariableRequest request) {
 		// FIXME - ensure VM is in SUSPEND state, otherwise report fError
 		VMEvaluationStepper fInterpreter2 = fInterpreter;
@@ -357,11 +369,13 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 			return null;
 		}
 	}
-	
+
+	@Override
 	public boolean isTerminated() {
 		return fTerminated;
 	}
 
+	@Override
 	public VMEvent readVMEvent() throws IOException {
 		try {
 			return fEvents.take();
@@ -369,7 +383,8 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 			throw new IOException("Waiting for event interrupted");
 		}
 	}
-	
+
+	@Override
 	public @NonNull VMResponse sendRequest(@NonNull VMRequest request) throws IOException {
 		VMResponse response = null;
 		try {
@@ -413,7 +428,7 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 			VM_REQUEST.println("?[" + Thread.currentThread().getName() + "] " + request);
 		}
 		synchronized (fLock) {
-			fRequests.add(request);			
+			fRequests.add(request);
 			fLock.notifyAll();
 		}
 		response = VMResponse.createOK();
@@ -422,21 +437,21 @@ public abstract class VMVirtualMachine implements IVMVirtualMachineShell
 		}
 		return response;
 	}
-	
+
 	private @NonNull VMResponse start(@NonNull VMStartRequest startRequest) {
 		Thread executorThread = new Thread(createVMRunnable(startRequest), getDebugCore().getVMThreadName());
-		
+
 		synchronized (fStateMonitor) {
 			if(fRunning) {
 				return VMResponse.createERROR();
 			}
 
 			executorThread.start();
-			
+
 			while(!(fRunning || fTerminated)) {
-				try {				
+				try {
 					fStateMonitor.wait();
-				} catch (InterruptedException e) {					
+				} catch (InterruptedException e) {
 					getDebugCore().log(getDebugCore().createStatus(IStatus.ERROR, "VM startup process interrupted"));
 				}
 			}

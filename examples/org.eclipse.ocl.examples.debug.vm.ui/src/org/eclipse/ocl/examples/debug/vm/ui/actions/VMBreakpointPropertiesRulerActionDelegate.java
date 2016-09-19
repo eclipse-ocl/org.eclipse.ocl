@@ -16,14 +16,15 @@ import org.eclipse.jface.text.source.IVerticalRulerInfo;
 import org.eclipse.ui.texteditor.AbstractRulerActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-public class VMBreakpointPropertiesRulerActionDelegate  extends AbstractRulerActionDelegate {
+public abstract class VMBreakpointPropertiesRulerActionDelegate  extends AbstractRulerActionDelegate {
 
-    /**
-     * @see AbstractRulerActionDelegate#createAction(ITextEditor, IVerticalRulerInfo)
-     */
-    protected IAction createAction(ITextEditor editor, IVerticalRulerInfo rulerInfo) {
-    	
-    	
-        return new VMBreakpointPropertiesRulerAction(editor, rulerInfo);
-    }
+	/**
+	 * @see AbstractRulerActionDelegate#createAction(ITextEditor, IVerticalRulerInfo)
+	 */
+	@Override
+	protected IAction createAction(ITextEditor editor, IVerticalRulerInfo rulerInfo) {
+
+
+		return new VMBreakpointPropertiesRulerAction(editor, rulerInfo);
+	}
 }

@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -47,7 +48,7 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 	private static final Logger logger = Logger.getLogger(DebugVMUIPlugin.class);
 
 	protected ImageRegistry imageDescriptorRegistry;
-	
+
 	/**
 	 * The constructor
 	 */
@@ -58,6 +59,7 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
@@ -67,6 +69,7 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		if (imageDescriptorRegistry != null) {
@@ -85,11 +88,11 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	
+
 	public Image createImage(String path) {
-		
+
 		Image image = getImageRegistry().get(path);
-		
+
 		if (image == null) {
 			try {
 				ImageDescriptor imageDescriptor = getImageDescriptor(path);
@@ -100,14 +103,14 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 			}
 			catch(Exception e) { logger.error("Failed to createImage '" + path + "'", e); }
 		}
-		
+
 		return image;
 	}
-	
+
 	public ImageDescriptor getImageDescriptor(String path) {
-		
+
 		ImageDescriptor imageDescriptor = getImageDescriptorRegistry().getDescriptor(path);
-		
+
 		if (imageDescriptor == null) {
 			URL url = FileLocator.find(getBundle(), new Path(path), Collections.<String, String>emptyMap());
 			if (url != null) {
@@ -115,33 +118,33 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 				if (imageDescriptor != null) getImageDescriptorRegistry().put(path, imageDescriptor);
 			}
 		}
-		
+
 		return imageDescriptor;
 	}
-	
+
 	protected ImageRegistry getImageDescriptorRegistry() {
 		if (imageDescriptorRegistry == null) {
 			imageDescriptorRegistry = createImageRegistry();
 		}
 		return imageDescriptorRegistry;
 	}
-	
+
 	public static BasicDiagnostic createDiagnostic(String message) {
 		return new BasicDiagnostic(Diagnostic.OK, PLUGIN_ID, 0, message, null);
 	}
-	
+
 	public static Diagnostic createErrorDiagnostic(String message, Throwable throwable) {
 		Object[] data = (throwable == null) ? null : new Object [] { throwable };
 		return new BasicDiagnostic(Diagnostic.ERROR,  PLUGIN_ID, 0, message, data);
 	}
-	
+
 	public static Diagnostic createWarnDiagnostic(String message) {
 		return new BasicDiagnostic(Diagnostic.ERROR,  PLUGIN_ID, 0, message, null);
-	}	
+	}
 
 	/**
 	 * Indicates that the given diagnostic is neither error or canceled.
-	 * 
+	 *
 	 * @param diagnostic
 	 *            the diagnostic to test
 	 * @return <code>true</code> in case of success, <code>false</code>
@@ -151,13 +154,13 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 		int severity = diagnostic.getSeverity();
 		return severity != Diagnostic.ERROR && severity != Diagnostic.CANCEL;
 	}
-	
+
 	public static void log(int severity, int code, String message, Throwable throwable) {
 		//
 		// Status ctor requires a non-null message
 		String msg = message == null
-			? "" //$NON-NLS-1$
-			: message;
+				? "" //$NON-NLS-1$
+						: message;
 
 		try {
 			if (getDefault() != null) {
@@ -166,26 +169,26 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 			} else {
 				// not in the Eclipse environment
 				//if (shouldTrace()) {
-					switch (code) {
-						case Diagnostic.WARNING :
-							System.err.print("WARNING "); //$NON-NLS-1$
-							break;
-						case Diagnostic.ERROR :
-						case Diagnostic.CANCEL :
-							System.err.print("ERROR "); //$NON-NLS-1$
-							break;
-						default :
-							// don't output INFO or OK messages
-							return;
-					}
+				switch (code) {
+				case Diagnostic.WARNING :
+					System.err.print("WARNING "); //$NON-NLS-1$
+					break;
+				case Diagnostic.ERROR :
+				case Diagnostic.CANCEL :
+					System.err.print("ERROR "); //$NON-NLS-1$
+					break;
+				default :
+					// don't output INFO or OK messages
+					return;
+				}
 
-					System.err.print(code);
-					System.err.print(": "); //$NON-NLS-1$
-					System.err.println(message);
+				System.err.print(code);
+				System.err.print(": "); //$NON-NLS-1$
+				System.err.println(message);
 
-					if (throwable != null) {
-						throwable.printStackTrace(System.err);
-					}
+				if (throwable != null) {
+					throwable.printStackTrace(System.err);
+				}
 				//}
 			}
 		} catch (IllegalArgumentException iae) {
@@ -193,16 +196,16 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 		}
 	}
 
-    public static void log(IStatus status) {
-    	DebugVMUIPlugin debugPlugin = getDefault();
+	public static void log(IStatus status) {
+		DebugVMUIPlugin debugPlugin = getDefault();
 		if(debugPlugin != null) {
 			debugPlugin.getLog().log(status);
-    	}
-    } 
+		}
+	}
 
-    public static void log(Throwable e) {
-        log(new Status(IStatus.ERROR, PLUGIN_ID, "Exception caught", e)); //$NON-NLS-1$
-    }
+	public static void log(Throwable e) {
+		log(new Status(IStatus.ERROR, PLUGIN_ID, "Exception caught", e)); //$NON-NLS-1$
+	}
 
 	public static final Display getStandardDisplay() {
 		Display display = Display.getCurrent();
@@ -214,7 +217,7 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 
 	/**
 	 * Returns the active workbench window
-	 * 
+	 *
 	 * @return the active workbench window
 	 */
 	public static IWorkbenchWindow getActiveWorkbenchWindow() {
@@ -223,7 +226,7 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 
 	/**
 	 * Returns the active workbench shell or <code>null</code> if none
-	 * 
+	 *
 	 * @return the active workbench shell or <code>null</code> if none
 	 */
 	public static Shell getActiveWorkbenchShell() {
@@ -234,11 +237,11 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 		return null;
 	}
 
-	public static IStatus createStatus(int severity, String message) {
+	public static @NonNull IStatus createStatus(int severity, String message) {
 		return new Status(severity, PLUGIN_ID, 0, message, null);
 	}
 
-	public static IStatus createErrorStatus(String message) {
+	public static @NonNull IStatus createErrorStatus(String message) {
 		return createStatus(IStatus.ERROR, message);
 	}
 
@@ -269,16 +272,16 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 				break;
 			case IStatus.INFO:
 				MessageDialog
-						.openInformation(shell, title, status.getMessage());
+				.openInformation(shell, title, status.getMessage());
 				break;
 			}
 		}
 	}
-	
+
 	@Override
 	protected ImageRegistry createImageRegistry() {
 		ImageRegistry imageRegistry = super.createImageRegistry();
-		imageRegistry.put(DebugVMImages.LOCAL_VARIABLE, imageDescriptor("localvar_obj.gif")); //$NON-NLS-1$		
+		imageRegistry.put(DebugVMImages.LOCAL_VARIABLE, imageDescriptor("localvar_obj.gif")); //$NON-NLS-1$
 		imageRegistry.put(DebugVMImages.THIS_VARIABLE, imageDescriptor("thisvar_obj.gif")); //$NON-NLS-1$
 		imageRegistry.put(DebugVMImages.PREDEFINED_VARIABLE, imageDescriptor("predefvar_obj.gif")); //$NON-NLS-1$
 		imageRegistry.put(DebugVMImages.MODEL_PARAMETER, imageDescriptor("modelpar_obj.gif")); //$NON-NLS-1$
@@ -286,14 +289,14 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 		imageRegistry.put(DebugVMImages.REFERENCE, imageDescriptor("reference_obj.gif")); //$NON-NLS-1$
 		imageRegistry.put(DebugVMImages.COLLECTION_ELEMENT, imageDescriptor("index_element_obj.gif")); //$NON-NLS-1$
 		imageRegistry.put(DebugVMImages.EXPRESSION_IN_OCL, imageDescriptor("ExpressionInOCL.gif")); //$NON-NLS-1$
-		
-/*		imageRegistry.put(OCLDebugImages.INTERM_PROPERTY,				
-				overlayImage("intermprop_ovr.gif", //$NON-NLS-1$ 
+
+		/*		imageRegistry.put(OCLDebugImages.INTERM_PROPERTY,
+				overlayImage("intermprop_ovr.gif", //$NON-NLS-1$
 						imageRegistry.get(OCLDebugImages.ATTRIBUTE),
-						IDecoration.BOTTOM_RIGHT));		
-		
+						IDecoration.BOTTOM_RIGHT));
+
 		imageRegistry.put(OCLDebugImages.CONDITIONAL_BPNT_ENABLED,
-				overlayImage("conditional_ovr.gif", //$NON-NLS-1$ 
+				overlayImage("conditional_ovr.gif", //$NON-NLS-1$
 						DebugUITools.getImage(IDebugUIConstants.IMG_OBJS_BREAKPOINT),
 						IDecoration.TOP_LEFT));
 		imageRegistry.put(OCLDebugImages.CONDITIONAL_BPNT_DISABLED,
@@ -301,15 +304,15 @@ public class DebugVMUIPlugin extends AbstractUIPlugin {
 						"conditional_ovr_disabled.gif", //$NON-NLS-1$
 						DebugUITools.getImage(IDebugUIConstants.IMG_OBJS_BREAKPOINT_DISABLED),
 						IDecoration.TOP_LEFT));
-*/
+		 */
 		return imageRegistry;
 	}
 
 	private ImageDescriptor imageDescriptor(String imagePath) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, "icons/" + imagePath); //$NON-NLS-1$
 	}
-	
-/*    private final ImageDescriptor overlayImage(String overImagePath, Image base, int quadrant) {
+
+	/*    private final ImageDescriptor overlayImage(String overImagePath, Image base, int quadrant) {
         ImageDescriptor decorator = imageDescriptor(overImagePath);
         return new DecorationOverlayIcon(base, decorator, quadrant);
     } */

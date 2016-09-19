@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.ocl.examples.debug.launching.OCLDebuggableRunnerFactory;
+import org.eclipse.ocl.examples.debug.vm.ValidBreakpointLocator;
 import org.eclipse.ocl.examples.debug.vm.ui.DebugVMUIPlugin;
 import org.eclipse.ocl.examples.debug.vm.utils.CompiledUnit;
 import org.eclipse.ocl.examples.debug.vm.utils.LineNumberProvider;
@@ -42,12 +42,13 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
-class BreakpointLocationVerifier {
-	
+public abstract class BreakpointLocationVerifier {
+
 	private static @NonNull LineNumberProvider getLineNumberProvider(final @NonNull IDocument doc) {
-		
+
 		return new LineNumberProvider() {
-			
+
+			@Override
 			public int getLineNumber(int offset) {
 				try {
 					return doc.getLineOfOffset(offset) + 1;
@@ -55,7 +56,8 @@ class BreakpointLocationVerifier {
 					return -1;
 				}
 			}
-			
+
+			@Override
 			public int getLineEnd(int lineNumber) {
 				try {
 					IRegion lineInfo = doc.getLineInformation(lineNumber);
@@ -65,31 +67,28 @@ class BreakpointLocationVerifier {
 				}
 			}
 
+			@Override
 			public int getLineCount() {
 				return doc.getNumberOfLines();
 			}
 		};
-	}		
-	
-//	private static final int GET_AST_TIMEOUT = 10 * 1000;
-	
-	private final ILineBreakpoint fBreakpoint;
-	private final ITextEditor fEditor;
-	private final String fInvalidLocationMessage;
-	
-	BreakpointLocationVerifier(ITextEditor editor, ILineBreakpoint breakpoint, String invalidLocationMessage) {
-		if(editor == null || breakpoint == null || invalidLocationMessage == null) {
-			throw new IllegalArgumentException();
-		}
-		
-		fEditor = editor; 			
-		fBreakpoint = breakpoint;
-		fInvalidLocationMessage = invalidLocationMessage; 			
 	}
-	
-	IStatus run()  {
-		IStatus status = checkBreakpointableElements();
-		if(!status.isOK()) {				
+
+	//	private static final int GET_AST_TIMEOUT = 10 * 1000;
+
+	private final @NonNull ILineBreakpoint fBreakpoint;
+	private final @NonNull ITextEditor fEditor;
+	private final @NonNull String fInvalidLocationMessage;
+
+	protected BreakpointLocationVerifier(@NonNull ITextEditor editor, @NonNull ILineBreakpoint breakpoint, @NonNull String invalidLocationMessage) {
+		fEditor = editor;
+		fBreakpoint = breakpoint;
+		fInvalidLocationMessage = invalidLocationMessage;
+	}
+
+	@NonNull IStatus run()  {
+		@NonNull IStatus status = checkBreakpointableElements();
+		if(!status.isOK()) {
 			if (fBreakpoint != null) {
 				try {
 					DebugPlugin.getDefault().getBreakpointManager().removeBreakpoint(fBreakpoint, true);
@@ -100,20 +99,20 @@ class BreakpointLocationVerifier {
 		}
 		return status;
 	}
-	
-	private IStatus checkBreakpointableElements()  {
+
+	private @NonNull IStatus checkBreakpointableElements()  {
 		int lineNumber;
 		try {
 			lineNumber = fBreakpoint.getLineNumber();
 		} catch (CoreException e) {
 			return e.getStatus();
 		}
-		
+
 		IDocumentProvider docProvider = fEditor.getDocumentProvider();
 		if(docProvider == null) {
 			return canceled();
 		}
-		
+
 		IDocument doc = docProvider.getDocument(fEditor.getEditorInput());
 		if(doc == null) {
 			return canceled();
@@ -138,29 +137,32 @@ class BreakpointLocationVerifier {
 				return null;
 			}
 		});
-        CompiledUnit compilationUnit = root != null ? new CompiledUnit(root) : null;
-        if(compilationUnit == null) {
-        	return DebugVMUIPlugin.createErrorStatus("Failed to obtain AST"); //$NON-NLS-1$
-        }
+		CompiledUnit compilationUnit = root != null ? new CompiledUnit(root) : null;
+		if(compilationUnit == null) {
+			return DebugVMUIPlugin.createErrorStatus("Failed to obtain AST"); //$NON-NLS-1$
+		}
 
-		List<Element> elements = OCLDebuggableRunnerFactory.validBreakpointLocator
+		List<Element> elements = getValidBreakpointLocator()
 				.getBreakpointableElementsForLine(compilationUnit, getLineNumberProvider(doc), lineNumber);
 		if (elements.isEmpty()) {
-            report(NLS.bind(fInvalidLocationMessage, new Integer(lineNumber)));
-            return canceled();
+			report(NLS.bind(fInvalidLocationMessage, new Integer(lineNumber)));
+			return canceled();
 		}
 
 		return Status.OK_STATUS;
 	}
-		
+
+	protected abstract @NonNull ValidBreakpointLocator getValidBreakpointLocator();
+
 	/**
 	 * Reports any status to the current active workbench shell
 	 * @param message the message to display
 	 */
 	protected void report(final String message) {
 		DebugVMUIPlugin.getStandardDisplay().asyncExec(new Runnable() {
+			@Override
 			public void run() {
-				@Nullable IEditorStatusLine statusLine = (IEditorStatusLine) fEditor.getAdapter(IEditorStatusLine.class);
+				@Nullable IEditorStatusLine statusLine = fEditor.getAdapter(IEditorStatusLine.class);
 				if (statusLine != null) {
 					statusLine.setMessage(true, message, null);
 				}
@@ -170,8 +172,8 @@ class BreakpointLocationVerifier {
 			}
 		});
 	}
-	
-	private IStatus canceled() {
+
+	private @NonNull IStatus canceled() {
 		return DebugVMUIPlugin.createStatus(IStatus.CANCEL, fInvalidLocationMessage);
 	}
 }

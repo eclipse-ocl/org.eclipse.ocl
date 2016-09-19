@@ -19,32 +19,32 @@ import org.eclipse.ocl.examples.debug.vm.evaluator.VMEvaluationStepper;
 import org.eclipse.ocl.pivot.Element;
 
 
-public class VMBreakpoint {
-	
-	private final long fID;	
+public abstract class VMBreakpoint {
+
+	private final long fID;
 	private final @NonNull String fTargetURI;
-	private final int fLineNumber;	
-	
+	private final int fLineNumber;
+
 	private final int fHitCount;
 	private final @NonNull Element fElement;
-	private final boolean fIsTemporary;			
+	private final boolean fIsTemporary;
 	private final @Nullable String fConditionBody;
-	
+
 	// intermediate calculated values
-	private int fCurrentHitCount;		
+	private int fCurrentHitCount;
 	private boolean fConditionEnabled;
 	private boolean fConditionSuspendOnTrue;
 	private boolean fLastValue;
 	private ConditionChecker fChecker;
 
-	
+
 	public VMBreakpoint(@NonNull Element element, @NonNull VMNewBreakpointData data, boolean isTemporary)  {
 		fID = data.getID();
 		fTargetURI = data.getTargetURI();
 		fElement = element;
-		fLineNumber = data.getLine();		
+		fLineNumber = data.getLine();
 		fIsTemporary = isTemporary;
-		
+
 		fHitCount = data.getHitCount();
 		fCurrentHitCount = 0;
 
@@ -52,14 +52,14 @@ public class VMBreakpoint {
 		fConditionEnabled = data.getConditionEnabled();
 		fConditionSuspendOnTrue = data.getConditionSuspendOnTrue();
 	}
-	
+
 	public VMBreakpoint(@NonNull Element element, long id, int line, @NonNull String targetURI, boolean isTemporary)  {
 		fID = id;
 		fTargetURI = targetURI;
 		fElement = element;
-		fLineNumber = line;		
+		fLineNumber = line;
 		fIsTemporary = isTemporary;
-		
+
 		fHitCount = 0;
 		fCurrentHitCount = 0;
 
@@ -67,7 +67,7 @@ public class VMBreakpoint {
 		fConditionEnabled = false;
 		fConditionSuspendOnTrue = false;
 	}
-	
+
 	public @NonNull String getUri() {
 		return fTargetURI;
 	}
@@ -84,7 +84,7 @@ public class VMBreakpoint {
 		return fIsTemporary;
 	}
 
-	public int getLineNumber() {	
+	public int getLineNumber() {
 		return fLineNumber;
 	}
 
@@ -95,22 +95,22 @@ public class VMBreakpoint {
 	public boolean expired() {
 		return fHitCount > 0 && fCurrentHitCount >= fHitCount;
 	}
-	
+
 	public boolean hitAndCheckIfTriggered(@NonNull VMEvaluationStepper visitor) throws CoreException {
 		if(expired()) {
 			return false;
 		}
-		
+
 		if (fConditionBody != null) {
 			if(!fConditionEnabled || !checkCondition(visitor)) {
 				return false;
 			}
 		}
-		
+
 		if(fHitCount > 0) {
 			return (++fCurrentHitCount == fHitCount);
 		}
-	
+
 		return true;
 	}
 
@@ -119,10 +119,10 @@ public class VMBreakpoint {
 		if ((fChecker == null) && (fConditionBody2 != null)) {
 			fChecker = new ConditionChecker(fConditionBody2, fElement);
 		}
-		
+
 		boolean prevValue = fLastValue;
 		fLastValue = fChecker.checkCondition(visitor);
-		
+
 		if (fConditionSuspendOnTrue) {
 			return fLastValue;
 		}

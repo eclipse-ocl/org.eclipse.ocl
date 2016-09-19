@@ -83,7 +83,7 @@ public class VMBreakpointManager
 			return null;
 		}
 
-		VMBreakpoint vmBreakpoint = new VMBreakpoint(targetElement, data, false);
+		VMBreakpoint vmBreakpoint = vmVirtualMachine.createBreakpoint(targetElement, data, false);
 		fElement2Breakpoint.put(targetElement, vmBreakpoint);
 		return vmBreakpoint;
 	}
@@ -91,7 +91,7 @@ public class VMBreakpointManager
 
 	public synchronized @NonNull VMBreakpoint createVMPrivateBreakpoint(URI unitURI, @NonNull Element element, int line, boolean isTemporary) throws CoreException {
 		@SuppressWarnings("null")@NonNull String string = unitURI.toString();
-		VMBreakpoint breakpoint = new VMBreakpoint(element, --fPrivateBreakpointID, line, string, isTemporary);
+		VMBreakpoint breakpoint = vmVirtualMachine.createBreakpoint(element, --fPrivateBreakpointID, line, string, isTemporary);
 		fElement2Breakpoint.put(element, breakpoint);
 		return breakpoint;
 	}

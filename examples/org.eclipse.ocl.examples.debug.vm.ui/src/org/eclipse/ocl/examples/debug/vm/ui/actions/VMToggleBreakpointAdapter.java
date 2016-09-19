@@ -25,8 +25,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ocl.examples.debug.core.OCLDebugCore;
-import org.eclipse.ocl.examples.debug.core.OCLLineBreakpoint;
 import org.eclipse.ocl.examples.debug.vm.core.VMLineBreakpoint;
 import org.eclipse.ocl.examples.debug.vm.ui.DebugVMUIPlugin;
 import org.eclipse.ocl.examples.debug.vm.ui.messages.DebugVMUIMessages;
@@ -36,6 +34,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 
 public abstract class VMToggleBreakpointAdapter implements IToggleBreakpointsTarget
 {
+	@Override
 	public void toggleLineBreakpoints(final IWorkbenchPart part, ISelection selection) throws CoreException {
 		final ITextEditor oclEditor = (ITextEditor)part;
 		IResource unitFile = ClassUtil.getAdapter(oclEditor.getEditorInput(), IResource.class);
@@ -44,9 +43,9 @@ public abstract class VMToggleBreakpointAdapter implements IToggleBreakpointsTar
 		}
 		ITextSelection textSelection = (ITextSelection) selection;
 		int lineNumber = textSelection.getStartLine() + 1;
-		
-		List<ILineBreakpoint> breakpoints = OCLDebugCore.INSTANCE.getOCLBreakpoints(ILineBreakpoint.class);
-		for(ILineBreakpoint next : breakpoints) {			 
+
+		List<@NonNull ILineBreakpoint> breakpoints = getOCLBreakpoints();
+		for(ILineBreakpoint next : breakpoints) {
 			if(!unitFile.equals(next.getMarker().getResource())) {
 				continue;
 			}
@@ -64,38 +63,49 @@ public abstract class VMToggleBreakpointAdapter implements IToggleBreakpointsTar
 		}
 
 		@NonNull URI sourceURI = URI.createPlatformResourceURI(unitFile.getFullPath().toString(), true);
-		final VMLineBreakpoint lineBreakpoint = new OCLLineBreakpoint(sourceURI, lineNumber);
+		final VMLineBreakpoint lineBreakpoint = createLineBreakpoint(lineNumber, sourceURI);
 		lineBreakpoint.register(true);
-        
-        Job job = new Job(DebugVMUIMessages.ToggleBreakpointAdapter_VerifyBreakpointJob) {
-            @Override
+
+		Job job = new Job(DebugVMUIMessages.ToggleBreakpointAdapter_VerifyBreakpointJob) {
+			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				return new BreakpointLocationVerifier(oclEditor, lineBreakpoint,
-						DebugVMUIMessages.ToggleBreakpointAdapter_CannotSetBreakpoint).run();
-            }
-            
-            @Override
-            public boolean belongsTo(Object family) {
-            	return OCLLineBreakpoint.OCL_BREAKPOINT_JOBFAMILY == family;
-            }
-        };
-        
-        job.setPriority(Job.INTERACTIVE);
-        job.setSystem(true);
-        job.schedule();        
-	} 
-		
-	public void toggleMethodBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
+				return createBreakpointLocationVerifier(oclEditor, lineBreakpoint).run();
+			}
+
+			@Override
+			public boolean belongsTo(Object family) {
+				return getBreakpointJobFamily() == family;
+			}
+		};
+
+		job.setPriority(Job.INTERACTIVE);
+		job.setSystem(true);
+		job.schedule();
 	}
 
+	@Override
 	public boolean canToggleMethodBreakpoints(IWorkbenchPart part, ISelection selection) {
 		return false;
 	}
 
-	public void toggleWatchpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
-	}
-
+	@Override
 	public boolean canToggleWatchpoints(IWorkbenchPart part, ISelection selection) {
 		return false;
+	}
+
+	protected abstract @NonNull BreakpointLocationVerifier createBreakpointLocationVerifier(@NonNull ITextEditor textEditor, @NonNull VMLineBreakpoint lineBreakpoint);
+
+	protected abstract @NonNull VMLineBreakpoint createLineBreakpoint(int lineNumber, @NonNull URI sourceURI) throws CoreException;
+
+	protected abstract @NonNull Object getBreakpointJobFamily();
+
+	protected abstract @NonNull List<@NonNull ILineBreakpoint> getOCLBreakpoints();
+
+	@Override
+	public void toggleMethodBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
+	}
+
+	@Override
+	public void toggleWatchpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
 	}
 }
