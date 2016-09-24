@@ -710,7 +710,7 @@ public class EnvironmentView
 					addNamedElement(rootCompletePackage);
 				}
 			}
-			for (CompletePackage completePackage : completeModel.getAllCompletePackagesWithUris()) {
+			for (@NonNull CompletePackage completePackage : completeModel.getAllCompletePackagesWithUris()) {
 				String nsURI = completePackage.getURI();
 				if (nsURI != null) {
 					addElement(nsURI, completePackage);

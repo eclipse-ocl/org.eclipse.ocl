@@ -24,58 +24,67 @@ import org.eclipse.ocl.xtext.essentialocl.as2cs.EssentialOCLLocationInFileProvid
 public class OCLDebugCore extends VMDebugCore
 {
 	public static final @NonNull OCLDebugCore INSTANCE = new OCLDebugCore();
-	
+
 	public static final @NonNull String BREAKPOINT_MARKER_ID = "org.eclipse.ocl.examples.debug.OCLBreakpointMarker"; //$NON-NLS-1
 	public static final @NonNull String MODEL_ID = "org.eclipse.ocl.examples.debug"; //$NON-NLS-1$
 	public static final @NonNull String DEBUGGER_ACTIVE_PROPERTY = "org.eclipse.ocl.examples.debug.debuggerActive"; //$NON-NLS-1$
-	
+
 	// The plug-in fBreakpointID
-	public static final @NonNull String PLUGIN_ID = OCLDebugPlugin.PLUGIN_ID; //$NON-NLS-1$
+	public static final @NonNull String PLUGIN_ID = OCLDebugPlugin.PLUGIN_ID;
 
 	private static final @NonNull String EXCEPTIONS_CATCHING = PLUGIN_ID + "/exceptions/catching"; //$NON-NLS-1$
 	private static final @NonNull String EXCEPTIONS_THROWING = PLUGIN_ID + "/exceptions/throwing"; //$NON-NLS-1$
 	private static final @NonNull String METHODS_ENTERING = PLUGIN_ID + "/methods/entering"; //$NON-NLS-1$
 	private static final @NonNull String METHODS_EXITING = PLUGIN_ID + "/methods/exiting"; //$NON-NLS-1$
-	
+
 	private static final @NonNull EssentialOCLLocationInFileProvider locationInFileProvider = new EssentialOCLLocationInFileProvider();
-	
+
 	public static @NonNull Trace TRACE = new Trace(EXCEPTIONS_CATCHING, EXCEPTIONS_THROWING, METHODS_ENTERING, METHODS_EXITING);
 
 	private OCLDebugCore() {}
 
+	@Override
 	public @NonNull String getBreakpointMarkerId() {
 		return BREAKPOINT_MARKER_ID;
 	}
 
+	@Override
 	public @NonNull String getDebuggerActiveProperty() {
 		return DEBUGGER_ACTIVE_PROPERTY;
 	}
-    
-	public @NonNull List<OCLLineBreakpoint> getLineBreakpoints() {
+
+	@Override
+	public @NonNull List<@NonNull OCLLineBreakpoint> getLineBreakpoints() {
 		return getOCLBreakpoints(OCLLineBreakpoint.class);
 	}
 
+	@Override
 	public @NonNull EssentialOCLLocationInFileProvider getLocationInFileProvider() {
 		return locationInFileProvider;
 	}
-	
-    public @Nullable ILog getLog() {
-    	OCLDebugPlugin debugPlugin = OCLDebugPlugin.getDefault();
+
+	@Override
+	public @Nullable ILog getLog() {
+		OCLDebugPlugin debugPlugin = OCLDebugPlugin.getDefault();
 		return debugPlugin != null ? debugPlugin.getLog() : null;
-    } 
-	
+	}
+
+	@Override
 	public @NonNull String getModelId() {
 		return MODEL_ID;
 	}
-	
+
+	@Override
 	public @NonNull String getPluginId() {
 		return PLUGIN_ID;
 	}
 
+	@Override
 	public @NonNull Trace getTrace() {
 		return TRACE;
 	}
-	
+
+	@Override
 	public @NonNull String getVMThreadName() {
 		return "OCL VM";
 	}

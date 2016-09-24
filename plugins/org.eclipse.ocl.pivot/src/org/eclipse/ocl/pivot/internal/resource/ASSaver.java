@@ -46,7 +46,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class ASSaver
 {
 	protected final @NonNull Resource resource;
-	
+
 	public ASSaver(@NonNull Resource resource) {
 		this.resource = resource;
 	}
@@ -75,7 +75,7 @@ public class ASSaver
 	 * The extra package for copies of specializations.
 	 */
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class orphanageClass = null;
-	
+
 	/**
 	 * The appropriate normalization visitor for each Resource.
 	 */
@@ -206,10 +206,10 @@ public class ASSaver
 					resolveVisitor.safeVisit(element);
 				}
 			}
-//			List<Type> ownedTypes = orphanage.getOwnedType();
-//			List<Type> sorted = ownedTypes; //WIP PivotUtil.sortByMoniker(new ArrayList<Type>(ownedTypes));
-//			ownedTypes.clear();
-//			ownedTypes.addAll(sorted);
+			//			List<Type> ownedTypes = orphanage.getOwnedType();
+			//			List<Type> sorted = ownedTypes; //WIP PivotUtil.sortByMoniker(new ArrayList<Type>(ownedTypes));
+			//			ownedTypes.clear();
+			//			ownedTypes.addAll(sorted);
 		}
 	}
 
@@ -236,7 +236,7 @@ public class ASSaver
 								}
 								break;
 							}
-						}					
+						}
 					}
 				}
 				if ((eRoot instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eRoot)) {	// FIXME Obsolete
@@ -261,7 +261,9 @@ public class ASSaver
 				ASSaverLocateVisitor locateVisitor = getLocateVisitor(eObject);
 				locateVisitor.safeVisit((Visitable) eObject);
 			}
-			locateSpecializations(eObject.eContents());
+			if (eObject != null) {
+				locateSpecializations(eObject.eContents());
+			}
 		}
 	}
 
@@ -286,7 +288,7 @@ public class ASSaver
 		String moniker = AS2Moniker.toString(referredOperation);
 		Operation operation = operations.get(moniker);
 		if (operation != null) {
-			@SuppressWarnings("unchecked") 
+			@SuppressWarnings("unchecked")
 			T castOperation = (T) operation;
 			return castOperation;
 		}
@@ -328,10 +330,10 @@ public class ASSaver
 				orphanage.getOwnedClasses().add(resolvedType);
 			}
 		}
-/*			String moniker = AS2Moniker.toString(referredType);
+		/*			String moniker = AS2Moniker.toString(referredType);
 		Type type = types.get(moniker);
 		if (type != null) {
-			@SuppressWarnings("unchecked") 
+			@SuppressWarnings("unchecked")
 			T castType = (T) type;
 			return castType;
 		}

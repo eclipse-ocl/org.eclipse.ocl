@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.emf.validation.validity.RootConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class ConstrainingNodeContentProvider extends AbstractNodeContentProvider
 {
@@ -23,7 +24,8 @@ public class ConstrainingNodeContentProvider extends AbstractNodeContentProvider
 		super(validityManager);
 	}
 
-	protected @NonNull List<RootConstrainingNode> getRootNodes(@NonNull RootNode rootNode) {
-		return rootNode.getConstrainingNodes();
+	@Override
+	protected @NonNull List<@NonNull RootConstrainingNode> getRootNodes(@NonNull RootNode rootNode) {
+		return ClassUtil.nullFree(rootNode.getConstrainingNodes());
 	}
 }

@@ -96,16 +96,14 @@ public class FieldingAnalyzer
 		@Override
 		public @Nullable Set<@NonNull CGVariable> visitCGElement(@NonNull CGElement cgElement) {
 			Set<@NonNull CGVariable> childExternals = null;
-			for (CGElement cgChild : cgElement.getChildren()) {
-				if (cgChild != null) {
-					Set<CGVariable> childExternal = cgChild.accept(this);
-					if (childExternal != null) {
-						if (childExternals == null) {
-							childExternals = childExternal;
-						}
-						else {
-							childExternals.addAll(childExternal);
-						}
+			for (@NonNull CGElement cgChild : cgElement.getChildren()) {
+				Set<CGVariable> childExternal = cgChild.accept(this);
+				if (childExternal != null) {
+					if (childExternals == null) {
+						childExternals = childExternal;
+					}
+					else {
+						childExternals.addAll(childExternal);
 					}
 				}
 			}
@@ -266,8 +264,8 @@ public class FieldingAnalyzer
 		@Override
 		public @NonNull Boolean visitCGElement(@NonNull CGElement cgElement) {
 			boolean isCaught = false;
-			for (CGElement cgChild : cgElement.getChildren()) {
-				if ((cgChild != null) && ClassUtil.nonNullState(cgChild.accept(this))) {
+			for (@NonNull CGElement cgChild : cgElement.getChildren()) {
+				if (ClassUtil.nonNullState(cgChild.accept(this))) {
 					isCaught = true;
 				}
 			}

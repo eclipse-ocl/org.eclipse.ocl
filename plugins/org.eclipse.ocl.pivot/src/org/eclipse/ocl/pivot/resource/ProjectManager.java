@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     E.D.Willink - initial API and implementation
- * 
+ *
  * The standalone functionality is heavily influenced by org.eclipse.emf.mwe.utils.StandaloneSetup.
  *******************************************************************************/
 package org.eclipse.ocl.pivot.resource;
@@ -37,7 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public interface ProjectManager extends Adapter
 {
 	/**
-	 * The NO_PROJECTS instance of ProjectManager contributes no external projects to a user application. 
+	 * The NO_PROJECTS instance of ProjectManager contributes no external projects to a user application.
 	 */
 	public static final @NonNull ProjectManager NO_PROJECTS = new BasicProjectManager();
 
@@ -64,7 +64,7 @@ public interface ProjectManager extends Adapter
 		 */
 		@Nullable EPackage handleConflictingDynamicResource(@NonNull IResourceLoadStatus packageLoadStatus, @NonNull EPackage ePackage);
 	}
-	
+
 	/**
 	 * An IPackageDescriptor describes the modeling capabilities of a known
 	 * model package and may be installed under a variety of synonyms in an
@@ -77,7 +77,7 @@ public interface ProjectManager extends Adapter
 		 * a strategy and a conflictHandler.
 		 */
 		void configure(@NonNull ResourceSet resourceSet, @NonNull IResourceLoadStrategy strategy, @Nullable IConflictHandler conflictHandler);
-		
+
 		/**
 		 * Return the classname defined in the generated_packaged extension point, or null if undefined.
 		 */
@@ -182,7 +182,7 @@ public interface ProjectManager extends Adapter
 			 */
 			@Nullable Iterable<@NonNull IPackageDescriptor> getPackageDescriptors();
 		}
-		
+
 		/**
 		 * Call back to add a packageDescriptor to the project.
 		 */
@@ -200,7 +200,7 @@ public interface ProjectManager extends Adapter
 		void configure(@Nullable ResourceSet resourceSet, @NonNull IResourceLoadStrategy resourceLoadStrategy, @Nullable IConflictHandler conflictHandler);
 
 		/**
-		 * Create an IResourceDescriptor for a projectRelativeGenModelUri comprsising a map of NsURI to className. 
+		 * Create an IResourceDescriptor for a projectRelativeGenModelUri comprsising a map of NsURI to className.
 		 */
 		@NonNull IResourceDescriptor createResourceDescriptor(@NonNull String projectRelativeGenModelUri, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className);
 
@@ -267,10 +267,10 @@ public interface ProjectManager extends Adapter
 		void initializePlatformResourceMap();
 
 		void initializeURIMap(@NonNull Map<URI, URI> uriMap);
-		
+
 		void unload(@NonNull ResourceSet resourceSet);
 	}
-	
+
 	/**
 	 * An IResourceDescriptor describes the modeling capabilities of one or more known
 	 * model packages in a genmodel.
@@ -299,7 +299,7 @@ public interface ProjectManager extends Adapter
 		/**
 		 * Return the descriptors for allpackages in this resource.
 		 */
-		Iterable<? extends IPackageDescriptor> getPackageDescriptors();
+		Iterable<@NonNull ? extends IPackageDescriptor> getPackageDescriptors();
 
 		/**
 		 * Return the platform:/resource form of the model URI containing the package
@@ -319,7 +319,7 @@ public interface ProjectManager extends Adapter
 		@NonNull IProjectDescriptor getProjectDescriptor();
 
 		@NonNull URI getProjectRelativeEcorePackageURI(@NonNull URI genModelRelativeEcorePackageURI);
-		
+
 		/**
 		 * Return IResourceLoadStatus for this resource in conjunction with resourceSet.
 		 */
@@ -334,7 +334,7 @@ public interface ProjectManager extends Adapter
 		 * Set the Ecore Model context of the resource from a list of URIs of the Ecore Packages relative to the
 		 * genModelURI, and a map of the package namespace URI to package descriptor.
 		 */
-		void setEcoreModel(@NonNull List<String> genModelRelativeEcorePackageUris, @NonNull Map<String, IPackageDescriptor> nsURI2packageDescriptor);
+		void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor);
 
 		/**
 		 * Unload the package registry to force a reload.
@@ -399,13 +399,13 @@ public interface ProjectManager extends Adapter
 	 * identified by an IResourceDescriptor within a ResourceSet.
 	 */
 	public static interface IResourceLoadStatus
-	{	
+	{
 		/**
 		 * Configure the ResourceSet.URIResourceMap to resolve platform:/plugin and platform:/resource
 		 * references to a pseudo resource that delegates to generated packages.
 		 */
 		void configureDelegatingResource();
-		
+
 		/**
 		 * Configure the EPackage.Registry to resolve namesapce URI references to the specified resource.
 		 */
@@ -433,7 +433,7 @@ public interface ProjectManager extends Adapter
 		@Nullable EPackage getFirstEPackage();
 
 		/**
-		 * Return the package load status for the package identified by packageDescriptor 
+		 * Return the package load status for the package identified by packageDescriptor
 		 */
 		@Nullable IPackageLoadStatus getPackageLoadStatus(@NonNull IPackageDescriptor packageDescriptor);
 
@@ -446,7 +446,7 @@ public interface ProjectManager extends Adapter
 		 * Return the configured resource loading strategy.
 		 */
 		@NonNull IResourceLoadStrategy getResourceLoadStrategy();
-		
+
 		/**
 		 * Return the package registry maintained by this resource load status
 		 */
@@ -494,7 +494,7 @@ public interface ProjectManager extends Adapter
 		 */
 		void unloadedResource();
 	}
-	
+
 	void configure(@NonNull ResourceSet resourceSet, @NonNull IResourceLoadStrategy instance, @Nullable IConflictHandler instance2);
 
 	IPackageDescriptor getPackageDescriptor(@NonNull URI ecoreURI);

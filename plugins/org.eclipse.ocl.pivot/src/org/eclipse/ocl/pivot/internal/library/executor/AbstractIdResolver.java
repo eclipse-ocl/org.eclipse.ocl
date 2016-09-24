@@ -265,7 +265,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 * Mapping from root package name to corresponding Pivot Package. (used to resolve RootPackageId).
 	 */
 	protected final @NonNull  Map<String, org.eclipse.ocl.pivot.Package> roots2package = new HashMap<String, org.eclipse.ocl.pivot.Package>();
-	
+
 	public AbstractIdResolver(@NonNull CompleteEnvironment environment) {
 		this.environment = environment;
 		this.standardLibrary = environment.getOwnedStandardLibrary();
@@ -355,14 +355,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			}
 			if (unboxedValue instanceof BigInteger) {
 				return ValueUtil.integerValueOf((BigInteger) unboxedValue);
-			}			
+			}
 			if (unboxedValue instanceof Unlimited) {
 				return unboxedValue;
-			}			
+			}
 		}
 		else if (unboxedValue instanceof Character) {
 			return ValueUtil.integerValueOf(((Character) unboxedValue).charValue());
-		}			
+		}
 		else if (unboxedValue.getClass().isArray()) {
 			try {
 				@NonNull Object @NonNull [] unboxedValues = (@NonNull Object @NonNull [])unboxedValue;
@@ -373,7 +373,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				TypeId elementTypeId = dynamicType.getTypeId();
 				CollectionTypeId collectedTypeId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
 				return createSequenceOfEach(collectedTypeId, (@NonNull Object @NonNull [])unboxedValue);
-			} 
+			}
 			catch (IllegalArgumentException e) {}
 		}
 		else if (unboxedValue instanceof Iterable<?>) {
@@ -397,7 +397,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				return createSequenceOfAll(collectedTypeId, unboxedValues);
 			}
 		}
-/*		else if (unboxedValue instanceof EEnumLiteral) {
+		/*		else if (unboxedValue instanceof EEnumLiteral) {
 			return ValuesUtil.createEnumerationLiteralValue((EEnumLiteral)unboxedValue);
 		} */
 		else if (unboxedValue instanceof Type) {
@@ -417,7 +417,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		else if (unboxedValue instanceof EnumerationLiteralId) {		// ?? shouldn't happen
 			return unboxedValue;
-		}	 
+		}
 		else if (unboxedValue instanceof Enumerator) {
 			return boxedValueOfEnumerator((Enumerator) unboxedValue);
 		}
@@ -427,14 +427,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	@Override
 	public @Nullable Object boxedValueOf(@NonNull Object unboxedValue, @Nullable EClassifier eClassifier) {
 		if (unboxedValue instanceof Value) {
-			return unboxedValue;		
+			return unboxedValue;
 		}
 		else if (eClassifier instanceof EEnum) {
 			EEnum eEnum = (EEnum)eClassifier;
 			String name = ClassUtil.nonNullModel(((Enumerator)unboxedValue).getName());
 			EnumerationId enumId = IdManager.getEnumerationId(eEnum);
 			EnumerationLiteralId enumerationLiteralId = enumId.getEnumerationLiteralId(name);
-			return enumerationLiteralId;		
+			return enumerationLiteralId;
 		}
 		else {
 			return boxedValueOf(unboxedValue);
@@ -469,7 +469,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				enumerator2enumerationLiteralId2 = enumerator2enumerationLiteralId;
 				if (enumerator2enumerationLiteralId2 == null) {
 					enumerator2enumerationLiteralId = enumerator2enumerationLiteralId2 = new HashMap<Enumerator, EnumerationLiteralId>();
-					for (CompletePackage dPackage : standardLibrary.getAllCompletePackages()) {
+					for (@NonNull CompletePackage dPackage : standardLibrary.getAllCompletePackages()) {
 						for (org.eclipse.ocl.pivot.Class dType : dPackage.getAllClasses()) {
 							if (dType instanceof Enumeration) {
 								for (EnumerationLiteral dEnumerationLiteral : ((Enumeration) dType).getOwnedLiterals()) {
@@ -481,7 +481,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 						}
 					}
 				}
-			}		
+			}
 		}
 		EnumerationLiteralId enumerationLiteralId = enumerator2enumerationLiteralId2.get(unboxedValue);
 		if (enumerationLiteralId == null) {
@@ -498,7 +498,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		return ValueUtil.createBagValue(typeId, boxedValues);
 	}
-	
+
 	@Override
 	public @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
 		Bag<Object> boxedValues = new BagImpl<Object>();
@@ -507,10 +507,10 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		return ValueUtil.createBagValue(typeId, boxedValues);
 	}
-	   
+
 	/**
 	 * Creates a new OCL <tt>Collection</tt> of the specified ordering and uniqueness.
-     * 
+	 *
 	 * @param isOrdered the required collection ordering
 	 * @param isUnique the required collection uniqueness
 	 * @param unboxedValues the required collection contents
@@ -551,7 +551,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		else /*if (collectionId == TypeId.SET)*/ {
 			return createSetOfAll(collectedId, unboxedValues);
 		}
-	} 
+	}
 
 	@Override
 	public @Nullable Object createInstance(@NonNull TypeId typeId, @NonNull String stringValue) {
@@ -681,7 +681,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				@SuppressWarnings("unchecked") Iterable<Object> values = (Iterable<Object>)value;
 				return ecoreValuesOfAll(instanceClass, values);
 			}
-	}
+		}
 		else {
 			return value;
 		}
@@ -692,7 +692,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 */
 	@Override
 	public @NonNull <T> EList<T> ecoreValueOfAll(@Nullable Class<T> instanceClass, @NonNull Iterable<? extends Object> values) {
-		
+
 		Object[] ecoreValues = new Object[Iterables.size(values)];
 		int i= 0;
 		for (Object value : values) {
@@ -705,7 +705,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	@Deprecated
 	@Override
 	public @NonNull EList<Object> ecoreValuesOfAll(@Nullable Class<?> instanceClass, @NonNull Iterable<Object> values) {
-		
+
 		Object[] ecoreValues = new Object[Iterables.size(values)];
 		int i= 0;
 		for (Object value : values) {
@@ -786,7 +786,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			}
 		}
 	}
-	
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getDynamicTypeOf(@Nullable Object value) {
 		if (value instanceof CollectionValue) {
@@ -807,7 +807,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return getStaticTypeOf(value);
 		}
 	}
-	
+
 	@Override
 	public @Nullable Type getDynamicTypeOf(@NonNull Object @NonNull ... values) {
 		Type elementType = null;
@@ -825,7 +825,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		return elementType;
 	}
-	
+
 	@Override
 	public @Nullable Type getDynamicTypeOf(@NonNull Iterable<?> values) {
 		Type elementType = null;
@@ -852,15 +852,15 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		if (type != null) {
 			return type;
 		}
-/*		if (javaClass == Boolean.class) {
+		/*		if (javaClass == Boolean.class) {
 			type = standardLibrary.getBooleanType();
 		}
 		else if (javaClass == String.class) {
 			type = standardLibrary.getStringType();
 		}
 		else { */
-			type = new JavaType(javaClass);
-//		}
+		type = new JavaType(javaClass);
+		//		}
 		key2type.put(javaClass, type);
 		return type;
 	}
@@ -944,7 +944,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return type;
 		}
 		else if (value instanceof Value) {
-			TypeId typeId = ((Value)value).getTypeId();			
+			TypeId typeId = ((Value)value).getTypeId();
 			org.eclipse.ocl.pivot.Class type = key2type.get(typeId);
 			if (type == null) {
 				type = (org.eclipse.ocl.pivot.Class) typeId.accept(this);
@@ -1008,7 +1008,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 					bestTypeId = anotherTypeId;
 				}
 			}
-		}		
+		}
 		return bestType;
 	}
 
@@ -1037,10 +1037,10 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 					assessedTypeKeys.add(anotherTypeKey);
 				}
 			}
-		}		
+		}
 		return bestType;
 	}
-	
+
 	@Override
 	public @NonNull TypedElement getTuplePart(@NonNull String name, @NonNull TypeId typeId) {
 		return getTuplePart(name, getType(typeId, null));
@@ -1095,7 +1095,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return typeKey;
 		}
 		else if (value instanceof Value) {
-			TypeId typeKey = ((Value)value).getTypeId();			
+			TypeId typeKey = ((Value)value).getTypeId();
 			org.eclipse.ocl.pivot.Class type = key2type.get(typeKey);
 			if (type == null) {
 				type = (org.eclipse.ocl.pivot.Class) typeKey.accept(this);
@@ -1105,7 +1105,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return typeKey;
 		}
 		else if (value == null) {
-			TypeId typeKey = TypeId.OCL_VOID;			
+			TypeId typeKey = TypeId.OCL_VOID;
 			key2type.put(typeKey, standardLibrary.getOclVoidType());
 			return typeKey;
 		}
@@ -1171,8 +1171,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		return false;
 	}
 
-//	@Override
-/*	public boolean oclEquals2(@Nullable Object thisValue, @Nullable Object thatValue) {
+	//	@Override
+	/*	public boolean oclEquals2(@Nullable Object thisValue, @Nullable Object thatValue) {
 		if (thisValue == thatValue) {
 			return true;
 		}
@@ -1211,7 +1211,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return thatValue == null;
 		}
 	} */
-	
+
 	/**
 	 * Return true if this Value is equal to thatValue regardless of the prevailing ecore/boxed/unboxed
 	 * representation of each input.
@@ -1372,7 +1372,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	/**
 	 * Return the hashCode of the boxed value of anObject, thereby ensuring that the same hashCode
-	 * is used for ecore, boxed and unboxed representations. 
+	 * is used for ecore, boxed and unboxed representations.
 	 * @since 1.1
 	 */
 	@Override
@@ -1397,15 +1397,15 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			}
 			return ((Number)anObject).intValue();
 		}
-//		else if (anObject instanceof String) {
-//			return ((String)anObject).hashCode();
-//		}
-//		else if (anObject instanceof Character) {
-//			return ((Character)anObject).charValue();
-//		}
+		//		else if (anObject instanceof String) {
+		//			return ((String)anObject).hashCode();
+		//		}
+		//		else if (anObject instanceof Character) {
+		//			return ((Character)anObject).charValue();
+		//		}
 		else {
 			return anObject.hashCode();
-//			return System.identityHashCode(anObject);
+			//			return System.identityHashCode(anObject);
 		}
 	}
 
@@ -1417,7 +1417,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		new ExternalCrossReferencer(directRoots)
 		{
 			private static final long serialVersionUID = 1L;
-			
+
 			private Set<EObject> moreRoots = new HashSet<EObject>();
 
 			{ findExternalCrossReferences(); }
@@ -1448,9 +1448,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			if (eObject instanceof Model) {
 				addPackages(((Model)eObject).getOwnedPackages());
 			}
-//			else if (eObject instanceof org.eclipse.ocl.pivot.Package) {							// Perhaps this is only needed for a lazy JUnit test
-//				addPackage((org.eclipse.ocl.pivot.Package)eObject);
-//			}
+			//			else if (eObject instanceof org.eclipse.ocl.pivot.Package) {							// Perhaps this is only needed for a lazy JUnit test
+			//				addPackage((org.eclipse.ocl.pivot.Package)eObject);
+			//			}
 			else {
 				ePackages.add(eObject.eClass().getEPackage());
 			}
@@ -1532,7 +1532,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		return nestedType;
 	}
-	
+
 	public @NonNull Type visitCollectedId(@NonNull CollectionTypeId id) {
 		Type elementType = (Type) id.getElementTypeId().accept(this);
 		if (elementType == null) {
@@ -1561,7 +1561,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		return nestedType;
 	}
-	
+
 	@Override
 	public @NonNull Enumeration visitEnumerationId(@NonNull EnumerationId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
@@ -1616,7 +1616,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		return nestedPackage;
 	}
 
-/*	@Override
+	/*	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package visitNsURIPackageId(@NonNull NsURIPackageId id) {
 		org.eclipse.ocl.pivot.Package nsURIPackage = standardLibrary.getNsURIPackage(id.getNsURI());
 		if (nsURIPackage == null) {
@@ -1654,7 +1654,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		EPackage ePackage = id.getEPackage();
 		if (ePackage != null) {
 			org.eclipse.ocl.pivot.Package asPackage = addEPackage(ePackage);
-/*			EcoreReflectivePackage ecoreExecutorPackage = new EcoreReflectivePackage(ePackage, this, id);
+			/*			EcoreReflectivePackage ecoreExecutorPackage = new EcoreReflectivePackage(ePackage, this, id);
 //			EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
 //			EcoreReflectiveType[] types = new EcoreReflectiveType[eClassifiers.size()];
 //			for (int i = 0; i < types.length; i++) {
@@ -1709,7 +1709,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		return memberProperty;
 	}
 
-/*	@Override
+	/*	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package visitRootPackageId(@NonNull RootPackageId id) {
 		String completeURIorName = id.getName();
 		org.eclipse.ocl.pivot.Package rootPackage = standardLibrary.getRootPackage(completeURIorName);
@@ -1729,11 +1729,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		if (knownPackage != null) {
 			return knownPackage;
 		}
-//		org.eclipse.ocl.pivot.Package libraryPackage = standardLibrary.getNsURIPackage(nsURI);
-//		if (libraryPackage != null) {
-//			nsURI2package.put(nsURI, libraryPackage);
-//			return libraryPackage;
-//		}
+		//		org.eclipse.ocl.pivot.Package libraryPackage = standardLibrary.getNsURIPackage(nsURI);
+		//		if (libraryPackage != null) {
+		//			nsURI2package.put(nsURI, libraryPackage);
+		//			return libraryPackage;
+		//		}
 		if (!directRootsProcessed) {
 			processDirectRoots();
 			knownPackage = roots2package.get(name);

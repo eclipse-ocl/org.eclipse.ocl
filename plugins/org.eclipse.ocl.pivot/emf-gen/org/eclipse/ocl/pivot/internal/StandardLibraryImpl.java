@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -388,9 +388,9 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	private @Nullable PrimitiveType stringType = null;
 	private @Nullable CollectionType uniqueCollectionType = null;
 	private @Nullable PrimitiveType unlimitedNaturalType = null;
-	
+
 	private @Nullable Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap = null;
-	
+
 	protected /*final*/ /*@NonNull*/ CompleteModelInternal completeModel;
 	protected /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
 
@@ -424,7 +424,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 
 	@Override
 	public void dispose() {
-		resetLibrary();	
+		resetLibrary();
 	}
 
 	/**
@@ -436,7 +436,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	}
 
 	@Override
-	public @NonNull Iterable<? extends CompletePackage> getAllCompletePackages() {
+	public @NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages() {
 		return environmentFactory.getMetamodelManager().getAllCompletePackages();
 	}
 
@@ -515,7 +515,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull PrimitiveType getBooleanType() {
 		PrimitiveType booleanType2 = booleanType;
 		if (booleanType2 == null) {
-			booleanType2 = booleanType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.BOOLEAN_NAME);		
+			booleanType2 = booleanType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.BOOLEAN_NAME);
 		}
 		return booleanType2;
 	}
@@ -524,7 +524,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getClassType() {
 		org.eclipse.ocl.pivot.Class classType2 = classType;
 		if (classType2 == null) {
-			classType2 = classType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.CLASS_NAME);		
+			classType2 = classType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.CLASS_NAME);
 		}
 		return classType2;
 	}
@@ -564,7 +564,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getEnumerationType() {
 		org.eclipse.ocl.pivot.Class enumerationType2 = enumerationType;
 		if (enumerationType2 == null) {
-			enumerationType2 = enumerationType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.ENUMERATION_NAME);		
+			enumerationType2 = enumerationType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.ENUMERATION_NAME);
 		}
 		return enumerationType2;
 	}
@@ -579,7 +579,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull PrimitiveType getIntegerType() {
 		PrimitiveType integerType2 = integerType;
 		if (integerType2 == null) {
-			integerType2 = integerType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.INTEGER_NAME);		
+			integerType2 = integerType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.INTEGER_NAME);
 		}
 		return integerType2;
 	}
@@ -619,7 +619,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		if (instanceType instanceof PrimitiveType) {
 			return getASClass(TypeId.PRIMITIVE_TYPE_NAME);
 		}
-//		throw new UnsupportedOperationException();
+		//		throw new UnsupportedOperationException();
 		return getMetaclass(instanceType);
 	}
 
@@ -633,7 +633,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull AnyType getOclAnyType() {
 		AnyType oclAnyType2 = oclAnyType;
 		if (oclAnyType2 == null) {
-			oclAnyType2 = oclAnyType = resolveRequiredSimpleType(AnyType.class, TypeId.OCL_ANY_NAME);		
+			oclAnyType2 = oclAnyType = resolveRequiredSimpleType(AnyType.class, TypeId.OCL_ANY_NAME);
 		}
 		return oclAnyType2;
 	}
@@ -642,7 +642,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclComparableType() {
 		org.eclipse.ocl.pivot.Class oclComparableType2 = oclComparableType;
 		if (oclComparableType2 == null) {
-			oclComparableType2 = oclComparableType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_COMPARABLE_NAME);		
+			oclComparableType2 = oclComparableType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_COMPARABLE_NAME);
 		}
 		return oclComparableType2;
 	}
@@ -651,7 +651,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclElementType() {
 		org.eclipse.ocl.pivot.Class oclElementType2 = oclElementType;
 		if (oclElementType2 == null) {
-			oclElementType2 = oclElementType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclElement");		
+			oclElementType2 = oclElementType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclElement");
 		}
 		return oclElementType2;
 	}
@@ -663,7 +663,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclEnumerationType() {
 		org.eclipse.ocl.pivot.Class oclEnumerationType2 = oclEnumerationType;
 		if (oclEnumerationType2 == null) {
-			oclEnumerationType2 = oclEnumerationType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_ENUMERATION_NAME);		
+			oclEnumerationType2 = oclEnumerationType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_ENUMERATION_NAME);
 		}
 		return oclEnumerationType2;
 	}
@@ -712,7 +712,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull InvalidType getOclInvalidType() {
 		InvalidType oclInvalidType2 = oclInvalidType;
 		if (oclInvalidType2 == null) {
-			oclInvalidType2 = oclInvalidType = resolveRequiredSimpleType(InvalidType.class, TypeId.OCL_INVALID_NAME);		
+			oclInvalidType2 = oclInvalidType = resolveRequiredSimpleType(InvalidType.class, TypeId.OCL_INVALID_NAME);
 		}
 		return oclInvalidType2;
 	}
@@ -721,7 +721,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclLambdaType() {
 		org.eclipse.ocl.pivot.Class oclLambdaType2 = oclLambdaType;
 		if (oclLambdaType2 == null) {
-			oclLambdaType2 = oclLambdaType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclLambda");		
+			oclLambdaType2 = oclLambdaType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclLambda");
 		}
 		return oclLambdaType2;
 	}
@@ -735,7 +735,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull SelfType getOclSelfType() {
 		SelfType oclSelfType2 = oclSelfType;
 		if (oclSelfType2 == null) {
-			oclSelfType2 = oclSelfType = resolveRequiredSimpleType(SelfType.class, TypeId.OCL_SELF_NAME);		
+			oclSelfType2 = oclSelfType = resolveRequiredSimpleType(SelfType.class, TypeId.OCL_SELF_NAME);
 		}
 		return oclSelfType2;
 	}
@@ -747,7 +747,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclStereotypeType() {
 		org.eclipse.ocl.pivot.Class oclStereotypeType2 = oclStereotypeType;
 		if (oclStereotypeType2 == null) {
-			oclStereotypeType2 = oclStereotypeType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_STEREOTYPE_NAME);		
+			oclStereotypeType2 = oclStereotypeType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_STEREOTYPE_NAME);
 		}
 		return oclStereotypeType2;
 	}
@@ -756,7 +756,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclSummableType() {
 		org.eclipse.ocl.pivot.Class oclSummableType2 = oclSummableType;
 		if (oclSummableType2 == null) {
-			oclSummableType2 = oclSummableType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_SUMMABLE_NAME);		
+			oclSummableType2 = oclSummableType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_SUMMABLE_NAME);
 		}
 		return oclSummableType2;
 	}
@@ -765,7 +765,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclTupleType() {
 		org.eclipse.ocl.pivot.Class oclTupleType2 = oclTupleType;
 		if (oclTupleType2 == null) {
-			oclTupleType2 = oclTupleType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclTuple");		
+			oclTupleType2 = oclTupleType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclTuple");
 		}
 		return oclTupleType2;
 	}
@@ -779,7 +779,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclTypeType() {
 		org.eclipse.ocl.pivot.Class oclTypeType2 = oclTypeType;
 		if (oclTypeType2 == null) {
-			oclTypeType2 = oclTypeType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclType");		
+			oclTypeType2 = oclTypeType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclType");
 		}
 		return oclTypeType2;
 	}
@@ -788,7 +788,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull VoidType getOclVoidType() {
 		VoidType oclVoidType2 = oclVoidType;
 		if (oclVoidType2 == null) {
-			oclVoidType2 = oclVoidType = resolveRequiredSimpleType(VoidType.class, TypeId.OCL_VOID_NAME);		
+			oclVoidType2 = oclVoidType = resolveRequiredSimpleType(VoidType.class, TypeId.OCL_VOID_NAME);
 		}
 		return oclVoidType2;
 	}
@@ -836,7 +836,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull PrimitiveType getRealType() {
 		PrimitiveType realType2 = realType;
 		if (realType2 == null) {
-			realType2 = realType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.REAL_NAME);		
+			realType2 = realType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.REAL_NAME);
 		}
 		return realType2;
 	}
@@ -845,7 +845,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getRequiredLibraryType(@NonNull String typeName) {
 		org.eclipse.ocl.pivot.Class type = getLibraryType(typeName);
 		if (type == null) {
-//			nameToLibraryTypeMap = null;
+			//			nameToLibraryTypeMap = null;
 			type = getLibraryType(typeName);	// FIXME just a debug retry
 			Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 			if ((nameToLibraryTypeMap2 == null) || nameToLibraryTypeMap2.isEmpty()) {
@@ -892,7 +892,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull PrimitiveType getStringType() {
 		PrimitiveType stringType2 = stringType;
 		if (stringType2 == null) {
-			stringType2 = stringType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.STRING_NAME);		
+			stringType2 = stringType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.STRING_NAME);
 		}
 		return stringType2;
 	}
@@ -910,11 +910,11 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public @NonNull PrimitiveType getUnlimitedNaturalType() {
 		PrimitiveType unlimitedNaturalType2 = unlimitedNaturalType;
 		if (unlimitedNaturalType2 == null) {
-			unlimitedNaturalType2 = unlimitedNaturalType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.UNLIMITED_NATURAL_NAME);		
+			unlimitedNaturalType2 = unlimitedNaturalType = resolveRequiredSimpleType(PrimitiveType.class, TypeId.UNLIMITED_NATURAL_NAME);
 		}
 		return unlimitedNaturalType2;
 	}
-	
+
 	@Override
 	public @NonNull StandardLibraryInternal  init(@NonNull CompleteModelInternal completeModel) {
 		this.completeModel = completeModel;
@@ -926,7 +926,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public boolean isExplicitDefaultStandardLibraryURI() {
 		return explicitDefaultStandardLibraryURI;
 	}
-	
+
 	public boolean isOrdered(Type sourceType) {
 		if (sourceType instanceof OrderedSetType) {
 			return true;
@@ -994,7 +994,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		}
 		else {
 			throw new IllegalLibraryException(name + " is not a " + requiredClassType.getSimpleName());
-		}		
+		}
 	}
 
 	protected @NonNull <T extends TemplateableElement> T resolveRequiredTemplateableType(@NonNull Class<T> requiredClassType, @NonNull String name, int parameterCount) {
@@ -1012,7 +1012,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		}
 		else {
 			throw new IllegalLibraryException(name + " is not a " + requiredClassType.getSimpleName());
-		}		
+		}
 	}
 
 	@Override

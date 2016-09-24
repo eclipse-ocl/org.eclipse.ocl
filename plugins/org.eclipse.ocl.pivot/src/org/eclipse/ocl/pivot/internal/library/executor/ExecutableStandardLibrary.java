@@ -15,9 +15,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
-import java.util.Map.Entry;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -61,23 +61,23 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public abstract class ExecutableStandardLibrary extends AbstractExecutorElement implements CompleteEnvironment, StandardLibraryExtension
 {
 	/**
-	 * Shared cache of the lazily created lazily deleted specializations of each collection type. 
+	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
 	 */
 	private @NonNull Map<Type, Map<CollectionTypeParameters<Type>, WeakReference<ExecutorCollectionType>>> collectionSpecializations = new WeakHashMap<Type, Map<CollectionTypeParameters<Type>, WeakReference<ExecutorCollectionType>>>();
-	
+
 	/**
-	 * Shared cache of the lazily created lazily deleted specializations of each map type. 
+	 * Shared cache of the lazily created lazily deleted specializations of each map type.
 	 */
 	private @NonNull Map<Type, Map<MapTypeParameters<Type, Type>, WeakReference<ExecutorMapType>>> mapSpecializations = new WeakHashMap<Type, Map<MapTypeParameters<Type,Type>, WeakReference<ExecutorMapType>>>();
-	
+
 	/**
-	 * Shared cache of the lazily created lazily deleted tuples. 
+	 * Shared cache of the lazily created lazily deleted tuples.
 	 */
 	private @NonNull Map<TupleTypeId, WeakReference<TupleType>> tupleTypeMap = new WeakHashMap<TupleTypeId, WeakReference<TupleType>>();
-    
-    /**
-     * Configuration of validation preferences.
-     */
+
+	/**
+	 * Configuration of validation preferences.
+	 */
 	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
 
 	protected @NonNull HashMap<Object, StatusCodes.Severity> createValidationKey2severityMap() {
@@ -93,7 +93,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	}
 
 	@Override
-	public @NonNull Iterable<? extends CompletePackage> getAllCompletePackages() {
+	public @NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -219,7 +219,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		if (metaType != null) {
 			return metaType;
 		}
-//		return OCLstdlibTables.Types._OclType;
+		//		return OCLstdlibTables.Types._OclType;
 		return getClassType();
 	}
 
@@ -346,7 +346,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 
 	public org.eclipse.ocl.pivot.@Nullable Class getPivotType(@NonNull String className) {
 		throw new UnsupportedOperationException();
-	}	
+	}
 
 	@Override
 	public @Nullable Type getPrimitiveType(@NonNull PrimitiveTypeId typeId) {
@@ -393,7 +393,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		return getCollectionType(getSetType(), elementType, isNullFree, lower, upper);
 	}
 
-//	@Override
+	//	@Override
 	public StatusCodes.@Nullable Severity getSeverity(@Nullable Object validationKey) {
 		Map<Object, StatusCodes.Severity> validationKey2severity2 = validationKey2severity;
 		if (validationKey2severity2 == null) {
@@ -412,7 +412,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		return OCLstdlibTables.Types._String;
 	}
 
-/*	public @NonNull DomainTupleType getTupleType(@NonNull List<? extends DomainTypedElement> parts) {
+	/*	public @NonNull DomainTupleType getTupleType(@NonNull List<? extends DomainTypedElement> parts) {
 		StringBuilder s = new StringBuilder();
 		for (DomainTypedElement part : parts) {
 			s.append(part.getName());
@@ -484,7 +484,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	public org.eclipse.ocl.pivot.@NonNull Class getUnlimitedNaturalType() {
 		return OCLstdlibTables.Types._UnlimitedNatural;
 	}
-	
+
 	public void resetSeverities() {
 		validationKey2severity = null;
 	}

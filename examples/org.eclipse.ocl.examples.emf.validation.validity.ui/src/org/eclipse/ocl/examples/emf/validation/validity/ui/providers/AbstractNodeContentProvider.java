@@ -23,23 +23,25 @@ import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 public abstract class AbstractNodeContentProvider implements ITreeContentProvider
 {
 	public static final @NonNull Object @NonNull [] NO_OBJECTS = new @NonNull Object[0];
-	
+
 	private final @NonNull ValidityManager validityManager;
 
 	public AbstractNodeContentProvider(@NonNull ValidityManager validityManager) {
 		this.validityManager = validityManager;
 	}
 
+	@Override
 	public void dispose() {}
 
+	@Override
 	public Object[] getElements(Object inputElement) {
 		RootNode rootNode = validityManager.getRootNode();
 		if (rootNode == null) {
 			return NO_OBJECTS;
 		}
-		List<? extends AbstractNode> validatableNodes = getRootNodes(rootNode);
-		List<AbstractNode> visibleNodes = new ArrayList<AbstractNode>(validatableNodes.size());
-		for (AbstractNode node : validatableNodes) {
+		List<@NonNull ? extends AbstractNode> validatableNodes = getRootNodes(rootNode);
+		List<@NonNull AbstractNode> visibleNodes = new ArrayList<>(validatableNodes.size());
+		for (@NonNull AbstractNode node : validatableNodes) {
 			if (node.isVisible()) {
 				visibleNodes.add(node);
 			}
@@ -47,20 +49,24 @@ public abstract class AbstractNodeContentProvider implements ITreeContentProvide
 		return visibleNodes.toArray(new Object[visibleNodes.size()]);
 	}
 
+	@Override
 	public Object[] getChildren(Object parentElement) {
 		return ((AbstractNode)parentElement).getVisibleChildren();
 	}
 
+	@Override
 	public Object getParent(Object element) {
 		return ((AbstractNode)element).getParent();
 	}
 
-	protected abstract @NonNull List<? extends AbstractNode> getRootNodes(@NonNull RootNode rootNode);
+	protected abstract @NonNull List<@NonNull ? extends AbstractNode> getRootNodes(@NonNull RootNode rootNode);
 
+	@Override
 	public boolean hasChildren(Object element) {
 		AbstractNode[] validatableNodes = ((AbstractNode)element).getVisibleChildren();
 		return validatableNodes.length > 0;
 	}
 
+	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {}
 }

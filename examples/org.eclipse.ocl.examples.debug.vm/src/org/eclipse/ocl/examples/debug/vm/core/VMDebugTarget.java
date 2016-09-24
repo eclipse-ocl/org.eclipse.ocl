@@ -72,7 +72,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 	private final IProcess fProcess;
 
 	private VMThread fMainThread;
-	
+
 	private String fMainModuleName;
 
 	private boolean fIsStarting;
@@ -93,31 +93,31 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		fEventListener.add(createVMEventListener());
 
 		EventDispatchJob dispatcher = new EventDispatchJob();
-		Thread eventDispatherThread = new Thread(dispatcher, "OCL Debug"); //$NON-NLS-1$			
+		Thread eventDispatherThread = new Thread(dispatcher, "OCL Debug"); //$NON-NLS-1$
 		eventDispatherThread.setDaemon(true);
 		eventDispatherThread.start();
 
 		try {
-			// start transformation execution				
+			// start transformation execution
 			sendRequest(new VMStartRequest(true));
 		} catch (DebugException e) {
 			getDebugCore().log(e.getStatus());
 			// FIXME - consult status handler to give UI feedback
 			return;
 		}
-		
+
 		joinStartOrTerminate();
 		// Note: VM is still suspended and waiting for resume
 		// => do whatever initialization we need now
 		// install VM breakpoints
 		installVMBreakpoints();
-		
+
 		DebugEvent createEvent = new DebugEvent(this, DebugEvent.CREATE);
 		createEvent.setData(new HashMap<Long, VMLineBreakpoint>(fID2Breakpoint));
 
 		fMainThread = new VMThread(this);
 		fLaunch.addDebugTarget(this);
-		System.setProperty(getDebugCore().getDebuggerActiveProperty(), Boolean.TRUE.toString());		
+		System.setProperty(getDebugCore().getDebuggerActiveProperty(), Boolean.TRUE.toString());
 
 		try {
 			// wake up so far suspended VM unless suspendOnStart
@@ -127,7 +127,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		} catch (IOException e) {
 			getDebugCore().log(e);
 		}
-		
+
 		IBreakpointManager breakpointManager = DebugPlugin.getDefault().getBreakpointManager();
 		breakpointManager.addBreakpointManagerListener(this);
 		breakpointManager.addBreakpointListener(this);
@@ -139,12 +139,12 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 	protected @NonNull URI computeBreakpointURI(@NonNull URI sourceURI) {
 		return sourceURI;
 	}
-	
+
 	private void installVMBreakpoints() {
-		HashMap<Long, VMLineBreakpoint> installedBreakpoints = new HashMap<Long, VMLineBreakpoint>();
-		List<VMNewBreakpointData> allBpData = new ArrayList<VMNewBreakpointData>();
-		
-		for (VMLineBreakpoint vmBp : getDebugCore().getLineBreakpoints()) {
+		HashMap<Long, VMLineBreakpoint> installedBreakpoints = new HashMap<>();
+		List<@NonNull VMNewBreakpointData> allBpData = new ArrayList<>();
+
+		for (@NonNull VMLineBreakpoint vmBp : getDebugCore().getLineBreakpoints()) {
 			boolean enabled = false;
 			try {
 				enabled = vmBp.isEnabled();
@@ -153,13 +153,13 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 			}
 
 			if (enabled) {
-				installedBreakpoints.put(new Long(((VMLineBreakpoint) vmBp).getID()),
+				installedBreakpoints.put(new Long(vmBp.getID()),
 						vmBp);
 				try {
 					String unitURI = vmBp.getUnitURI().toString();
 					@SuppressWarnings("null")@NonNull String targetURI = computeBreakpointURI(ClassUtil.nonNullEMF(URI.createURI(unitURI, true))).toString();
 					VMNewBreakpointData data = vmBp.createNewBreakpointData(targetURI);
-					
+
 					allBpData.add(data);
 				} catch (CoreException e) {
 					getDebugCore().log(e.getStatus());
@@ -172,11 +172,11 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 			VMBreakpointRequest breakpointRequest = VMBreakpointRequest.createAdd(bpData);
 			try {
 				VMResponse response = fVM.sendRequest(breakpointRequest);
-				// 
+				//
 				fID2Breakpoint.clear();
 				if(response instanceof VMBreakpointResponse) {
 					VMBreakpointResponse bpResponse = (VMBreakpointResponse) response;
-					
+
 					for(long addedID : bpResponse.getAddedBreakpointsIDs()) {
 						Long key = new Long(addedID);
 						VMLineBreakpoint bp = installedBreakpoints.get(key);
@@ -190,11 +190,12 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 			}
 		}
 	}
-	
+
 	public Collection<? extends IBreakpoint> getInstalledBreakpoints() {
 		return Collections.unmodifiableCollection(fID2Breakpoint.values());
 	}
 
+	@Override
 	public VMResponse sendRequest(@NonNull VMRequest request) throws DebugException {
 		try {
 			VMResponse response = fVM.sendRequest(request);
@@ -204,6 +205,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		}
 	}
 
+	@Override
 	public synchronized boolean isSuspended() {
 		return !isTerminated() && fIsSuspended;
 	}
@@ -222,6 +224,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		return fVM;
 	}
 
+	@Override
 	public IProcess getProcess() {
 		IProcess[] processes = getLaunch().getProcesses();
 		if (processes != null && processes.length > 0) {
@@ -231,54 +234,61 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		return null;
 	}
 
+	@Override
 	public boolean hasThreads() throws DebugException {
 		return !isTerminated();
 	}
 
+	@Override
 	public IThread[] getThreads() throws DebugException {
 		return (fMainThread != null) ? new IThread[] { fMainThread }
-				: new IThread[0];
+		: new IThread[0];
 	}
 
+	@Override
 	public String getName() throws DebugException {
 		return "OCL Debug target";
 	}
 
+	@Override
 	public boolean supportsBreakpoint(IBreakpoint breakpoint) {
 		return breakpoint.getModelIdentifier().equals(getModelIdentifier());
 	}
 
+	@Override
 	public boolean canTerminate() {
 		return !isTerminated();
 	}
 
+	@Override
 	public boolean isTerminated() {
 		return fVM.isTerminated();
 	}
 
+	@Override
 	public void terminate() throws DebugException {
 		sendRequest(new VMTerminateRequest());
 	}
 
 	protected void started(String mainModuleName) {
 		setMainModuleName(mainModuleName);
-		setStarting(false);		
+		setStarting(false);
 	}
-		
+
 	synchronized protected void setMainModuleName(String mainModuleName) {
 		fMainModuleName = mainModuleName;
 	}
-	
+
 	synchronized public String getMainModuleName() {
 		return fMainModuleName;
 	}
-		
+
 	protected void terminated() {
 		getDebugCore().getTrace().trace(DebugOptions.TARGET, "Debug target terminated"); //$NON-NLS-1$
-		System.setProperty(getDebugCore().getDebuggerActiveProperty(), Boolean.FALSE.toString());		
+		System.setProperty(getDebugCore().getDebuggerActiveProperty(), Boolean.FALSE.toString());
 
 		setStarting(false);
-		
+
 		fMainThread = null;
 
 		DebugPlugin debugPlugin = DebugPlugin.getDefault();
@@ -291,7 +301,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		}
 
 		fID2Breakpoint.clear();
-		
+
 		fireTerminateEvent();
 		if (fProcess instanceof VMVirtualProcess) {
 			VMVirtualProcess vp = (VMVirtualProcess) fProcess;
@@ -299,22 +309,27 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		}
 	}
 
+	@Override
 	public boolean canResume() {
 		return !isTerminated() && isSuspended();
 	}
 
+	@Override
 	public boolean canSuspend() {
 		return !isTerminated() && !isSuspended();
 	}
 
+	@Override
 	public void resume() throws DebugException {
 		sendRequest(new VMResumeRequest(VMSuspension.UNSPECIFIED));
 	}
 
+	@Override
 	public void suspend() throws DebugException {
 		sendRequest(new VMSuspendRequest(VMSuspension.UNSPECIFIED));
 	}
 
+	@Override
 	public void breakpointAdded(IBreakpoint breakpoint) {
 		if (breakpoint instanceof VMLineBreakpoint == false
 				|| !DebugPlugin.getDefault().getBreakpointManager().isEnabled()) {
@@ -339,6 +354,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		}
 	}
 
+	@Override
 	public void breakpointChanged(IBreakpoint breakpoint, IMarkerDelta delta) {
 		if (breakpoint instanceof VMLineBreakpoint == false
 				|| !DebugPlugin.getDefault().getBreakpointManager().isEnabled()) {
@@ -380,6 +396,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		}
 	}
 
+	@Override
 	public void breakpointRemoved(IBreakpoint breakpoint, IMarkerDelta delta) {
 		if (breakpoint instanceof VMLineBreakpoint) {
 			if (delta == null) {
@@ -407,25 +424,31 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		}
 	}
 
+	@Override
 	public boolean canDisconnect() {
 		return false;
 	}
 
+	@Override
 	public void disconnect() throws DebugException {
 	}
 
+	@Override
 	public boolean isDisconnected() {
 		return false;
 	}
 
+	@Override
 	public boolean supportsStorageRetrieval() {
 		return false;
 	}
 
+	@Override
 	public IMemoryBlock getMemoryBlock(long startAddress, long length) throws DebugException {
 		return null;
 	}
 
+	@Override
 	public void handleDebugEvents(DebugEvent[] events) {
 		for (int i = 0; i < events.length; i++) {
 			DebugEvent event = events[i];
@@ -442,6 +465,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		}
 	}
 
+	@Override
 	public void breakpointManagerEnablementChanged(boolean enabled) {
 		for (IBreakpoint breakpoint : getDebugCore().getOCLBreakpoints(IBreakpoint.class)) {
 			if (enabled) {
@@ -451,7 +475,7 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 			}
 		}
 	}
-	
+
 	private void joinStartOrTerminate() {
 		synchronized (fVMStartMonitor) {
 			while(fIsStarting) {
@@ -464,24 +488,24 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 			}
 		}
 	}
-	
-		
+
+
 	private void setStarting(boolean isStarting) {
 		synchronized (fVMStartMonitor) {
 			fIsStarting = isStarting;
 			fVMStartMonitor.notify();
 		}
 	}
-	
+
 	private void handleBreakpointConditionError(VMSuspendEvent suspend) {
 		IStatus breakpointStatus = new BreakpointError(suspend
 				.getBreakpointID(), suspend.getReason(),
 				suspend.getReasonDetail());
-		
+
 		IStatusHandler handler = DebugPlugin.getDefault().getStatusHandler(breakpointStatus);
 		if(handler != null) {
 			try {
-				handler.handleStatus(breakpointStatus, VMDebugTarget.this);									
+				handler.handleStatus(breakpointStatus, VMDebugTarget.this);
 			} catch (CoreException e) {
 				getDebugCore().log(e.getStatus());
 			}
@@ -489,32 +513,33 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 			// no custom handler found, at least log the status
 			getDebugCore().log(breakpointStatus);
 		}
-	}	
-	
+	}
+
 	private VMEventListener createVMEventListener() {
 		return new VMEventListener() {
-			
-			public void handleEvent(VMEvent event) { 
+
+			@Override
+			public void handleEvent(VMEvent event) {
 				if (event instanceof VMResumeEvent) {
 					fIsSuspended = false;
 					fireResumeEvent(0);
 				} else if (event instanceof VMSuspendEvent) {
 					fIsSuspended = true;
-					
-					VMSuspendEvent suspend = (VMSuspendEvent) event;					
+
+					VMSuspendEvent suspend = (VMSuspendEvent) event;
 					fireSuspendEvent(suspend.suspension.getDebugEventDetail());
-					
+
 					if (suspend.suspension == VMSuspension.BREAKPOINT_CONDITION_ERR) {
 						handleBreakpointConditionError(suspend);
 					}
-					
+
 				} else if (event instanceof VMTerminateEvent) {
 					fIsSuspended = false;
 					terminated();
 				} else if (event instanceof VMDisconnectEvent) {
 					fIsSuspended = false;
 					terminated();
-				} else if (event instanceof VMStartEvent) {					
+				} else if (event instanceof VMStartEvent) {
 					VMStartEvent startEvent = (VMStartEvent) event;
 					started(startEvent.mainModuleName);
 					fIsSuspended = startEvent.suspendOnStartup;
@@ -527,12 +552,14 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 		};
 	}
 
+	@Override
 	public void addVMEventListener(@NonNull VMEventListener listener) {
 		synchronized (fEventListener) {
 			fEventListener.add(listener);
 		}
 	}
 
+	@Override
 	public boolean removeVMEventListener(@NonNull VMEventListener listener) {
 		synchronized (fEventListener) {
 			return fEventListener.remove(listener);
@@ -553,20 +580,21 @@ public abstract class VMDebugTarget extends VMDebugElement implements IVMDebugTa
 			}
 		}
 	}
-	
+
 	public IValue evaluate(@NonNull String expressionText, long frameID) throws CoreException {
 		if (getVM() instanceof VMVirtualMachine) {
 			return ((VMVirtualMachine) getVM()).evaluate(expressionText, this, frameID);
 		}
 		return null;
 	}
-	
+
 	private class EventDispatchJob implements Runnable {
 
 		EventDispatchJob() {
 			super();
 		}
 
+		@Override
 		public void run() {
 			while (!isTerminated()) {
 				VMEvent event;

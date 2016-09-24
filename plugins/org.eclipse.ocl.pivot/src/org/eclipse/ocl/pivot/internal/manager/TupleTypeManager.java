@@ -73,7 +73,7 @@ public class TupleTypeManager
 	public static class TuplePart extends TypedElementImpl
 	{
 		protected final @NonNull TuplePartId partId;
-		
+
 		public TuplePart(@NonNull TuplePartId partId) {
 			this.partId = partId;
 			setName(partId.getName());
@@ -89,14 +89,14 @@ public class TupleTypeManager
 			return String.valueOf(name) + " : " + String.valueOf(type);
 		}
 	}
-	
+
 	/**
 	 * The TemplateParameterReferencesVisitor remembers the formal TemplateParameter for re-uyse during Tuple instantiation.
 	 */
 	protected static class TemplateParameterReferencesVisitor extends TemplateParameterSubstitutionVisitor
 	{
-		protected final @NonNull Map<Integer, TemplateParameter> templateParameters = new HashMap<Integer, TemplateParameter>();
-		
+		protected final @NonNull Map<Integer, TemplateParameter> templateParameters = new HashMap<>();
+
 		public TemplateParameterReferencesVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, Collection<? extends Type> partValues) {
 			super(environmentFactory, null, null);
 			for (Type partValue : partValues) {
@@ -114,12 +114,12 @@ public class TupleTypeManager
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final org.eclipse.ocl.pivot.@NonNull Class oclTupleType;
-	
+
 	/**
-	 * Map from the tuple typeId to the tuple type. 
+	 * Map from the tuple typeId to the tuple type.
 	 */
 	private @Nullable Map<TupleTypeId, TupleType> tupleid2tuple = null;
-	
+
 	public TupleTypeManager(@NonNull CompleteEnvironmentInternal allCompleteClasses) {
 		this.completeEnvironment = allCompleteClasses;
 		this.metamodelManager = allCompleteClasses.getEnvironmentFactory().getMetamodelManager();
@@ -130,15 +130,15 @@ public class TupleTypeManager
 		tupleid2tuple = null;
 	}
 
-    public @Nullable Type getCommonType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
-    		@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
+	public @Nullable Type getCommonType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
+			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
 		List<Property> leftProperties = leftType.getOwnedProperties();
 		List<Property> rightProperties = rightType.getOwnedProperties();
 		int iSize = leftProperties.size();
 		if (iSize != rightProperties.size()) {
 			return null;
 		}
-		List<@NonNull TuplePartId> commonPartIds = new ArrayList<@NonNull TuplePartId>(iSize);
+		List<@NonNull TuplePartId> commonPartIds = new ArrayList<>(iSize);
 		for (int i = 0; i < iSize; i++) {
 			Property leftProperty = leftProperties.get(i);
 			if (leftProperty == null) {
@@ -174,7 +174,7 @@ public class TupleTypeManager
 			synchronized (this) {
 				tupleid2tuple2 = tupleid2tuple;
 				if (tupleid2tuple2 == null) {
-					tupleid2tuple2 = tupleid2tuple = new HashMap<TupleTypeId, TupleType>();
+					tupleid2tuple2 = tupleid2tuple = new HashMap<>();
 				}
 			}
 		}
@@ -200,10 +200,10 @@ public class TupleTypeManager
 		return tupleType;
 	}
 
-	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Collection<? extends TypedElement> parts,
+	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Collection<@NonNull? extends TypedElement> parts,
 			@Nullable TemplateParameterSubstitutions usageBindings) {
-		Map<String, Type> partMap = new HashMap<String, Type>();
-		for (TypedElement part : parts) {
+		Map<String, Type> partMap = new HashMap<>();
+		for (@NonNull TypedElement part : parts) {
 			Type type1 = part.getType();
 			if (type1 != null) {
 				Type type2 = metamodelManager.getPrimaryType(type1);
@@ -213,7 +213,7 @@ public class TupleTypeManager
 		}
 		return getTupleType(tupleName, partMap);
 	}
-	
+
 	/**
 	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
 	 */
@@ -228,7 +228,7 @@ public class TupleTypeManager
 		//
 		int partsCount = parts.size();
 		@NonNull TuplePartId[] newPartIds = new @NonNull TuplePartId[partsCount];
-		List<String> sortedPartNames = new ArrayList<String>(parts.keySet());
+		List<String> sortedPartNames = new ArrayList<>(parts.keySet());
 		Collections.sort(sortedPartNames);
 		for (int i = 0; i < partsCount; i++) {
 			@SuppressWarnings("null")@NonNull String partName = sortedPartNames.get(i);
@@ -252,7 +252,7 @@ public class TupleTypeManager
 	}
 
 	public @NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateParameterSubstitutions usageBindings) {	// FIXME Remove duplication, unify type/multiplicity
-//		return getTupleType(type.getName(), type.getOwnedAttribute(), usageBindings);
+		//		return getTupleType(type.getName(), type.getOwnedAttribute(), usageBindings);
 		TupleType specializedTupleType = type;
 		Map<String, Type> resolutions =  null;
 		List<Property> parts = specializedTupleType.getOwnedProperties();
@@ -263,7 +263,7 @@ public class TupleTypeManager
 					Type resolvedPropertyType = completeEnvironment.getSpecializedType(propertyType, usageBindings);
 					if (resolvedPropertyType != propertyType) {
 						if (resolutions == null) {
-							resolutions = new HashMap<String, Type>();
+							resolutions = new HashMap<>();
 						}
 						resolutions.put(NameUtil.getSafeName(part), resolvedPropertyType);
 					}
@@ -271,7 +271,7 @@ public class TupleTypeManager
 			}
 		}
 		if (resolutions != null) {
-			List<@NonNull TuplePartId> partIds = new ArrayList<@NonNull TuplePartId>(parts.size());
+			List<@NonNull TuplePartId> partIds = new ArrayList<>(parts.size());
 			for (int i = 0; i < parts.size(); i++) {
 				@SuppressWarnings("null") @NonNull Property part = parts.get(i);
 				String partName = NameUtil.getSafeName(part);
@@ -285,7 +285,7 @@ public class TupleTypeManager
 			return specializedTupleType;
 		}
 		else {
-			return getTupleType(NameUtil.getSafeName(type), type.getOwnedProperties(), usageBindings);
+			return getTupleType(NameUtil.getSafeName(type), ClassUtil.nullFree(type.getOwnedProperties()), usageBindings);
 		}
 	}
 }

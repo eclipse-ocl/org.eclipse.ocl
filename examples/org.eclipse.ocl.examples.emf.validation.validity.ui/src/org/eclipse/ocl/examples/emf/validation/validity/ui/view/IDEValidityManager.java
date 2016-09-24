@@ -44,6 +44,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class IDEValidityManager extends ValidityManager
 {
@@ -62,12 +63,12 @@ public class IDEValidityManager extends ValidityManager
 			}
 		}
 	}
-	
+
 	protected class IDEValidityModel extends ValidityModel
 	{
 		public IDEValidityModel(@NonNull IDEValidityManager validityManager, @NonNull Collection<@NonNull Resource> newResources) {
 			super(validityManager, newResources);
- 		}
+		}
 
 		@Override
 		protected @Nullable Result createResult(@Nullable IProgressMonitor monitor) {
@@ -87,7 +88,7 @@ public class IDEValidityManager extends ValidityManager
 	{
 		protected final @NonNull ValidityView validityView;
 		protected final @Nullable Set<ResultConstrainingNode> selectedNodes;
-		
+
 		private ValidityViewJob(@NonNull ValidityView validityView, @Nullable Set<ResultConstrainingNode> selectedNodes) {
 			super("Validity View Validation");
 			this.validityView = validityView;
@@ -124,10 +125,10 @@ public class IDEValidityManager extends ValidityManager
 								}
 								ValidatableNode validatableParent = validatable.getParent();
 								LeafConstrainingNode constraint = result.getLeafConstrainingNode();
-	
+
 								if (constraint !=null) {
 									List<ConstrainingNode> constrainingAncestors = getConstrainingNodeAncestors(constraint);
-	
+
 									boolean isConstrainingNodeEnabled = true;
 									for (ConstrainingNode constrainingAncestor: constrainingAncestors){
 										if (!constrainingAncestor.isEnabled()){
@@ -135,18 +136,18 @@ public class IDEValidityManager extends ValidityManager
 											break;
 										}
 									}
-									
+
 									boolean isEnabledForValidation = false;
 									if (isConstrainingNodeEnabled) {
 										if (validatable instanceof ResultValidatableNode) {
 											if (validatableParent != null && validatableParent.isEnabled()) {
 												isEnabledForValidation = true;
-											} 
+											}
 										} else {
 											isEnabledForValidation = true;
 										}
 									}
-	
+
 									if (isEnabledForValidation){
 										ConstraintLocator constraintLocator = constraint.getConstraintLocator();
 										constraintLocator.validate(result, IDEValidityManager.this, emfMonitor);
@@ -217,9 +218,9 @@ public class IDEValidityManager extends ValidityManager
 					}
 				}
 			}
-		}	
+		}
 	}
-	
+
 	public class ResultAdapter extends AdapterImpl
 	{
 		@Override
@@ -252,27 +253,28 @@ public class IDEValidityManager extends ValidityManager
 			}
 		}
 	}
-	
+
 	private final @NonNull AbstractNodeAdapter nodeAdapter = new AbstractNodeAdapter();
 	private final @NonNull ResultAdapter resultAdapter = new ResultAdapter();
 	private final @NonNull ValidityViewRefreshJob refreshJob;
 
 	public IDEValidityManager(@NonNull ValidityViewRefreshJob refreshJob) {
 		this.refreshJob = refreshJob;
-//		CREATE_CONSTRAINING.setState(true);
-//		CREATE_RESULT.setState(true);
-//		CREATE_VALIDATABLE.setState(true);
+		//		CREATE_CONSTRAINING.setState(true);
+		//		CREATE_RESULT.setState(true);
+		//		CREATE_VALIDATABLE.setState(true);
 	}
 
 	@Override
 	protected @NonNull ValidityModel createModel(@NonNull Collection<@NonNull Resource> newResources) {
 		ValidityModel contents = new IDEValidityModel(this, newResources);
 		RootNode rootNode = contents.getRootNode();
-		installAdapters(rootNode.getConstrainingNodes());
-		installAdapters(rootNode.getValidatableNodes());
+		installAdapters(ClassUtil.nullFree(rootNode.getConstrainingNodes()));
+		installAdapters(ClassUtil.nullFree(rootNode.getValidatableNodes()));
 		return contents;
 	}
 
+	@Override
 	public @NonNull String getConstrainingLabel(@NonNull EObject eObject) {
 		if (eObject instanceof Model) {
 			return ILabelGenerator.Registry.INSTANCE.labelFor(eObject, LABEL_OPTIONS);
@@ -282,10 +284,10 @@ public class IDEValidityManager extends ValidityManager
 		}
 	}
 
-	private void installAdapters(@NonNull List<? extends AbstractNode> nodes) {
-		for (AbstractNode node : nodes) {
+	private void installAdapters(@NonNull List<@NonNull ? extends AbstractNode> nodes) {
+		for (@NonNull AbstractNode node : nodes) {
 			node.eAdapters().add(nodeAdapter);
-			installAdapters(node.getChildren());
+			installAdapters(ClassUtil.nullFree(node.getChildren()));
 		}
 	}
 

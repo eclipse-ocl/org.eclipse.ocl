@@ -24,7 +24,7 @@ public class AmbiguitiesAdapter extends ExceptionAdapter
 	 * If ambiguities is non-null install an AmbiguitiesAdapter for them on eObject.
 	 * Otherwise of null, remove any pre-existing AmbiguitiesAdapter on eObject.
 	 */
-	public static void setAmbiguities(@NonNull EObject eObject, @Nullable List<? extends EObject> ambiguities) {
+	public static void setAmbiguities(@NonNull EObject eObject, @Nullable List<@NonNull ? extends EObject> ambiguities) {
 		List<Adapter> eAdapters = eObject.eAdapters();
 		for (Adapter eAdapter : eAdapters) {
 			if (eAdapter instanceof AmbiguitiesAdapter) {
@@ -42,11 +42,11 @@ public class AmbiguitiesAdapter extends ExceptionAdapter
 		}
 	}
 
-	protected @NonNull List<? extends EObject> eObjects;
-	
-	protected AmbiguitiesAdapter(@NonNull List<? extends EObject> eObjects) {
+	protected @NonNull List<@NonNull ? extends EObject> eObjects;
+
+	protected AmbiguitiesAdapter(@NonNull List<@NonNull ? extends EObject> eObjects) {
 		super(null);
-		this.eObjects = new ArrayList<EObject>(eObjects);
+		this.eObjects = new ArrayList<>(eObjects);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class AmbiguitiesAdapter extends ExceptionAdapter
 			s.append("\n\t");
 			s.append(eObject.eClass().getName());
 			s.append(" : ");
-			s.append(eObject);				
+			s.append(eObject);
 		}
 		return s.toString();
 	}

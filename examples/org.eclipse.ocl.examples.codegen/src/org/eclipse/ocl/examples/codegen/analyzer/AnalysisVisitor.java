@@ -68,7 +68,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 
 	@Override
 	public @Nullable Object visitCGElement(@NonNull CGElement cgElement) {
-		for (CGElement cgChild : cgElement.getChildren()) {
+		for (@NonNull CGElement cgChild : cgElement.getChildren()) {
 			cgChild.accept(this);
 		}
 		return null;

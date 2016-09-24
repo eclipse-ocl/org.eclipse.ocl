@@ -626,8 +626,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return needsBlankLine;
 	}
 
-	public void generateGlobals(@NonNull Iterable<? extends CGValuedElement> sortedElements) {
-		for (CGValuedElement cgElement : sortedElements) {
+	public void generateGlobals(@NonNull Iterable<@NonNull ? extends CGValuedElement> sortedElements) {
+		for (@NonNull CGValuedElement cgElement : sortedElements) {
 			cgElement.accept(this);
 		}
 	}

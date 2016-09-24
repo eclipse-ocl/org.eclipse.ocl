@@ -218,7 +218,7 @@ public class StandaloneProjectMap implements ProjectManager
 	private static final String PLUGIN_ID = PivotPlugin.PLUGIN_ID;
 
 	private static final Logger logger = Logger.getLogger(StandaloneProjectMap.class);
-	private static @Nullable Set<String> alreadyLogged = null;
+	private static @Nullable Set<@NonNull String> alreadyLogged = null;
 
 	public static final @NonNull TracingOption PROJECT_MAP_ADD_EPACKAGE = new TracingOption(PLUGIN_ID, "projectMap/addEPackage");
 	public static final @NonNull TracingOption PROJECT_MAP_ADD_GEN_MODEL = new TracingOption(PLUGIN_ID, "projectMap/addGenModel");
@@ -699,7 +699,7 @@ public class StandaloneProjectMap implements ProjectManager
 			this.resourceDescriptor = resourceDescriptor;
 			this.resourceSet = resourceSet;
 			this.packageRegistry = StandaloneProjectMap.getPackageRegistry(resourceSet);
-			for (IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {
+			for (@NonNull IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {
 				nsURI2packageLoadStatus.put(packageDescriptor.getNsURI(), new PackageLoadStatus(this, packageDescriptor));
 			}
 		}
@@ -1351,14 +1351,14 @@ public class StandaloneProjectMap implements ProjectManager
 		/**
 		 * The package descriptors for each of the multiple packages in the genmodel.
 		 */
-		protected final @NonNull List<IPackageDescriptor> packageDescriptors = new ArrayList<IPackageDescriptor>();
+		protected final @NonNull List<@NonNull IPackageDescriptor> packageDescriptors = new ArrayList<>();
 
 		private boolean hasEcoreModel = false;
 
 		/**
 		 * The IResourceLoadStatus for each ResourceSet (null is the global 'ResourceSet' 'containing' all Java'd packages).
 		 */
-		private final @NonNull WeakHashMap<ResourceSet, IResourceLoadStatus> resourceSet2resourceLoadStatus = new WeakHashMap<ResourceSet, IResourceLoadStatus>();
+		private final @NonNull WeakHashMap<@Nullable ResourceSet, @NonNull IResourceLoadStatus> resourceSet2resourceLoadStatus = new WeakHashMap<>();
 
 		protected AbstractResourceDescriptor(@NonNull IProjectDescriptor projectDescriptor, @NonNull URI genModelURI, @NonNull Map<@NonNull URI, @NonNull String> nsURI2className) {
 			this.projectDescriptor = projectDescriptor;
@@ -1393,12 +1393,14 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public void addedGeneratedPackage(@NonNull ResourceSet resourceSet, @NonNull EPackage ePackage) {
 			IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.get(resourceSet);
-			@NonNull URI uri = URI.createURI(ePackage.getNsURI());
-			IPackageDescriptor packageDescriptor = getProjectDescriptor().getPackageDescriptor(uri);
-			if (packageDescriptor != null) {
-				IPackageLoadStatus packageLoadStatus = resourceLoadStatus.getPackageLoadStatus(packageDescriptor);
-				if (packageLoadStatus != null) {
-					resourceLoadStatus.getResourceLoadStrategy().addedGeneratedPackage(packageLoadStatus, ePackage);
+			if (resourceLoadStatus != null) {
+				@NonNull URI uri = URI.createURI(ePackage.getNsURI());
+				IPackageDescriptor packageDescriptor = getProjectDescriptor().getPackageDescriptor(uri);
+				if (packageDescriptor != null) {
+					IPackageLoadStatus packageLoadStatus = resourceLoadStatus.getPackageLoadStatus(packageDescriptor);
+					if (packageLoadStatus != null) {
+						resourceLoadStatus.getResourceLoadStrategy().addedGeneratedPackage(packageLoadStatus, ePackage);
+					}
 				}
 			}
 		}
@@ -1417,7 +1419,7 @@ public class StandaloneProjectMap implements ProjectManager
 			synchronized (resourceSet) {
 				uriResourceMap = ((ResourceSetImpl)resourceSet).getURIResourceMap();
 				if (uriResourceMap == null) {
-					uriResourceMap = new HashMap<URI, Resource>();
+					uriResourceMap = new HashMap<>();
 					((ResourceSetImpl)resourceSet).setURIResourceMap(uriResourceMap);
 				}
 			}
@@ -1447,7 +1449,7 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
-		public @NonNull List<? extends IPackageDescriptor> getPackageDescriptors() {
+		public @NonNull List<@NonNull ? extends IPackageDescriptor> getPackageDescriptors() {
 			return packageDescriptors;
 		}
 
@@ -1497,10 +1499,10 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
-		public void setEcoreModel(@NonNull List<String> genModelRelativeEcorePackageUris, @NonNull Map<String, IPackageDescriptor> nsURI2packageDescriptor) {
+		public void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor) {
 			int size = genModelRelativeEcorePackageUris.size();
 			if (size > 0) {
-				@SuppressWarnings("null")@NonNull String firstGenModelRelativeEcorePackageUri = genModelRelativeEcorePackageUris.get(0);
+				@NonNull String firstGenModelRelativeEcorePackageUri = genModelRelativeEcorePackageUris.get(0);
 				URI firstGenModelRelativeEcorePackageURI = URI.createURI(firstGenModelRelativeEcorePackageUri);
 				@NonNull URI genModelRelativeEcoreModelURI = firstGenModelRelativeEcorePackageURI.trimFragment();
 				URI projectLocationURI = projectDescriptor.getLocationURI();
@@ -1734,8 +1736,8 @@ public class StandaloneProjectMap implements ProjectManager
 		private int extensionCount = 0;
 		private boolean inPoint = false;
 		private int packageCount = 0;
-		private @NonNull Map<String, GenModelReader> genModelReaders = new HashMap<String, GenModelReader>();
-		private @Nullable Map<String, @NonNull Map<URI, String>> genModelURI2nsURI2className = null;
+		private @NonNull Map<@NonNull String, @NonNull GenModelReader> genModelReaders = new HashMap<>();
+		private @Nullable Map<@NonNull String, @NonNull Map<URI, String>> genModelURI2nsURI2className = null;
 
 		private PluginReader(@Nullable IProjectDescriptor projectDescriptor) {
 			this.jarFile = null;
@@ -1829,13 +1831,13 @@ public class StandaloneProjectMap implements ProjectManager
 						@NonNull URI nsURI = URI.createURI(attributes.getValue(uriAttribute));
 						String genModel = attributes.getValue(genModelAttribute);
 						if ((genModel != null) && (className != null)) {
-							Map<String, @NonNull Map<URI, String>> genModelURI2nsURI2className2 = genModelURI2nsURI2className;
+							Map<@NonNull String, @NonNull Map<URI, String>> genModelURI2nsURI2className2 = genModelURI2nsURI2className;
 							if (genModelURI2nsURI2className2 == null) {
-								genModelURI2nsURI2className = genModelURI2nsURI2className2 = new HashMap<String, @NonNull Map<URI, String>>();
+								genModelURI2nsURI2className = genModelURI2nsURI2className2 = new HashMap<>();
 							}
 							Map<URI, String> nsURI2className = genModelURI2nsURI2className2.get(genModel);
 							if (nsURI2className == null) {
-								nsURI2className = new HashMap<URI, String>();
+								nsURI2className = new HashMap<>();
 								genModelURI2nsURI2className2.put(genModel, nsURI2className);
 							}
 							nsURI2className.put(nsURI, className);
@@ -1861,11 +1863,11 @@ public class StandaloneProjectMap implements ProjectManager
 
 		protected final @NonNull IResourceDescriptor resourceDescriptor;
 		protected final @NonNull IProjectDescriptor projectDescriptor;
-		protected final @NonNull Map<String, IPackageDescriptor> nsURI2packageDescriptor = new HashMap<String, IPackageDescriptor>();
+		protected final @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor = new HashMap<>();
 		protected final @NonNull URI genModelURI;
-		protected final @NonNull List<String> ecorePackages = new ArrayList<String>();
+		protected final @NonNull List<@NonNull String> ecorePackages = new ArrayList<>();
 
-		private @NonNull Stack<String> elements = new Stack<String>();
+		private @NonNull Stack<String> elements = new Stack<>();
 
 		/**
 		 * A simple public static method that may be used to force class
@@ -1877,13 +1879,13 @@ public class StandaloneProjectMap implements ProjectManager
 			this.resourceDescriptor = resourceDescriptor;
 			this.projectDescriptor = resourceDescriptor.getProjectDescriptor();
 			this.genModelURI = resourceDescriptor.getGenModelURI();
-			for (@SuppressWarnings("null")@NonNull IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {
+			for (@NonNull IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {
 				add(packageDescriptor);
 			}
 		}
 
 		private void add(@NonNull IPackageDescriptor packageDescriptor) {
-			nsURI2packageDescriptor.put(packageDescriptor.getNsURI().toString(), packageDescriptor);
+			nsURI2packageDescriptor.put(String.valueOf(packageDescriptor.getNsURI()), packageDescriptor);
 		}
 
 		@Override
@@ -1969,7 +1971,7 @@ public class StandaloneProjectMap implements ProjectManager
 		public void addPackageDescriptor(@NonNull IPackageDescriptor packageDescriptor) {
 			Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2packageDescriptor2 = nsURI2packageDescriptor;
 			if (nsURI2packageDescriptor2 == null) {
-				nsURI2packageDescriptor = nsURI2packageDescriptor2 = new HashMap<@NonNull URI, @NonNull IPackageDescriptor>();
+				nsURI2packageDescriptor = nsURI2packageDescriptor2 = new HashMap<>();
 			}
 			nsURI2packageDescriptor2.put(packageDescriptor.getNsURI(), packageDescriptor);
 		}
@@ -1978,7 +1980,7 @@ public class StandaloneProjectMap implements ProjectManager
 		public void addResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor) {
 			Map<@NonNull URI, @NonNull IResourceDescriptor> genModelURI2packageDescriptor2 = genModelURI2packageDescriptor;
 			if (genModelURI2packageDescriptor2 == null) {
-				genModelURI2packageDescriptor = genModelURI2packageDescriptor2 = new HashMap<@NonNull URI, @NonNull IResourceDescriptor>();
+				genModelURI2packageDescriptor = genModelURI2packageDescriptor2 = new HashMap<>();
 			}
 			genModelURI2packageDescriptor2.put(resourceDescriptor.getGenModelURI(), resourceDescriptor);
 		}
@@ -2264,7 +2266,7 @@ public class StandaloneProjectMap implements ProjectManager
 			ResourceSetImpl resourceSetImpl = (ResourceSetImpl) resourceSet;
 			Map<URI, Resource> uriResourceMap = resourceSetImpl.getURIResourceMap();
 			if (uriResourceMap == null) {
-				resourceSetImpl.setURIResourceMap(new HashMap<URI, Resource>());
+				resourceSetImpl.setURIResourceMap(new HashMap<>());
 			}
 		}
 	}
@@ -2272,7 +2274,7 @@ public class StandaloneProjectMap implements ProjectManager
 	/**
 	 * Leak debugging aid. Set non-null to diagnose MetamodelManager construction and finalization.
 	 */
-	public static WeakHashMap<StandaloneProjectMap,Object> liveStandaloneProjectMaps = null;
+	public static WeakHashMap<@NonNull StandaloneProjectMap, @Nullable Object> liveStandaloneProjectMaps = null;
 
 	/**
 	 * Whether this is the Global Project Manager
@@ -2282,12 +2284,12 @@ public class StandaloneProjectMap implements ProjectManager
 	/**
 	 * Exceptions encountered during processing as a map from File to Exception.
 	 */
-	private @Nullable Map<String, Exception> exceptionMap = null;
+	private @Nullable Map<@NonNull String, @NonNull Exception> exceptionMap = null;
 
 	/**
 	 * The map of bundle/project name to project descriptor.
 	 */
-	private Map<String, @NonNull IProjectDescriptor> project2descriptor = null;
+	private Map<@NonNull String, @NonNull IProjectDescriptor> project2descriptor = null;
 
 	protected boolean initializedPlatformResourceMap = false;
 
@@ -2318,7 +2320,7 @@ public class StandaloneProjectMap implements ProjectManager
 	public void addResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor) {
 		Map<URI, IResourceDescriptor> uri2resource2 = uri2resource;
 		if (uri2resource2 == null) {
-			uri2resource = uri2resource2 = new HashMap<URI, IResourceDescriptor>();
+			uri2resource = uri2resource2 = new HashMap<>();
 		}
 		uri2resource2.put(resourceDescriptor.getPlatformPluginURI(), resourceDescriptor);
 		uri2resource2.put(resourceDescriptor.getPlatformResourceURI(), resourceDescriptor);
@@ -2347,7 +2349,7 @@ public class StandaloneProjectMap implements ProjectManager
 		if (liveStandaloneProjectMaps != null) {
 			PivotUtilInternal.debugPrintln("Finalize " + getClass().getSimpleName()
 				+ "@" + Integer.toHexString(System.identityHashCode(this)));
-			List<StandaloneProjectMap> keySet = new ArrayList<StandaloneProjectMap>(liveStandaloneProjectMaps.keySet());
+			List<@NonNull StandaloneProjectMap> keySet = new ArrayList<>(liveStandaloneProjectMaps.keySet());
 			if (!keySet.isEmpty()) {
 				StringBuilder s = new StringBuilder();
 				s.append(" live");
@@ -2429,10 +2431,10 @@ public class StandaloneProjectMap implements ProjectManager
 	 * exception map accessible using {@link #getExceptionMap()}. An overall
 	 * problem may be attributed to the null file.
 	 */
-	protected synchronized @Nullable Map<String, IProjectDescriptor> getProjectDescriptors() {
-		Map<String, @NonNull IProjectDescriptor> project2descriptor2 = project2descriptor;
+	protected synchronized @Nullable Map<@NonNull String, @NonNull IProjectDescriptor> getProjectDescriptors() {
+		Map<@NonNull String, @NonNull IProjectDescriptor> project2descriptor2 = project2descriptor;
 		if (project2descriptor2 == null) {
-			project2descriptor = project2descriptor2 = new HashMap<String, @NonNull IProjectDescriptor>();
+			project2descriptor = project2descriptor2 = new HashMap<>();
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			try {
 				SAXParser saxParser = factory.newSAXParser();
@@ -2476,11 +2478,11 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	public synchronized void initializeGenModelLocationMap(boolean force) {
 		if (force || (nsURI2package == null)) {
-			Map<URI, IPackageDescriptor> nsURI2package2 = new HashMap<URI, IPackageDescriptor> ();
+			Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package2 = new HashMap<> ();
 			nsURI2package = nsURI2package2;
-			Map<String, IProjectDescriptor> projectDescriptors = getProjectDescriptors();
+			Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors = getProjectDescriptors();
 			if (projectDescriptors != null) {
-				for (IProjectDescriptor projectDescriptor : projectDescriptors.values()) {
+				for (@NonNull IProjectDescriptor projectDescriptor : projectDescriptors.values()) {
 					projectDescriptor.initializeGenModelLocationMap(nsURI2package2);
 				}
 			}
@@ -2587,16 +2589,16 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	protected void logException(@NonNull String message, @NonNull Exception e) {
-		Set<String> alreadyLogged2 = alreadyLogged;
+		Set<@NonNull String> alreadyLogged2 = alreadyLogged;
 		if (alreadyLogged2 == null) {
-			alreadyLogged = alreadyLogged2 = new HashSet<String>();
+			alreadyLogged = alreadyLogged2 = new HashSet<>();
 		}
 		if (alreadyLogged2.add(message)) {
 			logger.info(message, e);
 		}
-		Map<String, Exception> exceptionMap2 = exceptionMap;
+		Map<@NonNull String, @NonNull Exception> exceptionMap2 = exceptionMap;
 		if (exceptionMap2 == null) {
-			exceptionMap = exceptionMap2 = new HashMap<String, Exception>();
+			exceptionMap = exceptionMap2 = new HashMap<>();
 		}
 		exceptionMap2.put(message, e);
 	}
@@ -2736,7 +2738,7 @@ public class StandaloneProjectMap implements ProjectManager
 					File f = fileEntry.getCanonicalFile();
 					if (f.getPath().endsWith(".jar")) {
 						registerBundle(f, saxParser);
-					} else if (!scanFolder(f, saxParser, new HashSet<String>(), 0)) {
+					} else if (!scanFolder(f, saxParser, new HashSet<>(), 0)) {
 						// eclipse bin folder?
 						File parentFile = f.getParentFile();
 						File dotProject = new File(parentFile, ".project");
@@ -2793,7 +2795,7 @@ public class StandaloneProjectMap implements ProjectManager
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		if (project2descriptor != null) {
-			List<String> projectNames = new ArrayList<String>(project2descriptor.keySet());
+			List<@NonNull String> projectNames = new ArrayList<>(project2descriptor.keySet());
 			Collections.sort(projectNames);
 			for (String projectName : projectNames) {
 				if (s.length() > 0) {

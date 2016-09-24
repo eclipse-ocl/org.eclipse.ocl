@@ -36,48 +36,48 @@ public class CGElementModelSpec extends ModelSpec
 			}
 		}
 
-		protected abstract @Nullable String getBody(@NonNull CGElementModelSpec cgModelSpec, @NonNull GenModel genModel);		
+		protected abstract @Nullable String getBody(@NonNull CGElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 	}
-		
-	protected static MethodSpec getChildren = new MyMethodSpec(CGElement.class, "@NonNull Iterable<? extends " + classRef(CGElement.class) + "> getChildren()", null,
-		"Return the child CGElements.")
-		{
-			@Override
-			protected @Nullable String getBody(@NonNull CGElementModelSpec modelSpec, @NonNull GenModel genModel) {
-				if (modelSpec.cgClass == rootClass) {
-					return "@SuppressWarnings({\"null\", \"unchecked\"}) @NonNull Iterable<? extends CGElement> eContents = (Iterable<? extends CGElement>) eContents();\n" +
-					"		return eContents;";
-				}
-				else {
-					return null;
-				}
+
+	protected static MethodSpec getChildren = new MyMethodSpec(CGElement.class, "@NonNull Iterable<@NonNull ? extends " + classRef(CGElement.class) + "> getChildren()", null,
+			"Return the child CGElements.")
+	{
+		@Override
+		protected @Nullable String getBody(@NonNull CGElementModelSpec modelSpec, @NonNull GenModel genModel) {
+			if (modelSpec.cgClass == rootClass) {
+				return "@SuppressWarnings({\"null\", \"unchecked\"}) @NonNull Iterable<@NonNull ? extends CGElement> eContents = (Iterable<@NonNull ? extends CGElement>) eContents();\n" +
+						"		return eContents;";
 			}
-		};
-		
+			else {
+				return null;
+			}
+		}
+	};
+
 	protected static MethodSpec getParent = new MyMethodSpec(CGElement.class, "@Nullable " + classRef(CGElement.class) + " getParent()", null,
-		"Return the parent node in a CG tree, null at the root.")
-		{
-			@Override
-			protected @Nullable String getBody(@NonNull CGElementModelSpec modelSpec, @NonNull GenModel genModel) {
-				if (modelSpec.cgClass == rootClass) {
-					return "return (" + classRef(CGElement.class) + ")eContainer();";
-				}
-				else {
-					return null;
-				}
+			"Return the parent node in a CG tree, null at the root.")
+	{
+		@Override
+		protected @Nullable String getBody(@NonNull CGElementModelSpec modelSpec, @NonNull GenModel genModel) {
+			if (modelSpec.cgClass == rootClass) {
+				return "return (" + classRef(CGElement.class) + ")eContainer();";
 			}
-		};
+			else {
+				return null;
+			}
+		}
+	};
 
 	public static class Register {
-	  public Register() {
-		new CGElementModelSpec(CGElement.class);
-	  }
+		public Register() {
+			new CGElementModelSpec(CGElement.class);
+		}
 	}
-	
+
 	protected CGElementModelSpec(@NonNull Class<?> cgClass) {
 		super(cgClass);
 	}
-	
+
 	@Override
 	public void generate(@NonNull StringBuilder s, @NonNull GenModel genModel, boolean isImplementation) {
 		getChildren.generate(s, this, genModel, isImplementation);

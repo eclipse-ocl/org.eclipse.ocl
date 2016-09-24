@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -130,17 +130,17 @@ public interface CompleteModel extends NamedElement
 	 * @generated
 	 */
 	@Nullable CompletePackage getOwnedCompletePackage(String name);
-	
+
 	void addPackageURI2completeURI(@NonNull String packageURI, @NonNull String newCompleteURI);
 	boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions);
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
-//	@NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+	//	@NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 	@NonNull CompleteClass getCompleteClass(@NonNull Type partialClass);
 	@NonNull CompleteEnvironment getCompleteEnvironment();
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 	@Nullable CompletePackage getCompletePackageByURI(@NonNull String packageURI);
-	@NonNull Iterable<? extends CompletePackage> getAllCompletePackagesWithUris();
+	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackagesWithUris();
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType);
 	org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);
 } // CompleteModel

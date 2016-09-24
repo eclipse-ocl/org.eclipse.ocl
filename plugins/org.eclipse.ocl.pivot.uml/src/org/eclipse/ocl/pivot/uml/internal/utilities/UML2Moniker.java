@@ -25,8 +25,10 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.util.EcoreSwitch;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.utilities.AliasAdapter;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * Ecore2Moniker supports generation of a hierarchically derived moniker for
@@ -39,19 +41,19 @@ public class UML2Moniker extends EcoreSwitch<Object> implements PivotConstantsIn
 		moniker.appendElement(eElement);
 		return moniker.toString();
 	}
-	
+
 	public static String toString(EModelElement eElement) {
 		UML2Moniker moniker = new UML2Moniker(false);
 		moniker.appendElement(eElement);
 		return moniker.toString();
 	}
-	
+
 	public static String toString(EGenericType eElement) {
 		UML2Moniker moniker = new UML2Moniker(false);
 		moniker.appendType(eElement);
 		return moniker.toString();
 	}
-	
+
 	/**
 	 * Moiniker detail; false for minimal uniqueness (omit template bounds, template
 	 * parameter declarations, parameter names), true to show everything.
@@ -59,22 +61,22 @@ public class UML2Moniker extends EcoreSwitch<Object> implements PivotConstantsIn
 	 * Ecore models (unlike Pivot models) are mutable so the moniker is computed on
 	 * demand and may change if a name on the hierarchical path changes.
 	 */
-	protected boolean fullSignature;	
+	protected boolean fullSignature;
 
 	private StringBuilder s = new StringBuilder();
 	private List<ETypeParameter> emittedParameters = null;
-	
+
 	protected UML2Moniker(boolean fullSignature) {
 		this.fullSignature = fullSignature;
 	}
-	
+
 	protected void append(String string) {
 		s.append(string != null ? string : "null"); //$NON-NLS-1$
 	}
-	
+
 	protected void appendBounds(List<? extends EGenericType> bounds) {
 		String prefix = "";
-		for (EGenericType bound : bounds) {
+		for (@NonNull EGenericType bound : ClassUtil.nullFree(bounds)) {
 			s.append(prefix);
 			prefix = "|";							// No example available
 			EGenericType eLowerBound = bound.getELowerBound();
@@ -99,7 +101,7 @@ public class UML2Moniker extends EcoreSwitch<Object> implements PivotConstantsIn
 			assert bound.getETypeParameter() == null;
 		}
 	}
-	
+
 	protected void appendElement(EModelElement eElement) {
 		if (eElement != null) {
 			int classifierID = eElement.eClass().getClassifierID();
@@ -115,7 +117,7 @@ public class UML2Moniker extends EcoreSwitch<Object> implements PivotConstantsIn
 	protected void appendName(ENamedElement eNamedElement) {
 		append(eNamedElement.getName());
 	}
-	
+
 	protected void appendParameters(List<EParameter> parameters) {
 		s.append(PARAMETER_PREFIX);
 		String prefix = ""; //$NON-NLS-1$
@@ -126,7 +128,7 @@ public class UML2Moniker extends EcoreSwitch<Object> implements PivotConstantsIn
 				s.append(":");
 				s.append(eParameter.getName());
 			}
-			prefix = PARAMETER_SEPARATOR; //$NON-NLS-1$
+			prefix = PARAMETER_SEPARATOR;
 		}
 		s.append(PARAMETER_SUFFIX);
 	}
@@ -253,7 +255,7 @@ public class UML2Moniker extends EcoreSwitch<Object> implements PivotConstantsIn
 		}
 		return true;
 	}
-	
+
 	@Override
 	public Object caseEPackage(EPackage eElement) {
 		String alias = AliasAdapter.getAlias(eElement);

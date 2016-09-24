@@ -87,17 +87,17 @@ public class TypeUtil
 	public static boolean conformsToLambdaType(@NonNull StandardLibrary standardLibrary, @NonNull LambdaType firstLambdaType, @NonNull LambdaType secondLambdaType) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public static boolean conformsToMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapType firstMapType, @NonNull MapType secondMapType) {
-//		Type firstContainerType = firstMapType.getContainerType();
-//		Type secondContainerType = secondMapType.getContainerType();
-//		if (firstContainerType != secondContainerType) {
-//			CompleteInheritance firstInheritance = firstContainerType.getInheritance(standardLibrary);
-//			CompleteInheritance secondInheritance = secondContainerType.getInheritance(standardLibrary);
-//			if (!secondInheritance.isSuperInheritanceOf(firstInheritance)) {
-//				return false;
-//			}
-//		}
+		//		Type firstContainerType = firstMapType.getContainerType();
+		//		Type secondContainerType = secondMapType.getContainerType();
+		//		if (firstContainerType != secondContainerType) {
+		//			CompleteInheritance firstInheritance = firstContainerType.getInheritance(standardLibrary);
+		//			CompleteInheritance secondInheritance = secondContainerType.getInheritance(standardLibrary);
+		//			if (!secondInheritance.isSuperInheritanceOf(firstInheritance)) {
+		//				return false;
+		//			}
+		//		}
 		Type firstKeyType = firstMapType.getKeyType();
 		Type secondKeyType = secondMapType.getKeyType();
 		if (firstKeyType != secondKeyType) {
@@ -120,7 +120,7 @@ public class TypeUtil
 		}
 		return true;
 	}
-	
+
 	public static boolean conformsToTupleType(@NonNull StandardLibrary standardLibrary, @NonNull TupleType firstTupleType, @NonNull TupleType secondTupleType) {
 		if (isEqualToTupleType(standardLibrary, firstTupleType, secondTupleType)) {
 			return true;
@@ -135,12 +135,12 @@ public class TypeUtil
 	 */
 	@Deprecated
 	public static @NonNull CollectionTypeParameters<@NonNull Type> createCollectionTypeParameters(@NonNull Type elementType,
-		@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+			@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, false, lower, upper);
 	}
 
 	public static @NonNull CollectionTypeParameters<@NonNull Type> createCollectionTypeParameters(@NonNull Type elementType, boolean isNullFree,
-		@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+			@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, isNullFree, lower, upper);
 	}
 
@@ -175,23 +175,23 @@ public class TypeUtil
 	public static @NonNull Type @NonNull [] getOperationParameterTypes(@NonNull Operation anOperation) {
 		@NonNull Type @NonNull [] parameterTypes;
 		int iParameter = 0;
-		List<? extends TypedElement> ownedParameters = anOperation.getOwnedParameters();
+		List<@NonNull ? extends TypedElement> ownedParameters = ClassUtil.nullFree(anOperation.getOwnedParameters());
 		if (anOperation instanceof Iteration) {
 			Iteration anIteration = (Iteration)anOperation;
-			List<? extends TypedElement> ownedIterators = anIteration.getOwnedIterators();
-			List<? extends TypedElement> ownedAccumulators = anIteration.getOwnedAccumulators();
+			List<@NonNull ? extends TypedElement> ownedIterators = ClassUtil.nullFree(anIteration.getOwnedIterators());
+			List<@NonNull ? extends TypedElement> ownedAccumulators = ClassUtil.nullFree(anIteration.getOwnedAccumulators());
 			parameterTypes = new @NonNull Type[ownedIterators.size() + ownedAccumulators.size() + ownedParameters.size()];
-			for (TypedElement ownedIterator : ownedIterators) {
+			for (@NonNull TypedElement ownedIterator : ownedIterators) {
 				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedIterator.getType());
 			}
-			for (TypedElement ownedAccumulator : ownedAccumulators) {
+			for (@NonNull TypedElement ownedAccumulator : ownedAccumulators) {
 				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedAccumulator.getType());
 			}
 		}
 		else {
 			parameterTypes = new @NonNull Type[ownedParameters.size()];
 		}
-		for (TypedElement ownedParameter : ownedParameters) {
+		for (@NonNull TypedElement ownedParameter : ownedParameters) {
 			parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedParameter.getType());
 		}
 		return parameterTypes;
@@ -230,7 +230,7 @@ public class TypeUtil
 		}
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public static boolean isEqualToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
 		Type firstContainerType = firstCollectionType.getContainerType();
 		Type secondContainerType = secondCollectionType.getContainerType();
@@ -249,13 +249,13 @@ public class TypeUtil
 		}
 		return true;
 	}
-	
+
 	public static boolean isEqualToMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapType firstMapType, @NonNull MapType secondMapType) {
-//		Type firstContainerType = firstMapType.getContainerType();
-//		Type secondContainerType = secondMapType.getContainerType();
-//		if ((firstContainerType != secondContainerType) && !firstContainerType.isEqualToUnspecializedType(standardLibrary, secondContainerType)) {
-//			return false;
-//		}
+		//		Type firstContainerType = firstMapType.getContainerType();
+		//		Type secondContainerType = secondMapType.getContainerType();
+		//		if ((firstContainerType != secondContainerType) && !firstContainerType.isEqualToUnspecializedType(standardLibrary, secondContainerType)) {
+		//			return false;
+		//		}
 		Type firstKeyType = firstMapType.getKeyType();
 		Type secondKeyType = secondMapType.getKeyType();
 		if (firstKeyType != secondKeyType) {

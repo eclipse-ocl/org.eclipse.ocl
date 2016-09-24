@@ -838,7 +838,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return asResourceSet;
 	}
 
-	public @NonNull Iterable<CompletePackageInternal> getAllCompletePackages() {
+	public @NonNull Iterable<@NonNull CompletePackageInternal> getAllCompletePackages() {
 		if (!libraryLoadInProgress && (asMetamodel == null))  {
 			getASmetamodel();
 		}
@@ -869,7 +869,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return completeClass.getOperations(featureFilter);
 	}
 
-	public @NonNull Iterable<Operation> getAllOperations(@NonNull Type type, @Nullable FeatureFilter featureFilter, @NonNull String name) {
+	public @NonNull Iterable<@NonNull Operation> getAllOperations(@NonNull Type type, @Nullable FeatureFilter featureFilter, @NonNull String name) {
 		CompleteClass completeClass = completeModel.getCompleteClass(type);
 		return completeClass.getOperations(featureFilter, name);
 	}
@@ -1469,12 +1469,12 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return Collections.singletonList(pivotOperation);
 	}
 
-	public @NonNull Iterable<? extends org.eclipse.ocl.pivot.Package> getPartialPackages(org.eclipse.ocl.pivot.@NonNull Package pkg, boolean loadASmetamodelFirst) {
+	public @NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages(org.eclipse.ocl.pivot.@NonNull Package pkg, boolean loadASmetamodelFirst) {
 		if (!libraryLoadInProgress && loadASmetamodelFirst && (asMetamodel == null)) {
 			getASmetamodel();
 		}
 		CompletePackage completePackage = completeModel.getCompletePackage(pkg);
-		return completePackage.getPartialPackages();
+		return ClassUtil.nullFree(completePackage.getPartialPackages());
 	}
 
 	public @NonNull Iterable<org.eclipse.ocl.pivot.Class> getPartialClasses(@NonNull Type pivotType) {
@@ -1910,7 +1910,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * @param asLibrary
 	 */
 	protected void loadASmetamodel(org.eclipse.ocl.pivot.@NonNull Package asLibrary) {
-		for (org.eclipse.ocl.pivot.Package libPackage : getPartialPackages(asLibrary, false)) {
+		for (org.eclipse.ocl.pivot.@NonNull Package libPackage : getPartialPackages(asLibrary, false)) {
 			if (NameUtil.getNameable(libPackage.getOwnedClasses(), PivotPackage.Literals.ELEMENT.getName()) != null) {
 				setASmetamodel(libPackage);	// Custom meta-model
 				return;

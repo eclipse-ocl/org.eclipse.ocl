@@ -90,7 +90,7 @@ public abstract class AbstractOperationMatcher
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @Nullable Type sourceType;
 	protected final @Nullable Type sourceTypeValue;
-	private @Nullable List<Operation> ambiguities = null;
+	private @Nullable List<@NonNull Operation> ambiguities = null;
 
 	protected AbstractOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue) {
 		this.environmentFactory = environmentFactory;
@@ -127,9 +127,9 @@ public abstract class AbstractOperationMatcher
 		int referenceConversions = 0;
 		int candidateConversions = 0;
 		Type comparedSourceType = sourceType;
-//		if (comparedSourceType instanceof DomainMetaclass) {
-//			comparedSourceType = ((DomainMetaclass)comparedSourceType).getInstanceType();
-//		}
+		//		if (comparedSourceType instanceof DomainMetaclass) {
+		//			comparedSourceType = ((DomainMetaclass)comparedSourceType).getInstanceType();
+		//		}
 		if (comparedSourceType != specializedReferenceType) {
 			referenceConversions++;
 		}
@@ -171,10 +171,10 @@ public abstract class AbstractOperationMatcher
 			return verdict;
 		}
 		if (isRedefinitionOf(reference, candidate)) {
-			return 1;				// match2 inferior			
+			return 1;				// match2 inferior
 		}
 		if (isRedefinitionOf(candidate, reference)) {
-			return -1;				// match1 inferior			
+			return -1;				// match1 inferior
 		}
 		org.eclipse.ocl.pivot.Package p1 = PivotUtil.getContainingPackage(reference);
 		org.eclipse.ocl.pivot.Package p2 = PivotUtil.getContainingPackage(candidate);
@@ -206,7 +206,7 @@ public abstract class AbstractOperationMatcher
 		return 0;
 	}
 
-	public @Nullable List<Operation> getAmbiguities() {
+	public @Nullable List<@NonNull Operation> getAmbiguities() {
 		return ambiguities;
 	}
 

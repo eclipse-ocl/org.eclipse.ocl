@@ -31,16 +31,16 @@ public class EcoreReflectiveFragment extends ReflectiveFragment
 
 	public EcoreReflectiveFragment(@NonNull EcoreReflectiveType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
 		super(derivedInheritance, baseInheritance);
-		this.eClassifier = derivedInheritance.getEClassifier();		
+		this.eClassifier = derivedInheritance.getEClassifier();
 	}
 
 	public final @NonNull EClassifier getEClassifier() {
 		return eClassifier;
 	}
-	
+
 	@Override
-	public @NonNull Iterable<? extends Property> getLocalProperties() {
-		Map<Property, LibraryFeature> propertyMap2 = propertyMap;
+	public @NonNull Iterable<@NonNull ? extends Property> getLocalProperties() {
+		Map<@NonNull Property, @NonNull LibraryFeature> propertyMap2 = propertyMap;
 		if (propertyMap2 == null) {
 			synchronized (this) {
 				propertyMap2 = propertyMap;
@@ -57,8 +57,8 @@ public class EcoreReflectiveFragment extends ReflectiveFragment
 		throw new UnsupportedOperationException();		// FIXME
 	}
 
-	protected @NonNull Map<Property, LibraryFeature> initProperties() {
-		Map<Property, LibraryFeature> map = new HashMap<Property, LibraryFeature>();
+	protected @NonNull Map<@NonNull Property, @NonNull LibraryFeature> initProperties() {
+		Map<@NonNull Property, @NonNull LibraryFeature> map = new HashMap<>();
 		List<EStructuralFeature> eStructuralFeatures = ((EClass) eClassifier).getEStructuralFeatures();
 		for (int i = 0; i < eStructuralFeatures.size(); i++) {
 			@SuppressWarnings("null")@NonNull EStructuralFeature eFeature = eStructuralFeatures.get(i);

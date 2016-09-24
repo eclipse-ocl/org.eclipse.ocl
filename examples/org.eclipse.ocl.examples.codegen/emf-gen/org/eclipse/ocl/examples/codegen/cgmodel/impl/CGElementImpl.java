@@ -96,8 +96,8 @@ public abstract class CGElementImpl extends MinimalEObjectImpl.Container impleme
 	 * @generated
 	 */
 	@Override
-	public @NonNull Iterable<? extends CGElement> getChildren() {
-		@SuppressWarnings({"null", "unchecked"}) @NonNull Iterable<? extends CGElement> eContents = (Iterable<? extends CGElement>) eContents();
+	public @NonNull Iterable<@NonNull ? extends CGElement> getChildren() {
+		@SuppressWarnings({"null", "unchecked"}) @NonNull Iterable<@NonNull ? extends CGElement> eContents = (Iterable<@NonNull ? extends CGElement>) eContents();
 		return eContents;
 	}
 

@@ -31,14 +31,14 @@ public class CompleteURIs
 	 * Map of Complete URI to Package URIs
 	 */
 	private final @NonNull Map<String, Set<String>> completeURI2packageURIs = new HashMap<String, Set<String>>();
-	
+
 	/**
 	 * Map of Package URI to Complete URI.
 	 */
 	private final @NonNull Map<String, String> packageURI2completeURI = new HashMap<String, String>();
 
 	/**
-	 * Map from Complete URI to Complete Package. 
+	 * Map from Complete URI to Complete Package.
 	 */
 	private final @NonNull Map<String, @NonNull CompletePackageInternal> completeURI2completePackage = new HashMap<String, @NonNull CompletePackageInternal>();
 
@@ -47,15 +47,15 @@ public class CompleteURIs
 	}
 
 	public void didAddCompletePackage(@NonNull CompletePackageInternal completePackage) {
-//		if ((completePackage != completeModel.getOrphanCompletePackage()) && (completePackage != completeModel.getPrimitiveCompletePackage())) {
-			String completeURI = completePackage.getURI();
-			if (completeURI != null) {
-				CompletePackage oldCompletePackage = completeURI2completePackage.put(completeURI, completePackage);
-				assert oldCompletePackage == null;
-			}
-//		}
+		//		if ((completePackage != completeModel.getOrphanCompletePackage()) && (completePackage != completeModel.getPrimitiveCompletePackage())) {
+		String completeURI = completePackage.getURI();
+		if (completeURI != null) {
+			CompletePackage oldCompletePackage = completeURI2completePackage.put(completeURI, completePackage);
+			assert oldCompletePackage == null;
+		}
+		//		}
 	}
-	
+
 	public void didAddPartialModel(@NonNull Model partialModel) {
 		for (org.eclipse.ocl.pivot.Package asPackage : partialModel.getOwnedPackages()) {
 			String packageURI = asPackage.getURI();
@@ -72,20 +72,20 @@ public class CompleteURIs
 	}
 
 	public void didRemoveCompletePackage(@NonNull CompletePackageInternal completePackage) {
-//		if ((completePackage != completeModel.getOrphanCompletePackage()) && (completePackage != completeModel.getPrimitiveCompletePackage())) {
-			String completeURI = completePackage.getURI();
-			if (completeURI != null) {
-				completeURI2completePackage.remove(completeURI);
-				Set<String> packageURIs = completeURI2packageURIs.remove(completeURI);
-				if (packageURIs != null) {
-					for (String packageURI : packageURIs) {
-						packageURI2completeURI.remove(packageURI);
-					}
+		//		if ((completePackage != completeModel.getOrphanCompletePackage()) && (completePackage != completeModel.getPrimitiveCompletePackage())) {
+		String completeURI = completePackage.getURI();
+		if (completeURI != null) {
+			completeURI2completePackage.remove(completeURI);
+			Set<String> packageURIs = completeURI2packageURIs.remove(completeURI);
+			if (packageURIs != null) {
+				for (String packageURI : packageURIs) {
+					packageURI2completeURI.remove(packageURI);
 				}
 			}
-//		}
+		}
+		//		}
 	}
-	
+
 	public void didRemovePartialModel(@NonNull Model partialModel) {
 		for (org.eclipse.ocl.pivot.Package asPackage : partialModel.getOwnedPackages()) {
 			String packageURI = asPackage.getURI();
@@ -94,7 +94,7 @@ public class CompleteURIs
 				PackageId packageId = asPackage.getPackageId();
 				if (packageId == IdManager.METAMODEL) {
 					if (packageURI != null) {
-//FIXME						removePackageURI2completeURI(packageURI, DomainConstants.METAMODEL_NAME);
+						//FIXME						removePackageURI2completeURI(packageURI, DomainConstants.METAMODEL_NAME);
 					}
 				}
 			}
@@ -109,14 +109,14 @@ public class CompleteURIs
 		return completeURI2completePackage.values();
 	}
 
-	public @NonNull Iterable<? extends CompletePackageInternal> getAllCompletePackagesWithUris() {
+	public @NonNull Iterable<@NonNull ? extends CompletePackageInternal> getAllCompletePackagesWithUris() {
 		return completeURI2completePackage.values();
 	}
 
 	/**
 	 * Partial models such as the OCL Standard Library have their own distinct package URI. These partial
 	 * models are merged by mapping the package URI to a complete URI. DomainConstants.METAMODEL_NAME is the
-	 * complete URI for all contributions merged as the overall OCL metamodel. 
+	 * complete URI for all contributions merged as the overall OCL metamodel.
 	 */
 	public void addPackageURI2completeURI(@NonNull String packageURI, @NonNull String newCompleteURI) {
 		String oldCompleteURI = packageURI2completeURI.get(packageURI);

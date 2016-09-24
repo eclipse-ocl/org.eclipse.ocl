@@ -62,15 +62,15 @@ public class ExecutorFragment extends AbstractFragment
 	}
 
 	@Override
-	public @NonNull List<Operation> getLocalOperations() {
+	public @NonNull List<@NonNull Operation> getLocalOperations() {
 		assert operations != null;
-		return Lists.<Operation>newArrayList(operations);
+		return Lists.<@NonNull Operation>newArrayList(operations);
 	}
 
 	@Override
-	public @NonNull List<Property> getLocalProperties() {
+	public @NonNull List<@NonNull Property> getLocalProperties() {
 		assert properties != null;
-		return Lists.<Property>newArrayList(properties);
+		return Lists.<@NonNull Property>newArrayList(properties);
 	}
 
 	public @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses() {

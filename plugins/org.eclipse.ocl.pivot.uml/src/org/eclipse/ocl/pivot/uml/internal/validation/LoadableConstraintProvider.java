@@ -36,6 +36,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -117,13 +118,13 @@ public abstract class LoadableConstraintProvider extends XmlConstraintProvider
 		}
 	}
 
-	protected void installContents(Iterable<? extends EObject> eContents, @NonNull Set<Category> categories) {
+	protected void installContents(Iterable<@NonNull ? extends EObject> eContents, @NonNull Set<@NonNull Category> categories) {
 		for (EObject eObject : eContents) {
 			if (eObject instanceof Constraint) {
 				installConstraint((Constraint)eObject, categories);
 			}
 			if (!(eObject instanceof EAnnotation) && !(eObject instanceof Annotation)) {
-				installContents(eObject.eContents(), categories);
+				installContents(ClassUtil.nullFree(eObject.eContents()), categories);
 			}
 		}
 	}
@@ -134,7 +135,7 @@ public abstract class LoadableConstraintProvider extends XmlConstraintProvider
 		load(getOCL().getEnvironmentFactory(), uri, categories);
 	}
 
-	protected boolean installResource(@NonNull Resource asResource, @NonNull Set<Category> categories) {
+	protected boolean installResource(@NonNull Resource asResource, @NonNull Set<@NonNull Category> categories) {
 		List<Resource.Diagnostic> errors = asResource.getErrors();
 		assert errors != null;
 		String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");

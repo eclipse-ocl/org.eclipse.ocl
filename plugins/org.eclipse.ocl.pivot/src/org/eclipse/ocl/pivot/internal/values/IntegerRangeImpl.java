@@ -33,10 +33,10 @@ public class IntegerRangeImpl extends AbstractList<Value> implements IntegerRang
 	{
 		private IntegerValue curr = null;		// null before first next(), last once finished
 
-//		public Value get() {
-//			assert curr != null;
-//			return curr;
-//		}
+		//		public Value get() {
+		//			assert curr != null;
+		//			return curr;
+		//		}
 
 		@Override
 		public boolean hasNext() {
@@ -76,12 +76,12 @@ public class IntegerRangeImpl extends AbstractList<Value> implements IntegerRang
 			return String.valueOf(curr);
 		}
 	}
-	
+
 	protected final @NonNull IntegerValue first;		// not null or invalid
 	protected final @NonNull IntegerValue last;			// not null or invalid
 	protected final @NonNull IntegerValue fullSize;		// zero if empty
 	protected final Integer size;						// null if fullSize not an Integer
-	
+
 	public IntegerRangeImpl(@NonNull IntegerValue first, @NonNull IntegerValue last) {
 		IntegerValue sizeMinusOne = last.subtractInteger(first);
 		this.first = first;
@@ -104,12 +104,12 @@ public class IntegerRangeImpl extends AbstractList<Value> implements IntegerRang
 		IntegerValue value = (IntegerValue)o;
 		return (first.commutatedCompareToInteger(value) <= 0) && (value.commutatedCompareToInteger(last) <= 0);
 	}
-	
+
 	@Override
 	public @NonNull IntegerValue get(int index) {
 		if ((index < 0) || (size == null) || (index >= size)) {
 			throw new NoSuchElementException();
-//			getValueFactory().throwInvalidValueException("Out of range index {0} for range 0..{1}", index, size);
+			//			getValueFactory().throwInvalidValueException("Out of range index {0} for range 0..{1}", index, size);
 		}
 		try {
 			return first.addInteger(ValueUtil.integerValueOf(index));
@@ -133,11 +133,11 @@ public class IntegerRangeImpl extends AbstractList<Value> implements IntegerRang
 		return fullSize;
 	}
 
-//	public @NonNull ValueFactory getValueFactory() {
-//		return first.getValueFactory();
-//	}
+	//	public @NonNull ValueFactory getValueFactory() {
+	//		return first.getValueFactory();
+	//	}
 
-    @Override
+	@Override
 	public @NonNull Iterator<Value> iterator() {
 		return new IntegerRangeIterator();
 	}
@@ -149,7 +149,7 @@ public class IntegerRangeImpl extends AbstractList<Value> implements IntegerRang
 		}
 		else {
 			throw new NoSuchElementException();
-//			getValueFactory().throwInvalidValueException("Range size {0} cannot be expressed as an int", size);
+			//			getValueFactory().throwInvalidValueException("Range size {0} cannot be expressed as an int", size);
 		}
 	}
 }

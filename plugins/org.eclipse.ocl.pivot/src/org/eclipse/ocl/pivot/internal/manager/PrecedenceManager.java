@@ -23,13 +23,14 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * PrecedenceManager encapsulates the knowledge about known precedences.
  */
 public class PrecedenceManager
-{	
-	
+{
+
 	public static @NonNull Precedence NULL_PRECEDENCE = PivotFactory.eINSTANCE.createPrecedence();
 	public static @NonNull Precedence NAVIGATION_PRECEDENCE = PivotFactory.eINSTANCE.createPrecedence();
 	public static @NonNull Precedence LEAF_PRECEDENCE = PivotFactory.eINSTANCE.createPrecedence();
@@ -51,11 +52,11 @@ public class PrecedenceManager
 	 * e.g. <tt> precedence A B D</tt> and <tt>precedence B C D</tt> merge to
 	 * <tt>A B C D</tt> with duplicate precedence objects for B and D.
 	 */
-	private Map<String, @NonNull List<Precedence>> nameToPrecedencesMap = null;
+	private Map<@NonNull String, @NonNull List<Precedence>> nameToPrecedencesMap = null;
 
-	private Map<String, String> infixToPrecedenceNameMap = null;
+	private Map<@NonNull String, String> infixToPrecedenceNameMap = null;
 
-	private Map<String, String> prefixToPrecedenceNameMap = null;
+	private Map<@NonNull String, @NonNull String> prefixToPrecedenceNameMap = null;
 
 	/**
 	 * Interleave the ownedPrecedences of the rootPackages to establish a merged
@@ -63,26 +64,27 @@ public class PrecedenceManager
 	 * rootPackages.ownedPrecedences. Any inconsistent ordering and
 	 * associativity is diagnosed.
 	 */
-	public @NonNull List<String> compilePrecedences(@NonNull Iterable<? extends Library> libraries) {
-		List<String> errors = new ArrayList<String>();
-		List<String> orderedPrecedences = new ArrayList<String>();
-		nameToPrecedencesMap = new HashMap<String, @NonNull List<Precedence>>();
-		infixToPrecedenceNameMap = new HashMap<String, String>();
-		prefixToPrecedenceNameMap = new HashMap<String, String>();
-		for (Library library : libraries) {
-			List<Precedence> precedences = library.getOwnedPrecedences();
+	public @NonNull List<@NonNull String> compilePrecedences(@NonNull Iterable<@NonNull ? extends Library> libraries) {
+		List<@NonNull String> errors = new ArrayList<>();
+		List<@NonNull String> orderedPrecedences = new ArrayList<>();
+		nameToPrecedencesMap = new HashMap<>();
+		infixToPrecedenceNameMap = new HashMap<>();
+		prefixToPrecedenceNameMap = new HashMap<>();
+		for (@NonNull Library library : libraries) {
+			List<@NonNull Precedence> precedences = ClassUtil.nullFree(library.getOwnedPrecedences());
 			if (precedences.size() > 0) {
 				compilePrecedencePackage(errors, library);
 				int prevIndex = -1;
 				List<Precedence> list = null;
 				String name = null;
-				for (Precedence precedence : precedences) {
+				for (@NonNull Precedence precedence : precedences) {
 					name = precedence.getName();
+					assert name != null;
 					int index = orderedPrecedences.indexOf(name);
 					if (index < 0) {
 						index = prevIndex < 0 ? orderedPrecedences.size() : prevIndex + 1;
 						orderedPrecedences.add(index, name);
-						list = new ArrayList<Precedence>();
+						list = new ArrayList<>();
 						nameToPrecedencesMap.put(name, list);
 					} else {
 						list = nameToPrecedencesMap.get(name);
@@ -115,13 +117,14 @@ public class PrecedenceManager
 		return errors;
 	}
 
-	protected void compilePrecedenceOperation(@NonNull List<String> errors, @NonNull Operation operation) {
+	protected void compilePrecedenceOperation(@NonNull List<@NonNull String> errors, @NonNull Operation operation) {
 		Precedence precedence = operation.getPrecedence();
 		if (precedence != null) {
-			List<Parameter> parameters = operation.getOwnedParameters();
+			List<@NonNull Parameter> parameters = ClassUtil.nullFree(operation.getOwnedParameters());
 			if (parameters.size() == 0) {
 				String newName = precedence.getName();
 				String operatorName = operation.getName();
+				assert (newName != null) && (operatorName != null);
 				String oldName = prefixToPrecedenceNameMap.put(operatorName, newName);
 				if ((oldName != null) && !oldName.equals(newName)) {
 					errors.add("Conflicting precedences for prefix operation '" + operatorName + "'");
@@ -129,6 +132,7 @@ public class PrecedenceManager
 			} else if (parameters.size() == 1) {
 				String newName = precedence.getName();
 				String operatorName = operation.getName();
+				assert (newName != null) && (operatorName != null);
 				String oldName = infixToPrecedenceNameMap.put(operatorName, newName);
 				if ((oldName != null) && !oldName.equals(newName)) {
 					errors.add("Conflicting precedences for infix operation '" + operatorName + "'");
@@ -137,10 +141,10 @@ public class PrecedenceManager
 		}
 	}
 
-	protected void compilePrecedencePackage(@NonNull List<String> errors, @NonNull Library library) {
-//		for (org.eclipse.ocl.pivot.Package nestedPackage : pivotPackage.getNestedPackage()) {
-//			compilePrecedencePackage(errors, nestedPackage);
-//		}
+	protected void compilePrecedencePackage(@NonNull List<@NonNull String> errors, @NonNull Library library) {
+		//		for (org.eclipse.ocl.pivot.Package nestedPackage : pivotPackage.getNestedPackage()) {
+		//			compilePrecedencePackage(errors, nestedPackage);
+		//		}
 		for (org.eclipse.ocl.pivot.Class type : library.getOwnedClasses()) {
 			if ((type != null) && PivotUtilInternal.isLibraryType(type)) {
 				compilePrecedenceType(errors, type);

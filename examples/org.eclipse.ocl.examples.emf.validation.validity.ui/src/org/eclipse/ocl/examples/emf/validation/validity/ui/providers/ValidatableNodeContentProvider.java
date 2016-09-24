@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
 import org.eclipse.ocl.examples.emf.validation.validity.RootValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class ValidatableNodeContentProvider extends AbstractNodeContentProvider
 {
@@ -23,7 +24,8 @@ public class ValidatableNodeContentProvider extends AbstractNodeContentProvider
 		super(validityManager);
 	}
 
-	protected @NonNull List<RootValidatableNode> getRootNodes(@NonNull RootNode rootNode) {
-		return rootNode.getValidatableNodes();
+	@Override
+	protected @NonNull List<@NonNull RootValidatableNode> getRootNodes(@NonNull RootNode rootNode) {
+		return ClassUtil.nullFree(rootNode.getValidatableNodes());
 	}
 }

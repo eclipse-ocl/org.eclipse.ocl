@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.AbstractNode;
 import org.eclipse.ocl.examples.emf.validation.validity.Result;
 import org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage;
 import org.eclipse.ocl.examples.emf.validation.validity.utilities.IVisibilityFilter;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -154,6 +155,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -163,6 +165,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setEnabled(boolean newEnabled) {
 		enabled = newEnabled;
 	}
@@ -172,6 +175,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isGrayed() {
 		return grayed;
 	}
@@ -181,6 +185,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isVisible() {
 		return visible;
 	}
@@ -190,6 +195,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getLabel() {
 		return label;
 	}
@@ -199,6 +205,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setLabel(String newLabel) {
 		label = newLabel;
 	}
@@ -208,6 +215,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Result getWorstResult() {
 		return worstResult;
 	}
@@ -220,6 +228,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	public void setWorstResultGen(Result newWorstResult) {
 		worstResult = newWorstResult;
 	}
+	@Override
 	public void setWorstResult(Result newWorstResult) {
 		if (newWorstResult != worstResult) {
 			Result oldWorstResult = worstResult;
@@ -247,6 +256,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public abstract AbstractNode getParent();
 
 	/**
@@ -254,6 +264,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public @NonNull abstract EList<? extends AbstractNode> getChildren();
 
 	/**
@@ -264,16 +275,16 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValidityPackage.ABSTRACT_NODE__ENABLED:
-				return isEnabled();
-			case ValidityPackage.ABSTRACT_NODE__GRAYED:
-				return isGrayed();
-			case ValidityPackage.ABSTRACT_NODE__VISIBLE:
-				return isVisible();
-			case ValidityPackage.ABSTRACT_NODE__LABEL:
-				return getLabel();
-			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
-				return getWorstResult();
+		case ValidityPackage.ABSTRACT_NODE__ENABLED:
+			return isEnabled();
+		case ValidityPackage.ABSTRACT_NODE__GRAYED:
+			return isGrayed();
+		case ValidityPackage.ABSTRACT_NODE__VISIBLE:
+			return isVisible();
+		case ValidityPackage.ABSTRACT_NODE__LABEL:
+			return getLabel();
+		case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+			return getWorstResult();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -286,15 +297,15 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValidityPackage.ABSTRACT_NODE__ENABLED:
-				setEnabled((Boolean)newValue);
-				return;
-			case ValidityPackage.ABSTRACT_NODE__LABEL:
-				setLabel((String)newValue);
-				return;
-			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
-				setWorstResult((Result)newValue);
-				return;
+		case ValidityPackage.ABSTRACT_NODE__ENABLED:
+			setEnabled((Boolean)newValue);
+			return;
+		case ValidityPackage.ABSTRACT_NODE__LABEL:
+			setLabel((String)newValue);
+			return;
+		case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+			setWorstResult((Result)newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -307,15 +318,15 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.ABSTRACT_NODE__ENABLED:
-				setEnabled(ENABLED_EDEFAULT);
-				return;
-			case ValidityPackage.ABSTRACT_NODE__LABEL:
-				setLabel(LABEL_EDEFAULT);
-				return;
-			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
-				setWorstResult((Result)null);
-				return;
+		case ValidityPackage.ABSTRACT_NODE__ENABLED:
+			setEnabled(ENABLED_EDEFAULT);
+			return;
+		case ValidityPackage.ABSTRACT_NODE__LABEL:
+			setLabel(LABEL_EDEFAULT);
+			return;
+		case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+			setWorstResult((Result)null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -328,16 +339,16 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.ABSTRACT_NODE__ENABLED:
-				return enabled != ENABLED_EDEFAULT;
-			case ValidityPackage.ABSTRACT_NODE__GRAYED:
-				return grayed != GRAYED_EDEFAULT;
-			case ValidityPackage.ABSTRACT_NODE__VISIBLE:
-				return visible != VISIBLE_EDEFAULT;
-			case ValidityPackage.ABSTRACT_NODE__LABEL:
-				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
-				return worstResult != null;
+		case ValidityPackage.ABSTRACT_NODE__ENABLED:
+			return enabled != ENABLED_EDEFAULT;
+		case ValidityPackage.ABSTRACT_NODE__GRAYED:
+			return grayed != GRAYED_EDEFAULT;
+		case ValidityPackage.ABSTRACT_NODE__VISIBLE:
+			return visible != VISIBLE_EDEFAULT;
+		case ValidityPackage.ABSTRACT_NODE__LABEL:
+			return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+		case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+			return worstResult != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -352,11 +363,12 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 		if (eIsProxy()) return super.toString();
 		return String.valueOf(label);
 	}
-	
+
 	public static final @NonNull AbstractNode @NonNull [] NO_CHILDREN = new AbstractNode[0];
-	
+
 	private @NonNull AbstractNode @NonNull [] visibleChildren = NO_CHILDREN;
 
+	@Override
 	public int countVisibleChildren() {
 		int allChildren = 1;
 		for (AbstractNode child : visibleChildren) {
@@ -365,6 +377,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 		return allChildren;
 	}
 
+	@Override
 	public void getGrayedElements(@NonNull List<AbstractNode> grayedNodes) {
 		if (grayed) {
 			grayedNodes.add(this);
@@ -374,12 +387,14 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 		}
 	}
 
+	@Override
 	public @NonNull AbstractNode @NonNull [] getVisibleChildren() {
 		return visibleChildren;
 	}
 
+	@Override
 	public int refreshGrayed() {
-		boolean isEnabled = enabled;	
+		boolean isEnabled = enabled;
 		boolean isDisabled = !isEnabled;
 		for (AbstractNode child : visibleChildren) {
 			int childStatus = child.refreshGrayed();
@@ -390,7 +405,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 				isDisabled = true;
 			}
 		}
-		if (!isDisabled) {		
+		if (!isDisabled) {
 			grayed = false;
 			return 1;
 		}
@@ -400,27 +415,30 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 		}
 		else {
 			grayed = true;
-//			System.out.println("Grayed " + eClass().getName() + " " + ILabelGenerator.Registry.INSTANCE.labelFor(getContext()));
+			//			System.out.println("Grayed " + eClass().getName() + " " + ILabelGenerator.Registry.INSTANCE.labelFor(getContext()));
 			return 0;
 		}
 	}
 
-	public boolean refreshVisibleChildren(@NonNull Iterable<IVisibilityFilter> visibilityFilters) {
-		List<? extends AbstractNode> children = new ArrayList<AbstractNode>(getChildren());		// Avoid CME from refresh during discover
-		List<AbstractNode> list = new ArrayList<AbstractNode>(children.size());
-		for (AbstractNode node : children) {
+	@Override
+	public boolean refreshVisibleChildren(@NonNull Iterable<@NonNull IVisibilityFilter> visibilityFilters) {
+		List<@NonNull ? extends AbstractNode> nullFreeChildren = ClassUtil.nullFree(getChildren());
+		List<@NonNull ? extends AbstractNode> children = new ArrayList<>(nullFreeChildren);		// Avoid CME from refresh during discover
+		List<@NonNull AbstractNode> list = new ArrayList<>(children.size());
+		for (@NonNull AbstractNode node : children) {
 			if (node.refreshVisibleChildren(visibilityFilters)) {
 				list.add(node);
 			}
 		}
-		for (IVisibilityFilter filter : visibilityFilters) {
+		for (@NonNull IVisibilityFilter filter : visibilityFilters) {
 			if (!filter.isVisible(this)) {
 				this.visibleChildren = NO_CHILDREN;
 				this.visible = false;
 				return false;
 			}
 		}
-		@SuppressWarnings("null")@NonNull AbstractNode @NonNull [] array = list.toArray(new  @NonNull AbstractNode @NonNull [list.size()]);
+		@SuppressWarnings("null")
+		@NonNull AbstractNode @NonNull [] array = list.toArray(new @NonNull AbstractNode @NonNull [list.size()]);
 		this.visibleChildren = array;
 		this.visible = true;
 		return true;

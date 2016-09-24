@@ -33,11 +33,11 @@ import com.google.common.collect.Multimap;
 public class HashedAnalyses implements Iterable<@NonNull AbstractAnalysis>
 {
 	public static @Nullable HashedAnalyses intersection(@NonNull HashedAnalyses iHash2Analyses, @NonNull HashedAnalyses jHash2Analyses) {
-		Multimap<Integer, AbstractAnalysis> intersection = null;
+		Multimap<@NonNull Integer, @NonNull AbstractAnalysis> intersection = null;
 		for (int hash : iHash2Analyses.map.keySet()) {
-			Collection<AbstractAnalysis> jAnalyses = jHash2Analyses.map.get(hash);
+			Collection<@NonNull AbstractAnalysis> jAnalyses = jHash2Analyses.map.get(hash);
 			if (jAnalyses != null) {
-				for (@SuppressWarnings("null")@NonNull AbstractAnalysis iAnalysis : iHash2Analyses.map.get(hash)) {
+				for (@NonNull AbstractAnalysis iAnalysis : iHash2Analyses.map.get(hash)) {
 					for (@NonNull AbstractAnalysis jAnalysis : jAnalyses) {
 						if (iAnalysis.isStructurallyEqualTo(jAnalysis)) {
 							if (intersection == null) {
@@ -53,11 +53,11 @@ public class HashedAnalyses implements Iterable<@NonNull AbstractAnalysis>
 		return intersection != null ? new HashedAnalyses(intersection) : null;
 	}
 
-	public static <V> void printIndented(@NonNull Appendable appendable, @NonNull Multimap<Integer,V> map, @NonNull String indentation, @NonNull String title) {
+	public static <@NonNull V> void printIndented(@NonNull Appendable appendable, @NonNull Multimap<@NonNull Integer,V> map, @NonNull String indentation, @NonNull String title) {
 		try {
-			List<Integer> keys = new ArrayList<Integer>(map.keySet());
+			List<@NonNull Integer> keys = new ArrayList<>(map.keySet());
 			Collections.sort(keys);
-			for (Integer key : keys) {
+			for (@NonNull Integer key : keys) {
 				appendable.append(indentation + title + " " + key + "\n");
 				for (V analysis : map.get(key)) {
 					appendable.append(indentation + "\t" + analysis.toString() + "\n");
@@ -68,14 +68,14 @@ public class HashedAnalyses implements Iterable<@NonNull AbstractAnalysis>
 		}
 	}
 
-	private @NonNull Multimap<Integer, AbstractAnalysis> map;
+	private @NonNull Multimap<@NonNull Integer, @NonNull AbstractAnalysis> map;
 
 	@SuppressWarnings("null")
 	public HashedAnalyses() {
 		this.map = HashMultimap.create();
 	}
 
-	private HashedAnalyses(@NonNull Multimap<Integer, AbstractAnalysis> map) {
+	private HashedAnalyses(@NonNull Multimap<@NonNull Integer, @NonNull AbstractAnalysis> map) {
 		this.map = map;
 	}
 
@@ -131,16 +131,15 @@ public class HashedAnalyses implements Iterable<@NonNull AbstractAnalysis>
 	}
 
 	@Override
-	@SuppressWarnings("null")
 	public @NonNull Iterator<@NonNull AbstractAnalysis> iterator() {
 		return map.values().iterator();
 	}
 
 	public @Nullable AbstractAnalysis remove(@NonNull AbstractAnalysis thatAnalysis) {
 		int hash = thatAnalysis.getStructuralHashCode();
-		Collection<AbstractAnalysis> theseAnalyses = map.get(hash);
+		Collection<@NonNull AbstractAnalysis> theseAnalyses = map.get(hash);
 		if (theseAnalyses != null) {
-			for (@SuppressWarnings("null")@NonNull AbstractAnalysis thisAnalysis : theseAnalyses) {
+			for (@NonNull AbstractAnalysis thisAnalysis : theseAnalyses) {
 				if (thisAnalysis.isStructurallyEqualTo(thatAnalysis)) {
 					theseAnalyses.remove(thisAnalysis);
 					return thisAnalysis;

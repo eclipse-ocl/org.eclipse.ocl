@@ -33,7 +33,7 @@ public class DomainProperties
 	public DomainProperties(@NonNull CompleteInheritance inheritance) {
 		this.inheritance = inheritance;
 		InheritanceFragment selfFragment = inheritance.getSelfFragment();
-		for (Property property : selfFragment.getLocalProperties()) {
+		for (@NonNull Property property : selfFragment.getLocalProperties()) {
 			name2property.put(property.getName(), property);
 		}
 	}
@@ -45,12 +45,12 @@ public class DomainProperties
 		}
 		@NonNull Iterable<Property> subItOps = Iterables.filter(values,
 			new Predicate<Property>()
-			{
-				@Override
-				public boolean apply(Property domainProperty) {
-					return (domainProperty != null) && featureFilter.accept(domainProperty);
-				}
-			});
+		{
+			@Override
+			public boolean apply(Property domainProperty) {
+				return (domainProperty != null) && featureFilter.accept(domainProperty);
+			}
+		});
 		return subItOps;
 	}
 

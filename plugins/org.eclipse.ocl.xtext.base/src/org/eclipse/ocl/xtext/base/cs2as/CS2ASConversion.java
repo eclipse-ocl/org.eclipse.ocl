@@ -528,8 +528,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * Add any packages and nested packages in eObjects to oldPackages. This
 	 * is invoked at the start of an update to cache the packages for re-use.
 	 */
-	protected void gatherOldPackages(@NonNull List<? extends org.eclipse.ocl.pivot.Package> pkgs) {
-		for (org.eclipse.ocl.pivot.Package pkg : pkgs) {
+	protected void gatherOldPackages(@NonNull List<? extends org.eclipse.ocl.pivot.@NonNull Package> pkgs) {
+		for (org.eclipse.ocl.pivot.@NonNull Package pkg : pkgs) {
 			String name = pkg.getName();
 			if (name == null) {
 				name = PivotConstantsInternal.NULL_ROOT;

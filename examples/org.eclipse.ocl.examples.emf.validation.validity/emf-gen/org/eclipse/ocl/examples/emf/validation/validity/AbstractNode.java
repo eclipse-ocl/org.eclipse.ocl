@@ -166,31 +166,31 @@ public interface AbstractNode extends EObject {
 	 * @generated NOT
 	 */
 	@NonNull EList<? extends AbstractNode> getChildren();
-	
+
 	/**
 	 * Return the number of visible children in this node and its descendants.
 	 */
 	int countVisibleChildren();
-	
+
 	/**
 	 * Fill grayedNodes with all grayed nodes in this node and its descendants.
 	 */
 	void getGrayedElements(@NonNull List<AbstractNode> grayedNodes);
-	
+
 	/**
 	 * Return the fraction of getChildren() that are visible in an array to suit access by a ContentProvider.
 	 */
 	@NonNull AbstractNode @NonNull [] getVisibleChildren();
-	
+
 	/**
 	 * Update the grayed status of this node and all its descendants, returning &gt;0 if this node and its children are consistently enabled,
-	 * &lt;0 is consistently disbaled and 0 otherwise.  
+	 * &lt;0 is consistently disbaled and 0 otherwise.
 	 */
 	int refreshGrayed();
-	
+
 	/**
 	 * Update the visible status of this node and all its descendants by comuting the AND of the visibilityFilters at each node.
 	 * Return strue if this  node visible.
 	 */
-	boolean refreshVisibleChildren(@NonNull Iterable<IVisibilityFilter> visibilityFilters);
+	boolean refreshVisibleChildren(@NonNull Iterable<@NonNull IVisibilityFilter> visibilityFilters);
 } // AbstractNode

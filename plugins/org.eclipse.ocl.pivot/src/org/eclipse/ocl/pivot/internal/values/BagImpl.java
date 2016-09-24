@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.values.Bag;
 
 /**
  * Default implementation of the {@link Bag} interface.
- * 
+ *
  * @author Christian W. Damus (cdamus)
  * @generated NOT
  */
@@ -34,8 +34,8 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 	private Map<E, @NonNull MutableInteger> coll;
 
 	private int size;
-	
-	
+
+
 	public BagImpl() {
 		super();
 		this.coll = new HashMap<E, @NonNull MutableInteger>();
@@ -47,16 +47,16 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 		addAll(c);
 	}
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public static <E> Bag<E> emptyBag() {
 		return (Bag<E>) ValueUtil.EMPTY_BAG;
 	}
-	
+
 	/**
 	 * removes every occurrence of the object from the collection
 	 */
 	@Override
-    public boolean remove(Object o) {
+	public boolean remove(Object o) {
 		MutableInteger count = coll.remove(o);
 		if (count != null)
 			size -= count.i;
@@ -64,7 +64,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 	}
 
 	@Override
-    public boolean add(E o) {
+	public boolean add(E o) {
 		MutableInteger count = coll.get(o);
 		if (count == null)
 			coll.put(o, new MutableInteger(1));
@@ -75,29 +75,29 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 		return true;
 	}
 
-    @Override
-    public boolean contains(Object o) {
-        return count(o) > 0;
-    }
-    
-    @Override
-	public int count(Object o) {
-        MutableInteger count = coll.get(o);
-        
-        if (count != null) {
-            return count.i;
-        }
-        
-        return 0;
-    }
-    
 	@Override
-    public int size() {
+	public boolean contains(Object o) {
+		return count(o) > 0;
+	}
+
+	@Override
+	public int count(Object o) {
+		MutableInteger count = coll.get(o);
+
+		if (count != null) {
+			return count.i;
+		}
+
+		return 0;
+	}
+
+	@Override
+	public int size() {
 		return size;
 	}
 
 	@Override
-    public void clear() {
+	public void clear() {
 		size = 0;
 		coll.clear();
 	}
@@ -107,7 +107,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 	 * elements.
 	 */
 	@Override
-    public boolean equals(Object o) {
+	public boolean equals(Object o) {
 		if (o instanceof BagImpl<?>) {
 			BagImpl<?> b = (BagImpl<?>) o;
 			if (size() == b.size()) {
@@ -125,7 +125,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 	}
 
 	@Override
-    public int hashCode() {
+	public int hashCode() {
 		int result = 37;
 		result = 37 * result + coll.hashCode();
 		result = 37 * result + size;
@@ -133,7 +133,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 	}
 
 	@Override
-    public Iterator<E> iterator() {
+	public @NonNull Iterator<E> iterator() {
 		// local inner class
 		class MyIterator implements Iterator<E> {
 
@@ -141,7 +141,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 			private int offset;
 			private int maxOffset;
 			private @Nullable E curr;
-			
+
 			public MyIterator() {
 				it = coll.keySet().iterator();
 				offset = 0;
@@ -190,7 +190,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 		}
 
 		@Override
-        public String toString() {
+		public String toString() {
 			return Integer.toString(i);
 		}
 
@@ -198,7 +198,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 	}
 
 	@Override
-    public String toString() {
+	public String toString() {
 		return coll.toString();
 	}
 }

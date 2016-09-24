@@ -30,9 +30,9 @@ import org.eclipse.ocl.pivot.types.AbstractFragment;
  */
 public abstract class ReflectiveFragment extends AbstractFragment
 {
-	protected Map<Operation, LibraryFeature> operationMap = null;
-	protected Map<Operation, Operation> apparentOperation2actualOperation = null;
-	protected Map<Property, LibraryFeature> propertyMap = null;
+	protected Map<@NonNull Operation, @NonNull LibraryFeature> operationMap = null;
+	protected Map<@NonNull Operation, @NonNull Operation> apparentOperation2actualOperation = null;
+	protected Map<@NonNull Property, @NonNull LibraryFeature> propertyMap = null;
 
 	public ReflectiveFragment(@NonNull CompleteInheritance derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
 		super(derivedInheritance, baseInheritance);
@@ -43,7 +43,7 @@ public abstract class ReflectiveFragment extends AbstractFragment
 		if (operationMap == null) {
 			synchronized (this) {
 				if (operationMap == null) {
-					operationMap = new HashMap<Operation, LibraryFeature>();		// Optimize to reuse single super map if no local ops
+					operationMap = new HashMap<>();		// Optimize to reuse single super map if no local ops
 				}
 			}
 		}
@@ -83,7 +83,7 @@ public abstract class ReflectiveFragment extends AbstractFragment
 									bestInheritance = superInheritance;
 									bestOverload = overload;
 								}
-								else if (depth == bestDepth) {				// Sibling candidate 
+								else if (depth == bestDepth) {				// Sibling candidate
 									bestOverload = null;
 									depth = -1;
 									break;
@@ -113,12 +113,12 @@ public abstract class ReflectiveFragment extends AbstractFragment
 	}
 
 	@Override
-	public @NonNull Iterable<? extends Operation> getLocalOperations() {
-		return operationMap != null ? operationMap.keySet() : Collections.<Operation>emptyList();
+	public @NonNull Iterable<@NonNull ? extends Operation> getLocalOperations() {
+		return operationMap != null ? operationMap.keySet() : Collections.<@NonNull Operation>emptyList();
 	}
-	
+
 	@Override
-	public @NonNull Iterable<? extends Property> getLocalProperties() {
-		return propertyMap != null ? propertyMap.keySet() : Collections.<Property>emptyList();
+	public @NonNull Iterable<@NonNull ? extends Property> getLocalProperties() {
+		return propertyMap != null ? propertyMap.keySet() : Collections.<@NonNull Property>emptyList();
 	}
 }
