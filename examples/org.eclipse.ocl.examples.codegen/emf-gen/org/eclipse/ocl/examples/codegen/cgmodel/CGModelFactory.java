@@ -77,6 +77,24 @@ public interface CGModelFactory extends EFactory {
 	@NonNull CGBuiltInIterationCallExp createCGBuiltInIterationCallExp();
 
 	/**
+	 * Returns a new object of class '<em>CG Cached Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CG Cached Operation</em>'.
+	 * @generated
+	 */
+	@NonNull CGCachedOperation createCGCachedOperation();
+
+	/**
+	 * Returns a new object of class '<em>CG Cached Operation Call Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CG Cached Operation Call Exp</em>'.
+	 * @generated
+	 */
+	@NonNull CGCachedOperationCallExp createCGCachedOperationCallExp();
+
+	/**
 	 * Returns a new object of class '<em>CG Cast Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

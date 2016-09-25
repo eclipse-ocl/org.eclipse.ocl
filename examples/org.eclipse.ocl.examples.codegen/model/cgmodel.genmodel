@@ -47,6 +47,11 @@
     <genClasses ecoreClass="cgmodel.ecore#//CGBuiltInIterationCallExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGBuiltInIterationCallExp/accumulator"/>
     </genClasses>
+    <genClasses ecoreClass="cgmodel.ecore#//CGCachedOperation"/>
+    <genClasses ecoreClass="cgmodel.ecore#//CGCachedOperationCallExp">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGCachedOperationCallExp/method"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGCachedOperationCallExp/thisIsSelf"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGCallable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGCallable/parameters"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGCallable/body"/>
@@ -84,15 +89,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGConstantExp/referredConstant"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGConstraint"/>
-    <genClasses image="false" ecoreClass="cgmodel.ecore#//CGShadowExp">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowExp/parts"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowExp/executorType"/>
-    </genClasses>
-    <genClasses ecoreClass="cgmodel.ecore#//CGShadowPart">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowPart/init"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowPart/shadowExp"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowPart/executorPart"/>
-    </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGEcoreClassShadowExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreClassShadowExp/eClass"/>
     </genClasses>
@@ -249,6 +245,15 @@
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGPropertyCallExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGReal"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGSettableVariable"/>
+    <genClasses image="false" ecoreClass="cgmodel.ecore#//CGShadowExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowExp/parts"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowExp/executorType"/>
+    </genClasses>
+    <genClasses ecoreClass="cgmodel.ecore#//CGShadowPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowPart/init"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowPart/shadowExp"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowPart/executorPart"/>
+    </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGString">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGString/stringValue"/>
     </genClasses>

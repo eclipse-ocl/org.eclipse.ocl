@@ -65,6 +65,16 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitCGCachedOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGCachedOperation object) {
+		return null;
+	}
+
+	@Override
+	public R visitCGCachedOperationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGCachedOperationCallExp object) {
+		return null;
+	}
+
+	@Override
 	public R visitCGCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGCallExp object) {
 		return null;
 	}

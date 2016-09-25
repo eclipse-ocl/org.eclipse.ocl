@@ -32,6 +32,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -968,6 +970,95 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			typeDescriptor.appendCastTerm(js, cgSource);
 			js.append(";\n");
 		}
+		return true;
+	}
+
+	@Override
+	public @NonNull Boolean visitCGCachedOperation(@NonNull CGCachedOperation cgOperation) {
+		Operation asOperation = (Operation) cgOperation.getAst();
+		assert asOperation != null;
+		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
+		if (localContext2 != null) {
+			localContext = localContext2;
+			try {
+				LanguageExpression expressionInOCL = asOperation.getBodyExpression();
+				String title = PrettyPrinter.printName(asOperation);
+				js.appendCommentWithOCL(title+"\n", expressionInOCL);
+				//
+				js.append("protected class ");
+				js.append(getNativeOperationClassName(asOperation));
+				js.append(" extends ");
+				js.appendClassReference(AbstractEvaluationOperation.class);
+				js.append("\n");
+				js.append("{\n");
+				js.pushIndentation(null);
+				doCachedOperationBasicEvaluate(cgOperation);
+				js.append("\n");
+				doCachedOperationEvaluate(cgOperation);
+				js.popIndentation();
+				js.append("}\n");
+				//
+				js.append("\n");
+				doCachedOperationClassInstance(asOperation);
+			}
+			finally {
+				localContext = null;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public @NonNull Boolean visitCGCachedOperationCallExp(@NonNull CGCachedOperationCallExp cgOperationCallExp) {
+		Operation pOperation = cgOperationCallExp.getReferredOperation();
+		boolean thisIsSelf = cgOperationCallExp.isThisIsSelf();
+		CGValuedElement source = getExpression(cgOperationCallExp.getSource());
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+		List<Parameter> pParameters = pOperation.getOwnedParameters();
+		//
+		if (!js.appendLocalStatements(source)) {
+			return false;
+		}
+		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
+			CGValuedElement argument = getExpression(cgArgument);
+			if (!js.appendLocalStatements(argument)) {
+				return false;
+			}
+		}
+		//
+		js.appendDeclaration(cgOperationCallExp);
+		js.append(" = ");
+		//		js.appendClassCast(cgOperationCallExp);
+		/*		if (thisIsSelf) {
+			js.appendValueName(source);
+		}
+		else {
+			if (localPrefix != null) {
+				js.append(localPrefix);
+				js.append(".");
+			}
+			js.append("this");
+		} */
+		js.append(getNativeOperationInstanceName(pOperation));
+		js.append(".evaluate");
+		//		js.append(cgOperationCallExp.getReferredOperation().getName());
+		js.append("(");
+		if (!thisIsSelf) {
+			js.appendValueName(source);
+		}
+		int iMax = Math.min(pParameters.size(), cgArguments.size());
+		for (int i = 0; i < iMax; i++) {
+			if ((i > 0) || !thisIsSelf) {
+				js.append(", ");
+			}
+			CGValuedElement cgArgument = cgArguments.get(i);
+			Parameter pParameter = pParameters.get(i);
+			CGTypeId cgTypeId = analyzer.getTypeId(pParameter.getTypeId());
+			TypeDescriptor parameterTypeDescriptor = context.getBoxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
+			CGValuedElement argument = getExpression(cgArgument);
+			js.appendReferenceTo(parameterTypeDescriptor, argument);
+		}
+		js.append(");\n");
 		return true;
 	}
 
@@ -2138,7 +2229,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return true;
 	}
 
-	@Override
+	@Override		// FIXME revert to the pre-cached code
 	public @NonNull Boolean visitCGNativeOperation(@NonNull CGNativeOperation cgOperation) {
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
@@ -2173,7 +2264,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return true;
 	}
 
-	@Override
+	@Override		// FIXME revert to the pre-cached code
 	public @NonNull Boolean visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgOperationCallExp) {
 		Operation pOperation = cgOperationCallExp.getReferredOperation();
 		boolean thisIsSelf = cgOperationCallExp.isThisIsSelf();

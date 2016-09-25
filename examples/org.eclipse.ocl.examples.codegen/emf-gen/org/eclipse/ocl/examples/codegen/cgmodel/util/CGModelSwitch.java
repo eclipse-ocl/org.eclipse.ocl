@@ -137,6 +137,32 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CGModelPackage.CG_CACHED_OPERATION: {
+				CGCachedOperation cgCachedOperation = (CGCachedOperation)theEObject;
+				T result = caseCGCachedOperation(cgCachedOperation);
+				if (result == null) result = caseCGOperation(cgCachedOperation);
+				if (result == null) result = caseCGCallable(cgCachedOperation);
+				if (result == null) result = caseCGValuedElement(cgCachedOperation);
+				if (result == null) result = caseCGTypedElement(cgCachedOperation);
+				if (result == null) result = caseCGNamedElement(cgCachedOperation);
+				if (result == null) result = caseCGElement(cgCachedOperation);
+				if (result == null) result = caseNameable(cgCachedOperation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CGModelPackage.CG_CACHED_OPERATION_CALL_EXP: {
+				CGCachedOperationCallExp cgCachedOperationCallExp = (CGCachedOperationCallExp)theEObject;
+				T result = caseCGCachedOperationCallExp(cgCachedOperationCallExp);
+				if (result == null) result = caseCGOperationCallExp(cgCachedOperationCallExp);
+				if (result == null) result = caseCGCallExp(cgCachedOperationCallExp);
+				if (result == null) result = caseCGValuedElement(cgCachedOperationCallExp);
+				if (result == null) result = caseCGTypedElement(cgCachedOperationCallExp);
+				if (result == null) result = caseCGNamedElement(cgCachedOperationCallExp);
+				if (result == null) result = caseCGElement(cgCachedOperationCallExp);
+				if (result == null) result = caseNameable(cgCachedOperationCallExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case CGModelPackage.CG_CALLABLE: {
 				CGCallable cgCallable = (CGCallable)theEObject;
 				T result = caseCGCallable(cgCallable);
@@ -245,28 +271,6 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = caseCGNamedElement(cgConstraint);
 				if (result == null) result = caseCGElement(cgConstraint);
 				if (result == null) result = caseNameable(cgConstraint);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CGModelPackage.CG_SHADOW_EXP: {
-				CGShadowExp cgShadowExp = (CGShadowExp)theEObject;
-				T result = caseCGShadowExp(cgShadowExp);
-				if (result == null) result = caseCGValuedElement(cgShadowExp);
-				if (result == null) result = caseCGTypedElement(cgShadowExp);
-				if (result == null) result = caseCGNamedElement(cgShadowExp);
-				if (result == null) result = caseCGElement(cgShadowExp);
-				if (result == null) result = caseNameable(cgShadowExp);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CGModelPackage.CG_SHADOW_PART: {
-				CGShadowPart cgShadowPart = (CGShadowPart)theEObject;
-				T result = caseCGShadowPart(cgShadowPart);
-				if (result == null) result = caseCGValuedElement(cgShadowPart);
-				if (result == null) result = caseCGTypedElement(cgShadowPart);
-				if (result == null) result = caseCGNamedElement(cgShadowPart);
-				if (result == null) result = caseCGElement(cgShadowPart);
-				if (result == null) result = caseNameable(cgShadowPart);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -969,6 +973,28 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case CGModelPackage.CG_SHADOW_EXP: {
+				CGShadowExp cgShadowExp = (CGShadowExp)theEObject;
+				T result = caseCGShadowExp(cgShadowExp);
+				if (result == null) result = caseCGValuedElement(cgShadowExp);
+				if (result == null) result = caseCGTypedElement(cgShadowExp);
+				if (result == null) result = caseCGNamedElement(cgShadowExp);
+				if (result == null) result = caseCGElement(cgShadowExp);
+				if (result == null) result = caseNameable(cgShadowExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case CGModelPackage.CG_SHADOW_PART: {
+				CGShadowPart cgShadowPart = (CGShadowPart)theEObject;
+				T result = caseCGShadowPart(cgShadowPart);
+				if (result == null) result = caseCGValuedElement(cgShadowPart);
+				if (result == null) result = caseCGTypedElement(cgShadowPart);
+				if (result == null) result = caseCGNamedElement(cgShadowPart);
+				if (result == null) result = caseCGElement(cgShadowPart);
+				if (result == null) result = caseNameable(cgShadowPart);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case CGModelPackage.CG_STRING: {
 				CGString cgString = (CGString)theEObject;
 				T result = caseCGString(cgString);
@@ -1225,6 +1251,36 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCGBuiltInIterationCallExp(CGBuiltInIterationCallExp object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>CG Cached Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>CG Cached Operation</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCGCachedOperation(CGCachedOperation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>CG Cached Operation Call Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>CG Cached Operation Call Exp</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCGCachedOperationCallExp(CGCachedOperationCallExp object) {
 		return null;
 	}
 

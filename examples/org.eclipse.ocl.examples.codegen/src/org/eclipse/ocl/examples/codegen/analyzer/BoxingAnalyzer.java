@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
@@ -293,6 +294,20 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	@Override
+	public @Nullable Object visitCGCachedOperationCallExp(@NonNull CGCachedOperationCallExp cgElement) {
+		super.visitCGCachedOperationCallExp(cgElement);
+		CGValuedElement cgSource = cgElement.getSource();
+		rewriteAsGuarded(cgSource, isSafe(cgElement), "source for '" + cgElement.getReferredOperation() + "'");
+		rewriteAsBoxed(cgSource);
+		List<CGValuedElement> cgArguments = cgElement.getArguments();
+		int iMax = cgArguments.size();
+		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
+			rewriteAsBoxed(cgArguments.get(i));
+		}
+		return null;
+	}
+
+	@Override
 	public @Nullable Object visitCGEcoreOperation(@NonNull CGEcoreOperation cgElement) {
 		super.visitCGEcoreOperation(cgElement);
 		CGValuedElement body = cgElement.getBody();
@@ -365,7 +380,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 
 	@Override
 	public @Nullable Object visitCGElement(@NonNull CGElement cgElement) {
-		for (@SuppressWarnings("null")@NonNull CGElement cgChild : cgElement.getChildren()) {
+		for (@NonNull CGElement cgChild : cgElement.getChildren()) {
 			cgChild.accept(this);
 		}
 		return null;

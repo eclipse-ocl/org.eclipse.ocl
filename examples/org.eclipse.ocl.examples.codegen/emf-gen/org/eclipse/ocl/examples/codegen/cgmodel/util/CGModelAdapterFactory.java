@@ -95,6 +95,14 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGBuiltInIterationCallExpAdapter();
 			}
 			@Override
+			public Adapter caseCGCachedOperation(CGCachedOperation object) {
+				return createCGCachedOperationAdapter();
+			}
+			@Override
+			public Adapter caseCGCachedOperationCallExp(CGCachedOperationCallExp object) {
+				return createCGCachedOperationCallExpAdapter();
+			}
+			@Override
 			public Adapter caseCGCallable(CGCallable object) {
 				return createCGCallableAdapter();
 			}
@@ -133,14 +141,6 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseCGConstraint(CGConstraint object) {
 				return createCGConstraintAdapter();
-			}
-			@Override
-			public Adapter caseCGShadowExp(CGShadowExp object) {
-				return createCGShadowExpAdapter();
-			}
-			@Override
-			public Adapter caseCGShadowPart(CGShadowPart object) {
-				return createCGShadowPartAdapter();
 			}
 			@Override
 			public Adapter caseCGEcoreClassShadowExp(CGEcoreClassShadowExp object) {
@@ -375,6 +375,14 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGSettableVariableAdapter();
 			}
 			@Override
+			public Adapter caseCGShadowExp(CGShadowExp object) {
+				return createCGShadowExpAdapter();
+			}
+			@Override
+			public Adapter caseCGShadowPart(CGShadowPart object) {
+				return createCGShadowPartAdapter();
+			}
+			@Override
 			public Adapter caseCGString(CGString object) {
 				return createCGStringAdapter();
 			}
@@ -525,6 +533,34 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGBuiltInIterationCallExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation <em>CG Cached Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation
+	 * @generated
+	 */
+	public Adapter createCGCachedOperationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp <em>CG Cached Operation Call Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp
+	 * @generated
+	 */
+	public Adapter createCGCachedOperationCallExpAdapter() {
 		return null;
 	}
 

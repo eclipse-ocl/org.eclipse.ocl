@@ -1139,7 +1139,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s1.append(" *************************************************************************\n");
 		s1.append(" * This code is 100% auto-generated\n");
 		s1.append(" * from:\n");
-		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package dPackage : metamodelManager.getPartialPackages(asPackage, false)) {
+		for (org.eclipse.ocl.pivot.@NonNull Package dPackage : metamodelManager.getPartialPackages(asPackage, false)) {
 			EObject eRoot = ((EObject)dPackage).eContainer();
 			if (eRoot instanceof Model) {
 				s1.append(" *   " + deresolveFileName(((Model)eRoot).getExternalURI()) + "\n");

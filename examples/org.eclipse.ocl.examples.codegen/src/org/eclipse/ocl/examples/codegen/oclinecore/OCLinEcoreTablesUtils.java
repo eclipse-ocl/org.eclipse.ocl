@@ -152,7 +152,7 @@ public class OCLinEcoreTablesUtils
 		}
 	};
 
-	private static <T extends GenPackage> @Nullable T getLibraryGenPackage(List<T> genPackages) {
+	private static <@NonNull T extends GenPackage> @Nullable T getLibraryGenPackage(List<T> genPackages) {
 		for (T genPackage : genPackages) {
 			EPackage ecorePackage = genPackage.getEcorePackage();
 			EClassifier eClassifier = ecorePackage.getEClassifier("_Dummy");		// FIXME
@@ -163,7 +163,7 @@ public class OCLinEcoreTablesUtils
 		return null;
 	}
 
-	private static <T extends GenPackage> @Nullable T getMetamodelGenPackage(@NonNull List<T> genPackages) {
+	private static <@NonNull T extends GenPackage> @Nullable T getMetamodelGenPackage(@NonNull List<T> genPackages) {
 		for (T genPackage : genPackages) {
 			EPackage ecorePackage = genPackage.getEcorePackage();
 			EClassifier eClassifier = ecorePackage.getEClassifier("Element");
@@ -174,7 +174,7 @@ public class OCLinEcoreTablesUtils
 		return null;
 	}
 
-	private static @Nullable <T extends GenClassifier> T getNamedElement1(@Nullable List<T> genClasses, @NonNull String name) {
+	private static @Nullable <@NonNull T extends GenClassifier> T getNamedElement1(@Nullable List<T> genClasses, @NonNull String name) {
 		if (genClasses != null) {
 			for (T genClass : genClasses) {
 				if (genClass.getName().equals(name)) {
@@ -185,7 +185,7 @@ public class OCLinEcoreTablesUtils
 		return null;
 	}
 
-	private static @Nullable <T extends GenFeature> T getNamedElement2(@Nullable List<T> genClasses, @NonNull String name) {
+	private static @Nullable <@NonNull T extends GenFeature> T getNamedElement2(@Nullable List<T> genClasses, @NonNull String name) {
 		if (genClasses != null) {
 			for (T genClass : genClasses) {
 				if (genClass.getName().equals(name)) {
@@ -899,7 +899,7 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected @Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		List<GenPackage> usedGenPackages;
+		List<@NonNull GenPackage> usedGenPackages;
 		ResourceSet genModelResourceSet;
 		GenPackage genPackage2 = genPackage;
 		if (genPackage2 != null) {
@@ -907,7 +907,7 @@ public class OCLinEcoreTablesUtils
 			if (firstEPackage.getName().equals(asPackage.getName())) {
 				return genPackage2;
 			}
-			usedGenPackages = genPackage2.getGenModel().getUsedGenPackages();
+			usedGenPackages = ClassUtil.nullFree(genPackage2.getGenModel().getUsedGenPackages());
 			assert usedGenPackages != null;
 			//		String nsURI = asPackage.getNsURI();
 			//		String name = asType.getName();
@@ -945,10 +945,8 @@ public class OCLinEcoreTablesUtils
 			if (genPackage3 != null) {
 				return genPackage3;
 			}
-			for (GenPackage usedGenPackage : usedGenPackages) {
-				if (usedGenPackage != null) {
-					metamodelManager.addGenPackage(usedGenPackage);
-				}
+			for (@NonNull GenPackage usedGenPackage : usedGenPackages) {
+				metamodelManager.addGenPackage(usedGenPackage);
 			}
 			genPackage3 = metamodelManager.getGenPackage(nsURI);
 			if (genPackage3 != null) {
@@ -1198,7 +1196,8 @@ public class OCLinEcoreTablesUtils
 		if (typeName == null) {
 			return false;
 		}
-		GenClass genClass = getNamedElement1(genPackage2.getGenClasses(), typeName);
+		List<@NonNull GenClass> genClasses = ClassUtil.nullFree(genPackage2.getGenClasses());
+		GenClass genClass = getNamedElement1(genClasses, typeName);
 		if (genClass == null) {
 			return false;
 		}
@@ -1206,7 +1205,8 @@ public class OCLinEcoreTablesUtils
 		if (propertyName == null) {
 			return false;
 		}
-		GenFeature genFeature = getNamedElement2(genClass.getAllGenFeatures(), propertyName);
+		List<@NonNull GenFeature> genFeatures = ClassUtil.nullFree(genClass.getAllGenFeatures());
+		GenFeature genFeature = getNamedElement2(genFeatures, propertyName);
 		if (genFeature == null) {
 			return false;
 		}
@@ -1257,11 +1257,13 @@ public class OCLinEcoreTablesUtils
 		if (genPackage2 != null) {
 			String typeName = type.getName();
 			if (typeName != null) {
-				GenClass genClass = getNamedElement1(genPackage2.getGenClasses(), typeName);
+				List<@NonNull GenClass> genClasses = ClassUtil.nullFree(genPackage2.getGenClasses());
+				GenClass genClass = getNamedElement1(genClasses, typeName);
 				if (genClass != null) {
 					return true;
 				}
-				GenEnum genEnum = getNamedElement1(genPackage2.getGenEnums(), typeName);
+				List<@NonNull GenEnum> genEnums = ClassUtil.nullFree(genPackage2.getGenEnums());
+				GenEnum genEnum = getNamedElement1(genEnums, typeName);
 				if (genEnum != null) {
 					return true;
 				}

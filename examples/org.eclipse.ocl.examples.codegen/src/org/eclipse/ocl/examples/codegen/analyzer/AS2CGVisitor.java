@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
@@ -292,6 +293,35 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @Nullable CGVariable basicGetParameter(@NonNull Variable aParameter) {
 		return variablesStack.getParameter(aParameter);
+	}
+
+	protected @NonNull CGValuedElement cachedOperationCall(@NonNull OperationCallExp element,
+			@NonNull CGClass currentClass, CGValuedElement cgSource, @NonNull Operation finalOperation) {
+		if (!nativeOperationsStack.contains(finalOperation)) {	// Prevent recursive call generating an additional implementation
+			boolean containsOp = false;
+			for (@NonNull CGOperation op : ClassUtil.nullFree(currentClass.getOperations())){
+				if (finalOperation == op.getAst()) {
+					containsOp = true;
+					break;
+				}
+			}
+			if (!containsOp) {									// Prevent another call generating an additional implementation
+				nativeOperationsStack.push(finalOperation);
+				CGOperation cgOp = visitOperation(finalOperation);
+				nativeOperationsStack.pop();
+				currentClass.getOperations().add(cgOp);
+			}
+		}
+		CGCachedOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGCachedOperationCallExp();
+		cgOperationCallExp.setSource(cgSource);
+		cgOperationCallExp.setThisIsSelf(false);
+		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
+			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
+			cgOperationCallExp.getArguments().add(cgArgument);
+		}
+		setAst(cgOperationCallExp, element);
+		cgOperationCallExp.setReferredOperation(finalOperation);
+		return cgOperationCallExp;
 	}
 
 	protected @NonNull CGValuedElement constrainedOperationCall(@NonNull OperationCallExp element,
@@ -646,7 +676,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 						if (cgOperationCallExp2 != null) {
 							return cgOperationCallExp2;
 						} else if (currentClass != null) {
-							return nativeOperationCall(element, currentClass, cgSource, finalOperation);
+							return cachedOperationCall(element, currentClass, cgSource, finalOperation);
 						} else {
 							return constrainedOperationCall(element, cgSource, finalOperation, (ConstrainedOperation)libraryOperation);
 						}
@@ -1089,35 +1119,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				|| (libraryProperty instanceof EObjectProperty);
 	}
 
-	protected @NonNull CGValuedElement nativeOperationCall(@NonNull OperationCallExp element,
-			@NonNull CGClass currentClass, CGValuedElement cgSource, @NonNull Operation finalOperation) {
-		if (!nativeOperationsStack.contains(finalOperation)) {	// Prevent recursive call generating an additional implementation
-			boolean containsOp = false;
-			for (@NonNull CGOperation op : ClassUtil.nullFree(currentClass.getOperations())){
-				if (finalOperation == op.getAst()) {
-					containsOp = true;
-					break;
-				}
-			}
-			if (!containsOp) {									// Prevent another call generating an additional implementation
-				nativeOperationsStack.push(finalOperation);
-				CGOperation cgOp = visitOperation(finalOperation);
-				nativeOperationsStack.pop();
-				currentClass.getOperations().add(cgOp);
-			}
-		}
-		CGNativeOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-		cgOperationCallExp.setSource(cgSource);
-		cgOperationCallExp.setThisIsSelf(false);
-		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
-			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-			cgOperationCallExp.getArguments().add(cgArgument);
-		}
-		setAst(cgOperationCallExp, element);
-		cgOperationCallExp.setReferredOperation(finalOperation);
-		return cgOperationCallExp;
-	}
-
 	/**
 	 * Pop the CGClass from the stack ensuring that it's at the top
 	 * of the stack
@@ -1394,7 +1395,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else if (libraryOperation instanceof ConstrainedOperation) {
 			org.eclipse.ocl.pivot.Package pPackage = element.getOwningClass().getOwningPackage();
 			cgOperation = pPackage instanceof Library ? CGModelFactory.eINSTANCE.createCGLibraryOperation()
-				: CGModelFactory.eINSTANCE.createCGNativeOperation();
+				: CGModelFactory.eINSTANCE.createCGCachedOperation();
 		}
 		if (cgOperation == null) {
 			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();

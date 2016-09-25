@@ -37,6 +37,21 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="accumulator" eType="#//CGIterator"
         containment="true" resolveProxies="false"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGCachedOperation" eSuperTypes="#//CGOperation">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A native operation that must be called using the native calling convention."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGCachedOperationCallExp" eSuperTypes="#//CGOperationCallExp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" lowerBound="1"
+        eType="#//Method"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="thisIsSelf" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="true when OCL's self is Java's this, false when OCL's self is passed as an additional first argument"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGCallable" abstract="true" eSuperTypes="#//CGValuedElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGConstraint defines a constraint such as a class invariant."/>
@@ -150,24 +165,6 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGConstraint defines a constraint such as a class invariant."/>
     </eAnnotations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGShadowExp" abstract="true" eSuperTypes="#//CGValuedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parts" upperBound="-1"
-        eType="#//CGShadowPart" containment="true" resolveProxies="false" eOpposite="#//CGShadowPart/shadowExp"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="executorType" lowerBound="1"
-        eType="#//CGExecutorType" resolveProxies="false"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGShadowPart" eSuperTypes="#//CGValuedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="init" lowerBound="1" eType="#//CGValuedElement"
-        containment="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="shadowExp" lowerBound="1"
-        eType="#//CGShadowExp" changeable="false" resolveProxies="false" eOpposite="#//CGShadowExp/parts"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="executorPart" lowerBound="1"
-        eType="#//CGExecutorShadowPart" resolveProxies="false">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The shared type."/>
-      </eAnnotations>
-    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGEcoreClassShadowExp" eSuperTypes="#//CGShadowExp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="eClass" lowerBound="1"
@@ -555,6 +552,24 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGSettableVariable defines a variable that may have many values, typically through&#xA;use as an iteration variable."/>
     </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGShadowExp" abstract="true" eSuperTypes="#//CGValuedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parts" upperBound="-1"
+        eType="#//CGShadowPart" containment="true" resolveProxies="false" eOpposite="#//CGShadowPart/shadowExp"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="executorType" lowerBound="1"
+        eType="#//CGExecutorType" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGShadowPart" eSuperTypes="#//CGValuedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="init" lowerBound="1" eType="#//CGValuedElement"
+        containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="shadowExp" lowerBound="1"
+        eType="#//CGShadowExp" changeable="false" resolveProxies="false" eOpposite="#//CGShadowExp/parts"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="executorPart" lowerBound="1"
+        eType="#//CGExecutorShadowPart" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The shared type."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGString" eSuperTypes="#//CGConstant">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

@@ -153,6 +153,8 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case CGModelPackage.CG_BOOLEAN: return createCGBoolean();
 			case CGModelPackage.CG_BOX_EXP: return createCGBoxExp();
 			case CGModelPackage.CG_BUILT_IN_ITERATION_CALL_EXP: return createCGBuiltInIterationCallExp();
+			case CGModelPackage.CG_CACHED_OPERATION: return createCGCachedOperation();
+			case CGModelPackage.CG_CACHED_OPERATION_CALL_EXP: return createCGCachedOperationCallExp();
 			case CGModelPackage.CG_CAST_EXP: return createCGCastExp();
 			case CGModelPackage.CG_CATCH_EXP: return createCGCatchExp();
 			case CGModelPackage.CG_CLASS: return createCGClass();
@@ -160,7 +162,6 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case CGModelPackage.CG_COLLECTION_PART: return createCGCollectionPart();
 			case CGModelPackage.CG_CONSTANT_EXP: return createCGConstantExp();
 			case CGModelPackage.CG_CONSTRAINT: return createCGConstraint();
-			case CGModelPackage.CG_SHADOW_PART: return createCGShadowPart();
 			case CGModelPackage.CG_ECORE_CLASS_SHADOW_EXP: return createCGEcoreClassShadowExp();
 			case CGModelPackage.CG_ECORE_DATA_TYPE_SHADOW_EXP: return createCGEcoreDataTypeShadowExp();
 			case CGModelPackage.CG_ECORE_EXP: return createCGEcoreExp();
@@ -209,6 +210,7 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case CGModelPackage.CG_PROPERTY: return createCGProperty();
 			case CGModelPackage.CG_REAL: return createCGReal();
 			case CGModelPackage.CG_SETTABLE_VARIABLE: return createCGSettableVariable();
+			case CGModelPackage.CG_SHADOW_PART: return createCGShadowPart();
 			case CGModelPackage.CG_STRING: return createCGString();
 			case CGModelPackage.CG_TEXT: return createCGText();
 			case CGModelPackage.CG_TEXT_PARAMETER: return createCGTextParameter();
@@ -369,6 +371,28 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	public @NonNull CGBuiltInIterationCallExp createCGBuiltInIterationCallExp() {
 		CGBuiltInIterationCallExpImpl cgBuiltInIterationCallExp = new CGBuiltInIterationCallExpImpl();
 		return cgBuiltInIterationCallExp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull CGCachedOperation createCGCachedOperation() {
+		CGCachedOperationImpl cgCachedOperation = new CGCachedOperationImpl();
+		return cgCachedOperation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull CGCachedOperationCallExp createCGCachedOperationCallExp() {
+		CGCachedOperationCallExpImpl cgCachedOperationCallExp = new CGCachedOperationCallExpImpl();
+		return cgCachedOperationCallExp;
 	}
 
 	/**

@@ -128,7 +128,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGClass()
 	 * @generated
 	 */
-	int CG_CLASS = 9;
+	int CG_CLASS = 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelImpl <em>CG Model</em>}' class.
@@ -148,7 +148,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGTypedElement()
 	 * @generated
 	 */
-	int CG_TYPED_ELEMENT = 84;
+	int CG_TYPED_ELEMENT = 86;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGValuedElementImpl <em>CG Valued Element</em>}' class.
@@ -158,7 +158,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGValuedElement()
 	 * @generated
 	 */
-	int CG_VALUED_ELEMENT = 87;
+	int CG_VALUED_ELEMENT = 89;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIfExpImpl <em>CG If Exp</em>}' class.
@@ -238,7 +238,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGConstant()
 	 * @generated
 	 */
-	int CG_CONSTANT = 12;
+	int CG_CONSTANT = 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCallExpImpl <em>CG Call Exp</em>}' class.
@@ -248,7 +248,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGCallExp()
 	 * @generated
 	 */
-	int CG_CALL_EXP = 6;
+	int CG_CALL_EXP = 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCatchExpImpl <em>CG Catch Exp</em>}' class.
@@ -258,7 +258,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGCatchExp()
 	 * @generated
 	 */
-	int CG_CATCH_EXP = 8;
+	int CG_CATCH_EXP = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCollectionExpImpl <em>CG Collection Exp</em>}' class.
@@ -268,7 +268,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGCollectionExp()
 	 * @generated
 	 */
-	int CG_COLLECTION_EXP = 10;
+	int CG_COLLECTION_EXP = 12;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCollectionPartImpl <em>CG Collection Part</em>}' class.
@@ -278,7 +278,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGCollectionPart()
 	 * @generated
 	 */
-	int CG_COLLECTION_PART = 11;
+	int CG_COLLECTION_PART = 13;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGLibraryOperationCallExpImpl <em>CG Library Operation Call Exp</em>}' class.
@@ -358,7 +358,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGString()
 	 * @generated
 	 */
-	int CG_STRING = 75;
+	int CG_STRING = 77;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGVariableImpl <em>CG Variable</em>}' class.
@@ -368,7 +368,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGVariable()
 	 * @generated
 	 */
-	int CG_VARIABLE = 88;
+	int CG_VARIABLE = 90;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGLocalVariableImpl <em>CG Local Variable</em>}' class.
@@ -408,7 +408,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGConstantExp()
 	 * @generated
 	 */
-	int CG_CONSTANT_EXP = 13;
+	int CG_CONSTANT_EXP = 15;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGFinalVariableImpl <em>CG Final Variable</em>}' class.
@@ -448,7 +448,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGThrowExp()
 	 * @generated
 	 */
-	int CG_THROW_EXP = 78;
+	int CG_THROW_EXP = 80;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTupleExpImpl <em>CG Tuple Exp</em>}' class.
@@ -458,7 +458,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGTupleExp()
 	 * @generated
 	 */
-	int CG_TUPLE_EXP = 79;
+	int CG_TUPLE_EXP = 81;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTuplePartImpl <em>CG Tuple Part</em>}' class.
@@ -468,7 +468,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGTuplePart()
 	 * @generated
 	 */
-	int CG_TUPLE_PART = 80;
+	int CG_TUPLE_PART = 82;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTypeExpImpl <em>CG Type Exp</em>}' class.
@@ -478,7 +478,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGTypeExp()
 	 * @generated
 	 */
-	int CG_TYPE_EXP = 83;
+	int CG_TYPE_EXP = 85;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGElementIdImpl <em>CG Element Id</em>}' class.
@@ -528,7 +528,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGText()
 	 * @generated
 	 */
-	int CG_TEXT = 76;
+	int CG_TEXT = 78;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGTypeIdImpl <em>CG Type Id</em>}' class.
@@ -538,7 +538,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGTypeId()
 	 * @generated
 	 */
-	int CG_TYPE_ID = 82;
+	int CG_TYPE_ID = 84;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -764,7 +764,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGConstraint()
 	 * @generated
 	 */
-	int CG_CONSTRAINT = 14;
+	int CG_CONSTRAINT = 16;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGExecutorOppositePropertyImpl <em>CG Executor Opposite Property</em>}' class.
@@ -814,7 +814,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGCastExp()
 	 * @generated
 	 */
-	int CG_CAST_EXP = 7;
+	int CG_CAST_EXP = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIteratorImpl <em>CG Iterator</em>}' class.
@@ -1827,7 +1827,67 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGCallable()
 	 * @generated
 	 */
-	int CG_CALLABLE = 5;
+	int CG_CALLABLE = 7;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGShadowExpImpl <em>CG Shadow Exp</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGShadowExpImpl
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGShadowExp()
+	 * @generated
+	 */
+	int CG_SHADOW_EXP = 75;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGShadowPartImpl <em>CG Shadow Part</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGShadowPartImpl
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGShadowPart()
+	 * @generated
+	 */
+	int CG_SHADOW_PART = 76;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreClassShadowExpImpl <em>CG Ecore Class Shadow Exp</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreClassShadowExpImpl
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGEcoreClassShadowExp()
+	 * @generated
+	 */
+	int CG_ECORE_CLASS_SHADOW_EXP = 17;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreDataTypeShadowExpImpl <em>CG Ecore Data Type Shadow Exp</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreDataTypeShadowExpImpl
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGEcoreDataTypeShadowExp()
+	 * @generated
+	 */
+	int CG_ECORE_DATA_TYPE_SHADOW_EXP = 18;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreExpImpl <em>CG Ecore Exp</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreExpImpl
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGEcoreExp()
+	 * @generated
+	 */
+	int CG_ECORE_EXP = 19;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationCallExpImpl <em>CG Cached Operation Call Exp</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationCallExpImpl
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGCachedOperationCallExp()
+	 * @generated
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP = 6;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -1909,6 +1969,466 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_CALLABLE_FEATURE_COUNT = CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__AST = CG_CALLABLE__AST;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__NAME = CG_CALLABLE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Type Id</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__TYPE_ID = CG_CALLABLE__TYPE_ID;
+
+	/**
+	 * The feature id for the '<em><b>Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__REQUIRED = CG_CALLABLE__REQUIRED;
+
+	/**
+	 * The feature id for the '<em><b>Depends On</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__DEPENDS_ON = CG_CALLABLE__DEPENDS_ON;
+
+	/**
+	 * The feature id for the '<em><b>Owns</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__OWNS = CG_CALLABLE__OWNS;
+
+	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__PARAMETERS = CG_CALLABLE__PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__BODY = CG_CALLABLE__BODY;
+
+	/**
+	 * The feature id for the '<em><b>Preconditions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__PRECONDITIONS = CG_CALLABLE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Postconditions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__POSTCONDITIONS = CG_CALLABLE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Containing Class</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION__CONTAINING_CLASS = CG_CALLABLE_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>CG Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_FEATURE_COUNT = CG_CALLABLE_FEATURE_COUNT + 3;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationImpl <em>CG Cached Operation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationImpl
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGCachedOperation()
+	 * @generated
+	 */
+	int CG_CACHED_OPERATION = 5;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__AST = CG_OPERATION__AST;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__NAME = CG_OPERATION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Type Id</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__TYPE_ID = CG_OPERATION__TYPE_ID;
+
+	/**
+	 * The feature id for the '<em><b>Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__REQUIRED = CG_OPERATION__REQUIRED;
+
+	/**
+	 * The feature id for the '<em><b>Depends On</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__DEPENDS_ON = CG_OPERATION__DEPENDS_ON;
+
+	/**
+	 * The feature id for the '<em><b>Owns</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__OWNS = CG_OPERATION__OWNS;
+
+	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__PARAMETERS = CG_OPERATION__PARAMETERS;
+
+	/**
+	 * The feature id for the '<em><b>Body</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__BODY = CG_OPERATION__BODY;
+
+	/**
+	 * The feature id for the '<em><b>Preconditions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__PRECONDITIONS = CG_OPERATION__PRECONDITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Postconditions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__POSTCONDITIONS = CG_OPERATION__POSTCONDITIONS;
+
+	/**
+	 * The feature id for the '<em><b>Containing Class</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION__CONTAINING_CLASS = CG_OPERATION__CONTAINING_CLASS;
+
+	/**
+	 * The number of structural features of the '<em>CG Cached Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_FEATURE_COUNT = CG_OPERATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__AST = CG_CALL_EXP__AST;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__NAME = CG_CALL_EXP__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Type Id</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__TYPE_ID = CG_CALL_EXP__TYPE_ID;
+
+	/**
+	 * The feature id for the '<em><b>Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__REQUIRED = CG_CALL_EXP__REQUIRED;
+
+	/**
+	 * The feature id for the '<em><b>Depends On</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__DEPENDS_ON = CG_CALL_EXP__DEPENDS_ON;
+
+	/**
+	 * The feature id for the '<em><b>Owns</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__OWNS = CG_CALL_EXP__OWNS;
+
+	/**
+	 * The feature id for the '<em><b>Invalidating</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__INVALIDATING = CG_CALL_EXP__INVALIDATING;
+
+	/**
+	 * The feature id for the '<em><b>Validating</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__VALIDATING = CG_CALL_EXP__VALIDATING;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__SOURCE = CG_CALL_EXP__SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__ARGUMENTS = CG_CALL_EXP_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Referred Operation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP__REFERRED_OPERATION = CG_CALL_EXP_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>CG Operation Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_OPERATION_CALL_EXP_FEATURE_COUNT = CG_CALL_EXP_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__AST = CG_OPERATION_CALL_EXP__AST;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__NAME = CG_OPERATION_CALL_EXP__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Type Id</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__TYPE_ID = CG_OPERATION_CALL_EXP__TYPE_ID;
+
+	/**
+	 * The feature id for the '<em><b>Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__REQUIRED = CG_OPERATION_CALL_EXP__REQUIRED;
+
+	/**
+	 * The feature id for the '<em><b>Depends On</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__DEPENDS_ON = CG_OPERATION_CALL_EXP__DEPENDS_ON;
+
+	/**
+	 * The feature id for the '<em><b>Owns</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__OWNS = CG_OPERATION_CALL_EXP__OWNS;
+
+	/**
+	 * The feature id for the '<em><b>Invalidating</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__INVALIDATING = CG_OPERATION_CALL_EXP__INVALIDATING;
+
+	/**
+	 * The feature id for the '<em><b>Validating</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__VALIDATING = CG_OPERATION_CALL_EXP__VALIDATING;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__SOURCE = CG_OPERATION_CALL_EXP__SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__ARGUMENTS = CG_OPERATION_CALL_EXP__ARGUMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Referred Operation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__REFERRED_OPERATION = CG_OPERATION_CALL_EXP__REFERRED_OPERATION;
+
+	/**
+	 * The feature id for the '<em><b>Method</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__METHOD = CG_OPERATION_CALL_EXP_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>This Is Self</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP__THIS_IS_SELF = CG_OPERATION_CALL_EXP_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>CG Cached Operation Call Exp</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_CACHED_OPERATION_CALL_EXP_FEATURE_COUNT = CG_OPERATION_CALL_EXP_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -2523,16 +3043,6 @@ public interface CGModelPackage extends EPackage {
 	int CG_CONSTRAINT_FEATURE_COUNT = CG_CALLABLE_FEATURE_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGShadowExpImpl <em>CG Shadow Exp</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGShadowExpImpl
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGShadowExp()
-	 * @generated
-	 */
-	int CG_SHADOW_EXP = 15;
-
-	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2612,116 +3122,6 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_SHADOW_EXP_FEATURE_COUNT = CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGShadowPartImpl <em>CG Shadow Part</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGShadowPartImpl
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGShadowPart()
-	 * @generated
-	 */
-	int CG_SHADOW_PART = 16;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_SHADOW_PART__AST = CG_VALUED_ELEMENT__AST;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_SHADOW_PART__NAME = CG_VALUED_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Type Id</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_SHADOW_PART__TYPE_ID = CG_VALUED_ELEMENT__TYPE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Required</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_SHADOW_PART__REQUIRED = CG_VALUED_ELEMENT__REQUIRED;
-
-	/**
-	 * The feature id for the '<em><b>Depends On</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_SHADOW_PART__DEPENDS_ON = CG_VALUED_ELEMENT__DEPENDS_ON;
-
-	/**
-	 * The feature id for the '<em><b>Owns</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_SHADOW_PART__OWNS = CG_VALUED_ELEMENT__OWNS;
-
-	/**
-	 * The feature id for the '<em><b>Init</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_SHADOW_PART__INIT = CG_VALUED_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Shadow Exp</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_SHADOW_PART__SHADOW_EXP = CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Executor Part</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_SHADOW_PART__EXECUTOR_PART = CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>CG Shadow Part</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_SHADOW_PART_FEATURE_COUNT = CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreClassShadowExpImpl <em>CG Ecore Class Shadow Exp</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreClassShadowExpImpl
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGEcoreClassShadowExp()
-	 * @generated
-	 */
-	int CG_ECORE_CLASS_SHADOW_EXP = 17;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -2812,16 +3212,6 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_ECORE_CLASS_SHADOW_EXP_FEATURE_COUNT = CG_SHADOW_EXP_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreDataTypeShadowExpImpl <em>CG Ecore Data Type Shadow Exp</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreDataTypeShadowExpImpl
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGEcoreDataTypeShadowExp()
-	 * @generated
-	 */
-	int CG_ECORE_DATA_TYPE_SHADOW_EXP = 18;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -2923,16 +3313,6 @@ public interface CGModelPackage extends EPackage {
 	int CG_ECORE_DATA_TYPE_SHADOW_EXP_FEATURE_COUNT = CG_SHADOW_EXP_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreExpImpl <em>CG Ecore Exp</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreExpImpl
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGEcoreExp()
-	 * @generated
-	 */
-	int CG_ECORE_EXP = 19;
-
-	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3030,114 +3410,6 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_ECORE_EXP_FEATURE_COUNT = CG_CALL_EXP_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__AST = CG_CALLABLE__AST;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__NAME = CG_CALLABLE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Type Id</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__TYPE_ID = CG_CALLABLE__TYPE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Required</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__REQUIRED = CG_CALLABLE__REQUIRED;
-
-	/**
-	 * The feature id for the '<em><b>Depends On</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__DEPENDS_ON = CG_CALLABLE__DEPENDS_ON;
-
-	/**
-	 * The feature id for the '<em><b>Owns</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__OWNS = CG_CALLABLE__OWNS;
-
-	/**
-	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__PARAMETERS = CG_CALLABLE__PARAMETERS;
-
-	/**
-	 * The feature id for the '<em><b>Body</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__BODY = CG_CALLABLE__BODY;
-
-	/**
-	 * The feature id for the '<em><b>Preconditions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__PRECONDITIONS = CG_CALLABLE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Postconditions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__POSTCONDITIONS = CG_CALLABLE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Containing Class</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION__CONTAINING_CLASS = CG_CALLABLE_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>CG Operation</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_FEATURE_COUNT = CG_CALLABLE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -3255,114 +3527,6 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_ECORE_OPERATION_FEATURE_COUNT = CG_OPERATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Ast</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__AST = CG_CALL_EXP__AST;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__NAME = CG_CALL_EXP__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Type Id</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__TYPE_ID = CG_CALL_EXP__TYPE_ID;
-
-	/**
-	 * The feature id for the '<em><b>Required</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__REQUIRED = CG_CALL_EXP__REQUIRED;
-
-	/**
-	 * The feature id for the '<em><b>Depends On</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__DEPENDS_ON = CG_CALL_EXP__DEPENDS_ON;
-
-	/**
-	 * The feature id for the '<em><b>Owns</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__OWNS = CG_CALL_EXP__OWNS;
-
-	/**
-	 * The feature id for the '<em><b>Invalidating</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__INVALIDATING = CG_CALL_EXP__INVALIDATING;
-
-	/**
-	 * The feature id for the '<em><b>Validating</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__VALIDATING = CG_CALL_EXP__VALIDATING;
-
-	/**
-	 * The feature id for the '<em><b>Source</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__SOURCE = CG_CALL_EXP__SOURCE;
-
-	/**
-	 * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__ARGUMENTS = CG_CALL_EXP_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Referred Operation</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP__REFERRED_OPERATION = CG_CALL_EXP_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>CG Operation Call Exp</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_OPERATION_CALL_EXP_FEATURE_COUNT = CG_CALL_EXP_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -7770,6 +7934,96 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
+	int CG_SHADOW_PART__AST = CG_VALUED_ELEMENT__AST;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_SHADOW_PART__NAME = CG_VALUED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Type Id</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_SHADOW_PART__TYPE_ID = CG_VALUED_ELEMENT__TYPE_ID;
+
+	/**
+	 * The feature id for the '<em><b>Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_SHADOW_PART__REQUIRED = CG_VALUED_ELEMENT__REQUIRED;
+
+	/**
+	 * The feature id for the '<em><b>Depends On</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_SHADOW_PART__DEPENDS_ON = CG_VALUED_ELEMENT__DEPENDS_ON;
+
+	/**
+	 * The feature id for the '<em><b>Owns</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_SHADOW_PART__OWNS = CG_VALUED_ELEMENT__OWNS;
+
+	/**
+	 * The feature id for the '<em><b>Init</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_SHADOW_PART__INIT = CG_VALUED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Shadow Exp</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_SHADOW_PART__SHADOW_EXP = CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Executor Part</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_SHADOW_PART__EXECUTOR_PART = CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>CG Shadow Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_SHADOW_PART_FEATURE_COUNT = CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Ast</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
 	int CG_STRING__AST = CG_CONSTANT__AST;
 
 	/**
@@ -7915,7 +8169,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGTextParameter()
 	 * @generated
 	 */
-	int CG_TEXT_PARAMETER = 77;
+	int CG_TEXT_PARAMETER = 79;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -8258,7 +8512,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGTuplePartCallExp()
 	 * @generated
 	 */
-	int CG_TUPLE_PART_CALL_EXP = 81;
+	int CG_TUPLE_PART_CALL_EXP = 83;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -8520,7 +8774,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGUnboxExp()
 	 * @generated
 	 */
-	int CG_UNBOX_EXP = 85;
+	int CG_UNBOX_EXP = 87;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -8620,7 +8874,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGUnlimited()
 	 * @generated
 	 */
-	int CG_UNLIMITED = 86;
+	int CG_UNLIMITED = 88;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -8693,7 +8947,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGVariableExp()
 	 * @generated
 	 */
-	int CG_VARIABLE_EXP = 89;
+	int CG_VARIABLE_EXP = 91;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -8775,7 +9029,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getNameable()
 	 * @generated
 	 */
-	int NAMEABLE = 90;
+	int NAMEABLE = 92;
 
 	/**
 	 * The number of structural features of the '<em>Nameable</em>' class.
@@ -8794,7 +9048,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getElement()
 	 * @generated
 	 */
-	int ELEMENT = 91;
+	int ELEMENT = 93;
 
 	/**
 	 * The meta object id for the '<em>Element Id</em>' data type.
@@ -8804,7 +9058,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getElementId()
 	 * @generated
 	 */
-	int ELEMENT_ID = 92;
+	int ELEMENT_ID = 94;
 
 	/**
 	 * The meta object id for the '<em>Enumeration Literal Id</em>' data type.
@@ -8814,7 +9068,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getEnumerationLiteralId()
 	 * @generated
 	 */
-	int ENUMERATION_LITERAL_ID = 93;
+	int ENUMERATION_LITERAL_ID = 95;
 
 	/**
 	 * The meta object id for the '<em>Iteration</em>' data type.
@@ -8824,7 +9078,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getIteration()
 	 * @generated
 	 */
-	int ITERATION = 94;
+	int ITERATION = 96;
 
 	/**
 	 * The meta object id for the '<em>Field</em>' data type.
@@ -8834,7 +9088,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getField()
 	 * @generated
 	 */
-	int FIELD = 95;
+	int FIELD = 97;
 
 	/**
 	 * The meta object id for the '<em>Library Iteration</em>' data type.
@@ -8844,7 +9098,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getLibraryIteration()
 	 * @generated
 	 */
-	int LIBRARY_ITERATION = 96;
+	int LIBRARY_ITERATION = 98;
 
 	/**
 	 * The meta object id for the '<em>Library Operation</em>' data type.
@@ -8854,7 +9108,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getLibraryOperation()
 	 * @generated
 	 */
-	int LIBRARY_OPERATION = 97;
+	int LIBRARY_OPERATION = 99;
 
 	/**
 	 * The meta object id for the '<em>Library Property</em>' data type.
@@ -8864,7 +9118,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getLibraryProperty()
 	 * @generated
 	 */
-	int LIBRARY_PROPERTY = 98;
+	int LIBRARY_PROPERTY = 100;
 
 	/**
 	 * The meta object id for the '<em>Method</em>' data type.
@@ -8874,7 +9128,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getMethod()
 	 * @generated
 	 */
-	int METHOD = 99;
+	int METHOD = 101;
 
 	/**
 	 * The meta object id for the '<em>Number</em>' data type.
@@ -8884,7 +9138,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getNumber()
 	 * @generated
 	 */
-	int NUMBER = 100;
+	int NUMBER = 102;
 
 	/**
 	 * The meta object id for the '<em>Object</em>' data type.
@@ -8894,7 +9148,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getObject()
 	 * @generated
 	 */
-	int OBJECT = 101;
+	int OBJECT = 103;
 
 	/**
 	 * The meta object id for the '<em>Operation</em>' data type.
@@ -8904,7 +9158,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getOperation()
 	 * @generated
 	 */
-	int OPERATION = 102;
+	int OPERATION = 104;
 
 	/**
 	 * The meta object id for the '<em>Property</em>' data type.
@@ -8914,7 +9168,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getProperty()
 	 * @generated
 	 */
-	int PROPERTY = 103;
+	int PROPERTY = 105;
 
 	/**
 	 * The meta object id for the '<em>Tuple Part Id</em>' data type.
@@ -8924,7 +9178,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getTuplePartId()
 	 * @generated
 	 */
-	int TUPLE_PART_ID = 104;
+	int TUPLE_PART_ID = 106;
 
 	/**
 	 * The meta object id for the '<em>Type</em>' data type.
@@ -8934,7 +9188,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getType()
 	 * @generated
 	 */
-	int TYPE = 105;
+	int TYPE = 107;
 
 	/**
 	 * The meta object id for the '<em>Type Id</em>' data type.
@@ -8944,7 +9198,7 @@ public interface CGModelPackage extends EPackage {
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getTypeId()
 	 * @generated
 	 */
-	int TYPE_ID = 106;
+	int TYPE_ID = 108;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator <em>CG Accumulator</em>}'.
@@ -9017,6 +9271,48 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCGBuiltInIterationCallExp_Accumulator();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation <em>CG Cached Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CG Cached Operation</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation
+	 * @generated
+	 */
+	EClass getCGCachedOperation();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp <em>CG Cached Operation Call Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CG Cached Operation Call Exp</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp
+	 * @generated
+	 */
+	EClass getCGCachedOperationCallExp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp#getMethod <em>Method</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Method</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp#getMethod()
+	 * @see #getCGCachedOperationCallExp()
+	 * @generated
+	 */
+	EAttribute getCGCachedOperationCallExp_Method();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp#isThisIsSelf <em>This Is Self</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>This Is Self</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp#isThisIsSelf()
+	 * @see #getCGCachedOperationCallExp()
+	 * @generated
+	 */
+	EAttribute getCGCachedOperationCallExp_ThisIsSelf();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallable <em>CG Callable</em>}'.
@@ -11204,6 +11500,42 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR = eINSTANCE.getCGBuiltInIterationCallExp_Accumulator();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationImpl <em>CG Cached Operation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationImpl
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGCachedOperation()
+		 * @generated
+		 */
+		EClass CG_CACHED_OPERATION = eINSTANCE.getCGCachedOperation();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationCallExpImpl <em>CG Cached Operation Call Exp</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationCallExpImpl
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGCachedOperationCallExp()
+		 * @generated
+		 */
+		EClass CG_CACHED_OPERATION_CALL_EXP = eINSTANCE.getCGCachedOperationCallExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Method</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_CACHED_OPERATION_CALL_EXP__METHOD = eINSTANCE.getCGCachedOperationCallExp_Method();
+
+		/**
+		 * The meta object literal for the '<em><b>This Is Self</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_CACHED_OPERATION_CALL_EXP__THIS_IS_SELF = eINSTANCE.getCGCachedOperationCallExp_ThisIsSelf();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCallableImpl <em>CG Callable</em>}' class.
