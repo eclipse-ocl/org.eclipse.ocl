@@ -37,7 +37,7 @@ public class FinalAnalysis
 	/* @Deprecated - not needed - compute from completeModel */
 	@Deprecated
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	
+
 	private final @NonNull Map<@NonNull CompleteClass, @NonNull Set<@NonNull CompleteClass>> superCompleteClass2subCompleteClasses = new HashMap<@NonNull CompleteClass, @NonNull Set<@NonNull CompleteClass>>();
 	private final @NonNull Map<@NonNull Operation, @Nullable Set<@NonNull Operation>> operation2overrides = new HashMap<@NonNull Operation, @Nullable Set<@NonNull Operation>>();
 
@@ -70,8 +70,8 @@ public class FinalAnalysis
 							if (opName.equals(subOperation.getName()) && parametersId.equals(subOperation.getParametersId())) {
 								LibraryFeature subImplementation = metamodelManager.getImplementation(subOperation);
 								if ((domainImplementation != subImplementation)
-								 || (domainOperation.getBodyExpression() != subOperation.getBodyExpression())
-								 || (domainOperation.getTypeId() != subOperation.getTypeId())) {
+										|| (domainOperation.getBodyExpression() != subOperation.getBodyExpression())
+										|| (domainOperation.getTypeId() != subOperation.getTypeId())) {
 									if (overrides == null) {
 										overrides = new HashSet<@NonNull Operation>();
 										overrides.add(domainOperation);
@@ -86,21 +86,21 @@ public class FinalAnalysis
 			}
 		}
 	}
-	
+
 	/**
 	 * Return the overrides of operation. If there are no overrides the original operation is returned.
-	 * 
+	 *
 	 * @since 1.1
 	 */
 	public @NonNull Iterable<@NonNull Operation> getOverrides(@NonNull Operation operation) {
 		Set<@NonNull Operation> overrides = operation2overrides.get(operation);
 		return overrides != null ? overrides : Collections.singletonList(operation);
 	}
-	
+
 	/**
 	 * Return the overrides of operation that are applicable to a source type of completeClass. If there are no overrides
 	 * the original operation is returned.
-	 * 
+	 *
 	 * @since 1.1
 	 */
 	public @NonNull Iterable<@NonNull Operation> getOverrides(@NonNull Operation operation, @NonNull CompleteClass completeClass) {
@@ -122,10 +122,10 @@ public class FinalAnalysis
 		}
 		return results;
 	}
-	
+
 	/**
 	 * Return true if no classes derive from completeClass.
-	 * 
+	 *
 	 * @param completeClass
 	 * @return
 	 */
@@ -133,10 +133,10 @@ public class FinalAnalysis
 		Set<@NonNull CompleteClass> subCompleteClasses = superCompleteClass2subCompleteClasses.get(completeClass);
 		return (subCompleteClasses != null) && (subCompleteClasses.size() <= 1);
 	}
-	
+
 	/**
 	 * Return true if no derived classes override operation.
-	 * 
+	 *
 	 * @param completeClass
 	 * @return
 	 */
@@ -144,7 +144,7 @@ public class FinalAnalysis
 		Set<@NonNull Operation> overrides = operation2overrides.get(operation);
 		return overrides == null;
 	}
-	
+
 	public @Nullable Operation isFinal(@NonNull Operation operation, @NonNull CompleteClass completeClass) {
 		Set<@NonNull Operation> overrides = operation2overrides.get(operation);
 		if (overrides == null) {
@@ -155,7 +155,7 @@ public class FinalAnalysis
 		CompleteInheritance requiredInheritance = completeClass.getCompleteInheritance();
 		for (@NonNull Operation override : overrides) {
 			CompleteInheritance overrideInheritance = override.getInheritance(standardLibrary);
-			if ((overrideInheritance != null) && overrideInheritance.isSuperInheritanceOf(requiredInheritance)) {
+			if ((overrideInheritance != null) && requiredInheritance.isSuperInheritanceOf(overrideInheritance)) {
 				if (candidate != null) {
 					return null;
 				}
@@ -164,7 +164,7 @@ public class FinalAnalysis
 		}
 		return candidate;
 	}
-	
+
 	public void print(@NonNull StringBuilder s) {
 		List<@NonNull CompleteClass> completeClasses = new ArrayList<@NonNull CompleteClass>(superCompleteClass2subCompleteClasses.keySet());
 		Collections.sort(completeClasses, NameUtil.NAMEABLE_COMPARATOR);
@@ -183,7 +183,7 @@ public class FinalAnalysis
 				s.append("\n\t");
 				s.append(completeClass.getName());
 			}
-		}	
+		}
 	}
 
 }
