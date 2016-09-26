@@ -14,6 +14,8 @@
  */
 package org.eclipse.ocl.examples.codegen.cgmodel;
 
+import java.util.List;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -24,9 +26,60 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * A native operation that must be called using the native calling convention.
  * <!-- end-model-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getFinalOperations <em>Final Operations</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getVirtualOperation <em>Virtual Operation</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGCachedOperation()
  * @generated
  */
 public interface CGCachedOperation extends CGOperation {
+
+	/**
+	 * Returns the value of the '<em><b>Final Operations</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation}.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getVirtualOperation <em>Virtual Operation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Final Operations</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Final Operations</em>' reference list.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGCachedOperation_FinalOperations()
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getVirtualOperation
+	 * @generated
+	 */
+	List<CGCachedOperation> getFinalOperations();
+
+	/**
+	 * Returns the value of the '<em><b>Virtual Operation</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getFinalOperations <em>Final Operations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Virtual Operation</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Virtual Operation</em>' reference.
+	 * @see #setVirtualOperation(CGCachedOperation)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGCachedOperation_VirtualOperation()
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getFinalOperations
+	 * @generated
+	 */
+	CGCachedOperation getVirtualOperation();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getVirtualOperation <em>Virtual Operation</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Virtual Operation</em>' reference.
+	 * @see #getVirtualOperation()
+	 * @generated
+	 */
+	void setVirtualOperation(CGCachedOperation value);
 } // CGCachedOperation

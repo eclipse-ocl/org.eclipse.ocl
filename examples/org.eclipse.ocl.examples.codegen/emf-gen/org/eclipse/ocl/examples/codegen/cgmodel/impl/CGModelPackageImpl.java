@@ -925,7 +925,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link CGModelPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -953,7 +953,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		// Mark meta-data to indicate it can't be changed
 		theCGModelPackage.freeze();
 
-  
+
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(CGModelPackage.eNS_URI, theCGModelPackage);
 		return theCGModelPackage;
@@ -1037,6 +1037,26 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	@Override
 	public EClass getCGCachedOperation() {
 		return cgCachedOperationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getCGCachedOperation_FinalOperations() {
+		return (EReference)cgCachedOperationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getCGCachedOperation_VirtualOperation() {
+		return (EReference)cgCachedOperationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -3111,6 +3131,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgBuiltInIterationCallExpEClass, CG_BUILT_IN_ITERATION_CALL_EXP__ACCUMULATOR);
 
 		cgCachedOperationEClass = createEClass(CG_CACHED_OPERATION);
+		createEReference(cgCachedOperationEClass, CG_CACHED_OPERATION__FINAL_OPERATIONS);
+		createEReference(cgCachedOperationEClass, CG_CACHED_OPERATION__VIRTUAL_OPERATION);
 
 		cgCachedOperationCallExpEClass = createEClass(CG_CACHED_OPERATION_CALL_EXP);
 		createEAttribute(cgCachedOperationCallExpEClass, CG_CACHED_OPERATION_CALL_EXP__METHOD);
@@ -3540,6 +3562,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEReference(getCGBuiltInIterationCallExp_Accumulator(), this.getCGIterator(), null, "accumulator", null, 0, 1, CGBuiltInIterationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgCachedOperationEClass, CGCachedOperation.class, "CGCachedOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCGCachedOperation_FinalOperations(), this.getCGCachedOperation(), this.getCGCachedOperation_VirtualOperation(), "finalOperations", null, 0, -1, CGCachedOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCGCachedOperation_VirtualOperation(), this.getCGCachedOperation(), this.getCGCachedOperation_FinalOperations(), "virtualOperation", null, 0, 1, CGCachedOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgCachedOperationCallExpEClass, CGCachedOperationCallExp.class, "CGCachedOperationCallExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCGCachedOperationCallExp_Method(), this.getMethod(), "method", null, 1, 1, CGCachedOperationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3848,13 +3872,13 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	protected void createImportAnnotations() {
-		String source = "http://www.eclipse.org/OCL/Import";	
+		String source = "http://www.eclipse.org/OCL/Import";
 		addAnnotation
-		  (this, 
-		   source, 
-		   new String[] {
-			 "ecore", "http://www.eclipse.org/emf/2002/Ecore#/"
-		   });
+		(this,
+			source,
+			new String[] {
+				"ecore", "http://www.eclipse.org/emf/2002/Ecore#/"
+		});
 	}
 
 } //CGModelPackageImpl
