@@ -47,7 +47,10 @@
     <genClasses ecoreClass="cgmodel.ecore#//CGBuiltInIterationCallExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGBuiltInIterationCallExp/accumulator"/>
     </genClasses>
-    <genClasses ecoreClass="cgmodel.ecore#//CGCachedOperation"/>
+    <genClasses ecoreClass="cgmodel.ecore#//CGCachedOperation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGCachedOperation/finalOperations"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGCachedOperation/virtualOperation"/>
+    </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGCachedOperationCallExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGCachedOperationCallExp/method"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGCachedOperationCallExp/thisIsSelf"/>
