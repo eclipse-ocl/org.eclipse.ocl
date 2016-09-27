@@ -779,6 +779,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					}
 					cgOperationCallExp = cgEcoreOperationCallExp;
 				} catch (GenModelException e) {
+					codeGenerator.addProblem(e);
 					org.eclipse.ocl.pivot.Class asType = asOperation.getOwningClass();
 					String className = asType.getInstanceClassName();
 					if (className != null) {
@@ -853,6 +854,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					}
 					cgPropertyCallExp = cgEcorePropertyCallExp;
 				} catch (GenModelException e) {
+					codeGenerator.addProblem(e);
 				}
 			}
 		}
@@ -896,6 +898,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					isRequired = asProperty.isIsRequired();
 					cgPropertyCallExp = cgEcorePropertyCallExp;
 				} catch (GenModelException e) {
+					codeGenerator.addProblem(e);		// FIXME drop through to better default
 				}
 			}
 		}

@@ -37,7 +37,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	private /*@LazyNonNull*/ CodeGenOptions options = null;
 	//
-	private /*@LazyNonNull*/ List<Exception> problems = null;
+	private /*@LazyNonNull*/ List<@NonNull Exception> problems = null;
 	private @NonNull String defaultIndent = "    ";
 
 	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory) {
@@ -65,7 +65,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	@Override
 	public void addProblem(@NonNull Exception problem) {
-		List<Exception> problems2 = problems;
+		List<@NonNull Exception> problems2 = problems;
 		if (problems2 == null) {
 			problems = problems2 = new ArrayList<>();
 		}
@@ -116,6 +116,11 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			options = options2 = createOptions();
 		}
 		return options2;
+	}
+
+	@Override
+	public @Nullable List<@NonNull Exception> getProblems() {
+		return problems;
 	}
 
 	@Override

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.generator;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
@@ -41,6 +43,7 @@ public interface CodeGenerator
 	@NonNull CommonSubexpressionEliminator createCommonSubexpressionEliminator();
 	@NonNull DependencyVisitor createDependencyVisitor();
 	@NonNull FieldingAnalyzer createFieldingAnalyzer();
+	@NonNull ReferencesVisitor createReferencesVisitor();
 	@NonNull CodeGenAnalyzer getAnalyzer();
 	@NonNull BoxedDescriptor getBoxedDescriptor(@NonNull ElementId elementId);
 	@Nullable String getConstantsClass();
@@ -53,7 +56,7 @@ public interface CodeGenerator
 	@Nullable IterationHelper getIterationHelper(@NonNull Iteration iteration);
 	@NonNull NameManager getNameManager();
 	@NonNull CodeGenOptions getOptions();
-	@NonNull ReferencesVisitor createReferencesVisitor();
+	@Nullable List<@NonNull Exception> getProblems();
 	@NonNull TypeDescriptor getTypeDescriptor(@NonNull CGValuedElement cgElement);
 	@NonNull UnboxedDescriptor getUnboxedDescriptor(@NonNull ElementId elementId);
 	@Nullable Operation isFinal(@NonNull Operation anOperation, org.eclipse.ocl.pivot.@NonNull Class staticType);
