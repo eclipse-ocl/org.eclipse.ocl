@@ -13,8 +13,10 @@ package org.eclipse.ocl.examples.build.utilities;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
@@ -22,6 +24,7 @@ import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.GenJDKLevel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenBaseGeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.util.BasicMonitor;
@@ -38,6 +41,7 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGeneratorAdapterFactory;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
@@ -52,7 +56,7 @@ public class GenerateModel extends AbstractWorkflowComponent {
 	protected String genModel; 				// URI of the genmodel
 	protected boolean showProgress = false; // Set true to show genmodel new tasks
 	private boolean clearResourceSet = true;// Set to false to preserve the resource set.
-	
+
 	public GenerateModel() {
 		super();
 		BaseLinkingService.DEBUG_RETRY.setState(true);
@@ -62,6 +66,14 @@ public class GenerateModel extends AbstractWorkflowComponent {
 	public void checkConfiguration(Issues issues) {
 		if (genModel == null) {
 			issues.addError(this, "uri not specified.");
+		}
+	}
+
+	private void gatherUsedGenPackages(@NonNull Set<GenPackage> allUsedGenPackages, GenPackage anotherUsedGenPackage) {
+		if (allUsedGenPackages.add(anotherUsedGenPackage)) {
+			for (GenPackage usedGenPackage : anotherUsedGenPackage.getGenModel().getUsedGenPackages()) {
+				gatherUsedGenPackages(allUsedGenPackages, usedGenPackage);
+			}
 		}
 	}
 
@@ -91,11 +103,11 @@ public class GenerateModel extends AbstractWorkflowComponent {
 				uriResourceMap.clear();
 			}
 		}
-		
+
 		if (isClearResourceSet()) {
-			resourceSet.getResources().clear();	
+			resourceSet.getResources().clear();
 		}
-		
+
 		Resource resource = resourceSet.getResource(fileURI, true);
 		// EcoreUtil.resolveAll(resourceSet); -- genModel can fail if
 		// proxies resolved here
@@ -104,22 +116,31 @@ public class GenerateModel extends AbstractWorkflowComponent {
 		// since the proxy seems to be successfully resolved giving a double
 		// feature
 		ResourceUtils.checkResourceSet(resourceSet);
-//		MetamodelManager metamodelManager = ElementUtil.findMetamodelManager(resourceSet);
-//		metamodelManager.setAutoLoadPivotMetamodel(false);
+		//		MetamodelManager metamodelManager = ElementUtil.findMetamodelManager(resourceSet);
+		//		metamodelManager.setAutoLoadPivotMetamodel(false);
 		EObject eObject = resource.getContents().get(0);
 		if (!(eObject instanceof GenModel)) {
 			throw new ConfigurationException("No GenModel found in '" + resource.getURI() + "'");
 		}
 		GenModel genModel = (GenModel) eObject;
+		List<GenPackage> usedGenPackages = genModel.getUsedGenPackages();
+		Set<GenPackage> allOldUsedGenPackages = new HashSet<>();
+		for (GenPackage usedGenPackage : usedGenPackages) {
+			gatherUsedGenPackages(allOldUsedGenPackages, usedGenPackage);
+		}
+		allOldUsedGenPackages.removeAll(usedGenPackages);		// Indirectly usedGenPackages
 		genModel.reconcile();
+		allOldUsedGenPackages.retainAll(usedGenPackages);		// Promoted indirect to direct usedGenPackages
 		try {
 			Map<Object, Object> saveOptions = new HashMap<Object, Object>();
 			saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
 			saveOptions.put(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER, "\n");
-		    saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
-		    saveOptions.put(Resource.OPTION_LINE_DELIMITER, Resource.OPTION_LINE_DELIMITER_UNSPECIFIED);
+			saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
+			saveOptions.put(Resource.OPTION_LINE_DELIMITER, Resource.OPTION_LINE_DELIMITER_UNSPECIFIED);
 			log.info("Saving reconciled '" + fileURI + "'");
+			usedGenPackages.removeAll(allOldUsedGenPackages);
 			resource.save(saveOptions);
+			usedGenPackages.addAll(allOldUsedGenPackages);
 		} catch (IOException e) {
 			throw new ConfigurationException("Failed to save '" + fileURI + "'", e);
 		}
@@ -127,21 +148,21 @@ public class GenerateModel extends AbstractWorkflowComponent {
 		// genModel.setCanGenerate(true);
 		// validate();
 
-		
-		
+
+
 		genModel.setValidateModel(true); // The more checks the better
-//		genModel.setCodeFormatting(true); // Normalize layout
+		//		genModel.setCodeFormatting(true); // Normalize layout
 		genModel.setForceOverwrite(false); // Don't overwrite read-only
-											// files
+		// files
 		genModel.setCanGenerate(true);
 		// genModel.setFacadeHelperClass(null); // Non-null gives JDT
 		// default NPEs
-//		genModel.setFacadeHelperClass(ASTFacadeHelper.class.getName()); // Bug 308069
+		//		genModel.setFacadeHelperClass(ASTFacadeHelper.class.getName()); // Bug 308069
 		// genModel.setValidateModel(true);
 		genModel.setBundleManifest(false); // New manifests should be
-											// generated manually
+		// generated manually
 		genModel.setUpdateClasspath(false); // New class-paths should be
-											// generated manually
+		// generated manually
 		if (genModel.getComplianceLevel().compareTo(GenJDKLevel.JDK50_LITERAL) < 0) {
 			genModel.setComplianceLevel(GenJDKLevel.JDK50_LITERAL);
 		}
@@ -153,7 +174,7 @@ public class GenerateModel extends AbstractWorkflowComponent {
 		 * JavaModelManager.getJavaModelManager().initializePreferences();
 		 * new
 		 * JavaCorePreferenceInitializer().initializeDefaultPreferences();
-		 * 
+		 *
 		 * GenJDKLevel genSDKcomplianceLevel =
 		 * genModel.getComplianceLevel(); String complianceLevel =
 		 * JavaCore.VERSION_1_5; switch (genSDKcomplianceLevel) { case
@@ -165,13 +186,13 @@ public class GenerateModel extends AbstractWorkflowComponent {
 		 * // JavaCore.setOptions(defaultOptions);
 		 */
 
-//		Generator generator = new Generator();
-//		generator.setInput(genModel);
+		//		Generator generator = new Generator();
+		//		generator.setInput(genModel);
 		Generator generator = GenModelUtil.createGenerator(genModel);
 		Monitor monitor = showProgress ? new LoggerMonitor(log)
-				: new BasicMonitor();
+			: new BasicMonitor();
 		diagnostic = generator.generate(genModel,
-				GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE, monitor);
+			GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE, monitor);
 		reportDiagnostics(issues, diagnostic);
 	}
 
@@ -218,7 +239,7 @@ public class GenerateModel extends AbstractWorkflowComponent {
 
 	/**
 	 * Define the genModel from which to generate a Java model.
-	 * 
+	 *
 	 * @param genModel URI of the genmodel
 	 */
 	public void setGenModel(String genModel) {
@@ -228,7 +249,7 @@ public class GenerateModel extends AbstractWorkflowComponent {
 	/**
 	 * Define a ReseourceSet to be used for for required resources. This allows the same ResourceSet to
 	 * be shared for multiple modeling purposes.
-	 * 
+	 *
 	 * @param resourceSet the ResourceSet
 	 */
 	public void setResourceSet(ResourceSet resourceSet) {
@@ -237,19 +258,19 @@ public class GenerateModel extends AbstractWorkflowComponent {
 
 	/**
 	 * Whether to display GenModel newTask activity.
-	 * 
+	 *
 	 * @param showProgress
 	 */
 	public void setShowProgress(boolean showProgress) {
 		this.showProgress = showProgress;
 	}
 
-	
+
 	public boolean isClearResourceSet() {
 		return clearResourceSet;
 	}
 
-	
+
 	/**
 	 * Set to <code>false</code> to preserve the resource set. <code>true</code> by default
 	 * @param clearResourceSet
