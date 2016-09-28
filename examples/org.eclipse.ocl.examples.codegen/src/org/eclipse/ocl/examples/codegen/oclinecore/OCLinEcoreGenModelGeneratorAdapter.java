@@ -388,6 +388,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
 			for (GenPackage genPackage : genPackages) {
 				EPackage ecorePackage = genPackage.getEcorePackage();
+				removeEAnnotation(ecorePackage.getEAnnotation(PivotConstants.IMPORT_ANNOTATION_SOURCE));
 				Resource ecoreResource = ecorePackage.eResource();
 				if (ecoreResource != null) {
 					Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, metamodelManager.getEnvironmentFactory());
