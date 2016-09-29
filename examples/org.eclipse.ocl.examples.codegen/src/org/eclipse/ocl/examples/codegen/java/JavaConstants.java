@@ -43,6 +43,7 @@ public class JavaConstants
 	public static final @NonNull String ID_RESOLVER_NAME = "idResolver";
 	public static final @NonNull String INSTANCE_NAME = "INSTANCE";
 	public static final @NonNull String SELF_NAME = "self";
+	public static final @NonNull String SOURCE_AND_ARGUMENT_VALUES_NAME = "sourceAndArgumentValues";
 	public static final @NonNull String STANDARD_LIBRARY_NAME = "standardLibrary";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 

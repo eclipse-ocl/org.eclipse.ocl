@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *   Adolfo Sanchez-Barbudo Herrera (University of York) - Lookup Environment/Visitor
@@ -24,6 +24,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.EvaluationCache;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
 
 /**
  * LookupCG2JavaVisitor refines the regular generation of Java code from an optimized Auto CG transformation tree
@@ -34,6 +36,20 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 	public LookupFilterCG2JavaVisitor(@NonNull LookupFilterGenerator codeGenerator, @NonNull CGPackage cgPackage,
 			@Nullable List<CGValuedElement> sortedGlobals) {
 		super(codeGenerator, cgPackage, sortedGlobals);
+	}
+
+	@Override
+	protected boolean doClassFields(@NonNull CGClass cgClass, boolean needsBlankLine) {
+		if (needsBlankLine) {
+			js.append("\n");
+		}
+		js.append("protected final ");
+		js.appendIsRequired(true);
+		js.append(" ");
+		js.appendClassReference(EvaluationCache.class);
+		js.append(" "+JavaConstants.EVALUATION_CACHE_NAME);
+		js.append(";\n");
+		return super.doClassFields(cgClass, false);
 	}
 
 	@Override
@@ -51,23 +67,26 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 		js.appendClassReference(null, getFilteredType(cgClass));
 		js.append(".class");
 		js.append(");\n");
-	
+
 		addFilterPropsInit(cgClass);
 		js.append("this." + JavaConstants.EXECUTOR_NAME + " = " +JavaConstants.EXECUTOR_NAME + ";\n");
 		js.append("this." + JavaConstants.ID_RESOLVER_NAME + " = " + JavaConstants.EXECUTOR_NAME + ".getIdResolver();\n");
-	
+		js.append("this." + JavaConstants.EVALUATION_CACHE_NAME + " = ((");
+		js.appendClassReference(ExecutorInternalExtension.class);
+		js.append(")" + JavaConstants.EXECUTOR_NAME + ").getEvaluationCache();\n");
+
 		js.popIndentation();
 		js.append("}\n");
 	}
-	
-	
+
+
 	private void addFilterParameters(CGClass cgClass) {
 		for (CGProperty filteringVar : context.getFilteringVars(cgClass)) {
 			js.append(",");
 			js.appendDeclaration(filteringVar);
 		}
 	}
-	
+
 	private void addFilterPropsInit(CGClass cgClass) {
 		for (CGProperty filteringVar : context.getFilteringVars(cgClass)) {
 			String varName = filteringVar.getValueName();
@@ -78,15 +97,15 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 			js.append(";\n");
 		}
 	}
-	
+
 	private CGValuedElement getFilteredType(CGClass cgClass) {
-		
+
 		//We get the first CGoperation, and the parameter will refer to the filteredType
 		CGOperation cgFilteringOp = cgClass.getOperations().get(0);
 		CGParameter param = cgFilteringOp.getParameters().get(0);
 		return param.getTypedValue();
 	}
-  	
 
-	
+
+
 }

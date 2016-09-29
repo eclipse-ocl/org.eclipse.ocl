@@ -41,6 +41,9 @@ public abstract class AutoCG2JavaVisitor<@NonNull CG extends AutoCodeGenerator> 
 
 	@Override
 	final protected boolean doClassMethods(@NonNull CGClass cgClass, boolean needsBlankLine) {
+		if (needsBlankLine) {
+			js.append("\n");
+		}
 		doConstructor(cgClass);
 		doMoreClassMethods(cgClass);
 		return super.doClassMethods(cgClass, needsBlankLine);

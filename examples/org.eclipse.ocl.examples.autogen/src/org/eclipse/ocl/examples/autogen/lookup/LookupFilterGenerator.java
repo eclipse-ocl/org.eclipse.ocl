@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *   Adolfo Sanchez-Barbudo Herrera (University of York) - Lookup Environment/Visitor
@@ -61,50 +61,50 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * LookupCodeGenerator supports generation of the content of a JavaClassFile for the Lookup visitor.
  */
 public class LookupFilterGenerator extends AutoCodeGenerator
-{	
+{
 	protected final @NonNull LookupFilterClassContext classContext;
 	protected final @NonNull AS2CGVisitor as2cgVisitor;
-	protected final @NonNull String lookupPackageName; 
+	protected final @NonNull String lookupPackageName;
 	protected final @Nullable String superLookupPackageName;
 	protected final @NonNull String baseLookupPackage;
-	
+
 	//
 	//	New AS elements
 	//
-	
+
 	protected final @NonNull List<org.eclipse.ocl.pivot.Package> asPackages;
-	
+
 	//
 	//	Important CG elements
 	//
 	private @Nullable CGProperty cgEvaluatorVariable = null;
 	private @Nullable CGProperty cgIdResolverVariable = null;
-	
-	
+
+
 	private @NonNull Set<Property> filteringProps = new HashSet<Property>();
-	private @NonNull Map<CGClass, List<@NonNull CGProperty>> cgClass2cgFilteringProps = new HashMap<CGClass, @NonNull List<@NonNull CGProperty>>(); 
+	private @NonNull Map<CGClass, List<@NonNull CGProperty>> cgClass2cgFilteringProps = new HashMap<CGClass, @NonNull List<@NonNull CGProperty>>();
 
 	protected LookupFilterGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage,
 			org.eclipse.ocl.pivot.@Nullable Package asSuperPackage, org.eclipse.ocl.pivot.@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
 			@Nullable GenPackage superGenPackage, @Nullable GenPackage baseGenPackage,
-			@NonNull String lookupPackageName, @Nullable String superLookupPackageName, 
+			@NonNull String lookupPackageName, @Nullable String superLookupPackageName,
 			@Nullable String baseLookupPackage) {
 		super(environmentFactory, asPackage, asSuperPackage, genPackage, superGenPackage, baseGenPackage);
 		this.lookupPackageName = lookupPackageName;
 		this.superLookupPackageName = superLookupPackageName;
 		this.baseLookupPackage = baseLookupPackage != null ? baseLookupPackage :
-									superLookupPackageName != null ? superLookupPackageName :
-										lookupPackageName;
+			superLookupPackageName != null ? superLookupPackageName :
+				lookupPackageName;
 		this.classContext = new LookupFilterClassContext(this, asPackage);
 		this.as2cgVisitor = createAS2CGVisitor();
 		this.asPackages = createASPackages();
 	}
 
 	private @NonNull List<org.eclipse.ocl.pivot.Package> createASPackages() {
-		
+
 		List<org.eclipse.ocl.pivot.Package> result = new ArrayList<org.eclipse.ocl.pivot.Package>();
 		List<Operation> filteringOps = gatherFilteringOps(asPackage);
-		
+
 		for (Operation filteringOp : filteringOps) {
 			String filteredClassName = filteringOp.getOwningClass().getName();
 			org.eclipse.ocl.pivot.Package asPackage = createASPackage(getSourcePackageName());
@@ -123,24 +123,24 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		}
 		return result;
 	}
-	
 
-	
+
+
 	/**
-	 * Convert  'Element'::_appliesFilter_'Element'(filterArg : FilterArgType) : Boolean 
+	 * Convert  'Element'::_appliesFilter_'Element'(filterArg : FilterArgType) : Boolean
 	 * to 'Element'LookupFilter::_matches(element : 'Element') : Boolean
-	 * 
-	 * with 
+	 *
+	 * with
 	 *     - self accessed as element.
 	 *     - filterArg accessed as this.filterArg (NB there might be many filterArgs).
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	private Operation createASMatchesOperation(@NonNull Operation filteringOp, org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull Variable thisVariable){
-		
-		Map<Element,Element> redefinitions = new HashMap<Element,Element>();		
+
+		Map<Element,Element> redefinitions = new HashMap<Element,Element>();
 		ExpressionInOCL oldExpressionInOCL = getExpressionInOCL(filteringOp);
 		ExpressionInOCL newExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
-		
+
 		Type filteringOpType = filteringOp.getType();
 		assert filteringOpType != null;
 		Operation asOperation = PivotUtil.createOperation("_" + LookupFilterClassContext.MATCHES_OP_NAME, filteringOpType, null, null);
@@ -149,12 +149,12 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		LetExp letRoot = null;
 		LetExp letLeaf = null;
 		for (Variable paramVar : oldExpressionInOCL.getOwnedParameters()) {
-			String paramName = paramVar.getName();
+			String paramName = nameManager.reserveName(paramVar.getName(), paramVar);
 			Type paramType = paramVar.getType();
 			assert (paramName != null) && (paramType != null);
 			Property asProperty = createNativeProperty(paramName, paramType, true, true);
 			asClass.getOwnedProperties().add(asProperty);
-			
+
 			// Redefinition requires a Variable access rather than a Property
 			VariableExp asThisVarExp = createThisVariableExp(thisVariable);
 			PropertyCallExp asPropertyAccess = PivotUtil.createPropertyCallExp(asThisVarExp, asProperty);
@@ -171,14 +171,14 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			}
 			letLeaf = letExp;
 		}
-		
+
 		// Filtering op context is translated as asOperation parameter
 		org.eclipse.ocl.pivot.Class asType = ClassUtil.nonNullState(filteringOp.getOwningClass());
-		Variable asParamVar = PivotUtil.createVariable(LookupFilterClassContext.ELEMENT_NAME, asType, 
+		Variable asParamVar = PivotUtil.createVariable(LookupFilterClassContext.ELEMENT_NAME, asType,
 			true, null);
 		newExpressionInOCL.getOwnedParameters().add(asParamVar);
 		redefinitions.put(oldExpressionInOCL.getOwnedContext(), asParamVar);
-		
+
 		OCLExpression asExpression = RereferencingCopier.copy(ClassUtil.nonNullState(oldExpressionInOCL.getOwnedBody()), redefinitions);
 		if ((letRoot != null) && (letLeaf != null)) {
 			for (LetExp letExp = letRoot; letExp != null; letExp = (LetExp) letExp.getOwnedIn()) {
@@ -198,23 +198,23 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		PivotUtil.initOperation(asOperation, newExpressionInOCL);
 		return asOperation;
 	}
-	
+
 	private List<Operation> gatherFilteringOps(
 			org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		
+
 		return asPackage.getOwnedClasses().stream()
-			.map(c -> c.getOwnedOperations())
-			.flatMap(o -> o.stream())
-			.filter(o -> o.getName().startsWith(LookupFilterClassContext.APPLIES_FILTER_OP_PREFIX))	// interested op
-			//.map(o -> o.getName().substring(o.getName().indexOf(LookupFilterClassContext.APPLIES_FILTER_OP_PREFIX))) // type name is after appliesFilter prefix 
-			.collect(Collectors.toList());
-			
+				.map(c -> c.getOwnedOperations())
+				.flatMap(o -> o.stream())
+				.filter(o -> o.getName().startsWith(LookupFilterClassContext.APPLIES_FILTER_OP_PREFIX))	// interested op
+				//.map(o -> o.getName().substring(o.getName().indexOf(LookupFilterClassContext.APPLIES_FILTER_OP_PREFIX))) // type name is after appliesFilter prefix
+				.collect(Collectors.toList());
+
 	}
 
-	
+
 	protected void convertPackages(@NonNull CGModel cgModel, @NonNull List<org.eclipse.ocl.pivot.Package> asPackages) {
-		
-		
+
+
 		for (org.eclipse.ocl.pivot.Package asPackage : asPackages) {
 			CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 			cgModel.getPackages().add(cgPackage);
@@ -222,16 +222,16 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			cgPackage.setName(asPackage.getName());
 			convertClasses(cgPackage, asPackage.getOwnedClasses());
 		}
-		
+
 	}
-	
+
 	protected void convertClasses(@NonNull CGPackage cgPackage, @NonNull List<org.eclipse.ocl.pivot.Class> asClasses) {
-		
+
 		for (org.eclipse.ocl.pivot.Class asClass : asClasses) {
 			CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
 			cgPackage.getClasses().add(cgClass);
 			cgClass.setAst(asClass);
-			cgClass.setName(asClass.getName());			
+			cgClass.setName(asClass.getName());
 			convertProperties(cgClass, asClass.getOwnedProperties());
 			convertOperations(cgClass, asClass.getOwnedOperations());
 			convertSuperTypes(cgClass);
@@ -260,16 +260,16 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 				List<CGProperty> cgProps = cgClass2cgFilteringProps.get(cgClass);
 				if (cgProps == null) {
 					cgProps = new ArrayList<CGProperty>();
-					cgClass2cgFilteringProps.put(cgClass, cgProps);	
+					cgClass2cgFilteringProps.put(cgClass, cgProps);
 				}
 				cgProps.add(cgProperty);
 			}
 		}
 	}
-	
+
 	/**
 	 * Convert the construction context to supertypes/interfaces of cgClass.
-	 * 
+	 *
 	 * Note: convertOperation should have been called first, so that we can access the target Operation
 	 * from which we can obtain the templater parameter substitution for the AbstractFilter super type
 	 */
@@ -285,7 +285,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		cgSuperClass.getTemplateParameters().add(getExternalClass(filteredType));
 		cgClass.getSuperTypes().add(cgSuperClass);
 	}
-	
+
 	@Override
 	protected @NonNull LookupFilterCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable List<CGValuedElement> sortedGlobals) {
 		return new LookupFilterCG2JavaVisitor(this, cgPackage, sortedGlobals);
@@ -297,8 +297,8 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	}
 
 	/**
-	 * Synthesize an AS package by simple AS2AS conversions and convert the AS package to a CG package for onward code generation. 
-	 * @throws ParserException 
+	 * Synthesize an AS package by simple AS2AS conversions and convert the AS package to a CG package for onward code generation.
+	 * @throws ParserException
 	 */
 	@Override
 	protected @NonNull List<CGPackage> createCGPackages() throws ParserException {
@@ -312,12 +312,12 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	protected @NonNull VariableExp createThisVariableExp(@NonNull Variable thisVariable) {
 		return PivotUtil.createVariableExp(thisVariable);
 	}
-	
-	
+
+
 	protected @NonNull NullLiteralExp createNullLiteralExp() {
 		return metamodelManager.createNullLiteralExp();
 	}
-	
+
 	public @NonNull CGValuedElement getEvaluatorVariable() {
 		// When generating lookup visitors for derived languages, the common lookup visitor is no
 		// not generated. Therefore we have to add this hack to provide CG for executor property
@@ -328,7 +328,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		}
 		return ClassUtil.nonNullState(cgEvaluatorVariable);
 	}
-	
+
 
 	@Override
 	public @NonNull LookupFilterClassContext getGlobalContext() {
@@ -356,11 +356,11 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	protected @NonNull String getSourcePackageName() {
 		return lookupPackageName + ".util";
 	}
-	
+
 	protected @Nullable String getSuperSourcePackageName() {
 		return superLookupPackageName + ".util";
 	}
-	
+
 	protected @NonNull String getBaseSourcePackageName() {
 		return baseLookupPackage + ".util";
 	}

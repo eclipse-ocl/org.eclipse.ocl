@@ -499,6 +499,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	protected void doCachedOperationBasicEvaluate(@NonNull CGOperation cgOperation) {
+		String nativeOperationClassName = getNativeOperationClassName(cgOperation);
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		CGValuedElement body = getExpression(cgOperation.getBody());
 		js.append("@Override\n");
@@ -527,7 +528,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" ");
 		js.appendIsRequired(true);
 		js.append(" [] ");
-		js.append("sourceAndArgumentValues");
+		js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
 		js.append(") {\n");
 		js.pushIndentation(null);
 		int i = 0;
@@ -541,7 +542,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.appendDeclaration(cgParameter);
 			js.append(" = (");
 			js.appendTypeDeclaration(cgParameter);
-			js.append(")sourceAndArgumentValues[" + i++ + "];\n");
+			js.append(")");
+			js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
+			js.append("[" + i++ + "];\n");
 		}
 		appendReturn(body);
 		js.popIndentation();

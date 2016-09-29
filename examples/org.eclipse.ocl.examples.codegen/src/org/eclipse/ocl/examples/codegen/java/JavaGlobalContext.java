@@ -43,6 +43,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	protected final @NonNull String evaluateName;
 	protected final @NonNull String instanceName;
 	protected final @NonNull String selfName;
+	protected final @NonNull String sourceAndArgumentValuesName;
 
 	public JavaGlobalContext(@NonNull CG codeGenerator) {
 		super(codeGenerator);
@@ -51,6 +52,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		this.evaluateName = nameManager.reserveName(JavaConstants.EVALUATE_NAME, null);
 		this.instanceName = nameManager.reserveName(JavaConstants.INSTANCE_NAME, null);
 		this.selfName = nameManager.reserveName(PivotConstants.SELF_NAME, null);
+		this.sourceAndArgumentValuesName = nameManager.reserveName(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME, null);
 	}
 
 	protected void addGlobal(@NonNull CGValuedElement cgGlobal) {
@@ -132,6 +134,10 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 
 	public @NonNull String getSelfName() {
 		return selfName;
+	}
+
+	public @NonNull String getSourceAndArgumentValuesName() {
+		return sourceAndArgumentValuesName;
 	}
 
 	public @NonNull String getValueName(@NonNull CGValuedElement cgValuedElement) {

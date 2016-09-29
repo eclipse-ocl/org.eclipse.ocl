@@ -13,12 +13,15 @@ package org.eclipse.ocl.examples.autogen.java;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 
 public class AutoGlobalContext<@NonNull CG extends AutoCodeGenerator> extends JavaGlobalContext<CG> {
 
 	public AutoGlobalContext(CG codeGenerator, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		super(codeGenerator);
+		//		nameManager.reserveName(JavaConstants.EXECUTOR_NAME, null);
+		nameManager.reserveName(JavaConstants.EVALUATION_CACHE_NAME, null);
 	}
 
 	@Override

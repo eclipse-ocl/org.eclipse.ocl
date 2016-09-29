@@ -438,6 +438,9 @@ public class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	import org.eclipse.jdt.annotation.NonNull;
 	import org.eclipse.jdt.annotation.Nullable;
 	import org.eclipse.ocl.pivot.internal.evaluation.EvaluationCache;
+	«IF !isDerived»	
+	import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
+	«ENDIF»	
 	
 	import «baseLookupPackageName».LookupEnvironment;
 	import «visitablePackageName».«visitableClassName»;
@@ -453,7 +456,7 @@ public class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 		
 		protected «visitorName»(@NonNull LookupEnvironment context) {
 			super(context);
-			«IF !isDerived»this.evaluationCache = context.getEvaluationCache();«ENDIF»
+			«IF !isDerived»this.evaluationCache = ((ExecutorInternalExtension)context.getExecutor()).getEvaluationCache();«ENDIF»
 			«IF isDerived»this.delegate = createSuperLangVisitor();«ENDIF»
 		}
 		

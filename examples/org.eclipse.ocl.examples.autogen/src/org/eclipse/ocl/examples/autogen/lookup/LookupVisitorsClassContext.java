@@ -34,6 +34,17 @@ public class LookupVisitorsClassContext extends AutoGlobalContext<@NonNull Looku
 
 	public LookupVisitorsClassContext(@NonNull LookupVisitorsCodeGenerator codeGenerator, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		super(codeGenerator, asPackage);
+		nameManager.reserveName(CHILD_NAME, null);
+		//		nameManager.reserveName(CONTEXT_NAME, null);
+		nameManager.reserveName(ELEMENT_NAME, null);
+		nameManager.reserveName(UNQUALIFIED_ENV_NAME, null);
+		nameManager.reserveName(EXPORTED_ENV_NAME, null);
+		nameManager.reserveName(HAS_FINAL_RESULT_NAME, null);
+		nameManager.reserveName(INMPORTER_NAME, null);
+		nameManager.reserveName(NESTED_ENV_NAME, null);
+		nameManager.reserveName(PARENT_NAME, null);
+		nameManager.reserveName(PARENT_ENV_NAME, null);
+		nameManager.reserveName(QUALIFIED_ENV_NAME, null);
 	}
 
 }
