@@ -116,6 +116,13 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		evaluationEnvironment.add(referredVariable, value);
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	protected @NonNull EvaluationCache createEvaluationCache() {
+		return new EvaluationCache(this);
+	}
+
 	protected EvaluationVisitor.@NonNull EvaluationVisitorExtension createEvaluationVisitor() {
 		EvaluationVisitor.EvaluationVisitorExtension result = new BasicEvaluationVisitor(this);
 
@@ -193,10 +200,11 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public @Nullable Object getCachedEvaluationResult(LibraryOperation.@NonNull LibraryOperationExtension2 implementation,
 			@NonNull TypedElement caller, @Nullable Object @NonNull [] sourceAndArgumentValues) {
-		if (evaluationCache == null) {
-			evaluationCache = new EvaluationCache(this);
+		EvaluationCache evaluationCache2 = evaluationCache;
+		if (evaluationCache2 == null) {
+			evaluationCache2 = evaluationCache = createEvaluationCache();
 		}
-		return evaluationCache.getCachedEvaluationResult(implementation, caller, sourceAndArgumentValues);
+		return evaluationCache2.getCachedEvaluationResult(implementation, caller, sourceAndArgumentValues);
 	}
 
 	@Override
@@ -220,6 +228,18 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return environmentFactory;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull EvaluationCache getEvaluationCache() {
+		EvaluationCache evaluationCache2 = evaluationCache;
+		if (evaluationCache2 == null) {
+			evaluationCache2 = evaluationCache = createEvaluationCache();
+		}
+		return evaluationCache2;
 	}
 
 	@Override
