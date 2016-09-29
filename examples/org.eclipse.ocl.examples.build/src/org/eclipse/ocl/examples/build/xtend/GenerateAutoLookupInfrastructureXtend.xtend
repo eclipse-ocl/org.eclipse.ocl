@@ -437,6 +437,7 @@ public class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	«ePackage.generateHeaderWithTemplate(visitorPackageName)»
 	import org.eclipse.jdt.annotation.NonNull;
 	import org.eclipse.jdt.annotation.Nullable;
+	import org.eclipse.ocl.pivot.internal.evaluation.EvaluationCache;
 	
 	import «baseLookupPackageName».LookupEnvironment;
 	import «visitablePackageName».«visitableClassName»;
@@ -447,9 +448,12 @@ public class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	public abstract class «visitorName»
 		extends «superClassName»<@Nullable LookupEnvironment, @NonNull LookupEnvironment> {
 	
+		«IF !isDerived»protected final @NonNull EvaluationCache evaluationCache;«ENDIF»
 		«IF isDerived»private «superVisitorName» delegate;«ENDIF»
+		
 		protected «visitorName»(@NonNull LookupEnvironment context) {
 			super(context);
+			«IF !isDerived»this.evaluationCache = context.getEvaluationCache();«ENDIF»
 			«IF isDerived»this.delegate = createSuperLangVisitor();«ENDIF»
 		}
 		
