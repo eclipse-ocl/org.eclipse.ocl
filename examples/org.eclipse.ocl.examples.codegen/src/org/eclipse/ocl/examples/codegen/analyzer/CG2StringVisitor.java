@@ -60,9 +60,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSelfParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTextParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
@@ -714,6 +714,12 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 	}
 
 	@Override
+	public @Nullable String visitCGSelfParameter(@NonNull CGSelfParameter cgSelfParameter) {
+		append("this");
+		return null;
+	}
+
+	@Override
 	public @Nullable String visitCGShadowExp(@NonNull CGShadowExp cgShadowExp) {
 		appendName(((ShadowExp)cgShadowExp.getAst()).getType());
 		append("{");//$NON-NLS-1$
@@ -734,12 +740,6 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		appendName(((ShadowPart)cgShadowPart.getAst()).getReferredProperty());
 		append(" <- ");
 		safeVisit(cgShadowPart.getInit());
-		return null;
-	}
-
-	@Override
-	public @Nullable String visitCGTextParameter(@NonNull CGTextParameter cgTextParameter) {
-		append(cgTextParameter.getTextValue());
 		return null;
 	}
 

@@ -100,7 +100,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTextParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
@@ -686,13 +685,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	private EClass cgTextEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass cgTextParameterEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2675,26 +2667,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getCGTextParameter() {
-		return cgTextParameterEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getCGTextParameter_TextValue() {
-		return (EAttribute)cgTextParameterEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getCGThrowExp() {
 		return cgThrowExpEClass;
 	}
@@ -3368,9 +3340,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgTextEClass = createEClass(CG_TEXT);
 		createEAttribute(cgTextEClass, CG_TEXT__TEXT_VALUE);
 
-		cgTextParameterEClass = createEClass(CG_TEXT_PARAMETER);
-		createEAttribute(cgTextParameterEClass, CG_TEXT_PARAMETER__TEXT_VALUE);
-
 		cgThrowExpEClass = createEClass(CG_THROW_EXP);
 
 		cgTupleExpEClass = createEClass(CG_TUPLE_EXP);
@@ -3534,7 +3503,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgShadowPartEClass.getESuperTypes().add(this.getCGValuedElement());
 		cgStringEClass.getESuperTypes().add(this.getCGConstant());
 		cgTextEClass.getESuperTypes().add(this.getCGConstant());
-		cgTextParameterEClass.getESuperTypes().add(this.getCGParameter());
 		cgThrowExpEClass.getESuperTypes().add(this.getCGCallExp());
 		cgTupleExpEClass.getESuperTypes().add(this.getCGValuedElement());
 		cgTuplePartEClass.getESuperTypes().add(this.getCGValuedElement());
@@ -3798,9 +3766,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		initEClass(cgTextEClass, CGText.class, "CGText", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCGText_TextValue(), ecorePackage.getEString(), "textValue", null, 1, 1, CGText.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(cgTextParameterEClass, CGTextParameter.class, "CGTextParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCGTextParameter_TextValue(), ecorePackage.getEString(), "textValue", null, 1, 1, CGTextParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgThrowExpEClass, CGThrowExp.class, "CGThrowExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

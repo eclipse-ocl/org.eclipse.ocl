@@ -1019,19 +1019,6 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case CGModelPackage.CG_TEXT_PARAMETER: {
-				CGTextParameter cgTextParameter = (CGTextParameter)theEObject;
-				T result = caseCGTextParameter(cgTextParameter);
-				if (result == null) result = caseCGParameter(cgTextParameter);
-				if (result == null) result = caseCGVariable(cgTextParameter);
-				if (result == null) result = caseCGValuedElement(cgTextParameter);
-				if (result == null) result = caseCGTypedElement(cgTextParameter);
-				if (result == null) result = caseCGNamedElement(cgTextParameter);
-				if (result == null) result = caseCGElement(cgTextParameter);
-				if (result == null) result = caseNameable(cgTextParameter);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case CGModelPackage.CG_THROW_EXP: {
 				CGThrowExp cgThrowExp = (CGThrowExp)theEObject;
 				T result = caseCGThrowExp(cgThrowExp);
@@ -2361,21 +2348,6 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCGText(CGText object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>CG Text Parameter</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>CG Text Parameter</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCGTextParameter(CGTextParameter object) {
 		return null;
 	}
 

@@ -88,7 +88,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGText;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTextParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
@@ -2593,17 +2592,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" = ");
 		js.append(cgText.getTextValue());
 		js.append(";\n");
-		return true;
-	}
-
-	@Override
-	public @NonNull Boolean visitCGTextParameter(@NonNull CGTextParameter cgTextParameter) {
-		String name = cgTextParameter.getTextValue();
-		if ((localPrefix != null) && "this".equals(name)) {
-			js.append(localPrefix);
-			js.append(".");
-		}
-		js.append(name);
 		return true;
 	}
 

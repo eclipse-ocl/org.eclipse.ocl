@@ -391,10 +391,6 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGTextAdapter();
 			}
 			@Override
-			public Adapter caseCGTextParameter(CGTextParameter object) {
-				return createCGTextParameterAdapter();
-			}
-			@Override
 			public Adapter caseCGThrowExp(CGThrowExp object) {
 				return createCGThrowExpAdapter();
 			}
@@ -1569,20 +1565,6 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGTextAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGTextParameter <em>CG Text Parameter</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGTextParameter
-	 * @generated
-	 */
-	public Adapter createCGTextParameterAdapter() {
 		return null;
 	}
 

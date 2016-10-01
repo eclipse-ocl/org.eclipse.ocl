@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -615,15 +615,6 @@ public interface CGModelFactory extends EFactory {
 	 * @generated
 	 */
 	@NonNull CGText createCGText();
-
-	/**
-	 * Returns a new object of class '<em>CG Text Parameter</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CG Text Parameter</em>'.
-	 * @generated
-	 */
-	@NonNull CGTextParameter createCGTextParameter();
 
 	/**
 	 * Returns a new object of class '<em>CG Throw Exp</em>'.

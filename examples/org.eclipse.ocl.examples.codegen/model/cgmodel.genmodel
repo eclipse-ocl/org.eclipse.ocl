@@ -263,9 +263,6 @@
     <genClasses ecoreClass="cgmodel.ecore#//CGText">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGText/textValue"/>
     </genClasses>
-    <genClasses ecoreClass="cgmodel.ecore#//CGTextParameter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGTextParameter/textValue"/>
-    </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGThrowExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGTupleExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGTupleExp/parts"/>
