@@ -172,11 +172,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	 */
 	protected JavaLocalContext<@NonNull ?> localContext;
 
-	/**
-	 * Scoping prefix for "this"
-	 */
-	protected @Nullable String localPrefix = null;
-
 	public CG2JavaVisitor(@NonNull CG codeGenerator) {
 		super(codeGenerator);
 		this.globalContext = codeGenerator.getGlobalContext();
@@ -391,21 +386,13 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.append(") {\n");
 		js.pushIndentation(null);
-		String savedLocalPrefix = localPrefix;
 		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
 		try {
-			CGClass cgClass = CGUtil.getContainingClass(cgIterationCallExp);
-			Element ast = cgClass != null ? cgClass.getAst() : null;
-			EObject eObject = ast != null ? ast.getESObject() : null;
-			if (eObject instanceof EClassifier) {
-				localPrefix = genModelHelper.getImplementationClassName((EClassifier)eObject);
-			}
 			localContext = globalContext.getLocalContext(cgIterationCallExp);
 			appendReturn(body);
 		}
 		finally {
 			localContext = savedLocalContext;
-			localPrefix = savedLocalPrefix;
 		}
 		js.popIndentation();
 		js.append("}\n");
