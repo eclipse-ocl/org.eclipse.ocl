@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
@@ -23,9 +24,11 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.EvaluationCache;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal.ExecutorInternalExtension;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * LookupCG2JavaVisitor refines the regular generation of Java code from an optimized Auto CG transformation tree
@@ -50,6 +53,48 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor<@NonNull Look
 		js.append(" "+JavaConstants.EVALUATION_CACHE_NAME);
 		js.append(";\n");
 		return super.doClassFields(cgClass, false);
+	}
+
+	@Override
+	protected void doMoreClassMethods(@NonNull CGClass cgClass) {
+		for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {
+			if (cgOperation instanceof CGCachedOperation) {
+				Operation asOperation = ClassUtil.nonNullState((Operation) cgOperation.getAst());
+				Iterable<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
+				Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
+				js.append("\n");
+				js.append("@Override\n");
+				js.append("protected ");
+				js.appendClassReference(isRequiredReturn, cgOperation);
+				js.append(" ");
+				js.append(ClassUtil.nonNullState(asOperation.getName()));
+				js.append("(");
+				boolean isFirst = true;
+				for (@NonNull CGParameter cgParameter : cgParameters) {
+					if (!isFirst) {
+						js.append(", ");
+					}
+					js.appendDeclaration(cgParameter);
+					isFirst = false;
+				}
+				js.append(") {\n");
+				js.pushIndentation(null);
+				js.append("return ");
+				js.append(getNativeOperationInstanceName(asOperation));
+				js.append(".evaluate(");
+				isFirst = true;
+				for (@NonNull CGParameter cgParameter : cgParameters) {
+					if (!isFirst) {
+						js.append(", ");
+					}
+					js.appendReferenceTo(cgParameter);
+					isFirst = false;
+				}
+				js.append(");\n");
+				js.popIndentation();
+				js.append("}\n");
+			}
+		}
 	}
 
 	@Override

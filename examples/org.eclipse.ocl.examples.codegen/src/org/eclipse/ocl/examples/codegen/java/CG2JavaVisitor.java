@@ -2295,7 +2295,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return true;
 	}
 
-	@Override		// FIXME revert to the pre-cached code
+	@Override
 	public @NonNull Boolean visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgOperationCallExp) {
 		Operation pOperation = cgOperationCallExp.getReferredOperation();
 		boolean thisIsSelf = cgOperationCallExp.isThisIsSelf();
@@ -2326,9 +2326,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 			js.append("this");
 		} */
-		js.append(getNativeOperationInstanceName(pOperation));
-		js.append(".evaluate");
-		//		js.append(cgOperationCallExp.getReferredOperation().getName());
+		js.appendThis(ClassUtil.nonNullState(cgOperationCallExp.getReferredOperation().getOwningClass().getName()));
+		js.append(".");
+		js.append(cgOperationCallExp.getReferredOperation().getName());
 		js.append("(");
 		if (!thisIsSelf) {
 			js.appendValueName(source);
