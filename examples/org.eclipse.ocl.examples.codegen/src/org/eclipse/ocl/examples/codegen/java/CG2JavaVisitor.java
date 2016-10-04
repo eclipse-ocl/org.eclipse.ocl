@@ -352,9 +352,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendClassReference(operationClass);
 		js.append(" " + bodyName + " = new ");
 		js.appendClassReference(operationClass);
-		js.append("()\n");
-		js.append("{\n");
-		js.pushIndentation(null);
+		js.append("()");
+		js.pushClassBody(String.valueOf(operationClass));
 		js.appendCommentWithOCL(null, body.getAst());
 		js.append("@Override\n");
 		js.append("public ");
@@ -410,8 +409,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.popIndentation();
 		js.append("}\n");
-		js.popIndentation();
-		js.append("};\n");
+		js.popClassBody(true);
 		//
 		//	Dispatch: Create execution manager
 		//
@@ -1003,19 +1001,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			localContext = localContext2;
 			boolean isVirtualDispatcher = isVirtualDispatcher(cgOperation);
 			try {
+				String operationClassName = getNativeOperationClassName(cgOperation);
 				if (isVirtualDispatcher) {
 					js.append("protected class ");
-					js.append(getNativeOperationClassName(cgOperation));
+					js.append(operationClassName);
 					js.append(" extends ");
 					js.appendClassReference(AbstractDispatchOperation.class);
-					js.append("\n");
-					js.append("{\n");
-					js.pushIndentation(null);
+					js.pushClassBody(operationClassName);
 					doCachedOperationDispatchInstaller(cgOperation);
 					js.append("\n");
 					doCachedOperationEvaluate(cgOperation);
-					js.popIndentation();
-					js.append("}\n");
+					js.popClassBody(false);
 					//
 					js.append("\n");
 					doCachedOperationClassInstance(cgOperation);
@@ -1026,17 +1022,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 					js.appendCommentWithOCL(title+"\n", expressionInOCL);
 					//
 					js.append("protected class ");
-					js.append(getNativeOperationClassName(cgOperation));
+					js.append(operationClassName);
 					js.append(" extends ");
 					js.appendClassReference(AbstractEvaluationOperation.class);
-					js.append("\n");
-					js.append("{\n");
-					js.pushIndentation(null);
+					js.pushClassBody(operationClassName);
 					doCachedOperationBasicEvaluate(cgOperation);
 					js.append("\n");
 					doCachedOperationEvaluate(cgOperation);
-					js.popIndentation();
-					js.append("}\n");
+					js.popClassBody(false);
 					//
 					if (cgOperation.getVirtualOperation() == null) {
 						js.append("\n");
@@ -2060,13 +2053,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			try {
 				List<CGParameter> cgParameters = cgOperation.getParameters();
 				String operationName = cgOperation.getName();
+				assert operationName != null;
 				js.append("public static class ");
 				js.append(operationName);
 				js.append(" extends ");
 				js.appendClassReference(genModelHelper.getAbstractOperationClass(cgParameters.size()-3)); // executor, typeId, self
-				js.append("\n");
-				js.append("{\n");
-				js.pushIndentation(null);
+				js.pushClassBody(operationName);
 				js.append("public static final ");
 				js.appendIsRequired(true);
 				js.append(" ");
@@ -2113,8 +2105,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				appendReturn(body);
 				js.popIndentation();
 				js.append("}\n");
-				js.popIndentation();
-				js.append("}\n");
+				js.popClassBody(false);
 			}
 			finally {
 				localContext = null;
@@ -2280,22 +2271,20 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (localContext2 != null) {
 			localContext = localContext2;
 			try {
+				String operationClassName = getNativeOperationClassName(cgOperation);
 				LanguageExpression expressionInOCL = asOperation.getBodyExpression();
 				String title = PrettyPrinter.printName(asOperation);
 				js.appendCommentWithOCL(title+"\n", expressionInOCL);
 				//
 				js.append("protected class ");
-				js.append(getNativeOperationClassName(cgOperation));
+				js.append(operationClassName);
 				js.append(" extends ");
 				js.appendClassReference(AbstractEvaluationOperation.class);
-				js.append("\n");
-				js.append("{\n");
-				js.pushIndentation(null);
+				js.pushClassBody(operationClassName);
 				doCachedOperationBasicEvaluate(cgOperation);
 				js.append("\n");
 				doCachedOperationEvaluate(cgOperation);
-				js.popIndentation();
-				js.append("}\n");
+				js.popClassBody(false);
 				//
 				js.append("\n");
 				doCachedOperationClassInstance(cgOperation);

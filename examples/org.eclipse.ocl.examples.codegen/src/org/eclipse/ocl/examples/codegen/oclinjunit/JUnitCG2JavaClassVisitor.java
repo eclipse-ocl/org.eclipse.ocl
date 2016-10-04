@@ -47,12 +47,11 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 		String title = cgClass.getName() + " provides the Java implementation for\n";
 		js.appendCommentWithOCL(title, expInOcl);
 		String className = cgClass.getName();
+		assert className != null;
 		js.append("@SuppressWarnings(\"nls\")\n");
 		js.append("public class " + className + " extends ");
 		js.appendClassReference(baseClass);
-		js.append("\n");
-		js.append("{\n");
-		js.pushIndentation(null);
+		js.pushClassBody(className);
 		if (sortedGlobals != null) {
 			generateGlobals(sortedGlobals);
 		}
@@ -67,8 +66,8 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 			js.append("«IF expInOcl.messageExpression != null»«(expInOcl.messageExpression as StringLiteralExp).stringSymbol»«ENDIF»\n");
 			js.append("*/\n");
 		}
-		js.popIndentation();
-		js.append("}\n");
+		js.popClassBody(false);
+		assert js.peekClassNameStack() == null;
 		return true;
 	}
 }

@@ -60,7 +60,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGSelfParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
@@ -713,11 +712,11 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		return null;
 	}
 
-	@Override
-	public @Nullable String visitCGSelfParameter(@NonNull CGSelfParameter cgSelfParameter) {
-		append("this");
-		return null;
-	}
+	//	@Override
+	//	public @Nullable String visitCGSelfParameter(@NonNull CGSelfParameter cgSelfParameter) {
+	//		append("this");
+	//		return null;
+	//	}
 
 	@Override
 	public @Nullable String visitCGShadowExp(@NonNull CGShadowExp cgShadowExp) {

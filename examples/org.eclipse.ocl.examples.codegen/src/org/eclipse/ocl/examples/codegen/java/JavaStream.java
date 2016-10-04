@@ -136,8 +136,9 @@ public class JavaStream
 	protected final boolean suppressNullWarnings;
 
 	private @NonNull StringBuilder s = new StringBuilder();
-	private @NonNull Stack<String> indentationStack = new Stack<String>();
+	private @NonNull Stack<@NonNull String> indentationStack = new Stack<>();
 	private @NonNull String defaultIndentationString = "    ";
+	private @NonNull Stack<@NonNull String> classNameStack = new Stack<>();
 
 	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor<@NonNull ?> cg2java) {
 		this.codeGenerator = codeGenerator;
@@ -885,6 +886,15 @@ public class JavaStream
 		append("\"");
 	}
 
+	public void appendThis(@NonNull String className) {
+		String currentClassName = classNameStack.peek();
+		if (!className.equals(currentClassName)) {
+			append(className);
+			append(".");
+		}
+		append("this");
+	}
+
 	public boolean appendThrowBooleanInvalidValueException(/*@NonNull*/ String message, @NonNull String... arguments) {
 		appendClassReference(ValueUtil.class);
 		append(".throwBooleanInvalidValueException(");
@@ -1052,8 +1062,29 @@ public class JavaStream
 		return s.length();
 	}
 
+	public @Nullable String peekClassNameStack() {
+		return classNameStack.isEmpty() ? null : classNameStack.peek();
+	}
+
+	public void popClassBody(boolean isAnonymous) {
+		popIndentation();
+		append("}");
+		if (isAnonymous) {
+			append(";");
+		}
+		append("\n");
+		classNameStack.pop();
+	}
+
 	public void popIndentation() {
 		indentationStack.pop();
+	}
+
+	public void pushClassBody(@NonNull String className) {
+		classNameStack.push(className);
+		append("\n");
+		append("{\n");
+		pushIndentation(null);
 	}
 
 	public void pushIndentation(@Nullable String extraIndentation) {
