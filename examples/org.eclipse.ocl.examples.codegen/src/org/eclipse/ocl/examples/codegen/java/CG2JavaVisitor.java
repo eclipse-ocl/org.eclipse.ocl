@@ -499,7 +499,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	}
 
 	protected void doCachedOperationBasicEvaluate(@NonNull CGOperation cgOperation) {
-		String nativeOperationClassName = getNativeOperationClassName(cgOperation);
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		CGValuedElement body = getExpression(cgOperation.getBody());
 		js.append("@Override\n");
@@ -786,6 +785,16 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	protected @NonNull String getSymbolName(@Nullable Object anObject, @Nullable String... nameHints) {
 		return localContext.getNameManagerContext().getSymbolName(anObject, nameHints);
+	}
+
+	protected @NonNull String getThisName(@NonNull CGElement cgElement) {
+		for (EObject eObject = cgElement; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof CGClass) {
+				return ClassUtil.nonNullState(((CGClass)eObject).getName());
+			}
+		}
+		assert false;
+		return "";
 	}
 
 	protected String getValueName(@NonNull CGValuedElement cgElement) {

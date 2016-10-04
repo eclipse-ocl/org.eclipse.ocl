@@ -980,6 +980,9 @@ public class JavaStream
 		//			for (CGValuedElement cgNext; (cgNext = cgValue.getReferredValuedElement()) != cgValue; cgValue = cgNext) {}
 		//			cgValue.accept(cg2java);
 		//		}
+		else if ("this".equals(cgElement.toString())) {		// FIXME use a CGThisVariable that is inlined
+			appendThis(cg2java.getThisName(cgElement));
+		}
 		else {
 			if (cgElement.isGlobal()) {
 				cg2java.appendGlobalPrefix();

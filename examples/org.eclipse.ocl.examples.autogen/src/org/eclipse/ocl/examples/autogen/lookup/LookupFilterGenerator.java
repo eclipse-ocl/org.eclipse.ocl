@@ -149,7 +149,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		LetExp letRoot = null;
 		LetExp letLeaf = null;
 		for (Variable paramVar : oldExpressionInOCL.getOwnedParameters()) {
-			String paramName = nameManager.reserveName(paramVar.getName(), paramVar);
+			String paramName = paramVar.getName();
 			Type paramType = paramVar.getType();
 			assert (paramName != null) && (paramType != null);
 			Property asProperty = createNativeProperty(paramName, paramType, true, true);

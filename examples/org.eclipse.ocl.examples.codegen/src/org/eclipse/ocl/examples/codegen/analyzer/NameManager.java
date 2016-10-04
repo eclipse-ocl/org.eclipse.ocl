@@ -549,6 +549,9 @@ public class NameManager
 									install(validHint, anObject);
 									return validHint;
 								}
+								else {
+									nameHint.toString();
+								}
 							}
 							else {
 								if (!name2object.containsKey(validHint)) {
