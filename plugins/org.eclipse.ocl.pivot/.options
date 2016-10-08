@@ -31,7 +31,7 @@ org.eclipse.ocl.pivot/completeClasses=false
 org.eclipse.ocl.pivot/evaluations=false
 
 # Trace maintenance of CompletePackages 
-org.eclipse.ocl.pivotcompletePackages=false
+org.eclipse.ocl.pivot/completePackages=false
 
 # Trace maintenance of PartialClasses 
 org.eclipse.ocl.pivot/partialClasses=false
@@ -53,12 +53,6 @@ org.eclipse.ocl.pivot/partialModels=false
 
 # Trace maintenance of PartialPackages 
 org.eclipse.ocl.pivot/partialPackages=false
-
-# Trace transformation exceptions 
-org.eclipse.ocl.pivot/tx.exceptions=false
-
-# Trace transformation invocations 
-org.eclipse.ocl.pivot/tx.invocations=false
 
 # Trace validation of InstanceSpecifications 
 org.eclipse.ocl.pivot/validate/instance=false
