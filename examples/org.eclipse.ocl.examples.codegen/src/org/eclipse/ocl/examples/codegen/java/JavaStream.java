@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.TypeVariable;
 import java.util.List;
 import java.util.Stack;
@@ -504,7 +505,11 @@ public class JavaStream
 				append(resolvedClassName);
 			}
 			else {
-				String annotation = "@" +  (isRequired ? NonNull.class : Nullable.class).getName() + " ";
+				Class<? extends Annotation> annotationClass = isRequired ? NonNull.class : Nullable.class;
+				String annotationClassName = annotationClass.getName();
+				assert annotationClassName != null;
+				cg2java.addImport(annotationClassName);
+				String annotation = "@" + annotationClass.getName() + " ";
 				int index = resolvedClassName.lastIndexOf(".");
 				if (index < 0) {
 					append(annotation + resolvedClassName);
