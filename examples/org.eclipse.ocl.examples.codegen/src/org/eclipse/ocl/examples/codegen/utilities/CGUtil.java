@@ -46,9 +46,25 @@ public class CGUtil
 	public static @NonNull String compressJDTannotations(@NonNull String classFileContent) {
 		final String ORG_ECLIPSE_JDT_ANNOTATION = org.eclipse.jdt.annotation.NonNull.class.getPackage().getName();
 		final String AT_ORG_ECLIPSE_JDT_ANNOTATION_DOT = "@" + ORG_ECLIPSE_JDT_ANNOTATION + ".";
+		Set<@NonNull String> reservedNames = new HashSet<>();
+		reservedNames.add("Byte");
+		reservedNames.add("Character");
+		reservedNames.add("Class");
+		reservedNames.add("Double");
+		reservedNames.add("Enum");
+		reservedNames.add("Error");
+		reservedNames.add("Exception");
+		reservedNames.add("Float");
+		reservedNames.add("Integer");
+		reservedNames.add("Long");
+		reservedNames.add("Math");
+		reservedNames.add("Object");
+		reservedNames.add("Package");
+		reservedNames.add("Process");
+		reservedNames.add("Short");
+		reservedNames.add("String");
 		try {
 			Set<@NonNull String> longImports = new HashSet<>();
-			//			Map<@NonNull String, @NonNull String> shortImports = new HashMap<>();
 			BufferedReader reader = new BufferedReader(new StringReader(classFileContent));
 			StringBuilder s = new StringBuilder();
 			for (String line; (line = reader.readLine()) != null; ) {
@@ -56,11 +72,13 @@ public class CGUtil
 					int index = line.indexOf(";");
 					if (index > 0) {
 						String longImport = line.substring(7, index).trim();
-						longImports.add(longImport);
 						int lastIndex = longImport.lastIndexOf(".");
 						if (lastIndex > 0) {
 							String shortImport = longImport.substring(lastIndex+1);
 							assert shortImport != null;
+							if (!reservedNames.contains(shortImport)) {
+								longImports.add(longImport);
+							}
 							//							String oldLongImport = shortImports.put(shortImport, longImport);
 							//							if (oldLongImport != null) {
 							//								shortImports.put(shortImport, shortImport);
@@ -112,13 +130,10 @@ public class CGUtil
 					if (longImports.contains(importName) || importName.startsWith("java.lang.")) {
 						line = line.substring(0, prefixIndex) + "@" + line.substring(annotationStart, line.length());
 					}
-					else {//if (!prefixName.equals(shortImports.get(prefixName))) {
+					else {
 						line = line.substring(0, prefixEnd) + "@" + line.substring(annotationStart, line.length());
 						break;
 					}
-					//					else {
-					//						break;
-					//					}
 				}
 				s.append(line);
 				s.append("\n");
