@@ -1181,8 +1181,9 @@ public abstract class UML2AS extends AbstractExternal2AS
 						}
 					}
 				}
+				pivotElement.setBody(umlBody);
+				break;
 			}
-			pivotElement.setBody(umlBody);
 		}
 		copyNamedElement(pivotElement, umlExpression);
 		return pivotElement;
