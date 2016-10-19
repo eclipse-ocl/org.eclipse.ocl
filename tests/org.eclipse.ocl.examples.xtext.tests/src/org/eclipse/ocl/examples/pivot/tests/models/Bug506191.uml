@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_1rkn0JU2EeamVLgE08A0wA" name="RootElement">
+  <packagedElement xmi:type="uml:Class" xmi:id="_2uVFUJU2EeamVLgE08A0wA" name="Test">
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_BDrIgJU3EeamVLgE08A0wA" name="Working-Single-Language">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_PpQ44JU3EeamVLgE08A0wA">
+        <language>OCL</language>
+        <body>self.name->includes('toto')</body>
+      </specification>
+    </ownedRule>
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_QV-N4JU3EeamVLgE08A0wA" name="Not-Working-Multi-Language">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_ad5gIJU3EeamVLgE08A0wA">
+        <language>OCL</language>
+        <language>Other</language>
+        <body>self.name->includes('toto')</body>
+        <body>This is not OCL should be ignored</body>
+      </specification>
+    </ownedRule>
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_pJeyQJXQEeaMubR7Ni7AWA" name="Working-Multi-Language-Order-Matters">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_sq9U8JXQEeaMubR7Ni7AWA">
+        <language>Other</language>
+        <language>OCL</language>
+        <body>This is not OCL should be ignored</body>
+        <body>self.name->includes('toto')</body>
+      </specification>
+    </ownedRule>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_312uEJU2EeamVLgE08A0wA" name="name" visibility="public">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__H1t8JU2EeamVLgE08A0wA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__H-34JU2EeamVLgE08A0wA" value="*"/>
+    </ownedAttribute>
+  </packagedElement>
+</uml:Model>
