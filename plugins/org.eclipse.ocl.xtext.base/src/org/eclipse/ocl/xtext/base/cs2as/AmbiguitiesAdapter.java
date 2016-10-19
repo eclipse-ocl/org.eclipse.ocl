@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Property;
 
 public class AmbiguitiesAdapter extends ExceptionAdapter
 {
@@ -63,6 +64,13 @@ public class AmbiguitiesAdapter extends ExceptionAdapter
 			s.append(eObject.eClass().getName());
 			s.append(" : ");
 			s.append(eObject);
+			if (eObject instanceof Property) {
+				Property asOpposite = ((Property)eObject).getOpposite();
+				if (asOpposite != null) {
+					s.append(" # ");
+					s.append(asOpposite);
+				}
+			}
 		}
 		return s.toString();
 	}
