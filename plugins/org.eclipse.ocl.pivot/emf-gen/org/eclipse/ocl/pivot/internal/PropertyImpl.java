@@ -1002,28 +1002,28 @@ public class PropertyImpl
 		final /*@NonInvalid*/ java.lang.@Nullable Object container = ClassifierOclContainerOperation.INSTANCE.evaluate(executor, this);
 		/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 		try {
-		    final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-		    final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, TYP_Class_0).booleanValue();
-		    CAUGHT_oclIsKindOf = oclIsKindOf;
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, TYP_Class_0).booleanValue();
+			CAUGHT_oclIsKindOf = oclIsKindOf;
 		}
 		catch (Exception e) {
-		    CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
+			CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 		}
 		/*@Caught*/ @NonNull Object CAUGHT_includes;
 		try {
-		    final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_1 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-		    final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class_1));
-		    final /*@Thrown*/ java.util.@NonNull List<Property> ownedProperties = oclAsType.getOwnedProperties();
-		    final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Property, ownedProperties);
-		    final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_ownedProperties, this).booleanValue();
-		    CAUGHT_includes = includes;
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_1 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+			final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class_1));
+			final /*@Thrown*/ java.util.@NonNull List<Property> ownedProperties = oclAsType.getOwnedProperties();
+			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Property, ownedProperties);
+			final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_ownedProperties, this).booleanValue();
+			CAUGHT_includes = includes;
 		}
 		catch (Exception e) {
-		    CAUGHT_includes = ValueUtil.createInvalidValue(e);
+			CAUGHT_includes = ValueUtil.createInvalidValue(e);
 		}
 		final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf, CAUGHT_includes);
 		if (and == null) {
-		    throw new InvalidValueException("Null body for \'pivot::Property::isAttribute(Property[1]) : Boolean[1]\'");
+			throw new InvalidValueException("Null body for \'pivot::Property::isAttribute(Property[1]) : Boolean[1]\'");
 		}
 		return and;
 	}
@@ -1058,57 +1058,57 @@ public class PropertyImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @Nullable Object CAUGHT_and;
-		        try {
-		            /*@Caught*/ @NonNull Object CAUGHT_ne;
-		            try {
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
-		                final /*@Thrown*/ boolean ne = ownedExpression != null;
-		                CAUGHT_ne = ne;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_ne = ValueUtil.createInvalidValue(e);
-		            }
-		            /*@Caught*/ @NonNull Object CAUGHT_ne_0;
-		            try {
-		                final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull ExpressionInOCL oclAsType = ClassUtil.nonNullState((ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression_0, TYP_ExpressionInOCL_0));
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
-		                final /*@Thrown*/ boolean ne_0 = ownedBody != null;
-		                CAUGHT_ne_0 = ne_0;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_ne_0 = ValueUtil.createInvalidValue(e);
-		            }
-		            final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, CAUGHT_ne_0);
-		            CAUGHT_and = and;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_and = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
-		        try {
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression_1 = this.getOwnedExpression();
-		            final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression_1);
-		            CAUGHT_CompatibleBody = CompatibleBody;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_CompatibleBody);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_Property_c_c_CompatibleDefaultExpression, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @Nullable Object CAUGHT_and;
+				try {
+					/*@Caught*/ @NonNull Object CAUGHT_ne;
+					try {
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
+						final /*@Thrown*/ boolean ne = ownedExpression != null;
+						CAUGHT_ne = ne;
+					}
+					catch (Exception e) {
+						CAUGHT_ne = ValueUtil.createInvalidValue(e);
+					}
+					/*@Caught*/ @NonNull Object CAUGHT_ne_0;
+					try {
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull ExpressionInOCL oclAsType = ClassUtil.nonNullState((ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression_0, TYP_ExpressionInOCL_0));
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
+						final /*@Thrown*/ boolean ne_0 = ownedBody != null;
+						CAUGHT_ne_0 = ne_0;
+					}
+					catch (Exception e) {
+						CAUGHT_ne_0 = ValueUtil.createInvalidValue(e);
+					}
+					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, CAUGHT_ne_0);
+					CAUGHT_and = and;
+				}
+				catch (Exception e) {
+					CAUGHT_and = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
+				try {
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression_1 = this.getOwnedExpression();
+					final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression_1);
+					CAUGHT_CompatibleBody = CompatibleBody;
+				}
+				catch (Exception e) {
+					CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_CompatibleBody);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_Property_c_c_CompatibleDefaultExpression, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}

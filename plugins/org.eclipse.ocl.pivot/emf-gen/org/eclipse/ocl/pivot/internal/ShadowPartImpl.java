@@ -172,38 +172,38 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_1;
 		if (le) {
-		    symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
-		    try {
-		        @SuppressWarnings("null")
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedInit = this.getOwnedInit();
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedInit.getType();
-		        /*@Caught*/ @Nullable Object CAUGHT_type;
-		        try {
-		            CAUGHT_type = type;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_type = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_type == null;
-		        /*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
-		        if (symbol_0 == Boolean.TRUE) {
-		            safe_conformsTo_source = null;
-		        }
-		        else {
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
-		            final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-		            safe_conformsTo_source = conformsTo;
-		        }
-		        CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_safe_conformsTo_source = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowPart_c_c_CompatibleInitialiserType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_safe_conformsTo_source, PivotTables.INT_0).booleanValue();
-		    symbol_1 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
+			try {
+				@SuppressWarnings("null")
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedInit = this.getOwnedInit();
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedInit.getType();
+				/*@Caught*/ @Nullable Object CAUGHT_type;
+				try {
+					CAUGHT_type = type;
+				}
+				catch (Exception e) {
+					CAUGHT_type = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_type == null;
+				/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
+				if (symbol_0 == Boolean.TRUE) {
+					safe_conformsTo_source = null;
+				}
+				else {
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
+					final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+					safe_conformsTo_source = conformsTo;
+				}
+				CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
+			}
+			catch (Exception e) {
+				CAUGHT_safe_conformsTo_source = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowPart_c_c_CompatibleInitialiserType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_safe_conformsTo_source, PivotTables.INT_0).booleanValue();
+			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
 	}
@@ -235,21 +235,21 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @NonNull Object CAUGHT_status;
-		    try {
-		        final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-		        final /*@Thrown*/ boolean status = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowPart_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@Thrown*/ boolean status = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowPart_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}

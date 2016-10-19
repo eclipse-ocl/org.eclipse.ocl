@@ -221,23 +221,23 @@ public class LetExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @NonNull Object CAUGHT_status;
-		    try {
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-		        @SuppressWarnings("null")
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedIn = this.getOwnedIn();
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedIn.getType();
-		        final /*@Thrown*/ boolean status = (type != null) && (type_0 != null) ? (type.getTypeId() == type_0.getTypeId()) : false;
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_LetExp_c_c_TypeIsInType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				@SuppressWarnings("null")
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedIn = this.getOwnedIn();
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedIn.getType();
+				final /*@Thrown*/ boolean status = (type != null) && (type_0 != null) ? (type.getTypeId() == type_0.getTypeId()) : false;
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_LetExp_c_c_TypeIsInType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}
@@ -269,21 +269,21 @@ public class LetExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @NonNull Object CAUGHT_status;
-		    try {
-		        final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-		        final /*@Thrown*/ boolean status = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_LetExp_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@Thrown*/ boolean status = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_LetExp_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}

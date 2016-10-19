@@ -1149,7 +1149,7 @@ implements PivotPackage  {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link PivotPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -1176,20 +1176,20 @@ implements PivotPackage  {
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put
-			(thePivotPackage, 
-			 new EValidator.Descriptor()
-			 {
+		(thePivotPackage,
+			new EValidator.Descriptor()
+		{
 			@Override
-				 public EValidator getEValidator()
-				 {
-					 return PivotValidator.INSTANCE;
-				 }
-			 });
+			public EValidator getEValidator()
+			{
+				return PivotValidator.INSTANCE;
+			}
+		});
 
 		// Mark meta-data to indicate it can't be changed
 		thePivotPackage.freeze();
 
-  
+
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(PivotPackage.eNS_URI, thePivotPackage);
 		return thePivotPackage;
@@ -8566,13 +8566,13 @@ implements PivotPackage  {
 	 */
 	protected void createASMetamodelAnnotations()
 	{
-		String source = "http://www.eclipse.org/OCL/ASMetamodel"; //$NON-NLS-1$	
+		String source = "http://www.eclipse.org/OCL/ASMetamodel"; //$NON-NLS-1$
 		addAnnotation
-		  (this, 
-		   source, 
-		   new String[] 
-		   {
-		   });
+		(this,
+			source,
+			new String[]
+					{
+					});
 	}
 
 	/**
@@ -8583,12 +8583,12 @@ implements PivotPackage  {
 	 */
 	protected void createEcoreAnnotations()
 	{
-		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$	
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation
-		  (this, 
-		   source, 
-		   new String[] 
-		   {
-		   });
+		(this,
+			source,
+			new String[]
+					{
+					});
 	}
 } //PivotPackageImpl

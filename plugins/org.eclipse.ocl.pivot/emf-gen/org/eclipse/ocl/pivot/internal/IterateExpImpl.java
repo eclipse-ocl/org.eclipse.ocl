@@ -501,38 +501,38 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_1;
 		if (le) {
-		    symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @NonNull Object CAUGHT_status;
-		    try {
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
-		        /*@Caught*/ @Nullable Object CAUGHT_ownedResult;
-		        try {
-		            CAUGHT_ownedResult = ownedResult;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_ownedResult = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedResult == null;
-		        /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
-		        if (symbol_0 == Boolean.TRUE) {
-		            safe_type_source = null;
-		        }
-		        else {
-		            assert ownedResult != null;
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedResult.getType();
-		            safe_type_source = type_0;
-		        }
-		        final /*@Thrown*/ boolean status = (type != null) && (safe_type_source != null) ? (type.getTypeId() == safe_type_source.getTypeId()) : false;
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_TypeIsResultType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_1 = logDiagnostic;
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
+				/*@Caught*/ @Nullable Object CAUGHT_ownedResult;
+				try {
+					CAUGHT_ownedResult = ownedResult;
+				}
+				catch (Exception e) {
+					CAUGHT_ownedResult = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedResult == null;
+				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
+				if (symbol_0 == Boolean.TRUE) {
+					safe_type_source = null;
+				}
+				else {
+					assert ownedResult != null;
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedResult.getType();
+					safe_type_source = type_0;
+				}
+				final /*@Thrown*/ boolean status = (type != null) && (safe_type_source != null) ? (type.getTypeId() == safe_type_source.getTypeId()) : false;
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_TypeIsResultType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
 	}
@@ -567,121 +567,121 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_1;
 		if (le) {
-		    symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @Nullable Object CAUGHT_and;
-		        try {
-		            /*@Caught*/ @Nullable Object CAUGHT_not;
-		            try {
-		                /*@Caught*/ @Nullable Object CAUGHT_isSafe;
-		                try {
-		                    final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-		                    CAUGHT_isSafe = isSafe;
-		                }
-		                catch (Exception e) {
-		                    CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-		                }
-		                final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isSafe);
-		                CAUGHT_not = not;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_not = ValueUtil.createInvalidValue(e);
-		            }
-		            /*@Caught*/ @NonNull Object CAUGHT_exists;
-		            try {
-		                final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-		                /*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.FALSE_VALUE;
-		                @NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-		                /*@Thrown*/ boolean exists;
-		                while (true) {
-		                    if (!ITERATOR__1.hasNext()) {
-		                        if (accumulator == ValueUtil.FALSE_VALUE) {
-		                            exists = ValueUtil.FALSE_VALUE;
-		                        }
-		                        else {
-		                            throw (InvalidValueException)accumulator;
-		                        }
-		                        break;
-		                    }
-		                    @SuppressWarnings("null")
-		                    /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Variable _1 = (Variable)ITERATOR__1.next();
-		                    /**
-		                     * isRequired
-		                     */
-		                    /*@Caught*/ @NonNull Object CAUGHT_isRequired;
-		                    try {
-		                        final /*@Thrown*/ boolean isRequired = _1.isIsRequired();
-		                        CAUGHT_isRequired = isRequired;
-		                    }
-		                    catch (Exception e) {
-		                        CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
-		                    }
-		                    //
-		                    if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {					// Normal successful body evaluation result
-		                        exists = ValueUtil.TRUE_VALUE;
-		                        break;														// Stop immediately 
-		                    }
-		                    else if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
-		                        ;															// Carry on
-		                    }
-		                    else if (CAUGHT_isRequired instanceof InvalidValueException) {		// Abnormal exception evaluation result
-		                        accumulator = CAUGHT_isRequired;									// Cache an exception failure
-		                    }
-		                    else {															// Impossible badly typed result
-		                        accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "exists");
-		                    }
-		                }
-		                CAUGHT_exists = exists;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_exists = ValueUtil.createInvalidValue(e);
-		            }
-		            final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_not, CAUGHT_exists);
-		            CAUGHT_and = and;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_and = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @NonNull Object CAUGHT_isNullFree;
-		        try {
-		            final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-		            /*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-		            try {
-		                CAUGHT_ownedSource = ownedSource;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-		            }
-		            final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource == null;
-		            /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
-		            if (symbol_0 == Boolean.TRUE) {
-		                safe_type_source = null;
-		            }
-		            else {
-		                assert ownedSource != null;
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
-		                safe_type_source = type;
-		            }
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType_0));
-		            final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
-		            CAUGHT_isNullFree = isNullFree;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_isNullFree);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_UnsafeSourceCanNotBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_1 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @Nullable Object CAUGHT_and;
+				try {
+					/*@Caught*/ @Nullable Object CAUGHT_not;
+					try {
+						/*@Caught*/ @Nullable Object CAUGHT_isSafe;
+						try {
+							final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+							CAUGHT_isSafe = isSafe;
+						}
+						catch (Exception e) {
+							CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
+						}
+						final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isSafe);
+						CAUGHT_not = not;
+					}
+					catch (Exception e) {
+						CAUGHT_not = ValueUtil.createInvalidValue(e);
+					}
+					/*@Caught*/ @NonNull Object CAUGHT_exists;
+					try {
+						final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+						final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+						/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.FALSE_VALUE;
+						@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+						/*@Thrown*/ boolean exists;
+						while (true) {
+							if (!ITERATOR__1.hasNext()) {
+								if (accumulator == ValueUtil.FALSE_VALUE) {
+									exists = ValueUtil.FALSE_VALUE;
+								}
+								else {
+									throw (InvalidValueException)accumulator;
+								}
+								break;
+							}
+							@SuppressWarnings("null")
+							/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Variable _1 = (Variable)ITERATOR__1.next();
+							/**
+							 * isRequired
+							 */
+							/*@Caught*/ @NonNull Object CAUGHT_isRequired;
+							try {
+								final /*@Thrown*/ boolean isRequired = _1.isIsRequired();
+								CAUGHT_isRequired = isRequired;
+							}
+							catch (Exception e) {
+								CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
+							}
+							//
+							if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {					// Normal successful body evaluation result
+								exists = ValueUtil.TRUE_VALUE;
+								break;														// Stop immediately 
+							}
+							else if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
+								;															// Carry on
+							}
+							else if (CAUGHT_isRequired instanceof InvalidValueException) {		// Abnormal exception evaluation result
+								accumulator = CAUGHT_isRequired;									// Cache an exception failure
+							}
+							else {															// Impossible badly typed result
+								accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "exists");
+							}
+						}
+						CAUGHT_exists = exists;
+					}
+					catch (Exception e) {
+						CAUGHT_exists = ValueUtil.createInvalidValue(e);
+					}
+					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_not, CAUGHT_exists);
+					CAUGHT_and = and;
+				}
+				catch (Exception e) {
+					CAUGHT_and = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
+				try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+					/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
+					try {
+						CAUGHT_ownedSource = ownedSource;
+					}
+					catch (Exception e) {
+						CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
+					}
+					final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource == null;
+					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
+					if (symbol_0 == Boolean.TRUE) {
+						safe_type_source = null;
+					}
+					else {
+						assert ownedSource != null;
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
+						safe_type_source = type;
+					}
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType_0));
+					final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
+					CAUGHT_isNullFree = isNullFree;
+				}
+				catch (Exception e) {
+					CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_isNullFree);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_UnsafeSourceCanNotBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
 	}
@@ -714,40 +714,40 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_1;
 		if (le) {
-		    symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @NonNull Object CAUGHT_status;
-		    try {
-		        @SuppressWarnings("null")
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedBody = this.getOwnedBody();
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedBody.getType();
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
-		        /*@Caught*/ @Nullable Object CAUGHT_ownedResult;
-		        try {
-		            CAUGHT_ownedResult = ownedResult;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_ownedResult = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedResult == null;
-		        /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
-		        if (symbol_0 == Boolean.TRUE) {
-		            safe_type_source = null;
-		        }
-		        else {
-		            assert ownedResult != null;
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedResult.getType();
-		            safe_type_source = type_0;
-		        }
-		        final /*@Thrown*/ boolean status = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, safe_type_source).booleanValue();
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_BodyTypeConformsToResultType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_1 = logDiagnostic;
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				@SuppressWarnings("null")
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedBody = this.getOwnedBody();
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedBody.getType();
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
+				/*@Caught*/ @Nullable Object CAUGHT_ownedResult;
+				try {
+					CAUGHT_ownedResult = ownedResult;
+				}
+				catch (Exception e) {
+					CAUGHT_ownedResult = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedResult == null;
+				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
+				if (symbol_0 == Boolean.TRUE) {
+					safe_type_source = null;
+				}
+				else {
+					assert ownedResult != null;
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedResult.getType();
+					safe_type_source = type_0;
+				}
+				final /*@Thrown*/ boolean status = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, safe_type_source).booleanValue();
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_BodyTypeConformsToResultType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
 	}
@@ -778,39 +778,39 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_1;
 		if (le) {
-		    symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @NonNull Object CAUGHT_status;
-		    try {
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
-		        /*@Caught*/ @Nullable Object CAUGHT_ownedResult;
-		        try {
-		            CAUGHT_ownedResult = ownedResult;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_ownedResult = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedResult == null;
-		        /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression safe_ownedInit_source;
-		        if (symbol_0 == Boolean.TRUE) {
-		            safe_ownedInit_source = null;
-		        }
-		        else {
-		            assert ownedResult != null;
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = ownedResult.getOwnedInit();
-		            safe_ownedInit_source = ownedInit;
-		        }
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OCLExpression, safe_ownedInit_source);
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
-		        final /*@Thrown*/ boolean status = size.equals(PivotTables.INT_1);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_OneInitializer, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_1 = logDiagnostic;
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
+				/*@Caught*/ @Nullable Object CAUGHT_ownedResult;
+				try {
+					CAUGHT_ownedResult = ownedResult;
+				}
+				catch (Exception e) {
+					CAUGHT_ownedResult = ValueUtil.createInvalidValue(e);
+				}
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedResult == null;
+				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression safe_ownedInit_source;
+				if (symbol_0 == Boolean.TRUE) {
+					safe_ownedInit_source = null;
+				}
+				else {
+					assert ownedResult != null;
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = ownedResult.getOwnedInit();
+					safe_ownedInit_source = ownedInit;
+				}
+				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OCLExpression, safe_ownedInit_source);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
+				final /*@Thrown*/ boolean status = size.equals(PivotTables.INT_1);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_OneInitializer, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
 	}
@@ -844,77 +844,77 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @Nullable Object CAUGHT_isSafe;
-		        try {
-		            final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-		            CAUGHT_isSafe = isSafe;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @NonNull Object CAUGHT_forAll;
-		        try {
-		            final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-		            /*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-		            @NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-		            /*@Thrown*/ boolean forAll;
-		            while (true) {
-		                if (!ITERATOR__1.hasNext()) {
-		                    if (accumulator == ValueUtil.TRUE_VALUE) {
-		                        forAll = ValueUtil.TRUE_VALUE;
-		                    }
-		                    else {
-		                        throw (InvalidValueException)accumulator;
-		                    }
-		                    break;
-		                }
-		                @SuppressWarnings("null")
-		                /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Variable _1 = (Variable)ITERATOR__1.next();
-		                /**
-		                 * isRequired
-		                 */
-		                /*@Caught*/ @NonNull Object CAUGHT_isRequired;
-		                try {
-		                    final /*@Thrown*/ boolean isRequired = _1.isIsRequired();
-		                    CAUGHT_isRequired = isRequired;
-		                }
-		                catch (Exception e) {
-		                    CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
-		                }
-		                //
-		                if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
-		                    forAll = ValueUtil.FALSE_VALUE;
-		                    break;														// Stop immediately 
-		                }
-		                else if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
-		                    ;															// Carry on
-		                }
-		                else if (CAUGHT_isRequired instanceof InvalidValueException) {		// Abnormal exception evaluation result
-		                    accumulator = CAUGHT_isRequired;									// Cache an exception failure
-		                }
-		                else {															// Impossible badly typed result
-		                    accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
-		                }
-		            }
-		            CAUGHT_forAll = forAll;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_forAll = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_isSafe, CAUGHT_forAll);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_SafeIteratorIsRequired, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @Nullable Object CAUGHT_isSafe;
+				try {
+					final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+					CAUGHT_isSafe = isSafe;
+				}
+				catch (Exception e) {
+					CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @NonNull Object CAUGHT_forAll;
+				try {
+					final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+					/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
+					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+					/*@Thrown*/ boolean forAll;
+					while (true) {
+						if (!ITERATOR__1.hasNext()) {
+							if (accumulator == ValueUtil.TRUE_VALUE) {
+								forAll = ValueUtil.TRUE_VALUE;
+							}
+							else {
+								throw (InvalidValueException)accumulator;
+							}
+							break;
+						}
+						@SuppressWarnings("null")
+						/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Variable _1 = (Variable)ITERATOR__1.next();
+						/**
+						 * isRequired
+						 */
+						/*@Caught*/ @NonNull Object CAUGHT_isRequired;
+						try {
+							final /*@Thrown*/ boolean isRequired = _1.isIsRequired();
+							CAUGHT_isRequired = isRequired;
+						}
+						catch (Exception e) {
+							CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
+						}
+						//
+						if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
+							forAll = ValueUtil.FALSE_VALUE;
+							break;														// Stop immediately 
+						}
+						else if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
+							;															// Carry on
+						}
+						else if (CAUGHT_isRequired instanceof InvalidValueException) {		// Abnormal exception evaluation result
+							accumulator = CAUGHT_isRequired;									// Cache an exception failure
+						}
+						else {															// Impossible badly typed result
+							accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
+						}
+					}
+					CAUGHT_forAll = forAll;
+				}
+				catch (Exception e) {
+					CAUGHT_forAll = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_isSafe, CAUGHT_forAll);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_SafeIteratorIsRequired, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}
@@ -947,63 +947,63 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_1;
 		if (le) {
-		    symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @Nullable Object CAUGHT_isSafe;
-		        try {
-		            final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-		            CAUGHT_isSafe = isSafe;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @Nullable Object CAUGHT_not;
-		        try {
-		            /*@Caught*/ @NonNull Object CAUGHT_isNullFree;
-		            try {
-		                final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-		                /*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-		                try {
-		                    CAUGHT_ownedSource = ownedSource;
-		                }
-		                catch (Exception e) {
-		                    CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-		                }
-		                final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource == null;
-		                /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
-		                if (symbol_0 == Boolean.TRUE) {
-		                    safe_type_source = null;
-		                }
-		                else {
-		                    assert ownedSource != null;
-		                    final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
-		                    safe_type_source = type;
-		                }
-		                final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType));
-		                final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
-		                CAUGHT_isNullFree = isNullFree;
-		            }
-		            catch (Exception e) {
-		                CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
-		            }
-		            final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNullFree);
-		            CAUGHT_not = not;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_not = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_isSafe, CAUGHT_not);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_1 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @Nullable Object CAUGHT_isSafe;
+				try {
+					final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+					CAUGHT_isSafe = isSafe;
+				}
+				catch (Exception e) {
+					CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @Nullable Object CAUGHT_not;
+				try {
+					/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
+					try {
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+						/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
+						try {
+							CAUGHT_ownedSource = ownedSource;
+						}
+						catch (Exception e) {
+							CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
+						}
+						final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource == null;
+						/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
+						if (symbol_0 == Boolean.TRUE) {
+							safe_type_source = null;
+						}
+						else {
+							assert ownedSource != null;
+							final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
+							safe_type_source = type;
+						}
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType));
+						final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
+						CAUGHT_isNullFree = isNullFree;
+					}
+					catch (Exception e) {
+						CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
+					}
+					final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNullFree);
+					CAUGHT_not = not;
+				}
+				catch (Exception e) {
+					CAUGHT_not = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_isSafe, CAUGHT_not);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
 	}

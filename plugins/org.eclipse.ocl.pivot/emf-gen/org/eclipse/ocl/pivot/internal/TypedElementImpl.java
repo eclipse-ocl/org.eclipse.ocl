@@ -183,23 +183,23 @@ public abstract class TypedElementImpl
 		final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = bodySpecification.getType();
 		/*@Caught*/ @Nullable Object CAUGHT_type;
 		try {
-		    CAUGHT_type = type;
+			CAUGHT_type = type;
 		}
 		catch (Exception e) {
-		    CAUGHT_type = ValueUtil.createInvalidValue(e);
+			CAUGHT_type = ValueUtil.createInvalidValue(e);
 		}
 		final /*@NonInvalid*/ @NonNull Object symbol_2 = CAUGHT_type == null;
 		/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
 		if (symbol_2 == Boolean.TRUE) {
-		    safe_conformsTo_source = null;
+			safe_conformsTo_source = null;
 		}
 		else {
-		    final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
-		    final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-		    safe_conformsTo_source = conformsTo;
+			final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
+			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+			safe_conformsTo_source = conformsTo;
 		}
 		if (safe_conformsTo_source == null) {
-		    throw new InvalidValueException("Null body for \'pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");
+			throw new InvalidValueException("Null body for \'pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");
 		}
 		return safe_conformsTo_source;
 	}

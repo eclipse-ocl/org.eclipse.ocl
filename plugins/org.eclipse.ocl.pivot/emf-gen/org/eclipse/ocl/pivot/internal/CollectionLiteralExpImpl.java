@@ -208,22 +208,22 @@ public class CollectionLiteralExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @NonNull Object CAUGHT_status;
-		    try {
-		        @SuppressWarnings("null")
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionKind kind = this.getKind();
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
-		        final /*@Thrown*/ boolean status = BOXED_kind != PivotTables.ELITid_Collection;
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionLiteralExp_c_c_CollectionKindIsConcrete, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				@SuppressWarnings("null")
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionKind kind = this.getKind();
+				final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
+				final /*@Thrown*/ boolean status = BOXED_kind != PivotTables.ELITid_Collection;
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionLiteralExp_c_c_CollectionKindIsConcrete, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}
@@ -257,40 +257,40 @@ public class CollectionLiteralExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @NonNull Object CAUGHT_eq;
-		        try {
-		            @SuppressWarnings("null")
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionKind kind = this.getKind();
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
-		            final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_Set;
-		            CAUGHT_eq = eq;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_eq = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
-		        try {
-		            final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SetType = idResolver.getClass(PivotTables.CLSSid_SetType, null);
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-		            final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SetType).booleanValue();
-		            CAUGHT_oclIsKindOf = oclIsKindOf;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_eq, CAUGHT_oclIsKindOf);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionLiteralExp_c_c_SetKindIsSet, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @NonNull Object CAUGHT_eq;
+				try {
+					@SuppressWarnings("null")
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionKind kind = this.getKind();
+					final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
+					final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_Set;
+					CAUGHT_eq = eq;
+				}
+				catch (Exception e) {
+					CAUGHT_eq = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
+				try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SetType = idResolver.getClass(PivotTables.CLSSid_SetType, null);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SetType).booleanValue();
+					CAUGHT_oclIsKindOf = oclIsKindOf;
+				}
+				catch (Exception e) {
+					CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_eq, CAUGHT_oclIsKindOf);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionLiteralExp_c_c_SetKindIsSet, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}
@@ -324,40 +324,40 @@ public class CollectionLiteralExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @NonNull Object CAUGHT_eq;
-		        try {
-		            @SuppressWarnings("null")
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionKind kind = this.getKind();
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
-		            final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_OrderedSet;
-		            CAUGHT_eq = eq;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_eq = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
-		        try {
-		            final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OrderedSetType = idResolver.getClass(PivotTables.CLSSid_OrderedSetType, null);
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-		            final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_OrderedSetType).booleanValue();
-		            CAUGHT_oclIsKindOf = oclIsKindOf;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_eq, CAUGHT_oclIsKindOf);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionLiteralExp_c_c_OrderedSetKindIsOrderedSet, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @NonNull Object CAUGHT_eq;
+				try {
+					@SuppressWarnings("null")
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionKind kind = this.getKind();
+					final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
+					final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_OrderedSet;
+					CAUGHT_eq = eq;
+				}
+				catch (Exception e) {
+					CAUGHT_eq = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
+				try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OrderedSetType = idResolver.getClass(PivotTables.CLSSid_OrderedSetType, null);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_OrderedSetType).booleanValue();
+					CAUGHT_oclIsKindOf = oclIsKindOf;
+				}
+				catch (Exception e) {
+					CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_eq, CAUGHT_oclIsKindOf);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionLiteralExp_c_c_OrderedSetKindIsOrderedSet, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}
@@ -391,40 +391,40 @@ public class CollectionLiteralExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @NonNull Object CAUGHT_eq;
-		        try {
-		            @SuppressWarnings("null")
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionKind kind = this.getKind();
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
-		            final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_Sequence;
-		            CAUGHT_eq = eq;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_eq = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
-		        try {
-		            final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SequenceType = idResolver.getClass(PivotTables.CLSSid_SequenceType, null);
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-		            final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SequenceType).booleanValue();
-		            CAUGHT_oclIsKindOf = oclIsKindOf;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_eq, CAUGHT_oclIsKindOf);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionLiteralExp_c_c_SequenceKindIsSequence, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @NonNull Object CAUGHT_eq;
+				try {
+					@SuppressWarnings("null")
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionKind kind = this.getKind();
+					final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
+					final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_Sequence;
+					CAUGHT_eq = eq;
+				}
+				catch (Exception e) {
+					CAUGHT_eq = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
+				try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SequenceType = idResolver.getClass(PivotTables.CLSSid_SequenceType, null);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_SequenceType).booleanValue();
+					CAUGHT_oclIsKindOf = oclIsKindOf;
+				}
+				catch (Exception e) {
+					CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_eq, CAUGHT_oclIsKindOf);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionLiteralExp_c_c_SequenceKindIsSequence, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}
@@ -458,40 +458,40 @@ public class CollectionLiteralExpImpl
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    /*@Caught*/ @Nullable Object CAUGHT_status;
-		    try {
-		        /*@Caught*/ @NonNull Object CAUGHT_eq;
-		        try {
-		            @SuppressWarnings("null")
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionKind kind = this.getKind();
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
-		            final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_Bag;
-		            CAUGHT_eq = eq;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_eq = ValueUtil.createInvalidValue(e);
-		        }
-		        /*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
-		        try {
-		            final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_BagType = idResolver.getClass(PivotTables.CLSSid_BagType, null);
-		            final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-		            final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_BagType).booleanValue();
-		            CAUGHT_oclIsKindOf = oclIsKindOf;
-		        }
-		        catch (Exception e) {
-		            CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
-		        }
-		        final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_eq, CAUGHT_oclIsKindOf);
-		        CAUGHT_status = status;
-		    }
-		    catch (Exception e) {
-		        CAUGHT_status = ValueUtil.createInvalidValue(e);
-		    }
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionLiteralExp_c_c_BagKindIsBag, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			/*@Caught*/ @Nullable Object CAUGHT_status;
+			try {
+				/*@Caught*/ @NonNull Object CAUGHT_eq;
+				try {
+					@SuppressWarnings("null")
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionKind kind = this.getKind();
+					final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
+					final /*@Thrown*/ boolean eq = BOXED_kind == PivotTables.ELITid_Bag;
+					CAUGHT_eq = eq;
+				}
+				catch (Exception e) {
+					CAUGHT_eq = ValueUtil.createInvalidValue(e);
+				}
+				/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
+				try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_BagType = idResolver.getClass(PivotTables.CLSSid_BagType, null);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+					final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_BagType).booleanValue();
+					CAUGHT_oclIsKindOf = oclIsKindOf;
+				}
+				catch (Exception e) {
+					CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_eq, CAUGHT_oclIsKindOf);
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CollectionLiteralExp_c_c_BagKindIsBag, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}

@@ -207,17 +207,17 @@ public abstract class ElementImpl
 		 */
 		final @NonNull AbstractBinaryOperation BODY_closure_0 = new AbstractBinaryOperation()
 		{
-		    /**
-		     * oclContents()->selectByKind(Element)
-		     */
-		    @Override
-		    public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object oclAsSet, final /*@NonInvalid*/ java.lang.@Nullable Object _1) {
-		        final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Element_0 = idResolver.getClass(PivotTables.CLSSid_Element, null);
-		        final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Element symbol_0 = (Element)_1;
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OclElement, symbol_0);
-		        final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue selectByKind = (SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element_0);
-		        return selectByKind;
-		    }
+			/**
+			 * oclContents()->selectByKind(Element)
+			 */
+			@Override
+			public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object oclAsSet, final /*@NonInvalid*/ java.lang.@Nullable Object _1) {
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Element_0 = idResolver.getClass(PivotTables.CLSSid_Element, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Element symbol_0 = (Element)_1;
+				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OclElement, symbol_0);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue selectByKind = (SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element_0);
+				return selectByKind;
+			}
 		};
 		final @NonNull  ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Element, BODY_closure_0, oclAsSet, ACC_closure_0);
 		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue closure = ClassUtil.nonNullState((SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0));
