@@ -199,6 +199,30 @@ public class CGUtil
 	}
 
 	/**
+	 * Trim trailing spaces from lines.
+	 */
+	public static @NonNull String trimLines(@NonNull String classFileContent) {
+		try {
+			BufferedReader reader = new BufferedReader(new StringReader(classFileContent));
+			StringBuilder s = new StringBuilder();
+			for (String line; (line = reader.readLine()) != null; ) {
+				int len = line.length();
+				int i = len;
+				while ((i > 0) && Character.isWhitespace(line.charAt(i-1))) {
+					i--;
+				}
+				s.append(i < len ? line.substring(0, i) : line);
+				s.append("\n");
+			}
+			return s.toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return classFileContent;
+	}
+
+	/**
 	 * Use wrapExp to wrap wrappedExp.
 	 */
 	public static void wrap(@NonNull CGCallExp wrapExp, @NonNull CGValuedElement wrappedExp) {

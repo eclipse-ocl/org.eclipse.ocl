@@ -138,7 +138,7 @@ public class JavaStream
 
 	private @NonNull StringBuilder s = new StringBuilder();
 	private @NonNull Stack<@NonNull String> indentationStack = new Stack<>();
-	private @NonNull String defaultIndentationString = "    ";
+	private @NonNull String defaultIndentationString = "\t";
 	private @NonNull Stack<@NonNull String> classNameStack = new Stack<>();
 
 	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor<@NonNull ?> cg2java) {
