@@ -81,6 +81,8 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionHelper;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
+import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -154,6 +156,34 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		@Nullable NamedElement getSingleResult();
 
 		@NonNull Type getSourceType();
+	}
+
+	private static class PropertyScopeFilter implements ScopeFilter
+	{
+		//		protected final @NonNull List<SquareBracketedClauseCS> csSquareBracketedClauses;
+		protected final @Nullable Property oppositeProperty;
+
+		public PropertyScopeFilter(@NonNull List<SquareBracketedClauseCS> csSquareBracketedClauses) {
+			//			this.csSquareBracketedClauses = csSquareBracketedClauses;
+			Property oppositeProperty = null;
+			if (csSquareBracketedClauses.size() == 1) {
+				SquareBracketedClauseCS csSquareBracketedClause = csSquareBracketedClauses.get(0);
+				List<ExpCS> csTerms = csSquareBracketedClause.getOwnedTerms();
+				if (csTerms.size() == 1) {
+					ExpCS csTerm = csTerms.get(0);
+					NavigationCallExp navigationCallExp = PivotUtil.getPivot(NavigationCallExp.class, csTerm);
+					if (navigationCallExp != null) {
+						oppositeProperty = PivotUtil.getReferredProperty(navigationCallExp);
+					}
+				}
+			}
+			this.oppositeProperty = oppositeProperty;
+		}
+
+		@Override
+		public boolean matches(@NonNull EnvironmentView environmentView, @NonNull Object object) {
+			return (object instanceof Property) && (((Property)object).getOpposite() == oppositeProperty);
+		}
 	}
 
 	public static class ResolvedInvocation implements Invocations
@@ -693,9 +723,20 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 */
 	protected @NonNull OCLExpression resolveExplicitSourceNavigation(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp) {
 		PathNameCS ownedPathName = ClassUtil.nonNullState(csNameExp.getOwnedPathName());
-		Element namedElement = context.lookupUndecoratedName(csNameExp, ownedPathName);
-		if ((namedElement instanceof Property) && !namedElement.eIsProxy()) {
-			CallExp callExp = resolvePropertyCallExp(sourceExp, csNameExp, (Property)namedElement);
+		PropertyScopeFilter propertyScopeFilter = null;
+		List<SquareBracketedClauseCS> csSquareBracketedClauses = csNameExp.getOwnedSquareBracketedClauses();
+		if (csSquareBracketedClauses.size() > 0) {
+			for (SquareBracketedClauseCS csSquareBracketedClause : csSquareBracketedClauses) {
+				for (ExpCS csExp : csSquareBracketedClause.getOwnedTerms()) {
+					csExp.accept(this);
+				}
+			}
+			propertyScopeFilter = new PropertyScopeFilter(csSquareBracketedClauses);
+		}
+		// FIXME Qualified navigation
+		Property namedElement = context.lookupProperty(csNameExp, ownedPathName, propertyScopeFilter);
+		if ((namedElement != null) && !namedElement.eIsProxy()) {
+			CallExp callExp = resolvePropertyCallExp(sourceExp, csNameExp, namedElement);
 			return callExp;
 		}
 		Property oclInvalidProperty = standardLibrary.getOclInvalidProperty();

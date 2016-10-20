@@ -801,6 +801,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return converter.lookupOperation(csElement, csPathName, scopeFilter);
 	}
 
+	public @Nullable Property lookupProperty(@NonNull ElementCS csElement, @NonNull PathNameCS csPathName, @Nullable ScopeFilter scopeFilter) {
+		return converter.lookupProperty(csElement, csPathName, scopeFilter);
+	}
+
 	public @Nullable Type lookupType(@NonNull ElementCS csElement, @NonNull PathNameCS csPathName) {
 		return converter.lookupType(csElement, csPathName);
 	}

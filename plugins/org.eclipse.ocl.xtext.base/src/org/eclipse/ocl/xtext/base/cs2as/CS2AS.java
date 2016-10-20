@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
@@ -78,17 +79,17 @@ import org.eclipse.xtext.util.Tuples;
  * to update.
  */
 public abstract class CS2AS extends AbstractConversion
-{	
+{
 	public static interface UnresolvedProxyMessageProvider
 	{
-		@NonNull EReference getEReference();	
+		@NonNull EReference getEReference();
 		@Nullable String getMessage(@NonNull EObject context, @NonNull String linkText);
 	}
 
 	public static abstract class AbstractUnresolvedProxyMessageProvider implements UnresolvedProxyMessageProvider
 	{
 		protected final @NonNull EReference eReference;
-		
+
 		public AbstractUnresolvedProxyMessageProvider(/*@NonNull*/ EReference eReference) {
 			assert eReference != null;
 			this.eReference = eReference;
@@ -97,7 +98,7 @@ public abstract class CS2AS extends AbstractConversion
 		public @NonNull EReference getEReference() {
 			return eReference;
 		}
-		
+
 		@Override
 		public abstract @Nullable String getMessage(@NonNull EObject context, @NonNull String linkText);
 	}
@@ -121,7 +122,7 @@ public abstract class CS2AS extends AbstractConversion
 		}
 		return new EContentsEList<EObject>(csRoot, containmentsList);
 	}
-	
+
 	private static Map<EReference, UnresolvedProxyMessageProvider> unresolvedProxyMessageProviderMap = new HashMap<EReference, UnresolvedProxyMessageProvider>();
 
 	/**
@@ -135,7 +136,7 @@ public abstract class CS2AS extends AbstractConversion
 	 */
 	public static interface MessageBinder
 	{
-		@NonNull String bind(@NonNull EObject csContext, @NonNull String messageTemplate, Object... bindings);	
+		@NonNull String bind(@NonNull EObject csContext, @NonNull String messageTemplate, Object... bindings);
 	}
 
 	/**
@@ -170,7 +171,7 @@ public abstract class CS2AS extends AbstractConversion
 			return message;
 		}
 	}
-	
+
 	private static MessageBinder messageBinder = DefaultMessageBinder.INSTANCE;
 
 	public static void addUnresolvedProxyMessageProvider(UnresolvedProxyMessageProvider unresolvedProxyMessageProvider) {
@@ -196,7 +197,7 @@ public abstract class CS2AS extends AbstractConversion
 	public static @Nullable DiagnosticMessage getUnresolvedProxyMessage(@NonNull EReference eReference, @NonNull EObject csContext, @NonNull String linkText) {
 		String message = getUnresolvedProxyText(eReference, csContext, linkText);
 		return message != null ? new DiagnosticMessage(message, Severity.ERROR, Diagnostic.LINKING_DIAGNOSTIC) : null;
-	}	
+	}
 
 	public static @Nullable String getUnresolvedProxyText(@NonNull EReference eReference, @NonNull EObject csContext, @NonNull String linkText) {
 		ExceptionAdapter exceptionAdapter = ClassUtil.getAdapter(ExceptionAdapter.class, csContext);
@@ -214,7 +215,7 @@ public abstract class CS2AS extends AbstractConversion
 			errorContext = referenceType.getName();
 		}
 		return messageBinder.bind(csContext, messageTemplate, errorContext, linkText);
-	}	
+	}
 
 	public static List<ILeafNode> getDocumentationNodes(@NonNull ICompositeNode node) {
 		List<ILeafNode> documentationNodes = null;
@@ -257,7 +258,7 @@ public abstract class CS2AS extends AbstractConversion
 			return false;
 		}
 	}
-	
+
 	private static final class UndecoratedNameFilter implements ScopeFilter
 	{
 		public static UndecoratedNameFilter INSTANCE = new UndecoratedNameFilter();
@@ -271,7 +272,7 @@ public abstract class CS2AS extends AbstractConversion
 	public static MessageBinder getMessageBinder() {
 		return messageBinder;
 	}
-	
+
 	private static long startTime = System.currentTimeMillis();
 	private static @NonNull Map<Thread,Long> threadRunTimes = new HashMap<Thread,Long>();
 	private static long[] indentRunTimes = new long[100];
@@ -313,7 +314,7 @@ public abstract class CS2AS extends AbstractConversion
 			pathNameCS.setContext(csContext);
 		}
 	}
-	
+
 	public static void refreshElementType(PathElementCS pathElementCS, EClassifier elementType) {
 		if ((pathElementCS != null)  && (pathElementCS.getElementType() != elementType)) {
 			pathElementCS.setElementType(elementType);
@@ -325,7 +326,7 @@ public abstract class CS2AS extends AbstractConversion
 			pathNameCS.setScopeFilter(scopeFilter);
 		}
 	}
-	
+
 	public static void setElementType(@NonNull PathNameCS pathNameCS, /*@NonNull*/ EClass elementType, @NonNull ElementCS csContext, @Nullable ScopeFilter scopeFilter) {
 		assert elementType != null;
 		refreshContext(pathNameCS, csContext);
@@ -343,7 +344,7 @@ public abstract class CS2AS extends AbstractConversion
 
 	/**
 	 * Define an alternative message binder. THe default null messageBinder uses
-	 * {@link NLS#bind(String, Object[])} 
+	 * {@link NLS#bind(String, Object[])}
 	 */
 	public static MessageBinder setMessageBinder(MessageBinder messageBinder) {
 		MessageBinder savedMessageBinder = CS2AS.messageBinder;
@@ -355,11 +356,11 @@ public abstract class CS2AS extends AbstractConversion
 	 * Define the resolution of a PathNameCS explicitly avoiding the need for the normal Xtext proxy resolution.
 	 * This is used after a non-trivial selection occurs such as the selection of the best operation overload.
 	 * If element is null the Xtext error message corresponding to an unresolved proxy is generated.
-	 * @param ambiguities 
+	 * @param ambiguities
 	 */
-	public static void setPathElement(@NonNull PathNameCS csPathName, @Nullable Element element, @Nullable List<? extends EObject> ambiguities) {
-		List<PathElementCS> csPath = csPathName.getOwnedPathElements();
-		@SuppressWarnings("null")@NonNull PathElementCS csLastElement = csPath.get(csPath.size()-1);
+	public static void setPathElement(@NonNull PathNameCS csPathName, @Nullable Element element, @Nullable List<@NonNull ? extends EObject> ambiguities) {
+		List<@NonNull PathElementCS> csPath = ClassUtil.nullFree(csPathName.getOwnedPathElements());
+		PathElementCS csLastElement = csPath.get(csPath.size()-1);
 		AmbiguitiesAdapter.setAmbiguities(csLastElement, ambiguities);
 		if ((element == null) || (ambiguities != null)) {
 			EObject eObject = csLastElement;
@@ -375,12 +376,12 @@ public abstract class CS2AS extends AbstractConversion
 			csLastElement.setReferredElement(element);
 		}
 	}
-	
+
 	/**
 	 * The CS resource mapped by this CS2AS.
 	 */
 	protected final @NonNull BaseCSResource csResource;
-	
+
 	/**
 	 * The AS resource mapped by this CS2AS.
 	 */
@@ -398,13 +399,13 @@ public abstract class CS2AS extends AbstractConversion
 		this.asResource = asResource;
 		csi2asMapping.add(csResource, this);
 	}
-	
+
 	protected CS2AS(@NonNull CS2AS aConverter) {
 		super(aConverter.getEnvironmentFactory());
 		this.csResource = aConverter.csResource;
 		this.asResource = aConverter.asResource;
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
-//		csi2asMapping.add(this);
+		//		csi2asMapping.add(this);
 	}
 
 	public @NonNull String bind(@NonNull EObject csContext, /*@NonNull*/ String messageTemplate, Object... bindings) {
@@ -460,8 +461,8 @@ public abstract class CS2AS extends AbstractConversion
 	 * is 'owned' by the CS element, so if the CS element vanishes, so does the pivot element.
 	 */
 	public void installPivotDefinition(@NonNull ModelElementCS csElement, @NonNull Element newPivotElement) {
-	//	logger.trace("Installing " + csElement.getDescription()); //$NON-NLS-1$ //$NON-NLS-2$	
-		EObject oldPivotElement = csElement.getPivot();	
+		//	logger.trace("Installing " + csElement.getDescription()); //$NON-NLS-1$ //$NON-NLS-2$
+		EObject oldPivotElement = csElement.getPivot();
 		if (oldPivotElement != newPivotElement) {
 			assert !newPivotElement.eIsProxy();
 			csElement.setPivot(newPivotElement);
@@ -471,29 +472,29 @@ public abstract class CS2AS extends AbstractConversion
 		}
 		csi2asMapping.put(csElement, newPivotElement);
 	}
-	
+
 	/**
 	 * Install the mapping from a CS element to a completely independent pivot element. If the pivot element vanishes, the
 	 * reference is stale, if the CS element the pivot element is less referenced.
 	 */
 	public void installPivotReference(@NonNull ElementRefCS csElement, @NonNull Element newPivotElement, @NonNull EReference eReference) {
 		assert eReference.getEContainingClass().isSuperTypeOf(csElement.eClass());
-	//	logger.trace("Installing " + csElement.getDescription()); //$NON-NLS-1$ //$NON-NLS-2$	
-		EObject oldPivotElement = csElement.getPivot();	
+		//	logger.trace("Installing " + csElement.getDescription()); //$NON-NLS-1$ //$NON-NLS-2$
+		EObject oldPivotElement = csElement.getPivot();
 		if (oldPivotElement != newPivotElement) {
 			assert !newPivotElement.eIsProxy();
 			csElement.setPivot(newPivotElement);
 		}
 	}
-	
+
 	/**
 	 * Install the mapping from a CS element to a related pivot element. This normally arises when more than one CS element
 	 * are associated with a single pivot element. In this case one of the CS elements is the defining CS element and the
 	 * others are users.
 	 */
 	public void installPivotUsage(@NonNull ModelElementCS csElement, @NonNull Element newPivotElement) {
-	//	logger.trace("Installing " + csElement.getDescription()); //$NON-NLS-1$ //$NON-NLS-2$	
-		EObject oldPivotElement = csElement.getPivot();	
+		//	logger.trace("Installing " + csElement.getDescription()); //$NON-NLS-1$ //$NON-NLS-2$
+		EObject oldPivotElement = csElement.getPivot();
 		if (oldPivotElement != newPivotElement) {
 			assert !newPivotElement.eIsProxy();
 			csElement.setPivot(newPivotElement);
@@ -516,6 +517,17 @@ public abstract class CS2AS extends AbstractConversion
 		Element namedElement = csPathName.getReferredElement();
 		if ((namedElement instanceof Operation) && !namedElement.eIsProxy()) {
 			return (Operation) namedElement;
+		}
+		else {
+			return null;
+		}
+	}
+
+	public @Nullable Property lookupProperty(@NonNull ElementCS csElement, @NonNull PathNameCS csPathName, @Nullable ScopeFilter scopeFilter) {
+		setElementType(csPathName, PivotPackage.Literals.PROPERTY, csElement, scopeFilter);
+		Element namedElement = csPathName.getReferredElement();
+		if ((namedElement instanceof Property) && !namedElement.eIsProxy()) {
+			return (Property) namedElement;
 		}
 		else {
 			return null;
@@ -578,13 +590,13 @@ public abstract class CS2AS extends AbstractConversion
 		Element namedElement = csPathName.getReferredElement();
 		return namedElement;
 	}
-	
+
 	public @NonNull <T extends Element> T refreshModelElement(@NonNull Class<T> pivotClass, @NonNull EClass pivotEClass, @Nullable ModelElementCS csElement) {
 		Element pivotElement = csElement != null ? getPivotElement(csElement) : null;
 		@NonNull Element pivotElement2;
 		if ((pivotElement != null)
-		 && pivotClass.isAssignableFrom(pivotElement.getClass())					// Avoid resetting container of incidental reference
-		 && ((csElement == null) || (csElement.eContainer() != null))) {			// Avoid resetting container of potentially re-used root
+				&& pivotClass.isAssignableFrom(pivotElement.getClass())					// Avoid resetting container of incidental reference
+				&& ((csElement == null) || (csElement.eContainer() != null))) {			// Avoid resetting container of potentially re-used root
 			PivotUtilInternal.resetContainer(pivotElement);		// Bypass child-stealing detector
 		}
 		if ((pivotElement == null) || (pivotEClass != pivotElement.eClass())) {
@@ -601,25 +613,25 @@ public abstract class CS2AS extends AbstractConversion
 		@NonNull T castElement = (T) pivotElement2;
 		return castElement;
 	}
-	
+
 	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
-//		printDiagnostic("CS2AS.update start", false, 0);
+		//		printDiagnostic("CS2AS.update start", false, 0);
 		@SuppressWarnings("unused") Map<CSI, Element> oldCSI2AS = csi2asMapping.getMapping();
 		@SuppressWarnings("unused") Set<CSI> newCSIs = csi2asMapping.computeCSIs(csResource);
-//		System.out.println("==========================================================================");
-//		for (Resource csResource : csResources) {
-//			System.out.println("CS " + csResource.getClass().getName() + "@" + csResource.hashCode() + " " + csResource.getURI());
-//		}
+		//		System.out.println("==========================================================================");
+		//		for (Resource csResource : csResources) {
+		//			System.out.println("CS " + csResource.getClass().getName() + "@" + csResource.hashCode() + " " + csResource.getURI());
+		//		}
 		CS2ASConversion conversion = createConversion(diagnosticsConsumer, csResource);
 		conversion.update(csResource);
-//		System.out.println("---------------------------------------------------------------------------");
-//		Collection<? extends Resource> pivotResources = cs2asResourceMap.values();
-//		for (Entry<? extends Resource, ? extends Resource> entry : cs2asResourceMap.entrySet()) {
-//			Resource csResource = entry.getKey();
-//			Resource asResource = entry.getValue();
-//			System.out.println("CS " + csResource.getClass().getName() + "@" + csResource.hashCode() + " => " + asResource.getClass().getName() + "@" + asResource.hashCode());
-//		}
-/*		Set<String> deadCSIs = new HashSet<String>(oldCSI2AS.keySet());
+		//		System.out.println("---------------------------------------------------------------------------");
+		//		Collection<? extends Resource> pivotResources = cs2asResourceMap.values();
+		//		for (Entry<? extends Resource, ? extends Resource> entry : cs2asResourceMap.entrySet()) {
+		//			Resource csResource = entry.getKey();
+		//			Resource asResource = entry.getValue();
+		//			System.out.println("CS " + csResource.getClass().getName() + "@" + csResource.hashCode() + " => " + asResource.getClass().getName() + "@" + asResource.hashCode());
+		//		}
+		/*		Set<String> deadCSIs = new HashSet<String>(oldCSI2AS.keySet());
 		deadCSIs.removeAll(newCSIs);
 		for (String deadCSI : deadCSIs) {
 			Element deadPivot = oldCSI2AS.get(deadCSI);	// WIP
@@ -634,6 +646,6 @@ public abstract class CS2AS extends AbstractConversion
 		}
 		conversion.garbageCollect(cs2asResourceMap);
 		csi2asMapping.update();
-//		printDiagnostic("CS2AS.update end", false, 0);
+		//		printDiagnostic("CS2AS.update end", false, 0);
 	}
 }

@@ -38,15 +38,14 @@ import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MessageExp;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
@@ -65,6 +64,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -104,9 +104,12 @@ import org.eclipse.ocl.xtext.essentialoclcs.PrefixExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.RoundBracketedClauseCS;
 import org.eclipse.ocl.xtext.essentialoclcs.SelfExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.ShadowPartCS;
+import org.eclipse.ocl.xtext.essentialoclcs.SquareBracketedClauseCS;
 import org.eclipse.ocl.xtext.essentialoclcs.StringLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralExpCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralPartCS;
+
+import com.google.common.collect.Iterables;
 
 public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 {
@@ -116,7 +119,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 
 	public EssentialOCLDeclarationVisitor(@NonNull AS2CSConversion context) {
 		super(context);
-	}	
+	}
 
 	protected ExpCS createExpCS(OCLExpression oclExpression) {
 		return context.visitDeclaration(ExpCS.class, oclExpression);
@@ -204,6 +207,14 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		csPathElement.setReferredElement(asNamedElement);
 		csPathName.getOwnedPathElements().add(csPathElement);
 		return csPathName;
+	}
+
+	protected @NonNull SquareBracketedClauseCS createSquareBracketedClauseCS(@NonNull ExpCS @NonNull ... csExps) {
+		SquareBracketedClauseCS csSquareBracketedClause = EssentialOCLCSFactory.eINSTANCE.createSquareBracketedClauseCS();
+		for (@NonNull ExpCS csExp : csExps) {
+			csSquareBracketedClause.getOwnedTerms().add(csExp);
+		}
+		return csSquareBracketedClause;
 	}
 
 	protected @Nullable TypedRefCS createTypeRefCS(@Nullable Type asType) {
@@ -296,9 +307,9 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 					String[] lines = body.split("\n");
 					int lastLineNumber = lines.length-1;
 					if ((lastLineNumber >= 3)
-					 && lines[0].replaceAll("\\s", "").equals("Tuple{")
-					 && lines[1].replaceAll("\\s", "").startsWith("message:String=")
-					 && lines[lastLineNumber].replaceAll("\\s", "").equals("}.status")) {
+							&& lines[0].replaceAll("\\s", "").equals("Tuple{")
+							&& lines[1].replaceAll("\\s", "").startsWith("message:String=")
+							&& lines[lastLineNumber].replaceAll("\\s", "").equals("}.status")) {
 						StringBuilder message = new StringBuilder();
 						message.append(lines[1].substring(lines[1].indexOf("=")+1, lines[1].length()).trim());
 						for (int i = 2; i < lastLineNumber; i++) {
@@ -310,18 +321,18 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 								String messageString = message.toString();
 								int lastIndex = messageString.lastIndexOf(',');
 								if (lastIndex > 0) {
-									messageString = messageString.substring(0, lastIndex); 
+									messageString = messageString.substring(0, lastIndex);
 								}
 								csMessage.setExprString(messageString);
 								csElement.setOwnedMessageSpecification(csMessage);
-								StringBuilder status = new StringBuilder();			
+								StringBuilder status = new StringBuilder();
 								status.append(lines[i].substring(lines[i].indexOf("=")+1, lines[i].length()).trim());
 								for (i++; i < lastLineNumber; i++) {
 									status.append("\n" + lines[i]);
 								}
 								csStatus = context.refreshElement(ExpSpecificationCS.class, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS, specification);
 								csStatus.setExprString(status.toString());
-							}					
+							}
 						}
 					}
 				}
@@ -331,8 +342,8 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 				}
 			}
 		}
-//		csElement.setSpecification(context.visitDeclaration(SpecificationCS.class, specification));	
-		csElement.setOwnedSpecification(csStatus);	
+		//		csElement.setSpecification(context.visitDeclaration(SpecificationCS.class, specification));
+		csElement.setOwnedSpecification(csStatus);
 		return csElement;
 	}
 
@@ -343,7 +354,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		csBooleanLiteralExp.setSymbol(Boolean.toString(asBooleanLiteralExp.isBooleanSymbol()));
 		return csBooleanLiteralExp;
 	}
-	
+
 	@Override
 	public @Nullable ElementCS visitCallExp(@NonNull CallExp object) {
 		throw new UnsupportedOperationException();
@@ -491,14 +502,14 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 				prefix = ",";
 			}
 		}
-		
+
 		if (prefix != null) {
 			prefix = "|";
 		}
 		csRoundBracketedClause.getOwnedArguments().add(createNavigatingArgCS(prefix, body));
 		return createNavigationOperatorCS(asIteratorExp, csNameExp, false);
 	}
-	
+
 	@Override
 	public @Nullable ElementCS visitLetExp(@NonNull LetExp asLetExp) {
 		LetExpCS csLetExp = EssentialOCLCSFactory.eINSTANCE.createLetExpCS();
@@ -538,6 +549,27 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	@Override
 	public @Nullable ElementCS visitMessageExp(@NonNull MessageExp object) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @Nullable ElementCS visitNavigationCallExp(@NonNull NavigationCallExp asNavigationCallExp) {
+		Property asProperty = PivotUtil.getReferredProperty(asNavigationCallExp);
+		NameExpCS csNameExp = createNameExpCS(asProperty);
+		Property asOpposite = asProperty.getOpposite();
+		if (asOpposite != null) {
+			String name = asProperty.getName();
+			Type type = asNavigationCallExp.getOwnedSource().getType();
+			if (type != null) {
+				CompleteClassInternal completeClass = context.getMetamodelManager().getCompleteClass(type);
+				Iterable<@NonNull Property> properties = completeClass.getProperties(name);
+				if (Iterables.size(properties) > 1) {
+					NameExpCS csOppositeNameExp = createNameExpCS(asOpposite, null);
+					SquareBracketedClauseCS csSquareBracketedClause = createSquareBracketedClauseCS(csOppositeNameExp);
+					csNameExp.getOwnedSquareBracketedClauses().add(csSquareBracketedClause);
+				}
+			}
+		}
+		return createNavigationOperatorCS(asNavigationCallExp, csNameExp, false);
 	}
 
 	@Override
@@ -626,21 +658,6 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			csPrefix.setOwnedRight(csSource);
 			return csResult;
 		}
-	}
-
-	@Override
-	public @Nullable ElementCS visitOppositePropertyCallExp(@NonNull OppositePropertyCallExp asOppositePropertyCallExp) {
-		Property reverseProperty = asOppositePropertyCallExp.getReferredProperty();
-		Property asProperty = getNonNullProperty(reverseProperty != null ? reverseProperty.getOpposite() : null);
-		NameExpCS csNameExp = createNameExpCS(asProperty);
-		return createNavigationOperatorCS(asOppositePropertyCallExp, csNameExp, false);
-	}
-
-	@Override
-	public @Nullable ElementCS visitPropertyCallExp(@NonNull PropertyCallExp asPropertyCallExp) {
-		Property asProperty = getNonNullProperty(asPropertyCallExp.getReferredProperty());
-		NameExpCS csNameExp = createNameExpCS(asProperty);
-		return createNavigationOperatorCS(asPropertyCallExp, csNameExp, false);
 	}
 
 	@Override
