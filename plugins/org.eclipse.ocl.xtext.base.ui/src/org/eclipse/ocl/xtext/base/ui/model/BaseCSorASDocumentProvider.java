@@ -310,12 +310,30 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 					}
 				}
 				if (allErrors != null) {
-					StringBuilder s = new StringBuilder();
+					Throwable firstThrowable = null;
+					StringWriter s = new StringWriter();
+					boolean isFirst = true;
 					for (Resource.Diagnostic diagnostic : allErrors) {
-						s.append("\n");
-						s.append(diagnostic.toString());
+						Object diag = diagnostic;
+						if (!isFirst) {
+							s.append("\n");
+						}
+						if (diag instanceof Throwable) {
+							while (((Throwable)diag).getCause() != null) {
+								diag = ((Throwable)diag).getCause();
+							}
+							s.append(diag.toString());
+							if (firstThrowable == null) {
+								firstThrowable = (Throwable) diagnostic;
+								s.append("\n  (see Error Log for details.)");
+							}
+						}
+						else {
+							s.append(diag.toString());
+						}
+						isFirst = false;
 					}
-					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, s.toString()));
+					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, s.toString(), firstThrowable));
 				}
 				ASResource asResource = null;
 				EList<EObject> contents = xmiResource.getContents();
