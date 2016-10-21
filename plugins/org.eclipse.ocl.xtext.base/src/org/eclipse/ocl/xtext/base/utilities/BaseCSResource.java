@@ -31,7 +31,7 @@ import org.eclipse.xtext.util.Triple;
 /**
  * BaseResource defines the Xtext-dependent extended interface for a Concrete Syntax resource.
  */
-public interface BaseCSResource extends CSResource.CSResourceExtension
+public interface BaseCSResource extends CSResource.CSResourceExtension2
 {
 	/**
 	 * Add the unresolved reference message for EReference in EObject at INode.

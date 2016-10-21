@@ -12,7 +12,9 @@ package org.eclipse.ocl.xtext.base.utilities;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.xtext.validation.DiagnosticConverterImpl;
 
@@ -24,7 +26,10 @@ public class PivotDiagnosticConverter extends DiagnosticConverterImpl
 		if (causer instanceof Element) {
 			ModelElementCS csModelElement = ElementUtil.getCsElement((Element) causer);
 			if (csModelElement != null) {
-				return csModelElement;
+				Resource resource = csModelElement.eResource();
+				if ((resource instanceof CSResourceExtension2) && !((CSResourceExtension2)resource).isDerived()) {
+					return csModelElement;
+				}
 			}
 			else {
 			  	ElementUtil.getCsElement((Element) causer);					// FIXME Just debugging

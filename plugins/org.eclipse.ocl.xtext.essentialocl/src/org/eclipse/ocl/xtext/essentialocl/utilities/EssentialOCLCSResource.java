@@ -181,6 +181,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	
 	private @Nullable ParserContext parserContext = null;
 	private @Nullable ProjectManager projectMap = null;
+	private boolean isDerived = false;		// True if this CSResource is the derived form of an edited ASResource.
 	
 	public EssentialOCLCSResource() {
 		super();
@@ -503,6 +504,11 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	protected void initializeResourceFactory(Resource.Factory.@NonNull Registry resourceFactoryRegistry) {}
 
 	@Override
+	public boolean isDerived() {
+		return isDerived;
+	}
+
+	@Override
 	public @Nullable NamedElement isPathable(@NonNull EObject element) {
 		if (element instanceof Feature) {
 			return (Feature)element;
@@ -659,6 +665,11 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			}
 		}
 		super.resolveLazyCrossReferences(mon);
+	}
+
+	@Override
+	public void setDerived(boolean isDerived) {
+		this.isDerived = isDerived;
 	}
 
 	protected void setHasError(ElementCS csElement) {

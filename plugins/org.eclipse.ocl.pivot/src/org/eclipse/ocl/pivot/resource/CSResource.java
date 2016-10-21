@@ -35,6 +35,23 @@ public interface CSResource extends Resource
 		 */
 		void dispose();
 	}
+	
+	/**
+	 * @since 1.3
+	 */
+	public interface CSResourceExtension2 extends CSResourceExtension
+	{
+		/**
+		 * Return true if this CSResource is derived from an ASResource..
+		 */
+		boolean isDerived();
+
+		/**
+		 * Set whether this CSResource is derived from an ASResource..
+		 */
+		void setDerived(boolean isDerived);
+	}
+	
 	/**
 	 * Return the Abstract Syntax representation of this Concrete Syntax resource.
 	 */

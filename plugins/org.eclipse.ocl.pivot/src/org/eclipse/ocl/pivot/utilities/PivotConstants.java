@@ -42,6 +42,10 @@ public interface PivotConstants
 	 */
 	static final @NonNull String UML_METAMODEL_NAME = "$uml$";	// FIXME Use extension point
 
+	/**
+	 * @since 1.3
+	 */
+	static final @NonNull String AS_EXTENSION_SUFFIX = "as";
 	static final @NonNull String ESSENTIAL_OCL_FILE_EXTENSION = "essentialocl";
 	static final @NonNull String OCL_FILE_EXTENSION = "ocl";
 	static final @NonNull String OCLINECORE_FILE_EXTENSION = "oclinecore";

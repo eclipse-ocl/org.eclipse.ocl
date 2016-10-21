@@ -60,7 +60,7 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSyntaxException;
 
 /**
- * QVTimperativeDocumentProvider orchestrates the load and saving of optional XMI content
+ * BaseCSorASDocumentProvider orchestrates the load and saving of optional XMI content
  * externally while maintaining the serialised human friendly form internally. 
  */
 public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
@@ -363,7 +363,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				//
 				//	ResourceSet contains
 				//		Ecore XMI resource with *.ecore URI, possibly in URIResourceMap as *.ecore
-				//		QVTimperative CS resource with *.ecore URI, in URIResourceMap as *.ecore.oclinecore
+				//		CS resource with *.ecore URI, in URIResourceMap as *.ecore.oclinecore
 				//
 				csResource.updateFrom(asResource, getOCL().getEnvironmentFactory());
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

@@ -68,6 +68,15 @@ public class PivotUtilInternal //extends PivotUtil
 	private static final Logger logger = Logger.getLogger(PivotUtilInternal.class);
 	public static boolean noDebug = true;
 	private static long startTime = System.currentTimeMillis();
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull URI appendASExtensionSuffix(@NonNull URI uri) {
+		String fileExtension = uri.fileExtension();
+		assert !fileExtension.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
+		return uri.trimFileExtension().appendFileExtension(fileExtension + PivotConstants.AS_EXTENSION_SUFFIX);
+	}
 	
 	public static void debugPrintln(@Nullable Object string) {
 		if (!noDebug) {
@@ -482,7 +491,7 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	public static boolean isASURI(@Nullable String uri) {
-		return (uri != null) && uri.endsWith("as");
+		return (uri != null) && uri.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
 	}
 
 	public static boolean isASURI(@Nullable URI uri) {
@@ -653,7 +662,7 @@ public class PivotUtilInternal //extends PivotUtil
 			}
 		}
 		for (T newElement : newElements) {				// Add any newElements not in oldElements
-			if (!newElement.eIsProxy() && !oldElements.contains(newElement)) {
+			if ((newElement != null) && !newElement.eIsProxy() && !oldElements.contains(newElement)) {
 				oldElements.add(newElement);
 			}
 		}
@@ -678,5 +687,14 @@ public class PivotUtilInternal //extends PivotUtil
 				}
 			}
 		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull URI trimASExtensionSuffix(@NonNull URI uri) {
+		String fileExtension = uri.fileExtension();
+		assert fileExtension.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
+		return uri.trimFileExtension().appendFileExtension(fileExtension.substring(0, fileExtension.length() - PivotConstants.AS_EXTENSION_SUFFIX.length()));
 	}
 }
