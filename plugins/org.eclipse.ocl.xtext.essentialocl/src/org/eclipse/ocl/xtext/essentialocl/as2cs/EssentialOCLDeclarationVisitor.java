@@ -562,7 +562,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			if (type != null) {
 				CompleteClassInternal completeClass = context.getMetamodelManager().getCompleteClass(type);
 				Iterable<@NonNull Property> properties = completeClass.getProperties(name);
-				if (Iterables.size(properties) > 1) {
+				if ((properties != null) && Iterables.size(properties) > 1) {
 					NameExpCS csOppositeNameExp = createNameExpCS(asOpposite, null);
 					SquareBracketedClauseCS csSquareBracketedClause = createSquareBracketedClauseCS(csOppositeNameExp);
 					csNameExp.getOwnedSquareBracketedClauses().add(csSquareBracketedClause);
