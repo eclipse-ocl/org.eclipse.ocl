@@ -83,7 +83,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 
 	@Override
 	public void setURI(URI uri) {
-		assert PivotUtilInternal.isASURI(uri);
+//		assert PivotUtilInternal.isASURI(uri);
 		super.setURI(uri);
 	}
 
