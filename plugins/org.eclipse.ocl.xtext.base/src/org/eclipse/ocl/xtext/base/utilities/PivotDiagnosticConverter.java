@@ -20,6 +20,8 @@ import org.eclipse.xtext.validation.DiagnosticConverterImpl;
 
 public class PivotDiagnosticConverter extends DiagnosticConverterImpl
 {
+	private boolean getLocationDataInProgress = false;
+	
 	@Override
 	protected EObject getCauser(Diagnostic diagnostic) {
 		EObject causer = super.getCauser(diagnostic);
@@ -27,7 +29,7 @@ public class PivotDiagnosticConverter extends DiagnosticConverterImpl
 			ModelElementCS csModelElement = ElementUtil.getCsElement((Element) causer);
 			if (csModelElement != null) {
 				Resource resource = csModelElement.eResource();
-				if ((resource instanceof CSResourceExtension2) && !((CSResourceExtension2)resource).isDerived()) {
+				if ((resource instanceof CSResourceExtension2) && (getLocationDataInProgress || !((CSResourceExtension2)resource).isDerived())) {
 					return csModelElement;
 				}
 			}
@@ -40,16 +42,23 @@ public class PivotDiagnosticConverter extends DiagnosticConverterImpl
 
 	@Override
 	protected IssueLocation getLocationData(Diagnostic diagnostic) {
-		if (diagnostic instanceof PivotResourceValidator.ValidationDiagnostic) {
-			PivotResourceValidator.ValidationDiagnostic node = (PivotResourceValidator.ValidationDiagnostic)diagnostic;
-			IssueLocation result = new IssueLocation();
-			result.lineNumber = node.getLine();
-			result.offset = node.getOffset();
-			result.length = node.getLength();
-			return result;
+		boolean savedGetLocationDataInProgress = getLocationDataInProgress;
+		getLocationDataInProgress = true;
+		try {
+			if (diagnostic instanceof PivotResourceValidator.ValidationDiagnostic) {
+				PivotResourceValidator.ValidationDiagnostic node = (PivotResourceValidator.ValidationDiagnostic)diagnostic;
+				IssueLocation result = new IssueLocation();
+				result.lineNumber = node.getLine();
+				result.offset = node.getOffset();
+				result.length = node.getLength();
+				return result;
+			}
+			else {
+				return super.getLocationData(diagnostic);
+			}
 		}
-		else {
-			return super.getLocationData(diagnostic);
+		finally {
+			getLocationDataInProgress = savedGetLocationDataInProgress;
 		}
 	}
 }

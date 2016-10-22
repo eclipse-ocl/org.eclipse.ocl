@@ -14,13 +14,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -57,25 +54,9 @@ public class OCLinEcoreCSResource extends EssentialOCLCSResource
 	public @NonNull ASResourceFactory getASResourceFactory() {
 		return OCLinEcoreASResourceFactory.getInstance();
 	}
-	
-	@Override
-	public @NonNull URI getASURI(@NonNull URI csURI) {
-		assert !PivotUtilInternal.isASURI(csURI); //bad		URI asURI = PivotUtilInternal.appendASExtensionSuffix(csURI);
-		return csURI.appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION); //		return super.getASURI(csURI);
-	}
 
 	@Override
 	public @NonNull String getEditorName() {
 		return "OCL in Ecore";
-	}
-
-	@Override
-	public void setURI(URI uri) {
-		assert uri != null;
-		if (PivotUtilInternal.isASURI(uri)) {
-			URI csURI = PivotUtilInternal.trimASExtensionSuffix(uri);
-			setDerived(true);
-		}
-		super.setURI(uri);
 	}
 }

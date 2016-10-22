@@ -60,7 +60,7 @@ public interface BaseCSResource extends CSResource.CSResourceExtension2
 	@NonNull String getASContentType();
 
 	/**
-	 * Return the Abstract Syntax URI for the fiven Concrete Syntax URI.
+	 * Return the Abstract Syntax URI for the given Concrete Syntax URI.
 	 */
 	@NonNull URI getASURI(@NonNull URI csURI);
 

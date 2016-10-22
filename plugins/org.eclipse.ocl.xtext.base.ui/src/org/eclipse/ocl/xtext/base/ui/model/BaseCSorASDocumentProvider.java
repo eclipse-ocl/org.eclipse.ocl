@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.BaseUiPluginHelper;
@@ -57,6 +58,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
+import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSyntaxException;
 
 /**
@@ -121,7 +123,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 	@Override
 	protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite) throws CoreException {
 		String saveAs = saveAsMap.get(document);
-		if ((element instanceof IFileEditorInput) && (document instanceof BaseDocument) && !PERSIST_AS_TEXT.equals(saveAs)) {
+		if ((element instanceof IFileEditorInput) && (document instanceof BaseDocument) && !isText(saveAs)) {
 			StringWriter xmlWriter = new StringWriter();
 			try {
 				URI uri = EditUIUtil.getURI((IFileEditorInput)element);
@@ -225,6 +227,10 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 			return true;		// Causes Save to do SaveAs
 		}
 		return super.isDeleted(element);
+	}
+
+	protected boolean isText(String loadedAs) {
+		return PERSIST_AS_TEXT.equals(loadedAs);
 	}
 
 	/**
@@ -457,6 +463,24 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 		super.setDocumentContent(document, inputStream, encoding);
 //		superSetDocumentText(document, displayText);
 //		}
+	}
+
+	@Override
+	protected void setDocumentResource(XtextDocument xtextDocument, IEditorInput editorInput, String encoding) throws CoreException {
+		super.setDocumentResource(xtextDocument, editorInput, encoding);
+		String loadedAs = loadedAsMap.get(xtextDocument);
+		if (!isText(loadedAs)) {
+			xtextDocument.readOnly(new IUnitOfWork<Object, XtextResource>()
+			{
+				@Override
+				public Object exec(XtextResource state) throws Exception {
+					if (state instanceof CSResourceExtension2) {
+						((CSResourceExtension2)state).setDerived(true);
+					}
+					return null;
+				}
+			});
+		}
 	}
 
 	public void setExportDelegateURI(Object element, String uri) {

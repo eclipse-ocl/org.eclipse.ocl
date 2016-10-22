@@ -97,36 +97,38 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 			StringWriter xmlWriter = new StringWriter();
 			try {
 				ASResource asResource = ((OCLinEcoreDocument) document).getASResource();
-				URI savedURI = asResource != null ? asResource.getURI() : null;
-				try {
-					URI uri = EditUIUtil.getURI((IFileEditorInput)element);
-					if (asResource != null) {
-						EcoreUtil.resolveAll(asResource);
-						asResource.setURI(uri);
+				URI uri = EditUIUtil.getURI((IFileEditorInput)element);
+				if (asResource != null) {
+					EcoreUtil.resolveAll(asResource);
+				}
+				if (uri == null) {
+					log.warn("No URI");
+				}
+				else if (PERSIST_AS_ECORE.equals(saveAs)) {
+					((OCLinEcoreDocument) document).saveAsEcore(xmlWriter, uri, exportDelegateURIMap.get(document));
+				}
+				else if (PERSIST_IN_ECORE.equals(saveAs)) {
+					((OCLinEcoreDocument) document).saveInEcore(xmlWriter, uri, exportDelegateURIMap.get(document));
+				}
+				else if (PERSIST_AS_PIVOT.equals(saveAs)) {
+					URI savedURI = asResource != null ? asResource.getURI() : null;
+					try {
+						if (asResource != null) {
+							asResource.setURI(uri);						// Tweak URI for simple EMF save
+						}
+						((OCLinEcoreDocument) document).saveAsPivot(xmlWriter);		// FIXME localize/avoid uri tweak
 					}
-					if (uri == null) {
-						log.warn("No URI");
-					}
-					else if (PERSIST_AS_ECORE.equals(saveAs)) {
-						((OCLinEcoreDocument) document).saveAsEcore(xmlWriter, uri, exportDelegateURIMap.get(document));
-					}
-					else if (PERSIST_IN_ECORE.equals(saveAs)) {
-						((OCLinEcoreDocument) document).saveInEcore(xmlWriter, uri, exportDelegateURIMap.get(document));
-					}
-					else if (PERSIST_AS_PIVOT.equals(saveAs)) {
-						((OCLinEcoreDocument) document).saveAsPivot(xmlWriter);
-					}
-					else if (PERSIST_AS_UML.equals(saveAs)) {
-						((OCLinEcoreDocument) document).saveAsUML(xmlWriter, uri);
-					}
-					else {
-						log.warn("Unknown saveAs '" + saveAs + "'");
+					finally {
+						if ((asResource != null) && (savedURI != null)) {
+							asResource.setURI(savedURI);				// Restore URI after simple EMF save
+						}
 					}
 				}
-				finally {
-					if ((asResource != null) && (savedURI != null)) {
-						asResource.setURI(savedURI);;
-					}
+				else if (PERSIST_AS_UML.equals(saveAs)) {
+					((OCLinEcoreDocument) document).saveAsUML(xmlWriter, uri);
+				}
+				else {
+					log.warn("Unknown saveAs '" + saveAs + "'");
 				}
 				IDocument saveDocument = new Document();
 				saveDocument.set(xmlWriter.toString());
@@ -153,6 +155,11 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 	@Override
 	protected @NonNull String getFileExtension() {
 		return "oclinecore";
+	}
+
+	@Override
+	protected boolean isText(String loadedAs) {
+		return PERSIST_AS_OCLINECORE.equals(loadedAs) || super.isText(loadedAs);
 	}
 
 	@Override

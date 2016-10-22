@@ -451,15 +451,6 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		return cs2as;
 	}
 
-/*	private @NonNull CS2AS getPseudoAdapter(@NonNull ASResource asResource, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		environmentFactory.getProjectManager();					// Ensures ProjectMap is notified of loaded resources
-		CS2AS cs2as = findCS2AS();
-		if (cs2as == null) {
-			cs2as = createCS2AS(environmentFactory, asResource);
-		}
-		return cs2as;
-	} */
-
 	@Override
 	public @NonNull String getEditorName() {
 		return "Essential OCL";
@@ -694,6 +685,13 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	public void setProjectManager(@Nullable ProjectManager projectMap) {
 		this.projectMap = projectMap;
 	}
+
+//	@Override
+//	public void setURI(URI uri) {
+//		assert uri != null;
+//		assert !PivotUtilInternal.isASURI(uri);
+//		super.setURI(uri);
+//	}
 
 	@Override
 	public void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
