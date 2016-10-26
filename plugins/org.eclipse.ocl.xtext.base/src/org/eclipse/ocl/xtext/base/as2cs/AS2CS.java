@@ -33,12 +33,36 @@ public class AS2CS extends AbstractConversion
 {	
 	public static interface Factory {
 		@NonNull BaseDeclarationVisitor createDeclarationVisitor(@NonNull AS2CSConversion converter);
+//		@NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope);
 		@NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope);
 
 		/**
 		 * Return a list of classes for which this AS2CS overrides a base AS2CS.
 		 */
 		@NonNull EClass @NonNull [] getEClasses();
+	}
+
+	public static abstract class AbstractFactory implements Factory
+	{
+		@Override
+		public @NonNull BaseDeclarationVisitor createDeclarationVisitor(@NonNull AS2CSConversion converter) {
+			return new BaseDeclarationVisitor(converter);
+		}
+	
+//		@Override
+		public @NonNull BaseReferenceVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
+			return createReferenceVisitor(converter, scope);
+		}
+	
+		@Override
+		public @NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
+			return new BaseReferenceVisitor(converter);
+		}
+
+		@Override
+		public @NonNull EClass @NonNull [] getEClasses() {
+			return new @NonNull EClass[] {};
+		}
 	}
 	
 	private @NonNull Map<EClass, Factory> factoryMap = new HashMap<EClass, Factory>();
@@ -66,6 +90,10 @@ public class AS2CS extends AbstractConversion
 
 	public @NonNull BaseDeclarationVisitor createDefaultDeclarationVisitor(@NonNull AS2CSConversion conversion) {
 		return new BaseDeclarationVisitor(conversion);
+	}
+
+	public @NonNull BaseReferenceVisitor createDefaultExpressionVisitor(@NonNull AS2CSConversion conversion) {
+		return new BaseReferenceVisitor(conversion);
 	}
 
 	public @NonNull BaseReferenceVisitor createDefaultReferenceVisitor(@NonNull AS2CSConversion conversion) {

@@ -37,7 +37,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 
 public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 {
-	public static final Logger logger = Logger.getLogger(BaseReferenceVisitor.class);
+	public static final Logger logger = Logger.getLogger(EssentialOCLReferenceVisitor.class);
 	
 	protected final @Nullable Namespace scope;
 

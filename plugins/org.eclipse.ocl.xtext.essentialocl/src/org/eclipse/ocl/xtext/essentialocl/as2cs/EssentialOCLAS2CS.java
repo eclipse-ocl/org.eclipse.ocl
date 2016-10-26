@@ -21,12 +21,11 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 import org.eclipse.ocl.xtext.base.as2cs.BaseAS2CS;
-import org.eclipse.ocl.xtext.base.as2cs.BaseReferenceVisitor;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 public class EssentialOCLAS2CS extends BaseAS2CS
 {	
-	private static final class Factory implements AS2CS.Factory
+	private static final class Factory extends AbstractFactory
 	{
 		private static AS2CS.@NonNull Factory INSTANCE = new Factory();
 
@@ -36,8 +35,8 @@ public class EssentialOCLAS2CS extends BaseAS2CS
 		}
 
 		@Override
-		public @NonNull BaseReferenceVisitor createReferenceVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
-			return new BaseReferenceVisitor(converter);
+		public @NonNull EssentialOCLExpressionVisitor createExpressionVisitor(@NonNull AS2CSConversion converter, @Nullable Namespace scope) {
+			return new EssentialOCLExpressionVisitor(converter, scope);
 		}
 
 		@Override

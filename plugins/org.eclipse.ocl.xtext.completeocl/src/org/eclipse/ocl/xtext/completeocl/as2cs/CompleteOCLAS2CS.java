@@ -30,7 +30,7 @@ import org.eclipse.ocl.xtext.essentialocl.as2cs.EssentialOCLReferenceVisitor;
 
 public class CompleteOCLAS2CS extends EssentialOCLAS2CS
 {	
-	private static final class Factory implements AS2CS.Factory
+	private static final class Factory extends AbstractFactory
 	{
 		private static AS2CS.@NonNull Factory INSTANCE = new Factory();
 
