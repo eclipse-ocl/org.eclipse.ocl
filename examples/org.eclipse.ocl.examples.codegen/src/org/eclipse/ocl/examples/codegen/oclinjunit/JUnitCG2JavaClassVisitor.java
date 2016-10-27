@@ -15,6 +15,7 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -54,8 +55,8 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 		js.pushClassBody(className);
 		if (sortedGlobals != null) {
 			generateGlobals(sortedGlobals);
+			js.append("\n");
 		}
-		js.append("\n");
 		if (expInOcl.getOwnedContext() != null) {
 			for (CGOperation cgOperation : cgClass.getOperations()) {
 				cgOperation.accept(this);
@@ -69,5 +70,10 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor<@NonNull JUnitCodeG
 		js.popClassBody(false);
 		assert js.peekClassNameStack() == null;
 		return true;
+	}
+
+	@Override
+	public @NonNull Boolean visitCGLibraryOperation(@NonNull CGLibraryOperation cgOperation) {
+		return visitCGOperation(cgOperation);
 	}
 }
