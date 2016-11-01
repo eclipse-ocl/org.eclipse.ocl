@@ -12,12 +12,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -26,7 +24,6 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -87,14 +84,12 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -1072,90 +1067,12 @@ public class PivotUtil
 	/**
 	 * Rewrite asTree and all its descendants to replace all "?." and "?->" navigations by their safe counterparts.
 	 * @since 1.3
+	 * @deprecated use PivotHelper
 	 */
+	@Deprecated	// All callers have been a local version for QVTd M3
 	public static void rewriteSafeNavigations(@NonNull EnvironmentFactory environmentFactory, @NonNull Element asTree) {
-		//
-		//	Locate all unsafe calls first to avoid CME from concurrent locate/rewrite.
-		//
-		List<@NonNull CallExp> unsafeCallExps = null;
-		if (asTree instanceof CallExp) {
-			unsafeCallExps = rewriteUnsafeCallExp_Gather(unsafeCallExps, (CallExp)asTree);
-		}
-		for (TreeIterator<EObject> tit = asTree.eAllContents(); tit.hasNext(); ) {
-			EObject eObject = tit.next();
-			if (eObject instanceof CallExp) {
-				unsafeCallExps = rewriteUnsafeCallExp_Gather(unsafeCallExps, (CallExp)eObject);
-			}
-		}
-		//
-		//	Rewrite the unsafe calls
-		//
-		if (unsafeCallExps != null) {
-			PivotMetamodelManager metamodelManager = (PivotMetamodelManager) environmentFactory.getMetamodelManager();
-			org.eclipse.ocl.pivot.Class oclAnyType = environmentFactory.getStandardLibrary().getOclAnyType();
-			Operation oclEqualsOperation = NameUtil.getNameable(oclAnyType.getOwnedOperations(), "=");
-			assert oclEqualsOperation != null;
-			org.eclipse.ocl.pivot.Class collectionType = environmentFactory.getStandardLibrary().getCollectionType();
-			Operation excludingOperation = NameUtil.getNameable(collectionType.getOwnedOperations(), "excluding");
-			assert excludingOperation != null;
-			for (CallExp unsafeCallExp : unsafeCallExps) {
-				OCLExpression source = unsafeCallExp.getOwnedSource();
-				assert source != null;
-				if (source.getType() instanceof CollectionType) {
-					rewriteUnsafeCollectionCallExp(metamodelManager, excludingOperation, unsafeCallExp);
-				}
-				else {
-					rewriteUnsafeObjectCallExp(metamodelManager, oclEqualsOperation, unsafeCallExp);
-				}
-			}
-		}
-	}
-
-	private static @Nullable List<@NonNull CallExp> rewriteUnsafeCallExp_Gather(@Nullable List<@NonNull CallExp> unsafeCallExps, @NonNull CallExp callExp) {
-		OCLExpression source = callExp.getOwnedSource();
-		if ((source != null) && callExp.isIsSafe()) {
-			if (unsafeCallExps == null) {
-				unsafeCallExps = new ArrayList<@NonNull CallExp>();
-			}
-			unsafeCallExps.add(callExp);
-		}
-		return unsafeCallExps;
-	}
-
-	private static void rewriteUnsafeCollectionCallExp(@NonNull PivotMetamodelManager metamodelManager, @NonNull Operation excludingOperation, @NonNull CallExp unsafeCollectionCallExp) {
-		unsafeCollectionCallExp.setIsSafe(false);
-		EObject eContainer = unsafeCollectionCallExp.eContainer();
-		EReference eContainmentFeature = unsafeCollectionCallExp.eContainmentFeature();
-		PivotUtilInternal.resetContainer(unsafeCollectionCallExp);
-		//
-		OCLExpression nullExpression = metamodelManager.createNullLiteralExp();
-		OCLExpression safeCollectionCallExp = PivotUtil.createOperationCallExp(unsafeCollectionCallExp, excludingOperation, nullExpression);
-		//
-		eContainer.eSet(eContainmentFeature, safeCollectionCallExp);
-	}
-
-	private static void rewriteUnsafeObjectCallExp(@NonNull PivotMetamodelManager metamodelManager, @NonNull Operation oclEqualsOperation, @NonNull CallExp unsafeObjectCallExp) {
-		unsafeObjectCallExp.setIsSafe(false);
-		EObject eContainer = unsafeObjectCallExp.eContainer();
-		EReference eContainmentFeature = unsafeObjectCallExp.eContainmentFeature();
-		PivotUtilInternal.resetContainer(unsafeObjectCallExp);
-		OCLExpression oldSourceExpression = unsafeObjectCallExp.getOwnedSource();
-		assert oldSourceExpression != null;
-		//
-		Variable unsafeSourceVariable = PivotUtil.createVariable("unsafe", oldSourceExpression);
-		OCLExpression unsafeSourceExpression1 = PivotUtil.createVariableExp(unsafeSourceVariable);
-		unsafeObjectCallExp.setOwnedSource(unsafeSourceExpression1);
-		//
-		OCLExpression unsafeSourceExpression2 = PivotUtil.createVariableExp(unsafeSourceVariable);
-		OCLExpression nullExpression = metamodelManager.createNullLiteralExp();
-		OCLExpression isUnsafeExpression = PivotUtil.createOperationCallExp(unsafeSourceExpression2, oclEqualsOperation, nullExpression);
-		//
-		OCLExpression thenExpression = metamodelManager.createNullLiteralExp();
-		OCLExpression safeObjectCallExp = metamodelManager.createIfExp(isUnsafeExpression, thenExpression, unsafeObjectCallExp);
-		//
-		LetExp safeExp = PivotUtil.createLetExp(unsafeSourceVariable, safeObjectCallExp);
-		//
-		eContainer.eSet(eContainmentFeature, safeExp);
+		PivotHelper helper = new PivotHelper(environmentFactory);
+		helper.rewriteSafeNavigations(asTree);
 	}
 
 	/**
