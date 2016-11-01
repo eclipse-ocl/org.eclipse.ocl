@@ -380,7 +380,9 @@ public class PivotUtil
 
 	/**
 	 * @since 1.1
+	 * @deprecated Use PivotHelper.createNavigationCallExp to specialize return types.
 	 */
+	@Deprecated
 	public static @NonNull NavigationCallExp createNavigationCallExp(@NonNull OCLExpression asSource, @NonNull Property asProperty) {
 		NavigationCallExp asNavigationCallExp;
 		if (asProperty.isIsImplicit()) {
@@ -425,6 +427,10 @@ public class PivotUtil
 		return asOperation;
 	}
 
+	/**
+	 * @deprecated Use PivotHelper.createOperationCallExp to specialize return types.
+	 */
+	@Deprecated
 	public static @NonNull OperationCallExp createOperationCallExp(@NonNull OCLExpression asSource, @NonNull Operation asOperation, /*@NonNull*/ OCLExpression... asArguments) {
 		OperationCallExp asCallExp = PivotFactory.eINSTANCE.createOperationCallExp();
 		asCallExp.setReferredOperation(asOperation);
