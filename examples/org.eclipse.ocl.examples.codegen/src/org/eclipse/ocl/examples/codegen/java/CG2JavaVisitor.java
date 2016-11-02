@@ -488,11 +488,13 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append("() {\n");
 		js.pushIndentation(null);
 		for (@NonNull CGCachedOperation cgFinalOperation : ClassUtil.nullFree(cgOperation.getFinalOperations())) {
+			Operation asFinalOperation = (Operation)cgFinalOperation.getAst();
+			assert asFinalOperation != null;
 			js.append("install(");
 			js.appendClassReference(null, cgFinalOperation.getParameters().get(0));
-			js.append(".class, new ");
-			js.append(getNativeOperationClassName(cgFinalOperation));
-			js.append("());\n");
+			js.append(".class, ");
+			js.append(getNativeOperationDirectInstanceName(asFinalOperation));
+			js.append(");\n");
 		}
 		js.popIndentation();
 		js.append("}\n");
@@ -548,6 +550,21 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		appendReturn(body);
 		js.popIndentation();
 		js.append("}\n");
+	}
+
+	protected void doCachedOperationClassDirectInstance(@NonNull CGOperation cgOperation) {
+		Operation asOperation = (Operation) cgOperation.getAst();
+		assert asOperation != null;
+		String name = getNativeOperationClassName(cgOperation);
+		js.append("protected final ");
+		js.appendIsRequired(true);
+		js.append(" ");
+		js.append(name);
+		js.append(" ");
+		js.append(getNativeOperationDirectInstanceName(asOperation));
+		js.append(" = new ");
+		js.append(name);
+		js.append("();\n");
 	}
 
 	protected void doCachedOperationClassInstance(@NonNull CGOperation cgOperation) {
@@ -775,8 +792,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 	}
 
-	protected @NonNull String getNativeOperationInstanceName(@NonNull Operation asOperation) {	// FIXME unique
+	protected @NonNull String getNativeOperationDirectInstanceName(@NonNull Operation asOperation) {	// FIXME unique
 		return "INST_" + getNativeOperationName(asOperation);
+	}
+
+	protected @NonNull String getNativeOperationInstanceName(@NonNull Operation asOperation) {	// FIXME unique
+		return "INSTANCE_" + getNativeOperationName(asOperation);
 	}
 
 	protected @NonNull String getNativeOperationName(@NonNull Operation asOperation) {	// FIXME unique
@@ -1020,7 +1041,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 					String title = PrettyPrinter.printName(asOperation);
 					js.appendCommentWithOCL(title+"\n", expressionInOCL);
 					//
-					js.append("protected class ");
+					js.append("public class ");
 					js.append(operationClassName);
 					js.append(" extends ");
 					js.appendClassReference(AbstractEvaluationOperation.class);
@@ -1030,9 +1051,13 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 					doCachedOperationEvaluate(cgOperation);
 					js.popClassBody(false);
 					//
-					if (cgOperation.getVirtualOperation() == null) {
+					if (cgOperation.getVirtualOperations().size() <= 0) {
 						js.append("\n");
 						doCachedOperationClassInstance(cgOperation);
+					}
+					else {
+						js.append("\n");
+						doCachedOperationClassDirectInstance(cgOperation);
 					}
 				}
 			}
