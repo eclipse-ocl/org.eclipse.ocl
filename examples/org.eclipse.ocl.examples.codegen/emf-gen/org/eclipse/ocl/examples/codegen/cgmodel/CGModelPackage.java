@@ -2197,13 +2197,13 @@ public interface CGModelPackage extends EPackage {
 	int CG_CACHED_OPERATION__FINAL_OPERATIONS = CG_OPERATION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Virtual Operation</b></em>' reference.
+	 * The feature id for the '<em><b>Virtual Operations</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CG_CACHED_OPERATION__VIRTUAL_OPERATION = CG_OPERATION_FEATURE_COUNT + 1;
+	int CG_CACHED_OPERATION__VIRTUAL_OPERATIONS = CG_OPERATION_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>CG Cached Operation</em>' class.
@@ -9212,15 +9212,15 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGCachedOperation_FinalOperations();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getVirtualOperation <em>Virtual Operation</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getVirtualOperations <em>Virtual Operations</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Virtual Operation</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getVirtualOperation()
+	 * @return the meta object for the reference list '<em>Virtual Operations</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation#getVirtualOperations()
 	 * @see #getCGCachedOperation()
 	 * @generated
 	 */
-	EReference getCGCachedOperation_VirtualOperation();
+	EReference getCGCachedOperation_VirtualOperations();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp <em>CG Cached Operation Call Exp</em>}'.
@@ -11439,12 +11439,12 @@ public interface CGModelPackage extends EPackage {
 		EReference CG_CACHED_OPERATION__FINAL_OPERATIONS = eINSTANCE.getCGCachedOperation_FinalOperations();
 
 		/**
-		 * The meta object literal for the '<em><b>Virtual Operation</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Virtual Operations</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CG_CACHED_OPERATION__VIRTUAL_OPERATION = eINSTANCE.getCGCachedOperation_VirtualOperation();
+		EReference CG_CACHED_OPERATION__VIRTUAL_OPERATIONS = eINSTANCE.getCGCachedOperation_VirtualOperations();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationCallExpImpl <em>CG Cached Operation Call Exp</em>}' class.

@@ -17,12 +17,10 @@ package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -39,7 +37,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationImpl#getFinalOperations <em>Final Operations</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationImpl#getVirtualOperation <em>Virtual Operation</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCachedOperationImpl#getVirtualOperations <em>Virtual Operations</em>}</li>
  * </ul>
  *
  * @generated
@@ -56,14 +54,14 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	protected EList<CGCachedOperation> finalOperations;
 
 	/**
-	 * The cached value of the '{@link #getVirtualOperation() <em>Virtual Operation</em>}' reference.
+	 * The cached value of the '{@link #getVirtualOperations() <em>Virtual Operations</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getVirtualOperation()
+	 * @see #getVirtualOperations()
 	 * @generated
 	 * @ordered
 	 */
-	protected CGCachedOperation virtualOperation;
+	protected EList<CGCachedOperation> virtualOperations;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -92,7 +90,7 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public List<CGCachedOperation> getFinalOperations() {
 		if (finalOperations == null) {
-			finalOperations = new EObjectWithInverseResolvingEList<CGCachedOperation>(CGCachedOperation.class, this, CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS, CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATION);
+			finalOperations = new EObjectWithInverseResolvingEList.ManyInverse<CGCachedOperation>(CGCachedOperation.class, this, CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS, CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS);
 		}
 		return finalOperations;
 	}
@@ -103,60 +101,11 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	 * @generated
 	 */
 	@Override
-	public CGCachedOperation getVirtualOperation() {
-		if (virtualOperation != null && virtualOperation.eIsProxy()) {
-			InternalEObject oldVirtualOperation = (InternalEObject)virtualOperation;
-			virtualOperation = (CGCachedOperation)eResolveProxy(oldVirtualOperation);
-			if (virtualOperation != oldVirtualOperation) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATION, oldVirtualOperation, virtualOperation));
-			}
+	public List<CGCachedOperation> getVirtualOperations() {
+		if (virtualOperations == null) {
+			virtualOperations = new EObjectWithInverseResolvingEList.ManyInverse<CGCachedOperation>(CGCachedOperation.class, this, CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS, CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS);
 		}
-		return virtualOperation;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public CGCachedOperation basicGetVirtualOperation() {
-		return virtualOperation;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetVirtualOperation(CGCachedOperation newVirtualOperation, NotificationChain msgs) {
-		CGCachedOperation oldVirtualOperation = virtualOperation;
-		virtualOperation = newVirtualOperation;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATION, oldVirtualOperation, newVirtualOperation);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setVirtualOperation(CGCachedOperation newVirtualOperation) {
-		if (newVirtualOperation != virtualOperation) {
-			NotificationChain msgs = null;
-			if (virtualOperation != null)
-				msgs = ((InternalEObject)virtualOperation).eInverseRemove(this, CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS, CGCachedOperation.class, msgs);
-			if (newVirtualOperation != null)
-				msgs = ((InternalEObject)newVirtualOperation).eInverseAdd(this, CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS, CGCachedOperation.class, msgs);
-			msgs = basicSetVirtualOperation(newVirtualOperation, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATION, newVirtualOperation, newVirtualOperation));
+		return virtualOperations;
 	}
 
 	/**
@@ -170,10 +119,8 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 		switch (featureID) {
 			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getFinalOperations()).basicAdd(otherEnd, msgs);
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATION:
-				if (virtualOperation != null)
-					msgs = ((InternalEObject)virtualOperation).eInverseRemove(this, CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS, CGCachedOperation.class, msgs);
-				return basicSetVirtualOperation((CGCachedOperation)otherEnd, msgs);
+			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getVirtualOperations()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -188,8 +135,8 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 		switch (featureID) {
 			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
 				return ((InternalEList<?>)getFinalOperations()).basicRemove(otherEnd, msgs);
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATION:
-				return basicSetVirtualOperation(null, msgs);
+			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+				return ((InternalEList<?>)getVirtualOperations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -204,9 +151,8 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 		switch (featureID) {
 			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
 				return getFinalOperations();
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATION:
-				if (resolve) return getVirtualOperation();
-				return basicGetVirtualOperation();
+			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+				return getVirtualOperations();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -224,8 +170,9 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 				getFinalOperations().clear();
 				getFinalOperations().addAll((Collection<? extends CGCachedOperation>)newValue);
 				return;
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATION:
-				setVirtualOperation((CGCachedOperation)newValue);
+			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+				getVirtualOperations().clear();
+				getVirtualOperations().addAll((Collection<? extends CGCachedOperation>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -242,8 +189,8 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
 				getFinalOperations().clear();
 				return;
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATION:
-				setVirtualOperation((CGCachedOperation)null);
+			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+				getVirtualOperations().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -259,8 +206,8 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 		switch (featureID) {
 			case CGModelPackage.CG_CACHED_OPERATION__FINAL_OPERATIONS:
 				return finalOperations != null && !finalOperations.isEmpty();
-			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATION:
-				return virtualOperation != null;
+			case CGModelPackage.CG_CACHED_OPERATION__VIRTUAL_OPERATIONS:
+				return virtualOperations != null && !virtualOperations.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
