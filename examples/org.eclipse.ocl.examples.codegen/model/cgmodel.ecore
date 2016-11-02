@@ -42,9 +42,9 @@
       <details key="documentation" value="A native operation that must be called using the native calling convention."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="finalOperations" upperBound="-1"
-        eType="#//CGCachedOperation" eOpposite="#//CGCachedOperation/virtualOperation"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="virtualOperation" eType="#//CGCachedOperation"
-        eOpposite="#//CGCachedOperation/finalOperations"/>
+        eType="#//CGCachedOperation" eOpposite="#//CGCachedOperation/virtualOperations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="virtualOperations" upperBound="-1"
+        eType="#//CGCachedOperation" eOpposite="#//CGCachedOperation/finalOperations"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGCachedOperationCallExp" eSuperTypes="#//CGOperationCallExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" lowerBound="1"
