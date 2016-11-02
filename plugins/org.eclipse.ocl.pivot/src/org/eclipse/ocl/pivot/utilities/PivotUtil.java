@@ -917,6 +917,13 @@ public class PivotUtil
 		}
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Operation subOperation) {
+		return ClassUtil.nonNullState(subOperation.getOwningClass());
+	}
+
 	public static org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EObject object) {
 		for (EObject eObject = object; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof org.eclipse.ocl.pivot.Package) {

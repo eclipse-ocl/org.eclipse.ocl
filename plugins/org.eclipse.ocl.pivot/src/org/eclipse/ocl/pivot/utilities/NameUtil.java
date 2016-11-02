@@ -58,8 +58,28 @@ public class NameUtil
 			return ClassUtil.safeCompareTo(n1, n2);
 		}
 	}
+	
+	/**
+	 * @since 1.3
+	 */
+	public static final class ToStringComparator implements Comparator<@NonNull Object>
+	{
+		public static final @NonNull ToStringComparator INSTANCE = new ToStringComparator();
+
+		@Override
+		public int compare(@NonNull Object o1, @NonNull Object o2) {
+			String s1 = o1.toString();
+			String s2 = o2.toString();
+			return ClassUtil.safeCompareTo(s1, s2);
+		}
+	}
 
 	public static final @NonNull NameableComparator NAMEABLE_COMPARATOR = NameableComparator.INSTANCE;
+	
+	/**
+	 * @since 1.3
+	 */
+	public static final @NonNull ToStringComparator TO_STRING_COMPARATOR = ToStringComparator.INSTANCE;
 
 	public static String debugFullName(Object object) {
 		if (object == null) {
@@ -83,7 +103,7 @@ public class NameUtil
 		if (elements == null)
 			return null;
 		for (T element : elements)
-			if (ClassUtil.safeEquals(name, element.getName()))
+			if ((element != null) && ClassUtil.safeEquals(name, element.getName()))
 				return element;
 		return null;				
 	}
@@ -97,7 +117,7 @@ public class NameUtil
 		if (returnClass == null)
 			return null;
 		for (T element : elements)
-			if (returnClass.isAssignableFrom(element.getClass()) && ClassUtil.safeEquals(name, element.getName()))
+			if ((element != null) && returnClass.isAssignableFrom(element.getClass()) && ClassUtil.safeEquals(name, element.getName()))
 				return (R) element;
 		return null;				
 	}
@@ -106,7 +126,7 @@ public class NameUtil
 		if (elements == null)
 			return null;
 		for (T element : elements)
-			if (ClassUtil.safeEquals(name, element.getName()))
+			if ((element != null) && ClassUtil.safeEquals(name, element.getName()))
 				return element;
 		return null;				
 	}

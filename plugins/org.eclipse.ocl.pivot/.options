@@ -27,11 +27,14 @@ org.eclipse.ocl.pivot/projectMap/resolve=false
 # Trace maintenance of CompleteClasses 
 org.eclipse.ocl.pivot/completeClasses=false
 
+# Trace maintenance of CompletePackages 
+org.eclipse.ocl.pivot/completePackages=false
+
 # Trace maintenance of cached evaluations 
 org.eclipse.ocl.pivot/evaluations=false
 
-# Trace maintenance of CompletePackages 
-org.eclipse.ocl.pivot/completePackages=false
+# Trace maintenance of FinalAnalysis 
+org.eclipse.ocl.pivot/finalAnaysis=false
 
 # Trace maintenance of PartialClasses 
 org.eclipse.ocl.pivot/partialClasses=false

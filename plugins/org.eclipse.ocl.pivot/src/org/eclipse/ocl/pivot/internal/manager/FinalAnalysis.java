@@ -28,28 +28,44 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public class FinalAnalysis
 {
+	/**
+	 * @since 1.3
+	 */
+	public static final @NonNull TracingOption FINAL_ANALYSIS = new TracingOption(PivotPlugin.PLUGIN_ID, "finalAnalysis");
+
 	protected final @NonNull CompleteModelInternal completeModel;
 	/* @Deprecated - not needed - compute from completeModel */
 	@Deprecated
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 
-	private final @NonNull Map<@NonNull CompleteClass, @NonNull Set<@NonNull CompleteClass>> superCompleteClass2subCompleteClasses = new HashMap<@NonNull CompleteClass, @NonNull Set<@NonNull CompleteClass>>();
-	private final @NonNull Map<@NonNull Operation, @Nullable Set<@NonNull Operation>> operation2overrides = new HashMap<@NonNull Operation, @Nullable Set<@NonNull Operation>>();
+	/**
+	 * Map from a CompleteClass to all its sub CompleteClasses.
+	 */
+	private final @NonNull Map<@NonNull CompleteClass, @NonNull Set<@NonNull CompleteClass>> superCompleteClass2subCompleteClasses = new HashMap<>();
+
+	/**
+	 * Map from an Operation to all its overrides, including itself. In the degenerate common case of no overrides, the single entry set is replaced by null.
+	 */
+	private final @NonNull Map<@NonNull Operation, @Nullable Set<@NonNull Operation>> operation2overrides = new HashMap<>();
 
 	public FinalAnalysis(@NonNull CompleteModelInternal completeModel) {
 		this.completeModel = completeModel;
-		this.metamodelManager = completeModel.getMetamodelManager();
+		PivotMetamodelManager metamodelManager = completeModel.getMetamodelManager();
+		this.metamodelManager = metamodelManager;
 		for (@NonNull CompletePackage completePackage :  completeModel.getAllCompletePackages()) {
 			for (@NonNull CompleteClass subCompleteClass :  ClassUtil.nullFree(completePackage.getOwnedCompleteClasses())) {
 				for (@NonNull CompleteClass superCompleteClass : subCompleteClass.getSuperCompleteClasses()) {
 					Set<@NonNull CompleteClass> subCompleteClasses = superCompleteClass2subCompleteClasses.get(superCompleteClass);
 					if (subCompleteClasses == null) {
-						subCompleteClasses = new HashSet<@NonNull CompleteClass>();
+						subCompleteClasses = new HashSet<>();
 						superCompleteClass2subCompleteClasses.put(superCompleteClass, subCompleteClasses);
 					}
 					subCompleteClasses.add(subCompleteClass);
@@ -67,13 +83,13 @@ public class FinalAnalysis
 				for (@NonNull CompleteClass subCompleteClass : subCompleteClasses) {
 					if (subCompleteClass != superCompleteClass) {
 						for (@NonNull Operation subOperation : subCompleteClass.getOperations(null)) {
-							if (opName.equals(subOperation.getName()) && parametersId.equals(subOperation.getParametersId())) {
+							if (opName.equals(subOperation.getName()) && parametersId.equals(subOperation.getParametersId()) && completeModel.getCompleteClass(PivotUtil.getOwningClass(subOperation)).conformsTo(superCompleteClass)) {
 								LibraryFeature subImplementation = metamodelManager.getImplementation(subOperation);
 								if ((domainImplementation != subImplementation)
 										|| (domainOperation.getBodyExpression() != subOperation.getBodyExpression())
 										|| (domainOperation.getTypeId() != subOperation.getTypeId())) {
 									if (overrides == null) {
-										overrides = new HashSet<@NonNull Operation>();
+										overrides = new HashSet<>();
 										overrides.add(domainOperation);
 									}
 									overrides.add(subOperation);
@@ -84,6 +100,11 @@ public class FinalAnalysis
 				}
 				operation2overrides.put(domainOperation, overrides);
 			}
+		}
+		if (FINAL_ANALYSIS.isActive()) {
+			StringBuilder s = new StringBuilder();
+			print(s);
+			FINAL_ANALYSIS.println(s.toString());
 		}
 	}
 
@@ -108,7 +129,7 @@ public class FinalAnalysis
 		if (overrides == null) {
 			return Collections.singletonList(operation);
 		}
-		List<@NonNull Operation> results = new ArrayList<@NonNull Operation>();
+		List<@NonNull Operation> results = new ArrayList<>();
 		StandardLibraryInternal standardLibrary = completeModel.getStandardLibrary();
 		CompleteInheritance requiredInheritance = completeClass.getCompleteInheritance();
 		for (@NonNull Operation override : overrides) {
@@ -166,7 +187,7 @@ public class FinalAnalysis
 	}
 
 	public void print(@NonNull StringBuilder s) {
-		List<@NonNull CompleteClass> completeClasses = new ArrayList<@NonNull CompleteClass>(superCompleteClass2subCompleteClasses.keySet());
+		List<@NonNull CompleteClass> completeClasses = new ArrayList<>(superCompleteClass2subCompleteClasses.keySet());
 		Collections.sort(completeClasses, NameUtil.NAMEABLE_COMPARATOR);
 		s.append("Final types");
 		for (@NonNull CompleteClass completeClass : completeClasses) {
@@ -184,6 +205,20 @@ public class FinalAnalysis
 				s.append(completeClass.getName());
 			}
 		}
+		List<@NonNull Operation> allOperations = new ArrayList<>(operation2overrides.keySet());
+		Collections.sort(allOperations, NameUtil.TO_STRING_COMPARATOR);
+		for (@NonNull Operation asOperation : allOperations) {
+			Set<@NonNull Operation> overrides = operation2overrides.get(asOperation);
+			if (overrides != null) {
+				List<@NonNull Operation> allOverrides = new ArrayList<>(overrides);
+				Collections.sort(allOverrides, NameUtil.TO_STRING_COMPARATOR);
+				s.append("\n" + asOperation);
+				for (@NonNull Operation asOverride : allOverrides) {
+					s.append("\n\t" + asOverride);
+				}
+			}
+		}
+
 	}
 
 }
