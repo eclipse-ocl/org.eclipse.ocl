@@ -43,8 +43,8 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * @generated
  */
 public class TypeExpImpl
-		extends OCLExpressionImpl
-		implements TypeExp {
+extends OCLExpressionImpl
+implements TypeExp {
 
 	/**
 	 * The cached value of the '{@link #getReferredType() <em>Referred Type</em>}' reference.
@@ -327,4 +327,13 @@ public class TypeExpImpl
 		return getReferredType();
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public Type getTypeValue() {
+		return getReferredType();
+	}
 } //TypeExpImpl
