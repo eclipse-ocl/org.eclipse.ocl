@@ -891,6 +891,17 @@ public class JavaStream
 		append("\"");
 	}
 
+	public boolean appendSuppressWarningsNull(boolean newLine) {
+		if (!isUseNullAnnotations()) {
+			return false;
+		}
+		append("@SuppressWarnings(\"null\")");
+		if (newLine) {
+			append("\n");
+		}
+		return true;
+	}
+
 	public void appendThis(@NonNull String className) {
 		String currentClassName = classNameStack.peek();
 		if (!className.equals(currentClassName)) {

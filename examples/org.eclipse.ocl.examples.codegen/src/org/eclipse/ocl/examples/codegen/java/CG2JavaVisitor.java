@@ -456,8 +456,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	protected void appendSuppressWarningsNull(@NonNull CGValuedElement cgActual, Boolean isNonNull) {
 		boolean isRequired = cgActual.isNonNull();
 		boolean isPrimitive = js.isPrimitive(cgActual);
-		if (!isPrimitive && isRequired && (isNonNull != Boolean.TRUE) && js.isUseNullAnnotations()) {
-			js.append("@SuppressWarnings(\"null\")\n");
+		if (!isPrimitive && isRequired && (isNonNull != Boolean.TRUE)) {
+			js.appendSuppressWarningsNull(true);
 		}
 	}
 
@@ -538,7 +538,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append("@SuppressWarnings(\"unchecked\") ");
 			}
 			else if (cgParameter.isRequired()) {
-				js.append("@SuppressWarnings(\"null\") ");
+				if (js.appendSuppressWarningsNull(false)) {
+					js.append(" ");
+				}
 			}
 			js.appendDeclaration(cgParameter);
 			js.append(" = (");
@@ -585,11 +587,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	protected void doCachedOperationEvaluate(@NonNull CGOperation cgOperation) {
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
-		if (cgOperation.getASTypeId() instanceof CollectionTypeId) {
+		if (cgOperation.isEcore() && (cgOperation.getASTypeId() instanceof CollectionTypeId)) {
 			js.append("@SuppressWarnings(\"unchecked\")\n");
 		}
-		else if ((isRequiredReturn == Boolean.TRUE) && js.isUseNullAnnotations()) {
-			js.append("@SuppressWarnings(\"null\")\n");
+		else if ((isRequiredReturn == Boolean.TRUE)) {
+			js.appendSuppressWarningsNull(true);
 		}
 		js.append("public ");
 		//				boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
@@ -2687,8 +2689,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		boolean isRequired = cgTuplePartCallExp.isNonNull();
 		boolean isPrimitive = js.isPrimitive(cgTuplePartCallExp);
-		if (!isPrimitive && isRequired /*&& (ecoreIsRequired == Boolean.FALSE)*/ && js.isUseNullAnnotations()) {
-			js.append("@SuppressWarnings(\"null\")\n");
+		if (!isPrimitive && isRequired /*&& (ecoreIsRequired == Boolean.FALSE)*/) {
+			js.appendSuppressWarningsNull(true);
 		}
 		js.appendDeclaration(cgTuplePartCallExp);
 		js.append(" = ");
