@@ -17,6 +17,9 @@ authority
 collapseSegments
  (Z)[Ljava/lang/String;
  (Z)[1L1java/lang/String;
+createFileURI
+ (Ljava/lang/String;)Lorg/eclipse/emf/common/util/URI;
+ (Ljava/lang/String;)L1org/eclipse/emf/common/util/URI;
 createPlatformPluginURI
  (Ljava/lang/String;Z)Lorg/eclipse/emf/common/util/URI;
  (Ljava/lang/String;Z)L1org/eclipse/emf/common/util/URI;
