@@ -2916,15 +2916,10 @@ public class OCLstdlib extends ASResourceImpl
 			op_Boolean__lt__gt_.setPrecedence(prec_EQUALITY);
 			op_Boolean__eq_.setPrecedence(prec_EQUALITY);
 			op_Boolean_and.setPrecedence(prec_AND);
-			op_Boolean_and2.setPrecedence(prec_AND);
 			op_Boolean_implies.setPrecedence(prec_IMPLIES);
-			op_Boolean_implies2.setPrecedence(prec_IMPLIES);
 			op_Boolean_not.setPrecedence(prec_UNARY);
-			op_Boolean_not2.setPrecedence(prec_UNARY);
 			op_Boolean_or.setPrecedence(prec_OR);
-			op_Boolean_or2.setPrecedence(prec_OR);
 			op_Boolean_xor.setPrecedence(prec_XOR);
-			op_Boolean_xor2.setPrecedence(prec_XOR);
 			op_Integer__mul_.setPrecedence(prec_MULTIPLICATIVE);
 			op_Integer__add_.setPrecedence(prec_ADDITIVE);
 			op_Integer__neg_.setPrecedence(prec_UNARY);

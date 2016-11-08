@@ -36,7 +36,7 @@
         <ownedComments body="Returns oclText[Set{false, true}]."/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Boolean.and2..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2"
-          isRequired="false" name="and2" precedence="#Z.AND" type="#Boolean">
+          isRequired="false" name="and2" type="#Boolean">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = false then false&#xA;&#x9;&#x9;      else if b = false then false&#xA;&#x9;&#x9;      else true&#xA;&#x9;&#x9;      endif endif"
             type="#Boolean">
           <ownedBody xsi:type="pivot:IfExp" type="#Boolean">
@@ -144,7 +144,7 @@
         <ownedParameters xmi:id="p0o.ocl.Boolean.and..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Boolean.implies2..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2"
-          isRequired="false" name="implies2" precedence="#Z.IMPLIES" type="#Boolean">
+          isRequired="false" name="implies2" type="#Boolean">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = false then true&#xA;&#x9;&#x9;      else if b = true then true&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif endif"
             type="#Boolean">
           <ownedBody xsi:type="pivot:IfExp" type="#Boolean">
@@ -248,7 +248,7 @@
         <ownedParameters xmi:id="p0o.ocl.Boolean.implies..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Boolean.not2" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2" name="not2"
-          precedence="#Z.UNARY" type="#Boolean">
+          type="#Boolean">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self then false else true endif" type="#Boolean">
           <ownedBody xsi:type="pivot:IfExp" type="#Boolean">
             <ownedCondition xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.7/@bodyExpression/@ownedContext"
@@ -290,7 +290,7 @@
         <ownedComments body="oclText[true] if oclText[self] is oclText[false].&#xA;oclText[false] if oclText[self] is oclText[true].&#xA;oclText[null] if oclText[self] is oclText[null].&#xA;Otherwise oclText[invalid].&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Boolean.or2..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2"
-          isRequired="false" name="or2" precedence="#Z.OR" type="#Boolean">
+          isRequired="false" name="or2" type="#Boolean">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = true then true&#xA;&#x9;&#x9;&#x9;  else if b = true then true&#xA;&#x9;&#x9;      else false&#xA;&#x9;&#x9;      endif endif"
             type="#Boolean">
           <ownedBody xsi:type="pivot:IfExp" type="#Boolean">
@@ -397,7 +397,7 @@
         <ownedComments body="Converts oclText[self] to a string value.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Boolean.xor2..ocl.Boolean" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2"
-          isRequired="false" name="xor2" precedence="#Z.XOR" type="#Boolean">
+          isRequired="false" name="xor2" type="#Boolean">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self &lt;> b" type="#Boolean">
           <ownedBody xsi:type="pivot:OperationCallExp" name="&lt;>" referredOperation="#o.ocl.Boolean.%60%%62%..ocl.OclSelf" type="#Boolean">
             <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.12/@bodyExpression/@ownedParameters.0"

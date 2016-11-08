@@ -80,88 +80,88 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	protected OCLstdlibSwitch<@Nullable Adapter> modelSwitch =
-		new OCLstdlibSwitch<@Nullable Adapter>() {
-			@Override
-			public <T> Adapter caseBag(Bag<T> object) {
-				return createBagAdapter();
-			}
-			@Override
-			public <T> Adapter caseCollection(Collection<T> object) {
-				return createCollectionAdapter();
-			}
-			@Override
-			public Adapter caseOclAny(Object object) {
-				return createOclAnyAdapter();
-			}
-			@Override
-			public Adapter caseOclComparable(Object object) {
-				return createOclComparableAdapter();
-			}
-			@Override
-			public Adapter caseOclElement(Object object) {
-				return createOclElementAdapter();
-			}
-			@Override
-			public Adapter caseOclInvalid(Object object) {
-				return createOclInvalidAdapter();
-			}
-			@Override
-			public Adapter caseOclLambda(Object object) {
-				return createOclLambdaAdapter();
-			}
-			@Override
-			public Adapter caseOclMessage(Object object) {
-				return createOclMessageAdapter();
-			}
-			@Override
-			public Adapter caseOclState(Object object) {
-				return createOclStateAdapter();
-			}
-			@Override
-			public Adapter caseOclStereotype(Object object) {
-				return createOclStereotypeAdapter();
-			}
-			@Override
-			public Adapter caseOclSummable(Object object) {
-				return createOclSummableAdapter();
-			}
-			@Override
-			public Adapter caseOclTuple(Object object) {
-				return createOclTupleAdapter();
-			}
-			@Override
-			public Adapter caseOclType(Object object) {
-				return createOclTypeAdapter();
-			}
-			@Override
-			public Adapter caseOclVoid(Object object) {
-				return createOclVoidAdapter();
-			}
-			@Override
-			public <T> Adapter caseOrderedCollection(Collection<T> object) {
-				return createOrderedCollectionAdapter();
-			}
-			@Override
-			public <T> Adapter caseOrderedSet(OrderedSet<T> object) {
-				return createOrderedSetAdapter();
-			}
-			@Override
-			public <T> Adapter caseSequence(List<T> object) {
-				return createSequenceAdapter();
-			}
-			@Override
-			public <T> Adapter caseSet(Set<T> object) {
-				return createSetAdapter();
-			}
-			@Override
-			public <T> Adapter caseUniqueCollection(Collection<T> object) {
-				return createUniqueCollectionAdapter();
-			}
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+			new OCLstdlibSwitch<@Nullable Adapter>() {
+		@Override
+		public <T> Adapter caseBag(Bag<T> object) {
+			return createBagAdapter();
+		}
+		@Override
+		public <T> Adapter caseCollection(Collection<T> object) {
+			return createCollectionAdapter();
+		}
+		@Override
+		public Adapter caseOclAny(Object object) {
+			return createOclAnyAdapter();
+		}
+		@Override
+		public Adapter caseOclComparable(Object object) {
+			return createOclComparableAdapter();
+		}
+		@Override
+		public Adapter caseOclElement(Object object) {
+			return createOclElementAdapter();
+		}
+		@Override
+		public Adapter caseOclInvalid(Object object) {
+			return createOclInvalidAdapter();
+		}
+		@Override
+		public Adapter caseOclLambda(Object object) {
+			return createOclLambdaAdapter();
+		}
+		@Override
+		public Adapter caseOclMessage(Object object) {
+			return createOclMessageAdapter();
+		}
+		@Override
+		public Adapter caseOclState(Object object) {
+			return createOclStateAdapter();
+		}
+		@Override
+		public Adapter caseOclStereotype(Object object) {
+			return createOclStereotypeAdapter();
+		}
+		@Override
+		public Adapter caseOclSummable(Object object) {
+			return createOclSummableAdapter();
+		}
+		@Override
+		public Adapter caseOclTuple(Object object) {
+			return createOclTupleAdapter();
+		}
+		@Override
+		public Adapter caseOclType(Object object) {
+			return createOclTypeAdapter();
+		}
+		@Override
+		public Adapter caseOclVoid(Object object) {
+			return createOclVoidAdapter();
+		}
+		@Override
+		public <T> Adapter caseOrderedCollection(Collection<T> object) {
+			return createOrderedCollectionAdapter();
+		}
+		@Override
+		public <T> Adapter caseOrderedSet(OrderedSet<T> object) {
+			return createOrderedSetAdapter();
+		}
+		@Override
+		public <T> Adapter caseSequence(List<T> object) {
+			return createSequenceAdapter();
+		}
+		@Override
+		public <T> Adapter caseSet(Set<T> object) {
+			return createSetAdapter();
+		}
+		@Override
+		public <T> Adapter caseUniqueCollection(Collection<T> object) {
+			return createUniqueCollectionAdapter();
+		}
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

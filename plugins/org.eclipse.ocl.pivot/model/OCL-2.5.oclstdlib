@@ -182,7 +182,7 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
 	Otherwise oclText[true].
 	**/
-	operation and2(b : Boolean[?]) : Boolean[?] precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2'
+	operation and2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2'
 	{
 		body: if self = false then false
 		      else if b = false then false
@@ -215,7 +215,7 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
 	Otherwise oclText[false].
 	**/
-	operation implies2(b : Boolean[?]) : Boolean[?] precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2'
+	operation implies2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2'
 	{
 		body: if self = false then true
 		      else if b = true then true
@@ -247,7 +247,7 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	oclText[true] if oclText[self] is oclText[false].
 	Otherwise oclText[false].
 	**/
-	operation not2() : Boolean[1] precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2'
+	operation not2() : Boolean[1] => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2'
 	{
 		body: if self then false else true endif;
 	}
@@ -268,7 +268,7 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	oclText[true] if either oclText[self] or oclText[b] is oclText[true].
 	Otherwise oclText[false]. 
 	**/
-	operation or2(b : Boolean[?]) : Boolean[?] precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2'
+	operation or2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2'
 	{
 		body: if self = true then true
 			  else if b = true then true
@@ -304,7 +304,7 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	oclText[true] if oclText[self] <> oclText[b]
 	Otherwise oclText[false].
 	**/
-	operation xor2(b : Boolean[?]) : Boolean[?] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2'
+	operation xor2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2'
 	{
 		body: self <> b;
 	}
