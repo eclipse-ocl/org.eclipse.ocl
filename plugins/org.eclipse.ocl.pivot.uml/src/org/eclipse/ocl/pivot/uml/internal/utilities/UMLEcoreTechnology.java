@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.InstanceSlotNavigationProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLBaseProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLExtensionProperty;
+import org.eclipse.ocl.pivot.uml.internal.library.UMLRedefinedNavigationProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLStereotypeProperty;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -86,6 +87,10 @@ public class UMLEcoreTechnology extends AbstractTechnology
 					return new InstanceSlotNavigationProperty((org.eclipse.uml2.uml.Property)eTarget, collectionTypeId);
 				}
 			}
+		}
+		List<Property> redefinedProperties = property.getRedefinedProperties();
+		if (redefinedProperties.size() > 0) {
+			return new UMLRedefinedNavigationProperty(environmentFactory.getCompleteModel(), property);
 		}
 		return super.createExplicitNavigationPropertyImplementation(environmentFactory, asNavigationExp, sourceValue, property);
 	}

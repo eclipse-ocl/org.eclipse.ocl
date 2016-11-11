@@ -921,8 +921,15 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
-	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Operation subOperation) {
-		return ClassUtil.nonNullState(subOperation.getOwningClass());
+	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Operation operation) {
+		return ClassUtil.nonNullState(operation.getOwningClass());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Type getOwningClass(@NonNull Property property) {
+		return ClassUtil.nonNullState(property.getOwningClass());
 	}
 
 	public static org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EObject object) {
@@ -948,6 +955,13 @@ public class PivotUtil
 		@SuppressWarnings("unchecked")
 		T castElement = (T) pivotElement;
 		return castElement;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@NonNull Property> getRedefinedProperties(@NonNull Property property) {
+		return ClassUtil.nullFree(property.getRedefinedProperties());
 	}
 
 	public static Feature getReferredFeature(CallExp callExp) {
