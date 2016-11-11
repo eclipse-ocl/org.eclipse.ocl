@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Profile xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_t32PEKgJEeatLuJHQg7WhA" name="RootElement" metaclassReference="_xFhE8KgJEeatLuJHQg7WhA _zDZG4KgJEeatLuJHQg7WhA">
+  <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8-OYUagJEeatLuJHQg7WhA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_csMwgKgLEeak5_xkUKtnhA" name="RootElement" nsURI="http:///schemas/RootElement/_csK7UKgLEeak5_xkUKtnhA/2" nsPrefix="RootElement">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_csN-o6gLEeak5_xkUKtnhA" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_csN-pKgLEeak5_xkUKtnhA" key="Version" value="0.0.3"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_csN-pagLEeak5_xkUKtnhA" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_csN-pqgLEeak5_xkUKtnhA" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_csN-p6gLEeak5_xkUKtnhA" key="Date" value="2016-11-11"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_csN-qKgLEeak5_xkUKtnhA" key="Author" value=""/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_csMwgagLEeak5_xkUKtnhA" name="MyLifeline1">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_csMwgqgLEeak5_xkUKtnhA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_1_LikKgJEeatLuJHQg7WhA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_csMwg6gLEeak5_xkUKtnhA" name="base_Lifeline" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_csMwhagLEeak5_xkUKtnhA" name="MyMessage">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_csMwhqgLEeak5_xkUKtnhA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_3bo5gKgJEeatLuJHQg7WhA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_csMwh6gLEeak5_xkUKtnhA" name="base_Message" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_csMwiagLEeak5_xkUKtnhA" name="MyLifeline2">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_csMwiqgLEeak5_xkUKtnhA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_LC1ikKgKEeatLuJHQg7WhA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_csMwi6gLEeak5_xkUKtnhA" name="base_Lifeline" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_QkOHgagKEeatLuJHQg7WhA" name="RootElement" nsURI="http:///schemas/RootElement/_QkOHgKgKEeatLuJHQg7WhA/1" nsPrefix="RootElement">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_QkOHkagKEeatLuJHQg7WhA" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QkOHkqgKEeatLuJHQg7WhA" key="Version" value="0.0.2"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QkOHk6gKEeatLuJHQg7WhA" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QkOHlKgKEeatLuJHQg7WhA" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QkOHlagKEeatLuJHQg7WhA" key="Date" value="2016-11-11"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QkOHlqgKEeatLuJHQg7WhA" key="Author" value=""/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_QkOHgqgKEeatLuJHQg7WhA" name="MyLifeline1">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_QkOHg6gKEeatLuJHQg7WhA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_1_LikKgJEeatLuJHQg7WhA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_QkOHhKgKEeatLuJHQg7WhA" name="base_Lifeline" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_QkOHhqgKEeatLuJHQg7WhA" name="MyMessage">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_QkOHh6gKEeatLuJHQg7WhA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_3bo5gKgJEeatLuJHQg7WhA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_QkOHiKgKEeatLuJHQg7WhA" name="base_Message" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_QkOHiqgKEeatLuJHQg7WhA" name="MyLifeLine2">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_QkOHi6gKEeatLuJHQg7WhA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_LC1ikKgKEeatLuJHQg7WhA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_QkOHjKgKEeatLuJHQg7WhA" name="base_Lifeline" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_8-O_YKgJEeatLuJHQg7WhA" name="RootElement" nsURI="http:///schemas/RootElement/_8-OYUKgJEeatLuJHQg7WhA/0" nsPrefix="RootElement">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8-O_a6gJEeatLuJHQg7WhA" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_8-O_bKgJEeatLuJHQg7WhA" key="Version" value="0.0.1"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_8-O_bagJEeatLuJHQg7WhA" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_8-O_bqgJEeatLuJHQg7WhA" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_8-O_b6gJEeatLuJHQg7WhA" key="Date" value="2016-11-11"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_8-O_cKgJEeatLuJHQg7WhA" key="Author" value=""/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_8-O_YagJEeatLuJHQg7WhA" name="MyLifeline">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8-O_YqgJEeatLuJHQg7WhA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_1_LikKgJEeatLuJHQg7WhA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_8-O_Y6gJEeatLuJHQg7WhA" name="base_Lifeline" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Lifeline"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_8-O_ZagJEeatLuJHQg7WhA" name="MyMessage">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8-O_ZqgJEeatLuJHQg7WhA" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_3bo5gKgJEeatLuJHQg7WhA"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_8-O_Z6gJEeatLuJHQg7WhA" name="base_Message" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Message"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+  </eAnnotations>
+  <elementImport xmi:type="uml:ElementImport" xmi:id="_xFhE8KgJEeatLuJHQg7WhA" alias="Lifeline">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Lifeline"/>
+  </elementImport>
+  <elementImport xmi:type="uml:ElementImport" xmi:id="_zDZG4KgJEeatLuJHQg7WhA" alias="Message">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Message"/>
+  </elementImport>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_1_LikKgJEeatLuJHQg7WhA" name="MyLifeline1">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_OzxdkagKEeatLuJHQg7WhA" name="base_Lifeline" association="_Ozw2gKgKEeatLuJHQg7WhA">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Lifeline"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_3bo5gKgJEeatLuJHQg7WhA" name="MyMessage">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_7GtdEqgJEeatLuJHQg7WhA" name="base_Message" association="_7GtdEKgJEeatLuJHQg7WhA">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Message"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_7GtdEKgJEeatLuJHQg7WhA" name="E_MyMessage_Message1" memberEnd="_7GtdEagJEeatLuJHQg7WhA _7GtdEqgJEeatLuJHQg7WhA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_7GtdEagJEeatLuJHQg7WhA" name="extension_MyMessage" type="_3bo5gKgJEeatLuJHQg7WhA" aggregation="composite" association="_7GtdEKgJEeatLuJHQg7WhA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_LC1ikKgKEeatLuJHQg7WhA" name="MyLifeline2">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_PawlEagKEeatLuJHQg7WhA" name="base_Lifeline" association="_Pav-AKgKEeatLuJHQg7WhA">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Lifeline"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_Ozw2gKgKEeatLuJHQg7WhA" name="E_MyLifeline1_Lifeline1" memberEnd="_OzxdkKgKEeatLuJHQg7WhA _OzxdkagKEeatLuJHQg7WhA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_OzxdkKgKEeatLuJHQg7WhA" name="extension_MyLifeline1" type="_1_LikKgJEeatLuJHQg7WhA" aggregation="composite" association="_Ozw2gKgKEeatLuJHQg7WhA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_Pav-AKgKEeatLuJHQg7WhA" name="E_MyLifeline2_Lifeline1" memberEnd="_PawlEKgKEeatLuJHQg7WhA _PawlEagKEeatLuJHQg7WhA">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_PawlEKgKEeatLuJHQg7WhA" name="extension_MyLifeline2" type="_LC1ikKgKEeatLuJHQg7WhA" aggregation="composite" association="_Pav-AKgKEeatLuJHQg7WhA"/>
+  </packagedElement>
+</uml:Profile>
