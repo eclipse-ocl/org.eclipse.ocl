@@ -116,6 +116,23 @@ public class UMLConsoleTests extends AbstractConsoleTests
 		consolePage.cancelValidation();
 	}
 
+	public void testConsole_Bug507406() throws Exception {
+		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
+
+		URI testModelURI = getProjectFileURI("Bug507406.uml");
+        Resource umlResource = resourceSet.getResource(testModelURI, true);
+        org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
+        org.eclipse.uml2.uml.Interaction interaction1 = (org.eclipse.uml2.uml.Interaction)model.getOwnedType("Interaction1");
+        org.eclipse.uml2.uml.Message message = interaction1.getMessage("Message");
+        //
+		assertConsoleResult(consolePage, message, "self", "RootElement::Interaction1::Message\n");
+		assertConsoleResult(consolePage, message, "self.receiveEvent", "RootElement::Interaction1::MessageRecv\n");
+		assertConsoleResult(consolePage, message, "self.receiveEvent.oclAsType(MessageOccurrenceSpecification).covered", "RootElement::Interaction1::Lifeline0\n");
+		assertConsoleResult(consolePage, message, "self.receiveEvent.oclAsType(MessageOccurrenceSpecification).covered.extension_MyLifeline2", "Lifeline0$MyLifeline2\n");
+		//
+		consolePage.cancelValidation();
+	}
+
 	@SuppressWarnings({"unused"})
 	public void testConsole_UML() throws Exception {
 		doDelete(PLUGIN_ID);

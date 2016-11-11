@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:RootElement="http:///schemas/RootElement/_csK7UKgLEeak5_xkUKtnhA/2" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/RootElement/_csK7UKgLEeak5_xkUKtnhA/2 Bug507406Profile.uml#_csMwgKgLEeak5_xkUKtnhA">
+  <uml:Model xmi:id="_xgXYcKgKEeak5_xkUKtnhA" name="RootElement">
+    <packagedElement xmi:type="uml:Interaction" xmi:id="_xh0xAKgKEeak5_xkUKtnhA" name="Interaction1">
+      <lifeline xmi:type="uml:Lifeline" xmi:id="_zrqLUKgKEeak5_xkUKtnhA" name="Lifeline" coveredBy="_3R0ZsKgKEeak5_xkUKtnhA"/>
+      <lifeline xmi:type="uml:Lifeline" xmi:id="_0JNC8KgKEeak5_xkUKtnhA" name="Lifeline0" coveredBy="_3R1AwKgKEeak5_xkUKtnhA"/>
+      <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_3R0ZsKgKEeak5_xkUKtnhA" name="MessageSend" covered="_zrqLUKgKEeak5_xkUKtnhA" message="_3RxWYKgKEeak5_xkUKtnhA"/>
+      <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_3R1AwKgKEeak5_xkUKtnhA" name="MessageRecv" covered="_0JNC8KgKEeak5_xkUKtnhA" message="_3RxWYKgKEeak5_xkUKtnhA"/>
+      <message xmi:type="uml:Message" xmi:id="_3RxWYKgKEeak5_xkUKtnhA" name="Message" messageSort="asynchCall" receiveEvent="_3R1AwKgKEeak5_xkUKtnhA" sendEvent="_3R0ZsKgKEeak5_xkUKtnhA"/>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_xj9fAKgKEeak5_xkUKtnhA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dghwcKgLEeak5_xkUKtnhA" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dghwcagLEeak5_xkUKtnhA" key="Version" value="0.0.3"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dghwcqgLEeak5_xkUKtnhA" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dghwc6gLEeak5_xkUKtnhA" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dghwdKgLEeak5_xkUKtnhA" key="Date" value="2016-11-11"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dghwdagLEeak5_xkUKtnhA" key="Author" value=""/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_xj-tIKgKEeak5_xkUKtnhA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="Bug507406Profile.uml#_csMwgKgLEeak5_xkUKtnhA"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="Bug507406Profile.uml#_t32PEKgJEeatLuJHQg7WhA"/>
+    </profileApplication>
+  </uml:Model>
+  <RootElement:MyLifeline2 xmi:id="_1Lke4KgKEeak5_xkUKtnhA" base_Lifeline="_0JNC8KgKEeak5_xkUKtnhA"/>
+  <RootElement:MyLifeline1 xmi:id="_2W-iEKgKEeak5_xkUKtnhA" base_Lifeline="_zrqLUKgKEeak5_xkUKtnhA"/>
+  <RootElement:MyMessage xmi:id="_3zoGQKgKEeak5_xkUKtnhA" base_Message="_3RxWYKgKEeak5_xkUKtnhA"/>
+</xmi:XMI>

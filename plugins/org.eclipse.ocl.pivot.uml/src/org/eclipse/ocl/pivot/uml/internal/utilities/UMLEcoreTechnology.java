@@ -87,6 +87,10 @@ public class UMLEcoreTechnology extends AbstractTechnology
 				}
 			}
 		}
+		List<Property> redefinedProperties = property.getRedefinedProperties();
+		if (redefinedProperties.size() > 0) {
+			return new UMLRedefinedNavigationProperty(environmentFactory.getCompleteModel(), property);
+		}
 		return super.createExplicitNavigationPropertyImplementation(environmentFactory, asNavigationExp, sourceValue, property);
 	}
 
