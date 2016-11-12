@@ -1,0 +1,4 @@
+class java/util/AbstractCollection
+toArray
+ <T:Ljava/lang/Object;>([TT;)[TT;
+ <T:Ljava/lang/Object;>([1TT;)[1TT;
