@@ -275,13 +275,13 @@
     </rm:provider>
   </rm:searchPath>
   <rm:searchPath name="xtext">
-    <!--rm:provider componentTypes="osgi.bundle,eclipse.feature" resolutionFilter="(&amp;(resolve.target.platform=true)(|(build.type=I)(build.type=N)(&amp;(resolve.n4s=true)(build.type=S))))" readerType="p2" source="false" mutable="false">
+    <rm:provider componentTypes="osgi.bundle,eclipse.feature" resolutionFilter="(&amp;(resolve.target.platform=true)(|(build.type=I)(build.type=N)(&amp;(resolve.n4s=true)(build.type=S))))" readerType="p2" source="false" mutable="false">
       <rm:property key="buckminster.source" value="false"/>
       <rm:property key="buckminster.mutable" value="false"/>
       <rm:uri format="{0}/modeling/tmf/updates/nightly">
         <bc:propertyRef key="eclipse.download"/>
       </rm:uri>
-    </rm:provider-->
+    </rm:provider>
     <rm:provider componentTypes="osgi.bundle,eclipse.feature" resolutionFilter="(&amp;(resolve.target.platform=true)(|(build.type=I)(build.type=N)(build.type=S)))" readerType="p2" source="false" mutable="false">
       <rm:property key="buckminster.source" value="false"/>
       <rm:property key="buckminster.mutable" value="false"/>
