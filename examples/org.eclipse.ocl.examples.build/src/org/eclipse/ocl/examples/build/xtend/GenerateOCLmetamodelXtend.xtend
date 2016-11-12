@@ -19,13 +19,20 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 	protected override String declareClassTypes(/*@NonNull*/ Model root) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
+		var Package pkg = root.ownedPackages.findPackage();
 		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());
 		'''
 		«FOR pkge : sortedPackages»
 
-			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-				private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
-			«ENDFOR»
+			«IF pkg == pkge»
+				«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
+					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
+				«ENDFOR»
+			«ELSE»
+				«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
+					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
+				«ENDFOR»
+			«ENDIF»
 		«ENDFOR»
 		'''
 	}
