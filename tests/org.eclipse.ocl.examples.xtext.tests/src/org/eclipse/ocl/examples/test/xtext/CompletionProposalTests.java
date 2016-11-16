@@ -49,28 +49,28 @@ import com.google.inject.Injector;
 
 /**
  * Tests that completion proposals include expected results and/or exclude unwanted offerings.
- * 
+ *
  * It is not intended to provide exhaustive testing of all possible proposals.
- * 
+ *
  * It is assumed that the grammar-driven capabilities of Xtext will be generally correct.
- * 
+ *
  * There we test first to conform that completion propsals exist and so detect whether some
  * unwanted evolution has occurred in Xtext or its usage.
- * 
+ *
  * Then we test known challenging cases especially regressions.
  */
 @SuppressWarnings("null")
 public class CompletionProposalTests extends XtextTestCase
-{		
+{
 	public static interface IReferenceCompletionProposal
 	{
 		boolean covers(@NonNull ICompletionProposal aProposal);
 	}
-	
+
 	public static class ReferenceCompletionProposal implements IReferenceCompletionProposal
 	{
 		protected final @NonNull String name;
-		
+
 		public ReferenceCompletionProposal(@NonNull String name) {
 			this.name = name;
 		}
@@ -86,9 +86,9 @@ public class CompletionProposalTests extends XtextTestCase
 		@Override
 		public String toString() {
 			return name;
-		}	
+		}
 	}
-	
+
 	public static class ReferenceConfigurableCompletionProposal extends ReferenceCompletionProposal implements IReferenceCompletionProposal
 	{
 		public ReferenceConfigurableCompletionProposal(@NonNull String name) {
@@ -101,9 +101,9 @@ public class CompletionProposalTests extends XtextTestCase
 				return false;
 			}
 			return super.covers(aProposal);
-		}	
+		}
 	}
-	
+
 	public static class ReferenceXtextTemplateProposal extends ReferenceCompletionProposal
 	{
 		public ReferenceXtextTemplateProposal(@NonNull String name) {
@@ -116,9 +116,9 @@ public class CompletionProposalTests extends XtextTestCase
 				return false;
 			}
 			return super.covers(aProposal);
-		}	
+		}
 	}
-	
+
 	public static final @NonNull IReferenceCompletionProposal abstractKeywordProposal = new ReferenceConfigurableCompletionProposal("abstract");
 	public static final @NonNull IReferenceCompletionProposal annotationTemplateProposal = new ReferenceXtextTemplateProposal("Annotation - annotation declaration");
 	public static final @NonNull IReferenceCompletionProposal selfKeywordProposal = new ReferenceConfigurableCompletionProposal(PivotConstants.SELF_NAME);
@@ -165,6 +165,9 @@ public class CompletionProposalTests extends XtextTestCase
 		document.set(trueContent);
 		ITextViewer viewer = editor.getInternalSourceViewer();
 		ICompletionProposal[] actualProposals = contentAssistProcessor.computeCompletionProposals(viewer, cursorIndex);
+//		for (ICompletionProposal actualProposal : actualProposals) {
+//			System.out.println(actualProposal);
+//		}
 		if (expectedProposals != null) {
 			for (IReferenceCompletionProposal expectedProposal : expectedProposals) {
 				assertIncludes(actualProposals, expectedProposal);
@@ -176,7 +179,7 @@ public class CompletionProposalTests extends XtextTestCase
 			}
 		}
 	}
-	
+
 	@Override
 	protected void setUp() throws Exception {
 		JavaClassScope.SUPPRESS_WORK_THREAD = true;
@@ -188,28 +191,28 @@ public class CompletionProposalTests extends XtextTestCase
 			throws CoreException, PartInitException, IOException {
 		contentAssistProcessor = injector.getInstance(XtextContentAssistProcessor.class);
 		InputStream inputStream = new URIConverter.ReadableInputStream(initialContent, "UTF-8");
-		IProject project = TestUtil.createJavaProject("CompletionProposalTests");	
+		IProject project = TestUtil.createJavaProject("CompletionProposalTests");
 		TestUtil.createIFile(TestUtil.createFolder(project, "META-INF"), "MANIFEST.MF",
 			"Manifest-Version: 1.0\n"+
-			"Bundle-ManifestVersion: 2\n"+
-			"Bundle-Name: CompletionProposalTests\n"+
-			"Bundle-SymbolicName: CompletionProposalTests\n"+
-			"Bundle-Version: 1.0.0.qualifier\n"+
-			"Bundle-RequiredExecutionEnvironment: JavaSE-1.7\n"+
-			"Require-Bundle: org.eclipse.ocl.pivot\n"+
-			"");
+					"Bundle-ManifestVersion: 2\n"+
+					"Bundle-Name: CompletionProposalTests\n"+
+					"Bundle-SymbolicName: CompletionProposalTests\n"+
+					"Bundle-Version: 1.0.0.qualifier\n"+
+					"Bundle-RequiredExecutionEnvironment: JavaSE-1.7\n"+
+					"Require-Bundle: org.eclipse.ocl.pivot\n"+
+				"");
 		TestUtil.createIFile(project, ".classpath",
-			"<classpath>\n" + 
-			"			<classpathentry kind=\"con\" path=\"org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7\"/>\n" + 
-			"			<classpathentry kind=\"con\" path=\"org.eclipse.pde.core.requiredPlugins\"/>\n" + 
-			"			<classpathentry kind=\"src\" path=\"src\"/>\n" + 
-			"			<classpathentry kind=\"output\" path=\"bin\"/>\n" + 
-			"		</classpath>\n"+
-			"");
+			"<classpath>\n" +
+					"			<classpathentry kind=\"con\" path=\"org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7\"/>\n" +
+					"			<classpathentry kind=\"con\" path=\"org.eclipse.pde.core.requiredPlugins\"/>\n" +
+					"			<classpathentry kind=\"src\" path=\"src\"/>\n" +
+					"			<classpathentry kind=\"output\" path=\"bin\"/>\n" +
+					"		</classpath>\n"+
+				"");
 		TestUtil.createIFile(TestUtil.createFolder(project, "src"), "Test.java",
 			"import org.eclipse.emf.ecore.provider.*;\n"+
-			"public class Test {}\n"+
-			"");
+					"public class Test {}\n"+
+				"");
 		project.build(IncrementalProjectBuilder.FULL_BUILD, null);
 		FileEditorInput fileEditorInput = TestUIUtil.createFileEditorInput(project, fileName, inputStream);
 		IWorkbench workbench = PlatformUI.getWorkbench();
@@ -221,6 +224,10 @@ public class CompletionProposalTests extends XtextTestCase
 	public void testEditor_OCLinEcore_Completions() throws Exception {
 		Injector injector = OCLinEcoreActivator.getInstance().getInjector(OCLinEcoreActivator.ORG_ECLIPSE_OCL_XTEXT_OCLINECORE_OCLINECORE);
 		doSetUp(OCLinEcoreUiModule.EDITOR_ID, injector, "completion.oclinecore", "package test : test = 'test' {}");
+		//		for (int i = 0; i < 100; i++) {
+		//			TestUIUtil.flushEvents();
+		//			Thread.sleep(100);
+		//		}
 		doTestEditor("package p : p = 'p' {$}",
 			new IReferenceCompletionProposal[]{abstractKeywordProposal, annotationTemplateProposal}, null);
 		doTestEditor("package p : p = 'p' { class C { invariant I:$}}",
@@ -234,20 +241,24 @@ public class CompletionProposalTests extends XtextTestCase
 		Injector injector = OCLstdlibActivator.getInstance().getInjector(OCLstdlibActivator.ORG_ECLIPSE_OCL_XTEXT_OCLSTDLIB_OCLSTDLIB);
 		doSetUp(OCLstdlibUiModule.EDITOR_ID, injector, "completion.oclstdlib",
 			"import 'http://www.eclipse.org/ocl/2015/Library';\n" +
-			"library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library' {\n" +
-			"	type Complex : PrimitiveType {\n" +
-			"	}\n" +
-			"}';\n");
+					"library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library' {\n" +
+					"	type Complex : PrimitiveType {\n" +
+					"	}\n" +
+				"}';\n");
+		//		for (int i = 0; i < 100; i++) {
+		//			TestUIUtil.flushEvents();
+		//			Thread.sleep(100);
+		//		}
 		try {
 			IReferenceCompletionProposal proposal1a = new ReferenceConfigurableCompletionProposal("PrimitiveType");
 			IReferenceCompletionProposal proposal1b = new ReferenceConfigurableCompletionProposal("{");
 			doTestEditor(
 				"import 'http://www.eclipse.org/ocl/2015/Library';\n" +
-				"library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library' {\n" +
-				"	type Complex : Primitive$ {\n" +
-				"	}\n" +
-				"}';\n",
-				new IReferenceCompletionProposal[]{proposal1a, proposal1b}, null);
+						"library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library' {\n" +
+						"	type Complex : Primitive$ {\n" +
+						"	}\n" +
+						"}';\n",
+						new IReferenceCompletionProposal[]{proposal1a, proposal1b}, null);
 			//
 			//	Completion proposal that probably resolves to a Jar entry.
 			//
@@ -255,12 +266,12 @@ public class CompletionProposalTests extends XtextTestCase
 			IReferenceCompletionProposal proposal2b = new ReferenceConfigurableCompletionProposal("org.eclipse.emf.common.util.ResourceLocator");
 			doTestEditor(
 				"import 'http://www.eclipse.org/ocl/2015/Library';\n" +
-				"library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library' {\n" +
-				"	type Complex : PrimitiveType {\n" +
-				"		operation testing() : String => 'org.eclipse.emf.common.util.R$';\n" +
-				"	}\n" +
-				"}';\n",
-				new IReferenceCompletionProposal[]{proposal2a, proposal2b}, null);
+						"library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library' {\n" +
+						"	type Complex : PrimitiveType {\n" +
+						"		operation testing() : String => 'org.eclipse.emf.common.util.R$';\n" +
+						"	}\n" +
+						"}';\n",
+						new IReferenceCompletionProposal[]{proposal2a, proposal2b}, null);
 			//
 			//	Completion proposal that probably resolves to a folder entry.
 			//
@@ -268,12 +279,12 @@ public class CompletionProposalTests extends XtextTestCase
 			IReferenceCompletionProposal proposal3b = new ReferenceConfigurableCompletionProposal("org.eclipse.ocl.pivot.internal.ids.OclVoidTypeIdImpl");
 			doTestEditor(
 				"import 'http://www.eclipse.org/ocl/2015/Library';\n" +
-				"library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library' {\n" +
-				"	type Complex : PrimitiveType {\n" +
-				"		operation testing() : String => 'org.eclipse.ocl.pivot.internal.ids.O$';\n" +
-				"	}\n" +
-				"}';\n",
-				new IReferenceCompletionProposal[]{proposal3a, proposal3b}, null);
+						"library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library' {\n" +
+						"	type Complex : PrimitiveType {\n" +
+						"		operation testing() : String => 'org.eclipse.ocl.pivot.internal.ids.O$';\n" +
+						"	}\n" +
+						"}';\n",
+						new IReferenceCompletionProposal[]{proposal3a, proposal3b}, null);
 		}
 		finally {
 			doTearDown(editor);

@@ -99,14 +99,14 @@ public class JavaClassScope extends AbstractJavaClassScope
 	 * IProject to help resolve references in an Eclipse context.
 	 */
 	private final @Nullable IProject project;
-	
+
 	/**
 	 * Map from known class names to their allocated EObjects.
 	 */
 	private final @NonNull Map<@NonNull String, @NonNull JavaClassCS> name2class = new HashMap<@NonNull String, @NonNull JavaClassCS>();
-	
+
 	private boolean doneFullScan = false;
-	
+
 	/* @deprecated use Iterable argument */
 	@Deprecated
 	public JavaClassScope(@NonNull ClassLoader classLoader) {
@@ -154,10 +154,10 @@ public class JavaClassScope extends AbstractJavaClassScope
 			} catch (JavaModelException e) {
 			}
 		}
-//		else {
-//			scanClassPath(classNames);
-//			scanBundles(classNames);
-//		}
+		//		else {
+		//			scanClassPath(classNames);
+		//			scanBundles(classNames);
+		//		}
 		for (@NonNull String className : classNames) {
 			getEObjectDescription(className);
 		}
@@ -172,6 +172,13 @@ public class JavaClassScope extends AbstractJavaClassScope
 			getAdapter(importedResource, project);
 		}
 	}
+
+//	@Override
+//	public Iterable<IEObjectDescription> getAllElements() {
+//		Iterable<IEObjectDescription> allElements = super.getAllElements();
+//		System.out.println("getAllElements => " + Iterables.size(allElements));
+//		return allElements;
+//	}
 
 	@Override
 	protected Iterable<IEObjectDescription> getAllLocalElements() {
@@ -248,7 +255,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		});
 		return result;
 	}
-	
+
 	@Override
 	public IEObjectDescription getSingleElement(QualifiedName qualifiedName) {
 		String name = qualifiedName.toString();
@@ -321,8 +328,8 @@ public class JavaClassScope extends AbstractJavaClassScope
 			return null;
 		}
 	}
-	
-/*	private void scanJar(@NonNull File file, @NonNull Set<String> classNames) {
+
+	/*	private void scanJar(@NonNull File file, @NonNull Set<String> classNames) {
 //		System.out.println("registerBundle " + file);
 		JarFile jarFile = null;
 		try {
@@ -351,7 +358,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 
 	} */
 
-/*	protected @Nullable IProjectDescriptor registerProject(@NonNull File file) {
+	/*	protected @Nullable IProjectDescriptor registerProject(@NonNull File file) {
 		System.out.println("registerProject " + file);
 		FileInputStream inputStream = null;
 		try {
@@ -376,8 +383,8 @@ public class JavaClassScope extends AbstractJavaClassScope
 		}
 		return null;
 	} */
-	
-/*	private void scanBundles(@NonNull Set<String> classNames) {
+
+	/*	private void scanBundles(@NonNull Set<String> classNames) {
 		for (IBundleGroupProvider bundleGroupProvider : Platform.getBundleGroupProviders()) {
 			for (IBundleGroup bundleGroup : bundleGroupProvider.getBundleGroups()) {
 				for (Bundle bundle : bundleGroup.getBundles()) {
@@ -407,12 +414,12 @@ public class JavaClassScope extends AbstractJavaClassScope
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}				
+				}
 			}
 		}
 	} */
-	
-/*	private void scanClassPath(@NonNull IClasspathEntry @NonNull [] resolvedClasspath, @NonNull Set<String> classNames) {
+
+	/*	private void scanClassPath(@NonNull IClasspathEntry @NonNull [] resolvedClasspath, @NonNull Set<String> classNames) {
 //		String property = System.getProperty("java.class.path");
 //		String separator = System.getProperty("path.separator");
 //		if (property != null) {
@@ -450,7 +457,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		}
 	} */
 
-/*	protected boolean scanFolder(@NonNull File f, @NonNull Set<String> alreadyVisited, int depth) {
+	/*	protected boolean scanFolder(@NonNull File f, @NonNull Set<String> alreadyVisited, int depth) {
 		try {
 			if (!alreadyVisited.add(f.getCanonicalPath()))
 				return true;
@@ -477,7 +484,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 		return containsProject || dotProject != null;
 	} */
 
-/*	private void scanFolder(@NonNull File folder, @NonNull Set<String> classNames, @NonNull String prefix, @NonNull String bundle) {
+	/*	private void scanFolder(@NonNull File folder, @NonNull Set<String> classNames, @NonNull String prefix, @NonNull String bundle) {
 //		System.out.println("scanFolder " + folder);
 		File[] files = folder.listFiles();
 		if (files != null) {
@@ -505,7 +512,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 							if (className != null) {
 								System.out.println("     entry " + prefix + "." + className);
 								classNames.add(prefix + "." + className);
-							}					
+							}
 						}
 					}
 				}
@@ -515,7 +522,7 @@ public class JavaClassScope extends AbstractJavaClassScope
 
 	private void scanJavaElements(IJavaElement[] elements, Set<String> classNames) {
 		for (IJavaElement element : elements) {
-//			System.out.println(getClass().getSimpleName() + " : " + element);
+			//			System.out.println(getClass().getSimpleName() + " : " + element);
 			if (element instanceof IType) {
 				IType iType = (IType)element;
 				classNames.add(iType.getFullyQualifiedName());

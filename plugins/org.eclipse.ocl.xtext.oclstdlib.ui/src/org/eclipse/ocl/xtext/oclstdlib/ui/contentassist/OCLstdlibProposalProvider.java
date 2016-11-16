@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.oclstdlib.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.xtext.oclstdlib.ui.contentassist.AbstractOCLstdlibProposalProvider;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
@@ -24,4 +23,13 @@ public class OCLstdlibProposalProvider extends AbstractOCLstdlibProposalProvider
 	public void complete_PrimitiveTypeIdentifier(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		proposeKeywordAlternatives(ruleCall, context, acceptor, getPrimitiveTypeImage());
 	}
+
+//	@Override
+//	protected ConfigurableCompletionProposal doCreateProposal(String proposal,
+//			StyledString displayString, Image image, int replacementOffset,
+//			int replacementLength) {
+//		System.out.println("Create " + displayString);
+//		return super.doCreateProposal(proposal, displayString, image, replacementOffset,
+//			replacementLength);
+//	}
 }
