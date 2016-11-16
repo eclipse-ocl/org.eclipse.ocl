@@ -1726,13 +1726,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	/**
-	 * Create implicit an opposite property if there is no explicit opposite.
+	 * Create an implicit opposite property if there is no explicit opposite.
 	 */
 	public void installPropertyDeclaration(@NonNull Property thisProperty) {
 		// We cannot detect ambiguous opposites reliably since a later Property might invalidate previously ok derived opposites
-		if ((thisProperty.isIsTransient() || thisProperty.isIsVolatile()) && !thisProperty.isIsDerived()) {		// FIXME Are any exclusions justified?
-			return;
-		}
+		//		if ((thisProperty.isIsTransient() || thisProperty.isIsVolatile()) && !thisProperty.isIsDerived()) {		// FIXME Are any exclusions justified?
+		//			return;
+		//		}
 		Property opposite = thisProperty.getOpposite();
 		if (opposite != null) {
 			return;
