@@ -928,7 +928,7 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
-	public static @NonNull Type getOwningClass(@NonNull Property property) {
+	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Property property) {
 		return ClassUtil.nonNullState(property.getOwningClass());
 	}
 
