@@ -573,10 +573,10 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	@Override
 	public @Nullable String visitCompleteClass(@NonNull CompleteClass object) {
-		List<org.eclipse.ocl.pivot.Class> partialClasses = object.getPartialClasses();
+		List<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = ClassUtil.nullFree(object.getPartialClasses());
 		int size = partialClasses.size();
 		if (size > 0) {
-			partialClasses.get(0).accept(this);
+			append(ToStringVisitor.toString(partialClasses.get(0)));
 		}
 		else {
 			appendName(object);
