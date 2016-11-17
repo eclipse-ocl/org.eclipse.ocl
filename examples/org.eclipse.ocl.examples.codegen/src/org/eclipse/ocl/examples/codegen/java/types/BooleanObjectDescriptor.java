@@ -64,7 +64,25 @@ public class BooleanObjectDescriptor extends SimpleValueDescriptor implements Si
 	@Override
 	public void appendEqualsValue(@NonNull JavaStream js, @NonNull CGValuedElement thisValue,
 			@NonNull CGValuedElement thatValue, boolean notEquals) {
-		super.appendEqualsValue(js, thisValue, thatValue, notEquals);
+		boolean thisIsNonNull = thisValue.isNonNull();
+		boolean thatIsNonNull = thatValue.isNonNull();
+		if (thisIsNonNull || !thatIsNonNull) {
+			js.appendValueName(thisValue);
+		}
+		else {
+			js.append("(");
+			js.appendValueName(thisValue);
+			js.append(" == Boolean.TRUE)");
+		}
+		js.append(notEquals ? " != " : " == ");
+		if (thatIsNonNull || !thisIsNonNull) {
+			js.appendValueName(thatValue);
+		}
+		else {
+			js.append("(");
+			js.appendValueName(thatValue);
+			js.append(" == Boolean.TRUE)");
+		}
 	}
 
 	@Override
