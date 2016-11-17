@@ -17,130 +17,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.ocl.pivot.Annotation;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.AssociationClass;
-import org.eclipse.ocl.pivot.AssociationClassCallExp;
-import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.Behavior;
-import org.eclipse.ocl.pivot.BooleanLiteralExp;
-import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CallOperationAction;
-import org.eclipse.ocl.pivot.CollectionItem;
-import org.eclipse.ocl.pivot.CollectionKind;
-import org.eclipse.ocl.pivot.CollectionLiteralExp;
-import org.eclipse.ocl.pivot.CollectionLiteralPart;
-import org.eclipse.ocl.pivot.CollectionRange;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.ConnectionPointReference;
-import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.ShadowExp;
-import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Detail;
-import org.eclipse.ocl.pivot.DynamicBehavior;
-import org.eclipse.ocl.pivot.DynamicElement;
-import org.eclipse.ocl.pivot.DynamicProperty;
-import org.eclipse.ocl.pivot.DynamicType;
-import org.eclipse.ocl.pivot.DynamicValueSpecification;
-import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.EnumLiteralExp;
-import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.Feature;
-import org.eclipse.ocl.pivot.FeatureCallExp;
-import org.eclipse.ocl.pivot.FinalState;
-import org.eclipse.ocl.pivot.IfExp;
-import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.InstanceSpecification;
-import org.eclipse.ocl.pivot.IntegerLiteralExp;
-import org.eclipse.ocl.pivot.InvalidLiteralExp;
-import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.IterateExp;
-import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.IteratorExp;
-import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.LanguageExpression;
-import org.eclipse.ocl.pivot.LetExp;
-import org.eclipse.ocl.pivot.Library;
-import org.eclipse.ocl.pivot.LiteralExp;
-import org.eclipse.ocl.pivot.LoopExp;
-import org.eclipse.ocl.pivot.MapLiteralExp;
-import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.MessageExp;
-import org.eclipse.ocl.pivot.MessageType;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.NullLiteralExp;
-import org.eclipse.ocl.pivot.NumericLiteralExp;
-import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.OppositePropertyCallExp;
-import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.OrphanCompletePackage;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
-import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
-import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Profile;
-import org.eclipse.ocl.pivot.ProfileApplication;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.Pseudostate;
-import org.eclipse.ocl.pivot.PseudostateKind;
-import org.eclipse.ocl.pivot.RealLiteralExp;
-import org.eclipse.ocl.pivot.ReferringElement;
-import org.eclipse.ocl.pivot.Region;
-import org.eclipse.ocl.pivot.SelfType;
-import org.eclipse.ocl.pivot.SendSignalAction;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.Signal;
-import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.State;
-import org.eclipse.ocl.pivot.StateExp;
-import org.eclipse.ocl.pivot.StateMachine;
-import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.TemplateableElement;
-import org.eclipse.ocl.pivot.Transition;
-import org.eclipse.ocl.pivot.TransitionKind;
-import org.eclipse.ocl.pivot.Trigger;
-import org.eclipse.ocl.pivot.TupleLiteralExp;
-import org.eclipse.ocl.pivot.TupleLiteralPart;
-import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypeExp;
-import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
-import org.eclipse.ocl.pivot.UnspecifiedValueExp;
-import org.eclipse.ocl.pivot.ValueSpecification;
-import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.Vertex;
-import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
@@ -153,9 +30,8 @@ import org.eclipse.ocl.pivot.utilities.Pivotable;
  * @see org.eclipse.ocl.pivot.PivotPackage
  * @generated
  */
-@SuppressWarnings("cast")
 public class PivotValidator
-		extends EObjectValidator {
+extends EObjectValidator {
 
 	/**
 	 * The cached model package
@@ -769,7 +645,7 @@ public class PivotValidator
 	 */
 	@Override
 	protected EPackage getEPackage() {
-	  return PivotPackage.eINSTANCE;
+		return PivotPackage.eINSTANCE;
 	}
 
 	/**
@@ -877,12 +753,16 @@ public class PivotValidator
 				return validateIteration((Iteration)value, diagnostics, context);
 			case PivotPackage.ITERATOR_EXP:
 				return validateIteratorExp((IteratorExp)value, diagnostics, context);
+			case PivotPackage.ITERATOR_VARIABLE:
+				return validateIteratorVariable((IteratorVariable)value, diagnostics, context);
 			case PivotPackage.LAMBDA_TYPE:
 				return validateLambdaType((LambdaType)value, diagnostics, context);
 			case PivotPackage.LANGUAGE_EXPRESSION:
 				return validateLanguageExpression((LanguageExpression)value, diagnostics, context);
 			case PivotPackage.LET_EXP:
 				return validateLetExp((LetExp)value, diagnostics, context);
+			case PivotPackage.LET_VARIABLE:
+				return validateLetVariable((LetVariable)value, diagnostics, context);
 			case PivotPackage.LIBRARY:
 				return validateLibrary((Library)value, diagnostics, context);
 			case PivotPackage.LITERAL_EXP:
@@ -931,6 +811,8 @@ public class PivotValidator
 				return validatePackage((org.eclipse.ocl.pivot.Package)value, diagnostics, context);
 			case PivotPackage.PARAMETER:
 				return validateParameter((Parameter)value, diagnostics, context);
+			case PivotPackage.PARAMETER_VARIABLE:
+				return validateParameterVariable((ParameterVariable)value, diagnostics, context);
 			case PivotPackage.PIVOTABLE:
 				return validatePivotable((Pivotable)value, diagnostics, context);
 			case PivotPackage.PRECEDENCE:
@@ -957,6 +839,8 @@ public class PivotValidator
 				return validateReferringElement((ReferringElement)value, diagnostics, context);
 			case PivotPackage.REGION:
 				return validateRegion((Region)value, diagnostics, context);
+			case PivotPackage.RESULT_VARIABLE:
+				return validateResultVariable((ResultVariable)value, diagnostics, context);
 			case PivotPackage.SELF_TYPE:
 				return validateSelfType((SelfType)value, diagnostics, context);
 			case PivotPackage.SEND_SIGNAL_ACTION:
@@ -1440,12 +1324,34 @@ public class PivotValidator
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateParameterVariable(ParameterVariable parameterVariable, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		if (!validate_NoCircularContainment(parameterVariable, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariable_validateCompatibleInitialiserType(parameterVariable, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public boolean validatePivotable(Pivotable pivotable, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint((EObject)pivotable, diagnostics, context);
+		return validate_EveryDefaultConstraint(pivotable, diagnostics, context);
 	}
 
 	/**
@@ -2566,6 +2472,28 @@ public class PivotValidator
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateIteratorVariable(IteratorVariable iteratorVariable, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		if (!validate_NoCircularContainment(iteratorVariable, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariable_validateCompatibleInitialiserType(iteratorVariable, diagnostics, context);
+		return result;
+	}
+
+	/**
 	 * Validates the validateIteratorTypeIsSourceElementType constraint of '<em>Iterator Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2878,6 +2806,28 @@ public class PivotValidator
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateLetVariable(LetVariable letVariable, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		if (!validate_NoCircularContainment(letVariable, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariable_validateCompatibleInitialiserType(letVariable, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -2966,7 +2916,7 @@ public class PivotValidator
 	 */
 	public boolean validateMorePivotable(MorePivotable morePivotable, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint((EObject)morePivotable, diagnostics, context);
+		return validate_EveryDefaultConstraint(morePivotable, diagnostics, context);
 	}
 
 	/**
@@ -3261,6 +3211,28 @@ public class PivotValidator
 	public boolean validateRegion(Region region, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return validate_EveryDefaultConstraint(region, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateResultVariable(ResultVariable resultVariable, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		if (!validate_NoCircularContainment(resultVariable, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariable_validateCompatibleInitialiserType(resultVariable, diagnostics, context);
+		return result;
 	}
 
 	/**

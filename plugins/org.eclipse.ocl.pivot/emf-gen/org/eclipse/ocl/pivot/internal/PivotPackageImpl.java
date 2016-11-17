@@ -20,131 +20,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.ocl.pivot.Annotation;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.AssociationClass;
-import org.eclipse.ocl.pivot.AssociationClassCallExp;
-import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.Behavior;
-import org.eclipse.ocl.pivot.BooleanLiteralExp;
-import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CallOperationAction;
-import org.eclipse.ocl.pivot.CollectionItem;
-import org.eclipse.ocl.pivot.CollectionKind;
-import org.eclipse.ocl.pivot.CollectionLiteralExp;
-import org.eclipse.ocl.pivot.CollectionLiteralPart;
-import org.eclipse.ocl.pivot.CollectionRange;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.ConnectionPointReference;
-import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Detail;
-import org.eclipse.ocl.pivot.DynamicBehavior;
-import org.eclipse.ocl.pivot.DynamicElement;
-import org.eclipse.ocl.pivot.DynamicProperty;
-import org.eclipse.ocl.pivot.DynamicType;
-import org.eclipse.ocl.pivot.DynamicValueSpecification;
-import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.EnumLiteralExp;
-import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.Feature;
-import org.eclipse.ocl.pivot.FeatureCallExp;
-import org.eclipse.ocl.pivot.FinalState;
-import org.eclipse.ocl.pivot.IfExp;
-import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.InstanceSpecification;
-import org.eclipse.ocl.pivot.IntegerLiteralExp;
-import org.eclipse.ocl.pivot.InvalidLiteralExp;
-import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.IterateExp;
-import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.IteratorExp;
-import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.LanguageExpression;
-import org.eclipse.ocl.pivot.LetExp;
-import org.eclipse.ocl.pivot.Library;
-import org.eclipse.ocl.pivot.LiteralExp;
-import org.eclipse.ocl.pivot.LoopExp;
-import org.eclipse.ocl.pivot.MapLiteralExp;
-import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.MessageExp;
-import org.eclipse.ocl.pivot.MessageType;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.NullLiteralExp;
-import org.eclipse.ocl.pivot.NumericLiteralExp;
-import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.OppositePropertyCallExp;
-import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.OrphanCompletePackage;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
-import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
-import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Profile;
-import org.eclipse.ocl.pivot.ProfileApplication;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.Pseudostate;
-import org.eclipse.ocl.pivot.PseudostateKind;
-import org.eclipse.ocl.pivot.RealLiteralExp;
-import org.eclipse.ocl.pivot.ReferringElement;
-import org.eclipse.ocl.pivot.Region;
-import org.eclipse.ocl.pivot.SelfType;
-import org.eclipse.ocl.pivot.SendSignalAction;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.ShadowExp;
-import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.Signal;
-import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.State;
-import org.eclipse.ocl.pivot.StateExp;
-import org.eclipse.ocl.pivot.StateMachine;
-import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.TemplateableElement;
-import org.eclipse.ocl.pivot.Transition;
-import org.eclipse.ocl.pivot.TransitionKind;
-import org.eclipse.ocl.pivot.Trigger;
-import org.eclipse.ocl.pivot.TupleLiteralExp;
-import org.eclipse.ocl.pivot.TupleLiteralPart;
-import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypeExp;
-import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
-import org.eclipse.ocl.pivot.UnspecifiedValueExp;
-import org.eclipse.ocl.pivot.ValueSpecification;
-import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.Vertex;
-import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -398,6 +274,13 @@ implements PivotPackage  {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass iteratorVariableEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass lambdaTypeEClass = null;
 
 	/**
@@ -413,6 +296,13 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	private EClass letExpEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass letVariableEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -588,6 +478,13 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	private EClass regionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass resultVariableEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -875,6 +772,13 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	private EClass parameterEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass parameterVariableEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2391,6 +2295,17 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EClass getIteratorVariable()
+	{
+		return iteratorVariableEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EOperation getIteratorExp__ValidateAnyHasOneIterator__DiagnosticChain_Map()
 	{
 		return iteratorExpEClass.getEOperations().get(1);
@@ -2679,6 +2594,17 @@ implements PivotPackage  {
 	public EOperation getLetExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
 	{
 		return letExpEClass.getEOperations().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getLetVariable()
+	{
+		return letVariableEClass;
 	}
 
 	/**
@@ -3543,6 +3469,17 @@ implements PivotPackage  {
 	public EReference getRegion_OwningStateMachine()
 	{
 		return (EReference)regionEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getResultVariable()
+	{
+		return resultVariableEClass;
 	}
 
 	/**
@@ -5552,6 +5489,17 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EClass getParameterVariable()
+	{
+		return parameterVariableEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getVariableDeclaration() {
 		return variableDeclarationEClass;
 	}
@@ -6761,6 +6709,8 @@ implements PivotPackage  {
 		createEOperation(iteratorExpEClass, ITERATOR_EXP___VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE__DIAGNOSTICCHAIN_MAP);
 		createEOperation(iteratorExpEClass, ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP);
 
+		iteratorVariableEClass = createEClass(ITERATOR_VARIABLE);
+
 		lambdaTypeEClass = createEClass(LAMBDA_TYPE);
 		createEReference(lambdaTypeEClass, LAMBDA_TYPE__CONTEXT_TYPE);
 		createEReference(lambdaTypeEClass, LAMBDA_TYPE__PARAMETER_TYPE);
@@ -6776,6 +6726,8 @@ implements PivotPackage  {
 		createEReference(letExpEClass, LET_EXP__OWNED_VARIABLE);
 		createEOperation(letExpEClass, LET_EXP___VALIDATE_TYPE_IS_IN_TYPE__DIAGNOSTICCHAIN_MAP);
 		createEOperation(letExpEClass, LET_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
+
+		letVariableEClass = createEClass(LET_VARIABLE);
 
 		libraryEClass = createEClass(LIBRARY);
 		createEReference(libraryEClass, LIBRARY__OWNED_PRECEDENCES);
@@ -6885,6 +6837,8 @@ implements PivotPackage  {
 		createEAttribute(parameterEClass, PARAMETER__IS_TYPEOF);
 		createEReference(parameterEClass, PARAMETER__OWNING_OPERATION);
 
+		parameterVariableEClass = createEClass(PARAMETER_VARIABLE);
+
 		pivotableEClass = createEClass(PIVOTABLE);
 
 		precedenceEClass = createEClass(PRECEDENCE);
@@ -6955,6 +6909,8 @@ implements PivotPackage  {
 		createEReference(regionEClass, REGION__OWNED_TRANSITIONS);
 		createEReference(regionEClass, REGION__OWNING_STATE);
 		createEReference(regionEClass, REGION__OWNING_STATE_MACHINE);
+
+		resultVariableEClass = createEClass(RESULT_VARIABLE);
 
 		selfTypeEClass = createEClass(SELF_TYPE);
 		createEOperation(selfTypeEClass, SELF_TYPE___SPECIALIZE_IN__CALLEXP_TYPE);
@@ -7230,9 +7186,11 @@ implements PivotPackage  {
 		iterationEClass.getESuperTypes().add(this.getOperation());
 		iteratorExpEClass.getESuperTypes().add(this.getLoopExp());
 		iteratorExpEClass.getESuperTypes().add(this.getReferringElement());
+		iteratorVariableEClass.getESuperTypes().add(this.getVariable());
 		lambdaTypeEClass.getESuperTypes().add(this.getDataType());
 		languageExpressionEClass.getESuperTypes().add(this.getValueSpecification());
 		letExpEClass.getESuperTypes().add(this.getOCLExpression());
+		letVariableEClass.getESuperTypes().add(this.getVariable());
 		libraryEClass.getESuperTypes().add(this.getPackage());
 		literalExpEClass.getESuperTypes().add(this.getOCLExpression());
 		loopExpEClass.getESuperTypes().add(this.getCallExp());
@@ -7259,6 +7217,7 @@ implements PivotPackage  {
 		orphanCompletePackageEClass.getESuperTypes().add(this.getCompletePackage());
 		packageEClass.getESuperTypes().add(this.getNamespace());
 		parameterEClass.getESuperTypes().add(this.getVariableDeclaration());
+		parameterVariableEClass.getESuperTypes().add(this.getVariable());
 		precedenceEClass.getESuperTypes().add(this.getNamedElement());
 		primitiveCompletePackageEClass.getESuperTypes().add(this.getCompletePackage());
 		primitiveLiteralExpEClass.getESuperTypes().add(this.getLiteralExp());
@@ -7271,6 +7230,7 @@ implements PivotPackage  {
 		pseudostateEClass.getESuperTypes().add(this.getVertex());
 		realLiteralExpEClass.getESuperTypes().add(this.getNumericLiteralExp());
 		regionEClass.getESuperTypes().add(this.getNamespace());
+		resultVariableEClass.getESuperTypes().add(this.getVariable());
 		selfTypeEClass.getESuperTypes().add(this.getClass_());
 		sendSignalActionEClass.getESuperTypes().add(this.getNamedElement());
 		sequenceTypeEClass.getESuperTypes().add(this.getCollectionType());
@@ -7869,6 +7829,8 @@ implements PivotPackage  {
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
+		initEClass(iteratorVariableEClass, IteratorVariable.class, "IteratorVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
 		initEClass(lambdaTypeEClass, LambdaType.class, "LambdaType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getLambdaType_ContextType(), this.getType(), null, "contextType", null, 1, 1, LambdaType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getLambdaType_ParameterType(), this.getType(), null, "parameterType", null, 0, -1, LambdaType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -7900,6 +7862,8 @@ implements PivotPackage  {
 		g2 = createEGenericType(ecorePackage.getEJavaObject());
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(letVariableEClass, LetVariable.class, "LetVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(libraryEClass, Library.class, "Library", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getLibrary_OwnedPrecedences(), this.getPrecedence(), null, "ownedPrecedences", null, 0, -1, Library.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -8097,6 +8061,8 @@ implements PivotPackage  {
 		initEAttribute(getParameter_IsTypeof(), this.getBoolean(), "isTypeof", "false", 1, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(getParameter_OwningOperation(), this.getOperation(), this.getOperation_OwnedParameters(), "owningOperation", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		initEClass(parameterVariableEClass, ParameterVariable.class, "ParameterVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
 		initEClass(pivotableEClass, Pivotable.class, "Pivotable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(precedenceEClass, Precedence.class, "Precedence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -8212,6 +8178,8 @@ implements PivotPackage  {
 		initEReference(getRegion_OwnedTransitions(), this.getTransition(), this.getTransition_OwningRegion(), "ownedTransitions", null, 0, -1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(getRegion_OwningState(), this.getState(), this.getState_OwnedRegions(), "owningState", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getRegion_OwningStateMachine(), this.getStateMachine(), this.getStateMachine_OwnedRegions(), "owningStateMachine", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(resultVariableEClass, ResultVariable.class, "ResultVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(selfTypeEClass, SelfType.class, "SelfType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

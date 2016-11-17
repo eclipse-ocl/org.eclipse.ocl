@@ -273,6 +273,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitIteratorVariable(org.eclipse.ocl.pivot.@NonNull IteratorVariable object) {
+		return null;
+	}
+
+	@Override
 	public R visitLambdaType(org.eclipse.ocl.pivot.@NonNull LambdaType object) {
 		return null;
 	}
@@ -284,6 +289,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 
 	@Override
 	public R visitLetExp(org.eclipse.ocl.pivot.@NonNull LetExp object) {
+		return null;
+	}
+
+	@Override
+	public R visitLetVariable(org.eclipse.ocl.pivot.@NonNull LetVariable object) {
 		return null;
 	}
 
@@ -398,6 +408,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitParameterVariable(org.eclipse.ocl.pivot.@NonNull ParameterVariable object) {
+		return null;
+	}
+
+	@Override
 	public R visitPrecedence(org.eclipse.ocl.pivot.@NonNull Precedence object) {
 		return null;
 	}
@@ -449,6 +464,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 
 	@Override
 	public R visitRegion(org.eclipse.ocl.pivot.@NonNull Region object) {
+		return null;
+	}
+
+	@Override
+	public R visitResultVariable(org.eclipse.ocl.pivot.@NonNull ResultVariable object) {
 		return null;
 	}
 

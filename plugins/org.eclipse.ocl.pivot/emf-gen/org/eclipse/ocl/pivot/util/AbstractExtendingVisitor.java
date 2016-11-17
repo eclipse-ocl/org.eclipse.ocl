@@ -273,6 +273,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitIteratorVariable(org.eclipse.ocl.pivot.@NonNull IteratorVariable object) {
+		return visitVariable(object);
+	}
+
+	@Override
 	public R visitLambdaType(org.eclipse.ocl.pivot.@NonNull LambdaType object) {
 		return visitDataType(object);
 	}
@@ -285,6 +290,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	@Override
 	public R visitLetExp(org.eclipse.ocl.pivot.@NonNull LetExp object) {
 		return visitOCLExpression(object);
+	}
+
+	@Override
+	public R visitLetVariable(org.eclipse.ocl.pivot.@NonNull LetVariable object) {
+		return visitVariable(object);
 	}
 
 	@Override
@@ -398,6 +408,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitParameterVariable(org.eclipse.ocl.pivot.@NonNull ParameterVariable object) {
+		return visitVariable(object);
+	}
+
+	@Override
 	public R visitPrecedence(org.eclipse.ocl.pivot.@NonNull Precedence object) {
 		return visitNamedElement(object);
 	}
@@ -450,6 +465,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	@Override
 	public R visitRegion(org.eclipse.ocl.pivot.@NonNull Region object) {
 		return visitNamespace(object);
+	}
+
+	@Override
+	public R visitResultVariable(org.eclipse.ocl.pivot.@NonNull ResultVariable object) {
+		return visitVariable(object);
 	}
 
 	@Override

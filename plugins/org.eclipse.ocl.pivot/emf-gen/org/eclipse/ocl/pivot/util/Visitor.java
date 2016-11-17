@@ -87,9 +87,11 @@ public interface Visitor<R>
 	R visitIterateExp(org.eclipse.ocl.pivot.@NonNull IterateExp object);
 	R visitIteration(org.eclipse.ocl.pivot.@NonNull Iteration object);
 	R visitIteratorExp(org.eclipse.ocl.pivot.@NonNull IteratorExp object);
+	R visitIteratorVariable(org.eclipse.ocl.pivot.@NonNull IteratorVariable object);
 	R visitLambdaType(org.eclipse.ocl.pivot.@NonNull LambdaType object);
 	R visitLanguageExpression(org.eclipse.ocl.pivot.@NonNull LanguageExpression object);
 	R visitLetExp(org.eclipse.ocl.pivot.@NonNull LetExp object);
+	R visitLetVariable(org.eclipse.ocl.pivot.@NonNull LetVariable object);
 	R visitLibrary(org.eclipse.ocl.pivot.@NonNull Library object);
 	R visitLiteralExp(org.eclipse.ocl.pivot.@NonNull LiteralExp object);
 	R visitLoopExp(org.eclipse.ocl.pivot.@NonNull LoopExp object);
@@ -112,6 +114,7 @@ public interface Visitor<R>
 	R visitOrphanCompletePackage(org.eclipse.ocl.pivot.@NonNull OrphanCompletePackage object);
 	R visitPackage(org.eclipse.ocl.pivot.@NonNull Package object);
 	R visitParameter(org.eclipse.ocl.pivot.@NonNull Parameter object);
+	R visitParameterVariable(org.eclipse.ocl.pivot.@NonNull ParameterVariable object);
 	R visitPrecedence(org.eclipse.ocl.pivot.@NonNull Precedence object);
 	R visitPrimitiveCompletePackage(org.eclipse.ocl.pivot.@NonNull PrimitiveCompletePackage object);
 	R visitPrimitiveLiteralExp(org.eclipse.ocl.pivot.@NonNull PrimitiveLiteralExp object);
@@ -123,6 +126,7 @@ public interface Visitor<R>
 	R visitPseudostate(org.eclipse.ocl.pivot.@NonNull Pseudostate object);
 	R visitRealLiteralExp(org.eclipse.ocl.pivot.@NonNull RealLiteralExp object);
 	R visitRegion(org.eclipse.ocl.pivot.@NonNull Region object);
+	R visitResultVariable(org.eclipse.ocl.pivot.@NonNull ResultVariable object);
 	R visitSelfType(org.eclipse.ocl.pivot.@NonNull SelfType object);
 	R visitSendSignalAction(org.eclipse.ocl.pivot.@NonNull SendSignalAction object);
 	R visitSequenceType(org.eclipse.ocl.pivot.@NonNull SequenceType object);

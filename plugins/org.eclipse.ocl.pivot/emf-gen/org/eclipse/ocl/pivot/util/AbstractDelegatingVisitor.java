@@ -290,6 +290,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitIteratorVariable(org.eclipse.ocl.pivot.@NonNull IteratorVariable object) {
+		return delegate.visitIteratorVariable(object);
+	}
+
+	@Override
 	public R visitLambdaType(org.eclipse.ocl.pivot.@NonNull LambdaType object) {
 		return delegate.visitLambdaType(object);
 	}
@@ -302,6 +307,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	@Override
 	public R visitLetExp(org.eclipse.ocl.pivot.@NonNull LetExp object) {
 		return delegate.visitLetExp(object);
+	}
+
+	@Override
+	public R visitLetVariable(org.eclipse.ocl.pivot.@NonNull LetVariable object) {
+		return delegate.visitLetVariable(object);
 	}
 
 	@Override
@@ -415,6 +425,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitParameterVariable(org.eclipse.ocl.pivot.@NonNull ParameterVariable object) {
+		return delegate.visitParameterVariable(object);
+	}
+
+	@Override
 	public R visitPrecedence(org.eclipse.ocl.pivot.@NonNull Precedence object) {
 		return delegate.visitPrecedence(object);
 	}
@@ -467,6 +482,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	@Override
 	public R visitRegion(org.eclipse.ocl.pivot.@NonNull Region object) {
 		return delegate.visitRegion(object);
+	}
+
+	@Override
+	public R visitResultVariable(org.eclipse.ocl.pivot.@NonNull ResultVariable object) {
+		return delegate.visitResultVariable(object);
 	}
 
 	@Override

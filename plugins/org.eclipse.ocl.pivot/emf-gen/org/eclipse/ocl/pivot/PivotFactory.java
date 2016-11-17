@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @generated
  */
 public interface PivotFactory
-		extends EFactory {
+extends EFactory {
 
 	/**
 	 * The singleton instance of the factory.
@@ -166,6 +166,16 @@ public interface PivotFactory
 	 * @generated
 	 */
 	@NonNull Parameter createParameter();
+
+	/**
+	 * Returns a new object of class '<em>Parameter Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Parameter Variable</em>'.
+	 * @generated
+	 */
+	@NonNull ParameterVariable createParameterVariable();
 
 	/**
 	 * Returns a new object of class '<em>Opposite Property Call Exp</em>'.
@@ -528,6 +538,16 @@ public interface PivotFactory
 	@NonNull IteratorExp createIteratorExp();
 
 	/**
+	 * Returns a new object of class '<em>Iterator Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Iterator Variable</em>'.
+	 * @generated
+	 */
+	@NonNull IteratorVariable createIteratorVariable();
+
+	/**
 	 * Returns a new object of class '<em>Lambda Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -544,6 +564,16 @@ public interface PivotFactory
 	 * @generated
 	 */
 	@NonNull LetExp createLetExp();
+
+	/**
+	 * Returns a new object of class '<em>Let Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Let Variable</em>'.
+	 * @generated
+	 */
+	@NonNull LetVariable createLetVariable();
 
 	/**
 	 * Returns a new object of class '<em>Library</em>'.
@@ -742,6 +772,16 @@ public interface PivotFactory
 	 * @generated
 	 */
 	@NonNull Region createRegion();
+
+	/**
+	 * Returns a new object of class '<em>Result Variable</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Result Variable</em>'.
+	 * @generated
+	 */
+	@NonNull ResultVariable createResultVariable();
 
 	/**
 	 * Returns a new object of class '<em>Self Type</em>'.

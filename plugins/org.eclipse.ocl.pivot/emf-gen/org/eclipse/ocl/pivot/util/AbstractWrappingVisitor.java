@@ -646,6 +646,18 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 	}
 
 	@Override
+	public R visitIteratorVariable(org.eclipse.ocl.pivot.@NonNull IteratorVariable object) {
+		@Nullable P prologue = preVisit(object);
+		try {
+			R result = delegate.visitIteratorVariable(object);
+			return postVisit(object, prologue, result);
+		}
+		catch (Throwable e) {
+			return badVisit(object, prologue, e);
+		}
+	}
+
+	@Override
 	public R visitLambdaType(org.eclipse.ocl.pivot.@NonNull LambdaType object) {
 		@Nullable P prologue = preVisit(object);
 		try {
@@ -674,6 +686,18 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 		@Nullable P prologue = preVisit(object);
 		try {
 			R result = delegate.visitLetExp(object);
+			return postVisit(object, prologue, result);
+		}
+		catch (Throwable e) {
+			return badVisit(object, prologue, e);
+		}
+	}
+
+	@Override
+	public R visitLetVariable(org.eclipse.ocl.pivot.@NonNull LetVariable object) {
+		@Nullable P prologue = preVisit(object);
+		try {
+			R result = delegate.visitLetVariable(object);
 			return postVisit(object, prologue, result);
 		}
 		catch (Throwable e) {
@@ -946,6 +970,18 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 	}
 
 	@Override
+	public R visitParameterVariable(org.eclipse.ocl.pivot.@NonNull ParameterVariable object) {
+		@Nullable P prologue = preVisit(object);
+		try {
+			R result = delegate.visitParameterVariable(object);
+			return postVisit(object, prologue, result);
+		}
+		catch (Throwable e) {
+			return badVisit(object, prologue, e);
+		}
+	}
+
+	@Override
 	public R visitPrecedence(org.eclipse.ocl.pivot.@NonNull Precedence object) {
 		@Nullable P prologue = preVisit(object);
 		try {
@@ -1070,6 +1106,18 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 		@Nullable P prologue = preVisit(object);
 		try {
 			R result = delegate.visitRegion(object);
+			return postVisit(object, prologue, result);
+		}
+		catch (Throwable e) {
+			return badVisit(object, prologue, e);
+		}
+	}
+
+	@Override
+	public R visitResultVariable(org.eclipse.ocl.pivot.@NonNull ResultVariable object) {
+		@Nullable P prologue = preVisit(object);
+		try {
+			R result = delegate.visitResultVariable(object);
 			return postVisit(object, prologue, result);
 		}
 		catch (Throwable e) {

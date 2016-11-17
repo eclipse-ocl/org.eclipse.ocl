@@ -19,109 +19,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Annotation;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.AssociationClass;
-import org.eclipse.ocl.pivot.AssociationClassCallExp;
-import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.BooleanLiteralExp;
-import org.eclipse.ocl.pivot.CallOperationAction;
-import org.eclipse.ocl.pivot.CollectionItem;
-import org.eclipse.ocl.pivot.CollectionKind;
-import org.eclipse.ocl.pivot.CollectionLiteralExp;
-import org.eclipse.ocl.pivot.CollectionRange;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.ConnectionPointReference;
-import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Detail;
-import org.eclipse.ocl.pivot.DynamicBehavior;
-import org.eclipse.ocl.pivot.DynamicElement;
-import org.eclipse.ocl.pivot.DynamicProperty;
-import org.eclipse.ocl.pivot.DynamicType;
-import org.eclipse.ocl.pivot.DynamicValueSpecification;
-import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.EnumLiteralExp;
-import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.FinalState;
-import org.eclipse.ocl.pivot.IfExp;
-import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.InstanceSpecification;
-import org.eclipse.ocl.pivot.IntegerLiteralExp;
-import org.eclipse.ocl.pivot.InvalidLiteralExp;
-import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.IterateExp;
-import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.IteratorExp;
-import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.LetExp;
-import org.eclipse.ocl.pivot.Library;
-import org.eclipse.ocl.pivot.MapLiteralExp;
-import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.MessageExp;
-import org.eclipse.ocl.pivot.MessageType;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NullLiteralExp;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.OppositePropertyCallExp;
-import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.OrphanCompletePackage;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
-import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Profile;
-import org.eclipse.ocl.pivot.ProfileApplication;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.Pseudostate;
-import org.eclipse.ocl.pivot.PseudostateKind;
-import org.eclipse.ocl.pivot.RealLiteralExp;
-import org.eclipse.ocl.pivot.Region;
-import org.eclipse.ocl.pivot.SelfType;
-import org.eclipse.ocl.pivot.SendSignalAction;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.ShadowExp;
-import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.Signal;
-import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.State;
-import org.eclipse.ocl.pivot.StateExp;
-import org.eclipse.ocl.pivot.StateMachine;
-import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.Transition;
-import org.eclipse.ocl.pivot.TransitionKind;
-import org.eclipse.ocl.pivot.Trigger;
-import org.eclipse.ocl.pivot.TupleLiteralExp;
-import org.eclipse.ocl.pivot.TupleLiteralPart;
-import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.TypeExp;
-import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
-import org.eclipse.ocl.pivot.UnspecifiedValueExp;
-import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -133,8 +31,8 @@ import org.eclipse.ocl.pivot.values.Unlimited;
  * @generated
  */
 public class PivotFactoryImpl
-		extends EFactoryImpl
-		implements PivotFactory {
+extends EFactoryImpl
+implements PivotFactory {
 
 	/**
 	 * Creates the default factory implementation.
@@ -218,8 +116,10 @@ public class PivotFactoryImpl
 			case PivotPackage.ITERATE_EXP: return createIterateExp();
 			case PivotPackage.ITERATION: return createIteration();
 			case PivotPackage.ITERATOR_EXP: return createIteratorExp();
+			case PivotPackage.ITERATOR_VARIABLE: return createIteratorVariable();
 			case PivotPackage.LAMBDA_TYPE: return createLambdaType();
 			case PivotPackage.LET_EXP: return createLetExp();
+			case PivotPackage.LET_VARIABLE: return createLetVariable();
 			case PivotPackage.LIBRARY: return createLibrary();
 			case PivotPackage.MAP_LITERAL_EXP: return createMapLiteralExp();
 			case PivotPackage.MAP_LITERAL_PART: return createMapLiteralPart();
@@ -235,6 +135,7 @@ public class PivotFactoryImpl
 			case PivotPackage.ORPHAN_COMPLETE_PACKAGE: return createOrphanCompletePackage();
 			case PivotPackage.PACKAGE: return createPackage();
 			case PivotPackage.PARAMETER: return createParameter();
+			case PivotPackage.PARAMETER_VARIABLE: return createParameterVariable();
 			case PivotPackage.PRECEDENCE: return createPrecedence();
 			case PivotPackage.PRIMITIVE_COMPLETE_PACKAGE: return createPrimitiveCompletePackage();
 			case PivotPackage.PRIMITIVE_TYPE: return createPrimitiveType();
@@ -245,6 +146,7 @@ public class PivotFactoryImpl
 			case PivotPackage.PSEUDOSTATE: return createPseudostate();
 			case PivotPackage.REAL_LITERAL_EXP: return createRealLiteralExp();
 			case PivotPackage.REGION: return createRegion();
+			case PivotPackage.RESULT_VARIABLE: return createResultVariable();
 			case PivotPackage.SELF_TYPE: return createSelfType();
 			case PivotPackage.SEND_SIGNAL_ACTION: return createSendSignalAction();
 			case PivotPackage.SEQUENCE_TYPE: return createSequenceType();
@@ -523,6 +425,18 @@ public class PivotFactoryImpl
 	public @NonNull Parameter createParameter() {
 		ParameterImpl parameter = new ParameterImpl();
 		return parameter;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull ParameterVariable createParameterVariable()
+	{
+		ParameterVariableImpl parameterVariable = new ParameterVariableImpl();
+		return parameterVariable;
 	}
 
 	/**
@@ -990,6 +904,18 @@ public class PivotFactoryImpl
 	 * @generated
 	 */
 	@Override
+	public @NonNull IteratorVariable createIteratorVariable()
+	{
+		IteratorVariableImpl iteratorVariable = new IteratorVariableImpl();
+		return iteratorVariable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public @NonNull LambdaType createLambdaType()
 	{
 		LambdaTypeImpl lambdaType = new LambdaTypeImpl();
@@ -1005,6 +931,18 @@ public class PivotFactoryImpl
 	public @NonNull LetExp createLetExp() {
 		LetExpImpl letExp = new LetExpImpl();
 		return letExp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull LetVariable createLetVariable()
+	{
+		LetVariableImpl letVariable = new LetVariableImpl();
+		return letVariable;
 	}
 
 	/**
@@ -1259,6 +1197,18 @@ public class PivotFactoryImpl
 	{
 		RegionImpl region = new RegionImpl();
 		return region;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull ResultVariable createResultVariable()
+	{
+		ResultVariableImpl resultVariable = new ResultVariableImpl();
+		return resultVariable;
 	}
 
 	/**
@@ -1627,7 +1577,7 @@ public class PivotFactoryImpl
 			return StringUtil.createNumberFromString(aValue);
 		}
 		catch (NumberFormatException e) {
-//			return throwInvalidValueException(e, EvaluatorMessages.InvalidInteger, aValue);
+			//			return throwInvalidValueException(e, EvaluatorMessages.InvalidInteger, aValue);
 		}
 		return (Number)super.createFromString(eDataType, aValue);
 	}
@@ -1695,7 +1645,7 @@ public class PivotFactoryImpl
 			return new BigDecimal(aValue);
 		}
 		catch (NumberFormatException e) {
-//			return throwInvalidValueException(e, EvaluatorMessages.InvalidInteger, aValue);
+			//			return throwInvalidValueException(e, EvaluatorMessages.InvalidInteger, aValue);
 		}
 		return (Number)super.createFromString(eDataType, aValue);
 	}
@@ -1760,7 +1710,7 @@ public class PivotFactoryImpl
 			return StringUtil.createNumberFromString(aValue);
 		}
 		catch (NumberFormatException e) {
-//			return throwInvalidValueException(e, EvaluatorMessages.InvalidInteger, aValue);
+			//			return throwInvalidValueException(e, EvaluatorMessages.InvalidInteger, aValue);
 		}
 		return (Number)super.createFromString(eDataType, aValue);
 	}
