@@ -405,6 +405,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedIterators" upperBound="-1" eType="#//Parameter" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IteratorExp" eSuperTypes="#//LoopExp #//ReferringElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IteratorVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="LambdaType" eSuperTypes="#//DataType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="contextType" lowerBound="1" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameterType" unique="false" upperBound="-1" eType="#//Type"/>
@@ -420,6 +421,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedIn" lowerBound="1" eType="#//OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedVariable" lowerBound="1" eType="#//Variable" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LetVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Library" eSuperTypes="#//Package">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedPrecedences" upperBound="-1" eType="#//Precedence" containment="true"/>
   </eClassifiers>
@@ -595,6 +597,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ParameterVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Pivotable" instanceClassName="org.eclipse.ocl.pivot.utilities.Pivotable" abstract="true"
       interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Precedence" eSuperTypes="#//NamedElement">
@@ -754,6 +757,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResultVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="SelfType" eSuperTypes="#//Class">
     <eOperations name="specializeIn" lowerBound="1" eType="#//Type">
       <eParameters name="expr" lowerBound="1" eType="#//CallExp"/>

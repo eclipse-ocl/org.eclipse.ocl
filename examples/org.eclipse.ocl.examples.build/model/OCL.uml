@@ -666,9 +666,21 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="OCL-OCL_Variables" name="OCL_Variables">
+      <packagedElement xmi:type="uml:Class" xmi:id="_KzuLUKymEea6UMIIRq32ug" name="IteratorVariable">
+        <generalization xmi:id="_KzuLUaymEea6UMIIRq32ug" general="OCL-OCL_Variables-Variable"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_BzWXAKymEea6UMIIRq32ug" name="LetVariable">
+        <generalization xmi:id="_BzWXAaymEea6UMIIRq32ug" general="OCL-OCL_Variables-Variable"/>
+      </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_BSdooBsGEeSM9LreJtBwBg" name="OCLExpression" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Variables-Parameter" name="Parameter">
         <generalization xmi:id="_Xpwc837VEeOu79LxSz8Ylw" general="OCL-OCL_Variables-VariableDeclaration"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_6L21oKyvEea6UMIIRq32ug" name="ParameterVariable">
+        <generalization xmi:id="_6L21oayvEea6UMIIRq32ug" general="OCL-OCL_Variables-Variable"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_LBmPQKymEea6UMIIRq32ug" name="ResultVariable">
+        <generalization xmi:id="_LBmPQaymEea6UMIIRq32ug" general="OCL-OCL_Variables-Variable"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Variables-TypedElement" name="TypedElement" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Variables-Variable" name="Variable">

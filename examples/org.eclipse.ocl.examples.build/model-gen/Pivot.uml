@@ -583,6 +583,9 @@
     <interfaceRealization xmi:id="Ppivot.TIteratorExp.interfaceRealization0" client="Ppivot.TIteratorExp" supplier="Ppivot.TReferringElement"
         contract="Ppivot.TReferringElement"/>
   </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIteratorVariable" name="IteratorVariable">
+    <generalization xmi:id="Ppivot.TIteratorVariable.g0" general="Ppivot.TVariable"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TLambdaType" name="LambdaType">
     <generalization xmi:id="Ppivot.TLambdaType.g0" general="Ppivot.TDataType"/>
     <ownedAttribute xmi:id="Ppivot.TLambdaType.PcontextType" name="contextType" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_contextType_LambdaType"/>
@@ -611,6 +614,9 @@
         association="Ppivot.A_ownedIn_LetExp"/>
     <ownedAttribute xmi:id="Ppivot.TLetExp.PownedVariable" name="ownedVariable" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
         association="Ppivot.A_ownedVariable_LetExp"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TLetVariable" name="LetVariable">
+    <generalization xmi:id="Ppivot.TLetVariable.g0" general="Ppivot.TVariable"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TLibrary" name="Library">
     <generalization xmi:id="Ppivot.TLibrary.g0" general="Ppivot.TPackage"/>
@@ -862,6 +868,9 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TParameter.PowningOperation.lV"/>
     </ownedAttribute>
   </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TParameterVariable" name="ParameterVariable">
+    <generalization xmi:id="Ppivot.TParameterVariable.g0" general="Ppivot.TVariable"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TPrecedence" name="Precedence">
     <generalization xmi:id="Ppivot.TPrecedence.g0" general="Ppivot.TNamedElement"/>
     <ownedAttribute xmi:id="Ppivot.TPrecedence.Passociativity" name="associativity" visibility="public" type="Ppivot.TAssociativityKind"
@@ -1030,6 +1039,9 @@
         association="Ppivot.A_ownedRegions_owningStateMachine">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TRegion.PowningStateMachine.lV"/>
     </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TResultVariable" name="ResultVariable">
+    <generalization xmi:id="Ppivot.TResultVariable.g0" general="Ppivot.TVariable"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TSelfType" name="SelfType">
     <generalization xmi:id="Ppivot.TSelfType.g0" general="Ppivot.TClass"/>
