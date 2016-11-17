@@ -56,8 +56,9 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
           </ownedBody>
-          <ownedContext name="self" type="#Boolean"/>
-          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.and2..ocl.Boolean" type="#Boolean"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Boolean"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.and2..ocl.Boolean"
+              type="#Boolean"/>
         </bodyExpression>
         <ownedComments body="oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[true].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Boolean.and2..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
@@ -132,8 +133,9 @@
                   type="#Boolean"/>
             </ownedThen>
           </ownedBody>
-          <ownedContext name="self" type="#Boolean"/>
-          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.and..ocl.Boolean" type="#Boolean"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Boolean"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.and..ocl.Boolean"
+              type="#Boolean"/>
         </bodyExpression>
         <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
           <ownedDetails name="ClassGroup">
@@ -164,8 +166,9 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
           </ownedBody>
-          <ownedContext name="self" type="#Boolean"/>
-          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.implies2..ocl.Boolean" type="#Boolean"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Boolean"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.implies2..ocl.Boolean"
+              type="#Boolean"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Boolean.implies2..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
@@ -241,8 +244,9 @@
                   type="#Boolean"/>
             </ownedThen>
           </ownedBody>
-          <ownedContext name="self" type="#Boolean"/>
-          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.implies..ocl.Boolean" type="#Boolean"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Boolean"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.implies..ocl.Boolean"
+              type="#Boolean"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Boolean.implies..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
@@ -256,7 +260,7 @@
             <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Boolean"/>
           </ownedBody>
-          <ownedContext name="self" type="#Boolean"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Boolean"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false].&#xA;Otherwise oclText[false].&#xA;"/>
       </ownedOperations>
@@ -285,7 +289,7 @@
             <ownedThen xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.8/@bodyExpression/@ownedContext"
                 type="#Boolean"/>
           </ownedBody>
-          <ownedContext name="self" type="#Boolean"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Boolean"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false].&#xA;oclText[false] if oclText[self] is oclText[true].&#xA;oclText[null] if oclText[self] is oclText[null].&#xA;Otherwise oclText[invalid].&#xA;"/>
       </ownedOperations>
@@ -310,8 +314,9 @@
             </ownedElse>
             <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Boolean"/>
           </ownedBody>
-          <ownedContext name="self" type="#Boolean"/>
-          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.or2..ocl.Boolean" type="#Boolean"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Boolean"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.or2..ocl.Boolean"
+              type="#Boolean"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Boolean.or2..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
@@ -386,8 +391,9 @@
                   type="#Boolean"/>
             </ownedThen>
           </ownedBody>
-          <ownedContext name="self" type="#Boolean"/>
-          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.or..ocl.Boolean" type="#Boolean"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Boolean"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.or..ocl.Boolean"
+              type="#Boolean"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Boolean.or..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
@@ -405,8 +411,9 @@
             <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.12/@bodyExpression/@ownedContext"
                 type="#Boolean"/>
           </ownedBody>
-          <ownedContext name="self" type="#Boolean"/>
-          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.xor2..ocl.Boolean" type="#Boolean"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Boolean"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.xor2..ocl.Boolean"
+              type="#Boolean"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] &lt;> oclText[b]&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Boolean.xor2..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
@@ -453,8 +460,9 @@
             <ownedThen xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.0/@ownedOperations.13/@bodyExpression/@ownedContext"
                 type="#Boolean"/>
           </ownedBody>
-          <ownedContext name="self" type="#Boolean"/>
-          <ownedParameters isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.xor..ocl.Boolean" type="#Boolean"/>
+          <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#Boolean"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="b" representedParameter="#p0o.ocl.Boolean.xor..ocl.Boolean"
+              type="#Boolean"/>
         </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[true] and oclText[b] is oclText[false], or if oclText[self] is oclText[false] and oclText[b] is oclText[true].&#xA;oclText[false] if oclText[self] is oclText[true] and oclText[b] is oclText[true], or if oclText[self] is oclText[false] and oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Boolean.xor..ocl.Boolean" isRequired="false" name="b" type="#Boolean"/>
@@ -1365,9 +1373,10 @@
               <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.11/@ownedOperations.0/@ownedPostconditions.0/@ownedSpecification/@ownedResult"
                   type="#Boolean"/>
             </ownedBody>
-            <ownedContext name="self" type="#T.ocl.OclAny"/>
-            <ownedParameters isRequired="false" name="object2" representedParameter="#p0o.ocl.OclAny.%61%..ocl.OclSelf" type="#T.ocl.OclAny"/>
-            <ownedResult name="result" type="#Boolean"/>
+            <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#T.ocl.OclAny"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object2" representedParameter="#p0o.ocl.OclAny.%61%..ocl.OclSelf"
+                type="#T.ocl.OclAny"/>
+            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#Boolean"/>
           </ownedSpecification>
         </ownedPostconditions>
       </ownedOperations>
@@ -1389,9 +1398,10 @@
               <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.11/@ownedOperations.1/@ownedPostconditions.0/@ownedSpecification/@ownedResult"
                   type="#Boolean"/>
             </ownedBody>
-            <ownedContext name="self" type="#T.ocl.OclAny"/>
-            <ownedParameters isRequired="false" name="object2" representedParameter="#p0o.ocl.OclAny.%60%%62%..ocl.OclSelf" type="#T.ocl.OclAny"/>
-            <ownedResult name="result" type="#Boolean"/>
+            <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#T.ocl.OclAny"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object2" representedParameter="#p0o.ocl.OclAny.%60%%62%..ocl.OclSelf"
+                type="#T.ocl.OclAny"/>
+            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#Boolean"/>
           </ownedSpecification>
         </ownedPostconditions>
       </ownedOperations>
@@ -1411,9 +1421,10 @@
               <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.11/@ownedOperations.3/@ownedPostconditions.0/@ownedSpecification/@ownedResult"
                   type="#t.ocl.OclAny..oclAsTypeTT"/>
             </ownedBody>
-            <ownedContext name="self" type="#T.ocl.OclAny"/>
-            <ownedParameters isRequired="false" name="type" representedParameter="#p0o.ocl.OclAny.oclAsType..TT" type="#t.ocl.OclAny..oclAsTypeTT"/>
-            <ownedResult name="result" type="#t.ocl.OclAny..oclAsTypeTT"/>
+            <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#T.ocl.OclAny"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="type" representedParameter="#p0o.ocl.OclAny.oclAsType..TT"
+                type="#t.ocl.OclAny..oclAsTypeTT"/>
+            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#t.ocl.OclAny..oclAsTypeTT"/>
           </ownedSpecification>
         </ownedPostconditions>
         <ownedSignature xmi:id="s.o.ocl.OclAny.oclAsType..TT">
@@ -1525,9 +1536,10 @@
               <ownedSource xsi:type="pivot:VariableExp" referredVariable="#//@ownedPackages.0/@ownedClasses.13/@ownedOperations.1/@ownedPostconditions.0/@ownedSpecification/@ownedResult"
                   type="#t.ocl.OclElement..oclAsModelTypeTT"/>
             </ownedBody>
-            <ownedContext name="self" type="#T.ocl.OclElement"/>
-            <ownedParameters isRequired="false" name="type" representedParameter="#p0o.ocl.OclElement.oclAsModelType..TT" type="#t.ocl.OclElement..oclAsModelTypeTT"/>
-            <ownedResult name="result" type="#t.ocl.OclElement..oclAsModelTypeTT"/>
+            <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#T.ocl.OclElement"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="type" representedParameter="#p0o.ocl.OclElement.oclAsModelType..TT"
+                type="#t.ocl.OclElement..oclAsModelTypeTT"/>
+            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#t.ocl.OclElement..oclAsModelTypeTT"/>
           </ownedSpecification>
         </ownedPostconditions>
         <ownedSignature xmi:id="s.o.ocl.OclElement.oclAsModelType..TT">
@@ -1934,9 +1946,10 @@
                     type="#OrderedSet"/>
               </ownedSource>
             </ownedBody>
-            <ownedContext name="self" type="#OrderedSet"/>
-            <ownedParameters isRequired="false" name="object" representedParameter="#p0o.ocl.OrderedSet.prepend..T" type="#t.ocl..OrderedSetT"/>
-            <ownedResult name="result" type="#OrderedSet"/>
+            <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#OrderedSet"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object" representedParameter="#p0o.ocl.OrderedSet.prepend..T"
+                type="#t.ocl..OrderedSetT"/>
+            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#OrderedSet"/>
           </ownedSpecification>
         </ownedPostconditions>
         <ownedPostconditions xmi:id="c+ocl.OrderedSet.prepend.IsAtStart" name="IsAtStart">
@@ -1951,9 +1964,10 @@
                     type="#OrderedSet"/>
               </ownedSource>
             </ownedBody>
-            <ownedContext name="self" type="#OrderedSet"/>
-            <ownedParameters isRequired="false" name="object" representedParameter="#p0o.ocl.OrderedSet.prepend..T" type="#t.ocl..OrderedSetT"/>
-            <ownedResult name="result" type="#OrderedSet"/>
+            <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#OrderedSet"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object" representedParameter="#p0o.ocl.OrderedSet.prepend..T"
+                type="#t.ocl..OrderedSetT"/>
+            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#OrderedSet"/>
           </ownedSpecification>
         </ownedPostconditions>
         <ownedPostconditions xmi:id="c+ocl.OrderedSet.prepend.IsShiftedAlong" name="IsShiftedAlong">
@@ -1979,7 +1993,7 @@
                       type="#OrderedSet"/>
                 </ownedSource>
               </ownedBody>
-              <ownedIterators name="index" representedParameter="#i0i.ocl.Collection.forAll..T" type="#Integer"/>
+              <ownedIterators xsi:type="pivot:IteratorVariable" name="index" representedParameter="#i0i.ocl.Collection.forAll..T" type="#Integer"/>
               <ownedSource xsi:type="pivot:CollectionLiteralExp" kind="Sequence" type="#//@ownedPackages.1/@ownedClasses.118">
                 <ownedParts xsi:type="pivot:CollectionRange" type="#Integer">
                   <ownedFirst xsi:type="pivot:IntegerLiteralExp" integerSymbol="1" type="#Integer"/>
@@ -1990,9 +2004,10 @@
                 </ownedParts>
               </ownedSource>
             </ownedBody>
-            <ownedContext name="self" type="#OrderedSet"/>
-            <ownedParameters isRequired="false" name="object" representedParameter="#p0o.ocl.OrderedSet.prepend..T" type="#t.ocl..OrderedSetT"/>
-            <ownedResult name="result" type="#OrderedSet"/>
+            <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#OrderedSet"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object" representedParameter="#p0o.ocl.OrderedSet.prepend..T"
+                type="#t.ocl..OrderedSetT"/>
+            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#OrderedSet"/>
           </ownedSpecification>
         </ownedPostconditions>
       </ownedOperations>

@@ -43,7 +43,9 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -785,7 +787,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		implicitCollectExp.setName(asIteration.getName());
 		implicitCollectExp.setIsSafe(isSafe);
 		context.setReferredIteration(implicitCollectExp, asIteration);
-		Variable iterator = context.refreshModelElement(Variable.class, PivotPackage.Literals.VARIABLE, null); // FIXME reuse
+		IteratorVariable iterator = context.refreshModelElement(IteratorVariable.class, PivotPackage.Literals.ITERATOR_VARIABLE, null); // FIXME reuse
 		Parameter resolvedIterator = asIteration.getOwnedIterators().get(0);
 		iterator.setRepresentedParameter(resolvedIterator);
 		context.refreshName(iterator, "1_");
@@ -1021,7 +1023,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		while (iteratorIndex < iterationIteratorsSize) {
 			Parameter formalIterator = iteration.getOwnedIterators().get(iteratorIndex);
 			String varName = Integer.toString(iteratorIndex+1) + "_";
-			Variable iterator = context.refreshModelElement(Variable.class, PivotPackage.Literals.VARIABLE, null);
+			IteratorVariable iterator = context.refreshModelElement(IteratorVariable.class, PivotPackage.Literals.ITERATOR_VARIABLE, null);
 			context.refreshName(iterator, varName);
 			context.setType(iterator, sourceElementType, isSafe || formalIterator.isIsRequired(), null);
 			iterator.setIsImplicit(true);
@@ -1750,7 +1752,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		LetExp firstLetExp = null;
 		LetExp lastLetExp = null;
 		for (LetVariableCS csLetVariable : csLetExp.getOwnedVariables()) {
-			Variable variable = PivotUtil.getPivot(Variable.class, csLetVariable);
+			LetVariable variable = PivotUtil.getPivot(LetVariable.class, csLetVariable);
 			if (variable != null) {
 				LetExp letExp;
 				EObject variableContainer = variable.eContainer();

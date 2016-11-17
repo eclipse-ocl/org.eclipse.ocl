@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
@@ -54,7 +55,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 
 	protected void addUnderspecifiedTypedElement(@NonNull TypedElement pivotElement) {
 		if (underspecifiedTypedElements == null) {
-			underspecifiedTypedElements  = new HashSet<TypedElement>();
+			underspecifiedTypedElements  = new HashSet<>();
 		}
 		underspecifiedTypedElements.add(pivotElement);
 	}
@@ -88,7 +89,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance) {
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		if (contextVariable == null) {
-			@NonNull Variable nonNullContextVariable = PivotFactory.eINSTANCE.createVariable();
+			@NonNull ParameterVariable nonNullContextVariable = PivotFactory.eINSTANCE.createParameterVariable();
 			contextVariable = nonNullContextVariable;
 			pivotSpecification.setOwnedContext(contextVariable);
 		}
@@ -111,7 +112,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 
 	public void setOperationContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Operation contextOperation, @Nullable String resultName) {
 		Variable contextVariable = pivotSpecification.getOwnedContext();
-//		pivotSpecification.getParameterVariable().clear();
+		//		pivotSpecification.getParameterVariable().clear();
 		if ((contextVariable != null) && !contextOperation.eIsProxy()) {
 			setType(contextVariable, contextOperation.getOwningClass(), true);
 			setParameterVariables(pivotSpecification, ClassUtil.nonNullEMF(contextOperation.getOwnedParameters()));
@@ -123,42 +124,42 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 
 	@Override
 	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull List<Parameter> parameters) {
-		List<Variable> oldVariables = new ArrayList<Variable>(pivotSpecification.getOwnedParameters());
-		List<Variable> newVariables = new ArrayList<Variable>();
+		List<Variable> oldVariables = new ArrayList<>(pivotSpecification.getOwnedParameters());
+		List<Variable> newVariables = new ArrayList<>();
 		for (Parameter parameter : parameters) {
-		    String name = parameter.getName();
+			String name = parameter.getName();
 			Variable param = NameUtil.getNameable(oldVariables, name);
-		    if (param != null) {
-		    	oldVariables.remove(param);
-		    }
-		    else {
-		    	param = PivotFactory.eINSTANCE.createVariable();
-		        param.setName(name);
-		    }
-		    setBehavioralType(param, parameter);
-		    param.setRepresentedParameter(parameter);
-		    newVariables.add(param);
+			if (param != null) {
+				oldVariables.remove(param);
+			}
+			else {
+				param = PivotFactory.eINSTANCE.createParameterVariable();
+				param.setName(name);
+			}
+			setBehavioralType(param, parameter);
+			param.setRepresentedParameter(parameter);
+			newVariables.add(param);
 		}
 		refreshList(ClassUtil.nonNullModel(pivotSpecification.getOwnedParameters()), newVariables);
 	}
 
 	@Override
 	public void setParameterVariables(@NonNull ExpressionInOCL pivotSpecification, @NonNull Map<String, Type> parameters) {
-		List<Variable> oldVariables = new ArrayList<Variable>(pivotSpecification.getOwnedParameters());
-		List<Variable> newVariables = new ArrayList<Variable>();
+		List<Variable> oldVariables = new ArrayList<>(pivotSpecification.getOwnedParameters());
+		List<Variable> newVariables = new ArrayList<>();
 		for (String name : parameters.keySet()) {
-		    Type type = parameters.get(name);
+			Type type = parameters.get(name);
 			Variable param = NameUtil.getNameable(oldVariables, name);
-		    if (param != null) {
-		    	oldVariables.remove(param);
-		    }
-		    else {
-		    	param = PivotFactory.eINSTANCE.createVariable();
-		        param.setName(name);
-		    }
+			if (param != null) {
+				oldVariables.remove(param);
+			}
+			else {
+				param = PivotFactory.eINSTANCE.createParameterVariable();
+				param.setName(name);
+			}
 			setType(param, type, param.isIsRequired());
-//		    param.setRepresentedParameter(parameter);
-		    newVariables.add(param);
+			//		    param.setRepresentedParameter(parameter);
+			newVariables.add(param);
 		}
 		refreshList(ClassUtil.nonNullModel(pivotSpecification.getOwnedParameters()), newVariables);
 	}
@@ -176,7 +177,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		if (returnType != null) {					// FIXME BUG 385711 Use OclVoid rather than null
 			Variable resultVariable = pivotSpecification.getOwnedResult();
 			if (resultVariable == null) {
-				resultVariable = PivotFactory.eINSTANCE.createVariable();
+				resultVariable = PivotFactory.eINSTANCE.createParameterVariable();
 			}
 			resultVariable.setName(resultName);
 			setBehavioralType(resultVariable, contextOperation);

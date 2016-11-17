@@ -45,16 +45,19 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 
 public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 {
 	protected final @NonNull OCLinEcoreGlobalContext globalContext;
+	protected final @NonNull PivotHelper asHelper;
 
 	public OCLinEcoreAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer, @NonNull OCLinEcoreGlobalContext globalContext) {
 		super(analyzer);
 		this.globalContext = globalContext;
-		createSeverityOperations(analyzer.getCodeGenerator().getEnvironmentFactory());
+		EnvironmentFactoryInternal environmentFactory = analyzer.getCodeGenerator().getEnvironmentFactory();
+		asHelper = new PivotHelper(environmentFactory);
+		createSeverityOperations(environmentFactory);
 	}
 
 	private void createSeverityOperations(@NonNull EnvironmentFactoryInternal environmentFactory) {
@@ -104,9 +107,9 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 					}
 					parserContext.setRootElement(specification);
 					if (specification instanceof ExpressionInOCL) {
-						Variable diagnosticsVariable = PivotUtil.createVariable("diagnostics", metamodelManager.getStandardLibrary().getOclAnyType(), false, null);
+						Variable diagnosticsVariable = asHelper.createParameterVariable("diagnostics", metamodelManager.getStandardLibrary().getOclAnyType(), false);
 						((ExpressionInOCL)specification).getOwnedParameters().add(diagnosticsVariable);
-						Variable contextVariable = PivotUtil.createVariable("context", metamodelManager.getStandardLibrary().getOclAnyType(), false, null);
+						Variable contextVariable = asHelper.createParameterVariable("context", metamodelManager.getStandardLibrary().getOclAnyType(), false);
 						((ExpressionInOCL)specification).getOwnedParameters().add(contextVariable);
 					}
 					String constraintName = element.getName();

@@ -35,7 +35,9 @@ import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
@@ -47,9 +49,11 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.RealLiteralExp;
+import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
@@ -191,6 +195,14 @@ public class PivotHelper
 		return asCallExp;
 	}
 
+	public @NonNull IteratorVariable createIteratorVariable(@NonNull String name, @NonNull Type asType, boolean isRequired) {
+		IteratorVariable asVariable = PivotFactory.eINSTANCE.createIteratorVariable();
+		asVariable.setName(name);
+		asVariable.setType(asType);
+		asVariable.setIsRequired(isRequired);
+		return asVariable;
+	}
+
 	public @NonNull LetExp createLetExp(@NonNull Variable asVariable, @NonNull OCLExpression asInExpression) {
 		Type commonType = getMetamodelManager().getCommonType(ClassUtil.nonNullState(asVariable.getType()), TemplateParameterSubstitutions.EMPTY,
 			ClassUtil.nonNullState(asInExpression.getType()), TemplateParameterSubstitutions.EMPTY);
@@ -201,6 +213,24 @@ public class PivotHelper
 		asLetExp.setIsRequired(asInExpression.isIsRequired());
 		asLetExp.setOwnedVariable(asVariable);
 		return asLetExp;
+	}
+
+	public @NonNull LetVariable createLetVariable(@NonNull String name, @NonNull OCLExpression asInitExpression) {
+		LetVariable asVariable = PivotFactory.eINSTANCE.createLetVariable();
+		asVariable.setName(name);
+		asVariable.setType(asInitExpression.getType());
+		asVariable.setIsRequired(asInitExpression.isIsRequired());
+		asVariable.setOwnedInit(asInitExpression);
+		return asVariable;
+	}
+
+	public @NonNull LetVariable createLetVariable(@NonNull String name, @NonNull Type asType, boolean isRequired, @NonNull OCLExpression asInitExpression) {
+		LetVariable asVariable = PivotFactory.eINSTANCE.createLetVariable();
+		asVariable.setName(name);
+		asVariable.setType(asType);
+		asVariable.setIsRequired(isRequired);
+		asVariable.setOwnedInit(asInitExpression);
+		return asVariable;
 	}
 
 	public @NonNull OCLExpression createMapLiteralExp(@NonNull MapType asType, @NonNull Iterable<MapLiteralPart> asParts) {
@@ -220,6 +250,7 @@ public class PivotHelper
 		return mapLiteralPart;
 	}
 
+	@SuppressWarnings("deprecation")
 	public @NonNull NavigationCallExp createNavigationCallExp(@NonNull OCLExpression asSourceExpression, @NonNull Property asProperty) {
 		return PivotUtil.createNavigationCallExp(asSourceExpression, asProperty);
 	}
@@ -333,12 +364,29 @@ public class PivotHelper
 		return asParameter;
 	}
 
+	public @NonNull ParameterVariable createParameterVariable(@NonNull String name, @NonNull Type asType, boolean isRequired) {
+		ParameterVariable asVariable = PivotFactory.eINSTANCE.createParameterVariable();
+		asVariable.setName(name);
+		asVariable.setType(asType);
+		asVariable.setIsRequired(isRequired);
+		return asVariable;
+	}
+
 	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull Number realSymbol) {
 		RealLiteralExp asReal = PivotFactory.eINSTANCE.createRealLiteralExp();
 		asReal.setRealSymbol(realSymbol);
 		asReal.setType(standardLibrary.getRealType());
 		asReal.setIsRequired(true);
 		return asReal;
+	}
+
+	public @NonNull ResultVariable createResultVariable(@NonNull String name, @NonNull Type asType, boolean isRequired, @NonNull OCLExpression asInitExpression) {
+		ResultVariable asVariable = PivotFactory.eINSTANCE.createResultVariable();
+		asVariable.setName(name);
+		asVariable.setType(asType);
+		asVariable.setIsRequired(isRequired);
+		asVariable.setOwnedInit(asInitExpression);
+		return asVariable;
 	}
 
 	public @NonNull OCLExpression createShadowExp(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull Iterable<ShadowPart> asParts) {
@@ -400,16 +448,22 @@ public class PivotHelper
 		return asUnlimitedNatural;
 	}
 
+	/** @deprecated Use appropriate derived Variable */
+	@Deprecated
 	public @NonNull Variable createVariable(@NonNull String name, @NonNull OCLExpression asInitExpression) {
 		Variable asVariable = PivotUtil.createVariable(name, asInitExpression);
 		return asVariable;
 	}
 
+	/** @deprecated Use appropriate derived Variable */
+	@Deprecated
 	public @NonNull Variable createVariable(@NonNull String name, @NonNull Type asType, boolean isRequired, @Nullable OCLExpression asInitExpression) {
 		Variable asVariable = PivotUtil.createVariable(name, asType, isRequired, asInitExpression);
 		return asVariable;
 	}
 
+	/** @deprecated Use appropriate derived Variable */
+	@Deprecated
 	public @NonNull Variable createVariable(@NonNull TypedElement typedElement) {
 		String name = ClassUtil.nonNullState(typedElement.getName());
 		Type type = ClassUtil.nonNullState(typedElement.getType());
@@ -499,7 +553,7 @@ public class PivotHelper
 		OCLExpression oldSourceExpression = unsafeObjectCallExp.getOwnedSource();
 		assert oldSourceExpression != null;
 		//
-		Variable unsafeSourceVariable = createVariable("unsafe", oldSourceExpression);
+		LetVariable unsafeSourceVariable = createLetVariable("unsafe", oldSourceExpression);
 		OCLExpression unsafeSourceExpression1 = createVariableExp(unsafeSourceVariable);
 		unsafeObjectCallExp.setOwnedSource(unsafeSourceExpression1);
 		//

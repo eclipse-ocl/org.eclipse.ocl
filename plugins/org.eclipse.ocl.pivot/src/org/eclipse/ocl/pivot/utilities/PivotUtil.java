@@ -621,6 +621,8 @@ public class PivotUtil
 		return s.toString();
 	}
 
+	/** @deprecated Use appropriate derived Variable */
+	@Deprecated
 	public static @NonNull Variable createVariable(@NonNull String name, @NonNull OCLExpression asInitExpression) {
 		Variable asVariable = PivotFactory.eINSTANCE.createVariable();
 		asVariable.setName(name);
@@ -630,6 +632,8 @@ public class PivotUtil
 		return asVariable;
 	}
 
+	/** @deprecated Use appropriate derived Variable */
+	@Deprecated
 	public static @NonNull Variable createVariable(@NonNull String name, @NonNull Type asType, boolean isRequired, @Nullable OCLExpression asInitExpression) {
 		Variable asVariable = PivotFactory.eINSTANCE.createVariable();
 		asVariable.setName(name);
@@ -894,6 +898,13 @@ public class PivotUtil
 		return elementType;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull String getName(@NonNull NamedElement namedElement) {
+		return ClassUtil.nonNullState(namedElement.getName());
+	}
+
 	public static @Nullable Namespace getNamespace(@Nullable EObject element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Model) {
@@ -916,6 +927,13 @@ public class PivotUtil
 		else {
 			return isSafe ? PivotConstants.SAFE_OBJECT_NAVIGATION_OPERATOR : PivotConstants.OBJECT_NAVIGATION_OPERATOR;
 		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@NonNull Variable> getOwnedIterators(@NonNull LoopExp loopExp) {
+		return ClassUtil.nullFree(loopExp.getOwnedIterators());
 	}
 
 	/**
