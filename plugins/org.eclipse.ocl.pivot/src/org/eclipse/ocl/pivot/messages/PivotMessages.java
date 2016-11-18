@@ -17,11 +17,11 @@ import org.eclipse.osgi.util.NLS;
  * An accessor class for externalized strings.
  */
 public class PivotMessages
-{	
+{
 	static {
 		NLS.initializeMessages(PivotMessages.class.getName(), PivotMessages.class);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -63,14 +63,14 @@ public class PivotMessages
 	public static String UndefinedInitialiser;
 	public static String UndefinedOperation;
 	public static String UndefinedResult;
-	public static String UnknownSourceType;	
+	public static String UnknownSourceType;
 	public static String UnsupportedCompareTo;
 	public static String Validation;
-	
+
 	public static String ValidationConstraintIsNotSatisfied_ERROR_;
 	public static String ValidationEvaluationFailed_ERROR_;
-	
-    public static String Severity_Cancel;
+
+	public static String Severity_Cancel;
 	public static String Severity_Fatal_Error;
 	public static String Severity_Error;
 	public static String Severity_Warning;

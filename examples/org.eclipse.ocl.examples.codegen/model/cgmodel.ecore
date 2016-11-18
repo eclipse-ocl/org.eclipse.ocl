@@ -588,7 +588,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGText" eSuperTypes="#//CGConstant">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A CGText supports provision of literal language-specific text as an inline contribution to the generate code.&#xA;(e.g. the initialisation of an evaluator)."/>
+      <details key="documentation" value="A CGText supports provision of literal language-specific text as an inline contribution to the generate code.&#xA;(e.g. the initialization of an evaluator)."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="textValue" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">

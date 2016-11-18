@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *     Adolfo Sanchez-Barbudo Herrera (University of York) - bug397429
@@ -55,7 +55,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 	protected String superGenModelFile;
 	protected String baseProjectName;
 	protected String baseGenModelFile;
-	
+
 	// Derived properties
 	protected String projectPrefix;
 	protected String modelPackageName;
@@ -71,12 +71,13 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 	protected String copyright;
 	protected String modelFolder;
 	protected String outputFolder;
-	
+
 	protected GenPackage genPackage = null;
 	protected GenPackage superGenPackage = null;
 	protected GenPackage baseGenPackage = null;
-	
 
+
+	@Override
 	public void checkConfiguration(final Issues issues) {
 		if (!isDefined(projectName)) {
 			issues.addError(this, "projectName not specified.");
@@ -91,7 +92,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 			if (!isDefined(baseProjectName)) {
 				issues.addError(this, "baseProjectName must be specified for derived languages");
 			}
-			
+
 			if (!isDefined(baseGenModelFile)) {
 				issues.addError(this, "baseGenModelFile must be specified for derived languages");
 			}
@@ -99,13 +100,13 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 	}
 
 	/**
-	 * <p>Initialises some derived component properties.</p>
-	 * 
-	 * <p>It also gives a chance to subclasses to do additional initialisation</p>
-	 * 
+	 * <p>Initializes some derived component properties.</p>
+	 *
+	 * <p>It also gives a chance to subclasses to do additional initialization</p>
+	 *
 	 * <p>Derived components may override, but they must call super.{@link #doPropertiesConfiguration(OCL)}
-	 * so the properties of this base component are initialised</p>
-	 * 
+	 * so the properties of this base component are initialized</p>
+	 *
 	 * @param ocl the component {@link OCL} instance
 	 */
 	protected void doPropertiesConfiguration(OCL ocl) {
@@ -115,10 +116,10 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 		GenModel genModel = getGenModel(genModelResource);
 		genModel.reconcile();
 		genPackage = getGenPackage(genModelResource);
-		
+
 		// And configure missing information
 		GenPackageHelper helper = new GenPackageHelper(genPackage);
-		projectPrefix = helper.getProjectPrefix(); 
+		projectPrefix = helper.getProjectPrefix();
 		visitorPackageName = helper.getVisitorPackageName();
 		visitorClassName = helper.getVisitorClassName();
 		modelPackageName = helper.getModelPackageName();
@@ -127,7 +128,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 			URI superGenModelURI = getGenModelURI(superProjectName, superGenModelFile);
 			Resource superGenModelResource = getGenModelResource(ocl, superGenModelURI);
 			superGenPackage = getGenPackage(superGenModelResource);
-			
+
 			helper = new GenPackageHelper(superGenPackage);
 			superProjectPrefix =  helper.getProjectPrefix();
 			superVisitorPackageName = helper.getVisitorPackageName();
@@ -136,28 +137,28 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 			baseProjectName = projectName;
 			baseGenModelFile = genModelFile;
 		}
-		
+
 		// Visitable info will be get from base package
 		URI baseGenModelURI = getGenModelURI(baseProjectName, baseGenModelFile);
 		Resource baseGenModelResource = getGenModelResource(ocl, baseGenModelURI);
 		baseGenPackage = getGenPackage(baseGenModelResource);
-		
+
 		helper = new GenPackageHelper(baseGenPackage);
-		visitablePackageName = helper.getVisitablePackageName(); 
+		visitablePackageName = helper.getVisitablePackageName();
 		visitableClassName = helper.getVisitableClassName();
 	}
-	
+
 	/**
 	 * It gives a chance to derived components to do some setup subprocess,
 	 * prior to start with the component generation process
-	 * 
+	 *
 	 * derived components may override
 	 */
 	protected void doSetup() {
 	}
 
 	public abstract void generateVisitors(/*@NonNull*/ final GenPackage genPackage);
-	
+
 	private String getCopyright(GenModel genModel) {
 		String copyright = genModel.getCopyright("");
 		return copyright != null ? copyright : EMPTY_STRING;
@@ -167,7 +168,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 		URI projectResourceURI = URI.createPlatformResourceURI("/" + projectName + "/", true);
 		return ClassUtil.nonNullState(URI.createURI(genModelFile).resolve(projectResourceURI));
 	}
-	
+
 	protected @NonNull Resource getGenModelResource(OCL ocl, URI genModelURI) {
 		Resource genModelResource = ocl.getResourceSet().getResource(genModelURI, true);
 		if (genModelResource == null) {
@@ -181,7 +182,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 			throw new IllegalArgumentException("Illegal empty genModelResource: " + genModelResource.getURI());
 		}
 		EObject rootElement = contents.get(0);
-		if (!(rootElement instanceof GenModel)) { 
+		if (!(rootElement instanceof GenModel)) {
 			throw new IllegalArgumentException("Illegal non GenModel root element: " + genModelResource.getURI());
 		}
 		return (GenModel) rootElement;
@@ -194,7 +195,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 		if (genPackage == null) {
 			throw new IllegalStateException("No '" + genModelResource.getURI() + "' GenPackage");
 		}
-		return genPackage; 
+		return genPackage;
 	}
 
 	@Override
@@ -203,7 +204,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 		assert resourceSet2 != null;
 		OCL ocl = OCL.newInstance(resourceSet2);
 		doPropertiesConfiguration(ocl);
-		
+
 		if (!isDefined(visitablePackageName)) {
 			visitablePackageName = visitorPackageName;
 		}
@@ -221,23 +222,23 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 		URI modelURI = URI.createURI(javaFolder);
 		URI resolvedModelURI = modelURI.resolve(projectFileURI);
 		modelFolder = (resolvedModelURI.isFile() ? resolvedModelURI.toFileString() : resolvedModelURI.toString()) + "/";
-//		URI outputURI = URI.createURI(javaFolder + '/' + visitorPackageName.replace('.', '/'));
-//		URI resolvedOutputURI = outputURI.resolve(projectFileURI);
+		//		URI outputURI = URI.createURI(javaFolder + '/' + visitorPackageName.replace('.', '/'));
+		//		URI resolvedOutputURI = outputURI.resolve(projectFileURI);
 		outputFolder = modelFolder + visitorPackageName.replace('.', '/') + "/";
 
 		log.info("Loading GenModel '" + genModelURI);
-//		try {
-			registerGenModel(ocl, ClassUtil.nonNullState(genPackage.getGenModel()));
-			copyright = getCopyright(genPackage.getGenModel());
-			sourceFile = genModelFile;
-			generateVisitors(genPackage);
-//		} catch (IOException e) {
-//			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
-//		}
+		//		try {
+		registerGenModel(ocl, ClassUtil.nonNullState(genPackage.getGenModel()));
+		copyright = getCopyright(genPackage.getGenModel());
+		sourceFile = genModelFile;
+		generateVisitors(genPackage);
+		//		} catch (IOException e) {
+		//			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
+		//		}
 		ocl.dispose();
 	}
 
-	protected boolean isDerived() {		
+	protected boolean isDerived() {
 		return (isDefined(superProjectName) && superProjectName.length() > 0);
 	}
 
@@ -250,7 +251,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 		return false;
 	}
 
-	
+
 	private void registerGenModel(@NonNull OCL ocl, @NonNull GenModel genModel) {
 		@SuppressWarnings("null")@NonNull ResourceSet resourceSet2 = resourceSet;
 		EnvironmentFactoryAdapter adapter = OCLInternal.adapt(resourceSet2); // We prepare the mManager for the whole resourceSet
@@ -290,7 +291,7 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 
 	/**
 	 * The project name that is extended by the project containing the genmodel
-	 * and generated EMF sources. (e.g. "org.my.superproject"). 
+	 * and generated EMF sources. (e.g. "org.my.superproject").
 	 * It may be null for base languages
 	 */
 	public void setSuperProjectName(final String superProjectName) {
@@ -298,24 +299,24 @@ public abstract class GenerateVisitorsWorkflowComponent extends AbstractWorkflow
 	}
 
 	/**
-	 * The gen model file path of the super project(e.g. "model/superModel.genmodel"). 
+	 * The gen model file path of the super project(e.g. "model/superModel.genmodel").
 	 * It may be null for base languages
 	 */
 	public void setSuperGenModelFile(final String superGenModelFile) {
 		this.superGenModelFile = superGenModelFile;
 	}
-	
+
 	/**
-	 * The gen model file path of the base project(e.g. "model/baseModel.genmodel"). 
-	 * It may be null for base languages 
+	 * The gen model file path of the base project(e.g. "model/baseModel.genmodel").
+	 * It may be null for base languages
 	 */
 	public void setBaseGenModelFile(final String baseGenModelFile) {
 		this.baseGenModelFile = baseGenModelFile;
 	}
-	
+
 	/**
 	 * The name of the base project (e.g. "org.my.baseproject"). It may be null for base
-	 * languages 
+	 * languages
 	 */
 	public void setBaseProjectName(final String baseProjectName) {
 		this.baseProjectName = baseProjectName;

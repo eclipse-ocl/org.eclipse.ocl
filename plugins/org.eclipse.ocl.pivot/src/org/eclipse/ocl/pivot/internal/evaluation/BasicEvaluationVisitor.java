@@ -384,7 +384,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			Variable accumulator = iterateExp.getOwnedResult();
 			Object initValue = accumulator.getOwnedInit().accept(undecoratedVisitor);
 			//			if ((initValue == null) || ValuesUtil.isUndefined(initValue)) {
-			//				return evaluationEnvironment.throwInvalidEvaluation(null, iterateExp, initValue, EvaluatorMessages.UndefinedInitialiser);
+			//				return evaluationEnvironment.throwInvalidEvaluation(null, iterateExp, initValue, EvaluatorMessages.UndefinedInitializer);
 			//			}
 			//			initValue = ValuesUtil.asValidValue(initValue);
 			IterationManager iterationManager;

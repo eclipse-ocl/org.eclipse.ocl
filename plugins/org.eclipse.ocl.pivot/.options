@@ -9,7 +9,7 @@ org.eclipse.ocl.pivot/projectMap/addGenModel=false
 # Turn on tracing of the plgin.xml generated_package extension point 
 org.eclipse.ocl.pivot/projectMap/addGeneratedPackage=false
 
-# Turn on tracing of the ResourceSet.Converter.URI_MAP URI initialisation 
+# Turn on tracing of the ResourceSet.Converter.URI_MAP URI initialization 
 org.eclipse.ocl.pivot/projectMap/addURIMap=false
 
 # Turn on tracing of the resource load strategy configuration commands

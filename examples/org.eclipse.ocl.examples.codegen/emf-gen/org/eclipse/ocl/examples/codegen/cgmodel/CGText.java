@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -19,7 +19,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  *
  * <!-- begin-model-doc -->
  * A CGText supports provision of literal language-specific text as an inline contribution to the generate code.
- * (e.g. the initialisation of an evaluator).
+ * (e.g. the initialization of an evaluator).
  * <!-- end-model-doc -->
  *
  * <p>
