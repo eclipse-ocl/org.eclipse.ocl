@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -66,11 +64,13 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.junit.After;
 import org.junit.Before;
 
+import junit.framework.TestCase;
+
 /**
  * Tests that OCL for model validation works.
  */
 public class ValidateTests extends AbstractValidateTests
-{	
+{
 	public static @NonNull List<Diagnostic> assertEcoreOCLValidationDiagnostics(@Nullable OCL ocl, @NonNull String prefix, @NonNull Resource resource, String... messages) {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		if (ocl != null) {
@@ -94,10 +94,10 @@ public class ValidateTests extends AbstractValidateTests
 		return ecoreResource;
 	}
 
-    @Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-    }
+	@Override
+	@Before public void setUp() throws Exception {
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
@@ -153,19 +153,19 @@ public class ValidateTests extends AbstractValidateTests
 	}
 
 	public void testValidate_Bug418552_oclinecore() throws IOException, InterruptedException {
-		String testDocument = 
+		String testDocument =
 				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
-				"\n" +
-				"package temp : Test = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +
-				"{\n" +
-				"	class Tester\n" +
-				"	{\n" +
-				"		attribute total : ecore::EDoubleObject { derived volatile }\n" +
-				"		{\n" +
-				"			derivation: true;\n" +
-				"		}\n" +
-				"	}\n" +
-				"}\n";
+						"\n" +
+						"package temp : Test = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +
+						"{\n" +
+						"	class Tester\n" +
+						"	{\n" +
+						"		attribute total : ecore::EDoubleObject { derived volatile }\n" +
+						"		{\n" +
+						"			derivation: true;\n" +
+						"		}\n" +
+						"	}\n" +
+						"}\n";
 		createOCLinEcoreFile("Bug418552.oclinecore", testDocument);
 		OCL ocl1 = createOCL();
 		@NonNull List<Diagnostic> diagnostics = doValidateOCLinEcore(ocl1, "Bug418552",
@@ -199,7 +199,7 @@ public class ValidateTests extends AbstractValidateTests
 
 	public void testValidate_OCL_2_5_oclas() throws IOException, InterruptedException {
 		ResourceSet resourceSet = new ResourceSetImpl();
-		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			getProjectMap().initializeResourceSet(resourceSet);
 		}
 		Resource resource = resourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/OCL-2.5.oclas", true), true);
@@ -208,7 +208,7 @@ public class ValidateTests extends AbstractValidateTests
 
 	public void testValidate_Pivot_oclas() throws IOException, InterruptedException {
 		ResourceSet resourceSet = new ResourceSetImpl();
-		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {			
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			getProjectMap().initializeResourceSet(resourceSet);
 			OCLASResourceFactory.getInstance().configure(resourceSet);
 		}
@@ -293,36 +293,36 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(template,  "Level2a::V2a", objectLabel));
 			objectLabel = LabelUtil.getLabel(testInstance2);
 			checkValidationDiagnostics(testInstance2, Diagnostic.ERROR,
-				StringUtil.bind("The ''{0}'' constraint is violated on ''{1}''", "L2a", "Level3 ok", objectLabel));
+				StringUtil.bind(VIOLATED_TEMPLATE, "L2a", "Level3 ok", objectLabel));
 		}
 		finally {
 			ocl0.dispose();
 			ocl1.dispose();
 			ocl2.dispose();
-			EValidator.Registry.INSTANCE.remove(validatePackage1);			
+			EValidator.Registry.INSTANCE.remove(validatePackage1);
 		}
 	}
 
-	public void testValidate_Validate_completeocl_loadresource() throws IOException, InterruptedException {		
+	public void testValidate_Validate_completeocl_loadresource() throws IOException, InterruptedException {
 		OCL ocl = createOCL();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		ResourceSet resourceSet = ocl.getResourceSet(); //createResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
-		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		//
 		URI ecoreURI = getTestModelURI("model/OCLinEcoreTutorial.ecore");
 		URI xmiURI = getTestModelURI("model/OCLinEcoreTutorial.xmi");
 		URI oclURI = getProjectFileURI("ExtraOCLinEcoreTutorial.ocl");
-		String testDocument = 
+		String testDocument =
 				"import '" + ecoreURI.toString() + "'\n" +
-				"package tutorial\n" +
-				"context Book\n" +
-				"inv ExactlyOneCopy: copies=1\n" +
-				"endpackage\n";
+						"package tutorial\n" +
+						"context Book\n" +
+						"inv ExactlyOneCopy: copies=1\n" +
+						"endpackage\n";
 		createOCLinEcoreFile("ExtraOCLinEcoreTutorial.ocl", testDocument);
 		//
 		Resource resource = ClassUtil.nonNullState(resourceSet.getResource(xmiURI, true));
-		assertValidationDiagnostics("Without Complete OCL", resource, 
+		assertValidationDiagnostics("Without Complete OCL", resource,
 			StringUtil.bind(VIOLATED_TEMPLATE, "SufficientCopies", "Library lib::Book b2"),
 			StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
 			StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3"));
@@ -343,7 +343,7 @@ public class ValidateTests extends AbstractValidateTests
 			StringUtil.bind(VIOLATED_TEMPLATE, "AtMostTwoLoans", "Library lib::Member m3"),
 			StringUtil.bind(VIOLATED_TEMPLATE, "UniqueLoans", "Library lib::Member m3"),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Book::ExactlyOneCopy", "Library lib::Book b2"));
-//		disposeResourceSet(resourceSet);
+		//		disposeResourceSet(resourceSet);
 		helper.dispose();
 		ocl.dispose();
 	}
@@ -356,21 +356,21 @@ public class ValidateTests extends AbstractValidateTests
 
 		ProjectMap.initializeURIResourceMap(resourceSet);
 		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
-    	if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-    		uriMap.putAll(EcorePlugin.computePlatformURIMap(false));
-    	}
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			uriMap.putAll(EcorePlugin.computePlatformURIMap(false));
+		}
 		UML2AS.initialize(resourceSet);
-		
-		
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
-		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);			
-//		MetamodelManagerResourceSetAdapter adapter = MetamodelManagerResourceSetAdapter.getAdapter(resourceSet, metamodelManager);
+
+
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
+		//		MetamodelManagerResourceSetAdapter adapter = MetamodelManagerResourceSetAdapter.getAdapter(resourceSet, metamodelManager);
 		//
 		URI umlURI = getProjectFileURI("Names.uml");
 		URI oclURI = getProjectFileURI("Bug422583.ocl");
-		String testDocument = 
-//				"import uml : '" + UMLResource.UML_METAMODEL_URI + "#/'\n" +
-//				"import uml : '" + XMI2UMLResource.UML_METAMODEL_NS_URI + "'\n" +
+		String testDocument =
+				//				"import uml : '" + UMLResource.UML_METAMODEL_URI + "#/'\n" +
+				//				"import uml : '" + XMI2UMLResource.UML_METAMODEL_NS_URI + "'\n" +
 				"import uml : 'http://www.eclipse.org/uml2/5.0.0/UML#/'\n" +
 				"package uml\n" +
 				"  context Element\n" +
@@ -415,15 +415,15 @@ public class ValidateTests extends AbstractValidateTests
 		assertTrue(helper.loadDocument(oclURI));
 		helper.installPackages();
 		String objectLabel1 = LabelUtil.getLabel(uNamed);
-//		String objectLabel3 = ClassUtil.getLabel(uNamed.getOwnedAttribute("r", null).getLowerValue());
-//		String objectLabel4 = ClassUtil.getLabel(uNamed.getOwnedAttribute("s", null).getLowerValue());
+		//		String objectLabel3 = ClassUtil.getLabel(uNamed.getOwnedAttribute("r", null).getLowerValue());
+		//		String objectLabel4 = ClassUtil.getLabel(uNamed.getOwnedAttribute("s", null).getLowerValue());
 		assertValidationDiagnostics("Without Complete OCL", resource,
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Classifier::IsClassifierWrtLeaf", objectLabel1),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::IsClassWrtLeaf", objectLabel1)/*,
 			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "NamedElement", "visibility_needs_ownership", objectLabel3),	// FIXME BUG 437450
 			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "NamedElement", "visibility_needs_ownership", objectLabel4)*/);	// FIXME BUG 437450
-//		adapter.getMetamodelManager().dispose();
-//		disposeResourceSet(resourceSet);
+		//		adapter.getMetamodelManager().dispose();
+		//		disposeResourceSet(resourceSet);
 		helper.dispose();
 		ocl.dispose();
 	}
@@ -453,7 +453,7 @@ public class ValidateTests extends AbstractValidateTests
 			checkValidationDiagnostics(testInstance, Diagnostic.ERROR,
 				StringUtil.bind(template,  "L1", objectLabel),
 				StringUtil.bind(template,  "L2a", objectLabel),
-	//BUG355184		ClassUtil.bind(template,  "L2b", objectLabel),
+				//BUG355184		ClassUtil.bind(template,  "L2b", objectLabel),
 				StringUtil.bind(template,  "L3", objectLabel));
 			//
 			//	Check OCLinEcoreEObjectValidator warnings and distinct message
@@ -463,7 +463,7 @@ public class ValidateTests extends AbstractValidateTests
 			checkValidationDiagnostics(testInstance, Diagnostic.WARNING,
 				StringUtil.bind(template, "Level1::L1", objectLabel),
 				StringUtil.bind(template, "Level2a::L2a", objectLabel),
-	//BUG355184		ClassUtil.bind(template,  "L2b", objectLabel),
+				//BUG355184		ClassUtil.bind(template,  "L2b", objectLabel),
 				StringUtil.bind(template, "Level3::L3", objectLabel));
 			//
 			//	No errors
