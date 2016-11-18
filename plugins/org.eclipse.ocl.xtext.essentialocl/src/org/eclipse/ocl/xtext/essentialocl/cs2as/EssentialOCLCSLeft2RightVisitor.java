@@ -1668,7 +1668,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						//	Condition the source for implicit set or implicit collect
 						//
 						String navigationOperatorName = csOperator.getName();
-						if (PivotUtil.isAggregate(actualSourceType)) {
+						boolean isAggregate = PivotUtil.isAggregate(actualSourceType);
+						if (isAggregate) {
 							if (PivotUtil.isObjectNavigationOperator(navigationOperatorName)) {
 								implicitCollectExp = resolveImplicitCollect(sourceExp, csOperator);
 								if (implicitCollectExp != null) {
@@ -1715,6 +1716,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 							}
 							else {
 								((CallExp) callExp).setIsSafe(isSafe);
+								if (isSafe) {
+									callExp.setIsRequired(isAggregate);
+								}
 								navigatingExp = callExp;
 							}
 						}
