@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface Visitor<R>
 {

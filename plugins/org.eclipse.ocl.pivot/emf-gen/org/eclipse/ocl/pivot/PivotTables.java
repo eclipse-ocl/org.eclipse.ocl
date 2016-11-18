@@ -108,9 +108,11 @@ public class PivotTables
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_IterateExp = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("IterateExp", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Iteration = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("Iteration", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_IteratorExp = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("IteratorExp", 0);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_IteratorVariable = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("IteratorVariable", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_LambdaType = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("LambdaType", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_LanguageExpression = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("LanguageExpression", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_LetExp = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("LetExp", 0);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_LetVariable = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("LetVariable", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Library = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("Library", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_LoopExp = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("LoopExp", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_MapLiteralExp = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("MapLiteralExp", 0);
@@ -131,6 +133,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_OrphanCompletePackage = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("OrphanCompletePackage", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Package = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("Package", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Parameter = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("Parameter", 0);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_ParameterVariable = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("ParameterVariable", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Precedence = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("Precedence", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_PrimitiveCompletePackage = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("PrimitiveCompletePackage", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_PrimitiveType = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("PrimitiveType", 0);
@@ -140,6 +143,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_PropertyCallExp = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("PropertyCallExp", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Pseudostate = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("Pseudostate", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Region = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("Region", 0);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_ResultVariable = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("ResultVariable", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_SelfType = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("SelfType", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_SendSignalAction = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("SendSignalAction", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_SequenceType = org.eclipse.ocl.pivot.PivotTables.PACKid_$metamodel$.getClassId("SequenceType", 0);
@@ -225,8 +229,13 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_SortedByIsOrderedIfSourceIsOrdered = "IteratorExp::SortedByIsOrderedIfSourceIsOrdered";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_SortedByIteratorTypeIsComparable = "IteratorExp::SortedByIteratorTypeIsComparable";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_UnsafeSourceCanNotBeNull = "IteratorExp::UnsafeSourceCanNotBeNull";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorVariable_c_c_HasNoInitializer = "IteratorVariable::HasNoInitializer";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_LetExp_c_c_CompatibleNullityForIn = "LetExp::CompatibleNullityForIn";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_LetExp_c_c_TypeIsInType = "LetExp::TypeIsInType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_LetExp_c_c_TypeIsNotInvalid = "LetExp::TypeIsNotInvalid";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_LetVariable_c_c_CompatibleNullityForInitializer = "LetVariable::CompatibleNullityForInitializer";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_LetVariable_c_c_CompatibleTypeForInitializer = "LetVariable::CompatibleTypeForInitializer";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_LetVariable_c_c_HasInitializer = "LetVariable::HasInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_LoopExp_c_c_NoInitializers = "LoopExp::NoInitializers";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_LoopExp_c_c_SourceIsCollection = "LoopExp::SourceIsCollection";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_MessageExp_c_c_OneCallOrOneSend = "MessageExp::OneCallOrOneSend";
@@ -239,11 +248,15 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_LoadableImplementation = "Operation::LoadableImplementation";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_UniquePostconditionName = "Operation::UniquePostconditionName";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_UniquePreconditionName = "Operation::UniquePreconditionName";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ParameterVariable_c_c_HasNoInitializer = "ParameterVariable::HasNoInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_PropertyCallExp_c_c_CompatibleResultType = "PropertyCallExp::CompatibleResultType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_PropertyCallExp_c_c_NonStaticSourceTypeIsConformant = "PropertyCallExp::NonStaticSourceTypeIsConformant";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_PropertyCallExp_c_c_SafeSourceCanBeNull = "PropertyCallExp::SafeSourceCanBeNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull = "PropertyCallExp::UnsafeSourceCanNotBeNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Property_c_c_CompatibleDefaultExpression = "Property::CompatibleDefaultExpression";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ResultVariable_c_c_CompatibleNullityForInitializer = "ResultVariable::CompatibleNullityForInitializer";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ResultVariable_c_c_CompatibleTypeForInitializer = "ResultVariable::CompatibleTypeForInitializer";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ResultVariable_c_c_HasInitializer = "ResultVariable::HasInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_ClassHasNoStringValueInitializer = "ShadowExp::ClassHasNoStringValueInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_DataTypeHasNoPartInitializers = "ShadowExp::DataTypeHasNoPartInitializers";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_DataTypeHasStringValueInitializer = "ShadowExp::DataTypeHasStringValueInitializer";

@@ -1376,7 +1376,7 @@
             <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#T.ocl.OclAny"/>
             <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object2" representedParameter="#p0o.ocl.OclAny.%61%..ocl.OclSelf"
                 type="#T.ocl.OclAny"/>
-            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#Boolean"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" name="result" type="#Boolean"/>
           </ownedSpecification>
         </ownedPostconditions>
       </ownedOperations>
@@ -1401,7 +1401,7 @@
             <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#T.ocl.OclAny"/>
             <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object2" representedParameter="#p0o.ocl.OclAny.%60%%62%..ocl.OclSelf"
                 type="#T.ocl.OclAny"/>
-            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#Boolean"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" name="result" type="#Boolean"/>
           </ownedSpecification>
         </ownedPostconditions>
       </ownedOperations>
@@ -1424,7 +1424,7 @@
             <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#T.ocl.OclAny"/>
             <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="type" representedParameter="#p0o.ocl.OclAny.oclAsType..TT"
                 type="#t.ocl.OclAny..oclAsTypeTT"/>
-            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#t.ocl.OclAny..oclAsTypeTT"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" name="result" type="#t.ocl.OclAny..oclAsTypeTT"/>
           </ownedSpecification>
         </ownedPostconditions>
         <ownedSignature xmi:id="s.o.ocl.OclAny.oclAsType..TT">
@@ -1539,7 +1539,7 @@
             <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#T.ocl.OclElement"/>
             <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="type" representedParameter="#p0o.ocl.OclElement.oclAsModelType..TT"
                 type="#t.ocl.OclElement..oclAsModelTypeTT"/>
-            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#t.ocl.OclElement..oclAsModelTypeTT"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" name="result" type="#t.ocl.OclElement..oclAsModelTypeTT"/>
           </ownedSpecification>
         </ownedPostconditions>
         <ownedSignature xmi:id="s.o.ocl.OclElement.oclAsModelType..TT">
@@ -1949,7 +1949,7 @@
             <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#OrderedSet"/>
             <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object" representedParameter="#p0o.ocl.OrderedSet.prepend..T"
                 type="#t.ocl..OrderedSetT"/>
-            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#OrderedSet"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" name="result" type="#OrderedSet"/>
           </ownedSpecification>
         </ownedPostconditions>
         <ownedPostconditions xmi:id="c+ocl.OrderedSet.prepend.IsAtStart" name="IsAtStart">
@@ -1967,7 +1967,7 @@
             <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#OrderedSet"/>
             <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object" representedParameter="#p0o.ocl.OrderedSet.prepend..T"
                 type="#t.ocl..OrderedSetT"/>
-            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#OrderedSet"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" name="result" type="#OrderedSet"/>
           </ownedSpecification>
         </ownedPostconditions>
         <ownedPostconditions xmi:id="c+ocl.OrderedSet.prepend.IsShiftedAlong" name="IsShiftedAlong">
@@ -2007,7 +2007,7 @@
             <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#OrderedSet"/>
             <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object" representedParameter="#p0o.ocl.OrderedSet.prepend..T"
                 type="#t.ocl..OrderedSetT"/>
-            <ownedResult xsi:type="pivot:ResultVariable" name="result" type="#OrderedSet"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" name="result" type="#OrderedSet"/>
           </ownedSpecification>
         </ownedPostconditions>
       </ownedOperations>

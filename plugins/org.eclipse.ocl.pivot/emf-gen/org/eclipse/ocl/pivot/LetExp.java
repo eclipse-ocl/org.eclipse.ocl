@@ -88,6 +88,13 @@ public interface LetExp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	boolean validateCompatibleNullityForIn(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	boolean validateTypeIsInType(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**

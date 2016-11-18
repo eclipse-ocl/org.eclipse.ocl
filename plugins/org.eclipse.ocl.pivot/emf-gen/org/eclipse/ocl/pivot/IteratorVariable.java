@@ -10,6 +10,9 @@
  */
 package org.eclipse.ocl.pivot;
 
+import java.util.Map;
+import org.eclipse.emf.common.util.DiagnosticChain;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -23,4 +26,11 @@ package org.eclipse.ocl.pivot;
  */
 public interface IteratorVariable extends Variable
 {
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateHasNoInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
 } // IteratorVariable

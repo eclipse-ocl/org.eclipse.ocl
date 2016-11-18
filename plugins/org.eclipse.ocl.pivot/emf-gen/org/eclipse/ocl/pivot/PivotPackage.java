@@ -13002,6 +13002,15 @@ extends EPackage
 	int ITERATOR_VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Has No Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP = VARIABLE_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Iterator Variable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * @since 1.3
@@ -13009,7 +13018,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_VARIABLE_OPERATION_COUNT = VARIABLE_OPERATION_COUNT + 0;
+	int ITERATOR_VARIABLE_OPERATION_COUNT = VARIABLE_OPERATION_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -13453,13 +13462,22 @@ extends EPackage
 	int LET_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Compatible Nullity For In</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_EXP___VALIDATE_COMPATIBLE_NULLITY_FOR_IN__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is In Type</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LET_EXP___VALIDATE_TYPE_IS_IN_TYPE__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 0;
+	int LET_EXP___VALIDATE_TYPE_IS_IN_TYPE__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -13468,7 +13486,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LET_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 1;
+	int LET_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Let Exp</em>' class.
@@ -13477,7 +13495,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LET_EXP_OPERATION_COUNT = OCL_EXPRESSION_OPERATION_COUNT + 2;
+	int LET_EXP_OPERATION_COUNT = OCL_EXPRESSION_OPERATION_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -13660,6 +13678,33 @@ extends EPackage
 	int LET_VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Compatible Nullity For Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_VARIABLE___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = VARIABLE_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Validate Compatible Type For Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_VARIABLE___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = VARIABLE_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Validate Has Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP = VARIABLE_OPERATION_COUNT + 2;
+
+	/**
 	 * The number of operations of the '<em>Let Variable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * @since 1.3
@@ -13667,7 +13712,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LET_VARIABLE_OPERATION_COUNT = VARIABLE_OPERATION_COUNT + 0;
+	int LET_VARIABLE_OPERATION_COUNT = VARIABLE_OPERATION_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -16490,6 +16535,15 @@ extends EPackage
 	int PARAMETER_VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Has No Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP = VARIABLE_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Parameter Variable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * @since 1.3
@@ -16497,7 +16551,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETER_VARIABLE_OPERATION_COUNT = VARIABLE_OPERATION_COUNT + 0;
+	int PARAMETER_VARIABLE_OPERATION_COUNT = VARIABLE_OPERATION_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Pivotable</em>' class.
@@ -18525,6 +18579,33 @@ extends EPackage
 	int RESULT_VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP;
 
 	/**
+	 * The operation id for the '<em>Validate Compatible Nullity For Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_VARIABLE___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = VARIABLE_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Validate Compatible Type For Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_VARIABLE___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = VARIABLE_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Validate Has Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP = VARIABLE_OPERATION_COUNT + 2;
+
+	/**
 	 * The number of operations of the '<em>Result Variable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * @since 1.3
@@ -18532,7 +18613,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int RESULT_VARIABLE_OPERATION_COUNT = VARIABLE_OPERATION_COUNT + 0;
+	int RESULT_VARIABLE_OPERATION_COUNT = VARIABLE_OPERATION_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -25013,6 +25094,16 @@ extends EPackage
 	EClass getIteratorVariable();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorVariable#validateHasNoInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Has No Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Has No Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.IteratorVariable#validateHasNoInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateAnyHasOneIterator(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Any Has One Iterator</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -25271,6 +25362,16 @@ extends EPackage
 	EReference getLetExp_OwnedVariable();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LetExp#validateCompatibleNullityForIn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Compatible Nullity For In</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Compatible Nullity For In</em>' operation.
+	 * @see org.eclipse.ocl.pivot.LetExp#validateCompatibleNullityForIn(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getLetExp__ValidateCompatibleNullityForIn__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LetExp#validateTypeIsInType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is In Type</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -25300,6 +25401,36 @@ extends EPackage
 	 * @generated
 	 */
 	EClass getLetVariable();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LetVariable#validateCompatibleNullityForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Compatible Nullity For Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Compatible Nullity For Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.LetVariable#validateCompatibleNullityForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getLetVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LetVariable#validateCompatibleTypeForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Compatible Type For Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Compatible Type For Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.LetVariable#validateCompatibleTypeForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getLetVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.LetVariable#validateHasInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Has Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Has Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.LetVariable#validateHasInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getLetVariable__ValidateHasInitializer__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Library <em>Library</em>}'.
@@ -26153,6 +26284,36 @@ extends EPackage
 	 * @generated
 	 */
 	EClass getResultVariable();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ResultVariable#validateCompatibleNullityForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Compatible Nullity For Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Compatible Nullity For Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ResultVariable#validateCompatibleNullityForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getResultVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ResultVariable#validateCompatibleTypeForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Compatible Type For Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Compatible Type For Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ResultVariable#validateCompatibleTypeForInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getResultVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ResultVariable#validateHasInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Has Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Has Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ResultVariable#validateHasInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getResultVariable__ValidateHasInitializer__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.SelfType <em>Self Type</em>}'.
@@ -28148,6 +28309,16 @@ extends EPackage
 	EClass getParameterVariable();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ParameterVariable#validateHasNoInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Has No Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Has No Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ParameterVariable#validateHasNoInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getParameterVariable__ValidateHasNoInitializer__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.VariableDeclaration <em>Variable Declaration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -30069,6 +30240,14 @@ extends EPackage
 		EClass ITERATOR_VARIABLE = eINSTANCE.getIteratorVariable();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Has No Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Any Has One Iterator</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -30275,6 +30454,14 @@ extends EPackage
 		EReference LET_EXP__OWNED_VARIABLE = eINSTANCE.getLetExp_OwnedVariable();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Compatible Nullity For In</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LET_EXP___VALIDATE_COMPATIBLE_NULLITY_FOR_IN__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLetExp__ValidateCompatibleNullityForIn__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Type Is In Type</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -30300,6 +30487,30 @@ extends EPackage
 		 * @generated
 		 */
 		EClass LET_VARIABLE = eINSTANCE.getLetVariable();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Compatible Nullity For Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LET_VARIABLE___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLetVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Compatible Type For Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LET_VARIABLE___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLetVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Has Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation LET_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getLetVariable__ValidateHasInitializer__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.LibraryImpl <em>Library</em>}' class.
@@ -31001,6 +31212,30 @@ extends EPackage
 		 * @generated
 		 */
 		EClass RESULT_VARIABLE = eINSTANCE.getResultVariable();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Compatible Nullity For Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESULT_VARIABLE___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getResultVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Compatible Type For Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESULT_VARIABLE___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getResultVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Has Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RESULT_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getResultVariable__ValidateHasInitializer__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.SelfTypeImpl <em>Self Type</em>}' class.
@@ -32583,6 +32818,14 @@ extends EPackage
 		 * @generated
 		 */
 		EClass PARAMETER_VARIABLE = eINSTANCE.getParameterVariable();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Has No Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation PARAMETER_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getParameterVariable__ValidateHasNoInitializer__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
