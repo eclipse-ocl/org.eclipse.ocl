@@ -197,6 +197,7 @@ implements LetExp {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.3
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
