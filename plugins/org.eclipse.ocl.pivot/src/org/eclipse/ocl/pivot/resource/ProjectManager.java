@@ -32,7 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *		<li>{@link ProjectManager#CLASS_PATH} - A shared Heavyweight including classpath analysis</li>
  *		<li>{@link BasicProjectManager#createDefaultProjectManager()} - Convenient method to create local heavyweight local managers</li>
  * </ul>
- *
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ProjectManager extends Adapter
 {
@@ -495,17 +495,27 @@ public interface ProjectManager extends Adapter
 		void unloadedResource();
 	}
 
+	void addResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor);
+
 	void configure(@NonNull ResourceSet resourceSet, @NonNull IResourceLoadStrategy instance, @Nullable IConflictHandler instance2);
 
 	IPackageDescriptor getPackageDescriptor(@NonNull URI ecoreURI);
+
+	/**
+	 * @since 1.3
+	 */
+	@Nullable IResourceDescriptor getResourceDescriptor(@NonNull URI uri);
 
 	void initializeResourceSet(@Nullable ResourceSet resourceSet);
 
 	boolean isGlobal();
 
-	void useGeneratedResource(@NonNull Resource resource, @NonNull ResourceSet resourceSet);
-
-	void addResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor);
+	/**
+	 * @since 1.3
+	 */
+	void removeResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor);
 
 	void unload(@NonNull ResourceSet resourceSet);
+
+	void useGeneratedResource(@NonNull Resource resource, @NonNull ResourceSet resourceSet);
 }

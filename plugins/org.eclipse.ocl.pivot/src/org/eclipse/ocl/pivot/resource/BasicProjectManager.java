@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     E.D.Willink - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.ocl.pivot.resource;
 
@@ -29,14 +29,14 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
  */
 public class BasicProjectManager extends AdapterImpl implements ProjectManager
 {
-	public static @NonNull ProjectManager createDefaultProjectManager() { 
+	public static @NonNull ProjectManager createDefaultProjectManager() {
 		return EMFPlugin.IS_ECLIPSE_RUNNING ? new ProjectMap(false) : new StandaloneProjectMap(false);
 	}
-	
-	public static @NonNull ProjectManager createGlobalProjectManager() { 
+
+	public static @NonNull ProjectManager createGlobalProjectManager() {
 		return EMFPlugin.IS_ECLIPSE_RUNNING ? new ProjectMap(true) : new StandaloneProjectMap(true);
 	}
-	
+
 	/**
 	 * Return any {@link ProjectManager} already installed as an adapter on a
 	 * <tt>resourceSet</tt>. Returns null if there is no such adapter.
@@ -63,6 +63,14 @@ public class BasicProjectManager extends AdapterImpl implements ProjectManager
 		return null;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable IResourceDescriptor getResourceDescriptor(@NonNull URI uri) {
+		return null;
+	}
+
 	@Override
 	public void initializeResourceSet(@Nullable ResourceSet resourceSet) {
 	}
@@ -70,6 +78,13 @@ public class BasicProjectManager extends AdapterImpl implements ProjectManager
 	@Override
 	public boolean isGlobal() {
 		return false;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public void removeResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor) {
 	}
 
 	@Override

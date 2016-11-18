@@ -2469,6 +2469,19 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 	}
 
+	/**
+	 * Return the IResourceDescriptor for a given URI.
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable IResourceDescriptor getResourceDescriptor(@NonNull URI uri) {
+		Map<@NonNull URI, @NonNull IResourceDescriptor> uri2resource2 = uri2resource;
+		if (uri2resource2 == null) {
+			return null;
+		}
+		return uri2resource2.get(uri);
+	}
+
 	@Override
 	public Notifier getTarget() {
 		return null;
@@ -2649,7 +2662,7 @@ public class StandaloneProjectMap implements ProjectManager
 	protected void notifyAddedDynamicResource(@NonNull ResourceSet resourceSet, @NonNull Resource resource) {
 		//		resource.eAdapters().add(this);
 		if (resourceSet instanceof ResourceSetImpl) {
-			Map<URI, IResourceDescriptor> uri2resource2 = uri2resource;
+			Map<@NonNull URI, @NonNull IResourceDescriptor> uri2resource2 = uri2resource;
 			if (uri2resource2 != null) {
 				URI uri = resource.getURI();
 				IResourceDescriptor resourceDescriptor = uri2resource2.get(uri);
@@ -2732,6 +2745,19 @@ public class StandaloneProjectMap implements ProjectManager
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Remove a resourceDescriptor so that an explicit create procedes without interference.
+	 * @since 1.3
+	 */
+	@Override
+	public void removeResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor) {
+		Map<@NonNull URI, @NonNull IResourceDescriptor> uri2resource2 = uri2resource;
+		if (uri2resource2 != null) {
+			uri2resource2.remove(resourceDescriptor.getPlatformPluginURI());
+			uri2resource2.remove(resourceDescriptor.getPlatformResourceURI());
+		}
 	}
 
 	protected void scanClassPath(@NonNull Map<String, IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
