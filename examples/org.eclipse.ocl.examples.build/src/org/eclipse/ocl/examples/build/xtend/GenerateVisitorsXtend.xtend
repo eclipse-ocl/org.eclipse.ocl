@@ -796,6 +796,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 			«ENDIF»
 
 			/**
+			 * @noimplement This interface is not intended to be implemented by clients.
 			 */
 			public interface «visitorClassName2»<R>«IF isDerived» extends «superVisitorPackageName».«superVisitorClassName»<R>«ENDIF»
 			{
