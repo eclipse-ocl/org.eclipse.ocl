@@ -47,9 +47,9 @@ def: isAttribute(p : Property) : Boolean =
 --Type.allInstances()->exists(c| c.ownedAttribute->includes(p))
 let container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)
 
---inv DerivedIsInitialised: isDerived implies ownedRule->one(stereotype = 'derivation') or ownedRule->one(stereotype = 'initial')
+--inv DerivedIsInitialized: isDerived implies ownedRule->one(stereotype = 'derivation') or ownedRule->one(stereotype = 'initial')
 
---inv CompatibleInitialiser: isDerived implies defaultExpression <> null
+--inv CompatibleInitializer: isDerived implies defaultExpression <> null
 
 inv CompatibleDefaultExpression: ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)
 
@@ -236,10 +236,19 @@ context IterateExp
 /** A result variable must have an init expression. */
 inv OneInitializer: self.ownedResult?.ownedInit->size() = 1
 
-/*------------- unescaped in */
 context LetExp
 /** The type of a Let expression is the type of the in expression. */
 inv TypeIsInType: type = ownedIn.type
+/** The nullity of a Let expression is the nullity of the in expression. */
+inv CompatibleNullityForIn: isRequired = ownedIn.isRequired
+
+context LetVariable
+/** Let variable has an initializer.*/
+inv HasInitializer: ownedInit <> null
+/** The type of a Let variable initializer expression conforms to the type of the Let variable. */
+inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+/** The nullity of a Let variable initializer expression is the nullity of the Let variable. */
+inv CompatibleNullityForInitializer: ownedInit?.isRequired = isRequired
 
 /** LiteralExp
 No additional well-formedness rules. */
@@ -247,8 +256,6 @@ No additional well-formedness rules. */
 context LoopExp
 /** The type of the source expression must be a collection. */
 inv SourceIsCollection: ownedSource?.type.oclIsKindOf(CollectionType)
-
-context LoopExp
 /** The loop variable of an iterator expression has no init expression. */
 inv NoInitializers: self.ownedIterators->forAll(ownedInit->isEmpty())
 
@@ -269,6 +276,10 @@ inv SafeSourceCanBeNull: isSafe implies not ownedSource?.type.oclAsType(Collecti
 inv SafeIteratorIsRequired: isSafe implies ownedIterators->forAll(isRequired)
 /** Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free. */
 inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies ownedSource?.type.oclAsType(CollectionType).isNullFree
+
+context IteratorVariable
+/** Iterator variable has no initializer.*/
+inv HasNoInitializer: ownedInit = null
 
 /** FeatureCallExp
 No additional well-formedness rules. */
@@ -299,7 +310,7 @@ No additional well-formedness rules. */
 --target.type.allOperations()->includes(calledOperation.operation)
 
 --context MapLiteralPart
---inv CompatibleInitialiserType: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+--inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
 --inv TypeIsNotInvalid : type <> OclInvalid
 
 context MessageExp
@@ -345,6 +356,10 @@ inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSourc
 --p.kind <> ParameterDirectionKind::return or
 --p.kind <> ParameterDirectionKind::out)
 
+context ParameterVariable
+/** Parameter variable has no initializer.*/
+inv HasNoInitializer: ownedInit = null
+
 context PropertyCallExp
 def: getSpecializedReferredPropertyOwningType() : Class = referredProperty?.owningClass -- extended in Java code
 def: getSpecializedReferredPropertyType() : Class = referredProperty?.type.oclAsType(Class) -- extended in Java code
@@ -359,6 +374,14 @@ inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSourc
 inv UnsafeSourceCanNotBeNull: (ownedSource <> null) and not isSafe implies ownedSource?.isRequired
 
 --inv StaticSourceIsNull: referredProperty.isStatic implies source.oclAsType(Type).conformsTo(getSpecializedReferredPropertyOwningType())
+
+context ResultVariable
+/** Result variable has an initializer.*/
+inv HasInitializer: ownedInit <> null
+/** The type of a Result variable initializer expression conforms to the type of the Result variable. */
+inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+/** A nullable expression cannot initialize a not-nullable Result variable. */
+inv CompatibleNullityForInitializer: not ownedInit?.isRequired implies not isRequired
 
 --context Class
 --def: allProperties() : Set(Property)[*|1] = self->closure(superClasses)?.ownedProperties->asSet()
@@ -392,7 +415,8 @@ inv CompatibleInitialiserType: ownedInit <> null implies ownedInit?.type?.confor
 inv TypeIsNotInvalid : type <> OclInvalid
 
 context Variable
-inv CompatibleInitialiserType: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+-- Variable semantics vary by consumer. Migrated to LetVariable, IteratorVariable, ParameterVariable, ResultVariable
+inv CompatibleInitialiserType: true
 
 context VariableDeclaration
 inv TypeIsNotInvalid : type <> OclInvalid
