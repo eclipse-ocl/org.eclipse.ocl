@@ -29269,6 +29269,8 @@ extends EPackage
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>
+	 * @noextend This interface is not intended to be extended by clients.
+	 * @noimplement This interface is not intended to be implemented by clients.
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */

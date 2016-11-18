@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Let Exp</b></em>'.
+ * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -31,7 +32,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface LetExp
-		extends OCLExpression {
+extends OCLExpression {
 
 	/**
 	 * Returns the value of the '<em><b>Owned In</b></em>' containment reference.
@@ -85,6 +86,7 @@ public interface LetExp
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.3
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */

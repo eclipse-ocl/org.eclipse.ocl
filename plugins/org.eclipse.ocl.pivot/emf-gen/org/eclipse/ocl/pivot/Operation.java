@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Operation</b></em>'.
+ * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -58,7 +59,7 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * The Types representing exceptions that may be raised during an invocation of this BehavioralFeature.
-	 * 
+	 *
 	 * The Types representing exceptions that may be raised during an invocation of this operation.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Raised Exceptions</em>' reference list.
@@ -93,7 +94,7 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * The ordered set of formal Parameters of this BehavioralFeature.
-	 * 
+	 *
 	 * The parameters owned by this Operation.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Owned Parameters</em>' containment reference list.
