@@ -112,22 +112,22 @@ public class PivotUnqualifiedLookupVisitor
     public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId SET_CLSSid_Class = TypeId.SET.getSpecializedId(CLSSid_Class_0);
     public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId SET_CLSSid_DataType = TypeId.SET.getSpecializedId(CLSSid_DataType_0);
     public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId SET_CLSSid_Package = TypeId.SET.getSpecializedId(CLSSid_Package_0);
-    
+
     protected final /*@Thrown*/ org.eclipse.ocl.pivot.evaluation.@org.eclipse.jdt.annotation.NonNull Executor executor;
     protected final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull IdResolver idResolver;
     protected /*@Thrown*/ java.lang.@org.eclipse.jdt.annotation.Nullable Object child;
-    
+
     public PivotUnqualifiedLookupVisitor(@NonNull LookupEnvironment context) {
         super(context);
         this.executor = context.getExecutor();
         this.idResolver = executor.getIdResolver();
     }
-    
+
     @Override
     protected @Nullable LookupEnvironment doVisiting(@NonNull Visitable visitable) {
         return parentEnv((EObject)visitable);
     }
-    
+
     /**
      * Continue the search for matches in the parent of element.
      */
@@ -141,10 +141,10 @@ public class PivotUnqualifiedLookupVisitor
             return context;
         }
     }
-    
+
     /**
      * visitClass(element : Class[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[1]
      */
     @Override
@@ -312,10 +312,10 @@ public class PivotUnqualifiedLookupVisitor
         }
         return symbol_1;
     }
-    
+
     /**
      * visitDataType(element : DataType[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[1]
      */
     @Override
@@ -458,10 +458,10 @@ public class PivotUnqualifiedLookupVisitor
         }
         return symbol_1;
     }
-    
+
     /**
      * visitElement(element : Element[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[?]
      */
     @Override
@@ -469,10 +469,10 @@ public class PivotUnqualifiedLookupVisitor
         final /*@Thrown*/ org.eclipse.ocl.pivot.internal.lookup.@org.eclipse.jdt.annotation.Nullable LookupEnvironment parentEnv = this.parentEnv(element_1);
         return parentEnv;
     }
-    
+
     /**
      * visitEnumeration(element : Enumeration[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[?]
      */
     @Override
@@ -554,10 +554,10 @@ public class PivotUnqualifiedLookupVisitor
         }
         return symbol_0;
     }
-    
+
     /**
      * visitExpressionInOCL(element : ExpressionInOCL[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[?]
      */
     @Override
@@ -582,10 +582,10 @@ public class PivotUnqualifiedLookupVisitor
         }
         return symbol_0;
     }
-    
+
     /**
      * visitIterateExp(element : IterateExp[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[1]
      */
     @Override
@@ -650,10 +650,10 @@ public class PivotUnqualifiedLookupVisitor
         }
         return symbol_4;
     }
-    
+
     /**
      * visitIteratorExp(element : IteratorExp[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[1]
      */
     @Override
@@ -696,10 +696,10 @@ public class PivotUnqualifiedLookupVisitor
         }
         return symbol_2;
     }
-    
+
     /**
      * visitLetExp(element : LetExp[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[?]
      */
     @Override
@@ -730,10 +730,10 @@ public class PivotUnqualifiedLookupVisitor
         }
         return symbol_1;
     }
-    
+
     /**
      * visitLibrary(element : Library[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[?]
      */
     @Override
@@ -759,10 +759,10 @@ public class PivotUnqualifiedLookupVisitor
         }
         return symbol_0;
     }
-    
+
     /**
      * visitModel(element : Model[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[1]
      */
     @Override
@@ -779,10 +779,10 @@ public class PivotUnqualifiedLookupVisitor
         final /*@Thrown*/ org.eclipse.ocl.pivot.internal.lookup.@org.eclipse.jdt.annotation.NonNull LookupEnvironment addElements_0 = addElements.addElements(ownedPackages);
         return addElements_0;
     }
-    
+
     /**
      * visitOperation(element : Operation[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[?]
      */
     @Override
@@ -811,10 +811,10 @@ public class PivotUnqualifiedLookupVisitor
         }
         return symbol_1;
     }
-    
+
     /**
      * visitPackage(element : Package[1]) : lookup::LookupEnvironment[?]
-     * 
+     *
      * _'null' : lookup::LookupEnvironment[?]
      */
     @Override

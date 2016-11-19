@@ -659,7 +659,7 @@ public class ClassImpl
 	public boolean validateUniqueInvariantName(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateUniqueInvariantName:
 		 *   let severity : Integer[1] = 'Class::UniqueInvariantName'.getSeverity()
 		 *   in
@@ -1115,11 +1115,11 @@ public class ClassImpl
 		}
 		classListeners2.addListener(classListener);
 	}
-	
+
 	public @NonNull TypeId computeId() {
 		return IdManager.getClassId(this);
 	}
-	
+
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {
@@ -1290,7 +1290,7 @@ public class ClassImpl
 		}
 		return unspecializedElement;
 	}
-	
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class isClass() {
 		return this;

@@ -400,7 +400,7 @@ public class PrimitiveTypeImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitPrimitiveType(this);
 	}
-	
+
 	@Override
 	public @NonNull TypeId computeId() {
 		String name2 = getName();

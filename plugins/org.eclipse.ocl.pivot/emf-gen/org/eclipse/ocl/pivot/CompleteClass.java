@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -81,7 +81,7 @@ public interface CompleteClass extends NamedElement
 
 	boolean conformsTo(@NonNull Type elementType);
 	boolean conformsTo(@NonNull CompleteClass thatCompleteClass);
-	
+
 	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass();
 
 	@Nullable CollectionType findCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters);

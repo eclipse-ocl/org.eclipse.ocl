@@ -484,7 +484,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	public boolean validateTypeIsResultType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsResultType:
 		 *   let severity : Integer[1] = 'IterateExp::TypeIsResultType'.getSeverity()
 		 *   in
@@ -546,7 +546,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	public boolean validateUnsafeSourceCanNotBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateUnsafeSourceCanNotBeNull:
 		 *   let
 		 *     severity : Integer[1] = 'IterateExp::UnsafeSourceCanNotBeNull'.getSeverity()
@@ -623,7 +623,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							//
 							if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {					// Normal successful body evaluation result
 								exists = ValueUtil.TRUE_VALUE;
-								break;														// Stop immediately 
+								break;														// Stop immediately
 							}
 							else if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
 								;															// Carry on
@@ -695,7 +695,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	public boolean validateBodyTypeConformsToResultType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateBodyTypeConformsToResultType:
 		 *   let
 		 *     severity : Integer[1] = 'IterateExp::BodyTypeConformsToResultType'.getSeverity()
@@ -761,7 +761,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	public boolean validateOneInitializer(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateOneInitializer:
 		 *   let severity : Integer[1] = 'IterateExp::OneInitializer'.getSeverity()
 		 *   in
@@ -824,7 +824,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	public boolean validateSafeIteratorIsRequired(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSafeIteratorIsRequired:
 		 *   let
 		 *     severity : Integer[1] = 'IterateExp::SafeIteratorIsRequired'.getSeverity()
@@ -890,7 +890,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						//
 						if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
 							forAll = ValueUtil.FALSE_VALUE;
-							break;														// Stop immediately 
+							break;														// Stop immediately
 						}
 						else if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
 							;															// Carry on
@@ -928,7 +928,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	public boolean validateSafeSourceCanBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSafeSourceCanBeNull:
 		 *   let severity : Integer[1] = 'IterateExp::SafeSourceCanBeNull'.getSeverity()
 		 *   in

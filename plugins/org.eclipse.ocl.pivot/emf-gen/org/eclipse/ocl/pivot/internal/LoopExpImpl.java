@@ -237,7 +237,7 @@ public abstract class LoopExpImpl
 	public boolean validateSourceIsCollection(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSourceIsCollection:
 		 *   let severity : Integer[1] = 'LoopExp::SourceIsCollection'.getSeverity()
 		 *   in
@@ -301,7 +301,7 @@ public abstract class LoopExpImpl
 	public boolean validateNoInitializers(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateNoInitializers:
 		 *   let severity : Integer[1] = 'LoopExp::NoInitializers'.getSeverity()
 		 *   in
@@ -358,7 +358,7 @@ public abstract class LoopExpImpl
 					//
 					if (CAUGHT_isEmpty == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
 						status = ValueUtil.FALSE_VALUE;
-						break;														// Stop immediately 
+						break;														// Stop immediately
 					}
 					else if (CAUGHT_isEmpty == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
 						;															// Carry on

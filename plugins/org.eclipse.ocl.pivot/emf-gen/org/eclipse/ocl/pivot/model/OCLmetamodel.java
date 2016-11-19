@@ -71,9 +71,9 @@ public class OCLmetamodel extends ASResourceImpl
 	}
 
 	/**
-	 * Return the default http://www.eclipse.org/ocl/2015/Pivot metamodel Resource using the default OCL Standard Library. 
+	 * Return the default http://www.eclipse.org/ocl/2015/Pivot metamodel Resource using the default OCL Standard Library.
 	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/Pivot.ecore
-	 *  is used as the default when no overriding copy is registered. 
+	 *  is used as the default when no overriding copy is registered.
 	 */
 	public static @NonNull OCLmetamodel getDefault() {
 		OCLmetamodel metamodel = INSTANCE;
@@ -86,9 +86,9 @@ public class OCLmetamodel extends ASResourceImpl
 	}
 
 	/**
-	 * Return the default http://www.eclipse.org/ocl/2015/Pivot metamodel Model using the default OCL Standard Library. 
+	 * Return the default http://www.eclipse.org/ocl/2015/Pivot metamodel Model using the default OCL Standard Library.
 	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/Pivot.ecore
-	 *  is used as the default when no overriding copy is registered. 
+	 *  is used as the default when no overriding copy is registered.
 	 */
 	public static @NonNull Model getDefaultModel() {
 		Model model = (Model)(getDefault().getContents().get(0));
@@ -131,11 +131,11 @@ public class OCLmetamodel extends ASResourceImpl
 			installTemplateBindings();
 			installComments();
 		}
-		
+
 		public @NonNull Model getModel() {
 			return root;
 		}
-		
+
 		private final @NonNull Package _ocl = standardLibrary;
 		private final @NonNull BagType _Bag = getBagType(_ocl, "Bag");
 		private final @NonNull PrimitiveType _Boolean = getPrimitiveType(_ocl, "Boolean");
@@ -158,13 +158,13 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull TemplateParameter _Sequence_T = getTemplateParameter(_Sequence, 0);
 		private final @NonNull TemplateParameter _Set_T = getTemplateParameter(_Set, 0);
 		private final @NonNull TemplateParameter _UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
-		
+
 		private void installPackages() {
 			root.getOwnedPackages().add(pivot);
 			root.getOwnedPackages().add(orphanage);
 			root.getOwnedImports().add(createImport(null, _ocl));
 		}
-		
+
 		private final @NonNull Class _Annotation = createClass(PivotPackage.Literals.ANNOTATION);
 		private final @NonNull Class _AnyType = createClass(PivotPackage.Literals.ANY_TYPE);
 		private final @NonNull Class _AssociationClass = createClass(PivotPackage.Literals.ASSOCIATION_CLASS);
@@ -297,7 +297,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _Visitable = createClass(PivotPackage.Literals.VISITABLE);
 		private final @NonNull Class _VoidType = createClass(PivotPackage.Literals.VOID_TYPE);
 		private final @NonNull Class _WildcardType = createClass(PivotPackage.Literals.WILDCARD_TYPE);
-		
+
 		private final @NonNull Enumeration _AssociativityKind = createEnumeration(PivotPackage.Literals.ASSOCIATIVITY_KIND);
 		private final @NonNull EnumerationLiteral el__AssociativityKind_left = createEnumerationLiteral(PivotPackage.Literals.ASSOCIATIVITY_KIND.getEEnumLiteral(AssociativityKind.LEFT_VALUE));
 		private final @NonNull EnumerationLiteral el__AssociativityKind_right = createEnumerationLiteral(PivotPackage.Literals.ASSOCIATIVITY_KIND.getEEnumLiteral(AssociativityKind.RIGHT_VALUE));
@@ -322,7 +322,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull EnumerationLiteral el__TransitionKind_internal = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral(TransitionKind.INTERNAL_VALUE));
 		private final @NonNull EnumerationLiteral el__TransitionKind_local = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral(TransitionKind.LOCAL_VALUE));
 		private final @NonNull EnumerationLiteral el__TransitionKind_external = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral(TransitionKind.EXTERNAL_VALUE));
-		
+
 		private final @NonNull BagType _Bag_Annotation = createBagType(_Bag, _Annotation);
 		private final @NonNull BagType _Bag_AssociationClassCallExp = createBagType(_Bag, _AssociationClassCallExp);
 		private final @NonNull BagType _Bag_CallOperationAction = createBagType(_Bag, _CallOperationAction);
@@ -543,12 +543,12 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_ValueSpecification = createCollectionType(_UniqueCollection, _ValueSpecification);
 		private final @NonNull CollectionType _UniqueCollection_Variable = createCollectionType(_UniqueCollection, _Variable);
 		private final @NonNull CollectionType _UniqueCollection_Vertex = createCollectionType(_UniqueCollection, _Vertex);
-		
+
 		private void installClassTypes() {
 			List<Class> ownedClasses;
 			List<Class> superClasses;
 			Class type;
-		
+
 			ownedClasses = pivot.getOwnedClasses();
 			ownedClasses.add(type = _Annotation);
 			superClasses = type.getSuperClasses();
@@ -987,12 +987,12 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Class);
 		}
-		
+
 		private void installEnumerations() {
 			List<Class> ownedClasses;
 			Enumeration type;
 			List<EnumerationLiteral> enumerationLiterals;
-		
+
 			ownedClasses = pivot.getOwnedClasses();
 			ownedClasses.add(type = _AssociativityKind);
 			enumerationLiterals = type.getOwnedLiterals();
@@ -1027,12 +1027,12 @@ public class OCLmetamodel extends ASResourceImpl
 			enumerationLiterals.add(el__TransitionKind_external);
 			type.getSuperClasses().add(_Enumeration);
 		}
-		
+
 		private void installCollectionTypes() {
 			List<Class> ownedClasses;
 			List<Class> superClasses;
 			CollectionType type;
-		
+
 			ownedClasses = orphanage.getOwnedClasses();
 			ownedClasses.add(type = _Bag_Annotation);
 			superClasses = type.getSuperClasses();
@@ -1758,7 +1758,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Vertex);
 		}
-		
+
 		private final @NonNull Operation op_CompleteModel_getOwnedCompletePackage = createOperation("getOwnedCompletePackage", _CompletePackage, null, null);
 		private final @NonNull Operation op_CompletePackage_getOwnedCompleteClass = createOperation("getOwnedCompleteClass", _CompleteClass, null, null);
 		private final @NonNull Operation op_Element_allOwnedElements = createOperation("allOwnedElements", _Set_Element_NullFree, null, null);
@@ -1779,25 +1779,25 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Operation op_ValueSpecification_isNull = createOperation("isNull", _Boolean, null, null);
 		private final @NonNull Operation op_ValueSpecification_stringValue = createOperation("stringValue", _String, null, null);
 		private final @NonNull Operation op_ValueSpecification_unlimitedValue = createOperation("unlimitedValue", _UnlimitedNatural, null, null);
-		
+
 		private void installOperations() {
 			List<Operation> ownedOperations;
 			List<Parameter> ownedParameters;
 			Operation operation;
 			Parameter parameter;
-		
+
 			ownedOperations = _CompleteModel.getOwnedOperations();
 			ownedOperations.add(operation = op_CompleteModel_getOwnedCompletePackage);
 			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("name", _String, false));
-		
+
 			ownedOperations = _CompletePackage.getOwnedOperations();
 			ownedOperations.add(operation = op_CompletePackage_getOwnedCompleteClass);
 			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("name", _String, false));
-		
+
 			ownedOperations = _Element.getOwnedOperations();
 			ownedOperations.add(operation = op_Element_allOwnedElements);
 			operation.setBodyExpression(createExpressionInOCL(_Set_Element_NullFree, "self->closure(oclContents()->selectByKind(Element))"));
@@ -1807,29 +1807,29 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("stereotype", _Type, true));
 			ownedParameters.add(parameter = createParameter("propertyName", _String, true));
-		
+
 			ownedOperations = _Property.getOwnedOperations();
 			ownedOperations.add(operation = op_Property_isAttribute);
 			operation.setBodyExpression(createExpressionInOCL(_Boolean, "--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))\nlet container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)"));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("p", _Property, true));
-		
+
 			ownedOperations = _PropertyCallExp.getOwnedOperations();
 			ownedOperations.add(operation = op_PropertyCallExp_getSpecializedReferredPropertyOwningType);
 			operation.setBodyExpression(createExpressionInOCL(_Class, "referredProperty?.owningClass"));
 			ownedOperations.add(operation = op_PropertyCallExp_getSpecializedReferredPropertyType);
 			operation.setBodyExpression(createExpressionInOCL(_Class, "referredProperty?.type.oclAsType(Class)"));
-		
+
 			ownedOperations = _ReferringElement.getOwnedOperations();
 			ownedOperations.add(operation = op_ReferringElement_getReferredElement);
-		
+
 			ownedOperations = _SelfType.getOwnedOperations();
 			ownedOperations.add(operation = op_SelfType_specializeIn);
 			operation.setBodyExpression(createExpressionInOCL(_Type, "selfType"));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("expr", _CallExp, true));
 			ownedParameters.add(parameter = createParameter("selfType", _Type, true));
-		
+
 			ownedOperations = _Type.getOwnedOperations();
 			ownedOperations.add(operation = op_Type_flattenedType);
 			operation.setIsRequired(false);
@@ -1843,13 +1843,13 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("expr", _CallExp, true));
 			ownedParameters.add(parameter = createParameter("selfType", _Type, true));
-		
+
 			ownedOperations = _TypedElement.getOwnedOperations();
 			ownedOperations.add(operation = op_TypedElement_CompatibleBody);
 			operation.setBodyExpression(createExpressionInOCL(_Boolean, "bodySpecification.type?.conformsTo(self.type)"));
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("bodySpecification", _ValueSpecification, true));
-		
+
 			ownedOperations = _ValueSpecification.getOwnedOperations();
 			ownedOperations.add(operation = op_ValueSpecification_booleanValue);
 			operation.setIsRequired(false);
@@ -1862,7 +1862,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedOperations.add(operation = op_ValueSpecification_unlimitedValue);
 			operation.setIsRequired(false);
 		}
-		
+
 		private final @NonNull Property pr_Annotation_ownedContents = createProperty(PivotPackage.Literals.ANNOTATION__OWNED_CONTENTS, _OrderedSet_Element_NullFree);
 		private final @NonNull Property pr_Annotation_ownedDetails = createProperty(PivotPackage.Literals.ANNOTATION__OWNED_DETAILS, _OrderedSet_Detail_NullFree);
 		private final @NonNull Property pr_Annotation_references = createProperty(PivotPackage.Literals.ANNOTATION__REFERENCES, _OrderedSet_Element_NullFree);
@@ -2244,11 +2244,11 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_WildcardType_lowerBound = createProperty(PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND, _Type);
 		private final @NonNull Property pr_WildcardType_upperBound = createProperty(PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, _Type);
 		private final @NonNull Property pr_WildcardType_TemplateParameterSubstitution_ownedWildcard = createProperty("TemplateParameterSubstitution", _TemplateParameterSubstitution);
-		
+
 		private void installProperties() {
 			List<Property> ownedProperties;
 			Property property;
-		
+
 			ownedProperties = _Annotation.getOwnedProperties();
 			ownedProperties.add(property = pr_Annotation_ownedContents);
 			property.setIsComposite(true);
@@ -2261,7 +2261,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_Annotation_references);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Element_Annotation_references);
-		
+
 			ownedProperties = _AssociationClass.getOwnedProperties();
 			ownedProperties.add(property = pr_AssociationClass_unownedAttributes);
 			property.setIsResolveProxies(true);
@@ -2270,13 +2270,13 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_AssociationClassCallExp_referredAssociationClass);
-		
+
 			ownedProperties = _AssociationClassCallExp.getOwnedProperties();
 			ownedProperties.add(property = pr_AssociationClassCallExp_referredAssociationClass);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_AssociationClass_AssociationClassCallExp_referredAssociationClass);
-		
+
 			ownedProperties = _Behavior.getOwnedProperties();
 			ownedProperties.add(property = pr_Behavior_owningTransition);
 			property.setIsRequired(false);
@@ -2302,12 +2302,12 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_State_ownedExit);
-		
+
 			ownedProperties = _BooleanLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_BooleanLiteralExp_booleanSymbol);
 			property.setIsResolveProxies(true);
 			property.setIsUnsettable(true);
-		
+
 			ownedProperties = _CallExp.getOwnedProperties();
 			ownedProperties.add(property = pr_CallExp_isImplicit);
 			property.setIsRequired(false);
@@ -2320,7 +2320,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OCLExpression_CallExp_ownedSource);
-		
+
 			ownedProperties = _CallOperationAction.getOwnedProperties();
 			ownedProperties.add(property = pr_CallOperationAction_operation);
 			property.setIsResolveProxies(true);
@@ -2330,7 +2330,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_MessageExp_ownedCalledOperation);
-		
+
 			ownedProperties = _Class.getOwnedProperties();
 			ownedProperties.add(property = pr_Class_extenders);
 			property.setIsResolveProxies(true);
@@ -2387,13 +2387,13 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TemplateParameter_constrainingClasses);
-		
+
 			ownedProperties = _CollectionItem.getOwnedProperties();
 			ownedProperties.add(property = pr_CollectionItem_ownedItem);
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OCLExpression_CollectionItem_ownedItem);
-		
+
 			ownedProperties = _CollectionLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_CollectionLiteralExp_kind);
 			property.setIsResolveProxies(true);
@@ -2401,14 +2401,14 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_CollectionLiteralPart_CollectionLiteralExp_ownedParts);
-		
+
 			ownedProperties = _CollectionLiteralPart.getOwnedProperties();
 			ownedProperties.add(property = pr_CollectionLiteralPart_CollectionLiteralExp_ownedParts);
 			property.setIsImplicit(true);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_CollectionLiteralExp_ownedParts);
-		
+
 			ownedProperties = _CollectionRange.getOwnedProperties();
 			ownedProperties.add(property = pr_CollectionRange_ownedFirst);
 			property.setIsComposite(true);
@@ -2418,7 +2418,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OCLExpression_CollectionRange_ownedLast);
-		
+
 			ownedProperties = _CollectionType.getOwnedProperties();
 			ownedProperties.add(property = pr_CollectionType_elementType);
 			property.setIsResolveProxies(true);
@@ -2429,7 +2429,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_CollectionType_upper);
 			property.setIsResolveProxies(true);
-		
+
 			ownedProperties = _Comment.getOwnedProperties();
 			ownedProperties.add(property = pr_Comment_annotatedElements);
 			property.setIsResolveProxies(true);
@@ -2441,7 +2441,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Element_ownedComments);
-		
+
 			ownedProperties = _CompleteClass.getOwnedProperties();
 			ownedProperties.add(property = pr_CompleteClass_owningCompletePackage);
 			property.setIsRequired(false);
@@ -2450,7 +2450,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_CompleteClass_partialClasses);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Class_CompleteClass_partialClasses);
-		
+
 			ownedProperties = _CompleteEnvironment.getOwnedProperties();
 			ownedProperties.add(property = pr_CompleteEnvironment_ownedCompleteModel);
 			property.setIsComposite(true);
@@ -2460,7 +2460,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_StandardLibrary_owningCompleteEnvironment);
-		
+
 			ownedProperties = _CompleteModel.getOwnedProperties();
 			ownedProperties.add(property = pr_CompleteModel_orphanCompletePackage);
 			property.setIsDerived(true);
@@ -2485,7 +2485,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsTransient(true);
 			property.setOpposite(pr_PrimitiveCompletePackage_CompleteModel_primitiveCompletePackage);
-		
+
 			ownedProperties = _CompletePackage.getOwnedProperties();
 			ownedProperties.add(property = pr_CompletePackage_ownedCompleteClasses);
 			property.setIsComposite(true);
@@ -2506,7 +2506,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_CompletePackage_partialPackages);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Package_CompletePackage_partialPackages);
-		
+
 			ownedProperties = _ConnectionPointReference.getOwnedProperties();
 			ownedProperties.add(property = pr_ConnectionPointReference_entries);
 			property.setIsResolveProxies(true);
@@ -2518,7 +2518,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_State_ownedConnections);
-		
+
 			ownedProperties = _Constraint.getOwnedProperties();
 			ownedProperties.add(property = pr_Constraint_constrainedElements);
 			property.setIsResolveProxies(true);
@@ -2569,7 +2569,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Namespace_ownedConstraints);
-		
+
 			ownedProperties = _DataType.getOwnedProperties();
 			ownedProperties.add(property = pr_DataType_behavioralClass);
 			property.setIsRequired(false);
@@ -2577,7 +2577,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setOpposite(pr_Class_DataType_behavioralClass);
 			ownedProperties.add(property = pr_DataType_isSerializable);
 			property.setIsResolveProxies(true);
-		
+
 			ownedProperties = _Detail.getOwnedProperties();
 			ownedProperties.add(property = pr_Detail_values);
 			property.setIsResolveProxies(true);
@@ -2586,12 +2586,12 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Annotation_ownedDetails);
-		
+
 			ownedProperties = _DynamicElement.getOwnedProperties();
 			ownedProperties.add(property = pr_DynamicElement_metaType);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_DynamicElement_metaType);
-		
+
 			ownedProperties = _DynamicProperty.getOwnedProperties();
 			ownedProperties.add(property = pr_DynamicProperty_default);
 			property.setIsRequired(false);
@@ -2604,13 +2604,13 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_DynamicType_ownedDynamicProperties);
-		
+
 			ownedProperties = _DynamicType.getOwnedProperties();
 			ownedProperties.add(property = pr_DynamicType_ownedDynamicProperties);
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_DynamicProperty_DynamicType_ownedDynamicProperties);
-		
+
 			ownedProperties = _Element.getOwnedProperties();
 			ownedProperties.add(property = pr_Element_annotatingComments);
 			property.setIsResolveProxies(true);
@@ -2645,7 +2645,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Element_ownedAnnotations);
-		
+
 			ownedProperties = _ElementExtension.getOwnedProperties();
 			ownedProperties.add(property = pr_ElementExtension_base);
 			property.setIsResolveProxies(true);
@@ -2657,19 +2657,19 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_ElementExtension_stereotype);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Stereotype_ElementExtension_stereotype);
-		
+
 			ownedProperties = _EnumLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_EnumLiteralExp_referredLiteral);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_EnumerationLiteral_EnumLiteralExp_referredLiteral);
-		
+
 			ownedProperties = _Enumeration.getOwnedProperties();
 			ownedProperties.add(property = pr_Enumeration_ownedLiterals);
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_EnumerationLiteral_owningEnumeration);
-		
+
 			ownedProperties = _EnumerationLiteral.getOwnedProperties();
 			ownedProperties.add(property = pr_EnumerationLiteral_owningEnumeration);
 			property.setIsResolveProxies(true);
@@ -2681,7 +2681,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_EnumLiteralExp_referredLiteral);
-		
+
 			ownedProperties = _ExpressionInOCL.getOwnedProperties();
 			ownedProperties.add(property = pr_ExpressionInOCL_ownedBody);
 			property.setIsComposite(true);
@@ -2702,7 +2702,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Variable_ExpressionInOCL_ownedResult);
-		
+
 			ownedProperties = _Feature.getOwnedProperties();
 			ownedProperties.add(property = pr_Feature_implementation);
 			property.setIsRequired(false);
@@ -2713,11 +2713,11 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_Feature_isStatic);
 			property.setIsResolveProxies(true);
-		
+
 			ownedProperties = _FeatureCallExp.getOwnedProperties();
 			ownedProperties.add(property = pr_FeatureCallExp_isPre);
 			property.setIsResolveProxies(true);
-		
+
 			ownedProperties = _IfExp.getOwnedProperties();
 			ownedProperties.add(property = pr_IfExp_ownedCondition);
 			property.setIsComposite(true);
@@ -2731,7 +2731,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OCLExpression_IfExp_ownedThen);
-		
+
 			ownedProperties = _Import.getOwnedProperties();
 			ownedProperties.add(property = pr_Import_importedNamespace);
 			property.setIsResolveProxies(true);
@@ -2741,7 +2741,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Model_ownedImports);
-		
+
 			ownedProperties = _InstanceSpecification.getOwnedProperties();
 			ownedProperties.add(property = pr_InstanceSpecification_classes);
 			property.setIsResolveProxies(true);
@@ -2759,18 +2759,18 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Package_ownedInstances);
-		
+
 			ownedProperties = _IntegerLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_IntegerLiteralExp_integerSymbol);
 			property.setIsResolveProxies(true);
-		
+
 			ownedProperties = _IterateExp.getOwnedProperties();
 			ownedProperties.add(property = pr_IterateExp_ownedResult);
 			property.setIsComposite(true);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Variable_IterateExp_ownedResult);
-		
+
 			ownedProperties = _Iteration.getOwnedProperties();
 			ownedProperties.add(property = pr_Iteration_ownedAccumulators);
 			property.setIsComposite(true);
@@ -2784,7 +2784,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_LoopExp_referredIteration);
-		
+
 			ownedProperties = _LambdaType.getOwnedProperties();
 			ownedProperties.add(property = pr_LambdaType_contextType);
 			property.setIsResolveProxies(true);
@@ -2795,7 +2795,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_LambdaType_resultType);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_LambdaType_resultType);
-		
+
 			ownedProperties = _LanguageExpression.getOwnedProperties();
 			ownedProperties.add(property = pr_LanguageExpression_body);
 			property.setIsRequired(false);
@@ -2825,7 +2825,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Property_ownedExpression);
-		
+
 			ownedProperties = _LetExp.getOwnedProperties();
 			ownedProperties.add(property = pr_LetExp_ownedIn);
 			property.setIsComposite(true);
@@ -2835,13 +2835,13 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Variable_LetExp_ownedVariable);
-		
+
 			ownedProperties = _Library.getOwnedProperties();
 			ownedProperties.add(property = pr_Library_ownedPrecedences);
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Precedence_Library_ownedPrecedences);
-		
+
 			ownedProperties = _LoopExp.getOwnedProperties();
 			ownedProperties.add(property = pr_LoopExp_ownedBody);
 			property.setIsComposite(true);
@@ -2855,13 +2855,13 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Iteration_LoopExp_referredIteration);
-		
+
 			ownedProperties = _MapLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_MapLiteralExp_ownedParts);
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_MapLiteralPart_MapLiteralExp_ownedParts);
-		
+
 			ownedProperties = _MapLiteralPart.getOwnedProperties();
 			ownedProperties.add(property = pr_MapLiteralPart_ownedKey);
 			property.setIsComposite(true);
@@ -2876,7 +2876,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_MapLiteralExp_ownedParts);
-		
+
 			ownedProperties = _MapType.getOwnedProperties();
 			ownedProperties.add(property = pr_MapType_keyType);
 			property.setIsResolveProxies(true);
@@ -2884,7 +2884,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_MapType_valueType);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_MapType_valueType);
-		
+
 			ownedProperties = _MessageExp.getOwnedProperties();
 			ownedProperties.add(property = pr_MessageExp_ownedArguments);
 			property.setIsComposite(true);
@@ -2904,7 +2904,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OCLExpression_MessageExp_ownedTarget);
-		
+
 			ownedProperties = _MessageType.getOwnedProperties();
 			ownedProperties.add(property = pr_MessageType_referredOperation);
 			property.setIsRequired(false);
@@ -2914,7 +2914,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Signal_MessageType_referredSignal);
-		
+
 			ownedProperties = _Model.getOwnedProperties();
 			ownedProperties.add(property = pr_Model_externalURI);
 			property.setIsRequired(false);
@@ -2931,12 +2931,12 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_CompleteModel_partialModels);
-		
+
 			ownedProperties = _NamedElement.getOwnedProperties();
 			ownedProperties.add(property = pr_NamedElement_name);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
-		
+
 			ownedProperties = _Namespace.getOwnedProperties();
 			ownedProperties.add(property = pr_Namespace_ownedConstraints);
 			property.setIsComposite(true);
@@ -2950,7 +2950,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Import_importedNamespace);
-		
+
 			ownedProperties = _NavigationCallExp.getOwnedProperties();
 			ownedProperties.add(property = pr_NavigationCallExp_navigationSource);
 			property.setIsRequired(false);
@@ -2959,7 +2959,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_NavigationCallExp_qualifiers);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OCLExpression_NavigationCallExp_qualifiers);
-		
+
 			ownedProperties = _OCLExpression.getOwnedProperties();
 			ownedProperties.add(property = pr_OCLExpression_typeValue);
 			property.setIsRequired(false);
@@ -3059,7 +3059,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Variable_ownedInit);
-		
+
 			ownedProperties = _Operation.getOwnedProperties();
 			ownedProperties.add(property = pr_Operation_bodyExpression);
 			property.setIsComposite(true);
@@ -3121,7 +3121,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_PrimitiveType_coercions);
-		
+
 			ownedProperties = _OperationCallExp.getOwnedProperties();
 			ownedProperties.add(property = pr_OperationCallExp_isVirtual);
 			property.setIsResolveProxies(true);
@@ -3133,19 +3133,19 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Operation_OperationCallExp_referredOperation);
-		
+
 			ownedProperties = _OppositePropertyCallExp.getOwnedProperties();
 			ownedProperties.add(property = pr_OppositePropertyCallExp_referredProperty);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Property_OppositePropertyCallExp_referredProperty);
-		
+
 			ownedProperties = _OrphanCompletePackage.getOwnedProperties();
 			ownedProperties.add(property = pr_OrphanCompletePackage_CompleteModel_orphanCompletePackage);
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_CompleteModel_orphanCompletePackage);
-		
+
 			ownedProperties = _Package.getOwnedProperties();
 			ownedProperties.add(property = pr_Package_URI);
 			property.setIsRequired(false);
@@ -3189,7 +3189,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Package_importedPackages);
-		
+
 			ownedProperties = _Parameter.getOwnedProperties();
 			ownedProperties.add(property = pr_Parameter_isTypeof);
 			property.setIsResolveProxies(true);
@@ -3211,7 +3211,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Variable_representedParameter);
-		
+
 			ownedProperties = _Precedence.getOwnedProperties();
 			ownedProperties.add(property = pr_Precedence_associativity);
 			property.setIsRequired(false);
@@ -3227,23 +3227,23 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Operation_precedence);
-		
+
 			ownedProperties = _PrimitiveCompletePackage.getOwnedProperties();
 			ownedProperties.add(property = pr_PrimitiveCompletePackage_CompleteModel_primitiveCompletePackage);
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_CompleteModel_primitiveCompletePackage);
-		
+
 			ownedProperties = _PrimitiveType.getOwnedProperties();
 			ownedProperties.add(property = pr_PrimitiveType_coercions);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Operation_PrimitiveType_coercions);
-		
+
 			ownedProperties = _Profile.getOwnedProperties();
 			ownedProperties.add(property = pr_Profile_profileApplications);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_ProfileApplication_appliedProfile);
-		
+
 			ownedProperties = _ProfileApplication.getOwnedProperties();
 			ownedProperties.add(property = pr_ProfileApplication_appliedProfile);
 			property.setIsResolveProxies(true);
@@ -3253,7 +3253,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_ProfileApplication_owningPackage);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Package_ownedProfileApplications);
-		
+
 			ownedProperties = _Property.getOwnedProperties();
 			ownedProperties.add(property = pr_Property_associationClass);
 			property.setIsRequired(false);
@@ -3356,13 +3356,13 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Slot_definingProperty);
-		
+
 			ownedProperties = _PropertyCallExp.getOwnedProperties();
 			ownedProperties.add(property = pr_PropertyCallExp_referredProperty);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Property_PropertyCallExp_referredProperty);
-		
+
 			ownedProperties = _Pseudostate.getOwnedProperties();
 			ownedProperties.add(property = pr_Pseudostate_kind);
 			property.setIsResolveProxies(true);
@@ -3382,11 +3382,11 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_ConnectionPointReference_exits);
-		
+
 			ownedProperties = _RealLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_RealLiteralExp_realSymbol);
 			property.setIsResolveProxies(true);
-		
+
 			ownedProperties = _Region.getOwnedProperties();
 			ownedProperties.add(property = pr_Region_extendedRegion);
 			property.setIsRequired(false);
@@ -3412,7 +3412,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Region_extendedRegion);
-		
+
 			ownedProperties = _SendSignalAction.getOwnedProperties();
 			ownedProperties.add(property = pr_SendSignalAction_signal);
 			property.setIsResolveProxies(true);
@@ -3422,7 +3422,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_MessageExp_ownedSentSignal);
-		
+
 			ownedProperties = _ShadowExp.getOwnedProperties();
 			ownedProperties.add(property = pr_ShadowExp_ownedParts);
 			property.setIsComposite(true);
@@ -3431,7 +3431,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_ShadowExp_value);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
-		
+
 			ownedProperties = _ShadowPart.getOwnedProperties();
 			ownedProperties.add(property = pr_ShadowPart_ownedInit);
 			property.setIsComposite(true);
@@ -3445,7 +3445,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_ShadowExp_ownedParts);
-		
+
 			ownedProperties = _Signal.getOwnedProperties();
 			ownedProperties.add(property = pr_Signal_MessageType_referredSignal);
 			property.setIsImplicit(true);
@@ -3455,7 +3455,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_SendSignalAction_signal);
-		
+
 			ownedProperties = _Slot.getOwnedProperties();
 			ownedProperties.add(property = pr_Slot_definingProperty);
 			property.setIsResolveProxies(true);
@@ -3467,13 +3467,13 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_Slot_owningInstance);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_InstanceSpecification_ownedSlots);
-		
+
 			ownedProperties = _StandardLibrary.getOwnedProperties();
 			ownedProperties.add(property = pr_StandardLibrary_owningCompleteEnvironment);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_CompleteEnvironment_ownedStandardLibrary);
-		
+
 			ownedProperties = _State.getOwnedProperties();
 			ownedProperties.add(property = pr_State_isComposite);
 			property.setIsDerived(true);
@@ -3551,13 +3551,13 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_StateExp_referredState);
-		
+
 			ownedProperties = _StateExp.getOwnedProperties();
 			ownedProperties.add(property = pr_StateExp_referredState);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_State_StateExp_referredState);
-		
+
 			ownedProperties = _StateMachine.getOwnedProperties();
 			ownedProperties.add(property = pr_StateMachine_extendedStateMachines);
 			property.setIsResolveProxies(true);
@@ -3577,7 +3577,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_StateMachine_extendedStateMachines);
-		
+
 			ownedProperties = _Stereotype.getOwnedProperties();
 			ownedProperties.add(property = pr_Stereotype_ownedExtenders);
 			property.setIsComposite(true);
@@ -3587,7 +3587,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_ElementExtension_stereotype);
-		
+
 			ownedProperties = _StereotypeExtender.getOwnedProperties();
 			ownedProperties.add(property = pr_StereotypeExtender_class);
 			property.setIsResolveProxies(true);
@@ -3597,11 +3597,11 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_StereotypeExtender_owningStereotype);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Stereotype_ownedExtenders);
-		
+
 			ownedProperties = _StringLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_StringLiteralExp_stringSymbol);
 			property.setIsResolveProxies(true);
-		
+
 			ownedProperties = _TemplateBinding.getOwnedProperties();
 			ownedProperties.add(property = pr_TemplateBinding_ownedSubstitutions);
 			property.setIsComposite(true);
@@ -3616,7 +3616,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsTransient(true);
 			property.setIsVolatile(true);
 			property.setOpposite(pr_TemplateSignature_TemplateBinding_templateSignature);
-		
+
 			ownedProperties = _TemplateParameter.getOwnedProperties();
 			ownedProperties.add(property = pr_TemplateParameter_constrainingClasses);
 			property.setIsResolveProxies(true);
@@ -3628,7 +3628,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TemplateParameterSubstitution_formal);
-		
+
 			ownedProperties = _TemplateParameterSubstitution.getOwnedProperties();
 			ownedProperties.add(property = pr_TemplateParameterSubstitution_actual);
 			property.setIsResolveProxies(true);
@@ -3644,7 +3644,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_TemplateParameterSubstitution_owningBinding);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TemplateBinding_ownedSubstitutions);
-		
+
 			ownedProperties = _TemplateSignature.getOwnedProperties();
 			ownedProperties.add(property = pr_TemplateSignature_ownedParameters);
 			property.setIsComposite(true);
@@ -3657,7 +3657,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TemplateBinding_templateSignature);
-		
+
 			ownedProperties = _TemplateableElement.getOwnedProperties();
 			ownedProperties.add(property = pr_TemplateableElement_ownedBindings);
 			property.setIsComposite(true);
@@ -3676,7 +3676,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TemplateableElement_unspecializedElement);
-		
+
 			ownedProperties = _Transition.getOwnedProperties();
 			ownedProperties.add(property = pr_Transition_kind);
 			property.setIsResolveProxies(true);
@@ -3703,7 +3703,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_Transition_target);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Vertex_incomingTransitions);
-		
+
 			ownedProperties = _Trigger.getOwnedProperties();
 			ownedProperties.add(property = pr_Trigger_owningState);
 			property.setIsRequired(false);
@@ -3713,13 +3713,13 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Transition_ownedTriggers);
-		
+
 			ownedProperties = _TupleLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_TupleLiteralExp_ownedParts);
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TupleLiteralPart_TupleLiteralExp_ownedParts);
-		
+
 			ownedProperties = _TupleLiteralPart.getOwnedProperties();
 			ownedProperties.add(property = pr_TupleLiteralPart_ownedInit);
 			property.setIsComposite(true);
@@ -3731,7 +3731,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TupleLiteralExp_ownedParts);
-		
+
 			ownedProperties = _Type.getOwnedProperties();
 			ownedProperties.add(property = pr_Type_CollectionType_elementType);
 			property.setIsImplicit(true);
@@ -3793,13 +3793,13 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_WildcardType_upperBound);
-		
+
 			ownedProperties = _TypeExp.getOwnedProperties();
 			ownedProperties.add(property = pr_TypeExp_referredType);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_TypeExp_referredType);
-		
+
 			ownedProperties = _TypedElement.getOwnedProperties();
 			ownedProperties.add(property = pr_TypedElement_isMany);
 			property.setIsDerived(true);
@@ -3813,18 +3813,18 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_TypedElement_type);
-		
+
 			ownedProperties = _UnlimitedNaturalLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_UnlimitedNaturalLiteralExp_unlimitedNaturalSymbol);
 			property.setIsResolveProxies(true);
-		
+
 			ownedProperties = _ValueSpecification.getOwnedProperties();
 			ownedProperties.add(property = pr_ValueSpecification_Slot_ownedValues);
 			property.setIsImplicit(true);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Slot_ownedValues);
-		
+
 			ownedProperties = _Variable.getOwnedProperties();
 			ownedProperties.add(property = pr_Variable_isImplicit);
 			property.setIsRequired(false);
@@ -3868,7 +3868,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_LoopExp_ownedIterators);
-		
+
 			ownedProperties = _VariableDeclaration.getOwnedProperties();
 			ownedProperties.add(property = pr_VariableDeclaration_typeValue);
 			property.setIsRequired(false);
@@ -3878,7 +3878,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_VariableExp_referredVariable);
-		
+
 			ownedProperties = _VariableExp.getOwnedProperties();
 			ownedProperties.add(property = pr_VariableExp_isImplicit);
 			property.setIsRequired(false);
@@ -3887,7 +3887,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_VariableDeclaration_VariableExp_referredVariable);
-		
+
 			ownedProperties = _Vertex.getOwnedProperties();
 			ownedProperties.add(property = pr_Vertex_incomingTransitions);
 			property.setIsReadOnly(true);
@@ -3901,7 +3901,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Region_ownedSubvertexes);
-		
+
 			ownedProperties = _WildcardType.getOwnedProperties();
 			ownedProperties.add(property = pr_WildcardType_lowerBound);
 			property.setIsRequired(false);
@@ -3917,7 +3917,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TemplateParameterSubstitution_ownedWildcard);
 		}
-		
+
 		private void installTemplateBindings() {
 			_Bag_Annotation.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(_Bag_T, _Annotation)));
@@ -4360,7 +4360,7 @@ public class OCLmetamodel extends ASResourceImpl
 			_UniqueCollection_Vertex.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(_UniqueCollection_T, _Vertex)));
 		}
-		
+
 		private void installComments() {
 			installComment(_AssociationClass, "A link is a tuple of values that refer to typed objects.  An Association classifies a set of links, each of which is an instance of the Association.  Each value in the link refers to an instance of the type of the corresponding end of the Association.\n\nA model element that has both Association and Class properties. An AssociationClass can be seen as an Association that also has Class properties, or as a Class that also has Association properties. It not only connects a set of Classifiers but also defines a set of Features that belong to the Association itself and not to any of the associated Classifiers.");
 			installComment(_Behavior, "Behavior is a specification of how its context BehavioredClassifier changes state over time. This specification may be either a definition of possible behavior execution or emergent behavior, or a selective illustration of an interesting subset of possible executions. The latter form is typically used for capturing examples, such as a trace of a particular execution.");

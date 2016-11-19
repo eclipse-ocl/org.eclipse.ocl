@@ -161,7 +161,7 @@ public class BooleanLiteralExpImpl
 	public boolean validateTypeIsBoolean(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsBoolean:
 		 *   let severity : Integer[1] = 'BooleanLiteralExp::TypeIsBoolean'.getSeverity()
 		 *   in

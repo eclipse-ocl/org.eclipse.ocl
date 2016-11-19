@@ -478,7 +478,7 @@ public class DataTypeImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitDataType(this);
 	}
-	
+
 	@Override
 	public @NonNull TypeId computeId() {
 		if (eContainer() instanceof Library) {

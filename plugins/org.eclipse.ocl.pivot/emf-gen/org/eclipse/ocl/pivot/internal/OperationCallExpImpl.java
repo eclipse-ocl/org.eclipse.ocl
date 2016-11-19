@@ -548,7 +548,7 @@ public class OperationCallExpImpl
 	public boolean validateArgumentTypeIsConformant(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateArgumentTypeIsConformant:
 		 *   let
 		 *     severity : Integer[1] = 'OperationCallExp::ArgumentTypeIsConformant'.getSeverity()
@@ -559,7 +559,7 @@ public class OperationCallExpImpl
 		 *       let
 		 *         status : OclAny[?] = let operation : Operation[?] = self.referredOperation
 		 *         in
-		 *           let parameters : OrderedSet(Parameter) = operation?.ownedParameters
+		 *           let parameters : OrderedSet(Parameter)[?] = operation?.ownedParameters
 		 *           in
 		 *             let selfType : Type[?] = operation?.owningClass
 		 *             in
@@ -650,7 +650,7 @@ public class OperationCallExpImpl
 					@SuppressWarnings("null")
 					/*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue i = (IntegerValue)ITERATOR_i.next();
 					/**
-					 * 
+					 *
 					 * let argument : OCLExpression[?] = ownedArguments->at(i)
 					 * in
 					 *   let parameter : Parameter[?] = parameters->at(i)
@@ -744,7 +744,7 @@ public class OperationCallExpImpl
 					//
 					if (CAUGHT_conformsTo == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
 						forAll = ValueUtil.FALSE_VALUE;
-						break;														// Stop immediately 
+						break;														// Stop immediately
 					}
 					else if (CAUGHT_conformsTo == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
 						;															// Carry on
@@ -776,7 +776,7 @@ public class OperationCallExpImpl
 	public boolean validateSafeSourceCanBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSafeSourceCanBeNull:
 		 *   let
 		 *     severity : Integer[1] = 'OperationCallExp::SafeSourceCanBeNull'.getSeverity()
@@ -878,7 +878,7 @@ public class OperationCallExpImpl
 	public boolean validateArgumentCount(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateArgumentCount:
 		 *   let severity : Integer[1] = 'OperationCallExp::ArgumentCount'.getSeverity()
 		 *   in

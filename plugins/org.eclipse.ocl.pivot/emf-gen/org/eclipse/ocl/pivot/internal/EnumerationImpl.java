@@ -482,7 +482,7 @@ public class EnumerationImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitEnumeration(this);
 	}
-	
+
 	@Override
 	public @NonNull EnumerationId computeId() {
 		return IdManager.getEnumerationId(this);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -154,7 +154,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	public boolean validateCompatibleInitialiserType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateCompatibleInitialiserType:
 		 *   let
 		 *     severity : Integer[1] = 'ShadowPart::CompatibleInitialiserType'.getSeverity()
@@ -162,7 +162,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = ownedInit.type?.conformsTo(type)
+		 *       let status : OclAny[?] = ownedInit.type?.conformsTo(type)
 		 *       in
 		 *         'ShadowPart::CompatibleInitialiserType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -217,7 +217,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	public boolean validateTypeIsNotInvalid(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'ShadowPart::TypeIsNotInvalid'.getSeverity()
 		 *   in

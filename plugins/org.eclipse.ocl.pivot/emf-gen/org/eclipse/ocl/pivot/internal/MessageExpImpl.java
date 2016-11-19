@@ -301,7 +301,7 @@ public class MessageExpImpl
 	public boolean validateOneCallOrOneSend(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateOneCallOrOneSend:
 		 *   let severity : Integer[1] = 'MessageExp::OneCallOrOneSend'.getSeverity()
 		 *   in
@@ -353,7 +353,7 @@ public class MessageExpImpl
 	public boolean validateTargetIsNotACollection(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTargetIsNotACollection:
 		 *   let
 		 *     severity : Integer[1] = 'MessageExp::TargetIsNotACollection'.getSeverity()

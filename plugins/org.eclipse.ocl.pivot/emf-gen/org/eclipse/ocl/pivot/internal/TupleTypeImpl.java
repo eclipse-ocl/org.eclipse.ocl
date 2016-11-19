@@ -59,9 +59,9 @@ public class TupleTypeImpl
 	protected EClass eStaticClass() {
 		return PivotPackage.Literals.TUPLE_TYPE;
 	}
-	
+
 	private /*final @NonNull*/ TupleTypeId tupleTypeId;		// PivotSaver has to 'clone' these using EcoreUtil.Copier
-	
+
 	public TupleTypeImpl(@NonNull TupleTypeId tupleTypeId) {
 		this.tupleTypeId = tupleTypeId;
 		setName(tupleTypeId.getName());

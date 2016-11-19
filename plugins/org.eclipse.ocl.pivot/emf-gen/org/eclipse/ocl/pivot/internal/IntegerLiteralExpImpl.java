@@ -126,7 +126,7 @@ public class IntegerLiteralExpImpl
 	public boolean validateTypeIsInteger(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsInteger:
 		 *   let severity : Integer[1] = 'IntegerLiteralExp::TypeIsInteger'.getSeverity()
 		 *   in

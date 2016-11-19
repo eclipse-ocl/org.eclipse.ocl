@@ -25,18 +25,18 @@ public class PivotExportedLookupVisitor
     public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Executor = PACKid_org_eclipse_ocl_pivot_evaluation.getClassId("Executor", 0);
     public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_IdResolver = PACKid_org_eclipse_ocl_pivot_ids.getClassId("IdResolver", 0);
     public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_OclElement = PACKid_$metamodel$.getClassId("OclElement", 0);
-    
+
     protected final /*@Thrown*/ org.eclipse.ocl.pivot.evaluation.@org.eclipse.jdt.annotation.NonNull Executor executor;
     protected final /*@Thrown*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull IdResolver idResolver;
     protected final /*@Thrown*/ java.lang.@org.eclipse.jdt.annotation.NonNull Object importer;
-    
+
     public PivotExportedLookupVisitor(@NonNull LookupEnvironment context, @NonNull Object importer) {
         super(context);
         this.executor = context.getExecutor();
         this.idResolver = executor.getIdResolver();
         this.importer = importer;
     }
-    
+
     @Override
     protected @Nullable LookupEnvironment doVisiting(@NonNull Visitable visitable) {
         return context;

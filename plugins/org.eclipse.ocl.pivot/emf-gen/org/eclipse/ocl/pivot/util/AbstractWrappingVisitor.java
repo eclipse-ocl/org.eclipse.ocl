@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *
@@ -26,17 +26,17 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 	implements Visitor<R>
 {
 	protected final @NonNull D delegate;
-	
+
 	protected AbstractWrappingVisitor(@NonNull D delegate, C context) {
 		super(context);
-		this.delegate = delegate;		
+		this.delegate = delegate;
 	//	delegate.setUndecoratedVisitor(this);
 	}
 
 	/**
 	 * Intercept an exception thrown by the delegated visit to perform some post-functionality that may use the visitable object,
 	 * the result of preVisit and the thrown exception to determine the overall wrapped result.
-	 * 
+	 *
 	 * @return a rethrown RuntimeException or a RuntimeException-wrapped non-RuntimeException.
 	 */
 	protected R badVisit(org.eclipse.ocl.pivot.util.@NonNull Visitable visitable, @Nullable P prologue, @NonNull Throwable e) throws RuntimeException {
@@ -50,7 +50,7 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 
 	/**
 	 * Obtains the visitor that I wrap.
-	 * 
+	 *
 	 * @return my wrapped visitor
 	 */
 	protected @NonNull D getDelegate() {
@@ -60,7 +60,7 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 	/**
 	 * Intercept the result of the delegated visit to perform some post-functionality that may use the visitable object,
 	 * the result of preVisit and the result of the delegated visit to determine the overall wrapped result.
-	 * 
+	 *
 	 * @return the epilogue result, which defaults to the delegated result.
 	 */
 	protected R postVisit(org.eclipse.ocl.pivot.util.@NonNull Visitable visitable, @Nullable P prologue, R result) {
@@ -69,7 +69,7 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 
 	/**
 	 * Compute and return some value before performing the delegated visit.
-	 * 
+	 *
 	 * @return the prologue result, which defauilts to null.
 	 */
 	protected @Nullable P preVisit(org.eclipse.ocl.pivot.util.@NonNull Visitable visitable) {

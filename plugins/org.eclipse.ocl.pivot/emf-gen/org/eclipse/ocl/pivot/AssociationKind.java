@@ -229,5 +229,5 @@ public enum AssociationKind implements Enumerator
 	{
 		return literal;
 	}
-	
+
 } //AssociationKind

@@ -123,7 +123,7 @@ public interface Feature
 	 * @generated
 	 */
 	void setImplementation(LibraryFeature value);
-	
+
 	org.eclipse.ocl.pivot.Class getOwningClass();
 
 } // Feature

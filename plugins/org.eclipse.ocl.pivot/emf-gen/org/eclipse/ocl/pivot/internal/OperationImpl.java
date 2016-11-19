@@ -744,7 +744,7 @@ implements Operation {
 	public boolean validateCompatibleReturn(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateCompatibleReturn:
 		 *   let severity : Integer[1] = 'Operation::CompatibleReturn'.getSeverity()
 		 *   in
@@ -828,7 +828,7 @@ implements Operation {
 	public boolean validateLoadableImplementation(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateLoadableImplementation:
 		 *   let
 		 *     severity : Integer[1] = 'Operation::LoadableImplementation'.getSeverity()
@@ -864,7 +864,7 @@ implements Operation {
 	public boolean validateUniquePreconditionName(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateUniquePreconditionName:
 		 *   let
 		 *     severity : Integer[1] = 'Operation::UniquePreconditionName'.getSeverity()
@@ -933,7 +933,7 @@ implements Operation {
 	public boolean validateUniquePostconditionName(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateUniquePostconditionName:
 		 *   let
 		 *     severity : Integer[1] = 'Operation::UniquePostconditionName'.getSeverity()

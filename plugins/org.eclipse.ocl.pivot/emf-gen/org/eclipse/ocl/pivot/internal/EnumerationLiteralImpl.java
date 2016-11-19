@@ -439,7 +439,7 @@ public class EnumerationLiteralImpl
 			throw new UnsupportedOperationException();			// FIXME
 		}
 	}
-	
+
 	private /*@LazyNonNull*/ EnumerationLiteralId enumerationLiteralId = null;
 
 	@Override

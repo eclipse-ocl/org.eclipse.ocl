@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *
@@ -29,7 +29,7 @@ public interface Visitor<R>
 	 * no such object can be found.
 	 *
 	 * @param adapter the adapter class to look up
-	 * @return an object of the given class, 
+	 * @return an object of the given class,
 	 *    or <code>null</code> if this object does not
 	 *    have an adapter for the given class
 	 */

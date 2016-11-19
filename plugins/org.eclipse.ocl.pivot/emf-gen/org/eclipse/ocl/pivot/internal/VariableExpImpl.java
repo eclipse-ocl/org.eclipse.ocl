@@ -167,7 +167,7 @@ public class VariableExpImpl
 	public boolean validateTypeIsNotInvalid(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'VariableExp::TypeIsNotInvalid'.getSeverity()
 		 *   in

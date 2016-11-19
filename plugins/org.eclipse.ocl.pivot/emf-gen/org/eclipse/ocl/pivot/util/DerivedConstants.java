@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 public interface DerivedConstants
 {
 	static final @NonNull String RESOURCE_OPTION_LINE_DELIMITER = "LINE_DELIMITER"; // org.eclipse.emf.ecore.resource.Resource.OPTION_LINE_DELIMITER since 2.9
-	
+
 	static final @NonNull String STEREOTYPE_BASE_PREFIX = "base_"; // org.eclipse.uml2.uml.Extension.METACLASS_ROLE_PREFIX
 	static final @NonNull String STEREOTYPE_EXTENSION_PREFIX = "extension_"; // org.eclipse.uml2.uml.Extension.STEREOTYPE_ROLE_PREFIX
 

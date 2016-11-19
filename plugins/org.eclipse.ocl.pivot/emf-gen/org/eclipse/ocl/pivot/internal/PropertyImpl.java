@@ -741,7 +741,7 @@ public class PropertyImpl
 				newDefaultValueString = uri.toString(); 		// FIXME resolve to parent base URI
 			}
 			else {
-				newDefaultValueString = newDefaultValue.toString();	
+				newDefaultValueString = newDefaultValue.toString();
 			}
 			setDefaultValueStringGen(newDefaultValueString);
 		}
@@ -990,7 +990,7 @@ public class PropertyImpl
 	public boolean isAttribute(final Property p)
 	{
 		/**
-		 * 
+		 *
 		 * let container : OclElement[?] = oclContainer()
 		 * in
 		 *   container.oclIsKindOf(Class) and
@@ -1037,7 +1037,7 @@ public class PropertyImpl
 	public boolean validateCompatibleDefaultExpression(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateCompatibleDefaultExpression:
 		 *   let
 		 *     severity : Integer[1] = 'Property::CompatibleDefaultExpression'.getSeverity()
@@ -1660,7 +1660,7 @@ public class PropertyImpl
 	}
 
 	private PropertyId propertyId = null;
-	
+
 	@Override
 	public @NonNull PropertyId getPropertyId() {
 		PropertyId propertyId2 = propertyId;

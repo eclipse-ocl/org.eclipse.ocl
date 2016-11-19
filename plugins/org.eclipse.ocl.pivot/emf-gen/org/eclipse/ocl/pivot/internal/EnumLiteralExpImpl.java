@@ -136,7 +136,7 @@ public class EnumLiteralExpImpl
 	public boolean validateTypeIsEnumerationType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsEnumerationType:
 		 *   let
 		 *     severity : Integer[1] = 'EnumLiteralExp::TypeIsEnumerationType'.getSeverity()

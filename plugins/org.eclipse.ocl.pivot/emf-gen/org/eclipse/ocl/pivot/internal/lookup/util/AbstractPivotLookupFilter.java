@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *
@@ -20,21 +20,21 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.NamedElement;
 
 /**
- * 
+ *
  */
 public abstract class AbstractPivotLookupFilter<C extends NamedElement> implements PivotLookupFilter {
-	
+
 	@NonNull private Class<C> _class;
-	
+
 	public AbstractPivotLookupFilter(@NonNull Class<C> _class) {
 		this._class = _class;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean matches(@NonNull NamedElement namedElement) {
 		return _class.isInstance(namedElement) && _matches((C)namedElement);
 	}
-	
+
 	abstract protected Boolean _matches(@NonNull C element);
 }

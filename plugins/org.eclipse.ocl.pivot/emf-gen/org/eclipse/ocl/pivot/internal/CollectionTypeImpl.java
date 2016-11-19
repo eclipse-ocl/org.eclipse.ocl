@@ -631,7 +631,7 @@ public class CollectionTypeImpl
 			return TypeId.COLLECTION.getSpecializedId(getElementType().getTypeId());
 		}
 	}
-	
+
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {
@@ -645,7 +645,7 @@ public class CollectionTypeImpl
 		}
 		return super.conformsTo(standardLibrary, type);
 	}
-	
+
 	@Override
 	public Type flattenedType() {
 		return getElementType();
@@ -698,7 +698,7 @@ public class CollectionTypeImpl
 		TemplateableElement unspecializedElement2 = unspecializedElement;
 		return unspecializedElement2 != null ? (CollectionType)unspecializedElement2 : this;
 	}
-	
+
 	@Override
 	public @NonNull CollectionTypeId getTypeId() {
 		return (CollectionTypeId) super.getTypeId();

@@ -143,7 +143,7 @@ public class CollectionItemImpl
 	public boolean validateTypeIsItemType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsItemType:
 		 *   let severity : Integer[1] = 'CollectionItem::TypeIsItemType'.getSeverity()
 		 *   in

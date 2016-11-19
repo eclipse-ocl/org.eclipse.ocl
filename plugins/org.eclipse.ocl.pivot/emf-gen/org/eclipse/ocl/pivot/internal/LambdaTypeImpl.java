@@ -542,12 +542,12 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitLambdaType(this);
 	}
-	
+
 	@Override
 	public @NonNull TypeId computeId() {
 		return IdManager.getLambdaTypeId(this);
 	}
-	
+
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {
@@ -558,7 +558,7 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 		}
 		return TypeUtil.conformsToLambdaType(standardLibrary, this, (LambdaType)type);
 	}
-	
+
 	private ParametersId parametersId = null;
 
 	@Override

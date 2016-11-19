@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *
@@ -32,7 +32,7 @@ public abstract class AbstractVisitor<R, C>
 
 	/**
 	 * Initializes me with an initial value for my result.
-	 * 
+	 *
 	 * @param context my initial result value
 	 */
 	protected AbstractVisitor(C context) {
@@ -49,10 +49,10 @@ public abstract class AbstractVisitor<R, C>
 			return null;
 		}
 	}
-	
+
 	/**
 	 * A null-safe visitation of the specified visitable.
-	 * 
+	 *
 	 * @param v a visitable, or <code>null</code>
 	 * @return <code>null</code> if the visitable is <code>null</code>;
 	 *	 otherwise, the result of visiting it
@@ -60,10 +60,10 @@ public abstract class AbstractVisitor<R, C>
 	public @Nullable R safeVisit(org.eclipse.ocl.pivot.util.@Nullable Visitable v) {
 		return (v == null) ? null : v.accept(this);
 	}
-	
+
 	/**
 	 * Perform a visit to the specified visitable.
-	 * 
+	 *
 	 * @param v a visitable, or <code>null</code>
 	 * @return <code>null</code> if the visitable is <code>null</code>;
 	 *	 otherwise, the result of visiting it

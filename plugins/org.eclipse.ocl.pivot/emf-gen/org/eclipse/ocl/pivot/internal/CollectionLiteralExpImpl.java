@@ -190,7 +190,7 @@ public class CollectionLiteralExpImpl
 	public boolean validateCollectionKindIsConcrete(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateCollectionKindIsConcrete:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralExp::CollectionKindIsConcrete'.getSeverity()
@@ -237,7 +237,7 @@ public class CollectionLiteralExpImpl
 	public boolean validateSetKindIsSet(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSetKindIsSet:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralExp::SetKindIsSet'.getSeverity()
@@ -304,7 +304,7 @@ public class CollectionLiteralExpImpl
 	public boolean validateOrderedSetKindIsOrderedSet(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateOrderedSetKindIsOrderedSet:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralExp::OrderedSetKindIsOrderedSet'.getSeverity()
@@ -371,7 +371,7 @@ public class CollectionLiteralExpImpl
 	public boolean validateSequenceKindIsSequence(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSequenceKindIsSequence:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralExp::SequenceKindIsSequence'.getSeverity()
@@ -438,7 +438,7 @@ public class CollectionLiteralExpImpl
 	public boolean validateBagKindIsBag(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateBagKindIsBag:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralExp::BagKindIsBag'.getSeverity()

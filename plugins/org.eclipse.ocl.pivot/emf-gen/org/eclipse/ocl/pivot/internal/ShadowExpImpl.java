@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -185,7 +185,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	public boolean validateClassHasNoStringValueInitializer(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateClassHasNoStringValueInitializer:
 		 *   let
 		 *     severity : Integer[1] = 'ShadowExp::ClassHasNoStringValueInitializer'.getSeverity()
@@ -258,7 +258,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	public boolean validateDataTypeHasNoPartInitializers(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateDataTypeHasNoPartInitializers:
 		 *   let
 		 *     severity : Integer[1] = 'ShadowExp::DataTypeHasNoPartInitializers'.getSeverity()
@@ -325,7 +325,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	public boolean validateDataTypeHasStringValueInitializer(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateDataTypeHasStringValueInitializer:
 		 *   let
 		 *     severity : Integer[1] = 'ShadowExp::DataTypeHasStringValueInitializer'.getSeverity()
@@ -390,7 +390,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	public boolean validateInitializesAllClassProperties(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateInitializesAllClassProperties:
 		 *   let
 		 *     severity : Integer[1] = 'ShadowExp::InitializesAllClassProperties'.getSeverity()
@@ -896,7 +896,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	public boolean validateTypeIsNotInvalid(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'ShadowExp::TypeIsNotInvalid'.getSeverity()
 		 *   in

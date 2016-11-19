@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -144,7 +144,7 @@ public interface CompletePackage extends NamedElement
 	@Nullable CompletePackage getOwnedCompletePackage(@Nullable String name);
 
 	@NonNull CompleteModel getCompleteModel();
-	
+
 	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllClasses();
 	@Nullable CompletePackage getOwningCompletePackage();
 

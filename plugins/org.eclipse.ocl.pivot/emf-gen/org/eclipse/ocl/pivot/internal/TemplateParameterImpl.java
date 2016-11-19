@@ -351,7 +351,7 @@ public class TemplateParameterImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitTemplateParameter(this);
 	}
-	
+
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		CompleteInheritance thisInheritance = standardLibrary.getOclAnyType().getInheritance(standardLibrary);
@@ -375,7 +375,7 @@ public class TemplateParameterImpl
 	}
 
 	private /*@LazyNonNull*/ TemplateParameterId templateParameterId;
-	
+
 	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId() {
 		TemplateParameterId templateParameterId2 = templateParameterId;
@@ -411,7 +411,7 @@ public class TemplateParameterImpl
 	public @NonNull TemplateParameterId getTypeId() {
 		return getTemplateParameterId();
 	}
-	
+
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class isClass() {
 		return null;

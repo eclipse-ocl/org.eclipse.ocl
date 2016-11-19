@@ -15,7 +15,130 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.*;
+import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociationClass;
+import org.eclipse.ocl.pivot.AssociationClassCallExp;
+import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.Behavior;
+import org.eclipse.ocl.pivot.BooleanLiteralExp;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CallOperationAction;
+import org.eclipse.ocl.pivot.CollectionItem;
+import org.eclipse.ocl.pivot.CollectionLiteralExp;
+import org.eclipse.ocl.pivot.CollectionLiteralPart;
+import org.eclipse.ocl.pivot.CollectionRange;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.ConnectionPointReference;
+import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Detail;
+import org.eclipse.ocl.pivot.DynamicBehavior;
+import org.eclipse.ocl.pivot.DynamicElement;
+import org.eclipse.ocl.pivot.DynamicProperty;
+import org.eclipse.ocl.pivot.DynamicType;
+import org.eclipse.ocl.pivot.DynamicValueSpecification;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.EnumLiteralExp;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.FeatureCallExp;
+import org.eclipse.ocl.pivot.FinalState;
+import org.eclipse.ocl.pivot.IfExp;
+import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.InstanceSpecification;
+import org.eclipse.ocl.pivot.IntegerLiteralExp;
+import org.eclipse.ocl.pivot.InvalidLiteralExp;
+import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterateExp;
+import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LetVariable;
+import org.eclipse.ocl.pivot.Library;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
+import org.eclipse.ocl.pivot.MapLiteralPart;
+import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.MessageExp;
+import org.eclipse.ocl.pivot.MessageType;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.NullLiteralExp;
+import org.eclipse.ocl.pivot.NumericLiteralExp;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.OppositePropertyCallExp;
+import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.OrphanCompletePackage;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
+import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Profile;
+import org.eclipse.ocl.pivot.ProfileApplication;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.PropertyCallExp;
+import org.eclipse.ocl.pivot.Pseudostate;
+import org.eclipse.ocl.pivot.RealLiteralExp;
+import org.eclipse.ocl.pivot.ReferringElement;
+import org.eclipse.ocl.pivot.Region;
+import org.eclipse.ocl.pivot.ResultVariable;
+import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.SendSignalAction;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.ShadowExp;
+import org.eclipse.ocl.pivot.ShadowPart;
+import org.eclipse.ocl.pivot.Signal;
+import org.eclipse.ocl.pivot.Slot;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.StateExp;
+import org.eclipse.ocl.pivot.StateMachine;
+import org.eclipse.ocl.pivot.Stereotype;
+import org.eclipse.ocl.pivot.StereotypeExtender;
+import org.eclipse.ocl.pivot.StringLiteralExp;
+import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.Transition;
+import org.eclipse.ocl.pivot.Trigger;
+import org.eclipse.ocl.pivot.TupleLiteralExp;
+import org.eclipse.ocl.pivot.TupleLiteralPart;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeExp;
+import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
+import org.eclipse.ocl.pivot.UnspecifiedValueExp;
+import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.Vertex;
+import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
@@ -80,658 +203,658 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	protected PivotSwitch<@Nullable Adapter> modelSwitch = new PivotSwitch<@Nullable Adapter>()
-	{
-		@Override
-		public Adapter caseAnnotation(Annotation object)
 		{
-			return createAnnotationAdapter();
-		}
-		@Override
-		public Adapter caseAnyType(AnyType object)
-		{
-			return createAnyTypeAdapter();
-		}
-		@Override
-		public Adapter caseAssociationClass(AssociationClass object)
-		{
-			return createAssociationClassAdapter();
-		}
-		@Override
-		public Adapter caseAssociationClassCallExp(AssociationClassCallExp object)
-		{
-			return createAssociationClassCallExpAdapter();
-		}
-		@Override
-		public Adapter caseBagType(BagType object)
-		{
-			return createBagTypeAdapter();
-		}
-		@Override
-		public Adapter caseBehavior(Behavior object)
-		{
-			return createBehaviorAdapter();
-		}
-		@Override
-		public Adapter caseBooleanLiteralExp(BooleanLiteralExp object)
-		{
-			return createBooleanLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseCallExp(CallExp object)
-		{
-			return createCallExpAdapter();
-		}
-		@Override
-		public Adapter caseCallOperationAction(CallOperationAction object)
-		{
-			return createCallOperationActionAdapter();
-		}
-		@Override
-		public Adapter caseClass(org.eclipse.ocl.pivot.Class object)
-		{
-			return createClassAdapter();
-		}
-		@Override
-		public Adapter caseCollectionItem(CollectionItem object)
-		{
-			return createCollectionItemAdapter();
-		}
-		@Override
-		public Adapter caseCollectionLiteralExp(CollectionLiteralExp object)
-		{
-			return createCollectionLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseCollectionLiteralPart(CollectionLiteralPart object)
-		{
-			return createCollectionLiteralPartAdapter();
-		}
-		@Override
-		public Adapter caseCollectionRange(CollectionRange object)
-		{
-			return createCollectionRangeAdapter();
-		}
-		@Override
-		public Adapter caseCollectionType(CollectionType object)
-		{
-			return createCollectionTypeAdapter();
-		}
-		@Override
-		public Adapter caseComment(Comment object)
-		{
-			return createCommentAdapter();
-		}
-		@Override
-		public Adapter caseCompleteClass(CompleteClass object)
-		{
-			return createCompleteClassAdapter();
-		}
-		@Override
-		public Adapter caseCompleteEnvironment(CompleteEnvironment object)
-		{
-			return createCompleteEnvironmentAdapter();
-		}
-		@Override
-		public Adapter caseCompleteModel(CompleteModel object)
-		{
-			return createCompleteModelAdapter();
-		}
-		@Override
-		public Adapter caseCompletePackage(CompletePackage object)
-		{
-			return createCompletePackageAdapter();
-		}
-		@Override
-		public Adapter caseConnectionPointReference(ConnectionPointReference object)
-		{
-			return createConnectionPointReferenceAdapter();
-		}
-		@Override
-		public Adapter caseConstraint(Constraint object)
-		{
-			return createConstraintAdapter();
-		}
-		@Override
-		public Adapter caseDataType(DataType object)
-		{
-			return createDataTypeAdapter();
-		}
-		@Override
-		public Adapter caseDetail(Detail object)
-		{
-			return createDetailAdapter();
-		}
-		@Override
-		public Adapter caseDynamicBehavior(DynamicBehavior object)
-		{
-			return createDynamicBehaviorAdapter();
-		}
-		@Override
-		public Adapter caseDynamicElement(DynamicElement object)
-		{
-			return createDynamicElementAdapter();
-		}
-		@Override
-		public Adapter caseDynamicProperty(DynamicProperty object)
-		{
-			return createDynamicPropertyAdapter();
-		}
-		@Override
-		public Adapter caseDynamicType(DynamicType object)
-		{
-			return createDynamicTypeAdapter();
-		}
-		@Override
-		public Adapter caseDynamicValueSpecification(DynamicValueSpecification object)
-		{
-			return createDynamicValueSpecificationAdapter();
-		}
-		@Override
-		public Adapter caseElement(Element object)
-		{
-			return createElementAdapter();
-		}
-		@Override
-		public Adapter caseElementExtension(ElementExtension object)
-		{
-			return createElementExtensionAdapter();
-		}
-		@Override
-		public Adapter caseEnumLiteralExp(EnumLiteralExp object)
-		{
-			return createEnumLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseEnumeration(Enumeration object)
-		{
-			return createEnumerationAdapter();
-		}
-		@Override
-		public Adapter caseEnumerationLiteral(EnumerationLiteral object)
-		{
-			return createEnumerationLiteralAdapter();
-		}
-		@Override
-		public Adapter caseExpressionInOCL(ExpressionInOCL object)
-		{
-			return createExpressionInOCLAdapter();
-		}
-		@Override
-		public Adapter caseFeature(Feature object)
-		{
-			return createFeatureAdapter();
-		}
-		@Override
-		public Adapter caseFeatureCallExp(FeatureCallExp object)
-		{
-			return createFeatureCallExpAdapter();
-		}
-		@Override
-		public Adapter caseFinalState(FinalState object)
-		{
-			return createFinalStateAdapter();
-		}
-		@Override
-		public Adapter caseIfExp(IfExp object)
-		{
-			return createIfExpAdapter();
-		}
-		@Override
-		public Adapter caseImport(Import object)
-		{
-			return createImportAdapter();
-		}
-		@Override
-		public Adapter caseInstanceSpecification(InstanceSpecification object)
-		{
-			return createInstanceSpecificationAdapter();
-		}
-		@Override
-		public Adapter caseIntegerLiteralExp(IntegerLiteralExp object)
-		{
-			return createIntegerLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseInvalidLiteralExp(InvalidLiteralExp object)
-		{
-			return createInvalidLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseInvalidType(InvalidType object)
-		{
-			return createInvalidTypeAdapter();
-		}
-		@Override
-		public Adapter caseIterateExp(IterateExp object)
-		{
-			return createIterateExpAdapter();
-		}
-		@Override
-		public Adapter caseIteration(Iteration object)
-		{
-			return createIterationAdapter();
-		}
-		@Override
-		public Adapter caseIteratorExp(IteratorExp object)
-		{
-			return createIteratorExpAdapter();
-		}
-		@Override
-		public Adapter caseIteratorVariable(IteratorVariable object)
-		{
-			return createIteratorVariableAdapter();
-		}
-		@Override
-		public Adapter caseLambdaType(LambdaType object)
-		{
-			return createLambdaTypeAdapter();
-		}
-		@Override
-		public Adapter caseLanguageExpression(LanguageExpression object)
-		{
-			return createLanguageExpressionAdapter();
-		}
-		@Override
-		public Adapter caseLetExp(LetExp object)
-		{
-			return createLetExpAdapter();
-		}
-		@Override
-		public Adapter caseLetVariable(LetVariable object)
-		{
-			return createLetVariableAdapter();
-		}
-		@Override
-		public Adapter caseLibrary(Library object)
-		{
-			return createLibraryAdapter();
-		}
-		@Override
-		public Adapter caseLiteralExp(LiteralExp object)
-		{
-			return createLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseLoopExp(LoopExp object)
-		{
-			return createLoopExpAdapter();
-		}
-		@Override
-		public Adapter caseMapLiteralExp(MapLiteralExp object)
-		{
-			return createMapLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseMapLiteralPart(MapLiteralPart object)
-		{
-			return createMapLiteralPartAdapter();
-		}
-		@Override
-		public Adapter caseMapType(MapType object)
-		{
-			return createMapTypeAdapter();
-		}
-		@Override
-		public Adapter caseMessageExp(MessageExp object)
-		{
-			return createMessageExpAdapter();
-		}
-		@Override
-		public Adapter caseMessageType(MessageType object)
-		{
-			return createMessageTypeAdapter();
-		}
-		@Override
-		public Adapter caseModel(Model object)
-		{
-			return createModelAdapter();
-		}
-		@Override
-		public Adapter caseMorePivotable(MorePivotable object)
-		{
-			return createMorePivotableAdapter();
-		}
-		@Override
-		public Adapter caseNameable(Nameable object)
-		{
-			return createNameableAdapter();
-		}
-		@Override
-		public Adapter caseNamedElement(NamedElement object)
-		{
-			return createNamedElementAdapter();
-		}
-		@Override
-		public Adapter caseNamespace(Namespace object)
-		{
-			return createNamespaceAdapter();
-		}
-		@Override
-		public Adapter caseNavigationCallExp(NavigationCallExp object)
-		{
-			return createNavigationCallExpAdapter();
-		}
-		@Override
-		public Adapter caseNullLiteralExp(NullLiteralExp object)
-		{
-			return createNullLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseNumericLiteralExp(NumericLiteralExp object)
-		{
-			return createNumericLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseOCLExpression(OCLExpression object)
-		{
-			return createOCLExpressionAdapter();
-		}
-		@Override
-		public Adapter caseOperation(Operation object)
-		{
-			return createOperationAdapter();
-		}
-		@Override
-		public Adapter caseOperationCallExp(OperationCallExp object)
-		{
-			return createOperationCallExpAdapter();
-		}
-		@Override
-		public Adapter caseOppositePropertyCallExp(OppositePropertyCallExp object)
-		{
-			return createOppositePropertyCallExpAdapter();
-		}
-		@Override
-		public Adapter caseOrderedSetType(OrderedSetType object)
-		{
-			return createOrderedSetTypeAdapter();
-		}
-		@Override
-		public Adapter caseOrphanCompletePackage(OrphanCompletePackage object)
-		{
-			return createOrphanCompletePackageAdapter();
-		}
-		@Override
-		public Adapter casePackage(org.eclipse.ocl.pivot.Package object)
-		{
-			return createPackageAdapter();
-		}
-		@Override
-		public Adapter caseParameter(Parameter object)
-		{
-			return createParameterAdapter();
-		}
-		@Override
-		public Adapter caseParameterVariable(ParameterVariable object)
-		{
-			return createParameterVariableAdapter();
-		}
-		@Override
-		public Adapter casePivotable(Pivotable object)
-		{
-			return createPivotableAdapter();
-		}
-		@Override
-		public Adapter casePrecedence(Precedence object)
-		{
-			return createPrecedenceAdapter();
-		}
-		@Override
-		public Adapter casePrimitiveCompletePackage(PrimitiveCompletePackage object)
-		{
-			return createPrimitiveCompletePackageAdapter();
-		}
-		@Override
-		public Adapter casePrimitiveLiteralExp(PrimitiveLiteralExp object)
-		{
-			return createPrimitiveLiteralExpAdapter();
-		}
-		@Override
-		public Adapter casePrimitiveType(PrimitiveType object)
-		{
-			return createPrimitiveTypeAdapter();
-		}
-		@Override
-		public Adapter caseProfile(Profile object)
-		{
-			return createProfileAdapter();
-		}
-		@Override
-		public Adapter caseProfileApplication(ProfileApplication object)
-		{
-			return createProfileApplicationAdapter();
-		}
-		@Override
-		public Adapter caseProperty(Property object)
-		{
-			return createPropertyAdapter();
-		}
-		@Override
-		public Adapter casePropertyCallExp(PropertyCallExp object)
-		{
-			return createPropertyCallExpAdapter();
-		}
-		@Override
-		public Adapter casePseudostate(Pseudostate object)
-		{
-			return createPseudostateAdapter();
-		}
-		@Override
-		public Adapter caseRealLiteralExp(RealLiteralExp object)
-		{
-			return createRealLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseReferringElement(ReferringElement object)
-		{
-			return createReferringElementAdapter();
-		}
-		@Override
-		public Adapter caseRegion(Region object)
-		{
-			return createRegionAdapter();
-		}
-		@Override
-		public Adapter caseResultVariable(ResultVariable object)
-		{
-			return createResultVariableAdapter();
-		}
-		@Override
-		public Adapter caseSelfType(SelfType object)
-		{
-			return createSelfTypeAdapter();
-		}
-		@Override
-		public Adapter caseSendSignalAction(SendSignalAction object)
-		{
-			return createSendSignalActionAdapter();
-		}
-		@Override
-		public Adapter caseSequenceType(SequenceType object)
-		{
-			return createSequenceTypeAdapter();
-		}
-		@Override
-		public Adapter caseSetType(SetType object)
-		{
-			return createSetTypeAdapter();
-		}
-		@Override
-		public Adapter caseShadowExp(ShadowExp object)
-		{
-			return createShadowExpAdapter();
-		}
-		@Override
-		public Adapter caseShadowPart(ShadowPart object)
-		{
-			return createShadowPartAdapter();
-		}
-		@Override
-		public Adapter caseSignal(Signal object)
-		{
-			return createSignalAdapter();
-		}
-		@Override
-		public Adapter caseSlot(Slot object)
-		{
-			return createSlotAdapter();
-		}
-		@Override
-		public Adapter caseStandardLibrary(StandardLibrary object)
-		{
-			return createStandardLibraryAdapter();
-		}
-		@Override
-		public Adapter caseState(State object)
-		{
-			return createStateAdapter();
-		}
-		@Override
-		public Adapter caseStateExp(StateExp object)
-		{
-			return createStateExpAdapter();
-		}
-		@Override
-		public Adapter caseStateMachine(StateMachine object)
-		{
-			return createStateMachineAdapter();
-		}
-		@Override
-		public Adapter caseStereotype(Stereotype object)
-		{
-			return createStereotypeAdapter();
-		}
-		@Override
-		public Adapter caseStereotypeExtender(StereotypeExtender object)
-		{
-			return createStereotypeExtenderAdapter();
-		}
-		@Override
-		public Adapter caseStringLiteralExp(StringLiteralExp object)
-		{
-			return createStringLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseTemplateBinding(TemplateBinding object)
-		{
-			return createTemplateBindingAdapter();
-		}
-		@Override
-		public Adapter caseTemplateParameter(TemplateParameter object)
-		{
-			return createTemplateParameterAdapter();
-		}
-		@Override
-		public Adapter caseTemplateParameterSubstitution(TemplateParameterSubstitution object)
-		{
-			return createTemplateParameterSubstitutionAdapter();
-		}
-		@Override
-		public Adapter caseTemplateSignature(TemplateSignature object)
-		{
-			return createTemplateSignatureAdapter();
-		}
-		@Override
-		public Adapter caseTemplateableElement(TemplateableElement object)
-		{
-			return createTemplateableElementAdapter();
-		}
-		@Override
-		public Adapter caseTransition(Transition object)
-		{
-			return createTransitionAdapter();
-		}
-		@Override
-		public Adapter caseTrigger(Trigger object)
-		{
-			return createTriggerAdapter();
-		}
-		@Override
-		public Adapter caseTupleLiteralExp(TupleLiteralExp object)
-		{
-			return createTupleLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseTupleLiteralPart(TupleLiteralPart object)
-		{
-			return createTupleLiteralPartAdapter();
-		}
-		@Override
-		public Adapter caseTupleType(TupleType object)
-		{
-			return createTupleTypeAdapter();
-		}
-		@Override
-		public Adapter caseType(Type object)
-		{
-			return createTypeAdapter();
-		}
-		@Override
-		public Adapter caseTypeExp(TypeExp object)
-		{
-			return createTypeExpAdapter();
-		}
-		@Override
-		public Adapter caseTypedElement(TypedElement object)
-		{
-			return createTypedElementAdapter();
-		}
-		@Override
-		public Adapter caseUnlimitedNaturalLiteralExp(UnlimitedNaturalLiteralExp object)
-		{
-			return createUnlimitedNaturalLiteralExpAdapter();
-		}
-		@Override
-		public Adapter caseUnspecifiedValueExp(UnspecifiedValueExp object)
-		{
-			return createUnspecifiedValueExpAdapter();
-		}
-		@Override
-		public Adapter caseValueSpecification(ValueSpecification object)
-		{
-			return createValueSpecificationAdapter();
-		}
-		@Override
-		public Adapter caseVariable(Variable object)
-		{
-			return createVariableAdapter();
-		}
-		@Override
-		public Adapter caseVariableDeclaration(VariableDeclaration object)
-		{
-			return createVariableDeclarationAdapter();
-		}
-		@Override
-		public Adapter caseVariableExp(VariableExp object)
-		{
-			return createVariableExpAdapter();
-		}
-		@Override
-		public Adapter caseVertex(Vertex object)
-		{
-			return createVertexAdapter();
-		}
-		@Override
-		public Adapter caseVisitable(Visitable object)
-		{
-			return createVisitableAdapter();
-		}
-		@Override
-		public Adapter caseVoidType(VoidType object)
-		{
-			return createVoidTypeAdapter();
-		}
-		@Override
-		public Adapter caseWildcardType(WildcardType object)
-		{
-			return createWildcardTypeAdapter();
-		}
-		@Override
-		public Adapter defaultCase(EObject object)
-		{
-			return createEObjectAdapter();
-		}
-	};
+			@Override
+			public Adapter caseAnnotation(Annotation object)
+			{
+				return createAnnotationAdapter();
+			}
+			@Override
+			public Adapter caseAnyType(AnyType object)
+			{
+				return createAnyTypeAdapter();
+			}
+			@Override
+			public Adapter caseAssociationClass(AssociationClass object)
+			{
+				return createAssociationClassAdapter();
+			}
+			@Override
+			public Adapter caseAssociationClassCallExp(AssociationClassCallExp object)
+			{
+				return createAssociationClassCallExpAdapter();
+			}
+			@Override
+			public Adapter caseBagType(BagType object)
+			{
+				return createBagTypeAdapter();
+			}
+			@Override
+			public Adapter caseBehavior(Behavior object)
+			{
+				return createBehaviorAdapter();
+			}
+			@Override
+			public Adapter caseBooleanLiteralExp(BooleanLiteralExp object)
+			{
+				return createBooleanLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseCallExp(CallExp object)
+			{
+				return createCallExpAdapter();
+			}
+			@Override
+			public Adapter caseCallOperationAction(CallOperationAction object)
+			{
+				return createCallOperationActionAdapter();
+			}
+			@Override
+			public Adapter caseClass(org.eclipse.ocl.pivot.Class object)
+			{
+				return createClassAdapter();
+			}
+			@Override
+			public Adapter caseCollectionItem(CollectionItem object)
+			{
+				return createCollectionItemAdapter();
+			}
+			@Override
+			public Adapter caseCollectionLiteralExp(CollectionLiteralExp object)
+			{
+				return createCollectionLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseCollectionLiteralPart(CollectionLiteralPart object)
+			{
+				return createCollectionLiteralPartAdapter();
+			}
+			@Override
+			public Adapter caseCollectionRange(CollectionRange object)
+			{
+				return createCollectionRangeAdapter();
+			}
+			@Override
+			public Adapter caseCollectionType(CollectionType object)
+			{
+				return createCollectionTypeAdapter();
+			}
+			@Override
+			public Adapter caseComment(Comment object)
+			{
+				return createCommentAdapter();
+			}
+			@Override
+			public Adapter caseCompleteClass(CompleteClass object)
+			{
+				return createCompleteClassAdapter();
+			}
+			@Override
+			public Adapter caseCompleteEnvironment(CompleteEnvironment object)
+			{
+				return createCompleteEnvironmentAdapter();
+			}
+			@Override
+			public Adapter caseCompleteModel(CompleteModel object)
+			{
+				return createCompleteModelAdapter();
+			}
+			@Override
+			public Adapter caseCompletePackage(CompletePackage object)
+			{
+				return createCompletePackageAdapter();
+			}
+			@Override
+			public Adapter caseConnectionPointReference(ConnectionPointReference object)
+			{
+				return createConnectionPointReferenceAdapter();
+			}
+			@Override
+			public Adapter caseConstraint(Constraint object)
+			{
+				return createConstraintAdapter();
+			}
+			@Override
+			public Adapter caseDataType(DataType object)
+			{
+				return createDataTypeAdapter();
+			}
+			@Override
+			public Adapter caseDetail(Detail object)
+			{
+				return createDetailAdapter();
+			}
+			@Override
+			public Adapter caseDynamicBehavior(DynamicBehavior object)
+			{
+				return createDynamicBehaviorAdapter();
+			}
+			@Override
+			public Adapter caseDynamicElement(DynamicElement object)
+			{
+				return createDynamicElementAdapter();
+			}
+			@Override
+			public Adapter caseDynamicProperty(DynamicProperty object)
+			{
+				return createDynamicPropertyAdapter();
+			}
+			@Override
+			public Adapter caseDynamicType(DynamicType object)
+			{
+				return createDynamicTypeAdapter();
+			}
+			@Override
+			public Adapter caseDynamicValueSpecification(DynamicValueSpecification object)
+			{
+				return createDynamicValueSpecificationAdapter();
+			}
+			@Override
+			public Adapter caseElement(Element object)
+			{
+				return createElementAdapter();
+			}
+			@Override
+			public Adapter caseElementExtension(ElementExtension object)
+			{
+				return createElementExtensionAdapter();
+			}
+			@Override
+			public Adapter caseEnumLiteralExp(EnumLiteralExp object)
+			{
+				return createEnumLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseEnumeration(Enumeration object)
+			{
+				return createEnumerationAdapter();
+			}
+			@Override
+			public Adapter caseEnumerationLiteral(EnumerationLiteral object)
+			{
+				return createEnumerationLiteralAdapter();
+			}
+			@Override
+			public Adapter caseExpressionInOCL(ExpressionInOCL object)
+			{
+				return createExpressionInOCLAdapter();
+			}
+			@Override
+			public Adapter caseFeature(Feature object)
+			{
+				return createFeatureAdapter();
+			}
+			@Override
+			public Adapter caseFeatureCallExp(FeatureCallExp object)
+			{
+				return createFeatureCallExpAdapter();
+			}
+			@Override
+			public Adapter caseFinalState(FinalState object)
+			{
+				return createFinalStateAdapter();
+			}
+			@Override
+			public Adapter caseIfExp(IfExp object)
+			{
+				return createIfExpAdapter();
+			}
+			@Override
+			public Adapter caseImport(Import object)
+			{
+				return createImportAdapter();
+			}
+			@Override
+			public Adapter caseInstanceSpecification(InstanceSpecification object)
+			{
+				return createInstanceSpecificationAdapter();
+			}
+			@Override
+			public Adapter caseIntegerLiteralExp(IntegerLiteralExp object)
+			{
+				return createIntegerLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseInvalidLiteralExp(InvalidLiteralExp object)
+			{
+				return createInvalidLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseInvalidType(InvalidType object)
+			{
+				return createInvalidTypeAdapter();
+			}
+			@Override
+			public Adapter caseIterateExp(IterateExp object)
+			{
+				return createIterateExpAdapter();
+			}
+			@Override
+			public Adapter caseIteration(Iteration object)
+			{
+				return createIterationAdapter();
+			}
+			@Override
+			public Adapter caseIteratorExp(IteratorExp object)
+			{
+				return createIteratorExpAdapter();
+			}
+			@Override
+			public Adapter caseIteratorVariable(IteratorVariable object)
+			{
+				return createIteratorVariableAdapter();
+			}
+			@Override
+			public Adapter caseLambdaType(LambdaType object)
+			{
+				return createLambdaTypeAdapter();
+			}
+			@Override
+			public Adapter caseLanguageExpression(LanguageExpression object)
+			{
+				return createLanguageExpressionAdapter();
+			}
+			@Override
+			public Adapter caseLetExp(LetExp object)
+			{
+				return createLetExpAdapter();
+			}
+			@Override
+			public Adapter caseLetVariable(LetVariable object)
+			{
+				return createLetVariableAdapter();
+			}
+			@Override
+			public Adapter caseLibrary(Library object)
+			{
+				return createLibraryAdapter();
+			}
+			@Override
+			public Adapter caseLiteralExp(LiteralExp object)
+			{
+				return createLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseLoopExp(LoopExp object)
+			{
+				return createLoopExpAdapter();
+			}
+			@Override
+			public Adapter caseMapLiteralExp(MapLiteralExp object)
+			{
+				return createMapLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseMapLiteralPart(MapLiteralPart object)
+			{
+				return createMapLiteralPartAdapter();
+			}
+			@Override
+			public Adapter caseMapType(MapType object)
+			{
+				return createMapTypeAdapter();
+			}
+			@Override
+			public Adapter caseMessageExp(MessageExp object)
+			{
+				return createMessageExpAdapter();
+			}
+			@Override
+			public Adapter caseMessageType(MessageType object)
+			{
+				return createMessageTypeAdapter();
+			}
+			@Override
+			public Adapter caseModel(Model object)
+			{
+				return createModelAdapter();
+			}
+			@Override
+			public Adapter caseMorePivotable(MorePivotable object)
+			{
+				return createMorePivotableAdapter();
+			}
+			@Override
+			public Adapter caseNameable(Nameable object)
+			{
+				return createNameableAdapter();
+			}
+			@Override
+			public Adapter caseNamedElement(NamedElement object)
+			{
+				return createNamedElementAdapter();
+			}
+			@Override
+			public Adapter caseNamespace(Namespace object)
+			{
+				return createNamespaceAdapter();
+			}
+			@Override
+			public Adapter caseNavigationCallExp(NavigationCallExp object)
+			{
+				return createNavigationCallExpAdapter();
+			}
+			@Override
+			public Adapter caseNullLiteralExp(NullLiteralExp object)
+			{
+				return createNullLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseNumericLiteralExp(NumericLiteralExp object)
+			{
+				return createNumericLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseOCLExpression(OCLExpression object)
+			{
+				return createOCLExpressionAdapter();
+			}
+			@Override
+			public Adapter caseOperation(Operation object)
+			{
+				return createOperationAdapter();
+			}
+			@Override
+			public Adapter caseOperationCallExp(OperationCallExp object)
+			{
+				return createOperationCallExpAdapter();
+			}
+			@Override
+			public Adapter caseOppositePropertyCallExp(OppositePropertyCallExp object)
+			{
+				return createOppositePropertyCallExpAdapter();
+			}
+			@Override
+			public Adapter caseOrderedSetType(OrderedSetType object)
+			{
+				return createOrderedSetTypeAdapter();
+			}
+			@Override
+			public Adapter caseOrphanCompletePackage(OrphanCompletePackage object)
+			{
+				return createOrphanCompletePackageAdapter();
+			}
+			@Override
+			public Adapter casePackage(org.eclipse.ocl.pivot.Package object)
+			{
+				return createPackageAdapter();
+			}
+			@Override
+			public Adapter caseParameter(Parameter object)
+			{
+				return createParameterAdapter();
+			}
+			@Override
+			public Adapter caseParameterVariable(ParameterVariable object)
+			{
+				return createParameterVariableAdapter();
+			}
+			@Override
+			public Adapter casePivotable(Pivotable object)
+			{
+				return createPivotableAdapter();
+			}
+			@Override
+			public Adapter casePrecedence(Precedence object)
+			{
+				return createPrecedenceAdapter();
+			}
+			@Override
+			public Adapter casePrimitiveCompletePackage(PrimitiveCompletePackage object)
+			{
+				return createPrimitiveCompletePackageAdapter();
+			}
+			@Override
+			public Adapter casePrimitiveLiteralExp(PrimitiveLiteralExp object)
+			{
+				return createPrimitiveLiteralExpAdapter();
+			}
+			@Override
+			public Adapter casePrimitiveType(PrimitiveType object)
+			{
+				return createPrimitiveTypeAdapter();
+			}
+			@Override
+			public Adapter caseProfile(Profile object)
+			{
+				return createProfileAdapter();
+			}
+			@Override
+			public Adapter caseProfileApplication(ProfileApplication object)
+			{
+				return createProfileApplicationAdapter();
+			}
+			@Override
+			public Adapter caseProperty(Property object)
+			{
+				return createPropertyAdapter();
+			}
+			@Override
+			public Adapter casePropertyCallExp(PropertyCallExp object)
+			{
+				return createPropertyCallExpAdapter();
+			}
+			@Override
+			public Adapter casePseudostate(Pseudostate object)
+			{
+				return createPseudostateAdapter();
+			}
+			@Override
+			public Adapter caseRealLiteralExp(RealLiteralExp object)
+			{
+				return createRealLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseReferringElement(ReferringElement object)
+			{
+				return createReferringElementAdapter();
+			}
+			@Override
+			public Adapter caseRegion(Region object)
+			{
+				return createRegionAdapter();
+			}
+			@Override
+			public Adapter caseResultVariable(ResultVariable object)
+			{
+				return createResultVariableAdapter();
+			}
+			@Override
+			public Adapter caseSelfType(SelfType object)
+			{
+				return createSelfTypeAdapter();
+			}
+			@Override
+			public Adapter caseSendSignalAction(SendSignalAction object)
+			{
+				return createSendSignalActionAdapter();
+			}
+			@Override
+			public Adapter caseSequenceType(SequenceType object)
+			{
+				return createSequenceTypeAdapter();
+			}
+			@Override
+			public Adapter caseSetType(SetType object)
+			{
+				return createSetTypeAdapter();
+			}
+			@Override
+			public Adapter caseShadowExp(ShadowExp object)
+			{
+				return createShadowExpAdapter();
+			}
+			@Override
+			public Adapter caseShadowPart(ShadowPart object)
+			{
+				return createShadowPartAdapter();
+			}
+			@Override
+			public Adapter caseSignal(Signal object)
+			{
+				return createSignalAdapter();
+			}
+			@Override
+			public Adapter caseSlot(Slot object)
+			{
+				return createSlotAdapter();
+			}
+			@Override
+			public Adapter caseStandardLibrary(StandardLibrary object)
+			{
+				return createStandardLibraryAdapter();
+			}
+			@Override
+			public Adapter caseState(State object)
+			{
+				return createStateAdapter();
+			}
+			@Override
+			public Adapter caseStateExp(StateExp object)
+			{
+				return createStateExpAdapter();
+			}
+			@Override
+			public Adapter caseStateMachine(StateMachine object)
+			{
+				return createStateMachineAdapter();
+			}
+			@Override
+			public Adapter caseStereotype(Stereotype object)
+			{
+				return createStereotypeAdapter();
+			}
+			@Override
+			public Adapter caseStereotypeExtender(StereotypeExtender object)
+			{
+				return createStereotypeExtenderAdapter();
+			}
+			@Override
+			public Adapter caseStringLiteralExp(StringLiteralExp object)
+			{
+				return createStringLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseTemplateBinding(TemplateBinding object)
+			{
+				return createTemplateBindingAdapter();
+			}
+			@Override
+			public Adapter caseTemplateParameter(TemplateParameter object)
+			{
+				return createTemplateParameterAdapter();
+			}
+			@Override
+			public Adapter caseTemplateParameterSubstitution(TemplateParameterSubstitution object)
+			{
+				return createTemplateParameterSubstitutionAdapter();
+			}
+			@Override
+			public Adapter caseTemplateSignature(TemplateSignature object)
+			{
+				return createTemplateSignatureAdapter();
+			}
+			@Override
+			public Adapter caseTemplateableElement(TemplateableElement object)
+			{
+				return createTemplateableElementAdapter();
+			}
+			@Override
+			public Adapter caseTransition(Transition object)
+			{
+				return createTransitionAdapter();
+			}
+			@Override
+			public Adapter caseTrigger(Trigger object)
+			{
+				return createTriggerAdapter();
+			}
+			@Override
+			public Adapter caseTupleLiteralExp(TupleLiteralExp object)
+			{
+				return createTupleLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseTupleLiteralPart(TupleLiteralPart object)
+			{
+				return createTupleLiteralPartAdapter();
+			}
+			@Override
+			public Adapter caseTupleType(TupleType object)
+			{
+				return createTupleTypeAdapter();
+			}
+			@Override
+			public Adapter caseType(Type object)
+			{
+				return createTypeAdapter();
+			}
+			@Override
+			public Adapter caseTypeExp(TypeExp object)
+			{
+				return createTypeExpAdapter();
+			}
+			@Override
+			public Adapter caseTypedElement(TypedElement object)
+			{
+				return createTypedElementAdapter();
+			}
+			@Override
+			public Adapter caseUnlimitedNaturalLiteralExp(UnlimitedNaturalLiteralExp object)
+			{
+				return createUnlimitedNaturalLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseUnspecifiedValueExp(UnspecifiedValueExp object)
+			{
+				return createUnspecifiedValueExpAdapter();
+			}
+			@Override
+			public Adapter caseValueSpecification(ValueSpecification object)
+			{
+				return createValueSpecificationAdapter();
+			}
+			@Override
+			public Adapter caseVariable(Variable object)
+			{
+				return createVariableAdapter();
+			}
+			@Override
+			public Adapter caseVariableDeclaration(VariableDeclaration object)
+			{
+				return createVariableDeclarationAdapter();
+			}
+			@Override
+			public Adapter caseVariableExp(VariableExp object)
+			{
+				return createVariableExpAdapter();
+			}
+			@Override
+			public Adapter caseVertex(Vertex object)
+			{
+				return createVertexAdapter();
+			}
+			@Override
+			public Adapter caseVisitable(Visitable object)
+			{
+				return createVisitableAdapter();
+			}
+			@Override
+			public Adapter caseVoidType(VoidType object)
+			{
+				return createVoidTypeAdapter();
+			}
+			@Override
+			public Adapter caseWildcardType(WildcardType object)
+			{
+				return createWildcardTypeAdapter();
+			}
+			@Override
+			public Adapter defaultCase(EObject object)
+			{
+				return createEObjectAdapter();
+			}
+		};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

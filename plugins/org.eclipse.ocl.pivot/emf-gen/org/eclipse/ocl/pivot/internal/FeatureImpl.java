@@ -191,7 +191,7 @@ public abstract class FeatureImpl
 	public boolean validateTypeIsNotInvalid(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'Feature::TypeIsNotInvalid'.getSeverity()
 		 *   in

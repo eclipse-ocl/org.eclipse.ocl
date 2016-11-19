@@ -48,12 +48,12 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * @generated
 	 */
 	Type specializeIn(CallExp expr, Type selfType);
-	
+
 	/**
 	 * Return true if this type conform to thatType within standardLibrary.
 	 */
 	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
-	
+
 	/**
 	 * Return the most derived type common to this type and thatType within standardLibrary.
 	 */
@@ -63,7 +63,7 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * Return the inheritance description for this type within standardLibrary.
 	 */
 	@NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary);
-	
+
 	/**
 	 * Return the unique executable form of this type within standardLibrary.
 	 */
@@ -73,13 +73,13 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * Return a unique StandardLibrary-independent identifier for this type.
 	 */
 	@NonNull TypeId getTypeId();
-	
+
 	/**
 	 * Return true if this is the same type as thatType within standardLibrary.
 	 */
 	boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
 	boolean isEqualToUnspecializedType(@NonNull StandardLibrary standardLibrary, @NonNull Type type);
-	
+
 	/**
 	 * Return true if this is an invalid type (with an associated error message).
 	 */

@@ -197,7 +197,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateUnsafeSourceCanNotBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateUnsafeSourceCanNotBeNull:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::UnsafeSourceCanNotBeNull'.getSeverity()
@@ -274,7 +274,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							//
 							if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {					// Normal successful body evaluation result
 								exists = ValueUtil.TRUE_VALUE;
-								break;														// Stop immediately 
+								break;														// Stop immediately
 							}
 							else if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
 								;															// Carry on
@@ -346,7 +346,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateAnyHasOneIterator(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateAnyHasOneIterator:
 		 *   let severity : Integer[1] = 'IteratorExp::AnyHasOneIterator'.getSeverity()
 		 *   in
@@ -410,7 +410,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateAnyTypeIsSourceElementType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateAnyTypeIsSourceElementType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::AnyTypeIsSourceElementType'.getSeverity()
@@ -514,7 +514,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateAnyBodyTypeIsBoolean(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateAnyBodyTypeIsBoolean:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::AnyBodyTypeIsBoolean'.getSeverity()
@@ -578,7 +578,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateClosureHasOneIterator(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateClosureHasOneIterator:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::ClosureHasOneIterator'.getSeverity()
@@ -644,7 +644,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateClosureTypeIsUniqueCollection(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateClosureTypeIsUniqueCollection:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::ClosureTypeIsUniqueCollection'.getSeverity()
@@ -796,7 +796,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateCollectElementTypeIsFlattenedBodyType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateCollectElementTypeIsFlattenedBodyType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::CollectElementTypeIsFlattenedBodyType'.getSeverity()
@@ -873,7 +873,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateClosureSourceElementTypeIsBodyElementType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateClosureSourceElementTypeIsBodyElementType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::ClosureSourceElementTypeIsBodyElementType'.getSeverity()
@@ -977,7 +977,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateClosureElementTypeIsSourceElementType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateClosureElementTypeIsSourceElementType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::ClosureElementTypeIsSourceElementType'.getSeverity()
@@ -1067,7 +1067,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateCollectTypeIsUnordered(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateCollectTypeIsUnordered:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::CollectTypeIsUnordered'.getSeverity()
@@ -1204,7 +1204,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateSortedByIsOrderedIfSourceIsOrdered(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSortedByIsOrderedIfSourceIsOrdered:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::SortedByIsOrderedIfSourceIsOrdered'.getSeverity()
@@ -1341,7 +1341,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateSortedByElementTypeIsSourceElementType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSortedByElementTypeIsSourceElementType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::SortedByElementTypeIsSourceElementType'.getSeverity()
@@ -1416,7 +1416,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateIteratorTypeIsSourceElementType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateIteratorTypeIsSourceElementType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::IteratorTypeIsSourceElementType'.getSeverity()
@@ -1461,7 +1461,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 					@SuppressWarnings("null")
 					/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Variable p = (Variable)ITERATOR_p.next();
 					/**
-					 * 
+					 *
 					 * ownedSource?.type.oclAsType(CollectionType)
 					 * .elementType.conformsTo(p.type)
 					 */
@@ -1499,7 +1499,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 					//
 					if (CAUGHT_conformsTo == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
 						status = ValueUtil.FALSE_VALUE;
-						break;														// Stop immediately 
+						break;														// Stop immediately
 					}
 					else if (CAUGHT_conformsTo == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
 						;															// Carry on
@@ -1531,7 +1531,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateSafeIteratorIsRequired(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSafeIteratorIsRequired:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::SafeIteratorIsRequired'.getSeverity()
@@ -1597,7 +1597,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 						//
 						if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
 							forAll = ValueUtil.FALSE_VALUE;
-							break;														// Stop immediately 
+							break;														// Stop immediately
 						}
 						else if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
 							;															// Carry on
@@ -1635,7 +1635,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	public boolean validateSafeSourceCanBeNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateSafeSourceCanBeNull:
 		 *   let severity : Integer[1] = 'IteratorExp::SafeSourceCanBeNull'.getSeverity()
 		 *   in

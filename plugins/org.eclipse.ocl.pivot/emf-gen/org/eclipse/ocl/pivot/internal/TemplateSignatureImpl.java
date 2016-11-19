@@ -335,7 +335,7 @@ public class TemplateSignatureImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitTemplateSignature(this);
 	}
-	
+
 	public static @NonNull TemplateParameters getTypeParameters(@Nullable TemplateSignature templateSignature) {
 		if (templateSignature == null) {
 			return TemplateParameters.EMPTY_LIST;

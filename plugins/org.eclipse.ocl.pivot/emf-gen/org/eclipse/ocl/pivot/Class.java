@@ -27,9 +27,9 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
  *
  * <!-- begin-model-doc -->
  * A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.
- * 
+ *
  * A Classifier represents a classification of instances according to their Features.
- * 
+ *
  * StructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier.
  * <!-- end-model-doc -->
  *
@@ -105,7 +105,7 @@ public interface Class
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * If true, the Class does not provide a complete declaration and cannot be instantiated. An abstract Class is typically used as a target of Associations or Generalizations.
-	 * 
+	 *
 	 * If true, the Classifier can only be instantiated by instantiating one of its specializations. An abstract Classifier is intended to be used by other Classifiers e.g., as the target of Associations or Generalizations.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Is Abstract</em>' attribute.
@@ -274,7 +274,7 @@ public interface Class
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * The Properties owned by the StructuredClassifier.
-	 * 
+	 *
 	 * The attributes (i.e., the Properties) owned by the Class.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Owned Properties</em>' containment reference list.
@@ -296,7 +296,7 @@ public interface Class
 	 * @param value string initial value
 	 */
 	@Nullable Object createInstance( @NonNull String value);
-	
+
 	/**
 	 * Return the name of the meta-type of this type.
 	 */
@@ -306,17 +306,17 @@ public interface Class
 	 * Return the ordered list of type parameters of this type.
 	 */
 	@NonNull TemplateParameters getTypeParameters();
-	
+
 	/**
 	 * Return true if this type is a Collection type and has ordered elements.
 	 */
 	boolean isOrdered();
-	
+
 	/**
 	 * Return true if this type is a Collection type and has unique elements.
 	 */
 	boolean isUnique();
-	
+
 	/**
 	 * Return the dynamic (overloaded) implementation of the staticOperation applicable to the types managed
 	 * by the given Standard Library.

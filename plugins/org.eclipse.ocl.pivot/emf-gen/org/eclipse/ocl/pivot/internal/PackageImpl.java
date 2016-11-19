@@ -64,7 +64,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public class PackageImpl
 		extends NamespaceImpl
 		implements org.eclipse.ocl.pivot.Package {
-		
+
 	/**
 	 * The default value of the '{@link #getURI() <em>URI</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -634,7 +634,7 @@ public class PackageImpl
 	}
 
 	@Override
-	
+
 	public org.eclipse.ocl.pivot.@Nullable Class getOwnedClass(String className) {
 		return NameUtil.getNameable(getOwnedClasses(), className);
 	}
@@ -676,7 +676,7 @@ public class PackageImpl
 			ownedPackages = ownedPackages2 = new EObjectContainmentWithInverseEList<org.eclipse.ocl.pivot.Package>(org.eclipse.ocl.pivot.Package.class, this, PivotPackage.PACKAGE__OWNED_PACKAGES, PivotPackage.PACKAGE__OWNING_PACKAGE)
 			{
 				private static final long serialVersionUID = 1L;
-	
+
 				@Override
 				protected void didRemove(int index, org.eclipse.ocl.pivot.Package partialPackage) {
 					assert partialPackage != null;
@@ -694,7 +694,7 @@ public class PackageImpl
 		}
 		return ownedPackages2;
 	}
-	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -725,7 +725,7 @@ public class PackageImpl
 		}
 		return packageId2;
 	}
-	
+
 	public boolean isIgnoreInvariants() {
 		return ignoreInvariants;
 	}
@@ -736,7 +736,7 @@ public class PackageImpl
 			packageListeners = null;
 		}
 	}
-	
+
 	public void setIgnoreInvariants(boolean ignoreInvariants) {
 		this.ignoreInvariants = ignoreInvariants;
 	}
@@ -763,7 +763,7 @@ public class PackageImpl
 			}
 		}
 	}
-	
+
 	public void setPackageId(@NonNull PackageId packageId) {
 		assert this.packageId == null;
 		this.packageId = packageId;

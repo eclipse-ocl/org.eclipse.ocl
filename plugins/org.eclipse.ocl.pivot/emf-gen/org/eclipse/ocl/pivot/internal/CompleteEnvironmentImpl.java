@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -370,18 +370,18 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	protected /*final @NonNull*/ CompleteModelInternal ownedCompleteModel;
 	protected /*final @NonNull*/ StandardLibraryInternal ownedStandardLibrary;
 	protected final @NonNull Map<org.eclipse.ocl.pivot.Class, CompleteClassInternal> class2completeClass = new WeakHashMap<org.eclipse.ocl.pivot.Class, CompleteClassInternal>();
-	
+
 	/**
 	 * The known lambda types.
 	 */
 	private LambdaTypeManager lambdaManager = null;			// Lazily created
-	
+
 	/**
 	 * The known tuple types.
 	 */
 	private @Nullable TupleTypeManager tupleManager = null;			// Lazily created
 	private boolean isCodeGeneration = false;
-	
+
 	@Override
 	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement) {
 		if (pivotElement.getUnspecializedElement() != null) {
@@ -593,7 +593,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
 		assert (oldCompleteClass == null) ||(oldCompleteClass == completeClass);
 	}
-	
+
 	@Override
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		class2completeClass.remove(pivotType);
@@ -636,13 +636,13 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	public @NonNull CollectionType getCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
 		return completeClass.getCollectionType(typeParameters);
 	}
-	
+
 	@Override
 	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		return getCollectionType((CollectionType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(elementType), isNullFree, lower, upper);
 	}
-	
+
 	@Override
 	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
@@ -662,13 +662,13 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		}
 		boolean isUnspecialized = elementType == templateParameters.get(0);
 		if (isUnspecialized) {
-			return containerType;	
+			return containerType;
 		}
 		@SuppressWarnings("unchecked")
 		T specializedType = (T) ownedCompleteModel.getCollectionType(ownedCompleteModel.getCompleteClass(containerType), TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper));
 		return specializedType;
 	}
-	
+
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
 		for (int recursions = 0; pivotType instanceof TemplateParameter; recursions++) {
@@ -743,7 +743,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	public @NonNull MapType getMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
 		return completeClass.getMapType(typeParameters);
 	}
-	
+
 	@Override
 	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, @NonNull Type valueType) {
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
@@ -763,7 +763,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		}
 		boolean isUnspecialized = (keyType == templateParameters.get(0)) && (valueType == templateParameters.get(1));
 		if (isUnspecialized) {
-			return containerType;	
+			return containerType;
 		}
 		MapType specializedType = ownedCompleteModel.getMapType(ownedCompleteModel.getCompleteClass(containerType), TypeUtil.createMapTypeParameters(keyType, valueType));
 		return specializedType;

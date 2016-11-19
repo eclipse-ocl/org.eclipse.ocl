@@ -934,7 +934,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link OCLstdlibPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -962,7 +962,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 		// Mark meta-data to indicate it can't be changed
 		theOCLstdlibPackage.freeze();
 
-  
+
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(OCLstdlibPackage.eNS_URI, theOCLstdlibPackage);
 		return theOCLstdlibPackage;
@@ -1566,10 +1566,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	protected void createASLibraryAnnotations() {
-		String source = "http://www.eclipse.org/OCL/ASLibrary"; //$NON-NLS-1$	
+		String source = "http://www.eclipse.org/OCL/ASLibrary"; //$NON-NLS-1$
 		addAnnotation
-		  (this, 
-		   source, 
+		  (this,
+		   source,
 		   new String[] {
 		   });
 	}

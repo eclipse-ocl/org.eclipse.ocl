@@ -151,7 +151,7 @@ public class TupleLiteralPartImpl
 	public boolean validateCompatibleInitialiserType(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateCompatibleInitialiserType:
 		 *   let
 		 *     severity : Integer[1] = 'TupleLiteralPart::CompatibleInitialiserType'.getSeverity()
@@ -247,7 +247,7 @@ public class TupleLiteralPartImpl
 	public boolean validateTypeIsNotInvalid(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsNotInvalid:
 		 *   let
 		 *     severity : Integer[1] = 'TupleLiteralPart::TypeIsNotInvalid'.getSeverity()
@@ -511,7 +511,7 @@ public class TupleLiteralPartImpl
 	}
 
 	private TuplePartId partId = null;
-	
+
 	@Override
 	public @Nullable TuplePartId getPartId() {
 		TupleTypeId tupleTypeId = (TupleTypeId) ((TupleLiteralExp)eContainer()).getTypeId();

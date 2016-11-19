@@ -262,7 +262,7 @@ public class IfExpImpl
 	public boolean validateConditionTypeIsBoolean(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateConditionTypeIsBoolean:
 		 *   let severity : Integer[1] = 'IfExp::ConditionTypeIsBoolean'.getSeverity()
 		 *   in
@@ -310,7 +310,7 @@ public class IfExpImpl
 	public boolean validateTypeIsNotInvalid(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateTypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'IfExp::TypeIsNotInvalid'.getSeverity()
 		 *   in

@@ -24,15 +24,15 @@ public class TuplePartImpl
 	protected TuplePartImpl() {
 		super();
 	}
-	
+
 	private TuplePartId partId;
-	
+
 	public TuplePartImpl(@NonNull TuplePartId partId, @NonNull Type partType) {
 		this.partId = partId;
 		setName(NameUtil.getSafeName(partId));
 		setType(partType);
 	}
-	
+
 	public @NonNull TuplePartId getTuplePartId() {
 		TuplePartId partId2 = partId;
 		if (partId2 == null) {

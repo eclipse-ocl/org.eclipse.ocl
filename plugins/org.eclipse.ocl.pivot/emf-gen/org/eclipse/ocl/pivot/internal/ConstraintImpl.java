@@ -432,7 +432,7 @@ public class ConstraintImpl
 	public boolean validateUniqueName(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 * 
+		 *
 		 * inv validateUniqueName:
 		 *   let severity : Integer[1] = 'Constraint::UniqueName'.getSeverity()
 		 *   in
