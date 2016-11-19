@@ -36,6 +36,7 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 
 /**
  * Convert the line endings of all files in a directory tree to use Unix line endings.
+ * Trailing whitespace is also removed.
  * Binary file extensions may be excluded from conversion.
  */
 public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
@@ -108,6 +109,7 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 			throw new FileNotFoundException(srcGenPath + " " + f.getAbsolutePath());
 		LOG.debug("Converting folder " + f.getPath());
 		convertFolder(f, new FileFilter() {
+			@Override
 			public boolean accept(File path) {
 				return !isBinaryExtension(path);
 			}
@@ -129,6 +131,7 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 		FileFilter myFilter = filter;
 		if (myFilter == null) {
 			myFilter = new FileFilter() {
+				@Override
 				public boolean accept(File pathname) {
 					return true;
 				}
@@ -154,10 +157,24 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 			Reader reader = new FileReader(file);
 			StringBuilder s = new StringBuilder();
 			boolean changed = false;
+			boolean trimmed = false;
 			try {
 				for (int c; (c = reader.read()) >= 0; ) {
 					if (c == '\r') {
 						changed = true;
+					}
+					else if (c == '\n') {
+						for (int len = s.length(); len-- >= 0; ) {
+							char ch = s.charAt(len);
+							if ((ch != '\n') && Character.isWhitespace(ch)) {
+								s.setLength(len);
+								trimmed = true;
+							}
+							else {
+								break;
+							}
+						}
+						s.append((char)c);
 					}
 					else {
 						s.append((char)c);
@@ -173,7 +190,7 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 				LOG.error("Failed to close '" + file + "'", e);
 				return;
 			}
-			if (changed) {
+			if (changed || trimmed) {
 				try {
 					Writer writer = new FileWriter(file);
 					try {
@@ -189,7 +206,7 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 					LOG.error("Failed to re-open '" + file + "'", e);
 					return;
 				}
-				LOG.info("Converted " + file);
+				LOG.info((changed ? "Converted " : "Trimmed ") + file);
 			}
 		} catch (FileNotFoundException e) {
 			LOG.error("Failed to open '" + file + "'", e);

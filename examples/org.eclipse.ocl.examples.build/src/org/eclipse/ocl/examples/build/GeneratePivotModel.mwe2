@@ -24,6 +24,7 @@ var ecoreSlot = "ecore"
 var umlSlot = "uml"
 var pivotProjectName = "org.eclipse.ocl.pivot"
 var internalProjectName = "org.eclipse.ocl.pivot"
+var basePivotProject = "../../plugins/${pivotProjectName}"
 //var platformURI = ".."
 
 /**
@@ -318,7 +319,7 @@ Workflow {
     	javaClassName = "OCLmetamodel"
     }
 	component = ConvertToUnixLineEndings {
-		directory = "${pivotProjectName}/emf-gen"
+		directory = "${basePivotProject}/emf-gen"
 	}
 }
 

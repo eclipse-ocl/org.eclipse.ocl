@@ -28,13 +28,13 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		var MergeWriter writer = new MergeWriter(outputFolder + "Abstract" + projectPrefix + generic + "Visitor.java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
-			
+
 			import «returnClass.getName()»;
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
 			import «contextClass.getName()»;
 			«IF isDerived»import «superVisitorPackageName»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
-			
+
 			/**
 			 * An Abstract«projectPrefix»«generic»Visitor provides a default implementation for each
 			 * visitXxx method that delegates to the visitYyy method of the first
@@ -48,15 +48,15 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 			{
 				/**
 				 * Initializes me with an initial value for my result.
-				 * 
+				 *
 				 * @param context my initial result value
 				 */
 				protected Abstract«projectPrefix»«generic»Visitor(«emitNonNull(contextClass.getSimpleName())» context) {
 					super(context);
-				}	
+				}
 				«FOR eClass : getSortedEClasses(ePackage)»
 				«var EClass firstSuperClass = eClass.firstSuperClass(eClass)»
-			
+
 				«IF needsOverride»
 				@Override
 				«ENDIF»
@@ -82,9 +82,9 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		var MergeWriter writer = new MergeWriter(outputFolder + "AbstractDelegating" + visitorClassName + ".java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
-			
+
 			import org.eclipse.jdt.annotation.NonNull;
-			
+
 			/**
 			 * An AbstractDelegating«visitorClassName» delegates all visits.
 			 */
@@ -98,11 +98,11 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 				}
 				«ELSE»
 				protected final @NonNull D delegate;
-				
+
 				protected AbstractDelegating«visitorClassName»(@NonNull D delegate, C context) {
 					super(context);
 				//	assert delegate != null : "cannot decorate a null visitor"; //$NON-NLS-1$
-					this.delegate = delegate;		
+					this.delegate = delegate;
 				//	delegate.setUndecoratedVisitor(this);
 				}
 
@@ -115,14 +115,14 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 
 				/**
 				 * Obtains the visitor that I decorate.
-				 * 
+				 *
 				 * @return my decorated visitor
 				 */
 				protected final @NonNull D getDelegate() {
 					return delegate;
 				}
 				«ENDIF»
-			
+
 				«IF isDerived || needsOverride»
 				@Override
 				«ENDIF»
@@ -150,12 +150,12 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		var MergeWriter writer = new MergeWriter(outputFolder + "AbstractExtendingDelegating" + visitorClassName + ".java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
-			
+
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
 			import «superVisitorPackageName».AbstractDelegating«superVisitorClassName»;
 			import «superVisitorPackageName».«superVisitorClassName»;
-			
+
 			/**
 			 * An AbstractExtendingDelegating«visitorClassName» provides a default implementation for each
 			 * visitXxx method that delegates to the supertype if the supertype is in the same package as
@@ -171,11 +171,11 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 				}
 				«ELSE»
 				protected final D delegate;
-				
+
 				protected AbstractExtendingDelegating«visitorClassName»(@NonNull D delegate, C context) {
 					super(context);
-				//	assert delegate != null : "cannot decorate a null visitor"; //$NON-NLS-1$		
-					this.delegate = delegate;		
+				//	assert delegate != null : "cannot decorate a null visitor"; //$NON-NLS-1$
+					this.delegate = delegate;
 				//	delegate.setUndecoratedVisitor(this);
 				}
 
@@ -188,7 +188,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 
 				/**
 				 * Obtains the visitor that I decorate.
-				 * 
+				 *
 				 * @return my decorated visitor
 				 */
 				protected final D getDelegate() {
@@ -230,9 +230,9 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		var MergeWriter writer = new MergeWriter(outputFolder + "AbstractExtending" + visitorClassName + ".java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
-			
+
 			import org.eclipse.jdt.annotation.NonNull;
-			
+
 			/**
 			 * An AbstractExtending«visitorClassName» provides a default implementation for each
 			 * visitXxx method that delegates to the visitYyy method of the first
@@ -246,15 +246,15 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 			{
 				/**
 				 * Initializes me with an initial value for my result.
-				 * 
+				 *
 				 * @param context my initial result value
 				 */
 				protected AbstractExtending«visitorClassName»(C context) {
 					super(context);
-				}	
+				}
 				«FOR eClass : getSortedEClasses(ePackage)»
 				«var EClass firstSuperClass = eClass.firstSuperClass(eClass)»
-			
+
 				«IF needsOverride»
 				@Override
 				«ENDIF»
@@ -280,9 +280,9 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		var MergeWriter writer = new MergeWriter(outputFolder + "AbstractMerged" + visitorClassName + ".java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
-			
+
 			import org.eclipse.jdt.annotation.NonNull;
-			
+
 			/**
 			 * An AbstractMerged«visitorClassName» merges all visits direct to visiting().
 			 * This can be used by a decorating visitor to execute shared code before redispatching to a decorated visitor.
@@ -317,9 +317,9 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		var MergeWriter writer = new MergeWriter(outputFolder + "AbstractNonNullExtending" + visitorClassName + ".java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
-			
+
 			import org.eclipse.jdt.annotation.NonNull;
-			
+
 			/**
 			 * An AbstractExtendingNonNull«visitorClassName» provides a default implementation for each
 			 * visitXxx method that delegates to the visitYyy method of the first
@@ -328,7 +328,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 			 * suitable first super class, the method delegates to visiting().
 			 * The return is annotated as @NonNull.
 			 *
-			 * @deprecated Explicit 'NonNull' functionality is obsolete with Java 8 @NonNull annotations.  
+			 * @deprecated Explicit 'NonNull' functionality is obsolete with Java 8 @NonNull annotations.
 			 */
 			 @Deprecated
 			public abstract class AbstractNonNullExtending«visitorClassName»<R, C>
@@ -337,17 +337,17 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 			{
 				/**
 				 * Initializes me with an initial value for my result.
-				 * 
+				 *
 				 * @param context my initial result value
 				 */
 				protected AbstractNonNullExtending«visitorClassName»(C context) {
 					super(context);
-				}	
+				}
 				«IF !isDerived»
-				
+
 				/**
 				 * Perform a visit to the specified visitable.
-				 * 
+				 *
 				 * @param visitable a visitable
 				 * @return the non-null result of visiting it
 				 */
@@ -362,7 +362,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 				«ENDIF»
 				«FOR eClass : getSortedEClasses(ePackage)»
 				«var EClass firstSuperClass = eClass.firstSuperClass(eClass)»
-			
+
 				«IF needsOverride»
 				@Override
 				«ENDIF»
@@ -407,7 +407,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 			 * An AbstractNull«visitorClassName» provides a default implementation for each
 			 * visitXxx method that returns null.
 			 *
-			 * @deprecated Explicit 'Null' functionality is obsolete with Java 8 @Nullable annotations.  
+			 * @deprecated Explicit 'Null' functionality is obsolete with Java 8 @Nullable annotations.
 			 */
 			 @Deprecated
 			public abstract class AbstractNull«visitorClassName»<@Nullable R, C>
@@ -419,12 +419,12 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 			{
 				/**
 				 * Initializes me with an initial value for my result.
-				 * 
+				 *
 				 * @param context my initial result value
 				 */
 				protected AbstractNull«visitorClassName»(C context) {
 					super(context);
-				}	
+				}
 				«FOR eClass : getSortedEClasses(ePackage)»
 
 				«IF needsOverride»
@@ -447,7 +447,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		var MergeWriter writer = new MergeWriter(outputFolder + "Abstract" + projectPrefix + generic + "Visitor.java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
-			
+
 			import «returnClass.getName()»;
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
@@ -455,7 +455,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 			import «contextClass.getName()»;
 			«IF isDerived && !superProjectPrefix.equals("")»import «superVisitorPackageName»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
 			«IF isDerived && superProjectPrefix.equals("")»import «TemplateParameterSubstitutionVisitor.getName()»;«ENDIF»
-			
+
 			/**
 			 * An Abstract«projectPrefix»«generic»Visitor provides a default implementation for each
 			 * visitXxx method that delegates to the visitYyy method of the first
@@ -469,15 +469,15 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 			{
 				/**
 				 * Initializes me with an initial value for my result.
-				 * 
+				 *
 				 * @param context my initial result value
 				 */
 				protected Abstract«projectPrefix»«generic»Visitor(«emitNonNull(contextClass.getSimpleName())» environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 					super(environmentFactory, selfType, selfTypeValue);
-				}	
+				}
 				«FOR eClass : getSortedEClasses(ePackage)»
 				«var EClass firstSuperClass = eClass.firstSuperClass(eClass)»
-			
+
 				«IF needsOverride»
 				@Override
 				«ENDIF»
@@ -503,12 +503,12 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		var MergeWriter writer = new MergeWriter(outputFolder + "Abstract" + visitorClassName + ".java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
-			
+
 			«IF !isDerived»
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
 			«ENDIF»
-			
+
 			/*
 			 * An Abstract«visitorClassName» provides a default implementation of the visitor framework
 			 * but n implementations of the visitXXX methods..
@@ -525,10 +525,10 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 				 */
 				protected final C context;
 
-				«ENDIF»	
+				«ENDIF»
 				/**
 				 * Initializes me with an initial value for my result.
-				 * 
+				 *
 				 * @param context my initial result value
 				 */
 				protected Abstract«visitorClassName»(C context) {
@@ -552,10 +552,10 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 						return null;
 					}
 				}
-				
+
 				/**
 				 * A null-safe visitation of the specified visitable.
-				 * 
+				 *
 				 * @param v a visitable, or <code>null</code>
 				 * @return <code>null</code> if the visitable is <code>null</code>;
 				 *	 otherwise, the result of visiting it
@@ -563,10 +563,10 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 				public @Nullable R safeVisit(«emitNullable(visitablePackageName + "." + visitableClassName)» v) {
 					return (v == null) ? null : v.accept(this);
 				}
-				
+
 				/**
 				 * Perform a visit to the specified visitable.
-				 * 
+				 *
 				 * @param v a visitable, or <code>null</code>
 				 * @return <code>null</code> if the visitable is <code>null</code>;
 				 *	 otherwise, the result of visiting it
@@ -583,7 +583,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		''');
 		writer.close();
 	}
-	
+
 	/*
 	 * AbstractWrappingVisitor
 	 */
@@ -593,10 +593,10 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		var MergeWriter writer = new MergeWriter(outputFolder + "AbstractWrapping" + visitorClassName + ".java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
-			
+
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
-			
+
 			/**
 			 * An AbstractWrapping«visitorClassName» delegates all visits wrapping the delegation in a call to a preVisit function and a postVisit function.
 			 */
@@ -610,17 +610,17 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 				}
 				«ELSE»
 				protected final @NonNull D delegate;
-				
+
 				protected AbstractWrapping«visitorClassName»(@NonNull D delegate, C context) {
 					super(context);
-					this.delegate = delegate;		
+					this.delegate = delegate;
 				//	delegate.setUndecoratedVisitor(this);
 				}
 
 				/**
 				 * Intercept an exception thrown by the delegated visit to perform some post-functionality that may use the visitable object,
 				 * the result of preVisit and the thrown exception to determine the overall wrapped result.
-				 * 
+				 *
 				 * @return a rethrown RuntimeException or a RuntimeException-wrapped non-RuntimeException.
 				 */
 				protected R badVisit(«emitNonNull(visitablePackageName + "." + visitableClassName)» visitable, @Nullable P prologue, @NonNull Throwable e) throws RuntimeException {
@@ -634,7 +634,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 
 				/**
 				 * Obtains the visitor that I wrap.
-				 * 
+				 *
 				 * @return my wrapped visitor
 				 */
 				protected @NonNull D getDelegate() {
@@ -644,7 +644,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 				/**
 				 * Intercept the result of the delegated visit to perform some post-functionality that may use the visitable object,
 				 * the result of preVisit and the result of the delegated visit to determine the overall wrapped result.
-				 * 
+				 *
 				 * @return the epilogue result, which defaults to the delegated result.
 				 */
 				protected R postVisit(«emitNonNull(visitablePackageName + "." + visitableClassName)» visitable, @Nullable P prologue, R result) {
@@ -653,7 +653,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 
 				/**
 				 * Compute and return some value before performing the delegated visit.
-				 * 
+				 *
 				 * @return the prologue result, which defauilts to null.
 				 */
 				protected @Nullable P preVisit(«emitNonNull(visitablePackageName + "." + visitableClassName)» visitable) {
@@ -697,9 +697,9 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		var MergeWriter writer = new MergeWriter(outputFolder + "Decorable" + visitorClassName + ".java");
 		writer.append('''
 			«ePackage.generateHeader(visitorPackageName)»
-			
+
 			import org.eclipse.jdt.annotation.NonNull;
-			
+
 			/**
 			 */
 			public interface Decorable«visitorClassName»<R> extends «visitorClassName»<R>«IF isDerived», «superVisitorPackageName».Decorable«superVisitorClassName»<R>«ENDIF»
@@ -716,15 +716,15 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 	protected def String generateHeader(/*@NonNull*/ EPackage ePackage, String javaPackage) {
 		generateHeader(ePackage,javaPackage, null);
 	}
-	
+
 	protected def String generateHeaderWithTemplate(/*@NonNull*/ EPackage ePackage, String javaPackage) {
 		generateHeader(ePackage,javaPackage, class.canonicalName);
 	}
-	
+
 	protected def String generateHeader(EPackage ePackage, String javaPackage, String template) {
 		'''
 		/*******************************************************************************
-		 * «MergeWriter.getCopyright(copyright).replace("\n", "\n* ")»
+		 * «MergeWriter.getCopyright(copyright).replace("\n", "\n* ").replace("\n* \n", "\n*\n")»
 		 *
 		 * This code is auto-generated
 		 * from: «projectName»/«sourceFile»
@@ -735,8 +735,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 		 * Only the copyright statement is editable.
 		 *******************************************************************************/
 		package	«javaPackage»;
-		'''	
-		
+		'''
 	}
 
 	protected def void generateVisitableInterface(/*@NonNull*/ GenPackage genPackage) {
@@ -770,7 +769,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 				 * @return the result of the visit.
 				 */
 				<R> R accept(«emitNonNull(visitorPackageName +"." + visitorClassName)»<R> visitor);
-				
+
 				EClass eClass();
 			}
 		''');
@@ -807,7 +806,7 @@ public abstract class GenerateVisitorsXtend extends GenerateVisitors
 				 * no such object can be found.
 				 *
 				 * @param adapter the adapter class to look up
-				 * @return an object of the given class, 
+				 * @return an object of the given class,
 				 *    or <code>null</code> if this object does not
 				 *    have an adapter for the given class
 				 */

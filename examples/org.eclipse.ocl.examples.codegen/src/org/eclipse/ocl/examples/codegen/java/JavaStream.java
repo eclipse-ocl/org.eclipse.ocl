@@ -167,8 +167,20 @@ public class JavaStream
 							atStartOfLine = false;
 							s.append(indentationStack.peek());
 						}
+						boolean newLine = c == '\n';
+						if (newLine) {
+							for (int len = s.length(); len-- > 0; ) {
+								char ch = s.charAt(len);
+								if ((ch != '\n') && Character.isWhitespace(ch)) {
+									s.setLength(len);
+								}
+								else {
+									break;
+								}
+							}
+						}
 						s.append(c);
-						atStartOfLine = c == '\n';
+						atStartOfLine = newLine;
 					}
 				}
 			}
