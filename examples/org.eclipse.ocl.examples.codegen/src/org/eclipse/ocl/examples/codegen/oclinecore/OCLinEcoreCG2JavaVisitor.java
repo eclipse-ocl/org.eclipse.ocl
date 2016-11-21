@@ -108,7 +108,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		js.appendLocalStatements(cgBody);
 		CGInvalid cgInvalidValue = cgBody.getInvalidValue();
 		if (cgInvalidValue  != null) {
-			js.append("throw new ");
+			js.append("throw ");
 			js.appendValueName(cgInvalidValue);
 		}
 		else {
@@ -205,7 +205,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		js.appendLocalStatements(cgBody);
 		//		CGInvalid cgInvalidValue = cgBody.getInvalidValue();
 		//		if (cgInvalidValue  != null) {
-		//			js.append("throw new ");
+		//			js.append("throw ");
 		//			js.appendValueName(cgInvalidValue);
 		//		}
 		//		else {

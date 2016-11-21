@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -33,7 +33,7 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 		js.appendClassReference(ValueUtil.class);
 		js.append(".FALSE_VALUE");
 	}
-	
+
 	@Override
 	public boolean appendFinalValue(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGIterator cgAccumulator = cgIterationCallExp.getAccumulator();
@@ -43,8 +43,8 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 			js.appendValueName(cgAccumulator);
 			js.append(" == null) {\n");
 			js.pushIndentation(null);
-				js.appendValueName(cgIterationCallExp);
-				js.append(" = null;\n");
+			js.appendValueName(cgIterationCallExp);
+			js.append(" = null;\n");
 			js.popIndentation();
 			js.append("}\n");
 			js.append("else ");
@@ -55,30 +55,30 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 		js.appendClassReference(ValueUtil.class);
 		js.append(".FALSE_VALUE) {\n");
 		js.pushIndentation(null);
-			js.appendValueName(cgIterationCallExp);
-			js.append(" = ");
-			js.appendClassReference(ValueUtil.class);
-			js.append(".FALSE_VALUE;\n");
+		js.appendValueName(cgIterationCallExp);
+		js.append(" = ");
+		js.appendClassReference(ValueUtil.class);
+		js.append(".FALSE_VALUE;\n");
 		js.popIndentation();
 		js.append("}\n");
 		js.append("else {\n");
 		js.pushIndentation(null);
-			js.append("throw (");
-			js.appendClassReference(InvalidValueException.class);
-			js.append(")");
-			js.appendValueName(cgAccumulator);
-			js.append(";\n");
+		js.append("throw (");
+		js.appendClassReference(InvalidValueException.class);
+		js.append(")");
+		js.appendValueName(cgAccumulator);
+		js.append(";\n");
 		js.popIndentation();
 		js.append("}\n");
 		return true;
 	}
-	
+
 	@Override
 	public boolean appendUpdate(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGInvalid cgInvalidValue;
 		CGIterator cgAccumulator = cgIterationCallExp.getAccumulator();
 		CGValuedElement cgBody = getBody(cgIterationCallExp);
-//		if ((cgBody.getASTypeId() == TypeId.BOOLEAN) || (cgBody.getASTypeId() == TypeId.OCL_VOID)) {
+		//		if ((cgBody.getASTypeId() == TypeId.BOOLEAN) || (cgBody.getASTypeId() == TypeId.OCL_VOID)) {
 		if (cgBody.isTrue()) {
 			js.appendValueName(cgIterationCallExp);
 			js.append(" = ");
@@ -99,7 +99,7 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 			js.append("break;\n");
 		}
 		else if ((cgInvalidValue = cgBody.getInvalidValue()) != null) {
-			js.append("throw new ");
+			js.append("throw ");
 			js.appendValueName(cgInvalidValue);
 			js.append(";\n");
 			js.append("break;\n");
@@ -114,11 +114,11 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 			js.appendClassReference(ValueUtil.class);
 			js.append(".TRUE_VALUE) {					// Normal successful body evaluation result\n");
 			js.pushIndentation(null);
-				js.appendValueName(cgIterationCallExp);
-				js.append(" = ");
-				js.appendClassReference(ValueUtil.class);
-				js.append(".TRUE_VALUE;\n");
-				js.append("break;														// Stop immediately \n");
+			js.appendValueName(cgIterationCallExp);
+			js.append(" = ");
+			js.appendClassReference(ValueUtil.class);
+			js.append(".TRUE_VALUE;\n");
+			js.append("break;														// Stop immediately \n");
 			js.popIndentation();
 			js.append("}\n");
 			//
@@ -128,7 +128,7 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 			js.appendClassReference(ValueUtil.class);
 			js.append(".FALSE_VALUE) {				// Normal unsuccessful body evaluation result\n");
 			js.pushIndentation(null);
-				js.append(";															// Carry on\n");
+			js.append(";															// Carry on\n");
 			js.popIndentation();
 			js.append("}\n");
 			//
@@ -137,16 +137,16 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 				js.appendValueName(cgBody);
 				js.append(" == null) {								// Abnormal null body evaluation result\n");
 				js.pushIndentation(null);
-					js.append("if (");
-					js.appendValueName(cgAccumulator);
-					js.append(" == ");
-					js.appendClassReference(ValueUtil.class);
-					js.append(".FALSE_VALUE) {\n");
-					js.pushIndentation(null);
-						js.appendValueName(cgAccumulator);
-						js.append(" = null;										// Cache a null failure\n");
-					js.popIndentation();
-					js.append("}\n");
+				js.append("if (");
+				js.appendValueName(cgAccumulator);
+				js.append(" == ");
+				js.appendClassReference(ValueUtil.class);
+				js.append(".FALSE_VALUE) {\n");
+				js.pushIndentation(null);
+				js.appendValueName(cgAccumulator);
+				js.append(" = null;										// Cache a null failure\n");
+				js.popIndentation();
+				js.append("}\n");
 				js.popIndentation();
 				js.append("}\n");
 			}
@@ -158,28 +158,28 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 				js.appendClassReference(InvalidValueException.class);
 				js.append(") {		// Abnormal exception evaluation result\n");
 				js.pushIndentation(null);
-					js.appendValueName(cgAccumulator);
-					js.append(" = ");
-					js.appendValueName(cgBody);
-					js.append(";									// Cache an exception failure\n");
+				js.appendValueName(cgAccumulator);
+				js.append(" = ");
+				js.appendValueName(cgBody);
+				js.append(";									// Cache an exception failure\n");
 				js.popIndentation();
 				js.append("}\n");
 			}
 			//
 			js.append("else {															// Impossible badly typed result\n");
 			js.pushIndentation(null);
-				js.appendValueName(cgAccumulator);
-				js.append(" = new ");
-				js.appendClassReference(InvalidValueException.class);
-				js.append("(");
-				js.appendClassReference(PivotMessages.class);
-				js.append(".NonBooleanBody, \"exists\");\n");
+			js.appendValueName(cgAccumulator);
+			js.append(" = new ");
+			js.appendClassReference(InvalidValueException.class);
+			js.append("(");
+			js.appendClassReference(PivotMessages.class);
+			js.append(".NonBooleanBody, \"exists\");\n");
 			js.popIndentation();
 			js.append("}\n");
 		}
 		return true;
 	}
-	
+
 	@Override
 	public @Nullable CGTypeId getAccumulatorTypeId(@NonNull CodeGenAnalyzer analyzer, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		return analyzer.getTypeId(new JavaTypeId(Object.class));
