@@ -35,7 +35,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 /**
  * ProjectMap extends {@link ProjectManager} to support polymorphic access in either plugin or standalone environments
  * to EMF resources and EPackages.
- * 
+ *
  *<h4>Plugin Environment</h4>
  *
  * A resolvable location is perhaps <tt>platform:/plugin/org.antlr.runtime/</tt> for a bundle or
@@ -73,11 +73,17 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
  * explicit URI map entry for each of the many hundreds of bundles in typical use.
  */
 public class ProjectMap extends StandaloneProjectMap
-{	
+{
 	public static class ProjectDescriptor extends StandaloneProjectMap.ProjectDescriptor
 	{
 		public ProjectDescriptor(@NonNull ProjectMap projectMap, @NonNull String name, @NonNull URI locationURI) {
 			super(projectMap, name, locationURI);
+		}
+
+		@Override
+		protected @NonNull URI getResolvedGenModelURI(@NonNull IResourceDescriptor resourceDescriptor) {
+			URI genModelURI = resourceDescriptor.getGenModelURI();
+			return genModelURI.resolve(getLocationURI());
 		}
 
 		@Override
@@ -127,7 +133,7 @@ public class ProjectMap extends StandaloneProjectMap
 	protected @NonNull IProjectDescriptor createProjectDescriptor(@NonNull String projectName, @NonNull URI locationURI) {
 		return new ProjectDescriptor(this, projectName, locationURI);
 	}
-	
+
 	@Override
 	public URI getLocation(@NonNull String projectName) {
 		URI uri = super.getLocation(projectName);
@@ -136,14 +142,14 @@ public class ProjectMap extends StandaloneProjectMap
 		}
 		return uri;
 	}
-	
-/*	@Override
+
+	/*	@Override
 	public synchronized void initializeGenModelLocationMap(boolean force) {
 		if (force || ((nsURI2package == null) && !EMFPlugin.IS_ECLIPSE_RUNNING)) {
 			super.initializeGenModelLocationMap(force);
 		}
 	} */
-	
+
 	@Override
 	public synchronized void initializePlatformResourceMap(boolean force) {
 		if (force || (!initializedPlatformResourceMap && !EMFPlugin.IS_ECLIPSE_RUNNING)) {
@@ -173,20 +179,20 @@ public class ProjectMap extends StandaloneProjectMap
 			super.scanClassPath(projectDescriptors, saxParser);
 		}
 		else {
-//			scanBundles();  -- no need to scan hundreds of bundles when a single URI map entry will handle them all. 
+			//			scanBundles();  -- no need to scan hundreds of bundles when a single URI map entry will handle them all.
 			scanProjects(projectDescriptors);
 			scanGenModels(saxParser);
 		}
 	}
 
-/*	protected void scanBundles() {
+	/*	protected void scanBundles() {
 		for (IBundleGroupProvider bundleGroupProvider : Platform.getBundleGroupProviders()) {
 			for (IBundleGroup bundleGroup : bundleGroupProvider.getBundleGroups()) {
 				for (Bundle bundle : bundleGroup.getBundles()) {
 					String bundleName = bundle.getSymbolicName();
 					String projectKey = "/" + bundleName + "/";
 					project2location.put(bundleName, URI.createPlatformPluginURI(projectKey, true));
-				}				
+				}
 			}
 		}
 	} */
@@ -215,10 +221,10 @@ public class ProjectMap extends StandaloneProjectMap
 				@NonNull String genModelString = String.valueOf(deresolvedGenModelURI);
 				IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModelString, nsURI2className);
 				GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
-		        InputStream inputStream = null;
-		        try {
-		        	inputStream = uriConverter.createInputStream(genModelURI);
-		        	saxParser.parse(inputStream, genModelReader);
+				InputStream inputStream = null;
+				try {
+					inputStream = uriConverter.createInputStream(genModelURI);
+					saxParser.parse(inputStream, genModelReader);
 				} catch (Exception e) {
 					logException("Failed to parse '" + genModelURI + "'", e);
 				} finally {
@@ -227,7 +233,7 @@ public class ProjectMap extends StandaloneProjectMap
 							inputStream.close();
 						}
 					} catch (IOException e) {}
-		        }
+				}
 			}
 		}
 	}

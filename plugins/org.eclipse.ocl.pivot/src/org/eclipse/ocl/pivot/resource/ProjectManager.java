@@ -260,9 +260,9 @@ public interface ProjectManager extends Adapter
 		/**
 		 * Return all packages descriptors in the project.
 		 */
-		@Nullable Collection<IResourceDescriptor> getResourceDescriptors();
+		@Nullable Collection<@NonNull IResourceDescriptor> getResourceDescriptors();
 
-		void initializeGenModelLocationMap(@NonNull Map<URI, IPackageDescriptor> nsURI2package);
+		void initializeGenModelLocationMap(@NonNull Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package);
 
 		void initializePlatformResourceMap();
 

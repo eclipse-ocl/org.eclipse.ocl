@@ -2036,8 +2036,16 @@ public class StandaloneProjectMap implements ProjectManager
 			return nsURI2packageDescriptor != null ? nsURI2packageDescriptor.get(nsURI) : null;
 		}
 
+		/**
+		 * @since 1.3
+		 */
+		protected @NonNull URI getResolvedGenModelURI(@NonNull IResourceDescriptor resourceDescriptor) {
+			URI genModelURI = resourceDescriptor.getGenModelURI();
+			return genModelURI.resolve(getPlatformResourceURI());
+		}
+
 		@Override
-		public @Nullable Collection<IResourceDescriptor> getResourceDescriptors() {
+		public @Nullable Collection<@NonNull IResourceDescriptor> getResourceDescriptors() {
 			return genModelURI2packageDescriptor != null ? genModelURI2packageDescriptor.values() : null;
 		}
 
@@ -2075,20 +2083,19 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		@Override
-		public void initializeGenModelLocationMap(@NonNull Map<URI, IPackageDescriptor> nsURI2package) {
-			Collection<IResourceDescriptor> resourceDescriptors = getResourceDescriptors();
+		public void initializeGenModelLocationMap(@NonNull Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package) {
+			Collection<@NonNull IResourceDescriptor> resourceDescriptors = getResourceDescriptors();
 			if (resourceDescriptors != null) {
 				Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
-				for (IResourceDescriptor resourceDescriptor : resourceDescriptors) {
-					URI genModelURI = resourceDescriptor.getGenModelURI();
-					URI resolvedURI = genModelURI.resolve(locationURI);
+				for (@NonNull IResourceDescriptor resourceDescriptor : resourceDescriptors) {
+					URI resolvedGenModelURI = getResolvedGenModelURI(resourceDescriptor);
 					for (IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {
 						URI nsURI = packageDescriptor.getNsURI();
 						String nsURIstring = nsURI.toString();
-						ePackageNsURIToGenModelLocationMap.put(nsURIstring, resolvedURI);
+						ePackageNsURIToGenModelLocationMap.put(nsURIstring, resolvedGenModelURI);
 						nsURI2package.put(nsURI, packageDescriptor);
 						if (PROJECT_MAP_ADD_GEN_MODEL.isActive()) {
-							PROJECT_MAP_ADD_GEN_MODEL.println(nsURI + " => " + resolvedURI);
+							PROJECT_MAP_ADD_GEN_MODEL.println(nsURI + " => " + resolvedGenModelURI);
 						}
 					}
 				}
@@ -2296,12 +2303,12 @@ public class StandaloneProjectMap implements ProjectManager
 	/**
 	 * The map of package nsURI to package descriptor.
 	 */
-	protected @Nullable Map<URI, IPackageDescriptor> nsURI2package = null;
+	protected @Nullable Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package = null;
 
 	/**
 	 * The map of document URI to resource descriptor.
 	 */
-	protected @Nullable Map<URI, IResourceDescriptor> uri2resource = null;
+	protected @Nullable Map<@NonNull URI, @NonNull IResourceDescriptor> uri2resource = null;
 
 	public StandaloneProjectMap(boolean isGlobal) {
 		super();
@@ -2318,7 +2325,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	@Override
 	public void addResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor) {
-		Map<URI, IResourceDescriptor> uri2resource2 = uri2resource;
+		Map<@NonNull URI, @NonNull IResourceDescriptor> uri2resource2 = uri2resource;
 		if (uri2resource2 == null) {
 			uri2resource = uri2resource2 = new HashMap<>();
 		}
@@ -2709,7 +2716,7 @@ public class StandaloneProjectMap implements ProjectManager
 			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);
 			String project = document.getDocumentElement().getElementsByTagName("name").item(0).getTextContent();
 			if (project != null) {
-				@SuppressWarnings("null")@NonNull URI locationURI = URI.createFileURI(file.getParentFile().getCanonicalPath() + File.separator);
+				@NonNull URI locationURI = URI.createFileURI(file.getParentFile().getCanonicalPath() + File.separator);
 				IProjectDescriptor projectDescriptor = createProjectDescriptor(project, locationURI);
 				project2descriptor.put(project, projectDescriptor);
 				return projectDescriptor;
