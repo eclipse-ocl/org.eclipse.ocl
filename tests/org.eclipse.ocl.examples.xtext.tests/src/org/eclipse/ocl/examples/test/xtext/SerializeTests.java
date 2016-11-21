@@ -56,6 +56,7 @@ public class SerializeTests extends XtextTestCase
 		Map<Object, Object> options = new HashMap<Object, Object>();
 		options.put(ResourceSetInitializer.class, new ResourceSetInitializer()
 		{
+			@Override
 			public void initializeResourceSet(@NonNull ResourceSet resourceSet) {
 				StandaloneProjectMap.IProjectDescriptor projectDescriptor = getProjectMap().getProjectDescriptor("org.eclipse.emf.ecore");
 				if (projectDescriptor != null) {
@@ -93,7 +94,7 @@ public class SerializeTests extends XtextTestCase
 		Resource ecoreResource = loadEcore(inputURI);
 		//
 		//	Ecore to Pivot
-		//		
+		//
 		OCL ocl1 = OCL.newInstance(getProjectMap());
 		XtextResource xtextResource1 = null;
 		try {
@@ -105,7 +106,7 @@ public class SerializeTests extends XtextTestCase
 			assertNoValidationErrors("Normalisation invalid", asResource);
 			//
 			//	Pivot to CS
-			//		
+			//
 			xtextResource1 = as2cs(ocl1, resourceSet, asResource, outputURI);
 			resourceSet.getResources().clear();
 		}
@@ -132,23 +133,23 @@ public class SerializeTests extends XtextTestCase
 			}
 			//
 			//	CS to Pivot
-			//	
+			//
 			String pivotName2 = stem + "2.ecore.oclas";
 			URI pivotURI2 = getProjectFileURI(pivotName2);
 			Resource pivotResource2 = cs2as(ocl2, xtextResource2, pivotURI2);
 			//
 			//	Pivot to Ecore
-			//		
+			//
 			String inputName2 = stem + "2.ecore";
 			URI ecoreURI2 = getProjectFileURI(inputName2);
 			Resource ecoreResource2 = as2ecore(ocl2, pivotResource2, ecoreURI2, validateSaved);
 			//
 			//
 			//
-	//		TestUtil.TestUtil.assertSameModel(asResource, pivotResource2);
+			//		TestUtil.TestUtil.assertSameModel(asResource, pivotResource2);
 			Resource referenceResource = loadEcore(referenceURI);
 			if (doCompare) {	// Workaround for Bug 354621
-				TestUtil.assertSameModel(referenceResource, ecoreResource2);		
+				TestUtil.assertSameModel(referenceResource, ecoreResource2);
 			}
 			return xtextResource1;
 		}
@@ -157,9 +158,9 @@ public class SerializeTests extends XtextTestCase
 			ocl2 = null;
 		}
 	}
-	
+
 	public XtextResource doSerializeUML(@NonNull OCL ocl, @NonNull String stem) throws Exception {
-//		UML2AS.initialize(ocl.getResourceSet());
+		//		UML2AS.initialize(ocl.getResourceSet());
 		UMLPackage.eINSTANCE.getClass();
 		//
 		//	Load as Ecore
@@ -179,7 +180,7 @@ public class SerializeTests extends XtextTestCase
 			Resource asResource = getPivotFromUML(metamodelManager1, umlResource);
 			//
 			//	Pivot to CS
-			/*		
+			/*
 			String outputName = stem + ".serialized.oclinecore";
 			URI outputURI = getProjectFileURI(outputName);
 			xtextResource = as2cs(ocl1, resourceSet, asResource, outputURI);
@@ -192,9 +193,9 @@ public class SerializeTests extends XtextTestCase
 			ocl1.dispose();
 			ocl1 = null;
 		}
-/*		//
+		/*		//
 		//	CS to Pivot
-		//	
+		//
 		String pivotName2 = stem + "2.ecore.oclas";
 		URI pivotURI2 = getProjectFileURI(pivotName2);
 		Resource pivotResource2 = cs2as(ocl, xtextResource2, pivotURI2);
@@ -218,8 +219,8 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	protected Resource getPivotFromUML(MetamodelManagerInternal metamodelManager, @NonNull Resource umlResource) throws ParserException {
-//		String problem = UML2AS.initialize(metamodelManager.getExternalResourceSet());
-//		assertNull(problem);
+		//		String problem = UML2AS.initialize(metamodelManager.getExternalResourceSet());
+		//		assertNull(problem);
 		UML2AS uml2as = UML2AS.getAdapter(umlResource, metamodelManager.getEnvironmentFactory());
 		Model pivotModel = uml2as.getASModel();
 		Resource asResource = ClassUtil.nonNullState(pivotModel.eResource());
@@ -230,44 +231,44 @@ public class SerializeTests extends XtextTestCase
 
 	@SuppressWarnings("null")
 	protected @NonNull Resource loadUML(@NonNull OCL ocl, @NonNull URI inputURI) {
-//		ResourceSet resourceSet = metamodelManager.getExternalResourceSet();
-//		assertNull(OCL.initialize(resourceSet));
+		//		ResourceSet resourceSet = metamodelManager.getExternalResourceSet();
+		//		assertNull(OCL.initialize(resourceSet));
 		Resource umlResource = ocl.getResourceSet().getResource(inputURI, true);
 		mapOwnURI(umlResource);
-//		List<String> conversionErrors = new ArrayList<String>();
-//		RootPackageCS documentCS = Ecore2OCLinEcore.importFromEcore(resourceSet, null, ecoreResource);
-//		Resource eResource = documentCS.eResource();
+		//		List<String> conversionErrors = new ArrayList<String>();
+		//		RootPackageCS documentCS = Ecore2OCLinEcore.importFromEcore(resourceSet, null, ecoreResource);
+		//		Resource eResource = documentCS.eResource();
 		assertNoResourceErrors("Load failed", umlResource);
-//		Resource xtextResource = resourceSet.createResource(outputURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
-//		XtextResource xtextResource = (XtextResource) resourceSet.createResource(outputURI);
-//		xtextResource.getContents().add(documentCS);
+		//		Resource xtextResource = resourceSet.createResource(outputURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
+		//		XtextResource xtextResource = (XtextResource) resourceSet.createResource(outputURI);
+		//		xtextResource.getContents().add(documentCS);
 		return umlResource;
 	}
-	
+
 	public void testSerialize_Bug320689() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		doSerialize(ocl, "Bug320689");
 		ocl.dispose();
 	}
-	
+
 	public void testSerialize_Bug323741() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		doSerialize(ocl, "Bug323741");
 		ocl.dispose();
 	}
-	
+
 	public void testSerialize_Bug354336() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		doSerialize(ocl, "Bug354336", "Bug354336", null, false, true);		// FIXME Model check suppressed because of Bug 354621
 		ocl.dispose();
 	}
-	
+
 	public void testSerialize_Bug362620() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		doSerialize(ocl, "Bug362620");
 		ocl.dispose();
 	}
-	
+
 	public void testSerialize_Bug376488() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		doSerialize(ocl, "Bug376488", "Bug376488", null, true, false);
@@ -276,20 +277,20 @@ public class SerializeTests extends XtextTestCase
 
 	public void testSerialize_Bug388282() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		String testFile = 
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-			"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-			"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"rootPackage\" nsURI=\"http://www.example.com/rootPackage/1.0\"\n" +
-			"    nsPrefix=\"rootPackage\">\n" +
-			"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Element\" abstract=\"true\">\n" +
-			"    <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"name\" lowerBound=\"1\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString\"\n" +
-			"        defaultValueLiteral=\"\"/>\n" +
-			"  </eClassifiers>\n" +
-			"  <eSubpackages name=\"subPackage\" nsURI=\"http://www.example.com/subPackage/1.0\" nsPrefix=\"subPackage\">\n" +
-			"    <eClassifiers xsi:type=\"ecore:EClass\" name=\"Element\" abstract=\"true\" eSuperTypes=\"#//Element\"/>\n" +
-			"  </eSubpackages>\n" +
-			"</ecore:EPackage>\n" +
-			"\n";
+		String testFile =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"rootPackage\" nsURI=\"http://www.example.com/rootPackage/1.0\"\n" +
+						"    nsPrefix=\"rootPackage\">\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Element\" abstract=\"true\">\n" +
+						"    <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"name\" lowerBound=\"1\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString\"\n" +
+						"        defaultValueLiteral=\"\"/>\n" +
+						"  </eClassifiers>\n" +
+						"  <eSubpackages name=\"subPackage\" nsURI=\"http://www.example.com/subPackage/1.0\" nsPrefix=\"subPackage\">\n" +
+						"    <eClassifiers xsi:type=\"ecore:EClass\" name=\"Element\" abstract=\"true\" eSuperTypes=\"#//Element\"/>\n" +
+						"  </eSubpackages>\n" +
+						"</ecore:EPackage>\n" +
+						"\n";
 		createOCLinEcoreFile("Bug388282.ecore", testFile);		// FIXME rename as createTextFile
 		doSerialize(ocl, "Bug388282");
 		ocl.dispose();
@@ -297,25 +298,25 @@ public class SerializeTests extends XtextTestCase
 
 	public void testSerialize_Bug397917() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		String testFile = 
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-			"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-			"   xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"test1\" nsURI=\"http://test1/1.0\" nsPrefix=\"test1\">\n" +
-			" <eClassifiers xsi:type=\"ecore:EClass\" name=\"Model\">\n" +
-			"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"node\" upperBound=\"-1\" eType=\"#//Node\" containment=\"true\"/>\n" +
-			"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"link\" upperBound=\"-1\" eType=\"#//Link\" containment=\"true\"/>\n" +
-			" </eClassifiers>\n" +
-			" <eClassifiers xsi:type=\"ecore:EClass\" name=\"Node\">\n" +
-			"   <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"uuid\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString\" iD=\"true\"/>\n" +
-			"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"outgoing\" eType=\"#//Link\" eOpposite=\"#//Link/from\" eKeys=\"#//Link/uuid\"/>\n" +
-			"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"incoming\" eType=\"#//Link\" eOpposite=\"#//Link/to\" eKeys=\"#//Link/uuid\"/>\n" +
-			" </eClassifiers>\n" +
-			" <eClassifiers xsi:type=\"ecore:EClass\" name=\"Link\">\n" +
-			"   <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"uuid\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString\" defaultValueLiteral=\"\" iD=\"true\"/>\n" +
-			"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"from\" lowerBound=\"1\" eType=\"#//Node\" eOpposite=\"#//Node/outgoing\" eKeys=\"#//Node/uuid\"/>\n" +
-			"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"to\" lowerBound=\"1\" eType=\"#//Node\" eOpposite=\"#//Node/incoming\" eKeys=\"#//Node/uuid\"/>\n" +
-			" </eClassifiers>\n" +
-			"</ecore:EPackage>";
+		String testFile =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+						"   xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"test1\" nsURI=\"http://test1/1.0\" nsPrefix=\"test1\">\n" +
+						" <eClassifiers xsi:type=\"ecore:EClass\" name=\"Model\">\n" +
+						"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"node\" upperBound=\"-1\" eType=\"#//Node\" containment=\"true\"/>\n" +
+						"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"link\" upperBound=\"-1\" eType=\"#//Link\" containment=\"true\"/>\n" +
+						" </eClassifiers>\n" +
+						" <eClassifiers xsi:type=\"ecore:EClass\" name=\"Node\">\n" +
+						"   <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"uuid\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString\" iD=\"true\"/>\n" +
+						"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"outgoing\" eType=\"#//Link\" eOpposite=\"#//Link/from\" eKeys=\"#//Link/uuid\"/>\n" +
+						"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"incoming\" eType=\"#//Link\" eOpposite=\"#//Link/to\" eKeys=\"#//Link/uuid\"/>\n" +
+						" </eClassifiers>\n" +
+						" <eClassifiers xsi:type=\"ecore:EClass\" name=\"Link\">\n" +
+						"   <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"uuid\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString\" defaultValueLiteral=\"\" iD=\"true\"/>\n" +
+						"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"from\" lowerBound=\"1\" eType=\"#//Node\" eOpposite=\"#//Node/outgoing\" eKeys=\"#//Node/uuid\"/>\n" +
+						"   <eStructuralFeatures xsi:type=\"ecore:EReference\" name=\"to\" lowerBound=\"1\" eType=\"#//Node\" eOpposite=\"#//Node/incoming\" eKeys=\"#//Node/uuid\"/>\n" +
+						" </eClassifiers>\n" +
+						"</ecore:EPackage>";
 		createOCLinEcoreFile("Bug397917.ecore", testFile);		// FIXME rename as createTextFile
 		doSerialize(ocl, "Bug397917");
 		ocl.dispose();
@@ -323,26 +324,26 @@ public class SerializeTests extends XtextTestCase
 
 	public void testSerialize_Bug404493() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		String testFile = 
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-			"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-			"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"company\" nsURI=\"http://www.eclipse.org/ocl/test/Pivot/Company.ecore\"\n" +
-			"    nsPrefix=\"co\">\n" +
-			"  <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" +
-			"    <details key=\"invocationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
-			"    <details key=\"settingDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
-			"    <details key=\"validationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
-			"  </eAnnotations>\n" +
-			"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Employee\">\n" +
-			"    <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"name\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString\"/>\n" +
-			"    <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"hasNameAsAttribute\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean\"\n" +
-			"        changeable=\"false\" volatile=\"true\" transient=\"true\" derived=\"true\">\n" +
-			"      <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\">\n" +
-			"        <details key=\"derivation\" value=\"name &lt;> null -- trailing comment\"/>\n" +
-			"      </eAnnotations>\n" +
-			"    </eStructuralFeatures>\n" +
-			"  </eClassifiers>\n" +
-			"</ecore:EPackage>\n";
+		String testFile =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"company\" nsURI=\"http://www.eclipse.org/ocl/test/Pivot/Company.ecore\"\n" +
+						"    nsPrefix=\"co\">\n" +
+						"  <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" +
+						"    <details key=\"invocationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
+						"    <details key=\"settingDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
+						"    <details key=\"validationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
+						"  </eAnnotations>\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Employee\">\n" +
+						"    <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"name\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString\"/>\n" +
+						"    <eStructuralFeatures xsi:type=\"ecore:EAttribute\" name=\"hasNameAsAttribute\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean\"\n" +
+						"        changeable=\"false\" volatile=\"true\" transient=\"true\" derived=\"true\">\n" +
+						"      <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\">\n" +
+						"        <details key=\"derivation\" value=\"name &lt;> null -- trailing comment\"/>\n" +
+						"      </eAnnotations>\n" +
+						"    </eStructuralFeatures>\n" +
+						"  </eClassifiers>\n" +
+						"</ecore:EPackage>\n";
 		createOCLinEcoreFile("Bug404493.ecore", testFile);
 		doSerialize(ocl, "Bug404493", "Bug404493", null, false, true);
 		ocl.dispose();
@@ -350,46 +351,46 @@ public class SerializeTests extends XtextTestCase
 
 	public void testSerialize_Bug425506() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		String testFile = 
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
-			"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" + 
-			"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"p\" nsURI=\"p\" nsPrefix=\"p\">\n" + 
-			"  <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" + 
-			"    <details key=\"invocationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
-			"    <details key=\"settingDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
-			"    <details key=\"validationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" + 
-			"  </eAnnotations>\n" + 
-			"  <eAnnotations source=\"http://www.eclipse.org/OCL/Import\">\n" + 
-			"    <details key=\"ecore\" value=\"http://www.eclipse.org/emf/2002/Ecore\"/>\n" + 
-			"  </eAnnotations>\n" + 
-			"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"A\">\n" + 
-			"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" + 
-			"      <details key=\"constraints\" value=\"inv2\"/>\n" + 
-			"    </eAnnotations>\n" + 
-			"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\">\n" + 
-			"      <details key=\"inv2\" value=\"true\"/>\n" + 
-			"    </eAnnotations>\n" + 
-			"    <eOperations name=\"f\">\n" + 
-			"      <eAnnotations source=\"http://www.eclipse.org/emf/2002/GenModel\">\n" + 
-			"        <details key=\"documentation\" value=\"function doc\"/>\n" + 
-			"        <details key=\"body\" value=\"return 1;\"/>\n" + 
-			"      </eAnnotations>\n" + 
-			"    </eOperations>\n" + 
-			"    <eOperations name=\"inv\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean\">\n" + 
-			"      <eAnnotations source=\"http://www.eclipse.org/emf/2002/GenModel\">\n" + 
-			"        <details key=\"documentation\" value=\"invariant doc\"/>\n" + 
-			"        <details key=\"body\" value=\"return 1;\"/>\n" + 
-			"      </eAnnotations>\n" + 
-			"      <eParameters name=\"diagnostics\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain\"/>\n" + 
-			"      <eParameters name=\"context\">\n" + 
-			"        <eGenericType eClassifier=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap\">\n" + 
-			"          <eTypeArguments eClassifier=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject\"/>\n" + 
-			"          <eTypeArguments eClassifier=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject\"/>\n" + 
-			"        </eGenericType>\n" + 
-			"      </eParameters>\n" + 
-			"    </eOperations>\n" + 
-			"  </eClassifiers>\n" + 
-			"</ecore:EPackage>\n" ;
+		String testFile =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"p\" nsURI=\"p\" nsPrefix=\"p\">\n" +
+						"  <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" +
+						"    <details key=\"invocationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
+						"    <details key=\"settingDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
+						"    <details key=\"validationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
+						"  </eAnnotations>\n" +
+						"  <eAnnotations source=\"http://www.eclipse.org/OCL/Import\">\n" +
+						"    <details key=\"ecore\" value=\"http://www.eclipse.org/emf/2002/Ecore\"/>\n" +
+						"  </eAnnotations>\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"A\">\n" +
+						"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" +
+						"      <details key=\"constraints\" value=\"inv2\"/>\n" +
+						"    </eAnnotations>\n" +
+						"    <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\">\n" +
+						"      <details key=\"inv2\" value=\"true\"/>\n" +
+						"    </eAnnotations>\n" +
+						"    <eOperations name=\"f\">\n" +
+						"      <eAnnotations source=\"http://www.eclipse.org/emf/2002/GenModel\">\n" +
+						"        <details key=\"documentation\" value=\"function doc\"/>\n" +
+						"        <details key=\"body\" value=\"return 1;\"/>\n" +
+						"      </eAnnotations>\n" +
+						"    </eOperations>\n" +
+						"    <eOperations name=\"inv\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean\">\n" +
+						"      <eAnnotations source=\"http://www.eclipse.org/emf/2002/GenModel\">\n" +
+						"        <details key=\"documentation\" value=\"invariant doc\"/>\n" +
+						"        <details key=\"body\" value=\"return 1;\"/>\n" +
+						"      </eAnnotations>\n" +
+						"      <eParameters name=\"diagnostics\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain\"/>\n" +
+						"      <eParameters name=\"context\">\n" +
+						"        <eGenericType eClassifier=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap\">\n" +
+						"          <eTypeArguments eClassifier=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject\"/>\n" +
+						"          <eTypeArguments eClassifier=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject\"/>\n" +
+						"        </eGenericType>\n" +
+						"      </eParameters>\n" +
+						"    </eOperations>\n" +
+						"  </eClassifiers>\n" +
+						"</ecore:EPackage>\n" ;
 		createOCLinEcoreFile("Bug425506.ecore", testFile);
 		doSerialize(ocl, "Bug425506", "Bug425506", null, true, true);
 		ocl.dispose();
@@ -397,52 +398,52 @@ public class SerializeTests extends XtextTestCase
 
 	public void testSerialize_Bug457043() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		String testFile = 
-			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
-			"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\"\n" + 
-			"    name=\"bug457043\" nsURI=\"http://bug/457043\" nsPrefix=\"bug\">\n" + 
-			"  <eAnnotations source=\"http://www.eclipse.org/emf/2002/GenModel\">\n" + 
-			"    <details key=\"documentation\"/>\n" + 
-			"  </eAnnotations>\n" + 
-			"</ecore:EPackage>\n";
+		String testFile =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\"\n" +
+						"    name=\"bug457043\" nsURI=\"http://bug/457043\" nsPrefix=\"bug\">\n" +
+						"  <eAnnotations source=\"http://www.eclipse.org/emf/2002/GenModel\">\n" +
+						"    <details key=\"documentation\"/>\n" +
+						"  </eAnnotations>\n" +
+						"</ecore:EPackage>\n";
 		createOCLinEcoreFile("Bug457043.ecore", testFile);
 		doSerialize(ocl, "Bug457043", "Bug457043", null, true, true);
 		ocl.dispose();
 	}
-	
+
 	public void testSerialize_Bug463877() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		String testFile = 
-				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
-				"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" + 
-				"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"my\" nsURI=\"http://my\" nsPrefix=\"my\">\n" + 
-				"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Node\">\n" + 
-				"    <eStructuralFeatures xsi:type=\"ecore:EReference\"/>\n" + 
-				"  </eClassifiers>\n" + 
-				"</ecore:EPackage>\n";
+		String testFile =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"my\" nsURI=\"http://my\" nsPrefix=\"my\">\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Node\">\n" +
+						"    <eStructuralFeatures xsi:type=\"ecore:EReference\"/>\n" +
+						"  </eClassifiers>\n" +
+						"</ecore:EPackage>\n";
 		createOCLinEcoreFile("Bug463877.ecore", testFile);
 		doSerialize(ocl, "Bug463877", "Bug463877", null, false, false);
 		ocl.dispose();
 	}
-	
+
 	public void testSerialize_Bug464062() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		String testFile = 
-				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
-				"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" + 
-				"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"env\" nsURI=\"http://cs2as/tests/example2/env/1.0\" nsPrefix=\"env\">\n" + 
-				"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Environment\">\n" + 
-				"    <eOperations name=\"addElements\" eType=\"#//Environment\">\n" + 
-				"      <eTypeParameters name=\"E\">\n" + 
-				"        <eBounds eClassifier=\"#//Element\"/>\n" + 
-				"      </eTypeParameters>\n" + 
-				"      <eParameters name=\"elements\" upperBound=\"-1\">\n" + 
-				"        <eGenericType eTypeParameter=\"#//Environment/addElements/E\"/>\n" + 
-				"      </eParameters>\n" + 
-				"    </eOperations>\n" + 
-				"  </eClassifiers>\n" + 
-				"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Element\" abstract=\"true\"/>\n" + 
-				"</ecore:EPackage>\n";
+		String testFile =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"env\" nsURI=\"http://cs2as/tests/example2/env/1.0\" nsPrefix=\"env\">\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Environment\">\n" +
+						"    <eOperations name=\"addElements\" eType=\"#//Environment\">\n" +
+						"      <eTypeParameters name=\"E\">\n" +
+						"        <eBounds eClassifier=\"#//Element\"/>\n" +
+						"      </eTypeParameters>\n" +
+						"      <eParameters name=\"elements\" upperBound=\"-1\">\n" +
+						"        <eGenericType eTypeParameter=\"#//Environment/addElements/E\"/>\n" +
+						"      </eParameters>\n" +
+						"    </eOperations>\n" +
+						"  </eClassifiers>\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Element\" abstract=\"true\"/>\n" +
+						"</ecore:EPackage>\n";
 		createOCLinEcoreFile("Bug464062.ecore", testFile);
 		doSerialize(ocl, "Bug464062");
 		ocl.dispose();
@@ -450,13 +451,13 @@ public class SerializeTests extends XtextTestCase
 
 	public void testSerialize_Company() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-//		Logger logger = Logger.getLogger(AbstractParseTreeConstructor.class);
-//		logger.setLevel(Level.TRACE);
-//		logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-//		BaseScopeProvider.LOOKUP.setState(true);
-//		DocumentAttribution.WORK.setState(true);
-//		CS2ASConversion.CONTINUATION.setState(true);
-//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
+		//		Logger logger = Logger.getLogger(AbstractParseTreeConstructor.class);
+		//		logger.setLevel(Level.TRACE);
+		//		logger.addAppender(new ConsoleAppender(new SimpleLayout()));
+		//		BaseScopeProvider.LOOKUP.setState(true);
+		//		DocumentAttribution.WORK.setState(true);
+		//		CS2ASConversion.CONTINUATION.setState(true);
+		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doSerialize(ocl, "Company", "Company.reference", null, true, true);
 		ocl.dispose();
 	}
@@ -494,9 +495,9 @@ public class SerializeTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-/*	
- * Requires support for lower bounds on generic types
- * and better resolution of EAnnotation.references
+	/*
+	 * Requires support for lower bounds on generic types
+	 * and better resolution of EAnnotation.references
 	public void testSerialize_OCL() throws Exception {
 		doSerialize(ocl, "OCL");
 	} */
@@ -523,7 +524,7 @@ public class SerializeTests extends XtextTestCase
 		@SuppressWarnings("null")@NonNull String stem = uri.trimFileExtension().lastSegment();
 		Map<Object, Object> options = createLoadedEcoreOptions();
 		doSerialize(ocl, uri, stem, uri, options, false, true);		// FIXME URIs don't quite compare
-//		doSerialize(ocl, "OCLinEcoreCST");
+		//		doSerialize(ocl, "OCLinEcoreCST");
 		ocl.dispose();
 	}
 
@@ -547,16 +548,16 @@ public class SerializeTests extends XtextTestCase
 	public void testSerialize_RoyalAndLoyal_ecore() throws Exception {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {		// org.eclipse.ocl.examples.project.royalandloyal is not a plugin.
 			OCL ocl = OCL.newInstance(getProjectMap());
-			@NonNull URI inputURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.royalandloyal/oclsrc/RoyalAndLoyal/RoyalAndLoyal.ecore", true);
+			@NonNull URI inputURI = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.project.royalandloyal/model/RoyalAndLoyal.ecore", true);
 			doSerialize(ocl, inputURI, "RoyalAndLoyal", inputURI, null, true, true);
 			ocl.dispose();
 		}
 	}
-	
+
 	public void testSerialize_States() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		Map<Object, Object> options = new HashMap<Object, Object>();
-		options.put("cs2asErrors", 
+		options.put("cs2asErrors",
 			StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "substring", "1, 1"));
 		doSerialize(ocl, "States", "States", options, true, true);
 		ocl.dispose();

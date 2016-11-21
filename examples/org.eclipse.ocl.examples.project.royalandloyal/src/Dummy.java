@@ -9,8 +9,8 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 /**
- * This Dummy class enables RoyalAndLoyal.* to be found on the classpath.
+ * This Dummy class enables standalone JUnit tests to find RoyalAndLoyal.* via the classpath.
  */
-public class Dummy {
+class Dummy {
 
 }

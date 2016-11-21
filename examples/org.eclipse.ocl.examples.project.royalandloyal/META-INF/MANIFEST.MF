@@ -3,3 +3,4 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Royalandloyal
 Bundle-SymbolicName: org.eclipse.ocl.examples.project.royalandloyal
 Bundle-Version: 1.0.200.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
