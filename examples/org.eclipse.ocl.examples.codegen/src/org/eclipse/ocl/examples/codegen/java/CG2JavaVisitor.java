@@ -1521,9 +1521,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" = new ");
 		js.appendClassReference(null, cgExecutorProperty);
 		js.append("(");
-		Property asProperty = (Property) cgExecutorProperty.getAst();
-		Property asOppositeProperty = asProperty.getOpposite();
-		js.appendString(ClassUtil.nonNullState(asOppositeProperty.getName()));
+		js.appendIdReference(cgExecutorProperty.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");
 		return true;
 	}

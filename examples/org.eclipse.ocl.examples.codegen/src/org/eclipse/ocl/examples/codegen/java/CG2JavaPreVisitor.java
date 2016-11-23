@@ -276,8 +276,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	@Override
 	public @Nullable Object visitCGExecutorCompositionProperty(@NonNull CGExecutorCompositionProperty cgExecutorProperty) {
 		Property asProperty = (Property) cgExecutorProperty.getAst();
-		Property asOppositeProperty = asProperty.getOpposite();
-		if ((asOppositeProperty != null) && asOppositeProperty.isIsComposite()) {
+		if ((asProperty != null) && asProperty.isIsComposite()) {
 			TypeId javaPropertyTypeId = JavaConstants.UNBOXED_COMPOSITION_PROPERTY_TYPE_ID;
 			cgExecutorProperty.setTypeId(analyzer.getTypeId(javaPropertyTypeId));
 		}

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -149,7 +149,7 @@ public class CodeGenAnalyzer
 		cgOperation.setUnderlyingOperationId(cgOperationId);
 		cgOperation.setAst(asOperation);
 		cgOperation.setName(nameManager.getGlobalSymbolName(asOperation));
-//		cgOperation.setValueName(cgOperation.getName());
+		//		cgOperation.setValueName(cgOperation.getName());
 		cgOperation.getDependsOn().add(cgOperationId);
 		return cgOperation;
 	}
@@ -160,24 +160,28 @@ public class CodeGenAnalyzer
 		CGElementId cgPropertyId = getElementId(propertyId);
 		Property asOppositeProperty = ClassUtil.nonNullState(asProperty.getOpposite());
 		if (asOppositeProperty.isIsComposite()) {
-			cgPropertyId = getElementId(propertyId);
+			cgPropertyId = getElementId(asOppositeProperty.getPropertyId());
 			cgProperty = CGModelFactory.eINSTANCE.createCGExecutorCompositionProperty();
+			cgProperty.setUnderlyingPropertyId(cgPropertyId);
+			cgProperty.setAst(asOppositeProperty);
+			cgProperty.setName("IMPPROPid_" + asOppositeProperty.getName());
+			cgProperty.getDependsOn().add(cgPropertyId);
 		}
 		else {
 			cgPropertyId = getElementId(asOppositeProperty.getPropertyId());
-			cgProperty = CGModelFactory.eINSTANCE.createCGExecutorOppositeProperty();					
+			cgProperty = CGModelFactory.eINSTANCE.createCGExecutorOppositeProperty();
+			cgProperty.setUnderlyingPropertyId(cgPropertyId);
+			cgProperty.setAst(asProperty);
+			cgProperty.setName("IMPPROPid_" + asProperty.getName());
+			cgProperty.getDependsOn().add(cgPropertyId);
 		}
-		cgProperty.setUnderlyingPropertyId(cgPropertyId);
-		cgProperty.setAst(asProperty);
-		cgProperty.setName("IMPPROPid_" + asProperty.getName());
-		cgProperty.getDependsOn().add(cgPropertyId);
 		return cgProperty;
 	}
 
 	public @NonNull CGExecutorProperty createExecutorProperty(@NonNull Property asProperty) {
 		PropertyId propertyId = asProperty.getPropertyId();
 		CGElementId cgPropertyId = getElementId(propertyId);
-		CGExecutorProperty cgProperty = CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();					
+		CGExecutorProperty cgProperty = CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
 		cgProperty.setUnderlyingPropertyId(cgPropertyId);
 		cgProperty.setAst(asProperty);
 		cgProperty.setName("IMPPROPid_" + asProperty.getName());
@@ -187,7 +191,7 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGExecutorShadowPart createExecutorShadowPart(@NonNull Property asProperty) {
 		PropertyId propertyId = asProperty.getPropertyId();
-		CGExecutorShadowPart cgPart = CGModelFactory.eINSTANCE.createCGExecutorShadowPart();					
+		CGExecutorShadowPart cgPart = CGModelFactory.eINSTANCE.createCGExecutorShadowPart();
 		CGElementId cgPropertyId = getElementId(propertyId);
 		cgPart.setUnderlyingPropertyId(cgPropertyId);
 		cgPart.setAst(asProperty);
@@ -203,11 +207,11 @@ public class CodeGenAnalyzer
 		cgType.setUnderlyingTypeId(cgTypeId);
 		cgType.setAst(asType);
 		cgType.setName(getNameManager().getGlobalSymbolName(asType));
-//		cgType.setValueName(cgType.getName());
+		//		cgType.setValueName(cgType.getName());
 		cgType.getDependsOn().add(cgTypeId);
 		return cgType;
 	}
-	
+
 	public @NonNull CGBoolean getBoolean(boolean aBoolean) {
 		return aBoolean ? cgTrue : cgFalse;
 	}
@@ -233,7 +237,7 @@ public class CodeGenAnalyzer
 	public @NonNull CGValuedElement getExpression(@Nullable CGValuedElement cgExpression) {
 		if (cgExpression == null) {
 			CGConstantExp cgLiteralExp = CGModelFactory.eINSTANCE.createCGConstantExp();
-//			cgLiteralExp.setAst(element);
+			//			cgLiteralExp.setAst(element);
 			cgLiteralExp.setReferredConstant(getInvalid());
 			cgLiteralExp.setTypeId(getTypeId(TypeId.OCL_INVALID));
 			cgExpression = cgLiteralExp;
@@ -257,7 +261,7 @@ public class CodeGenAnalyzer
 		CGInvalid cgInvalid2 = cgInvalid;
 		if (cgInvalid2 == null) {
 			cgInvalid = cgInvalid2 = CGModelFactory.eINSTANCE.createCGInvalid();
-//			cgInvalid.setAst(ValuesUtil.INVALID_VALUE);
+			//			cgInvalid.setAst(ValuesUtil.INVALID_VALUE);
 			setNames(cgInvalid2, ValueUtil.INVALID_VALUE);
 			cgInvalid2.setTypeId(getTypeId(TypeId.OCL_INVALID));
 		}
@@ -338,7 +342,7 @@ public class CodeGenAnalyzer
 		if (oldElement.isRequired() && newElement.isNull()) {
 			newElement = getInvalid(messageTemplate, bindings);
 		}
-		return CGUtil.replace(oldElement, newElement);		
+		return CGUtil.replace(oldElement, newElement);
 	}
 
 	public void setConstant(@NonNull CGValuedElement oldElement, @NonNull CGValuedElement aConstant) {
@@ -346,7 +350,7 @@ public class CodeGenAnalyzer
 		newElement.setReferredConstant(aConstant);
 		newElement.setTypeId(oldElement.getTypeId());
 		newElement.setAst(oldElement.getAst());
-		CGUtil.replace(oldElement, newElement);		
+		CGUtil.replace(oldElement, newElement);
 	}
 
 	public void setExplicitNames(@NonNull CGValuedElement cgValue, @Nullable Object anObject) {
