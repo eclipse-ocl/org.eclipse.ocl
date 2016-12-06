@@ -253,7 +253,7 @@ public class OCLinEcoreTablesUtils
 			String key = referencedClass;
 			int i = referencedClass.lastIndexOf(".");
 			if (i > 0) {
-				@SuppressWarnings("null")@NonNull String trimmedKey = referencedClass.substring(i+1);
+				@NonNull String trimmedKey = referencedClass.substring(i+1);
 				key = trimmedKey;
 				s.append(key);
 			}
@@ -1109,7 +1109,7 @@ public class OCLinEcoreTablesUtils
 		int colonColonIndex = qualifiedSignature.indexOf("::");
 		int parenthesisIndex = qualifiedSignature.indexOf("(");
 		if ((parenthesisIndex < 0) ? (colonColonIndex > 0) : (colonColonIndex < parenthesisIndex)) {	// FIXME use a decent inherently right algorithm
-			@SuppressWarnings("null")@NonNull String substring = qualifiedSignature.substring(colonColonIndex+1);
+			@NonNull String substring = qualifiedSignature.substring(colonColonIndex+1);
 			return substring;
 		}
 		else {

@@ -383,7 +383,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	/**
 	 * Assign xmi:id values to referenceable elements in the libraries.
 	 */
-	public void assignLibraryIds(@NonNull AS2XMIid as2xmIid, @Nullable Map<?, ?> options) {
+	public void assignLibraryIds(@NonNull AS2XMIid as2xmIid, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		for (@NonNull Library asLibrary : asLibraries) {
 			Resource eResource = asLibrary.eResource();
 			if (eResource instanceof ASResource) {

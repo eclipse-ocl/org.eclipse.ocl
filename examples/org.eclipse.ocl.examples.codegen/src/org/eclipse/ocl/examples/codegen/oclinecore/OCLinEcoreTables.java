@@ -216,7 +216,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			for (org.eclipse.ocl.pivot.@NonNull Class pSuperClass : getAllSupertypesSortedByName(pClass)) {
 				for (/*@NonNull*/ Property prop : getLocalPropertiesSortedByName(pSuperClass)) {
 					assert prop != null;
-					if (isProperty(prop)) {
+					if (isProperty(prop) && !prop.isIsImplicit()) {			// FIXME need implicits too
 						allProperties.add(prop);
 					}
 				}

@@ -91,13 +91,8 @@ public class ConstraintMerger extends AbstractProjectComponent
 		Resource ecoreResource = (Resource) ctx.get(getModelSlot());
 		EPackage ecorePivotPackage = (EPackage) ecoreResource.getContents().get(0);
 		final String pivotNsURI = ClassUtil.nonNullState(ecorePivotPackage.getNsURI());
-		//		IPackageDescriptor packageDescriptor = projectDescriptor.getPackageDescriptor(URI.createURI(pivotNsURI));
-		//		packageDescriptor.setUseModel(true, null);				// Hide packages installed by CompleteOCLStandaloneSetup
-
-		ResourceSet resourceSet = getResourceSet();
-		OCLInternal ocl = OCLInternal.newInstance(StandaloneProjectMap.getAdapter(resourceSet), resourceSet);
+		OCLInternal ocl = OCLInternal.newInstance();
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
-		//		OCLInternal ocl = OCLInternal.newInstance();
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
 		ocl.getResourceSet().getResources().add(ecoreResource);		// Don't load another copy
@@ -114,7 +109,6 @@ public class ConstraintMerger extends AbstractProjectComponent
 		ASResource asResource = ClassUtil.nonNullState((ASResource)pivotModel.eResource());
 		Set<@NonNull Resource> primaryASResources = Sets.newHashSet(asResource);
 		//FIXME		diagnoseErrors(asResource);
-		//		URI fileURI = URI.createPlatformResourceURI(uri, true);
 		try {
 			CSResource csResource = ocl.getCSResource(inputURI);
 			ResourceUtils.checkResourceSet(asResourceSet);
@@ -164,7 +158,6 @@ public class ConstraintMerger extends AbstractProjectComponent
 					// FIXME migrate class
 				}
 			}
-			//			new AS2XMIid().assignIds(asResource, new HashMap<>());
 			//
 			Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 			options.put(AS2Ecore.OPTION_SUPPRESS_DUPLICATES, true);
@@ -178,27 +171,6 @@ public class ConstraintMerger extends AbstractProjectComponent
 				projectDescriptor.configure(ecoreResource2.getResourceSet(), StandaloneProjectMap.LoadBothStrategy.INSTANCE, null);
 				ocl.getResourceSet().getResources().remove(ecoreResource2);
 			}
-			//			List<Resource> resources = resourceSet.getResources();
-			//			URI ecoreURI = ClassUtil.nonNullState(ecoreResource.getURI());
-			//			for (int i = resources.size() - 1; i >= 0; --i) {
-			//				Resource resource = resources.get(i);
-			//				if (ecoreURI.equals(resource.getURI())) {
-			//					resources.remove(resource);
-			//				}
-			//			}
-			//				System.out.println("AS2Ecore " + asResource.getURI());
-
-			//			for (EObject eObject : oclResource.getContents()) {
-			//				if (eObject instanceof org.eclipse.ocl.pivot.Package) {
-			//					org.eclipse.ocl.pivot.Package pivotPackage = (org.eclipse.ocl.pivot.Package)eObject;
-			//					PackageTracker packageTracker = metamodelManager.getPackageTracker(pivotPackage);
-			//					PackageServer packageServer = packageTracker.getPackageServer();
-			//					packageServer.removePackage(pivotPackage);
-			//				}
-			//			}
-			//			EcoreUtil.resolveAll(resourceSet);
-			//			ResourceUtils.checkResourceSet(resourceSet);
-			//			ctx.set(getModelSlot(), resource);
 			ocl.dispose();
 		} catch (IOException e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
@@ -255,25 +227,6 @@ public class ConstraintMerger extends AbstractProjectComponent
 			}
 		}
 	}
-
-	/*	public void identifyResources(MetamodelManager metamodelManager, Iterable<org.eclipse.ocl.pivot.Package> somePackages,
-			Set<Resource> primaryPivotResources, Set<Resource> libraryPivotResources) {
-		for (org.eclipse.ocl.pivot.Package pPackage : somePackages) {
-			if (pPackage instanceof Library) {
-				libraryPivotResources.add(pPackage.eResource());
-			}
-			else {
-				for (Type pType : pPackage.getOwnedType()) {
-					TypeTracker typeTracker = metamodelManager.getTypeTracker(pType);
-					if (typeTracker instanceof TypeServer) {
-						primaryPivotResources.add(pPackage.eResource());
-						break;
-					}
-				}
-				identifyResources(metamodelManager, pPackage.getNestedPackage(),  primaryPivotResources, libraryPivotResources);
-			}
-		}
-	} */
 
 	public void setUri(String uri) {
 		this.uri = uri;

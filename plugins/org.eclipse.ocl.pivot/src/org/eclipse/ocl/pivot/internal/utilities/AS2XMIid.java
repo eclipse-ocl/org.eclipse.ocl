@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor;
 import org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 public class AS2XMIid
 {
@@ -44,11 +45,11 @@ public class AS2XMIid
 	public static final class UnstableXMIidDiagnostics implements Resource.Diagnostic
 	{
 		protected final @NonNull String message;
-		
+
 		public UnstableXMIidDiagnostics(@NonNull String message) {
 			this.message = message;
 		}
-		
+
 		@Override
 		public String getMessage() {
 			return message.replace("\n",  "\\n");
@@ -76,13 +77,13 @@ public class AS2XMIid
 	}
 
 	/**
-	 * Create an AS2ID conversion primed with the xmi:id values obtained by loading uri. 
+	 * Create an AS2ID conversion primed with the xmi:id values obtained by loading uri.
 	 */
 	public static @NonNull AS2XMIid load(@NonNull URI uri) {
-		Map<String, String> moniker2id = new HashMap<String, String>();
+		Map<@NonNull String, @NonNull String> moniker2id = new HashMap<>();
 		ResourceSet resourceSet = new ResourceSetImpl();
 		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(resourceSet);
-//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(PivotConstants.OCL_AS_FILE_EXTENSION, OCLASResourceFactory.INSTANCE);
+		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(PivotConstants.OCL_AS_FILE_EXTENSION, OCLASResourceFactory.INSTANCE);
 		try {
 			Resource resource = resourceSet.getResource(uri, true);
 			if (resource instanceof XMLResource) {
@@ -109,13 +110,13 @@ public class AS2XMIid
 		return new AS2XMIid(moniker2id);
 	}
 
-	protected final @NonNull Map<String, String> moniker2id;
-	
+	protected final @NonNull Map<@NonNull String, @NonNull String> moniker2id;
+
 	public AS2XMIid() {
-		this.moniker2id = new HashMap<String, String>();
+		this.moniker2id = new HashMap<>();
 	}
-	
-	protected AS2XMIid(@NonNull Map<String, String> moniker2id) {
+
+	protected AS2XMIid(@NonNull Map<@NonNull String, @NonNull String> moniker2id) {
 		this.moniker2id = moniker2id;
 	}
 
@@ -123,14 +124,13 @@ public class AS2XMIid
 	 * Assign xmi:id values to referenceable elements in asResource re-using the xmi:id
 	 * values read when this AS2ID was constructed.
 	 */
-	public void assignIds(@NonNull ASResource asResource, @Nullable Map<?, ?> options) {
+	public void assignIds(@NonNull ASResource asResource, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		StringBuilder s = null;
-		Map<String, EObject> allIds = new HashMap<String, EObject>();
+		Map<@NonNull String, @NonNull EObject> allIds = new HashMap<>();
 		ASResourceFactory resourceFactory = asResource.getASResourceFactory();
 		Object optionInternalUUIDs = options != null ? options.get(ASResource.OPTION_INTERNAL_UUIDS) : null;
 		boolean internalUUIDs = (optionInternalUUIDs != null) && Boolean.valueOf(optionInternalUUIDs.toString());
-		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
-			EObject eObject = tit.next();
+		for (EObject eObject : new TreeIterable(asResource)) {
 			if (eObject instanceof Element) {
 				Element element = (Element)eObject;
 				AS2XMIidVisitor idVisitor = resourceFactory.createAS2XMIidVisitor(this);
@@ -147,6 +147,7 @@ public class AS2XMIid
 					else if (changedId) {
 						idNew = idAuto;
 					}
+					assert idNew != null;
 					if (badId || changedId) {
 						if (s == null) {
 							s = new StringBuilder();
@@ -171,7 +172,7 @@ public class AS2XMIid
 	 * Assign xmi:id values to referenceable elements in asResourceSet re-using the xmi:id
 	 * values read when this AS2ID was constructed.
 	 */
-	public void assignIds(@NonNull ResourceSet asResourceSet, @Nullable Map<?, ?> options) {
+	public void assignIds(@NonNull ResourceSet asResourceSet, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		EcoreUtil.resolveAll(asResourceSet);		// Pending a fix to BUG 451928 this may provoke  CME unless all resources already loaded
 		for (@SuppressWarnings("null")@NonNull Resource resource : asResourceSet.getResources()) {
 			if (resource instanceof ASResource) {
@@ -189,7 +190,7 @@ public class AS2XMIid
 		String id = moniker2id.get(moniker);
 		if ((id == null) && internalUUIDs) {
 			id = EcoreUtil.generateUUID();
-//			System.out.println(id + " for " + element + " " + ClassUtil.debugSimpleName(element));
+			//			System.out.println(id + " for " + element + " " + ClassUtil.debugSimpleName(element));
 		}
 		return id;
 	}

@@ -29,6 +29,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
@@ -65,6 +66,7 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
+		ResourceSet resourceSet = ClassUtil.nonNullState(getResourceSet());
 		Resource inputResource = (Resource) ctx.get(getModelSlot());
 		try {
 			if (uri != null) {
@@ -96,6 +98,12 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 					}
 				}
 				saveResource.getContents().addAll(inputResource.getContents());
+				if (eObject2xmiId != null) {
+					XMLResource xmlResource = (XMLResource)saveResource;
+					for (Map.Entry<@NonNull EObject, @NonNull String> entry : eObject2xmiId.entrySet()) {
+						xmlResource.setID(entry.getKey(),  entry.getValue());
+					}
+				}
 				saveResource.save(getSaveOptions());
 				inputResource.getContents().addAll(saveResource.getContents());
 				saveResource.unload();

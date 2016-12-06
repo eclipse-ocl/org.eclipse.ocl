@@ -62,7 +62,7 @@ public class AS2Ecore extends AbstractConversion
 	public static final Logger logger = Logger.getLogger(AS2Ecore.class);
 
 	/**
-	 * True to add comments to the invariant context and doagnostics parameters.
+	 * True to add comments to the invariant context and diagnostics parameters.
 	 */
 	public static final @NonNull String OPTION_ADD_INVARIANT_COMMENTS = "addInvariantComments";
 
@@ -117,7 +117,7 @@ public class AS2Ecore extends AbstractConversion
 			if (PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE.equals(eAnnotation.getSource())) {
 				if (iComment >= iMax) {
 					if (removals == null) {
-						removals = new ArrayList<EAnnotation>();
+						removals = new ArrayList<>();
 					}
 					removals.add(eAnnotation);
 				}
@@ -140,9 +140,9 @@ public class AS2Ecore extends AbstractConversion
 		}
 	}
 
-	public static @NonNull EOperation createConstraintEOperation(@NonNull Constraint pivotConstraint, @NonNull String operationName, @Nullable Map<String, Object> options) {
+	public static @NonNull EOperation createConstraintEOperation(@NonNull Constraint pivotConstraint, @NonNull String operationName, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		if (options == null) {
-			options = new HashMap<String, Object>();
+			options = new HashMap<>();
 		}
 		boolean addInvariantComments = AS2Ecore.isAddInvariantComments(options);
 		EOperation eOperation = EcoreFactory.eINSTANCE.createEOperation();
@@ -201,12 +201,12 @@ public class AS2Ecore extends AbstractConversion
 		return eOperation;
 	}
 
-	public static @NonNull XMLResource createResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @Nullable Map<String,Object> options) {
+	public static @NonNull XMLResource createResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		AS2Ecore converter = new AS2Ecore(environmentFactory, ecoreURI, options);
 		return converter.convertResource(asResource, ecoreURI);
 	}
 
-	public static @NonNull Boolean getBoolean(@Nullable Map<String, Object> options, @NonNull String key) {
+	public static @NonNull Boolean getBoolean(@Nullable Map<@NonNull String, @Nullable Object> options, @NonNull String key) {
 		if (options == null) {
 			return false;
 		}
@@ -220,17 +220,17 @@ public class AS2Ecore extends AbstractConversion
 		return false;
 	}
 
-	public static @Nullable String getExportDelegateURI(@Nullable Map<String, Object> options) {
+	public static @Nullable String getExportDelegateURI(@Nullable Map<@NonNull String, @Nullable Object> options) {
 		String exportDelegateURI = options != null ? (String)options.get(OCLConstants.OCL_DELEGATE_URI) : null;
 		return exportDelegateURI != null ? exportDelegateURI : OCLinEcoreOptions.EXPORT_DELEGATION_URI.getPreferredValue();
 	}
 
-	public static @Nullable String getInvariantPrefix(@Nullable Map<String, Object> options) {
+	public static @Nullable String getInvariantPrefix(@Nullable Map<@NonNull String, @Nullable Object> options) {
 		Object invariantPrefix = options != null ? options.get(OPTION_INVARIANT_PREFIX) : null;
 		return invariantPrefix != null ? invariantPrefix.toString() : null;
 	}
 
-	public static @Nullable String getString(@Nullable Map<String, Object> options, @NonNull String key) {
+	public static @Nullable String getString(@Nullable Map<@NonNull String, @Nullable Object> options, @NonNull String key) {
 		if (options == null) {
 			return null;
 		}
@@ -244,37 +244,37 @@ public class AS2Ecore extends AbstractConversion
 		return null;
 	}
 
-	public static boolean isAddInvariantComments(@NonNull Map<String,Object> options) {
+	public static boolean isAddInvariantComments(@NonNull Map<@NonNull String, @Nullable Object> options) {
 		return Boolean.valueOf(String.valueOf(options.get(OPTION_ADD_INVARIANT_COMMENTS)));
 	}
 
-	public static boolean isBooleanInvariants(@NonNull Map<String,Object> options) {
+	public static boolean isBooleanInvariants(@NonNull Map<@NonNull String, @Nullable Object> options) {
 		return Boolean.valueOf(String.valueOf(options.get(OPTION_BOOLEAN_INVARIANTS)));
 	}
 
 	/**
 	 * Mapping of pivot elements to the resulting E elements.
 	 */
-	private final @NonNull Map<Element, EModelElement> createMap = new HashMap<Element, EModelElement>();
+	private final @NonNull Map<@NonNull Element, @NonNull EModelElement> createMap = new HashMap<>();
 
 	/**
 	 * Mapping of all E elements created during pass 1 that require further work
 	 * with respect to the corresponding CS element in pass 2.
 	 */
-	private final @NonNull Set<Element> deferMap = new HashSet<Element>();
+	private final @NonNull Set<@NonNull Element> deferMap = new HashSet<>();
 
-	private @Nullable List<Resource.Diagnostic> errors = null;
+	private @Nullable List<Resource.@NonNull Diagnostic> errors = null;
 
-	protected final @NonNull Map<String,Object> options;
+	protected final @NonNull Map<@NonNull String, @Nullable Object> options;
 	protected final @NonNull DelegateInstaller delegateInstaller;
 	protected final @NonNull AS2EcoreDeclarationVisitor pass1;
 	protected final @NonNull AS2EcoreReferenceVisitor pass2;
 	protected final @NonNull URI ecoreURI;
 	protected final @Nullable String primitiveTypesUriPrefix;
 
-	public AS2Ecore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull URI ecoreURI, @Nullable Map<String,Object> options) {
+	public AS2Ecore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		super(environmentFactory);
-		this.options = options != null ? options : new HashMap<String,Object>();
+		this.options = options != null ? options : new HashMap<>();
 		this.delegateInstaller = new DelegateInstaller(environmentFactory, options);
 		this.pass1 = new AS2EcoreDeclarationVisitor(this);
 		this.pass2 = new AS2EcoreReferenceVisitor(this);
@@ -282,6 +282,8 @@ public class AS2Ecore extends AbstractConversion
 		this.primitiveTypesUriPrefix = getString(options, PivotConstants.PRIMITIVE_TYPES_URI_PREFIX);
 	}
 
+	/** @deprecated not used */
+	@Deprecated
 	protected @Nullable Object convert(@NonNull Element pivotObject) {
 		Object eObject = pass1.safeVisit(pivotObject);
 		for (Element eKey : deferMap) {
@@ -307,10 +309,10 @@ public class AS2Ecore extends AbstractConversion
 					}
 				}
 			}
-			for (Element eKey : deferMap) {
+			for (@NonNull Element eKey : deferMap) {
 				pass2.safeVisit(eKey);
 			}
-			for (Element pivotElement : createMap.keySet()) {
+			for (@NonNull Element pivotElement : createMap.keySet()) {
 				EObject eObject = createMap.get(pivotElement);
 				((PivotObjectImpl) pivotElement).setESObject(eObject);
 			}
@@ -326,9 +328,9 @@ public class AS2Ecore extends AbstractConversion
 	}
 
 	protected void error(@NonNull String message) {
-		List<Diagnostic> errors2 = errors;
+		List<@NonNull Diagnostic> errors2 = errors;
 		if (errors2 == null) {
-			errors = errors2 = new ArrayList<Resource.Diagnostic>();
+			errors = errors2 = new ArrayList<>();
 		}
 		errors2.add(new XMIException(message));
 	}
