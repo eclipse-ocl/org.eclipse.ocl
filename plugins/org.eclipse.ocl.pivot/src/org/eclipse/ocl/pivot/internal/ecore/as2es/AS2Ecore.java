@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
-import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -295,16 +294,8 @@ public class AS2Ecore extends AbstractConversion
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		setGenerationInProgress(asResource, true);
 		try {
-			ProjectManager projectManager = environmentFactory.getProjectManager();
-			IResourceDescriptor resourceDescriptor = projectManager.getResourceDescriptor(ecoreURI);
-			if (resourceDescriptor != null) {
-				projectManager.removeResourceDescriptor(resourceDescriptor);
-			}
 			XMLResource ecoreResource = (XMLResource) resourceSet.createResource(ecoreURI);
 			List<EObject> contents = ecoreResource.getContents();
-			if (resourceDescriptor != null) {
-				projectManager.addResourceDescriptor(resourceDescriptor);
-			}
 			//			contents.clear();						// FIXME workaround for BUG 465326
 			for (EObject eContent : asResource.getContents()) {
 				if (eContent instanceof Model) {

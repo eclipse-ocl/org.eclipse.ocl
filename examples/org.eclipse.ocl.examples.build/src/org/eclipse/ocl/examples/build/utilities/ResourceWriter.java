@@ -11,17 +11,25 @@
 package org.eclipse.ocl.examples.build.utilities;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 /**
@@ -29,8 +37,8 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
  */
 public class ResourceWriter extends WorkflowComponentWithModelSlot
 {
-	private Logger log = Logger.getLogger(getClass());	
-	private ResourceSet resourceSet = null;	
+	private Logger log = Logger.getLogger(getClass());
+	private ResourceSet resourceSet = null;
 	private String uri;
 	private String contentTypeIdentifier = null;
 
@@ -62,7 +70,31 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 			if (uri != null) {
 				URI fileURI = URI.createPlatformResourceURI(uri, true);
 				log.info("Writing '" + fileURI + "'");
+				IResourceDescriptor resourceDescriptor = null;
+				ProjectManager projectManager = StandaloneProjectMap.findAdapter(resourceSet);
+				if (projectManager != null) {
+					resourceDescriptor = projectManager.getResourceDescriptor(fileURI);
+					if (resourceDescriptor != null) {
+						resourceDescriptor.unload(resourceSet);
+						resourceDescriptor.configure(resourceSet,
+							StandaloneProjectMap.CreateStrategy.INSTANCE,
+							StandaloneProjectMap.MapToFirstConflictHandlerWithLog.INSTANCE);
+					}
+				}
 				Resource saveResource = resourceSet.createResource(fileURI, contentTypeIdentifier);
+				Map<@NonNull EObject, @NonNull String> eObject2xmiId = null;
+				if ((inputResource instanceof XMLResource) && (saveResource instanceof XMLResource)) {
+					XMLResource xmlResource = (XMLResource)inputResource;
+					for (EObject eObject : new TreeIterable(inputResource)) {
+						String xmiId = xmlResource.getID(eObject);
+						if (xmiId != null) {
+							if (eObject2xmiId == null) {
+								eObject2xmiId = new HashMap<>();
+							}
+							eObject2xmiId.put(eObject,  xmiId);
+						}
+					}
+				}
 				saveResource.getContents().addAll(inputResource.getContents());
 				saveResource.save(getSaveOptions());
 				inputResource.getContents().addAll(saveResource.getContents());
@@ -80,7 +112,7 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 	public void setContentTypeIdentifier(String contentTypeIdentifier) {
 		this.contentTypeIdentifier = contentTypeIdentifier;
 	}
-	
+
 	public void setResourceSet(ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

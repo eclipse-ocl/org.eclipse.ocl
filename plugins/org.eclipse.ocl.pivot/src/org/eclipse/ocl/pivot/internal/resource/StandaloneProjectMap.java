@@ -379,6 +379,48 @@ public class StandaloneProjectMap implements ProjectManager
 	}
 
 	/**
+	 * The CreateStrategy uses a programmtically created EPackage for all kinds of access,
+	 * and then changes the strategy to the LoadedStrategy for all further accesses.
+	 *
+	 * @since 1.3
+	 */
+	public static final class CreateStrategy extends AbstractResourceLoadStrategy
+	{
+		public static final @NonNull IResourceLoadStrategy INSTANCE = new CreateStrategy();
+
+		@Override
+		public void addedDynamicResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Resource resource) {
+			resourceLoadStatus.setResourceLoadStrategy(LoadedStrategy.INSTANCE);
+		}
+
+		@Override
+		public void addedGeneratedPackage(@NonNull IPackageLoadStatus packageLoadStatus, @NonNull EPackage ePackage) {
+			IResourceLoadStatus resourceLoadStatus = packageLoadStatus.getResourceLoadStatus();
+			Resource eResource = ePackage.eResource();
+			if (eResource != null) {
+				resourceLoadStatus.configureResourceSetURIResourceMap(eResource);
+			}
+			resourceLoadStatus.setResourceLoadStrategy(LoadedStrategy.INSTANCE);
+		}
+
+		@Override
+		public void handleConflictingDynamicResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull EPackage ePackage) {
+			resourceLoadStatus.getConflictingDynamicResource(ePackage);
+		}
+
+		@Override
+		public @Nullable EPackage getEPackage(@NonNull IPackageLoadStatus packageLoadStatus) {
+			return loadEPackage(packageLoadStatus, false);
+		}
+
+		@Override
+		public void unloadedResource(@NonNull IResourceLoadStatus packageLoadStatus) {}
+
+		@Override
+		public void useGeneratedResource(@NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Resource resource) {}
+	}
+
+	/**
 	 * The LoadedStrategy re-uses the already loaded EPackage.
 	 */
 	private static final class LoadedStrategy extends AbstractResourceLoadStrategy
@@ -662,7 +704,7 @@ public class StandaloneProjectMap implements ProjectManager
 	{
 		protected final @NonNull IResourceDescriptor resourceDescriptor;
 		protected @Nullable ResourceSet resourceSet;
-		private final @NonNull Map<URI, PackageLoadStatus> nsURI2packageLoadStatus = new HashMap<URI, PackageLoadStatus>();
+		private final @NonNull Map<@NonNull URI, @NonNull PackageLoadStatus> nsURI2packageLoadStatus = new HashMap<>();
 		protected final EPackage.@NonNull Registry packageRegistry;
 
 		/**
@@ -749,6 +791,9 @@ public class StandaloneProjectMap implements ProjectManager
 			if (target != null) {
 				target.eAdapters().remove(this);
 				target = null;
+			}
+			for (@NonNull PackageLoadStatus packageLoadStatus : nsURI2packageLoadStatus.values()) {
+				packageLoadStatus.unloadedResource();
 			}
 		}
 
@@ -1027,7 +1072,7 @@ public class StandaloneProjectMap implements ProjectManager
 	{
 		protected final @NonNull IResourceLoadStatus resourceLoadStatus;
 		protected final @NonNull Iterable<PackageLoadStatus> packageLoadStatuses;
-		private final @NonNull Map<String, @NonNull EPackage> fragment2ePackage = new HashMap<String, @NonNull EPackage>();
+		private final @NonNull Map<@NonNull String, @NonNull EPackage> fragment2ePackage = new HashMap<>();
 
 		public DelegatedMultiplePackageResource(@NonNull URI uri, @NonNull IResourceLoadStatus resourceLoadStatus, @NonNull Iterable<PackageLoadStatus> packageLoadStatuses) {
 			super(uri);
@@ -1095,7 +1140,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	public static class DelegatedSinglePackageResource extends ResourceImpl
 	{
-		private static @NonNull EList<@NonNull EObject> EMPTY_LIST = new BasicEList.UnmodifiableEList<@NonNull EObject>(0, new Object[]{});
+		private static @NonNull EList<@NonNull EObject> EMPTY_LIST = new BasicEList.UnmodifiableEList<>(0, new Object[]{});
 
 		protected final @NonNull IPackageLoadStatus packageLoadStatus;
 		private final @Nullable EPackage ePackage;
@@ -1737,7 +1782,7 @@ public class StandaloneProjectMap implements ProjectManager
 		private boolean inPoint = false;
 		private int packageCount = 0;
 		private @NonNull Map<@NonNull String, @NonNull GenModelReader> genModelReaders = new HashMap<>();
-		private @Nullable Map<@NonNull String, @NonNull Map<URI, String>> genModelURI2nsURI2className = null;
+		private @Nullable Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className = null;
 
 		private PluginReader(@Nullable IProjectDescriptor projectDescriptor) {
 			this.jarFile = null;
@@ -1752,10 +1797,10 @@ public class StandaloneProjectMap implements ProjectManager
 		@Override
 		public void endDocument() throws SAXException {
 			super.endDocument();
-			Map<String, @NonNull Map<URI, String>> genModelURI2nsURI2className2 = genModelURI2nsURI2className;
+			Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className2 = genModelURI2nsURI2className;
 			if (genModelURI2nsURI2className2 != null) {
-				for (@SuppressWarnings("null")@NonNull String genModel : genModelURI2nsURI2className2.keySet()) {
-					Map<URI, String> nsURI2className = genModelURI2nsURI2className2.get(genModel);
+				for (@NonNull String genModel : genModelURI2nsURI2className2.keySet()) {
+					Map<@NonNull URI, @NonNull String> nsURI2className = genModelURI2nsURI2className2.get(genModel);
 					assert nsURI2className != null;
 					IResourceDescriptor resourceDescriptor = projectDescriptor.createResourceDescriptor(genModel, nsURI2className);
 					GenModelReader genModelReader = new GenModelReader(resourceDescriptor);
@@ -1784,7 +1829,7 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 
 		public void scanContents(SAXParser saxParser) throws SAXParseException {
-			for (String genModel : genModelReaders.keySet()) {
+			for (@NonNull String genModel : genModelReaders.keySet()) {
 				GenModelReader genModelReader = genModelReaders.get(genModel);
 				URI locationURI = projectDescriptor.getLocationURI();
 				URI genModelURI = URI.createURI(genModel).resolve(locationURI);
@@ -1831,11 +1876,11 @@ public class StandaloneProjectMap implements ProjectManager
 						@NonNull URI nsURI = URI.createURI(attributes.getValue(uriAttribute));
 						String genModel = attributes.getValue(genModelAttribute);
 						if ((genModel != null) && (className != null)) {
-							Map<@NonNull String, @NonNull Map<URI, String>> genModelURI2nsURI2className2 = genModelURI2nsURI2className;
+							Map<@NonNull String, @NonNull Map<@NonNull URI, @NonNull String>> genModelURI2nsURI2className2 = genModelURI2nsURI2className;
 							if (genModelURI2nsURI2className2 == null) {
 								genModelURI2nsURI2className = genModelURI2nsURI2className2 = new HashMap<>();
 							}
-							Map<URI, String> nsURI2className = genModelURI2nsURI2className2.get(genModel);
+							Map<@NonNull URI, @NonNull String> nsURI2className = genModelURI2nsURI2className2.get(genModel);
 							if (nsURI2className == null) {
 								nsURI2className = new HashMap<>();
 								genModelURI2nsURI2className2.put(genModel, nsURI2className);
@@ -2122,16 +2167,16 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void unload(@NonNull ResourceSet resourceSet) {
-			Collection<IResourceDescriptor> resourceDescriptors = getResourceDescriptors();
+			Collection<@NonNull IResourceDescriptor> resourceDescriptors = getResourceDescriptors();
 			if (resourceDescriptors != null) {
-				for (IResourceDescriptor resourceDescriptor : resourceDescriptors) {
+				for (@NonNull IResourceDescriptor resourceDescriptor : resourceDescriptors) {
 					assert resourceDescriptor != null;
 					resourceDescriptor.unload(resourceSet);
 				}
-				Map<URI, IPackageDescriptor> nsURI2packageDescriptor2 = nsURI2packageDescriptor;
+				Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2packageDescriptor2 = nsURI2packageDescriptor;
 				EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
 				if ((nsURI2packageDescriptor2 != null) && (packageRegistry != null)) {
-					for (URI nsURI : nsURI2packageDescriptor2.keySet()) {
+					for (@NonNull URI nsURI : nsURI2packageDescriptor2.keySet()) {
 						packageRegistry.remove(nsURI.toString());
 					}
 				}
@@ -2339,9 +2384,9 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	@Override
 	public void configure(@Nullable ResourceSet resourceSet, @NonNull IResourceLoadStrategy resourceLoadStrategy, @Nullable IConflictHandler conflictHandler) {
-		Map<String, IProjectDescriptor> projectDescriptors = getProjectDescriptors();
+		Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors = getProjectDescriptors();
 		if (projectDescriptors != null) {
-			for (IProjectDescriptor projectDescriptor : projectDescriptors.values()) {
+			for (@NonNull IProjectDescriptor projectDescriptor : projectDescriptors.values()) {
 				projectDescriptor.configure(resourceSet, resourceLoadStrategy, conflictHandler);
 			}
 		}
@@ -2380,7 +2425,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 * Return the IProjectDescriptor for a given project or bundle name.
 	 */
 	public @Nullable IProjectDescriptor getProjectDescriptor(@NonNull String projectName) {
-		Map<String, IProjectDescriptor> projectDescriptors = getProjectDescriptors();
+		Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors = getProjectDescriptors();
 		if (projectDescriptors == null) {
 			return null;
 		}
@@ -2403,7 +2448,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 * Return the mapping of problem files to exceptions, or null if not yet
 	 * computed or if no exceptions thrown.
 	 */
-	public @Nullable Map<String, Exception> getExceptionMap() {
+	public @Nullable Map<@NonNull String, @NonNull Exception> getExceptionMap() {
 		return exceptionMap;
 	}
 
@@ -2411,7 +2456,7 @@ public class StandaloneProjectMap implements ProjectManager
 	 * Return the resolveable URI for a given project or bundle name.
 	 */
 	public @Nullable URI getLocation(@NonNull String projectName) {
-		Map<String, IProjectDescriptor> projectDescriptors = getProjectDescriptors();
+		Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors = getProjectDescriptors();
 		if (projectDescriptors == null) {
 			return null;
 		}
@@ -2459,8 +2504,8 @@ public class StandaloneProjectMap implements ProjectManager
 	/**
 	 * Return the names of all the  projects/bundles.
 	 */
-	public @Nullable Set<String> getProjectNames() {
-		Map<String, IProjectDescriptor> project2descriptor2 = getProjectDescriptors();
+	public @Nullable Set<@NonNull String> getProjectNames() {
+		Map<@NonNull String, @NonNull IProjectDescriptor> project2descriptor2 = getProjectDescriptors();
 		if (project2descriptor2 == null) {
 			return null;
 		}
@@ -2760,7 +2805,7 @@ public class StandaloneProjectMap implements ProjectManager
 		}
 	}
 
-	protected void scanClassPath(@NonNull Map<String, IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
+	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
 		String property = System.getProperty("java.class.path");
 		String separator = System.getProperty("path.separator");
 		if (property != null) {

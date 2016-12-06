@@ -476,7 +476,10 @@ public interface ProjectManager extends Adapter
 
 		/**
 		 * Set true by AS2Ecore to inhibit auto-loading of newly added EPackages.
+		 *
+		 * @deprecated - try using a CreateStrategy instead, see Bug 465326
 		 */
+		@Deprecated
 		void setGenerationInProgress(boolean isGenerating);
 
 		/**

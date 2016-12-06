@@ -135,7 +135,7 @@ public class ProjectMap extends StandaloneProjectMap
 	}
 
 	@Override
-	public URI getLocation(@NonNull String projectName) {
+	public @Nullable URI getLocation(@NonNull String projectName) {
 		URI uri = super.getLocation(projectName);
 		if ((uri == null) && EMFPlugin.IS_ECLIPSE_RUNNING) {
 			uri = URI.createPlatformPluginURI("/" + projectName + "/", true);
@@ -174,7 +174,7 @@ public class ProjectMap extends StandaloneProjectMap
 	}
 
 	@Override
-	protected void scanClassPath(@NonNull Map<String, IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
+	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			super.scanClassPath(projectDescriptors, saxParser);
 		}
@@ -200,22 +200,22 @@ public class ProjectMap extends StandaloneProjectMap
 	protected void scanGenModels(@NonNull SAXParser saxParser) {
 		URIConverter uriConverter = new ExtensibleURIConverterImpl();
 		Map<String, URI> ePackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
-		Map<URI, @NonNull Map<URI, String>> genModel2nsURI2className = new HashMap<URI, @NonNull Map<URI, String>>();
+		Map<@NonNull URI, @NonNull Map<@NonNull URI, @Nullable String>> genModel2nsURI2className = new HashMap<>();
 		for (String ePackageNsURI : ePackageNsURIToGenModelLocationMap.keySet()) {
 			URI genModelURI = ePackageNsURIToGenModelLocationMap.get(ePackageNsURI);
 			if (genModelURI != null) {
-				Map<URI, String> nsURI2className = genModel2nsURI2className.get(genModelURI);
+				Map<@NonNull URI, @Nullable String> nsURI2className = genModel2nsURI2className.get(genModelURI);
 				if (nsURI2className == null) {
-					nsURI2className = new HashMap<URI, String>();
+					nsURI2className = new HashMap<>();
 					genModel2nsURI2className.put(genModelURI, nsURI2className);
 				}
 				nsURI2className.put(URI.createURI(ePackageNsURI), null);
 			}
 		}
-		for (@SuppressWarnings("null")@NonNull URI genModelURI : genModel2nsURI2className.keySet()) {
+		for (@NonNull URI genModelURI : genModel2nsURI2className.keySet()) {
 			if (genModelURI.isPlatformPlugin()) {
 				IProjectDescriptor projectDescriptor = getProjectDescriptorInternal(genModelURI);
-				Map<URI, String> nsURI2className = genModel2nsURI2className.get(genModelURI);
+				Map<@NonNull URI, @Nullable String> nsURI2className = genModel2nsURI2className.get(genModelURI);
 				assert nsURI2className != null;
 				@NonNull URI deresolvedGenModelURI = genModelURI.deresolve(projectDescriptor.getLocationURI(), true, true, true);
 				@NonNull String genModelString = String.valueOf(deresolvedGenModelURI);
