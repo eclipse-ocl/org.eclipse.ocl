@@ -69,7 +69,7 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 	public static final @NonNull String NULL_MARKER = "-null-element-"; //$NON-NLS-1$
 
 	public static final @NonNull String FRAGMENT_SEPARATOR = "#"; //$NON-NLS-1$
-	
+
 	public static final @NonNull String ACCUMULATOR_PREFIX = "a"; //$NON-NLS-1$
 	public static final @NonNull String BODYCONDITION_PREFIX = "c="; //$NON-NLS-1$
 	/**
@@ -80,6 +80,10 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 	public static final @NonNull String ITERATION_PREFIX = "i."; //$NON-NLS-1$
 	public static final @NonNull String ITERATOR_PREFIX = "i"; //$NON-NLS-1$
 	public static final @NonNull String OPERATION_PREFIX = "o."; //$NON-NLS-1$
+	/**
+	 * @since 1.3
+	 */
+	public static final @NonNull String OPPOSITE_PROPERTY_PREFIX = "op."; //$NON-NLS-1$
 	public static final @NonNull String PARAMETER_PREFIX = "p"; //$NON-NLS-1$
 	public static final @NonNull String PACKAGE_PREFIX = "P."; //$NON-NLS-1$
 	public static final @NonNull String POSTCONDITION_PREFIX = "c+"; //$NON-NLS-1$
@@ -89,13 +93,13 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 	public static final @NonNull String TEMPLATE_PARAMETER_PREFIX = "t."; //$NON-NLS-1$
 	public static final @NonNull String TEMPLATE_SIGNATURE_PREFIX = "s."; //$NON-NLS-1$
 	public static final @NonNull String TYPE_PREFIX = "T."; //$NON-NLS-1$
-	
+
 	public static final @NonNull String OPERATION_PARAMETER_SEPARATOR = ".."; //$NON-NLS-1$
 	public static final @NonNull String SCOPE_SEPARATOR = "."; //$NON-NLS-1$
 	public static final @NonNull String TEMPLATE_PARAMETER_SEPARATOR = ".."; //$NON-NLS-1$
 
 	protected final @NonNull StringBuilder s = new StringBuilder();
-	
+
 	public AS2XMIidVisitor(@NonNull AS2XMIid context) {
 		super(context);
 	}
@@ -133,7 +137,7 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 			}
 		}
 	}
-	
+
 	protected void appendNameOf(@NonNull Object element) {
 		if (element instanceof Nameable) {
 			s.append(((Nameable)element).getName());
@@ -158,7 +162,7 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 			s.append(OVERFLOW_MARKER);
 		}
 		else if (element == null) {
-			s.append(NULL_MARKER);	
+			s.append(NULL_MARKER);
 			s.append(SCOPE_SEPARATOR);
 		}
 		else {
@@ -166,9 +170,9 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 			if (eContainer instanceof Model) {
 			}
 			else if (eContainer != null) {
-//				if (!(eContainer instanceof TemplateParameter)) {
-					appendParent(eContainer);
-//				}
+				//				if (!(eContainer instanceof TemplateParameter)) {
+				appendParent(eContainer);
+				//				}
 				appendNameOf(eContainer);
 				s.append(SCOPE_SEPARATOR);
 			}
@@ -177,7 +181,7 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 
 	protected void appendType(@Nullable Type type) {
 		if (type == null) {
-			s.append(NULL_MARKER);	
+			s.append(NULL_MARKER);
 		}
 		else {
 			if (type.isClass() != null) {
@@ -198,7 +202,7 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 		else {
 			return context.getID(element, internalUUIDs);
 		}
-	}	
+	}
 
 	@Override
 	public String toString() {
@@ -373,10 +377,15 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 			return false;	// TupleParts of synthesized types use UUIDs
 		}
 		String name = object.getName();
-		if (object.isIsImplicit() && (eContainer instanceof org.eclipse.ocl.pivot.Class)) {
+		Property opposite = object.getOpposite();
+		if ((opposite != null) && object.isIsImplicit() && (eContainer instanceof org.eclipse.ocl.pivot.Class)) {
 			for (Property asProperty : ((org.eclipse.ocl.pivot.Class)eContainer).getOwnedProperties()) {
 				if ((asProperty != object) && name.equals(asProperty.getName())) {
-					return false;	// Ambiguous implicit opposites must use UUIDs
+					s.append(OPPOSITE_PROPERTY_PREFIX);
+					appendParent(opposite);
+					appendName(opposite.getName());
+					return true;
+					//					return false;	// Ambiguous implicit opposites must use UUIDs
 				}
 			}
 		}

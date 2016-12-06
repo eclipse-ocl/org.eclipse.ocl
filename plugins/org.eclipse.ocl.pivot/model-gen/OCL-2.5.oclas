@@ -1568,15 +1568,17 @@
         <ownedComments body="Evaluates to all of the most derived model types of which oclText[self] is an instance. The return from oclText[oclModelTypes()]&#xA;is normally equivalent to that from oclText[oclModelType()] unless oclText[self] is an instance of multiply classified model type.&#xA;&#xA;The return is normally oclText[invalid] since few model elements have model types. UML's InstanceSpecification::classifier provides&#xA;a multiple classification for a model type.&#xA;"/>
       </ownedOperations>
       <ownedProperties xmi:id="p.ocl.OclElement.oclContainer" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty"
-          isRequired="false" name="oclContainer" opposite="#//@ownedPackages.0/@ownedClasses.13/@ownedProperties.2" type="#T.ocl.OclElement">
+          isRequired="false" name="oclContainer" opposite="#op.ocl.OclElement.oclContainer" type="#T.ocl.OclElement">
         <ownedComments body="The object for which self is a composed content or null if there is no such object.&#xA;"/>
       </ownedProperties>
       <ownedProperties xmi:id="p.ocl.OclElement.oclContents" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty"
-          name="oclContents" opposite="#//@ownedPackages.0/@ownedClasses.13/@ownedProperties.3" type="#//@ownedPackages.1/@ownedClasses.133">
+          name="oclContents" opposite="#op.ocl.OclElement.oclContents" type="#//@ownedPackages.1/@ownedClasses.133">
         <ownedComments body="The composed contents of self."/>
       </ownedProperties>
-      <ownedProperties isImplicit="true" name="OclElement" opposite="#p.ocl.OclElement.oclContainer" type="#//@ownedPackages.1/@ownedClasses.35"/>
-      <ownedProperties isImplicit="true" name="OclElement" opposite="#p.ocl.OclElement.oclContents" type="#//@ownedPackages.1/@ownedClasses.35"/>
+      <ownedProperties xmi:id="op.ocl.OclElement.oclContainer" isImplicit="true" name="OclElement" opposite="#p.ocl.OclElement.oclContainer"
+          type="#//@ownedPackages.1/@ownedClasses.35"/>
+      <ownedProperties xmi:id="op.ocl.OclElement.oclContents" isImplicit="true" name="OclElement" opposite="#p.ocl.OclElement.oclContents"
+          type="#//@ownedPackages.1/@ownedClasses.35"/>
     </ownedClasses>
     <ownedClasses xmi:id="T.ocl.OclEnumeration" isAbstract="true" name="OclEnumeration" superClasses="#T.ocl.OclType">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
