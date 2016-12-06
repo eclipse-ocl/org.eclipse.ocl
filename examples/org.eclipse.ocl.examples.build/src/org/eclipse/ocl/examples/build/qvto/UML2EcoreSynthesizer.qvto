@@ -457,10 +457,10 @@ mapping inout Ecore::ENamedElement::installComments(in comments : Sequence(UML::
 mapping inout Ecore::EClassifier::installInstanceClassName(in types : Set(UML::Type), stereotypeName : String)
 {
 	var stereotypedTypes : Set(UML::Type) := types->select(getAppliedStereotype(stereotypeName) <> null)->asSet();
-	var stereotypedType : UML::Type := stereotypedTypes->any(true);
+	var stereotypedType : UML::Type := if stereotypedTypes->notEmpty() then stereotypedTypes->any(true) else null endif;
 --	var stereotypes : Set(UML::Stereotype) := createType.oldTypes.oclAsType(UML::DataType).getAppliedStereotype('Ecore::EDataType')->asSet();
 --	log('stereotypedType', stereotypedType);
-	var instanceClassName : String := stereotypedType.getValue(stereotypedType.getAppliedStereotype(stereotypeName), 'instanceClassName').oclAsType(String);
+	var instanceClassName : String := if stereotypedType <> null then stereotypedType.getValue(stereotypedType.getAppliedStereotype(stereotypeName), 'instanceClassName').oclAsType(String) else null endif;
 --	log('instanceClassName', instanceClassName);
 	self.instanceClassName := instanceClassName;
 --	result.defaultValue := instanceClassName;
