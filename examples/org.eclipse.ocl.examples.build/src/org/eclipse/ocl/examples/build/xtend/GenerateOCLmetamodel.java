@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -54,32 +53,30 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
-{	
-	protected final @NonNull Comparator<CollectionType> collectionTypeComparator = new Comparator<CollectionType>()
+{
+	protected final @NonNull Comparator<@NonNull CollectionType> collectionTypeComparator = new Comparator<@NonNull CollectionType>()
 	{
-		public int compare(CollectionType o1, CollectionType o2) {
-			if ((o1 == null) || (o2 == null)) {
-				return 0;
-			}
-			TypeId m1 = PivotUtil.getUnspecializedTemplateableElement(o1).getTypeId(); 
+		@Override
+		public int compare(@NonNull CollectionType o1, @NonNull CollectionType o2) {
+			TypeId m1 = PivotUtil.getUnspecializedTemplateableElement(o1).getTypeId();
 			TypeId m2 = PivotUtil.getUnspecializedTemplateableElement(o2).getTypeId();
 			int i = m1.toString().compareTo(m2.toString());
 			if (i != 0) {
 				return i;
 			}
-			String n1 = o1.getElementType().getName(); 
+			String n1 = o1.getElementType().getName();
 			String n2 = o2.getElementType().getName();
 			i = n1.compareTo(n2);
 			if (i != 0) {
 				return i;
 			}
-			IntegerValue l1 = o1.getLowerValue(); 
+			IntegerValue l1 = o1.getLowerValue();
 			IntegerValue l2 = o2.getLowerValue();
 			i = l1.compareTo(l2);
 			if (i != 0) {
 				return i;
 			}
-			UnlimitedNaturalValue u1 = o1.getUpperValue(); 
+			UnlimitedNaturalValue u1 = o1.getUpperValue();
 			UnlimitedNaturalValue u2 = o2.getUpperValue();
 			return u1.compareTo(u2);
 		}
@@ -121,7 +118,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		}
 		return null;
 	}
-	
+
 	protected DataType findPrimitiveType(Iterable<org.eclipse.ocl.pivot.Class> types, String name) {
 		for (Type type : types) {
 			if ((type instanceof DataType) && (type.getName().equals(name))) {
@@ -140,7 +137,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	}
 
 	protected abstract String generateMetamodel(/*@NonNull*/ Model pivotModel);
-	
+
 	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Class elem) {
 		return nameQueries.getEcoreLiteral(elem);
 	}
@@ -148,7 +145,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	protected String getEcoreLiteral(@NonNull EnumerationLiteral elem) {
 		return nameQueries.getEcoreLiteral(elem);
 	}
-	
+
 	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Package elem) {
 		return nameQueries.getEcoreLiteral(elem);
 	}
@@ -158,7 +155,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		@NonNull Set<PrimitiveType> emptySet = Collections.emptySet();
 		return emptySet;
 	}
-	
+
 	@Override
 	protected @NonNull String getNameLiteral(@NonNull Property property) {
 		return nameQueries.getEcoreLiteral(property);
@@ -168,7 +165,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	protected @NonNull Map<org.eclipse.ocl.pivot.Package, List<CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
 		return super.getSortedCollectionTypes(root, collectionTypeComparator);
 	}
-	
+
 	@Override
 	protected @NonNull Map<org.eclipse.ocl.pivot.Package, List<PrimitiveType>> getSortedPrimitiveTypes(@NonNull Model root) {
 		Map<org.eclipse.ocl.pivot.Package, List<PrimitiveType>> pkge2primitiveTypes = new HashMap<org.eclipse.ocl.pivot.Package, List<PrimitiveType>>();
@@ -190,11 +187,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			issues.addError(this, "Unknown project '" + projectName + "'", null, null, null);
 			return;
 		}
-		@NonNull URI nsURI = URI.createURI(PivotPackage.eNS_URI);
-		StandaloneProjectMap.IPackageDescriptor packageDescriptor = projectDescriptor.getPackageDescriptor(nsURI);
-//	    if (packageDescriptor != null) {
-//	    	packageDescriptor.configure(asResourceSet, LoadDynamicResourceStrategy.INSTANCE, null);
-//	    }
 		assert modelFile != null;
 		URI inputURI = projectDescriptor.getPlatformResourceURI(modelFile);
 		File outputFolder = projectDescriptor.getLocationFile(javaFolder + '/' + javaPackageName.replace('.', '/'));
@@ -204,9 +196,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			OCLInternal ocl = OCLInternal.newInstance();
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
 			ResourceSet asResourceSet = metamodelManager.getASResourceSet();
-		    if (packageDescriptor != null) {
-		    	packageDescriptor.configure(asResourceSet, StandaloneProjectMap.LoadDynamicResourceStrategy.INSTANCE, null);
-		    }
 			Resource ecoreResource = ClassUtil.nonNullState(asResourceSet.getResource(inputURI, true));
 			getEnvironmentFactory().adapt(ecoreResource);
 			String ecoreErrorsString = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(ecoreResource.getErrors()), "Loading " + inputURI, "\n");
@@ -218,17 +207,17 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			Model pivotModel = ecore2as.getASModel();
 			Resource asResource = pivotModel.eResource();
 			String pivotErrorsString = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(asResource.getErrors()), "Converting " + inputURI, "\n");
-				if (pivotErrorsString != null) {
-					issues.addError(this, pivotErrorsString, null, null, null);
-					return;
-				}
+			if (pivotErrorsString != null) {
+				issues.addError(this, pivotErrorsString, null, null, null);
+				return;
+			}
 			sourceFile = "/" + projectName + "/" + modelFile;
 			EObject asRoot = asResource.getContents().get(0);
 			ASSaver saver = new ASSaver(asResource);
 			/*Package orphanage =*/ saver.localizeSpecializations();
-//			if ((orphanage != null) && (pivotModel instanceof Root)) {
-//				(pivotModel as Root).getOwnedPackages().add(orphanage);
-//			}
+			//			if ((orphanage != null) && (pivotModel instanceof Root)) {
+			//				(pivotModel as Root).getOwnedPackages().add(orphanage);
+			//			}
 			String fileName = outputFolder + "/" + javaClassName + ".java";
 			log.info("Generating '" + fileName + "'");
 			assert asRoot instanceof Model;
@@ -250,8 +239,8 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			fw.close();
 			String saveFile = "/" + projectName + "/" + modelFile.replace("model", "model-gen").replace("ecore", "oclas");
 			URI saveURI = URI.createPlatformResourceURI(saveFile, true);
-//			log.info("Loading '" + saveURI + "'");
-//			AS2XMIid as2id = AS2XMIid.load(saveURI);
+			//			log.info("Loading '" + saveURI + "'");
+			//			AS2XMIid as2id = AS2XMIid.load(saveURI);
 			log.info("Saving '" + saveURI + "'");
 			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
@@ -261,7 +250,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 				}
 			}
 			asResource.setURI(saveURI);
-//	    	as2id.assignIds(asResource.getResourceSet());
+			//	    	as2id.assignIds(asResource.getResourceSet());
 			Map<Object, Object> options = XMIUtil.createSaveOptions();
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
 			asResource.save(options);

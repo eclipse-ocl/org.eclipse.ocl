@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -58,7 +59,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -465,7 +465,7 @@ public class PivotUtil
 	}
 
 	public static org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage, @Nullable String nsPrefix, @NonNull String nsURI) {
-		Package pivotPackage = PivotFactory.eINSTANCE.createPackage();
+		org.eclipse.ocl.pivot.Package pivotPackage = PivotFactory.eINSTANCE.createPackage();
 		pivotPackage.setName(ePackage.getName());
 		pivotPackage.setNsPrefix(nsPrefix);
 		pivotPackage.setURI(nsURI);
@@ -474,7 +474,7 @@ public class PivotUtil
 	}
 
 	public static org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId) {
-		Package pivotPackage = PivotFactory.eINSTANCE.createPackage();
+		org.eclipse.ocl.pivot.Package pivotPackage = PivotFactory.eINSTANCE.createPackage();
 		pivotPackage.setName(name);
 		pivotPackage.setNsPrefix(nsPrefix);
 		if (packageId != null) {
@@ -899,6 +899,22 @@ public class PivotUtil
 	}
 
 	/**
+	 * Return the Model at the root of asResource.
+	 *
+	 * @throws IllegalStateException if none.
+	 *
+	 * @since 1.3
+	 */
+	public static @NonNull Model getModel(@NonNull Resource asResource) {
+		for (EObject eObject : asResource.getContents()) {
+			if (eObject instanceof Model) {
+				return (Model)eObject;
+			}
+		}
+		throw new IllegalStateException();
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull String getName(@NonNull NamedElement namedElement) {
@@ -932,8 +948,57 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getOwnedClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return ClassUtil.nullFree(asPackage.getOwnedClasses());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull Iterable<@NonNull Variable> getOwnedIterators(@NonNull LoopExp loopExp) {
 		return ClassUtil.nullFree(loopExp.getOwnedIterators());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@NonNull Operation> getOwnedClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nullFree(asClass.getOwnedOperations());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@NonNull Constraint> getOwnedInvariants(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nullFree(asClass.getOwnedInvariants());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getOwnedPackages(@NonNull Model asModel) {
+		return ClassUtil.nullFree(asModel.getOwnedPackages());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getOwnedPackages(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return ClassUtil.nullFree(asPackage.getOwnedPackages());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getPartialClasses(@NonNull CompleteClass completeClass) {
+		return ClassUtil.nullFree(completeClass.getPartialClasses());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@NonNull Property> getOwnedProperties(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nullFree(asClass.getOwnedProperties());
 	}
 
 	/**
@@ -1025,6 +1090,13 @@ public class PivotUtil
 		else {
 			throw new IllegalStateException();
 		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Resource getResource(@NonNull EObject eObject) {
+		return ClassUtil.nonNullState(eObject.eResource());
 	}
 
 	public static @NonNull <T extends TemplateableElement> T getUnspecializedTemplateableElement(@NonNull T templateableElement) {

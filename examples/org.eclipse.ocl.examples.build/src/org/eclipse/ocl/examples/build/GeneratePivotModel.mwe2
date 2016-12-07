@@ -182,36 +182,23 @@ Workflow {
     }
 
 
-	bean = ResourceSetImpl : pivotGenerateResourceSet {}
-    bean = ProjectMapSetup { resourceSet = pivotGenerateResourceSet }
-    bean = UMLStandaloneSetup { resourceSet = pivotGenerateResourceSet }
+	bean = ResourceSetImpl : pivotMergeResourceSet {}
+    bean = ProjectMapSetup { resourceSet = pivotMergeResourceSet }
+    bean = UMLStandaloneSetup { resourceSet = pivotMergeResourceSet }
     bean = OCLStandaloneSetup {}
-    bean = EcoreGenModelSetup { resourceSet = pivotGenerateResourceSet }
-    component = ResourceReader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
-    	modelSlot = "${umlSlot}"
+    bean = EcoreGenModelSetup { resourceSet = pivotMergeResourceSet }
+    component = ResourceReader { resourceSet = pivotMergeResourceSet skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
     	uri = "/${buildProjectName}/model-gen/RawPivot.ecore"
 	}
-    component = EPackageAlphabetizer { skipOnErrors = true
-    	modelSlot = "${umlSlot}"
-    }
-    component = EConstraintRemover { skipOnErrors = true
-    	modelSlot = "${umlSlot}"
-    }
-    component = ResourceWriter { resourceSet = pivotGenerateResourceSet skipOnErrors = true
-    	modelSlot = "${umlSlot}"
-    	uri = "/${internalProjectName}/model/Pivot.ecore"
-    }
-     component = GenmodelReloader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
-    	projectName = "${internalProjectName}"
-    	modelSlot = "xyzzy"
-    	genModel = "/${internalProjectName}/model/Pivot.genmodel"
-    	ecoreFile = "/${internalProjectName}/model/Pivot.ecore"
-    }
-     component = ResourceReader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
+    component = ResourceRenamer { /*resourceSet = pivotGenerateResourceSet*/ skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     	uri = "/${internalProjectName}/model/Pivot.ecore"
+	}
+    component = EConstraintRemover { skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
     }
-    component = ConstraintMerger { resourceSet = pivotGenerateResourceSet skipOnErrors = true
+    component = ConstraintMerger { resourceSet = pivotMergeResourceSet skipOnErrors = true
     	projectName = "${internalProjectName}"
     	modelSlot = "${ecoreSlot}"
     	uri = "model/Pivot.ocl"
@@ -226,12 +213,31 @@ Workflow {
     component = SetASmetamodel { skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     }
-//    component = PivotWorkarounds { skipOnErrors = true
-//    	modelSlot = "${ecoreSlot}"
-//    }
-//    component = OCLDelegateActivator { skipOnErrors = true
-//    	modelSlot = "${pivotSlot}"
-//    }
+    component = ResourceWriter { resourceSet = pivotMergeResourceSet skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
+    	uri = "/${internalProjectName}/model/Pivot.ecore"
+    }
+    //
+    //
+    //
+	bean = ResourceSetImpl : pivotGenerateResourceSet {}
+    bean = ProjectMapSetup { resourceSet = pivotGenerateResourceSet }
+    bean = UMLStandaloneSetup { resourceSet = pivotGenerateResourceSet }
+    bean = OCLStandaloneSetup {}
+    bean = EcoreGenModelSetup { resourceSet = pivotGenerateResourceSet }
+     component = GenmodelReloader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
+    	projectName = "${internalProjectName}"
+    	modelSlot = "xyzzy"
+    	genModel = "/${internalProjectName}/model/Pivot.genmodel"
+    	ecoreFile = "/${internalProjectName}/model/Pivot.ecore"
+    }
+     component = ResourceReader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
+    	uri = "/${internalProjectName}/model/Pivot.ecore"
+    }
+    component = EPackageAlphabetizer { skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
+    }
     component = ResourceWriter { resourceSet = pivotGenerateResourceSet skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     }
@@ -248,7 +254,7 @@ Workflow {
     	genModelFile = "model/Pivot.genmodel"
     }
     
-    component = GenerateOCLmetamodelXtend { //resourceSet = pivotGenerateResourceSet
+    component = GenerateOCLmetamodelXtend { resourceSet = pivotGenerateResourceSet
     	projectName = "${internalProjectName}"
     	modelFile = "model/Pivot.ecore"
     	uri = "http://www.eclipse.org/ocl/2015/Pivot"
