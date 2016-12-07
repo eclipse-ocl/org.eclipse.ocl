@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class AS2Ecore extends AbstractConversion
 {
@@ -140,14 +141,18 @@ public class AS2Ecore extends AbstractConversion
 		}
 	}
 
-	public static @NonNull EOperation createConstraintEOperation(Constraint pivotConstraint, String operationName, @Nullable Map<String, Object> options) {
+	public static @NonNull EOperation createConstraintEOperation(@NonNull Constraint pivotConstraint, @NonNull String operationName, @Nullable Map<String, Object> options) {
 		if (options == null) {
 			options = new HashMap<String, Object>();
 		}
 		boolean addInvariantComments = AS2Ecore.isAddInvariantComments(options);
 		EOperation eOperation = EcoreFactory.eINSTANCE.createEOperation();
-		eOperation.setName(operationName != null ? operationName : "");
+		eOperation.setName(operationName);
 		eOperation.setEType(EcorePackage.Literals.EBOOLEAN);
+		String originalName = PivotUtil.getName(pivotConstraint);
+		if (!operationName.equals(originalName)) {
+			NameUtil.setOriginalName(eOperation, originalName);
+		}
 		{
 			EParameter firstParameter = EcoreFactory.eINSTANCE.createEParameter();
 			firstParameter.setName("diagnostics");

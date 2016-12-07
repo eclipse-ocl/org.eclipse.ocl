@@ -184,7 +184,7 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			else if (eContainer instanceof EClassifier) {
 				String prefix = ((EClassifier)eContainer).getName() + "_";		// FIXME Bug 405061 workaround
 				String originalName = NameUtil.getOriginalName(eNamedElement);
-				if (originalName.startsWith(prefix)) {
+				if ((originalName != null) && originalName.startsWith(prefix)) {
 					originalName = originalName.substring(prefix.length());
 				}
 				return originalName;

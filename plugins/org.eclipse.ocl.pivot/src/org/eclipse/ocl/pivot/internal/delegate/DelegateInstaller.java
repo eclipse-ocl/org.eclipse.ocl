@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  * 	 E.D.Willink (Obeo) - Bug 416287 - tuple-valued constraints
@@ -59,7 +59,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class DelegateInstaller
-{	
+{
 	/**
 	 * True to apply result = () wrapper to invariant body.
 	 */
@@ -88,11 +88,11 @@ public class DelegateInstaller
 			return name != null ? "post_" + name : "post";
 		}
 		else {
-//			error("Unsupported " + pivotConstraint);
+			//			error("Unsupported " + pivotConstraint);
 		}
 		return null;
 	}
-	
+
 	public static @Nullable String getDelegateURI(@NonNull List<EObject> contents) {
 		for (EObject eObject : contents) {
 			if (eObject instanceof EPackage) {
@@ -107,9 +107,9 @@ public class DelegateInstaller
 
 	public static @Nullable String getDelegateURI(@NonNull EPackage ePackage) {
 		Set<String> allURIs = new HashSet<String>();
-//		allURIs.addAll(EcoreUtil.getConversionDelegates(ePackage));
+		//		allURIs.addAll(EcoreUtil.getConversionDelegates(ePackage));
 		allURIs.addAll(ClassUtil.nonNull(EcoreUtil.getInvocationDelegates(ePackage)));
-//		allURIs.addAll(EcoreUtil.getQueryDelegates(ePackage));
+		//		allURIs.addAll(EcoreUtil.getQueryDelegates(ePackage));
 		allURIs.addAll(ClassUtil.nonNull(EcoreUtil.getSettingDelegates(ePackage)));
 		allURIs.addAll(ClassUtil.nonNull(EcoreUtil.getValidationDelegates(ePackage)));
 		String theURI = null;
@@ -204,7 +204,7 @@ public class DelegateInstaller
 
 	public DelegateInstaller(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Map<String, Object> options) {
 		this.environmentFactory = environmentFactory;
-//		this.metamodelManager = metamodelManager;
+		//		this.metamodelManager = metamodelManager;
 		this.options = options != null ? options : new HashMap<String,Object>();
 		this.exportDelegateURI = getExportDelegateURI(this.options);
 	}
@@ -218,7 +218,7 @@ public class DelegateInstaller
 		}
 		return oclAnnotation;
 	}
-	
+
 	public @Nullable EAnnotation createConstraintDelegate(@NonNull EModelElement eModelElement, @NonNull Constraint pivotConstraint, @Nullable URI ecoreURI) {
 		LanguageExpression specification = pivotConstraint.getOwnedSpecification();
 		if (specification == null) {
@@ -251,7 +251,7 @@ public class DelegateInstaller
 		options.setBaseURI(ecoreURI);
 		return PrettyPrinter.print(bodyExpression, options);
 	}
-	
+
 	public @Nullable EAnnotation createOperationDelegate(@NonNull EOperation eOperation, @NonNull LanguageExpression bodyExpression, @Nullable URI ecoreURI) {
 		String exprString = createExpression(bodyExpression, ecoreURI);
 		if (exprString == null) {
@@ -264,7 +264,7 @@ public class DelegateInstaller
 		oclAnnotation.getDetails().put(InvocationBehavior.BODY_CONSTRAINT_KEY, exprString);
 		return oclAnnotation;
 	}
-	
+
 	public @Nullable EAnnotation createPropertyDelegate(@NonNull EStructuralFeature eStructuralFeature, @NonNull LanguageExpression defaultExpression, @Nullable URI ecoreURI) {
 		String exprString = createExpression(defaultExpression, ecoreURI);
 		if (exprString == null) {
@@ -283,22 +283,22 @@ public class DelegateInstaller
 		return exportDelegateURI;
 	}
 
-//	public @NonNull MetamodelManager getMetamodelManager() {
-//		return metamodelManager;
-//	}
+	//	public @NonNull MetamodelManager getMetamodelManager() {
+	//		return metamodelManager;
+	//	}
 
 	/**
 	 * Install all Constraints from pivotPackage and its nestedPackages as OCL Delegates.
 	 */
 	public void installDelegates(@NonNull CompletePackage completePackage) {
 		boolean hasDelegates = false;
-//		for (Type aType : metamodelManager.getLocalClasses(pivotPackage)) {
+		//		for (Type aType : metamodelManager.getLocalClasses(pivotPackage)) {
 		for (CompleteClass completeClass : completePackage.getOwnedCompleteClasses()) {
 			if (installDelegates(completeClass.getPrimaryClass())) {
 				hasDelegates = true;
 			}
 		}
-//		PackageServer packageServer = metamodelManager.getPackageServer(pivotPackage);
+		//		PackageServer packageServer = metamodelManager.getPackageServer(pivotPackage);
 		EPackage ePackage = completePackage.getEPackage();
 		if ((ePackage != null) && hasDelegates) {
 			installDelegates(ePackage);
@@ -312,7 +312,7 @@ public class DelegateInstaller
 
 	/**
 	 * Install all Constraints from pivotType and its operations as OCL Delegates. Returning true if any OCL Delegate installed.
-	 * 
+	 *
 	 * @param metamodelManager
 	 * @param pivotPackage
 	 */
@@ -327,7 +327,7 @@ public class DelegateInstaller
 			for (Constraint constraint : metamodelManager.getLocalInvariants(pivotType)) {
 				if (constraint.isIsCallable()) {
 					EOperation eContext = null;
-					String name = constraint.getName();
+					@NonNull String name = PivotUtil.getName(constraint);
 					for (EOperation candidate : ((EClass) eClassifier).getEOperations()) {
 						if (name.equals(candidate.getName()) && EcoreUtil.isInvariant(candidate)) {
 							eContext = candidate;
@@ -416,7 +416,7 @@ public class DelegateInstaller
 			eAnnotations.add(oclAnnotation);
 		}
 	}
-	
+
 	public void installDelegates(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		StringBuilder s = null;
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();

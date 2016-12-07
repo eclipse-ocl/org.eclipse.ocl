@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
@@ -26,7 +27,7 @@ public class NameUtil
 	public static final class EAnnotationComparator implements Comparator<EAnnotation>
 	{
 		public static final @NonNull EAnnotationComparator INSTANCE = new EAnnotationComparator();
-	
+
 		@Override
 		public int compare(EAnnotation o1, EAnnotation o2) {
 			String n1 = o1.getSource();
@@ -36,9 +37,9 @@ public class NameUtil
 	}
 
 	public static final class NameableComparator implements Comparator<Nameable>
-	{	
+	{
 		public static final @NonNull NameableComparator INSTANCE = new NameableComparator();
-	
+
 		@Override
 		public int compare(Nameable o1, Nameable o2) {
 			String n1 = NameUtil.getSafeName(o1);
@@ -50,7 +51,7 @@ public class NameUtil
 	public static final class ENamedElementComparator implements Comparator<ENamedElement>
 	{
 		public static final @NonNull ENamedElementComparator INSTANCE = new ENamedElementComparator();
-	
+
 		@Override
 		public int compare(ENamedElement o1, ENamedElement o2) {
 			String n1 = o1.getName();
@@ -58,7 +59,7 @@ public class NameUtil
 			return ClassUtil.safeCompareTo(n1, n2);
 		}
 	}
-	
+
 	/**
 	 * @since 1.3
 	 */
@@ -75,7 +76,7 @@ public class NameUtil
 	}
 
 	public static final @NonNull NameableComparator NAMEABLE_COMPARATOR = NameableComparator.INSTANCE;
-	
+
 	/**
 	 * @since 1.3
 	 */
@@ -105,7 +106,7 @@ public class NameUtil
 		for (T element : elements)
 			if ((element != null) && ClassUtil.safeEquals(name, element.getName()))
 				return element;
-		return null;				
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -119,7 +120,7 @@ public class NameUtil
 		for (T element : elements)
 			if ((element != null) && returnClass.isAssignableFrom(element.getClass()) && ClassUtil.safeEquals(name, element.getName()))
 				return (R) element;
-		return null;				
+		return null;
 	}
 
 	public static <T extends Nameable> @Nullable T getNameable(@Nullable Iterable<T> elements, @Nullable String name) {
@@ -128,18 +129,18 @@ public class NameUtil
 		for (T element : elements)
 			if ((element != null) && ClassUtil.safeEquals(name, element.getName()))
 				return element;
-		return null;				
+		return null;
 	}
-	
-	public static String getOriginalName(@NonNull ENamedElement eNamedElement) {
-	    EAnnotation eAnnotation = eNamedElement.getEAnnotation(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
-	    if (eAnnotation != null) {
-	    	String originalName = eAnnotation.getDetails().get(DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME);
-	    	if (originalName != null) {
-	    		return originalName;
-	    	}
-	    }
-	    return eNamedElement.getName();
+
+	public static @Nullable String getOriginalName(@NonNull ENamedElement eNamedElement) {
+		EAnnotation eAnnotation = eNamedElement.getEAnnotation(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
+		if (eAnnotation != null) {
+			String originalName = eAnnotation.getDetails().get(DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME);
+			if (originalName != null) {
+				return originalName;
+			}
+		}
+		return eNamedElement.getName();
 	}
 
 	public static @NonNull String getSafeName(@Nullable Nameable aNameable) {
@@ -156,7 +157,7 @@ public class NameUtil
 	/**
 	 * Return a qualified name for object using the label generators registered
 	 * in the QUALIFIED_NAME_REGISTRY.
-	 * 
+	 *
 	 * @param object to be named
 	 * @return qualified name
 	 */
@@ -170,9 +171,22 @@ public class NameUtil
 	}
 
 	/**
+	 * @since 1.3
+	 */
+	public static void setOriginalName(@NonNull ENamedElement eNamedElement, @NonNull String originalName) {
+		EAnnotation eAnnotation = eNamedElement.getEAnnotation(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
+		if (eAnnotation == null) {
+			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+			eAnnotation.setSource(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
+			eNamedElement.getEAnnotations().add(eAnnotation);
+		}
+		eAnnotation.getDetails().put(DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME, originalName);
+	}
+
+	/**
 	 * Return a simple name for object using the label generators registered
 	 * in the SIMPLE_NAME_REGISTRY.
-	 * 
+	 *
 	 * @param object to be named
 	 * @return simple name
 	 */
@@ -181,5 +195,5 @@ public class NameUtil
 			return "<<null>>";
 		}
 		return LabelUtil.SIMPLE_NAME_REGISTRY.labelFor(object);
-	}	
+	}
 }
