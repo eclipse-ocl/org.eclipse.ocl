@@ -647,7 +647,9 @@ public class RoundTripTests extends XtextTestCase
 
 	public void testPivotRoundTrip() throws IOException, InterruptedException, ParserException {
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.pivot/model/Pivot.ecore", true);
-		doRoundTripFromEcore(uri, uri, null);
+		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<@NonNull String, @Nullable Object>();
+		saveOptions.put(AS2Ecore.OPTION_INVARIANT_PREFIX, "validate");
+		doRoundTripFromEcore(uri, uri, saveOptions);
 	}
 
 	//	public void testEssentialOCLCSTRoundTrip() throws IOException, InterruptedException {

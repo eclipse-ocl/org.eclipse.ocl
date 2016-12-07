@@ -1038,7 +1038,7 @@ public class PropertyImpl
 	{
 		/**
 		 *
-		 * inv validateCompatibleDefaultExpression:
+		 * inv CompatibleDefaultExpression:
 		 *   let
 		 *     severity : Integer[1] = 'Property::CompatibleDefaultExpression'.getSeverity()
 		 *   in

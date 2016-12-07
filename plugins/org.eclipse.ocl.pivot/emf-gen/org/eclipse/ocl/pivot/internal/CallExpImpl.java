@@ -193,7 +193,7 @@ public abstract class CallExpImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'CallExp::TypeIsNotInvalid'.getSeverity()
 		 *   in
 		 *     if severity <= 0

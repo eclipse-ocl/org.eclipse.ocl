@@ -168,7 +168,7 @@ public class VariableExpImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'VariableExp::TypeIsNotInvalid'.getSeverity()
 		 *   in
 		 *     if severity <= 0

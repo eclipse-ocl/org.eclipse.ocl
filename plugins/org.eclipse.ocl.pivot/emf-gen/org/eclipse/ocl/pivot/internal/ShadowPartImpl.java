@@ -155,7 +155,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	{
 		/**
 		 *
-		 * inv validateCompatibleInitialiserType:
+		 * inv CompatibleInitialiserType:
 		 *   let
 		 *     severity : Integer[1] = 'ShadowPart::CompatibleInitialiserType'.getSeverity()
 		 *   in
@@ -218,7 +218,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'ShadowPart::TypeIsNotInvalid'.getSeverity()
 		 *   in
 		 *     if severity <= 0

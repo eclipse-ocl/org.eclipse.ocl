@@ -263,7 +263,7 @@ public class IfExpImpl
 	{
 		/**
 		 *
-		 * inv validateConditionTypeIsBoolean:
+		 * inv ConditionTypeIsBoolean:
 		 *   let severity : Integer[1] = 'IfExp::ConditionTypeIsBoolean'.getSeverity()
 		 *   in
 		 *     if severity <= 0
@@ -311,7 +311,7 @@ public class IfExpImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'IfExp::TypeIsNotInvalid'.getSeverity()
 		 *   in
 		 *     if severity <= 0

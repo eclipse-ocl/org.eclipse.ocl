@@ -660,7 +660,7 @@ public class ClassImpl
 	{
 		/**
 		 *
-		 * inv validateUniqueInvariantName:
+		 * inv UniqueInvariantName:
 		 *   let severity : Integer[1] = 'Class::UniqueInvariantName'.getSeverity()
 		 *   in
 		 *     if severity <= 0

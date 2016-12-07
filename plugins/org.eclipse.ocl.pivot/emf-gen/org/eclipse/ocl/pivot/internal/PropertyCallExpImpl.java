@@ -490,7 +490,7 @@ implements PropertyCallExp {
 	{
 		/**
 		 *
-		 * inv validateNonStaticSourceTypeIsConformant:
+		 * inv NonStaticSourceTypeIsConformant:
 		 *   let
 		 *     severity : Integer[1] = 'PropertyCallExp::NonStaticSourceTypeIsConformant'.getSeverity()
 		 *   in
@@ -597,7 +597,7 @@ implements PropertyCallExp {
 	{
 		/**
 		 *
-		 * inv validateSafeSourceCanBeNull:
+		 * inv SafeSourceCanBeNull:
 		 *   let
 		 *     severity : Integer[1] = 'PropertyCallExp::SafeSourceCanBeNull'.getSeverity()
 		 *   in
@@ -699,7 +699,7 @@ implements PropertyCallExp {
 	{
 		/**
 		 *
-		 * inv validateUnsafeSourceCanNotBeNull:
+		 * inv UnsafeSourceCanNotBeNull:
 		 *   let
 		 *     severity : Integer[1] = 'PropertyCallExp::UnsafeSourceCanNotBeNull'.getSeverity()
 		 *   in
@@ -801,7 +801,7 @@ implements PropertyCallExp {
 	{
 		/**
 		 *
-		 * inv validateCompatibleResultType:
+		 * inv CompatibleResultType:
 		 *   let
 		 *     severity : Integer[1] = 'PropertyCallExp::CompatibleResultType'.getSeverity()
 		 *   in

@@ -127,7 +127,7 @@ public class IntegerLiteralExpImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsInteger:
+		 * inv TypeIsInteger:
 		 *   let severity : Integer[1] = 'IntegerLiteralExp::TypeIsInteger'.getSeverity()
 		 *   in
 		 *     if severity <= 0

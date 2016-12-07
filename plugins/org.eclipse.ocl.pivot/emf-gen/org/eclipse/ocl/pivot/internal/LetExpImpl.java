@@ -206,7 +206,7 @@ implements LetExp {
 	{
 		/**
 		 *
-		 * inv validateCompatibleNullityForIn:
+		 * inv CompatibleNullityForIn:
 		 *   let severity : Integer[1] = 'LetExp::CompatibleNullityForIn'.getSeverity()
 		 *   in
 		 *     if severity <= 0
@@ -253,7 +253,7 @@ implements LetExp {
 	{
 		/**
 		 *
-		 * inv validateTypeIsInType:
+		 * inv TypeIsInType:
 		 *   let severity : Integer[1] = 'LetExp::TypeIsInType'.getSeverity()
 		 *   in
 		 *     if severity <= 0
@@ -300,7 +300,7 @@ implements LetExp {
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'LetExp::TypeIsNotInvalid'.getSeverity()
 		 *   in
 		 *     if severity <= 0

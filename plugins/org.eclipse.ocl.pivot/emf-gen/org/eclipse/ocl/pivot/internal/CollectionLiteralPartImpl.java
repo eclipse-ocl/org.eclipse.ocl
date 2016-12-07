@@ -39,8 +39,8 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * @generated
  */
 public abstract class CollectionLiteralPartImpl
-		extends TypedElementImpl
-		implements CollectionLiteralPart {
+extends TypedElementImpl
+implements CollectionLiteralPart {
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -66,11 +66,12 @@ public abstract class CollectionLiteralPartImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean validateTypeIsNotInvalid(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralPart::TypeIsNotInvalid'.getSeverity()
 		 *   in

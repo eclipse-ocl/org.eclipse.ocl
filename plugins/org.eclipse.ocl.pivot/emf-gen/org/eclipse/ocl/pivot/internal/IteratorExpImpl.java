@@ -198,7 +198,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateUnsafeSourceCanNotBeNull:
+		 * inv UnsafeSourceCanNotBeNull:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::UnsafeSourceCanNotBeNull'.getSeverity()
 		 *   in
@@ -347,7 +347,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateAnyHasOneIterator:
+		 * inv AnyHasOneIterator:
 		 *   let severity : Integer[1] = 'IteratorExp::AnyHasOneIterator'.getSeverity()
 		 *   in
 		 *     if severity <= 0
@@ -411,7 +411,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateAnyTypeIsSourceElementType:
+		 * inv AnyTypeIsSourceElementType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::AnyTypeIsSourceElementType'.getSeverity()
 		 *   in
@@ -515,7 +515,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateAnyBodyTypeIsBoolean:
+		 * inv AnyBodyTypeIsBoolean:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::AnyBodyTypeIsBoolean'.getSeverity()
 		 *   in
@@ -579,7 +579,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateClosureHasOneIterator:
+		 * inv ClosureHasOneIterator:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::ClosureHasOneIterator'.getSeverity()
 		 *   in
@@ -645,7 +645,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateClosureTypeIsUniqueCollection:
+		 * inv ClosureTypeIsUniqueCollection:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::ClosureTypeIsUniqueCollection'.getSeverity()
 		 *   in
@@ -797,7 +797,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateCollectElementTypeIsFlattenedBodyType:
+		 * inv CollectElementTypeIsFlattenedBodyType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::CollectElementTypeIsFlattenedBodyType'.getSeverity()
 		 *   in
@@ -874,7 +874,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateClosureSourceElementTypeIsBodyElementType:
+		 * inv ClosureSourceElementTypeIsBodyElementType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::ClosureSourceElementTypeIsBodyElementType'.getSeverity()
 		 *   in
@@ -978,7 +978,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateClosureElementTypeIsSourceElementType:
+		 * inv ClosureElementTypeIsSourceElementType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::ClosureElementTypeIsSourceElementType'.getSeverity()
 		 *   in
@@ -1068,7 +1068,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateCollectTypeIsUnordered:
+		 * inv CollectTypeIsUnordered:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::CollectTypeIsUnordered'.getSeverity()
 		 *   in
@@ -1205,7 +1205,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateSortedByIsOrderedIfSourceIsOrdered:
+		 * inv SortedByIsOrderedIfSourceIsOrdered:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::SortedByIsOrderedIfSourceIsOrdered'.getSeverity()
 		 *   in
@@ -1342,7 +1342,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateSortedByElementTypeIsSourceElementType:
+		 * inv SortedByElementTypeIsSourceElementType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::SortedByElementTypeIsSourceElementType'.getSeverity()
 		 *   in
@@ -1417,7 +1417,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateIteratorTypeIsSourceElementType:
+		 * inv IteratorTypeIsSourceElementType:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::IteratorTypeIsSourceElementType'.getSeverity()
 		 *   in
@@ -1532,7 +1532,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateSafeIteratorIsRequired:
+		 * inv SafeIteratorIsRequired:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorExp::SafeIteratorIsRequired'.getSeverity()
 		 *   in
@@ -1636,7 +1636,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	{
 		/**
 		 *
-		 * inv validateSafeSourceCanBeNull:
+		 * inv SafeSourceCanBeNull:
 		 *   let severity : Integer[1] = 'IteratorExp::SafeSourceCanBeNull'.getSeverity()
 		 *   in
 		 *     if severity <= 0

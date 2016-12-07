@@ -238,7 +238,7 @@ public abstract class LoopExpImpl
 	{
 		/**
 		 *
-		 * inv validateSourceIsCollection:
+		 * inv SourceIsCollection:
 		 *   let severity : Integer[1] = 'LoopExp::SourceIsCollection'.getSeverity()
 		 *   in
 		 *     if severity <= 0
@@ -302,7 +302,7 @@ public abstract class LoopExpImpl
 	{
 		/**
 		 *
-		 * inv validateNoInitializers:
+		 * inv NoInitializers:
 		 *   let severity : Integer[1] = 'LoopExp::NoInitializers'.getSeverity()
 		 *   in
 		 *     if severity <= 0

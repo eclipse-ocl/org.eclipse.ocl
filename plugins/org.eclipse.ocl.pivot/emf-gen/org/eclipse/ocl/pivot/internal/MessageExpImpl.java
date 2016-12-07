@@ -302,7 +302,7 @@ public class MessageExpImpl
 	{
 		/**
 		 *
-		 * inv validateOneCallOrOneSend:
+		 * inv OneCallOrOneSend:
 		 *   let severity : Integer[1] = 'MessageExp::OneCallOrOneSend'.getSeverity()
 		 *   in
 		 *     if severity <= 0
@@ -354,7 +354,7 @@ public class MessageExpImpl
 	{
 		/**
 		 *
-		 * inv validateTargetIsNotACollection:
+		 * inv TargetIsNotACollection:
 		 *   let
 		 *     severity : Integer[1] = 'MessageExp::TargetIsNotACollection'.getSeverity()
 		 *   in

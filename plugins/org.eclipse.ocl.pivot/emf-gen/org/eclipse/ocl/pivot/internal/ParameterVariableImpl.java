@@ -72,7 +72,7 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	{
 		/**
 		 *
-		 * inv validateHasNoInitializer:
+		 * inv HasNoInitializer:
 		 *   let
 		 *     severity : Integer[1] = 'ParameterVariable::HasNoInitializer'.getSeverity()
 		 *   in

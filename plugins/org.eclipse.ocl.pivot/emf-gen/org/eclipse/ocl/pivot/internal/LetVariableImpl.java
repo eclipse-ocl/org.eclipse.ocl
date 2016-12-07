@@ -74,7 +74,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 	{
 		/**
 		 *
-		 * inv validateCompatibleNullityForInitializer:
+		 * inv CompatibleNullityForInitializer:
 		 *   let
 		 *     severity : Integer[1] = 'LetVariable::CompatibleNullityForInitializer'.getSeverity()
 		 *   in
@@ -137,7 +137,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 	{
 		/**
 		 *
-		 * inv validateCompatibleTypeForInitializer:
+		 * inv CompatibleTypeForInitializer:
 		 *   let
 		 *     severity : Integer[1] = 'LetVariable::CompatibleTypeForInitializer'.getSeverity()
 		 *   in
@@ -233,7 +233,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 	{
 		/**
 		 *
-		 * inv validateHasInitializer:
+		 * inv HasInitializer:
 		 *   let severity : Integer[1] = 'LetVariable::HasInitializer'.getSeverity()
 		 *   in
 		 *     if severity <= 0

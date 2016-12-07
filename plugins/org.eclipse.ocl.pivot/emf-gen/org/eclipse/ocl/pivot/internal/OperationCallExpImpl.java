@@ -549,7 +549,7 @@ public class OperationCallExpImpl
 	{
 		/**
 		 *
-		 * inv validateArgumentTypeIsConformant:
+		 * inv ArgumentTypeIsConformant:
 		 *   let
 		 *     severity : Integer[1] = 'OperationCallExp::ArgumentTypeIsConformant'.getSeverity()
 		 *   in
@@ -777,7 +777,7 @@ public class OperationCallExpImpl
 	{
 		/**
 		 *
-		 * inv validateSafeSourceCanBeNull:
+		 * inv SafeSourceCanBeNull:
 		 *   let
 		 *     severity : Integer[1] = 'OperationCallExp::SafeSourceCanBeNull'.getSeverity()
 		 *   in
@@ -879,7 +879,7 @@ public class OperationCallExpImpl
 	{
 		/**
 		 *
-		 * inv validateArgumentCount:
+		 * inv ArgumentCount:
 		 *   let severity : Integer[1] = 'OperationCallExp::ArgumentCount'.getSeverity()
 		 *   in
 		 *     if severity <= 0

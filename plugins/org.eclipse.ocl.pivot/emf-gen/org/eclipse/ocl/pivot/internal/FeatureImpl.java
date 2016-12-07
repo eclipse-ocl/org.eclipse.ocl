@@ -192,7 +192,7 @@ public abstract class FeatureImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'Feature::TypeIsNotInvalid'.getSeverity()
 		 *   in
 		 *     if severity <= 0

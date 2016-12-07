@@ -144,7 +144,7 @@ public class CollectionItemImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsItemType:
+		 * inv TypeIsItemType:
 		 *   let severity : Integer[1] = 'CollectionItem::TypeIsItemType'.getSeverity()
 		 *   in
 		 *     if severity <= 0

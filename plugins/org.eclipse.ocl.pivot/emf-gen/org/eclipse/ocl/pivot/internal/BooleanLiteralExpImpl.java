@@ -162,7 +162,7 @@ public class BooleanLiteralExpImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsBoolean:
+		 * inv TypeIsBoolean:
 		 *   let severity : Integer[1] = 'BooleanLiteralExp::TypeIsBoolean'.getSeverity()
 		 *   in
 		 *     if severity <= 0

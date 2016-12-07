@@ -186,7 +186,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	{
 		/**
 		 *
-		 * inv validateClassHasNoStringValueInitializer:
+		 * inv ClassHasNoStringValueInitializer:
 		 *   let
 		 *     severity : Integer[1] = 'ShadowExp::ClassHasNoStringValueInitializer'.getSeverity()
 		 *   in
@@ -259,7 +259,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	{
 		/**
 		 *
-		 * inv validateDataTypeHasNoPartInitializers:
+		 * inv DataTypeHasNoPartInitializers:
 		 *   let
 		 *     severity : Integer[1] = 'ShadowExp::DataTypeHasNoPartInitializers'.getSeverity()
 		 *   in
@@ -326,7 +326,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	{
 		/**
 		 *
-		 * inv validateDataTypeHasStringValueInitializer:
+		 * inv DataTypeHasStringValueInitializer:
 		 *   let
 		 *     severity : Integer[1] = 'ShadowExp::DataTypeHasStringValueInitializer'.getSeverity()
 		 *   in
@@ -391,7 +391,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	{
 		/**
 		 *
-		 * inv validateInitializesAllClassProperties:
+		 * inv InitializesAllClassProperties:
 		 *   let
 		 *     severity : Integer[1] = 'ShadowExp::InitializesAllClassProperties'.getSeverity()
 		 *   in
@@ -897,7 +897,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'ShadowExp::TypeIsNotInvalid'.getSeverity()
 		 *   in
 		 *     if severity <= 0

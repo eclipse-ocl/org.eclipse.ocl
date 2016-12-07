@@ -137,7 +137,7 @@ public class StateExpImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let severity : Integer[1] = 'StateExp::TypeIsNotInvalid'.getSeverity()
 		 *   in
 		 *     if severity <= 0

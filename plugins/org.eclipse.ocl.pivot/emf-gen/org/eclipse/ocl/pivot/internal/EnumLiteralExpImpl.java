@@ -137,7 +137,7 @@ public class EnumLiteralExpImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsEnumerationType:
+		 * inv TypeIsEnumerationType:
 		 *   let
 		 *     severity : Integer[1] = 'EnumLiteralExp::TypeIsEnumerationType'.getSeverity()
 		 *   in

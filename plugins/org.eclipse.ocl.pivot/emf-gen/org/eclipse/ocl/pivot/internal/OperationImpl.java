@@ -745,7 +745,7 @@ implements Operation {
 	{
 		/**
 		 *
-		 * inv validateCompatibleReturn:
+		 * inv CompatibleReturn:
 		 *   let severity : Integer[1] = 'Operation::CompatibleReturn'.getSeverity()
 		 *   in
 		 *     if severity <= 0
@@ -829,7 +829,7 @@ implements Operation {
 	{
 		/**
 		 *
-		 * inv validateLoadableImplementation:
+		 * inv LoadableImplementation:
 		 *   let
 		 *     severity : Integer[1] = 'Operation::LoadableImplementation'.getSeverity()
 		 *   in
@@ -865,7 +865,7 @@ implements Operation {
 	{
 		/**
 		 *
-		 * inv validateUniquePreconditionName:
+		 * inv UniquePreconditionName:
 		 *   let
 		 *     severity : Integer[1] = 'Operation::UniquePreconditionName'.getSeverity()
 		 *   in
@@ -934,7 +934,7 @@ implements Operation {
 	{
 		/**
 		 *
-		 * inv validateUniquePostconditionName:
+		 * inv UniquePostconditionName:
 		 *   let
 		 *     severity : Integer[1] = 'Operation::UniquePostconditionName'.getSeverity()
 		 *   in

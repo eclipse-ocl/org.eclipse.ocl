@@ -152,7 +152,7 @@ public class TupleLiteralPartImpl
 	{
 		/**
 		 *
-		 * inv validateCompatibleInitialiserType:
+		 * inv CompatibleInitialiserType:
 		 *   let
 		 *     severity : Integer[1] = 'TupleLiteralPart::CompatibleInitialiserType'.getSeverity()
 		 *   in
@@ -248,7 +248,7 @@ public class TupleLiteralPartImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let
 		 *     severity : Integer[1] = 'TupleLiteralPart::TypeIsNotInvalid'.getSeverity()
 		 *   in

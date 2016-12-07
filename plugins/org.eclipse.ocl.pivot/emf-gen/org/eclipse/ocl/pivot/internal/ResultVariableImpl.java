@@ -75,7 +75,7 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 	{
 		/**
 		 *
-		 * inv validateCompatibleNullityForInitializer:
+		 * inv CompatibleNullityForInitializer:
 		 *   let
 		 *     severity : Integer[1] = 'ResultVariable::CompatibleNullityForInitializer'.getSeverity()
 		 *   in
@@ -168,7 +168,7 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 	{
 		/**
 		 *
-		 * inv validateCompatibleTypeForInitializer:
+		 * inv CompatibleTypeForInitializer:
 		 *   let
 		 *     severity : Integer[1] = 'ResultVariable::CompatibleTypeForInitializer'.getSeverity()
 		 *   in
@@ -264,7 +264,7 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 	{
 		/**
 		 *
-		 * inv validateHasInitializer:
+		 * inv HasInitializer:
 		 *   let severity : Integer[1] = 'ResultVariable::HasInitializer'.getSeverity()
 		 *   in
 		 *     if severity <= 0

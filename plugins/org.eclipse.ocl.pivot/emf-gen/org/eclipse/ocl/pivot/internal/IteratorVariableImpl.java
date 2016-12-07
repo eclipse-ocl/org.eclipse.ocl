@@ -72,7 +72,7 @@ public class IteratorVariableImpl extends VariableImpl implements IteratorVariab
 	{
 		/**
 		 *
-		 * inv validateHasNoInitializer:
+		 * inv HasNoInitializer:
 		 *   let
 		 *     severity : Integer[1] = 'IteratorVariable::HasNoInitializer'.getSeverity()
 		 *   in

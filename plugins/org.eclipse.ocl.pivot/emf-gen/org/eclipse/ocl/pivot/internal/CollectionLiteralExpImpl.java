@@ -191,7 +191,7 @@ public class CollectionLiteralExpImpl
 	{
 		/**
 		 *
-		 * inv validateCollectionKindIsConcrete:
+		 * inv CollectionKindIsConcrete:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralExp::CollectionKindIsConcrete'.getSeverity()
 		 *   in
@@ -238,7 +238,7 @@ public class CollectionLiteralExpImpl
 	{
 		/**
 		 *
-		 * inv validateSetKindIsSet:
+		 * inv SetKindIsSet:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralExp::SetKindIsSet'.getSeverity()
 		 *   in
@@ -305,7 +305,7 @@ public class CollectionLiteralExpImpl
 	{
 		/**
 		 *
-		 * inv validateOrderedSetKindIsOrderedSet:
+		 * inv OrderedSetKindIsOrderedSet:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralExp::OrderedSetKindIsOrderedSet'.getSeverity()
 		 *   in
@@ -372,7 +372,7 @@ public class CollectionLiteralExpImpl
 	{
 		/**
 		 *
-		 * inv validateSequenceKindIsSequence:
+		 * inv SequenceKindIsSequence:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralExp::SequenceKindIsSequence'.getSeverity()
 		 *   in
@@ -439,7 +439,7 @@ public class CollectionLiteralExpImpl
 	{
 		/**
 		 *
-		 * inv validateBagKindIsBag:
+		 * inv BagKindIsBag:
 		 *   let
 		 *     severity : Integer[1] = 'CollectionLiteralExp::BagKindIsBag'.getSeverity()
 		 *   in

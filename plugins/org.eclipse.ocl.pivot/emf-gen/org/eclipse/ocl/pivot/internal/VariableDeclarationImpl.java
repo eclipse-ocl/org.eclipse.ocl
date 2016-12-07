@@ -118,7 +118,7 @@ public abstract class VariableDeclarationImpl
 	{
 		/**
 		 *
-		 * inv validateTypeIsNotInvalid:
+		 * inv TypeIsNotInvalid:
 		 *   let
 		 *     severity : Integer[1] = 'VariableDeclaration::TypeIsNotInvalid'.getSeverity()
 		 *   in

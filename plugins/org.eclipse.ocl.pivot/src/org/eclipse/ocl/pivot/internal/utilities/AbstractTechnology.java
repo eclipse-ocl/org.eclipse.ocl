@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 public abstract class AbstractTechnology implements Technology
@@ -59,7 +60,7 @@ public abstract class AbstractTechnology implements Technology
 
 	@Override
 	public @Nullable String getOriginalName(@NonNull ENamedElement eNamedElement) {
-		return eNamedElement.getName();
+		return NameUtil.getOriginalName(eNamedElement);
 	}
 
 	@Override

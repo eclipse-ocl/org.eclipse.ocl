@@ -433,7 +433,7 @@ public class ConstraintImpl
 	{
 		/**
 		 *
-		 * inv validateUniqueName:
+		 * inv UniqueName:
 		 *   let severity : Integer[1] = 'Constraint::UniqueName'.getSeverity()
 		 *   in
 		 *     if severity <= 0

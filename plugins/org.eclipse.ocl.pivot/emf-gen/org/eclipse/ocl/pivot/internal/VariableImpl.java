@@ -230,7 +230,7 @@ implements Variable {
 	{
 		/**
 		 *
-		 * inv validateCompatibleInitialiserType:
+		 * inv CompatibleInitialiserType:
 		 *   let
 		 *     severity : Integer[1] = 'Variable::CompatibleInitialiserType'.getSeverity()
 		 *   in

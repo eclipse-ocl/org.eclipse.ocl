@@ -485,7 +485,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	{
 		/**
 		 *
-		 * inv validateTypeIsResultType:
+		 * inv TypeIsResultType:
 		 *   let severity : Integer[1] = 'IterateExp::TypeIsResultType'.getSeverity()
 		 *   in
 		 *     if severity <= 0
@@ -547,7 +547,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	{
 		/**
 		 *
-		 * inv validateUnsafeSourceCanNotBeNull:
+		 * inv UnsafeSourceCanNotBeNull:
 		 *   let
 		 *     severity : Integer[1] = 'IterateExp::UnsafeSourceCanNotBeNull'.getSeverity()
 		 *   in
@@ -696,7 +696,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	{
 		/**
 		 *
-		 * inv validateBodyTypeConformsToResultType:
+		 * inv BodyTypeConformsToResultType:
 		 *   let
 		 *     severity : Integer[1] = 'IterateExp::BodyTypeConformsToResultType'.getSeverity()
 		 *   in
@@ -762,7 +762,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	{
 		/**
 		 *
-		 * inv validateOneInitializer:
+		 * inv OneInitializer:
 		 *   let severity : Integer[1] = 'IterateExp::OneInitializer'.getSeverity()
 		 *   in
 		 *     if severity <= 0
@@ -825,7 +825,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	{
 		/**
 		 *
-		 * inv validateSafeIteratorIsRequired:
+		 * inv SafeIteratorIsRequired:
 		 *   let
 		 *     severity : Integer[1] = 'IterateExp::SafeIteratorIsRequired'.getSeverity()
 		 *   in
@@ -929,7 +929,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 	{
 		/**
 		 *
-		 * inv validateSafeSourceCanBeNull:
+		 * inv SafeSourceCanBeNull:
 		 *   let severity : Integer[1] = 'IterateExp::SafeSourceCanBeNull'.getSeverity()
 		 *   in
 		 *     if severity <= 0
