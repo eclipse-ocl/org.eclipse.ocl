@@ -213,6 +213,9 @@ Workflow {
     component = SetASmetamodel { skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     }
+    component = StructuralENamedElementIdAssigner { skipOnErrors = true
+    	modelSlot = "${ecoreSlot}"
+    }
     component = ResourceWriter { resourceSet = pivotMergeResourceSet skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     	uri = "/${internalProjectName}/model/Pivot.ecore"
@@ -230,16 +233,6 @@ Workflow {
     	modelSlot = "xyzzy"
     	genModel = "/${internalProjectName}/model/Pivot.genmodel"
     	ecoreFile = "/${internalProjectName}/model/Pivot.ecore"
-    }
-     component = ResourceReader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
-    	modelSlot = "${ecoreSlot}"
-    	uri = "/${internalProjectName}/model/Pivot.ecore"
-    }
-    component = EPackageAlphabetizer { skipOnErrors = true
-    	modelSlot = "${ecoreSlot}"
-    }
-    component = ResourceWriter { resourceSet = pivotGenerateResourceSet skipOnErrors = true
-    	modelSlot = "${ecoreSlot}"
     }
     
     component = GenerateModel { resourceSet = pivotGenerateResourceSet skipOnErrors = true

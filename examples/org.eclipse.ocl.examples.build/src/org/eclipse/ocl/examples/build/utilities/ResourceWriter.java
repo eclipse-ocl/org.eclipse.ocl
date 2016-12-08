@@ -11,7 +11,6 @@
 package org.eclipse.ocl.examples.build.utilities;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -30,7 +29,6 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 /**
@@ -86,23 +84,11 @@ public class ResourceWriter extends WorkflowComponentWithModelSlot
 				Resource saveResource = resourceSet.createResource(fileURI, contentTypeIdentifier);
 				Map<@NonNull EObject, @NonNull String> eObject2xmiId = null;
 				if ((inputResource instanceof XMLResource) && (saveResource instanceof XMLResource)) {
-					XMLResource xmlResource = (XMLResource)inputResource;
-					for (EObject eObject : new TreeIterable(inputResource)) {
-						String xmiId = xmlResource.getID(eObject);
-						if (xmiId != null) {
-							if (eObject2xmiId == null) {
-								eObject2xmiId = new HashMap<>();
-							}
-							eObject2xmiId.put(eObject,  xmiId);
-						}
-					}
+					eObject2xmiId = XMIUtil.getIds((XMLResource)inputResource);
 				}
 				saveResource.getContents().addAll(inputResource.getContents());
 				if (eObject2xmiId != null) {
-					XMLResource xmlResource = (XMLResource)saveResource;
-					for (Map.Entry<@NonNull EObject, @NonNull String> entry : eObject2xmiId.entrySet()) {
-						xmlResource.setID(entry.getKey(),  entry.getValue());
-					}
+					XMIUtil.setIds((XMLResource) saveResource, eObject2xmiId);
 				}
 				saveResource.save(getSaveOptions());
 				inputResource.getContents().addAll(saveResource.getContents());
