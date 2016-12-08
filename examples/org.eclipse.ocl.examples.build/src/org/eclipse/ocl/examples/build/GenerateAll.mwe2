@@ -18,12 +18,11 @@ import org.eclipse.ocl.examples.build.utilities.*
  * Generate all auto-generated files for the OCL Examples Editors
  */
 Workflow {
-// FIXME the use of StandaloneProjectMap in GeneratePivotModel disrupts GenModel GenerateXtextModels
-//  so GeneratePivotModel must be run manually before GenerateAll
-// Also because the use of UML JET templates for the Pivot cannot coexist with EMF JET templates for other models
-//  component = @GeneratePivotModel {}
+  component = @GeneratePivotModel {}
   component = @GenerateCSModels {}
   component = @GenerateCGModels {}
   component = @GenerateAllEditors {}
   component = @GenerateOCLstdlibModel {}
+//FIXME GenerateTestModels requires manual fixup of the Values package
+//  component = @GenerateTestModels {}
 }

@@ -164,7 +164,7 @@ public class ConvertToUnixLineEndings extends AbstractWorkflowComponent2 {
 						changed = true;
 					}
 					else if (c == '\n') {
-						for (int len = s.length(); len-- >= 0; ) {
+						for (int len = s.length(); --len >= 0; ) {
 							char ch = s.charAt(len);
 							if ((ch != '\n') && Character.isWhitespace(ch)) {
 								s.setLength(len);

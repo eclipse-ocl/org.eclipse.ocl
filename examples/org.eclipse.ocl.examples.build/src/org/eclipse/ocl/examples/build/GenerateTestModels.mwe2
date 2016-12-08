@@ -17,39 +17,39 @@ import org.eclipse.ocl.examples.build.xtend.*
 import org.eclipse.emf.ecore.resource.impl.*
 
 Workflow {
-	bean = ResourceSetImpl : resourceSet {}
-    bean = ProjectMapSetup{ resourceSet = resourceSet}
-    bean = EcoreGenModelSetup { resourceSet = resourceSet }
+	bean = ResourceSetImpl : testResourceSet {}
+    bean = ProjectMapSetup{ resourceSet = testResourceSet}
+    bean = EcoreGenModelSetup { resourceSet = testResourceSet }
     //
     //	Models with no script of their own.
     //
-	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true
     	genModel = "/org.eclipse.ocl.pivot/model/Values.genmodel"
     	//
     	// NB This is irregular, with *Impl largely manual.
     	// Generate then use GIT diff to keep only the good new bits
     	//
     }
-	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true
     	genModel = "/org.eclipse.ocl.examples.emf.validation.validity/model/Validity.genmodel"
     }
     //
     //	The JUnit test models
     //
-	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true
     	genModel = "/org.eclipse.ocl.examples.xtext.tests/model/Company.genmodel"
     }
-	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true
     	genModel = "/org.eclipse.ocl.examples.xtext.tests/model/CodeGenCompanySrc.genmodel"
 //    	genModel = "/org.eclipse.ocl.examples.xtext.tests/model/CodeGenCompany.genmodel" is used by the JUnit tests
     }
-	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true 
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true 
     	genModel = "/org.eclipse.ocl.examples.xtext.tests/model/NoReflectionCompany.genmodel"
     }
-	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true 
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true 
     	genModel = "/org.eclipse.ocl.examples.xtext.tests/src/org/eclipse/ocl/examples/test/xtext/models/Bug477283A.genmodel"
     }
-	component = GenerateModel { resourceSet = resourceSet skipOnErrors = true 
+	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true 
     	genModel = "/org.eclipse.ocl.examples.xtext.tests/src/org/eclipse/ocl/examples/test/xtext/models/Bug477283B.genmodel"
     }
 }

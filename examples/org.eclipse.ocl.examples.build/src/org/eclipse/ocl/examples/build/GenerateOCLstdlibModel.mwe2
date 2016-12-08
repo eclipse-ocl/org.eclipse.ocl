@@ -48,5 +48,8 @@ Workflow {
     	genModelFile = "/${sourceName}/model/oclstdlib.genmodel"
     	genOCLstdlib = true
     }
+	component = ConvertToUnixLineEndings {
+		directory = "../../plugins/${sourceName}/emf-gen"
+	}
 }
 
