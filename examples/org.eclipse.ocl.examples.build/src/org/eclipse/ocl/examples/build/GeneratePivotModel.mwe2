@@ -182,28 +182,37 @@ Workflow {
     }
 
 
+	bean = ResourceSetImpl : pivotRenameResourceSet {}
+    bean = ProjectMapSetup { resourceSet = pivotRenameResourceSet }
+    bean = UMLStandaloneSetup { resourceSet = pivotRenameResourceSet }
+    bean = OCLStandaloneSetup {}
+    bean = EcoreGenModelSetup { resourceSet = pivotRenameResourceSet }
+    component = ResourceRenamer { resourceSet = pivotRenameResourceSet skipOnErrors = true
+    	projectName = "${buildProjectName}"
+    	resourceRename = {
+    		from = "model-gen/RawPivot.ecore"
+    		to = "../${internalProjectName}/model/Pivot.ecore"
+    	}
+    }
+    //
+    //
+    //
 	bean = ResourceSetImpl : pivotMergeResourceSet {}
     bean = ProjectMapSetup { resourceSet = pivotMergeResourceSet }
     bean = UMLStandaloneSetup { resourceSet = pivotMergeResourceSet }
     bean = OCLStandaloneSetup {}
     bean = EcoreGenModelSetup { resourceSet = pivotMergeResourceSet }
+    component = ConstraintMerger { resourceSet = pivotMergeResourceSet skipOnErrors = true
+    	projectName = "${internalProjectName}"
+    	libraryURI = "http://www.eclipse.org/ocl/2015/Library"
+    	ecoreURI = "model/Pivot.ecore"
+    	oclURI = "model/Pivot.ocl"
+    	invariantPrefix = "validate"
+    }
     component = ResourceReader { resourceSet = pivotMergeResourceSet skipOnErrors = true
-    	modelSlot = "${ecoreSlot}"
-    	uri = "/${buildProjectName}/model-gen/RawPivot.ecore"
-	}
-    component = ResourceRenamer { /*resourceSet = pivotGenerateResourceSet*/ skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     	uri = "/${internalProjectName}/model/Pivot.ecore"
 	}
-    component = EConstraintRemover { skipOnErrors = true
-    	modelSlot = "${ecoreSlot}"
-    }
-    component = ConstraintMerger { resourceSet = pivotMergeResourceSet skipOnErrors = true
-    	projectName = "${internalProjectName}"
-    	modelSlot = "${ecoreSlot}"
-    	uri = "model/Pivot.ocl"
-    	invariantPrefix = "validate"
-    }
     component = EPackageAlphabetizer { skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     }
@@ -230,7 +239,6 @@ Workflow {
     bean = EcoreGenModelSetup { resourceSet = pivotGenerateResourceSet }
      component = GenmodelReloader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
     	projectName = "${internalProjectName}"
-    	modelSlot = "xyzzy"
     	genModel = "/${internalProjectName}/model/Pivot.genmodel"
     	ecoreFile = "/${internalProjectName}/model/Pivot.ecore"
     }

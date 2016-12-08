@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
@@ -49,9 +50,12 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 
 import com.google.common.collect.Sets;
@@ -62,7 +66,9 @@ import com.google.common.collect.Sets;
 public class ConstraintMerger extends AbstractProjectComponent
 {
 	private Logger log = Logger.getLogger(getClass());
-	protected String uri;
+	protected @NonNull List<@NonNull String> ecoreURIs = new ArrayList<>();
+	protected String libraryURI = null;
+	protected @NonNull List<@NonNull String> oclURIs = new ArrayList<>();
 	protected String invariantPrefix;
 
 	public ConstraintMerger() {
@@ -70,52 +76,81 @@ public class ConstraintMerger extends AbstractProjectComponent
 		CompleteOCLStandaloneSetup.doSetup();
 	}
 
+	public void addEcoreURI(String ecoreURI) {
+		assert ecoreURI != null;
+		ecoreURIs.add(ecoreURI);
+	}
+
+	public void addOclURI(String oclURI) {
+		assert oclURI != null;
+		oclURIs.add(oclURI);
+	}
+
 	@Override
 	public void checkConfiguration(Issues issues) {
 		super.checkConfiguration(issues);
-		if (uri == null) {
-			issues.addError(this, "uri not specified.");
+		if (ecoreURIs.size() <= 0) {
+			issues.addError(this, "no ecoreURI specified.");
 		}
-	}
-
-	public String getUri() {
-		return uri;
+		if (oclURIs.size() <= 0) {
+			issues.addError(this, "no oclURI specified.");
+		}
 	}
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
+		ResourceSet resourceSet = getResourceSet();
 		StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.nonNullState(getProjectDescriptor());
-		assert uri != null;
-		URI inputURI = projectDescriptor.getPlatformResourceURI(uri);
-		log.info("Merging '" + inputURI + "'");
-		Resource ecoreResource = (Resource) ctx.get(getModelSlot());
-		EPackage ecorePivotPackage = (EPackage) ecoreResource.getContents().get(0);
-		final String pivotNsURI = ClassUtil.nonNullState(ecorePivotPackage.getNsURI());
-		OCLInternal ocl = OCLInternal.newInstance();
+		//		Resource ecoreResource = (Resource) ctx.get(getModelSlot());
+		//		EPackage ecorePivotPackage = (EPackage) ecoreResource.getContents().get(0);
+		//		final String pivotNsURI = ClassUtil.nonNullState(ecorePivotPackage.getNsURI());
+		OCLInternal ocl = OCLInternal.newInstance(resourceSet);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
-		ocl.getResourceSet().getResources().add(ecoreResource);		// Don't load another copy
-		ocl.getStandardLibrary().setDefaultStandardLibraryURI(pivotNsURI);
-		StandardLibraryContribution.REGISTRY.put(pivotNsURI, new OCLstdlib.Loader());
-		for (EObject eObject : ecoreResource.getContents()) {
-			if (eObject instanceof EPackage) {
-				EPackage ePackage = (EPackage) eObject;
-				ClassUtil.getMetamodelAnnotation(ePackage); // Install EAnnotation
-			}
+		//		ocl.getResourceSet().getResources().add(ecoreResource);		// Don't load another copy
+		String libraryURI2 = libraryURI;
+		if (libraryURI2 != null) {
+			ocl.getStandardLibrary().setDefaultStandardLibraryURI(libraryURI2);
+			StandardLibraryContribution.REGISTRY.put(libraryURI2, new OCLstdlib.Loader());
 		}
-		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, ocl.getEnvironmentFactory());
-		Model pivotModel = ecore2as.getASModel();
-		ASResource asResource = ClassUtil.nonNullState((ASResource)pivotModel.eResource());
-		Set<@NonNull Resource> primaryASResources = Sets.newHashSet(asResource);
-		//FIXME		diagnoseErrors(asResource);
+
+
+		//
 		try {
-			CSResource csResource = ocl.getCSResource(inputURI);
+			for (@NonNull String ecoreURI : ecoreURIs) {
+				URI uri = projectDescriptor.getPlatformResourceURI(ecoreURI);
+				log.info("Loading " + uri);
+				Resource ecoreResource = resourceSet.getResource(uri, true);
+				EcoreUtil.resolveAll(ecoreResource);
+				ResourceUtils.checkResource(ecoreResource);
+				for (EObject eObject : ecoreResource.getContents()) {
+					if (eObject instanceof EPackage) {
+						EPackage ePackage = (EPackage) eObject;
+						ClassUtil.getMetamodelAnnotation(ePackage); // Install EAnnotation
+					}
+				}
+				Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
+				Model pivotModel = ecore2as.getASModel();
+				ASResource asResource = ClassUtil.nonNullState((ASResource)pivotModel.eResource());
+				ResourceUtils.checkResource(asResource);
+			}
+			EcoreUtil.resolveAll(resourceSet);
+			ResourceUtils.checkResourceSet(resourceSet);
+			Set<@NonNull Resource> primaryASResources = Sets.newHashSet(ClassUtil.nullFree(asResourceSet.getResources()));
+			//
+			for (@NonNull String oclURI : oclURIs) {
+				URI uri = projectDescriptor.getPlatformResourceURI(oclURI);
+				log.info("Merging " + uri);
+				CSResource csResource = ocl.getCSResource(uri);
+				ResourceUtils.checkResourceSet(asResourceSet);
+				@SuppressWarnings("unused") Resource oclResource = csResource.getASResource();
+			}
 			ResourceUtils.checkResourceSet(asResourceSet);
-			@SuppressWarnings("unused") Resource oclResource = csResource.getASResource();
+			//
 			Set<@NonNull Resource> modifiedPrimaryASResources = new HashSet<>();
 			Map<@NonNull CompleteClass, @NonNull List<org.eclipse.ocl.pivot.Class>> completeClass2mergeTypes = new HashMap<>();
-			for (Resource secondaryASResource : metamodelManager.getASResourceSet().getResources()) {
+			for (Resource secondaryASResource : asResourceSet.getResources()) {
 				if (!primaryASResources.contains(secondaryASResource)) {
 					for (TreeIterator<EObject> tit = secondaryASResource.getAllContents(); tit.hasNext(); ) {
 						EObject eObject = tit.next();
@@ -162,14 +197,31 @@ public class ConstraintMerger extends AbstractProjectComponent
 			Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 			options.put(AS2Ecore.OPTION_SUPPRESS_DUPLICATES, true);
 			options.put(AS2Ecore.OPTION_INVARIANT_PREFIX, invariantPrefix);
+			ProjectManager projectManager = StandaloneProjectMap.findAdapter(resourceSet);
+			resourceSet.getResources().clear();
 			for (@NonNull Resource modifiedPrimaryASResource : modifiedPrimaryASResources) {
 				Model asModel = PivotUtil.getModel(modifiedPrimaryASResource);
 				String externalURI = asModel.getExternalURI();
 				URI ecoreURI = URI.createURI(externalURI);
-				Resource ecoreResource2 = AS2Ecore.createResource(environmentFactory, asResource, ecoreURI, options);
-				ctx.set(getModelSlot(), ecoreResource2);
-				projectDescriptor.configure(ecoreResource2.getResourceSet(), StandaloneProjectMap.LoadBothStrategy.INSTANCE, null);
-				ocl.getResourceSet().getResources().remove(ecoreResource2);
+				//				Resource oldEcoreResource = resourceSet.getResource(ecoreURI, false);
+				//				if (oldEcoreResource != null) {
+				//
+				//				}
+				if (projectManager != null) {
+					IResourceDescriptor resourceDescriptor = null;
+					resourceDescriptor = projectManager.getResourceDescriptor(ecoreURI);
+					if (resourceDescriptor != null) {
+						resourceDescriptor.unload(resourceSet);
+						resourceDescriptor.configure(resourceSet,
+							StandaloneProjectMap.CreateStrategy.INSTANCE,
+							StandaloneProjectMap.MapToFirstConflictHandlerWithLog.INSTANCE);
+					}
+				}
+				Resource newEcoreResource = AS2Ecore.createResource(environmentFactory, modifiedPrimaryASResource, ecoreURI, options);
+				//				projectDescriptor.configure(ecoreResource2.getResourceSet(), StandaloneProjectMap.LoadBothStrategy.INSTANCE, null);
+				XMIUtil.assignIds(newEcoreResource, new XMIUtil.StructuralENamedElementIdCreator(), null);
+				newEcoreResource.save(null); //getSaveOptions());
+				//				resourceSet.getResources().remove(ecoreResource2);
 			}
 			ocl.dispose();
 		} catch (IOException e) {
@@ -228,14 +280,21 @@ public class ConstraintMerger extends AbstractProjectComponent
 		}
 	}
 
-	public void setUri(String uri) {
-		this.uri = uri;
-	}
+	//	public void setUri(String uri) {
+	//		this.uri = uri;
+	//	}
 
 	/**
 	 * Define a prefix such as "validate" for all invariant operation names.
 	 */
 	public void setInvariantPrefix(String invariantPrefix) {
 		this.invariantPrefix = invariantPrefix;
+	}
+
+	/**
+	 * Define a URI to bw loade as the OCL Standard Library.
+	 */
+	public void setLibraryURI(String libraryURI) {
+		this.libraryURI = libraryURI;
 	}
 }

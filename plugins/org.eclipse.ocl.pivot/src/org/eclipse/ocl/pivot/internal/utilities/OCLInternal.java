@@ -52,12 +52,19 @@ public class OCLInternal extends OCL
 		}
 		return adapter;
 	}
-	
+
 	public static @NonNull OCLInternal newInstance() {
-		return newInstance(BasicProjectManager.createDefaultProjectManager(), null);
+		return newInstance((ResourceSet)null);
 	}
-	
-	public static @NonNull OCLInternal newInstance(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {	
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLInternal newInstance(@Nullable ResourceSet resourceSet) {
+		return newInstance(BasicProjectManager.createDefaultProjectManager(), resourceSet);
+	}
+
+	public static @NonNull OCLInternal newInstance(@NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
 		EnvironmentFactoryInternal environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, externalResourceSet);
 		OCLInternal ocl = newInstance(environmentFactory);
 		if (externalResourceSet != null) {
@@ -65,11 +72,11 @@ public class OCLInternal extends OCL
 		}
 		return ocl;
 	}
-	
-	public static @NonNull OCLInternal newInstance(@NonNull EnvironmentFactoryInternal environmentFactory) {	
+
+	public static @NonNull OCLInternal newInstance(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		return new OCLInternal(environmentFactory);
 	}
-	
+
 	public OCLInternal(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(environmentFactory);
 	}

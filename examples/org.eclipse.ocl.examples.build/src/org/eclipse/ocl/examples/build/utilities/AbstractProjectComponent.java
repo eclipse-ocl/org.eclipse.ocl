@@ -13,19 +13,18 @@ package org.eclipse.ocl.examples.build.utilities;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
-import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
+import org.eclipse.emf.mwe.core.lib.AbstractWorkflowComponent;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 
-public abstract class AbstractProjectComponent extends WorkflowComponentWithModelSlot
+public abstract class AbstractProjectComponent extends AbstractWorkflowComponent
 {
-	private ResourceSet resourceSet = null;	
+	private ResourceSet resourceSet = null;
 	private String projectName;
 
 	@Override
 	public void checkConfiguration(Issues issues) {
-		super.checkConfiguration(issues);
 		if (projectName == null) {
 			issues.addError(this, "projectName not specified.");
 		}
@@ -49,7 +48,7 @@ public abstract class AbstractProjectComponent extends WorkflowComponentWithMode
 	public void setProjectName(@NonNull String projectName) {
 		this.projectName = projectName;
 	}
-	
+
 	public void setResourceSet(@NonNull ResourceSet resourceSet) {
 		this.resourceSet = resourceSet;
 	}

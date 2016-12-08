@@ -54,7 +54,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  * client code from the long list of parameter substitutions.  This subclass
  * also provides a shortcut to creating an <code>OCL</code> on the shared
  * {@link EnvironmentFactoryInternal} instance.
- * 
+ *
  * @see EnvironmentFactoryInternal
  */
 public class OCL
@@ -71,67 +71,66 @@ public class OCL
 	 */
 	public static final @NonNull ProjectManager CLASS_PATH = BasicProjectManager.CLASS_PATH;
 
-    /**
-     * Creates a new <code>OCL</code> with a new heavyweight ProjectManager and a new
-     * ResourceSet for loaded models.
-     */
+	/**
+	 * Creates a new <code>OCL</code> with a new heavyweight ProjectManager and a new
+	 * ResourceSet for loaded models.
+	 */
 	public static @NonNull OCL newInstance() {
 		return OCLInternal.newInstance();
 	}
-	
-    /**
-     * Creates a new <code>OCL</code> using the specified ProjectManager and a new
-     * ResourceSet for loaded models.
-     */
-	public static @NonNull OCL newInstance(@NonNull ProjectManager projectManager) {	
+
+	/**
+	 * Creates a new <code>OCL</code> using the specified ProjectManager and a new
+	 * ResourceSet for loaded models.
+	 */
+	public static @NonNull OCL newInstance(@NonNull ProjectManager projectManager) {
 		return OCLInternal.newInstance(projectManager, null);
 	}
-	
-    /**
-     * Creates a new <code>OCL</code> using the specified ProjectManager and exploiting the
-     * already loaded models and configuration of ResourceSet.
-     */
+
+	/**
+	 * Creates a new <code>OCL</code> using the specified ProjectManager and exploiting the
+	 * already loaded models and configuration of ResourceSet.
+	 */
 	public static @NonNull OCL newInstance(@NonNull ProjectManager projectManager, @NonNull ResourceSet resourceSet) {
 		OCL ocl = OCLInternal.newInstance(projectManager, resourceSet);
-//		ocl.getEnvironmentFactory().adapt(resourceSet);
+		//		ocl.getEnvironmentFactory().adapt(resourceSet);
 		return ocl;
 	}
-	
-    /**
-     * Creates a new <code>OCL</code> with a new heavyweight ProjectManager and exploiting the
-     * already loaded models and configuration of ResourceSet.
-     */
+
+	/**
+	 * Creates a new <code>OCL</code> with a new heavyweight ProjectManager and exploiting the
+	 * already loaded models and configuration of ResourceSet.
+	 */
 	public static @NonNull OCL newInstance(@NonNull ResourceSet resourceSet) {
 		OCL ocl = OCLInternal.newInstance(BasicProjectManager.createDefaultProjectManager(), resourceSet);
-//		ocl.getEnvironmentFactory().adapt(resourceSet);
+		//		ocl.getEnvironmentFactory().adapt(resourceSet);
 		return ocl;
-
 	}
-	
-    /**
-     * Creates a new <code>OCL</code> instance using the specified Ecore package registry.
-     * 
-     * Note that the returned {@link OCL} instance will use their own clean {@link ResourceSet}
-     * 
-     * @see OCL#getResourceSet()
-     */
+
+	/**
+	 * Creates a new <code>OCL</code> instance using the specified Ecore package registry.
+	 *
+	 * Note that the returned {@link OCL} instance will use their own clean {@link ResourceSet}
+	 *
+	 * @see OCL#getResourceSet()
+	 */
 	public static @NonNull OCL newInstance(EPackage.@NonNull Registry ePackageRegistry) {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.setPackageRegistry(ePackageRegistry);
 		return newInstance(NO_PROJECTS, resourceSet);
 	}
-	
-    /**
-     * Creates a new <code>OCL</code> using the specified Ecore environment
-     * factory.
-     * 
-     * @param environmentFactory an environment factory for Ecore
-     * @return the new <code>OCL</code>
-     * 
-     * @deprecated use environmentFactory.createOCL()
-     */
+
+	/**
+	 * Creates a new <code>OCL</code> using the specified Ecore environment
+	 * factory.
+	 *
+	 * @param environmentFactory an environment factory for Ecore
+	 * @return the new <code>OCL</code>
+	 *
+	 * @deprecated use environmentFactory.createOCL()
+	 */
 	@Deprecated
-	public static @NonNull OCL newInstance(@NonNull EnvironmentFactory environmentFactory) {	
+	public static @NonNull OCL newInstance(@NonNull EnvironmentFactory environmentFactory) {
 		return environmentFactory.createOCL();
 	}
 
@@ -140,14 +139,14 @@ public class OCL
 	 * This is non-null until the OCL is disposed. Any subsequent usage will provoke NPEs.
 	 */
 	protected /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;			// Set null once disposed, so NPE is use after dispose
-	
+
 	private @Nullable ModelManager modelManager;
 
 	private boolean traceEvaluation = HelperUtil.shouldTrace(OCLDebugOptions.EVALUATION);
 
 	/**
 	 * Initializes me with my environment factory and root environment.
-	 * 
+	 *
 	 * @param environmentFactory
 	 *            my environment factory
 	 */
@@ -159,7 +158,7 @@ public class OCL
 
 	/**
 	 * Update the CS resource from a asResource.
-	 * 
+	 *
 	 * For a first update, the csResource may be created by something like
 	 * <p><tt>
 	 * (BaseResource) resourceSet.createResource(outputURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
@@ -184,14 +183,14 @@ public class OCL
 	 * required. If it is an operation precondition or postcondition, however,
 	 * then the appropriate parameter variables and (in the postcondition case)
 	 * result variable should be bound in the evaluation environment.
-	 * 
+	 *
 	 * @param context
 	 *            the <tt>self</tt> object of the constraint
 	 * @param constraint
 	 *            the constraint to check
-	 * 
+	 *
 	 * @return whether the context object satisfies the constraint
-	 * 
+	 *
 	 * @see #check(Object, ExpressionInOCL)
 	 * @see #evaluate(Object, ExpressionInOCL)
 	 */
@@ -204,7 +203,7 @@ public class OCL
 		try {
 			query = getMetamodelManager().parseSpecification(specification);
 		} catch (ParserException e) {
-//			e.printStackTrace();
+			//			e.printStackTrace();
 			return false;
 		}
 		return check(context, query);
@@ -217,18 +216,18 @@ public class OCL
 	 * precondition or postcondition, however, then the appropriate parameter
 	 * variables and (in the postcondition case) result variable should be bound
 	 * in the evaluation environment.
-	 * 
+	 *
 	 * @param context
 	 *            the <tt>self</tt> object of the constraint
 	 * @param specification
 	 *            the constraint to check, which must be a boolean-valued
 	 *            expression
-	 * 
+	 *
 	 * @return whether the context object satisfies the constraint
-	 * 
+	 *
 	 * @see #check(Object, ExpressionInOCL)
 	 * @see #evaluate(Object, ExpressionInOCL)
-	 * 
+	 *
 	 * @throws IllegalArgumentException
 	 *             if the constraint expression is not boolean-valued
 	 */
@@ -245,37 +244,37 @@ public class OCL
 		}
 	}
 
-    /**
-     * Creates a new evaluation visitor, for the evaluation of an OCL expression in a context.
-     * The evaluationVisitor reuses any previously established ModelManager.
-     */
+	/**
+	 * Creates a new evaluation visitor, for the evaluation of an OCL expression in a context.
+	 * The evaluationVisitor reuses any previously established ModelManager.
+	 */
 	public @NonNull EvaluationVisitor createEvaluationVisitor(@Nullable Object context, @NonNull ExpressionInOCL expression) {
 		return environmentFactory.createEvaluationVisitor(context, expression, modelManager);
 	}
 
 	/**
 	 * Parse oclExpression using selfType as the type of each run-time self object.
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	public @NonNull ExpressionInOCL createInvariant(@NonNull EObject contextElement, @NonNull String oclExpression) throws ParserException {
 		return createOCLHelper(contextElement).createInvariant(oclExpression);
 	}
-	
+
 	public ExpressionInOCL createPostcondition(@NonNull EOperation contextOperation, @NonNull String oclExpression) throws ParserException {
 		return createOCLHelper(contextOperation).createPostcondition(oclExpression);
 	}
-    
+
 	/**
 	 * Creates a new {@link OCLHelper} instance for convenient parsing of
 	 * embedded constraints and query expressions for the specified context
 	 * which may be an Ecore EClassifier/EOperation/EStructuralFeature or
 	 * or Pivot Class/Operation/Property.
-	 * 
+	 *
 	 * @return a new helper object
 	 */
-    public @NonNull OCLHelper createOCLHelper(@Nullable EObject contextElement) throws ParserException {
-        return new OCLHelperImpl(this, contextElement);
-     }
+	public @NonNull OCLHelper createOCLHelper(@Nullable EObject contextElement) throws ParserException {
+		return new OCLHelperImpl(this, contextElement);
+	}
 
 	public @NonNull ExpressionInOCL createQuery(@Nullable EObject contextElement, @NonNull String oclExpression) throws ParserException {
 		return createOCLHelper(contextElement).createQuery(oclExpression);
@@ -291,11 +290,11 @@ public class OCL
 	 * concurrent evaluation (where this may be safe in an EMF-based model) and
 	 * different bindings for client-supplied "global" variables.
 	 * </p>
-	 * 
+	 *
 	 * @param query
 	 *            the OCL query expression, which may be interpreted as a
 	 *            constraint if it is boolean-valued
-	 * 
+	 *
 	 * @return the new query object
 	 */
 	public @NonNull Query createQuery(@NonNull ExpressionInOCL query) {
@@ -311,13 +310,13 @@ public class OCL
 	 * concurrent evaluation (where this may be safe in an EMF-based model) and
 	 * different bindings for client-supplied "global" variables.
 	 * </p>
-	 * 
+	 *
 	 * @param constraint
 	 *            the OCL constraint
-	 * 
+	 *
 	 * @return the new query object
-	 * @throws ParserException 
-	 * 
+	 * @throws ParserException
+	 *
 	 * @see #createQuery(ExpressionInOCL)
 	 */
 	public Query createQuery(@NonNull Constraint constraint) throws ParserException {
@@ -364,15 +363,15 @@ public class OCL
 	/**
 	 * Evaluates a query expression on a context object (which is bound to the
 	 * <tt>self</tt> variable).
-	 * 
+	 *
 	 * @param context
 	 *            the context (self) object
 	 * @param expression
 	 *            the OCL expression to evaluate
-	 * 
+	 *
 	 * @return the value of the expression, or <tt>OclInvalid</tt> if the
 	 *         evaluation fails for reasons other than a run-time exception
-	 * 
+	 *
 	 * @see #check(Object, ExpressionInOCL)
 	 */
 	public @Nullable Object evaluate(@Nullable Object context, @NonNull ExpressionInOCL expression) {
@@ -458,7 +457,7 @@ public class OCL
 	/**
 	 * Obtains the model manager, if any, provided by the client to customize the
 	 * evaluation of constraints.
-	 * 
+	 *
 	 * @return the client-provided custom model manager, or <code>null</code> if
 	 *         thie OCL is using the default dynamic extent map implementation
 	 */
@@ -508,9 +507,9 @@ public class OCL
 	 * In an Eclipse environment, tracing is also enabled by turning on the
 	 * <tt>org.eclipse.ocl/debug/evaluation</tt> debug option.
 	 * </p>
-	 * 
+	 *
 	 * @return whether evaluation tracing is enabled
-	 * 
+	 *
 	 * @see #setEvaluationTracingEnabled(boolean)
 	 */
 	@Deprecated // Has no functionality
@@ -545,14 +544,14 @@ public class OCL
 	 * from textual to executable form. Redundant re-invocation of parseSpecification is harmless.
 	 * <p>
 	 * The specification's container, typically a Constraint or Operation is used as the contextElement to determine self within the expression.
-	 * 
+	 *
 	 * @throws ParserException if text parsing fails
 	 */
 	public @NonNull ExpressionInOCL parseSpecification(@NonNull LanguageExpression specification) throws ParserException {
 		return getMetamodelManager().parseSpecification(specification);
 	}
 	/**
-	 * @throws ParserException 
+	 * @throws ParserException
 	 * @deprecated use parseSpecification(specification)
 	 */
 	@Deprecated
@@ -567,10 +566,10 @@ public class OCL
 	 * In an Eclipse environment, tracing is also enabled by turning on the
 	 * <tt>org.eclipse.ocl/debug/evaluation</tt> debug option.
 	 * </p>
-	 * 
+	 *
 	 * @param b
 	 *            whether evaluation tracing is enabled
-	 * 
+	 *
 	 * @see #isEvaluationTracingEnabled()
 	 */
 	@Deprecated // Has no functionality
@@ -583,7 +582,7 @@ public class OCL
 	 * Assigns a custom extent map to define the extents of classes in
 	 * evaluation of OCL constraints. This is only needed if the default dynamic
 	 * extent-map implementation is not suitable.
-	 * 
+	 *
 	 * @param modelManager
 	 *            a custom extent map, or <code>null</code> to use the default
 	 *            dynamic extent map implementation
@@ -596,20 +595,20 @@ public class OCL
 	 * Validates an OCL expression, which may have been loaded from some
 	 * resource or constructed via the API (perhaps by translation from some
 	 * other language).
-	 * 
+	 *
 	 * @param expression
 	 *            an expression to validate
-	 * 
+	 *
 	 * @throws SemanticException
 	 *             on detection of any well-formedness problem in the expression
-	 * 
+	 *
 	 * @see #validate(Constraint)
 	 */
 	@Deprecated // Has no functionality
 	public void validate(@NonNull OCLExpression expression) throws SemanticException {
 		throw new UnsupportedOperationException(getClass().getName() + ".validate");
 		// clear out old diagnostics
-/*		ProblemHandler ph = OCLUtil.getAdapter(rootEnvironment,
+		/*		ProblemHandler ph = OCLUtil.getAdapter(rootEnvironment,
 			ProblemHandler.class);
 		if (ph != null) {
 			ph.beginValidation();
@@ -633,10 +632,10 @@ public class OCL
 	 * Validates an OCL constraint, which may have been loaded from some
 	 * resource or constructed via the API (perhaps by translation from some
 	 * other language).
-	 * 
+	 *
 	 * @param constraint
 	 *            a constraint to validate
-	 * 
+	 *
 	 * @throws SemanticException
 	 *             on detection of any well-formedness problem in the constraint
 	 */
@@ -644,7 +643,7 @@ public class OCL
 	public void validate(@NonNull Constraint constraint) throws SemanticException {
 		throw new UnsupportedOperationException(getClass().getName() + ".validate");
 		// clear out old diagnostics
-/*		ProblemHandler ph = OCLUtil.getAdapter(rootEnvironment,
+		/*		ProblemHandler ph = OCLUtil.getAdapter(rootEnvironment,
 			ProblemHandler.class);
 		if (ph != null) {
 			ph.beginValidation();
