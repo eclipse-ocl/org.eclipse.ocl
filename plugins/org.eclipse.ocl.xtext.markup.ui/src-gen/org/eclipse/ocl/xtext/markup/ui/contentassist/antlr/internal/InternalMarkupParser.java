@@ -1,4 +1,4 @@
-package org.eclipse.ocl.xtext.markup.ui.contentassist.antlr.internal; 
+package org.eclipse.ocl.xtext.markup.ui.contentassist.antlr.internal;
 
 import java.io.InputStream;
 import org.eclipse.xtext.*;
@@ -73,26 +73,26 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
         }
         public InternalMarkupParser(TokenStream input, RecognizerSharedState state) {
             super(input, state);
-             
+
         }
-        
+
 
     public String[] getTokenNames() { return InternalMarkupParser.tokenNames; }
     public String getGrammarFileName() { return "InternalMarkup.g"; }
 
 
-     
+
      	private MarkupGrammarAccess grammarAccess;
-     	
+
         public void setGrammarAccess(MarkupGrammarAccess grammarAccess) {
         	this.grammarAccess = grammarAccess;
         }
-        
+
         @Override
         protected Grammar getGrammar() {
         	return grammarAccess.getGrammar();
         }
-        
+
         @Override
         protected String getValueForTokenName(String tokenName) {
         	return tokenName;
@@ -109,7 +109,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:70:1: ruleMarkup EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMarkupRule()); 
+               before(grammarAccess.getMarkupRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleMarkup();
@@ -117,7 +117,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMarkupRule()); 
+               after(grammarAccess.getMarkupRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -140,7 +140,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleMarkup() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:81:2: ( ( ( rule__Markup__ElementsAssignment )* ) )
             // InternalMarkup.g:82:1: ( ( rule__Markup__ElementsAssignment )* )
@@ -149,7 +149,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:83:1: ( rule__Markup__ElementsAssignment )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMarkupAccess().getElementsAssignment()); 
+               before(grammarAccess.getMarkupAccess().getElementsAssignment());
             }
             // InternalMarkup.g:84:1: ( rule__Markup__ElementsAssignment )*
             loop1:
@@ -181,7 +181,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMarkupAccess().getElementsAssignment()); 
+               after(grammarAccess.getMarkupAccess().getElementsAssignment());
             }
 
             }
@@ -212,7 +212,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:98:1: ruleMarkupKeyword EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMarkupKeywordRule()); 
+               before(grammarAccess.getMarkupKeywordRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleMarkupKeyword();
@@ -220,7 +220,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMarkupKeywordRule()); 
+               after(grammarAccess.getMarkupKeywordRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -243,7 +243,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleMarkupKeyword() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:109:2: ( ( ( rule__MarkupKeyword__Alternatives ) ) )
             // InternalMarkup.g:110:1: ( ( rule__MarkupKeyword__Alternatives ) )
@@ -252,7 +252,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:111:1: ( rule__MarkupKeyword__Alternatives )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMarkupKeywordAccess().getAlternatives()); 
+               before(grammarAccess.getMarkupKeywordAccess().getAlternatives());
             }
             // InternalMarkup.g:112:1: ( rule__MarkupKeyword__Alternatives )
             // InternalMarkup.g:112:2: rule__MarkupKeyword__Alternatives
@@ -266,7 +266,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMarkupKeywordAccess().getAlternatives()); 
+               after(grammarAccess.getMarkupKeywordAccess().getAlternatives());
             }
 
             }
@@ -297,7 +297,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:126:1: ruleMarkupElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMarkupElementRule()); 
+               before(grammarAccess.getMarkupElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleMarkupElement();
@@ -305,7 +305,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMarkupElementRule()); 
+               after(grammarAccess.getMarkupElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -328,7 +328,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleMarkupElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:137:2: ( ( ( rule__MarkupElement__Alternatives ) ) )
             // InternalMarkup.g:138:1: ( ( rule__MarkupElement__Alternatives ) )
@@ -337,7 +337,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:139:1: ( rule__MarkupElement__Alternatives )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMarkupElementAccess().getAlternatives()); 
+               before(grammarAccess.getMarkupElementAccess().getAlternatives());
             }
             // InternalMarkup.g:140:1: ( rule__MarkupElement__Alternatives )
             // InternalMarkup.g:140:2: rule__MarkupElement__Alternatives
@@ -351,7 +351,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMarkupElementAccess().getAlternatives()); 
+               after(grammarAccess.getMarkupElementAccess().getAlternatives());
             }
 
             }
@@ -382,7 +382,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:154:1: ruleBulletElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementRule()); 
+               before(grammarAccess.getBulletElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleBulletElement();
@@ -390,7 +390,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementRule()); 
+               after(grammarAccess.getBulletElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -413,7 +413,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleBulletElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:165:2: ( ( ( rule__BulletElement__Group__0 ) ) )
             // InternalMarkup.g:166:1: ( ( rule__BulletElement__Group__0 ) )
@@ -422,7 +422,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:167:1: ( rule__BulletElement__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getGroup()); 
+               before(grammarAccess.getBulletElementAccess().getGroup());
             }
             // InternalMarkup.g:168:1: ( rule__BulletElement__Group__0 )
             // InternalMarkup.g:168:2: rule__BulletElement__Group__0
@@ -436,7 +436,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getGroup()); 
+               after(grammarAccess.getBulletElementAccess().getGroup());
             }
 
             }
@@ -467,7 +467,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:182:1: ruleFontElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFontElementRule()); 
+               before(grammarAccess.getFontElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleFontElement();
@@ -475,7 +475,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFontElementRule()); 
+               after(grammarAccess.getFontElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -498,7 +498,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleFontElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:193:2: ( ( ( rule__FontElement__Group__0 ) ) )
             // InternalMarkup.g:194:1: ( ( rule__FontElement__Group__0 ) )
@@ -507,7 +507,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:195:1: ( rule__FontElement__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFontElementAccess().getGroup()); 
+               before(grammarAccess.getFontElementAccess().getGroup());
             }
             // InternalMarkup.g:196:1: ( rule__FontElement__Group__0 )
             // InternalMarkup.g:196:2: rule__FontElement__Group__0
@@ -521,7 +521,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFontElementAccess().getGroup()); 
+               after(grammarAccess.getFontElementAccess().getGroup());
             }
 
             }
@@ -552,7 +552,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:210:1: ruleFigureElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementRule()); 
+               before(grammarAccess.getFigureElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleFigureElement();
@@ -560,7 +560,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementRule()); 
+               after(grammarAccess.getFigureElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -583,7 +583,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleFigureElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:221:2: ( ( ( rule__FigureElement__Group__0 ) ) )
             // InternalMarkup.g:222:1: ( ( rule__FigureElement__Group__0 ) )
@@ -592,7 +592,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:223:1: ( rule__FigureElement__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getGroup()); 
+               before(grammarAccess.getFigureElementAccess().getGroup());
             }
             // InternalMarkup.g:224:1: ( rule__FigureElement__Group__0 )
             // InternalMarkup.g:224:2: rule__FigureElement__Group__0
@@ -606,7 +606,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getGroup()); 
+               after(grammarAccess.getFigureElementAccess().getGroup());
             }
 
             }
@@ -637,7 +637,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:238:1: ruleFigureRefElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureRefElementRule()); 
+               before(grammarAccess.getFigureRefElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleFigureRefElement();
@@ -645,7 +645,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureRefElementRule()); 
+               after(grammarAccess.getFigureRefElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -668,7 +668,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleFigureRefElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:249:2: ( ( ( rule__FigureRefElement__Group__0 ) ) )
             // InternalMarkup.g:250:1: ( ( rule__FigureRefElement__Group__0 ) )
@@ -677,7 +677,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:251:1: ( rule__FigureRefElement__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureRefElementAccess().getGroup()); 
+               before(grammarAccess.getFigureRefElementAccess().getGroup());
             }
             // InternalMarkup.g:252:1: ( rule__FigureRefElement__Group__0 )
             // InternalMarkup.g:252:2: rule__FigureRefElement__Group__0
@@ -691,7 +691,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureRefElementAccess().getGroup()); 
+               after(grammarAccess.getFigureRefElementAccess().getGroup());
             }
 
             }
@@ -722,7 +722,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:266:1: ruleFootnoteElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFootnoteElementRule()); 
+               before(grammarAccess.getFootnoteElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleFootnoteElement();
@@ -730,7 +730,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFootnoteElementRule()); 
+               after(grammarAccess.getFootnoteElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -753,7 +753,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleFootnoteElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:277:2: ( ( ( rule__FootnoteElement__Group__0 ) ) )
             // InternalMarkup.g:278:1: ( ( rule__FootnoteElement__Group__0 ) )
@@ -762,7 +762,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:279:1: ( rule__FootnoteElement__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFootnoteElementAccess().getGroup()); 
+               before(grammarAccess.getFootnoteElementAccess().getGroup());
             }
             // InternalMarkup.g:280:1: ( rule__FootnoteElement__Group__0 )
             // InternalMarkup.g:280:2: rule__FootnoteElement__Group__0
@@ -776,7 +776,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFootnoteElementAccess().getGroup()); 
+               after(grammarAccess.getFootnoteElementAccess().getGroup());
             }
 
             }
@@ -807,7 +807,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:294:1: ruleHeadingElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementRule()); 
+               before(grammarAccess.getHeadingElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleHeadingElement();
@@ -815,7 +815,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementRule()); 
+               after(grammarAccess.getHeadingElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -838,7 +838,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleHeadingElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:305:2: ( ( ( rule__HeadingElement__Group__0 ) ) )
             // InternalMarkup.g:306:1: ( ( rule__HeadingElement__Group__0 ) )
@@ -847,7 +847,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:307:1: ( rule__HeadingElement__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getGroup()); 
+               before(grammarAccess.getHeadingElementAccess().getGroup());
             }
             // InternalMarkup.g:308:1: ( rule__HeadingElement__Group__0 )
             // InternalMarkup.g:308:2: rule__HeadingElement__Group__0
@@ -861,7 +861,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getGroup()); 
+               after(grammarAccess.getHeadingElementAccess().getGroup());
             }
 
             }
@@ -892,7 +892,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:322:1: ruleNewLineElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNewLineElementRule()); 
+               before(grammarAccess.getNewLineElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleNewLineElement();
@@ -900,7 +900,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNewLineElementRule()); 
+               after(grammarAccess.getNewLineElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -923,7 +923,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleNewLineElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:333:2: ( ( ( rule__NewLineElement__TextAssignment ) ) )
             // InternalMarkup.g:334:1: ( ( rule__NewLineElement__TextAssignment ) )
@@ -932,7 +932,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:335:1: ( rule__NewLineElement__TextAssignment )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNewLineElementAccess().getTextAssignment()); 
+               before(grammarAccess.getNewLineElementAccess().getTextAssignment());
             }
             // InternalMarkup.g:336:1: ( rule__NewLineElement__TextAssignment )
             // InternalMarkup.g:336:2: rule__NewLineElement__TextAssignment
@@ -946,7 +946,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNewLineElementAccess().getTextAssignment()); 
+               after(grammarAccess.getNewLineElementAccess().getTextAssignment());
             }
 
             }
@@ -977,7 +977,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:350:1: ruleNullElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNullElementRule()); 
+               before(grammarAccess.getNullElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleNullElement();
@@ -985,7 +985,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNullElementRule()); 
+               after(grammarAccess.getNullElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1008,7 +1008,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleNullElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:361:2: ( ( ( rule__NullElement__Group__0 ) ) )
             // InternalMarkup.g:362:1: ( ( rule__NullElement__Group__0 ) )
@@ -1017,7 +1017,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:363:1: ( rule__NullElement__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNullElementAccess().getGroup()); 
+               before(grammarAccess.getNullElementAccess().getGroup());
             }
             // InternalMarkup.g:364:1: ( rule__NullElement__Group__0 )
             // InternalMarkup.g:364:2: rule__NullElement__Group__0
@@ -1031,7 +1031,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNullElementAccess().getGroup()); 
+               after(grammarAccess.getNullElementAccess().getGroup());
             }
 
             }
@@ -1062,7 +1062,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:378:1: ruleOCLCodeElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLCodeElementRule()); 
+               before(grammarAccess.getOCLCodeElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleOCLCodeElement();
@@ -1070,7 +1070,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLCodeElementRule()); 
+               after(grammarAccess.getOCLCodeElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1093,7 +1093,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleOCLCodeElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:389:2: ( ( ( rule__OCLCodeElement__Group__0 ) ) )
             // InternalMarkup.g:390:1: ( ( rule__OCLCodeElement__Group__0 ) )
@@ -1102,7 +1102,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:391:1: ( rule__OCLCodeElement__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLCodeElementAccess().getGroup()); 
+               before(grammarAccess.getOCLCodeElementAccess().getGroup());
             }
             // InternalMarkup.g:392:1: ( rule__OCLCodeElement__Group__0 )
             // InternalMarkup.g:392:2: rule__OCLCodeElement__Group__0
@@ -1116,7 +1116,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLCodeElementAccess().getGroup()); 
+               after(grammarAccess.getOCLCodeElementAccess().getGroup());
             }
 
             }
@@ -1147,7 +1147,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:406:1: ruleOCLEvalElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLEvalElementRule()); 
+               before(grammarAccess.getOCLEvalElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleOCLEvalElement();
@@ -1155,7 +1155,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLEvalElementRule()); 
+               after(grammarAccess.getOCLEvalElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1178,7 +1178,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleOCLEvalElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:417:2: ( ( ( rule__OCLEvalElement__Group__0 ) ) )
             // InternalMarkup.g:418:1: ( ( rule__OCLEvalElement__Group__0 ) )
@@ -1187,7 +1187,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:419:1: ( rule__OCLEvalElement__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLEvalElementAccess().getGroup()); 
+               before(grammarAccess.getOCLEvalElementAccess().getGroup());
             }
             // InternalMarkup.g:420:1: ( rule__OCLEvalElement__Group__0 )
             // InternalMarkup.g:420:2: rule__OCLEvalElement__Group__0
@@ -1201,7 +1201,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLEvalElementAccess().getGroup()); 
+               after(grammarAccess.getOCLEvalElementAccess().getGroup());
             }
 
             }
@@ -1232,7 +1232,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:434:1: ruleOCLTextElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLTextElementRule()); 
+               before(grammarAccess.getOCLTextElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleOCLTextElement();
@@ -1240,7 +1240,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLTextElementRule()); 
+               after(grammarAccess.getOCLTextElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1263,7 +1263,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleOCLTextElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:445:2: ( ( ( rule__OCLTextElement__Group__0 ) ) )
             // InternalMarkup.g:446:1: ( ( rule__OCLTextElement__Group__0 ) )
@@ -1272,7 +1272,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:447:1: ( rule__OCLTextElement__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLTextElementAccess().getGroup()); 
+               before(grammarAccess.getOCLTextElementAccess().getGroup());
             }
             // InternalMarkup.g:448:1: ( rule__OCLTextElement__Group__0 )
             // InternalMarkup.g:448:2: rule__OCLTextElement__Group__0
@@ -1286,7 +1286,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLTextElementAccess().getGroup()); 
+               after(grammarAccess.getOCLTextElementAccess().getGroup());
             }
 
             }
@@ -1317,7 +1317,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:462:1: ruleTextElement EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTextElementRule()); 
+               before(grammarAccess.getTextElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleTextElement();
@@ -1325,7 +1325,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTextElementRule()); 
+               after(grammarAccess.getTextElementRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1348,7 +1348,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void ruleTextElement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:473:2: ( ( ( rule__TextElement__Alternatives ) ) )
             // InternalMarkup.g:474:1: ( ( rule__TextElement__Alternatives ) )
@@ -1357,7 +1357,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:475:1: ( rule__TextElement__Alternatives )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTextElementAccess().getAlternatives()); 
+               before(grammarAccess.getTextElementAccess().getAlternatives());
             }
             // InternalMarkup.g:476:1: ( rule__TextElement__Alternatives )
             // InternalMarkup.g:476:2: rule__TextElement__Alternatives
@@ -1371,7 +1371,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTextElementAccess().getAlternatives()); 
+               after(grammarAccess.getTextElementAccess().getAlternatives());
             }
 
             }
@@ -1399,7 +1399,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__MarkupKeyword__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:492:1: ( ( 'b' ) | ( 'e' ) | ( 'bullet' ) | ( 'figure' ) | ( 'figureRef' ) | ( 'footnote' ) | ( 'heading' ) | ( 'oclCode' ) | ( 'oclEval' ) | ( 'oclText' ) )
             int alt2=10;
@@ -1470,11 +1470,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:494:1: 'b'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupKeywordAccess().getBKeyword_0()); 
+                       before(grammarAccess.getMarkupKeywordAccess().getBKeyword_0());
                     }
                     match(input,16,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupKeywordAccess().getBKeyword_0()); 
+                       after(grammarAccess.getMarkupKeywordAccess().getBKeyword_0());
                     }
 
                     }
@@ -1489,11 +1489,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:502:1: 'e'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupKeywordAccess().getEKeyword_1()); 
+                       before(grammarAccess.getMarkupKeywordAccess().getEKeyword_1());
                     }
                     match(input,17,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupKeywordAccess().getEKeyword_1()); 
+                       after(grammarAccess.getMarkupKeywordAccess().getEKeyword_1());
                     }
 
                     }
@@ -1508,11 +1508,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:510:1: 'bullet'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupKeywordAccess().getBulletKeyword_2()); 
+                       before(grammarAccess.getMarkupKeywordAccess().getBulletKeyword_2());
                     }
                     match(input,18,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupKeywordAccess().getBulletKeyword_2()); 
+                       after(grammarAccess.getMarkupKeywordAccess().getBulletKeyword_2());
                     }
 
                     }
@@ -1527,11 +1527,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:518:1: 'figure'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupKeywordAccess().getFigureKeyword_3()); 
+                       before(grammarAccess.getMarkupKeywordAccess().getFigureKeyword_3());
                     }
                     match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupKeywordAccess().getFigureKeyword_3()); 
+                       after(grammarAccess.getMarkupKeywordAccess().getFigureKeyword_3());
                     }
 
                     }
@@ -1546,11 +1546,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:526:1: 'figureRef'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupKeywordAccess().getFigureRefKeyword_4()); 
+                       before(grammarAccess.getMarkupKeywordAccess().getFigureRefKeyword_4());
                     }
                     match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupKeywordAccess().getFigureRefKeyword_4()); 
+                       after(grammarAccess.getMarkupKeywordAccess().getFigureRefKeyword_4());
                     }
 
                     }
@@ -1565,11 +1565,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:534:1: 'footnote'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupKeywordAccess().getFootnoteKeyword_5()); 
+                       before(grammarAccess.getMarkupKeywordAccess().getFootnoteKeyword_5());
                     }
                     match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupKeywordAccess().getFootnoteKeyword_5()); 
+                       after(grammarAccess.getMarkupKeywordAccess().getFootnoteKeyword_5());
                     }
 
                     }
@@ -1584,11 +1584,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:542:1: 'heading'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupKeywordAccess().getHeadingKeyword_6()); 
+                       before(grammarAccess.getMarkupKeywordAccess().getHeadingKeyword_6());
                     }
                     match(input,22,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupKeywordAccess().getHeadingKeyword_6()); 
+                       after(grammarAccess.getMarkupKeywordAccess().getHeadingKeyword_6());
                     }
 
                     }
@@ -1603,11 +1603,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:550:1: 'oclCode'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupKeywordAccess().getOclCodeKeyword_7()); 
+                       before(grammarAccess.getMarkupKeywordAccess().getOclCodeKeyword_7());
                     }
                     match(input,23,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupKeywordAccess().getOclCodeKeyword_7()); 
+                       after(grammarAccess.getMarkupKeywordAccess().getOclCodeKeyword_7());
                     }
 
                     }
@@ -1622,11 +1622,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:558:1: 'oclEval'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupKeywordAccess().getOclEvalKeyword_8()); 
+                       before(grammarAccess.getMarkupKeywordAccess().getOclEvalKeyword_8());
                     }
                     match(input,24,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupKeywordAccess().getOclEvalKeyword_8()); 
+                       after(grammarAccess.getMarkupKeywordAccess().getOclEvalKeyword_8());
                     }
 
                     }
@@ -1641,11 +1641,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:566:1: 'oclText'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupKeywordAccess().getOclTextKeyword_9()); 
+                       before(grammarAccess.getMarkupKeywordAccess().getOclTextKeyword_9());
                     }
                     match(input,25,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupKeywordAccess().getOclTextKeyword_9()); 
+                       after(grammarAccess.getMarkupKeywordAccess().getOclTextKeyword_9());
                     }
 
                     }
@@ -1675,7 +1675,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__MarkupElement__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:582:1: ( ( ruleFontElement ) | ( ruleNewLineElement ) | ( ruleBulletElement ) | ( ruleFigureElement ) | ( ruleFigureRefElement ) | ( ruleFootnoteElement ) | ( ruleHeadingElement ) | ( ruleNullElement ) | ( ruleOCLCodeElement ) | ( ruleOCLEvalElement ) | ( ruleOCLTextElement ) | ( ruleTextElement ) )
             int alt3=12;
@@ -1688,7 +1688,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:584:1: ruleFontElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getFontElementParserRuleCall_0()); 
+                       before(grammarAccess.getMarkupElementAccess().getFontElementParserRuleCall_0());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleFontElement();
@@ -1696,7 +1696,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getFontElementParserRuleCall_0()); 
+                       after(grammarAccess.getMarkupElementAccess().getFontElementParserRuleCall_0());
                     }
 
                     }
@@ -1711,7 +1711,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:590:1: ruleNewLineElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getNewLineElementParserRuleCall_1()); 
+                       before(grammarAccess.getMarkupElementAccess().getNewLineElementParserRuleCall_1());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleNewLineElement();
@@ -1719,7 +1719,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getNewLineElementParserRuleCall_1()); 
+                       after(grammarAccess.getMarkupElementAccess().getNewLineElementParserRuleCall_1());
                     }
 
                     }
@@ -1734,7 +1734,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:596:1: ruleBulletElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getBulletElementParserRuleCall_2()); 
+                       before(grammarAccess.getMarkupElementAccess().getBulletElementParserRuleCall_2());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleBulletElement();
@@ -1742,7 +1742,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getBulletElementParserRuleCall_2()); 
+                       after(grammarAccess.getMarkupElementAccess().getBulletElementParserRuleCall_2());
                     }
 
                     }
@@ -1757,7 +1757,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:602:1: ruleFigureElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getFigureElementParserRuleCall_3()); 
+                       before(grammarAccess.getMarkupElementAccess().getFigureElementParserRuleCall_3());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleFigureElement();
@@ -1765,7 +1765,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getFigureElementParserRuleCall_3()); 
+                       after(grammarAccess.getMarkupElementAccess().getFigureElementParserRuleCall_3());
                     }
 
                     }
@@ -1780,7 +1780,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:608:1: ruleFigureRefElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getFigureRefElementParserRuleCall_4()); 
+                       before(grammarAccess.getMarkupElementAccess().getFigureRefElementParserRuleCall_4());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleFigureRefElement();
@@ -1788,7 +1788,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getFigureRefElementParserRuleCall_4()); 
+                       after(grammarAccess.getMarkupElementAccess().getFigureRefElementParserRuleCall_4());
                     }
 
                     }
@@ -1803,7 +1803,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:614:1: ruleFootnoteElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getFootnoteElementParserRuleCall_5()); 
+                       before(grammarAccess.getMarkupElementAccess().getFootnoteElementParserRuleCall_5());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleFootnoteElement();
@@ -1811,7 +1811,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getFootnoteElementParserRuleCall_5()); 
+                       after(grammarAccess.getMarkupElementAccess().getFootnoteElementParserRuleCall_5());
                     }
 
                     }
@@ -1826,7 +1826,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:620:1: ruleHeadingElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getHeadingElementParserRuleCall_6()); 
+                       before(grammarAccess.getMarkupElementAccess().getHeadingElementParserRuleCall_6());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleHeadingElement();
@@ -1834,7 +1834,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getHeadingElementParserRuleCall_6()); 
+                       after(grammarAccess.getMarkupElementAccess().getHeadingElementParserRuleCall_6());
                     }
 
                     }
@@ -1849,7 +1849,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:626:1: ruleNullElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getNullElementParserRuleCall_7()); 
+                       before(grammarAccess.getMarkupElementAccess().getNullElementParserRuleCall_7());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleNullElement();
@@ -1857,7 +1857,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getNullElementParserRuleCall_7()); 
+                       after(grammarAccess.getMarkupElementAccess().getNullElementParserRuleCall_7());
                     }
 
                     }
@@ -1872,7 +1872,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:632:1: ruleOCLCodeElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getOCLCodeElementParserRuleCall_8()); 
+                       before(grammarAccess.getMarkupElementAccess().getOCLCodeElementParserRuleCall_8());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleOCLCodeElement();
@@ -1880,7 +1880,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getOCLCodeElementParserRuleCall_8()); 
+                       after(grammarAccess.getMarkupElementAccess().getOCLCodeElementParserRuleCall_8());
                     }
 
                     }
@@ -1895,7 +1895,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:638:1: ruleOCLEvalElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getOCLEvalElementParserRuleCall_9()); 
+                       before(grammarAccess.getMarkupElementAccess().getOCLEvalElementParserRuleCall_9());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleOCLEvalElement();
@@ -1903,7 +1903,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getOCLEvalElementParserRuleCall_9()); 
+                       after(grammarAccess.getMarkupElementAccess().getOCLEvalElementParserRuleCall_9());
                     }
 
                     }
@@ -1918,7 +1918,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:644:1: ruleOCLTextElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getOCLTextElementParserRuleCall_10()); 
+                       before(grammarAccess.getMarkupElementAccess().getOCLTextElementParserRuleCall_10());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleOCLTextElement();
@@ -1926,7 +1926,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getOCLTextElementParserRuleCall_10()); 
+                       after(grammarAccess.getMarkupElementAccess().getOCLTextElementParserRuleCall_10());
                     }
 
                     }
@@ -1941,7 +1941,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:650:1: ruleTextElement
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMarkupElementAccess().getTextElementParserRuleCall_11()); 
+                       before(grammarAccess.getMarkupElementAccess().getTextElementParserRuleCall_11());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleTextElement();
@@ -1949,7 +1949,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMarkupElementAccess().getTextElementParserRuleCall_11()); 
+                       after(grammarAccess.getMarkupElementAccess().getTextElementParserRuleCall_11());
                     }
 
                     }
@@ -1979,7 +1979,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__FontAlternatives_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:664:1: ( ( 'b' ) | ( 'e' ) )
             int alt4=2;
@@ -2006,11 +2006,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:666:1: 'b'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getFontElementAccess().getFontBKeyword_0_0_0()); 
+                       before(grammarAccess.getFontElementAccess().getFontBKeyword_0_0_0());
                     }
                     match(input,16,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getFontElementAccess().getFontBKeyword_0_0_0()); 
+                       after(grammarAccess.getFontElementAccess().getFontBKeyword_0_0_0());
                     }
 
                     }
@@ -2025,11 +2025,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:674:1: 'e'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getFontElementAccess().getFontEKeyword_0_0_1()); 
+                       before(grammarAccess.getFontElementAccess().getFontEKeyword_0_0_1());
                     }
                     match(input,17,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getFontElementAccess().getFontEKeyword_0_0_1()); 
+                       after(grammarAccess.getFontElementAccess().getFontEKeyword_0_0_1());
                     }
 
                     }
@@ -2059,7 +2059,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__TextElement__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:690:1: ( ( ( ( rule__TextElement__TextAssignment_0 ) ) ( ( rule__TextElement__TextAssignment_0 )* ) ) | ( ( rule__TextElement__TextAssignment_1 ) ) )
             int alt6=2;
@@ -2089,7 +2089,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:693:1: ( rule__TextElement__TextAssignment_0 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTextElementAccess().getTextAssignment_0()); 
+                       before(grammarAccess.getTextElementAccess().getTextAssignment_0());
                     }
                     // InternalMarkup.g:694:1: ( rule__TextElement__TextAssignment_0 )
                     // InternalMarkup.g:694:2: rule__TextElement__TextAssignment_0
@@ -2103,7 +2103,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTextElementAccess().getTextAssignment_0()); 
+                       after(grammarAccess.getTextElementAccess().getTextAssignment_0());
                     }
 
                     }
@@ -2112,7 +2112,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:698:1: ( rule__TextElement__TextAssignment_0 )*
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTextElementAccess().getTextAssignment_0()); 
+                       before(grammarAccess.getTextElementAccess().getTextAssignment_0());
                     }
                     // InternalMarkup.g:699:1: ( rule__TextElement__TextAssignment_0 )*
                     loop5:
@@ -2138,7 +2138,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     } while (true);
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTextElementAccess().getTextAssignment_0()); 
+                       after(grammarAccess.getTextElementAccess().getTextAssignment_0());
                     }
 
                     }
@@ -2156,7 +2156,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:705:1: ( rule__TextElement__TextAssignment_1 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTextElementAccess().getTextAssignment_1()); 
+                       before(grammarAccess.getTextElementAccess().getTextAssignment_1());
                     }
                     // InternalMarkup.g:706:1: ( rule__TextElement__TextAssignment_1 )
                     // InternalMarkup.g:706:2: rule__TextElement__TextAssignment_1
@@ -2170,7 +2170,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTextElementAccess().getTextAssignment_1()); 
+                       after(grammarAccess.getTextElementAccess().getTextAssignment_1());
                     }
 
                     }
@@ -2200,7 +2200,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__TextElement__TextAlternatives_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:719:1: ( ( RULE_ID ) | ( RULE_WORD ) | ( RULE_INT ) | ( RULE_WS ) | ( ':' ) | ( '#' ) | ( ',' ) )
             int alt7=7;
@@ -2256,11 +2256,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:721:1: RULE_ID
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTextElementAccess().getTextIDTerminalRuleCall_0_0_0()); 
+                       before(grammarAccess.getTextElementAccess().getTextIDTerminalRuleCall_0_0_0());
                     }
                     match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTextElementAccess().getTextIDTerminalRuleCall_0_0_0()); 
+                       after(grammarAccess.getTextElementAccess().getTextIDTerminalRuleCall_0_0_0());
                     }
 
                     }
@@ -2275,11 +2275,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:727:1: RULE_WORD
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTextElementAccess().getTextWORDTerminalRuleCall_0_0_1()); 
+                       before(grammarAccess.getTextElementAccess().getTextWORDTerminalRuleCall_0_0_1());
                     }
                     match(input,RULE_WORD,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTextElementAccess().getTextWORDTerminalRuleCall_0_0_1()); 
+                       after(grammarAccess.getTextElementAccess().getTextWORDTerminalRuleCall_0_0_1());
                     }
 
                     }
@@ -2294,11 +2294,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:733:1: RULE_INT
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTextElementAccess().getTextINTTerminalRuleCall_0_0_2()); 
+                       before(grammarAccess.getTextElementAccess().getTextINTTerminalRuleCall_0_0_2());
                     }
                     match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTextElementAccess().getTextINTTerminalRuleCall_0_0_2()); 
+                       after(grammarAccess.getTextElementAccess().getTextINTTerminalRuleCall_0_0_2());
                     }
 
                     }
@@ -2313,11 +2313,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:739:1: RULE_WS
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTextElementAccess().getTextWSTerminalRuleCall_0_0_3()); 
+                       before(grammarAccess.getTextElementAccess().getTextWSTerminalRuleCall_0_0_3());
                     }
                     match(input,RULE_WS,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTextElementAccess().getTextWSTerminalRuleCall_0_0_3()); 
+                       after(grammarAccess.getTextElementAccess().getTextWSTerminalRuleCall_0_0_3());
                     }
 
                     }
@@ -2332,11 +2332,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:745:1: ':'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTextElementAccess().getTextColonKeyword_0_0_4()); 
+                       before(grammarAccess.getTextElementAccess().getTextColonKeyword_0_0_4());
                     }
                     match(input,26,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTextElementAccess().getTextColonKeyword_0_0_4()); 
+                       after(grammarAccess.getTextElementAccess().getTextColonKeyword_0_0_4());
                     }
 
                     }
@@ -2351,11 +2351,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:753:1: '#'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTextElementAccess().getTextNumberSignKeyword_0_0_5()); 
+                       before(grammarAccess.getTextElementAccess().getTextNumberSignKeyword_0_0_5());
                     }
                     match(input,27,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTextElementAccess().getTextNumberSignKeyword_0_0_5()); 
+                       after(grammarAccess.getTextElementAccess().getTextNumberSignKeyword_0_0_5());
                     }
 
                     }
@@ -2370,11 +2370,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
                     // InternalMarkup.g:761:1: ','
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTextElementAccess().getTextCommaKeyword_0_0_6()); 
+                       before(grammarAccess.getTextElementAccess().getTextCommaKeyword_0_0_6());
                     }
                     match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTextElementAccess().getTextCommaKeyword_0_0_6()); 
+                       after(grammarAccess.getTextElementAccess().getTextCommaKeyword_0_0_6());
                     }
 
                     }
@@ -2404,7 +2404,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:779:1: ( rule__BulletElement__Group__0__Impl rule__BulletElement__Group__1 )
             // InternalMarkup.g:780:2: rule__BulletElement__Group__0__Impl rule__BulletElement__Group__1
@@ -2442,7 +2442,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:791:1: ( ( () ) )
             // InternalMarkup.g:792:1: ( () )
@@ -2451,15 +2451,15 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:793:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getBulletElementAction_0()); 
+               before(grammarAccess.getBulletElementAccess().getBulletElementAction_0());
             }
             // InternalMarkup.g:794:1: ()
-            // InternalMarkup.g:796:1: 
+            // InternalMarkup.g:796:1:
             {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getBulletElementAction_0()); 
+               after(grammarAccess.getBulletElementAccess().getBulletElementAction_0());
             }
 
             }
@@ -2483,7 +2483,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:810:1: ( rule__BulletElement__Group__1__Impl rule__BulletElement__Group__2 )
             // InternalMarkup.g:811:2: rule__BulletElement__Group__1__Impl rule__BulletElement__Group__2
@@ -2521,7 +2521,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:822:1: ( ( 'bullet' ) )
             // InternalMarkup.g:823:1: ( 'bullet' )
@@ -2530,11 +2530,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:824:1: 'bullet'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getBulletKeyword_1()); 
+               before(grammarAccess.getBulletElementAccess().getBulletKeyword_1());
             }
             match(input,18,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getBulletKeyword_1()); 
+               after(grammarAccess.getBulletElementAccess().getBulletKeyword_1());
             }
 
             }
@@ -2562,7 +2562,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:841:1: ( rule__BulletElement__Group__2__Impl rule__BulletElement__Group__3 )
             // InternalMarkup.g:842:2: rule__BulletElement__Group__2__Impl rule__BulletElement__Group__3
@@ -2600,7 +2600,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:853:1: ( ( ( rule__BulletElement__Group_2__0 )? ) )
             // InternalMarkup.g:854:1: ( ( rule__BulletElement__Group_2__0 )? )
@@ -2609,7 +2609,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:855:1: ( rule__BulletElement__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getGroup_2()); 
+               before(grammarAccess.getBulletElementAccess().getGroup_2());
             }
             // InternalMarkup.g:856:1: ( rule__BulletElement__Group_2__0 )?
             int alt8=2;
@@ -2634,7 +2634,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getGroup_2()); 
+               after(grammarAccess.getBulletElementAccess().getGroup_2());
             }
 
             }
@@ -2662,7 +2662,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:870:1: ( rule__BulletElement__Group__3__Impl rule__BulletElement__Group__4 )
             // InternalMarkup.g:871:2: rule__BulletElement__Group__3__Impl rule__BulletElement__Group__4
@@ -2700,7 +2700,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:882:1: ( ( '[' ) )
             // InternalMarkup.g:883:1: ( '[' )
@@ -2709,11 +2709,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:884:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getLeftSquareBracketKeyword_3()); 
+               before(grammarAccess.getBulletElementAccess().getLeftSquareBracketKeyword_3());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getLeftSquareBracketKeyword_3()); 
+               after(grammarAccess.getBulletElementAccess().getLeftSquareBracketKeyword_3());
             }
 
             }
@@ -2741,7 +2741,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:901:1: ( rule__BulletElement__Group__4__Impl rule__BulletElement__Group__5 )
             // InternalMarkup.g:902:2: rule__BulletElement__Group__4__Impl rule__BulletElement__Group__5
@@ -2779,7 +2779,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:913:1: ( ( ( rule__BulletElement__ElementsAssignment_4 )* ) )
             // InternalMarkup.g:914:1: ( ( rule__BulletElement__ElementsAssignment_4 )* )
@@ -2788,7 +2788,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:915:1: ( rule__BulletElement__ElementsAssignment_4 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getElementsAssignment_4()); 
+               before(grammarAccess.getBulletElementAccess().getElementsAssignment_4());
             }
             // InternalMarkup.g:916:1: ( rule__BulletElement__ElementsAssignment_4 )*
             loop9:
@@ -2820,7 +2820,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getElementsAssignment_4()); 
+               after(grammarAccess.getBulletElementAccess().getElementsAssignment_4());
             }
 
             }
@@ -2848,7 +2848,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:930:1: ( rule__BulletElement__Group__5__Impl )
             // InternalMarkup.g:931:2: rule__BulletElement__Group__5__Impl
@@ -2881,7 +2881,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:941:1: ( ( ']' ) )
             // InternalMarkup.g:942:1: ( ']' )
@@ -2890,11 +2890,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:943:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getRightSquareBracketKeyword_5()); 
+               before(grammarAccess.getBulletElementAccess().getRightSquareBracketKeyword_5());
             }
             match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getRightSquareBracketKeyword_5()); 
+               after(grammarAccess.getBulletElementAccess().getRightSquareBracketKeyword_5());
             }
 
             }
@@ -2922,7 +2922,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:972:1: ( rule__BulletElement__Group_2__0__Impl rule__BulletElement__Group_2__1 )
             // InternalMarkup.g:973:2: rule__BulletElement__Group_2__0__Impl rule__BulletElement__Group_2__1
@@ -2960,7 +2960,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:984:1: ( ( ':' ) )
             // InternalMarkup.g:985:1: ( ':' )
@@ -2969,11 +2969,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:986:1: ':'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getColonKeyword_2_0()); 
+               before(grammarAccess.getBulletElementAccess().getColonKeyword_2_0());
             }
             match(input,26,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getColonKeyword_2_0()); 
+               after(grammarAccess.getBulletElementAccess().getColonKeyword_2_0());
             }
 
             }
@@ -3001,7 +3001,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1003:1: ( rule__BulletElement__Group_2__1__Impl )
             // InternalMarkup.g:1004:2: rule__BulletElement__Group_2__1__Impl
@@ -3034,7 +3034,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1014:1: ( ( ( rule__BulletElement__LevelAssignment_2_1 ) ) )
             // InternalMarkup.g:1015:1: ( ( rule__BulletElement__LevelAssignment_2_1 ) )
@@ -3043,7 +3043,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1016:1: ( rule__BulletElement__LevelAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getLevelAssignment_2_1()); 
+               before(grammarAccess.getBulletElementAccess().getLevelAssignment_2_1());
             }
             // InternalMarkup.g:1017:1: ( rule__BulletElement__LevelAssignment_2_1 )
             // InternalMarkup.g:1017:2: rule__BulletElement__LevelAssignment_2_1
@@ -3057,7 +3057,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getLevelAssignment_2_1()); 
+               after(grammarAccess.getBulletElementAccess().getLevelAssignment_2_1());
             }
 
             }
@@ -3085,7 +3085,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1035:1: ( rule__FontElement__Group__0__Impl rule__FontElement__Group__1 )
             // InternalMarkup.g:1036:2: rule__FontElement__Group__0__Impl rule__FontElement__Group__1
@@ -3123,7 +3123,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1047:1: ( ( ( rule__FontElement__FontAssignment_0 ) ) )
             // InternalMarkup.g:1048:1: ( ( rule__FontElement__FontAssignment_0 ) )
@@ -3132,7 +3132,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1049:1: ( rule__FontElement__FontAssignment_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFontElementAccess().getFontAssignment_0()); 
+               before(grammarAccess.getFontElementAccess().getFontAssignment_0());
             }
             // InternalMarkup.g:1050:1: ( rule__FontElement__FontAssignment_0 )
             // InternalMarkup.g:1050:2: rule__FontElement__FontAssignment_0
@@ -3146,7 +3146,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFontElementAccess().getFontAssignment_0()); 
+               after(grammarAccess.getFontElementAccess().getFontAssignment_0());
             }
 
             }
@@ -3174,7 +3174,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1064:1: ( rule__FontElement__Group__1__Impl rule__FontElement__Group__2 )
             // InternalMarkup.g:1065:2: rule__FontElement__Group__1__Impl rule__FontElement__Group__2
@@ -3212,7 +3212,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1076:1: ( ( '[' ) )
             // InternalMarkup.g:1077:1: ( '[' )
@@ -3221,11 +3221,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1078:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFontElementAccess().getLeftSquareBracketKeyword_1()); 
+               before(grammarAccess.getFontElementAccess().getLeftSquareBracketKeyword_1());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFontElementAccess().getLeftSquareBracketKeyword_1()); 
+               after(grammarAccess.getFontElementAccess().getLeftSquareBracketKeyword_1());
             }
 
             }
@@ -3253,7 +3253,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1095:1: ( rule__FontElement__Group__2__Impl rule__FontElement__Group__3 )
             // InternalMarkup.g:1096:2: rule__FontElement__Group__2__Impl rule__FontElement__Group__3
@@ -3291,7 +3291,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1107:1: ( ( ( rule__FontElement__ElementsAssignment_2 )* ) )
             // InternalMarkup.g:1108:1: ( ( rule__FontElement__ElementsAssignment_2 )* )
@@ -3300,7 +3300,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1109:1: ( rule__FontElement__ElementsAssignment_2 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFontElementAccess().getElementsAssignment_2()); 
+               before(grammarAccess.getFontElementAccess().getElementsAssignment_2());
             }
             // InternalMarkup.g:1110:1: ( rule__FontElement__ElementsAssignment_2 )*
             loop10:
@@ -3332,7 +3332,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFontElementAccess().getElementsAssignment_2()); 
+               after(grammarAccess.getFontElementAccess().getElementsAssignment_2());
             }
 
             }
@@ -3360,7 +3360,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1124:1: ( rule__FontElement__Group__3__Impl )
             // InternalMarkup.g:1125:2: rule__FontElement__Group__3__Impl
@@ -3393,7 +3393,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1135:1: ( ( ']' ) )
             // InternalMarkup.g:1136:1: ( ']' )
@@ -3402,11 +3402,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1137:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFontElementAccess().getRightSquareBracketKeyword_3()); 
+               before(grammarAccess.getFontElementAccess().getRightSquareBracketKeyword_3());
             }
             match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFontElementAccess().getRightSquareBracketKeyword_3()); 
+               after(grammarAccess.getFontElementAccess().getRightSquareBracketKeyword_3());
             }
 
             }
@@ -3434,7 +3434,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1162:1: ( rule__FigureElement__Group__0__Impl rule__FigureElement__Group__1 )
             // InternalMarkup.g:1163:2: rule__FigureElement__Group__0__Impl rule__FigureElement__Group__1
@@ -3472,7 +3472,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1174:1: ( ( 'figure' ) )
             // InternalMarkup.g:1175:1: ( 'figure' )
@@ -3481,11 +3481,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1176:1: 'figure'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getFigureKeyword_0()); 
+               before(grammarAccess.getFigureElementAccess().getFigureKeyword_0());
             }
             match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getFigureKeyword_0()); 
+               after(grammarAccess.getFigureElementAccess().getFigureKeyword_0());
             }
 
             }
@@ -3513,7 +3513,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1193:1: ( rule__FigureElement__Group__1__Impl rule__FigureElement__Group__2 )
             // InternalMarkup.g:1194:2: rule__FigureElement__Group__1__Impl rule__FigureElement__Group__2
@@ -3551,7 +3551,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1205:1: ( ( ( rule__FigureElement__Group_1__0 )? ) )
             // InternalMarkup.g:1206:1: ( ( rule__FigureElement__Group_1__0 )? )
@@ -3560,7 +3560,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1207:1: ( rule__FigureElement__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getGroup_1()); 
+               before(grammarAccess.getFigureElementAccess().getGroup_1());
             }
             // InternalMarkup.g:1208:1: ( rule__FigureElement__Group_1__0 )?
             int alt11=2;
@@ -3585,7 +3585,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getGroup_1()); 
+               after(grammarAccess.getFigureElementAccess().getGroup_1());
             }
 
             }
@@ -3613,7 +3613,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1222:1: ( rule__FigureElement__Group__2__Impl rule__FigureElement__Group__3 )
             // InternalMarkup.g:1223:2: rule__FigureElement__Group__2__Impl rule__FigureElement__Group__3
@@ -3651,7 +3651,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1234:1: ( ( '[' ) )
             // InternalMarkup.g:1235:1: ( '[' )
@@ -3660,11 +3660,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1236:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getLeftSquareBracketKeyword_2()); 
+               before(grammarAccess.getFigureElementAccess().getLeftSquareBracketKeyword_2());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getLeftSquareBracketKeyword_2()); 
+               after(grammarAccess.getFigureElementAccess().getLeftSquareBracketKeyword_2());
             }
 
             }
@@ -3692,7 +3692,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1253:1: ( rule__FigureElement__Group__3__Impl rule__FigureElement__Group__4 )
             // InternalMarkup.g:1254:2: rule__FigureElement__Group__3__Impl rule__FigureElement__Group__4
@@ -3730,7 +3730,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1265:1: ( ( ( rule__FigureElement__SrcAssignment_3 ) ) )
             // InternalMarkup.g:1266:1: ( ( rule__FigureElement__SrcAssignment_3 ) )
@@ -3739,7 +3739,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1267:1: ( rule__FigureElement__SrcAssignment_3 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getSrcAssignment_3()); 
+               before(grammarAccess.getFigureElementAccess().getSrcAssignment_3());
             }
             // InternalMarkup.g:1268:1: ( rule__FigureElement__SrcAssignment_3 )
             // InternalMarkup.g:1268:2: rule__FigureElement__SrcAssignment_3
@@ -3753,7 +3753,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getSrcAssignment_3()); 
+               after(grammarAccess.getFigureElementAccess().getSrcAssignment_3());
             }
 
             }
@@ -3781,7 +3781,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1282:1: ( rule__FigureElement__Group__4__Impl rule__FigureElement__Group__5 )
             // InternalMarkup.g:1283:2: rule__FigureElement__Group__4__Impl rule__FigureElement__Group__5
@@ -3819,7 +3819,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1294:1: ( ( ( rule__FigureElement__Group_4__0 )? ) )
             // InternalMarkup.g:1295:1: ( ( rule__FigureElement__Group_4__0 )? )
@@ -3828,7 +3828,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1296:1: ( rule__FigureElement__Group_4__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getGroup_4()); 
+               before(grammarAccess.getFigureElementAccess().getGroup_4());
             }
             // InternalMarkup.g:1297:1: ( rule__FigureElement__Group_4__0 )?
             int alt12=2;
@@ -3853,7 +3853,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getGroup_4()); 
+               after(grammarAccess.getFigureElementAccess().getGroup_4());
             }
 
             }
@@ -3881,7 +3881,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1311:1: ( rule__FigureElement__Group__5__Impl )
             // InternalMarkup.g:1312:2: rule__FigureElement__Group__5__Impl
@@ -3914,7 +3914,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1322:1: ( ( ']' ) )
             // InternalMarkup.g:1323:1: ( ']' )
@@ -3923,11 +3923,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1324:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getRightSquareBracketKeyword_5()); 
+               before(grammarAccess.getFigureElementAccess().getRightSquareBracketKeyword_5());
             }
             match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getRightSquareBracketKeyword_5()); 
+               after(grammarAccess.getFigureElementAccess().getRightSquareBracketKeyword_5());
             }
 
             }
@@ -3955,7 +3955,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1353:1: ( rule__FigureElement__Group_1__0__Impl rule__FigureElement__Group_1__1 )
             // InternalMarkup.g:1354:2: rule__FigureElement__Group_1__0__Impl rule__FigureElement__Group_1__1
@@ -3993,7 +3993,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1365:1: ( ( '#' ) )
             // InternalMarkup.g:1366:1: ( '#' )
@@ -4002,11 +4002,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1367:1: '#'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getNumberSignKeyword_1_0()); 
+               before(grammarAccess.getFigureElementAccess().getNumberSignKeyword_1_0());
             }
             match(input,27,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getNumberSignKeyword_1_0()); 
+               after(grammarAccess.getFigureElementAccess().getNumberSignKeyword_1_0());
             }
 
             }
@@ -4034,7 +4034,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1384:1: ( rule__FigureElement__Group_1__1__Impl )
             // InternalMarkup.g:1385:2: rule__FigureElement__Group_1__1__Impl
@@ -4067,7 +4067,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1395:1: ( ( ( rule__FigureElement__DefAssignment_1_1 ) ) )
             // InternalMarkup.g:1396:1: ( ( rule__FigureElement__DefAssignment_1_1 ) )
@@ -4076,7 +4076,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1397:1: ( rule__FigureElement__DefAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getDefAssignment_1_1()); 
+               before(grammarAccess.getFigureElementAccess().getDefAssignment_1_1());
             }
             // InternalMarkup.g:1398:1: ( rule__FigureElement__DefAssignment_1_1 )
             // InternalMarkup.g:1398:2: rule__FigureElement__DefAssignment_1_1
@@ -4090,7 +4090,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getDefAssignment_1_1()); 
+               after(grammarAccess.getFigureElementAccess().getDefAssignment_1_1());
             }
 
             }
@@ -4118,7 +4118,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1416:1: ( rule__FigureElement__Group_4__0__Impl rule__FigureElement__Group_4__1 )
             // InternalMarkup.g:1417:2: rule__FigureElement__Group_4__0__Impl rule__FigureElement__Group_4__1
@@ -4156,7 +4156,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1428:1: ( ( ',' ) )
             // InternalMarkup.g:1429:1: ( ',' )
@@ -4165,11 +4165,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1430:1: ','
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getCommaKeyword_4_0()); 
+               before(grammarAccess.getFigureElementAccess().getCommaKeyword_4_0());
             }
             match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getCommaKeyword_4_0()); 
+               after(grammarAccess.getFigureElementAccess().getCommaKeyword_4_0());
             }
 
             }
@@ -4197,7 +4197,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1447:1: ( rule__FigureElement__Group_4__1__Impl rule__FigureElement__Group_4__2 )
             // InternalMarkup.g:1448:2: rule__FigureElement__Group_4__1__Impl rule__FigureElement__Group_4__2
@@ -4235,7 +4235,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1459:1: ( ( ( rule__FigureElement__AltAssignment_4_1 ) ) )
             // InternalMarkup.g:1460:1: ( ( rule__FigureElement__AltAssignment_4_1 ) )
@@ -4244,7 +4244,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1461:1: ( rule__FigureElement__AltAssignment_4_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getAltAssignment_4_1()); 
+               before(grammarAccess.getFigureElementAccess().getAltAssignment_4_1());
             }
             // InternalMarkup.g:1462:1: ( rule__FigureElement__AltAssignment_4_1 )
             // InternalMarkup.g:1462:2: rule__FigureElement__AltAssignment_4_1
@@ -4258,7 +4258,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getAltAssignment_4_1()); 
+               after(grammarAccess.getFigureElementAccess().getAltAssignment_4_1());
             }
 
             }
@@ -4286,7 +4286,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1476:1: ( rule__FigureElement__Group_4__2__Impl )
             // InternalMarkup.g:1477:2: rule__FigureElement__Group_4__2__Impl
@@ -4319,7 +4319,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1487:1: ( ( ( rule__FigureElement__Group_4_2__0 )? ) )
             // InternalMarkup.g:1488:1: ( ( rule__FigureElement__Group_4_2__0 )? )
@@ -4328,7 +4328,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1489:1: ( rule__FigureElement__Group_4_2__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getGroup_4_2()); 
+               before(grammarAccess.getFigureElementAccess().getGroup_4_2());
             }
             // InternalMarkup.g:1490:1: ( rule__FigureElement__Group_4_2__0 )?
             int alt13=2;
@@ -4353,7 +4353,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getGroup_4_2()); 
+               after(grammarAccess.getFigureElementAccess().getGroup_4_2());
             }
 
             }
@@ -4381,7 +4381,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1510:1: ( rule__FigureElement__Group_4_2__0__Impl rule__FigureElement__Group_4_2__1 )
             // InternalMarkup.g:1511:2: rule__FigureElement__Group_4_2__0__Impl rule__FigureElement__Group_4_2__1
@@ -4419,7 +4419,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1522:1: ( ( ',' ) )
             // InternalMarkup.g:1523:1: ( ',' )
@@ -4428,11 +4428,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1524:1: ','
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_0()); 
+               before(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_0());
             }
             match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_0()); 
+               after(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_0());
             }
 
             }
@@ -4460,7 +4460,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1541:1: ( rule__FigureElement__Group_4_2__1__Impl rule__FigureElement__Group_4_2__2 )
             // InternalMarkup.g:1542:2: rule__FigureElement__Group_4_2__1__Impl rule__FigureElement__Group_4_2__2
@@ -4498,7 +4498,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1553:1: ( ( ( rule__FigureElement__RequiredWidthAssignment_4_2_1 ) ) )
             // InternalMarkup.g:1554:1: ( ( rule__FigureElement__RequiredWidthAssignment_4_2_1 ) )
@@ -4507,7 +4507,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1555:1: ( rule__FigureElement__RequiredWidthAssignment_4_2_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getRequiredWidthAssignment_4_2_1()); 
+               before(grammarAccess.getFigureElementAccess().getRequiredWidthAssignment_4_2_1());
             }
             // InternalMarkup.g:1556:1: ( rule__FigureElement__RequiredWidthAssignment_4_2_1 )
             // InternalMarkup.g:1556:2: rule__FigureElement__RequiredWidthAssignment_4_2_1
@@ -4521,7 +4521,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getRequiredWidthAssignment_4_2_1()); 
+               after(grammarAccess.getFigureElementAccess().getRequiredWidthAssignment_4_2_1());
             }
 
             }
@@ -4549,7 +4549,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4_2__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1570:1: ( rule__FigureElement__Group_4_2__2__Impl )
             // InternalMarkup.g:1571:2: rule__FigureElement__Group_4_2__2__Impl
@@ -4582,7 +4582,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4_2__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1581:1: ( ( ( rule__FigureElement__Group_4_2_2__0 )? ) )
             // InternalMarkup.g:1582:1: ( ( rule__FigureElement__Group_4_2_2__0 )? )
@@ -4591,7 +4591,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1583:1: ( rule__FigureElement__Group_4_2_2__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getGroup_4_2_2()); 
+               before(grammarAccess.getFigureElementAccess().getGroup_4_2_2());
             }
             // InternalMarkup.g:1584:1: ( rule__FigureElement__Group_4_2_2__0 )?
             int alt14=2;
@@ -4616,7 +4616,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getGroup_4_2_2()); 
+               after(grammarAccess.getFigureElementAccess().getGroup_4_2_2());
             }
 
             }
@@ -4644,7 +4644,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4_2_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1604:1: ( rule__FigureElement__Group_4_2_2__0__Impl rule__FigureElement__Group_4_2_2__1 )
             // InternalMarkup.g:1605:2: rule__FigureElement__Group_4_2_2__0__Impl rule__FigureElement__Group_4_2_2__1
@@ -4682,7 +4682,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4_2_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1616:1: ( ( ',' ) )
             // InternalMarkup.g:1617:1: ( ',' )
@@ -4691,11 +4691,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1618:1: ','
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_2_0()); 
+               before(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_2_0());
             }
             match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_2_0()); 
+               after(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_2_0());
             }
 
             }
@@ -4723,7 +4723,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4_2_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1635:1: ( rule__FigureElement__Group_4_2_2__1__Impl )
             // InternalMarkup.g:1636:2: rule__FigureElement__Group_4_2_2__1__Impl
@@ -4756,7 +4756,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__Group_4_2_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1646:1: ( ( ( rule__FigureElement__RequiredHeightAssignment_4_2_2_1 ) ) )
             // InternalMarkup.g:1647:1: ( ( rule__FigureElement__RequiredHeightAssignment_4_2_2_1 ) )
@@ -4765,7 +4765,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1648:1: ( rule__FigureElement__RequiredHeightAssignment_4_2_2_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getRequiredHeightAssignment_4_2_2_1()); 
+               before(grammarAccess.getFigureElementAccess().getRequiredHeightAssignment_4_2_2_1());
             }
             // InternalMarkup.g:1649:1: ( rule__FigureElement__RequiredHeightAssignment_4_2_2_1 )
             // InternalMarkup.g:1649:2: rule__FigureElement__RequiredHeightAssignment_4_2_2_1
@@ -4779,7 +4779,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getRequiredHeightAssignment_4_2_2_1()); 
+               after(grammarAccess.getFigureElementAccess().getRequiredHeightAssignment_4_2_2_1());
             }
 
             }
@@ -4807,7 +4807,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureRefElement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1667:1: ( rule__FigureRefElement__Group__0__Impl rule__FigureRefElement__Group__1 )
             // InternalMarkup.g:1668:2: rule__FigureRefElement__Group__0__Impl rule__FigureRefElement__Group__1
@@ -4845,7 +4845,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureRefElement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1679:1: ( ( 'figureRef' ) )
             // InternalMarkup.g:1680:1: ( 'figureRef' )
@@ -4854,11 +4854,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1681:1: 'figureRef'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureRefElementAccess().getFigureRefKeyword_0()); 
+               before(grammarAccess.getFigureRefElementAccess().getFigureRefKeyword_0());
             }
             match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureRefElementAccess().getFigureRefKeyword_0()); 
+               after(grammarAccess.getFigureRefElementAccess().getFigureRefKeyword_0());
             }
 
             }
@@ -4886,7 +4886,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureRefElement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1698:1: ( rule__FigureRefElement__Group__1__Impl rule__FigureRefElement__Group__2 )
             // InternalMarkup.g:1699:2: rule__FigureRefElement__Group__1__Impl rule__FigureRefElement__Group__2
@@ -4924,7 +4924,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureRefElement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1710:1: ( ( '[' ) )
             // InternalMarkup.g:1711:1: ( '[' )
@@ -4933,11 +4933,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1712:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureRefElementAccess().getLeftSquareBracketKeyword_1()); 
+               before(grammarAccess.getFigureRefElementAccess().getLeftSquareBracketKeyword_1());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureRefElementAccess().getLeftSquareBracketKeyword_1()); 
+               after(grammarAccess.getFigureRefElementAccess().getLeftSquareBracketKeyword_1());
             }
 
             }
@@ -4965,7 +4965,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureRefElement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1729:1: ( rule__FigureRefElement__Group__2__Impl rule__FigureRefElement__Group__3 )
             // InternalMarkup.g:1730:2: rule__FigureRefElement__Group__2__Impl rule__FigureRefElement__Group__3
@@ -5003,7 +5003,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureRefElement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1741:1: ( ( ( rule__FigureRefElement__RefAssignment_2 ) ) )
             // InternalMarkup.g:1742:1: ( ( rule__FigureRefElement__RefAssignment_2 ) )
@@ -5012,7 +5012,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1743:1: ( rule__FigureRefElement__RefAssignment_2 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureRefElementAccess().getRefAssignment_2()); 
+               before(grammarAccess.getFigureRefElementAccess().getRefAssignment_2());
             }
             // InternalMarkup.g:1744:1: ( rule__FigureRefElement__RefAssignment_2 )
             // InternalMarkup.g:1744:2: rule__FigureRefElement__RefAssignment_2
@@ -5026,7 +5026,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureRefElementAccess().getRefAssignment_2()); 
+               after(grammarAccess.getFigureRefElementAccess().getRefAssignment_2());
             }
 
             }
@@ -5054,7 +5054,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureRefElement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1758:1: ( rule__FigureRefElement__Group__3__Impl )
             // InternalMarkup.g:1759:2: rule__FigureRefElement__Group__3__Impl
@@ -5087,7 +5087,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureRefElement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1769:1: ( ( ']' ) )
             // InternalMarkup.g:1770:1: ( ']' )
@@ -5096,11 +5096,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1771:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureRefElementAccess().getRightSquareBracketKeyword_3()); 
+               before(grammarAccess.getFigureRefElementAccess().getRightSquareBracketKeyword_3());
             }
             match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureRefElementAccess().getRightSquareBracketKeyword_3()); 
+               after(grammarAccess.getFigureRefElementAccess().getRightSquareBracketKeyword_3());
             }
 
             }
@@ -5128,7 +5128,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1796:1: ( rule__FootnoteElement__Group__0__Impl rule__FootnoteElement__Group__1 )
             // InternalMarkup.g:1797:2: rule__FootnoteElement__Group__0__Impl rule__FootnoteElement__Group__1
@@ -5166,7 +5166,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1808:1: ( ( () ) )
             // InternalMarkup.g:1809:1: ( () )
@@ -5175,15 +5175,15 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1810:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFootnoteElementAccess().getFootnoteElementAction_0()); 
+               before(grammarAccess.getFootnoteElementAccess().getFootnoteElementAction_0());
             }
             // InternalMarkup.g:1811:1: ()
-            // InternalMarkup.g:1813:1: 
+            // InternalMarkup.g:1813:1:
             {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFootnoteElementAccess().getFootnoteElementAction_0()); 
+               after(grammarAccess.getFootnoteElementAccess().getFootnoteElementAction_0());
             }
 
             }
@@ -5207,7 +5207,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1827:1: ( rule__FootnoteElement__Group__1__Impl rule__FootnoteElement__Group__2 )
             // InternalMarkup.g:1828:2: rule__FootnoteElement__Group__1__Impl rule__FootnoteElement__Group__2
@@ -5245,7 +5245,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1839:1: ( ( 'footnote' ) )
             // InternalMarkup.g:1840:1: ( 'footnote' )
@@ -5254,11 +5254,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1841:1: 'footnote'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFootnoteElementAccess().getFootnoteKeyword_1()); 
+               before(grammarAccess.getFootnoteElementAccess().getFootnoteKeyword_1());
             }
             match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFootnoteElementAccess().getFootnoteKeyword_1()); 
+               after(grammarAccess.getFootnoteElementAccess().getFootnoteKeyword_1());
             }
 
             }
@@ -5286,7 +5286,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1858:1: ( rule__FootnoteElement__Group__2__Impl rule__FootnoteElement__Group__3 )
             // InternalMarkup.g:1859:2: rule__FootnoteElement__Group__2__Impl rule__FootnoteElement__Group__3
@@ -5324,7 +5324,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1870:1: ( ( '[' ) )
             // InternalMarkup.g:1871:1: ( '[' )
@@ -5333,11 +5333,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1872:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFootnoteElementAccess().getLeftSquareBracketKeyword_2()); 
+               before(grammarAccess.getFootnoteElementAccess().getLeftSquareBracketKeyword_2());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFootnoteElementAccess().getLeftSquareBracketKeyword_2()); 
+               after(grammarAccess.getFootnoteElementAccess().getLeftSquareBracketKeyword_2());
             }
 
             }
@@ -5365,7 +5365,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1889:1: ( rule__FootnoteElement__Group__3__Impl rule__FootnoteElement__Group__4 )
             // InternalMarkup.g:1890:2: rule__FootnoteElement__Group__3__Impl rule__FootnoteElement__Group__4
@@ -5403,7 +5403,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1901:1: ( ( ( rule__FootnoteElement__ElementsAssignment_3 )* ) )
             // InternalMarkup.g:1902:1: ( ( rule__FootnoteElement__ElementsAssignment_3 )* )
@@ -5412,7 +5412,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1903:1: ( rule__FootnoteElement__ElementsAssignment_3 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFootnoteElementAccess().getElementsAssignment_3()); 
+               before(grammarAccess.getFootnoteElementAccess().getElementsAssignment_3());
             }
             // InternalMarkup.g:1904:1: ( rule__FootnoteElement__ElementsAssignment_3 )*
             loop15:
@@ -5444,7 +5444,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFootnoteElementAccess().getElementsAssignment_3()); 
+               after(grammarAccess.getFootnoteElementAccess().getElementsAssignment_3());
             }
 
             }
@@ -5472,7 +5472,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1918:1: ( rule__FootnoteElement__Group__4__Impl )
             // InternalMarkup.g:1919:2: rule__FootnoteElement__Group__4__Impl
@@ -5505,7 +5505,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1929:1: ( ( ']' ) )
             // InternalMarkup.g:1930:1: ( ']' )
@@ -5514,11 +5514,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1931:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFootnoteElementAccess().getRightSquareBracketKeyword_4()); 
+               before(grammarAccess.getFootnoteElementAccess().getRightSquareBracketKeyword_4());
             }
             match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFootnoteElementAccess().getRightSquareBracketKeyword_4()); 
+               after(grammarAccess.getFootnoteElementAccess().getRightSquareBracketKeyword_4());
             }
 
             }
@@ -5546,7 +5546,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1958:1: ( rule__HeadingElement__Group__0__Impl rule__HeadingElement__Group__1 )
             // InternalMarkup.g:1959:2: rule__HeadingElement__Group__0__Impl rule__HeadingElement__Group__1
@@ -5584,7 +5584,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1970:1: ( ( () ) )
             // InternalMarkup.g:1971:1: ( () )
@@ -5593,15 +5593,15 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:1972:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getHeadingElementAction_0()); 
+               before(grammarAccess.getHeadingElementAccess().getHeadingElementAction_0());
             }
             // InternalMarkup.g:1973:1: ()
-            // InternalMarkup.g:1975:1: 
+            // InternalMarkup.g:1975:1:
             {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getHeadingElementAction_0()); 
+               after(grammarAccess.getHeadingElementAccess().getHeadingElementAction_0());
             }
 
             }
@@ -5625,7 +5625,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:1989:1: ( rule__HeadingElement__Group__1__Impl rule__HeadingElement__Group__2 )
             // InternalMarkup.g:1990:2: rule__HeadingElement__Group__1__Impl rule__HeadingElement__Group__2
@@ -5663,7 +5663,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2001:1: ( ( 'heading' ) )
             // InternalMarkup.g:2002:1: ( 'heading' )
@@ -5672,11 +5672,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2003:1: 'heading'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getHeadingKeyword_1()); 
+               before(grammarAccess.getHeadingElementAccess().getHeadingKeyword_1());
             }
             match(input,22,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getHeadingKeyword_1()); 
+               after(grammarAccess.getHeadingElementAccess().getHeadingKeyword_1());
             }
 
             }
@@ -5704,7 +5704,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2020:1: ( rule__HeadingElement__Group__2__Impl rule__HeadingElement__Group__3 )
             // InternalMarkup.g:2021:2: rule__HeadingElement__Group__2__Impl rule__HeadingElement__Group__3
@@ -5742,7 +5742,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2032:1: ( ( ( rule__HeadingElement__Group_2__0 )? ) )
             // InternalMarkup.g:2033:1: ( ( rule__HeadingElement__Group_2__0 )? )
@@ -5751,7 +5751,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2034:1: ( rule__HeadingElement__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getGroup_2()); 
+               before(grammarAccess.getHeadingElementAccess().getGroup_2());
             }
             // InternalMarkup.g:2035:1: ( rule__HeadingElement__Group_2__0 )?
             int alt16=2;
@@ -5776,7 +5776,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getGroup_2()); 
+               after(grammarAccess.getHeadingElementAccess().getGroup_2());
             }
 
             }
@@ -5804,7 +5804,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2049:1: ( rule__HeadingElement__Group__3__Impl rule__HeadingElement__Group__4 )
             // InternalMarkup.g:2050:2: rule__HeadingElement__Group__3__Impl rule__HeadingElement__Group__4
@@ -5842,7 +5842,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2061:1: ( ( '[' ) )
             // InternalMarkup.g:2062:1: ( '[' )
@@ -5851,11 +5851,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2063:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getLeftSquareBracketKeyword_3()); 
+               before(grammarAccess.getHeadingElementAccess().getLeftSquareBracketKeyword_3());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getLeftSquareBracketKeyword_3()); 
+               after(grammarAccess.getHeadingElementAccess().getLeftSquareBracketKeyword_3());
             }
 
             }
@@ -5883,7 +5883,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2080:1: ( rule__HeadingElement__Group__4__Impl rule__HeadingElement__Group__5 )
             // InternalMarkup.g:2081:2: rule__HeadingElement__Group__4__Impl rule__HeadingElement__Group__5
@@ -5921,7 +5921,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2092:1: ( ( ( rule__HeadingElement__ElementsAssignment_4 )* ) )
             // InternalMarkup.g:2093:1: ( ( rule__HeadingElement__ElementsAssignment_4 )* )
@@ -5930,7 +5930,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2094:1: ( rule__HeadingElement__ElementsAssignment_4 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getElementsAssignment_4()); 
+               before(grammarAccess.getHeadingElementAccess().getElementsAssignment_4());
             }
             // InternalMarkup.g:2095:1: ( rule__HeadingElement__ElementsAssignment_4 )*
             loop17:
@@ -5962,7 +5962,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getElementsAssignment_4()); 
+               after(grammarAccess.getHeadingElementAccess().getElementsAssignment_4());
             }
 
             }
@@ -5990,7 +5990,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2109:1: ( rule__HeadingElement__Group__5__Impl )
             // InternalMarkup.g:2110:2: rule__HeadingElement__Group__5__Impl
@@ -6023,7 +6023,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2120:1: ( ( ']' ) )
             // InternalMarkup.g:2121:1: ( ']' )
@@ -6032,11 +6032,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2122:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getRightSquareBracketKeyword_5()); 
+               before(grammarAccess.getHeadingElementAccess().getRightSquareBracketKeyword_5());
             }
             match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getRightSquareBracketKeyword_5()); 
+               after(grammarAccess.getHeadingElementAccess().getRightSquareBracketKeyword_5());
             }
 
             }
@@ -6064,7 +6064,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2151:1: ( rule__HeadingElement__Group_2__0__Impl rule__HeadingElement__Group_2__1 )
             // InternalMarkup.g:2152:2: rule__HeadingElement__Group_2__0__Impl rule__HeadingElement__Group_2__1
@@ -6102,7 +6102,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2163:1: ( ( ':' ) )
             // InternalMarkup.g:2164:1: ( ':' )
@@ -6111,11 +6111,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2165:1: ':'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getColonKeyword_2_0()); 
+               before(grammarAccess.getHeadingElementAccess().getColonKeyword_2_0());
             }
             match(input,26,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getColonKeyword_2_0()); 
+               after(grammarAccess.getHeadingElementAccess().getColonKeyword_2_0());
             }
 
             }
@@ -6143,7 +6143,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2182:1: ( rule__HeadingElement__Group_2__1__Impl )
             // InternalMarkup.g:2183:2: rule__HeadingElement__Group_2__1__Impl
@@ -6176,7 +6176,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2193:1: ( ( ( rule__HeadingElement__LevelAssignment_2_1 ) ) )
             // InternalMarkup.g:2194:1: ( ( rule__HeadingElement__LevelAssignment_2_1 ) )
@@ -6185,7 +6185,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2195:1: ( rule__HeadingElement__LevelAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getLevelAssignment_2_1()); 
+               before(grammarAccess.getHeadingElementAccess().getLevelAssignment_2_1());
             }
             // InternalMarkup.g:2196:1: ( rule__HeadingElement__LevelAssignment_2_1 )
             // InternalMarkup.g:2196:2: rule__HeadingElement__LevelAssignment_2_1
@@ -6199,7 +6199,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getLevelAssignment_2_1()); 
+               after(grammarAccess.getHeadingElementAccess().getLevelAssignment_2_1());
             }
 
             }
@@ -6227,7 +6227,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__NullElement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2214:1: ( rule__NullElement__Group__0__Impl rule__NullElement__Group__1 )
             // InternalMarkup.g:2215:2: rule__NullElement__Group__0__Impl rule__NullElement__Group__1
@@ -6265,7 +6265,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__NullElement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2226:1: ( ( () ) )
             // InternalMarkup.g:2227:1: ( () )
@@ -6274,15 +6274,15 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2228:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNullElementAccess().getNullElementAction_0()); 
+               before(grammarAccess.getNullElementAccess().getNullElementAction_0());
             }
             // InternalMarkup.g:2229:1: ()
-            // InternalMarkup.g:2231:1: 
+            // InternalMarkup.g:2231:1:
             {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNullElementAccess().getNullElementAction_0()); 
+               after(grammarAccess.getNullElementAccess().getNullElementAction_0());
             }
 
             }
@@ -6306,7 +6306,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__NullElement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2245:1: ( rule__NullElement__Group__1__Impl rule__NullElement__Group__2 )
             // InternalMarkup.g:2246:2: rule__NullElement__Group__1__Impl rule__NullElement__Group__2
@@ -6344,7 +6344,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__NullElement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2257:1: ( ( '[' ) )
             // InternalMarkup.g:2258:1: ( '[' )
@@ -6353,11 +6353,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2259:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNullElementAccess().getLeftSquareBracketKeyword_1()); 
+               before(grammarAccess.getNullElementAccess().getLeftSquareBracketKeyword_1());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNullElementAccess().getLeftSquareBracketKeyword_1()); 
+               after(grammarAccess.getNullElementAccess().getLeftSquareBracketKeyword_1());
             }
 
             }
@@ -6385,7 +6385,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__NullElement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2276:1: ( rule__NullElement__Group__2__Impl rule__NullElement__Group__3 )
             // InternalMarkup.g:2277:2: rule__NullElement__Group__2__Impl rule__NullElement__Group__3
@@ -6423,7 +6423,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__NullElement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2288:1: ( ( ( rule__NullElement__ElementsAssignment_2 )* ) )
             // InternalMarkup.g:2289:1: ( ( rule__NullElement__ElementsAssignment_2 )* )
@@ -6432,7 +6432,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2290:1: ( rule__NullElement__ElementsAssignment_2 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNullElementAccess().getElementsAssignment_2()); 
+               before(grammarAccess.getNullElementAccess().getElementsAssignment_2());
             }
             // InternalMarkup.g:2291:1: ( rule__NullElement__ElementsAssignment_2 )*
             loop18:
@@ -6464,7 +6464,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNullElementAccess().getElementsAssignment_2()); 
+               after(grammarAccess.getNullElementAccess().getElementsAssignment_2());
             }
 
             }
@@ -6492,7 +6492,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__NullElement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2305:1: ( rule__NullElement__Group__3__Impl )
             // InternalMarkup.g:2306:2: rule__NullElement__Group__3__Impl
@@ -6525,7 +6525,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__NullElement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2316:1: ( ( ']' ) )
             // InternalMarkup.g:2317:1: ( ']' )
@@ -6534,11 +6534,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2318:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNullElementAccess().getRightSquareBracketKeyword_3()); 
+               before(grammarAccess.getNullElementAccess().getRightSquareBracketKeyword_3());
             }
             match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNullElementAccess().getRightSquareBracketKeyword_3()); 
+               after(grammarAccess.getNullElementAccess().getRightSquareBracketKeyword_3());
             }
 
             }
@@ -6566,7 +6566,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2343:1: ( rule__OCLCodeElement__Group__0__Impl rule__OCLCodeElement__Group__1 )
             // InternalMarkup.g:2344:2: rule__OCLCodeElement__Group__0__Impl rule__OCLCodeElement__Group__1
@@ -6604,7 +6604,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2355:1: ( ( () ) )
             // InternalMarkup.g:2356:1: ( () )
@@ -6613,15 +6613,15 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2357:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLCodeElementAccess().getOCLCodeElementAction_0()); 
+               before(grammarAccess.getOCLCodeElementAccess().getOCLCodeElementAction_0());
             }
             // InternalMarkup.g:2358:1: ()
-            // InternalMarkup.g:2360:1: 
+            // InternalMarkup.g:2360:1:
             {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLCodeElementAccess().getOCLCodeElementAction_0()); 
+               after(grammarAccess.getOCLCodeElementAccess().getOCLCodeElementAction_0());
             }
 
             }
@@ -6645,7 +6645,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2374:1: ( rule__OCLCodeElement__Group__1__Impl rule__OCLCodeElement__Group__2 )
             // InternalMarkup.g:2375:2: rule__OCLCodeElement__Group__1__Impl rule__OCLCodeElement__Group__2
@@ -6683,7 +6683,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2386:1: ( ( 'oclCode' ) )
             // InternalMarkup.g:2387:1: ( 'oclCode' )
@@ -6692,11 +6692,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2388:1: 'oclCode'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLCodeElementAccess().getOclCodeKeyword_1()); 
+               before(grammarAccess.getOCLCodeElementAccess().getOclCodeKeyword_1());
             }
             match(input,23,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLCodeElementAccess().getOclCodeKeyword_1()); 
+               after(grammarAccess.getOCLCodeElementAccess().getOclCodeKeyword_1());
             }
 
             }
@@ -6724,7 +6724,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2405:1: ( rule__OCLCodeElement__Group__2__Impl rule__OCLCodeElement__Group__3 )
             // InternalMarkup.g:2406:2: rule__OCLCodeElement__Group__2__Impl rule__OCLCodeElement__Group__3
@@ -6762,7 +6762,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2417:1: ( ( '[' ) )
             // InternalMarkup.g:2418:1: ( '[' )
@@ -6771,11 +6771,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2419:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLCodeElementAccess().getLeftSquareBracketKeyword_2()); 
+               before(grammarAccess.getOCLCodeElementAccess().getLeftSquareBracketKeyword_2());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLCodeElementAccess().getLeftSquareBracketKeyword_2()); 
+               after(grammarAccess.getOCLCodeElementAccess().getLeftSquareBracketKeyword_2());
             }
 
             }
@@ -6803,7 +6803,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2436:1: ( rule__OCLCodeElement__Group__3__Impl rule__OCLCodeElement__Group__4 )
             // InternalMarkup.g:2437:2: rule__OCLCodeElement__Group__3__Impl rule__OCLCodeElement__Group__4
@@ -6841,7 +6841,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2448:1: ( ( ( rule__OCLCodeElement__ElementsAssignment_3 )* ) )
             // InternalMarkup.g:2449:1: ( ( rule__OCLCodeElement__ElementsAssignment_3 )* )
@@ -6850,7 +6850,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2450:1: ( rule__OCLCodeElement__ElementsAssignment_3 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLCodeElementAccess().getElementsAssignment_3()); 
+               before(grammarAccess.getOCLCodeElementAccess().getElementsAssignment_3());
             }
             // InternalMarkup.g:2451:1: ( rule__OCLCodeElement__ElementsAssignment_3 )*
             loop19:
@@ -6882,7 +6882,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLCodeElementAccess().getElementsAssignment_3()); 
+               after(grammarAccess.getOCLCodeElementAccess().getElementsAssignment_3());
             }
 
             }
@@ -6910,7 +6910,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2465:1: ( rule__OCLCodeElement__Group__4__Impl )
             // InternalMarkup.g:2466:2: rule__OCLCodeElement__Group__4__Impl
@@ -6943,7 +6943,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2476:1: ( ( ']' ) )
             // InternalMarkup.g:2477:1: ( ']' )
@@ -6952,11 +6952,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2478:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLCodeElementAccess().getRightSquareBracketKeyword_4()); 
+               before(grammarAccess.getOCLCodeElementAccess().getRightSquareBracketKeyword_4());
             }
             match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLCodeElementAccess().getRightSquareBracketKeyword_4()); 
+               after(grammarAccess.getOCLCodeElementAccess().getRightSquareBracketKeyword_4());
             }
 
             }
@@ -6984,7 +6984,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2505:1: ( rule__OCLEvalElement__Group__0__Impl rule__OCLEvalElement__Group__1 )
             // InternalMarkup.g:2506:2: rule__OCLEvalElement__Group__0__Impl rule__OCLEvalElement__Group__1
@@ -7022,7 +7022,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2517:1: ( ( () ) )
             // InternalMarkup.g:2518:1: ( () )
@@ -7031,15 +7031,15 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2519:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLEvalElementAccess().getOCLEvalElementAction_0()); 
+               before(grammarAccess.getOCLEvalElementAccess().getOCLEvalElementAction_0());
             }
             // InternalMarkup.g:2520:1: ()
-            // InternalMarkup.g:2522:1: 
+            // InternalMarkup.g:2522:1:
             {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLEvalElementAccess().getOCLEvalElementAction_0()); 
+               after(grammarAccess.getOCLEvalElementAccess().getOCLEvalElementAction_0());
             }
 
             }
@@ -7063,7 +7063,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2536:1: ( rule__OCLEvalElement__Group__1__Impl rule__OCLEvalElement__Group__2 )
             // InternalMarkup.g:2537:2: rule__OCLEvalElement__Group__1__Impl rule__OCLEvalElement__Group__2
@@ -7101,7 +7101,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2548:1: ( ( 'oclEval' ) )
             // InternalMarkup.g:2549:1: ( 'oclEval' )
@@ -7110,11 +7110,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2550:1: 'oclEval'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLEvalElementAccess().getOclEvalKeyword_1()); 
+               before(grammarAccess.getOCLEvalElementAccess().getOclEvalKeyword_1());
             }
             match(input,24,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLEvalElementAccess().getOclEvalKeyword_1()); 
+               after(grammarAccess.getOCLEvalElementAccess().getOclEvalKeyword_1());
             }
 
             }
@@ -7142,7 +7142,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2567:1: ( rule__OCLEvalElement__Group__2__Impl rule__OCLEvalElement__Group__3 )
             // InternalMarkup.g:2568:2: rule__OCLEvalElement__Group__2__Impl rule__OCLEvalElement__Group__3
@@ -7180,7 +7180,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2579:1: ( ( '[' ) )
             // InternalMarkup.g:2580:1: ( '[' )
@@ -7189,11 +7189,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2581:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLEvalElementAccess().getLeftSquareBracketKeyword_2()); 
+               before(grammarAccess.getOCLEvalElementAccess().getLeftSquareBracketKeyword_2());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLEvalElementAccess().getLeftSquareBracketKeyword_2()); 
+               after(grammarAccess.getOCLEvalElementAccess().getLeftSquareBracketKeyword_2());
             }
 
             }
@@ -7221,7 +7221,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2598:1: ( rule__OCLEvalElement__Group__3__Impl rule__OCLEvalElement__Group__4 )
             // InternalMarkup.g:2599:2: rule__OCLEvalElement__Group__3__Impl rule__OCLEvalElement__Group__4
@@ -7259,7 +7259,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2610:1: ( ( ( rule__OCLEvalElement__ElementsAssignment_3 )* ) )
             // InternalMarkup.g:2611:1: ( ( rule__OCLEvalElement__ElementsAssignment_3 )* )
@@ -7268,7 +7268,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2612:1: ( rule__OCLEvalElement__ElementsAssignment_3 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLEvalElementAccess().getElementsAssignment_3()); 
+               before(grammarAccess.getOCLEvalElementAccess().getElementsAssignment_3());
             }
             // InternalMarkup.g:2613:1: ( rule__OCLEvalElement__ElementsAssignment_3 )*
             loop20:
@@ -7300,7 +7300,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLEvalElementAccess().getElementsAssignment_3()); 
+               after(grammarAccess.getOCLEvalElementAccess().getElementsAssignment_3());
             }
 
             }
@@ -7328,7 +7328,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2627:1: ( rule__OCLEvalElement__Group__4__Impl )
             // InternalMarkup.g:2628:2: rule__OCLEvalElement__Group__4__Impl
@@ -7361,7 +7361,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2638:1: ( ( ']' ) )
             // InternalMarkup.g:2639:1: ( ']' )
@@ -7370,11 +7370,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2640:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLEvalElementAccess().getRightSquareBracketKeyword_4()); 
+               before(grammarAccess.getOCLEvalElementAccess().getRightSquareBracketKeyword_4());
             }
             match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLEvalElementAccess().getRightSquareBracketKeyword_4()); 
+               after(grammarAccess.getOCLEvalElementAccess().getRightSquareBracketKeyword_4());
             }
 
             }
@@ -7402,7 +7402,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2667:1: ( rule__OCLTextElement__Group__0__Impl rule__OCLTextElement__Group__1 )
             // InternalMarkup.g:2668:2: rule__OCLTextElement__Group__0__Impl rule__OCLTextElement__Group__1
@@ -7440,7 +7440,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2679:1: ( ( () ) )
             // InternalMarkup.g:2680:1: ( () )
@@ -7449,15 +7449,15 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2681:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLTextElementAccess().getOCLTextElementAction_0()); 
+               before(grammarAccess.getOCLTextElementAccess().getOCLTextElementAction_0());
             }
             // InternalMarkup.g:2682:1: ()
-            // InternalMarkup.g:2684:1: 
+            // InternalMarkup.g:2684:1:
             {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLTextElementAccess().getOCLTextElementAction_0()); 
+               after(grammarAccess.getOCLTextElementAccess().getOCLTextElementAction_0());
             }
 
             }
@@ -7481,7 +7481,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2698:1: ( rule__OCLTextElement__Group__1__Impl rule__OCLTextElement__Group__2 )
             // InternalMarkup.g:2699:2: rule__OCLTextElement__Group__1__Impl rule__OCLTextElement__Group__2
@@ -7519,7 +7519,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2710:1: ( ( 'oclText' ) )
             // InternalMarkup.g:2711:1: ( 'oclText' )
@@ -7528,11 +7528,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2712:1: 'oclText'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLTextElementAccess().getOclTextKeyword_1()); 
+               before(grammarAccess.getOCLTextElementAccess().getOclTextKeyword_1());
             }
             match(input,25,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLTextElementAccess().getOclTextKeyword_1()); 
+               after(grammarAccess.getOCLTextElementAccess().getOclTextKeyword_1());
             }
 
             }
@@ -7560,7 +7560,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2729:1: ( rule__OCLTextElement__Group__2__Impl rule__OCLTextElement__Group__3 )
             // InternalMarkup.g:2730:2: rule__OCLTextElement__Group__2__Impl rule__OCLTextElement__Group__3
@@ -7598,7 +7598,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2741:1: ( ( '[' ) )
             // InternalMarkup.g:2742:1: ( '[' )
@@ -7607,11 +7607,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2743:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLTextElementAccess().getLeftSquareBracketKeyword_2()); 
+               before(grammarAccess.getOCLTextElementAccess().getLeftSquareBracketKeyword_2());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLTextElementAccess().getLeftSquareBracketKeyword_2()); 
+               after(grammarAccess.getOCLTextElementAccess().getLeftSquareBracketKeyword_2());
             }
 
             }
@@ -7639,7 +7639,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2760:1: ( rule__OCLTextElement__Group__3__Impl rule__OCLTextElement__Group__4 )
             // InternalMarkup.g:2761:2: rule__OCLTextElement__Group__3__Impl rule__OCLTextElement__Group__4
@@ -7677,7 +7677,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2772:1: ( ( ( rule__OCLTextElement__ElementsAssignment_3 )* ) )
             // InternalMarkup.g:2773:1: ( ( rule__OCLTextElement__ElementsAssignment_3 )* )
@@ -7686,7 +7686,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2774:1: ( rule__OCLTextElement__ElementsAssignment_3 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLTextElementAccess().getElementsAssignment_3()); 
+               before(grammarAccess.getOCLTextElementAccess().getElementsAssignment_3());
             }
             // InternalMarkup.g:2775:1: ( rule__OCLTextElement__ElementsAssignment_3 )*
             loop21:
@@ -7718,7 +7718,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLTextElementAccess().getElementsAssignment_3()); 
+               after(grammarAccess.getOCLTextElementAccess().getElementsAssignment_3());
             }
 
             }
@@ -7746,7 +7746,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2789:1: ( rule__OCLTextElement__Group__4__Impl )
             // InternalMarkup.g:2790:2: rule__OCLTextElement__Group__4__Impl
@@ -7779,7 +7779,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2800:1: ( ( ']' ) )
             // InternalMarkup.g:2801:1: ( ']' )
@@ -7788,11 +7788,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2802:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLTextElementAccess().getRightSquareBracketKeyword_4()); 
+               before(grammarAccess.getOCLTextElementAccess().getRightSquareBracketKeyword_4());
             }
             match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLTextElementAccess().getRightSquareBracketKeyword_4()); 
+               after(grammarAccess.getOCLTextElementAccess().getRightSquareBracketKeyword_4());
             }
 
             }
@@ -7820,7 +7820,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__Markup__ElementsAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2830:1: ( ( ruleMarkupElement ) )
             // InternalMarkup.g:2831:1: ( ruleMarkupElement )
@@ -7829,7 +7829,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2832:1: ruleMarkupElement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMarkupAccess().getElementsMarkupElementParserRuleCall_0()); 
+               before(grammarAccess.getMarkupAccess().getElementsMarkupElementParserRuleCall_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMarkupElement();
@@ -7837,7 +7837,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMarkupAccess().getElementsMarkupElementParserRuleCall_0()); 
+               after(grammarAccess.getMarkupAccess().getElementsMarkupElementParserRuleCall_0());
             }
 
             }
@@ -7865,7 +7865,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__LevelAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2845:1: ( ( RULE_INT ) )
             // InternalMarkup.g:2846:1: ( RULE_INT )
@@ -7874,11 +7874,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2847:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getLevelINTTerminalRuleCall_2_1_0()); 
+               before(grammarAccess.getBulletElementAccess().getLevelINTTerminalRuleCall_2_1_0());
             }
             match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getLevelINTTerminalRuleCall_2_1_0()); 
+               after(grammarAccess.getBulletElementAccess().getLevelINTTerminalRuleCall_2_1_0());
             }
 
             }
@@ -7906,7 +7906,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__BulletElement__ElementsAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2860:1: ( ( ruleMarkupElement ) )
             // InternalMarkup.g:2861:1: ( ruleMarkupElement )
@@ -7915,7 +7915,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2862:1: ruleMarkupElement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBulletElementAccess().getElementsMarkupElementParserRuleCall_4_0()); 
+               before(grammarAccess.getBulletElementAccess().getElementsMarkupElementParserRuleCall_4_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMarkupElement();
@@ -7923,7 +7923,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBulletElementAccess().getElementsMarkupElementParserRuleCall_4_0()); 
+               after(grammarAccess.getBulletElementAccess().getElementsMarkupElementParserRuleCall_4_0());
             }
 
             }
@@ -7951,7 +7951,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__FontAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2875:1: ( ( ( rule__FontElement__FontAlternatives_0_0 ) ) )
             // InternalMarkup.g:2876:1: ( ( rule__FontElement__FontAlternatives_0_0 ) )
@@ -7960,7 +7960,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2877:1: ( rule__FontElement__FontAlternatives_0_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFontElementAccess().getFontAlternatives_0_0()); 
+               before(grammarAccess.getFontElementAccess().getFontAlternatives_0_0());
             }
             // InternalMarkup.g:2878:1: ( rule__FontElement__FontAlternatives_0_0 )
             // InternalMarkup.g:2878:2: rule__FontElement__FontAlternatives_0_0
@@ -7974,7 +7974,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFontElementAccess().getFontAlternatives_0_0()); 
+               after(grammarAccess.getFontElementAccess().getFontAlternatives_0_0());
             }
 
             }
@@ -8002,7 +8002,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FontElement__ElementsAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2891:1: ( ( ruleMarkupElement ) )
             // InternalMarkup.g:2892:1: ( ruleMarkupElement )
@@ -8011,7 +8011,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2893:1: ruleMarkupElement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFontElementAccess().getElementsMarkupElementParserRuleCall_2_0()); 
+               before(grammarAccess.getFontElementAccess().getElementsMarkupElementParserRuleCall_2_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMarkupElement();
@@ -8019,7 +8019,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFontElementAccess().getElementsMarkupElementParserRuleCall_2_0()); 
+               after(grammarAccess.getFontElementAccess().getElementsMarkupElementParserRuleCall_2_0());
             }
 
             }
@@ -8047,7 +8047,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__DefAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2906:1: ( ( RULE_ID ) )
             // InternalMarkup.g:2907:1: ( RULE_ID )
@@ -8056,11 +8056,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2908:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getDefIDTerminalRuleCall_1_1_0()); 
+               before(grammarAccess.getFigureElementAccess().getDefIDTerminalRuleCall_1_1_0());
             }
             match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getDefIDTerminalRuleCall_1_1_0()); 
+               after(grammarAccess.getFigureElementAccess().getDefIDTerminalRuleCall_1_1_0());
             }
 
             }
@@ -8088,7 +8088,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__SrcAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2921:1: ( ( RULE_STRING ) )
             // InternalMarkup.g:2922:1: ( RULE_STRING )
@@ -8097,11 +8097,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2923:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getSrcSTRINGTerminalRuleCall_3_0()); 
+               before(grammarAccess.getFigureElementAccess().getSrcSTRINGTerminalRuleCall_3_0());
             }
             match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getSrcSTRINGTerminalRuleCall_3_0()); 
+               after(grammarAccess.getFigureElementAccess().getSrcSTRINGTerminalRuleCall_3_0());
             }
 
             }
@@ -8129,7 +8129,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__AltAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2936:1: ( ( RULE_STRING ) )
             // InternalMarkup.g:2937:1: ( RULE_STRING )
@@ -8138,11 +8138,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2938:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getAltSTRINGTerminalRuleCall_4_1_0()); 
+               before(grammarAccess.getFigureElementAccess().getAltSTRINGTerminalRuleCall_4_1_0());
             }
             match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getAltSTRINGTerminalRuleCall_4_1_0()); 
+               after(grammarAccess.getFigureElementAccess().getAltSTRINGTerminalRuleCall_4_1_0());
             }
 
             }
@@ -8170,7 +8170,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__RequiredWidthAssignment_4_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2951:1: ( ( RULE_INT ) )
             // InternalMarkup.g:2952:1: ( RULE_INT )
@@ -8179,11 +8179,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2953:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getRequiredWidthINTTerminalRuleCall_4_2_1_0()); 
+               before(grammarAccess.getFigureElementAccess().getRequiredWidthINTTerminalRuleCall_4_2_1_0());
             }
             match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getRequiredWidthINTTerminalRuleCall_4_2_1_0()); 
+               after(grammarAccess.getFigureElementAccess().getRequiredWidthINTTerminalRuleCall_4_2_1_0());
             }
 
             }
@@ -8211,7 +8211,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureElement__RequiredHeightAssignment_4_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2966:1: ( ( RULE_INT ) )
             // InternalMarkup.g:2967:1: ( RULE_INT )
@@ -8220,11 +8220,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2968:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureElementAccess().getRequiredHeightINTTerminalRuleCall_4_2_2_1_0()); 
+               before(grammarAccess.getFigureElementAccess().getRequiredHeightINTTerminalRuleCall_4_2_2_1_0());
             }
             match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureElementAccess().getRequiredHeightINTTerminalRuleCall_4_2_2_1_0()); 
+               after(grammarAccess.getFigureElementAccess().getRequiredHeightINTTerminalRuleCall_4_2_2_1_0());
             }
 
             }
@@ -8252,7 +8252,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FigureRefElement__RefAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:2981:1: ( ( ( RULE_ID ) ) )
             // InternalMarkup.g:2982:1: ( ( RULE_ID ) )
@@ -8261,23 +8261,23 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:2983:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureRefElementAccess().getRefFigureElementCrossReference_2_0()); 
+               before(grammarAccess.getFigureRefElementAccess().getRefFigureElementCrossReference_2_0());
             }
             // InternalMarkup.g:2984:1: ( RULE_ID )
             // InternalMarkup.g:2985:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFigureRefElementAccess().getRefFigureElementIDTerminalRuleCall_2_0_1()); 
+               before(grammarAccess.getFigureRefElementAccess().getRefFigureElementIDTerminalRuleCall_2_0_1());
             }
             match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureRefElementAccess().getRefFigureElementIDTerminalRuleCall_2_0_1()); 
+               after(grammarAccess.getFigureRefElementAccess().getRefFigureElementIDTerminalRuleCall_2_0_1());
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFigureRefElementAccess().getRefFigureElementCrossReference_2_0()); 
+               after(grammarAccess.getFigureRefElementAccess().getRefFigureElementCrossReference_2_0());
             }
 
             }
@@ -8305,7 +8305,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__FootnoteElement__ElementsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:3000:1: ( ( ruleMarkupElement ) )
             // InternalMarkup.g:3001:1: ( ruleMarkupElement )
@@ -8314,7 +8314,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:3002:1: ruleMarkupElement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFootnoteElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
+               before(grammarAccess.getFootnoteElementAccess().getElementsMarkupElementParserRuleCall_3_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMarkupElement();
@@ -8322,7 +8322,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFootnoteElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
+               after(grammarAccess.getFootnoteElementAccess().getElementsMarkupElementParserRuleCall_3_0());
             }
 
             }
@@ -8350,7 +8350,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__LevelAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:3015:1: ( ( RULE_INT ) )
             // InternalMarkup.g:3016:1: ( RULE_INT )
@@ -8359,11 +8359,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:3017:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getLevelINTTerminalRuleCall_2_1_0()); 
+               before(grammarAccess.getHeadingElementAccess().getLevelINTTerminalRuleCall_2_1_0());
             }
             match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getLevelINTTerminalRuleCall_2_1_0()); 
+               after(grammarAccess.getHeadingElementAccess().getLevelINTTerminalRuleCall_2_1_0());
             }
 
             }
@@ -8391,7 +8391,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__HeadingElement__ElementsAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:3030:1: ( ( ruleMarkupElement ) )
             // InternalMarkup.g:3031:1: ( ruleMarkupElement )
@@ -8400,7 +8400,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:3032:1: ruleMarkupElement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getHeadingElementAccess().getElementsMarkupElementParserRuleCall_4_0()); 
+               before(grammarAccess.getHeadingElementAccess().getElementsMarkupElementParserRuleCall_4_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMarkupElement();
@@ -8408,7 +8408,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getHeadingElementAccess().getElementsMarkupElementParserRuleCall_4_0()); 
+               after(grammarAccess.getHeadingElementAccess().getElementsMarkupElementParserRuleCall_4_0());
             }
 
             }
@@ -8436,7 +8436,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__NewLineElement__TextAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:3045:1: ( ( RULE_NL ) )
             // InternalMarkup.g:3046:1: ( RULE_NL )
@@ -8445,11 +8445,11 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:3047:1: RULE_NL
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNewLineElementAccess().getTextNLTerminalRuleCall_0()); 
+               before(grammarAccess.getNewLineElementAccess().getTextNLTerminalRuleCall_0());
             }
             match(input,RULE_NL,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNewLineElementAccess().getTextNLTerminalRuleCall_0()); 
+               after(grammarAccess.getNewLineElementAccess().getTextNLTerminalRuleCall_0());
             }
 
             }
@@ -8477,7 +8477,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__NullElement__ElementsAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:3060:1: ( ( ruleMarkupElement ) )
             // InternalMarkup.g:3061:1: ( ruleMarkupElement )
@@ -8486,7 +8486,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:3062:1: ruleMarkupElement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNullElementAccess().getElementsMarkupElementParserRuleCall_2_0()); 
+               before(grammarAccess.getNullElementAccess().getElementsMarkupElementParserRuleCall_2_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMarkupElement();
@@ -8494,7 +8494,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNullElementAccess().getElementsMarkupElementParserRuleCall_2_0()); 
+               after(grammarAccess.getNullElementAccess().getElementsMarkupElementParserRuleCall_2_0());
             }
 
             }
@@ -8522,7 +8522,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLCodeElement__ElementsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:3075:1: ( ( ruleMarkupElement ) )
             // InternalMarkup.g:3076:1: ( ruleMarkupElement )
@@ -8531,7 +8531,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:3077:1: ruleMarkupElement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLCodeElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
+               before(grammarAccess.getOCLCodeElementAccess().getElementsMarkupElementParserRuleCall_3_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMarkupElement();
@@ -8539,7 +8539,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLCodeElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
+               after(grammarAccess.getOCLCodeElementAccess().getElementsMarkupElementParserRuleCall_3_0());
             }
 
             }
@@ -8567,7 +8567,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLEvalElement__ElementsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:3090:1: ( ( ruleMarkupElement ) )
             // InternalMarkup.g:3091:1: ( ruleMarkupElement )
@@ -8576,7 +8576,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:3092:1: ruleMarkupElement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLEvalElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
+               before(grammarAccess.getOCLEvalElementAccess().getElementsMarkupElementParserRuleCall_3_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMarkupElement();
@@ -8584,7 +8584,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLEvalElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
+               after(grammarAccess.getOCLEvalElementAccess().getElementsMarkupElementParserRuleCall_3_0());
             }
 
             }
@@ -8612,7 +8612,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__OCLTextElement__ElementsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:3105:1: ( ( ruleMarkupElement ) )
             // InternalMarkup.g:3106:1: ( ruleMarkupElement )
@@ -8621,7 +8621,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:3107:1: ruleMarkupElement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getOCLTextElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
+               before(grammarAccess.getOCLTextElementAccess().getElementsMarkupElementParserRuleCall_3_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMarkupElement();
@@ -8629,7 +8629,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getOCLTextElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
+               after(grammarAccess.getOCLTextElementAccess().getElementsMarkupElementParserRuleCall_3_0());
             }
 
             }
@@ -8657,7 +8657,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__TextElement__TextAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:3120:1: ( ( ( rule__TextElement__TextAlternatives_0_0 ) ) )
             // InternalMarkup.g:3121:1: ( ( rule__TextElement__TextAlternatives_0_0 ) )
@@ -8666,7 +8666,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:3122:1: ( rule__TextElement__TextAlternatives_0_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTextElementAccess().getTextAlternatives_0_0()); 
+               before(grammarAccess.getTextElementAccess().getTextAlternatives_0_0());
             }
             // InternalMarkup.g:3123:1: ( rule__TextElement__TextAlternatives_0_0 )
             // InternalMarkup.g:3123:2: rule__TextElement__TextAlternatives_0_0
@@ -8680,7 +8680,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTextElementAccess().getTextAlternatives_0_0()); 
+               after(grammarAccess.getTextElementAccess().getTextAlternatives_0_0());
             }
 
             }
@@ -8708,7 +8708,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     public final void rule__TextElement__TextAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalMarkup.g:3136:1: ( ( ruleMarkupKeyword ) )
             // InternalMarkup.g:3137:1: ( ruleMarkupKeyword )
@@ -8717,7 +8717,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             // InternalMarkup.g:3138:1: ruleMarkupKeyword
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTextElementAccess().getTextMarkupKeywordParserRuleCall_1_0()); 
+               before(grammarAccess.getTextElementAccess().getTextMarkupKeywordParserRuleCall_1_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMarkupKeyword();
@@ -8725,7 +8725,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTextElementAccess().getTextMarkupKeywordParserRuleCall_1_0()); 
+               after(grammarAccess.getTextElementAccess().getTextMarkupKeywordParserRuleCall_1_0());
             }
 
             }
@@ -8748,7 +8748,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TextElement__TextAssignment_1"
 
     // $ANTLR start synpred11_InternalMarkup
-    public final void synpred11_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred11_InternalMarkup_fragment() throws RecognitionException {
         // InternalMarkup.g:583:1: ( ( ruleFontElement ) )
         // InternalMarkup.g:583:1: ( ruleFontElement )
         {
@@ -8756,7 +8756,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
         // InternalMarkup.g:584:1: ruleFontElement
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getMarkupElementAccess().getFontElementParserRuleCall_0()); 
+           before(grammarAccess.getMarkupElementAccess().getFontElementParserRuleCall_0());
         }
         pushFollow(FollowSets000.FOLLOW_2);
         ruleFontElement();
@@ -8772,7 +8772,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     // $ANTLR end synpred11_InternalMarkup
 
     // $ANTLR start synpred13_InternalMarkup
-    public final void synpred13_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred13_InternalMarkup_fragment() throws RecognitionException {
         // InternalMarkup.g:595:6: ( ( ruleBulletElement ) )
         // InternalMarkup.g:595:6: ( ruleBulletElement )
         {
@@ -8780,7 +8780,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
         // InternalMarkup.g:596:1: ruleBulletElement
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getMarkupElementAccess().getBulletElementParserRuleCall_2()); 
+           before(grammarAccess.getMarkupElementAccess().getBulletElementParserRuleCall_2());
         }
         pushFollow(FollowSets000.FOLLOW_2);
         ruleBulletElement();
@@ -8796,7 +8796,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     // $ANTLR end synpred13_InternalMarkup
 
     // $ANTLR start synpred14_InternalMarkup
-    public final void synpred14_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred14_InternalMarkup_fragment() throws RecognitionException {
         // InternalMarkup.g:601:6: ( ( ruleFigureElement ) )
         // InternalMarkup.g:601:6: ( ruleFigureElement )
         {
@@ -8804,7 +8804,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
         // InternalMarkup.g:602:1: ruleFigureElement
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getMarkupElementAccess().getFigureElementParserRuleCall_3()); 
+           before(grammarAccess.getMarkupElementAccess().getFigureElementParserRuleCall_3());
         }
         pushFollow(FollowSets000.FOLLOW_2);
         ruleFigureElement();
@@ -8820,7 +8820,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     // $ANTLR end synpred14_InternalMarkup
 
     // $ANTLR start synpred15_InternalMarkup
-    public final void synpred15_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred15_InternalMarkup_fragment() throws RecognitionException {
         // InternalMarkup.g:607:6: ( ( ruleFigureRefElement ) )
         // InternalMarkup.g:607:6: ( ruleFigureRefElement )
         {
@@ -8828,7 +8828,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
         // InternalMarkup.g:608:1: ruleFigureRefElement
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getMarkupElementAccess().getFigureRefElementParserRuleCall_4()); 
+           before(grammarAccess.getMarkupElementAccess().getFigureRefElementParserRuleCall_4());
         }
         pushFollow(FollowSets000.FOLLOW_2);
         ruleFigureRefElement();
@@ -8844,7 +8844,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     // $ANTLR end synpred15_InternalMarkup
 
     // $ANTLR start synpred16_InternalMarkup
-    public final void synpred16_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred16_InternalMarkup_fragment() throws RecognitionException {
         // InternalMarkup.g:613:6: ( ( ruleFootnoteElement ) )
         // InternalMarkup.g:613:6: ( ruleFootnoteElement )
         {
@@ -8852,7 +8852,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
         // InternalMarkup.g:614:1: ruleFootnoteElement
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getMarkupElementAccess().getFootnoteElementParserRuleCall_5()); 
+           before(grammarAccess.getMarkupElementAccess().getFootnoteElementParserRuleCall_5());
         }
         pushFollow(FollowSets000.FOLLOW_2);
         ruleFootnoteElement();
@@ -8868,7 +8868,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     // $ANTLR end synpred16_InternalMarkup
 
     // $ANTLR start synpred17_InternalMarkup
-    public final void synpred17_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred17_InternalMarkup_fragment() throws RecognitionException {
         // InternalMarkup.g:619:6: ( ( ruleHeadingElement ) )
         // InternalMarkup.g:619:6: ( ruleHeadingElement )
         {
@@ -8876,7 +8876,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
         // InternalMarkup.g:620:1: ruleHeadingElement
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getMarkupElementAccess().getHeadingElementParserRuleCall_6()); 
+           before(grammarAccess.getMarkupElementAccess().getHeadingElementParserRuleCall_6());
         }
         pushFollow(FollowSets000.FOLLOW_2);
         ruleHeadingElement();
@@ -8892,7 +8892,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     // $ANTLR end synpred17_InternalMarkup
 
     // $ANTLR start synpred19_InternalMarkup
-    public final void synpred19_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred19_InternalMarkup_fragment() throws RecognitionException {
         // InternalMarkup.g:631:6: ( ( ruleOCLCodeElement ) )
         // InternalMarkup.g:631:6: ( ruleOCLCodeElement )
         {
@@ -8900,7 +8900,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
         // InternalMarkup.g:632:1: ruleOCLCodeElement
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getMarkupElementAccess().getOCLCodeElementParserRuleCall_8()); 
+           before(grammarAccess.getMarkupElementAccess().getOCLCodeElementParserRuleCall_8());
         }
         pushFollow(FollowSets000.FOLLOW_2);
         ruleOCLCodeElement();
@@ -8916,7 +8916,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     // $ANTLR end synpred19_InternalMarkup
 
     // $ANTLR start synpred20_InternalMarkup
-    public final void synpred20_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred20_InternalMarkup_fragment() throws RecognitionException {
         // InternalMarkup.g:637:6: ( ( ruleOCLEvalElement ) )
         // InternalMarkup.g:637:6: ( ruleOCLEvalElement )
         {
@@ -8924,7 +8924,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
         // InternalMarkup.g:638:1: ruleOCLEvalElement
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getMarkupElementAccess().getOCLEvalElementParserRuleCall_9()); 
+           before(grammarAccess.getMarkupElementAccess().getOCLEvalElementParserRuleCall_9());
         }
         pushFollow(FollowSets000.FOLLOW_2);
         ruleOCLEvalElement();
@@ -8940,7 +8940,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     // $ANTLR end synpred20_InternalMarkup
 
     // $ANTLR start synpred21_InternalMarkup
-    public final void synpred21_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred21_InternalMarkup_fragment() throws RecognitionException {
         // InternalMarkup.g:643:6: ( ( ruleOCLTextElement ) )
         // InternalMarkup.g:643:6: ( ruleOCLTextElement )
         {
@@ -8948,7 +8948,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
         // InternalMarkup.g:644:1: ruleOCLTextElement
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getMarkupElementAccess().getOCLTextElementParserRuleCall_10()); 
+           before(grammarAccess.getMarkupElementAccess().getOCLTextElementParserRuleCall_10());
         }
         pushFollow(FollowSets000.FOLLOW_2);
         ruleOCLTextElement();
@@ -8964,7 +8964,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
     // $ANTLR end synpred21_InternalMarkup
 
     // $ANTLR start synpred23_InternalMarkup
-    public final void synpred23_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred23_InternalMarkup_fragment() throws RecognitionException {
         // InternalMarkup.g:699:2: ( rule__TextElement__TextAssignment_0 )
         // InternalMarkup.g:699:2: rule__TextElement__TextAssignment_0
         {
@@ -9188,10 +9188,10 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
-                    case 0 : 
+                    case 0 :
                         int LA3_1 = input.LA(1);
 
-                         
+
                         int index3_1 = input.index();
                         input.rewind();
                         s = -1;
@@ -9199,14 +9199,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_1);
                         if ( s>=0 ) return s;
                         break;
-                    case 1 : 
+                    case 1 :
                         int LA3_2 = input.LA(1);
 
-                         
+
                         int index3_2 = input.index();
                         input.rewind();
                         s = -1;
@@ -9214,14 +9214,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_2);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 2 :
                         int LA3_4 = input.LA(1);
 
-                         
+
                         int index3_4 = input.index();
                         input.rewind();
                         s = -1;
@@ -9229,14 +9229,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_4);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 3 :
                         int LA3_5 = input.LA(1);
 
-                         
+
                         int index3_5 = input.index();
                         input.rewind();
                         s = -1;
@@ -9244,14 +9244,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_5);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 4 :
                         int LA3_6 = input.LA(1);
 
-                         
+
                         int index3_6 = input.index();
                         input.rewind();
                         s = -1;
@@ -9259,14 +9259,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 5 :
                         int LA3_7 = input.LA(1);
 
-                         
+
                         int index3_7 = input.index();
                         input.rewind();
                         s = -1;
@@ -9274,14 +9274,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 6 :
                         int LA3_8 = input.LA(1);
 
-                         
+
                         int index3_8 = input.index();
                         input.rewind();
                         s = -1;
@@ -9289,14 +9289,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 7 : 
+                    case 7 :
                         int LA3_10 = input.LA(1);
 
-                         
+
                         int index3_10 = input.index();
                         input.rewind();
                         s = -1;
@@ -9304,14 +9304,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_10);
                         if ( s>=0 ) return s;
                         break;
-                    case 8 : 
+                    case 8 :
                         int LA3_11 = input.LA(1);
 
-                         
+
                         int index3_11 = input.index();
                         input.rewind();
                         s = -1;
@@ -9319,14 +9319,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_11);
                         if ( s>=0 ) return s;
                         break;
-                    case 9 : 
+                    case 9 :
                         int LA3_12 = input.LA(1);
 
-                         
+
                         int index3_12 = input.index();
                         input.rewind();
                         s = -1;
@@ -9334,7 +9334,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_12);
                         if ( s>=0 ) return s;
                         break;
@@ -9393,10 +9393,10 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
-                    case 0 : 
+                    case 0 :
                         int LA5_3 = input.LA(1);
 
-                         
+
                         int index5_3 = input.index();
                         input.rewind();
                         s = -1;
@@ -9404,14 +9404,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index5_3);
                         if ( s>=0 ) return s;
                         break;
-                    case 1 : 
+                    case 1 :
                         int LA5_7 = input.LA(1);
 
-                         
+
                         int index5_7 = input.index();
                         input.rewind();
                         s = -1;
@@ -9419,14 +9419,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index5_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 2 :
                         int LA5_4 = input.LA(1);
 
-                         
+
                         int index5_4 = input.index();
                         input.rewind();
                         s = -1;
@@ -9434,14 +9434,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index5_4);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 3 :
                         int LA5_5 = input.LA(1);
 
-                         
+
                         int index5_5 = input.index();
                         input.rewind();
                         s = -1;
@@ -9449,14 +9449,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index5_5);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 4 :
                         int LA5_2 = input.LA(1);
 
-                         
+
                         int index5_2 = input.index();
                         input.rewind();
                         s = -1;
@@ -9464,14 +9464,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index5_2);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 5 :
                         int LA5_6 = input.LA(1);
 
-                         
+
                         int index5_6 = input.index();
                         input.rewind();
                         s = -1;
@@ -9479,14 +9479,14 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index5_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 6 :
                         int LA5_8 = input.LA(1);
 
-                         
+
                         int index5_8 = input.index();
                         input.rewind();
                         s = -1;
@@ -9494,7 +9494,7 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index5_8);
                         if ( s>=0 ) return s;
                         break;
@@ -9506,9 +9506,9 @@ public class InternalMarkupParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
- 
 
-    
+
+
     private static class FollowSets000 {
         public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});

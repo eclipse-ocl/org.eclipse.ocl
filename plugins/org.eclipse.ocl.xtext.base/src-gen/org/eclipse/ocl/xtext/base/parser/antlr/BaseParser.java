@@ -16,31 +16,31 @@ import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
 
 public class BaseParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+
 	@Inject
 	private BaseGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
-	
+
 	@Override
 	protected org.eclipse.ocl.xtext.base.parser.antlr.internal.InternalBaseParser createParser(XtextTokenStream stream) {
 		return new org.eclipse.ocl.xtext.base.parser.antlr.internal.InternalBaseParser(stream, getGrammarAccess());
 	}
-	
-	@Override 
+
+	@Override
 	protected String getDefaultRuleName() {
 		return "MultiplicityBoundsCS";
 	}
-	
+
 	public BaseGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(BaseGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
+
 }

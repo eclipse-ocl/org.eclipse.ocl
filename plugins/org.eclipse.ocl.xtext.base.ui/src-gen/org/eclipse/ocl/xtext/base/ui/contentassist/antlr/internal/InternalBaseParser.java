@@ -1,4 +1,4 @@
-package org.eclipse.ocl.xtext.base.ui.contentassist.antlr.internal; 
+package org.eclipse.ocl.xtext.base.ui.contentassist.antlr.internal;
 
 import java.io.InputStream;
 import org.eclipse.xtext.*;
@@ -72,26 +72,26 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
         }
         public InternalBaseParser(TokenStream input, RecognizerSharedState state) {
             super(input, state);
-             
+
         }
-        
+
 
     public String[] getTokenNames() { return InternalBaseParser.tokenNames; }
     public String getGrammarFileName() { return "InternalBase.g"; }
 
 
-     
+
      	private BaseGrammarAccess grammarAccess;
-     	
+
         public void setGrammarAccess(BaseGrammarAccess grammarAccess) {
         	this.grammarAccess = grammarAccess;
         }
-        
+
         @Override
         protected Grammar getGrammar() {
         	return grammarAccess.getGrammar();
         }
-        
+
         @Override
         protected String getValueForTokenName(String tokenName) {
         	return tokenName;
@@ -108,7 +108,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:70:1: ruleMultiplicityBoundsCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityBoundsCSRule()); 
+               before(grammarAccess.getMultiplicityBoundsCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleMultiplicityBoundsCS();
@@ -116,7 +116,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityBoundsCSRule()); 
+               after(grammarAccess.getMultiplicityBoundsCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -139,7 +139,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleMultiplicityBoundsCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:81:2: ( ( ( rule__MultiplicityBoundsCS__Group__0 ) ) )
             // InternalBase.g:82:1: ( ( rule__MultiplicityBoundsCS__Group__0 ) )
@@ -148,7 +148,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:83:1: ( rule__MultiplicityBoundsCS__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityBoundsCSAccess().getGroup()); 
+               before(grammarAccess.getMultiplicityBoundsCSAccess().getGroup());
             }
             // InternalBase.g:84:1: ( rule__MultiplicityBoundsCS__Group__0 )
             // InternalBase.g:84:2: rule__MultiplicityBoundsCS__Group__0
@@ -162,7 +162,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityBoundsCSAccess().getGroup()); 
+               after(grammarAccess.getMultiplicityBoundsCSAccess().getGroup());
             }
 
             }
@@ -193,7 +193,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:98:1: ruleMultiplicityCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityCSRule()); 
+               before(grammarAccess.getMultiplicityCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleMultiplicityCS();
@@ -201,7 +201,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityCSRule()); 
+               after(grammarAccess.getMultiplicityCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -224,7 +224,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleMultiplicityCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:109:2: ( ( ( rule__MultiplicityCS__Group__0 ) ) )
             // InternalBase.g:110:1: ( ( rule__MultiplicityCS__Group__0 ) )
@@ -233,7 +233,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:111:1: ( rule__MultiplicityCS__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityCSAccess().getGroup()); 
+               before(grammarAccess.getMultiplicityCSAccess().getGroup());
             }
             // InternalBase.g:112:1: ( rule__MultiplicityCS__Group__0 )
             // InternalBase.g:112:2: rule__MultiplicityCS__Group__0
@@ -247,7 +247,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityCSAccess().getGroup()); 
+               after(grammarAccess.getMultiplicityCSAccess().getGroup());
             }
 
             }
@@ -278,7 +278,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:126:1: ruleMultiplicityStringCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityStringCSRule()); 
+               before(grammarAccess.getMultiplicityStringCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleMultiplicityStringCS();
@@ -286,7 +286,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityStringCSRule()); 
+               after(grammarAccess.getMultiplicityStringCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -309,7 +309,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleMultiplicityStringCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:137:2: ( ( ( rule__MultiplicityStringCS__StringBoundsAssignment ) ) )
             // InternalBase.g:138:1: ( ( rule__MultiplicityStringCS__StringBoundsAssignment ) )
@@ -318,7 +318,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:139:1: ( rule__MultiplicityStringCS__StringBoundsAssignment )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAssignment()); 
+               before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAssignment());
             }
             // InternalBase.g:140:1: ( rule__MultiplicityStringCS__StringBoundsAssignment )
             // InternalBase.g:140:2: rule__MultiplicityStringCS__StringBoundsAssignment
@@ -332,7 +332,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAssignment()); 
+               after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAssignment());
             }
 
             }
@@ -363,7 +363,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:154:1: rulePathNameCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPathNameCSRule()); 
+               before(grammarAccess.getPathNameCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             rulePathNameCS();
@@ -371,7 +371,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPathNameCSRule()); 
+               after(grammarAccess.getPathNameCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -394,7 +394,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rulePathNameCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:165:2: ( ( ( rule__PathNameCS__Group__0 ) ) )
             // InternalBase.g:166:1: ( ( rule__PathNameCS__Group__0 ) )
@@ -403,7 +403,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:167:1: ( rule__PathNameCS__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPathNameCSAccess().getGroup()); 
+               before(grammarAccess.getPathNameCSAccess().getGroup());
             }
             // InternalBase.g:168:1: ( rule__PathNameCS__Group__0 )
             // InternalBase.g:168:2: rule__PathNameCS__Group__0
@@ -417,7 +417,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPathNameCSAccess().getGroup()); 
+               after(grammarAccess.getPathNameCSAccess().getGroup());
             }
 
             }
@@ -448,7 +448,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:182:1: ruleFirstPathElementCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFirstPathElementCSRule()); 
+               before(grammarAccess.getFirstPathElementCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleFirstPathElementCS();
@@ -456,7 +456,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFirstPathElementCSRule()); 
+               after(grammarAccess.getFirstPathElementCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -479,7 +479,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleFirstPathElementCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:193:2: ( ( ( rule__FirstPathElementCS__ReferredElementAssignment ) ) )
             // InternalBase.g:194:1: ( ( rule__FirstPathElementCS__ReferredElementAssignment ) )
@@ -488,7 +488,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:195:1: ( rule__FirstPathElementCS__ReferredElementAssignment )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFirstPathElementCSAccess().getReferredElementAssignment()); 
+               before(grammarAccess.getFirstPathElementCSAccess().getReferredElementAssignment());
             }
             // InternalBase.g:196:1: ( rule__FirstPathElementCS__ReferredElementAssignment )
             // InternalBase.g:196:2: rule__FirstPathElementCS__ReferredElementAssignment
@@ -502,7 +502,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFirstPathElementCSAccess().getReferredElementAssignment()); 
+               after(grammarAccess.getFirstPathElementCSAccess().getReferredElementAssignment());
             }
 
             }
@@ -533,7 +533,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:210:1: ruleNextPathElementCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNextPathElementCSRule()); 
+               before(grammarAccess.getNextPathElementCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleNextPathElementCS();
@@ -541,7 +541,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNextPathElementCSRule()); 
+               after(grammarAccess.getNextPathElementCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -564,7 +564,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleNextPathElementCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:221:2: ( ( ( rule__NextPathElementCS__ReferredElementAssignment ) ) )
             // InternalBase.g:222:1: ( ( rule__NextPathElementCS__ReferredElementAssignment ) )
@@ -573,7 +573,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:223:1: ( rule__NextPathElementCS__ReferredElementAssignment )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNextPathElementCSAccess().getReferredElementAssignment()); 
+               before(grammarAccess.getNextPathElementCSAccess().getReferredElementAssignment());
             }
             // InternalBase.g:224:1: ( rule__NextPathElementCS__ReferredElementAssignment )
             // InternalBase.g:224:2: rule__NextPathElementCS__ReferredElementAssignment
@@ -587,7 +587,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNextPathElementCSAccess().getReferredElementAssignment()); 
+               after(grammarAccess.getNextPathElementCSAccess().getReferredElementAssignment());
             }
 
             }
@@ -618,7 +618,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:238:1: ruleTemplateBindingCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateBindingCSRule()); 
+               before(grammarAccess.getTemplateBindingCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleTemplateBindingCS();
@@ -626,7 +626,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateBindingCSRule()); 
+               after(grammarAccess.getTemplateBindingCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -649,7 +649,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleTemplateBindingCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:249:2: ( ( ( rule__TemplateBindingCS__Group__0 ) ) )
             // InternalBase.g:250:1: ( ( rule__TemplateBindingCS__Group__0 ) )
@@ -658,7 +658,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:251:1: ( rule__TemplateBindingCS__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateBindingCSAccess().getGroup()); 
+               before(grammarAccess.getTemplateBindingCSAccess().getGroup());
             }
             // InternalBase.g:252:1: ( rule__TemplateBindingCS__Group__0 )
             // InternalBase.g:252:2: rule__TemplateBindingCS__Group__0
@@ -672,7 +672,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateBindingCSAccess().getGroup()); 
+               after(grammarAccess.getTemplateBindingCSAccess().getGroup());
             }
 
             }
@@ -703,7 +703,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:266:1: ruleTemplateParameterSubstitutionCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateParameterSubstitutionCSRule()); 
+               before(grammarAccess.getTemplateParameterSubstitutionCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleTemplateParameterSubstitutionCS();
@@ -711,7 +711,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateParameterSubstitutionCSRule()); 
+               after(grammarAccess.getTemplateParameterSubstitutionCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -734,7 +734,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleTemplateParameterSubstitutionCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:277:2: ( ( ( rule__TemplateParameterSubstitutionCS__OwnedActualParameterAssignment ) ) )
             // InternalBase.g:278:1: ( ( rule__TemplateParameterSubstitutionCS__OwnedActualParameterAssignment ) )
@@ -743,7 +743,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:279:1: ( rule__TemplateParameterSubstitutionCS__OwnedActualParameterAssignment )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterAssignment()); 
+               before(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterAssignment());
             }
             // InternalBase.g:280:1: ( rule__TemplateParameterSubstitutionCS__OwnedActualParameterAssignment )
             // InternalBase.g:280:2: rule__TemplateParameterSubstitutionCS__OwnedActualParameterAssignment
@@ -757,7 +757,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterAssignment()); 
+               after(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterAssignment());
             }
 
             }
@@ -788,7 +788,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:296:1: ruleTypeParameterCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSRule()); 
+               before(grammarAccess.getTypeParameterCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleTypeParameterCS();
@@ -796,7 +796,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSRule()); 
+               after(grammarAccess.getTypeParameterCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -819,7 +819,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleTypeParameterCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:307:2: ( ( ( rule__TypeParameterCS__Group__0 ) ) )
             // InternalBase.g:308:1: ( ( rule__TypeParameterCS__Group__0 ) )
@@ -828,7 +828,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:309:1: ( rule__TypeParameterCS__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getGroup()); 
+               before(grammarAccess.getTypeParameterCSAccess().getGroup());
             }
             // InternalBase.g:310:1: ( rule__TypeParameterCS__Group__0 )
             // InternalBase.g:310:2: rule__TypeParameterCS__Group__0
@@ -842,7 +842,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getGroup()); 
+               after(grammarAccess.getTypeParameterCSAccess().getGroup());
             }
 
             }
@@ -873,7 +873,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:324:1: ruleTypeRefCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefCSRule()); 
+               before(grammarAccess.getTypeRefCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleTypeRefCS();
@@ -881,7 +881,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefCSRule()); 
+               after(grammarAccess.getTypeRefCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -904,7 +904,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleTypeRefCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:335:2: ( ( ( rule__TypeRefCS__Alternatives ) ) )
             // InternalBase.g:336:1: ( ( rule__TypeRefCS__Alternatives ) )
@@ -913,7 +913,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:337:1: ( rule__TypeRefCS__Alternatives )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeRefCSAccess().getAlternatives()); 
+               before(grammarAccess.getTypeRefCSAccess().getAlternatives());
             }
             // InternalBase.g:338:1: ( rule__TypeRefCS__Alternatives )
             // InternalBase.g:338:2: rule__TypeRefCS__Alternatives
@@ -927,7 +927,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeRefCSAccess().getAlternatives()); 
+               after(grammarAccess.getTypeRefCSAccess().getAlternatives());
             }
 
             }
@@ -958,7 +958,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:352:1: ruleTypedRefCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedRefCSRule()); 
+               before(grammarAccess.getTypedRefCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleTypedRefCS();
@@ -966,7 +966,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedRefCSRule()); 
+               after(grammarAccess.getTypedRefCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -989,7 +989,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleTypedRefCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:363:2: ( ( ruleTypedTypeRefCS ) )
             // InternalBase.g:364:1: ( ruleTypedTypeRefCS )
@@ -998,7 +998,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:365:1: ruleTypedTypeRefCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedRefCSAccess().getTypedTypeRefCSParserRuleCall()); 
+               before(grammarAccess.getTypedRefCSAccess().getTypedTypeRefCSParserRuleCall());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleTypedTypeRefCS();
@@ -1006,7 +1006,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedRefCSAccess().getTypedTypeRefCSParserRuleCall()); 
+               after(grammarAccess.getTypedRefCSAccess().getTypedTypeRefCSParserRuleCall());
             }
 
             }
@@ -1037,7 +1037,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:380:1: ruleTypedTypeRefCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedTypeRefCSRule()); 
+               before(grammarAccess.getTypedTypeRefCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleTypedTypeRefCS();
@@ -1045,7 +1045,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedTypeRefCSRule()); 
+               after(grammarAccess.getTypedTypeRefCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1068,7 +1068,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleTypedTypeRefCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:391:2: ( ( ( rule__TypedTypeRefCS__Group__0 ) ) )
             // InternalBase.g:392:1: ( ( rule__TypedTypeRefCS__Group__0 ) )
@@ -1077,7 +1077,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:393:1: ( rule__TypedTypeRefCS__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedTypeRefCSAccess().getGroup()); 
+               before(grammarAccess.getTypedTypeRefCSAccess().getGroup());
             }
             // InternalBase.g:394:1: ( rule__TypedTypeRefCS__Group__0 )
             // InternalBase.g:394:2: rule__TypedTypeRefCS__Group__0
@@ -1091,7 +1091,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedTypeRefCSAccess().getGroup()); 
+               after(grammarAccess.getTypedTypeRefCSAccess().getGroup());
             }
 
             }
@@ -1122,7 +1122,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:408:1: ruleUnreservedName EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getUnreservedNameRule()); 
+               before(grammarAccess.getUnreservedNameRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleUnreservedName();
@@ -1130,7 +1130,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getUnreservedNameRule()); 
+               after(grammarAccess.getUnreservedNameRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1153,7 +1153,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleUnreservedName() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:419:2: ( ( ruleUnrestrictedName ) )
             // InternalBase.g:420:1: ( ruleUnrestrictedName )
@@ -1162,7 +1162,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:421:1: ruleUnrestrictedName
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getUnreservedNameAccess().getUnrestrictedNameParserRuleCall()); 
+               before(grammarAccess.getUnreservedNameAccess().getUnrestrictedNameParserRuleCall());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleUnrestrictedName();
@@ -1170,7 +1170,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getUnreservedNameAccess().getUnrestrictedNameParserRuleCall()); 
+               after(grammarAccess.getUnreservedNameAccess().getUnrestrictedNameParserRuleCall());
             }
 
             }
@@ -1201,7 +1201,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:436:1: ruleUnrestrictedName EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getUnrestrictedNameRule()); 
+               before(grammarAccess.getUnrestrictedNameRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleUnrestrictedName();
@@ -1209,7 +1209,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getUnrestrictedNameRule()); 
+               after(grammarAccess.getUnrestrictedNameRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1232,7 +1232,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleUnrestrictedName() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:447:2: ( ( ruleIdentifier ) )
             // InternalBase.g:448:1: ( ruleIdentifier )
@@ -1241,7 +1241,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:449:1: ruleIdentifier
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getUnrestrictedNameAccess().getIdentifierParserRuleCall()); 
+               before(grammarAccess.getUnrestrictedNameAccess().getIdentifierParserRuleCall());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleIdentifier();
@@ -1249,7 +1249,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getUnrestrictedNameAccess().getIdentifierParserRuleCall()); 
+               after(grammarAccess.getUnrestrictedNameAccess().getIdentifierParserRuleCall());
             }
 
             }
@@ -1280,7 +1280,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:464:1: ruleWildcardTypeRefCS EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getWildcardTypeRefCSRule()); 
+               before(grammarAccess.getWildcardTypeRefCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleWildcardTypeRefCS();
@@ -1288,7 +1288,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getWildcardTypeRefCSRule()); 
+               after(grammarAccess.getWildcardTypeRefCSRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1311,7 +1311,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleWildcardTypeRefCS() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:475:2: ( ( ( rule__WildcardTypeRefCS__Group__0 ) ) )
             // InternalBase.g:476:1: ( ( rule__WildcardTypeRefCS__Group__0 ) )
@@ -1320,7 +1320,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:477:1: ( rule__WildcardTypeRefCS__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getWildcardTypeRefCSAccess().getGroup()); 
+               before(grammarAccess.getWildcardTypeRefCSAccess().getGroup());
             }
             // InternalBase.g:478:1: ( rule__WildcardTypeRefCS__Group__0 )
             // InternalBase.g:478:2: rule__WildcardTypeRefCS__Group__0
@@ -1334,7 +1334,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getWildcardTypeRefCSAccess().getGroup()); 
+               after(grammarAccess.getWildcardTypeRefCSAccess().getGroup());
             }
 
             }
@@ -1365,7 +1365,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:492:1: ruleID EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getIDRule()); 
+               before(grammarAccess.getIDRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleID();
@@ -1373,7 +1373,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getIDRule()); 
+               after(grammarAccess.getIDRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1396,7 +1396,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleID() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:503:2: ( ( ( rule__ID__Alternatives ) ) )
             // InternalBase.g:504:1: ( ( rule__ID__Alternatives ) )
@@ -1405,7 +1405,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:505:1: ( rule__ID__Alternatives )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getIDAccess().getAlternatives()); 
+               before(grammarAccess.getIDAccess().getAlternatives());
             }
             // InternalBase.g:506:1: ( rule__ID__Alternatives )
             // InternalBase.g:506:2: rule__ID__Alternatives
@@ -1419,7 +1419,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getIDAccess().getAlternatives()); 
+               after(grammarAccess.getIDAccess().getAlternatives());
             }
 
             }
@@ -1450,7 +1450,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:520:1: ruleIdentifier EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getIdentifierRule()); 
+               before(grammarAccess.getIdentifierRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleIdentifier();
@@ -1458,7 +1458,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getIdentifierRule()); 
+               after(grammarAccess.getIdentifierRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1481,7 +1481,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleIdentifier() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:531:2: ( ( ruleID ) )
             // InternalBase.g:532:1: ( ruleID )
@@ -1490,7 +1490,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:533:1: ruleID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getIdentifierAccess().getIDParserRuleCall()); 
+               before(grammarAccess.getIdentifierAccess().getIDParserRuleCall());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleID();
@@ -1498,7 +1498,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getIdentifierAccess().getIDParserRuleCall()); 
+               after(grammarAccess.getIdentifierAccess().getIDParserRuleCall());
             }
 
             }
@@ -1529,7 +1529,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:548:1: ruleLOWER EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLOWERRule()); 
+               before(grammarAccess.getLOWERRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleLOWER();
@@ -1537,7 +1537,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLOWERRule()); 
+               after(grammarAccess.getLOWERRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1560,7 +1560,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleLOWER() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:559:2: ( ( RULE_INT ) )
             // InternalBase.g:560:1: ( RULE_INT )
@@ -1569,11 +1569,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:561:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLOWERAccess().getINTTerminalRuleCall()); 
+               before(grammarAccess.getLOWERAccess().getINTTerminalRuleCall());
             }
             match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLOWERAccess().getINTTerminalRuleCall()); 
+               after(grammarAccess.getLOWERAccess().getINTTerminalRuleCall());
             }
 
             }
@@ -1604,7 +1604,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:580:1: ruleUPPER EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getUPPERRule()); 
+               before(grammarAccess.getUPPERRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             ruleUPPER();
@@ -1612,7 +1612,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getUPPERRule()); 
+               after(grammarAccess.getUPPERRule());
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -1635,7 +1635,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void ruleUPPER() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:591:2: ( ( ( rule__UPPER__Alternatives ) ) )
             // InternalBase.g:592:1: ( ( rule__UPPER__Alternatives ) )
@@ -1644,7 +1644,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:593:1: ( rule__UPPER__Alternatives )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getUPPERAccess().getAlternatives()); 
+               before(grammarAccess.getUPPERAccess().getAlternatives());
             }
             // InternalBase.g:594:1: ( rule__UPPER__Alternatives )
             // InternalBase.g:594:2: rule__UPPER__Alternatives
@@ -1658,7 +1658,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getUPPERAccess().getAlternatives()); 
+               after(grammarAccess.getUPPERAccess().getAlternatives());
             }
 
             }
@@ -1686,7 +1686,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__Alternatives_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:612:1: ( ( ruleMultiplicityBoundsCS ) | ( ruleMultiplicityStringCS ) )
             int alt1=2;
@@ -1713,7 +1713,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:614:1: ruleMultiplicityBoundsCS
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMultiplicityCSAccess().getMultiplicityBoundsCSParserRuleCall_1_0()); 
+                       before(grammarAccess.getMultiplicityCSAccess().getMultiplicityBoundsCSParserRuleCall_1_0());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleMultiplicityBoundsCS();
@@ -1721,7 +1721,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMultiplicityCSAccess().getMultiplicityBoundsCSParserRuleCall_1_0()); 
+                       after(grammarAccess.getMultiplicityCSAccess().getMultiplicityBoundsCSParserRuleCall_1_0());
                     }
 
                     }
@@ -1736,7 +1736,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:620:1: ruleMultiplicityStringCS
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMultiplicityCSAccess().getMultiplicityStringCSParserRuleCall_1_1()); 
+                       before(grammarAccess.getMultiplicityCSAccess().getMultiplicityStringCSParserRuleCall_1_1());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleMultiplicityStringCS();
@@ -1744,7 +1744,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMultiplicityCSAccess().getMultiplicityStringCSParserRuleCall_1_1()); 
+                       after(grammarAccess.getMultiplicityCSAccess().getMultiplicityStringCSParserRuleCall_1_1());
                     }
 
                     }
@@ -1774,7 +1774,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__Alternatives_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:634:1: ( ( '|?' ) | ( ( rule__MultiplicityCS__IsNullFreeAssignment_2_1 ) ) )
             int alt2=2;
@@ -1801,11 +1801,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:636:1: '|?'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0()); 
+                       before(grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0());
                     }
                     match(input,16,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0()); 
+                       after(grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0());
                     }
 
                     }
@@ -1820,7 +1820,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:644:1: ( rule__MultiplicityCS__IsNullFreeAssignment_2_1 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMultiplicityCSAccess().getIsNullFreeAssignment_2_1()); 
+                       before(grammarAccess.getMultiplicityCSAccess().getIsNullFreeAssignment_2_1());
                     }
                     // InternalBase.g:645:1: ( rule__MultiplicityCS__IsNullFreeAssignment_2_1 )
                     // InternalBase.g:645:2: rule__MultiplicityCS__IsNullFreeAssignment_2_1
@@ -1834,7 +1834,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMultiplicityCSAccess().getIsNullFreeAssignment_2_1()); 
+                       after(grammarAccess.getMultiplicityCSAccess().getIsNullFreeAssignment_2_1());
                     }
 
                     }
@@ -1864,7 +1864,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityStringCS__StringBoundsAlternatives_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:658:1: ( ( '*' ) | ( '+' ) | ( '?' ) )
             int alt3=3;
@@ -1900,11 +1900,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:660:1: '*'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAsteriskKeyword_0_0()); 
+                       before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAsteriskKeyword_0_0());
                     }
                     match(input,17,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAsteriskKeyword_0_0()); 
+                       after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAsteriskKeyword_0_0());
                     }
 
                     }
@@ -1919,11 +1919,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:668:1: '+'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsPlusSignKeyword_0_1()); 
+                       before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsPlusSignKeyword_0_1());
                     }
                     match(input,18,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsPlusSignKeyword_0_1()); 
+                       after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsPlusSignKeyword_0_1());
                     }
 
                     }
@@ -1938,11 +1938,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:676:1: '?'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsQuestionMarkKeyword_0_2()); 
+                       before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsQuestionMarkKeyword_0_2());
                     }
                     match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsQuestionMarkKeyword_0_2()); 
+                       after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsQuestionMarkKeyword_0_2());
                     }
 
                     }
@@ -1972,7 +1972,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeRefCS__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:692:1: ( ( ruleTypedRefCS ) | ( ruleWildcardTypeRefCS ) )
             int alt4=2;
@@ -1999,7 +1999,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:694:1: ruleTypedRefCS
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTypeRefCSAccess().getTypedRefCSParserRuleCall_0()); 
+                       before(grammarAccess.getTypeRefCSAccess().getTypedRefCSParserRuleCall_0());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleTypedRefCS();
@@ -2007,7 +2007,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTypeRefCSAccess().getTypedRefCSParserRuleCall_0()); 
+                       after(grammarAccess.getTypeRefCSAccess().getTypedRefCSParserRuleCall_0());
                     }
 
                     }
@@ -2022,7 +2022,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:700:1: ruleWildcardTypeRefCS
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTypeRefCSAccess().getWildcardTypeRefCSParserRuleCall_1()); 
+                       before(grammarAccess.getTypeRefCSAccess().getWildcardTypeRefCSParserRuleCall_1());
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleWildcardTypeRefCS();
@@ -2030,7 +2030,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTypeRefCSAccess().getWildcardTypeRefCSParserRuleCall_1()); 
+                       after(grammarAccess.getTypeRefCSAccess().getWildcardTypeRefCSParserRuleCall_1());
                     }
 
                     }
@@ -2060,7 +2060,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__ID__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:714:1: ( ( RULE_SIMPLE_ID ) | ( RULE_ESCAPED_ID ) )
             int alt5=2;
@@ -2087,11 +2087,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:716:1: RULE_SIMPLE_ID
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getIDAccess().getSIMPLE_IDTerminalRuleCall_0()); 
+                       before(grammarAccess.getIDAccess().getSIMPLE_IDTerminalRuleCall_0());
                     }
                     match(input,RULE_SIMPLE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getIDAccess().getSIMPLE_IDTerminalRuleCall_0()); 
+                       after(grammarAccess.getIDAccess().getSIMPLE_IDTerminalRuleCall_0());
                     }
 
                     }
@@ -2106,11 +2106,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:722:1: RULE_ESCAPED_ID
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getIDAccess().getESCAPED_IDTerminalRuleCall_1()); 
+                       before(grammarAccess.getIDAccess().getESCAPED_IDTerminalRuleCall_1());
                     }
                     match(input,RULE_ESCAPED_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getIDAccess().getESCAPED_IDTerminalRuleCall_1()); 
+                       after(grammarAccess.getIDAccess().getESCAPED_IDTerminalRuleCall_1());
                     }
 
                     }
@@ -2140,7 +2140,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__UPPER__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:736:1: ( ( RULE_INT ) | ( '*' ) )
             int alt6=2;
@@ -2167,11 +2167,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:738:1: RULE_INT
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getUPPERAccess().getINTTerminalRuleCall_0()); 
+                       before(grammarAccess.getUPPERAccess().getINTTerminalRuleCall_0());
                     }
                     match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getUPPERAccess().getINTTerminalRuleCall_0()); 
+                       after(grammarAccess.getUPPERAccess().getINTTerminalRuleCall_0());
                     }
 
                     }
@@ -2186,11 +2186,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
                     // InternalBase.g:744:1: '*'
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getUPPERAccess().getAsteriskKeyword_1()); 
+                       before(grammarAccess.getUPPERAccess().getAsteriskKeyword_1());
                     }
                     match(input,17,FollowSets000.FOLLOW_2); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getUPPERAccess().getAsteriskKeyword_1()); 
+                       after(grammarAccess.getUPPERAccess().getAsteriskKeyword_1());
                     }
 
                     }
@@ -2220,7 +2220,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityBoundsCS__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:762:1: ( rule__MultiplicityBoundsCS__Group__0__Impl rule__MultiplicityBoundsCS__Group__1 )
             // InternalBase.g:763:2: rule__MultiplicityBoundsCS__Group__0__Impl rule__MultiplicityBoundsCS__Group__1
@@ -2258,7 +2258,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityBoundsCS__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:774:1: ( ( ( rule__MultiplicityBoundsCS__LowerBoundAssignment_0 ) ) )
             // InternalBase.g:775:1: ( ( rule__MultiplicityBoundsCS__LowerBoundAssignment_0 ) )
@@ -2267,7 +2267,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:776:1: ( rule__MultiplicityBoundsCS__LowerBoundAssignment_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundAssignment_0()); 
+               before(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundAssignment_0());
             }
             // InternalBase.g:777:1: ( rule__MultiplicityBoundsCS__LowerBoundAssignment_0 )
             // InternalBase.g:777:2: rule__MultiplicityBoundsCS__LowerBoundAssignment_0
@@ -2281,7 +2281,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundAssignment_0()); 
+               after(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundAssignment_0());
             }
 
             }
@@ -2309,7 +2309,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityBoundsCS__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:791:1: ( rule__MultiplicityBoundsCS__Group__1__Impl )
             // InternalBase.g:792:2: rule__MultiplicityBoundsCS__Group__1__Impl
@@ -2342,7 +2342,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityBoundsCS__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:802:1: ( ( ( rule__MultiplicityBoundsCS__Group_1__0 )? ) )
             // InternalBase.g:803:1: ( ( rule__MultiplicityBoundsCS__Group_1__0 )? )
@@ -2351,7 +2351,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:804:1: ( rule__MultiplicityBoundsCS__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityBoundsCSAccess().getGroup_1()); 
+               before(grammarAccess.getMultiplicityBoundsCSAccess().getGroup_1());
             }
             // InternalBase.g:805:1: ( rule__MultiplicityBoundsCS__Group_1__0 )?
             int alt7=2;
@@ -2376,7 +2376,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityBoundsCSAccess().getGroup_1()); 
+               after(grammarAccess.getMultiplicityBoundsCSAccess().getGroup_1());
             }
 
             }
@@ -2404,7 +2404,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityBoundsCS__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:823:1: ( rule__MultiplicityBoundsCS__Group_1__0__Impl rule__MultiplicityBoundsCS__Group_1__1 )
             // InternalBase.g:824:2: rule__MultiplicityBoundsCS__Group_1__0__Impl rule__MultiplicityBoundsCS__Group_1__1
@@ -2442,7 +2442,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityBoundsCS__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:835:1: ( ( '..' ) )
             // InternalBase.g:836:1: ( '..' )
@@ -2451,11 +2451,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:837:1: '..'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityBoundsCSAccess().getFullStopFullStopKeyword_1_0()); 
+               before(grammarAccess.getMultiplicityBoundsCSAccess().getFullStopFullStopKeyword_1_0());
             }
             match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityBoundsCSAccess().getFullStopFullStopKeyword_1_0()); 
+               after(grammarAccess.getMultiplicityBoundsCSAccess().getFullStopFullStopKeyword_1_0());
             }
 
             }
@@ -2483,7 +2483,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityBoundsCS__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:854:1: ( rule__MultiplicityBoundsCS__Group_1__1__Impl )
             // InternalBase.g:855:2: rule__MultiplicityBoundsCS__Group_1__1__Impl
@@ -2516,7 +2516,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityBoundsCS__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:865:1: ( ( ( rule__MultiplicityBoundsCS__UpperBoundAssignment_1_1 ) ) )
             // InternalBase.g:866:1: ( ( rule__MultiplicityBoundsCS__UpperBoundAssignment_1_1 ) )
@@ -2525,7 +2525,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:867:1: ( rule__MultiplicityBoundsCS__UpperBoundAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundAssignment_1_1()); 
+               before(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundAssignment_1_1());
             }
             // InternalBase.g:868:1: ( rule__MultiplicityBoundsCS__UpperBoundAssignment_1_1 )
             // InternalBase.g:868:2: rule__MultiplicityBoundsCS__UpperBoundAssignment_1_1
@@ -2539,7 +2539,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundAssignment_1_1()); 
+               after(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundAssignment_1_1());
             }
 
             }
@@ -2567,7 +2567,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:886:1: ( rule__MultiplicityCS__Group__0__Impl rule__MultiplicityCS__Group__1 )
             // InternalBase.g:887:2: rule__MultiplicityCS__Group__0__Impl rule__MultiplicityCS__Group__1
@@ -2605,7 +2605,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:898:1: ( ( '[' ) )
             // InternalBase.g:899:1: ( '[' )
@@ -2614,11 +2614,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:900:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityCSAccess().getLeftSquareBracketKeyword_0()); 
+               before(grammarAccess.getMultiplicityCSAccess().getLeftSquareBracketKeyword_0());
             }
             match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityCSAccess().getLeftSquareBracketKeyword_0()); 
+               after(grammarAccess.getMultiplicityCSAccess().getLeftSquareBracketKeyword_0());
             }
 
             }
@@ -2646,7 +2646,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:917:1: ( rule__MultiplicityCS__Group__1__Impl rule__MultiplicityCS__Group__2 )
             // InternalBase.g:918:2: rule__MultiplicityCS__Group__1__Impl rule__MultiplicityCS__Group__2
@@ -2684,7 +2684,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:929:1: ( ( ( rule__MultiplicityCS__Alternatives_1 ) ) )
             // InternalBase.g:930:1: ( ( rule__MultiplicityCS__Alternatives_1 ) )
@@ -2693,7 +2693,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:931:1: ( rule__MultiplicityCS__Alternatives_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityCSAccess().getAlternatives_1()); 
+               before(grammarAccess.getMultiplicityCSAccess().getAlternatives_1());
             }
             // InternalBase.g:932:1: ( rule__MultiplicityCS__Alternatives_1 )
             // InternalBase.g:932:2: rule__MultiplicityCS__Alternatives_1
@@ -2707,7 +2707,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityCSAccess().getAlternatives_1()); 
+               after(grammarAccess.getMultiplicityCSAccess().getAlternatives_1());
             }
 
             }
@@ -2735,7 +2735,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:946:1: ( rule__MultiplicityCS__Group__2__Impl rule__MultiplicityCS__Group__3 )
             // InternalBase.g:947:2: rule__MultiplicityCS__Group__2__Impl rule__MultiplicityCS__Group__3
@@ -2773,7 +2773,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:958:1: ( ( ( rule__MultiplicityCS__Alternatives_2 )? ) )
             // InternalBase.g:959:1: ( ( rule__MultiplicityCS__Alternatives_2 )? )
@@ -2782,7 +2782,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:960:1: ( rule__MultiplicityCS__Alternatives_2 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityCSAccess().getAlternatives_2()); 
+               before(grammarAccess.getMultiplicityCSAccess().getAlternatives_2());
             }
             // InternalBase.g:961:1: ( rule__MultiplicityCS__Alternatives_2 )?
             int alt8=2;
@@ -2807,7 +2807,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityCSAccess().getAlternatives_2()); 
+               after(grammarAccess.getMultiplicityCSAccess().getAlternatives_2());
             }
 
             }
@@ -2835,7 +2835,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:975:1: ( rule__MultiplicityCS__Group__3__Impl )
             // InternalBase.g:976:2: rule__MultiplicityCS__Group__3__Impl
@@ -2868,7 +2868,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:986:1: ( ( ']' ) )
             // InternalBase.g:987:1: ( ']' )
@@ -2877,11 +2877,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:988:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityCSAccess().getRightSquareBracketKeyword_3()); 
+               before(grammarAccess.getMultiplicityCSAccess().getRightSquareBracketKeyword_3());
             }
             match(input,22,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityCSAccess().getRightSquareBracketKeyword_3()); 
+               after(grammarAccess.getMultiplicityCSAccess().getRightSquareBracketKeyword_3());
             }
 
             }
@@ -2909,7 +2909,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__PathNameCS__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1013:1: ( rule__PathNameCS__Group__0__Impl rule__PathNameCS__Group__1 )
             // InternalBase.g:1014:2: rule__PathNameCS__Group__0__Impl rule__PathNameCS__Group__1
@@ -2947,7 +2947,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__PathNameCS__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1025:1: ( ( ( rule__PathNameCS__OwnedPathElementsAssignment_0 ) ) )
             // InternalBase.g:1026:1: ( ( rule__PathNameCS__OwnedPathElementsAssignment_0 ) )
@@ -2956,7 +2956,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1027:1: ( rule__PathNameCS__OwnedPathElementsAssignment_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPathNameCSAccess().getOwnedPathElementsAssignment_0()); 
+               before(grammarAccess.getPathNameCSAccess().getOwnedPathElementsAssignment_0());
             }
             // InternalBase.g:1028:1: ( rule__PathNameCS__OwnedPathElementsAssignment_0 )
             // InternalBase.g:1028:2: rule__PathNameCS__OwnedPathElementsAssignment_0
@@ -2970,7 +2970,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPathNameCSAccess().getOwnedPathElementsAssignment_0()); 
+               after(grammarAccess.getPathNameCSAccess().getOwnedPathElementsAssignment_0());
             }
 
             }
@@ -2998,7 +2998,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__PathNameCS__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1042:1: ( rule__PathNameCS__Group__1__Impl )
             // InternalBase.g:1043:2: rule__PathNameCS__Group__1__Impl
@@ -3031,7 +3031,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__PathNameCS__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1053:1: ( ( ( rule__PathNameCS__Group_1__0 )* ) )
             // InternalBase.g:1054:1: ( ( rule__PathNameCS__Group_1__0 )* )
@@ -3040,7 +3040,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1055:1: ( rule__PathNameCS__Group_1__0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPathNameCSAccess().getGroup_1()); 
+               before(grammarAccess.getPathNameCSAccess().getGroup_1());
             }
             // InternalBase.g:1056:1: ( rule__PathNameCS__Group_1__0 )*
             loop9:
@@ -3072,7 +3072,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPathNameCSAccess().getGroup_1()); 
+               after(grammarAccess.getPathNameCSAccess().getGroup_1());
             }
 
             }
@@ -3100,7 +3100,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__PathNameCS__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1074:1: ( rule__PathNameCS__Group_1__0__Impl rule__PathNameCS__Group_1__1 )
             // InternalBase.g:1075:2: rule__PathNameCS__Group_1__0__Impl rule__PathNameCS__Group_1__1
@@ -3138,7 +3138,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__PathNameCS__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1086:1: ( ( '::' ) )
             // InternalBase.g:1087:1: ( '::' )
@@ -3147,11 +3147,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1088:1: '::'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPathNameCSAccess().getColonColonKeyword_1_0()); 
+               before(grammarAccess.getPathNameCSAccess().getColonColonKeyword_1_0());
             }
             match(input,23,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPathNameCSAccess().getColonColonKeyword_1_0()); 
+               after(grammarAccess.getPathNameCSAccess().getColonColonKeyword_1_0());
             }
 
             }
@@ -3179,7 +3179,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__PathNameCS__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1105:1: ( rule__PathNameCS__Group_1__1__Impl )
             // InternalBase.g:1106:2: rule__PathNameCS__Group_1__1__Impl
@@ -3212,7 +3212,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__PathNameCS__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1116:1: ( ( ( rule__PathNameCS__OwnedPathElementsAssignment_1_1 ) ) )
             // InternalBase.g:1117:1: ( ( rule__PathNameCS__OwnedPathElementsAssignment_1_1 ) )
@@ -3221,7 +3221,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1118:1: ( rule__PathNameCS__OwnedPathElementsAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPathNameCSAccess().getOwnedPathElementsAssignment_1_1()); 
+               before(grammarAccess.getPathNameCSAccess().getOwnedPathElementsAssignment_1_1());
             }
             // InternalBase.g:1119:1: ( rule__PathNameCS__OwnedPathElementsAssignment_1_1 )
             // InternalBase.g:1119:2: rule__PathNameCS__OwnedPathElementsAssignment_1_1
@@ -3235,7 +3235,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPathNameCSAccess().getOwnedPathElementsAssignment_1_1()); 
+               after(grammarAccess.getPathNameCSAccess().getOwnedPathElementsAssignment_1_1());
             }
 
             }
@@ -3263,7 +3263,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1137:1: ( rule__TemplateBindingCS__Group__0__Impl rule__TemplateBindingCS__Group__1 )
             // InternalBase.g:1138:2: rule__TemplateBindingCS__Group__0__Impl rule__TemplateBindingCS__Group__1
@@ -3301,7 +3301,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1149:1: ( ( ( rule__TemplateBindingCS__OwnedSubstitutionsAssignment_0 ) ) )
             // InternalBase.g:1150:1: ( ( rule__TemplateBindingCS__OwnedSubstitutionsAssignment_0 ) )
@@ -3310,7 +3310,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1151:1: ( rule__TemplateBindingCS__OwnedSubstitutionsAssignment_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsAssignment_0()); 
+               before(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsAssignment_0());
             }
             // InternalBase.g:1152:1: ( rule__TemplateBindingCS__OwnedSubstitutionsAssignment_0 )
             // InternalBase.g:1152:2: rule__TemplateBindingCS__OwnedSubstitutionsAssignment_0
@@ -3324,7 +3324,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsAssignment_0()); 
+               after(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsAssignment_0());
             }
 
             }
@@ -3352,7 +3352,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1166:1: ( rule__TemplateBindingCS__Group__1__Impl rule__TemplateBindingCS__Group__2 )
             // InternalBase.g:1167:2: rule__TemplateBindingCS__Group__1__Impl rule__TemplateBindingCS__Group__2
@@ -3390,7 +3390,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1178:1: ( ( ( rule__TemplateBindingCS__Group_1__0 )* ) )
             // InternalBase.g:1179:1: ( ( rule__TemplateBindingCS__Group_1__0 )* )
@@ -3399,7 +3399,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1180:1: ( rule__TemplateBindingCS__Group_1__0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateBindingCSAccess().getGroup_1()); 
+               before(grammarAccess.getTemplateBindingCSAccess().getGroup_1());
             }
             // InternalBase.g:1181:1: ( rule__TemplateBindingCS__Group_1__0 )*
             loop10:
@@ -3431,7 +3431,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateBindingCSAccess().getGroup_1()); 
+               after(grammarAccess.getTemplateBindingCSAccess().getGroup_1());
             }
 
             }
@@ -3459,7 +3459,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1195:1: ( rule__TemplateBindingCS__Group__2__Impl )
             // InternalBase.g:1196:2: rule__TemplateBindingCS__Group__2__Impl
@@ -3492,7 +3492,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1206:1: ( ( ( rule__TemplateBindingCS__OwnedMultiplicityAssignment_2 )? ) )
             // InternalBase.g:1207:1: ( ( rule__TemplateBindingCS__OwnedMultiplicityAssignment_2 )? )
@@ -3501,7 +3501,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1208:1: ( rule__TemplateBindingCS__OwnedMultiplicityAssignment_2 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateBindingCSAccess().getOwnedMultiplicityAssignment_2()); 
+               before(grammarAccess.getTemplateBindingCSAccess().getOwnedMultiplicityAssignment_2());
             }
             // InternalBase.g:1209:1: ( rule__TemplateBindingCS__OwnedMultiplicityAssignment_2 )?
             int alt11=2;
@@ -3526,7 +3526,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateBindingCSAccess().getOwnedMultiplicityAssignment_2()); 
+               after(grammarAccess.getTemplateBindingCSAccess().getOwnedMultiplicityAssignment_2());
             }
 
             }
@@ -3554,7 +3554,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1229:1: ( rule__TemplateBindingCS__Group_1__0__Impl rule__TemplateBindingCS__Group_1__1 )
             // InternalBase.g:1230:2: rule__TemplateBindingCS__Group_1__0__Impl rule__TemplateBindingCS__Group_1__1
@@ -3592,7 +3592,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1241:1: ( ( ',' ) )
             // InternalBase.g:1242:1: ( ',' )
@@ -3601,11 +3601,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1243:1: ','
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateBindingCSAccess().getCommaKeyword_1_0()); 
+               before(grammarAccess.getTemplateBindingCSAccess().getCommaKeyword_1_0());
             }
             match(input,24,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateBindingCSAccess().getCommaKeyword_1_0()); 
+               after(grammarAccess.getTemplateBindingCSAccess().getCommaKeyword_1_0());
             }
 
             }
@@ -3633,7 +3633,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1260:1: ( rule__TemplateBindingCS__Group_1__1__Impl )
             // InternalBase.g:1261:2: rule__TemplateBindingCS__Group_1__1__Impl
@@ -3666,7 +3666,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1271:1: ( ( ( rule__TemplateBindingCS__OwnedSubstitutionsAssignment_1_1 ) ) )
             // InternalBase.g:1272:1: ( ( rule__TemplateBindingCS__OwnedSubstitutionsAssignment_1_1 ) )
@@ -3675,7 +3675,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1273:1: ( rule__TemplateBindingCS__OwnedSubstitutionsAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsAssignment_1_1()); 
+               before(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsAssignment_1_1());
             }
             // InternalBase.g:1274:1: ( rule__TemplateBindingCS__OwnedSubstitutionsAssignment_1_1 )
             // InternalBase.g:1274:2: rule__TemplateBindingCS__OwnedSubstitutionsAssignment_1_1
@@ -3689,7 +3689,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsAssignment_1_1()); 
+               after(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsAssignment_1_1());
             }
 
             }
@@ -3717,7 +3717,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1294:1: ( rule__TypeParameterCS__Group__0__Impl rule__TypeParameterCS__Group__1 )
             // InternalBase.g:1295:2: rule__TypeParameterCS__Group__0__Impl rule__TypeParameterCS__Group__1
@@ -3755,7 +3755,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1306:1: ( ( ( rule__TypeParameterCS__NameAssignment_0 ) ) )
             // InternalBase.g:1307:1: ( ( rule__TypeParameterCS__NameAssignment_0 ) )
@@ -3764,7 +3764,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1308:1: ( rule__TypeParameterCS__NameAssignment_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getNameAssignment_0()); 
+               before(grammarAccess.getTypeParameterCSAccess().getNameAssignment_0());
             }
             // InternalBase.g:1309:1: ( rule__TypeParameterCS__NameAssignment_0 )
             // InternalBase.g:1309:2: rule__TypeParameterCS__NameAssignment_0
@@ -3778,7 +3778,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getNameAssignment_0()); 
+               after(grammarAccess.getTypeParameterCSAccess().getNameAssignment_0());
             }
 
             }
@@ -3806,7 +3806,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1323:1: ( rule__TypeParameterCS__Group__1__Impl )
             // InternalBase.g:1324:2: rule__TypeParameterCS__Group__1__Impl
@@ -3839,7 +3839,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1334:1: ( ( ( rule__TypeParameterCS__Group_1__0 )? ) )
             // InternalBase.g:1335:1: ( ( rule__TypeParameterCS__Group_1__0 )? )
@@ -3848,7 +3848,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1336:1: ( rule__TypeParameterCS__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getGroup_1()); 
+               before(grammarAccess.getTypeParameterCSAccess().getGroup_1());
             }
             // InternalBase.g:1337:1: ( rule__TypeParameterCS__Group_1__0 )?
             int alt12=2;
@@ -3873,7 +3873,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getGroup_1()); 
+               after(grammarAccess.getTypeParameterCSAccess().getGroup_1());
             }
 
             }
@@ -3901,7 +3901,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1355:1: ( rule__TypeParameterCS__Group_1__0__Impl rule__TypeParameterCS__Group_1__1 )
             // InternalBase.g:1356:2: rule__TypeParameterCS__Group_1__0__Impl rule__TypeParameterCS__Group_1__1
@@ -3939,7 +3939,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1367:1: ( ( 'extends' ) )
             // InternalBase.g:1368:1: ( 'extends' )
@@ -3948,11 +3948,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1369:1: 'extends'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getExtendsKeyword_1_0()); 
+               before(grammarAccess.getTypeParameterCSAccess().getExtendsKeyword_1_0());
             }
             match(input,25,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getExtendsKeyword_1_0()); 
+               after(grammarAccess.getTypeParameterCSAccess().getExtendsKeyword_1_0());
             }
 
             }
@@ -3980,7 +3980,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1386:1: ( rule__TypeParameterCS__Group_1__1__Impl rule__TypeParameterCS__Group_1__2 )
             // InternalBase.g:1387:2: rule__TypeParameterCS__Group_1__1__Impl rule__TypeParameterCS__Group_1__2
@@ -4018,7 +4018,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1398:1: ( ( ( rule__TypeParameterCS__OwnedExtendsAssignment_1_1 ) ) )
             // InternalBase.g:1399:1: ( ( rule__TypeParameterCS__OwnedExtendsAssignment_1_1 ) )
@@ -4027,7 +4027,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1400:1: ( rule__TypeParameterCS__OwnedExtendsAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsAssignment_1_1()); 
+               before(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsAssignment_1_1());
             }
             // InternalBase.g:1401:1: ( rule__TypeParameterCS__OwnedExtendsAssignment_1_1 )
             // InternalBase.g:1401:2: rule__TypeParameterCS__OwnedExtendsAssignment_1_1
@@ -4041,7 +4041,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsAssignment_1_1()); 
+               after(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsAssignment_1_1());
             }
 
             }
@@ -4069,7 +4069,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1415:1: ( rule__TypeParameterCS__Group_1__2__Impl )
             // InternalBase.g:1416:2: rule__TypeParameterCS__Group_1__2__Impl
@@ -4102,7 +4102,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1426:1: ( ( ( rule__TypeParameterCS__Group_1_2__0 )* ) )
             // InternalBase.g:1427:1: ( ( rule__TypeParameterCS__Group_1_2__0 )* )
@@ -4111,7 +4111,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1428:1: ( rule__TypeParameterCS__Group_1_2__0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getGroup_1_2()); 
+               before(grammarAccess.getTypeParameterCSAccess().getGroup_1_2());
             }
             // InternalBase.g:1429:1: ( rule__TypeParameterCS__Group_1_2__0 )*
             loop13:
@@ -4143,7 +4143,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getGroup_1_2()); 
+               after(grammarAccess.getTypeParameterCSAccess().getGroup_1_2());
             }
 
             }
@@ -4171,7 +4171,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group_1_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1449:1: ( rule__TypeParameterCS__Group_1_2__0__Impl rule__TypeParameterCS__Group_1_2__1 )
             // InternalBase.g:1450:2: rule__TypeParameterCS__Group_1_2__0__Impl rule__TypeParameterCS__Group_1_2__1
@@ -4209,7 +4209,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group_1_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1461:1: ( ( '&&' ) )
             // InternalBase.g:1462:1: ( '&&' )
@@ -4218,11 +4218,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1463:1: '&&'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getAmpersandAmpersandKeyword_1_2_0()); 
+               before(grammarAccess.getTypeParameterCSAccess().getAmpersandAmpersandKeyword_1_2_0());
             }
             match(input,26,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getAmpersandAmpersandKeyword_1_2_0()); 
+               after(grammarAccess.getTypeParameterCSAccess().getAmpersandAmpersandKeyword_1_2_0());
             }
 
             }
@@ -4250,7 +4250,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group_1_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1480:1: ( rule__TypeParameterCS__Group_1_2__1__Impl )
             // InternalBase.g:1481:2: rule__TypeParameterCS__Group_1_2__1__Impl
@@ -4283,7 +4283,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__Group_1_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1491:1: ( ( ( rule__TypeParameterCS__OwnedExtendsAssignment_1_2_1 ) ) )
             // InternalBase.g:1492:1: ( ( rule__TypeParameterCS__OwnedExtendsAssignment_1_2_1 ) )
@@ -4292,7 +4292,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1493:1: ( rule__TypeParameterCS__OwnedExtendsAssignment_1_2_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsAssignment_1_2_1()); 
+               before(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsAssignment_1_2_1());
             }
             // InternalBase.g:1494:1: ( rule__TypeParameterCS__OwnedExtendsAssignment_1_2_1 )
             // InternalBase.g:1494:2: rule__TypeParameterCS__OwnedExtendsAssignment_1_2_1
@@ -4306,7 +4306,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsAssignment_1_2_1()); 
+               after(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsAssignment_1_2_1());
             }
 
             }
@@ -4334,7 +4334,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1512:1: ( rule__TypedTypeRefCS__Group__0__Impl rule__TypedTypeRefCS__Group__1 )
             // InternalBase.g:1513:2: rule__TypedTypeRefCS__Group__0__Impl rule__TypedTypeRefCS__Group__1
@@ -4372,7 +4372,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1524:1: ( ( ( rule__TypedTypeRefCS__OwnedPathNameAssignment_0 ) ) )
             // InternalBase.g:1525:1: ( ( rule__TypedTypeRefCS__OwnedPathNameAssignment_0 ) )
@@ -4381,7 +4381,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1526:1: ( rule__TypedTypeRefCS__OwnedPathNameAssignment_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedTypeRefCSAccess().getOwnedPathNameAssignment_0()); 
+               before(grammarAccess.getTypedTypeRefCSAccess().getOwnedPathNameAssignment_0());
             }
             // InternalBase.g:1527:1: ( rule__TypedTypeRefCS__OwnedPathNameAssignment_0 )
             // InternalBase.g:1527:2: rule__TypedTypeRefCS__OwnedPathNameAssignment_0
@@ -4395,7 +4395,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedTypeRefCSAccess().getOwnedPathNameAssignment_0()); 
+               after(grammarAccess.getTypedTypeRefCSAccess().getOwnedPathNameAssignment_0());
             }
 
             }
@@ -4423,7 +4423,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1541:1: ( rule__TypedTypeRefCS__Group__1__Impl )
             // InternalBase.g:1542:2: rule__TypedTypeRefCS__Group__1__Impl
@@ -4456,7 +4456,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1552:1: ( ( ( rule__TypedTypeRefCS__Group_1__0 )? ) )
             // InternalBase.g:1553:1: ( ( rule__TypedTypeRefCS__Group_1__0 )? )
@@ -4465,7 +4465,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1554:1: ( rule__TypedTypeRefCS__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedTypeRefCSAccess().getGroup_1()); 
+               before(grammarAccess.getTypedTypeRefCSAccess().getGroup_1());
             }
             // InternalBase.g:1555:1: ( rule__TypedTypeRefCS__Group_1__0 )?
             int alt14=2;
@@ -4490,7 +4490,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedTypeRefCSAccess().getGroup_1()); 
+               after(grammarAccess.getTypedTypeRefCSAccess().getGroup_1());
             }
 
             }
@@ -4518,7 +4518,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1573:1: ( rule__TypedTypeRefCS__Group_1__0__Impl rule__TypedTypeRefCS__Group_1__1 )
             // InternalBase.g:1574:2: rule__TypedTypeRefCS__Group_1__0__Impl rule__TypedTypeRefCS__Group_1__1
@@ -4556,7 +4556,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1585:1: ( ( '(' ) )
             // InternalBase.g:1586:1: ( '(' )
@@ -4565,11 +4565,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1587:1: '('
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedTypeRefCSAccess().getLeftParenthesisKeyword_1_0()); 
+               before(grammarAccess.getTypedTypeRefCSAccess().getLeftParenthesisKeyword_1_0());
             }
             match(input,27,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedTypeRefCSAccess().getLeftParenthesisKeyword_1_0()); 
+               after(grammarAccess.getTypedTypeRefCSAccess().getLeftParenthesisKeyword_1_0());
             }
 
             }
@@ -4597,7 +4597,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1604:1: ( rule__TypedTypeRefCS__Group_1__1__Impl rule__TypedTypeRefCS__Group_1__2 )
             // InternalBase.g:1605:2: rule__TypedTypeRefCS__Group_1__1__Impl rule__TypedTypeRefCS__Group_1__2
@@ -4635,7 +4635,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1616:1: ( ( ( rule__TypedTypeRefCS__OwnedBindingAssignment_1_1 ) ) )
             // InternalBase.g:1617:1: ( ( rule__TypedTypeRefCS__OwnedBindingAssignment_1_1 ) )
@@ -4644,7 +4644,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1618:1: ( rule__TypedTypeRefCS__OwnedBindingAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedTypeRefCSAccess().getOwnedBindingAssignment_1_1()); 
+               before(grammarAccess.getTypedTypeRefCSAccess().getOwnedBindingAssignment_1_1());
             }
             // InternalBase.g:1619:1: ( rule__TypedTypeRefCS__OwnedBindingAssignment_1_1 )
             // InternalBase.g:1619:2: rule__TypedTypeRefCS__OwnedBindingAssignment_1_1
@@ -4658,7 +4658,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedTypeRefCSAccess().getOwnedBindingAssignment_1_1()); 
+               after(grammarAccess.getTypedTypeRefCSAccess().getOwnedBindingAssignment_1_1());
             }
 
             }
@@ -4686,7 +4686,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1633:1: ( rule__TypedTypeRefCS__Group_1__2__Impl )
             // InternalBase.g:1634:2: rule__TypedTypeRefCS__Group_1__2__Impl
@@ -4719,7 +4719,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1644:1: ( ( ')' ) )
             // InternalBase.g:1645:1: ( ')' )
@@ -4728,11 +4728,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1646:1: ')'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedTypeRefCSAccess().getRightParenthesisKeyword_1_2()); 
+               before(grammarAccess.getTypedTypeRefCSAccess().getRightParenthesisKeyword_1_2());
             }
             match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedTypeRefCSAccess().getRightParenthesisKeyword_1_2()); 
+               after(grammarAccess.getTypedTypeRefCSAccess().getRightParenthesisKeyword_1_2());
             }
 
             }
@@ -4760,7 +4760,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1669:1: ( rule__WildcardTypeRefCS__Group__0__Impl rule__WildcardTypeRefCS__Group__1 )
             // InternalBase.g:1670:2: rule__WildcardTypeRefCS__Group__0__Impl rule__WildcardTypeRefCS__Group__1
@@ -4798,7 +4798,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1681:1: ( ( () ) )
             // InternalBase.g:1682:1: ( () )
@@ -4807,15 +4807,15 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1683:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getWildcardTypeRefCSAccess().getWildcardTypeRefCSAction_0()); 
+               before(grammarAccess.getWildcardTypeRefCSAccess().getWildcardTypeRefCSAction_0());
             }
             // InternalBase.g:1684:1: ()
-            // InternalBase.g:1686:1: 
+            // InternalBase.g:1686:1:
             {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getWildcardTypeRefCSAccess().getWildcardTypeRefCSAction_0()); 
+               after(grammarAccess.getWildcardTypeRefCSAccess().getWildcardTypeRefCSAction_0());
             }
 
             }
@@ -4839,7 +4839,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1700:1: ( rule__WildcardTypeRefCS__Group__1__Impl rule__WildcardTypeRefCS__Group__2 )
             // InternalBase.g:1701:2: rule__WildcardTypeRefCS__Group__1__Impl rule__WildcardTypeRefCS__Group__2
@@ -4877,7 +4877,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1712:1: ( ( '?' ) )
             // InternalBase.g:1713:1: ( '?' )
@@ -4886,11 +4886,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1714:1: '?'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getWildcardTypeRefCSAccess().getQuestionMarkKeyword_1()); 
+               before(grammarAccess.getWildcardTypeRefCSAccess().getQuestionMarkKeyword_1());
             }
             match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getWildcardTypeRefCSAccess().getQuestionMarkKeyword_1()); 
+               after(grammarAccess.getWildcardTypeRefCSAccess().getQuestionMarkKeyword_1());
             }
 
             }
@@ -4918,7 +4918,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1731:1: ( rule__WildcardTypeRefCS__Group__2__Impl )
             // InternalBase.g:1732:2: rule__WildcardTypeRefCS__Group__2__Impl
@@ -4951,7 +4951,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1742:1: ( ( ( rule__WildcardTypeRefCS__Group_2__0 )? ) )
             // InternalBase.g:1743:1: ( ( rule__WildcardTypeRefCS__Group_2__0 )? )
@@ -4960,7 +4960,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1744:1: ( rule__WildcardTypeRefCS__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getWildcardTypeRefCSAccess().getGroup_2()); 
+               before(grammarAccess.getWildcardTypeRefCSAccess().getGroup_2());
             }
             // InternalBase.g:1745:1: ( rule__WildcardTypeRefCS__Group_2__0 )?
             int alt15=2;
@@ -4985,7 +4985,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getWildcardTypeRefCSAccess().getGroup_2()); 
+               after(grammarAccess.getWildcardTypeRefCSAccess().getGroup_2());
             }
 
             }
@@ -5013,7 +5013,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1765:1: ( rule__WildcardTypeRefCS__Group_2__0__Impl rule__WildcardTypeRefCS__Group_2__1 )
             // InternalBase.g:1766:2: rule__WildcardTypeRefCS__Group_2__0__Impl rule__WildcardTypeRefCS__Group_2__1
@@ -5051,7 +5051,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1777:1: ( ( 'extends' ) )
             // InternalBase.g:1778:1: ( 'extends' )
@@ -5060,11 +5060,11 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1779:1: 'extends'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getWildcardTypeRefCSAccess().getExtendsKeyword_2_0()); 
+               before(grammarAccess.getWildcardTypeRefCSAccess().getExtendsKeyword_2_0());
             }
             match(input,25,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getWildcardTypeRefCSAccess().getExtendsKeyword_2_0()); 
+               after(grammarAccess.getWildcardTypeRefCSAccess().getExtendsKeyword_2_0());
             }
 
             }
@@ -5092,7 +5092,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1796:1: ( rule__WildcardTypeRefCS__Group_2__1__Impl )
             // InternalBase.g:1797:2: rule__WildcardTypeRefCS__Group_2__1__Impl
@@ -5125,7 +5125,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1807:1: ( ( ( rule__WildcardTypeRefCS__OwnedExtendsAssignment_2_1 ) ) )
             // InternalBase.g:1808:1: ( ( rule__WildcardTypeRefCS__OwnedExtendsAssignment_2_1 ) )
@@ -5134,7 +5134,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1809:1: ( rule__WildcardTypeRefCS__OwnedExtendsAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getWildcardTypeRefCSAccess().getOwnedExtendsAssignment_2_1()); 
+               before(grammarAccess.getWildcardTypeRefCSAccess().getOwnedExtendsAssignment_2_1());
             }
             // InternalBase.g:1810:1: ( rule__WildcardTypeRefCS__OwnedExtendsAssignment_2_1 )
             // InternalBase.g:1810:2: rule__WildcardTypeRefCS__OwnedExtendsAssignment_2_1
@@ -5148,7 +5148,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getWildcardTypeRefCSAccess().getOwnedExtendsAssignment_2_1()); 
+               after(grammarAccess.getWildcardTypeRefCSAccess().getOwnedExtendsAssignment_2_1());
             }
 
             }
@@ -5176,7 +5176,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityBoundsCS__LowerBoundAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1829:1: ( ( ruleLOWER ) )
             // InternalBase.g:1830:1: ( ruleLOWER )
@@ -5185,7 +5185,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1831:1: ruleLOWER
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundLOWERParserRuleCall_0_0()); 
+               before(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundLOWERParserRuleCall_0_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleLOWER();
@@ -5193,7 +5193,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundLOWERParserRuleCall_0_0()); 
+               after(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundLOWERParserRuleCall_0_0());
             }
 
             }
@@ -5221,7 +5221,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityBoundsCS__UpperBoundAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1844:1: ( ( ruleUPPER ) )
             // InternalBase.g:1845:1: ( ruleUPPER )
@@ -5230,7 +5230,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1846:1: ruleUPPER
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundUPPERParserRuleCall_1_1_0()); 
+               before(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundUPPERParserRuleCall_1_1_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleUPPER();
@@ -5238,7 +5238,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundUPPERParserRuleCall_1_1_0()); 
+               after(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundUPPERParserRuleCall_1_1_0());
             }
 
             }
@@ -5266,7 +5266,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityCS__IsNullFreeAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1859:1: ( ( ( '|1' ) ) )
             // InternalBase.g:1860:1: ( ( '|1' ) )
@@ -5275,23 +5275,23 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1861:1: ( '|1' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0()); 
+               before(grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0());
             }
             // InternalBase.g:1862:1: ( '|1' )
             // InternalBase.g:1863:1: '|1'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0()); 
+               before(grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0());
             }
             match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0()); 
+               after(grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0());
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0()); 
+               after(grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0());
             }
 
             }
@@ -5319,7 +5319,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__MultiplicityStringCS__StringBoundsAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1882:1: ( ( ( rule__MultiplicityStringCS__StringBoundsAlternatives_0 ) ) )
             // InternalBase.g:1883:1: ( ( rule__MultiplicityStringCS__StringBoundsAlternatives_0 ) )
@@ -5328,7 +5328,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1884:1: ( rule__MultiplicityStringCS__StringBoundsAlternatives_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAlternatives_0()); 
+               before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAlternatives_0());
             }
             // InternalBase.g:1885:1: ( rule__MultiplicityStringCS__StringBoundsAlternatives_0 )
             // InternalBase.g:1885:2: rule__MultiplicityStringCS__StringBoundsAlternatives_0
@@ -5342,7 +5342,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAlternatives_0()); 
+               after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAlternatives_0());
             }
 
             }
@@ -5370,7 +5370,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__PathNameCS__OwnedPathElementsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1898:1: ( ( ruleFirstPathElementCS ) )
             // InternalBase.g:1899:1: ( ruleFirstPathElementCS )
@@ -5379,7 +5379,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1900:1: ruleFirstPathElementCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPathNameCSAccess().getOwnedPathElementsFirstPathElementCSParserRuleCall_0_0()); 
+               before(grammarAccess.getPathNameCSAccess().getOwnedPathElementsFirstPathElementCSParserRuleCall_0_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleFirstPathElementCS();
@@ -5387,7 +5387,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPathNameCSAccess().getOwnedPathElementsFirstPathElementCSParserRuleCall_0_0()); 
+               after(grammarAccess.getPathNameCSAccess().getOwnedPathElementsFirstPathElementCSParserRuleCall_0_0());
             }
 
             }
@@ -5415,7 +5415,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__PathNameCS__OwnedPathElementsAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1913:1: ( ( ruleNextPathElementCS ) )
             // InternalBase.g:1914:1: ( ruleNextPathElementCS )
@@ -5424,7 +5424,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1915:1: ruleNextPathElementCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPathNameCSAccess().getOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0()); 
+               before(grammarAccess.getPathNameCSAccess().getOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleNextPathElementCS();
@@ -5432,7 +5432,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPathNameCSAccess().getOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0()); 
+               after(grammarAccess.getPathNameCSAccess().getOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0());
             }
 
             }
@@ -5460,7 +5460,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__FirstPathElementCS__ReferredElementAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1928:1: ( ( ( ruleUnrestrictedName ) ) )
             // InternalBase.g:1929:1: ( ( ruleUnrestrictedName ) )
@@ -5469,13 +5469,13 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1930:1: ( ruleUnrestrictedName )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementCrossReference_0()); 
+               before(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementCrossReference_0());
             }
             // InternalBase.g:1931:1: ( ruleUnrestrictedName )
             // InternalBase.g:1932:1: ruleUnrestrictedName
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementUnrestrictedNameParserRuleCall_0_1()); 
+               before(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementUnrestrictedNameParserRuleCall_0_1());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleUnrestrictedName();
@@ -5483,13 +5483,13 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementUnrestrictedNameParserRuleCall_0_1()); 
+               after(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementUnrestrictedNameParserRuleCall_0_1());
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementCrossReference_0()); 
+               after(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementCrossReference_0());
             }
 
             }
@@ -5517,7 +5517,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__NextPathElementCS__ReferredElementAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1947:1: ( ( ( ruleUnreservedName ) ) )
             // InternalBase.g:1948:1: ( ( ruleUnreservedName ) )
@@ -5526,13 +5526,13 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1949:1: ( ruleUnreservedName )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementCrossReference_0()); 
+               before(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementCrossReference_0());
             }
             // InternalBase.g:1950:1: ( ruleUnreservedName )
             // InternalBase.g:1951:1: ruleUnreservedName
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementUnreservedNameParserRuleCall_0_1()); 
+               before(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementUnreservedNameParserRuleCall_0_1());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleUnreservedName();
@@ -5540,13 +5540,13 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementUnreservedNameParserRuleCall_0_1()); 
+               after(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementUnreservedNameParserRuleCall_0_1());
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementCrossReference_0()); 
+               after(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementCrossReference_0());
             }
 
             }
@@ -5574,7 +5574,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__OwnedSubstitutionsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1966:1: ( ( ruleTemplateParameterSubstitutionCS ) )
             // InternalBase.g:1967:1: ( ruleTemplateParameterSubstitutionCS )
@@ -5583,7 +5583,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1968:1: ruleTemplateParameterSubstitutionCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_0_0()); 
+               before(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_0_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleTemplateParameterSubstitutionCS();
@@ -5591,7 +5591,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_0_0()); 
+               after(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_0_0());
             }
 
             }
@@ -5619,7 +5619,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__OwnedSubstitutionsAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1981:1: ( ( ruleTemplateParameterSubstitutionCS ) )
             // InternalBase.g:1982:1: ( ruleTemplateParameterSubstitutionCS )
@@ -5628,7 +5628,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1983:1: ruleTemplateParameterSubstitutionCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_1_1_0()); 
+               before(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_1_1_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleTemplateParameterSubstitutionCS();
@@ -5636,7 +5636,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_1_1_0()); 
+               after(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_1_1_0());
             }
 
             }
@@ -5664,7 +5664,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateBindingCS__OwnedMultiplicityAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:1996:1: ( ( ruleMultiplicityCS ) )
             // InternalBase.g:1997:1: ( ruleMultiplicityCS )
@@ -5673,7 +5673,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:1998:1: ruleMultiplicityCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateBindingCSAccess().getOwnedMultiplicityMultiplicityCSParserRuleCall_2_0()); 
+               before(grammarAccess.getTemplateBindingCSAccess().getOwnedMultiplicityMultiplicityCSParserRuleCall_2_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleMultiplicityCS();
@@ -5681,7 +5681,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateBindingCSAccess().getOwnedMultiplicityMultiplicityCSParserRuleCall_2_0()); 
+               after(grammarAccess.getTemplateBindingCSAccess().getOwnedMultiplicityMultiplicityCSParserRuleCall_2_0());
             }
 
             }
@@ -5709,7 +5709,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TemplateParameterSubstitutionCS__OwnedActualParameterAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:2011:1: ( ( ruleTypeRefCS ) )
             // InternalBase.g:2012:1: ( ruleTypeRefCS )
@@ -5718,7 +5718,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:2013:1: ruleTypeRefCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterTypeRefCSParserRuleCall_0()); 
+               before(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterTypeRefCSParserRuleCall_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleTypeRefCS();
@@ -5726,7 +5726,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterTypeRefCSParserRuleCall_0()); 
+               after(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterTypeRefCSParserRuleCall_0());
             }
 
             }
@@ -5754,7 +5754,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:2028:1: ( ( ruleUnrestrictedName ) )
             // InternalBase.g:2029:1: ( ruleUnrestrictedName )
@@ -5763,7 +5763,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:2030:1: ruleUnrestrictedName
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getNameUnrestrictedNameParserRuleCall_0_0()); 
+               before(grammarAccess.getTypeParameterCSAccess().getNameUnrestrictedNameParserRuleCall_0_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleUnrestrictedName();
@@ -5771,7 +5771,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getNameUnrestrictedNameParserRuleCall_0_0()); 
+               after(grammarAccess.getTypeParameterCSAccess().getNameUnrestrictedNameParserRuleCall_0_0());
             }
 
             }
@@ -5799,7 +5799,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__OwnedExtendsAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:2043:1: ( ( ruleTypedRefCS ) )
             // InternalBase.g:2044:1: ( ruleTypedRefCS )
@@ -5808,7 +5808,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:2045:1: ruleTypedRefCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_1_0()); 
+               before(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_1_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleTypedRefCS();
@@ -5816,7 +5816,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_1_0()); 
+               after(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_1_0());
             }
 
             }
@@ -5844,7 +5844,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypeParameterCS__OwnedExtendsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:2058:1: ( ( ruleTypedRefCS ) )
             // InternalBase.g:2059:1: ( ruleTypedRefCS )
@@ -5853,7 +5853,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:2060:1: ruleTypedRefCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_2_1_0()); 
+               before(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_2_1_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleTypedRefCS();
@@ -5861,7 +5861,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_2_1_0()); 
+               after(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_2_1_0());
             }
 
             }
@@ -5889,7 +5889,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__OwnedPathNameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:2073:1: ( ( rulePathNameCS ) )
             // InternalBase.g:2074:1: ( rulePathNameCS )
@@ -5898,7 +5898,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:2075:1: rulePathNameCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedTypeRefCSAccess().getOwnedPathNamePathNameCSParserRuleCall_0_0()); 
+               before(grammarAccess.getTypedTypeRefCSAccess().getOwnedPathNamePathNameCSParserRuleCall_0_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             rulePathNameCS();
@@ -5906,7 +5906,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedTypeRefCSAccess().getOwnedPathNamePathNameCSParserRuleCall_0_0()); 
+               after(grammarAccess.getTypedTypeRefCSAccess().getOwnedPathNamePathNameCSParserRuleCall_0_0());
             }
 
             }
@@ -5934,7 +5934,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__TypedTypeRefCS__OwnedBindingAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:2088:1: ( ( ruleTemplateBindingCS ) )
             // InternalBase.g:2089:1: ( ruleTemplateBindingCS )
@@ -5943,7 +5943,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:2090:1: ruleTemplateBindingCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypedTypeRefCSAccess().getOwnedBindingTemplateBindingCSParserRuleCall_1_1_0()); 
+               before(grammarAccess.getTypedTypeRefCSAccess().getOwnedBindingTemplateBindingCSParserRuleCall_1_1_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleTemplateBindingCS();
@@ -5951,7 +5951,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypedTypeRefCSAccess().getOwnedBindingTemplateBindingCSParserRuleCall_1_1_0()); 
+               after(grammarAccess.getTypedTypeRefCSAccess().getOwnedBindingTemplateBindingCSParserRuleCall_1_1_0());
             }
 
             }
@@ -5979,7 +5979,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     public final void rule__WildcardTypeRefCS__OwnedExtendsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
-            
+
         try {
             // InternalBase.g:2103:1: ( ( ruleTypedRefCS ) )
             // InternalBase.g:2104:1: ( ruleTypedRefCS )
@@ -5988,7 +5988,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             // InternalBase.g:2105:1: ruleTypedRefCS
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getWildcardTypeRefCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_2_1_0()); 
+               before(grammarAccess.getWildcardTypeRefCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_2_1_0());
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleTypedRefCS();
@@ -5996,7 +5996,7 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getWildcardTypeRefCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_2_1_0()); 
+               after(grammarAccess.getWildcardTypeRefCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_2_1_0());
             }
 
             }
@@ -6021,9 +6021,9 @@ public class InternalBaseParser extends AbstractInternalContentAssistParser {
     // Delegated rules
 
 
- 
 
-    
+
+
     private static class FollowSets000 {
         public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});

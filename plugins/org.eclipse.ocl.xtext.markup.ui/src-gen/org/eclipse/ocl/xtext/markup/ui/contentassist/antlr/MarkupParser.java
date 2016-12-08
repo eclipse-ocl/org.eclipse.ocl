@@ -25,19 +25,19 @@ import com.google.inject.Inject;
 import org.eclipse.ocl.xtext.markup.services.MarkupGrammarAccess;
 
 public class MarkupParser extends AbstractContentAssistParser {
-	
+
 	@Inject
 	private MarkupGrammarAccess grammarAccess;
-	
+
 	private Map<AbstractElement, String> nameMappings;
-	
+
 	@Override
 	protected org.eclipse.ocl.xtext.markup.ui.contentassist.antlr.internal.InternalMarkupParser createParser() {
 		org.eclipse.ocl.xtext.markup.ui.contentassist.antlr.internal.InternalMarkupParser result = new org.eclipse.ocl.xtext.markup.ui.contentassist.antlr.internal.InternalMarkupParser(null);
 		result.setGrammarAccess(grammarAccess);
 		return result;
 	}
-	
+
 	@Override
 	protected String getRuleName(AbstractElement element) {
 		if (nameMappings == null) {
@@ -91,7 +91,7 @@ public class MarkupParser extends AbstractContentAssistParser {
 		}
 		return nameMappings.get(element);
 	}
-	
+
 	@Override
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
@@ -100,18 +100,18 @@ public class MarkupParser extends AbstractContentAssistParser {
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);
-		}		
+		}
 	}
-	
+
 	@Override
 	protected String[] getInitialHiddenTokens() {
 		return new String[] {  };
 	}
-	
+
 	public MarkupGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(MarkupGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}

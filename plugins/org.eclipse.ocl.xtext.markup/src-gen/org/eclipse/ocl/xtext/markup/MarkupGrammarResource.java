@@ -9,7 +9,7 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: E:\GIT\org.eclipse.ocl\examples..\..\plugins\org.eclipse.ocl.xtext.markup\src-gen\org\eclipse\ocl\xtext\markup\Markup.xtextbin
+ * from: E:\GIT\org.eclipse.ocl\plugins..\..\plugins\org.eclipse.ocl.xtext.markup\src-gen\org\eclipse\ocl\xtext\markup\Markup.xtextbin
  * by: org.eclipse.ocl.examples.build.xtend.generateGrammar.xtend
  *
  * Do not edit it.
@@ -69,7 +69,7 @@ public class MarkupGrammarResource extends AbstractGrammarResource
 
 	/*
 	 * This class should be bound to org.eclipse.xtext.service.GrammarProvider.
-	 */ 
+	 */
 	@Singleton
 	public static class GrammarProvider extends org.eclipse.xtext.service.GrammarProvider
 	{
@@ -83,12 +83,12 @@ public class MarkupGrammarResource extends AbstractGrammarResource
 			return MarkupGrammarResource.GRAMMAR;
 		}
 	}
-	
+
 	private static class _Markup
 	{
 		private static final @NonNull ReferencedMetamodel MM = createReferencedMetamodel(org.eclipse.ocl.xtext.markupcs.MarkupPackage.eINSTANCE, null); // http://www.eclipse.org/ocl/2015/MarkupCS
 		private static final @NonNull ReferencedMetamodel MM_ecore = createReferencedMetamodel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE, "ecore"); // http://www.eclipse.org/emf/2002/Ecore
-		
+
 		private static final @NonNull TerminalRule TR_ANY_OTHER = createTerminalRule("ANY_OTHER", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull TerminalRule TR_ESCAPED = createTerminalRule("ESCAPED", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull TerminalRule TR_HORIZONTAL_WS = createTerminalRule("HORIZONTAL_WS", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
@@ -101,7 +101,7 @@ public class MarkupGrammarResource extends AbstractGrammarResource
 		private static final @NonNull TerminalRule TR_VERTICAL_WS = createTerminalRule("VERTICAL_WS", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull TerminalRule TR_WORD = createTerminalRule("WORD", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull TerminalRule TR_WS = createTerminalRule("WS", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
-		
+
 		private static void initTerminalRules() {
 			TR_ANY_OTHER.setAlternatives(createWildcard());
 			TR_ESCAPED.setFragment(true);
@@ -121,7 +121,7 @@ public class MarkupGrammarResource extends AbstractGrammarResource
 			TR_WORD.setAlternatives(setCardinality("+", createAlternatives(createRuleCall(TR_ESCAPED), createNegatedToken(createAlternatives(createKeyword("\\"), createKeyword("\""), createKeyword("["), createKeyword("]"), createKeyword(":"), createKeyword("#"), createKeyword(","), createRuleCall(TR_HORIZONTAL_WS), createRuleCall(TR_VERTICAL_WS))))));
 			TR_WS.setAlternatives(setCardinality("+", createRuleCall(TR_HORIZONTAL_WS)));
 		}
-		
+
 		private static final @NonNull ParserRule PR_BulletElement = createParserRule("BulletElement", createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.BULLET_ELEMENT));
 		private static final @NonNull ParserRule PR_FigureElement = createParserRule("FigureElement", createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.FIGURE_ELEMENT));
 		private static final @NonNull ParserRule PR_FigureRefElement = createParserRule("FigureRefElement", createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.FIGURE_REF_ELEMENT));
@@ -137,7 +137,7 @@ public class MarkupGrammarResource extends AbstractGrammarResource
 		private static final @NonNull ParserRule PR_OCLEvalElement = createParserRule("OCLEvalElement", createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.OCL_EVAL_ELEMENT));
 		private static final @NonNull ParserRule PR_OCLTextElement = createParserRule("OCLTextElement", createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.OCL_TEXT_ELEMENT));
 		private static final @NonNull ParserRule PR_TextElement = createParserRule("TextElement", createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.TEXT_ELEMENT));
-		
+
 		private static void initParserRules() {
 			PR_BulletElement.setAlternatives(createGroup(createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.BULLET_ELEMENT)), createKeyword("bullet"), setCardinality("?", createGroup(createKeyword(":"), createAssignment("level", "=", createRuleCall(TR_INT)))), createKeyword("["), setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))), createKeyword("]")));
 			PR_FigureElement.setAlternatives(createGroup(createKeyword("figure"), setCardinality("?", createGroup(createKeyword("#"), createAssignment("def", "=", createRuleCall(TR_ID)))), createKeyword("["), createAssignment("src", "=", createRuleCall(TR_STRING)), setCardinality("?", createGroup(createKeyword(","), createAssignment("alt", "=", createRuleCall(TR_STRING)), setCardinality("?", createGroup(createKeyword(","), createAssignment("requiredWidth", "=", createRuleCall(TR_INT)), setCardinality("?", createGroup(createKeyword(","), createAssignment("requiredHeight", "=", createRuleCall(TR_INT)))))))), createKeyword("]")));
@@ -155,7 +155,7 @@ public class MarkupGrammarResource extends AbstractGrammarResource
 			PR_OCLTextElement.setAlternatives(createGroup(createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.OCL_TEXT_ELEMENT)), createKeyword("oclText"), createKeyword("["), setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))), createKeyword("]")));
 			PR_TextElement.setAlternatives(createAlternatives(setCardinality("+", createAssignment("text", "+=", createAlternatives(createRuleCall(TR_ID), createRuleCall(TR_WORD), createRuleCall(TR_INT), createRuleCall(TR_WS), createKeyword(":"), createKeyword("#"), createKeyword(",")))), createAssignment("text", "+=", createRuleCall(PR_MarkupKeyword))));
 		}
-		
+
 		private static @NonNull Grammar initGrammar() {
 			initTerminalRules();
 			initParserRules();

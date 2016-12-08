@@ -25,18 +25,18 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractMarkupSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected MarkupGrammarAccess grammarAccess;
-	
+
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (MarkupGrammarAccess) access;
 	}
-	
+
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		return "";
 	}
-	
-	
+
+
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
 		if (transition.getAmbiguousSyntaxes().isEmpty()) return;

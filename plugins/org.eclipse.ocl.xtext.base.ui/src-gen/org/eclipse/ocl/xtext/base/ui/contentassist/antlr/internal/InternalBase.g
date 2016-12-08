@@ -13,19 +13,19 @@ grammar InternalBase;
 options {
 	superClass=AbstractInternalContentAssistParser;
 	backtrack=true;
-	
+
 }
 
 @lexer::header {
 package org.eclipse.ocl.xtext.base.ui.contentassist.antlr.internal;
 
-// Hack: Use our own Lexer superclass by means of import. 
+// Hack: Use our own Lexer superclass by means of import.
 // Currently there is no other way to specify the superclass for the lexer.
 import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
 }
 
 @parser::header {
-package org.eclipse.ocl.xtext.base.ui.contentassist.antlr.internal; 
+package org.eclipse.ocl.xtext.base.ui.contentassist.antlr.internal;
 
 import java.io.InputStream;
 import org.eclipse.xtext.*;
@@ -42,18 +42,18 @@ import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
 }
 
 @parser::members {
- 
+
  	private BaseGrammarAccess grammarAccess;
- 	
+
     public void setGrammarAccess(BaseGrammarAccess grammarAccess) {
     	this.grammarAccess = grammarAccess;
     }
-    
+
     @Override
     protected Grammar getGrammar() {
     	return grammarAccess.getGrammar();
     }
-    
+
     @Override
     protected String getValueForTokenName(String tokenName) {
     	return tokenName;
@@ -65,12 +65,12 @@ import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
 
 
 // Entry rule entryRuleMultiplicityBoundsCS
-entryRuleMultiplicityBoundsCS 
+entryRuleMultiplicityBoundsCS
 :
 { before(grammarAccess.getMultiplicityBoundsCSRule()); }
 	 ruleMultiplicityBoundsCS
-{ after(grammarAccess.getMultiplicityBoundsCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getMultiplicityBoundsCSRule()); }
+	 EOF
 ;
 
 // Rule MultiplicityBoundsCS
@@ -93,12 +93,12 @@ finally {
 
 
 // Entry rule entryRuleMultiplicityCS
-entryRuleMultiplicityCS 
+entryRuleMultiplicityCS
 :
 { before(grammarAccess.getMultiplicityCSRule()); }
 	 ruleMultiplicityCS
-{ after(grammarAccess.getMultiplicityCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getMultiplicityCSRule()); }
+	 EOF
 ;
 
 // Rule MultiplicityCS
@@ -121,12 +121,12 @@ finally {
 
 
 // Entry rule entryRuleMultiplicityStringCS
-entryRuleMultiplicityStringCS 
+entryRuleMultiplicityStringCS
 :
 { before(grammarAccess.getMultiplicityStringCSRule()); }
 	 ruleMultiplicityStringCS
-{ after(grammarAccess.getMultiplicityStringCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getMultiplicityStringCSRule()); }
+	 EOF
 ;
 
 // Rule MultiplicityStringCS
@@ -149,12 +149,12 @@ finally {
 
 
 // Entry rule entryRulePathNameCS
-entryRulePathNameCS 
+entryRulePathNameCS
 :
 { before(grammarAccess.getPathNameCSRule()); }
 	 rulePathNameCS
-{ after(grammarAccess.getPathNameCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getPathNameCSRule()); }
+	 EOF
 ;
 
 // Rule PathNameCS
@@ -177,12 +177,12 @@ finally {
 
 
 // Entry rule entryRuleFirstPathElementCS
-entryRuleFirstPathElementCS 
+entryRuleFirstPathElementCS
 :
 { before(grammarAccess.getFirstPathElementCSRule()); }
 	 ruleFirstPathElementCS
-{ after(grammarAccess.getFirstPathElementCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getFirstPathElementCSRule()); }
+	 EOF
 ;
 
 // Rule FirstPathElementCS
@@ -205,12 +205,12 @@ finally {
 
 
 // Entry rule entryRuleNextPathElementCS
-entryRuleNextPathElementCS 
+entryRuleNextPathElementCS
 :
 { before(grammarAccess.getNextPathElementCSRule()); }
 	 ruleNextPathElementCS
-{ after(grammarAccess.getNextPathElementCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getNextPathElementCSRule()); }
+	 EOF
 ;
 
 // Rule NextPathElementCS
@@ -233,12 +233,12 @@ finally {
 
 
 // Entry rule entryRuleTemplateBindingCS
-entryRuleTemplateBindingCS 
+entryRuleTemplateBindingCS
 :
 { before(grammarAccess.getTemplateBindingCSRule()); }
 	 ruleTemplateBindingCS
-{ after(grammarAccess.getTemplateBindingCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getTemplateBindingCSRule()); }
+	 EOF
 ;
 
 // Rule TemplateBindingCS
@@ -261,12 +261,12 @@ finally {
 
 
 // Entry rule entryRuleTemplateParameterSubstitutionCS
-entryRuleTemplateParameterSubstitutionCS 
+entryRuleTemplateParameterSubstitutionCS
 :
 { before(grammarAccess.getTemplateParameterSubstitutionCSRule()); }
 	 ruleTemplateParameterSubstitutionCS
-{ after(grammarAccess.getTemplateParameterSubstitutionCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getTemplateParameterSubstitutionCSRule()); }
+	 EOF
 ;
 
 // Rule TemplateParameterSubstitutionCS
@@ -291,12 +291,12 @@ finally {
 
 
 // Entry rule entryRuleTypeParameterCS
-entryRuleTypeParameterCS 
+entryRuleTypeParameterCS
 :
 { before(grammarAccess.getTypeParameterCSRule()); }
 	 ruleTypeParameterCS
-{ after(grammarAccess.getTypeParameterCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getTypeParameterCSRule()); }
+	 EOF
 ;
 
 // Rule TypeParameterCS
@@ -319,12 +319,12 @@ finally {
 
 
 // Entry rule entryRuleTypeRefCS
-entryRuleTypeRefCS 
+entryRuleTypeRefCS
 :
 { before(grammarAccess.getTypeRefCSRule()); }
 	 ruleTypeRefCS
-{ after(grammarAccess.getTypeRefCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getTypeRefCSRule()); }
+	 EOF
 ;
 
 // Rule TypeRefCS
@@ -347,12 +347,12 @@ finally {
 
 
 // Entry rule entryRuleTypedRefCS
-entryRuleTypedRefCS 
+entryRuleTypedRefCS
 :
 { before(grammarAccess.getTypedRefCSRule()); }
 	 ruleTypedRefCS
-{ after(grammarAccess.getTypedRefCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getTypedRefCSRule()); }
+	 EOF
 ;
 
 // Rule TypedRefCS
@@ -375,12 +375,12 @@ finally {
 
 
 // Entry rule entryRuleTypedTypeRefCS
-entryRuleTypedTypeRefCS 
+entryRuleTypedTypeRefCS
 :
 { before(grammarAccess.getTypedTypeRefCSRule()); }
 	 ruleTypedTypeRefCS
-{ after(grammarAccess.getTypedTypeRefCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getTypedTypeRefCSRule()); }
+	 EOF
 ;
 
 // Rule TypedTypeRefCS
@@ -403,12 +403,12 @@ finally {
 
 
 // Entry rule entryRuleUnreservedName
-entryRuleUnreservedName 
+entryRuleUnreservedName
 :
 { before(grammarAccess.getUnreservedNameRule()); }
 	 ruleUnreservedName
-{ after(grammarAccess.getUnreservedNameRule()); } 
-	 EOF 
+{ after(grammarAccess.getUnreservedNameRule()); }
+	 EOF
 ;
 
 // Rule UnreservedName
@@ -431,12 +431,12 @@ finally {
 
 
 // Entry rule entryRuleUnrestrictedName
-entryRuleUnrestrictedName 
+entryRuleUnrestrictedName
 :
 { before(grammarAccess.getUnrestrictedNameRule()); }
 	 ruleUnrestrictedName
-{ after(grammarAccess.getUnrestrictedNameRule()); } 
-	 EOF 
+{ after(grammarAccess.getUnrestrictedNameRule()); }
+	 EOF
 ;
 
 // Rule UnrestrictedName
@@ -459,12 +459,12 @@ finally {
 
 
 // Entry rule entryRuleWildcardTypeRefCS
-entryRuleWildcardTypeRefCS 
+entryRuleWildcardTypeRefCS
 :
 { before(grammarAccess.getWildcardTypeRefCSRule()); }
 	 ruleWildcardTypeRefCS
-{ after(grammarAccess.getWildcardTypeRefCSRule()); } 
-	 EOF 
+{ after(grammarAccess.getWildcardTypeRefCSRule()); }
+	 EOF
 ;
 
 // Rule WildcardTypeRefCS
@@ -487,12 +487,12 @@ finally {
 
 
 // Entry rule entryRuleID
-entryRuleID 
+entryRuleID
 :
 { before(grammarAccess.getIDRule()); }
 	 ruleID
-{ after(grammarAccess.getIDRule()); } 
-	 EOF 
+{ after(grammarAccess.getIDRule()); }
+	 EOF
 ;
 
 // Rule ID
@@ -515,12 +515,12 @@ finally {
 
 
 // Entry rule entryRuleIdentifier
-entryRuleIdentifier 
+entryRuleIdentifier
 :
 { before(grammarAccess.getIdentifierRule()); }
 	 ruleIdentifier
-{ after(grammarAccess.getIdentifierRule()); } 
-	 EOF 
+{ after(grammarAccess.getIdentifierRule()); }
+	 EOF
 ;
 
 // Rule Identifier
@@ -543,12 +543,12 @@ finally {
 
 
 // Entry rule entryRuleLOWER
-entryRuleLOWER 
+entryRuleLOWER
 :
 { before(grammarAccess.getLOWERRule()); }
 	 ruleLOWER
-{ after(grammarAccess.getLOWERRule()); } 
-	 EOF 
+{ after(grammarAccess.getLOWERRule()); }
+	 EOF
 ;
 
 // Rule LOWER
@@ -575,12 +575,12 @@ finally {
 
 
 // Entry rule entryRuleUPPER
-entryRuleUPPER 
+entryRuleUPPER
 :
 { before(grammarAccess.getUPPERRule()); }
 	 ruleUPPER
-{ after(grammarAccess.getUPPERRule()); } 
-	 EOF 
+{ after(grammarAccess.getUPPERRule()); }
+	 EOF
 ;
 
 // Rule UPPER
@@ -635,7 +635,7 @@ rule__MultiplicityCS__Alternatives_2
 (
 { before(grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0()); }
 
-	'|?' 
+	'|?'
 
 { after(grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0()); }
 )
@@ -659,7 +659,7 @@ rule__MultiplicityStringCS__StringBoundsAlternatives_0
 (
 { before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAsteriskKeyword_0_0()); }
 
-	'*' 
+	'*'
 
 { after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAsteriskKeyword_0_0()); }
 )
@@ -667,7 +667,7 @@ rule__MultiplicityStringCS__StringBoundsAlternatives_0
     |(
 { before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsPlusSignKeyword_0_1()); }
 
-	'+' 
+	'+'
 
 { after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsPlusSignKeyword_0_1()); }
 )
@@ -675,7 +675,7 @@ rule__MultiplicityStringCS__StringBoundsAlternatives_0
     |(
 { before(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsQuestionMarkKeyword_0_2()); }
 
-	'?' 
+	'?'
 
 { after(grammarAccess.getMultiplicityStringCSAccess().getStringBoundsQuestionMarkKeyword_0_2()); }
 )
@@ -743,7 +743,7 @@ rule__UPPER__Alternatives
     |(
 { before(grammarAccess.getUPPERAccess().getAsteriskKeyword_1()); }
 
-	'*' 
+	'*'
 
 { after(grammarAccess.getUPPERAccess().getAsteriskKeyword_1()); }
 )
@@ -836,7 +836,7 @@ rule__MultiplicityBoundsCS__Group_1__0__Impl
 (
 { before(grammarAccess.getMultiplicityBoundsCSAccess().getFullStopFullStopKeyword_1_0()); }
 
-	'..' 
+	'..'
 
 { after(grammarAccess.getMultiplicityBoundsCSAccess().getFullStopFullStopKeyword_1_0()); }
 )
@@ -899,7 +899,7 @@ rule__MultiplicityCS__Group__0__Impl
 (
 { before(grammarAccess.getMultiplicityCSAccess().getLeftSquareBracketKeyword_0()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getMultiplicityCSAccess().getLeftSquareBracketKeyword_0()); }
 )
@@ -987,7 +987,7 @@ rule__MultiplicityCS__Group__3__Impl
 (
 { before(grammarAccess.getMultiplicityCSAccess().getRightSquareBracketKeyword_3()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getMultiplicityCSAccess().getRightSquareBracketKeyword_3()); }
 )
@@ -1087,7 +1087,7 @@ rule__PathNameCS__Group_1__0__Impl
 (
 { before(grammarAccess.getPathNameCSAccess().getColonColonKeyword_1_0()); }
 
-	'::' 
+	'::'
 
 { after(grammarAccess.getPathNameCSAccess().getColonColonKeyword_1_0()); }
 )
@@ -1242,7 +1242,7 @@ rule__TemplateBindingCS__Group_1__0__Impl
 (
 { before(grammarAccess.getTemplateBindingCSAccess().getCommaKeyword_1_0()); }
 
-	',' 
+	','
 
 { after(grammarAccess.getTemplateBindingCSAccess().getCommaKeyword_1_0()); }
 )
@@ -1368,7 +1368,7 @@ rule__TypeParameterCS__Group_1__0__Impl
 (
 { before(grammarAccess.getTypeParameterCSAccess().getExtendsKeyword_1_0()); }
 
-	'extends' 
+	'extends'
 
 { after(grammarAccess.getTypeParameterCSAccess().getExtendsKeyword_1_0()); }
 )
@@ -1462,7 +1462,7 @@ rule__TypeParameterCS__Group_1_2__0__Impl
 (
 { before(grammarAccess.getTypeParameterCSAccess().getAmpersandAmpersandKeyword_1_2_0()); }
 
-	'&&' 
+	'&&'
 
 { after(grammarAccess.getTypeParameterCSAccess().getAmpersandAmpersandKeyword_1_2_0()); }
 )
@@ -1586,7 +1586,7 @@ rule__TypedTypeRefCS__Group_1__0__Impl
 (
 { before(grammarAccess.getTypedTypeRefCSAccess().getLeftParenthesisKeyword_1_0()); }
 
-	'(' 
+	'('
 
 { after(grammarAccess.getTypedTypeRefCSAccess().getLeftParenthesisKeyword_1_0()); }
 )
@@ -1645,7 +1645,7 @@ rule__TypedTypeRefCS__Group_1__2__Impl
 (
 { before(grammarAccess.getTypedTypeRefCSAccess().getRightParenthesisKeyword_1_2()); }
 
-	')' 
+	')'
 
 { after(grammarAccess.getTypedTypeRefCSAccess().getRightParenthesisKeyword_1_2()); }
 )
@@ -1713,7 +1713,7 @@ rule__WildcardTypeRefCS__Group__1__Impl
 (
 { before(grammarAccess.getWildcardTypeRefCSAccess().getQuestionMarkKeyword_1()); }
 
-	'?' 
+	'?'
 
 { after(grammarAccess.getWildcardTypeRefCSAccess().getQuestionMarkKeyword_1()); }
 )
@@ -1778,7 +1778,7 @@ rule__WildcardTypeRefCS__Group_2__0__Impl
 (
 { before(grammarAccess.getWildcardTypeRefCSAccess().getExtendsKeyword_2_0()); }
 
-	'extends' 
+	'extends'
 
 { after(grammarAccess.getWildcardTypeRefCSAccess().getExtendsKeyword_2_0()); }
 )
@@ -1862,7 +1862,7 @@ rule__MultiplicityCS__IsNullFreeAssignment_2_1
 (
 { before(grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0()); }
 
-	'|1' 
+	'|1'
 
 { after(grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0()); }
 )

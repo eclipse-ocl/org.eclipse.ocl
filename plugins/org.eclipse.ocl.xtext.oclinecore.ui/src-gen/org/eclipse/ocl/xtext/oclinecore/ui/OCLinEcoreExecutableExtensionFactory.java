@@ -19,7 +19,7 @@ import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
- * introduced subclass. 
+ * introduced subclass.
  */
 public class OCLinEcoreExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
 
@@ -27,10 +27,10 @@ public class OCLinEcoreExecutableExtensionFactory extends AbstractGuiceAwareExec
 	protected Bundle getBundle() {
 		return OCLinEcoreActivator.getInstance().getBundle();
 	}
-	
+
 	@Override
 	protected Injector getInjector() {
 		return OCLinEcoreActivator.getInstance().getInjector(OCLinEcoreActivator.ORG_ECLIPSE_OCL_XTEXT_OCLINECORE_OCLINECORE);
 	}
-	
+
 }

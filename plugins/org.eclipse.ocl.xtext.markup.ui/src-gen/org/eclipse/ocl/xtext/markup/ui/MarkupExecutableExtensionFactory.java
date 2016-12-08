@@ -19,7 +19,7 @@ import org.eclipse.ocl.xtext.markup.ui.internal.MarkupActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
- * introduced subclass. 
+ * introduced subclass.
  */
 public class MarkupExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
 
@@ -27,10 +27,10 @@ public class MarkupExecutableExtensionFactory extends AbstractGuiceAwareExecutab
 	protected Bundle getBundle() {
 		return MarkupActivator.getInstance().getBundle();
 	}
-	
+
 	@Override
 	protected Injector getInjector() {
 		return MarkupActivator.getInstance().getInjector(MarkupActivator.ORG_ECLIPSE_OCL_XTEXT_MARKUP_MARKUP);
 	}
-	
+
 }

@@ -37,7 +37,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	protected AbstractElementAlias match_LibPropertyCS_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_2__;
 	protected AbstractElementAlias match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q;
 	protected AbstractElementAlias match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
-	
+
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (OCLstdlibGrammarAccess) access;
@@ -50,14 +50,14 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 		match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0());
 		match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTupleTypeCSAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getTupleTypeCSAccess().getRightParenthesisKeyword_1_2()));
 	}
-	
+
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (ruleCall.getRule() == grammarAccess.getUnrestrictedNameRule())
 			return getUnrestrictedNameToken(semanticObject, ruleCall, node);
 		return "";
 	}
-	
+
 	/**
 	 * UnrestrictedName returns ecore::EString: 	EssentialOCLUnrestrictedName;
 	 */
@@ -66,7 +66,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 			return getTokenText(node);
 		return "";
 	}
-	
+
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
 		if (transition.getAmbiguousSyntaxes().isEmpty()) return;
@@ -104,7 +104,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	protected void emit_LibCoercionCS_SemicolonKeyword_7_1_or___LeftCurlyBracketKeyword_7_0_0_RightCurlyBracketKeyword_7_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     ('{' '}') | ';'
@@ -118,7 +118,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	protected void emit_LibIterationCS_SemicolonKeyword_14_1_or___LeftCurlyBracketKeyword_14_0_0_RightCurlyBracketKeyword_14_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     ';' | ('{' '}')
@@ -133,7 +133,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	protected void emit_LibOperationCS_SemicolonKeyword_13_1_or___LeftCurlyBracketKeyword_13_0_0_RightCurlyBracketKeyword_13_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
@@ -152,7 +152,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	protected void emit_LibOperationCS_UnrestrictedNameParserRuleCall_13_0_1_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     (';' 'precedence')?
@@ -163,7 +163,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	protected void emit_LibPackageCS___SemicolonKeyword_4_1_2_PrecedenceKeyword_4_1_0__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     ('{' '}') | ';'
@@ -175,7 +175,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	protected void emit_LibPropertyCS_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     '|?'?
@@ -190,7 +190,7 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	protected void emit_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     ('(' ')')?
@@ -202,5 +202,5 @@ public abstract class AbstractOCLstdlibSyntacticSequencer extends AbstractSyntac
 	protected void emit_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 }

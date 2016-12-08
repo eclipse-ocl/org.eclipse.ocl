@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CGModelVisitor<R>
 {
@@ -30,7 +31,7 @@ public interface CGModelVisitor<R>
 	 * no such object can be found.
 	 *
 	 * @param adapter the adapter class to look up
-	 * @return an object of the given class, 
+	 * @return an object of the given class,
 	 *    or <code>null</code> if this object does not
 	 *    have an adapter for the given class
 	 */

@@ -9,7 +9,7 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.validation;
- 
+
 import java.util.ArrayList;
 import java.util.List;
 

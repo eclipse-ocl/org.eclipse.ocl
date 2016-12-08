@@ -28,19 +28,19 @@ public abstract class AbstractBaseSyntacticSequencer extends AbstractSyntacticSe
 
 	protected BaseGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q;
-	
+
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (BaseGrammarAccess) access;
 		match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0());
 	}
-	
+
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		return "";
 	}
-	
-	
+
+
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
 		if (transition.getAmbiguousSyntaxes().isEmpty()) return;
@@ -67,5 +67,5 @@ public abstract class AbstractBaseSyntacticSequencer extends AbstractSyntacticSe
 	protected void emit_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 }

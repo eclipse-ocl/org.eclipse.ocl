@@ -13,19 +13,19 @@ grammar InternalMarkup;
 options {
 	superClass=AbstractInternalContentAssistParser;
 	backtrack=true;
-	
+
 }
 
 @lexer::header {
 package org.eclipse.ocl.xtext.markup.ui.contentassist.antlr.internal;
 
-// Hack: Use our own Lexer superclass by means of import. 
+// Hack: Use our own Lexer superclass by means of import.
 // Currently there is no other way to specify the superclass for the lexer.
 import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
 }
 
 @parser::header {
-package org.eclipse.ocl.xtext.markup.ui.contentassist.antlr.internal; 
+package org.eclipse.ocl.xtext.markup.ui.contentassist.antlr.internal;
 
 import java.io.InputStream;
 import org.eclipse.xtext.*;
@@ -42,18 +42,18 @@ import org.eclipse.ocl.xtext.markup.services.MarkupGrammarAccess;
 }
 
 @parser::members {
- 
+
  	private MarkupGrammarAccess grammarAccess;
- 	
+
     public void setGrammarAccess(MarkupGrammarAccess grammarAccess) {
     	this.grammarAccess = grammarAccess;
     }
-    
+
     @Override
     protected Grammar getGrammar() {
     	return grammarAccess.getGrammar();
     }
-    
+
     @Override
     protected String getValueForTokenName(String tokenName) {
     	return tokenName;
@@ -65,12 +65,12 @@ import org.eclipse.ocl.xtext.markup.services.MarkupGrammarAccess;
 
 
 // Entry rule entryRuleMarkup
-entryRuleMarkup 
+entryRuleMarkup
 :
 { before(grammarAccess.getMarkupRule()); }
 	 ruleMarkup
-{ after(grammarAccess.getMarkupRule()); } 
-	 EOF 
+{ after(grammarAccess.getMarkupRule()); }
+	 EOF
 ;
 
 // Rule Markup
@@ -93,12 +93,12 @@ finally {
 
 
 // Entry rule entryRuleMarkupKeyword
-entryRuleMarkupKeyword 
+entryRuleMarkupKeyword
 :
 { before(grammarAccess.getMarkupKeywordRule()); }
 	 ruleMarkupKeyword
-{ after(grammarAccess.getMarkupKeywordRule()); } 
-	 EOF 
+{ after(grammarAccess.getMarkupKeywordRule()); }
+	 EOF
 ;
 
 // Rule MarkupKeyword
@@ -121,12 +121,12 @@ finally {
 
 
 // Entry rule entryRuleMarkupElement
-entryRuleMarkupElement 
+entryRuleMarkupElement
 :
 { before(grammarAccess.getMarkupElementRule()); }
 	 ruleMarkupElement
-{ after(grammarAccess.getMarkupElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getMarkupElementRule()); }
+	 EOF
 ;
 
 // Rule MarkupElement
@@ -149,12 +149,12 @@ finally {
 
 
 // Entry rule entryRuleBulletElement
-entryRuleBulletElement 
+entryRuleBulletElement
 :
 { before(grammarAccess.getBulletElementRule()); }
 	 ruleBulletElement
-{ after(grammarAccess.getBulletElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getBulletElementRule()); }
+	 EOF
 ;
 
 // Rule BulletElement
@@ -177,12 +177,12 @@ finally {
 
 
 // Entry rule entryRuleFontElement
-entryRuleFontElement 
+entryRuleFontElement
 :
 { before(grammarAccess.getFontElementRule()); }
 	 ruleFontElement
-{ after(grammarAccess.getFontElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getFontElementRule()); }
+	 EOF
 ;
 
 // Rule FontElement
@@ -205,12 +205,12 @@ finally {
 
 
 // Entry rule entryRuleFigureElement
-entryRuleFigureElement 
+entryRuleFigureElement
 :
 { before(grammarAccess.getFigureElementRule()); }
 	 ruleFigureElement
-{ after(grammarAccess.getFigureElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getFigureElementRule()); }
+	 EOF
 ;
 
 // Rule FigureElement
@@ -233,12 +233,12 @@ finally {
 
 
 // Entry rule entryRuleFigureRefElement
-entryRuleFigureRefElement 
+entryRuleFigureRefElement
 :
 { before(grammarAccess.getFigureRefElementRule()); }
 	 ruleFigureRefElement
-{ after(grammarAccess.getFigureRefElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getFigureRefElementRule()); }
+	 EOF
 ;
 
 // Rule FigureRefElement
@@ -261,12 +261,12 @@ finally {
 
 
 // Entry rule entryRuleFootnoteElement
-entryRuleFootnoteElement 
+entryRuleFootnoteElement
 :
 { before(grammarAccess.getFootnoteElementRule()); }
 	 ruleFootnoteElement
-{ after(grammarAccess.getFootnoteElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getFootnoteElementRule()); }
+	 EOF
 ;
 
 // Rule FootnoteElement
@@ -289,12 +289,12 @@ finally {
 
 
 // Entry rule entryRuleHeadingElement
-entryRuleHeadingElement 
+entryRuleHeadingElement
 :
 { before(grammarAccess.getHeadingElementRule()); }
 	 ruleHeadingElement
-{ after(grammarAccess.getHeadingElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getHeadingElementRule()); }
+	 EOF
 ;
 
 // Rule HeadingElement
@@ -317,12 +317,12 @@ finally {
 
 
 // Entry rule entryRuleNewLineElement
-entryRuleNewLineElement 
+entryRuleNewLineElement
 :
 { before(grammarAccess.getNewLineElementRule()); }
 	 ruleNewLineElement
-{ after(grammarAccess.getNewLineElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getNewLineElementRule()); }
+	 EOF
 ;
 
 // Rule NewLineElement
@@ -345,12 +345,12 @@ finally {
 
 
 // Entry rule entryRuleNullElement
-entryRuleNullElement 
+entryRuleNullElement
 :
 { before(grammarAccess.getNullElementRule()); }
 	 ruleNullElement
-{ after(grammarAccess.getNullElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getNullElementRule()); }
+	 EOF
 ;
 
 // Rule NullElement
@@ -373,12 +373,12 @@ finally {
 
 
 // Entry rule entryRuleOCLCodeElement
-entryRuleOCLCodeElement 
+entryRuleOCLCodeElement
 :
 { before(grammarAccess.getOCLCodeElementRule()); }
 	 ruleOCLCodeElement
-{ after(grammarAccess.getOCLCodeElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getOCLCodeElementRule()); }
+	 EOF
 ;
 
 // Rule OCLCodeElement
@@ -401,12 +401,12 @@ finally {
 
 
 // Entry rule entryRuleOCLEvalElement
-entryRuleOCLEvalElement 
+entryRuleOCLEvalElement
 :
 { before(grammarAccess.getOCLEvalElementRule()); }
 	 ruleOCLEvalElement
-{ after(grammarAccess.getOCLEvalElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getOCLEvalElementRule()); }
+	 EOF
 ;
 
 // Rule OCLEvalElement
@@ -429,12 +429,12 @@ finally {
 
 
 // Entry rule entryRuleOCLTextElement
-entryRuleOCLTextElement 
+entryRuleOCLTextElement
 :
 { before(grammarAccess.getOCLTextElementRule()); }
 	 ruleOCLTextElement
-{ after(grammarAccess.getOCLTextElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getOCLTextElementRule()); }
+	 EOF
 ;
 
 // Rule OCLTextElement
@@ -457,12 +457,12 @@ finally {
 
 
 // Entry rule entryRuleTextElement
-entryRuleTextElement 
+entryRuleTextElement
 :
 { before(grammarAccess.getTextElementRule()); }
 	 ruleTextElement
-{ after(grammarAccess.getTextElementRule()); } 
-	 EOF 
+{ after(grammarAccess.getTextElementRule()); }
+	 EOF
 ;
 
 // Rule TextElement
@@ -493,7 +493,7 @@ rule__MarkupKeyword__Alternatives
 (
 { before(grammarAccess.getMarkupKeywordAccess().getBKeyword_0()); }
 
-	'b' 
+	'b'
 
 { after(grammarAccess.getMarkupKeywordAccess().getBKeyword_0()); }
 )
@@ -501,7 +501,7 @@ rule__MarkupKeyword__Alternatives
     |(
 { before(grammarAccess.getMarkupKeywordAccess().getEKeyword_1()); }
 
-	'e' 
+	'e'
 
 { after(grammarAccess.getMarkupKeywordAccess().getEKeyword_1()); }
 )
@@ -509,7 +509,7 @@ rule__MarkupKeyword__Alternatives
     |(
 { before(grammarAccess.getMarkupKeywordAccess().getBulletKeyword_2()); }
 
-	'bullet' 
+	'bullet'
 
 { after(grammarAccess.getMarkupKeywordAccess().getBulletKeyword_2()); }
 )
@@ -517,7 +517,7 @@ rule__MarkupKeyword__Alternatives
     |(
 { before(grammarAccess.getMarkupKeywordAccess().getFigureKeyword_3()); }
 
-	'figure' 
+	'figure'
 
 { after(grammarAccess.getMarkupKeywordAccess().getFigureKeyword_3()); }
 )
@@ -525,7 +525,7 @@ rule__MarkupKeyword__Alternatives
     |(
 { before(grammarAccess.getMarkupKeywordAccess().getFigureRefKeyword_4()); }
 
-	'figureRef' 
+	'figureRef'
 
 { after(grammarAccess.getMarkupKeywordAccess().getFigureRefKeyword_4()); }
 )
@@ -533,7 +533,7 @@ rule__MarkupKeyword__Alternatives
     |(
 { before(grammarAccess.getMarkupKeywordAccess().getFootnoteKeyword_5()); }
 
-	'footnote' 
+	'footnote'
 
 { after(grammarAccess.getMarkupKeywordAccess().getFootnoteKeyword_5()); }
 )
@@ -541,7 +541,7 @@ rule__MarkupKeyword__Alternatives
     |(
 { before(grammarAccess.getMarkupKeywordAccess().getHeadingKeyword_6()); }
 
-	'heading' 
+	'heading'
 
 { after(grammarAccess.getMarkupKeywordAccess().getHeadingKeyword_6()); }
 )
@@ -549,7 +549,7 @@ rule__MarkupKeyword__Alternatives
     |(
 { before(grammarAccess.getMarkupKeywordAccess().getOclCodeKeyword_7()); }
 
-	'oclCode' 
+	'oclCode'
 
 { after(grammarAccess.getMarkupKeywordAccess().getOclCodeKeyword_7()); }
 )
@@ -557,7 +557,7 @@ rule__MarkupKeyword__Alternatives
     |(
 { before(grammarAccess.getMarkupKeywordAccess().getOclEvalKeyword_8()); }
 
-	'oclEval' 
+	'oclEval'
 
 { after(grammarAccess.getMarkupKeywordAccess().getOclEvalKeyword_8()); }
 )
@@ -565,7 +565,7 @@ rule__MarkupKeyword__Alternatives
     |(
 { before(grammarAccess.getMarkupKeywordAccess().getOclTextKeyword_9()); }
 
-	'oclText' 
+	'oclText'
 
 { after(grammarAccess.getMarkupKeywordAccess().getOclTextKeyword_9()); }
 )
@@ -665,7 +665,7 @@ rule__FontElement__FontAlternatives_0_0
 (
 { before(grammarAccess.getFontElementAccess().getFontBKeyword_0_0_0()); }
 
-	'b' 
+	'b'
 
 { after(grammarAccess.getFontElementAccess().getFontBKeyword_0_0_0()); }
 )
@@ -673,7 +673,7 @@ rule__FontElement__FontAlternatives_0_0
     |(
 { before(grammarAccess.getFontElementAccess().getFontEKeyword_0_0_1()); }
 
-	'e' 
+	'e'
 
 { after(grammarAccess.getFontElementAccess().getFontEKeyword_0_0_1()); }
 )
@@ -744,7 +744,7 @@ rule__TextElement__TextAlternatives_0_0
     |(
 { before(grammarAccess.getTextElementAccess().getTextColonKeyword_0_0_4()); }
 
-	':' 
+	':'
 
 { after(grammarAccess.getTextElementAccess().getTextColonKeyword_0_0_4()); }
 )
@@ -752,7 +752,7 @@ rule__TextElement__TextAlternatives_0_0
     |(
 { before(grammarAccess.getTextElementAccess().getTextNumberSignKeyword_0_0_5()); }
 
-	'#' 
+	'#'
 
 { after(grammarAccess.getTextElementAccess().getTextNumberSignKeyword_0_0_5()); }
 )
@@ -760,7 +760,7 @@ rule__TextElement__TextAlternatives_0_0
     |(
 { before(grammarAccess.getTextElementAccess().getTextCommaKeyword_0_0_6()); }
 
-	',' 
+	','
 
 { after(grammarAccess.getTextElementAccess().getTextCommaKeyword_0_0_6()); }
 )
@@ -823,7 +823,7 @@ rule__BulletElement__Group__1__Impl
 (
 { before(grammarAccess.getBulletElementAccess().getBulletKeyword_1()); }
 
-	'bullet' 
+	'bullet'
 
 { after(grammarAccess.getBulletElementAccess().getBulletKeyword_1()); }
 )
@@ -883,7 +883,7 @@ rule__BulletElement__Group__3__Impl
 (
 { before(grammarAccess.getBulletElementAccess().getLeftSquareBracketKeyword_3()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getBulletElementAccess().getLeftSquareBracketKeyword_3()); }
 )
@@ -942,7 +942,7 @@ rule__BulletElement__Group__5__Impl
 (
 { before(grammarAccess.getBulletElementAccess().getRightSquareBracketKeyword_5()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getBulletElementAccess().getRightSquareBracketKeyword_5()); }
 )
@@ -985,7 +985,7 @@ rule__BulletElement__Group_2__0__Impl
 (
 { before(grammarAccess.getBulletElementAccess().getColonKeyword_2_0()); }
 
-	':' 
+	':'
 
 { after(grammarAccess.getBulletElementAccess().getColonKeyword_2_0()); }
 )
@@ -1077,7 +1077,7 @@ rule__FontElement__Group__1__Impl
 (
 { before(grammarAccess.getFontElementAccess().getLeftSquareBracketKeyword_1()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getFontElementAccess().getLeftSquareBracketKeyword_1()); }
 )
@@ -1136,7 +1136,7 @@ rule__FontElement__Group__3__Impl
 (
 { before(grammarAccess.getFontElementAccess().getRightSquareBracketKeyword_3()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getFontElementAccess().getRightSquareBracketKeyword_3()); }
 )
@@ -1175,7 +1175,7 @@ rule__FigureElement__Group__0__Impl
 (
 { before(grammarAccess.getFigureElementAccess().getFigureKeyword_0()); }
 
-	'figure' 
+	'figure'
 
 { after(grammarAccess.getFigureElementAccess().getFigureKeyword_0()); }
 )
@@ -1235,7 +1235,7 @@ rule__FigureElement__Group__2__Impl
 (
 { before(grammarAccess.getFigureElementAccess().getLeftSquareBracketKeyword_2()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getFigureElementAccess().getLeftSquareBracketKeyword_2()); }
 )
@@ -1323,7 +1323,7 @@ rule__FigureElement__Group__5__Impl
 (
 { before(grammarAccess.getFigureElementAccess().getRightSquareBracketKeyword_5()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getFigureElementAccess().getRightSquareBracketKeyword_5()); }
 )
@@ -1366,7 +1366,7 @@ rule__FigureElement__Group_1__0__Impl
 (
 { before(grammarAccess.getFigureElementAccess().getNumberSignKeyword_1_0()); }
 
-	'#' 
+	'#'
 
 { after(grammarAccess.getFigureElementAccess().getNumberSignKeyword_1_0()); }
 )
@@ -1429,7 +1429,7 @@ rule__FigureElement__Group_4__0__Impl
 (
 { before(grammarAccess.getFigureElementAccess().getCommaKeyword_4_0()); }
 
-	',' 
+	','
 
 { after(grammarAccess.getFigureElementAccess().getCommaKeyword_4_0()); }
 )
@@ -1523,7 +1523,7 @@ rule__FigureElement__Group_4_2__0__Impl
 (
 { before(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_0()); }
 
-	',' 
+	','
 
 { after(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_0()); }
 )
@@ -1617,7 +1617,7 @@ rule__FigureElement__Group_4_2_2__0__Impl
 (
 { before(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_2_0()); }
 
-	',' 
+	','
 
 { after(grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_2_0()); }
 )
@@ -1680,7 +1680,7 @@ rule__FigureRefElement__Group__0__Impl
 (
 { before(grammarAccess.getFigureRefElementAccess().getFigureRefKeyword_0()); }
 
-	'figureRef' 
+	'figureRef'
 
 { after(grammarAccess.getFigureRefElementAccess().getFigureRefKeyword_0()); }
 )
@@ -1711,7 +1711,7 @@ rule__FigureRefElement__Group__1__Impl
 (
 { before(grammarAccess.getFigureRefElementAccess().getLeftSquareBracketKeyword_1()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getFigureRefElementAccess().getLeftSquareBracketKeyword_1()); }
 )
@@ -1770,7 +1770,7 @@ rule__FigureRefElement__Group__3__Impl
 (
 { before(grammarAccess.getFigureRefElementAccess().getRightSquareBracketKeyword_3()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getFigureRefElementAccess().getRightSquareBracketKeyword_3()); }
 )
@@ -1840,7 +1840,7 @@ rule__FootnoteElement__Group__1__Impl
 (
 { before(grammarAccess.getFootnoteElementAccess().getFootnoteKeyword_1()); }
 
-	'footnote' 
+	'footnote'
 
 { after(grammarAccess.getFootnoteElementAccess().getFootnoteKeyword_1()); }
 )
@@ -1871,7 +1871,7 @@ rule__FootnoteElement__Group__2__Impl
 (
 { before(grammarAccess.getFootnoteElementAccess().getLeftSquareBracketKeyword_2()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getFootnoteElementAccess().getLeftSquareBracketKeyword_2()); }
 )
@@ -1930,7 +1930,7 @@ rule__FootnoteElement__Group__4__Impl
 (
 { before(grammarAccess.getFootnoteElementAccess().getRightSquareBracketKeyword_4()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getFootnoteElementAccess().getRightSquareBracketKeyword_4()); }
 )
@@ -2002,7 +2002,7 @@ rule__HeadingElement__Group__1__Impl
 (
 { before(grammarAccess.getHeadingElementAccess().getHeadingKeyword_1()); }
 
-	'heading' 
+	'heading'
 
 { after(grammarAccess.getHeadingElementAccess().getHeadingKeyword_1()); }
 )
@@ -2062,7 +2062,7 @@ rule__HeadingElement__Group__3__Impl
 (
 { before(grammarAccess.getHeadingElementAccess().getLeftSquareBracketKeyword_3()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getHeadingElementAccess().getLeftSquareBracketKeyword_3()); }
 )
@@ -2121,7 +2121,7 @@ rule__HeadingElement__Group__5__Impl
 (
 { before(grammarAccess.getHeadingElementAccess().getRightSquareBracketKeyword_5()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getHeadingElementAccess().getRightSquareBracketKeyword_5()); }
 )
@@ -2164,7 +2164,7 @@ rule__HeadingElement__Group_2__0__Impl
 (
 { before(grammarAccess.getHeadingElementAccess().getColonKeyword_2_0()); }
 
-	':' 
+	':'
 
 { after(grammarAccess.getHeadingElementAccess().getColonKeyword_2_0()); }
 )
@@ -2258,7 +2258,7 @@ rule__NullElement__Group__1__Impl
 (
 { before(grammarAccess.getNullElementAccess().getLeftSquareBracketKeyword_1()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getNullElementAccess().getLeftSquareBracketKeyword_1()); }
 )
@@ -2317,7 +2317,7 @@ rule__NullElement__Group__3__Impl
 (
 { before(grammarAccess.getNullElementAccess().getRightSquareBracketKeyword_3()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getNullElementAccess().getRightSquareBracketKeyword_3()); }
 )
@@ -2387,7 +2387,7 @@ rule__OCLCodeElement__Group__1__Impl
 (
 { before(grammarAccess.getOCLCodeElementAccess().getOclCodeKeyword_1()); }
 
-	'oclCode' 
+	'oclCode'
 
 { after(grammarAccess.getOCLCodeElementAccess().getOclCodeKeyword_1()); }
 )
@@ -2418,7 +2418,7 @@ rule__OCLCodeElement__Group__2__Impl
 (
 { before(grammarAccess.getOCLCodeElementAccess().getLeftSquareBracketKeyword_2()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getOCLCodeElementAccess().getLeftSquareBracketKeyword_2()); }
 )
@@ -2477,7 +2477,7 @@ rule__OCLCodeElement__Group__4__Impl
 (
 { before(grammarAccess.getOCLCodeElementAccess().getRightSquareBracketKeyword_4()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getOCLCodeElementAccess().getRightSquareBracketKeyword_4()); }
 )
@@ -2549,7 +2549,7 @@ rule__OCLEvalElement__Group__1__Impl
 (
 { before(grammarAccess.getOCLEvalElementAccess().getOclEvalKeyword_1()); }
 
-	'oclEval' 
+	'oclEval'
 
 { after(grammarAccess.getOCLEvalElementAccess().getOclEvalKeyword_1()); }
 )
@@ -2580,7 +2580,7 @@ rule__OCLEvalElement__Group__2__Impl
 (
 { before(grammarAccess.getOCLEvalElementAccess().getLeftSquareBracketKeyword_2()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getOCLEvalElementAccess().getLeftSquareBracketKeyword_2()); }
 )
@@ -2639,7 +2639,7 @@ rule__OCLEvalElement__Group__4__Impl
 (
 { before(grammarAccess.getOCLEvalElementAccess().getRightSquareBracketKeyword_4()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getOCLEvalElementAccess().getRightSquareBracketKeyword_4()); }
 )
@@ -2711,7 +2711,7 @@ rule__OCLTextElement__Group__1__Impl
 (
 { before(grammarAccess.getOCLTextElementAccess().getOclTextKeyword_1()); }
 
-	'oclText' 
+	'oclText'
 
 { after(grammarAccess.getOCLTextElementAccess().getOclTextKeyword_1()); }
 )
@@ -2742,7 +2742,7 @@ rule__OCLTextElement__Group__2__Impl
 (
 { before(grammarAccess.getOCLTextElementAccess().getLeftSquareBracketKeyword_2()); }
 
-	'[' 
+	'['
 
 { after(grammarAccess.getOCLTextElementAccess().getLeftSquareBracketKeyword_2()); }
 )
@@ -2801,7 +2801,7 @@ rule__OCLTextElement__Group__4__Impl
 (
 { before(grammarAccess.getOCLTextElementAccess().getRightSquareBracketKeyword_4()); }
 
-	']' 
+	']'
 
 { after(grammarAccess.getOCLTextElementAccess().getRightSquareBracketKeyword_4()); }
 )

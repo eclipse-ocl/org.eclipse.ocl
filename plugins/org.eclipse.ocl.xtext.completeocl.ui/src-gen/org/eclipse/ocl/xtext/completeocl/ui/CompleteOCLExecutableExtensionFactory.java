@@ -19,7 +19,7 @@ import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
- * introduced subclass. 
+ * introduced subclass.
  */
 public class CompleteOCLExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
 
@@ -27,10 +27,10 @@ public class CompleteOCLExecutableExtensionFactory extends AbstractGuiceAwareExe
 	protected Bundle getBundle() {
 		return CompleteOCLActivator.getInstance().getBundle();
 	}
-	
+
 	@Override
 	protected Injector getInjector() {
 		return CompleteOCLActivator.getInstance().getInjector(CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL);
 	}
-	
+
 }

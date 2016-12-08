@@ -1,6 +1,6 @@
 package org.eclipse.ocl.xtext.oclstdlib.ui.contentassist.antlr.internal;
 
-// Hack: Use our own Lexer superclass by means of import. 
+// Hack: Use our own Lexer superclass by means of import.
 // Currently there is no other way to specify the superclass for the lexer.
 import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
 
@@ -121,7 +121,7 @@ public class InternalOCLstdlibLexer extends Lexer {
     // delegates
     // delegators
 
-    public InternalOCLstdlibLexer() {;} 
+    public InternalOCLstdlibLexer() {;}
     public InternalOCLstdlibLexer(CharStream input) {
         this(input, new RecognizerSharedState());
     }
@@ -139,7 +139,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:11:7: ( 'abstract' )
             // InternalOCLstdlib.g:11:9: 'abstract'
             {
-            match("abstract"); 
+            match("abstract");
 
 
             }
@@ -160,7 +160,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:12:7: ( 'annotation' )
             // InternalOCLstdlib.g:12:9: 'annotation'
             {
-            match("annotation"); 
+            match("annotation");
 
 
             }
@@ -181,7 +181,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:13:7: ( 'conformsTo' )
             // InternalOCLstdlib.g:13:9: 'conformsTo'
             {
-            match("conformsTo"); 
+            match("conformsTo");
 
 
             }
@@ -202,7 +202,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:14:7: ( 'documentation' )
             // InternalOCLstdlib.g:14:9: 'documentation'
             {
-            match("documentation"); 
+            match("documentation");
 
 
             }
@@ -223,7 +223,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:15:7: ( 'extends' )
             // InternalOCLstdlib.g:15:9: 'extends'
             {
-            match("extends"); 
+            match("extends");
 
 
             }
@@ -244,7 +244,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:16:7: ( 'import' )
             // InternalOCLstdlib.g:16:9: 'import'
             {
-            match("import"); 
+            match("import");
 
 
             }
@@ -265,7 +265,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:17:7: ( 'inv' )
             // InternalOCLstdlib.g:17:9: 'inv'
             {
-            match("inv"); 
+            match("inv");
 
 
             }
@@ -286,7 +286,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:18:7: ( 'invalidating' )
             // InternalOCLstdlib.g:18:9: 'invalidating'
             {
-            match("invalidating"); 
+            match("invalidating");
 
 
             }
@@ -307,7 +307,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:19:7: ( 'iteration' )
             // InternalOCLstdlib.g:19:9: 'iteration'
             {
-            match("iteration"); 
+            match("iteration");
 
 
             }
@@ -328,7 +328,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:20:7: ( 'left' )
             // InternalOCLstdlib.g:20:9: 'left'
             {
-            match("left"); 
+            match("left");
 
 
             }
@@ -349,7 +349,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:21:7: ( 'library' )
             // InternalOCLstdlib.g:21:9: 'library'
             {
-            match("library"); 
+            match("library");
 
 
             }
@@ -370,7 +370,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:22:7: ( 'operation' )
             // InternalOCLstdlib.g:22:9: 'operation'
             {
-            match("operation"); 
+            match("operation");
 
 
             }
@@ -391,7 +391,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:23:7: ( 'package' )
             // InternalOCLstdlib.g:23:9: 'package'
             {
-            match("package"); 
+            match("package");
 
 
             }
@@ -412,7 +412,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:24:7: ( 'post' )
             // InternalOCLstdlib.g:24:9: 'post'
             {
-            match("post"); 
+            match("post");
 
 
             }
@@ -433,7 +433,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:25:7: ( 'pre' )
             // InternalOCLstdlib.g:25:9: 'pre'
             {
-            match("pre"); 
+            match("pre");
 
 
             }
@@ -454,7 +454,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:26:7: ( 'precedence' )
             // InternalOCLstdlib.g:26:9: 'precedence'
             {
-            match("precedence"); 
+            match("precedence");
 
 
             }
@@ -475,7 +475,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:27:7: ( 'property' )
             // InternalOCLstdlib.g:27:9: 'property'
             {
-            match("property"); 
+            match("property");
 
 
             }
@@ -496,7 +496,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:28:7: ( 'right' )
             // InternalOCLstdlib.g:28:9: 'right'
             {
-            match("right"); 
+            match("right");
 
 
             }
@@ -517,7 +517,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:29:7: ( 'static' )
             // InternalOCLstdlib.g:29:9: 'static'
             {
-            match("static"); 
+            match("static");
 
 
             }
@@ -538,7 +538,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:30:7: ( 'type' )
             // InternalOCLstdlib.g:30:9: 'type'
             {
-            match("type"); 
+            match("type");
 
 
             }
@@ -559,7 +559,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:31:7: ( 'validating' )
             // InternalOCLstdlib.g:31:9: 'validating'
             {
-            match("validating"); 
+            match("validating");
 
 
             }
@@ -580,7 +580,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:32:7: ( 'Lambda' )
             // InternalOCLstdlib.g:32:9: 'Lambda'
             {
-            match("Lambda"); 
+            match("Lambda");
 
 
             }
@@ -601,7 +601,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:33:7: ( 'Map' )
             // InternalOCLstdlib.g:33:9: 'Map'
             {
-            match("Map"); 
+            match("Map");
 
 
             }
@@ -622,7 +622,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:34:7: ( 'Tuple' )
             // InternalOCLstdlib.g:34:9: 'Tuple'
             {
-            match("Tuple"); 
+            match("Tuple");
 
 
             }
@@ -643,7 +643,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:35:7: ( ';' )
             // InternalOCLstdlib.g:35:9: ';'
             {
-            match(';'); 
+            match(';');
 
             }
 
@@ -663,7 +663,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:36:7: ( 'and' )
             // InternalOCLstdlib.g:36:9: 'and'
             {
-            match("and"); 
+            match("and");
 
 
             }
@@ -684,7 +684,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:37:7: ( 'else' )
             // InternalOCLstdlib.g:37:9: 'else'
             {
-            match("else"); 
+            match("else");
 
 
             }
@@ -705,7 +705,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:38:7: ( 'endif' )
             // InternalOCLstdlib.g:38:9: 'endif'
             {
-            match("endif"); 
+            match("endif");
 
 
             }
@@ -726,7 +726,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:39:7: ( 'if' )
             // InternalOCLstdlib.g:39:9: 'if'
             {
-            match("if"); 
+            match("if");
 
 
             }
@@ -747,7 +747,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:40:7: ( 'implies' )
             // InternalOCLstdlib.g:40:9: 'implies'
             {
-            match("implies"); 
+            match("implies");
 
 
             }
@@ -768,7 +768,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:41:7: ( 'in' )
             // InternalOCLstdlib.g:41:9: 'in'
             {
-            match("in"); 
+            match("in");
 
 
             }
@@ -789,7 +789,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:42:7: ( 'let' )
             // InternalOCLstdlib.g:42:9: 'let'
             {
-            match("let"); 
+            match("let");
 
 
             }
@@ -810,7 +810,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:43:7: ( 'not' )
             // InternalOCLstdlib.g:43:9: 'not'
             {
-            match("not"); 
+            match("not");
 
 
             }
@@ -831,7 +831,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:44:7: ( 'or' )
             // InternalOCLstdlib.g:44:9: 'or'
             {
-            match("or"); 
+            match("or");
 
 
             }
@@ -852,7 +852,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:45:7: ( 'then' )
             // InternalOCLstdlib.g:45:9: 'then'
             {
-            match("then"); 
+            match("then");
 
 
             }
@@ -873,7 +873,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:46:7: ( 'xor' )
             // InternalOCLstdlib.g:46:9: 'xor'
             {
-            match("xor"); 
+            match("xor");
 
 
             }
@@ -894,7 +894,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:47:7: ( '-' )
             // InternalOCLstdlib.g:47:9: '-'
             {
-            match('-'); 
+            match('-');
 
             }
 
@@ -914,7 +914,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:48:7: ( '*' )
             // InternalOCLstdlib.g:48:9: '*'
             {
-            match('*'); 
+            match('*');
 
             }
 
@@ -934,7 +934,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:49:7: ( '/' )
             // InternalOCLstdlib.g:49:9: '/'
             {
-            match('/'); 
+            match('/');
 
             }
 
@@ -954,7 +954,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:50:7: ( '+' )
             // InternalOCLstdlib.g:50:9: '+'
             {
-            match('+'); 
+            match('+');
 
             }
 
@@ -974,7 +974,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:51:7: ( '>' )
             // InternalOCLstdlib.g:51:9: '>'
             {
-            match('>'); 
+            match('>');
 
             }
 
@@ -994,7 +994,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:52:7: ( '<' )
             // InternalOCLstdlib.g:52:9: '<'
             {
-            match('<'); 
+            match('<');
 
             }
 
@@ -1014,7 +1014,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:53:7: ( '>=' )
             // InternalOCLstdlib.g:53:9: '>='
             {
-            match(">="); 
+            match(">=");
 
 
             }
@@ -1035,7 +1035,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:54:7: ( '<=' )
             // InternalOCLstdlib.g:54:9: '<='
             {
-            match("<="); 
+            match("<=");
 
 
             }
@@ -1056,7 +1056,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:55:7: ( '=' )
             // InternalOCLstdlib.g:55:9: '='
             {
-            match('='); 
+            match('=');
 
             }
 
@@ -1076,7 +1076,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:56:7: ( '<>' )
             // InternalOCLstdlib.g:56:9: '<>'
             {
-            match("<>"); 
+            match("<>");
 
 
             }
@@ -1097,7 +1097,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:57:7: ( '.' )
             // InternalOCLstdlib.g:57:9: '.'
             {
-            match('.'); 
+            match('.');
 
             }
 
@@ -1117,7 +1117,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:58:7: ( '->' )
             // InternalOCLstdlib.g:58:9: '->'
             {
-            match("->"); 
+            match("->");
 
 
             }
@@ -1138,7 +1138,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:59:7: ( '?.' )
             // InternalOCLstdlib.g:59:9: '?.'
             {
-            match("?."); 
+            match("?.");
 
 
             }
@@ -1159,7 +1159,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:60:7: ( '?->' )
             // InternalOCLstdlib.g:60:9: '?->'
             {
-            match("?->"); 
+            match("?->");
 
 
             }
@@ -1180,7 +1180,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:61:7: ( 'Boolean' )
             // InternalOCLstdlib.g:61:9: 'Boolean'
             {
-            match("Boolean"); 
+            match("Boolean");
 
 
             }
@@ -1201,7 +1201,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:62:7: ( 'Integer' )
             // InternalOCLstdlib.g:62:9: 'Integer'
             {
-            match("Integer"); 
+            match("Integer");
 
 
             }
@@ -1222,7 +1222,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:63:7: ( 'Real' )
             // InternalOCLstdlib.g:63:9: 'Real'
             {
-            match("Real"); 
+            match("Real");
 
 
             }
@@ -1243,7 +1243,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:64:7: ( 'String' )
             // InternalOCLstdlib.g:64:9: 'String'
             {
-            match("String"); 
+            match("String");
 
 
             }
@@ -1264,7 +1264,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:65:7: ( 'UnlimitedNatural' )
             // InternalOCLstdlib.g:65:9: 'UnlimitedNatural'
             {
-            match("UnlimitedNatural"); 
+            match("UnlimitedNatural");
 
 
             }
@@ -1285,7 +1285,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:66:7: ( 'OclAny' )
             // InternalOCLstdlib.g:66:9: 'OclAny'
             {
-            match("OclAny"); 
+            match("OclAny");
 
 
             }
@@ -1306,7 +1306,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:67:7: ( 'OclInvalid' )
             // InternalOCLstdlib.g:67:9: 'OclInvalid'
             {
-            match("OclInvalid"); 
+            match("OclInvalid");
 
 
             }
@@ -1327,7 +1327,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:68:7: ( 'OclVoid' )
             // InternalOCLstdlib.g:68:9: 'OclVoid'
             {
-            match("OclVoid"); 
+            match("OclVoid");
 
 
             }
@@ -1348,7 +1348,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:69:7: ( 'Set' )
             // InternalOCLstdlib.g:69:9: 'Set'
             {
-            match("Set"); 
+            match("Set");
 
 
             }
@@ -1369,7 +1369,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:70:7: ( 'Bag' )
             // InternalOCLstdlib.g:70:9: 'Bag'
             {
-            match("Bag"); 
+            match("Bag");
 
 
             }
@@ -1390,7 +1390,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:71:7: ( 'Sequence' )
             // InternalOCLstdlib.g:71:9: 'Sequence'
             {
-            match("Sequence"); 
+            match("Sequence");
 
 
             }
@@ -1411,7 +1411,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:72:7: ( 'Collection' )
             // InternalOCLstdlib.g:72:9: 'Collection'
             {
-            match("Collection"); 
+            match("Collection");
 
 
             }
@@ -1432,7 +1432,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:73:7: ( 'OrderedSet' )
             // InternalOCLstdlib.g:73:9: 'OrderedSet'
             {
-            match("OrderedSet"); 
+            match("OrderedSet");
 
 
             }
@@ -1453,7 +1453,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:74:7: ( '|?' )
             // InternalOCLstdlib.g:74:9: '|?'
             {
-            match("|?"); 
+            match("|?");
 
 
             }
@@ -1474,7 +1474,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:75:7: ( '?' )
             // InternalOCLstdlib.g:75:9: '?'
             {
-            match('?'); 
+            match('?');
 
             }
 
@@ -1494,7 +1494,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:76:7: ( '::' )
             // InternalOCLstdlib.g:76:9: '::'
             {
-            match("::"); 
+            match("::");
 
 
             }
@@ -1515,7 +1515,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:77:7: ( ':' )
             // InternalOCLstdlib.g:77:9: ':'
             {
-            match(':'); 
+            match(':');
 
             }
 
@@ -1535,7 +1535,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:78:7: ( '(' )
             // InternalOCLstdlib.g:78:9: '('
             {
-            match('('); 
+            match('(');
 
             }
 
@@ -1555,7 +1555,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:79:7: ( ')' )
             // InternalOCLstdlib.g:79:9: ')'
             {
-            match(')'); 
+            match(')');
 
             }
 
@@ -1575,7 +1575,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:80:7: ( ',' )
             // InternalOCLstdlib.g:80:9: ','
             {
-            match(','); 
+            match(',');
 
             }
 
@@ -1595,7 +1595,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:81:7: ( '{' )
             // InternalOCLstdlib.g:81:9: '{'
             {
-            match('{'); 
+            match('{');
 
             }
 
@@ -1615,7 +1615,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:82:7: ( '}' )
             // InternalOCLstdlib.g:82:9: '}'
             {
-            match('}'); 
+            match('}');
 
             }
 
@@ -1635,7 +1635,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:83:7: ( 'coercion' )
             // InternalOCLstdlib.g:83:9: 'coercion'
             {
-            match("coercion"); 
+            match("coercion");
 
 
             }
@@ -1656,7 +1656,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:84:7: ( '=>' )
             // InternalOCLstdlib.g:84:9: '=>'
             {
-            match("=>"); 
+            match("=>");
 
 
             }
@@ -1677,7 +1677,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:85:7: ( '|' )
             // InternalOCLstdlib.g:85:9: '|'
             {
-            match('|'); 
+            match('|');
 
             }
 
@@ -1697,7 +1697,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:86:7: ( 'body' )
             // InternalOCLstdlib.g:86:9: 'body'
             {
-            match("body"); 
+            match("body");
 
 
             }
@@ -1718,7 +1718,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:87:7: ( '..' )
             // InternalOCLstdlib.g:87:9: '..'
             {
-            match(".."); 
+            match("..");
 
 
             }
@@ -1739,7 +1739,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:88:7: ( '++' )
             // InternalOCLstdlib.g:88:9: '++'
             {
-            match("++"); 
+            match("++");
 
 
             }
@@ -1760,7 +1760,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:89:7: ( '<-' )
             // InternalOCLstdlib.g:89:9: '<-'
             {
-            match("<-"); 
+            match("<-");
 
 
             }
@@ -1781,7 +1781,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:90:7: ( 'invalid' )
             // InternalOCLstdlib.g:90:9: 'invalid'
             {
-            match("invalid"); 
+            match("invalid");
 
 
             }
@@ -1802,7 +1802,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:91:7: ( 'null' )
             // InternalOCLstdlib.g:91:9: 'null'
             {
-            match("null"); 
+            match("null");
 
 
             }
@@ -1823,7 +1823,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:92:7: ( '[' )
             // InternalOCLstdlib.g:92:9: '['
             {
-            match('['); 
+            match('[');
 
             }
 
@@ -1843,7 +1843,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:93:7: ( ']' )
             // InternalOCLstdlib.g:93:9: ']'
             {
-            match(']'); 
+            match(']');
 
             }
 
@@ -1863,7 +1863,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:94:7: ( 'elseif' )
             // InternalOCLstdlib.g:94:9: 'elseif'
             {
-            match("elseif"); 
+            match("elseif");
 
 
             }
@@ -1884,7 +1884,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:95:8: ( 'self' )
             // InternalOCLstdlib.g:95:10: 'self'
             {
-            match("self"); 
+            match("self");
 
 
             }
@@ -1905,7 +1905,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:96:8: ( '&&' )
             // InternalOCLstdlib.g:96:10: '&&'
             {
-            match("&&"); 
+            match("&&");
 
 
             }
@@ -1926,7 +1926,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:97:8: ( '::*' )
             // InternalOCLstdlib.g:97:10: '::*'
             {
-            match("::*"); 
+            match("::*");
 
 
             }
@@ -1947,7 +1947,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:98:8: ( 'typeof' )
             // InternalOCLstdlib.g:98:10: 'typeof'
             {
-            match("typeof"); 
+            match("typeof");
 
 
             }
@@ -1968,7 +1968,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:99:8: ( 'true' )
             // InternalOCLstdlib.g:99:10: 'true'
             {
-            match("true"); 
+            match("true");
 
 
             }
@@ -1989,7 +1989,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:100:8: ( 'false' )
             // InternalOCLstdlib.g:100:10: 'false'
             {
-            match("false"); 
+            match("false");
 
 
             }
@@ -2010,7 +2010,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:101:8: ( '@' )
             // InternalOCLstdlib.g:101:10: '@'
             {
-            match('@'); 
+            match('@');
 
             }
 
@@ -2030,7 +2030,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:102:8: ( '|1' )
             // InternalOCLstdlib.g:102:10: '|1'
             {
-            match("|1"); 
+            match("|1");
 
 
             }
@@ -2049,7 +2049,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:24158:33: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) )
             // InternalOCLstdlib.g:24158:35: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
             {
-            match('\\'); 
+            match('\\');
             if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
                 input.consume();
 
@@ -2100,7 +2100,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:24162:27: ( '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
             // InternalOCLstdlib.g:24162:29: '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
-            match('\"'); 
+            match('\"');
             // InternalOCLstdlib.g:24162:33: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )*
             loop1:
             do {
@@ -2119,7 +2119,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             	case 1 :
             	    // InternalOCLstdlib.g:24162:34: RULE_ESCAPED_CHARACTER
             	    {
-            	    mRULE_ESCAPED_CHARACTER(); 
+            	    mRULE_ESCAPED_CHARACTER();
 
             	    }
             	    break;
@@ -2144,7 +2144,7 @@ public class InternalOCLstdlibLexer extends Lexer {
                 }
             } while (true);
 
-            match('\"'); 
+            match('\"');
 
             }
 
@@ -2164,7 +2164,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:24164:27: ( '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             // InternalOCLstdlib.g:24164:29: '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
-            match('\''); 
+            match('\'');
             // InternalOCLstdlib.g:24164:34: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop2:
             do {
@@ -2183,7 +2183,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             	case 1 :
             	    // InternalOCLstdlib.g:24164:35: RULE_ESCAPED_CHARACTER
             	    {
-            	    mRULE_ESCAPED_CHARACTER(); 
+            	    mRULE_ESCAPED_CHARACTER();
 
             	    }
             	    break;
@@ -2208,7 +2208,7 @@ public class InternalOCLstdlibLexer extends Lexer {
                 }
             } while (true);
 
-            match('\''); 
+            match('\'');
 
             }
 
@@ -2228,7 +2228,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:24166:30: ( '/\\'' ( options {greedy=false; } : . )* '\\'/' )
             // InternalOCLstdlib.g:24166:32: '/\\'' ( options {greedy=false; } : . )* '\\'/'
             {
-            match("/'"); 
+            match("/'");
 
             // InternalOCLstdlib.g:24166:38: ( options {greedy=false; } : . )*
             loop3:
@@ -2257,7 +2257,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             	case 1 :
             	    // InternalOCLstdlib.g:24166:66: .
             	    {
-            	    matchAny(); 
+            	    matchAny();
 
             	    }
             	    break;
@@ -2267,7 +2267,7 @@ public class InternalOCLstdlibLexer extends Lexer {
                 }
             } while (true);
 
-            match("'/"); 
+            match("'/");
 
 
             }
@@ -2288,7 +2288,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:24168:16: ( RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )* )
             // InternalOCLstdlib.g:24168:18: RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             {
-            mRULE_LETTER_CHARACTER(); 
+            mRULE_LETTER_CHARACTER();
             // InternalOCLstdlib.g:24168:40: ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             loop4:
             do {
@@ -2341,8 +2341,8 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:24170:17: ( '_' RULE_SINGLE_QUOTED_STRING )
             // InternalOCLstdlib.g:24170:19: '_' RULE_SINGLE_QUOTED_STRING
             {
-            match('_'); 
-            mRULE_SINGLE_QUOTED_STRING(); 
+            match('_');
+            mRULE_SINGLE_QUOTED_STRING();
 
             }
 
@@ -2378,7 +2378,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             	case 1 :
             	    // InternalOCLstdlib.g:24172:13: '0' .. '9'
             	    {
-            	    matchRange('0','9'); 
+            	    matchRange('0','9');
 
             	    }
             	    break;
@@ -2411,7 +2411,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:24174:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
             // InternalOCLstdlib.g:24174:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
-            match("/*"); 
+            match("/*");
 
             // InternalOCLstdlib.g:24174:24: ( options {greedy=false; } : . )*
             loop6:
@@ -2440,7 +2440,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             	case 1 :
             	    // InternalOCLstdlib.g:24174:52: .
             	    {
-            	    matchAny(); 
+            	    matchAny();
 
             	    }
             	    break;
@@ -2450,7 +2450,7 @@ public class InternalOCLstdlibLexer extends Lexer {
                 }
             } while (true);
 
-            match("*/"); 
+            match("*/");
 
 
             }
@@ -2471,7 +2471,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:24176:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
             // InternalOCLstdlib.g:24176:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
-            match("--"); 
+            match("--");
 
             // InternalOCLstdlib.g:24176:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
@@ -2528,14 +2528,14 @@ public class InternalOCLstdlibLexer extends Lexer {
                         case 1 :
                             // InternalOCLstdlib.g:24176:41: '\\r'
                             {
-                            match('\r'); 
+                            match('\r');
 
                             }
                             break;
 
                     }
 
-                    match('\n'); 
+                    match('\n');
 
                     }
                     break;
@@ -2618,7 +2618,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             // InternalOCLstdlib.g:24180:16: ( . )
             // InternalOCLstdlib.g:24180:18: .
             {
-            matchAny(); 
+            matchAny();
 
             }
 
@@ -2638,714 +2638,714 @@ public class InternalOCLstdlibLexer extends Lexer {
             case 1 :
                 // InternalOCLstdlib.g:1:10: T__16
                 {
-                mT__16(); 
+                mT__16();
 
                 }
                 break;
             case 2 :
                 // InternalOCLstdlib.g:1:16: T__17
                 {
-                mT__17(); 
+                mT__17();
 
                 }
                 break;
             case 3 :
                 // InternalOCLstdlib.g:1:22: T__18
                 {
-                mT__18(); 
+                mT__18();
 
                 }
                 break;
             case 4 :
                 // InternalOCLstdlib.g:1:28: T__19
                 {
-                mT__19(); 
+                mT__19();
 
                 }
                 break;
             case 5 :
                 // InternalOCLstdlib.g:1:34: T__20
                 {
-                mT__20(); 
+                mT__20();
 
                 }
                 break;
             case 6 :
                 // InternalOCLstdlib.g:1:40: T__21
                 {
-                mT__21(); 
+                mT__21();
 
                 }
                 break;
             case 7 :
                 // InternalOCLstdlib.g:1:46: T__22
                 {
-                mT__22(); 
+                mT__22();
 
                 }
                 break;
             case 8 :
                 // InternalOCLstdlib.g:1:52: T__23
                 {
-                mT__23(); 
+                mT__23();
 
                 }
                 break;
             case 9 :
                 // InternalOCLstdlib.g:1:58: T__24
                 {
-                mT__24(); 
+                mT__24();
 
                 }
                 break;
             case 10 :
                 // InternalOCLstdlib.g:1:64: T__25
                 {
-                mT__25(); 
+                mT__25();
 
                 }
                 break;
             case 11 :
                 // InternalOCLstdlib.g:1:70: T__26
                 {
-                mT__26(); 
+                mT__26();
 
                 }
                 break;
             case 12 :
                 // InternalOCLstdlib.g:1:76: T__27
                 {
-                mT__27(); 
+                mT__27();
 
                 }
                 break;
             case 13 :
                 // InternalOCLstdlib.g:1:82: T__28
                 {
-                mT__28(); 
+                mT__28();
 
                 }
                 break;
             case 14 :
                 // InternalOCLstdlib.g:1:88: T__29
                 {
-                mT__29(); 
+                mT__29();
 
                 }
                 break;
             case 15 :
                 // InternalOCLstdlib.g:1:94: T__30
                 {
-                mT__30(); 
+                mT__30();
 
                 }
                 break;
             case 16 :
                 // InternalOCLstdlib.g:1:100: T__31
                 {
-                mT__31(); 
+                mT__31();
 
                 }
                 break;
             case 17 :
                 // InternalOCLstdlib.g:1:106: T__32
                 {
-                mT__32(); 
+                mT__32();
 
                 }
                 break;
             case 18 :
                 // InternalOCLstdlib.g:1:112: T__33
                 {
-                mT__33(); 
+                mT__33();
 
                 }
                 break;
             case 19 :
                 // InternalOCLstdlib.g:1:118: T__34
                 {
-                mT__34(); 
+                mT__34();
 
                 }
                 break;
             case 20 :
                 // InternalOCLstdlib.g:1:124: T__35
                 {
-                mT__35(); 
+                mT__35();
 
                 }
                 break;
             case 21 :
                 // InternalOCLstdlib.g:1:130: T__36
                 {
-                mT__36(); 
+                mT__36();
 
                 }
                 break;
             case 22 :
                 // InternalOCLstdlib.g:1:136: T__37
                 {
-                mT__37(); 
+                mT__37();
 
                 }
                 break;
             case 23 :
                 // InternalOCLstdlib.g:1:142: T__38
                 {
-                mT__38(); 
+                mT__38();
 
                 }
                 break;
             case 24 :
                 // InternalOCLstdlib.g:1:148: T__39
                 {
-                mT__39(); 
+                mT__39();
 
                 }
                 break;
             case 25 :
                 // InternalOCLstdlib.g:1:154: T__40
                 {
-                mT__40(); 
+                mT__40();
 
                 }
                 break;
             case 26 :
                 // InternalOCLstdlib.g:1:160: T__41
                 {
-                mT__41(); 
+                mT__41();
 
                 }
                 break;
             case 27 :
                 // InternalOCLstdlib.g:1:166: T__42
                 {
-                mT__42(); 
+                mT__42();
 
                 }
                 break;
             case 28 :
                 // InternalOCLstdlib.g:1:172: T__43
                 {
-                mT__43(); 
+                mT__43();
 
                 }
                 break;
             case 29 :
                 // InternalOCLstdlib.g:1:178: T__44
                 {
-                mT__44(); 
+                mT__44();
 
                 }
                 break;
             case 30 :
                 // InternalOCLstdlib.g:1:184: T__45
                 {
-                mT__45(); 
+                mT__45();
 
                 }
                 break;
             case 31 :
                 // InternalOCLstdlib.g:1:190: T__46
                 {
-                mT__46(); 
+                mT__46();
 
                 }
                 break;
             case 32 :
                 // InternalOCLstdlib.g:1:196: T__47
                 {
-                mT__47(); 
+                mT__47();
 
                 }
                 break;
             case 33 :
                 // InternalOCLstdlib.g:1:202: T__48
                 {
-                mT__48(); 
+                mT__48();
 
                 }
                 break;
             case 34 :
                 // InternalOCLstdlib.g:1:208: T__49
                 {
-                mT__49(); 
+                mT__49();
 
                 }
                 break;
             case 35 :
                 // InternalOCLstdlib.g:1:214: T__50
                 {
-                mT__50(); 
+                mT__50();
 
                 }
                 break;
             case 36 :
                 // InternalOCLstdlib.g:1:220: T__51
                 {
-                mT__51(); 
+                mT__51();
 
                 }
                 break;
             case 37 :
                 // InternalOCLstdlib.g:1:226: T__52
                 {
-                mT__52(); 
+                mT__52();
 
                 }
                 break;
             case 38 :
                 // InternalOCLstdlib.g:1:232: T__53
                 {
-                mT__53(); 
+                mT__53();
 
                 }
                 break;
             case 39 :
                 // InternalOCLstdlib.g:1:238: T__54
                 {
-                mT__54(); 
+                mT__54();
 
                 }
                 break;
             case 40 :
                 // InternalOCLstdlib.g:1:244: T__55
                 {
-                mT__55(); 
+                mT__55();
 
                 }
                 break;
             case 41 :
                 // InternalOCLstdlib.g:1:250: T__56
                 {
-                mT__56(); 
+                mT__56();
 
                 }
                 break;
             case 42 :
                 // InternalOCLstdlib.g:1:256: T__57
                 {
-                mT__57(); 
+                mT__57();
 
                 }
                 break;
             case 43 :
                 // InternalOCLstdlib.g:1:262: T__58
                 {
-                mT__58(); 
+                mT__58();
 
                 }
                 break;
             case 44 :
                 // InternalOCLstdlib.g:1:268: T__59
                 {
-                mT__59(); 
+                mT__59();
 
                 }
                 break;
             case 45 :
                 // InternalOCLstdlib.g:1:274: T__60
                 {
-                mT__60(); 
+                mT__60();
 
                 }
                 break;
             case 46 :
                 // InternalOCLstdlib.g:1:280: T__61
                 {
-                mT__61(); 
+                mT__61();
 
                 }
                 break;
             case 47 :
                 // InternalOCLstdlib.g:1:286: T__62
                 {
-                mT__62(); 
+                mT__62();
 
                 }
                 break;
             case 48 :
                 // InternalOCLstdlib.g:1:292: T__63
                 {
-                mT__63(); 
+                mT__63();
 
                 }
                 break;
             case 49 :
                 // InternalOCLstdlib.g:1:298: T__64
                 {
-                mT__64(); 
+                mT__64();
 
                 }
                 break;
             case 50 :
                 // InternalOCLstdlib.g:1:304: T__65
                 {
-                mT__65(); 
+                mT__65();
 
                 }
                 break;
             case 51 :
                 // InternalOCLstdlib.g:1:310: T__66
                 {
-                mT__66(); 
+                mT__66();
 
                 }
                 break;
             case 52 :
                 // InternalOCLstdlib.g:1:316: T__67
                 {
-                mT__67(); 
+                mT__67();
 
                 }
                 break;
             case 53 :
                 // InternalOCLstdlib.g:1:322: T__68
                 {
-                mT__68(); 
+                mT__68();
 
                 }
                 break;
             case 54 :
                 // InternalOCLstdlib.g:1:328: T__69
                 {
-                mT__69(); 
+                mT__69();
 
                 }
                 break;
             case 55 :
                 // InternalOCLstdlib.g:1:334: T__70
                 {
-                mT__70(); 
+                mT__70();
 
                 }
                 break;
             case 56 :
                 // InternalOCLstdlib.g:1:340: T__71
                 {
-                mT__71(); 
+                mT__71();
 
                 }
                 break;
             case 57 :
                 // InternalOCLstdlib.g:1:346: T__72
                 {
-                mT__72(); 
+                mT__72();
 
                 }
                 break;
             case 58 :
                 // InternalOCLstdlib.g:1:352: T__73
                 {
-                mT__73(); 
+                mT__73();
 
                 }
                 break;
             case 59 :
                 // InternalOCLstdlib.g:1:358: T__74
                 {
-                mT__74(); 
+                mT__74();
 
                 }
                 break;
             case 60 :
                 // InternalOCLstdlib.g:1:364: T__75
                 {
-                mT__75(); 
+                mT__75();
 
                 }
                 break;
             case 61 :
                 // InternalOCLstdlib.g:1:370: T__76
                 {
-                mT__76(); 
+                mT__76();
 
                 }
                 break;
             case 62 :
                 // InternalOCLstdlib.g:1:376: T__77
                 {
-                mT__77(); 
+                mT__77();
 
                 }
                 break;
             case 63 :
                 // InternalOCLstdlib.g:1:382: T__78
                 {
-                mT__78(); 
+                mT__78();
 
                 }
                 break;
             case 64 :
                 // InternalOCLstdlib.g:1:388: T__79
                 {
-                mT__79(); 
+                mT__79();
 
                 }
                 break;
             case 65 :
                 // InternalOCLstdlib.g:1:394: T__80
                 {
-                mT__80(); 
+                mT__80();
 
                 }
                 break;
             case 66 :
                 // InternalOCLstdlib.g:1:400: T__81
                 {
-                mT__81(); 
+                mT__81();
 
                 }
                 break;
             case 67 :
                 // InternalOCLstdlib.g:1:406: T__82
                 {
-                mT__82(); 
+                mT__82();
 
                 }
                 break;
             case 68 :
                 // InternalOCLstdlib.g:1:412: T__83
                 {
-                mT__83(); 
+                mT__83();
 
                 }
                 break;
             case 69 :
                 // InternalOCLstdlib.g:1:418: T__84
                 {
-                mT__84(); 
+                mT__84();
 
                 }
                 break;
             case 70 :
                 // InternalOCLstdlib.g:1:424: T__85
                 {
-                mT__85(); 
+                mT__85();
 
                 }
                 break;
             case 71 :
                 // InternalOCLstdlib.g:1:430: T__86
                 {
-                mT__86(); 
+                mT__86();
 
                 }
                 break;
             case 72 :
                 // InternalOCLstdlib.g:1:436: T__87
                 {
-                mT__87(); 
+                mT__87();
 
                 }
                 break;
             case 73 :
                 // InternalOCLstdlib.g:1:442: T__88
                 {
-                mT__88(); 
+                mT__88();
 
                 }
                 break;
             case 74 :
                 // InternalOCLstdlib.g:1:448: T__89
                 {
-                mT__89(); 
+                mT__89();
 
                 }
                 break;
             case 75 :
                 // InternalOCLstdlib.g:1:454: T__90
                 {
-                mT__90(); 
+                mT__90();
 
                 }
                 break;
             case 76 :
                 // InternalOCLstdlib.g:1:460: T__91
                 {
-                mT__91(); 
+                mT__91();
 
                 }
                 break;
             case 77 :
                 // InternalOCLstdlib.g:1:466: T__92
                 {
-                mT__92(); 
+                mT__92();
 
                 }
                 break;
             case 78 :
                 // InternalOCLstdlib.g:1:472: T__93
                 {
-                mT__93(); 
+                mT__93();
 
                 }
                 break;
             case 79 :
                 // InternalOCLstdlib.g:1:478: T__94
                 {
-                mT__94(); 
+                mT__94();
 
                 }
                 break;
             case 80 :
                 // InternalOCLstdlib.g:1:484: T__95
                 {
-                mT__95(); 
+                mT__95();
 
                 }
                 break;
             case 81 :
                 // InternalOCLstdlib.g:1:490: T__96
                 {
-                mT__96(); 
+                mT__96();
 
                 }
                 break;
             case 82 :
                 // InternalOCLstdlib.g:1:496: T__97
                 {
-                mT__97(); 
+                mT__97();
 
                 }
                 break;
             case 83 :
                 // InternalOCLstdlib.g:1:502: T__98
                 {
-                mT__98(); 
+                mT__98();
 
                 }
                 break;
             case 84 :
                 // InternalOCLstdlib.g:1:508: T__99
                 {
-                mT__99(); 
+                mT__99();
 
                 }
                 break;
             case 85 :
                 // InternalOCLstdlib.g:1:514: T__100
                 {
-                mT__100(); 
+                mT__100();
 
                 }
                 break;
             case 86 :
                 // InternalOCLstdlib.g:1:521: T__101
                 {
-                mT__101(); 
+                mT__101();
 
                 }
                 break;
             case 87 :
                 // InternalOCLstdlib.g:1:528: T__102
                 {
-                mT__102(); 
+                mT__102();
 
                 }
                 break;
             case 88 :
                 // InternalOCLstdlib.g:1:535: T__103
                 {
-                mT__103(); 
+                mT__103();
 
                 }
                 break;
             case 89 :
                 // InternalOCLstdlib.g:1:542: T__104
                 {
-                mT__104(); 
+                mT__104();
 
                 }
                 break;
             case 90 :
                 // InternalOCLstdlib.g:1:549: T__105
                 {
-                mT__105(); 
+                mT__105();
 
                 }
                 break;
             case 91 :
                 // InternalOCLstdlib.g:1:556: T__106
                 {
-                mT__106(); 
+                mT__106();
 
                 }
                 break;
             case 92 :
                 // InternalOCLstdlib.g:1:563: T__107
                 {
-                mT__107(); 
+                mT__107();
 
                 }
                 break;
             case 93 :
                 // InternalOCLstdlib.g:1:570: RULE_DOUBLE_QUOTED_STRING
                 {
-                mRULE_DOUBLE_QUOTED_STRING(); 
+                mRULE_DOUBLE_QUOTED_STRING();
 
                 }
                 break;
             case 94 :
                 // InternalOCLstdlib.g:1:596: RULE_SINGLE_QUOTED_STRING
                 {
-                mRULE_SINGLE_QUOTED_STRING(); 
+                mRULE_SINGLE_QUOTED_STRING();
 
                 }
                 break;
             case 95 :
                 // InternalOCLstdlib.g:1:622: RULE_ML_SINGLE_QUOTED_STRING
                 {
-                mRULE_ML_SINGLE_QUOTED_STRING(); 
+                mRULE_ML_SINGLE_QUOTED_STRING();
 
                 }
                 break;
             case 96 :
                 // InternalOCLstdlib.g:1:651: RULE_SIMPLE_ID
                 {
-                mRULE_SIMPLE_ID(); 
+                mRULE_SIMPLE_ID();
 
                 }
                 break;
             case 97 :
                 // InternalOCLstdlib.g:1:666: RULE_ESCAPED_ID
                 {
-                mRULE_ESCAPED_ID(); 
+                mRULE_ESCAPED_ID();
 
                 }
                 break;
             case 98 :
                 // InternalOCLstdlib.g:1:682: RULE_INT
                 {
-                mRULE_INT(); 
+                mRULE_INT();
 
                 }
                 break;
             case 99 :
                 // InternalOCLstdlib.g:1:691: RULE_ML_COMMENT
                 {
-                mRULE_ML_COMMENT(); 
+                mRULE_ML_COMMENT();
 
                 }
                 break;
             case 100 :
                 // InternalOCLstdlib.g:1:707: RULE_SL_COMMENT
                 {
-                mRULE_SL_COMMENT(); 
+                mRULE_SL_COMMENT();
 
                 }
                 break;
             case 101 :
                 // InternalOCLstdlib.g:1:723: RULE_WS
                 {
-                mRULE_WS(); 
+                mRULE_WS();
 
                 }
                 break;
             case 102 :
                 // InternalOCLstdlib.g:1:731: RULE_ANY_OTHER
                 {
-                mRULE_ANY_OTHER(); 
+                mRULE_ANY_OTHER();
 
                 }
                 break;
@@ -3831,7 +3831,7 @@ public class InternalOCLstdlibLexer extends Lexer {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
-                    case 0 : 
+                    case 0 :
                         int LA11_0 = input.LA(1);
 
                         s = -1;
@@ -3945,7 +3945,7 @@ public class InternalOCLstdlibLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 1 : 
+                    case 1 :
                         int LA11_48 = input.LA(1);
 
                         s = -1;
@@ -3955,7 +3955,7 @@ public class InternalOCLstdlibLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 2 :
                         int LA11_49 = input.LA(1);
 
                         s = -1;
@@ -3972,6 +3972,6 @@ public class InternalOCLstdlibLexer extends Lexer {
             throw nvae;
         }
     }
- 
+
 
 }

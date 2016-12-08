@@ -19,7 +19,7 @@ import org.eclipse.ocl.xtext.essentialocl.ui.internal.EssentialOCLActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
- * introduced subclass. 
+ * introduced subclass.
  */
 public class EssentialOCLExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
 
@@ -27,10 +27,10 @@ public class EssentialOCLExecutableExtensionFactory extends AbstractGuiceAwareEx
 	protected Bundle getBundle() {
 		return EssentialOCLActivator.getInstance().getBundle();
 	}
-	
+
 	@Override
 	protected Injector getInjector() {
 		return EssentialOCLActivator.getInstance().getInjector(EssentialOCLActivator.ORG_ECLIPSE_OCL_XTEXT_ESSENTIALOCL_ESSENTIALOCL);
 	}
-	
+
 }

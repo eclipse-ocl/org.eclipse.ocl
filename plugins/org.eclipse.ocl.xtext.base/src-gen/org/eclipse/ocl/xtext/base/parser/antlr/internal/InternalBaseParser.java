@@ -1,4 +1,4 @@
-package org.eclipse.ocl.xtext.base.parser.antlr.internal; 
+package org.eclipse.ocl.xtext.base.parser.antlr.internal;
 
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.parser.*;
@@ -71,9 +71,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         }
         public InternalBaseParser(TokenStream input, RecognizerSharedState state) {
             super(input, state);
-             
+
         }
-        
+
 
     public String[] getTokenNames() { return InternalBaseParser.tokenNames; }
     public String getGrammarFileName() { return "InternalBase.g"; }
@@ -84,20 +84,20 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
       This grammar contains a lot of empty actions to work around a bug in ANTLR.
       Otherwise the ANTLR tool will create synpreds that cannot be compiled in some rare cases.
     */
-     
+
      	private BaseGrammarAccess grammarAccess;
-     	
+
         public InternalBaseParser(TokenStream input, BaseGrammarAccess grammarAccess) {
             this(input);
             this.grammarAccess = grammarAccess;
             registerRules(grammarAccess.getGrammar());
         }
-        
+
         @Override
         protected String getFirstRuleName() {
-        	return "MultiplicityBoundsCS";	
+        	return "MultiplicityBoundsCS";
        	}
-       	
+
        	@Override
        	protected BaseGrammarAccess getGrammarAccess() {
        		return grammarAccess;
@@ -118,7 +118,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:82:2: iv_ruleMultiplicityBoundsCS= ruleMultiplicityBoundsCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getMultiplicityBoundsCSRule()); 
+               newCompositeNode(grammarAccess.getMultiplicityBoundsCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleMultiplicityBoundsCS=ruleMultiplicityBoundsCS();
@@ -126,18 +126,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleMultiplicityBoundsCS; 
+               current =iv_ruleMultiplicityBoundsCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -156,8 +156,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_upperBound_2_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:92:28: ( ( ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )? ) )
             // InternalBase.g:93:1: ( ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )? )
@@ -172,9 +172,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:95:3: lv_lowerBound_0_0= ruleLOWER
             {
             if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundLOWERParserRuleCall_0_0()); 
-              	    
+
+              	        newCompositeNode(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundLOWERParserRuleCall_0_0());
+
             }
             pushFollow(FollowSets000.FOLLOW_3);
             lv_lowerBound_0_0=ruleLOWER();
@@ -187,12 +187,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
               	            current = createModelElementForParent(grammarAccess.getMultiplicityBoundsCSRule());
               	        }
                      		set(
-                     			current, 
+                     			current,
                      			"lowerBound",
-                      		lv_lowerBound_0_0, 
+                      		lv_lowerBound_0_0,
                       		"org.eclipse.ocl.xtext.base.Base.LOWER");
               	        afterParserOrEnumRuleCall();
-              	    
+
             }
 
             }
@@ -215,7 +215,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getMultiplicityBoundsCSAccess().getFullStopFullStopKeyword_1_0());
-                          
+
                     }
                     // InternalBase.g:115:1: ( (lv_upperBound_2_0= ruleUPPER ) )
                     // InternalBase.g:116:1: (lv_upperBound_2_0= ruleUPPER )
@@ -224,9 +224,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     // InternalBase.g:117:3: lv_upperBound_2_0= ruleUPPER
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	        newCompositeNode(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundUPPERParserRuleCall_1_1_0()); 
-                      	    
+
+                      	        newCompositeNode(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundUPPERParserRuleCall_1_1_0());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     lv_upperBound_2_0=ruleUPPER();
@@ -239,12 +239,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                       	            current = createModelElementForParent(grammarAccess.getMultiplicityBoundsCSRule());
                       	        }
                              		set(
-                             			current, 
+                             			current,
                              			"upperBound",
-                              		lv_upperBound_2_0, 
+                              		lv_upperBound_2_0,
                               		"org.eclipse.ocl.xtext.base.Base.UPPER");
                       	        afterParserOrEnumRuleCall();
-                      	    
+
                     }
 
                     }
@@ -265,14 +265,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -293,7 +293,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:143:2: iv_ruleMultiplicityCS= ruleMultiplicityCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getMultiplicityCSRule()); 
+               newCompositeNode(grammarAccess.getMultiplicityCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleMultiplicityCS=ruleMultiplicityCS();
@@ -301,18 +301,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleMultiplicityCS; 
+               current =iv_ruleMultiplicityCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -334,8 +334,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         EObject this_MultiplicityStringCS_2 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:153:28: ( (otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']' ) )
             // InternalBase.g:154:1: (otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']' )
@@ -347,7 +347,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getMultiplicityCSAccess().getLeftSquareBracketKeyword_0());
-                  
+
             }
             // InternalBase.g:158:1: (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS )
             int alt2=2;
@@ -371,14 +371,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     // InternalBase.g:159:2: this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMultiplicityCSAccess().getMultiplicityBoundsCSParserRuleCall_1_0()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMultiplicityCSAccess().getMultiplicityBoundsCSParserRuleCall_1_0());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_6);
                     this_MultiplicityBoundsCS_1=ruleMultiplicityBoundsCS();
@@ -386,10 +386,10 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_MultiplicityBoundsCS_1; 
+
+                              current = this_MultiplicityBoundsCS_1;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -398,14 +398,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     // InternalBase.g:172:2: this_MultiplicityStringCS_2= ruleMultiplicityStringCS
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMultiplicityCSAccess().getMultiplicityStringCSParserRuleCall_1_1()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMultiplicityCSAccess().getMultiplicityStringCSParserRuleCall_1_1());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_6);
                     this_MultiplicityStringCS_2=ruleMultiplicityStringCS();
@@ -413,10 +413,10 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_MultiplicityStringCS_2; 
+
+                              current = this_MultiplicityStringCS_2;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -442,7 +442,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0());
-                          
+
                     }
 
                     }
@@ -460,7 +460,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_isNullFree_4_0, grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0());
-                          
+
                     }
                     if ( state.backtracking==0 ) {
 
@@ -468,7 +468,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                       	            current = createModelElement(grammarAccess.getMultiplicityCSRule());
                       	        }
                              		setWithLastConsumed(current, "isNullFree", true, "|1");
-                      	    
+
                     }
 
                     }
@@ -486,7 +486,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_5, grammarAccess.getMultiplicityCSAccess().getRightSquareBracketKeyword_3());
-                  
+
             }
 
             }
@@ -495,14 +495,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -523,7 +523,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:217:2: iv_ruleMultiplicityStringCS= ruleMultiplicityStringCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getMultiplicityStringCSRule()); 
+               newCompositeNode(grammarAccess.getMultiplicityStringCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleMultiplicityStringCS=ruleMultiplicityStringCS();
@@ -531,18 +531,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleMultiplicityStringCS; 
+               current =iv_ruleMultiplicityStringCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -559,8 +559,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         Token lv_stringBounds_0_2=null;
         Token lv_stringBounds_0_3=null;
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:227:28: ( ( ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) ) ) )
             // InternalBase.g:228:1: ( ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) ) )
@@ -605,7 +605,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_stringBounds_0_1, grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAsteriskKeyword_0_0());
-                          
+
                     }
                     if ( state.backtracking==0 ) {
 
@@ -613,7 +613,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                       	            current = createModelElement(grammarAccess.getMultiplicityStringCSRule());
                       	        }
                              		setWithLastConsumed(current, "stringBounds", lv_stringBounds_0_1, null);
-                      	    
+
                     }
 
                     }
@@ -625,7 +625,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_stringBounds_0_2, grammarAccess.getMultiplicityStringCSAccess().getStringBoundsPlusSignKeyword_0_1());
-                          
+
                     }
                     if ( state.backtracking==0 ) {
 
@@ -633,7 +633,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                       	            current = createModelElement(grammarAccess.getMultiplicityStringCSRule());
                       	        }
                              		setWithLastConsumed(current, "stringBounds", lv_stringBounds_0_2, null);
-                      	    
+
                     }
 
                     }
@@ -645,7 +645,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_stringBounds_0_3, grammarAccess.getMultiplicityStringCSAccess().getStringBoundsQuestionMarkKeyword_0_2());
-                          
+
                     }
                     if ( state.backtracking==0 ) {
 
@@ -653,7 +653,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                       	            current = createModelElement(grammarAccess.getMultiplicityStringCSRule());
                       	        }
                              		setWithLastConsumed(current, "stringBounds", lv_stringBounds_0_3, null);
-                      	    
+
                     }
 
                     }
@@ -671,14 +671,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -699,7 +699,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:280:2: iv_rulePathNameCS= rulePathNameCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getPathNameCSRule()); 
+               newCompositeNode(grammarAccess.getPathNameCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_rulePathNameCS=rulePathNameCS();
@@ -707,18 +707,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_rulePathNameCS; 
+               current =iv_rulePathNameCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -737,8 +737,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         EObject lv_ownedPathElements_2_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:290:28: ( ( ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )* ) )
             // InternalBase.g:291:1: ( ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )* )
@@ -753,9 +753,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:293:3: lv_ownedPathElements_0_0= ruleFirstPathElementCS
             {
             if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getPathNameCSAccess().getOwnedPathElementsFirstPathElementCSParserRuleCall_0_0()); 
-              	    
+
+              	        newCompositeNode(grammarAccess.getPathNameCSAccess().getOwnedPathElementsFirstPathElementCSParserRuleCall_0_0());
+
             }
             pushFollow(FollowSets000.FOLLOW_8);
             lv_ownedPathElements_0_0=ruleFirstPathElementCS();
@@ -768,12 +768,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
               	            current = createModelElementForParent(grammarAccess.getPathNameCSRule());
               	        }
                      		add(
-                     			current, 
+                     			current,
                      			"ownedPathElements",
-                      		lv_ownedPathElements_0_0, 
+                      		lv_ownedPathElements_0_0,
                       		"org.eclipse.ocl.xtext.base.Base.FirstPathElementCS");
               	        afterParserOrEnumRuleCall();
-              	    
+
             }
 
             }
@@ -800,7 +800,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_1, grammarAccess.getPathNameCSAccess().getColonColonKeyword_1_0());
-            	          
+
             	    }
             	    // InternalBase.g:313:1: ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) )
             	    // InternalBase.g:314:1: (lv_ownedPathElements_2_0= ruleNextPathElementCS )
@@ -809,9 +809,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             	    // InternalBase.g:315:3: lv_ownedPathElements_2_0= ruleNextPathElementCS
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getPathNameCSAccess().getOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getPathNameCSAccess().getOwnedPathElementsNextPathElementCSParserRuleCall_1_1_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_8);
             	    lv_ownedPathElements_2_0=ruleNextPathElementCS();
@@ -824,12 +824,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getPathNameCSRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"ownedPathElements",
-            	              		lv_ownedPathElements_2_0, 
+            	              		lv_ownedPathElements_2_0,
             	              		"org.eclipse.ocl.xtext.base.Base.NextPathElementCS");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -853,14 +853,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -881,7 +881,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:341:2: iv_ruleFirstPathElementCS= ruleFirstPathElementCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getFirstPathElementCSRule()); 
+               newCompositeNode(grammarAccess.getFirstPathElementCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleFirstPathElementCS=ruleFirstPathElementCS();
@@ -889,18 +889,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleFirstPathElementCS; 
+               current =iv_ruleFirstPathElementCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -913,8 +913,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
     public final EObject ruleFirstPathElementCS() throws RecognitionException {
         EObject current = null;
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:351:28: ( ( ( ruleUnrestrictedName ) ) )
             // InternalBase.g:352:1: ( ( ruleUnrestrictedName ) )
@@ -926,21 +926,21 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:354:3: ruleUnrestrictedName
             {
             if ( state.backtracking==0 ) {
-               
-              		  /* */ 
-              		
+
+              		  /* */
+
             }
             if ( state.backtracking==0 ) {
 
               			if (current==null) {
               	            current = createModelElement(grammarAccess.getFirstPathElementCSRule());
               	        }
-                      
+
             }
             if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementCrossReference_0()); 
-              	    
+
+              	        newCompositeNode(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementCrossReference_0());
+
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleUnrestrictedName();
@@ -948,9 +948,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               
+
               	        afterParserOrEnumRuleCall();
-              	    
+
             }
 
             }
@@ -962,14 +962,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -990,7 +990,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:380:2: iv_ruleNextPathElementCS= ruleNextPathElementCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getNextPathElementCSRule()); 
+               newCompositeNode(grammarAccess.getNextPathElementCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleNextPathElementCS=ruleNextPathElementCS();
@@ -998,18 +998,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleNextPathElementCS; 
+               current =iv_ruleNextPathElementCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1022,8 +1022,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
     public final EObject ruleNextPathElementCS() throws RecognitionException {
         EObject current = null;
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:390:28: ( ( ( ruleUnreservedName ) ) )
             // InternalBase.g:391:1: ( ( ruleUnreservedName ) )
@@ -1035,21 +1035,21 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:393:3: ruleUnreservedName
             {
             if ( state.backtracking==0 ) {
-               
-              		  /* */ 
-              		
+
+              		  /* */
+
             }
             if ( state.backtracking==0 ) {
 
               			if (current==null) {
               	            current = createModelElement(grammarAccess.getNextPathElementCSRule());
               	        }
-                      
+
             }
             if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementCrossReference_0()); 
-              	    
+
+              	        newCompositeNode(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementCrossReference_0());
+
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleUnreservedName();
@@ -1057,9 +1057,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               
+
               	        afterParserOrEnumRuleCall();
-              	    
+
             }
 
             }
@@ -1071,14 +1071,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1099,7 +1099,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:419:2: iv_ruleTemplateBindingCS= ruleTemplateBindingCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getTemplateBindingCSRule()); 
+               newCompositeNode(grammarAccess.getTemplateBindingCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleTemplateBindingCS=ruleTemplateBindingCS();
@@ -1107,18 +1107,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleTemplateBindingCS; 
+               current =iv_ruleTemplateBindingCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1139,8 +1139,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         EObject lv_ownedMultiplicity_3_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:429:28: ( ( ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )? ) )
             // InternalBase.g:430:1: ( ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )? )
@@ -1155,9 +1155,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:432:3: lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS
             {
             if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_0_0()); 
-              	    
+
+              	        newCompositeNode(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_0_0());
+
             }
             pushFollow(FollowSets000.FOLLOW_10);
             lv_ownedSubstitutions_0_0=ruleTemplateParameterSubstitutionCS();
@@ -1170,12 +1170,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
               	            current = createModelElementForParent(grammarAccess.getTemplateBindingCSRule());
               	        }
                      		add(
-                     			current, 
+                     			current,
                      			"ownedSubstitutions",
-                      		lv_ownedSubstitutions_0_0, 
+                      		lv_ownedSubstitutions_0_0,
                       		"org.eclipse.ocl.xtext.base.Base.TemplateParameterSubstitutionCS");
               	        afterParserOrEnumRuleCall();
-              	    
+
             }
 
             }
@@ -1202,7 +1202,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_1, grammarAccess.getTemplateBindingCSAccess().getCommaKeyword_1_0());
-            	          
+
             	    }
             	    // InternalBase.g:452:1: ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) )
             	    // InternalBase.g:453:1: (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS )
@@ -1211,9 +1211,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             	    // InternalBase.g:454:3: lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_1_1_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getTemplateBindingCSAccess().getOwnedSubstitutionsTemplateParameterSubstitutionCSParserRuleCall_1_1_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_10);
             	    lv_ownedSubstitutions_2_0=ruleTemplateParameterSubstitutionCS();
@@ -1226,12 +1226,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getTemplateBindingCSRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"ownedSubstitutions",
-            	              		lv_ownedSubstitutions_2_0, 
+            	              		lv_ownedSubstitutions_2_0,
             	              		"org.eclipse.ocl.xtext.base.Base.TemplateParameterSubstitutionCS");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -1263,9 +1263,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     // InternalBase.g:472:3: lv_ownedMultiplicity_3_0= ruleMultiplicityCS
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	        newCompositeNode(grammarAccess.getTemplateBindingCSAccess().getOwnedMultiplicityMultiplicityCSParserRuleCall_2_0()); 
-                      	    
+
+                      	        newCompositeNode(grammarAccess.getTemplateBindingCSAccess().getOwnedMultiplicityMultiplicityCSParserRuleCall_2_0());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     lv_ownedMultiplicity_3_0=ruleMultiplicityCS();
@@ -1278,12 +1278,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                       	            current = createModelElementForParent(grammarAccess.getTemplateBindingCSRule());
                       	        }
                              		set(
-                             			current, 
+                             			current,
                              			"ownedMultiplicity",
-                              		lv_ownedMultiplicity_3_0, 
+                              		lv_ownedMultiplicity_3_0,
                               		"org.eclipse.ocl.xtext.base.Base.MultiplicityCS");
                       	        afterParserOrEnumRuleCall();
-                      	    
+
                     }
 
                     }
@@ -1301,14 +1301,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1329,7 +1329,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:498:2: iv_ruleTemplateParameterSubstitutionCS= ruleTemplateParameterSubstitutionCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getTemplateParameterSubstitutionCSRule()); 
+               newCompositeNode(grammarAccess.getTemplateParameterSubstitutionCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleTemplateParameterSubstitutionCS=ruleTemplateParameterSubstitutionCS();
@@ -1337,18 +1337,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleTemplateParameterSubstitutionCS; 
+               current =iv_ruleTemplateParameterSubstitutionCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1364,8 +1364,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         EObject lv_ownedActualParameter_0_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:508:28: ( ( (lv_ownedActualParameter_0_0= ruleTypeRefCS ) ) )
             // InternalBase.g:509:1: ( (lv_ownedActualParameter_0_0= ruleTypeRefCS ) )
@@ -1377,9 +1377,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:511:3: lv_ownedActualParameter_0_0= ruleTypeRefCS
             {
             if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterTypeRefCSParserRuleCall_0()); 
-              	    
+
+              	        newCompositeNode(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterTypeRefCSParserRuleCall_0());
+
             }
             pushFollow(FollowSets000.FOLLOW_2);
             lv_ownedActualParameter_0_0=ruleTypeRefCS();
@@ -1392,12 +1392,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
               	            current = createModelElementForParent(grammarAccess.getTemplateParameterSubstitutionCSRule());
               	        }
                      		set(
-                     			current, 
+                     			current,
                      			"ownedActualParameter",
-                      		lv_ownedActualParameter_0_0, 
+                      		lv_ownedActualParameter_0_0,
                       		"org.eclipse.ocl.xtext.base.Base.TypeRefCS");
               	        afterParserOrEnumRuleCall();
-              	    
+
             }
 
             }
@@ -1409,14 +1409,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1437,7 +1437,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:539:2: iv_ruleTypeParameterCS= ruleTypeParameterCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getTypeParameterCSRule()); 
+               newCompositeNode(grammarAccess.getTypeParameterCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleTypeParameterCS=ruleTypeParameterCS();
@@ -1445,18 +1445,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleTypeParameterCS; 
+               current =iv_ruleTypeParameterCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1478,8 +1478,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         EObject lv_ownedExtends_4_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:549:28: ( ( ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )? ) )
             // InternalBase.g:550:1: ( ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )? )
@@ -1494,9 +1494,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:552:3: lv_name_0_0= ruleUnrestrictedName
             {
             if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getTypeParameterCSAccess().getNameUnrestrictedNameParserRuleCall_0_0()); 
-              	    
+
+              	        newCompositeNode(grammarAccess.getTypeParameterCSAccess().getNameUnrestrictedNameParserRuleCall_0_0());
+
             }
             pushFollow(FollowSets000.FOLLOW_12);
             lv_name_0_0=ruleUnrestrictedName();
@@ -1509,12 +1509,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
               	            current = createModelElementForParent(grammarAccess.getTypeParameterCSRule());
               	        }
                      		set(
-                     			current, 
+                     			current,
                      			"name",
-                      		lv_name_0_0, 
+                      		lv_name_0_0,
                       		"org.eclipse.ocl.xtext.base.Base.UnrestrictedName");
               	        afterParserOrEnumRuleCall();
-              	    
+
             }
 
             }
@@ -1537,7 +1537,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getTypeParameterCSAccess().getExtendsKeyword_1_0());
-                          
+
                     }
                     // InternalBase.g:572:1: ( (lv_ownedExtends_2_0= ruleTypedRefCS ) )
                     // InternalBase.g:573:1: (lv_ownedExtends_2_0= ruleTypedRefCS )
@@ -1546,9 +1546,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     // InternalBase.g:574:3: lv_ownedExtends_2_0= ruleTypedRefCS
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	        newCompositeNode(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_1_0()); 
-                      	    
+
+                      	        newCompositeNode(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_1_0());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_13);
                     lv_ownedExtends_2_0=ruleTypedRefCS();
@@ -1561,12 +1561,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                       	            current = createModelElementForParent(grammarAccess.getTypeParameterCSRule());
                       	        }
                              		add(
-                             			current, 
+                             			current,
                              			"ownedExtends",
-                              		lv_ownedExtends_2_0, 
+                              		lv_ownedExtends_2_0,
                               		"org.eclipse.ocl.xtext.base.Base.TypedRefCS");
                       	        afterParserOrEnumRuleCall();
-                      	    
+
                     }
 
                     }
@@ -1593,7 +1593,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     	    if ( state.backtracking==0 ) {
 
                     	          	newLeafNode(otherlv_3, grammarAccess.getTypeParameterCSAccess().getAmpersandAmpersandKeyword_1_2_0());
-                    	          
+
                     	    }
                     	    // InternalBase.g:594:1: ( (lv_ownedExtends_4_0= ruleTypedRefCS ) )
                     	    // InternalBase.g:595:1: (lv_ownedExtends_4_0= ruleTypedRefCS )
@@ -1602,9 +1602,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     	    // InternalBase.g:596:3: lv_ownedExtends_4_0= ruleTypedRefCS
                     	    {
                     	    if ( state.backtracking==0 ) {
-                    	       
-                    	      	        newCompositeNode(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_2_1_0()); 
-                    	      	    
+
+                    	      	        newCompositeNode(grammarAccess.getTypeParameterCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_1_2_1_0());
+
                     	    }
                     	    pushFollow(FollowSets000.FOLLOW_13);
                     	    lv_ownedExtends_4_0=ruleTypedRefCS();
@@ -1617,12 +1617,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     	      	            current = createModelElementForParent(grammarAccess.getTypeParameterCSRule());
                     	      	        }
                     	             		add(
-                    	             			current, 
+                    	             			current,
                     	             			"ownedExtends",
-                    	              		lv_ownedExtends_4_0, 
+                    	              		lv_ownedExtends_4_0,
                     	              		"org.eclipse.ocl.xtext.base.Base.TypedRefCS");
                     	      	        afterParserOrEnumRuleCall();
-                    	      	    
+
                     	    }
 
                     	    }
@@ -1652,14 +1652,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1680,7 +1680,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:622:2: iv_ruleTypeRefCS= ruleTypeRefCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getTypeRefCSRule()); 
+               newCompositeNode(grammarAccess.getTypeRefCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleTypeRefCS=ruleTypeRefCS();
@@ -1688,18 +1688,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleTypeRefCS; 
+               current =iv_ruleTypeRefCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1717,8 +1717,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         EObject this_WildcardTypeRefCS_1 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:632:28: ( (this_TypedRefCS_0= ruleTypedRefCS | this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS ) )
             // InternalBase.g:633:1: (this_TypedRefCS_0= ruleTypedRefCS | this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS )
@@ -1745,14 +1745,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     // InternalBase.g:634:2: this_TypedRefCS_0= ruleTypedRefCS
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getTypeRefCSAccess().getTypedRefCSParserRuleCall_0()); 
-                          
+
+                              newCompositeNode(grammarAccess.getTypeRefCSAccess().getTypedRefCSParserRuleCall_0());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_TypedRefCS_0=ruleTypedRefCS();
@@ -1760,10 +1760,10 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_TypedRefCS_0; 
+
+                              current = this_TypedRefCS_0;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -1772,14 +1772,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     // InternalBase.g:647:2: this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getTypeRefCSAccess().getWildcardTypeRefCSParserRuleCall_1()); 
-                          
+
+                              newCompositeNode(grammarAccess.getTypeRefCSAccess().getWildcardTypeRefCSParserRuleCall_1());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_WildcardTypeRefCS_1=ruleWildcardTypeRefCS();
@@ -1787,10 +1787,10 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_WildcardTypeRefCS_1; 
+
+                              current = this_WildcardTypeRefCS_1;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -1802,14 +1802,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1830,7 +1830,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:668:2: iv_ruleTypedRefCS= ruleTypedRefCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getTypedRefCSRule()); 
+               newCompositeNode(grammarAccess.getTypedRefCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleTypedRefCS=ruleTypedRefCS();
@@ -1838,18 +1838,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleTypedRefCS; 
+               current =iv_ruleTypedRefCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1865,21 +1865,21 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         EObject this_TypedTypeRefCS_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:678:28: (this_TypedTypeRefCS_0= ruleTypedTypeRefCS )
             // InternalBase.g:680:2: this_TypedTypeRefCS_0= ruleTypedTypeRefCS
             {
             if ( state.backtracking==0 ) {
-               
-              	  /* */ 
-              	
+
+              	  /* */
+
             }
             if ( state.backtracking==0 ) {
-               
-                      newCompositeNode(grammarAccess.getTypedRefCSAccess().getTypedTypeRefCSParserRuleCall()); 
-                  
+
+                      newCompositeNode(grammarAccess.getTypedRefCSAccess().getTypedTypeRefCSParserRuleCall());
+
             }
             pushFollow(FollowSets000.FOLLOW_2);
             this_TypedTypeRefCS_0=ruleTypedTypeRefCS();
@@ -1887,23 +1887,23 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               
-                      current = this_TypedTypeRefCS_0; 
+
+                      current = this_TypedTypeRefCS_0;
                       afterParserOrEnumRuleCall();
-                  
+
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1924,7 +1924,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:701:2: iv_ruleTypedTypeRefCS= ruleTypedTypeRefCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getTypedTypeRefCSRule()); 
+               newCompositeNode(grammarAccess.getTypedTypeRefCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleTypedTypeRefCS=ruleTypedTypeRefCS();
@@ -1932,18 +1932,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleTypedTypeRefCS; 
+               current =iv_ruleTypedTypeRefCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1963,8 +1963,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         EObject lv_ownedBinding_2_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:711:28: ( ( ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )? ) )
             // InternalBase.g:712:1: ( ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )? )
@@ -1979,9 +1979,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:714:3: lv_ownedPathName_0_0= rulePathNameCS
             {
             if ( state.backtracking==0 ) {
-               
-              	        newCompositeNode(grammarAccess.getTypedTypeRefCSAccess().getOwnedPathNamePathNameCSParserRuleCall_0_0()); 
-              	    
+
+              	        newCompositeNode(grammarAccess.getTypedTypeRefCSAccess().getOwnedPathNamePathNameCSParserRuleCall_0_0());
+
             }
             pushFollow(FollowSets000.FOLLOW_14);
             lv_ownedPathName_0_0=rulePathNameCS();
@@ -1994,12 +1994,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
               	            current = createModelElementForParent(grammarAccess.getTypedTypeRefCSRule());
               	        }
                      		set(
-                     			current, 
+                     			current,
                      			"ownedPathName",
-                      		lv_ownedPathName_0_0, 
+                      		lv_ownedPathName_0_0,
                       		"org.eclipse.ocl.xtext.base.Base.PathNameCS");
               	        afterParserOrEnumRuleCall();
-              	    
+
             }
 
             }
@@ -2022,7 +2022,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getTypedTypeRefCSAccess().getLeftParenthesisKeyword_1_0());
-                          
+
                     }
                     // InternalBase.g:734:1: ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) )
                     // InternalBase.g:735:1: (lv_ownedBinding_2_0= ruleTemplateBindingCS )
@@ -2031,9 +2031,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     // InternalBase.g:736:3: lv_ownedBinding_2_0= ruleTemplateBindingCS
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	        newCompositeNode(grammarAccess.getTypedTypeRefCSAccess().getOwnedBindingTemplateBindingCSParserRuleCall_1_1_0()); 
-                      	    
+
+                      	        newCompositeNode(grammarAccess.getTypedTypeRefCSAccess().getOwnedBindingTemplateBindingCSParserRuleCall_1_1_0());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_15);
                     lv_ownedBinding_2_0=ruleTemplateBindingCS();
@@ -2046,12 +2046,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                       	            current = createModelElementForParent(grammarAccess.getTypedTypeRefCSRule());
                       	        }
                              		set(
-                             			current, 
+                             			current,
                              			"ownedBinding",
-                              		lv_ownedBinding_2_0, 
+                              		lv_ownedBinding_2_0,
                               		"org.eclipse.ocl.xtext.base.Base.TemplateBindingCS");
                       	        afterParserOrEnumRuleCall();
-                      	    
+
                     }
 
                     }
@@ -2063,7 +2063,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getTypedTypeRefCSAccess().getRightParenthesisKeyword_1_2());
-                          
+
                     }
 
                     }
@@ -2078,14 +2078,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2106,7 +2106,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:766:2: iv_ruleUnreservedName= ruleUnreservedName EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getUnreservedNameRule()); 
+               newCompositeNode(grammarAccess.getUnreservedNameRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleUnreservedName=ruleUnreservedName();
@@ -2114,18 +2114,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleUnreservedName.getText(); 
+               current =iv_ruleUnreservedName.getText();
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2141,16 +2141,16 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken this_UnrestrictedName_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:776:28: (this_UnrestrictedName_0= ruleUnrestrictedName )
             // InternalBase.g:778:5: this_UnrestrictedName_0= ruleUnrestrictedName
             {
             if ( state.backtracking==0 ) {
-               
-                      newCompositeNode(grammarAccess.getUnreservedNameAccess().getUnrestrictedNameParserRuleCall()); 
-                  
+
+                      newCompositeNode(grammarAccess.getUnreservedNameAccess().getUnrestrictedNameParserRuleCall());
+
             }
             pushFollow(FollowSets000.FOLLOW_2);
             this_UnrestrictedName_0=ruleUnrestrictedName();
@@ -2160,25 +2160,25 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               		current.merge(this_UnrestrictedName_0);
-                  
+
             }
             if ( state.backtracking==0 ) {
-               
+
                       afterParserOrEnumRuleCall();
-                  
+
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2199,7 +2199,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:798:2: iv_ruleUnrestrictedName= ruleUnrestrictedName EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getUnrestrictedNameRule()); 
+               newCompositeNode(grammarAccess.getUnrestrictedNameRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleUnrestrictedName=ruleUnrestrictedName();
@@ -2207,18 +2207,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleUnrestrictedName.getText(); 
+               current =iv_ruleUnrestrictedName.getText();
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2234,16 +2234,16 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken this_Identifier_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:808:28: (this_Identifier_0= ruleIdentifier )
             // InternalBase.g:810:5: this_Identifier_0= ruleIdentifier
             {
             if ( state.backtracking==0 ) {
-               
-                      newCompositeNode(grammarAccess.getUnrestrictedNameAccess().getIdentifierParserRuleCall()); 
-                  
+
+                      newCompositeNode(grammarAccess.getUnrestrictedNameAccess().getIdentifierParserRuleCall());
+
             }
             pushFollow(FollowSets000.FOLLOW_2);
             this_Identifier_0=ruleIdentifier();
@@ -2253,25 +2253,25 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               		current.merge(this_Identifier_0);
-                  
+
             }
             if ( state.backtracking==0 ) {
-               
+
                       afterParserOrEnumRuleCall();
-                  
+
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2292,7 +2292,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:830:2: iv_ruleWildcardTypeRefCS= ruleWildcardTypeRefCS EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getWildcardTypeRefCSRule()); 
+               newCompositeNode(grammarAccess.getWildcardTypeRefCSRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleWildcardTypeRefCS=ruleWildcardTypeRefCS();
@@ -2300,18 +2300,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleWildcardTypeRefCS; 
+               current =iv_ruleWildcardTypeRefCS;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2329,8 +2329,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         EObject lv_ownedExtends_3_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:840:28: ( ( () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )? ) )
             // InternalBase.g:841:1: ( () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )? )
@@ -2339,19 +2339,19 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:841:2: () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )?
             {
             // InternalBase.g:841:2: ()
-            // InternalBase.g:842:2: 
+            // InternalBase.g:842:2:
             {
             if ( state.backtracking==0 ) {
-               
-              	  /* */ 
-              	
+
+              	  /* */
+
             }
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
                           grammarAccess.getWildcardTypeRefCSAccess().getWildcardTypeRefCSAction_0(),
                           current);
-                  
+
             }
 
             }
@@ -2360,7 +2360,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getWildcardTypeRefCSAccess().getQuestionMarkKeyword_1());
-                  
+
             }
             // InternalBase.g:854:1: (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )?
             int alt12=2;
@@ -2377,7 +2377,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getWildcardTypeRefCSAccess().getExtendsKeyword_2_0());
-                          
+
                     }
                     // InternalBase.g:858:1: ( (lv_ownedExtends_3_0= ruleTypedRefCS ) )
                     // InternalBase.g:859:1: (lv_ownedExtends_3_0= ruleTypedRefCS )
@@ -2386,9 +2386,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     // InternalBase.g:860:3: lv_ownedExtends_3_0= ruleTypedRefCS
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	        newCompositeNode(grammarAccess.getWildcardTypeRefCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_2_1_0()); 
-                      	    
+
+                      	        newCompositeNode(grammarAccess.getWildcardTypeRefCSAccess().getOwnedExtendsTypedRefCSParserRuleCall_2_1_0());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     lv_ownedExtends_3_0=ruleTypedRefCS();
@@ -2401,12 +2401,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                       	            current = createModelElementForParent(grammarAccess.getWildcardTypeRefCSRule());
                       	        }
                              		set(
-                             			current, 
+                             			current,
                              			"ownedExtends",
-                              		lv_ownedExtends_3_0, 
+                              		lv_ownedExtends_3_0,
                               		"org.eclipse.ocl.xtext.base.Base.TypedRefCS");
                       	        afterParserOrEnumRuleCall();
-                      	    
+
                     }
 
                     }
@@ -2427,14 +2427,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2455,7 +2455,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:886:2: iv_ruleID= ruleID EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getIDRule()); 
+               newCompositeNode(grammarAccess.getIDRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleID=ruleID();
@@ -2463,18 +2463,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleID.getText(); 
+               current =iv_ruleID.getText();
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2490,8 +2490,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         Token this_SIMPLE_ID_0=null;
         Token this_ESCAPED_ID_1=null;
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:896:28: ( (this_SIMPLE_ID_0= RULE_SIMPLE_ID | this_ESCAPED_ID_1= RULE_ESCAPED_ID ) )
             // InternalBase.g:897:1: (this_SIMPLE_ID_0= RULE_SIMPLE_ID | this_ESCAPED_ID_1= RULE_ESCAPED_ID )
@@ -2521,12 +2521,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       		current.merge(this_SIMPLE_ID_0);
-                          
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                          newLeafNode(this_SIMPLE_ID_0, grammarAccess.getIDAccess().getSIMPLE_IDTerminalRuleCall_0()); 
-                          
+
+                          newLeafNode(this_SIMPLE_ID_0, grammarAccess.getIDAccess().getSIMPLE_IDTerminalRuleCall_0());
+
                     }
 
                     }
@@ -2538,12 +2538,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       		current.merge(this_ESCAPED_ID_1);
-                          
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                          newLeafNode(this_ESCAPED_ID_1, grammarAccess.getIDAccess().getESCAPED_IDTerminalRuleCall_1()); 
-                          
+
+                          newLeafNode(this_ESCAPED_ID_1, grammarAccess.getIDAccess().getESCAPED_IDTerminalRuleCall_1());
+
                     }
 
                     }
@@ -2555,14 +2555,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2583,7 +2583,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:922:2: iv_ruleIdentifier= ruleIdentifier EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getIdentifierRule()); 
+               newCompositeNode(grammarAccess.getIdentifierRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleIdentifier=ruleIdentifier();
@@ -2591,18 +2591,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleIdentifier.getText(); 
+               current =iv_ruleIdentifier.getText();
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2618,16 +2618,16 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken this_ID_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:932:28: (this_ID_0= ruleID )
             // InternalBase.g:934:5: this_ID_0= ruleID
             {
             if ( state.backtracking==0 ) {
-               
-                      newCompositeNode(grammarAccess.getIdentifierAccess().getIDParserRuleCall()); 
-                  
+
+                      newCompositeNode(grammarAccess.getIdentifierAccess().getIDParserRuleCall());
+
             }
             pushFollow(FollowSets000.FOLLOW_2);
             this_ID_0=ruleID();
@@ -2637,25 +2637,25 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               		current.merge(this_ID_0);
-                  
+
             }
             if ( state.backtracking==0 ) {
-               
+
                       afterParserOrEnumRuleCall();
-                  
+
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2676,7 +2676,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:954:2: iv_ruleLOWER= ruleLOWER EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getLOWERRule()); 
+               newCompositeNode(grammarAccess.getLOWERRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleLOWER=ruleLOWER();
@@ -2684,18 +2684,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleLOWER.getText(); 
+               current =iv_ruleLOWER.getText();
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2710,8 +2710,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
 
         Token this_INT_0=null;
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:964:28: (this_INT_0= RULE_INT )
             // InternalBase.g:965:5: this_INT_0= RULE_INT
@@ -2720,25 +2720,25 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               		current.merge(this_INT_0);
-                  
+
             }
             if ( state.backtracking==0 ) {
-               
-                  newLeafNode(this_INT_0, grammarAccess.getLOWERAccess().getINTTerminalRuleCall()); 
-                  
-            }
+
+                  newLeafNode(this_INT_0, grammarAccess.getLOWERAccess().getINTTerminalRuleCall());
 
             }
 
+            }
+
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2759,7 +2759,7 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             // InternalBase.g:986:2: iv_ruleUPPER= ruleUPPER EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getUPPERRule()); 
+               newCompositeNode(grammarAccess.getUPPERRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleUPPER=ruleUPPER();
@@ -2767,18 +2767,18 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleUPPER.getText(); 
+               current =iv_ruleUPPER.getText();
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2794,8 +2794,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
         Token this_INT_0=null;
         Token kw=null;
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalBase.g:996:28: ( (this_INT_0= RULE_INT | kw= '*' ) )
             // InternalBase.g:997:1: (this_INT_0= RULE_INT | kw= '*' )
@@ -2825,12 +2825,12 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       		current.merge(this_INT_0);
-                          
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                          newLeafNode(this_INT_0, grammarAccess.getUPPERAccess().getINTTerminalRuleCall_0()); 
-                          
+
+                          newLeafNode(this_INT_0, grammarAccess.getUPPERAccess().getINTTerminalRuleCall_0());
+
                     }
 
                     }
@@ -2842,8 +2842,8 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getUPPERAccess().getAsteriskKeyword_1()); 
-                          
+                              newLeafNode(kw, grammarAccess.getUPPERAccess().getAsteriskKeyword_1());
+
                     }
 
                     }
@@ -2855,14 +2855,14 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2872,9 +2872,9 @@ public class InternalBaseParser extends AbstractInternalAntlrParser {
     // Delegated rules
 
 
- 
 
-    
+
+
     private static class FollowSets000 {
         public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});

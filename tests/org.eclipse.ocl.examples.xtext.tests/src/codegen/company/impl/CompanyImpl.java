@@ -32,7 +32,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -41,26 +40,18 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
-
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
-
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
-
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -181,7 +172,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	 */
 	public CompanySizeKind getSize() {
 		/**
-		 * 
+		 *
 		 * let
 		 *   table : Set(Tuple(range:Sequence(Integer), size:company::CompanySizeKind[1])) = Set{
 		 *     Tuple{range = Sequence{0..49}, size = CompanySizeKind::small
@@ -196,53 +187,53 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
-		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue safe_null_sources = (SetValue)CollectionExcludingOperation.INSTANCE.evaluate(CodegencompanyTables.table, null);
-		@NonNull Iterator<?> ITERATOR__1 = safe_null_sources.iterator();
+		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue safe_null_sources = (SetValue)CollectionExcludingOperation.INSTANCE.evaluate(CodegencompanyTables.table, (Object)null);
+		@NonNull Iterator<Object> ITERATOR__1 = safe_null_sources.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@Nullable TupleValue any;
 		while (true) {
-		    if (!ITERATOR__1.hasNext()) {
-		        throw new InvalidValueException("No matching content for 'any'");
-		    }
-		    @SuppressWarnings("null")
-		    /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull TupleValue _1 = (TupleValue)ITERATOR__1.next();
-		    /**
-		     * range->includes(employees->size())
-		     */
-		    @SuppressWarnings("null")
-		    final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue range = (SequenceValue)_1.getValue(0/*range*/);
-		    @SuppressWarnings("null")
-		    final /*@Thrown*/ java.util.@NonNull List<Employee> employees = this.getEmployees();
-		    final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
-		    final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
-		    final /*@NonInvalid*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(range, size).booleanValue();
-		    //
-		    if (includes != ValueUtil.FALSE_VALUE) {			// Carry on till something found
-		        any = _1;
-		        break;
-		    }
+			if (!ITERATOR__1.hasNext()) {
+				throw new InvalidValueException("No matching content for 'any'");
+			}
+			@SuppressWarnings("null")
+			/*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull TupleValue _1 = (TupleValue)ITERATOR__1.next();
+			/**
+			 * range->includes(employees->size())
+			 */
+			@SuppressWarnings("null")
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue range = (SequenceValue)_1.getValue(0/*range*/);
+			@SuppressWarnings("null")
+			final /*@Thrown*/ java.util.@NonNull List<Employee> employees = this.getEmployees();
+			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
+			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
+			final /*@NonInvalid*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(range, size).booleanValue();
+			//
+			if (includes != ValueUtil.FALSE_VALUE) {			// Carry on till something found
+				any = _1;
+				break;
+			}
 		}
 		/*@Caught*/ @Nullable Object CAUGHT_any;
 		try {
-		    CAUGHT_any = any;
+			CAUGHT_any = any;
 		}
 		catch (Exception e) {
-		    CAUGHT_any = ValueUtil.createInvalidValue(e);
+			CAUGHT_any = ValueUtil.createInvalidValue(e);
 		}
 		final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_any == null;
 		/*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@Nullable EnumerationLiteralId safe_size_source;
 		if (symbol_0 == Boolean.TRUE) {
-		    safe_size_source = null;
+			safe_size_source = null;
 		}
 		else {
-		    assert any != null;
-		    @SuppressWarnings("null")
-		    final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId size_0 = (EnumerationLiteralId)any.getValue(1/*size*/);
-		    safe_size_source = size_0;
+			assert any != null;
+			@SuppressWarnings("null")
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull EnumerationLiteralId size_0 = (EnumerationLiteralId)any.getValue(1/*size*/);
+			safe_size_source = size_0;
 		}
 		if (safe_size_source == null) {
-		    throw new InvalidValueException("Null body for \'company::Company::size\'");
+			throw new InvalidValueException("Null body for \'company::Company::size\'");
 		}
-		final /*@NonInvalid*/ codegen.company.@NonNull CompanySizeKind ECORE_safe_size_source = (CompanySizeKind)idResolver.ecoreValueOf(Enumerator.class, safe_size_source);
+		final /*@Thrown*/ codegen.company.@NonNull CompanySizeKind ECORE_safe_size_source = (CompanySizeKind)idResolver.ecoreValueOf(Enumerator.class, safe_size_source);
 		return ECORE_safe_size_source;
 	}
 
@@ -253,7 +244,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	 */
 	public boolean dummyInvariant(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
 		/**
-		 * 
+		 *
 		 * inv dummyInvariant:
 		 *   let severity : Integer[1] = 'Company::dummyInvariant'.getSeverity()
 		 *   in
@@ -270,11 +261,11 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, CodegencompanyTables.INT_0).booleanValue();
 		/*@NonInvalid*/ boolean symbol_0;
 		if (le) {
-		    symbol_0 = ValueUtil.TRUE_VALUE;
+			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-		    final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, CodegencompanyTables.STR_Company_c_c_dummyInvariant, this, null, diagnostics, context, null, severity_0, ValueUtil.TRUE_VALUE, CodegencompanyTables.INT_0).booleanValue();
-		    symbol_0 = logDiagnostic;
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, CodegencompanyTables.STR_Company_c_c_dummyInvariant, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, CodegencompanyTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
 	}

@@ -96,7 +96,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 
 	@Inject
 	private OCLstdlibGrammarAccess grammarAccess;
-	
+
 	@Override
 	public void sequence(ISerializationContext context, EObject semanticObject) {
 		EPackage epackage = semanticObject.eClass().getEPackage();
@@ -106,397 +106,397 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 		if (epackage == BaseCSPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case BaseCSPackage.ANNOTATION_CS:
-				sequence_AnnotationCS(context, (AnnotationCS) semanticObject); 
-				return; 
+				sequence_AnnotationCS(context, (AnnotationCS) semanticObject);
+				return;
 			case BaseCSPackage.DETAIL_CS:
-				sequence_DetailCS(context, (DetailCS) semanticObject); 
-				return; 
+				sequence_DetailCS(context, (DetailCS) semanticObject);
+				return;
 			case BaseCSPackage.DOCUMENTATION_CS:
-				sequence_DocumentationCS(context, (DocumentationCS) semanticObject); 
-				return; 
+				sequence_DocumentationCS(context, (DocumentationCS) semanticObject);
+				return;
 			case BaseCSPackage.IMPORT_CS:
-				sequence_ImportCS(context, (ImportCS) semanticObject); 
-				return; 
+				sequence_ImportCS(context, (ImportCS) semanticObject);
+				return;
 			case BaseCSPackage.LAMBDA_TYPE_CS:
 				if (rule == grammarAccess.getLambdaTypeCSRule()
 						|| rule == grammarAccess.getTypedRefCSRule()
 						|| rule == grammarAccess.getTypeRefCSRule()) {
-					sequence_LambdaTypeCS(context, (LambdaTypeCS) semanticObject); 
-					return; 
+					sequence_LambdaTypeCS(context, (LambdaTypeCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypedMultiplicityRefCSRule()) {
-					sequence_LambdaTypeCS_TypedMultiplicityRefCS(context, (LambdaTypeCS) semanticObject); 
-					return; 
+					sequence_LambdaTypeCS_TypedMultiplicityRefCS(context, (LambdaTypeCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS:
 				if (rule == grammarAccess.getMultiplicityBoundsCSRule()) {
-					sequence_MultiplicityBoundsCS(context, (MultiplicityBoundsCS) semanticObject); 
-					return; 
+					sequence_MultiplicityBoundsCS(context, (MultiplicityBoundsCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getMultiplicityCSRule()) {
-					sequence_MultiplicityBoundsCS_MultiplicityCS(context, (MultiplicityBoundsCS) semanticObject); 
-					return; 
+					sequence_MultiplicityBoundsCS_MultiplicityCS(context, (MultiplicityBoundsCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.MULTIPLICITY_STRING_CS:
 				if (rule == grammarAccess.getMultiplicityCSRule()) {
-					sequence_MultiplicityCS_MultiplicityStringCS(context, (MultiplicityStringCS) semanticObject); 
-					return; 
+					sequence_MultiplicityCS_MultiplicityStringCS(context, (MultiplicityStringCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getMultiplicityStringCSRule()) {
-					sequence_MultiplicityStringCS(context, (MultiplicityStringCS) semanticObject); 
-					return; 
+					sequence_MultiplicityStringCS(context, (MultiplicityStringCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.PACKAGE_CS:
-				sequence_PackageCS(context, (PackageCS) semanticObject); 
-				return; 
+				sequence_PackageCS(context, (PackageCS) semanticObject);
+				return;
 			case BaseCSPackage.PARAMETER_CS:
 				if (rule == grammarAccess.getAccumulatorCSRule()) {
-					sequence_AccumulatorCS(context, (ParameterCS) semanticObject); 
-					return; 
+					sequence_AccumulatorCS(context, (ParameterCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getIteratorCSRule()) {
-					sequence_IteratorCS(context, (ParameterCS) semanticObject); 
-					return; 
+					sequence_IteratorCS(context, (ParameterCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getParameterCSRule()) {
-					sequence_ParameterCS(context, (ParameterCS) semanticObject); 
-					return; 
+					sequence_ParameterCS(context, (ParameterCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.PATH_ELEMENT_CS:
 				if (rule == grammarAccess.getFirstPathElementCSRule()) {
-					sequence_FirstPathElementCS(context, (PathElementCS) semanticObject); 
-					return; 
+					sequence_FirstPathElementCS(context, (PathElementCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getLibPathElementCSRule()) {
-					sequence_LibPathElementCS(context, (PathElementCS) semanticObject); 
-					return; 
+					sequence_LibPathElementCS(context, (PathElementCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getNextPathElementCSRule()) {
-					sequence_NextPathElementCS(context, (PathElementCS) semanticObject); 
-					return; 
+					sequence_NextPathElementCS(context, (PathElementCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getURIFirstPathElementCSRule()) {
-					sequence_URIFirstPathElementCS(context, (PathElementCS) semanticObject); 
-					return; 
+					sequence_URIFirstPathElementCS(context, (PathElementCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.PATH_ELEMENT_WITH_URICS:
-				sequence_URIFirstPathElementCS(context, (PathElementWithURICS) semanticObject); 
-				return; 
+				sequence_URIFirstPathElementCS(context, (PathElementWithURICS) semanticObject);
+				return;
 			case BaseCSPackage.PATH_NAME_CS:
 				if (rule == grammarAccess.getLibPathNameCSRule()) {
-					sequence_LibPathNameCS(context, (PathNameCS) semanticObject); 
-					return; 
+					sequence_LibPathNameCS(context, (PathNameCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getPathNameCSRule()) {
-					sequence_PathNameCS(context, (PathNameCS) semanticObject); 
-					return; 
+					sequence_PathNameCS(context, (PathNameCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getURIPathNameCSRule()) {
-					sequence_URIPathNameCS(context, (PathNameCS) semanticObject); 
-					return; 
+					sequence_URIPathNameCS(context, (PathNameCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.PRIMITIVE_TYPE_REF_CS:
 				if (rule == grammarAccess.getPrimitiveTypeCSRule()
 						|| rule == grammarAccess.getTypeLiteralCSRule()) {
-					sequence_PrimitiveTypeCS(context, (PrimitiveTypeRefCS) semanticObject); 
-					return; 
+					sequence_PrimitiveTypeCS(context, (PrimitiveTypeRefCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypeExpCSRule()) {
-					sequence_PrimitiveTypeCS_TypeExpCS(context, (PrimitiveTypeRefCS) semanticObject); 
-					return; 
+					sequence_PrimitiveTypeCS_TypeExpCS(context, (PrimitiveTypeRefCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypeLiteralWithMultiplicityCSRule()) {
-					sequence_PrimitiveTypeCS_TypeLiteralWithMultiplicityCS(context, (PrimitiveTypeRefCS) semanticObject); 
-					return; 
+					sequence_PrimitiveTypeCS_TypeLiteralWithMultiplicityCS(context, (PrimitiveTypeRefCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.TEMPLATE_BINDING_CS:
-				sequence_TemplateBindingCS(context, (TemplateBindingCS) semanticObject); 
-				return; 
+				sequence_TemplateBindingCS(context, (TemplateBindingCS) semanticObject);
+				return;
 			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS:
-				sequence_TemplateParameterSubstitutionCS(context, (TemplateParameterSubstitutionCS) semanticObject); 
-				return; 
+				sequence_TemplateParameterSubstitutionCS(context, (TemplateParameterSubstitutionCS) semanticObject);
+				return;
 			case BaseCSPackage.TEMPLATE_SIGNATURE_CS:
-				sequence_TemplateSignatureCS(context, (TemplateSignatureCS) semanticObject); 
-				return; 
+				sequence_TemplateSignatureCS(context, (TemplateSignatureCS) semanticObject);
+				return;
 			case BaseCSPackage.TUPLE_PART_CS:
-				sequence_TuplePartCS(context, (TuplePartCS) semanticObject); 
-				return; 
+				sequence_TuplePartCS(context, (TuplePartCS) semanticObject);
+				return;
 			case BaseCSPackage.TUPLE_TYPE_CS:
 				if (rule == grammarAccess.getTypedRefCSRule()
 						|| rule == grammarAccess.getTupleTypeCSRule()
 						|| rule == grammarAccess.getTypeLiteralCSRule()
 						|| rule == grammarAccess.getTypeRefCSRule()) {
-					sequence_TupleTypeCS(context, (TupleTypeCS) semanticObject); 
-					return; 
+					sequence_TupleTypeCS(context, (TupleTypeCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypeExpCSRule()) {
-					sequence_TupleTypeCS_TypeExpCS(context, (TupleTypeCS) semanticObject); 
-					return; 
+					sequence_TupleTypeCS_TypeExpCS(context, (TupleTypeCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypeLiteralWithMultiplicityCSRule()) {
-					sequence_TupleTypeCS_TypeLiteralWithMultiplicityCS(context, (TupleTypeCS) semanticObject); 
-					return; 
+					sequence_TupleTypeCS_TypeLiteralWithMultiplicityCS(context, (TupleTypeCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypedMultiplicityRefCSRule()) {
-					sequence_TupleTypeCS_TypedMultiplicityRefCS(context, (TupleTypeCS) semanticObject); 
-					return; 
+					sequence_TupleTypeCS_TypedMultiplicityRefCS(context, (TupleTypeCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.TYPE_PARAMETER_CS:
-				sequence_TypeParameterCS(context, (TypeParameterCS) semanticObject); 
-				return; 
+				sequence_TypeParameterCS(context, (TypeParameterCS) semanticObject);
+				return;
 			case BaseCSPackage.TYPED_TYPE_REF_CS:
 				if (rule == grammarAccess.getLambdaContextTypeRefCSRule()) {
-					sequence_LambdaContextTypeRefCS(context, (TypedTypeRefCS) semanticObject); 
-					return; 
+					sequence_LambdaContextTypeRefCS(context, (TypedTypeRefCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypedMultiplicityRefCSRule()) {
-					sequence_TypedMultiplicityRefCS_TypedTypeRefCS(context, (TypedTypeRefCS) semanticObject); 
-					return; 
+					sequence_TypedMultiplicityRefCS_TypedTypeRefCS(context, (TypedTypeRefCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypedRefCSRule()
 						|| rule == grammarAccess.getTypedTypeRefCSRule()
 						|| rule == grammarAccess.getTypeRefCSRule()) {
-					sequence_TypedTypeRefCS(context, (TypedTypeRefCS) semanticObject); 
-					return; 
+					sequence_TypedTypeRefCS(context, (TypedTypeRefCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.WILDCARD_TYPE_REF_CS:
-				sequence_WildcardTypeRefCS(context, (WildcardTypeRefCS) semanticObject); 
-				return; 
+				sequence_WildcardTypeRefCS(context, (WildcardTypeRefCS) semanticObject);
+				return;
 			}
 		else if (epackage == EssentialOCLCSPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case EssentialOCLCSPackage.BOOLEAN_LITERAL_EXP_CS:
-				sequence_BooleanLiteralExpCS(context, (BooleanLiteralExpCS) semanticObject); 
-				return; 
+				sequence_BooleanLiteralExpCS(context, (BooleanLiteralExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.COLLECTION_LITERAL_EXP_CS:
-				sequence_CollectionLiteralExpCS(context, (CollectionLiteralExpCS) semanticObject); 
-				return; 
+				sequence_CollectionLiteralExpCS(context, (CollectionLiteralExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.COLLECTION_LITERAL_PART_CS:
-				sequence_CollectionLiteralPartCS(context, (CollectionLiteralPartCS) semanticObject); 
-				return; 
+				sequence_CollectionLiteralPartCS(context, (CollectionLiteralPartCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS:
 				if (rule == grammarAccess.getCollectionPatternCSRule()) {
-					sequence_CollectionPatternCS(context, (CollectionPatternCS) semanticObject); 
-					return; 
+					sequence_CollectionPatternCS(context, (CollectionPatternCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypeExpCSRule()) {
-					sequence_CollectionPatternCS_TypeExpCS(context, (CollectionPatternCS) semanticObject); 
-					return; 
+					sequence_CollectionPatternCS_TypeExpCS(context, (CollectionPatternCS) semanticObject);
+					return;
 				}
 				else break;
 			case EssentialOCLCSPackage.COLLECTION_TYPE_CS:
 				if (rule == grammarAccess.getCollectionTypeCSRule()
 						|| rule == grammarAccess.getTypeLiteralCSRule()) {
-					sequence_CollectionTypeCS(context, (CollectionTypeCS) semanticObject); 
-					return; 
+					sequence_CollectionTypeCS(context, (CollectionTypeCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypeExpCSRule()) {
-					sequence_CollectionTypeCS_TypeExpCS(context, (CollectionTypeCS) semanticObject); 
-					return; 
+					sequence_CollectionTypeCS_TypeExpCS(context, (CollectionTypeCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypeLiteralWithMultiplicityCSRule()) {
-					sequence_CollectionTypeCS_TypeLiteralWithMultiplicityCS(context, (CollectionTypeCS) semanticObject); 
-					return; 
+					sequence_CollectionTypeCS_TypeLiteralWithMultiplicityCS(context, (CollectionTypeCS) semanticObject);
+					return;
 				}
 				else break;
 			case EssentialOCLCSPackage.CONTEXT_CS:
-				sequence_Model(context, (ContextCS) semanticObject); 
-				return; 
+				sequence_Model(context, (ContextCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.CURLY_BRACKETED_CLAUSE_CS:
-				sequence_CurlyBracketedClauseCS(context, (CurlyBracketedClauseCS) semanticObject); 
-				return; 
+				sequence_CurlyBracketedClauseCS(context, (CurlyBracketedClauseCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.EXP_SPECIFICATION_CS:
-				sequence_SpecificationCS(context, (ExpSpecificationCS) semanticObject); 
-				return; 
+				sequence_SpecificationCS(context, (ExpSpecificationCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.IF_EXP_CS:
-				sequence_IfExpCS(context, (IfExpCS) semanticObject); 
-				return; 
+				sequence_IfExpCS(context, (IfExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.IF_THEN_EXP_CS:
-				sequence_ElseIfThenExpCS(context, (IfThenExpCS) semanticObject); 
-				return; 
+				sequence_ElseIfThenExpCS(context, (IfThenExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.INFIX_EXP_CS:
-				sequence_ExpCS(context, (InfixExpCS) semanticObject); 
-				return; 
+				sequence_ExpCS(context, (InfixExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.INVALID_LITERAL_EXP_CS:
-				sequence_InvalidLiteralExpCS(context, (InvalidLiteralExpCS) semanticObject); 
-				return; 
+				sequence_InvalidLiteralExpCS(context, (InvalidLiteralExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.LAMBDA_LITERAL_EXP_CS:
-				sequence_LambdaLiteralExpCS(context, (LambdaLiteralExpCS) semanticObject); 
-				return; 
+				sequence_LambdaLiteralExpCS(context, (LambdaLiteralExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.LET_EXP_CS:
-				sequence_LetExpCS(context, (LetExpCS) semanticObject); 
-				return; 
+				sequence_LetExpCS(context, (LetExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.LET_VARIABLE_CS:
-				sequence_LetVariableCS(context, (LetVariableCS) semanticObject); 
-				return; 
+				sequence_LetVariableCS(context, (LetVariableCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.MAP_LITERAL_EXP_CS:
-				sequence_MapLiteralExpCS(context, (MapLiteralExpCS) semanticObject); 
-				return; 
+				sequence_MapLiteralExpCS(context, (MapLiteralExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.MAP_LITERAL_PART_CS:
-				sequence_MapLiteralPartCS(context, (MapLiteralPartCS) semanticObject); 
-				return; 
+				sequence_MapLiteralPartCS(context, (MapLiteralPartCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.MAP_TYPE_CS:
 				if (rule == grammarAccess.getTypedRefCSRule()
 						|| rule == grammarAccess.getMapTypeCSRule()
 						|| rule == grammarAccess.getTypeLiteralCSRule()
 						|| rule == grammarAccess.getTypeRefCSRule()) {
-					sequence_MapTypeCS(context, (MapTypeCS) semanticObject); 
-					return; 
+					sequence_MapTypeCS(context, (MapTypeCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypeExpCSRule()) {
-					sequence_MapTypeCS_TypeExpCS(context, (MapTypeCS) semanticObject); 
-					return; 
+					sequence_MapTypeCS_TypeExpCS(context, (MapTypeCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypeLiteralWithMultiplicityCSRule()) {
-					sequence_MapTypeCS_TypeLiteralWithMultiplicityCS(context, (MapTypeCS) semanticObject); 
-					return; 
+					sequence_MapTypeCS_TypeLiteralWithMultiplicityCS(context, (MapTypeCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypedMultiplicityRefCSRule()) {
-					sequence_MapTypeCS_TypedMultiplicityRefCS(context, (MapTypeCS) semanticObject); 
-					return; 
+					sequence_MapTypeCS_TypedMultiplicityRefCS(context, (MapTypeCS) semanticObject);
+					return;
 				}
 				else break;
 			case EssentialOCLCSPackage.NAME_EXP_CS:
-				sequence_NameExpCS(context, (NameExpCS) semanticObject); 
-				return; 
+				sequence_NameExpCS(context, (NameExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.NAVIGATING_ARG_CS:
 				if (rule == grammarAccess.getNavigatingArgCSRule()) {
-					sequence_NavigatingArgCS(context, (NavigatingArgCS) semanticObject); 
-					return; 
+					sequence_NavigatingArgCS(context, (NavigatingArgCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getNavigatingBarArgCSRule()) {
-					sequence_NavigatingBarArgCS(context, (NavigatingArgCS) semanticObject); 
-					return; 
+					sequence_NavigatingBarArgCS(context, (NavigatingArgCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getNavigatingCommaArgCSRule()) {
-					sequence_NavigatingCommaArgCS(context, (NavigatingArgCS) semanticObject); 
-					return; 
+					sequence_NavigatingCommaArgCS(context, (NavigatingArgCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getNavigatingSemiArgCSRule()) {
-					sequence_NavigatingSemiArgCS(context, (NavigatingArgCS) semanticObject); 
-					return; 
+					sequence_NavigatingSemiArgCS(context, (NavigatingArgCS) semanticObject);
+					return;
 				}
 				else break;
 			case EssentialOCLCSPackage.NESTED_EXP_CS:
-				sequence_NestedExpCS(context, (NestedExpCS) semanticObject); 
-				return; 
+				sequence_NestedExpCS(context, (NestedExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.NULL_LITERAL_EXP_CS:
-				sequence_NullLiteralExpCS(context, (NullLiteralExpCS) semanticObject); 
-				return; 
+				sequence_NullLiteralExpCS(context, (NullLiteralExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.NUMBER_LITERAL_EXP_CS:
-				sequence_NumberLiteralExpCS(context, (NumberLiteralExpCS) semanticObject); 
-				return; 
+				sequence_NumberLiteralExpCS(context, (NumberLiteralExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.PATTERN_EXP_CS:
-				sequence_PatternExpCS(context, (PatternExpCS) semanticObject); 
-				return; 
+				sequence_PatternExpCS(context, (PatternExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.PREFIX_EXP_CS:
 				if (rule == grammarAccess.getPrefixedLetExpCSRule()) {
-					sequence_PrefixedLetExpCS(context, (PrefixExpCS) semanticObject); 
-					return; 
+					sequence_PrefixedLetExpCS(context, (PrefixExpCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getExpCSRule()
 						|| rule == grammarAccess.getNavigatingArgExpCSRule()) {
-					sequence_PrefixedLetExpCS_PrefixedPrimaryExpCS(context, (PrefixExpCS) semanticObject); 
-					return; 
+					sequence_PrefixedLetExpCS_PrefixedPrimaryExpCS(context, (PrefixExpCS) semanticObject);
+					return;
 				}
 				else if (action == grammarAccess.getExpCSAccess().getInfixExpCSOwnedLeftAction_0_1_0()
 						|| rule == grammarAccess.getPrefixedPrimaryExpCSRule()) {
-					sequence_PrefixedPrimaryExpCS(context, (PrefixExpCS) semanticObject); 
-					return; 
+					sequence_PrefixedPrimaryExpCS(context, (PrefixExpCS) semanticObject);
+					return;
 				}
 				else break;
 			case EssentialOCLCSPackage.ROUND_BRACKETED_CLAUSE_CS:
-				sequence_RoundBracketedClauseCS(context, (RoundBracketedClauseCS) semanticObject); 
-				return; 
+				sequence_RoundBracketedClauseCS(context, (RoundBracketedClauseCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.SELF_EXP_CS:
-				sequence_SelfExpCS(context, (SelfExpCS) semanticObject); 
-				return; 
+				sequence_SelfExpCS(context, (SelfExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.SHADOW_PART_CS:
-				sequence_ShadowPartCS(context, (ShadowPartCS) semanticObject); 
-				return; 
+				sequence_ShadowPartCS(context, (ShadowPartCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.SQUARE_BRACKETED_CLAUSE_CS:
-				sequence_SquareBracketedClauseCS(context, (SquareBracketedClauseCS) semanticObject); 
-				return; 
+				sequence_SquareBracketedClauseCS(context, (SquareBracketedClauseCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.STRING_LITERAL_EXP_CS:
-				sequence_StringLiteralExpCS(context, (StringLiteralExpCS) semanticObject); 
-				return; 
+				sequence_StringLiteralExpCS(context, (StringLiteralExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.TUPLE_LITERAL_EXP_CS:
-				sequence_TupleLiteralExpCS(context, (TupleLiteralExpCS) semanticObject); 
-				return; 
+				sequence_TupleLiteralExpCS(context, (TupleLiteralExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.TUPLE_LITERAL_PART_CS:
-				sequence_TupleLiteralPartCS(context, (TupleLiteralPartCS) semanticObject); 
-				return; 
+				sequence_TupleLiteralPartCS(context, (TupleLiteralPartCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.TYPE_LITERAL_EXP_CS:
-				sequence_TypeLiteralExpCS(context, (TypeLiteralExpCS) semanticObject); 
-				return; 
+				sequence_TypeLiteralExpCS(context, (TypeLiteralExpCS) semanticObject);
+				return;
 			case EssentialOCLCSPackage.TYPE_NAME_EXP_CS:
 				if (rule == grammarAccess.getTypeExpCSRule()) {
-					sequence_TypeExpCS_TypeNameExpCS(context, (TypeNameExpCS) semanticObject); 
-					return; 
+					sequence_TypeExpCS_TypeNameExpCS(context, (TypeNameExpCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getTypeNameExpCSRule()) {
-					sequence_TypeNameExpCS(context, (TypeNameExpCS) semanticObject); 
-					return; 
+					sequence_TypeNameExpCS(context, (TypeNameExpCS) semanticObject);
+					return;
 				}
 				else break;
 			case EssentialOCLCSPackage.UNLIMITED_NATURAL_LITERAL_EXP_CS:
-				sequence_UnlimitedNaturalLiteralExpCS(context, (UnlimitedNaturalLiteralExpCS) semanticObject); 
-				return; 
+				sequence_UnlimitedNaturalLiteralExpCS(context, (UnlimitedNaturalLiteralExpCS) semanticObject);
+				return;
 			}
 		else if (epackage == OCLstdlibCSPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case OCLstdlibCSPackage.LIB_CLASS_CS:
-				sequence_LibClassCS(context, (LibClassCS) semanticObject); 
-				return; 
+				sequence_LibClassCS(context, (LibClassCS) semanticObject);
+				return;
 			case OCLstdlibCSPackage.LIB_COERCION_CS:
-				sequence_LibCoercionCS(context, (LibCoercionCS) semanticObject); 
-				return; 
+				sequence_LibCoercionCS(context, (LibCoercionCS) semanticObject);
+				return;
 			case OCLstdlibCSPackage.LIB_CONSTRAINT_CS:
 				if (rule == grammarAccess.getInvCSRule()) {
-					sequence_InvCS(context, (LibConstraintCS) semanticObject); 
-					return; 
+					sequence_InvCS(context, (LibConstraintCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getPostCSRule()) {
-					sequence_PostCS(context, (LibConstraintCS) semanticObject); 
-					return; 
+					sequence_PostCS(context, (LibConstraintCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getPreCSRule()) {
-					sequence_PreCS(context, (LibConstraintCS) semanticObject); 
-					return; 
+					sequence_PreCS(context, (LibConstraintCS) semanticObject);
+					return;
 				}
 				else break;
 			case OCLstdlibCSPackage.LIB_ITERATION_CS:
-				sequence_LibIterationCS(context, (LibIterationCS) semanticObject); 
-				return; 
+				sequence_LibIterationCS(context, (LibIterationCS) semanticObject);
+				return;
 			case OCLstdlibCSPackage.LIB_OPERATION_CS:
-				sequence_LibOperationCS(context, (LibOperationCS) semanticObject); 
-				return; 
+				sequence_LibOperationCS(context, (LibOperationCS) semanticObject);
+				return;
 			case OCLstdlibCSPackage.LIB_PACKAGE_CS:
-				sequence_LibPackageCS(context, (LibPackageCS) semanticObject); 
-				return; 
+				sequence_LibPackageCS(context, (LibPackageCS) semanticObject);
+				return;
 			case OCLstdlibCSPackage.LIB_PROPERTY_CS:
-				sequence_LibPropertyCS(context, (LibPropertyCS) semanticObject); 
-				return; 
+				sequence_LibPropertyCS(context, (LibPropertyCS) semanticObject);
+				return;
 			case OCLstdlibCSPackage.LIB_ROOT_PACKAGE_CS:
-				sequence_Library(context, (LibRootPackageCS) semanticObject); 
-				return; 
+				sequence_Library(context, (LibRootPackageCS) semanticObject);
+				return;
 			case OCLstdlibCSPackage.PRECEDENCE_CS:
-				sequence_PrecedenceCS(context, (PrecedenceCS) semanticObject); 
-				return; 
+				sequence_PrecedenceCS(context, (PrecedenceCS) semanticObject);
+				return;
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
-	
+
 	/**
 	 * Contexts:
 	 *     AccumulatorCS returns ParameterCS
@@ -516,8 +516,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 		feeder.accept(grammarAccess.getAccumulatorCSAccess().getOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0(), semanticObject.getOwnedType());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     AnnotationCS returns AnnotationCS
@@ -529,8 +529,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_AnnotationCS(ISerializationContext context, AnnotationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     DetailCS returns DetailCS
@@ -541,8 +541,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_DetailCS(ISerializationContext context, DetailCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     AnnotationElementCS returns DocumentationCS
@@ -554,8 +554,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_DocumentationCS(ISerializationContext context, DocumentationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     ImportCS returns ImportCS
@@ -566,8 +566,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_ImportCS(ISerializationContext context, ImportCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     InvCS returns LibConstraintCS
@@ -578,8 +578,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_InvCS(ISerializationContext context, LibConstraintCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     IteratorCS returns ParameterCS
@@ -599,8 +599,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 		feeder.accept(grammarAccess.getIteratorCSAccess().getOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0(), semanticObject.getOwnedType());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     LambdaContextTypeRefCS returns TypedTypeRefCS
@@ -617,8 +617,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 		feeder.accept(grammarAccess.getLambdaContextTypeRefCSAccess().getOwnedPathNameLibPathNameCSParserRuleCall_0(), semanticObject.getOwnedPathName());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     LambdaTypeCS returns LambdaTypeCS
@@ -627,37 +627,37 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *
 	 * Constraint:
 	 *     (
-	 *         name='Lambda' 
-	 *         ownedSignature=TemplateSignatureCS? 
-	 *         ownedContextType=LambdaContextTypeRefCS 
-	 *         (ownedParameterTypes+=TypedMultiplicityRefCS ownedParameterTypes+=TypedMultiplicityRefCS*)? 
+	 *         name='Lambda'
+	 *         ownedSignature=TemplateSignatureCS?
+	 *         ownedContextType=LambdaContextTypeRefCS
+	 *         (ownedParameterTypes+=TypedMultiplicityRefCS ownedParameterTypes+=TypedMultiplicityRefCS*)?
 	 *         ownedResultType=TypedRefCS
 	 *     )
 	 */
 	protected void sequence_LambdaTypeCS(ISerializationContext context, LambdaTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns LambdaTypeCS
 	 *
 	 * Constraint:
 	 *     (
-	 *         name='Lambda' 
-	 *         ownedSignature=TemplateSignatureCS? 
-	 *         ownedContextType=LambdaContextTypeRefCS 
-	 *         (ownedParameterTypes+=TypedMultiplicityRefCS ownedParameterTypes+=TypedMultiplicityRefCS*)? 
-	 *         ownedResultType=TypedRefCS 
+	 *         name='Lambda'
+	 *         ownedSignature=TemplateSignatureCS?
+	 *         ownedContextType=LambdaContextTypeRefCS
+	 *         (ownedParameterTypes+=TypedMultiplicityRefCS ownedParameterTypes+=TypedMultiplicityRefCS*)?
+	 *         ownedResultType=TypedRefCS
 	 *         ownedMultiplicity=MultiplicityCS?
 	 *     )
 	 */
 	protected void sequence_LambdaTypeCS_TypedMultiplicityRefCS(ISerializationContext context, LambdaTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     LibClassCS returns LibClassCS
@@ -665,19 +665,19 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *
 	 * Constraint:
 	 *     (
-	 *         isAbstract?='abstract'? 
-	 *         name=AnyName 
-	 *         ownedSignature=TemplateSignatureCS? 
-	 *         metaclassName=[MetaclassNameCS|AnyName]? 
-	 *         (ownedSuperTypes+=TypedRefCS ownedSuperTypes+=TypedRefCS*)? 
+	 *         isAbstract?='abstract'?
+	 *         name=AnyName
+	 *         ownedSignature=TemplateSignatureCS?
+	 *         metaclassName=[MetaclassNameCS|AnyName]?
+	 *         (ownedSuperTypes+=TypedRefCS ownedSuperTypes+=TypedRefCS*)?
 	 *         (ownedOperations+=OperationCS | ownedProperties+=LibPropertyCS | ownedConstraints+=InvCS | ownedAnnotations+=AnnotationElementCS)*
 	 *     )
 	 */
 	protected void sequence_LibClassCS(ISerializationContext context, LibClassCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     LibCoercionCS returns LibCoercionCS
@@ -685,17 +685,17 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *
 	 * Constraint:
 	 *     (
-	 *         name=Name 
-	 *         ownedType=TypedMultiplicityRefCS 
-	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]? 
+	 *         name=Name
+	 *         ownedType=TypedMultiplicityRefCS
+	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]?
 	 *         (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PostCS | ownedPostconditions+=PreCS)*
 	 *     )
 	 */
 	protected void sequence_LibCoercionCS(ISerializationContext context, LibCoercionCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     LibIterationCS returns LibIterationCS
@@ -703,24 +703,24 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *
 	 * Constraint:
 	 *     (
-	 *         name=Name 
-	 *         ownedSignature=TemplateSignatureCS? 
-	 *         ownedIterators+=IteratorCS 
-	 *         ownedIterators+=IteratorCS* 
-	 *         (ownedAccumulators+=AccumulatorCS ownedAccumulators+=AccumulatorCS*)? 
-	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)? 
-	 *         ownedType=TypedMultiplicityRefCS 
-	 *         isInvalidating?='invalidating'? 
-	 *         isValidating?='validating'? 
-	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]? 
+	 *         name=Name
+	 *         ownedSignature=TemplateSignatureCS?
+	 *         ownedIterators+=IteratorCS
+	 *         ownedIterators+=IteratorCS*
+	 *         (ownedAccumulators+=AccumulatorCS ownedAccumulators+=AccumulatorCS*)?
+	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
+	 *         ownedType=TypedMultiplicityRefCS
+	 *         isInvalidating?='invalidating'?
+	 *         isValidating?='validating'?
+	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]?
 	 *         (ownedAnnotations+=AnnotationElementCS | ownedPreconditions+=PostCS | ownedPostconditions+=PreCS)*
 	 *     )
 	 */
 	protected void sequence_LibIterationCS(ISerializationContext context, LibIterationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     OperationCS returns LibOperationCS
@@ -728,39 +728,39 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	 *
 	 * Constraint:
 	 *     (
-	 *         isStatic?='static'? 
-	 *         name=Name 
-	 *         ownedSignature=TemplateSignatureCS? 
-	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)? 
-	 *         ownedType=TypedMultiplicityRefCS 
-	 *         isValidating?='validating'? 
-	 *         isInvalidating?='invalidating'? 
-	 *         precedence=[Precedence|Name]? 
-	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]? 
+	 *         isStatic?='static'?
+	 *         name=Name
+	 *         ownedSignature=TemplateSignatureCS?
+	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
+	 *         ownedType=TypedMultiplicityRefCS
+	 *         isValidating?='validating'?
+	 *         isInvalidating?='invalidating'?
+	 *         precedence=[Precedence|Name]?
+	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]?
 	 *         (ownedAnnotations+=AnnotationElementCS | ownedBodyExpressions+=SpecificationCS | ownedPostconditions+=PostCS | ownedPreconditions+=PreCS)*
 	 *     )
 	 */
 	protected void sequence_LibOperationCS(ISerializationContext context, LibOperationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     LibPackageCS returns LibPackageCS
 	 *
 	 * Constraint:
 	 *     (
-	 *         name=Name 
-	 *         (nsPrefix=Identifier nsURI=URI)? 
+	 *         name=Name
+	 *         (nsPrefix=Identifier nsURI=URI)?
 	 *         (ownedPackages+=PackageCS | ownedPrecedences+=PrecedenceCS | ownedClasses+=ClassCS | ownedAnnotations+=AnnotationElementCS)*
 	 *     )
 	 */
 	protected void sequence_LibPackageCS(ISerializationContext context, LibPackageCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     LibPathElementCS returns PathElementCS
@@ -777,8 +777,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 		feeder.accept(grammarAccess.getLibPathElementCSAccess().getReferredElementNamedElementNameParserRuleCall_0_1(), semanticObject.getReferredElement());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     LibPathNameCS returns PathNameCS
@@ -789,26 +789,26 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_LibPathNameCS(ISerializationContext context, PathNameCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     LibPropertyCS returns LibPropertyCS
 	 *
 	 * Constraint:
 	 *     (
-	 *         isStatic?='static'? 
-	 *         name=Name 
-	 *         ownedType=TypedMultiplicityRefCS 
-	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]? 
+	 *         isStatic?='static'?
+	 *         name=Name
+	 *         ownedType=TypedMultiplicityRefCS
+	 *         implementation=[JavaClassCS|SINGLE_QUOTED_STRING]?
 	 *         ownedAnnotations+=AnnotationElementCS*
 	 *     )
 	 */
 	protected void sequence_LibPropertyCS(ISerializationContext context, LibPropertyCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     Library returns LibRootPackageCS
@@ -819,8 +819,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_Library(ISerializationContext context, LibRootPackageCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns MapTypeCS
@@ -831,8 +831,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_MapTypeCS_TypedMultiplicityRefCS(ISerializationContext context, MapTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     PackageCS returns PackageCS
@@ -843,8 +843,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_PackageCS(ISerializationContext context, PackageCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     ParameterCS returns ParameterCS
@@ -864,8 +864,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 		feeder.accept(grammarAccess.getParameterCSAccess().getOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0(), semanticObject.getOwnedType());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     PostCS returns LibConstraintCS
@@ -876,8 +876,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_PostCS(ISerializationContext context, LibConstraintCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     PreCS returns LibConstraintCS
@@ -888,8 +888,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_PreCS(ISerializationContext context, LibConstraintCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     PrecedenceCS returns PrecedenceCS
@@ -900,8 +900,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_PrecedenceCS(ISerializationContext context, PrecedenceCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     SpecificationCS returns ExpSpecificationCS
@@ -918,8 +918,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 		feeder.accept(grammarAccess.getSpecificationCSAccess().getOwnedExpressionExpCSParserRuleCall_0(), semanticObject.getOwnedExpression());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TuplePartCS returns TuplePartCS
@@ -939,8 +939,8 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 		feeder.accept(grammarAccess.getTuplePartCSAccess().getOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0(), semanticObject.getOwnedType());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns TupleTypeCS
@@ -951,23 +951,23 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_TupleTypeCS_TypedMultiplicityRefCS(ISerializationContext context, TupleTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns TypedTypeRefCS
 	 *
 	 * Constraint:
 	 *     (
-	 *         ((isTypeof?='typeof' ownedPathName=LibPathNameCS) | (ownedPathName=LibPathNameCS ownedBinding=TemplateBindingCS?)) 
+	 *         ((isTypeof?='typeof' ownedPathName=LibPathNameCS) | (ownedPathName=LibPathNameCS ownedBinding=TemplateBindingCS?))
 	 *         ownedMultiplicity=MultiplicityCS?
 	 *     )
 	 */
 	protected void sequence_TypedMultiplicityRefCS_TypedTypeRefCS(ISerializationContext context, TypedTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TypedRefCS returns TypedTypeRefCS
@@ -980,6 +980,6 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 	protected void sequence_TypedTypeRefCS(ISerializationContext context, TypedTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 }

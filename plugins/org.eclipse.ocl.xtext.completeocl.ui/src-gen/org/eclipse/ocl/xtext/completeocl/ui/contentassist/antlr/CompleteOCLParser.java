@@ -25,19 +25,19 @@ import com.google.inject.Inject;
 import org.eclipse.ocl.xtext.completeocl.services.CompleteOCLGrammarAccess;
 
 public class CompleteOCLParser extends AbstractContentAssistParser {
-	
+
 	@Inject
 	private CompleteOCLGrammarAccess grammarAccess;
-	
+
 	private Map<AbstractElement, String> nameMappings;
-	
+
 	@Override
 	protected org.eclipse.ocl.xtext.completeocl.ui.contentassist.antlr.internal.InternalCompleteOCLParser createParser() {
 		org.eclipse.ocl.xtext.completeocl.ui.contentassist.antlr.internal.InternalCompleteOCLParser result = new org.eclipse.ocl.xtext.completeocl.ui.contentassist.antlr.internal.InternalCompleteOCLParser(null);
 		result.setGrammarAccess(grammarAccess);
 		return result;
 	}
-	
+
 	@Override
 	protected String getRuleName(AbstractElement element) {
 		if (nameMappings == null) {
@@ -389,7 +389,7 @@ public class CompleteOCLParser extends AbstractContentAssistParser {
 		}
 		return nameMappings.get(element);
 	}
-	
+
 	@Override
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
@@ -398,18 +398,18 @@ public class CompleteOCLParser extends AbstractContentAssistParser {
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);
-		}		
+		}
 	}
-	
+
 	@Override
 	protected String[] getInitialHiddenTokens() {
 		return new String[] { "RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT" };
 	}
-	
+
 	public CompleteOCLGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(CompleteOCLGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}

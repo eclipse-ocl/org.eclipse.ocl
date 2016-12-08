@@ -1,6 +1,6 @@
 package org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal;
 
-// Hack: Use our own Lexer superclass by means of import. 
+// Hack: Use our own Lexer superclass by means of import.
 // Currently there is no other way to specify the superclass for the lexer.
 import org.eclipse.xtext.parser.antlr.Lexer;
 
@@ -151,7 +151,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
     // delegates
     // delegators
 
-    public InternalOCLinEcoreLexer() {;} 
+    public InternalOCLinEcoreLexer() {;}
     public InternalOCLinEcoreLexer(CharStream input) {
         this(input, new RecognizerSharedState());
     }
@@ -169,7 +169,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:11:7: ( 'module' )
             // InternalOCLinEcore.g:11:9: 'module'
             {
-            match("module"); 
+            match("module");
 
 
             }
@@ -190,7 +190,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:12:7: ( '-' )
             // InternalOCLinEcore.g:12:9: '-'
             {
-            match('-'); 
+            match('-');
 
             }
 
@@ -210,7 +210,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:13:7: ( 'abstract' )
             // InternalOCLinEcore.g:13:9: 'abstract'
             {
-            match("abstract"); 
+            match("abstract");
 
 
             }
@@ -231,7 +231,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:14:7: ( 'attribute' )
             // InternalOCLinEcore.g:14:9: 'attribute'
             {
-            match("attribute"); 
+            match("attribute");
 
 
             }
@@ -252,7 +252,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:15:7: ( 'body' )
             // InternalOCLinEcore.g:15:9: 'body'
             {
-            match("body"); 
+            match("body");
 
 
             }
@@ -273,7 +273,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:16:7: ( 'callable' )
             // InternalOCLinEcore.g:16:9: 'callable'
             {
-            match("callable"); 
+            match("callable");
 
 
             }
@@ -294,7 +294,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:17:7: ( 'class' )
             // InternalOCLinEcore.g:17:9: 'class'
             {
-            match("class"); 
+            match("class");
 
 
             }
@@ -315,7 +315,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:18:7: ( 'composes' )
             // InternalOCLinEcore.g:18:9: 'composes'
             {
-            match("composes"); 
+            match("composes");
 
 
             }
@@ -336,7 +336,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:19:7: ( 'datatype' )
             // InternalOCLinEcore.g:19:9: 'datatype'
             {
-            match("datatype"); 
+            match("datatype");
 
 
             }
@@ -357,7 +357,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:20:7: ( 'definition' )
             // InternalOCLinEcore.g:20:9: 'definition'
             {
-            match("definition"); 
+            match("definition");
 
 
             }
@@ -378,7 +378,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:21:7: ( 'derivation' )
             // InternalOCLinEcore.g:21:9: 'derivation'
             {
-            match("derivation"); 
+            match("derivation");
 
 
             }
@@ -399,7 +399,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:22:7: ( 'derived' )
             // InternalOCLinEcore.g:22:9: 'derived'
             {
-            match("derived"); 
+            match("derived");
 
 
             }
@@ -420,7 +420,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:23:7: ( 'enum' )
             // InternalOCLinEcore.g:23:9: 'enum'
             {
-            match("enum"); 
+            match("enum");
 
 
             }
@@ -441,7 +441,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:24:7: ( 'extends' )
             // InternalOCLinEcore.g:24:9: 'extends'
             {
-            match("extends"); 
+            match("extends");
 
 
             }
@@ -462,7 +462,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:25:7: ( 'id' )
             // InternalOCLinEcore.g:25:9: 'id'
             {
-            match("id"); 
+            match("id");
 
 
             }
@@ -483,7 +483,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:26:7: ( 'import' )
             // InternalOCLinEcore.g:26:9: 'import'
             {
-            match("import"); 
+            match("import");
 
 
             }
@@ -504,7 +504,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:27:7: ( 'initial' )
             // InternalOCLinEcore.g:27:9: 'initial'
             {
-            match("initial"); 
+            match("initial");
 
 
             }
@@ -525,7 +525,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:28:7: ( 'interface' )
             // InternalOCLinEcore.g:28:9: 'interface'
             {
-            match("interface"); 
+            match("interface");
 
 
             }
@@ -546,7 +546,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:29:7: ( 'key' )
             // InternalOCLinEcore.g:29:9: 'key'
             {
-            match("key"); 
+            match("key");
 
 
             }
@@ -567,7 +567,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:30:7: ( 'library' )
             // InternalOCLinEcore.g:30:9: 'library'
             {
-            match("library"); 
+            match("library");
 
 
             }
@@ -588,7 +588,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:31:7: ( 'operation' )
             // InternalOCLinEcore.g:31:9: 'operation'
             {
-            match("operation"); 
+            match("operation");
 
 
             }
@@ -609,7 +609,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:32:7: ( 'ordered' )
             // InternalOCLinEcore.g:32:9: 'ordered'
             {
-            match("ordered"); 
+            match("ordered");
 
 
             }
@@ -630,7 +630,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:33:7: ( 'package' )
             // InternalOCLinEcore.g:33:9: 'package'
             {
-            match("package"); 
+            match("package");
 
 
             }
@@ -651,7 +651,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:34:7: ( 'postcondition' )
             // InternalOCLinEcore.g:34:9: 'postcondition'
             {
-            match("postcondition"); 
+            match("postcondition");
 
 
             }
@@ -672,7 +672,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:35:7: ( 'precondition' )
             // InternalOCLinEcore.g:35:9: 'precondition'
             {
-            match("precondition"); 
+            match("precondition");
 
 
             }
@@ -693,7 +693,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:36:7: ( 'primitive' )
             // InternalOCLinEcore.g:36:9: 'primitive'
             {
-            match("primitive"); 
+            match("primitive");
 
 
             }
@@ -714,7 +714,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:37:7: ( 'property' )
             // InternalOCLinEcore.g:37:9: 'property'
             {
-            match("property"); 
+            match("property");
 
 
             }
@@ -735,7 +735,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:38:7: ( 'readonly' )
             // InternalOCLinEcore.g:38:9: 'readonly'
             {
-            match("readonly"); 
+            match("readonly");
 
 
             }
@@ -756,7 +756,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:39:7: ( 'reference' )
             // InternalOCLinEcore.g:39:9: 'reference'
             {
-            match("reference"); 
+            match("reference");
 
 
             }
@@ -777,7 +777,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:40:7: ( 'resolve' )
             // InternalOCLinEcore.g:40:9: 'resolve'
             {
-            match("resolve"); 
+            match("resolve");
 
 
             }
@@ -798,7 +798,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:41:7: ( 'static' )
             // InternalOCLinEcore.g:41:9: 'static'
             {
-            match("static"); 
+            match("static");
 
 
             }
@@ -819,7 +819,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:42:7: ( 'throws' )
             // InternalOCLinEcore.g:42:9: 'throws'
             {
-            match("throws"); 
+            match("throws");
 
 
             }
@@ -840,7 +840,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:43:7: ( 'transient' )
             // InternalOCLinEcore.g:43:9: 'transient'
             {
-            match("transient"); 
+            match("transient");
 
 
             }
@@ -861,7 +861,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:44:7: ( 'unique' )
             // InternalOCLinEcore.g:44:9: 'unique'
             {
-            match("unique"); 
+            match("unique");
 
 
             }
@@ -882,7 +882,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:45:7: ( 'unsettable' )
             // InternalOCLinEcore.g:45:9: 'unsettable'
             {
-            match("unsettable"); 
+            match("unsettable");
 
 
             }
@@ -903,7 +903,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:46:7: ( 'volatile' )
             // InternalOCLinEcore.g:46:9: 'volatile'
             {
-            match("volatile"); 
+            match("volatile");
 
 
             }
@@ -924,7 +924,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:47:7: ( 'invariant' )
             // InternalOCLinEcore.g:47:9: 'invariant'
             {
-            match("invariant"); 
+            match("invariant");
 
 
             }
@@ -945,7 +945,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:48:7: ( '(' )
             // InternalOCLinEcore.g:48:9: '('
             {
-            match('('); 
+            match('(');
 
             }
 
@@ -965,7 +965,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:49:7: ( ')' )
             // InternalOCLinEcore.g:49:9: ')'
             {
-            match(')'); 
+            match(')');
 
             }
 
@@ -985,7 +985,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:50:7: ( ':' )
             // InternalOCLinEcore.g:50:9: ':'
             {
-            match(':'); 
+            match(':');
 
             }
 
@@ -1005,7 +1005,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:51:7: ( ';' )
             // InternalOCLinEcore.g:51:9: ';'
             {
-            match(';'); 
+            match(';');
 
             }
 
@@ -1025,7 +1025,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:52:7: ( 'annotation' )
             // InternalOCLinEcore.g:52:9: 'annotation'
             {
-            match("annotation"); 
+            match("annotation");
 
 
             }
@@ -1046,7 +1046,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:53:7: ( ',' )
             // InternalOCLinEcore.g:53:9: ','
             {
-            match(','); 
+            match(',');
 
             }
 
@@ -1066,7 +1066,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:54:7: ( '{' )
             // InternalOCLinEcore.g:54:9: '{'
             {
-            match('{'); 
+            match('{');
 
             }
 
@@ -1086,7 +1086,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:55:7: ( '}' )
             // InternalOCLinEcore.g:55:9: '}'
             {
-            match('}'); 
+            match('}');
 
             }
 
@@ -1106,7 +1106,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:56:7: ( '=' )
             // InternalOCLinEcore.g:56:9: '='
             {
-            match('='); 
+            match('=');
 
             }
 
@@ -1126,7 +1126,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:57:7: ( '!derived' )
             // InternalOCLinEcore.g:57:9: '!derived'
             {
-            match("!derived"); 
+            match("!derived");
 
 
             }
@@ -1147,7 +1147,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:58:7: ( '!id' )
             // InternalOCLinEcore.g:58:9: '!id'
             {
-            match("!id"); 
+            match("!id");
 
 
             }
@@ -1168,7 +1168,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:59:7: ( '!ordered' )
             // InternalOCLinEcore.g:59:9: '!ordered'
             {
-            match("!ordered"); 
+            match("!ordered");
 
 
             }
@@ -1189,7 +1189,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:60:7: ( '!readonly' )
             // InternalOCLinEcore.g:60:9: '!readonly'
             {
-            match("!readonly"); 
+            match("!readonly");
 
 
             }
@@ -1210,7 +1210,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:61:7: ( '!transient' )
             // InternalOCLinEcore.g:61:9: '!transient'
             {
-            match("!transient"); 
+            match("!transient");
 
 
             }
@@ -1231,7 +1231,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:62:7: ( '!unique' )
             // InternalOCLinEcore.g:62:9: '!unique'
             {
-            match("!unique"); 
+            match("!unique");
 
 
             }
@@ -1252,7 +1252,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:63:7: ( '!unsettable' )
             // InternalOCLinEcore.g:63:9: '!unsettable'
             {
-            match("!unsettable"); 
+            match("!unsettable");
 
 
             }
@@ -1273,7 +1273,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:64:7: ( '!volatile' )
             // InternalOCLinEcore.g:64:9: '!volatile'
             {
-            match("!volatile"); 
+            match("!volatile");
 
 
             }
@@ -1294,7 +1294,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:65:7: ( 'serializable' )
             // InternalOCLinEcore.g:65:9: 'serializable'
             {
-            match("serializable"); 
+            match("serializable");
 
 
             }
@@ -1315,7 +1315,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:66:7: ( '!serializable' )
             // InternalOCLinEcore.g:66:9: '!serializable'
             {
-            match("!serializable"); 
+            match("!serializable");
 
 
             }
@@ -1336,7 +1336,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:67:7: ( 'documentation' )
             // InternalOCLinEcore.g:67:9: 'documentation'
             {
-            match("documentation"); 
+            match("documentation");
 
 
             }
@@ -1357,7 +1357,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:68:7: ( 'literal' )
             // InternalOCLinEcore.g:68:9: 'literal'
             {
-            match("literal"); 
+            match("literal");
 
 
             }
@@ -1378,7 +1378,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:69:7: ( '::*' )
             // InternalOCLinEcore.g:69:9: '::*'
             {
-            match("::*"); 
+            match("::*");
 
 
             }
@@ -1399,7 +1399,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:70:7: ( '#' )
             // InternalOCLinEcore.g:70:9: '#'
             {
-            match('#'); 
+            match('#');
 
             }
 
@@ -1419,7 +1419,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:71:7: ( '!composes' )
             // InternalOCLinEcore.g:71:9: '!composes'
             {
-            match("!composes"); 
+            match("!composes");
 
 
             }
@@ -1440,7 +1440,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:72:7: ( '!resolve' )
             // InternalOCLinEcore.g:72:9: '!resolve'
             {
-            match("!resolve"); 
+            match("!resolve");
 
 
             }
@@ -1461,7 +1461,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:73:7: ( 'sysml' )
             // InternalOCLinEcore.g:73:9: 'sysml'
             {
-            match("sysml"); 
+            match("sysml");
 
 
             }
@@ -1482,7 +1482,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:74:7: ( '<' )
             // InternalOCLinEcore.g:74:9: '<'
             {
-            match('<'); 
+            match('<');
 
             }
 
@@ -1502,7 +1502,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:75:7: ( '>' )
             // InternalOCLinEcore.g:75:9: '>'
             {
-            match('>'); 
+            match('>');
 
             }
 
@@ -1522,7 +1522,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:76:7: ( 'not' )
             // InternalOCLinEcore.g:76:9: 'not'
             {
-            match("not"); 
+            match("not");
 
 
             }
@@ -1543,7 +1543,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:77:7: ( '*' )
             // InternalOCLinEcore.g:77:9: '*'
             {
-            match('*'); 
+            match('*');
 
             }
 
@@ -1563,7 +1563,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:78:7: ( '/' )
             // InternalOCLinEcore.g:78:9: '/'
             {
-            match('/'); 
+            match('/');
 
             }
 
@@ -1583,7 +1583,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:79:7: ( '+' )
             // InternalOCLinEcore.g:79:9: '+'
             {
-            match('+'); 
+            match('+');
 
             }
 
@@ -1603,7 +1603,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:80:7: ( '>=' )
             // InternalOCLinEcore.g:80:9: '>='
             {
-            match(">="); 
+            match(">=");
 
 
             }
@@ -1624,7 +1624,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:81:7: ( '<=' )
             // InternalOCLinEcore.g:81:9: '<='
             {
-            match("<="); 
+            match("<=");
 
 
             }
@@ -1645,7 +1645,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:82:7: ( '<>' )
             // InternalOCLinEcore.g:82:9: '<>'
             {
-            match("<>"); 
+            match("<>");
 
 
             }
@@ -1666,7 +1666,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:83:7: ( 'and' )
             // InternalOCLinEcore.g:83:9: 'and'
             {
-            match("and"); 
+            match("and");
 
 
             }
@@ -1687,7 +1687,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:84:7: ( 'or' )
             // InternalOCLinEcore.g:84:9: 'or'
             {
-            match("or"); 
+            match("or");
 
 
             }
@@ -1708,7 +1708,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:85:7: ( 'xor' )
             // InternalOCLinEcore.g:85:9: 'xor'
             {
-            match("xor"); 
+            match("xor");
 
 
             }
@@ -1729,7 +1729,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:86:7: ( 'implies' )
             // InternalOCLinEcore.g:86:9: 'implies'
             {
-            match("implies"); 
+            match("implies");
 
 
             }
@@ -1750,7 +1750,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:87:7: ( '.' )
             // InternalOCLinEcore.g:87:9: '.'
             {
-            match('.'); 
+            match('.');
 
             }
 
@@ -1770,7 +1770,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:88:7: ( '->' )
             // InternalOCLinEcore.g:88:9: '->'
             {
-            match("->"); 
+            match("->");
 
 
             }
@@ -1791,7 +1791,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:89:7: ( '?.' )
             // InternalOCLinEcore.g:89:9: '?.'
             {
-            match("?."); 
+            match("?.");
 
 
             }
@@ -1812,7 +1812,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:90:7: ( '?->' )
             // InternalOCLinEcore.g:90:9: '?->'
             {
-            match("?->"); 
+            match("?->");
 
 
             }
@@ -1833,7 +1833,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:91:7: ( 'Map' )
             // InternalOCLinEcore.g:91:9: 'Map'
             {
-            match("Map"); 
+            match("Map");
 
 
             }
@@ -1854,7 +1854,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:92:7: ( 'Tuple' )
             // InternalOCLinEcore.g:92:9: 'Tuple'
             {
-            match("Tuple"); 
+            match("Tuple");
 
 
             }
@@ -1875,7 +1875,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:93:7: ( '::' )
             // InternalOCLinEcore.g:93:9: '::'
             {
-            match("::"); 
+            match("::");
 
 
             }
@@ -1896,7 +1896,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:94:8: ( 'Boolean' )
             // InternalOCLinEcore.g:94:10: 'Boolean'
             {
-            match("Boolean"); 
+            match("Boolean");
 
 
             }
@@ -1917,7 +1917,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:95:8: ( 'Integer' )
             // InternalOCLinEcore.g:95:10: 'Integer'
             {
-            match("Integer"); 
+            match("Integer");
 
 
             }
@@ -1938,7 +1938,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:96:8: ( 'Real' )
             // InternalOCLinEcore.g:96:10: 'Real'
             {
-            match("Real"); 
+            match("Real");
 
 
             }
@@ -1959,7 +1959,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:97:8: ( 'String' )
             // InternalOCLinEcore.g:97:10: 'String'
             {
-            match("String"); 
+            match("String");
 
 
             }
@@ -1980,7 +1980,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:98:8: ( 'UnlimitedNatural' )
             // InternalOCLinEcore.g:98:10: 'UnlimitedNatural'
             {
-            match("UnlimitedNatural"); 
+            match("UnlimitedNatural");
 
 
             }
@@ -2001,7 +2001,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:99:8: ( 'OclAny' )
             // InternalOCLinEcore.g:99:10: 'OclAny'
             {
-            match("OclAny"); 
+            match("OclAny");
 
 
             }
@@ -2022,7 +2022,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:100:8: ( 'OclInvalid' )
             // InternalOCLinEcore.g:100:10: 'OclInvalid'
             {
-            match("OclInvalid"); 
+            match("OclInvalid");
 
 
             }
@@ -2043,7 +2043,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:101:8: ( 'OclVoid' )
             // InternalOCLinEcore.g:101:10: 'OclVoid'
             {
-            match("OclVoid"); 
+            match("OclVoid");
 
 
             }
@@ -2064,7 +2064,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:102:8: ( 'Set' )
             // InternalOCLinEcore.g:102:10: 'Set'
             {
-            match("Set"); 
+            match("Set");
 
 
             }
@@ -2085,7 +2085,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:103:8: ( 'Bag' )
             // InternalOCLinEcore.g:103:10: 'Bag'
             {
-            match("Bag"); 
+            match("Bag");
 
 
             }
@@ -2106,7 +2106,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:104:8: ( 'Sequence' )
             // InternalOCLinEcore.g:104:10: 'Sequence'
             {
-            match("Sequence"); 
+            match("Sequence");
 
 
             }
@@ -2127,7 +2127,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:105:8: ( 'Collection' )
             // InternalOCLinEcore.g:105:10: 'Collection'
             {
-            match("Collection"); 
+            match("Collection");
 
 
             }
@@ -2148,7 +2148,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:106:8: ( 'OrderedSet' )
             // InternalOCLinEcore.g:106:10: 'OrderedSet'
             {
-            match("OrderedSet"); 
+            match("OrderedSet");
 
 
             }
@@ -2169,7 +2169,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:107:8: ( '..' )
             // InternalOCLinEcore.g:107:10: '..'
             {
-            match(".."); 
+            match("..");
 
 
             }
@@ -2190,7 +2190,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:108:8: ( '++' )
             // InternalOCLinEcore.g:108:10: '++'
             {
-            match("++"); 
+            match("++");
 
 
             }
@@ -2211,7 +2211,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:109:8: ( 'Lambda' )
             // InternalOCLinEcore.g:109:10: 'Lambda'
             {
-            match("Lambda"); 
+            match("Lambda");
 
 
             }
@@ -2232,7 +2232,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:110:8: ( '<-' )
             // InternalOCLinEcore.g:110:10: '<-'
             {
-            match("<-"); 
+            match("<-");
 
 
             }
@@ -2253,7 +2253,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:111:8: ( 'true' )
             // InternalOCLinEcore.g:111:10: 'true'
             {
-            match("true"); 
+            match("true");
 
 
             }
@@ -2274,7 +2274,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:112:8: ( 'false' )
             // InternalOCLinEcore.g:112:10: 'false'
             {
-            match("false"); 
+            match("false");
 
 
             }
@@ -2295,7 +2295,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:113:8: ( 'invalid' )
             // InternalOCLinEcore.g:113:10: 'invalid'
             {
-            match("invalid"); 
+            match("invalid");
 
 
             }
@@ -2316,7 +2316,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:114:8: ( 'null' )
             // InternalOCLinEcore.g:114:10: 'null'
             {
-            match("null"); 
+            match("null");
 
 
             }
@@ -2337,7 +2337,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:115:8: ( '@' )
             // InternalOCLinEcore.g:115:10: '@'
             {
-            match('@'); 
+            match('@');
 
             }
 
@@ -2357,7 +2357,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:116:8: ( 'pre' )
             // InternalOCLinEcore.g:116:10: 'pre'
             {
-            match("pre"); 
+            match("pre");
 
 
             }
@@ -2378,7 +2378,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:117:8: ( '[' )
             // InternalOCLinEcore.g:117:10: '['
             {
-            match('['); 
+            match('[');
 
             }
 
@@ -2398,7 +2398,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:118:8: ( ']' )
             // InternalOCLinEcore.g:118:10: ']'
             {
-            match(']'); 
+            match(']');
 
             }
 
@@ -2418,7 +2418,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:119:8: ( 'in' )
             // InternalOCLinEcore.g:119:10: 'in'
             {
-            match("in"); 
+            match("in");
 
 
             }
@@ -2439,7 +2439,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:120:8: ( '|' )
             // InternalOCLinEcore.g:120:10: '|'
             {
-            match('|'); 
+            match('|');
 
             }
 
@@ -2459,7 +2459,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:121:8: ( 'if' )
             // InternalOCLinEcore.g:121:10: 'if'
             {
-            match("if"); 
+            match("if");
 
 
             }
@@ -2480,7 +2480,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:122:8: ( 'then' )
             // InternalOCLinEcore.g:122:10: 'then'
             {
-            match("then"); 
+            match("then");
 
 
             }
@@ -2501,7 +2501,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:123:8: ( 'else' )
             // InternalOCLinEcore.g:123:10: 'else'
             {
-            match("else"); 
+            match("else");
 
 
             }
@@ -2522,7 +2522,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:124:8: ( 'endif' )
             // InternalOCLinEcore.g:124:10: 'endif'
             {
-            match("endif"); 
+            match("endif");
 
 
             }
@@ -2543,7 +2543,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:125:8: ( 'elseif' )
             // InternalOCLinEcore.g:125:10: 'elseif'
             {
-            match("elseif"); 
+            match("elseif");
 
 
             }
@@ -2564,7 +2564,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:126:8: ( 'let' )
             // InternalOCLinEcore.g:126:10: 'let'
             {
-            match("let"); 
+            match("let");
 
 
             }
@@ -2585,7 +2585,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:127:8: ( 'self' )
             // InternalOCLinEcore.g:127:10: 'self'
             {
-            match("self"); 
+            match("self");
 
 
             }
@@ -2606,7 +2606,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:128:8: ( '|?' )
             // InternalOCLinEcore.g:128:10: '|?'
             {
-            match("|?"); 
+            match("|?");
 
 
             }
@@ -2627,7 +2627,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:129:8: ( '|1' )
             // InternalOCLinEcore.g:129:10: '|1'
             {
-            match("|1"); 
+            match("|1");
 
 
             }
@@ -2648,7 +2648,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:130:8: ( '?' )
             // InternalOCLinEcore.g:130:10: '?'
             {
-            match('?'); 
+            match('?');
 
             }
 
@@ -2668,7 +2668,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:131:8: ( '&&' )
             // InternalOCLinEcore.g:131:10: '&&'
             {
-            match("&&"); 
+            match("&&");
 
 
             }
@@ -2689,7 +2689,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:9914:22: ( '\\u00A3$%^\\u00A3$%^' )
             // InternalOCLinEcore.g:9914:24: '\\u00A3$%^\\u00A3$%^'
             {
-            match("\u00A3$%^\u00A3$%^"); 
+            match("\u00A3$%^\u00A3$%^");
 
 
             }
@@ -2708,7 +2708,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:9916:33: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) )
             // InternalOCLinEcore.g:9916:35: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
             {
-            match('\\'); 
+            match('\\');
             if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
                 input.consume();
 
@@ -2759,7 +2759,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:9920:27: ( '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
             // InternalOCLinEcore.g:9920:29: '\"' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
-            match('\"'); 
+            match('\"');
             // InternalOCLinEcore.g:9920:33: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\"' ) ) )*
             loop1:
             do {
@@ -2778,7 +2778,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             	case 1 :
             	    // InternalOCLinEcore.g:9920:34: RULE_ESCAPED_CHARACTER
             	    {
-            	    mRULE_ESCAPED_CHARACTER(); 
+            	    mRULE_ESCAPED_CHARACTER();
 
             	    }
             	    break;
@@ -2803,7 +2803,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
                 }
             } while (true);
 
-            match('\"'); 
+            match('\"');
 
             }
 
@@ -2823,7 +2823,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:9922:27: ( '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             // InternalOCLinEcore.g:9922:29: '\\'' ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
-            match('\''); 
+            match('\'');
             // InternalOCLinEcore.g:9922:34: ( RULE_ESCAPED_CHARACTER | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop2:
             do {
@@ -2842,7 +2842,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             	case 1 :
             	    // InternalOCLinEcore.g:9922:35: RULE_ESCAPED_CHARACTER
             	    {
-            	    mRULE_ESCAPED_CHARACTER(); 
+            	    mRULE_ESCAPED_CHARACTER();
 
             	    }
             	    break;
@@ -2867,7 +2867,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
                 }
             } while (true);
 
-            match('\''); 
+            match('\'');
 
             }
 
@@ -2887,7 +2887,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:9924:30: ( '/\\'' ( options {greedy=false; } : . )* '\\'/' )
             // InternalOCLinEcore.g:9924:32: '/\\'' ( options {greedy=false; } : . )* '\\'/'
             {
-            match("/'"); 
+            match("/'");
 
             // InternalOCLinEcore.g:9924:38: ( options {greedy=false; } : . )*
             loop3:
@@ -2916,7 +2916,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             	case 1 :
             	    // InternalOCLinEcore.g:9924:66: .
             	    {
-            	    matchAny(); 
+            	    matchAny();
 
             	    }
             	    break;
@@ -2926,7 +2926,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
                 }
             } while (true);
 
-            match("'/"); 
+            match("'/");
 
 
             }
@@ -2947,7 +2947,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:9926:16: ( RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )* )
             // InternalOCLinEcore.g:9926:18: RULE_LETTER_CHARACTER ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             {
-            mRULE_LETTER_CHARACTER(); 
+            mRULE_LETTER_CHARACTER();
             // InternalOCLinEcore.g:9926:40: ( RULE_LETTER_CHARACTER | '0' .. '9' )*
             loop4:
             do {
@@ -3000,8 +3000,8 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:9928:17: ( '_' RULE_SINGLE_QUOTED_STRING )
             // InternalOCLinEcore.g:9928:19: '_' RULE_SINGLE_QUOTED_STRING
             {
-            match('_'); 
-            mRULE_SINGLE_QUOTED_STRING(); 
+            match('_');
+            mRULE_SINGLE_QUOTED_STRING();
 
             }
 
@@ -3037,7 +3037,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             	case 1 :
             	    // InternalOCLinEcore.g:9930:13: '0' .. '9'
             	    {
-            	    matchRange('0','9'); 
+            	    matchRange('0','9');
 
             	    }
             	    break;
@@ -3070,7 +3070,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:9932:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
             // InternalOCLinEcore.g:9932:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
-            match("/*"); 
+            match("/*");
 
             // InternalOCLinEcore.g:9932:24: ( options {greedy=false; } : . )*
             loop6:
@@ -3099,7 +3099,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             	case 1 :
             	    // InternalOCLinEcore.g:9932:52: .
             	    {
-            	    matchAny(); 
+            	    matchAny();
 
             	    }
             	    break;
@@ -3109,7 +3109,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
                 }
             } while (true);
 
-            match("*/"); 
+            match("*/");
 
 
             }
@@ -3130,7 +3130,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:9934:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
             // InternalOCLinEcore.g:9934:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
-            match("--"); 
+            match("--");
 
             // InternalOCLinEcore.g:9934:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop7:
@@ -3187,14 +3187,14 @@ public class InternalOCLinEcoreLexer extends Lexer {
                         case 1 :
                             // InternalOCLinEcore.g:9934:41: '\\r'
                             {
-                            match('\r'); 
+                            match('\r');
 
                             }
                             break;
 
                     }
 
-                    match('\n'); 
+                    match('\n');
 
                     }
                     break;
@@ -3277,7 +3277,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             // InternalOCLinEcore.g:9938:16: ( . )
             // InternalOCLinEcore.g:9938:18: .
             {
-            matchAny(); 
+            matchAny();
 
             }
 
@@ -3297,924 +3297,924 @@ public class InternalOCLinEcoreLexer extends Lexer {
             case 1 :
                 // InternalOCLinEcore.g:1:10: T__17
                 {
-                mT__17(); 
+                mT__17();
 
                 }
                 break;
             case 2 :
                 // InternalOCLinEcore.g:1:16: T__18
                 {
-                mT__18(); 
+                mT__18();
 
                 }
                 break;
             case 3 :
                 // InternalOCLinEcore.g:1:22: T__19
                 {
-                mT__19(); 
+                mT__19();
 
                 }
                 break;
             case 4 :
                 // InternalOCLinEcore.g:1:28: T__20
                 {
-                mT__20(); 
+                mT__20();
 
                 }
                 break;
             case 5 :
                 // InternalOCLinEcore.g:1:34: T__21
                 {
-                mT__21(); 
+                mT__21();
 
                 }
                 break;
             case 6 :
                 // InternalOCLinEcore.g:1:40: T__22
                 {
-                mT__22(); 
+                mT__22();
 
                 }
                 break;
             case 7 :
                 // InternalOCLinEcore.g:1:46: T__23
                 {
-                mT__23(); 
+                mT__23();
 
                 }
                 break;
             case 8 :
                 // InternalOCLinEcore.g:1:52: T__24
                 {
-                mT__24(); 
+                mT__24();
 
                 }
                 break;
             case 9 :
                 // InternalOCLinEcore.g:1:58: T__25
                 {
-                mT__25(); 
+                mT__25();
 
                 }
                 break;
             case 10 :
                 // InternalOCLinEcore.g:1:64: T__26
                 {
-                mT__26(); 
+                mT__26();
 
                 }
                 break;
             case 11 :
                 // InternalOCLinEcore.g:1:70: T__27
                 {
-                mT__27(); 
+                mT__27();
 
                 }
                 break;
             case 12 :
                 // InternalOCLinEcore.g:1:76: T__28
                 {
-                mT__28(); 
+                mT__28();
 
                 }
                 break;
             case 13 :
                 // InternalOCLinEcore.g:1:82: T__29
                 {
-                mT__29(); 
+                mT__29();
 
                 }
                 break;
             case 14 :
                 // InternalOCLinEcore.g:1:88: T__30
                 {
-                mT__30(); 
+                mT__30();
 
                 }
                 break;
             case 15 :
                 // InternalOCLinEcore.g:1:94: T__31
                 {
-                mT__31(); 
+                mT__31();
 
                 }
                 break;
             case 16 :
                 // InternalOCLinEcore.g:1:100: T__32
                 {
-                mT__32(); 
+                mT__32();
 
                 }
                 break;
             case 17 :
                 // InternalOCLinEcore.g:1:106: T__33
                 {
-                mT__33(); 
+                mT__33();
 
                 }
                 break;
             case 18 :
                 // InternalOCLinEcore.g:1:112: T__34
                 {
-                mT__34(); 
+                mT__34();
 
                 }
                 break;
             case 19 :
                 // InternalOCLinEcore.g:1:118: T__35
                 {
-                mT__35(); 
+                mT__35();
 
                 }
                 break;
             case 20 :
                 // InternalOCLinEcore.g:1:124: T__36
                 {
-                mT__36(); 
+                mT__36();
 
                 }
                 break;
             case 21 :
                 // InternalOCLinEcore.g:1:130: T__37
                 {
-                mT__37(); 
+                mT__37();
 
                 }
                 break;
             case 22 :
                 // InternalOCLinEcore.g:1:136: T__38
                 {
-                mT__38(); 
+                mT__38();
 
                 }
                 break;
             case 23 :
                 // InternalOCLinEcore.g:1:142: T__39
                 {
-                mT__39(); 
+                mT__39();
 
                 }
                 break;
             case 24 :
                 // InternalOCLinEcore.g:1:148: T__40
                 {
-                mT__40(); 
+                mT__40();
 
                 }
                 break;
             case 25 :
                 // InternalOCLinEcore.g:1:154: T__41
                 {
-                mT__41(); 
+                mT__41();
 
                 }
                 break;
             case 26 :
                 // InternalOCLinEcore.g:1:160: T__42
                 {
-                mT__42(); 
+                mT__42();
 
                 }
                 break;
             case 27 :
                 // InternalOCLinEcore.g:1:166: T__43
                 {
-                mT__43(); 
+                mT__43();
 
                 }
                 break;
             case 28 :
                 // InternalOCLinEcore.g:1:172: T__44
                 {
-                mT__44(); 
+                mT__44();
 
                 }
                 break;
             case 29 :
                 // InternalOCLinEcore.g:1:178: T__45
                 {
-                mT__45(); 
+                mT__45();
 
                 }
                 break;
             case 30 :
                 // InternalOCLinEcore.g:1:184: T__46
                 {
-                mT__46(); 
+                mT__46();
 
                 }
                 break;
             case 31 :
                 // InternalOCLinEcore.g:1:190: T__47
                 {
-                mT__47(); 
+                mT__47();
 
                 }
                 break;
             case 32 :
                 // InternalOCLinEcore.g:1:196: T__48
                 {
-                mT__48(); 
+                mT__48();
 
                 }
                 break;
             case 33 :
                 // InternalOCLinEcore.g:1:202: T__49
                 {
-                mT__49(); 
+                mT__49();
 
                 }
                 break;
             case 34 :
                 // InternalOCLinEcore.g:1:208: T__50
                 {
-                mT__50(); 
+                mT__50();
 
                 }
                 break;
             case 35 :
                 // InternalOCLinEcore.g:1:214: T__51
                 {
-                mT__51(); 
+                mT__51();
 
                 }
                 break;
             case 36 :
                 // InternalOCLinEcore.g:1:220: T__52
                 {
-                mT__52(); 
+                mT__52();
 
                 }
                 break;
             case 37 :
                 // InternalOCLinEcore.g:1:226: T__53
                 {
-                mT__53(); 
+                mT__53();
 
                 }
                 break;
             case 38 :
                 // InternalOCLinEcore.g:1:232: T__54
                 {
-                mT__54(); 
+                mT__54();
 
                 }
                 break;
             case 39 :
                 // InternalOCLinEcore.g:1:238: T__55
                 {
-                mT__55(); 
+                mT__55();
 
                 }
                 break;
             case 40 :
                 // InternalOCLinEcore.g:1:244: T__56
                 {
-                mT__56(); 
+                mT__56();
 
                 }
                 break;
             case 41 :
                 // InternalOCLinEcore.g:1:250: T__57
                 {
-                mT__57(); 
+                mT__57();
 
                 }
                 break;
             case 42 :
                 // InternalOCLinEcore.g:1:256: T__58
                 {
-                mT__58(); 
+                mT__58();
 
                 }
                 break;
             case 43 :
                 // InternalOCLinEcore.g:1:262: T__59
                 {
-                mT__59(); 
+                mT__59();
 
                 }
                 break;
             case 44 :
                 // InternalOCLinEcore.g:1:268: T__60
                 {
-                mT__60(); 
+                mT__60();
 
                 }
                 break;
             case 45 :
                 // InternalOCLinEcore.g:1:274: T__61
                 {
-                mT__61(); 
+                mT__61();
 
                 }
                 break;
             case 46 :
                 // InternalOCLinEcore.g:1:280: T__62
                 {
-                mT__62(); 
+                mT__62();
 
                 }
                 break;
             case 47 :
                 // InternalOCLinEcore.g:1:286: T__63
                 {
-                mT__63(); 
+                mT__63();
 
                 }
                 break;
             case 48 :
                 // InternalOCLinEcore.g:1:292: T__64
                 {
-                mT__64(); 
+                mT__64();
 
                 }
                 break;
             case 49 :
                 // InternalOCLinEcore.g:1:298: T__65
                 {
-                mT__65(); 
+                mT__65();
 
                 }
                 break;
             case 50 :
                 // InternalOCLinEcore.g:1:304: T__66
                 {
-                mT__66(); 
+                mT__66();
 
                 }
                 break;
             case 51 :
                 // InternalOCLinEcore.g:1:310: T__67
                 {
-                mT__67(); 
+                mT__67();
 
                 }
                 break;
             case 52 :
                 // InternalOCLinEcore.g:1:316: T__68
                 {
-                mT__68(); 
+                mT__68();
 
                 }
                 break;
             case 53 :
                 // InternalOCLinEcore.g:1:322: T__69
                 {
-                mT__69(); 
+                mT__69();
 
                 }
                 break;
             case 54 :
                 // InternalOCLinEcore.g:1:328: T__70
                 {
-                mT__70(); 
+                mT__70();
 
                 }
                 break;
             case 55 :
                 // InternalOCLinEcore.g:1:334: T__71
                 {
-                mT__71(); 
+                mT__71();
 
                 }
                 break;
             case 56 :
                 // InternalOCLinEcore.g:1:340: T__72
                 {
-                mT__72(); 
+                mT__72();
 
                 }
                 break;
             case 57 :
                 // InternalOCLinEcore.g:1:346: T__73
                 {
-                mT__73(); 
+                mT__73();
 
                 }
                 break;
             case 58 :
                 // InternalOCLinEcore.g:1:352: T__74
                 {
-                mT__74(); 
+                mT__74();
 
                 }
                 break;
             case 59 :
                 // InternalOCLinEcore.g:1:358: T__75
                 {
-                mT__75(); 
+                mT__75();
 
                 }
                 break;
             case 60 :
                 // InternalOCLinEcore.g:1:364: T__76
                 {
-                mT__76(); 
+                mT__76();
 
                 }
                 break;
             case 61 :
                 // InternalOCLinEcore.g:1:370: T__77
                 {
-                mT__77(); 
+                mT__77();
 
                 }
                 break;
             case 62 :
                 // InternalOCLinEcore.g:1:376: T__78
                 {
-                mT__78(); 
+                mT__78();
 
                 }
                 break;
             case 63 :
                 // InternalOCLinEcore.g:1:382: T__79
                 {
-                mT__79(); 
+                mT__79();
 
                 }
                 break;
             case 64 :
                 // InternalOCLinEcore.g:1:388: T__80
                 {
-                mT__80(); 
+                mT__80();
 
                 }
                 break;
             case 65 :
                 // InternalOCLinEcore.g:1:394: T__81
                 {
-                mT__81(); 
+                mT__81();
 
                 }
                 break;
             case 66 :
                 // InternalOCLinEcore.g:1:400: T__82
                 {
-                mT__82(); 
+                mT__82();
 
                 }
                 break;
             case 67 :
                 // InternalOCLinEcore.g:1:406: T__83
                 {
-                mT__83(); 
+                mT__83();
 
                 }
                 break;
             case 68 :
                 // InternalOCLinEcore.g:1:412: T__84
                 {
-                mT__84(); 
+                mT__84();
 
                 }
                 break;
             case 69 :
                 // InternalOCLinEcore.g:1:418: T__85
                 {
-                mT__85(); 
+                mT__85();
 
                 }
                 break;
             case 70 :
                 // InternalOCLinEcore.g:1:424: T__86
                 {
-                mT__86(); 
+                mT__86();
 
                 }
                 break;
             case 71 :
                 // InternalOCLinEcore.g:1:430: T__87
                 {
-                mT__87(); 
+                mT__87();
 
                 }
                 break;
             case 72 :
                 // InternalOCLinEcore.g:1:436: T__88
                 {
-                mT__88(); 
+                mT__88();
 
                 }
                 break;
             case 73 :
                 // InternalOCLinEcore.g:1:442: T__89
                 {
-                mT__89(); 
+                mT__89();
 
                 }
                 break;
             case 74 :
                 // InternalOCLinEcore.g:1:448: T__90
                 {
-                mT__90(); 
+                mT__90();
 
                 }
                 break;
             case 75 :
                 // InternalOCLinEcore.g:1:454: T__91
                 {
-                mT__91(); 
+                mT__91();
 
                 }
                 break;
             case 76 :
                 // InternalOCLinEcore.g:1:460: T__92
                 {
-                mT__92(); 
+                mT__92();
 
                 }
                 break;
             case 77 :
                 // InternalOCLinEcore.g:1:466: T__93
                 {
-                mT__93(); 
+                mT__93();
 
                 }
                 break;
             case 78 :
                 // InternalOCLinEcore.g:1:472: T__94
                 {
-                mT__94(); 
+                mT__94();
 
                 }
                 break;
             case 79 :
                 // InternalOCLinEcore.g:1:478: T__95
                 {
-                mT__95(); 
+                mT__95();
 
                 }
                 break;
             case 80 :
                 // InternalOCLinEcore.g:1:484: T__96
                 {
-                mT__96(); 
+                mT__96();
 
                 }
                 break;
             case 81 :
                 // InternalOCLinEcore.g:1:490: T__97
                 {
-                mT__97(); 
+                mT__97();
 
                 }
                 break;
             case 82 :
                 // InternalOCLinEcore.g:1:496: T__98
                 {
-                mT__98(); 
+                mT__98();
 
                 }
                 break;
             case 83 :
                 // InternalOCLinEcore.g:1:502: T__99
                 {
-                mT__99(); 
+                mT__99();
 
                 }
                 break;
             case 84 :
                 // InternalOCLinEcore.g:1:508: T__100
                 {
-                mT__100(); 
+                mT__100();
 
                 }
                 break;
             case 85 :
                 // InternalOCLinEcore.g:1:515: T__101
                 {
-                mT__101(); 
+                mT__101();
 
                 }
                 break;
             case 86 :
                 // InternalOCLinEcore.g:1:522: T__102
                 {
-                mT__102(); 
+                mT__102();
 
                 }
                 break;
             case 87 :
                 // InternalOCLinEcore.g:1:529: T__103
                 {
-                mT__103(); 
+                mT__103();
 
                 }
                 break;
             case 88 :
                 // InternalOCLinEcore.g:1:536: T__104
                 {
-                mT__104(); 
+                mT__104();
 
                 }
                 break;
             case 89 :
                 // InternalOCLinEcore.g:1:543: T__105
                 {
-                mT__105(); 
+                mT__105();
 
                 }
                 break;
             case 90 :
                 // InternalOCLinEcore.g:1:550: T__106
                 {
-                mT__106(); 
+                mT__106();
 
                 }
                 break;
             case 91 :
                 // InternalOCLinEcore.g:1:557: T__107
                 {
-                mT__107(); 
+                mT__107();
 
                 }
                 break;
             case 92 :
                 // InternalOCLinEcore.g:1:564: T__108
                 {
-                mT__108(); 
+                mT__108();
 
                 }
                 break;
             case 93 :
                 // InternalOCLinEcore.g:1:571: T__109
                 {
-                mT__109(); 
+                mT__109();
 
                 }
                 break;
             case 94 :
                 // InternalOCLinEcore.g:1:578: T__110
                 {
-                mT__110(); 
+                mT__110();
 
                 }
                 break;
             case 95 :
                 // InternalOCLinEcore.g:1:585: T__111
                 {
-                mT__111(); 
+                mT__111();
 
                 }
                 break;
             case 96 :
                 // InternalOCLinEcore.g:1:592: T__112
                 {
-                mT__112(); 
+                mT__112();
 
                 }
                 break;
             case 97 :
                 // InternalOCLinEcore.g:1:599: T__113
                 {
-                mT__113(); 
+                mT__113();
 
                 }
                 break;
             case 98 :
                 // InternalOCLinEcore.g:1:606: T__114
                 {
-                mT__114(); 
+                mT__114();
 
                 }
                 break;
             case 99 :
                 // InternalOCLinEcore.g:1:613: T__115
                 {
-                mT__115(); 
+                mT__115();
 
                 }
                 break;
             case 100 :
                 // InternalOCLinEcore.g:1:620: T__116
                 {
-                mT__116(); 
+                mT__116();
 
                 }
                 break;
             case 101 :
                 // InternalOCLinEcore.g:1:627: T__117
                 {
-                mT__117(); 
+                mT__117();
 
                 }
                 break;
             case 102 :
                 // InternalOCLinEcore.g:1:634: T__118
                 {
-                mT__118(); 
+                mT__118();
 
                 }
                 break;
             case 103 :
                 // InternalOCLinEcore.g:1:641: T__119
                 {
-                mT__119(); 
+                mT__119();
 
                 }
                 break;
             case 104 :
                 // InternalOCLinEcore.g:1:648: T__120
                 {
-                mT__120(); 
+                mT__120();
 
                 }
                 break;
             case 105 :
                 // InternalOCLinEcore.g:1:655: T__121
                 {
-                mT__121(); 
+                mT__121();
 
                 }
                 break;
             case 106 :
                 // InternalOCLinEcore.g:1:662: T__122
                 {
-                mT__122(); 
+                mT__122();
 
                 }
                 break;
             case 107 :
                 // InternalOCLinEcore.g:1:669: T__123
                 {
-                mT__123(); 
+                mT__123();
 
                 }
                 break;
             case 108 :
                 // InternalOCLinEcore.g:1:676: T__124
                 {
-                mT__124(); 
+                mT__124();
 
                 }
                 break;
             case 109 :
                 // InternalOCLinEcore.g:1:683: T__125
                 {
-                mT__125(); 
+                mT__125();
 
                 }
                 break;
             case 110 :
                 // InternalOCLinEcore.g:1:690: T__126
                 {
-                mT__126(); 
+                mT__126();
 
                 }
                 break;
             case 111 :
                 // InternalOCLinEcore.g:1:697: T__127
                 {
-                mT__127(); 
+                mT__127();
 
                 }
                 break;
             case 112 :
                 // InternalOCLinEcore.g:1:704: T__128
                 {
-                mT__128(); 
+                mT__128();
 
                 }
                 break;
             case 113 :
                 // InternalOCLinEcore.g:1:711: T__129
                 {
-                mT__129(); 
+                mT__129();
 
                 }
                 break;
             case 114 :
                 // InternalOCLinEcore.g:1:718: T__130
                 {
-                mT__130(); 
+                mT__130();
 
                 }
                 break;
             case 115 :
                 // InternalOCLinEcore.g:1:725: T__131
                 {
-                mT__131(); 
+                mT__131();
 
                 }
                 break;
             case 116 :
                 // InternalOCLinEcore.g:1:732: T__132
                 {
-                mT__132(); 
+                mT__132();
 
                 }
                 break;
             case 117 :
                 // InternalOCLinEcore.g:1:739: T__133
                 {
-                mT__133(); 
+                mT__133();
 
                 }
                 break;
             case 118 :
                 // InternalOCLinEcore.g:1:746: T__134
                 {
-                mT__134(); 
+                mT__134();
 
                 }
                 break;
             case 119 :
                 // InternalOCLinEcore.g:1:753: T__135
                 {
-                mT__135(); 
+                mT__135();
 
                 }
                 break;
             case 120 :
                 // InternalOCLinEcore.g:1:760: T__136
                 {
-                mT__136(); 
+                mT__136();
 
                 }
                 break;
             case 121 :
                 // InternalOCLinEcore.g:1:767: T__137
                 {
-                mT__137(); 
+                mT__137();
 
                 }
                 break;
             case 122 :
                 // InternalOCLinEcore.g:1:774: RULE_UNQUOTED_STRING
                 {
-                mRULE_UNQUOTED_STRING(); 
+                mRULE_UNQUOTED_STRING();
 
                 }
                 break;
             case 123 :
                 // InternalOCLinEcore.g:1:795: RULE_DOUBLE_QUOTED_STRING
                 {
-                mRULE_DOUBLE_QUOTED_STRING(); 
+                mRULE_DOUBLE_QUOTED_STRING();
 
                 }
                 break;
             case 124 :
                 // InternalOCLinEcore.g:1:821: RULE_SINGLE_QUOTED_STRING
                 {
-                mRULE_SINGLE_QUOTED_STRING(); 
+                mRULE_SINGLE_QUOTED_STRING();
 
                 }
                 break;
             case 125 :
                 // InternalOCLinEcore.g:1:847: RULE_ML_SINGLE_QUOTED_STRING
                 {
-                mRULE_ML_SINGLE_QUOTED_STRING(); 
+                mRULE_ML_SINGLE_QUOTED_STRING();
 
                 }
                 break;
             case 126 :
                 // InternalOCLinEcore.g:1:876: RULE_SIMPLE_ID
                 {
-                mRULE_SIMPLE_ID(); 
+                mRULE_SIMPLE_ID();
 
                 }
                 break;
             case 127 :
                 // InternalOCLinEcore.g:1:891: RULE_ESCAPED_ID
                 {
-                mRULE_ESCAPED_ID(); 
+                mRULE_ESCAPED_ID();
 
                 }
                 break;
             case 128 :
                 // InternalOCLinEcore.g:1:907: RULE_INT
                 {
-                mRULE_INT(); 
+                mRULE_INT();
 
                 }
                 break;
             case 129 :
                 // InternalOCLinEcore.g:1:916: RULE_ML_COMMENT
                 {
-                mRULE_ML_COMMENT(); 
+                mRULE_ML_COMMENT();
 
                 }
                 break;
             case 130 :
                 // InternalOCLinEcore.g:1:932: RULE_SL_COMMENT
                 {
-                mRULE_SL_COMMENT(); 
+                mRULE_SL_COMMENT();
 
                 }
                 break;
             case 131 :
                 // InternalOCLinEcore.g:1:948: RULE_WS
                 {
-                mRULE_WS(); 
+                mRULE_WS();
 
                 }
                 break;
             case 132 :
                 // InternalOCLinEcore.g:1:956: RULE_ANY_OTHER
                 {
-                mRULE_ANY_OTHER(); 
+                mRULE_ANY_OTHER();
 
                 }
                 break;
@@ -4863,7 +4863,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
-                    case 0 : 
+                    case 0 :
                         int LA11_54 = input.LA(1);
 
                         s = -1;
@@ -4873,7 +4873,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 1 : 
+                    case 1 :
                         int LA11_55 = input.LA(1);
 
                         s = -1;
@@ -4883,7 +4883,7 @@ public class InternalOCLinEcoreLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 2 :
                         int LA11_0 = input.LA(1);
 
                         s = -1;
@@ -5016,6 +5016,6 @@ public class InternalOCLinEcoreLexer extends Lexer {
             throw nvae;
         }
     }
- 
+
 
 }

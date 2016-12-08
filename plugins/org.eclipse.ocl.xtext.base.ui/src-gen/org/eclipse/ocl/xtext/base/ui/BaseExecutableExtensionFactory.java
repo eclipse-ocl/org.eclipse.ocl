@@ -19,7 +19,7 @@ import org.eclipse.ocl.xtext.base.ui.internal.BaseActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
- * introduced subclass. 
+ * introduced subclass.
  */
 public class BaseExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
 
@@ -27,10 +27,10 @@ public class BaseExecutableExtensionFactory extends AbstractGuiceAwareExecutable
 	protected Bundle getBundle() {
 		return BaseActivator.getInstance().getBundle();
 	}
-	
+
 	@Override
 	protected Injector getInjector() {
 		return BaseActivator.getInstance().getInjector(BaseActivator.ORG_ECLIPSE_OCL_XTEXT_BASE_BASE);
 	}
-	
+
 }

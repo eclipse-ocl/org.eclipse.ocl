@@ -16,31 +16,31 @@ import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.ocl.xtext.oclstdlib.services.OCLstdlibGrammarAccess;
 
 public class OCLstdlibParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+
 	@Inject
 	private OCLstdlibGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
-	
+
 	@Override
 	protected org.eclipse.ocl.xtext.oclstdlib.parser.antlr.internal.InternalOCLstdlibParser createParser(XtextTokenStream stream) {
 		return new org.eclipse.ocl.xtext.oclstdlib.parser.antlr.internal.InternalOCLstdlibParser(stream, getGrammarAccess());
 	}
-	
-	@Override 
+
+	@Override
 	protected String getDefaultRuleName() {
 		return "Library";
 	}
-	
+
 	public OCLstdlibGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(OCLstdlibGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
+
 }

@@ -1,10 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2016 Willink Transformations and others.
+ * Copyright (c) 2010, 2017 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *
@@ -30,12 +30,12 @@ public abstract class AbstractExtendingCompleteOCLCSVisitor<R, C>
 {
 	/**
 	 * Initializes me with an initial value for my result.
-	 * 
+	 *
 	 * @param context my initial result value
 	 */
 	protected AbstractExtendingCompleteOCLCSVisitor(C context) {
 		super(context);
-	}	
+	}
 
 	@Override
 	public R visitClassifierContextDeclCS(org.eclipse.ocl.xtext.completeoclcs.@NonNull ClassifierContextDeclCS object) {

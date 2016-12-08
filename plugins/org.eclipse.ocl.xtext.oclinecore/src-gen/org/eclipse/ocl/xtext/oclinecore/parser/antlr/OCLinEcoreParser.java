@@ -16,31 +16,31 @@ import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess;
 
 public class OCLinEcoreParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+
 	@Inject
 	private OCLinEcoreGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
-	
+
 	@Override
 	protected org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal.InternalOCLinEcoreParser createParser(XtextTokenStream stream) {
 		return new org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal.InternalOCLinEcoreParser(stream, getGrammarAccess());
 	}
-	
-	@Override 
+
+	@Override
 	protected String getDefaultRuleName() {
 		return "TopLevelCS";
 	}
-	
+
 	public OCLinEcoreGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(OCLinEcoreGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
+
 }

@@ -45,7 +45,7 @@ public interface Bug418716 extends EObject {
 	 * @return the value of the '<em>Attribute With Initital</em>' attribute.
 	 * @see #setAttributeWithInitital(int)
 	 * @see codegen.company.CodegencompanyPackage#getBug418716_AttributeWithInitital()
-	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='/**\n * 100\n \052/\nfinal int ECORE_INT_100 = <%org.eclipse.ocl.pivot.utilities.ValueUtil%>.intValueOf(<%codegen.company.CodegencompanyTables%>.INT_100);\nreturn ECORE_INT_100;'"
+	 * @model annotation="http://www.eclipse.org/emf/2002/GenModel get='/**\n * 100\n \052/\nfinal int ECORE_INT_100 = &lt;%org.eclipse.ocl.pivot.utilities.ValueUtil%&gt;.intValueOf(&lt;%codegen.company.CodegencompanyTables%&gt;.INT_100);\nreturn ECORE_INT_100;'"
 	 * @generated
 	 */
 	int getAttributeWithInitital();

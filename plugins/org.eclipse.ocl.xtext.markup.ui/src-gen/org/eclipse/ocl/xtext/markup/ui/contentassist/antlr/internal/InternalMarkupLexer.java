@@ -1,6 +1,6 @@
 package org.eclipse.ocl.xtext.markup.ui.contentassist.antlr.internal;
 
-// Hack: Use our own Lexer superclass by means of import. 
+// Hack: Use our own Lexer superclass by means of import.
 // Currently there is no other way to specify the superclass for the lexer.
 import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
 
@@ -44,7 +44,7 @@ public class InternalMarkupLexer extends Lexer {
     // delegates
     // delegators
 
-    public InternalMarkupLexer() {;} 
+    public InternalMarkupLexer() {;}
     public InternalMarkupLexer(CharStream input) {
         this(input, new RecognizerSharedState());
     }
@@ -62,7 +62,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:11:7: ( 'b' )
             // InternalMarkup.g:11:9: 'b'
             {
-            match('b'); 
+            match('b');
 
             }
 
@@ -82,7 +82,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:12:7: ( 'e' )
             // InternalMarkup.g:12:9: 'e'
             {
-            match('e'); 
+            match('e');
 
             }
 
@@ -102,7 +102,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:13:7: ( 'bullet' )
             // InternalMarkup.g:13:9: 'bullet'
             {
-            match("bullet"); 
+            match("bullet");
 
 
             }
@@ -123,7 +123,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:14:7: ( 'figure' )
             // InternalMarkup.g:14:9: 'figure'
             {
-            match("figure"); 
+            match("figure");
 
 
             }
@@ -144,7 +144,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:15:7: ( 'figureRef' )
             // InternalMarkup.g:15:9: 'figureRef'
             {
-            match("figureRef"); 
+            match("figureRef");
 
 
             }
@@ -165,7 +165,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:16:7: ( 'footnote' )
             // InternalMarkup.g:16:9: 'footnote'
             {
-            match("footnote"); 
+            match("footnote");
 
 
             }
@@ -186,7 +186,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:17:7: ( 'heading' )
             // InternalMarkup.g:17:9: 'heading'
             {
-            match("heading"); 
+            match("heading");
 
 
             }
@@ -207,7 +207,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:18:7: ( 'oclCode' )
             // InternalMarkup.g:18:9: 'oclCode'
             {
-            match("oclCode"); 
+            match("oclCode");
 
 
             }
@@ -228,7 +228,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:19:7: ( 'oclEval' )
             // InternalMarkup.g:19:9: 'oclEval'
             {
-            match("oclEval"); 
+            match("oclEval");
 
 
             }
@@ -249,7 +249,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:20:7: ( 'oclText' )
             // InternalMarkup.g:20:9: 'oclText'
             {
-            match("oclText"); 
+            match("oclText");
 
 
             }
@@ -270,7 +270,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:21:7: ( ':' )
             // InternalMarkup.g:21:9: ':'
             {
-            match(':'); 
+            match(':');
 
             }
 
@@ -290,7 +290,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:22:7: ( '#' )
             // InternalMarkup.g:22:9: '#'
             {
-            match('#'); 
+            match('#');
 
             }
 
@@ -310,7 +310,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:23:7: ( ',' )
             // InternalMarkup.g:23:9: ','
             {
-            match(','); 
+            match(',');
 
             }
 
@@ -330,7 +330,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:24:7: ( '[' )
             // InternalMarkup.g:24:9: '['
             {
-            match('['); 
+            match('[');
 
             }
 
@@ -350,7 +350,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:25:7: ( ']' )
             // InternalMarkup.g:25:9: ']'
             {
-            match(']'); 
+            match(']');
 
             }
 
@@ -368,7 +368,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:3148:22: ( '0' .. '9' )
             // InternalMarkup.g:3148:24: '0' .. '9'
             {
-            matchRange('0','9'); 
+            matchRange('0','9');
 
             }
 
@@ -408,7 +408,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:3152:23: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' | '<' | '>' | '[' | ']' ) )
             // InternalMarkup.g:3152:25: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' | '<' | '>' | '[' | ']' )
             {
-            match('\\'); 
+            match('\\');
             if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='<'||input.LA(1)=='>'||(input.LA(1)>='[' && input.LA(1)<=']')||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
                 input.consume();
 
@@ -499,7 +499,7 @@ public class InternalMarkupLexer extends Lexer {
             	case 1 :
             	    // InternalMarkup.g:3158:12: RULE_NUMBER
             	    {
-            	    mRULE_NUMBER(); 
+            	    mRULE_NUMBER();
 
             	    }
             	    break;
@@ -532,7 +532,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:3160:13: ( '\"' ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
             // InternalMarkup.g:3160:15: '\"' ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
-            match('\"'); 
+            match('\"');
             // InternalMarkup.g:3160:19: ( RULE_ESCAPED | ~ ( ( '\\\\' | '\"' ) ) )*
             loop2:
             do {
@@ -551,7 +551,7 @@ public class InternalMarkupLexer extends Lexer {
             	case 1 :
             	    // InternalMarkup.g:3160:20: RULE_ESCAPED
             	    {
-            	    mRULE_ESCAPED(); 
+            	    mRULE_ESCAPED();
 
             	    }
             	    break;
@@ -576,7 +576,7 @@ public class InternalMarkupLexer extends Lexer {
                 }
             } while (true);
 
-            match('\"'); 
+            match('\"');
 
             }
 
@@ -596,7 +596,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:3162:9: ( RULE_LETTER ( RULE_LETTER | RULE_NUMBER )* )
             // InternalMarkup.g:3162:11: RULE_LETTER ( RULE_LETTER | RULE_NUMBER )*
             {
-            mRULE_LETTER(); 
+            mRULE_LETTER();
             // InternalMarkup.g:3162:23: ( RULE_LETTER | RULE_NUMBER )*
             loop3:
             do {
@@ -668,7 +668,7 @@ public class InternalMarkupLexer extends Lexer {
             	case 1 :
             	    // InternalMarkup.g:3164:14: RULE_ESCAPED
             	    {
-            	    mRULE_ESCAPED(); 
+            	    mRULE_ESCAPED();
 
             	    }
             	    break;
@@ -747,7 +747,7 @@ public class InternalMarkupLexer extends Lexer {
             	    	case 1 :
             	    	    // InternalMarkup.g:3166:12: RULE_HORIZONTAL_WS
             	    	    {
-            	    	    mRULE_HORIZONTAL_WS(); 
+            	    	    mRULE_HORIZONTAL_WS();
 
             	    	    }
             	    	    break;
@@ -757,7 +757,7 @@ public class InternalMarkupLexer extends Lexer {
             	        }
             	    } while (true);
 
-            	    mRULE_VERTICAL_WS(); 
+            	    mRULE_VERTICAL_WS();
 
             	    }
             	    break;
@@ -806,7 +806,7 @@ public class InternalMarkupLexer extends Lexer {
             	case 1 :
             	    // InternalMarkup.g:3168:11: RULE_HORIZONTAL_WS
             	    {
-            	    mRULE_HORIZONTAL_WS(); 
+            	    mRULE_HORIZONTAL_WS();
 
             	    }
             	    break;
@@ -839,7 +839,7 @@ public class InternalMarkupLexer extends Lexer {
             // InternalMarkup.g:3170:16: ( . )
             // InternalMarkup.g:3170:18: .
             {
-            matchAny(); 
+            matchAny();
 
             }
 
@@ -859,154 +859,154 @@ public class InternalMarkupLexer extends Lexer {
             case 1 :
                 // InternalMarkup.g:1:10: T__16
                 {
-                mT__16(); 
+                mT__16();
 
                 }
                 break;
             case 2 :
                 // InternalMarkup.g:1:16: T__17
                 {
-                mT__17(); 
+                mT__17();
 
                 }
                 break;
             case 3 :
                 // InternalMarkup.g:1:22: T__18
                 {
-                mT__18(); 
+                mT__18();
 
                 }
                 break;
             case 4 :
                 // InternalMarkup.g:1:28: T__19
                 {
-                mT__19(); 
+                mT__19();
 
                 }
                 break;
             case 5 :
                 // InternalMarkup.g:1:34: T__20
                 {
-                mT__20(); 
+                mT__20();
 
                 }
                 break;
             case 6 :
                 // InternalMarkup.g:1:40: T__21
                 {
-                mT__21(); 
+                mT__21();
 
                 }
                 break;
             case 7 :
                 // InternalMarkup.g:1:46: T__22
                 {
-                mT__22(); 
+                mT__22();
 
                 }
                 break;
             case 8 :
                 // InternalMarkup.g:1:52: T__23
                 {
-                mT__23(); 
+                mT__23();
 
                 }
                 break;
             case 9 :
                 // InternalMarkup.g:1:58: T__24
                 {
-                mT__24(); 
+                mT__24();
 
                 }
                 break;
             case 10 :
                 // InternalMarkup.g:1:64: T__25
                 {
-                mT__25(); 
+                mT__25();
 
                 }
                 break;
             case 11 :
                 // InternalMarkup.g:1:70: T__26
                 {
-                mT__26(); 
+                mT__26();
 
                 }
                 break;
             case 12 :
                 // InternalMarkup.g:1:76: T__27
                 {
-                mT__27(); 
+                mT__27();
 
                 }
                 break;
             case 13 :
                 // InternalMarkup.g:1:82: T__28
                 {
-                mT__28(); 
+                mT__28();
 
                 }
                 break;
             case 14 :
                 // InternalMarkup.g:1:88: T__29
                 {
-                mT__29(); 
+                mT__29();
 
                 }
                 break;
             case 15 :
                 // InternalMarkup.g:1:94: T__30
                 {
-                mT__30(); 
+                mT__30();
 
                 }
                 break;
             case 16 :
                 // InternalMarkup.g:1:100: RULE_INT
                 {
-                mRULE_INT(); 
+                mRULE_INT();
 
                 }
                 break;
             case 17 :
                 // InternalMarkup.g:1:109: RULE_STRING
                 {
-                mRULE_STRING(); 
+                mRULE_STRING();
 
                 }
                 break;
             case 18 :
                 // InternalMarkup.g:1:121: RULE_ID
                 {
-                mRULE_ID(); 
+                mRULE_ID();
 
                 }
                 break;
             case 19 :
                 // InternalMarkup.g:1:129: RULE_WORD
                 {
-                mRULE_WORD(); 
+                mRULE_WORD();
 
                 }
                 break;
             case 20 :
                 // InternalMarkup.g:1:139: RULE_NL
                 {
-                mRULE_NL(); 
+                mRULE_NL();
 
                 }
                 break;
             case 21 :
                 // InternalMarkup.g:1:147: RULE_WS
                 {
-                mRULE_WS(); 
+                mRULE_WS();
 
                 }
                 break;
             case 22 :
                 // InternalMarkup.g:1:155: RULE_ANY_OTHER
                 {
-                mRULE_ANY_OTHER(); 
+                mRULE_ANY_OTHER();
 
                 }
                 break;
@@ -1151,7 +1151,7 @@ public class InternalMarkupLexer extends Lexer {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
-                    case 0 : 
+                    case 0 :
                         int LA8_61 = input.LA(1);
 
                         s = -1;
@@ -1165,7 +1165,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 1 : 
+                    case 1 :
                         int LA8_69 = input.LA(1);
 
                         s = -1;
@@ -1179,7 +1179,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 2 :
                         int LA8_26 = input.LA(1);
 
                         s = -1;
@@ -1193,7 +1193,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 3 :
                         int LA8_43 = input.LA(1);
 
                         s = -1;
@@ -1207,7 +1207,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 4 :
                         int LA8_48 = input.LA(1);
 
                         s = -1;
@@ -1221,7 +1221,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 5 :
                         int LA8_70 = input.LA(1);
 
                         s = -1;
@@ -1233,7 +1233,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 6 :
                         int LA8_55 = input.LA(1);
 
                         s = -1;
@@ -1247,7 +1247,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 7 : 
+                    case 7 :
                         int LA8_62 = input.LA(1);
 
                         s = -1;
@@ -1261,7 +1261,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 8 : 
+                    case 8 :
                         int LA8_49 = input.LA(1);
 
                         s = -1;
@@ -1275,7 +1275,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 9 : 
+                    case 9 :
                         int LA8_56 = input.LA(1);
 
                         s = -1;
@@ -1289,7 +1289,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 10 : 
+                    case 10 :
                         int LA8_63 = input.LA(1);
 
                         s = -1;
@@ -1303,7 +1303,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 11 : 
+                    case 11 :
                         int LA8_4 = input.LA(1);
 
                         s = -1;
@@ -1317,7 +1317,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 12 : 
+                    case 12 :
                         int LA8_20 = input.LA(1);
 
                         s = -1;
@@ -1329,7 +1329,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 13 : 
+                    case 13 :
                         int LA8_27 = input.LA(1);
 
                         s = -1;
@@ -1343,7 +1343,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 14 : 
+                    case 14 :
                         int LA8_71 = input.LA(1);
 
                         s = -1;
@@ -1355,7 +1355,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 15 : 
+                    case 15 :
                         int LA8_50 = input.LA(1);
 
                         s = -1;
@@ -1369,7 +1369,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 16 : 
+                    case 16 :
                         int LA8_44 = input.LA(1);
 
                         s = -1;
@@ -1387,7 +1387,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 17 : 
+                    case 17 :
                         int LA8_57 = input.LA(1);
 
                         s = -1;
@@ -1401,7 +1401,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 18 : 
+                    case 18 :
                         int LA8_64 = input.LA(1);
 
                         s = -1;
@@ -1415,7 +1415,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 19 : 
+                    case 19 :
                         int LA8_0 = input.LA(1);
 
                         s = -1;
@@ -1455,7 +1455,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 20 : 
+                    case 20 :
                         int LA8_51 = input.LA(1);
 
                         s = -1;
@@ -1469,7 +1469,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 21 : 
+                    case 21 :
                         int LA8_58 = input.LA(1);
 
                         s = -1;
@@ -1483,7 +1483,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 22 : 
+                    case 22 :
                         int LA8_60 = input.LA(1);
 
                         s = -1;
@@ -1497,7 +1497,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 23 : 
+                    case 23 :
                         int LA8_65 = input.LA(1);
 
                         s = -1;
@@ -1511,7 +1511,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 24 : 
+                    case 24 :
                         int LA8_5 = input.LA(1);
 
                         s = -1;
@@ -1525,7 +1525,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 25 : 
+                    case 25 :
                         int LA8_3 = input.LA(1);
 
                         s = -1;
@@ -1541,7 +1541,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 26 : 
+                    case 26 :
                         int LA8_72 = input.LA(1);
 
                         s = -1;
@@ -1553,7 +1553,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 27 : 
+                    case 27 :
                         int LA8_13 = input.LA(1);
 
                         s = -1;
@@ -1565,7 +1565,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 28 : 
+                    case 28 :
                         int LA8_23 = input.LA(1);
 
                         s = -1;
@@ -1579,7 +1579,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 29 : 
+                    case 29 :
                         int LA8_41 = input.LA(1);
 
                         s = -1;
@@ -1593,7 +1593,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 30 : 
+                    case 30 :
                         int LA8_59 = input.LA(1);
 
                         s = -1;
@@ -1605,7 +1605,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 31 : 
+                    case 31 :
                         int LA8_73 = input.LA(1);
 
                         s = -1;
@@ -1617,7 +1617,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 32 : 
+                    case 32 :
                         int LA8_46 = input.LA(1);
 
                         s = -1;
@@ -1631,7 +1631,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 33 : 
+                    case 33 :
                         int LA8_2 = input.LA(1);
 
                         s = -1;
@@ -1643,7 +1643,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 34 : 
+                    case 34 :
                         int LA8_53 = input.LA(1);
 
                         s = -1;
@@ -1657,7 +1657,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 35 : 
+                    case 35 :
                         int LA8_12 = input.LA(1);
 
                         s = -1;
@@ -1667,7 +1667,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 36 : 
+                    case 36 :
                         int LA8_18 = input.LA(1);
 
                         s = -1;
@@ -1681,7 +1681,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 37 : 
+                    case 37 :
                         int LA8_40 = input.LA(1);
 
                         s = -1;
@@ -1695,7 +1695,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 38 : 
+                    case 38 :
                         int LA8_34 = input.LA(1);
 
                         s = -1;
@@ -1707,7 +1707,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 39 : 
+                    case 39 :
                         int LA8_45 = input.LA(1);
 
                         s = -1;
@@ -1721,7 +1721,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 40 : 
+                    case 40 :
                         int LA8_52 = input.LA(1);
 
                         s = -1;
@@ -1735,7 +1735,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 41 : 
+                    case 41 :
                         int LA8_80 = input.LA(1);
 
                         s = -1;
@@ -1747,7 +1747,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 42 : 
+                    case 42 :
                         int LA8_11 = input.LA(1);
 
                         s = -1;
@@ -1759,7 +1759,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 43 : 
+                    case 43 :
                         int LA8_67 = input.LA(1);
 
                         s = -1;
@@ -1773,7 +1773,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 44 : 
+                    case 44 :
                         int LA8_74 = input.LA(1);
 
                         s = -1;
@@ -1787,7 +1787,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 45 : 
+                    case 45 :
                         int LA8_1 = input.LA(1);
 
                         s = -1;
@@ -1801,7 +1801,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 46 : 
+                    case 46 :
                         int LA8_75 = input.LA(1);
 
                         s = -1;
@@ -1813,7 +1813,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 47 : 
+                    case 47 :
                         int LA8_24 = input.LA(1);
 
                         s = -1;
@@ -1827,7 +1827,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 48 : 
+                    case 48 :
                         int LA8_42 = input.LA(1);
 
                         s = -1;
@@ -1841,7 +1841,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 49 : 
+                    case 49 :
                         int LA8_47 = input.LA(1);
 
                         s = -1;
@@ -1855,7 +1855,7 @@ public class InternalMarkupLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 50 : 
+                    case 50 :
                         int LA8_54 = input.LA(1);
 
                         s = -1;
@@ -1876,6 +1876,6 @@ public class InternalMarkupLexer extends Lexer {
             throw nvae;
         }
     }
- 
+
 
 }

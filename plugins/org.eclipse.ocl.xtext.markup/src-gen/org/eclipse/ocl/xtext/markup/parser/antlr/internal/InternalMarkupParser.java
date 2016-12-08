@@ -1,4 +1,4 @@
-package org.eclipse.ocl.xtext.markup.parser.antlr.internal; 
+package org.eclipse.ocl.xtext.markup.parser.antlr.internal;
 
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.parser.*;
@@ -72,9 +72,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         }
         public InternalMarkupParser(TokenStream input, RecognizerSharedState state) {
             super(input, state);
-             
+
         }
-        
+
 
     public String[] getTokenNames() { return InternalMarkupParser.tokenNames; }
     public String getGrammarFileName() { return "InternalMarkup.g"; }
@@ -85,20 +85,20 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
       This grammar contains a lot of empty actions to work around a bug in ANTLR.
       Otherwise the ANTLR tool will create synpreds that cannot be compiled in some rare cases.
     */
-     
+
      	private MarkupGrammarAccess grammarAccess;
-     	
+
         public InternalMarkupParser(TokenStream input, MarkupGrammarAccess grammarAccess) {
             this(input);
             this.grammarAccess = grammarAccess;
             registerRules(grammarAccess.getGrammar());
         }
-        
+
         @Override
         protected String getFirstRuleName() {
-        	return "Markup";	
+        	return "Markup";
        	}
-       	
+
        	@Override
        	protected MarkupGrammarAccess getGrammarAccess() {
        		return grammarAccess;
@@ -119,7 +119,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:82:2: iv_ruleMarkup= ruleMarkup EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getMarkupRule()); 
+               newCompositeNode(grammarAccess.getMarkupRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleMarkup=ruleMarkup();
@@ -127,18 +127,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleMarkup; 
+               current =iv_ruleMarkup;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -154,8 +154,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         EObject lv_elements_0_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:92:28: ( ( (lv_elements_0_0= ruleMarkupElement ) )* )
             // InternalMarkup.g:93:1: ( (lv_elements_0_0= ruleMarkupElement ) )*
@@ -179,9 +179,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	    // InternalMarkup.g:95:3: lv_elements_0_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getMarkupAccess().getElementsMarkupElementParserRuleCall_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getMarkupAccess().getElementsMarkupElementParserRuleCall_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_3);
             	    lv_elements_0_0=ruleMarkupElement();
@@ -194,12 +194,12 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getMarkupRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"elements",
-            	              		lv_elements_0_0, 
+            	              		lv_elements_0_0,
             	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -217,14 +217,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -245,7 +245,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:121:2: iv_ruleMarkupKeyword= ruleMarkupKeyword EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getMarkupKeywordRule()); 
+               newCompositeNode(grammarAccess.getMarkupKeywordRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleMarkupKeyword=ruleMarkupKeyword();
@@ -253,18 +253,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleMarkupKeyword.getText(); 
+               current =iv_ruleMarkupKeyword.getText();
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -279,8 +279,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
         Token kw=null;
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:131:28: ( (kw= 'b' | kw= 'e' | kw= 'bullet' | kw= 'figure' | kw= 'figureRef' | kw= 'footnote' | kw= 'heading' | kw= 'oclCode' | kw= 'oclEval' | kw= 'oclText' ) )
             // InternalMarkup.g:132:1: (kw= 'b' | kw= 'e' | kw= 'bullet' | kw= 'figure' | kw= 'figureRef' | kw= 'footnote' | kw= 'heading' | kw= 'oclCode' | kw= 'oclEval' | kw= 'oclText' )
@@ -354,8 +354,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getBKeyword_0()); 
-                          
+                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getBKeyword_0());
+
                     }
 
                     }
@@ -367,8 +367,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getEKeyword_1()); 
-                          
+                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getEKeyword_1());
+
                     }
 
                     }
@@ -380,8 +380,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getBulletKeyword_2()); 
-                          
+                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getBulletKeyword_2());
+
                     }
 
                     }
@@ -393,8 +393,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFigureKeyword_3()); 
-                          
+                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFigureKeyword_3());
+
                     }
 
                     }
@@ -406,8 +406,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFigureRefKeyword_4()); 
-                          
+                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFigureRefKeyword_4());
+
                     }
 
                     }
@@ -419,8 +419,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFootnoteKeyword_5()); 
-                          
+                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFootnoteKeyword_5());
+
                     }
 
                     }
@@ -432,8 +432,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getHeadingKeyword_6()); 
-                          
+                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getHeadingKeyword_6());
+
                     }
 
                     }
@@ -445,8 +445,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclCodeKeyword_7()); 
-                          
+                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclCodeKeyword_7());
+
                     }
 
                     }
@@ -458,8 +458,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclEvalKeyword_8()); 
-                          
+                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclEvalKeyword_8());
+
                     }
 
                     }
@@ -471,8 +471,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclTextKeyword_9()); 
-                          
+                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclTextKeyword_9());
+
                     }
 
                     }
@@ -484,14 +484,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -512,7 +512,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:211:2: iv_ruleMarkupElement= ruleMarkupElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getMarkupElementRule()); 
+               newCompositeNode(grammarAccess.getMarkupElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleMarkupElement=ruleMarkupElement();
@@ -520,18 +520,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleMarkupElement; 
+               current =iv_ruleMarkupElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -569,8 +569,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         EObject this_TextElement_11 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:221:28: ( (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement ) )
             // InternalMarkup.g:222:1: (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement )
@@ -583,14 +583,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:223:2: this_FontElement_0= ruleFontElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFontElementParserRuleCall_0()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFontElementParserRuleCall_0());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_FontElement_0=ruleFontElement();
@@ -598,10 +598,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_FontElement_0; 
+
+                              current = this_FontElement_0;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -610,14 +610,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:236:2: this_NewLineElement_1= ruleNewLineElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getNewLineElementParserRuleCall_1()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getNewLineElementParserRuleCall_1());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_NewLineElement_1=ruleNewLineElement();
@@ -625,10 +625,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_NewLineElement_1; 
+
+                              current = this_NewLineElement_1;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -637,14 +637,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:249:2: this_BulletElement_2= ruleBulletElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getBulletElementParserRuleCall_2()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getBulletElementParserRuleCall_2());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_BulletElement_2=ruleBulletElement();
@@ -652,10 +652,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_BulletElement_2; 
+
+                              current = this_BulletElement_2;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -664,14 +664,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:262:2: this_FigureElement_3= ruleFigureElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFigureElementParserRuleCall_3()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFigureElementParserRuleCall_3());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_FigureElement_3=ruleFigureElement();
@@ -679,10 +679,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_FigureElement_3; 
+
+                              current = this_FigureElement_3;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -691,14 +691,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:275:2: this_FigureRefElement_4= ruleFigureRefElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFigureRefElementParserRuleCall_4()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFigureRefElementParserRuleCall_4());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_FigureRefElement_4=ruleFigureRefElement();
@@ -706,10 +706,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_FigureRefElement_4; 
+
+                              current = this_FigureRefElement_4;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -718,14 +718,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:288:2: this_FootnoteElement_5= ruleFootnoteElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFootnoteElementParserRuleCall_5()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFootnoteElementParserRuleCall_5());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_FootnoteElement_5=ruleFootnoteElement();
@@ -733,10 +733,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_FootnoteElement_5; 
+
+                              current = this_FootnoteElement_5;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -745,14 +745,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:301:2: this_HeadingElement_6= ruleHeadingElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getHeadingElementParserRuleCall_6()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getHeadingElementParserRuleCall_6());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_HeadingElement_6=ruleHeadingElement();
@@ -760,10 +760,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_HeadingElement_6; 
+
+                              current = this_HeadingElement_6;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -772,14 +772,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:314:2: this_NullElement_7= ruleNullElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getNullElementParserRuleCall_7()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getNullElementParserRuleCall_7());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_NullElement_7=ruleNullElement();
@@ -787,10 +787,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_NullElement_7; 
+
+                              current = this_NullElement_7;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -799,14 +799,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:327:2: this_OCLCodeElement_8= ruleOCLCodeElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLCodeElementParserRuleCall_8()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLCodeElementParserRuleCall_8());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_OCLCodeElement_8=ruleOCLCodeElement();
@@ -814,10 +814,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_OCLCodeElement_8; 
+
+                              current = this_OCLCodeElement_8;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -826,14 +826,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:340:2: this_OCLEvalElement_9= ruleOCLEvalElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLEvalElementParserRuleCall_9()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLEvalElementParserRuleCall_9());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_OCLEvalElement_9=ruleOCLEvalElement();
@@ -841,10 +841,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_OCLEvalElement_9; 
+
+                              current = this_OCLEvalElement_9;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -853,14 +853,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:353:2: this_OCLTextElement_10= ruleOCLTextElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLTextElementParserRuleCall_10()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLTextElementParserRuleCall_10());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_OCLTextElement_10=ruleOCLTextElement();
@@ -868,10 +868,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_OCLTextElement_10; 
+
+                              current = this_OCLTextElement_10;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -880,14 +880,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:366:2: this_TextElement_11= ruleTextElement
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
+
+                      	  /* */
+
                     }
                     if ( state.backtracking==0 ) {
-                       
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getTextElementParserRuleCall_11()); 
-                          
+
+                              newCompositeNode(grammarAccess.getMarkupElementAccess().getTextElementParserRuleCall_11());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     this_TextElement_11=ruleTextElement();
@@ -895,10 +895,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
-                       
-                              current = this_TextElement_11; 
+
+                              current = this_TextElement_11;
                               afterParserOrEnumRuleCall();
-                          
+
                     }
 
                     }
@@ -910,14 +910,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -938,7 +938,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:387:2: iv_ruleBulletElement= ruleBulletElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getBulletElementRule()); 
+               newCompositeNode(grammarAccess.getBulletElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleBulletElement=ruleBulletElement();
@@ -946,18 +946,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleBulletElement; 
+               current =iv_ruleBulletElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -978,8 +978,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         EObject lv_elements_5_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:397:28: ( ( () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' ) )
             // InternalMarkup.g:398:1: ( () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' )
@@ -988,19 +988,19 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:398:2: () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']'
             {
             // InternalMarkup.g:398:2: ()
-            // InternalMarkup.g:399:2: 
+            // InternalMarkup.g:399:2:
             {
             if ( state.backtracking==0 ) {
-               
-              	  /* */ 
-              	
+
+              	  /* */
+
             }
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
                           grammarAccess.getBulletElementAccess().getBulletElementAction_0(),
                           current);
-                  
+
             }
 
             }
@@ -1009,7 +1009,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getBulletElementAccess().getBulletKeyword_1());
-                  
+
             }
             // InternalMarkup.g:411:1: (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )?
             int alt4=2;
@@ -1026,7 +1026,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getBulletElementAccess().getColonKeyword_2_0());
-                          
+
                     }
                     // InternalMarkup.g:415:1: ( (lv_level_3_0= RULE_INT ) )
                     // InternalMarkup.g:416:1: (lv_level_3_0= RULE_INT )
@@ -1037,8 +1037,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     lv_level_3_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_level_3_0, grammarAccess.getBulletElementAccess().getLevelINTTerminalRuleCall_2_1_0()); 
-                      		
+                      			newLeafNode(lv_level_3_0, grammarAccess.getBulletElementAccess().getLevelINTTerminalRuleCall_2_1_0());
+
                     }
                     if ( state.backtracking==0 ) {
 
@@ -1046,11 +1046,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                       	            current = createModelElement(grammarAccess.getBulletElementRule());
                       	        }
                              		setWithLastConsumed(
-                             			current, 
+                             			current,
                              			"level",
-                              		lv_level_3_0, 
+                              		lv_level_3_0,
                               		"org.eclipse.ocl.xtext.markup.Markup.INT");
-                      	    
+
                     }
 
                     }
@@ -1068,7 +1068,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getBulletElementAccess().getLeftSquareBracketKeyword_3());
-                  
+
             }
             // InternalMarkup.g:437:1: ( (lv_elements_5_0= ruleMarkupElement ) )*
             loop5:
@@ -1089,9 +1089,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	    // InternalMarkup.g:439:3: lv_elements_5_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getBulletElementAccess().getElementsMarkupElementParserRuleCall_4_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getBulletElementAccess().getElementsMarkupElementParserRuleCall_4_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
             	    lv_elements_5_0=ruleMarkupElement();
@@ -1104,12 +1104,12 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getBulletElementRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"elements",
-            	              		lv_elements_5_0, 
+            	              		lv_elements_5_0,
             	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -1127,7 +1127,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_6, grammarAccess.getBulletElementAccess().getRightSquareBracketKeyword_5());
-                  
+
             }
 
             }
@@ -1136,14 +1136,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1164,7 +1164,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:469:2: iv_ruleFontElement= ruleFontElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getFontElementRule()); 
+               newCompositeNode(grammarAccess.getFontElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleFontElement=ruleFontElement();
@@ -1172,18 +1172,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleFontElement; 
+               current =iv_ruleFontElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1203,8 +1203,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         EObject lv_elements_2_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:479:28: ( ( ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' ) )
             // InternalMarkup.g:480:1: ( ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' )
@@ -1243,7 +1243,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_font_0_1, grammarAccess.getFontElementAccess().getFontBKeyword_0_0_0());
-                          
+
                     }
                     if ( state.backtracking==0 ) {
 
@@ -1251,7 +1251,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                       	            current = createModelElement(grammarAccess.getFontElementRule());
                       	        }
                              		setWithLastConsumed(current, "font", lv_font_0_1, null);
-                      	    
+
                     }
 
                     }
@@ -1263,7 +1263,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_font_0_2, grammarAccess.getFontElementAccess().getFontEKeyword_0_0_1());
-                          
+
                     }
                     if ( state.backtracking==0 ) {
 
@@ -1271,7 +1271,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                       	            current = createModelElement(grammarAccess.getFontElementRule());
                       	        }
                              		setWithLastConsumed(current, "font", lv_font_0_2, null);
-                      	    
+
                     }
 
                     }
@@ -1289,7 +1289,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getFontElementAccess().getLeftSquareBracketKeyword_1());
-                  
+
             }
             // InternalMarkup.g:514:1: ( (lv_elements_2_0= ruleMarkupElement ) )*
             loop7:
@@ -1310,9 +1310,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	    // InternalMarkup.g:516:3: lv_elements_2_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getFontElementAccess().getElementsMarkupElementParserRuleCall_2_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getFontElementAccess().getElementsMarkupElementParserRuleCall_2_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
             	    lv_elements_2_0=ruleMarkupElement();
@@ -1325,12 +1325,12 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getFontElementRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"elements",
-            	              		lv_elements_2_0, 
+            	              		lv_elements_2_0,
             	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -1348,7 +1348,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getFontElementAccess().getRightSquareBracketKeyword_3());
-                  
+
             }
 
             }
@@ -1357,14 +1357,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1385,7 +1385,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:546:2: iv_ruleFigureElement= ruleFigureElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getFigureElementRule()); 
+               newCompositeNode(grammarAccess.getFigureElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleFigureElement=ruleFigureElement();
@@ -1393,18 +1393,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleFigureElement; 
+               current =iv_ruleFigureElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1430,8 +1430,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         Token lv_requiredHeight_10_0=null;
         Token otherlv_11=null;
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:556:28: ( (otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']' ) )
             // InternalMarkup.g:557:1: (otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']' )
@@ -1443,7 +1443,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getFigureElementAccess().getFigureKeyword_0());
-                  
+
             }
             // InternalMarkup.g:561:1: (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )?
             int alt8=2;
@@ -1460,7 +1460,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getFigureElementAccess().getNumberSignKeyword_1_0());
-                          
+
                     }
                     // InternalMarkup.g:565:1: ( (lv_def_2_0= RULE_ID ) )
                     // InternalMarkup.g:566:1: (lv_def_2_0= RULE_ID )
@@ -1471,8 +1471,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     lv_def_2_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_def_2_0, grammarAccess.getFigureElementAccess().getDefIDTerminalRuleCall_1_1_0()); 
-                      		
+                      			newLeafNode(lv_def_2_0, grammarAccess.getFigureElementAccess().getDefIDTerminalRuleCall_1_1_0());
+
                     }
                     if ( state.backtracking==0 ) {
 
@@ -1480,11 +1480,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                       	            current = createModelElement(grammarAccess.getFigureElementRule());
                       	        }
                              		setWithLastConsumed(
-                             			current, 
+                             			current,
                              			"def",
-                              		lv_def_2_0, 
+                              		lv_def_2_0,
                               		"org.eclipse.ocl.xtext.markup.Markup.ID");
-                      	    
+
                     }
 
                     }
@@ -1502,7 +1502,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getFigureElementAccess().getLeftSquareBracketKeyword_2());
-                  
+
             }
             // InternalMarkup.g:587:1: ( (lv_src_4_0= RULE_STRING ) )
             // InternalMarkup.g:588:1: (lv_src_4_0= RULE_STRING )
@@ -1513,8 +1513,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             lv_src_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_11); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_src_4_0, grammarAccess.getFigureElementAccess().getSrcSTRINGTerminalRuleCall_3_0()); 
-              		
+              			newLeafNode(lv_src_4_0, grammarAccess.getFigureElementAccess().getSrcSTRINGTerminalRuleCall_3_0());
+
             }
             if ( state.backtracking==0 ) {
 
@@ -1522,11 +1522,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
               	            current = createModelElement(grammarAccess.getFigureElementRule());
               	        }
                      		setWithLastConsumed(
-                     			current, 
+                     			current,
                      			"src",
-                      		lv_src_4_0, 
+                      		lv_src_4_0,
                       		"org.eclipse.ocl.xtext.markup.Markup.STRING");
-              	    
+
             }
 
             }
@@ -1549,7 +1549,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getFigureElementAccess().getCommaKeyword_4_0());
-                          
+
                     }
                     // InternalMarkup.g:609:1: ( (lv_alt_6_0= RULE_STRING ) )
                     // InternalMarkup.g:610:1: (lv_alt_6_0= RULE_STRING )
@@ -1560,8 +1560,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     lv_alt_6_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_11); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_alt_6_0, grammarAccess.getFigureElementAccess().getAltSTRINGTerminalRuleCall_4_1_0()); 
-                      		
+                      			newLeafNode(lv_alt_6_0, grammarAccess.getFigureElementAccess().getAltSTRINGTerminalRuleCall_4_1_0());
+
                     }
                     if ( state.backtracking==0 ) {
 
@@ -1569,11 +1569,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                       	            current = createModelElement(grammarAccess.getFigureElementRule());
                       	        }
                              		setWithLastConsumed(
-                             			current, 
+                             			current,
                              			"alt",
-                              		lv_alt_6_0, 
+                              		lv_alt_6_0,
                               		"org.eclipse.ocl.xtext.markup.Markup.STRING");
-                      	    
+
                     }
 
                     }
@@ -1596,7 +1596,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_7, grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_0());
-                                  
+
                             }
                             // InternalMarkup.g:631:1: ( (lv_requiredWidth_8_0= RULE_INT ) )
                             // InternalMarkup.g:632:1: (lv_requiredWidth_8_0= RULE_INT )
@@ -1607,8 +1607,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                             lv_requiredWidth_8_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_11); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                              			newLeafNode(lv_requiredWidth_8_0, grammarAccess.getFigureElementAccess().getRequiredWidthINTTerminalRuleCall_4_2_1_0()); 
-                              		
+                              			newLeafNode(lv_requiredWidth_8_0, grammarAccess.getFigureElementAccess().getRequiredWidthINTTerminalRuleCall_4_2_1_0());
+
                             }
                             if ( state.backtracking==0 ) {
 
@@ -1616,11 +1616,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                               	            current = createModelElement(grammarAccess.getFigureElementRule());
                               	        }
                                      		setWithLastConsumed(
-                                     			current, 
+                                     			current,
                                      			"requiredWidth",
-                                      		lv_requiredWidth_8_0, 
+                                      		lv_requiredWidth_8_0,
                                       		"org.eclipse.ocl.xtext.markup.Markup.INT");
-                              	    
+
                             }
 
                             }
@@ -1643,7 +1643,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                                     if ( state.backtracking==0 ) {
 
                                           	newLeafNode(otherlv_9, grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_2_0());
-                                          
+
                                     }
                                     // InternalMarkup.g:653:1: ( (lv_requiredHeight_10_0= RULE_INT ) )
                                     // InternalMarkup.g:654:1: (lv_requiredHeight_10_0= RULE_INT )
@@ -1654,8 +1654,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                                     lv_requiredHeight_10_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_12); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
-                                      			newLeafNode(lv_requiredHeight_10_0, grammarAccess.getFigureElementAccess().getRequiredHeightINTTerminalRuleCall_4_2_2_1_0()); 
-                                      		
+                                      			newLeafNode(lv_requiredHeight_10_0, grammarAccess.getFigureElementAccess().getRequiredHeightINTTerminalRuleCall_4_2_2_1_0());
+
                                     }
                                     if ( state.backtracking==0 ) {
 
@@ -1663,11 +1663,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                                       	            current = createModelElement(grammarAccess.getFigureElementRule());
                                       	        }
                                              		setWithLastConsumed(
-                                             			current, 
+                                             			current,
                                              			"requiredHeight",
-                                              		lv_requiredHeight_10_0, 
+                                              		lv_requiredHeight_10_0,
                                               		"org.eclipse.ocl.xtext.markup.Markup.INT");
-                                      	    
+
                                     }
 
                                     }
@@ -1697,7 +1697,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_11, grammarAccess.getFigureElementAccess().getRightSquareBracketKeyword_5());
-                  
+
             }
 
             }
@@ -1706,14 +1706,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1734,7 +1734,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:685:2: iv_ruleFigureRefElement= ruleFigureRefElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getFigureRefElementRule()); 
+               newCompositeNode(grammarAccess.getFigureRefElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleFigureRefElement=ruleFigureRefElement();
@@ -1742,18 +1742,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleFigureRefElement; 
+               current =iv_ruleFigureRefElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1771,8 +1771,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         Token otherlv_2=null;
         Token otherlv_3=null;
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:695:28: ( (otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']' ) )
             // InternalMarkup.g:696:1: (otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']' )
@@ -1784,13 +1784,13 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getFigureRefElementAccess().getFigureRefKeyword_0());
-                  
+
             }
             otherlv_1=(Token)match(input,27,FollowSets000.FOLLOW_9); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getFigureRefElementAccess().getLeftSquareBracketKeyword_1());
-                  
+
             }
             // InternalMarkup.g:704:1: ( (otherlv_2= RULE_ID ) )
             // InternalMarkup.g:705:1: (otherlv_2= RULE_ID )
@@ -1799,22 +1799,22 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:706:3: otherlv_2= RULE_ID
             {
             if ( state.backtracking==0 ) {
-               
-              		  /* */ 
-              		
+
+              		  /* */
+
             }
             if ( state.backtracking==0 ) {
 
               			if (current==null) {
               	            current = createModelElement(grammarAccess.getFigureRefElementRule());
               	        }
-                      
+
             }
             otherlv_2=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_12); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              		newLeafNode(otherlv_2, grammarAccess.getFigureRefElementAccess().getRefFigureElementCrossReference_2_0()); 
-              	
+              		newLeafNode(otherlv_2, grammarAccess.getFigureRefElementAccess().getRefFigureElementCrossReference_2_0());
+
             }
 
             }
@@ -1826,7 +1826,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getFigureRefElementAccess().getRightSquareBracketKeyword_3());
-                  
+
             }
 
             }
@@ -1835,14 +1835,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1863,7 +1863,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:734:2: iv_ruleFootnoteElement= ruleFootnoteElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getFootnoteElementRule()); 
+               newCompositeNode(grammarAccess.getFootnoteElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleFootnoteElement=ruleFootnoteElement();
@@ -1871,18 +1871,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleFootnoteElement; 
+               current =iv_ruleFootnoteElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -1901,8 +1901,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         EObject lv_elements_3_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:744:28: ( ( () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
             // InternalMarkup.g:745:1: ( () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
@@ -1911,19 +1911,19 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:745:2: () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
             {
             // InternalMarkup.g:745:2: ()
-            // InternalMarkup.g:746:2: 
+            // InternalMarkup.g:746:2:
             {
             if ( state.backtracking==0 ) {
-               
-              	  /* */ 
-              	
+
+              	  /* */
+
             }
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
                           grammarAccess.getFootnoteElementAccess().getFootnoteElementAction_0(),
                           current);
-                  
+
             }
 
             }
@@ -1932,13 +1932,13 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getFootnoteElementAccess().getFootnoteKeyword_1());
-                  
+
             }
             otherlv_2=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getFootnoteElementAccess().getLeftSquareBracketKeyword_2());
-                  
+
             }
             // InternalMarkup.g:762:1: ( (lv_elements_3_0= ruleMarkupElement ) )*
             loop12:
@@ -1959,9 +1959,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	    // InternalMarkup.g:764:3: lv_elements_3_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getFootnoteElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getFootnoteElementAccess().getElementsMarkupElementParserRuleCall_3_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
             	    lv_elements_3_0=ruleMarkupElement();
@@ -1974,12 +1974,12 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getFootnoteElementRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"elements",
-            	              		lv_elements_3_0, 
+            	              		lv_elements_3_0,
             	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -1997,7 +1997,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getFootnoteElementAccess().getRightSquareBracketKeyword_4());
-                  
+
             }
 
             }
@@ -2006,14 +2006,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2034,7 +2034,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:794:2: iv_ruleHeadingElement= ruleHeadingElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getHeadingElementRule()); 
+               newCompositeNode(grammarAccess.getHeadingElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleHeadingElement=ruleHeadingElement();
@@ -2042,18 +2042,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleHeadingElement; 
+               current =iv_ruleHeadingElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2074,8 +2074,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         EObject lv_elements_5_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:804:28: ( ( () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' ) )
             // InternalMarkup.g:805:1: ( () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' )
@@ -2084,19 +2084,19 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:805:2: () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']'
             {
             // InternalMarkup.g:805:2: ()
-            // InternalMarkup.g:806:2: 
+            // InternalMarkup.g:806:2:
             {
             if ( state.backtracking==0 ) {
-               
-              	  /* */ 
-              	
+
+              	  /* */
+
             }
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
                           grammarAccess.getHeadingElementAccess().getHeadingElementAction_0(),
                           current);
-                  
+
             }
 
             }
@@ -2105,7 +2105,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getHeadingElementAccess().getHeadingKeyword_1());
-                  
+
             }
             // InternalMarkup.g:818:1: (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )?
             int alt13=2;
@@ -2122,7 +2122,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getHeadingElementAccess().getColonKeyword_2_0());
-                          
+
                     }
                     // InternalMarkup.g:822:1: ( (lv_level_3_0= RULE_INT ) )
                     // InternalMarkup.g:823:1: (lv_level_3_0= RULE_INT )
@@ -2133,8 +2133,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     lv_level_3_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_level_3_0, grammarAccess.getHeadingElementAccess().getLevelINTTerminalRuleCall_2_1_0()); 
-                      		
+                      			newLeafNode(lv_level_3_0, grammarAccess.getHeadingElementAccess().getLevelINTTerminalRuleCall_2_1_0());
+
                     }
                     if ( state.backtracking==0 ) {
 
@@ -2142,11 +2142,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                       	            current = createModelElement(grammarAccess.getHeadingElementRule());
                       	        }
                              		setWithLastConsumed(
-                             			current, 
+                             			current,
                              			"level",
-                              		lv_level_3_0, 
+                              		lv_level_3_0,
                               		"org.eclipse.ocl.xtext.markup.Markup.INT");
-                      	    
+
                     }
 
                     }
@@ -2164,7 +2164,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getHeadingElementAccess().getLeftSquareBracketKeyword_3());
-                  
+
             }
             // InternalMarkup.g:844:1: ( (lv_elements_5_0= ruleMarkupElement ) )*
             loop14:
@@ -2185,9 +2185,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	    // InternalMarkup.g:846:3: lv_elements_5_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getHeadingElementAccess().getElementsMarkupElementParserRuleCall_4_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getHeadingElementAccess().getElementsMarkupElementParserRuleCall_4_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
             	    lv_elements_5_0=ruleMarkupElement();
@@ -2200,12 +2200,12 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getHeadingElementRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"elements",
-            	              		lv_elements_5_0, 
+            	              		lv_elements_5_0,
             	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -2223,7 +2223,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_6, grammarAccess.getHeadingElementAccess().getRightSquareBracketKeyword_5());
-                  
+
             }
 
             }
@@ -2232,14 +2232,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2260,7 +2260,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:876:2: iv_ruleNewLineElement= ruleNewLineElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getNewLineElementRule()); 
+               newCompositeNode(grammarAccess.getNewLineElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleNewLineElement=ruleNewLineElement();
@@ -2268,18 +2268,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleNewLineElement; 
+               current =iv_ruleNewLineElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2294,8 +2294,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
         Token lv_text_0_0=null;
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:886:28: ( ( (lv_text_0_0= RULE_NL ) ) )
             // InternalMarkup.g:887:1: ( (lv_text_0_0= RULE_NL ) )
@@ -2309,8 +2309,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             lv_text_0_0=(Token)match(input,RULE_NL,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_text_0_0, grammarAccess.getNewLineElementAccess().getTextNLTerminalRuleCall_0()); 
-              		
+              			newLeafNode(lv_text_0_0, grammarAccess.getNewLineElementAccess().getTextNLTerminalRuleCall_0());
+
             }
             if ( state.backtracking==0 ) {
 
@@ -2318,11 +2318,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
               	            current = createModelElement(grammarAccess.getNewLineElementRule());
               	        }
                      		setWithLastConsumed(
-                     			current, 
+                     			current,
                      			"text",
-                      		lv_text_0_0, 
+                      		lv_text_0_0,
                       		"org.eclipse.ocl.xtext.markup.Markup.NL");
-              	    
+
             }
 
             }
@@ -2334,14 +2334,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2362,7 +2362,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:915:2: iv_ruleNullElement= ruleNullElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getNullElementRule()); 
+               newCompositeNode(grammarAccess.getNullElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleNullElement=ruleNullElement();
@@ -2370,18 +2370,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleNullElement; 
+               current =iv_ruleNullElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2399,8 +2399,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         EObject lv_elements_2_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:925:28: ( ( () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' ) )
             // InternalMarkup.g:926:1: ( () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' )
@@ -2409,19 +2409,19 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:926:2: () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']'
             {
             // InternalMarkup.g:926:2: ()
-            // InternalMarkup.g:927:2: 
+            // InternalMarkup.g:927:2:
             {
             if ( state.backtracking==0 ) {
-               
-              	  /* */ 
-              	
+
+              	  /* */
+
             }
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
                           grammarAccess.getNullElementAccess().getNullElementAction_0(),
                           current);
-                  
+
             }
 
             }
@@ -2430,7 +2430,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getNullElementAccess().getLeftSquareBracketKeyword_1());
-                  
+
             }
             // InternalMarkup.g:939:1: ( (lv_elements_2_0= ruleMarkupElement ) )*
             loop15:
@@ -2451,9 +2451,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	    // InternalMarkup.g:941:3: lv_elements_2_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getNullElementAccess().getElementsMarkupElementParserRuleCall_2_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getNullElementAccess().getElementsMarkupElementParserRuleCall_2_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
             	    lv_elements_2_0=ruleMarkupElement();
@@ -2466,12 +2466,12 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getNullElementRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"elements",
-            	              		lv_elements_2_0, 
+            	              		lv_elements_2_0,
             	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -2489,7 +2489,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getNullElementAccess().getRightSquareBracketKeyword_3());
-                  
+
             }
 
             }
@@ -2498,14 +2498,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2526,7 +2526,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:971:2: iv_ruleOCLCodeElement= ruleOCLCodeElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getOCLCodeElementRule()); 
+               newCompositeNode(grammarAccess.getOCLCodeElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleOCLCodeElement=ruleOCLCodeElement();
@@ -2534,18 +2534,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleOCLCodeElement; 
+               current =iv_ruleOCLCodeElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2564,8 +2564,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         EObject lv_elements_3_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:981:28: ( ( () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
             // InternalMarkup.g:982:1: ( () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
@@ -2574,19 +2574,19 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:982:2: () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
             {
             // InternalMarkup.g:982:2: ()
-            // InternalMarkup.g:983:2: 
+            // InternalMarkup.g:983:2:
             {
             if ( state.backtracking==0 ) {
-               
-              	  /* */ 
-              	
+
+              	  /* */
+
             }
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
                           grammarAccess.getOCLCodeElementAccess().getOCLCodeElementAction_0(),
                           current);
-                  
+
             }
 
             }
@@ -2595,13 +2595,13 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getOCLCodeElementAccess().getOclCodeKeyword_1());
-                  
+
             }
             otherlv_2=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getOCLCodeElementAccess().getLeftSquareBracketKeyword_2());
-                  
+
             }
             // InternalMarkup.g:999:1: ( (lv_elements_3_0= ruleMarkupElement ) )*
             loop16:
@@ -2622,9 +2622,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	    // InternalMarkup.g:1001:3: lv_elements_3_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getOCLCodeElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getOCLCodeElementAccess().getElementsMarkupElementParserRuleCall_3_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
             	    lv_elements_3_0=ruleMarkupElement();
@@ -2637,12 +2637,12 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getOCLCodeElementRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"elements",
-            	              		lv_elements_3_0, 
+            	              		lv_elements_3_0,
             	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -2660,7 +2660,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getOCLCodeElementAccess().getRightSquareBracketKeyword_4());
-                  
+
             }
 
             }
@@ -2669,14 +2669,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2697,7 +2697,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:1031:2: iv_ruleOCLEvalElement= ruleOCLEvalElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getOCLEvalElementRule()); 
+               newCompositeNode(grammarAccess.getOCLEvalElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleOCLEvalElement=ruleOCLEvalElement();
@@ -2705,18 +2705,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleOCLEvalElement; 
+               current =iv_ruleOCLEvalElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2735,8 +2735,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         EObject lv_elements_3_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:1041:28: ( ( () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
             // InternalMarkup.g:1042:1: ( () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
@@ -2745,19 +2745,19 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:1042:2: () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
             {
             // InternalMarkup.g:1042:2: ()
-            // InternalMarkup.g:1043:2: 
+            // InternalMarkup.g:1043:2:
             {
             if ( state.backtracking==0 ) {
-               
-              	  /* */ 
-              	
+
+              	  /* */
+
             }
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
                           grammarAccess.getOCLEvalElementAccess().getOCLEvalElementAction_0(),
                           current);
-                  
+
             }
 
             }
@@ -2766,13 +2766,13 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getOCLEvalElementAccess().getOclEvalKeyword_1());
-                  
+
             }
             otherlv_2=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getOCLEvalElementAccess().getLeftSquareBracketKeyword_2());
-                  
+
             }
             // InternalMarkup.g:1059:1: ( (lv_elements_3_0= ruleMarkupElement ) )*
             loop17:
@@ -2793,9 +2793,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	    // InternalMarkup.g:1061:3: lv_elements_3_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getOCLEvalElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getOCLEvalElementAccess().getElementsMarkupElementParserRuleCall_3_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
             	    lv_elements_3_0=ruleMarkupElement();
@@ -2808,12 +2808,12 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getOCLEvalElementRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"elements",
-            	              		lv_elements_3_0, 
+            	              		lv_elements_3_0,
             	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -2831,7 +2831,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getOCLEvalElementAccess().getRightSquareBracketKeyword_4());
-                  
+
             }
 
             }
@@ -2840,14 +2840,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2868,7 +2868,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:1091:2: iv_ruleOCLTextElement= ruleOCLTextElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getOCLTextElementRule()); 
+               newCompositeNode(grammarAccess.getOCLTextElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleOCLTextElement=ruleOCLTextElement();
@@ -2876,18 +2876,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleOCLTextElement; 
+               current =iv_ruleOCLTextElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -2906,8 +2906,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         EObject lv_elements_3_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:1101:28: ( ( () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
             // InternalMarkup.g:1102:1: ( () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
@@ -2916,19 +2916,19 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:1102:2: () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
             {
             // InternalMarkup.g:1102:2: ()
-            // InternalMarkup.g:1103:2: 
+            // InternalMarkup.g:1103:2:
             {
             if ( state.backtracking==0 ) {
-               
-              	  /* */ 
-              	
+
+              	  /* */
+
             }
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
                           grammarAccess.getOCLTextElementAccess().getOCLTextElementAction_0(),
                           current);
-                  
+
             }
 
             }
@@ -2937,13 +2937,13 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getOCLTextElementAccess().getOclTextKeyword_1());
-                  
+
             }
             otherlv_2=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getOCLTextElementAccess().getLeftSquareBracketKeyword_2());
-                  
+
             }
             // InternalMarkup.g:1119:1: ( (lv_elements_3_0= ruleMarkupElement ) )*
             loop18:
@@ -2964,9 +2964,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	    // InternalMarkup.g:1121:3: lv_elements_3_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getOCLTextElementAccess().getElementsMarkupElementParserRuleCall_3_0()); 
-            	      	    
+
+            	      	        newCompositeNode(grammarAccess.getOCLTextElementAccess().getElementsMarkupElementParserRuleCall_3_0());
+
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
             	    lv_elements_3_0=ruleMarkupElement();
@@ -2979,12 +2979,12 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             	      	            current = createModelElementForParent(grammarAccess.getOCLTextElementRule());
             	      	        }
             	             		add(
-            	             			current, 
+            	             			current,
             	             			"elements",
-            	              		lv_elements_3_0, 
+            	              		lv_elements_3_0,
             	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
             	      	        afterParserOrEnumRuleCall();
-            	      	    
+
             	    }
 
             	    }
@@ -3002,7 +3002,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getOCLTextElementAccess().getRightSquareBracketKeyword_4());
-                  
+
             }
 
             }
@@ -3011,14 +3011,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -3039,7 +3039,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             // InternalMarkup.g:1151:2: iv_ruleTextElement= ruleTextElement EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getTextElementRule()); 
+               newCompositeNode(grammarAccess.getTextElementRule());
             }
             pushFollow(FollowSets000.FOLLOW_1);
             iv_ruleTextElement=ruleTextElement();
@@ -3047,18 +3047,18 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleTextElement; 
+               current =iv_ruleTextElement;
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
             }
 
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -3081,8 +3081,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_text_1_0 = null;
 
 
-         enterRule(); 
-            
+         enterRule();
+
         try {
             // InternalMarkup.g:1161:28: ( ( ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+ | ( (lv_text_1_0= ruleMarkupKeyword ) ) ) )
             // InternalMarkup.g:1162:1: ( ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+ | ( (lv_text_1_0= ruleMarkupKeyword ) ) )
@@ -3174,8 +3174,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	            lv_text_0_1=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	              			newLeafNode(lv_text_0_1, grammarAccess.getTextElementAccess().getTextIDTerminalRuleCall_0_0_0()); 
-                    	              		
+                    	              			newLeafNode(lv_text_0_1, grammarAccess.getTextElementAccess().getTextIDTerminalRuleCall_0_0_0());
+
                     	            }
                     	            if ( state.backtracking==0 ) {
 
@@ -3183,11 +3183,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	              	            current = createModelElement(grammarAccess.getTextElementRule());
                     	              	        }
                     	                     		addWithLastConsumed(
-                    	                     			current, 
+                    	                     			current,
                     	                     			"text",
-                    	                      		lv_text_0_1, 
+                    	                      		lv_text_0_1,
                     	                      		"org.eclipse.ocl.xtext.markup.Markup.ID");
-                    	              	    
+
                     	            }
 
                     	            }
@@ -3198,8 +3198,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	            lv_text_0_2=(Token)match(input,RULE_WORD,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	              			newLeafNode(lv_text_0_2, grammarAccess.getTextElementAccess().getTextWORDTerminalRuleCall_0_0_1()); 
-                    	              		
+                    	              			newLeafNode(lv_text_0_2, grammarAccess.getTextElementAccess().getTextWORDTerminalRuleCall_0_0_1());
+
                     	            }
                     	            if ( state.backtracking==0 ) {
 
@@ -3207,11 +3207,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	              	            current = createModelElement(grammarAccess.getTextElementRule());
                     	              	        }
                     	                     		addWithLastConsumed(
-                    	                     			current, 
+                    	                     			current,
                     	                     			"text",
-                    	                      		lv_text_0_2, 
+                    	                      		lv_text_0_2,
                     	                      		"org.eclipse.ocl.xtext.markup.Markup.WORD");
-                    	              	    
+
                     	            }
 
                     	            }
@@ -3222,8 +3222,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	            lv_text_0_3=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	              			newLeafNode(lv_text_0_3, grammarAccess.getTextElementAccess().getTextINTTerminalRuleCall_0_0_2()); 
-                    	              		
+                    	              			newLeafNode(lv_text_0_3, grammarAccess.getTextElementAccess().getTextINTTerminalRuleCall_0_0_2());
+
                     	            }
                     	            if ( state.backtracking==0 ) {
 
@@ -3231,11 +3231,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	              	            current = createModelElement(grammarAccess.getTextElementRule());
                     	              	        }
                     	                     		addWithLastConsumed(
-                    	                     			current, 
+                    	                     			current,
                     	                     			"text",
-                    	                      		lv_text_0_3, 
+                    	                      		lv_text_0_3,
                     	                      		"org.eclipse.ocl.xtext.markup.Markup.INT");
-                    	              	    
+
                     	            }
 
                     	            }
@@ -3246,8 +3246,8 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	            lv_text_0_4=(Token)match(input,RULE_WS,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	              			newLeafNode(lv_text_0_4, grammarAccess.getTextElementAccess().getTextWSTerminalRuleCall_0_0_3()); 
-                    	              		
+                    	              			newLeafNode(lv_text_0_4, grammarAccess.getTextElementAccess().getTextWSTerminalRuleCall_0_0_3());
+
                     	            }
                     	            if ( state.backtracking==0 ) {
 
@@ -3255,11 +3255,11 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	              	            current = createModelElement(grammarAccess.getTextElementRule());
                     	              	        }
                     	                     		addWithLastConsumed(
-                    	                     			current, 
+                    	                     			current,
                     	                     			"text",
-                    	                      		lv_text_0_4, 
+                    	                      		lv_text_0_4,
                     	                      		"org.eclipse.ocl.xtext.markup.Markup.WS");
-                    	              	    
+
                     	            }
 
                     	            }
@@ -3271,7 +3271,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	            if ( state.backtracking==0 ) {
 
                     	                      newLeafNode(lv_text_0_5, grammarAccess.getTextElementAccess().getTextColonKeyword_0_0_4());
-                    	                  
+
                     	            }
                     	            if ( state.backtracking==0 ) {
 
@@ -3279,7 +3279,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	              	            current = createModelElement(grammarAccess.getTextElementRule());
                     	              	        }
                     	                     		addWithLastConsumed(current, "text", lv_text_0_5, null);
-                    	              	    
+
                     	            }
 
                     	            }
@@ -3291,7 +3291,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	            if ( state.backtracking==0 ) {
 
                     	                      newLeafNode(lv_text_0_6, grammarAccess.getTextElementAccess().getTextNumberSignKeyword_0_0_5());
-                    	                  
+
                     	            }
                     	            if ( state.backtracking==0 ) {
 
@@ -3299,7 +3299,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	              	            current = createModelElement(grammarAccess.getTextElementRule());
                     	              	        }
                     	                     		addWithLastConsumed(current, "text", lv_text_0_6, null);
-                    	              	    
+
                     	            }
 
                     	            }
@@ -3311,7 +3311,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	            if ( state.backtracking==0 ) {
 
                     	                      newLeafNode(lv_text_0_7, grammarAccess.getTextElementAccess().getTextCommaKeyword_0_0_6());
-                    	                  
+
                     	            }
                     	            if ( state.backtracking==0 ) {
 
@@ -3319,7 +3319,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     	              	            current = createModelElement(grammarAccess.getTextElementRule());
                     	              	        }
                     	                     		addWithLastConsumed(current, "text", lv_text_0_7, null);
-                    	              	    
+
                     	            }
 
                     	            }
@@ -3357,9 +3357,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                     // InternalMarkup.g:1267:3: lv_text_1_0= ruleMarkupKeyword
                     {
                     if ( state.backtracking==0 ) {
-                       
-                      	        newCompositeNode(grammarAccess.getTextElementAccess().getTextMarkupKeywordParserRuleCall_1_0()); 
-                      	    
+
+                      	        newCompositeNode(grammarAccess.getTextElementAccess().getTextMarkupKeywordParserRuleCall_1_0());
+
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     lv_text_1_0=ruleMarkupKeyword();
@@ -3372,12 +3372,12 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
                       	            current = createModelElementForParent(grammarAccess.getTextElementRule());
                       	        }
                              		add(
-                             			current, 
+                             			current,
                              			"text",
-                              		lv_text_1_0, 
+                              		lv_text_1_0,
                               		"org.eclipse.ocl.xtext.markup.Markup.MarkupKeyword");
                       	        afterParserOrEnumRuleCall();
-                      	    
+
                     }
 
                     }
@@ -3395,14 +3395,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule(); 
+               leaveRule();
             }
         }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
+
+            catch (RecognitionException re) {
+                recover(input,re);
                 appendSkippedTokens();
-            } 
+            }
         finally {
         }
         return current;
@@ -3410,7 +3410,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleTextElement"
 
     // $ANTLR start synpred11_InternalMarkup
-    public final void synpred11_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred11_InternalMarkup_fragment() throws RecognitionException {
         EObject this_FontElement_0 = null;
 
 
@@ -3418,9 +3418,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         // InternalMarkup.g:223:2: this_FontElement_0= ruleFontElement
         {
         if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
+
+          	  /* */
+
         }
         pushFollow(FollowSets000.FOLLOW_2);
         this_FontElement_0=ruleFontElement();
@@ -3433,7 +3433,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
     // $ANTLR end synpred11_InternalMarkup
 
     // $ANTLR start synpred13_InternalMarkup
-    public final void synpred13_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred13_InternalMarkup_fragment() throws RecognitionException {
         EObject this_BulletElement_2 = null;
 
 
@@ -3441,9 +3441,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         // InternalMarkup.g:249:2: this_BulletElement_2= ruleBulletElement
         {
         if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
+
+          	  /* */
+
         }
         pushFollow(FollowSets000.FOLLOW_2);
         this_BulletElement_2=ruleBulletElement();
@@ -3456,7 +3456,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
     // $ANTLR end synpred13_InternalMarkup
 
     // $ANTLR start synpred14_InternalMarkup
-    public final void synpred14_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred14_InternalMarkup_fragment() throws RecognitionException {
         EObject this_FigureElement_3 = null;
 
 
@@ -3464,9 +3464,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         // InternalMarkup.g:262:2: this_FigureElement_3= ruleFigureElement
         {
         if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
+
+          	  /* */
+
         }
         pushFollow(FollowSets000.FOLLOW_2);
         this_FigureElement_3=ruleFigureElement();
@@ -3479,7 +3479,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
     // $ANTLR end synpred14_InternalMarkup
 
     // $ANTLR start synpred15_InternalMarkup
-    public final void synpred15_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred15_InternalMarkup_fragment() throws RecognitionException {
         EObject this_FigureRefElement_4 = null;
 
 
@@ -3487,9 +3487,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         // InternalMarkup.g:275:2: this_FigureRefElement_4= ruleFigureRefElement
         {
         if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
+
+          	  /* */
+
         }
         pushFollow(FollowSets000.FOLLOW_2);
         this_FigureRefElement_4=ruleFigureRefElement();
@@ -3502,7 +3502,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
     // $ANTLR end synpred15_InternalMarkup
 
     // $ANTLR start synpred16_InternalMarkup
-    public final void synpred16_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred16_InternalMarkup_fragment() throws RecognitionException {
         EObject this_FootnoteElement_5 = null;
 
 
@@ -3510,9 +3510,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         // InternalMarkup.g:288:2: this_FootnoteElement_5= ruleFootnoteElement
         {
         if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
+
+          	  /* */
+
         }
         pushFollow(FollowSets000.FOLLOW_2);
         this_FootnoteElement_5=ruleFootnoteElement();
@@ -3525,7 +3525,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
     // $ANTLR end synpred16_InternalMarkup
 
     // $ANTLR start synpred17_InternalMarkup
-    public final void synpred17_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred17_InternalMarkup_fragment() throws RecognitionException {
         EObject this_HeadingElement_6 = null;
 
 
@@ -3533,9 +3533,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         // InternalMarkup.g:301:2: this_HeadingElement_6= ruleHeadingElement
         {
         if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
+
+          	  /* */
+
         }
         pushFollow(FollowSets000.FOLLOW_2);
         this_HeadingElement_6=ruleHeadingElement();
@@ -3548,7 +3548,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
     // $ANTLR end synpred17_InternalMarkup
 
     // $ANTLR start synpred19_InternalMarkup
-    public final void synpred19_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred19_InternalMarkup_fragment() throws RecognitionException {
         EObject this_OCLCodeElement_8 = null;
 
 
@@ -3556,9 +3556,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         // InternalMarkup.g:327:2: this_OCLCodeElement_8= ruleOCLCodeElement
         {
         if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
+
+          	  /* */
+
         }
         pushFollow(FollowSets000.FOLLOW_2);
         this_OCLCodeElement_8=ruleOCLCodeElement();
@@ -3571,7 +3571,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
     // $ANTLR end synpred19_InternalMarkup
 
     // $ANTLR start synpred20_InternalMarkup
-    public final void synpred20_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred20_InternalMarkup_fragment() throws RecognitionException {
         EObject this_OCLEvalElement_9 = null;
 
 
@@ -3579,9 +3579,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         // InternalMarkup.g:340:2: this_OCLEvalElement_9= ruleOCLEvalElement
         {
         if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
+
+          	  /* */
+
         }
         pushFollow(FollowSets000.FOLLOW_2);
         this_OCLEvalElement_9=ruleOCLEvalElement();
@@ -3594,7 +3594,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
     // $ANTLR end synpred20_InternalMarkup
 
     // $ANTLR start synpred21_InternalMarkup
-    public final void synpred21_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred21_InternalMarkup_fragment() throws RecognitionException {
         EObject this_OCLTextElement_10 = null;
 
 
@@ -3602,9 +3602,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
         // InternalMarkup.g:353:2: this_OCLTextElement_10= ruleOCLTextElement
         {
         if ( state.backtracking==0 ) {
-           
-          	  /* */ 
-          	
+
+          	  /* */
+
         }
         pushFollow(FollowSets000.FOLLOW_2);
         this_OCLTextElement_10=ruleOCLTextElement();
@@ -3617,7 +3617,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
     // $ANTLR end synpred21_InternalMarkup
 
     // $ANTLR start synpred43_InternalMarkup
-    public final void synpred43_InternalMarkup_fragment() throws RecognitionException {   
+    public final void synpred43_InternalMarkup_fragment() throws RecognitionException {
         Token lv_text_0_1=null;
         Token lv_text_0_2=null;
         Token lv_text_0_3=null;
@@ -3949,10 +3949,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
-                    case 0 : 
+                    case 0 :
                         int LA3_1 = input.LA(1);
 
-                         
+
                         int index3_1 = input.index();
                         input.rewind();
                         s = -1;
@@ -3960,14 +3960,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_1);
                         if ( s>=0 ) return s;
                         break;
-                    case 1 : 
+                    case 1 :
                         int LA3_2 = input.LA(1);
 
-                         
+
                         int index3_2 = input.index();
                         input.rewind();
                         s = -1;
@@ -3975,14 +3975,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_2);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 2 :
                         int LA3_4 = input.LA(1);
 
-                         
+
                         int index3_4 = input.index();
                         input.rewind();
                         s = -1;
@@ -3990,14 +3990,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_4);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 3 :
                         int LA3_5 = input.LA(1);
 
-                         
+
                         int index3_5 = input.index();
                         input.rewind();
                         s = -1;
@@ -4005,14 +4005,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_5);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 4 :
                         int LA3_6 = input.LA(1);
 
-                         
+
                         int index3_6 = input.index();
                         input.rewind();
                         s = -1;
@@ -4020,14 +4020,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 5 :
                         int LA3_7 = input.LA(1);
 
-                         
+
                         int index3_7 = input.index();
                         input.rewind();
                         s = -1;
@@ -4035,14 +4035,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 6 :
                         int LA3_8 = input.LA(1);
 
-                         
+
                         int index3_8 = input.index();
                         input.rewind();
                         s = -1;
@@ -4050,14 +4050,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 7 : 
+                    case 7 :
                         int LA3_10 = input.LA(1);
 
-                         
+
                         int index3_10 = input.index();
                         input.rewind();
                         s = -1;
@@ -4065,14 +4065,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_10);
                         if ( s>=0 ) return s;
                         break;
-                    case 8 : 
+                    case 8 :
                         int LA3_11 = input.LA(1);
 
-                         
+
                         int index3_11 = input.index();
                         input.rewind();
                         s = -1;
@@ -4080,14 +4080,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_11);
                         if ( s>=0 ) return s;
                         break;
-                    case 9 : 
+                    case 9 :
                         int LA3_12 = input.LA(1);
 
-                         
+
                         int index3_12 = input.index();
                         input.rewind();
                         s = -1;
@@ -4095,7 +4095,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 13;}
 
-                         
+
                         input.seek(index3_12);
                         if ( s>=0 ) return s;
                         break;
@@ -4154,10 +4154,10 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
-                    case 0 : 
+                    case 0 :
                         int LA20_2 = input.LA(1);
 
-                         
+
                         int index20_2 = input.index();
                         input.rewind();
                         s = -1;
@@ -4165,14 +4165,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index20_2);
                         if ( s>=0 ) return s;
                         break;
-                    case 1 : 
+                    case 1 :
                         int LA20_3 = input.LA(1);
 
-                         
+
                         int index20_3 = input.index();
                         input.rewind();
                         s = -1;
@@ -4180,14 +4180,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index20_3);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 2 :
                         int LA20_4 = input.LA(1);
 
-                         
+
                         int index20_4 = input.index();
                         input.rewind();
                         s = -1;
@@ -4195,14 +4195,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index20_4);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 3 :
                         int LA20_5 = input.LA(1);
 
-                         
+
                         int index20_5 = input.index();
                         input.rewind();
                         s = -1;
@@ -4210,14 +4210,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index20_5);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 4 :
                         int LA20_6 = input.LA(1);
 
-                         
+
                         int index20_6 = input.index();
                         input.rewind();
                         s = -1;
@@ -4225,14 +4225,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index20_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 5 :
                         int LA20_7 = input.LA(1);
 
-                         
+
                         int index20_7 = input.index();
                         input.rewind();
                         s = -1;
@@ -4240,14 +4240,14 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index20_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 6 :
                         int LA20_8 = input.LA(1);
 
-                         
+
                         int index20_8 = input.index();
                         input.rewind();
                         s = -1;
@@ -4255,7 +4255,7 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
 
                         else if ( (true) ) {s = 1;}
 
-                         
+
                         input.seek(index20_8);
                         if ( s>=0 ) return s;
                         break;
@@ -4267,9 +4267,9 @@ public class InternalMarkupParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
- 
 
-    
+
+
     private static class FollowSets000 {
         public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});

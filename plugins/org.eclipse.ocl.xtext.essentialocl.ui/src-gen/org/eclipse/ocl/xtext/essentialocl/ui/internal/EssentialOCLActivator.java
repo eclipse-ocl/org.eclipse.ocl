@@ -26,35 +26,35 @@ import com.google.inject.Module;
 
 /**
  * This class was generated. Customizations should only happen in a newly
- * introduced subclass. 
+ * introduced subclass.
  */
 public class EssentialOCLActivator extends AbstractUIPlugin {
-	
+
 	public static final String ORG_ECLIPSE_OCL_XTEXT_ESSENTIALOCL_ESSENTIALOCL = "org.eclipse.ocl.xtext.essentialocl.EssentialOCL";
-	
+
 	private static final Logger logger = Logger.getLogger(EssentialOCLActivator.class);
-	
+
 	private static EssentialOCLActivator INSTANCE;
-	
+
 	private Map<String, Injector> injectors = Collections.synchronizedMap(Maps.<String, Injector> newHashMapWithExpectedSize(1));
-	
+
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		INSTANCE = this;
 	}
-	
+
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		injectors.clear();
 		INSTANCE = null;
 		super.stop(context);
 	}
-	
+
 	public static EssentialOCLActivator getInstance() {
 		return INSTANCE;
 	}
-	
+
 	public Injector getInjector(String language) {
 		synchronized (injectors) {
 			Injector injector = injectors.get(language);
@@ -64,7 +64,7 @@ public class EssentialOCLActivator extends AbstractUIPlugin {
 			return injector;
 		}
 	}
-	
+
 	protected Injector createInjector(String language) {
 		try {
 			Module runtimeModule = getRuntimeModule(language);
@@ -83,20 +83,20 @@ public class EssentialOCLActivator extends AbstractUIPlugin {
 		if (ORG_ECLIPSE_OCL_XTEXT_ESSENTIALOCL_ESSENTIALOCL.equals(grammar)) {
 			return new org.eclipse.ocl.xtext.essentialocl.EssentialOCLRuntimeModule();
 		}
-		
+
 		throw new IllegalArgumentException(grammar);
 	}
-	
+
 	protected Module getUiModule(String grammar) {
 		if (ORG_ECLIPSE_OCL_XTEXT_ESSENTIALOCL_ESSENTIALOCL.equals(grammar)) {
 			return new org.eclipse.ocl.xtext.essentialocl.ui.EssentialOCLUiModule(this);
 		}
-		
+
 		throw new IllegalArgumentException(grammar);
 	}
-	
+
 	protected Module getSharedStateModule() {
 		return new SharedStateModule();
 	}
-	
+
 }

@@ -32,12 +32,12 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 {
 	/**
 	 * Initializes me with an initial value for my result.
-	 * 
+	 *
 	 * @param context my initial result value
 	 */
 	protected AbstractExtendingCGModelVisitor(C context) {
 		super(context);
-	}	
+	}
 
 	@Override
 	public R visitCGAccumulator(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGAccumulator object) {

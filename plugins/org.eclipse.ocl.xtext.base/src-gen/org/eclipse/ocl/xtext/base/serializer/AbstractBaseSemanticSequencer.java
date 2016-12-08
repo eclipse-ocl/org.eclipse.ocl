@@ -39,7 +39,7 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 	@Inject
 	private BaseGrammarAccess grammarAccess;
-	
+
 	@Override
 	public void sequence(ISerializationContext context, EObject semanticObject) {
 		EPackage epackage = semanticObject.eClass().getEPackage();
@@ -50,60 +50,60 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 			switch (semanticObject.eClass().getClassifierID()) {
 			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS:
 				if (rule == grammarAccess.getMultiplicityBoundsCSRule()) {
-					sequence_MultiplicityBoundsCS(context, (MultiplicityBoundsCS) semanticObject); 
-					return; 
+					sequence_MultiplicityBoundsCS(context, (MultiplicityBoundsCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getMultiplicityCSRule()) {
-					sequence_MultiplicityBoundsCS_MultiplicityCS(context, (MultiplicityBoundsCS) semanticObject); 
-					return; 
+					sequence_MultiplicityBoundsCS_MultiplicityCS(context, (MultiplicityBoundsCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.MULTIPLICITY_STRING_CS:
 				if (rule == grammarAccess.getMultiplicityCSRule()) {
-					sequence_MultiplicityCS_MultiplicityStringCS(context, (MultiplicityStringCS) semanticObject); 
-					return; 
+					sequence_MultiplicityCS_MultiplicityStringCS(context, (MultiplicityStringCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getMultiplicityStringCSRule()) {
-					sequence_MultiplicityStringCS(context, (MultiplicityStringCS) semanticObject); 
-					return; 
+					sequence_MultiplicityStringCS(context, (MultiplicityStringCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.PATH_ELEMENT_CS:
 				if (rule == grammarAccess.getFirstPathElementCSRule()) {
-					sequence_FirstPathElementCS(context, (PathElementCS) semanticObject); 
-					return; 
+					sequence_FirstPathElementCS(context, (PathElementCS) semanticObject);
+					return;
 				}
 				else if (rule == grammarAccess.getNextPathElementCSRule()) {
-					sequence_NextPathElementCS(context, (PathElementCS) semanticObject); 
-					return; 
+					sequence_NextPathElementCS(context, (PathElementCS) semanticObject);
+					return;
 				}
 				else break;
 			case BaseCSPackage.PATH_NAME_CS:
-				sequence_PathNameCS(context, (PathNameCS) semanticObject); 
-				return; 
+				sequence_PathNameCS(context, (PathNameCS) semanticObject);
+				return;
 			case BaseCSPackage.TEMPLATE_BINDING_CS:
-				sequence_TemplateBindingCS(context, (TemplateBindingCS) semanticObject); 
-				return; 
+				sequence_TemplateBindingCS(context, (TemplateBindingCS) semanticObject);
+				return;
 			case BaseCSPackage.TEMPLATE_PARAMETER_SUBSTITUTION_CS:
-				sequence_TemplateParameterSubstitutionCS(context, (TemplateParameterSubstitutionCS) semanticObject); 
-				return; 
+				sequence_TemplateParameterSubstitutionCS(context, (TemplateParameterSubstitutionCS) semanticObject);
+				return;
 			case BaseCSPackage.TEMPLATE_SIGNATURE_CS:
-				sequence_TemplateSignatureCS(context, (TemplateSignatureCS) semanticObject); 
-				return; 
+				sequence_TemplateSignatureCS(context, (TemplateSignatureCS) semanticObject);
+				return;
 			case BaseCSPackage.TYPE_PARAMETER_CS:
-				sequence_TypeParameterCS(context, (TypeParameterCS) semanticObject); 
-				return; 
+				sequence_TypeParameterCS(context, (TypeParameterCS) semanticObject);
+				return;
 			case BaseCSPackage.TYPED_TYPE_REF_CS:
-				sequence_TypedTypeRefCS(context, (TypedTypeRefCS) semanticObject); 
-				return; 
+				sequence_TypedTypeRefCS(context, (TypedTypeRefCS) semanticObject);
+				return;
 			case BaseCSPackage.WILDCARD_TYPE_REF_CS:
-				sequence_WildcardTypeRefCS(context, (WildcardTypeRefCS) semanticObject); 
-				return; 
+				sequence_WildcardTypeRefCS(context, (WildcardTypeRefCS) semanticObject);
+				return;
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
-	
+
 	/**
 	 * Contexts:
 	 *     FirstPathElementCS returns PathElementCS
@@ -120,8 +120,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 		feeder.accept(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementUnrestrictedNameParserRuleCall_0_1(), semanticObject.getReferredElement());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MultiplicityBoundsCS returns MultiplicityBoundsCS
@@ -132,8 +132,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	protected void sequence_MultiplicityBoundsCS(ISerializationContext context, MultiplicityBoundsCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MultiplicityCS returns MultiplicityBoundsCS
@@ -144,8 +144,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	protected void sequence_MultiplicityBoundsCS_MultiplicityCS(ISerializationContext context, MultiplicityBoundsCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MultiplicityCS returns MultiplicityStringCS
@@ -156,8 +156,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	protected void sequence_MultiplicityCS_MultiplicityStringCS(ISerializationContext context, MultiplicityStringCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MultiplicityStringCS returns MultiplicityStringCS
@@ -168,8 +168,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	protected void sequence_MultiplicityStringCS(ISerializationContext context, MultiplicityStringCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     NextPathElementCS returns PathElementCS
@@ -186,8 +186,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 		feeder.accept(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementUnreservedNameParserRuleCall_0_1(), semanticObject.getReferredElement());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     PathNameCS returns PathNameCS
@@ -198,8 +198,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	protected void sequence_PathNameCS(ISerializationContext context, PathNameCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TemplateBindingCS returns TemplateBindingCS
@@ -210,8 +210,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	protected void sequence_TemplateBindingCS(ISerializationContext context, TemplateBindingCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TemplateParameterSubstitutionCS returns TemplateParameterSubstitutionCS
@@ -228,8 +228,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 		feeder.accept(grammarAccess.getTemplateParameterSubstitutionCSAccess().getOwnedActualParameterTypeRefCSParserRuleCall_0(), semanticObject.getOwnedActualParameter());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TemplateSignatureCS returns TemplateSignatureCS
@@ -240,8 +240,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	protected void sequence_TemplateSignatureCS(ISerializationContext context, TemplateSignatureCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TypeParameterCS returns TypeParameterCS
@@ -252,8 +252,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	protected void sequence_TypeParameterCS(ISerializationContext context, TypeParameterCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TypeRefCS returns TypedTypeRefCS
@@ -266,8 +266,8 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	protected void sequence_TypedTypeRefCS(ISerializationContext context, TypedTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     TypeRefCS returns WildcardTypeRefCS
@@ -279,6 +279,6 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	protected void sequence_WildcardTypeRefCS(ISerializationContext context, WildcardTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 }

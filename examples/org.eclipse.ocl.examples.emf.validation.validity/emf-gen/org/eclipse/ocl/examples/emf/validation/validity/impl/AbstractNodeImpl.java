@@ -275,16 +275,16 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case ValidityPackage.ABSTRACT_NODE__ENABLED:
-			return isEnabled();
-		case ValidityPackage.ABSTRACT_NODE__GRAYED:
-			return isGrayed();
-		case ValidityPackage.ABSTRACT_NODE__VISIBLE:
-			return isVisible();
-		case ValidityPackage.ABSTRACT_NODE__LABEL:
-			return getLabel();
-		case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
-			return getWorstResult();
+			case ValidityPackage.ABSTRACT_NODE__ENABLED:
+				return isEnabled();
+			case ValidityPackage.ABSTRACT_NODE__GRAYED:
+				return isGrayed();
+			case ValidityPackage.ABSTRACT_NODE__VISIBLE:
+				return isVisible();
+			case ValidityPackage.ABSTRACT_NODE__LABEL:
+				return getLabel();
+			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+				return getWorstResult();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -297,15 +297,15 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case ValidityPackage.ABSTRACT_NODE__ENABLED:
-			setEnabled((Boolean)newValue);
-			return;
-		case ValidityPackage.ABSTRACT_NODE__LABEL:
-			setLabel((String)newValue);
-			return;
-		case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
-			setWorstResult((Result)newValue);
-			return;
+			case ValidityPackage.ABSTRACT_NODE__ENABLED:
+				setEnabled((Boolean)newValue);
+				return;
+			case ValidityPackage.ABSTRACT_NODE__LABEL:
+				setLabel((String)newValue);
+				return;
+			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+				setWorstResult((Result)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -318,15 +318,15 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case ValidityPackage.ABSTRACT_NODE__ENABLED:
-			setEnabled(ENABLED_EDEFAULT);
-			return;
-		case ValidityPackage.ABSTRACT_NODE__LABEL:
-			setLabel(LABEL_EDEFAULT);
-			return;
-		case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
-			setWorstResult((Result)null);
-			return;
+			case ValidityPackage.ABSTRACT_NODE__ENABLED:
+				setEnabled(ENABLED_EDEFAULT);
+				return;
+			case ValidityPackage.ABSTRACT_NODE__LABEL:
+				setLabel(LABEL_EDEFAULT);
+				return;
+			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+				setWorstResult((Result)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -339,16 +339,16 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case ValidityPackage.ABSTRACT_NODE__ENABLED:
-			return enabled != ENABLED_EDEFAULT;
-		case ValidityPackage.ABSTRACT_NODE__GRAYED:
-			return grayed != GRAYED_EDEFAULT;
-		case ValidityPackage.ABSTRACT_NODE__VISIBLE:
-			return visible != VISIBLE_EDEFAULT;
-		case ValidityPackage.ABSTRACT_NODE__LABEL:
-			return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-		case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
-			return worstResult != null;
+			case ValidityPackage.ABSTRACT_NODE__ENABLED:
+				return enabled != ENABLED_EDEFAULT;
+			case ValidityPackage.ABSTRACT_NODE__GRAYED:
+				return grayed != GRAYED_EDEFAULT;
+			case ValidityPackage.ABSTRACT_NODE__VISIBLE:
+				return visible != VISIBLE_EDEFAULT;
+			case ValidityPackage.ABSTRACT_NODE__LABEL:
+				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+			case ValidityPackage.ABSTRACT_NODE__WORST_RESULT:
+				return worstResult != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -437,7 +437,6 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 				return false;
 			}
 		}
-		@SuppressWarnings("null")
 		@NonNull AbstractNode @NonNull [] array = list.toArray(new @NonNull AbstractNode @NonNull [list.size()]);
 		this.visibleChildren = array;
 		this.visible = true;

@@ -16,31 +16,31 @@ import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.ocl.xtext.completeocl.services.CompleteOCLGrammarAccess;
 
 public class CompleteOCLParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParser {
-	
+
 	@Inject
 	private CompleteOCLGrammarAccess grammarAccess;
-	
+
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
 		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT");
 	}
-	
+
 	@Override
 	protected org.eclipse.ocl.xtext.completeocl.parser.antlr.internal.InternalCompleteOCLParser createParser(XtextTokenStream stream) {
 		return new org.eclipse.ocl.xtext.completeocl.parser.antlr.internal.InternalCompleteOCLParser(stream, getGrammarAccess());
 	}
-	
-	@Override 
+
+	@Override
 	protected String getDefaultRuleName() {
 		return "CompleteOCLDocumentCS";
 	}
-	
+
 	public CompleteOCLGrammarAccess getGrammarAccess() {
 		return this.grammarAccess;
 	}
-	
+
 	public void setGrammarAccess(CompleteOCLGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
 	}
-	
+
 }

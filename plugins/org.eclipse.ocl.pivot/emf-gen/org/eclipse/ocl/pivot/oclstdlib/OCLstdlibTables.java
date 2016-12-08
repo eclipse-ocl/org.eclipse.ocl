@@ -2713,16 +2713,12 @@ public class OCLstdlibTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclElement = {
 			OCLstdlibTables.Properties._OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__oclContents,
-			OCLstdlibTables.Properties._OclElement__OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__OclElement__oclContents
+			OCLstdlibTables.Properties._OclElement__oclContents
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclEnumeration = {
 			OCLstdlibTables.Properties._OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__oclContents,
-			OCLstdlibTables.Properties._OclElement__OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__OclElement__oclContents
+			OCLstdlibTables.Properties._OclElement__oclContents
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclInvalid = {};
@@ -2737,9 +2733,7 @@ public class OCLstdlibTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclStereotype = {
 			OCLstdlibTables.Properties._OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__oclContents,
-			OCLstdlibTables.Properties._OclElement__OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__OclElement__oclContents
+			OCLstdlibTables.Properties._OclElement__oclContents
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclSummable = {};
@@ -2748,9 +2742,7 @@ public class OCLstdlibTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclType = {
 			OCLstdlibTables.Properties._OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__oclContents,
-			OCLstdlibTables.Properties._OclElement__OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__OclElement__oclContents
+			OCLstdlibTables.Properties._OclElement__oclContents
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclVoid = {};

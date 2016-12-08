@@ -35,7 +35,7 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	protected AbstractElementAlias match_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q;
 	protected AbstractElementAlias match_OperationContextDeclCS_UnrestrictedNameParserRuleCall_8_2_1_q;
 	protected AbstractElementAlias match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q;
-	
+
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (CompleteOCLGrammarAccess) access;
@@ -46,14 +46,14 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 		match_OperationContextDeclCS_UnrestrictedNameParserRuleCall_8_2_1_q = new TokenAlias(false, true, grammarAccess.getOperationContextDeclCSAccess().getUnrestrictedNameParserRuleCall_8_2_1());
 		match_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTupleTypeCSAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getTupleTypeCSAccess().getRightParenthesisKeyword_1_2()));
 	}
-	
+
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (ruleCall.getRule() == grammarAccess.getUnrestrictedNameRule())
 			return getUnrestrictedNameToken(semanticObject, ruleCall, node);
 		return "";
 	}
-	
+
 	/**
 	 * UnrestrictedName returns ecore::EString:
 	 * 	EssentialOCLUnrestrictedName
@@ -67,7 +67,7 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 			return getTokenText(node);
 		return "";
 	}
-	
+
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
 		if (transition.getAmbiguousSyntaxes().isEmpty()) return;
@@ -103,7 +103,7 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	protected void emit_DefOperationCS_UnrestrictedNameParserRuleCall_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
@@ -115,7 +115,7 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	protected void emit_DefPropertyCS_UnrestrictedNameParserRuleCall_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     'import' | 'include' | 'library'
@@ -127,7 +127,7 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	protected void emit_ImportCS_ImportKeyword_0_0_or_IncludeKeyword_0_1_or_LibraryKeyword_0_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     '|?'?
@@ -142,7 +142,7 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	protected void emit_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
@@ -158,7 +158,7 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	protected void emit_OperationContextDeclCS_UnrestrictedNameParserRuleCall_8_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 	/**
 	 * Ambiguous syntax:
 	 *     ('(' ')')?
@@ -170,5 +170,5 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	protected void emit_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
-	
+
 }

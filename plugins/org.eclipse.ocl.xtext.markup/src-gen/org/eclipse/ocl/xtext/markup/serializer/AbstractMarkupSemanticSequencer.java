@@ -42,7 +42,7 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 	@Inject
 	private MarkupGrammarAccess grammarAccess;
-	
+
 	@Override
 	public void sequence(ISerializationContext context, EObject semanticObject) {
 		EPackage epackage = semanticObject.eClass().getEPackage();
@@ -52,49 +52,49 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 		if (epackage == MarkupPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case MarkupPackage.BULLET_ELEMENT:
-				sequence_BulletElement(context, (BulletElement) semanticObject); 
-				return; 
+				sequence_BulletElement(context, (BulletElement) semanticObject);
+				return;
 			case MarkupPackage.FIGURE_ELEMENT:
-				sequence_FigureElement(context, (FigureElement) semanticObject); 
-				return; 
+				sequence_FigureElement(context, (FigureElement) semanticObject);
+				return;
 			case MarkupPackage.FIGURE_REF_ELEMENT:
-				sequence_FigureRefElement(context, (FigureRefElement) semanticObject); 
-				return; 
+				sequence_FigureRefElement(context, (FigureRefElement) semanticObject);
+				return;
 			case MarkupPackage.FONT_ELEMENT:
-				sequence_FontElement(context, (FontElement) semanticObject); 
-				return; 
+				sequence_FontElement(context, (FontElement) semanticObject);
+				return;
 			case MarkupPackage.FOOTNOTE_ELEMENT:
-				sequence_FootnoteElement(context, (FootnoteElement) semanticObject); 
-				return; 
+				sequence_FootnoteElement(context, (FootnoteElement) semanticObject);
+				return;
 			case MarkupPackage.HEADING_ELEMENT:
-				sequence_HeadingElement(context, (HeadingElement) semanticObject); 
-				return; 
+				sequence_HeadingElement(context, (HeadingElement) semanticObject);
+				return;
 			case MarkupPackage.MARKUP:
-				sequence_Markup(context, (Markup) semanticObject); 
-				return; 
+				sequence_Markup(context, (Markup) semanticObject);
+				return;
 			case MarkupPackage.NEW_LINE_ELEMENT:
-				sequence_NewLineElement(context, (NewLineElement) semanticObject); 
-				return; 
+				sequence_NewLineElement(context, (NewLineElement) semanticObject);
+				return;
 			case MarkupPackage.NULL_ELEMENT:
-				sequence_NullElement(context, (NullElement) semanticObject); 
-				return; 
+				sequence_NullElement(context, (NullElement) semanticObject);
+				return;
 			case MarkupPackage.OCL_CODE_ELEMENT:
-				sequence_OCLCodeElement(context, (OCLCodeElement) semanticObject); 
-				return; 
+				sequence_OCLCodeElement(context, (OCLCodeElement) semanticObject);
+				return;
 			case MarkupPackage.OCL_EVAL_ELEMENT:
-				sequence_OCLEvalElement(context, (OCLEvalElement) semanticObject); 
-				return; 
+				sequence_OCLEvalElement(context, (OCLEvalElement) semanticObject);
+				return;
 			case MarkupPackage.OCL_TEXT_ELEMENT:
-				sequence_OCLTextElement(context, (OCLTextElement) semanticObject); 
-				return; 
+				sequence_OCLTextElement(context, (OCLTextElement) semanticObject);
+				return;
 			case MarkupPackage.TEXT_ELEMENT:
-				sequence_TextElement(context, (TextElement) semanticObject); 
-				return; 
+				sequence_TextElement(context, (TextElement) semanticObject);
+				return;
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
-	
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns BulletElement
@@ -106,8 +106,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	protected void sequence_BulletElement(ISerializationContext context, BulletElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns FigureElement
@@ -119,8 +119,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	protected void sequence_FigureElement(ISerializationContext context, FigureElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns FigureRefElement
@@ -138,8 +138,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 		feeder.accept(grammarAccess.getFigureRefElementAccess().getRefFigureElementIDTerminalRuleCall_2_0_1(), semanticObject.getRef());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns FontElement
@@ -151,8 +151,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	protected void sequence_FontElement(ISerializationContext context, FontElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns FootnoteElement
@@ -164,8 +164,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	protected void sequence_FootnoteElement(ISerializationContext context, FootnoteElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns HeadingElement
@@ -177,8 +177,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	protected void sequence_HeadingElement(ISerializationContext context, HeadingElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     Markup returns Markup
@@ -189,8 +189,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	protected void sequence_Markup(ISerializationContext context, Markup semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns NewLineElement
@@ -208,8 +208,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 		feeder.accept(grammarAccess.getNewLineElementAccess().getTextNLTerminalRuleCall_0(), semanticObject.getText());
 		feeder.finish();
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns NullElement
@@ -221,8 +221,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	protected void sequence_NullElement(ISerializationContext context, NullElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns OCLCodeElement
@@ -234,8 +234,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	protected void sequence_OCLCodeElement(ISerializationContext context, OCLCodeElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns OCLEvalElement
@@ -247,8 +247,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	protected void sequence_OCLEvalElement(ISerializationContext context, OCLEvalElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns OCLTextElement
@@ -260,8 +260,8 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	protected void sequence_OCLTextElement(ISerializationContext context, OCLTextElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 	/**
 	 * Contexts:
 	 *     MarkupElement returns TextElement
@@ -270,20 +270,20 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	 * Constraint:
 	 *     (
 	 *         (
-	 *             text+=ID | 
-	 *             text+=WORD | 
-	 *             text+=INT | 
-	 *             text+=WS | 
-	 *             text+=':' | 
-	 *             text+='#' | 
+	 *             text+=ID |
+	 *             text+=WORD |
+	 *             text+=INT |
+	 *             text+=WS |
+	 *             text+=':' |
+	 *             text+='#' |
 	 *             text+=','
-	 *         )+ | 
+	 *         )+ |
 	 *         text+=MarkupKeyword
 	 *     )
 	 */
 	protected void sequence_TextElement(ISerializationContext context, TextElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
-	
-	
+
+
 }

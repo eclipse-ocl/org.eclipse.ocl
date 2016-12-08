@@ -19,7 +19,7 @@ import org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
- * introduced subclass. 
+ * introduced subclass.
  */
 public class OCLstdlibExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
 
@@ -27,10 +27,10 @@ public class OCLstdlibExecutableExtensionFactory extends AbstractGuiceAwareExecu
 	protected Bundle getBundle() {
 		return OCLstdlibActivator.getInstance().getBundle();
 	}
-	
+
 	@Override
 	protected Injector getInjector() {
 		return OCLstdlibActivator.getInstance().getInjector(OCLstdlibActivator.ORG_ECLIPSE_OCL_XTEXT_OCLSTDLIB_OCLSTDLIB);
 	}
-	
+
 }
