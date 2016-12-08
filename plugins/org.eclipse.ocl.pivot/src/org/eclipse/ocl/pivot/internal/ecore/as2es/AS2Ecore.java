@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 public class AS2Ecore extends AbstractConversion
 {
@@ -81,6 +82,13 @@ public class AS2Ecore extends AbstractConversion
 	 * the auto-generation of Pivot.ecore..
 	 */
 	public static final @NonNull String OPTION_SUPPRESS_DUPLICATES = "suppressDuplicates";
+
+	/**
+	 * True to use XMIUtil.StructuralENamedElementIdCreator to assign xmi:ids.
+	 *
+	 * @since 1.3
+	 */
+	public static final @NonNull String OPTION_GENERATE_STRUCTURAL_XMI_IDS = "generateStructuralXmiIds";
 
 	public static void copyAnnotationComments(@NonNull EAnnotation eModelElement, @NonNull Constraint pivotConstraint) {
 		String key = DelegateInstaller.getAnnotationKey(pivotConstraint);
@@ -315,6 +323,9 @@ public class AS2Ecore extends AbstractConversion
 			for (@NonNull Element pivotElement : createMap.keySet()) {
 				EObject eObject = createMap.get(pivotElement);
 				((PivotObjectImpl) pivotElement).setESObject(eObject);
+			}
+			if (Boolean.valueOf(String.valueOf(options.get(OPTION_GENERATE_STRUCTURAL_XMI_IDS)))) {
+				XMIUtil.assignIds(ecoreResource, new XMIUtil.StructuralENamedElementIdCreator(), null);
 			}
 			return ecoreResource;
 		}

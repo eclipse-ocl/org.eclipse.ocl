@@ -160,7 +160,7 @@ public class RoundTripTests extends XtextTestCase
 			BaseCSResource xtextResource3 = createXtextFromURI(environmentFactory3, outputURI);
 			@SuppressWarnings("unused")
 			ASResource pivotResource3 = createPivotFromXtext(environmentFactory3, xtextResource3, 1);
-			//			Map<String,Object> options = new HashMap<String,Object>();
+			//			Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 			//			options.put(MatchOptions.OPTION_IGNORE_ID, Boolean.TRUE);
 			//			options.put(MatchOptions.OPTION_IGNORE_XMI_ID, Boolean.TRUE);
 			//			((NamedElement)pivotResource3.getContents().get(0)).setName(((NamedElement)pivotResource1.getContents().get(0)).getName());
@@ -175,7 +175,7 @@ public class RoundTripTests extends XtextTestCase
 	public void doRoundTripFromEcore(String stem) throws IOException, InterruptedException, ParserException {
 		doRoundTripFromEcore(stem, stem, null);
 	}
-	public void doRoundTripFromEcore(String stem, String reference, Map<String,Object> saveOptions) throws IOException, InterruptedException, ParserException {
+	public void doRoundTripFromEcore(String stem, String reference, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
 		String inputName = stem + ".ecore";
 		URI inputURI = getProjectFileURI(inputName);
 		String referenceName = reference + ".ecore";
@@ -184,12 +184,12 @@ public class RoundTripTests extends XtextTestCase
 		doRoundTripFromEcore(ocl.getEnvironmentFactory(), inputURI, referenceURI, saveOptions);
 		ocl.dispose();
 	}
-	public void doRoundTripFromEcore(URI inputURI, URI referenceURI, Map<String,Object> saveOptions) throws IOException, InterruptedException, ParserException {
+	public void doRoundTripFromEcore(URI inputURI, URI referenceURI, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		doRoundTripFromEcore(ocl.getEnvironmentFactory(), inputURI, referenceURI, saveOptions);
 		ocl.dispose();
 	}
-	protected void doRoundTripFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, URI inputURI, URI referenceURI, Map<String,Object> saveOptions) throws IOException, InterruptedException, ParserException {
+	protected void doRoundTripFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, URI inputURI, URI referenceURI, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String pivotName = stem + ".ecore.oclas";
 		String outputName = stem + ".regenerated.ecore";
@@ -228,7 +228,7 @@ public class RoundTripTests extends XtextTestCase
 
 		//		RootPackageCS csDocument = null; // FIXME Ecore2OCLinEcore.importFromEcore(resourceSet, null, leftResource);
 		//		assertNoResourceErrors("From Ecore errors", csDocument.eResource());
-		//		List<PackageCS> csObjects = new ArrayList<PackageCS>();
+		//		List<PackageCS> csObjects = new ArrayList<>();
 		//		csObjects.addAll(csDocument.getPackages());
 		//		Resource middleResource = resourceSet.createResource(middleURI);
 		//		middleResource.getContents().addAll(csObjects);
@@ -316,7 +316,7 @@ public class RoundTripTests extends XtextTestCase
 		asResource.save(null);
 		assertNoValidationErrors("UML2AS invalid", asResource);
 
-		List<? extends @NonNull EObject> outputObjects = new ArrayList<@NonNull EObject>(AS2UML.createResource(environmentFactory, asResource));
+		List<? extends @NonNull EObject> outputObjects = new ArrayList<>(AS2UML.createResource(environmentFactory, asResource));
 		@SuppressWarnings("unchecked")
 		List<? extends org.eclipse.uml2.uml.@NonNull NamedElement> castOutputObjects = (List<? extends org.eclipse.uml2.uml.@NonNull NamedElement>)outputObjects;
 		outputObjects.remove(getNamedElement(castOutputObjects, "orphanage"));
@@ -337,7 +337,7 @@ public class RoundTripTests extends XtextTestCase
 		if (elements == null)
 			return null;
 		for (T element : elements)
-			if (ClassUtil.safeEquals(name, element.getName()))
+			if (ClassUtil.safeEquals(name, ClassUtil.nonNullState(element).getName()))
 				return element;
 		return null;
 	}
@@ -647,8 +647,9 @@ public class RoundTripTests extends XtextTestCase
 
 	public void testPivotRoundTrip() throws IOException, InterruptedException, ParserException {
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.pivot/model/Pivot.ecore", true);
-		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<@NonNull String, @Nullable Object>();
+		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<>();
 		saveOptions.put(AS2Ecore.OPTION_INVARIANT_PREFIX, "validate");
+		saveOptions.put(AS2Ecore.OPTION_GENERATE_STRUCTURAL_XMI_IDS, Boolean.TRUE);
 		doRoundTripFromEcore(uri, uri, saveOptions);
 	}
 
@@ -663,7 +664,7 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testOCLRoundTrip() throws IOException, InterruptedException, ParserException {
-		Map<String,Object> options = new HashMap<String, Object>();
+		Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 		options.put(AS2Ecore.OPTION_ADD_INVARIANT_COMMENTS, true);
 		doRoundTripFromEcore("OCL", "OCL", options); // "OCL.reference");
 	}
@@ -685,10 +686,10 @@ public class RoundTripTests extends XtextTestCase
 		UMLStandaloneSetup.init();
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/UML.ecore", true);
-		Map<String,Object> options = new HashMap<String, Object>();
+		Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 		options.put(AS2Ecore.OPTION_ADD_INVARIANT_COMMENTS, true);
 		options.put(DelegateInstaller.OPTION_BOOLEAN_INVARIANTS, true);
-		options.put(OCLConstants.OCL_DELEGATE_URI, OCLConstants.OCL_DELEGATE_URI);
+		options.put(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), OCLConstants.OCL_DELEGATE_URI);
 		options.put(DelegateInstaller.OPTION_OMIT_SETTING_DELEGATES, true);
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		doRoundTripFromEcore(ocl.getEnvironmentFactory(), uri, uri, options);
