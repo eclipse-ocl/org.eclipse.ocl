@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
@@ -51,11 +52,13 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
+import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.resource.ProjectManager.IPackageDescriptor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
@@ -80,9 +83,24 @@ public class TestOCL extends OCLInternal
 
 	public TestOCL(@NonNull String testPackageName, @NonNull String testName, @NonNull ProjectManager projectManager) {
 		super(ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(projectManager, null));
-		NoHttpURIHandlerImpl.install(getResourceSet());
+		ResourceSet resourceSet = getResourceSet();
+		NoHttpURIHandlerImpl.install(resourceSet);
 		this.testPackageName = testPackageName;
 		this.testName = testName;
+		projectManager.initializeResourceSet(resourceSet);
+		EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
+		packageRegistry.put(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
+		packageRegistry.put(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
+		//
+		// http://www.eclipse.org/emf/2002/Ecore is referenced by just about any model load
+		// Ecore.core is referenced from Ecore.genmodel that is used by the CG to coordinate Ecore objects with their Java classes
+		// therefore suppress diagnostics about confusing usage.
+		//
+		URI ecoreURI = URI.createURI(EcorePackage.eNS_URI);
+		IPackageDescriptor packageDescriptor = projectManager.getPackageDescriptor(ecoreURI);
+		if (packageDescriptor != null) {
+			packageDescriptor.configure(resourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, null);
+		}
 	}
 
 	public void addSupertype(org.eclipse.ocl.pivot.@NonNull Class aClass, org.eclipse.ocl.pivot.@NonNull Class superClass) {
@@ -747,14 +765,7 @@ public class TestOCL extends OCLInternal
 			result = super.evaluate(self, expr);
 		}
 		else {
-			ProjectManager projectMap = environmentFactory.getProjectManager();
-			ResourceSet resourceSet = getResourceSet();
-			projectMap.initializeResourceSet(resourceSet);
-			resourceSet.getPackageRegistry().put(org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
-			resourceSet.getPackageRegistry().put(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eNS_URI, org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
-
 			CodeGenHelper genModelHelper = getCodeGenHelper(getEnvironmentFactory());
-
 			File targetFolder = new File("../" + PivotTestSuite.ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS + "/src-gen");
 			targetFolder.mkdir();
 			String packageName = testPackageName;
