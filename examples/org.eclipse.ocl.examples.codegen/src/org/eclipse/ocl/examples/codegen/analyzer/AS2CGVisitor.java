@@ -427,13 +427,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgOperation;
 	}
 
-	/*	public @NonNull CGParameter createCGParameter(@NonNull VariableDeclaration asVariable) {
-		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-		setPivot(cgParameter, asVariable);
-		cgParameter.setTypeId(context.getTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
-		return cgParameter;
-	} */
-
 	public @NonNull CGVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = variablesStack.getVariable(asVariable);
 		if (cgVariable == null) {
@@ -1006,7 +999,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGIterator();
 			setAst(cgParameter, asVariable);
-			cgParameter.setTypeId(context.getTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
+			cgParameter.setTypeId(context.getTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
 			variablesStack.putVariable(asVariable, cgParameter);
 		}
 		return (CGIterator) cgParameter;

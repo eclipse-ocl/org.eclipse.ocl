@@ -798,7 +798,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						};
 						final @NonNull  ExecutorSingleIterationManager MGR_sortedBy_1 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy_1, extraProperties, ACC_sortedBy_1);
 						final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue sortedBy = ClassUtil.nonNullState((OrderedSetValue)IMPL_sortedBy_1.evaluateIteration(MGR_sortedBy_1));
-						/*@NonInvalid*/ java.lang.@NonNull String acc = PivotTables.STR_Unexpected_32_initializers_c;
+						/*@NonInvalid*/ java.lang.@Nullable String acc = PivotTables.STR_Unexpected_32_initializers_c;
 						@NonNull Iterator<Object> ITERATOR_p_0 = sortedBy.iterator();
 						/*@Thrown*/ java.lang.@Nullable String iterate;
 						while (true) {
@@ -811,9 +811,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							/**
 							 * acc + ' ' + p.name
 							 */
-							final /*@NonInvalid*/ java.lang.@NonNull String sum = StringConcatOperation.INSTANCE.evaluate(acc, PivotTables.STR__32);
+							final /*@Thrown*/ java.lang.@NonNull String sum = StringConcatOperation.INSTANCE.evaluate(acc, PivotTables.STR__32);
 							final /*@Thrown*/ java.lang.@Nullable String name_1 = p_0.getName();
-							final /*@NonInvalid*/ java.lang.@NonNull String sum_0 = StringConcatOperation.INSTANCE.evaluate(sum, name_1);
+							final /*@Thrown*/ java.lang.@NonNull String sum_0 = StringConcatOperation.INSTANCE.evaluate(sum, name_1);
 							//
 							acc = sum_0;
 						}
@@ -847,7 +847,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							};
 							final @NonNull  ExecutorSingleIterationManager MGR_sortedBy_0_0 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy_0_0, missingProperties, ACC_sortedBy_0_0);
 							final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue sortedBy_0 = ClassUtil.nonNullState((OrderedSetValue)IMPL_sortedBy_0_0.evaluateIteration(MGR_sortedBy_0_0));
-							/*@NonInvalid*/ java.lang.@NonNull String acc_0 = PivotTables.STR_Missing_32_initializers_c;
+							/*@NonInvalid*/ java.lang.@Nullable String acc_0 = PivotTables.STR_Missing_32_initializers_c;
 							@NonNull Iterator<Object> ITERATOR_p_1 = sortedBy_0.iterator();
 							/*@Thrown*/ java.lang.@Nullable String iterate_0;
 							while (true) {
@@ -860,9 +860,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								/**
 								 * acc + ' ' + p.name
 								 */
-								final /*@NonInvalid*/ java.lang.@NonNull String sum_1 = StringConcatOperation.INSTANCE.evaluate(acc_0, PivotTables.STR__32);
+								final /*@Thrown*/ java.lang.@NonNull String sum_1 = StringConcatOperation.INSTANCE.evaluate(acc_0, PivotTables.STR__32);
 								final /*@Thrown*/ java.lang.@Nullable String name_3 = p_1.getName();
-								final /*@NonInvalid*/ java.lang.@NonNull String sum_2 = StringConcatOperation.INSTANCE.evaluate(sum_1, name_3);
+								final /*@Thrown*/ java.lang.@NonNull String sum_2 = StringConcatOperation.INSTANCE.evaluate(sum_1, name_3);
 								//
 								acc_0 = sum_2;
 							}

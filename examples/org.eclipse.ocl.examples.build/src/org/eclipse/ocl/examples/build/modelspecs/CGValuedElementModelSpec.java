@@ -821,6 +821,20 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"		}";
 			}
 		};
+
+		public static final @NonNull Eq ITRTR = new Eq() {
+			@Override public @Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return thatValue.isEquivalentToInternal(this);";
+			}
+			@Override public @Nullable String generateIsEquivalentToInternal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "if (this == thatValue) {\n" +
+						"			return Boolean.TRUE;\n" +
+						"		}\n" +
+						"		else {\n" +
+						"			return null;\n" +
+						"		}";
+			}
+		};
 		public static final @NonNull Eq NULL = new Eq() {
 			@Override public @Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return null;
@@ -2175,8 +2189,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGSettableVariable.class, null,				null     , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 
 			new CGValuedElementModelSpec(CGParameter.class, "init",						Box.PARAM, null     , null     , null     , Inv.NEVER, Glo.DELEG, null     , null     , null    , Con.DELEG, Val.DELVL, null     , null     , Ctl.PARAM, null     , null     , null    );
-			new CGValuedElementModelSpec(CGIterator.class, null,						null     , null     , null     , null     , null     , Glo.FALSE, null     , Set.TRUE , null    , null     , null     , null     , null     , Ctl.CNTRL, null     , null     , null    );
-			new CGValuedElementModelSpec(CGAccumulator.class, null,						null     , null     , null     , null     , Inv.VAL  , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
+			new CGValuedElementModelSpec(CGIterator.class, null,						null     , null     , null     , null     , null     , Glo.FALSE, null     , Set.TRUE , null    , Con.FALSE, Val.ROOT , null     , null     , Ctl.CNTRL, null     , null     , Eq.ITRTR);
+			new CGValuedElementModelSpec(CGAccumulator.class, null,						null     , null     , null     , null     , Inv.VAL  , null     , null     , null     , null    , Con.FALSE, Val.ROOT , null     , null     , null     , null     , null     , Eq.ITRTR);
 
 			new CGValuedElementModelSpec(CGCollectionExp.class, "CGCollectionPart",		Box.BOX  , Ths.PARTS, null     , Nul.NEVER, Inv.PARTS, Glo.PARTS, null     , null     , null    , Con.PARTS, null     , null     , null     , Ctl.LORG , null     , null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGCollectionPart.class, null,					Box.RANGE, Ths.CPART, null     , Nul.CPART, Inv.CPART, Glo.CPART, Inl.CPART, null     , null    , Con.CPART, null     , null     , null     , null     , Com.FALSE, null     , Eq.EQUIV);

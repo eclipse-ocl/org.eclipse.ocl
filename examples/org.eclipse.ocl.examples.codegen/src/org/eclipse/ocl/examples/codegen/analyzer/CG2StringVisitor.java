@@ -62,6 +62,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
@@ -323,6 +324,11 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			safeVisit(variable);
 			isFirst = false;
 		}
+		CGIterator cgAccumulator = cgExp.getAccumulator();
+		if (cgAccumulator != null) {
+			append("; ");
+			safeVisit(cgAccumulator);
+		}
 		append(" | ");
 		safeVisit(cgExp.getBody());
 		append(")");//$NON-NLS-1$
@@ -521,6 +527,22 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		safeVisit(ic.getBody());
 		append(")");
 		//		appendAtPre(oc);
+		return null;
+	}
+
+	@Override
+	public @Nullable String visitCGIterator(@NonNull CGIterator cgElement) {
+		appendName(cgElement);
+		CGTypeId type = cgElement.getTypeId();
+		if (type != null) {
+			append(" : ");
+			appendElementType(cgElement);
+		}
+		CGValuedElement init = cgElement.getInit();
+		if (init != null) {
+			append(" = ");
+			init.accept(this);
+		}
 		return null;
 	}
 
@@ -739,6 +761,14 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		appendName(((ShadowPart)cgShadowPart.getAst()).getReferredProperty());
 		append(" <- ");
 		safeVisit(cgShadowPart.getInit());
+		return null;
+	}
+
+	@Override
+	public @Nullable String visitCGString(@NonNull CGString cgString) {
+		append("'");
+		append(cgString.getStringValue());
+		append("'");
 		return null;
 	}
 
