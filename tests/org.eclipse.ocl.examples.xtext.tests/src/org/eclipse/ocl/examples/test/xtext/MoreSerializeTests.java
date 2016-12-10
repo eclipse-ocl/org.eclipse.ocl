@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
  * Tests that check that an Ecore model can be serialized to OCLinEcore.
  */
 public class MoreSerializeTests extends SerializeTests
-{	
+{
 	// Fails due to bad specialisation templates
 	public void testEcoreSerialize() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
@@ -26,18 +26,18 @@ public class MoreSerializeTests extends SerializeTests
 	}
 
 	//	public void testMarkupSerialize() throws Exception {
-//		doSerialize(ocl, "Markup");
-//	}
+	//		doSerialize(ocl, "Markup");
+	//	}
 
-//	public void test_model_uml_Serialize() throws Exception {
-//		doSerializeUML("model");
-//	}
+	//	public void test_model_uml_Serialize() throws Exception {
+	//		doSerializeUML("model");
+	//	}
 
 	// Fails ? because lowerBounds do not propagate from UML2Ecore ?
 	// Fails because no support for redefines
 	public void test_Fruit_uml_Serialize() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		doSerializeUML(ocl, "Fruit");
+		doSerializeUML(ocl, "Fruit", null);
 		ocl.dispose();
 	}
 
@@ -67,5 +67,5 @@ public class MoreSerializeTests extends SerializeTests
 		OCL ocl = OCL.newInstance(getProjectMap());
 		doSerialize(ocl, "OCLTest");
 		ocl.dispose();
-	}	
+	}
 }

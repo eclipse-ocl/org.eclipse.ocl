@@ -20,6 +20,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -395,7 +396,7 @@ public class PivotTestCase extends TestCase
 			Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
 			diagnostics.addAll(diagnostic.getChildren());
 		}
-		return assertDiagnostics(prefix, diagnostics, messages);
+		return messages != null ? assertDiagnostics(prefix, diagnostics, messages) : Collections.emptyList();
 	}
 
 	public static @Nullable StandaloneProjectMap basicGetProjectMap() {

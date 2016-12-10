@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Package;
@@ -63,10 +64,10 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 {
 	public static class MyOCL extends TestOCL
 	{
-    	EPackage statefulEPackage;
-    	EFactory statefulEFactory;
-    	EClass c1Class;
-		
+		EPackage statefulEPackage;
+		EFactory statefulEFactory;
+		EClass c1Class;
+
 		public MyOCL(@NonNull String testPackageName, @NonNull String name) {
 			super(testPackageName, name, useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
@@ -77,18 +78,18 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		}
 
 		@SuppressWarnings("null")
-		protected Resource getPivotFromUML(@NonNull MetamodelManagerInternal metamodelManager, Resource umlResource) throws ParserException {
-//			String problem = UML2AS.initialize(metamodelManager.getExternalResourceSet());
-//			assertNull(problem);
+		protected Resource getPivotFromUML(@NonNull MetamodelManagerInternal metamodelManager, Resource umlResource, @NonNull String @Nullable [] asValidationMessages) throws ParserException {
+			//			String problem = UML2AS.initialize(metamodelManager.getExternalResourceSet());
+			//			assertNull(problem);
 			UML2AS uml2as = UML2AS.getAdapter(umlResource, metamodelManager.getEnvironmentFactory());
 			Model pivotModel = uml2as.getASModel();
 			Resource asResource = pivotModel.eResource();
 			assertNoResourceErrors("Normalisation failed", asResource);
-			assertNoValidationErrors("Normalisation invalid", asResource);
+			assertValidationDiagnostics("Normalisation invalid", asResource, asValidationMessages);
 			return asResource;
 		}
-		
-		protected Resource initStateMachinePackage(URI uri) throws ParserException {
+
+		protected Resource initStateMachinePackage(URI uri, @NonNull String @Nullable [] asValidationMessages) throws ParserException {
 			UMLStandaloneSetup.init();
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
 			ResourceSet resourceSet2 = getResourceSet();
@@ -115,18 +116,18 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 			UML2EcoreConverter uml2EcoreConverter = new UML2EcoreConverter();
 			Collection<? extends EObject> ecoreContents = uml2EcoreConverter.convert(contents, options, null, null);
 			Resource ecoreResource = resourceSet2.createResource(URI.createURI("StateMachines.ecore"));
-			ecoreResource.getContents().addAll(ecoreContents);
+			for (EObject eObject : ecoreContents) {
+				assert eObject != null;
+				ecoreResource.getContents().add(eObject);
+			}
 			statefulEPackage = (EPackage) ecoreResource.getContents().get(0);
 			statefulEFactory = statefulEPackage.getEFactoryInstance();
 			c1Class = (EClass) statefulEPackage.getEClassifier("C1");
-//			OCL ocl1 = OCL.newInstance();
-//			MetamodelManager metamodelManager1 = ocl1.getMetamodelManager();
-//			try {
-				Resource asResource = getPivotFromUML(metamodelManager, umlResource);
+			Resource asResource = getPivotFromUML(metamodelManager, umlResource, asValidationMessages);
 			return asResource;
 		}
 	}
-	
+
 	@Parameters
 	public static Collection<Object[]> data() {
 		Object[][] data = new Object[][]{{false} /*, {true}*/};
@@ -146,35 +147,39 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 	protected @NonNull String getTestPackageName() {
 		return "EvaluateUML";
 	}
-	
+
 	@BeforeClass public static void resetCounter() throws Exception {
 		PivotTestSuite.resetCounter();
-    }
+	}
 
-    @Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-    }
+	@Override
+	@Before public void setUp() throws Exception {
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
 		super.tearDown();
 	}
-	
+
 	/**
 	 * Tests construction of a type instance with property values
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	@Test public void test_oclIsInState() throws InvocationTargetException, ParserException {
 		UMLStandaloneSetup.init();
 		MyOCL ocl = createOCL();
-		ocl.initStateMachinePackage(getTestModelURI("model/StateMachines.uml"));
+		ocl.initStateMachinePackage(getTestModelURI("model/StateMachines.uml"),
+			new @NonNull String[] {
+			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : \"<null>\"[1]'",
+			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C2::o2() : \"<null>\"[1]'"
+		});
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		EObject context = ocl.statefulEFactory.create(ocl.c1Class);
 		org.eclipse.ocl.pivot.Class contextType = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, ocl.c1Class);
 		assert contextType != null;
-		ocl.assertSemanticErrorQuery(contextType, "self.oclIsInState(S2b)", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::C1", "S2b");	
-		ocl.assertQueryInvalid(context, "self.oclIsInState(S1a)", StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "OclAny::oclIsInState(OclState[?]) : Boolean[1]", "C1", "self.oclIsInState(null)"), UnsupportedOperationException.class);	
+		ocl.assertSemanticErrorQuery(contextType, "self.oclIsInState(S2b)", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::C1", "S2b");
+		ocl.assertQueryInvalid(context, "self.oclIsInState(S1a)", StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "OclAny::oclIsInState(OclState[?]) : Boolean[1]", "C1", "self.oclIsInState(null)"), UnsupportedOperationException.class);
 		ocl.dispose();
 	}
 
@@ -183,49 +188,49 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		URI umlURI = getProjectFileURI(umlName).appendFragment(fragment);
 		return ocl.getResourceSet().getEObject(umlURI, true);
 	}
-	
+
 	/**
 	 * Tests construction of a type instance with property values
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	@Test public void test_stereotypes_Bug431638() throws Exception {
 		MyOCL ocl = createOCL();
-//		UML2AS.ADD_ELEMENT_EXTENSION.setState(true);
-//		UML2AS.ADD_IMPORTED_RESOURCE.setState(true);
-//		UML2AS.ADD_PROFILE_APPLICATION.setState(true);
-//		UML2AS.CONVERT_RESOURCE.setState(true);
-//		AbstractTypeServer.ADD_BASE_PROPERTY.setState(true);
-//		AbstractTypeServer.ADD_EXTENSION_PROPERTY.setState(true);
+		//		UML2AS.ADD_ELEMENT_EXTENSION.setState(true);
+		//		UML2AS.ADD_IMPORTED_RESOURCE.setState(true);
+		//		UML2AS.ADD_PROFILE_APPLICATION.setState(true);
+		//		UML2AS.CONVERT_RESOURCE.setState(true);
+		//		AbstractTypeServer.ADD_BASE_PROPERTY.setState(true);
+		//		AbstractTypeServer.ADD_EXTENSION_PROPERTY.setState(true);
 		IdResolver idResolver = ocl.getIdResolver();
 		EObject context = doLoadUML(ocl, "Bug431638", "Bug431638Model.Class1.Attribute1");
 		assertNotNull(context);
 		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticTypeOf(context);
 		org.eclipse.ocl.pivot.Package contextPackage = contextType.getOwningPackage();
-//		assertEquals(XMI2UMLResource.UML_METAMODEL_NS_URI, contextPackage.getNsURI());
-//		assertEquals(IdManager.METAMODEL, contextPackage.getPackageId());
+		//		assertEquals(XMI2UMLResource.UML_METAMODEL_NS_URI, contextPackage.getNsURI());
+		//		assertEquals(IdManager.METAMODEL, contextPackage.getPackageId());
 		assertEquals(PivotConstants.UML_METAMODEL_NAME, contextPackage.getPackageId().getDisplayName());
-		ocl.assertValidQuery(contextType, "self.extension_vStereotype1");	
-		ocl.assertSemanticErrorQuery(contextType, "self.extension_Stereotype1", PivotMessagesInternal.UnresolvedProperty_ERROR_, "UML::Property", "extension_Stereotype1");	
-		ocl.assertValidQuery(contextType, "self.extension_vStereotype1.base_NamedElement");	
-		ocl.assertSemanticErrorQuery(contextType, "self.extension_vStereotype1.base_Class", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bug431638Profile::vStereotype1", "base_Class");	
-		ocl.assertSemanticErrorQuery(contextType, "self.extension_vStereotype1.string", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bug431638Profile::vStereotype1", "string");	
-		ocl.assertValidQuery(contextType, "self.extension_vStereotype1.oclAsType(Bug431638Profile::Stereotype1).string");	
+		ocl.assertValidQuery(contextType, "self.extension_vStereotype1");
+		ocl.assertSemanticErrorQuery(contextType, "self.extension_Stereotype1", PivotMessagesInternal.UnresolvedProperty_ERROR_, "UML::Property", "extension_Stereotype1");
+		ocl.assertValidQuery(contextType, "self.extension_vStereotype1.base_NamedElement");
+		ocl.assertSemanticErrorQuery(contextType, "self.extension_vStereotype1.base_Class", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bug431638Profile::vStereotype1", "base_Class");
+		ocl.assertSemanticErrorQuery(contextType, "self.extension_vStereotype1.string", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bug431638Profile::vStereotype1", "string");
+		ocl.assertValidQuery(contextType, "self.extension_vStereotype1.oclAsType(Bug431638Profile::Stereotype1).string");
 
-//OK		ocl.assertQueryEquals(context, contextType, "self.oclType()");	
-//OK		ocl.assertQueryEquals(context, "Property", "self.oclType().name");	
-		ocl.assertQueryEquals(context, "overrideValue", "self.extension_vStereotype1.oclAsType(Bug431638Profile::Stereotype1).string");	
-		
-		
-		
-//		ocl.assertValidQuery((Type)contextType, "self.extension_vStereotype1.base_Class.oclIsKindOf(Property)");	
-//		ocl.assertQueryFalse(context, "self.extension_vStereotype1.base_Class.oclIsKindOf(Property)");	
-//		ocl.assertQueryTrue(context, "self.oclType().oclIsKindOf(self.extension_vStereotype1.base_NamedElement)");	
-		ocl.assertSemanticErrorQuery(contextType, "self.extension_vStereotype1.base_Class = self.oclType()", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bug431638Profile::vStereotype1", "base_Class");	
-//		ocl.assertQueryTrue(context, "self.extension_vStereotype1.base_Class.oclIsKindOf(UML::Property)");	
-//		ocl.assertSemanticErrorQuery2((Type)contextType, "self.extension_vStereotype1", OCLMessages.UnresolvedProperty_ERROR_, "Model::C1", "S2b");	
+		//OK		ocl.assertQueryEquals(context, contextType, "self.oclType()");
+		//OK		ocl.assertQueryEquals(context, "Property", "self.oclType().name");
+		ocl.assertQueryEquals(context, "overrideValue", "self.extension_vStereotype1.oclAsType(Bug431638Profile::Stereotype1).string");
+
+
+
+		//		ocl.assertValidQuery((Type)contextType, "self.extension_vStereotype1.base_Class.oclIsKindOf(Property)");
+		//		ocl.assertQueryFalse(context, "self.extension_vStereotype1.base_Class.oclIsKindOf(Property)");
+		//		ocl.assertQueryTrue(context, "self.oclType().oclIsKindOf(self.extension_vStereotype1.base_NamedElement)");
+		ocl.assertSemanticErrorQuery(contextType, "self.extension_vStereotype1.base_Class = self.oclType()", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bug431638Profile::vStereotype1", "base_Class");
+		//		ocl.assertQueryTrue(context, "self.extension_vStereotype1.base_Class.oclIsKindOf(UML::Property)");
+		//		ocl.assertSemanticErrorQuery2((Type)contextType, "self.extension_vStereotype1", OCLMessages.UnresolvedProperty_ERROR_, "Model::C1", "S2b");
 		ocl.dispose();
 	}
-	
+
 	/**
 	 * Tests construction of a type instance with property values
 	 */
@@ -237,14 +242,14 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		assertNotNull(context);
 		assert context != null;
 		org.eclipse.ocl.pivot.Class contextType = idResolver.getStaticTypeOf(context);
-		ocl.assertQueryTrue(context, "self.aggregation=UML::AggregationKind::composite");	
-		ocl.assertQueryResults(context, "UML::AggregationKind::composite", "self.aggregation");	
+		ocl.assertQueryTrue(context, "self.aggregation=UML::AggregationKind::composite");
+		ocl.assertQueryResults(context, "UML::AggregationKind::composite", "self.aggregation");
 		EObject associationContext = doLoadUML(ocl, "Bug455394", "Model.A_class2_class1");
 		CollectionTypeId collectionTypeId = TypeId.ORDERED_SET.getSpecializedId(contextType.getTypeId());
-		ocl.assertQueryEquals(associationContext, idResolver.createOrderedSetOfEach(collectionTypeId, context), "self.memberEnd?->select(e|e.aggregation=AggregationKind::composite)");	
+		ocl.assertQueryEquals(associationContext, idResolver.createOrderedSetOfEach(collectionTypeId, context), "self.memberEnd?->select(e|e.aggregation=AggregationKind::composite)");
 		ocl.dispose();
 	}
-	
+
 	/**
 	 * Tests uses of allInstances on a stereotype
 	 */
@@ -260,12 +265,12 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		assert application1 != null;
 		assert application2 != null;
 		CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(contextType.getTypeId());
-		ocl.assertQueryEquals(train1, ValueUtil.createSetOfEach(setTypeId, application1, application2), "TestProfile::Train.allInstances()");	
-		ocl.assertQueryEquals(train1, ValueUtil.createSetOfEach(setTypeId, application1, application2), "self.extension_Train.oclType().allInstances()");	
-		ocl.assertQueryResults(train1, "Bag{'Train1','Train2'}", "TestProfile::Train.allInstances().base_Class.name");	
+		ocl.assertQueryEquals(train1, ValueUtil.createSetOfEach(setTypeId, application1, application2), "TestProfile::Train.allInstances()");
+		ocl.assertQueryEquals(train1, ValueUtil.createSetOfEach(setTypeId, application1, application2), "self.extension_Train.oclType().allInstances()");
+		ocl.assertQueryResults(train1, "Bag{'Train1','Train2'}", "TestProfile::Train.allInstances().base_Class.name");
 		ocl.dispose();
 	}
-	
+
 	/**
 	 * Tests uses of allInstances on a signal
 	 */
