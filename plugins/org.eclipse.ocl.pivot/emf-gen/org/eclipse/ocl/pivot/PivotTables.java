@@ -202,7 +202,9 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CollectionLiteralPart_c_c_TypeIsNotInvalid = "CollectionLiteralPart::TypeIsNotInvalid";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Constraint_c_c_UniqueName = "Constraint::UniqueName";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_EnumLiteralExp_c_c_TypeIsEnumerationType = "EnumLiteralExp::TypeIsEnumerationType";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Feature_c_c_NameIsNotNull = "Feature::NameIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Feature_c_c_TypeIsNotInvalid = "Feature::TypeIsNotInvalid";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Feature_c_c_TypeIsNotNull = "Feature::TypeIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IfExp_c_c_ConditionTypeIsBoolean = "IfExp::ConditionTypeIsBoolean";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IfExp_c_c_TypeIsNotInvalid = "IfExp::TypeIsNotInvalid";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IntegerLiteralExp_c_c_TypeIsInteger = "IntegerLiteralExp::TypeIsInteger";
@@ -241,6 +243,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_MessageExp_c_c_OneCallOrOneSend = "MessageExp::OneCallOrOneSend";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_MessageExp_c_c_TargetIsNotACollection = "MessageExp::TargetIsNotACollection";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Missing_32_initializers_c = "Missing initializers:";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OCLExpression_c_c_TypeIsNotNull = "OCLExpression::TypeIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OperationCallExp_c_c_ArgumentCount = "OperationCallExp::ArgumentCount";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OperationCallExp_c_c_ArgumentTypeIsConformant = "OperationCallExp::ArgumentTypeIsConformant";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OperationCallExp_c_c_SafeSourceCanBeNull = "OperationCallExp::SafeSourceCanBeNull";
@@ -264,11 +267,14 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_TypeIsNotInvalid = "ShadowExp::TypeIsNotInvalid";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowPart_c_c_CompatibleInitialiserType = "ShadowPart::CompatibleInitialiserType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowPart_c_c_TypeIsNotInvalid = "ShadowPart::TypeIsNotInvalid";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowPart_c_c_TypeIsNotNull = "ShadowPart::TypeIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_StateExp_c_c_TypeIsNotInvalid = "StateExp::TypeIsNotInvalid";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_TupleLiteralPart_c_c_CompatibleInitialiserType = "TupleLiteralPart::CompatibleInitialiserType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_TupleLiteralPart_c_c_TypeIsNotInvalid = "TupleLiteralPart::TypeIsNotInvalid";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Unexpected_32_initializers_c = "Unexpected initializers:";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_VariableDeclaration_c_c_NameIsNotNull = "VariableDeclaration::NameIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_VariableDeclaration_c_c_TypeIsNotInvalid = "VariableDeclaration::TypeIsNotInvalid";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_VariableDeclaration_c_c_TypeIsNotNull = "VariableDeclaration::TypeIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_VariableExp_c_c_TypeIsNotInvalid = "VariableExp::TypeIsNotInvalid";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Variable_c_c_CompatibleInitialiserType = "Variable::CompatibleInitialiserType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR__32 = " ";

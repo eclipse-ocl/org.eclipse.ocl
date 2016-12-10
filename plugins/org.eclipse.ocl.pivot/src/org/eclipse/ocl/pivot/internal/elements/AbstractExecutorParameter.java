@@ -21,12 +21,12 @@ import org.eclipse.ocl.pivot.Type;
 public final class AbstractExecutorParameter extends AbstractExecutorTypedElement implements Parameter
 {
 	protected final boolean typeof;
-	
+
 	public AbstractExecutorParameter(@NonNull String name, @NonNull Type type, boolean typeof) {
 		super(name, type);
 		this.typeof = typeof;
 	}
-	
+
 	@Override
 	public boolean isIsTypeof() {
 		return typeof;
@@ -57,8 +57,24 @@ public final class AbstractExecutorParameter extends AbstractExecutorTypedElemen
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public boolean validateNameIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
 	@Override
 	public boolean validateTypeIsNotInvalid(DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public boolean validateTypeIsNotNull(DiagnosticChain diagnostics,Map<Object, Object> context) {
 		return true;
 	}
 }

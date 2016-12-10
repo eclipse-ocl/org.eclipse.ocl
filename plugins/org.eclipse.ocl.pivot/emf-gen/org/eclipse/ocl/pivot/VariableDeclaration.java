@@ -11,12 +11,14 @@
 package org.eclipse.ocl.pivot;
 
 import java.util.Map;
+
 import org.eclipse.emf.common.util.DiagnosticChain;
 
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Variable Declaration</b></em>'.
+ * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -30,7 +32,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface VariableDeclaration
-		extends TypedElement {
+extends TypedElement {
 
 	/**
 	 * Returns the value of the '<em><b>Type Value</b></em>' reference.
@@ -59,8 +61,24 @@ public interface VariableDeclaration
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateNameIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	boolean validateTypeIsNotInvalid(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateTypeIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context);
 } // VariableDeclaration

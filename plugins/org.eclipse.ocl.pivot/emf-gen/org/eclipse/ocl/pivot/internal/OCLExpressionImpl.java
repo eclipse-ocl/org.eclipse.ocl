@@ -10,19 +10,32 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
+import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
+import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,8 +51,8 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * @generated
  */
 public abstract class OCLExpressionImpl
-		extends TypedElementImpl
-		implements OCLExpression {
+extends TypedElementImpl
+implements OCLExpression {
 
 	/**
 	 * The cached value of the '{@link #getTypeValue() <em>Type Value</em>}' reference.
@@ -93,6 +106,51 @@ public abstract class OCLExpressionImpl
 		typeValue = newTypeValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OCL_EXPRESSION__TYPE_VALUE, oldTypeValue, typeValue));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean validateTypeIsNotNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
+	{
+		/**
+		 *
+		 * inv TypeIsNotNull:
+		 *   let severity : Integer[1] = 'OCLExpression::TypeIsNotNull'.getSeverity()
+		 *   in
+		 *     if severity <= 0
+		 *     then true
+		 *     else
+		 *       let status : OclAny[1] = type <> null
+		 *       in
+		 *         'OCLExpression::TypeIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
+		 *     endif
+		 */
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_OCLExpression_c_c_TypeIsNotNull);
+		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+		/*@NonInvalid*/ boolean symbol_0;
+		if (le) {
+			symbol_0 = ValueUtil.TRUE_VALUE;
+		}
+		else {
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@Thrown*/ boolean status = type != null;
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_OCLExpression_c_c_TypeIsNotNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
+		}
+		return Boolean.TRUE == symbol_0;
 	}
 
 	/**
@@ -239,6 +297,29 @@ public abstract class OCLExpressionImpl
 				return typeValue != null;
 		}
 		return eDynamicIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+	{
+		switch (operationID)
+		{
+			case PivotPackage.OCL_EXPRESSION___ALL_OWNED_ELEMENTS:
+				return allOwnedElements();
+			case PivotPackage.OCL_EXPRESSION___GET_VALUE__TYPE_STRING:
+				return getValue((Type)arguments.get(0), (String)arguments.get(1));
+			case PivotPackage.OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION:
+				return CompatibleBody((ValueSpecification)arguments.get(0));
+			case PivotPackage.OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+		}
+		return eDynamicInvoke(operationID, arguments);
 	}
 
 	@Override

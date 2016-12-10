@@ -372,8 +372,14 @@
     </ownedClasses>
     <ownedClasses xmi:id="T.pivot.Feature" isAbstract="true" name="Feature" superClasses="#T.pivot.TypedElement">
       <ownedComments body="A Feature declares a behavioral or structural characteristic of Classifiers."/>
+      <ownedInvariants xmi:id="cipivot.Feature.NameIsNotNull" isCallable="true" name="NameIsNotNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name &lt;> null&#xA;"/>
+      </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.Feature.TypeIsNotInvalid" isCallable="true" name="TypeIsNotInvalid">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="cipivot.Feature.TypeIsNotNull" isCallable="true" name="TypeIsNotNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> null&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedProperties xmi:id="p.pivot.Feature.implementation" isRequired="false" isTransient="true" name="implementation" type="#T.pivot.LibraryFeature"/>
       <ownedProperties xmi:id="p.pivot.Feature.implementationClass" isRequired="false" name="implementationClass" type="#String"/>
@@ -657,6 +663,9 @@
     <ownedClasses xmi:id="T.pivot.NullLiteralExp" name="NullLiteralExp" superClasses="#T.pivot.PrimitiveLiteralExp"/>
     <ownedClasses xmi:id="T.pivot.NumericLiteralExp" isAbstract="true" name="NumericLiteralExp" superClasses="#T.pivot.PrimitiveLiteralExp"/>
     <ownedClasses xmi:id="T.pivot.OCLExpression" isAbstract="true" name="OCLExpression" superClasses="#T.pivot.TypedElement">
+      <ownedInvariants xmi:id="cipivot.OCLExpression.TypeIsNotNull" isCallable="true" name="TypeIsNotNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> null&#xA;&#xA;"/>
+      </ownedInvariants>
       <ownedProperties xmi:id="p.pivot.OCLExpression.typeValue" isRequired="false" isResolveProxies="false" isTransient="true" name="typeValue"
           opposite="#p.pivot.Type.OCLExpression" type="#T.pivot.Type"/>
       <ownedProperties xmi:id="p.pivot.OCLExpression.CallExp" isImplicit="true" isRequired="false" name="CallExp" opposite="#p.pivot.CallExp.ownedSource"
@@ -1074,7 +1083,10 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit.type?.conformsTo(type)&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.ShadowPart.TypeIsNotInvalid" isCallable="true" name="TypeIsNotInvalid">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="cipivot.ShadowPart.TypeIsNotNull" isCallable="true" name="TypeIsNotNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> null&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedProperties xmi:id="p.pivot.ShadowPart.ownedInit" isComposite="true" name="ownedInit" opposite="#p.pivot.OCLExpression.ShadowPart"
           type="#T.pivot.OCLExpression"/>
@@ -1452,8 +1464,14 @@
           type="#T.pivot.LoopExp"/>
     </ownedClasses>
     <ownedClasses xmi:id="T.pivot.VariableDeclaration" isAbstract="true" name="VariableDeclaration" superClasses="#T.pivot.TypedElement">
+      <ownedInvariants xmi:id="cipivot.VariableDeclaration.NameIsNotNull" isCallable="true" name="NameIsNotNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name &lt;> null&#xA;"/>
+      </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.VariableDeclaration.TypeIsNotInvalid" isCallable="true" name="TypeIsNotInvalid">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;"/>
+      </ownedInvariants>
+      <ownedInvariants xmi:id="cipivot.VariableDeclaration.TypeIsNotNull" isCallable="true" name="TypeIsNotNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> null&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedProperties xmi:id="p.pivot.VariableDeclaration.typeValue" isRequired="false" isResolveProxies="false" isTransient="true" name="typeValue"
           opposite="#p.pivot.Type.VariableDeclaration" type="#T.pivot.Type"/>

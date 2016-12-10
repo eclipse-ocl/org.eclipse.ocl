@@ -17,134 +17,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.ocl.pivot.Annotation;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.AssociationClass;
-import org.eclipse.ocl.pivot.AssociationClassCallExp;
-import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.Behavior;
-import org.eclipse.ocl.pivot.BooleanLiteralExp;
-import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CallOperationAction;
-import org.eclipse.ocl.pivot.CollectionItem;
-import org.eclipse.ocl.pivot.CollectionKind;
-import org.eclipse.ocl.pivot.CollectionLiteralExp;
-import org.eclipse.ocl.pivot.CollectionLiteralPart;
-import org.eclipse.ocl.pivot.CollectionRange;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.ConnectionPointReference;
-import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Detail;
-import org.eclipse.ocl.pivot.DynamicBehavior;
-import org.eclipse.ocl.pivot.DynamicElement;
-import org.eclipse.ocl.pivot.DynamicProperty;
-import org.eclipse.ocl.pivot.DynamicType;
-import org.eclipse.ocl.pivot.DynamicValueSpecification;
-import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.EnumLiteralExp;
-import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.Feature;
-import org.eclipse.ocl.pivot.FeatureCallExp;
-import org.eclipse.ocl.pivot.FinalState;
-import org.eclipse.ocl.pivot.IfExp;
-import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.InstanceSpecification;
-import org.eclipse.ocl.pivot.IntegerLiteralExp;
-import org.eclipse.ocl.pivot.InvalidLiteralExp;
-import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.IterateExp;
-import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.IteratorExp;
-import org.eclipse.ocl.pivot.IteratorVariable;
-import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.LanguageExpression;
-import org.eclipse.ocl.pivot.LetExp;
-import org.eclipse.ocl.pivot.LetVariable;
-import org.eclipse.ocl.pivot.Library;
-import org.eclipse.ocl.pivot.LiteralExp;
-import org.eclipse.ocl.pivot.LoopExp;
-import org.eclipse.ocl.pivot.MapLiteralExp;
-import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.MessageExp;
-import org.eclipse.ocl.pivot.MessageType;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.NullLiteralExp;
-import org.eclipse.ocl.pivot.NumericLiteralExp;
-import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.OppositePropertyCallExp;
-import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.OrphanCompletePackage;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.ParameterVariable;
-import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
-import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
-import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Profile;
-import org.eclipse.ocl.pivot.ProfileApplication;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.Pseudostate;
-import org.eclipse.ocl.pivot.PseudostateKind;
-import org.eclipse.ocl.pivot.RealLiteralExp;
-import org.eclipse.ocl.pivot.ReferringElement;
-import org.eclipse.ocl.pivot.Region;
-import org.eclipse.ocl.pivot.ResultVariable;
-import org.eclipse.ocl.pivot.SelfType;
-import org.eclipse.ocl.pivot.SendSignalAction;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.ShadowExp;
-import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.Signal;
-import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.State;
-import org.eclipse.ocl.pivot.StateExp;
-import org.eclipse.ocl.pivot.StateMachine;
-import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.TemplateableElement;
-import org.eclipse.ocl.pivot.Transition;
-import org.eclipse.ocl.pivot.TransitionKind;
-import org.eclipse.ocl.pivot.Trigger;
-import org.eclipse.ocl.pivot.TupleLiteralExp;
-import org.eclipse.ocl.pivot.TupleLiteralPart;
-import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypeExp;
-import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
-import org.eclipse.ocl.pivot.UnspecifiedValueExp;
-import org.eclipse.ocl.pivot.ValueSpecification;
-import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.Vertex;
-import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
@@ -275,12 +148,28 @@ extends EObjectValidator {
 	public static final int ENUM_LITERAL_EXP__VALIDATE_TYPE_IS_ENUMERATION_TYPE = 12;
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Name Is Not Null' of 'Feature'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int FEATURE__VALIDATE_NAME_IS_NOT_NULL = 13;
+
+	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Feature'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int FEATURE__VALIDATE_TYPE_IS_NOT_INVALID = 13;
+	public static final int FEATURE__VALIDATE_TYPE_IS_NOT_INVALID = 14;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'Feature'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int FEATURE__VALIDATE_TYPE_IS_NOT_NULL = 15;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Condition Type Is Boolean' of 'If Exp'.
@@ -288,7 +177,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int IF_EXP__VALIDATE_CONDITION_TYPE_IS_BOOLEAN = 14;
+	public static final int IF_EXP__VALIDATE_CONDITION_TYPE_IS_BOOLEAN = 16;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'If Exp'.
@@ -296,7 +185,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int IF_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 15;
+	public static final int IF_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 17;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Integer' of 'Integer Literal Exp'.
@@ -304,7 +193,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int INTEGER_LITERAL_EXP__VALIDATE_TYPE_IS_INTEGER = 16;
+	public static final int INTEGER_LITERAL_EXP__VALIDATE_TYPE_IS_INTEGER = 18;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Body Type Conforms To Result Type' of 'Iterate Exp'.
@@ -312,7 +201,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE = 17;
+	public static final int ITERATE_EXP__VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE = 19;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate One Initializer' of 'Iterate Exp'.
@@ -320,7 +209,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_ONE_INITIALIZER = 18;
+	public static final int ITERATE_EXP__VALIDATE_ONE_INITIALIZER = 20;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Iterator Is Required' of 'Iterate Exp'.
@@ -328,7 +217,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_SAFE_ITERATOR_IS_REQUIRED = 19;
+	public static final int ITERATE_EXP__VALIDATE_SAFE_ITERATOR_IS_REQUIRED = 21;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Iterate Exp'.
@@ -336,7 +225,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 20;
+	public static final int ITERATE_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 22;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Result Type' of 'Iterate Exp'.
@@ -344,7 +233,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_TYPE_IS_RESULT_TYPE = 21;
+	public static final int ITERATE_EXP__VALIDATE_TYPE_IS_RESULT_TYPE = 23;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Iterate Exp'.
@@ -352,7 +241,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATE_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 22;
+	public static final int ITERATE_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 24;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Any Body Type Is Boolean' of 'Iterator Exp'.
@@ -360,7 +249,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_ANY_BODY_TYPE_IS_BOOLEAN = 23;
+	public static final int ITERATOR_EXP__VALIDATE_ANY_BODY_TYPE_IS_BOOLEAN = 25;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Any Has One Iterator' of 'Iterator Exp'.
@@ -368,7 +257,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_ANY_HAS_ONE_ITERATOR = 24;
+	public static final int ITERATOR_EXP__VALIDATE_ANY_HAS_ONE_ITERATOR = 26;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Any Type Is Source Element Type' of 'Iterator Exp'.
@@ -376,7 +265,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE = 25;
+	public static final int ITERATOR_EXP__VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE = 27;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Body Type Is Conformantto Iterator Type' of 'Iterator Exp'.
@@ -384,7 +273,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE = 26;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE = 28;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Element Type Is Source Element Type' of 'Iterator Exp'.
@@ -392,7 +281,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE = 27;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE = 29;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Has One Iterator' of 'Iterator Exp'.
@@ -400,7 +289,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_HAS_ONE_ITERATOR = 28;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_HAS_ONE_ITERATOR = 30;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Source Element Type Is Body Element Type' of 'Iterator Exp'.
@@ -408,7 +297,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE = 29;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE = 31;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Closure Type Is Unique Collection' of 'Iterator Exp'.
@@ -416,7 +305,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION = 30;
+	public static final int ITERATOR_EXP__VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION = 32;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Collect Element Type Is Flattened Body Type' of 'Iterator Exp'.
@@ -424,7 +313,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE = 31;
+	public static final int ITERATOR_EXP__VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE = 33;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Collect Type Is Unordered' of 'Iterator Exp'.
@@ -432,7 +321,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_COLLECT_TYPE_IS_UNORDERED = 32;
+	public static final int ITERATOR_EXP__VALIDATE_COLLECT_TYPE_IS_UNORDERED = 34;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Iterator Type Is Source Element Type' of 'Iterator Exp'.
@@ -440,7 +329,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE = 33;
+	public static final int ITERATOR_EXP__VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE = 35;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Iterator Is Required' of 'Iterator Exp'.
@@ -448,7 +337,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_SAFE_ITERATOR_IS_REQUIRED = 34;
+	public static final int ITERATOR_EXP__VALIDATE_SAFE_ITERATOR_IS_REQUIRED = 36;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Iterator Exp'.
@@ -456,7 +345,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 35;
+	public static final int ITERATOR_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 37;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Sorted By Element Type Is Source Element Type' of 'Iterator Exp'.
@@ -464,7 +353,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE = 36;
+	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE = 38;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Sorted By Is Ordered If Source Is Ordered' of 'Iterator Exp'.
@@ -472,7 +361,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED = 37;
+	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED = 39;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Sorted By Iterator Type Is Comparable' of 'Iterator Exp'.
@@ -480,7 +369,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE = 38;
+	public static final int ITERATOR_EXP__VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE = 40;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Iterator Exp'.
@@ -488,7 +377,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 39;
+	public static final int ITERATOR_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 41;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Has No Initializer' of 'Iterator Variable'.
@@ -496,7 +385,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ITERATOR_VARIABLE__VALIDATE_HAS_NO_INITIALIZER = 40;
+	public static final int ITERATOR_VARIABLE__VALIDATE_HAS_NO_INITIALIZER = 42;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Nullity For In' of 'Let Exp'.
@@ -504,7 +393,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_EXP__VALIDATE_COMPATIBLE_NULLITY_FOR_IN = 41;
+	public static final int LET_EXP__VALIDATE_COMPATIBLE_NULLITY_FOR_IN = 43;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is In Type' of 'Let Exp'.
@@ -512,7 +401,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_EXP__VALIDATE_TYPE_IS_IN_TYPE = 42;
+	public static final int LET_EXP__VALIDATE_TYPE_IS_IN_TYPE = 44;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Let Exp'.
@@ -520,7 +409,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 43;
+	public static final int LET_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 45;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Nullity For Initializer' of 'Let Variable'.
@@ -528,7 +417,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 44;
+	public static final int LET_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 46;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Type For Initializer' of 'Let Variable'.
@@ -536,7 +425,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 45;
+	public static final int LET_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 47;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Has Initializer' of 'Let Variable'.
@@ -544,7 +433,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LET_VARIABLE__VALIDATE_HAS_INITIALIZER = 46;
+	public static final int LET_VARIABLE__VALIDATE_HAS_INITIALIZER = 48;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate No Initializers' of 'Loop Exp'.
@@ -552,7 +441,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_NO_INITIALIZERS = 47;
+	public static final int LOOP_EXP__VALIDATE_NO_INITIALIZERS = 49;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Source Is Collection' of 'Loop Exp'.
@@ -560,7 +449,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int LOOP_EXP__VALIDATE_SOURCE_IS_COLLECTION = 48;
+	public static final int LOOP_EXP__VALIDATE_SOURCE_IS_COLLECTION = 50;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate One Call Or One Send' of 'Message Exp'.
@@ -568,7 +457,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int MESSAGE_EXP__VALIDATE_ONE_CALL_OR_ONE_SEND = 49;
+	public static final int MESSAGE_EXP__VALIDATE_ONE_CALL_OR_ONE_SEND = 51;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Target Is Not ACollection' of 'Message Exp'.
@@ -576,7 +465,15 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int MESSAGE_EXP__VALIDATE_TARGET_IS_NOT_ACOLLECTION = 50;
+	public static final int MESSAGE_EXP__VALIDATE_TARGET_IS_NOT_ACOLLECTION = 52;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'OCL Expression'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int OCL_EXPRESSION__VALIDATE_TYPE_IS_NOT_NULL = 53;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Return' of 'Operation'.
@@ -584,7 +481,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_COMPATIBLE_RETURN = 51;
+	public static final int OPERATION__VALIDATE_COMPATIBLE_RETURN = 54;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Loadable Implementation' of 'Operation'.
@@ -592,7 +489,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_LOADABLE_IMPLEMENTATION = 52;
+	public static final int OPERATION__VALIDATE_LOADABLE_IMPLEMENTATION = 55;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unique Postcondition Name' of 'Operation'.
@@ -600,7 +497,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_UNIQUE_POSTCONDITION_NAME = 53;
+	public static final int OPERATION__VALIDATE_UNIQUE_POSTCONDITION_NAME = 56;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unique Precondition Name' of 'Operation'.
@@ -608,7 +505,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__VALIDATE_UNIQUE_PRECONDITION_NAME = 54;
+	public static final int OPERATION__VALIDATE_UNIQUE_PRECONDITION_NAME = 57;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Argument Count' of 'Operation Call Exp'.
@@ -616,7 +513,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_COUNT = 55;
+	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_COUNT = 58;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Argument Type Is Conformant' of 'Operation Call Exp'.
@@ -624,7 +521,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT = 56;
+	public static final int OPERATION_CALL_EXP__VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT = 59;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Operation Call Exp'.
@@ -632,7 +529,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 57;
+	public static final int OPERATION_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 60;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Has No Initializer' of 'Parameter Variable'.
@@ -640,7 +537,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_VARIABLE__VALIDATE_HAS_NO_INITIALIZER = 58;
+	public static final int PARAMETER_VARIABLE__VALIDATE_HAS_NO_INITIALIZER = 61;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Default Expression' of 'Property'.
@@ -648,7 +545,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY__VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION = 59;
+	public static final int PROPERTY__VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION = 62;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Result Type' of 'Property Call Exp'.
@@ -656,7 +553,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_COMPATIBLE_RESULT_TYPE = 60;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_COMPATIBLE_RESULT_TYPE = 63;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Non Static Source Type Is Conformant' of 'Property Call Exp'.
@@ -664,7 +561,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT = 61;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT = 64;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Safe Source Can Be Null' of 'Property Call Exp'.
@@ -672,7 +569,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 62;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL = 65;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Unsafe Source Can Not Be Null' of 'Property Call Exp'.
@@ -680,7 +577,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 63;
+	public static final int PROPERTY_CALL_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL = 66;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Nullity For Initializer' of 'Result Variable'.
@@ -688,7 +585,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 64;
+	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER = 67;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Type For Initializer' of 'Result Variable'.
@@ -696,7 +593,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 65;
+	public static final int RESULT_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER = 68;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Has Initializer' of 'Result Variable'.
@@ -704,7 +601,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int RESULT_VARIABLE__VALIDATE_HAS_INITIALIZER = 66;
+	public static final int RESULT_VARIABLE__VALIDATE_HAS_INITIALIZER = 69;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Class Has No String Value Initializer' of 'Shadow Exp'.
@@ -712,7 +609,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER = 67;
+	public static final int SHADOW_EXP__VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER = 70;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Data Type Has No Part Initializers' of 'Shadow Exp'.
@@ -720,7 +617,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS = 68;
+	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS = 71;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Data Type Has String Value Initializer' of 'Shadow Exp'.
@@ -728,7 +625,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER = 69;
+	public static final int SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER = 72;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Initializes All Class Properties' of 'Shadow Exp'.
@@ -736,7 +633,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES = 70;
+	public static final int SHADOW_EXP__VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES = 73;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Shadow Exp'.
@@ -744,7 +641,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 71;
+	public static final int SHADOW_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 74;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Shadow Part'.
@@ -752,7 +649,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 72;
+	public static final int SHADOW_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 75;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Shadow Part'.
@@ -760,7 +657,15 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_INVALID = 73;
+	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_INVALID = 76;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'Shadow Part'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SHADOW_PART__VALIDATE_TYPE_IS_NOT_NULL = 77;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'State Exp'.
@@ -768,7 +673,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int STATE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 74;
+	public static final int STATE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 78;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Tuple Literal Part'.
@@ -776,7 +681,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 75;
+	public static final int TUPLE_LITERAL_PART__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 79;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Tuple Literal Part'.
@@ -784,7 +689,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID = 76;
+	public static final int TUPLE_LITERAL_PART__VALIDATE_TYPE_IS_NOT_INVALID = 80;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Compatible Initialiser Type' of 'Variable'.
@@ -792,7 +697,15 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 77;
+	public static final int VARIABLE__VALIDATE_COMPATIBLE_INITIALISER_TYPE = 81;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Name Is Not Null' of 'Variable Declaration'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL = 82;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Declaration'.
@@ -800,7 +713,15 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 78;
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_INVALID = 83;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Null' of 'Variable Declaration'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL = 84;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate Type Is Not Invalid' of 'Variable Exp'.
@@ -808,7 +729,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 79;
+	public static final int VARIABLE_EXP__VALIDATE_TYPE_IS_NOT_INVALID = 85;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -816,7 +737,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 79;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 85;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -844,7 +765,7 @@ extends EObjectValidator {
 	 */
 	@Override
 	protected EPackage getEPackage() {
-	  return PivotPackage.eINSTANCE;
+		return PivotPackage.eINSTANCE;
 	}
 
 	/**
@@ -1282,7 +1203,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(property, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(property, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(property, diagnostics, context);
+		if (result || diagnostics != null) result &= validateFeature_validateNameIsNotNull(property, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotInvalid(property, diagnostics, context);
+		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotNull(property, diagnostics, context);
 		if (result || diagnostics != null) result &= validateProperty_validateCompatibleDefaultExpression(property, diagnostics, context);
 		return result;
 	}
@@ -1316,7 +1239,17 @@ extends EObjectValidator {
 	public boolean validateUnlimitedNaturalLiteralExp(
 			UnlimitedNaturalLiteralExp unlimitedNaturalLiteralExp,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(unlimitedNaturalLiteralExp, diagnostics, context);
+		if (!validate_NoCircularContainment(unlimitedNaturalLiteralExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(unlimitedNaturalLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(unlimitedNaturalLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(unlimitedNaturalLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(unlimitedNaturalLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(unlimitedNaturalLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(unlimitedNaturalLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(unlimitedNaturalLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(unlimitedNaturalLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(unlimitedNaturalLiteralExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -1449,7 +1382,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(operation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateFeature_validateNameIsNotNull(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotInvalid(operation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotNull(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOperation_validateCompatibleReturn(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOperation_validateLoadableImplementation(operation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOperation_validateUniquePostconditionName(operation, diagnostics, context);
@@ -1517,7 +1452,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(parameter, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(parameter, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(parameter, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(parameter, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(parameter, diagnostics, context);
 		return result;
 	}
 
@@ -1538,7 +1475,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(parameterVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(parameterVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(parameterVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(parameterVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(parameterVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariable_validateCompatibleInitialiserType(parameterVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateParameterVariable_validateHasNoInitializer(parameterVariable, diagnostics, context);
 		return result;
@@ -1562,7 +1501,7 @@ extends EObjectValidator {
 	 */
 	public boolean validatePivotable(Pivotable pivotable, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint((EObject)pivotable, diagnostics, context);
+		return validate_EveryDefaultConstraint(pivotable, diagnostics, context);
 	}
 
 	/**
@@ -1581,6 +1520,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(oppositePropertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(oppositePropertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(oppositePropertyCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(oppositePropertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(oppositePropertyCallExp, diagnostics, context);
 		return result;
 	}
@@ -1704,6 +1644,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(associationClassCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(associationClassCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(associationClassCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(associationClassCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(associationClassCallExp, diagnostics, context);
 		return result;
 	}
@@ -1725,6 +1666,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(navigationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(navigationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(navigationCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(navigationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(navigationCallExp, diagnostics, context);
 		return result;
 	}
@@ -1745,6 +1687,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(featureCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(featureCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(featureCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(featureCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(featureCallExp, diagnostics, context);
 		return result;
 	}
@@ -1775,6 +1718,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(callExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(callExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(callExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(callExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(callExp, diagnostics, context);
 		return result;
 	}
@@ -1978,6 +1922,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(booleanLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(booleanLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(booleanLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(booleanLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateBooleanLiteralExp_validateTypeIsBoolean(booleanLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -2001,7 +1946,17 @@ extends EObjectValidator {
 	public boolean validatePrimitiveLiteralExp(
 			PrimitiveLiteralExp primitiveLiteralExp,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(primitiveLiteralExp, diagnostics, context);
+		if (!validate_NoCircularContainment(primitiveLiteralExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(primitiveLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(primitiveLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(primitiveLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(primitiveLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(primitiveLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(primitiveLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(primitiveLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(primitiveLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(primitiveLiteralExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -2011,7 +1966,17 @@ extends EObjectValidator {
 	 */
 	public boolean validateLiteralExp(LiteralExp literalExp,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(literalExp, diagnostics, context);
+		if (!validate_NoCircularContainment(literalExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(literalExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(literalExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(literalExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(literalExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(literalExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(literalExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(literalExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(literalExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(literalExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -2095,6 +2060,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(collectionLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(collectionLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(collectionLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(collectionLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCollectionLiteralExp_validateBagKindIsBag(collectionLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCollectionLiteralExp_validateCollectionKindIsConcrete(collectionLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCollectionLiteralExp_validateOrderedSetKindIsOrderedSet(collectionLiteralExp, diagnostics, context);
@@ -2194,6 +2160,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(enumLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(enumLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(enumLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(enumLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateEnumLiteralExp_validateTypeIsEnumerationType(enumLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -2266,8 +2233,22 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(feature, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(feature, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(feature, diagnostics, context);
+		if (result || diagnostics != null) result &= validateFeature_validateNameIsNotNull(feature, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotInvalid(feature, diagnostics, context);
+		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotNull(feature, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the validateNameIsNotNull constraint of '<em>Feature</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateFeature_validateNameIsNotNull(Feature feature, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return feature.validateNameIsNotNull(diagnostics, context);
 	}
 
 	/**
@@ -2279,6 +2260,18 @@ extends EObjectValidator {
 	public boolean validateFeature_validateTypeIsNotInvalid(Feature feature, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return feature.validateTypeIsNotInvalid(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateTypeIsNotNull constraint of '<em>Feature</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateFeature_validateTypeIsNotNull(Feature feature, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return feature.validateTypeIsNotNull(diagnostics, context);
 	}
 
 	/**
@@ -2297,7 +2290,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(variable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(variable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(variable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(variable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(variable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(variable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariable_validateCompatibleInitialiserType(variable, diagnostics, context);
 		return result;
 	}
@@ -2330,8 +2325,22 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(variableDeclaration, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(variableDeclaration, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(variableDeclaration, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(variableDeclaration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(variableDeclaration, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(variableDeclaration, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the validateNameIsNotNull constraint of '<em>Variable Declaration</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateVariableDeclaration_validateNameIsNotNull(VariableDeclaration variableDeclaration, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return variableDeclaration.validateNameIsNotNull(diagnostics, context);
 	}
 
 	/**
@@ -2343,6 +2352,18 @@ extends EObjectValidator {
 	public boolean validateVariableDeclaration_validateTypeIsNotInvalid(VariableDeclaration variableDeclaration, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return variableDeclaration.validateTypeIsNotInvalid(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateTypeIsNotNull constraint of '<em>Variable Declaration</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateVariableDeclaration_validateTypeIsNotNull(VariableDeclaration variableDeclaration, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return variableDeclaration.validateTypeIsNotNull(diagnostics, context);
 	}
 
 	/**
@@ -2361,6 +2382,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(ifExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(ifExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(ifExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(ifExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIfExp_validateConditionTypeIsBoolean(ifExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIfExp_validateTypeIsNotInvalid(ifExp, diagnostics, context);
 		return result;
@@ -2425,6 +2447,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(integerLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(integerLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(integerLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(integerLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIntegerLiteralExp_validateTypeIsInteger(integerLiteralExp, diagnostics, context);
 		return result;
 	}
@@ -2448,7 +2471,17 @@ extends EObjectValidator {
 	public boolean validateNumericLiteralExp(
 			NumericLiteralExp numericLiteralExp, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(numericLiteralExp, diagnostics, context);
+		if (!validate_NoCircularContainment(numericLiteralExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(numericLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(numericLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(numericLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(numericLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(numericLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(numericLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(numericLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(numericLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(numericLiteralExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -2458,7 +2491,29 @@ extends EObjectValidator {
 	 */
 	public boolean validateOCLExpression(OCLExpression oclExpression, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint(oclExpression, diagnostics, context);
+		if (!validate_NoCircularContainment(oclExpression, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(oclExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(oclExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(oclExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(oclExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(oclExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(oclExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(oclExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(oclExpression, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(oclExpression, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the validateTypeIsNotNull constraint of '<em>OCL Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateOCLExpression_validateTypeIsNotNull(OCLExpression oclExpression, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return oclExpression.validateTypeIsNotNull(diagnostics, context);
 	}
 
 	/**
@@ -2469,7 +2524,17 @@ extends EObjectValidator {
 	public boolean validateInvalidLiteralExp(
 			InvalidLiteralExp invalidLiteralExp, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(invalidLiteralExp, diagnostics, context);
+		if (!validate_NoCircularContainment(invalidLiteralExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(invalidLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(invalidLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(invalidLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(invalidLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(invalidLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(invalidLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(invalidLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(invalidLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(invalidLiteralExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -2508,6 +2573,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iterateExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateNoInitializers(iterateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateSourceIsCollection(iterateExp, diagnostics, context);
@@ -2602,7 +2668,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iteration, diagnostics, context);
+		if (result || diagnostics != null) result &= validateFeature_validateNameIsNotNull(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotInvalid(iteration, diagnostics, context);
+		if (result || diagnostics != null) result &= validateFeature_validateTypeIsNotNull(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOperation_validateCompatibleReturn(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOperation_validateLoadableImplementation(iteration, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOperation_validateUniquePostconditionName(iteration, diagnostics, context);
@@ -2626,6 +2694,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iteratorExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateNoInitializers(iteratorExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateSourceIsCollection(iteratorExp, diagnostics, context);
@@ -2699,7 +2768,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(iteratorVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(iteratorVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(iteratorVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(iteratorVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(iteratorVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariable_validateCompatibleInitialiserType(iteratorVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateIteratorVariable_validateHasNoInitializer(iteratorVariable, diagnostics, context);
 		return result;
@@ -2916,6 +2987,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(loopExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateNoInitializers(loopExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLoopExp_validateSourceIsCollection(loopExp, diagnostics, context);
@@ -2951,7 +3023,17 @@ extends EObjectValidator {
 	 */
 	public boolean validateMapLiteralExp(MapLiteralExp mapLiteralExp, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint(mapLiteralExp, diagnostics, context);
+		if (!validate_NoCircularContainment(mapLiteralExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(mapLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(mapLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(mapLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(mapLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(mapLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(mapLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(mapLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(mapLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(mapLiteralExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -3000,6 +3082,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(letExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(letExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(letExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(letExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLetExp_validateCompatibleNullityForIn(letExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLetExp_validateTypeIsInType(letExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLetExp_validateTypeIsNotInvalid(letExp, diagnostics, context);
@@ -3056,7 +3139,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(letVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariable_validateCompatibleInitialiserType(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLetVariable_validateCompatibleNullityForInitializer(letVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateLetVariable_validateCompatibleTypeForInitializer(letVariable, diagnostics, context);
@@ -3123,6 +3208,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(messageExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(messageExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(messageExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(messageExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateMessageExp_validateOneCallOrOneSend(messageExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateMessageExp_validateTargetIsNotACollection(messageExp, diagnostics, context);
 		return result;
@@ -3187,7 +3273,7 @@ extends EObjectValidator {
 	 */
 	public boolean validateMorePivotable(MorePivotable morePivotable, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint((EObject)morePivotable, diagnostics, context);
+		return validate_EveryDefaultConstraint(morePivotable, diagnostics, context);
 	}
 
 	/**
@@ -3247,7 +3333,17 @@ extends EObjectValidator {
 	 */
 	public boolean validateNullLiteralExp(NullLiteralExp nullLiteralExp,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(nullLiteralExp, diagnostics, context);
+		if (!validate_NoCircularContainment(nullLiteralExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(nullLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(nullLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(nullLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(nullLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(nullLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(nullLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(nullLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(nullLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(nullLiteralExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -3266,6 +3362,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(operationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(operationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(operationCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(operationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(operationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOperationCallExp_validateArgumentCount(operationCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOperationCallExp_validateArgumentTypeIsConformant(operationCallExp, diagnostics, context);
@@ -3392,6 +3489,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(propertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(propertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(propertyCallExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(propertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateCallExp_validateTypeIsNotInvalid(propertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validatePropertyCallExp_validateCompatibleResultType(propertyCallExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validatePropertyCallExp_validateNonStaticSourceTypeIsConformant(propertyCallExp, diagnostics, context);
@@ -3461,7 +3559,17 @@ extends EObjectValidator {
 	 */
 	public boolean validateRealLiteralExp(RealLiteralExp realLiteralExp,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(realLiteralExp, diagnostics, context);
+		if (!validate_NoCircularContainment(realLiteralExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(realLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(realLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(realLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(realLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(realLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(realLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(realLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(realLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(realLiteralExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -3501,7 +3609,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotInvalid(resultVariable, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariable_validateCompatibleInitialiserType(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateResultVariable_validateCompatibleNullityForInitializer(resultVariable, diagnostics, context);
 		if (result || diagnostics != null) result &= validateResultVariable_validateCompatibleTypeForInitializer(resultVariable, diagnostics, context);
@@ -3628,6 +3738,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(shadowExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowExp_validateClassHasNoStringValueInitializer(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowExp_validateDataTypeHasNoPartInitializers(shadowExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowExp_validateDataTypeHasStringValueInitializer(shadowExp, diagnostics, context);
@@ -3709,6 +3820,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(shadowPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowPart_validateCompatibleInitialiserType(shadowPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateShadowPart_validateTypeIsNotInvalid(shadowPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateShadowPart_validateTypeIsNotNull(shadowPart, diagnostics, context);
 		return result;
 	}
 
@@ -3732,6 +3844,18 @@ extends EObjectValidator {
 	public boolean validateShadowPart_validateTypeIsNotInvalid(ShadowPart shadowPart, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return shadowPart.validateTypeIsNotInvalid(diagnostics, context);
+	}
+
+	/**
+	 * Validates the validateTypeIsNotNull constraint of '<em>Shadow Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateShadowPart_validateTypeIsNotNull(ShadowPart shadowPart, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return shadowPart.validateTypeIsNotNull(diagnostics, context);
 	}
 
 	/**
@@ -3760,6 +3884,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(stateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(stateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(stateExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(stateExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateStateExp_validateTypeIsNotInvalid(stateExp, diagnostics, context);
 		return result;
 	}
@@ -3832,7 +3957,17 @@ extends EObjectValidator {
 	 */
 	public boolean validateStringLiteralExp(StringLiteralExp stringLiteralExp,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(stringLiteralExp, diagnostics, context);
+		if (!validate_NoCircularContainment(stringLiteralExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(stringLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(stringLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(stringLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(stringLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(stringLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(stringLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(stringLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(stringLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(stringLiteralExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -3842,7 +3977,17 @@ extends EObjectValidator {
 	 */
 	public boolean validateTupleLiteralExp(TupleLiteralExp tupleLiteralExp,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(tupleLiteralExp, diagnostics, context);
+		if (!validate_NoCircularContainment(tupleLiteralExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(tupleLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(tupleLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(tupleLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(tupleLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(tupleLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(tupleLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(tupleLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(tupleLiteralExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(tupleLiteralExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -3861,7 +4006,9 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(tupleLiteralPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateNameIsNotNull(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateTupleLiteralPart_validateTypeIsNotInvalid(tupleLiteralPart, diagnostics, context);
+		if (result || diagnostics != null) result &= validateVariableDeclaration_validateTypeIsNotNull(tupleLiteralPart, diagnostics, context);
 		if (result || diagnostics != null) result &= validateTupleLiteralPart_validateCompatibleInitialiserType(tupleLiteralPart, diagnostics, context);
 		return result;
 	}
@@ -3915,7 +4062,17 @@ extends EObjectValidator {
 	 */
 	public boolean validateTypeExp(TypeExp typeExp,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(typeExp, diagnostics, context);
+		if (!validate_NoCircularContainment(typeExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(typeExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(typeExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(typeExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(typeExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(typeExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(typeExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(typeExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(typeExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(typeExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -3926,7 +4083,17 @@ extends EObjectValidator {
 	public boolean validateUnspecifiedValueExp(
 			UnspecifiedValueExp unspecifiedValueExp,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(unspecifiedValueExp, diagnostics, context);
+		if (!validate_NoCircularContainment(unspecifiedValueExp, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(unspecifiedValueExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(unspecifiedValueExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(unspecifiedValueExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(unspecifiedValueExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(unspecifiedValueExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(unspecifiedValueExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(unspecifiedValueExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(unspecifiedValueExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(unspecifiedValueExp, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -3956,6 +4123,7 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(variableExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(variableExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(variableExp, diagnostics, context);
+		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(variableExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateVariableExp_validateTypeIsNotInvalid(variableExp, diagnostics, context);
 		return result;
 	}

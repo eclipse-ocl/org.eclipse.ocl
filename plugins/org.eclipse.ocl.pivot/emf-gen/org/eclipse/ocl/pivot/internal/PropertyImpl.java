@@ -1561,8 +1561,12 @@ public class PropertyImpl
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case PivotPackage.PROPERTY___COMPATIBLE_BODY__VALUESPECIFICATION:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
+			case PivotPackage.PROPERTY___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.PROPERTY___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case PivotPackage.PROPERTY___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.PROPERTY___IS_ATTRIBUTE__PROPERTY:
 				return isAttribute((Property)arguments.get(0));
 			case PivotPackage.PROPERTY___VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION__DIAGNOSTICCHAIN_MAP:

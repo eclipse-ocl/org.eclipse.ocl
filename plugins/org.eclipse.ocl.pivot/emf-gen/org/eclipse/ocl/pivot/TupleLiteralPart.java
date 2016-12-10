@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot;
 
 import java.util.Map;
+
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 
@@ -30,7 +31,7 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
  * @generated
  */
 public interface TupleLiteralPart
-		extends VariableDeclaration {
+extends VariableDeclaration {
 
 	/**
 	 * Returns the value of the '<em><b>Owned Init</b></em>' containment reference.

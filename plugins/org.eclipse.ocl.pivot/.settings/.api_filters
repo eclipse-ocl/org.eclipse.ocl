@@ -4,6 +4,20 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ASSOCIATION_CLASS_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ASSOCIATION_CLASS_CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="ASSOCIATIVITY_KIND"/>
                 <message_argument value="125"/>
             </message_arguments>
@@ -18,8 +32,141 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="BOOLEAN_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="BOOLEAN_LITERAL_EXP___VALIDATE_TYPE_IS_BOOLEAN__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="COLLECTION_KIND"/>
                 <message_argument value="126"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="COLLECTION_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="COLLECTION_LITERAL_EXP___VALIDATE_BAG_KIND_IS_BAG__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="COLLECTION_LITERAL_EXP___VALIDATE_COLLECTION_KIND_IS_CONCRETE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="COLLECTION_LITERAL_EXP___VALIDATE_ORDERED_SET_KIND_IS_ORDERED_SET__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="COLLECTION_LITERAL_EXP___VALIDATE_SEQUENCE_KIND_IS_SEQUENCE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="COLLECTION_LITERAL_EXP___VALIDATE_SET_KIND_IS_SET__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ENUM_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ENUM_LITERAL_EXP___VALIDATE_TYPE_IS_ENUMERATION_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="FEATURE_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="FEATURE_CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="FEATURE_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="FEATURE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="IF_EXP_OPERATION_COUNT"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="IF_EXP___VALIDATE_CONDITION_TYPE_IS_BOOLEAN__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="IF_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -32,8 +179,113 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="INTEGER_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="INTEGER_LITERAL_EXP___VALIDATE_TYPE_IS_INTEGER__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="INVALID_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP_OPERATION_COUNT"/>
+                <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___GET_REFERRED_ELEMENT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___VALIDATE_ONE_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___VALIDATE_TYPE_IS_RESULT_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATE_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="ITERATION_FEATURE_COUNT"/>
                 <message_argument value="28"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION_OPERATION_COUNT"/>
+                <message_argument value="8"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -116,6 +368,195 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION___VALIDATE_COMPATIBLE_RETURN__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP_OPERATION_COUNT"/>
+                <message_argument value="24"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___GET_REFERRED_ELEMENT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_ANY_BODY_TYPE_IS_BOOLEAN__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_ANY_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_CLOSURE_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="14"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="15"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_COLLECT_TYPE_IS_UNORDERED__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="16"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="17"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="18"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="19"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="20"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="21"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="22"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="23"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="LAMBDA_TYPE"/>
                 <message_argument value="47"/>
             </message_arguments>
@@ -179,6 +620,13 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="LOOP_EXP"/>
                 <message_argument value="52"/>
             </message_arguments>
@@ -186,8 +634,43 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="LOOP_EXP_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="LOOP_EXP___VALIDATE_NO_INITIALIZERS__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="LOOP_EXP___VALIDATE_SOURCE_IS_COLLECTION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="LOOP_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="MAP_LITERAL_EXP"/>
                 <message_argument value="53"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="MAP_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -209,6 +692,27 @@
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="MESSAGE_EXP"/>
                 <message_argument value="56"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="MESSAGE_EXP_OPERATION_COUNT"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="MESSAGE_EXP___VALIDATE_ONE_CALL_OR_ONE_SEND__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="MESSAGE_EXP___VALIDATE_TARGET_IS_NOT_ACOLLECTION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -263,6 +767,20 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="NAVIGATION_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="NAVIGATION_CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="NULL_LITERAL_EXP"/>
                 <message_argument value="64"/>
             </message_arguments>
@@ -270,8 +788,22 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="NULL_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="NUMERIC_LITERAL_EXP"/>
                 <message_argument value="65"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="NUMERIC_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -291,6 +823,13 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OCL_EXPRESSION_OPERATION_COUNT"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="OPERATION"/>
                 <message_argument value="67"/>
             </message_arguments>
@@ -305,8 +844,57 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP___GET_REFERRED_ELEMENT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="OPERATION_FEATURE_COUNT"/>
                 <message_argument value="26"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION_OPERATION_COUNT"/>
+                <message_argument value="8"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -375,8 +963,57 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION___VALIDATE_COMPATIBLE_RETURN__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION___VALIDATE_LOADABLE_IMPLEMENTATION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION___VALIDATE_UNIQUE_POSTCONDITION_NAME__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="OPPOSITE_PROPERTY_CALL_EXP"/>
                 <message_argument value="69"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -410,6 +1047,20 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PARAMETER_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PARAMETER___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="PIVOTABLE"/>
                 <message_argument value="74"/>
             </message_arguments>
@@ -433,6 +1084,13 @@
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="PRIMITIVE_LITERAL_EXP"/>
                 <message_argument value="77"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PRIMITIVE_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -473,6 +1131,97 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY_CALL_EXP_OPERATION_COUNT"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY_CALL_EXP___GET_REFERRED_ELEMENT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_OWNING_TYPE"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_TYPE"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY_CALL_EXP___VALIDATE_COMPATIBLE_RESULT_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY_CALL_EXP___VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY___IS_ATTRIBUTE__PROPERTY"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY___VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="PROPERTY___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="PSEUDOSTATE"/>
                 <message_argument value="83"/>
             </message_arguments>
@@ -496,6 +1245,13 @@
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="REAL_LITERAL_EXP"/>
                 <message_argument value="84"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="REAL_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -550,8 +1306,57 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="SHADOW_EXP_OPERATION_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="SHADOW_EXP___VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="SHADOW_PART"/>
                 <message_argument value="92"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="SHADOW_PART_OPERATION_COUNT"/>
+                <message_argument value="5"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -592,6 +1397,20 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="STATE_EXP_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="STATE_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="STATE_MACHINE"/>
                 <message_argument value="98"/>
             </message_arguments>
@@ -622,6 +1441,13 @@
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="STRING_LITERAL_EXP"/>
                 <message_argument value="101"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="STRING_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -697,8 +1523,36 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="TUPLE_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="TUPLE_LITERAL_PART"/>
                 <message_argument value="110"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="TUPLE_LITERAL_PART_OPERATION_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="TUPLE_LITERAL_PART___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="5"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -732,6 +1586,20 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="TYPE_EXP_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="TYPE_EXP___GET_REFERRED_ELEMENT"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="UNLIMITED_NATURAL"/>
                 <message_argument value="136"/>
             </message_arguments>
@@ -746,8 +1614,22 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="UNLIMITED_NATURAL_LITERAL_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="UNSPECIFIED_VALUE_EXP"/>
                 <message_argument value="116"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="UNSPECIFIED_VALUE_EXP_OPERATION_COUNT"/>
+                <message_argument value="3"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -774,8 +1656,64 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="VARIABLE_DECLARATION_OPERATION_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="VARIABLE_EXP"/>
                 <message_argument value="120"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="VARIABLE_EXP_OPERATION_COUNT"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="VARIABLE_EXP___GET_REFERRED_ELEMENT"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="VARIABLE_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="VARIABLE_OPERATION_COUNT"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="VARIABLE___VALIDATE_COMPATIBLE_INITIALISER_TYPE__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="3"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -808,12 +1746,102 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="ASSOCIATION_CLASS_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="BOOLEAN_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COLLECTION_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENUM_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="FEATURE_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="FEATURE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="FEATURE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="IF_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="INTEGER_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="INVALID_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATOR_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="ITERATOR_VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATOR_VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="LET_EXP___VALIDATE_COMPATIBLE_NULLITY_FOR_IN__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LET_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -833,7 +1861,122 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="LET_VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LET_VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LOOP_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MAP_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MESSAGE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="NAVIGATION_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="NULL_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="NUMERIC_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPERATION_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPERATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPERATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="PARAMETER_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PARAMETER_VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PARAMETER_VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PARAMETER___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PARAMETER___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PRIMITIVE_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PROPERTY___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PROPERTY___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="REAL_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -849,6 +1992,101 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="RESULT_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="RESULT_VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="RESULT_VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="SHADOW_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="SHADOW_PART___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="STATE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="STRING_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TUPLE_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TUPLE_LITERAL_PART___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TYPE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="UNLIMITED_NATURAL_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="UNSPECIFIED_VALUE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="VARIABLE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getFeature__ValidateNameIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getFeature__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -878,6 +2116,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="getParameterVariable__ValidateHasNoInitializer__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
@@ -896,8 +2139,35 @@
                 <message_argument value="getResultVariable__ValidateHasInitializer__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getShadowPart__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getVariableDeclaration__ValidateNameIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getVariableDeclaration__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="FEATURE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="FEATURE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
@@ -943,6 +2213,12 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
                 <message_argument value="OPERATION__IS_TRANSIENT"/>
             </message_arguments>
         </filter>
@@ -982,6 +2258,34 @@
                 <message_argument value="RESULT_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="SHADOW_PART___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="FEATURE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="FEATURE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
@@ -1009,6 +2313,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="PARAMETER_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -1025,6 +2334,21 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="RESULT_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="SHADOW_PART___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1066,6 +2390,16 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="STR_Feature_c_c_NameIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="STR_Feature_c_c_TypeIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="STR_IteratorVariable_c_c_HasNoInitializer"/>
             </message_arguments>
         </filter>
@@ -1091,6 +2425,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="STR_OCLExpression_c_c_TypeIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="STR_ParameterVariable_c_c_HasNoInitializer"/>
             </message_arguments>
         </filter>
@@ -1107,6 +2446,21 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="STR_ResultVariable_c_c_HasInitializer"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="STR_ShadowPart_c_c_TypeIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="STR_VariableDeclaration_c_c_NameIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="STR_VariableDeclaration_c_c_TypeIsNotNull"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1173,6 +2527,16 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotPackageImpl.java" type="org.eclipse.ocl.pivot.internal.PivotPackageImpl">
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="getFeature__ValidateNameIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getFeature__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="getIteratorVariable()"/>
             </message_arguments>
         </filter>
@@ -1208,6 +2572,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="getParameterVariable()"/>
             </message_arguments>
         </filter>
@@ -1234,6 +2603,21 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="getResultVariable__ValidateHasInitializer__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getShadowPart__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getVariableDeclaration__ValidateNameIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getVariableDeclaration__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1353,6 +2737,195 @@
                 <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
                 <message_argument value="DIAGNOSTIC_CODE_COUNT"/>
                 <message_argument value="70"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="FEATURE__VALIDATE_TYPE_IS_NOT_INVALID"/>
+                <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="IF_EXP__VALIDATE_CONDITION_TYPE_IS_BOOLEAN"/>
+                <message_argument value="14"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="IF_EXP__VALIDATE_TYPE_IS_NOT_INVALID"/>
+                <message_argument value="15"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="INTEGER_LITERAL_EXP__VALIDATE_TYPE_IS_INTEGER"/>
+                <message_argument value="16"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATE_EXP__VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE"/>
+                <message_argument value="17"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATE_EXP__VALIDATE_ONE_INITIALIZER"/>
+                <message_argument value="18"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATE_EXP__VALIDATE_SAFE_ITERATOR_IS_REQUIRED"/>
+                <message_argument value="19"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATE_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL"/>
+                <message_argument value="20"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATE_EXP__VALIDATE_TYPE_IS_RESULT_TYPE"/>
+                <message_argument value="21"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATE_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL"/>
+                <message_argument value="22"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_ANY_BODY_TYPE_IS_BOOLEAN"/>
+                <message_argument value="23"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_ANY_HAS_ONE_ITERATOR"/>
+                <message_argument value="24"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE"/>
+                <message_argument value="25"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE"/>
+                <message_argument value="26"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE"/>
+                <message_argument value="27"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_CLOSURE_HAS_ONE_ITERATOR"/>
+                <message_argument value="28"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE"/>
+                <message_argument value="29"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION"/>
+                <message_argument value="30"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE"/>
+                <message_argument value="31"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_COLLECT_TYPE_IS_UNORDERED"/>
+                <message_argument value="32"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE"/>
+                <message_argument value="33"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_SAFE_ITERATOR_IS_REQUIRED"/>
+                <message_argument value="34"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_SAFE_SOURCE_CAN_BE_NULL"/>
+                <message_argument value="35"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE"/>
+                <message_argument value="36"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED"/>
+                <message_argument value="37"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE"/>
+                <message_argument value="38"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL"/>
+                <message_argument value="39"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -1574,6 +3147,16 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="FEATURE__VALIDATE_NAME_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="FEATURE__VALIDATE_TYPE_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="ITERATOR_VARIABLE__VALIDATE_HAS_NO_INITIALIZER"/>
             </message_arguments>
         </filter>
@@ -1599,6 +3182,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="OCL_EXPRESSION__VALIDATE_TYPE_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="PARAMETER_VARIABLE__VALIDATE_HAS_NO_INITIALIZER"/>
             </message_arguments>
         </filter>
@@ -1615,6 +3203,21 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="RESULT_VARIABLE__VALIDATE_HAS_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="SHADOW_PART__VALIDATE_TYPE_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">

@@ -10,11 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import java.util.Map;
+
+import org.eclipse.emf.common.util.DiagnosticChain;
+
 
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Ocl Expression</b></em>'.
+ * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -53,6 +58,14 @@ public interface OCLExpression extends TypedElement {
 	 * @generated
 	 */
 	void setTypeValue(Type value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateTypeIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // OCLExpression
 

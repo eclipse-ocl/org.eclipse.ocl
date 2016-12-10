@@ -2532,13 +2532,22 @@ extends EPackage
 	int OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION = TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>OCL Expression</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OCL_EXPRESSION_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 0;
+	int OCL_EXPRESSION_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -2683,6 +2692,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -2854,6 +2872,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int FEATURE_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -3043,6 +3070,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int NAVIGATION_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = FEATURE_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAVIGATION_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -3241,6 +3277,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ASSOCIATION_CLASS_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NAVIGATION_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSOCIATION_CLASS_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = NAVIGATION_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -4557,6 +4602,15 @@ extends EPackage
 	int LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The number of operations of the '<em>Literal Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4681,6 +4735,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int PRIMITIVE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The number of operations of the '<em>Primitive Literal Exp</em>' class.
@@ -4816,6 +4879,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int BOOLEAN_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = PRIMITIVE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOOLEAN_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = PRIMITIVE_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Boolean</em>' operation.
@@ -5329,6 +5401,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int COLLECTION_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Bag Kind Is Bag</em>' operation.
@@ -8134,6 +8215,15 @@ extends EPackage
 	int ENUM_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUM_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Enumeration Type</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9269,13 +9359,31 @@ extends EPackage
 	int FEATURE___COMPATIBLE_BODY__VALUESPECIFICATION = TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FEATURE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 0;
+	int FEATURE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Feature</em>' class.
@@ -9284,7 +9392,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int FEATURE_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 1;
+	int FEATURE_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -10067,6 +10175,15 @@ extends EPackage
 	int IF_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IF_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Condition Type Is Boolean</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10301,6 +10418,15 @@ extends EPackage
 	int NUMERIC_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = PRIMITIVE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUMERIC_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = PRIMITIVE_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The number of operations of the '<em>Numeric Literal Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10436,6 +10562,15 @@ extends EPackage
 	int INTEGER_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NUMERIC_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTEGER_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = NUMERIC_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Integer</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10569,6 +10704,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int INVALID_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INVALID_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The number of operations of the '<em>Invalid Literal Exp</em>' class.
@@ -11012,6 +11156,15 @@ extends EPackage
 	int LOOP_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOOP_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11226,6 +11379,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ITERATE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LOOP_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -11607,6 +11769,15 @@ extends EPackage
 	int OPERATION___COMPATIBLE_BODY__VALUESPECIFICATION = FEATURE___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = FEATURE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11614,6 +11785,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int OPERATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = FEATURE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = FEATURE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Compatible Return</em>' operation.
@@ -11960,6 +12140,15 @@ extends EPackage
 	int ITERATION___COMPATIBLE_BODY__VALUESPECIFICATION = OPERATION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OPERATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11967,6 +12156,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ITERATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = OPERATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OPERATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Compatible Return</em>' operation.
@@ -12183,6 +12381,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ITERATOR_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LOOP_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -12561,13 +12768,31 @@ extends EPackage
 	int VARIABLE_DECLARATION___COMPATIBLE_BODY__VALUESPECIFICATION = TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 0;
+	int VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Variable Declaration</em>' class.
@@ -12576,7 +12801,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 1;
+	int VARIABLE_DECLARATION_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl <em>Primitive Complete Package</em>}' class.
@@ -12784,6 +13009,15 @@ extends EPackage
 	int VARIABLE___COMPATIBLE_BODY__VALUESPECIFICATION = VARIABLE_DECLARATION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12791,6 +13025,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Compatible Initialiser Type</em>' operation.
@@ -12982,6 +13225,15 @@ extends EPackage
 	int ITERATOR_VARIABLE___COMPATIBLE_BODY__VALUESPECIFICATION = VARIABLE___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * @since 1.3
@@ -12990,6 +13242,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ITERATOR_VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Compatible Initialiser Type</em>' operation.
@@ -13462,6 +13723,15 @@ extends EPackage
 	int LET_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Compatible Nullity For In</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13658,6 +13928,15 @@ extends EPackage
 	int LET_VARIABLE___COMPATIBLE_BODY__VALUESPECIFICATION = VARIABLE___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * @since 1.3
@@ -13666,6 +13945,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int LET_VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Compatible Initialiser Type</em>' operation.
@@ -14172,6 +14460,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int MAP_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAP_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The number of operations of the '<em>Map Literal Exp</em>' class.
@@ -14721,6 +15018,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int MESSAGE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MESSAGE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate One Call Or One Send</em>' operation.
@@ -15299,6 +15605,15 @@ extends EPackage
 	int NULL_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = PRIMITIVE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NULL_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = PRIMITIVE_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The number of operations of the '<em>Null Literal Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15487,6 +15802,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int OPERATION_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = FEATURE_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = FEATURE_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -15721,6 +16045,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int OPPOSITE_PROPERTY_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NAVIGATION_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = NAVIGATION_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -16326,6 +16659,15 @@ extends EPackage
 	int PARAMETER___COMPATIBLE_BODY__VALUESPECIFICATION = VARIABLE_DECLARATION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16333,6 +16675,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int PARAMETER___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The number of operations of the '<em>Parameter</em>' class.
@@ -16515,6 +16866,15 @@ extends EPackage
 	int PARAMETER_VARIABLE___COMPATIBLE_BODY__VALUESPECIFICATION = VARIABLE___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * @since 1.3
@@ -16523,6 +16883,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int PARAMETER_VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Compatible Initialiser Type</em>' operation.
@@ -17670,6 +18039,15 @@ extends EPackage
 	int PROPERTY___COMPATIBLE_BODY__VALUESPECIFICATION = FEATURE___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = FEATURE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17677,6 +18055,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int PROPERTY___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = FEATURE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = FEATURE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Is Attribute</em>' operation.
@@ -17884,6 +18271,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int PROPERTY_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NAVIGATION_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = NAVIGATION_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -18228,6 +18624,15 @@ extends EPackage
 	int REAL_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NUMERIC_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REAL_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = NUMERIC_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The number of operations of the '<em>Real Literal Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -18559,6 +18964,15 @@ extends EPackage
 	int RESULT_VARIABLE___COMPATIBLE_BODY__VALUESPECIFICATION = VARIABLE___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * @since 1.3
@@ -18567,6 +18981,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int RESULT_VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Compatible Initialiser Type</em>' operation.
@@ -19732,6 +20155,15 @@ extends EPackage
 	int SHADOW_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Class Has No String Value Initializer</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -19930,13 +20362,22 @@ extends EPackage
 	int SHADOW_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_PART___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 2;
+
+	/**
 	 * The number of operations of the '<em>Shadow Part</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SHADOW_PART_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 2;
+	int SHADOW_PART_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -20504,6 +20945,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int STATE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -21323,6 +21773,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int STRING_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = PRIMITIVE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = PRIMITIVE_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The number of operations of the '<em>String Literal Exp</em>' class.
@@ -22243,6 +22702,15 @@ extends EPackage
 	int TUPLE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUPLE_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The number of operations of the '<em>Tuple Literal Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -22376,6 +22844,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int TUPLE_LITERAL_PART___COMPATIBLE_BODY__VALUESPECIFICATION = VARIABLE_DECLARATION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUPLE_LITERAL_PART___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Compatible Initialiser Type</em>' operation.
@@ -22810,6 +23296,15 @@ extends EPackage
 	int TYPE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Get Referred Element</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -22954,6 +23449,15 @@ extends EPackage
 	int UNLIMITED_NATURAL_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NUMERIC_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNLIMITED_NATURAL_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = NUMERIC_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The number of operations of the '<em>Unlimited Natural Literal Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -23078,6 +23582,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int UNSPECIFIED_VALUE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNSPECIFIED_VALUE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The number of operations of the '<em>Unspecified Value Exp</em>' class.
@@ -23222,6 +23735,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int VARIABLE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Get Referred Element</em>' operation.
@@ -24636,6 +25158,16 @@ extends EPackage
 	EAttribute getFeature_IsStatic();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Feature#validateNameIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Name Is Not Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Name Is Not Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.Feature#validateNameIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getFeature__ValidateNameIsNotNull__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Feature#validateTypeIsNotInvalid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Invalid</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -24644,6 +25176,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getFeature__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Feature#validateTypeIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Type Is Not Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.Feature#validateTypeIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getFeature__ValidateTypeIsNotNull__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.Feature#getImplementation <em>Implementation</em>}'.
@@ -24908,6 +25450,16 @@ extends EPackage
 	 * @generated
 	 */
 	EReference getOCLExpression_TypeValue();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OCLExpression#validateTypeIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Type Is Not Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OCLExpression#validateTypeIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.InvalidLiteralExp <em>Invalid Literal Exp</em>}'.
@@ -26488,6 +27040,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getShadowPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ShadowPart#validateTypeIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Type Is Not Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ShadowPart#validateTypeIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getShadowPart__ValidateTypeIsNotNull__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.State <em>State</em>}'.
@@ -28340,6 +28902,16 @@ extends EPackage
 	EReference getVariableDeclaration_TypeValue();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.VariableDeclaration#validateNameIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Name Is Not Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Name Is Not Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.VariableDeclaration#validateNameIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getVariableDeclaration__ValidateNameIsNotNull__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.VariableDeclaration#validateTypeIsNotInvalid(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Invalid</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -28348,6 +28920,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getVariableDeclaration__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.VariableDeclaration#validateTypeIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Type Is Not Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.VariableDeclaration#validateTypeIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getVariableDeclaration__ValidateTypeIsNotNull__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OppositePropertyCallExp <em>Opposite Property Call Exp</em>}'.
@@ -29447,6 +30029,14 @@ extends EPackage
 		EReference OCL_EXPRESSION__TYPE_VALUE = eINSTANCE.getOCLExpression_TypeValue();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Type Is Not Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.BagTypeImpl <em>Bag Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -29881,12 +30471,28 @@ extends EPackage
 		EAttribute FEATURE__IS_STATIC = eINSTANCE.getFeature_IsStatic();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Name Is Not Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation FEATURE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getFeature__ValidateNameIsNotNull__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Type Is Not Invalid</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EOperation FEATURE___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getFeature__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Type Is Not Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation FEATURE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getFeature__ValidateTypeIsNotNull__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Implementation</b></em>' attribute feature.
@@ -31386,6 +31992,14 @@ extends EPackage
 		EOperation SHADOW_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getShadowPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Type Is Not Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SHADOW_PART___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getShadowPart__ValidateTypeIsNotNull__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.StateImpl <em>State</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -32848,12 +33462,28 @@ extends EPackage
 		EReference VARIABLE_DECLARATION__TYPE_VALUE = eINSTANCE.getVariableDeclaration_TypeValue();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Name Is Not Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getVariableDeclaration__ValidateNameIsNotNull__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Type Is Not Invalid</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EOperation VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getVariableDeclaration__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Type Is Not Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getVariableDeclaration__ValidateTypeIsNotNull__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.OppositePropertyCallExpImpl <em>Opposite Property Call Exp</em>}' class.

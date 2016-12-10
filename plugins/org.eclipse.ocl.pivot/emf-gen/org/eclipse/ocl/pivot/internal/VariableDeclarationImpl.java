@@ -51,8 +51,8 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * @generated
  */
 public abstract class VariableDeclarationImpl
-		extends TypedElementImpl
-		implements VariableDeclaration {
+extends TypedElementImpl
+implements VariableDeclaration {
 
 	/**
 	 * The cached value of the '{@link #getTypeValue() <em>Type Value</em>}' reference.
@@ -110,6 +110,52 @@ public abstract class VariableDeclarationImpl
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean validateNameIsNotNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
+	{
+		/**
+		 *
+		 * inv NameIsNotNull:
+		 *   let
+		 *     severity : Integer[1] = 'VariableDeclaration::NameIsNotNull'.getSeverity()
+		 *   in
+		 *     if severity <= 0
+		 *     then true
+		 *     else
+		 *       let status : OclAny[1] = name <> null
+		 *       in
+		 *         'VariableDeclaration::NameIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
+		 *     endif
+		 */
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_VariableDeclaration_c_c_NameIsNotNull);
+		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+		/*@NonInvalid*/ boolean symbol_0;
+		if (le) {
+			symbol_0 = ValueUtil.TRUE_VALUE;
+		}
+		else {
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				final /*@Thrown*/ java.lang.@Nullable String name = this.getName();
+				final /*@Thrown*/ boolean status = name != null;
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_VariableDeclaration_c_c_NameIsNotNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
+		}
+		return Boolean.TRUE == symbol_0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -150,6 +196,52 @@ public abstract class VariableDeclarationImpl
 				CAUGHT_status = ValueUtil.createInvalidValue(e);
 			}
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_VariableDeclaration_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
+		}
+		return Boolean.TRUE == symbol_0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean validateTypeIsNotNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
+	{
+		/**
+		 *
+		 * inv TypeIsNotNull:
+		 *   let
+		 *     severity : Integer[1] = 'VariableDeclaration::TypeIsNotNull'.getSeverity()
+		 *   in
+		 *     if severity <= 0
+		 *     then true
+		 *     else
+		 *       let status : OclAny[1] = type <> null
+		 *       in
+		 *         'VariableDeclaration::TypeIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
+		 *     endif
+		 */
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_VariableDeclaration_c_c_TypeIsNotNull);
+		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+		/*@NonInvalid*/ boolean symbol_0;
+		if (le) {
+			symbol_0 = ValueUtil.TRUE_VALUE;
+		}
+		else {
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@Thrown*/ boolean status = type != null;
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_VariableDeclaration_c_c_TypeIsNotNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
 			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
@@ -318,8 +410,12 @@ public abstract class VariableDeclarationImpl
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case PivotPackage.VARIABLE_DECLARATION___COMPATIBLE_BODY__VALUESPECIFICATION:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
+			case PivotPackage.VARIABLE_DECLARATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP:
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
+			case PivotPackage.VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
 	}

@@ -11,12 +11,14 @@
 package org.eclipse.ocl.pivot;
 
 import java.util.Map;
+
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Feature</b></em>'.
+ * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -36,7 +38,7 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
  * @generated
  */
 public interface Feature
-		extends TypedElement {
+extends TypedElement {
 
 	/**
 	 * Returns the value of the '<em><b>Implementation Class</b></em>' attribute.
@@ -94,10 +96,26 @@ public interface Feature
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateNameIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	boolean validateTypeIsNotInvalid(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateTypeIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * Returns the value of the '<em><b>Implementation</b></em>' attribute.
