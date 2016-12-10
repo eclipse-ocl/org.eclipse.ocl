@@ -92,6 +92,9 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 			@NonNull ParameterVariable nonNullContextVariable = PivotFactory.eINSTANCE.createParameterVariable();
 			contextVariable = nonNullContextVariable;
 			pivotSpecification.setOwnedContext(contextVariable);
+			if (contextType == null) {
+				contextType = standardLibrary.getOclVoidType();
+			}
 		}
 		refreshName(contextVariable, selfVariableName);
 		setType(contextVariable, contextType, contextVariable.isIsRequired(), contextInstance);

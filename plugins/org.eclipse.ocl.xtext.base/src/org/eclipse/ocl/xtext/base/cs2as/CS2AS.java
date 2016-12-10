@@ -536,8 +536,8 @@ public abstract class CS2AS extends AbstractConversion
 
 	public @Nullable VariableDeclaration lookupSelf(@NonNull ElementCS csElement) {
 		@SuppressWarnings("null") @NonNull EReference eReference = PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
-		EnvironmentView environmentView = new EnvironmentView(metamodelManager.getEnvironmentFactory(), eReference, PivotConstants.SELF_NAME);
-		ScopeView baseScopeView = BaseScopeView.getScopeView(metamodelManager.getEnvironmentFactory(), csElement, eReference);
+		EnvironmentView environmentView = new EnvironmentView(environmentFactory, eReference, PivotConstants.SELF_NAME);
+		ScopeView baseScopeView = BaseScopeView.getScopeView(environmentFactory, csElement, eReference);
 		environmentView.computeLookups(baseScopeView);
 		VariableDeclaration variableDeclaration = (VariableDeclaration) environmentView.getContent();
 		return variableDeclaration;

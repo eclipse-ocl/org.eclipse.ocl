@@ -64,6 +64,10 @@ public class PivotMessages
 	public static String UndefinedOperation;
 	public static String UndefinedResult;
 	public static String UnknownSourceType;
+	/**
+	 * @since 1.3
+	 */
+	public static String UnspecifiedSelfContext;
 	public static String UnsupportedCompareTo;
 	public static String Validation;
 

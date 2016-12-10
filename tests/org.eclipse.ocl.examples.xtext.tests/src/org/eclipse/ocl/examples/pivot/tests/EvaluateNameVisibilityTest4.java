@@ -269,7 +269,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 
 	@Test public void test_no_self() throws ParserException {
 		TestOCL ocl = createOCL();
-		ocl.assertSemanticErrorQuery(null, "self->any(true)", "The context of ''self'' is unspecified");
+		// This test relies on a fudge in assertSemanticErrorQuery or rather in assertBadQuery that adjusts the 'self' spelling.
+		ocl.assertSemanticErrorQuery(null, "self->any(true)", PivotMessages.UnspecifiedSelfContext);
 		ocl.dispose();
 	}
 

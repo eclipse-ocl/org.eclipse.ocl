@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IPackageDescriptor;
@@ -149,7 +150,10 @@ public class TestOCL extends OCLInternal
 	public void assertBadQuery(@NonNull Class<?> exception, int severity, org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression, /*@NonNull*/ String messageTemplate, Object... bindings) {
 		BaseCSResource csResource = null;
 		try {
-			ParserContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+			ClassContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+			if (PivotMessages.UnspecifiedSelfContext.equals(messageTemplate)) {
+				classContext.setSelfName("SELF");
+			}
 			csResource = (BaseCSResource) classContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
 			Resource asResource = csResource.getASResource();

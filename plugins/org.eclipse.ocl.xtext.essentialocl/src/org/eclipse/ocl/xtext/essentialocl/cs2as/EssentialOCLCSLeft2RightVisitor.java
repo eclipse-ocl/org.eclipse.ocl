@@ -88,6 +88,7 @@ import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -2027,7 +2028,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (parent != null) {
 				VariableDeclaration variableDeclaration = context.getConverter().lookupSelf(parent);
 				if (variableDeclaration == null) {
-					return context.addBadExpressionError(csSelfExp, "The context of 'self' is unspecified");
+					return context.addBadExpressionError(csSelfExp, StringUtil.bind(PivotMessages.UnspecifiedSelfContext));
 				}
 				expression.setReferredVariable(variableDeclaration);
 				context.setType(expression, variableDeclaration.getType(), true, variableDeclaration.getTypeValue());

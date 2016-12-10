@@ -56,7 +56,6 @@ import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
-import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -104,23 +103,23 @@ public class PivotTestCase extends TestCase
 {
 	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.examples.xtext.tests";
 	public static final @NonNull TracingOption TEST_START = new TracingOption(PLUGIN_ID, "test/start");
-//	private static StandaloneProjectMap projectMap = null;
+	//	private static StandaloneProjectMap projectMap = null;
 	private static Writer testLog = null;
-	
+
 	/*
 	 * The following may be tweaked to assist debugging.
 	 */
-	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test 
+	public static boolean DEBUG_GC = false;			// True performs an enthusuastic resource release and GC at the end of each test
 	public static boolean DEBUG_ID = false;			// True prints the start and end of each test.
 	{
-//		PivotUtilInternal.noDebug = false;
-//		DEBUG_GC = true; 
-//		DEBUG_ID = true;
-//		PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<PivotMetamodelManager,Object>();	// Prints the create/finalize of each MetamodelManager
-//		StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<StandaloneProjectMap,Object>();	// Prints the create/finalize of each StandaloneProjectMap
-//		ResourceSetImpl.liveResourceSets = new WeakHashMap<ResourceSet,Object>();				// Requires edw-debug private EMF branch
+		//		PivotUtilInternal.noDebug = false;
+		//		DEBUG_GC = true;
+		//		DEBUG_ID = true;
+		//		PivotMetamodelManager.liveMetamodelManagers = new WeakHashMap<PivotMetamodelManager,Object>();	// Prints the create/finalize of each MetamodelManager
+		//		StandaloneProjectMap.liveStandaloneProjectMaps = new WeakHashMap<StandaloneProjectMap,Object>();	// Prints the create/finalize of each StandaloneProjectMap
+		//		ResourceSetImpl.liveResourceSets = new WeakHashMap<ResourceSet,Object>();				// Requires edw-debug private EMF branch
 	}
-	
+
 	public static void appendLog(String name, Object context, String testExpression, String parseVerdict, String evaluationVerdict, String evaluationTolerance) {
 		if (testLog != null) {
 			try {
@@ -159,23 +158,23 @@ public class PivotTestCase extends TestCase
 
 	public static @NonNull XtextResource as2cs(@NonNull OCL ocl, @NonNull ResourceSet resourceSet, @NonNull ASResource asResource, @NonNull URI outputURI) throws IOException {
 		XtextResource xtextResource = ClassUtil.nonNullState((XtextResource) resourceSet.createResource(outputURI, OCLinEcoreCSPackage.eCONTENT_TYPE));
-//		ResourceSet csResourceSet = resourceSet; //new ResourceSetImpl();
-//		csResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("cs", new EcoreResourceFactoryImpl());
-//		csResourceSet.getPackageRegistry().put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
-//		Resource csResource = csResourceSet.createResource(uri);
-//		URI oclinecoreURI = ecoreResource.getURI().appendFileExtension("oclinecore");
+		//		ResourceSet csResourceSet = resourceSet; //new ResourceSetImpl();
+		//		csResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("cs", new EcoreResourceFactoryImpl());
+		//		csResourceSet.getPackageRegistry().put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
+		//		Resource csResource = csResourceSet.createResource(uri);
+		//		URI oclinecoreURI = ecoreResource.getURI().appendFileExtension("oclinecore");
 		ocl.as2cs(asResource, (CSResource) xtextResource);
 		assertNoResourceErrors("Conversion failed", xtextResource);
-//		csResource.save(null);
+		//		csResource.save(null);
 		//
 		//	CS save and reload
-		//		
+		//
 		URI savedURI = ClassUtil.nonNullState(asResource.getURI());
-//		asResource.setURI(PivotUtil.getNonPivotURI(savedURI).appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION));
+		//		asResource.setURI(PivotUtil.getNonPivotURI(savedURI).appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION));
 		asResource.setURI(outputURI.trimFileExtension().trimFileExtension().appendFileExtension(PivotConstants.OCL_AS_FILE_EXTENSION));
 		asResource.save(null);
 		asResource.setURI(savedURI);
-		
+
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
 		try {
 			xtextResource.save(null);
@@ -201,7 +200,7 @@ public class PivotTestCase extends TestCase
 		}
 		return ecoreResource;
 	}
-	
+
 	public static @NonNull List<Diagnostic> assertDiagnostics(@NonNull String prefix, @NonNull List<Diagnostic> diagnostics, String... messages) {
 		Map<String, Integer> expected = new HashMap<String, Integer>();
 		for (String message : messages) {
@@ -287,10 +286,10 @@ public class PivotTestCase extends TestCase
 		if (unresolvedProxies.size() > 0) {
 			StringBuilder s = new StringBuilder();
 			s.append(unresolvedProxies.size());
-			s.append(" unresolved proxies in ");	
+			s.append(" unresolved proxies in ");
 			s.append(message);
 			for (Map.Entry<EObject, Collection<Setting>> unresolvedProxy : unresolvedProxies.entrySet()) {
-				s.append("\n");	
+				s.append("\n");
 				BasicEObjectImpl key = (BasicEObjectImpl) unresolvedProxy.getKey();
 				s.append(key.eProxyURI());
 				for (Setting setting : unresolvedProxy.getValue()) {
@@ -311,8 +310,8 @@ public class PivotTestCase extends TestCase
 
 	public static void assertNoValidationErrors(@NonNull String string, @NonNull EObject eObject) {
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
-//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
-//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
+		//		Resource eResource = ClassUtil.nonNullState(eObject.eResource());
+		//		PivotUtilInternal.getMetamodelManager(eResource);	// FIXME oclIsKindOf fails because ExecutableStandardLibrary.getMetaclass is bad
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
 		List<Diagnostic> children = diagnostic.getChildren();
 		if (children.size() <= 0) {
@@ -463,7 +462,7 @@ public class PivotTestCase extends TestCase
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static @NonNull Resource cs2ecore(@NonNull OCL ocl, @NonNull String testDocument, @Nullable URI ecoreURI) throws IOException {
 		InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
@@ -476,7 +475,7 @@ public class PivotTestCase extends TestCase
 		Resource ecoreResource = as2ecore(ocl, asResource, ecoreURI, true);
 		return ecoreResource;
 	}
-	
+
 	public static @NonNull Resource cs2as(@NonNull OCL ocl, @NonNull String testDocument) throws IOException {
 		InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
@@ -488,7 +487,7 @@ public class PivotTestCase extends TestCase
 		Resource asResource = cs2as(ocl, xtextResource, null);
 		return asResource;
 	}
-	
+
 	public static @NonNull Resource cs2as(@NonNull OCL ocl, @NonNull CSResource xtextResource, @Nullable URI pivotURI) throws IOException {
 		ASResource asResource = ocl.cs2as(xtextResource);
 		assertNoUnresolvedProxies("Unresolved proxies", asResource);
@@ -516,7 +515,7 @@ public class PivotTestCase extends TestCase
 	 */
 	@Deprecated
 	public static void doCompleteOCLSetup() {
-    	TestUtil.doCompleteOCLSetup();
+		TestUtil.doCompleteOCLSetup();
 	}
 
 	/**
@@ -527,7 +526,7 @@ public class PivotTestCase extends TestCase
 	 */
 	@Deprecated
 	public static void doEssentialOCLSetup() {
-    	TestUtil.doEssentialOCLSetup();
+		TestUtil.doEssentialOCLSetup();
 	}
 
 	/**
@@ -538,7 +537,7 @@ public class PivotTestCase extends TestCase
 	 */
 	@Deprecated
 	public static void doOCLinEcoreSetup() {
-    	TestUtil.doOCLinEcoreSetup();
+		TestUtil.doOCLinEcoreSetup();
 	}
 
 	/**
@@ -549,7 +548,7 @@ public class PivotTestCase extends TestCase
 	 */
 	@Deprecated
 	public static void doOCLstdlibSetup() {
-    	TestUtil.doOCLstdlibSetup();
+		TestUtil.doOCLstdlibSetup();
 	}
 
 	public static boolean eclipseIsRunning() {
@@ -568,21 +567,21 @@ public class PivotTestCase extends TestCase
 			if (eCause != null) {
 				return failOn(expression, eCause);
 			}
-			throw new Error(StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, expression), e);
+			throw new Error(StringUtil.bind("Failed to evaluate ''{0}'' : {1}", expression, e.getMessage()), e);
 		}
 		else if (e instanceof EvaluationException) {
 			throw new Error("Failed to parse or evaluate \"" + expression + "\"", e);
 		}
 		else {
-	        throw new Error("Failure for \"" + expression + "\"", e);
+			throw new Error("Failure for \"" + expression + "\"", e);
 		}
 	}
 
 	/**
 	 * Return the difference between expectedMessages and actualMessages, or null if no differences.
-	 * 
+	 *
 	 * The return is formatted one message per line with a leading new-line followed by
-	 * an expected/actual count in parentheses followed by the messages 
+	 * an expected/actual count in parentheses followed by the messages
 	 */
 	public static String formatMessageDifferences(Bag<String> expectedMessages, @NonNull Bag<String> actualMessages) {
 		Set<String> allMessages = new HashSet<String>(expectedMessages);
@@ -603,18 +602,18 @@ public class PivotTestCase extends TestCase
 
 	public static @NonNull StandaloneProjectMap getProjectMap() {
 		return (StandaloneProjectMap)ProjectManager.CLASS_PATH;
-//		StandaloneProjectMap projectMap2 = projectMap;
-//		if (projectMap2 == null) {
-//			projectMap = projectMap2 = EcorePlugin.IS_ECLIPSE_RUNNING ? new ProjectMap() : new StandaloneProjectMap();
-//		}
-//		return projectMap2;
+		//		StandaloneProjectMap projectMap2 = projectMap;
+		//		if (projectMap2 == null) {
+		//			projectMap = projectMap2 = EcorePlugin.IS_ECLIPSE_RUNNING ? new ProjectMap() : new StandaloneProjectMap();
+		//		}
+		//		return projectMap2;
 	}
 
 	public static boolean isWindows() {
 		String os = System.getProperty("os.name");
 		return (os != null) && os.startsWith("Windows");
 	}
-	
+
 	public static void unloadResourceSet(@NonNull ResourceSet resourceSet) {
 		StandaloneProjectMap projectMap = StandaloneProjectMap.findAdapter(resourceSet);
 		if (projectMap != null) {
@@ -631,11 +630,11 @@ public class PivotTestCase extends TestCase
 		}
 		resourceSet.eAdapters().clear();
 	}
-	
+
 	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent) throws IOException {
 		return createEcoreFile(ocl, fileName, fileContent, false);
 	}
-	
+
 	public @NonNull URI createEcoreFile(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
 		String inputName = fileName + ".oclinecore";
 		createOCLinEcoreFile(inputName, fileContent);
@@ -659,7 +658,7 @@ public class PivotTestCase extends TestCase
 		ecoreResource.save(null);
 		return ecoreURI;
 	}
-	
+
 	public void createOCLinEcoreFile(String fileName, String fileContent) throws IOException {
 		File file = new File(getProjectFile(), fileName);
 		Writer writer = new FileWriter(file);
@@ -669,21 +668,21 @@ public class PivotTestCase extends TestCase
 
 	protected @NonNull File getProjectFile() {
 		String projectName = getProjectName();
-		URL projectURL = getTestResource(projectName);	
+		URL projectURL = getTestResource(projectName);
 		assertNotNull(projectURL);
 		return new File(projectURL.getFile());
 	}
-	
+
 	protected @NonNull URI getProjectFileURI(String referenceName) {
 		File projectFile = getProjectFile();
 		return ClassUtil.nonNullState(URI.createFileURI(projectFile.toString() + "/" + referenceName));
 	}
-	
+
 	protected @NonNull String getProjectName() {
 		return getClass().getPackage().getName().replace('.', '/') + "/models";
 	}
-	
-    @Rule public TestName testName = new TestName();
+
+	@Rule public TestName testName = new TestName();
 
 	@Override
 	public @NonNull String getName() {
@@ -694,7 +693,7 @@ public class PivotTestCase extends TestCase
 		String methodName = testName.getMethodName();
 		return methodName != null ? methodName : "<unnamed>";
 	}
-	
+
 	public @NonNull URI getTestModelURI(@NonNull String localFileName) {
 		StandaloneProjectMap projectMap = getProjectMap();
 		URI location = projectMap.getLocation(PLUGIN_ID);
@@ -732,7 +731,7 @@ public class PivotTestCase extends TestCase
 	protected void setUp() throws Exception {
 		PivotUtilInternal.debugReset();
 		GlobalEnvironmentFactory.resetSafeNavigationValidations();
-//		EssentialOCLLinkingService.DEBUG_RETRY = true;
+		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
 		if (DEBUG_GC) {
 			XMLNamespacePackage.eINSTANCE.getClass();
 			makeCopyOfGlobalState = new GlobalStateMemento();
@@ -743,21 +742,21 @@ public class PivotTestCase extends TestCase
 		}
 		TEST_START.println("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
 		EcorePackage.eINSTANCE.getClass();						// Workaround Bug 425841
-//		EPackage.Registry.INSTANCE.put(UML302UMLResource.STANDARD_PROFILE_NS_URI, L2Package.eINSTANCE);
+		//		EPackage.Registry.INSTANCE.put(UML302UMLResource.STANDARD_PROFILE_NS_URI, L2Package.eINSTANCE);
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-//		if (DEBUG_ID) {
-//			PivotUtilInternal.debugPrintln("==> Done " + getName());
-//		}
+		//		if (DEBUG_ID) {
+		//			PivotUtilInternal.debugPrintln("==> Done " + getName());
+		//		}
 		if (DEBUG_GC) {
 			uninstall();
 			makeCopyOfGlobalState.restoreGlobalState();
 			makeCopyOfGlobalState = null;
 			System.gc();
 			System.runFinalization();
-//			MetamodelManagerResourceAdapter.INSTANCES.show();
+			//			MetamodelManagerResourceAdapter.INSTANCES.show();
 		}
 		if (DEBUG_ID) {
 			PivotUtilInternal.debugPrintln("==> Finish " + getClass().getSimpleName() + "." + getName());
@@ -788,13 +787,13 @@ public class PivotTestCase extends TestCase
 		OCLinEcoreStandaloneSetup.doTearDown();
 		OCLstdlibStandaloneSetup.doTearDown();
 		GlobalEnvironmentFactory.disposeInstance();
-//		OCLstdlib.uninstall(); // should be able to persist
-//		if (projectMap != null) {
-//			projectMap.dispose();
-//			projectMap = null;
-//		}
+		//		OCLstdlib.uninstall(); // should be able to persist
+		//		if (projectMap != null) {
+		//			projectMap.dispose();
+		//			projectMap = null;
+		//		}
 	}
-	
+
 	public static class GlobalStateMemento
 	{
 		private @NonNull HashMap<EPackage, Object> validatorReg;
@@ -817,39 +816,39 @@ public class PivotTestCase extends TestCase
 			extensionToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap());
 			contentTypeIdentifierToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap());
 		}
-	
+
 		public void restoreGlobalState() {
 			clearGlobalRegistries();
 			EValidator.Registry.INSTANCE.putAll(validatorReg);
 			EPackage.Registry.INSTANCE.putAll(epackageReg);
-			
+
 			Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().putAll(protocolToFactoryMap);
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().putAll(extensionToFactoryMap);
 			Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().putAll(contentTypeIdentifierToFactoryMap);
-			
+
 			IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap().putAll(protocolToServiceProviderMap);
 			IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().putAll(extensionToServiceProviderMap);
 			IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap().putAll(contentTypeIdentifierToServiceProviderMap);
 		}
-		
+
 		public static void clearGlobalRegistries() {
-//			Registry eValidatorRegistry = EValidator.Registry.INSTANCE;
-//			for (EPackage key : eValidatorRegistry.keySet()) {
-//				Object object = eValidatorRegistry.get(key);
-//				System.out.println("key : " + key.getNsURI() + " => " + object.getClass().getName());
-//			}
+			//			Registry eValidatorRegistry = EValidator.Registry.INSTANCE;
+			//			for (EPackage key : eValidatorRegistry.keySet()) {
+			//				Object object = eValidatorRegistry.get(key);
+			//				System.out.println("key : " + key.getNsURI() + " => " + object.getClass().getName());
+			//			}
 			EValidator.Registry.INSTANCE.clear();
 			EPackage.Registry.INSTANCE.clear();
 			Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().clear();
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().clear();
 			Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().clear();
-			
+
 			IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap().clear();
 			IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().clear();
 			IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap().clear();
 			initializeDefaults();
 		}
-		
+
 		public static void initializeDefaults() {
 			//EMF Standalone setup
 			if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("ecore"))

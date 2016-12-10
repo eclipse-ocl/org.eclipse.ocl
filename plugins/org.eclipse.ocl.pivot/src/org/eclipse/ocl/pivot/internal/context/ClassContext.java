@@ -25,10 +25,11 @@ public class ClassContext extends AbstractParserContext
 {
 	protected final org.eclipse.ocl.pivot.@Nullable Class classContext;
 	protected final @Nullable Type instanceContext;
-	
+	private @NonNull String selfName = PivotConstants.SELF_NAME;
+
 	public ClassContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, org.eclipse.ocl.pivot.@Nullable Class classContext, @Nullable Type instanceContext) {
 		super(environmentFactory, uri);
- 		this.classContext = classContext != null ? getMetamodelManager().getPrimaryClass(classContext) : null;
+		this.classContext = classContext != null ? getMetamodelManager().getPrimaryClass(classContext) : null;
 		this.instanceContext = instanceContext;
 	}
 
@@ -45,6 +46,13 @@ public class ClassContext extends AbstractParserContext
 	@Override
 	public void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression) {
 		super.initialize(conversion, expression);
-		conversion.setContextVariable(expression, PivotConstants.SELF_NAME, classContext, instanceContext);
+		conversion.setContextVariable(expression, selfName, classContext, instanceContext);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public void setSelfName(@NonNull String selfName) {
+		this.selfName = selfName;
 	}
 }
