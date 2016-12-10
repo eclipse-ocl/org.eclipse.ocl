@@ -53,6 +53,9 @@ let container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class)
 
 inv CompatibleDefaultExpression: ownedExpression <> null and ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(ownedExpression)
 
+context OCLExpression
+inv TypeIsNotNull : type <> null
+
 context Operation
 inv CompatibleReturn: bodyExpression <> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies CompatibleBody(bodyExpression)
 inv LoadableImplementation:
@@ -61,7 +64,9 @@ inv UniquePreconditionName: ownedPreconditions->isUnique(name)
 inv UniquePostconditionName: ownedPostconditions->isUnique(name)
 
 context Feature
+inv NameIsNotNull : name <> null
 inv TypeIsNotInvalid : type <> OclInvalid
+inv TypeIsNotNull : type <> null
 
 context CollectionLiteralPart
 inv TypeIsNotInvalid : type <> OclInvalid
@@ -406,6 +411,7 @@ inv TypeIsNotInvalid : type <> OclInvalid
 context ShadowPart
 inv CompatibleInitialiserType: ownedInit.type?.conformsTo(type)
 inv TypeIsNotInvalid : type <> OclInvalid
+inv TypeIsNotNull : type <> null
 
 context StateExp
 inv TypeIsNotInvalid : type <> OclInvalid
@@ -419,7 +425,9 @@ context Variable
 inv CompatibleInitialiserType: true
 
 context VariableDeclaration
+inv NameIsNotNull : name <> null
 inv TypeIsNotInvalid : type <> OclInvalid
+inv TypeIsNotNull : type <> null
 
 context VariableExp
 inv TypeIsNotInvalid : type <> OclInvalid
