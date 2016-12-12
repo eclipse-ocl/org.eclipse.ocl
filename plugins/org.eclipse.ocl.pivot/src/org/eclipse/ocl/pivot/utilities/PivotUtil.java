@@ -77,6 +77,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
@@ -773,6 +774,17 @@ public class PivotUtil
 		return s.toString();
 	}
 
+	/**
+	 * Return the type of a TypedElement, exploiting the known non-null and non-TypeParameter characteristics.
+	 * @throws IllegalStateException for a null type
+	 * @throws ClassCastException for a TypeParameter
+	 *
+	 * @since 1.3
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypedElement typedElement) {
+		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)typedElement.getType());
+	}
+
 	public static @Nullable Constraint getContainingConstraint(@Nullable Element element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Constraint) {
@@ -1097,6 +1109,16 @@ public class PivotUtil
 	 */
 	public static @NonNull Resource getResource(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eResource());
+	}
+
+	/**
+	 * Return the type of a TypedElement, exploiting the known non-null characteristics.
+	 * @throws IllegalStateException for a null type
+	 *
+	 * @since 1.3
+	 */
+	public static @NonNull Type getType(@NonNull TypedElement typedElement) {
+		return ClassUtil.nonNullState(typedElement.getType());
 	}
 
 	public static @NonNull <T extends TemplateableElement> T getUnspecializedTemplateableElement(@NonNull T templateableElement) {
