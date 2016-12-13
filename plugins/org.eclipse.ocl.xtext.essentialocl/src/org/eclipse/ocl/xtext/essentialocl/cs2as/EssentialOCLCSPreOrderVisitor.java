@@ -79,7 +79,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 						upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
 					}
 					else {
-						isNullFree = false;
+						isNullFree = true;
 						lowerValue = null;
 						upperValue = null;
 					}
@@ -109,7 +109,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 			return super.execute();
 		}
 	}
-	
+
 	protected static class MapTypeContinuation extends SingleContinuation<MapTypeCS>
 	{
 		public MapTypeContinuation(@NonNull CS2ASConversion context, @NonNull MapTypeCS csElement) {
@@ -172,11 +172,11 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 		@Override
 		public BasicContinuation<?> execute() {
 			Type element = csElement.getElement();
-//			if ((element == null) || element.eIsProxy() || (element instanceof InvalidType)) {
-//				String boundMessage = context.bind(csElement, PivotMessagesInternal.UnresolvedType_ERROR_, "", csElement.toString());
-//				context.addDiagnostic(csElement, boundMessage);
-//				element = context.getStandardLibrary().getOclInvalidType();	// FIXME with reason
-//			}
+			//			if ((element == null) || element.eIsProxy() || (element instanceof InvalidType)) {
+			//				String boundMessage = context.bind(csElement, PivotMessagesInternal.UnresolvedType_ERROR_, "", csElement.toString());
+			//				context.addDiagnostic(csElement, boundMessage);
+			//				element = context.getStandardLibrary().getOclInvalidType();	// FIXME with reason
+			//			}
 			context.installPivotTypeWithMultiplicity(element, csElement);
 			return null;
 		}
@@ -191,9 +191,9 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 			if (unspecializedPivotElement == null) {
 				return false;
 			}
-//			if (unspecializedPivotElement.eIsProxy()) {
-//				return false;
-//			}
+			//			if (unspecializedPivotElement.eIsProxy()) {
+			//				return false;
+			//			}
 		}
 		if (csTypedRef.getPivot() == null) {
 			return false;

@@ -107,22 +107,22 @@ import org.eclipse.ocl.pivot.values.Unlimited;
 /**
  * Converts an OCL expression to a string for debugging. This is not intended to
  * be used by client applications as an AST-to-text transformation.
- * 
+ *
  * @author Edith Schonberg (edith)
  * @author Christian W. Damus (cdamus)
  * @author Edward Willink (ewillink)
  */
 public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, @NonNull StringBuilder>
-{	
+{
 	private static final Logger logger = Logger.getLogger(ToStringVisitor.class);
 
 	public static interface Factory {
 		@NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s);
 		@NonNull EPackage getEPackage();
 	}
-	
+
 	private static @NonNull Map<EPackage, Factory> factoryMap = new HashMap<EPackage, Factory>();
-	
+
 	public static synchronized void addFactory(@NonNull Factory factory) {
 		factoryMap.put(factory.getEPackage(), factory);
 	}
@@ -158,7 +158,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	{
 		protected AS2StringFactory() {
 			ToStringVisitor.addFactory(this);
-//			FACTORY.getClass();				// This is redundant for this class but needed by derived classes
+			//			FACTORY.getClass();				// This is redundant for this class but needed by derived classes
 		}
 
 		@Override
@@ -175,7 +175,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	public static ToStringVisitor.@NonNull Factory FACTORY = new AS2StringFactory();
-	
+
 	/**
 	 * Indicates where a required element in the AST was <code>null</code>, so
 	 * that it is evident in the debugger that something was missing. We don't
@@ -188,17 +188,17 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 * Initializes me.
 	 */
 	public ToStringVisitor(@NonNull StringBuilder s) {
-        super(s);
+		super(s);
 	}
 
 	/*
 	 * protected List<? extends EObject> getConstrainedElements(Constraint
 	 * constraint) { if (uml == null) { return Collections.emptyList(); } else {
 	 * return uml.getConstrainedElements(constraint); } }
-	 * 
+	 *
 	 * protected String getStereotype(Constraint constraint) { return (uml ==
 	 * null)? null : uml.getStereotype(constraint); }
-	 * 
+	 *
 	 * @Override protected ExpressionInOCL getSpecification(Constraint
 	 * constraint) { return (uml == null)? null :
 	 * uml.getSpecification(constraint); }
@@ -258,7 +258,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		append("(");
 		boolean comma = false;
 		for (java.util.Iterator<Parameter> iter = operation
-			.getOwnedParameters().iterator(); iter.hasNext();) {
+				.getOwnedParameters().iterator(); iter.hasNext();) {
 			Parameter parm = iter.next();
 
 			if (comma) {
@@ -299,14 +299,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	protected void appendPropertyCallExp(@NonNull NavigationCallExp pc, Property property) {
 		// source is null when the property call expression is an
-        //    association class navigation qualifier
-        OCLExpression source = pc.getOwnedSource();
+		//    association class navigation qualifier
+		OCLExpression source = pc.getOwnedSource();
 		safeVisit(source);
-        Type sourceType = source != null ? source.getType() : null;
+		Type sourceType = source != null ? source.getType() : null;
 		append(PivotUtil.getNavigationOperator(pc.isIsSafe(), PivotUtil.isAggregate(sourceType)));
 		appendName(property);
 		appendAtPre(pc);
-        List<OCLExpression> qualifiers = pc.getQualifiers();
+		List<OCLExpression> qualifiers = pc.getQualifiers();
 		if (!qualifiers.isEmpty()) {
 			append("["); //$NON-NLS-1$
 			String prefix = ""; //$NON-NLS-1$
@@ -342,7 +342,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		else {
 			EObject container = object.eContainer();
 			if ((container != null) && (!(container instanceof Model) && (container instanceof NamedElement) &&
-				(!(container.eContainer() instanceof Model) || !PivotConstants.OCL_NAME.equals(((NamedElement)container).getName())))) {
+					(!(container.eContainer() instanceof Model) || !PivotConstants.OCL_NAME.equals(((NamedElement)container).getName())))) {
 				appendQualifiedName((NamedElement) container);
 				append("::"); //$NON-NLS-1$
 			}
@@ -372,7 +372,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 				Number upper = collectionType.getUpper();
 				long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
 				long upperValue = (upper != null) && !(upper instanceof Unlimited) ? upper.longValue() : -1l;
-				if ((lowerValue != 0) || (upperValue != -1) || collectionType.isIsNullFree()) {
+				if ((lowerValue != 0) || (upperValue != -1) || !collectionType.isIsNullFree()) {
 					StringUtil.appendMultiplicity(context, lowerValue, upperValue, collectionType.isIsNullFree());
 				}
 			}
@@ -397,17 +397,17 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	protected void appendType(Type type) {
 		if ((type != null)
-				 && (type.eClass() == PivotPackage.Literals.CLASS)	// i.e. by pass AnyType, PrimitiveType, ...
-				 && (type.eContainer() instanceof NamedElement)) {
+				&& (type.eClass() == PivotPackage.Literals.CLASS)	// i.e. by pass AnyType, PrimitiveType, ...
+				&& (type.eContainer() instanceof NamedElement)) {
 			appendQualifiedName((NamedElement) type.eContainer());
 			append("::");
 		}
 		appendName(type);
 	}
-	
+
 	/**
 	 * A null-safe visitation of the specified visitable, appending any generted text to the toStringVisitor context.
-	 * 
+	 *
 	 * @param v a visitable, or <code>null</code>
 	 * @return <code>null</code>
 	 */
@@ -441,7 +441,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an AssociationClassCallExp visit.
-	 * 
+	 *
 	 * @param ac
 	 *            the association class expression
 	 * @return string source.ref
@@ -450,9 +450,9 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	public String visitAssociationClassCallExp(@NonNull AssociationClassCallExp ac) {
 		safeVisit(ac.getOwnedSource());
 		append("."); //$NON-NLS-1$
-		appendName(ac.getReferredAssociationClass()); //$NON-NLS-1$
+		appendName(ac.getReferredAssociationClass());
 		appendAtPre(ac);
-        List<OCLExpression> qualifiers = ac.getQualifiers();
+		List<OCLExpression> qualifiers = ac.getQualifiers();
 		if (!qualifiers.isEmpty()) {
 			append("[");
 			safeVisit(qualifiers.get(0));
@@ -463,7 +463,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for a BooleanLiteralExp visit.
-	 * 
+	 *
 	 * @param bl
 	 *            -- boolean literal expression
 	 * @return the value of the boolean literal as a java.lang.Boolean.
@@ -491,19 +491,19 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		appendTemplateSignature(cls.getOwnedSignature());
 		return null;
 	}
-    
-    /**
-     * Visits the item's item expression.
-     */
-    @Override
-	public String visitCollectionItem(@NonNull CollectionItem item) {
-    	safeVisit(item.getOwnedItem());  	
-        return null;
-    }
 
-    /**
-     * Visits the collection literal's parts.
-     */
+	/**
+	 * Visits the item's item expression.
+	 */
+	@Override
+	public String visitCollectionItem(@NonNull CollectionItem item) {
+		safeVisit(item.getOwnedItem());
+		return null;
+	}
+
+	/**
+	 * Visits the collection literal's parts.
+	 */
 	@Override
 	public String visitCollectionLiteralExp(@NonNull CollectionLiteralExp cl) {
 		// construct the appropriate collection from the parts
@@ -525,41 +525,41 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 				append("Collection{");//$NON-NLS-1$
 				break;
 		}
-        boolean isFirst = true;
+		boolean isFirst = true;
 		for (CollectionLiteralPart part : cl.getOwnedParts()) {
 			if (!isFirst) {
 				append(", ");
 			}
-            safeVisit(part);
+			safeVisit(part);
 			isFirst = false;
 		}
 		append("}");
 		return null;
 	}
-    
-    /**
-     * Visits the range's first and last expressions.
-     */
-    @Override
+
+	/**
+	 * Visits the range's first and last expressions.
+	 */
+	@Override
 	public String visitCollectionRange(@NonNull CollectionRange range) {
-        safeVisit(range.getOwnedFirst());
-        append(" .. ");
-        safeVisit(range.getOwnedLast());
-        return null;
-    }
+		safeVisit(range.getOwnedFirst());
+		append(" .. ");
+		safeVisit(range.getOwnedLast());
+		return null;
+	}
 
 	@Override
 	public String visitCollectionType(@NonNull CollectionType object) {
 		appendName(object);
 		appendTemplateBindings(object.getOwnedBindings(), object);
 		appendTemplateSignature(object.getOwnedSignature());
-//		Number lower = object.getLower();
-//		Number upper = object.getUpper();
-//		long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
-//		long upperValue = (upper != null) && !(upper instanceof Unlimited) ? upper.longValue() : -1l;
-//		if ((lowerValue != 0) || (upperValue != -1)) {
-//			StringUtil.appendMultiplicity(context, lowerValue, upperValue, object.isIsNullFree());
-//		}
+		//		Number lower = object.getLower();
+		//		Number upper = object.getUpper();
+		//		long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
+		//		long upperValue = (upper != null) && !(upper instanceof Unlimited) ? upper.longValue() : -1l;
+		//		if ((lowerValue != 0) || (upperValue != -1)) {
+		//			StringUtil.appendMultiplicity(context, lowerValue, upperValue, object.isIsNullFree());
+		//		}
 		return null;
 	}
 
@@ -618,14 +618,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		}
 
 		String stereo = PivotUtilInternal.getStereotype(constraint);
-		append(stereo); //$NON-NLS-1$
+		append(stereo);
 		String name = constraint.getName();
 		if (name != null) {
 			append(" "); //$NON-NLS-1$
 			append(name);
 		}
 		append(": "); //$NON-NLS-1$
-/* FIXME def context
+		/* FIXME def context
 		EObject elem = constrained.get(1);
 		if (elem instanceof Operation) {
 			appendOperationSignature((Operation) elem);
@@ -633,7 +633,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			appendPropertySignature((Property) elem);
 		}
 		append(" = "); //$NON-NLS-1$
-*/
+		 */
 		safeVisit(constraint.getOwnedSpecification());
 		return null;
 	}
@@ -661,7 +661,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an EnumLiteralExp visit.
-	 * 
+	 *
 	 * @param el
 	 *            the enumeration literal expresion
 	 * @return the enumeration literal toString()
@@ -695,7 +695,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an IfExp visit.
-	 * 
+	 *
 	 * @param ifExp
 	 *            an IfExp
 	 * @return the string representation
@@ -721,7 +721,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an IntegerLiteralExp visit.
-	 * 
+	 *
 	 * @param il
 	 *            -- integer literal expression
 	 * @return String
@@ -746,7 +746,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an IterateExp visit.
-	 * 
+	 *
 	 * @param callExp
 	 *            an iterate expression
 	 * @return the string representation
@@ -762,7 +762,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			if (!isFirst) {
 				append(", ");
 			}
-            safeVisit(variable);
+			safeVisit(variable);
 			isFirst = false;
 		}
 		append("; ");
@@ -770,7 +770,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		append(" | ");
 		safeVisit(callExp.getOwnedBody());
 		append(")");//$NON-NLS-1$
-		return null;        
+		return null;
 	}
 
 	@Override
@@ -816,7 +816,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an IteratorExp visit.
-	 * 
+	 *
 	 * @param callExp
 	 *            an iterator expression
 	 * @return the string representation
@@ -832,13 +832,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			if (!isFirst) {
 				append(", ");
 			}
-            safeVisit(variable);
+			safeVisit(variable);
 			isFirst = false;
 		}
 		append(" | ");
 		safeVisit(callExp.getOwnedBody());
 		append(")");//$NON-NLS-1$
-		return null;        
+		return null;
 	}
 
 	@Override
@@ -866,7 +866,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for LetExp visit.
-	 * 
+	 *
 	 * @param letExp
 	 *            a let expression
 	 * @return the string representation
@@ -880,34 +880,34 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		return null;
 	}
 
-    /**
-     * Visits the map literal's parts.
-     */
+	/**
+	 * Visits the map literal's parts.
+	 */
 	@Override
 	public String visitMapLiteralExp(@NonNull MapLiteralExp mapLiteralExp) {
 		append("Map{");//$NON-NLS-1$
-        boolean isFirst = true;
+		boolean isFirst = true;
 		for (MapLiteralPart part : mapLiteralExp.getOwnedParts()) {
 			if (!isFirst) {
 				append(", ");
 			}
-            safeVisit(part);
+			safeVisit(part);
 			isFirst = false;
 		}
 		append("}");
 		return null;
 	}
-    
-    /**
-     * Visits the range's first and last expressions.
-     */
-    @Override
+
+	/**
+	 * Visits the range's first and last expressions.
+	 */
+	@Override
 	public String visitMapLiteralPart(@NonNull MapLiteralPart mapLiteralPart) {
-        safeVisit(mapLiteralPart.getOwnedKey());
-        append(" <- ");
-        safeVisit(mapLiteralPart.getOwnedValue());
-        return null;
-    }
+		safeVisit(mapLiteralPart.getOwnedKey());
+		append(" <- ");
+		safeVisit(mapLiteralPart.getOwnedValue());
+		return null;
+	}
 
 	@Override
 	public String visitMapType(@NonNull MapType object) {
@@ -916,10 +916,10 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		appendTemplateSignature(object.getOwnedSignature());
 		return null;
 	}
-	
-    /**
-     * Visits the message expression's target and then its arguments.
-     */
+
+	/**
+	 * Visits the message expression's target and then its arguments.
+	 */
 	@Override
 	public String visitMessageExp(@NonNull MessageExp messageExp) {
 		safeVisit(messageExp.getOwnedTarget());
@@ -933,8 +933,8 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		String prefix = "";
 		for (OCLExpression argument : messageExp.getOwnedArguments()) {
 			append(prefix);
-            safeVisit(argument);
-            prefix = ", "; //$NON-NLS-1$
+			safeVisit(argument);
+			prefix = ", "; //$NON-NLS-1$
 		}
 		append(")");
 		return null;
@@ -967,21 +967,21 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an OperationCallExp visit.
-	 * 
+	 *
 	 * Look at the source to determine operator ( -&gt; or . )
-	 * 
+	 *
 	 * @param oc
 	 *            the operation call expression
 	 * @return string
 	 */
 	@Override
 	public String visitOperationCallExp(@NonNull OperationCallExp oc) {
-        OCLExpression source = oc.getOwnedSource();
+		OCLExpression source = oc.getOwnedSource();
 		safeVisit(source);
 		Operation oper = oc.getReferredOperation();
 		if (oper != null) {
-	        Type sourceType = source != null ? source.getType() : null;
-	        append(PivotUtil.getNavigationOperator(oc.isIsSafe(), PivotUtil.isAggregate(sourceType)));
+			Type sourceType = source != null ? source.getType() : null;
+			append(PivotUtil.getNavigationOperator(oc.isIsSafe(), PivotUtil.isAggregate(sourceType)));
 			appendName(oper);
 		} else {
 			append(PivotUtil.getNavigationOperator(false, false));
@@ -1001,7 +1001,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an OppositePropertyCallExp visit.
-	 * 
+	 *
 	 * @param pc
 	 *            the property call expression
 	 * @return string source.ref
@@ -1010,7 +1010,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	public String visitOppositePropertyCallExp(@NonNull OppositePropertyCallExp pc) {
 		Property referredOppositeProperty = pc.getReferredProperty();
 		Property referredProperty = referredOppositeProperty != null ? referredOppositeProperty.getOpposite() : null;
-        appendPropertyCallExp(pc, referredProperty);
+		appendPropertyCallExp(pc, referredProperty);
 		return null;
 	}
 
@@ -1055,7 +1055,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an PropertyCallExp visit.
-	 * 
+	 *
 	 * @param pc
 	 *            the property call expression
 	 * @return string source.ref
@@ -1063,13 +1063,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitPropertyCallExp(@NonNull PropertyCallExp pc) {
 		Property property = pc.getReferredProperty();
-        appendPropertyCallExp(pc, property);
+		appendPropertyCallExp(pc, property);
 		return null;
 	}
 
 	/**
 	 * Callback for a RealLiteralExp visit.
-	 * 
+	 *
 	 * @param rl
 	 *            -- real literal expression
 	 * @return the value of the real literal as a java.lang.Double.
@@ -1088,7 +1088,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for a ShadowExp visit.
-	 * 
+	 *
 	 * @param shadowExp
 	 *            shadow expression
 	 * @return the string representation
@@ -1100,16 +1100,16 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		String prefix = "";
 		for (ShadowPart part : shadowExp.getOwnedParts()) {
 			append(prefix);
-            safeVisit(part);
+			safeVisit(part);
 			prefix = ", ";//$NON-NLS-1$
 		}
 		append("}");
 		return null;
 	}
-	
-    /**
-     * Visits the tuple shadow part's value, if any.
-     */
+
+	/**
+	 * Visits the tuple shadow part's value, if any.
+	 */
 	@Override
 	public String visitShadowPart(@NonNull ShadowPart part) {
 		appendName(part.getReferredProperty());
@@ -1137,7 +1137,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for a StringLiteralExp visit.
-	 * 
+	 *
 	 * @param sl
 	 *            -- string literal expression
 	 * @return the value of the string literal as a java.lang.String.
@@ -1186,7 +1186,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for a TupleLiteralExp visit.
-	 * 
+	 *
 	 * @param literalExp
 	 *            tuple literal expression
 	 * @return the string representation
@@ -1197,16 +1197,16 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		String prefix = "";
 		for (TupleLiteralPart part : literalExp.getOwnedParts()) {
 			append(prefix);
-            safeVisit(part);
+			safeVisit(part);
 			prefix = ", ";//$NON-NLS-1$
 		}
 		append("}");
 		return null;
 	}
-	
-    /**
-     * Visits the tuple literal part's value, if any.
-     */
+
+	/**
+	 * Visits the tuple literal part's value, if any.
+	 */
 	@Override
 	public String visitTupleLiteralPart(@NonNull TupleLiteralPart part) {
 		appendName(part);
@@ -1247,7 +1247,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an UnlimitedNaturalLiteralExp visit.
-	 * 
+	 *
 	 * @param unl
 	 *            -- unlimited natural literal expression
 	 * @return String
@@ -1266,7 +1266,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for an UnspecifiedValueExp visit.
-	 * 
+	 *
 	 * @param uv
 	 *            - UnspecifiedValueExp
 	 * @return the string representation
@@ -1281,9 +1281,9 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		return null;
 	}
 
-    /**
-     * Visits the variable's initialization expression (if any).
-     */
+	/**
+	 * Visits the variable's initialization expression (if any).
+	 */
 	@Override
 	public String visitVariable(@NonNull Variable variable) {
 		appendName(variable);
@@ -1302,7 +1302,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	/**
 	 * Callback for a VariableExp visit.
-	 * 
+	 *
 	 * @param v
 	 *            the variable expression
 	 * @return the variable name

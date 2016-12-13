@@ -603,7 +603,7 @@ public class PrettyPrinter
 					Number lower = collectionType.getLower();
 					Number upper = collectionType.getUpper();
 					boolean isNullFree = collectionType.isIsNullFree();
-					if (isNullFree || ((lower != null) && (upper != null) && ((lower.longValue() != 0) || !(upper instanceof  Unlimited)))) {
+					if (!isNullFree || ((lower != null) && (upper != null) && ((lower.longValue() != 0) || !(upper instanceof  Unlimited)))) {
 						appendMultiplicity(lower, upper, isNullFree);
 					}
 				}

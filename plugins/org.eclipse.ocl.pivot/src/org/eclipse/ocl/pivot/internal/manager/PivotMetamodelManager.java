@@ -1375,7 +1375,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			assert pivotClass instanceof CollectionType;
 			assert templateArguments.size() == 1;
 			@NonNull Type templateArgument = templateArguments.get(0);
-			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getCollectionType(libraryCompleteClass, TypeUtil.createCollectionTypeParameters(templateArgument, false, null, null));
+			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getCollectionType(libraryCompleteClass, TypeUtil.createCollectionTypeParameters(templateArgument, true, null, null));
 			return specializedType;
 		}
 		else if (pivotClass instanceof MapType) {
