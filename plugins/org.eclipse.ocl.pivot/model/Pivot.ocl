@@ -197,6 +197,9 @@ context IteratorExp
 inv ClosureElementTypeIsSourceElementType: name = 'closure' implies
 type.oclAsType(CollectionType).elementType
 = ownedSource?.type.oclAsType(CollectionType).elementType
+/** Each body element is assignable to the iterator. */
+inv ClosureBodyElementTypeIsIteratorType: name = 'closure' implies
+ownedBody.type.oclAsType(CollectionType).elementType.conformsTo(ownedIterators->at(1).type)
 
 context IteratorExp
 /* The collection type for an OrderedSet or a Sequence type is a Sequence,
