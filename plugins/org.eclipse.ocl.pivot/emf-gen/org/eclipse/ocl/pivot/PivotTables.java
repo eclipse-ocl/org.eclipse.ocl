@@ -192,6 +192,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Boolean = "Boolean";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_BooleanLiteralExp_c_c_TypeIsBoolean = "BooleanLiteralExp::TypeIsBoolean";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CallExp_c_c_TypeIsNotInvalid = "CallExp::TypeIsNotInvalid";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Class_c_c_NameIsNotNull = "Class::NameIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Class_c_c_UniqueInvariantName = "Class::UniqueInvariantName";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CollectionItem_c_c_TypeIsItemType = "CollectionItem::TypeIsItemType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CollectionLiteralExp_c_c_BagKindIsBag = "CollectionLiteralExp::BagKindIsBag";
@@ -217,6 +218,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_AnyBodyTypeIsBoolean = "IteratorExp::AnyBodyTypeIsBoolean";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_AnyHasOneIterator = "IteratorExp::AnyHasOneIterator";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_AnyTypeIsSourceElementType = "IteratorExp::AnyTypeIsSourceElementType";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureBodyElementTypeIsIteratorType = "IteratorExp::ClosureBodyElementTypeIsIteratorType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureBodyTypeIsConformanttoIteratorType = "IteratorExp::ClosureBodyTypeIsConformanttoIteratorType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureElementTypeIsSourceElementType = "IteratorExp::ClosureElementTypeIsSourceElementType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureHasOneIterator = "IteratorExp::ClosureHasOneIterator";

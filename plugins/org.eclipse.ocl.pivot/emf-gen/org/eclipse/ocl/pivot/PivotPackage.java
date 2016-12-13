@@ -1749,13 +1749,22 @@ extends EPackage
 	int CLASS___SPECIALIZE_IN__CALLEXP_TYPE = TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = TYPE_OPERATION_COUNT + 0;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = TYPE_OPERATION_COUNT + 0;
+	int CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = TYPE_OPERATION_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Class</em>' class.
@@ -1764,7 +1773,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CLASS_OPERATION_COUNT = TYPE_OPERATION_COUNT + 1;
+	int CLASS_OPERATION_COUNT = TYPE_OPERATION_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -2008,6 +2017,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ANY_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ANY_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -2278,6 +2296,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ASSOCIATION_CLASS___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSOCIATION_CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -3567,6 +3594,15 @@ extends EPackage
 	int DATA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3880,6 +3916,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int COLLECTION_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = DATA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -4197,6 +4242,15 @@ extends EPackage
 	int BAG_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = COLLECTION_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BAG_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = COLLECTION_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4465,6 +4519,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int BEHAVIOR___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BEHAVIOR___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -6982,6 +7045,15 @@ extends EPackage
 	int DYNAMIC_BEHAVIOR___SPECIALIZE_IN__CALLEXP_TYPE = BEHAVIOR___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_BEHAVIOR___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = BEHAVIOR___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7430,6 +7502,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int DYNAMIC_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -8071,6 +8152,15 @@ extends EPackage
 	int ELEMENT_EXTENSION___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT_EXTENSION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8510,6 +8600,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ENUMERATION___SPECIALIZE_IN__CALLEXP_TYPE = DATA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -10967,6 +11066,15 @@ extends EPackage
 	int INVALID_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INVALID_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12455,13 +12563,22 @@ extends EPackage
 	int ITERATOR_EXP___VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 3;
 
 	/**
+	 * The operation id for the '<em>Validate Closure Body Element Type Is Iterator Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP___VALIDATE_CLOSURE_BODY_ELEMENT_TYPE_IS_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 4;
+
+	/**
 	 * The operation id for the '<em>Validate Closure Body Type Is Conformantto Iterator Type</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 4;
+	int ITERATOR_EXP___VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 5;
 
 	/**
 	 * The operation id for the '<em>Validate Closure Element Type Is Source Element Type</em>' operation.
@@ -12470,7 +12587,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 5;
+	int ITERATOR_EXP___VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 6;
 
 	/**
 	 * The operation id for the '<em>Validate Closure Has One Iterator</em>' operation.
@@ -12479,7 +12596,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_CLOSURE_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 6;
+	int ITERATOR_EXP___VALIDATE_CLOSURE_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 7;
 
 	/**
 	 * The operation id for the '<em>Validate Closure Source Element Type Is Body Element Type</em>' operation.
@@ -12488,7 +12605,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 7;
+	int ITERATOR_EXP___VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 8;
 
 	/**
 	 * The operation id for the '<em>Validate Closure Type Is Unique Collection</em>' operation.
@@ -12497,7 +12614,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 8;
+	int ITERATOR_EXP___VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Validate Collect Element Type Is Flattened Body Type</em>' operation.
@@ -12506,7 +12623,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 9;
+	int ITERATOR_EXP___VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Validate Collect Type Is Unordered</em>' operation.
@@ -12515,7 +12632,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_COLLECT_TYPE_IS_UNORDERED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 10;
+	int ITERATOR_EXP___VALIDATE_COLLECT_TYPE_IS_UNORDERED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Validate Iterator Type Is Source Element Type</em>' operation.
@@ -12524,7 +12641,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 11;
+	int ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>Validate Safe Iterator Is Required</em>' operation.
@@ -12533,7 +12650,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 12;
+	int ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 13;
 
 	/**
 	 * The operation id for the '<em>Validate Safe Source Can Be Null</em>' operation.
@@ -12542,7 +12659,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 13;
+	int ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 14;
 
 	/**
 	 * The operation id for the '<em>Validate Sorted By Element Type Is Source Element Type</em>' operation.
@@ -12551,7 +12668,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 14;
+	int ITERATOR_EXP___VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 15;
 
 	/**
 	 * The operation id for the '<em>Validate Sorted By Is Ordered If Source Is Ordered</em>' operation.
@@ -12560,7 +12677,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 15;
+	int ITERATOR_EXP___VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 16;
 
 	/**
 	 * The operation id for the '<em>Validate Sorted By Iterator Type Is Comparable</em>' operation.
@@ -12569,7 +12686,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 16;
+	int ITERATOR_EXP___VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 17;
 
 	/**
 	 * The operation id for the '<em>Validate Unsafe Source Can Not Be Null</em>' operation.
@@ -12578,7 +12695,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 17;
+	int ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 18;
 
 	/**
 	 * The number of operations of the '<em>Iterator Exp</em>' class.
@@ -12587,7 +12704,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP_OPERATION_COUNT = LOOP_EXP_OPERATION_COUNT + 18;
+	int ITERATOR_EXP_OPERATION_COUNT = LOOP_EXP_OPERATION_COUNT + 19;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.LetVariableImpl <em>Let Variable</em>}' class.
@@ -13568,6 +13685,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int LAMBDA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = DATA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LAMBDA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -14849,6 +14975,15 @@ extends EPackage
 	int MAP_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = DATA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAP_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15315,6 +15450,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int MESSAGE_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MESSAGE_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -16369,6 +16513,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ORDERED_SET_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = COLLECTION_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_SET_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = COLLECTION_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -17443,6 +17596,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int PRIMITIVE_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = DATA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -19273,6 +19435,15 @@ extends EPackage
 	int SELF_TYPE___IS_TEMPLATE_PARAMETER = CLASS___IS_TEMPLATE_PARAMETER;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SELF_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -19687,6 +19858,15 @@ extends EPackage
 	int SEQUENCE_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = COLLECTION_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEQUENCE_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = COLLECTION_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -20000,6 +20180,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int SET_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = COLLECTION_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SET_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = COLLECTION_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -20621,6 +20810,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int SIGNAL___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIGNAL___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -21262,6 +21460,15 @@ extends EPackage
 	int STATE_MACHINE___SPECIALIZE_IN__CALLEXP_TYPE = BEHAVIOR___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE_MACHINE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = BEHAVIOR___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -21530,6 +21737,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int STEREOTYPE___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STEREOTYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -23152,6 +23368,15 @@ extends EPackage
 	int TUPLE_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = DATA_TYPE___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUPLE_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = DATA_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -24016,6 +24241,15 @@ extends EPackage
 	int VOID_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
 
 	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VOID_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
+
+	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -24303,6 +24537,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int WILDCARD_TYPE___SPECIALIZE_IN__CALLEXP_TYPE = CLASS___SPECIALIZE_IN__CALLEXP_TYPE;
+
+	/**
+	 * The operation id for the '<em>Validate Name Is Not Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WILDCARD_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP;
 
 	/**
 	 * The operation id for the '<em>Validate Unique Invariant Name</em>' operation.
@@ -25674,6 +25917,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getIteratorExp__ValidateAnyTypeIsSourceElementType__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateClosureBodyElementTypeIsIteratorType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Closure Body Element Type Is Iterator Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Closure Body Element Type Is Iterator Type</em>' operation.
+	 * @see org.eclipse.ocl.pivot.IteratorExp#validateClosureBodyElementTypeIsIteratorType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateAnyBodyTypeIsBoolean(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Any Body Type Is Boolean</em>}' operation.
@@ -27764,6 +28017,16 @@ extends EPackage
 	 * @generated
 	 */
 	EReference getClass_SuperClasses();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Class#validateNameIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Name Is Not Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Name Is Not Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.Class#validateNameIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getClass__ValidateNameIsNotNull__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Class#validateUniqueInvariantName(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Unique Invariant Name</em>}' operation.
@@ -30872,6 +31135,14 @@ extends EPackage
 		EOperation ITERATOR_EXP___VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorExp__ValidateAnyTypeIsSourceElementType__DiagnosticChain_Map();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Closure Body Element Type Is Iterator Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ITERATOR_EXP___VALIDATE_CLOSURE_BODY_ELEMENT_TYPE_IS_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate Any Body Type Is Boolean</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -32572,6 +32843,14 @@ extends EPackage
 		 * @generated
 		 */
 		EReference CLASS__SUPER_CLASSES = eINSTANCE.getClass_SuperClasses();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Name Is Not Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getClass__ValidateNameIsNotNull__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Unique Invariant Name</b></em>' operation.

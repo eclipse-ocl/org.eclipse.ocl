@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Class</b></em>'.
+ * @noimplement
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -54,7 +55,7 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
  * @generated
  */
 public interface Class
-		extends Type, Namespace, TemplateableElement {
+extends Type, Namespace, TemplateableElement {
 
 	/**
 	 * Returns the value of the '<em><b>Extenders</b></em>' reference list.
@@ -230,6 +231,14 @@ public interface Class
 	 * @generated
 	 */
 	@NonNull List<Class> getSuperClasses();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateNameIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->

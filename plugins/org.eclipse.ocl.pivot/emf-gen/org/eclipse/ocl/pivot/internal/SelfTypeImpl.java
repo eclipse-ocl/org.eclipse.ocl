@@ -83,6 +83,8 @@ public class SelfTypeImpl extends ClassImpl implements SelfType
 				return isTemplateParameter();
 			case PivotPackage.SELF_TYPE___SPECIALIZE_IN__CALLEXP_TYPE:
 				return specializeIn((CallExp)arguments.get(0), (Type)arguments.get(1));
+			case PivotPackage.SELF_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.SELF_TYPE___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP:
 				return validateUniqueInvariantName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}

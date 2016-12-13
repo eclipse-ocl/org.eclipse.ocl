@@ -81,6 +81,7 @@ context LetExp
 inv TypeIsNotInvalid : type <> OclInvalid
 
 context Class
+inv NameIsNotNull : name <> null
 inv UniqueInvariantName: ownedInvariants->isUnique(name)
 
 context IteratorExp

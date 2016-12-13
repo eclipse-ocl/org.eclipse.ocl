@@ -356,7 +356,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			return SelectIteration2Java.INSTANCE;
 		}
 		else {
-			return null;
+			return null;			// closure, sortedBy
 		}
 	}
 

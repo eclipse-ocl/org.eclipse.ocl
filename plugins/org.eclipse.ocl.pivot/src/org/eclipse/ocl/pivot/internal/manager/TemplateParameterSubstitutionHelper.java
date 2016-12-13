@@ -46,7 +46,7 @@ import org.eclipse.ocl.pivot.library.iterator.SortedByIteration;
  * <p>
  * The TemplateParameterSubstitutionHelper maintains a registry of helpers indexed by their implementatin class.
  */
-public abstract class TemplateParameterSubstitutionHelper 
+public abstract class TemplateParameterSubstitutionHelper
 {
 	public void resolveUnmodeledTemplateParameterSubstitutions(@NonNull TemplateParameterSubstitutionVisitor templateParameterSubstitutions, @NonNull CallExp callExp) {}
 
@@ -59,7 +59,7 @@ public abstract class TemplateParameterSubstitutionHelper
 	}
 
 	private static @NonNull Map<Class<? extends LibraryFeature>, TemplateParameterSubstitutionHelper> className2helper = new HashMap<Class<? extends LibraryFeature>, TemplateParameterSubstitutionHelper>();
-	
+
 	public static void addHelper(@NonNull Class<? extends LibraryFeature> className, @NonNull TemplateParameterSubstitutionHelper helper) {
 		className2helper.put(className,  helper);
 	}
@@ -81,14 +81,14 @@ public abstract class TemplateParameterSubstitutionHelper
 			Type bodyType = asType != null ? PivotUtilInternal.getNonLambdaType(asType) : null;
 			if (bodyType != null) {
 				@NonNull Type elementType = bodyType;
-//				if (bodyType instanceof CollectionType) {
-					while (elementType instanceof CollectionType) {
-						Type elementType2 = ((CollectionType)elementType).getElementType();
-						if (elementType2 != null) {
-							elementType = elementType2;
-						}
+				//				if (bodyType instanceof CollectionType) {
+				while (elementType instanceof CollectionType) {
+					Type elementType2 = ((CollectionType)elementType).getElementType();
+					if (elementType2 != null) {
+						elementType = elementType2;
 					}
-//				}
+				}
+				//				}
 				return elementType;
 			}
 			return returnType;
@@ -102,14 +102,14 @@ public abstract class TemplateParameterSubstitutionHelper
 			Type bodyType = asType != null ? PivotUtilInternal.getNonLambdaType(asType) : null;
 			if (bodyType != null) {
 				@NonNull Type elementType = bodyType;
-//				if (bodyType instanceof CollectionType) {
-					while (elementType instanceof CollectionType) {
-						Type elementType2 = ((CollectionType)elementType).getElementType();
-						if (elementType2 != null) {
-							elementType = elementType2;
-						}
+				//				if (bodyType instanceof CollectionType) {
+				while (elementType instanceof CollectionType) {
+					Type elementType2 = ((CollectionType)elementType).getElementType();
+					if (elementType2 != null) {
+						elementType = elementType2;
 					}
-//				}
+				}
+				//				}
 				boolean isOrdered = (returnType instanceof CollectionType) && ((CollectionType)returnType).isOrdered();
 				boolean isNullFree = asType instanceof CollectionType && ((CollectionType)asType).isIsNullFree();
 				boolean isRequired = !(asType instanceof CollectionType) && (body != null) && body.isIsRequired();
@@ -135,7 +135,7 @@ public abstract class TemplateParameterSubstitutionHelper
 	}
 
 	//
-	//	Special case processing for return types based pn the source.
+	//	Special case processing for return types based on the source.
 	//
 	private static class CollectionSourceHelper extends TemplateParameterSubstitutionHelper
 	{
@@ -156,7 +156,7 @@ public abstract class TemplateParameterSubstitutionHelper
 			return returnType;
 		}
 	}
-	
+
 	static
 	{
 		addHelper(AnyIteration.class, new CollectionSourceHelper());
@@ -167,8 +167,8 @@ public abstract class TemplateParameterSubstitutionHelper
 		addHelper(CollectionAsSetOperation.class, new CollectionSourceHelper());
 		addHelper(CollectionExcludingOperation.class, new CollectionSourceHelper());
 		addHelper(CollectionExcludingAllOperation.class, new CollectionSourceHelper());
-//		addHelper(CollectionIncludingOperation.class, new CollectionSourceAndArgumentHelper());
-//		addHelper(CollectionIncludingAllOperation.class, new CollectionSourceAndArgumentHelper());
+		//		addHelper(CollectionIncludingOperation.class, new CollectionSourceAndArgumentHelper());
+		//		addHelper(CollectionIncludingAllOperation.class, new CollectionSourceAndArgumentHelper());
 		addHelper(CollectionIntersectionOperation.class, new CollectionSourceHelper()/*OrArgument*/);
 		addHelper(CollectionMinOperation.class, new CollectionSourceHelper());
 		addHelper(OrderedCollectionAtOperation.class, new CollectionSourceHelper());

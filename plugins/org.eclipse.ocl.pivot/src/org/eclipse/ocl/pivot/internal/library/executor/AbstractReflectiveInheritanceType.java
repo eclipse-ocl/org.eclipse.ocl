@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.executor;
 
+import java.util.Map;
+
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
@@ -33,7 +36,7 @@ public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheri
 		}
 		return thatInheritance.isSuperInheritanceOf(this);
 	}
-	
+
 	@Override
 	public org.eclipse.ocl.pivot.Class flattenedType() {
 		return this;
@@ -82,5 +85,10 @@ public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheri
 	@Override
 	public int oclHashCode() {
 		return getTypeId().hashCode();
+	}
+
+	@Override
+	public boolean validateNameIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context) {
+		throw new UnsupportedOperationException();
 	}
 }

@@ -113,6 +113,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Class-ownedProperties"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Class-owningPackage"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Class-superClasses"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Class/validateNameIsNotNull">
+        <genParameters ecoreParameter="Pivot.ecore#//Class/validateNameIsNotNull/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Class/validateNameIsNotNull/context"/>
+      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//Class/validateUniqueInvariantName">
         <genParameters ecoreParameter="Pivot.ecore#//Class/validateUniqueInvariantName/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//Class/validateUniqueInvariantName/context"/>
@@ -369,6 +373,10 @@
       <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateAnyTypeIsSourceElementType">
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateAnyTypeIsSourceElementType/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateAnyTypeIsSourceElementType/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureBodyElementTypeIsIteratorType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureBodyElementTypeIsIteratorType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureBodyElementTypeIsIteratorType/context"/>
       </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureBodyTypeIsConformanttoIteratorType">
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureBodyTypeIsConformanttoIteratorType/diagnostics"/>

@@ -96,8 +96,8 @@ import org.eclipse.ocl.pivot.values.SetValue;
  * @generated
  */
 public class ClassImpl
-		extends TypeImpl
-		implements org.eclipse.ocl.pivot.Class {
+extends TypeImpl
+implements org.eclipse.ocl.pivot.Class {
 
 	/**
 	 * The cached value of the '{@link #getOwnedConstraints() <em>Owned Constraints</em>}' containment reference list.
@@ -1094,6 +1094,8 @@ public class ClassImpl
 				return isTemplateParameter();
 			case PivotPackage.CLASS___SPECIALIZE_IN__CALLEXP_TYPE:
 				return specializeIn((CallExp)arguments.get(0), (Type)arguments.get(1));
+			case PivotPackage.CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
+				return validateNameIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case PivotPackage.CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP:
 				return validateUniqueInvariantName((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
@@ -1253,6 +1255,51 @@ public class ClassImpl
 			};
 		}
 		return superClasses2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean validateNameIsNotNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
+	{
+		/**
+		 *
+		 * inv NameIsNotNull:
+		 *   let severity : Integer[1] = 'Class::NameIsNotNull'.getSeverity()
+		 *   in
+		 *     if severity <= 0
+		 *     then true
+		 *     else
+		 *       let status : OclAny[1] = name <> null
+		 *       in
+		 *         'Class::NameIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
+		 *     endif
+		 */
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Class_c_c_NameIsNotNull);
+		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
+		/*@NonInvalid*/ boolean symbol_0;
+		if (le) {
+			symbol_0 = ValueUtil.TRUE_VALUE;
+		}
+		else {
+			/*@Caught*/ @NonNull Object CAUGHT_status;
+			try {
+				final /*@Thrown*/ java.lang.@Nullable String name = this.getName();
+				final /*@Thrown*/ boolean status = name != null;
+				CAUGHT_status = status;
+			}
+			catch (Exception e) {
+				CAUGHT_status = ValueUtil.createInvalidValue(e);
+			}
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_Class_c_c_NameIsNotNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			symbol_0 = logDiagnostic;
+		}
+		return Boolean.TRUE == symbol_0;
 	}
 
 	@Override

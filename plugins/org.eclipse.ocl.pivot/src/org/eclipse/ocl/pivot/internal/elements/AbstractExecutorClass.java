@@ -71,7 +71,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return getTypeId().getMetaTypeName();
-//		throw new UnsupportedOperationException();
+		//		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -126,11 +126,11 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
-		@NonNull
-		public TemplateParameters getTypeParameters() {
-			return TemplateParameters.EMPTY_LIST;
-	//		throw new UnsupportedOperationException();
-		}
+	@NonNull
+	public TemplateParameters getTypeParameters() {
+		return TemplateParameters.EMPTY_LIST;
+		//		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public TemplateableElement getUnspecializedElement() {
@@ -155,13 +155,13 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	@Override
 	public boolean isOrdered() {
 		return false;
-//		throw new UnsupportedOperationException();
+		//		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isUnique() {
 		return false;
-//		throw new UnsupportedOperationException();
+		//		throw new UnsupportedOperationException();
 	}
 
 	//	@Override
@@ -169,7 +169,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 		throw new UnsupportedOperationException();
 	}
 
-//	@Override
+	//	@Override
 	public void setBehavioralClass(Class value) {
 		throw new UnsupportedOperationException();
 	}
@@ -211,6 +211,14 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 
 	@Override
 	public void setUnspecializedElement(TemplateableElement value) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public boolean validateNameIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context) {
 		throw new UnsupportedOperationException();
 	}
 

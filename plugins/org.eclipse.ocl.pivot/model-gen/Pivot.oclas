@@ -78,6 +78,9 @@
     </ownedClasses>
     <ownedClasses xmi:id="T.pivot.Class" name="Class" superClasses="#T.pivot.Type #T.pivot.Namespace #T.pivot.TemplateableElement">
       <ownedComments body="A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.&#xA;&#xA;A Classifier represents a classification of instances according to their Features.&#xA;&#xA;StructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier."/>
+      <ownedInvariants xmi:id="cipivot.Class.NameIsNotNull" isCallable="true" name="NameIsNotNull">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name &lt;> null&#xA;"/>
+      </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.Class.UniqueInvariantName" isCallable="true" name="UniqueInvariantName">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInvariants->isUnique(name)&#xA;&#xA;"/>
       </ownedInvariants>
@@ -474,11 +477,14 @@
       <ownedInvariants xmi:id="cipivot.IteratorExp.AnyTypeIsSourceElementType" isCallable="true" name="AnyTypeIsSourceElementType">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'any' implies type = ownedSource?.type?.oclAsType(CollectionType).elementType&#xA;&#xA;"/>
       </ownedInvariants>
+      <ownedInvariants xmi:id="cipivot.IteratorExp.ClosureBodyElementTypeIsIteratorType" isCallable="true" name="ClosureBodyElementTypeIsIteratorType">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies&#xA;ownedBody.type.oclAsType(CollectionType).elementType.conformsTo(ownedIterators->at(1).type)&#xA;&#xA;"/>
+      </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.IteratorExp.ClosureBodyTypeIsConformanttoIteratorType" isCallable="true" name="ClosureBodyTypeIsConformanttoIteratorType">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;true&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.IteratorExp.ClosureElementTypeIsSourceElementType" isCallable="true" name="ClosureElementTypeIsSourceElementType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies&#xA;type.oclAsType(CollectionType).elementType&#xA;= ownedSource?.type.oclAsType(CollectionType).elementType&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies&#xA;type.oclAsType(CollectionType).elementType&#xA;= ownedSource?.type.oclAsType(CollectionType).elementType&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.IteratorExp.ClosureHasOneIterator" isCallable="true" name="ClosureHasOneIterator">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies ownedIterators->size() = 1&#xA;&#xA;"/>
