@@ -51,33 +51,33 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 
 	public static class MyOCL extends TestOCL
 	{
-        // need a metamodel that has a reflexive EReference.
-        // Ecore will do nicely. Create the following structure:
-        // pkg1
-        // pkg1::pkg2
-        // pkg1::pkg2::jim
-        // pkg1::bob
-        // pkg1::pkg3
-        // pkg1::pkg3::pkg4
-        // pkg1::pkg3::pkg5
-        // pkg1::pkg3::pkg5::george
-        @NonNull Model root = PivotUtil.createModel(null);
-        org.eclipse.ocl.pivot.@NonNull Package pkg1 = PivotUtil.createOwnedPackage(root, "pkg1");
-        org.eclipse.ocl.pivot.@NonNull Package pkg2 = PivotUtil.createOwnedPackage(pkg1, "pkg2");
-        org.eclipse.ocl.pivot.@NonNull Package jim = PivotUtil.createOwnedPackage(pkg2, "jim");
-        org.eclipse.ocl.pivot.@NonNull Package bob = PivotUtil.createOwnedPackage(pkg1, "bob");
-        org.eclipse.ocl.pivot.@NonNull Package pkg3 = PivotUtil.createOwnedPackage(pkg1, "pkg3");
-        org.eclipse.ocl.pivot.@NonNull Package pkg4 = PivotUtil.createOwnedPackage(pkg3, "pkg4");
-        org.eclipse.ocl.pivot.@NonNull Package pkg5 = PivotUtil.createOwnedPackage(pkg3, "pkg5");
-        org.eclipse.ocl.pivot.@NonNull Package george = PivotUtil.createOwnedPackage(pkg5, "george");
-		
+		// need a metamodel that has a reflexive EReference.
+		// Ecore will do nicely. Create the following structure:
+		// pkg1
+		// pkg1::pkg2
+		// pkg1::pkg2::jim
+		// pkg1::bob
+		// pkg1::pkg3
+		// pkg1::pkg3::pkg4
+		// pkg1::pkg3::pkg5
+		// pkg1::pkg3::pkg5::george
+		@NonNull Model root = PivotUtil.createModel(null);
+		org.eclipse.ocl.pivot.@NonNull Package pkg1 = PivotUtil.createOwnedPackage(root, "pkg1");
+		org.eclipse.ocl.pivot.@NonNull Package pkg2 = PivotUtil.createOwnedPackage(pkg1, "pkg2");
+		org.eclipse.ocl.pivot.@NonNull Package jim = PivotUtil.createOwnedPackage(pkg2, "jim");
+		org.eclipse.ocl.pivot.@NonNull Package bob = PivotUtil.createOwnedPackage(pkg1, "bob");
+		org.eclipse.ocl.pivot.@NonNull Package pkg3 = PivotUtil.createOwnedPackage(pkg1, "pkg3");
+		org.eclipse.ocl.pivot.@NonNull Package pkg4 = PivotUtil.createOwnedPackage(pkg3, "pkg4");
+		org.eclipse.ocl.pivot.@NonNull Package pkg5 = PivotUtil.createOwnedPackage(pkg3, "pkg5");
+		org.eclipse.ocl.pivot.@NonNull Package george = PivotUtil.createOwnedPackage(pkg5, "george");
+
 		public MyOCL(@NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager) {
 			super(testPackageName, name, projectManager);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
-//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.nonNullState(metamodelManager.getASmetamodel()));
+			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.nonNullState(metamodelManager.getASmetamodel()));
 
-	        metamodelManager.installRoot(ClassUtil.nonNullState(root));
-//	        helper.setContext(ClassUtil.nonNullState(metamodelManager.getPivotType("Package")));
+			metamodelManager.installRoot(ClassUtil.nonNullState(root));
+			//	        helper.setContext(ClassUtil.nonNullState(metamodelManager.getPivotType("Package")));
 		}
 	}
 
@@ -85,7 +85,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 		super(useCodeGen);
 	}
 
-//	@Override
+	//	@Override
 	protected @NonNull MyOCL createOCL(@NonNull ProjectManager classPath) {
 		return new MyOCL(getTestPackageName(), getName(), classPath);
 	}
@@ -93,8 +93,8 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	@Override
 	@Before public void setUp() throws Exception {
 		BaseLinkingService.DEBUG_RETRY.setState(true);
-        super.setUp();
-    }
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
@@ -121,23 +121,23 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 			ocl.assertSemanticErrorQuery(classType, "OclAny.allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "OclAny", "allInstances", "");
 			ocl.assertSemanticErrorQuery(classType, "4.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Integer", "allInstances", "");
 			ocl.assertSemanticErrorQuery(classType, "true.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Boolean", "allInstances", "");
-	//		ocl.assertQueryInvalid(null, "true.allInstances()");
-	//		ocl.assertQueryResults(null, "Set{true,false}", "true.allInstances()");
-			ocl.assertSemanticErrorQuery(classType, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Integer)[*|1]", "allInstances", "");
+			//		ocl.assertQueryInvalid(null, "true.allInstances()");
+			//		ocl.assertQueryResults(null, "Set{true,false}", "true.allInstances()");
+			ocl.assertSemanticErrorQuery(classType, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Integer)", "allInstances", "");
 			ocl.assertSemanticErrorQuery(classType, "Tuple{a:Integer=1}.allInstances()", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Tuple(a:Integer[1])", "allInstances", "");
 			ocl.assertQueryInvalid(null, "OclInvalid.allInstances()");
 		} finally {
 			ocl.dispose();
 		}
 	}
-	
+
 	/**
 	 * Tests the conformsTo() operator.
 	 */
 	@Test public void test_conformsTo() {
 		MyOCL ocl = createOCL(OCL.NO_PROJECTS);
 		try {
-	//		ocl.assertQueryTrue(null, "true.conformsTo(Boolean)");
+			//		ocl.assertQueryTrue(null, "true.conformsTo(Boolean)");
 			ocl.assertQueryTrue(null, "Boolean.conformsTo(Boolean)");
 			ocl.assertQueryFalse(null, "String.conformsTo(Boolean)");
 			ocl.assertQueryFalse(null, "Boolean.conformsTo(String)");
@@ -152,7 +152,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 			ocl.dispose();
 		}
 	}
-	
+
 	/**
 	 * Tests the oclContainer() operator.
 	 */
@@ -180,7 +180,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 			ocl.dispose();
 		}
 	}
-	
+
 	/**
 	 * Tests the oclContents() operator.
 	 */
@@ -190,7 +190,7 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 		try {
 			IdResolver idResolver = metamodelManager.getEnvironmentFactory().getIdResolver();
 			org.eclipse.ocl.pivot.Class classType = metamodelManager.getStandardLibrary().getClassType();
-	    	@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
+			@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
 			CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
 			ocl.assertSemanticErrorQuery(classType, "invalid.oclContents()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "OclInvalid", "oclContents");
 			ocl.assertQueryInvalid(ocl.pkg2, "let s : OclElement = invalid in s.oclContents()");

@@ -64,7 +64,7 @@ import org.junit.Before;
  * Tests that load a model and verify that there are no unresolved proxies as a result.
  */
 public class EditTests extends XtextTestCase
-{		
+{
 	public class DebugRef
 	{
 		public final Object object;
@@ -114,8 +114,8 @@ public class EditTests extends XtextTestCase
 
 	protected @NonNull Resource doRename(@NonNull OCL ocl, @NonNull CSResource xtextResource, @NonNull Resource asResource, String oldString, String newString, String... expectedErrors) throws IOException {
 		String contextMessage = "Renaming '" + oldString + "' to '" + newString + "'";
-//		System.out.println("-----------------" + contextMessage + "----------------");
-		replace(xtextResource, oldString, newString); 
+		//		System.out.println("-----------------" + contextMessage + "----------------");
+		replace(xtextResource, oldString, newString);
 		assertResourceErrors(contextMessage, xtextResource, expectedErrors);
 		assertNoResourceErrors(contextMessage, asResource);
 		boolean validSave = expectedErrors.length == 0;
@@ -141,20 +141,20 @@ public class EditTests extends XtextTestCase
 		int index = xtextContent.indexOf(oldString);
 		assert index >= 0;
 		xtextResource.update(index, oldString.length(), newString);
-	}	
+	}
 
 	public void testEdit_Paste_NsURI() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		String testDocument = 
-				"package example : ex = 'http://www.example.org/examples/example.ecore'\n" + 
-				"{\n" + 
-				"	class Example\n" + 
-				"	{\n" + 
-				"		attribute name : String[?];\n" + 
-				"		property children : Example[*] { ordered composes };\n" + 
-				"	}\n" + 
-				"}\n";
+		String testDocument =
+				"package example : ex = 'http://www.example.org/examples/example.ecore'\n" +
+						"{\n" +
+						"	class Example\n" +
+						"	{\n" +
+						"		attribute name : String[?];\n" +
+						"		property children : Example[*] { ordered composes };\n" +
+						"	}\n" +
+						"}\n";
 		CSResource xtextResource;
 		Resource asResource;
 		{
@@ -189,35 +189,35 @@ public class EditTests extends XtextTestCase
 			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
 		}
 		ocl.dispose();
-	}	
+	}
 
 	public void testEdit_Paste_OCLinEcore() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		String oldDocument = 
-				"package example : ex = 'http://www.example.org/examples/example.ecore'\n" + 
-				"{\n" + 
-				"	class Example\n" + 
-				"	{\n" + 
-				"		attribute name : String[?];\n" + 
-				"		property children : Example[*] { ordered composes };\n" + 
-				"	}\n" + 
-				"}\n";
-		String newDocument = 
-				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" + 
-				"\n" + 
-				"package tutorial : tut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" + 
-				"{\n" + 
-				"  class Library\n" + 
-				"  {\n" + 
-				"    attribute name : String;\n" + 
-				"    property loans : Loan[*] { composes };\n" + 
-				"  }\n" + 
-				"  \n" + 
-				"  class Loan\n" + 
-				"  {\n" + 
-				"  }\n" + 
-				"}\n";
+		String oldDocument =
+				"package example : ex = 'http://www.example.org/examples/example.ecore'\n" +
+						"{\n" +
+						"	class Example\n" +
+						"	{\n" +
+						"		attribute name : String[?];\n" +
+						"		property children : Example[*] { ordered composes };\n" +
+						"	}\n" +
+						"}\n";
+		String newDocument =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n" +
+						"\n" +
+						"package tutorial : tut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +
+						"{\n" +
+						"  class Library\n" +
+						"  {\n" +
+						"    attribute name : String;\n" +
+						"    property loans : Loan[*] { composes };\n" +
+						"  }\n" +
+						"  \n" +
+						"  class Loan\n" +
+						"  {\n" +
+						"  }\n" +
+						"}\n";
 		CSResource xtextResource;
 		Resource asResource;
 		{
@@ -252,33 +252,33 @@ public class EditTests extends XtextTestCase
 			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
 		}
 		ocl.dispose();
-	}	
+	}
 
 
 	public void testEdit_Paste_operation_394057() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-//		OCLDelegateDomain.initialize(null);
-//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
+		//		OCLDelegateDomain.initialize(null);
+		//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		String testDocument = 
-			"package tutorial : tuttut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +
-			"{\n" +
-			"	class Library\n" +
-			"	{\n" +
-			"		property books#library : Book[*] { composes };\n" +
-			"		/*$$*/\n" +
-			"	}\n" +
-			"	class Book\n" +
-			"	{\n" +
-			"		attribute name : String;\n" +
-			"		property library#books : Library[?];\n" +
-			"	}\n" +
-			"}\n";
-		String pasteText = 
-			"operation packageLabels(packages : Book[*] { !unique, ordered }) : String\n" +
-			"{\n" +
-			"	body: packages?->sortedBy(name)?->iterate(p; acc : String = '' | acc + ' ' + p.name);\n" +		// FIXME should not need second ?->
-			"}";
+		String testDocument =
+				"package tutorial : tuttut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +
+						"{\n" +
+						"	class Library\n" +
+						"	{\n" +
+						"		property books#library : Book[*] { composes };\n" +
+						"		/*$$*/\n" +
+						"	}\n" +
+						"	class Book\n" +
+						"	{\n" +
+						"		attribute name : String;\n" +
+						"		property library#books : Library[?];\n" +
+						"	}\n" +
+						"}\n";
+		String pasteText =
+				"operation packageLabels(packages : Book[*] { !unique, ordered }) : String\n" +
+						"{\n" +
+						"	body: packages?->sortedBy(name)?->iterate(p; acc : String = '' | acc + ' ' + p.name);\n" +		// FIXME should not need second ?->
+						"}";
 		CSResource xtextResource;
 		Resource asResource;
 		{
@@ -313,221 +313,221 @@ public class EditTests extends XtextTestCase
 			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
 		}
 		ocl.dispose();
-	}	
+	}
 
 	public void testEdit_Paste_473249() throws Exception {
 		BaseLinkingService.DEBUG_RETRY.setState(true);
 		UMLStandaloneSetup.init();
 		OCL ocl = OCL.newInstance(getProjectMap());
-//		OCLDelegateDomain.initialize(null);
-//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
+		//		OCLDelegateDomain.initialize(null);
+		//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		String testDocument = 
-			"import ecore : 'http://www.eclipse.org/emf/2002/Ecore' ; import uml : 'http://www.eclipse.org/uml2/5.0.0/UML' ;\n" + 
-			"\n" + 
-			"package UML2EcoreMapping : u2e = 'http://www.eclipse.org/ocl/2012/UML2EcoreMapping'\n" + 
-			"{\n" + 
-			"	class CreateOperation extends OperationMapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: nameLabel(newName) + ' <= ' + 'operationLabels(oldOperations)';\n" + 
-			"		}\n" + 
-			"		attribute newName : String[1];\n" + 
-			"	}\n" + 
-			"	class CreatePackage extends PackageMapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: nameLabel(newName) + ' <= ' + packageLabels(oldPackages);\n" + 
-			"		}\n" + 
-			"		attribute newName : String[1];\n" + 
-			"		attribute nsPrefix : String[1];\n" + 
-			"		attribute nsURI : String[1];\n" + 
-			"		attribute isASmetamodel : Boolean[1] = 'false';\n" + 
-			"		attribute ecoreFileStem : String[?];\n" + 
-			"		property typeMappings : TypeMapping[*] { ordered composes };\n" + 
-			"	}\n" + 
-			"	class CreateProperty extends PropertyMapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: nameLabel(newName) + ' <= ' + propertyLabels(oldProperties);\n" + 
-			"		}\n" + 
-			"		attribute newName : String[1];\n" + 
-			"		attribute newIsDerived : ecore::EBooleanObject[?];\n" + 
-			"		attribute newIsNullFree : ecore::EBooleanObject[?];\n" + 
-			"		attribute newIsResolveProxies : ecore::EBooleanObject[?];\n" + 
-			"		attribute newIsTransient : ecore::EBooleanObject[?];\n" + 
-			"		attribute newIsUnsettable : ecore::EBooleanObject[?];\n" + 
-			"		attribute newIsVolatile : ecore::EBooleanObject[?];\n" + 
-			"		attribute newLowerBound : ecore::EIntegerObject[?];\n" + 
-			"		property opposite : uml::Property[?];\n" + 
-			"	}\n" + 
-			"	class CreateType extends TypeMapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: nameLabel(newName) + ' <= ' + typeLabels(oldTypes);\n" + 
-			"		}\n" + 
-			"		attribute newName : String[1];\n" + 
-			"		attribute newInstanceTypeName : String[?];\n" + 
-			"		attribute newIsSerializable : ecore::EBooleanObject[?];\n" + 
-			"		property orderedSuperTypes : uml::Type[*] { ordered };\n" + 
-			"		property excludeProperties : uml::Property[*] { ordered };\n" + 
-			"		property includeProperties : uml::Property[*] { ordered };\n" + 
-			"		property excludeTypes : uml::Type[*] { ordered };\n" + 
-			"		property operationMappings : OperationMapping[*] { ordered composes };\n" + 
-			"		property propertyMappings : PropertyMapping[*] { ordered composes };\n" + 
-			"		invariant UniqueCreatePropertyNames: propertyMappings->selectByKind(CreateProperty)->isUnique(newName);\n" + 
-			"	}\n" + 
-			"	class DeleteOperation extends OperationMapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: nameLabel(oldName) + ' <= ' + operationLabels(oldOperations);\n" + 
-			"		}\n" + 
-			"		attribute oldName : String[1];\n" + 
-			"	}\n" + 
-			"	class DeletePackage extends PackageMapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: oldName;\n" + 
-			"		}\n" + 
-			"		attribute oldName : String[1];\n" + 
-			"		property deleteTypes : DeleteType[*] { ordered composes };\n" + 
-			"	}\n" + 
-			"	class DeleteProperty extends PropertyMapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: nameLabel(oldName) + ' <= ' + propertyLabels(oldProperties);\n" + 
-			"		}\n" + 
-			"		attribute oldName : String[1];\n" + 
-			"	}\n" + 
-			"	class DeleteType extends TypeMapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: nameLabel(oldName) + ' <= ' + typeLabels(oldTypes);\n" + 
-			"		}\n" + 
-			"		attribute oldName : String[1];\n" + 
-			"		property operationMappings : OperationMapping[*] { ordered composes };\n" + 
-			"		property propertyMappings : PropertyMapping[*] { ordered composes };\n" + 
-			"	}\n" + 
-			"	abstract class Mapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: 'default-label';\n" + 
-			"		}\n" + 
-			"		operation nameLabel(name : String[1]) : String[1]\n" + 
-			"		{\n" + 
-			"			body: if name = null then 'null' else name endif;\n" + 
-			"		}\n" + 
-			"		operation operationLabels(operations : uml::Operation[*] { ordered }) : String[1]\n" + 
-			"		{\n" + 
-			"			body: operations->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | let type : uml::Type = if p.class <> null then p.class else p.interface endif in acc + ' ' + nameLabel(p.class.package.name) + '::' + nameLabel(p.class.name) + '::' + nameLabel(p.name));\n" + 
-			"		}\n" + 
-			"		operation packageLabel(p : uml::Package[1]) : String[1]\n" + 
-			"		{\n" + 
-			"			body: if p <> null then nameLabel(p.name) else 'null' endif;\n" + 
-			"		}\n" + 
-			"		operation packageLabels(packages : uml::Package[*] { ordered }) : String[1]\n" + 
-			"		{\n" + 
-			"			body: packages->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | acc + ' ' + packageLabel(p));\n" + 
-			"		}\n" + 
-			"		operation propertyLabel(p : uml::Property[1]) : String[1]\n" + 
-			"		{\n" + 
-			"			body: if p <> null then let t = if p.class <> null then p.class else p.association endif in typeLabel(t) + '::' + nameLabel(p.name) else 'null' endif;\n" + 
-			"		}\n" + 
-			"		operation propertyLabels(properties : uml::Property[*] { ordered }) : String[1]\n" + 
-			"		{\n" + 
-			"			body: properties->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | acc + ' ' + propertyLabel(p));\n" + 
-			"		}\n" + 
-			"		operation typeLabel(t : uml::Type[1]) : String[1]\n" + 
-			"		{\n" + 
-			"			body: if t <> null then packageLabel(t.package) + '::' + nameLabel(t.name) else 'null' endif;\n" + 
-			"		}\n" + 
-			"		operation typeLabels(types : uml::Type[*] { ordered }) : String[1]\n" + 
-			"		{\n" + 
-			"			body: types->sortedBy(nameLabel(name))->iterate(t; acc : String = '' | acc + ' ' + typeLabel(t));\n" + 
-			"		}\n" + 
-			"		attribute label : String[1] { transient }\n" + 
-			"		{\n" + 
-			"			initial: label();\n" + 
-			"		}\n" + 
-			"	}\n" + 
-			"	class Mappings\n" + 
-			"	{\n" + 
-			"		property mappings : Mapping[*] { ordered composes };\n" + 
-			"	}\n" + 
-			"	abstract class PackageMapping extends Mapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: packageLabels(oldPackages);\n" + 
-			"		}\n" + 
-			"		property oldPackages : uml::Package[*] { ordered };\n" + 
-			"	}\n" + 
-			"	abstract class OperationMapping extends Mapping\n" + 
-			"	{\n" + 
-			"		property oldOperations : uml::Operation[*] { ordered };\n" + 
-			"	}\n" + 
-			"	abstract class PropertyMapping extends Mapping\n" + 
-			"	{\n" + 
-			"		property oldProperties : uml::Property[*] { ordered };\n" + 
-			"	}\n" + 
-			"	abstract class TypeMapping extends Mapping\n" + 
-			"	{\n" + 
-			"		operation label() : String[1]\n" + 
-			"		{\n" + 
-			"			body: typeLabels(oldTypes);\n" + 
-			"		}\n" + 
-			"		property oldTypes : uml::Type[*] { ordered };\n" + 
-			"	}\n" + 
-			"}";
+		String testDocument =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore' ; import uml : 'http://www.eclipse.org/uml2/5.0.0/UML' ;\n" +
+						"\n" +
+						"package UML2EcoreMapping : u2e = 'http://www.eclipse.org/ocl/2012/UML2EcoreMapping'\n" +
+						"{\n" +
+						"	class CreateOperation extends OperationMapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: nameLabel(newName) + ' <= ' + 'operationLabels(oldOperations)';\n" +
+						"		}\n" +
+						"		attribute newName : String[1];\n" +
+						"	}\n" +
+						"	class CreatePackage extends PackageMapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: nameLabel(newName) + ' <= ' + packageLabels(oldPackages);\n" +
+						"		}\n" +
+						"		attribute newName : String[1];\n" +
+						"		attribute nsPrefix : String[1];\n" +
+						"		attribute nsURI : String[1];\n" +
+						"		attribute isASmetamodel : Boolean[1] = 'false';\n" +
+						"		attribute ecoreFileStem : String[?];\n" +
+						"		property typeMappings : TypeMapping[*] { ordered composes };\n" +
+						"	}\n" +
+						"	class CreateProperty extends PropertyMapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: nameLabel(newName) + ' <= ' + propertyLabels(oldProperties);\n" +
+						"		}\n" +
+						"		attribute newName : String[1];\n" +
+						"		attribute newIsDerived : ecore::EBooleanObject[?];\n" +
+						"		attribute newIsNullFree : ecore::EBooleanObject[?];\n" +
+						"		attribute newIsResolveProxies : ecore::EBooleanObject[?];\n" +
+						"		attribute newIsTransient : ecore::EBooleanObject[?];\n" +
+						"		attribute newIsUnsettable : ecore::EBooleanObject[?];\n" +
+						"		attribute newIsVolatile : ecore::EBooleanObject[?];\n" +
+						"		attribute newLowerBound : ecore::EIntegerObject[?];\n" +
+						"		property opposite : uml::Property[?];\n" +
+						"	}\n" +
+						"	class CreateType extends TypeMapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: nameLabel(newName) + ' <= ' + typeLabels(oldTypes);\n" +
+						"		}\n" +
+						"		attribute newName : String[1];\n" +
+						"		attribute newInstanceTypeName : String[?];\n" +
+						"		attribute newIsSerializable : ecore::EBooleanObject[?];\n" +
+						"		property orderedSuperTypes : uml::Type[*] { ordered };\n" +
+						"		property excludeProperties : uml::Property[*] { ordered };\n" +
+						"		property includeProperties : uml::Property[*] { ordered };\n" +
+						"		property excludeTypes : uml::Type[*] { ordered };\n" +
+						"		property operationMappings : OperationMapping[*] { ordered composes };\n" +
+						"		property propertyMappings : PropertyMapping[*] { ordered composes };\n" +
+						"		invariant UniqueCreatePropertyNames: propertyMappings->selectByKind(CreateProperty)->isUnique(newName);\n" +
+						"	}\n" +
+						"	class DeleteOperation extends OperationMapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: nameLabel(oldName) + ' <= ' + operationLabels(oldOperations);\n" +
+						"		}\n" +
+						"		attribute oldName : String[1];\n" +
+						"	}\n" +
+						"	class DeletePackage extends PackageMapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: oldName;\n" +
+						"		}\n" +
+						"		attribute oldName : String[1];\n" +
+						"		property deleteTypes : DeleteType[*] { ordered composes };\n" +
+						"	}\n" +
+						"	class DeleteProperty extends PropertyMapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: nameLabel(oldName) + ' <= ' + propertyLabels(oldProperties);\n" +
+						"		}\n" +
+						"		attribute oldName : String[1];\n" +
+						"	}\n" +
+						"	class DeleteType extends TypeMapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: nameLabel(oldName) + ' <= ' + typeLabels(oldTypes);\n" +
+						"		}\n" +
+						"		attribute oldName : String[1];\n" +
+						"		property operationMappings : OperationMapping[*] { ordered composes };\n" +
+						"		property propertyMappings : PropertyMapping[*] { ordered composes };\n" +
+						"	}\n" +
+						"	abstract class Mapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: 'default-label';\n" +
+						"		}\n" +
+						"		operation nameLabel(name : String[1]) : String[1]\n" +
+						"		{\n" +
+						"			body: if name = null then 'null' else name endif;\n" +
+						"		}\n" +
+						"		operation operationLabels(operations : uml::Operation[*] { ordered }) : String[1]\n" +
+						"		{\n" +
+						"			body: operations->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | let type : uml::Type = if p.class <> null then p.class else p.interface endif in acc + ' ' + nameLabel(p.class.package.name) + '::' + nameLabel(p.class.name) + '::' + nameLabel(p.name));\n" +
+						"		}\n" +
+						"		operation packageLabel(p : uml::Package[1]) : String[1]\n" +
+						"		{\n" +
+						"			body: if p <> null then nameLabel(p.name) else 'null' endif;\n" +
+						"		}\n" +
+						"		operation packageLabels(packages : uml::Package[*] { ordered }) : String[1]\n" +
+						"		{\n" +
+						"			body: packages->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | acc + ' ' + packageLabel(p));\n" +
+						"		}\n" +
+						"		operation propertyLabel(p : uml::Property[1]) : String[1]\n" +
+						"		{\n" +
+						"			body: if p <> null then let t = if p.class <> null then p.class else p.association endif in typeLabel(t) + '::' + nameLabel(p.name) else 'null' endif;\n" +
+						"		}\n" +
+						"		operation propertyLabels(properties : uml::Property[*] { ordered }) : String[1]\n" +
+						"		{\n" +
+						"			body: properties->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | acc + ' ' + propertyLabel(p));\n" +
+						"		}\n" +
+						"		operation typeLabel(t : uml::Type[1]) : String[1]\n" +
+						"		{\n" +
+						"			body: if t <> null then packageLabel(t.package) + '::' + nameLabel(t.name) else 'null' endif;\n" +
+						"		}\n" +
+						"		operation typeLabels(types : uml::Type[*] { ordered }) : String[1]\n" +
+						"		{\n" +
+						"			body: types->sortedBy(nameLabel(name))->iterate(t; acc : String = '' | acc + ' ' + typeLabel(t));\n" +
+						"		}\n" +
+						"		attribute label : String[1] { transient }\n" +
+						"		{\n" +
+						"			initial: label();\n" +
+						"		}\n" +
+						"	}\n" +
+						"	class Mappings\n" +
+						"	{\n" +
+						"		property mappings : Mapping[*] { ordered composes };\n" +
+						"	}\n" +
+						"	abstract class PackageMapping extends Mapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: packageLabels(oldPackages);\n" +
+						"		}\n" +
+						"		property oldPackages : uml::Package[*] { ordered };\n" +
+						"	}\n" +
+						"	abstract class OperationMapping extends Mapping\n" +
+						"	{\n" +
+						"		property oldOperations : uml::Operation[*] { ordered };\n" +
+						"	}\n" +
+						"	abstract class PropertyMapping extends Mapping\n" +
+						"	{\n" +
+						"		property oldProperties : uml::Property[*] { ordered };\n" +
+						"	}\n" +
+						"	abstract class TypeMapping extends Mapping\n" +
+						"	{\n" +
+						"		operation label() : String[1]\n" +
+						"		{\n" +
+						"			body: typeLabels(oldTypes);\n" +
+						"		}\n" +
+						"		property oldTypes : uml::Type[*] { ordered };\n" +
+						"	}\n" +
+						"}";
 		CSResource xtextResource;
-//		System.out.println("------Load--------------------------------");
+		//		System.out.println("------Load--------------------------------");
 		Resource asResource;
 		{
 			URI ecoreURI1 = getProjectFileURI("Bug473249a.ecore");
 			URI outputURI = getProjectFileURI("Bug473249.oclinecore");
 			xtextResource = ocl.getCSResource(outputURI, testDocument);
-//			System.out.println("------cs2as--------------------------------");
+			//			System.out.println("------cs2as--------------------------------");
 			asResource = cs2as(ocl, xtextResource, null);
-//			System.out.println("------as2ecore--------------------------------");
+			//			System.out.println("------as2ecore--------------------------------");
 			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
 		}
 		//
 		//	Change "/*$$*/" to "pasteText".
 		//
 		{
-//			System.out.println("------replace--------------------------------");
+			//			System.out.println("------replace--------------------------------");
 			replace(xtextResource, "'operationLabels(oldOperations)'", "operationLabels(oldOperations)");
 			assertNoResourceErrors("Pasting operation", xtextResource);
-//			System.out.println("------validate--------------------------------");
+			//			System.out.println("------validate--------------------------------");
 			assertNoValidationErrors("Pasting operation", xtextResource);
 			assertNoResourceErrors("Pasting operation", asResource);
 			assertNoValidationErrors("Pasting operation", asResource);
 			URI ecoreURI2 = getProjectFileURI("Bug473249b.ecore");
-//			System.out.println("------as2ecore--------------------------------");
+			//			System.out.println("------as2ecore--------------------------------");
 			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
 		}
 		ocl.dispose();
-	}	
+	}
 
 	public void testEdit_Reclass_ecore_383285() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		String testDocument_class = 
+		String testDocument_class =
 				"package p1 : p2 = 'p3' {\n" +
-				"    class C : 'java.lang.Object';\n" +
-				"}\n";
-		String testDocument_datatype = 
+						"    class C : 'java.lang.Object';\n" +
+						"}\n";
+		String testDocument_datatype =
 				"package p1 : p2 = 'p3' {\n" +
-				"    datatype C : 'java.lang.Object';\n" +
-				"}\n";
+						"    datatype C : 'java.lang.Object';\n" +
+						"}\n";
 		URI ecoreURI_class = getProjectFileURI("test-class.ecore");
 		URI ecoreURI_datatype = getProjectFileURI("test-datatype.ecore");
 		OCL ocl_class = OCL.newInstance(getProjectMap());
@@ -566,29 +566,29 @@ public class EditTests extends XtextTestCase
 		}
 		ocl_class.dispose();
 		ocl_datatype.dispose();
-		ocl.dispose();		
-	}	
+		ocl.dispose();
+	}
 
 	public void testEdit_Comments() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		String testDocument_uncommented = 
+		String testDocument_uncommented =
 				"package p1 : p2 = 'p3' {\n" +
-				"    class C : 'java.lang.Object';\n" +
-				"}\n";
-		String testDocument_commented = 
+						"    class C : 'java.lang.Object';\n" +
+						"}\n";
+		String testDocument_commented =
 				"package p1 : p2 = 'p3' {\n" +
-				"    /* a comment */\n" +
-				"    class C : 'java.lang.Object';\n" +
-				"}\n";
-		String testDocument_recommented = 
+						"    /* a comment */\n" +
+						"    class C : 'java.lang.Object';\n" +
+						"}\n";
+		String testDocument_recommented =
 				"package p1 : p2 = 'p3' {\n" +
-				"    /*\n" +
-				"	  *	yet \n" +
-				"	  *	another \n" +
-				"	  *	comment\n" +
-				"	  */\n" +
-				"    class C : 'java.lang.Object';\n" +
-				"}\n";
+						"    /*\n" +
+						"	  *	yet \n" +
+						"	  *	another \n" +
+						"	  *	comment\n" +
+						"	  */\n" +
+						"    class C : 'java.lang.Object';\n" +
+						"}\n";
 		URI ecoreURI_uncommented = getProjectFileURI("test-uncommented.ecore");
 		URI ecoreURI_commented = getProjectFileURI("test-commented.ecore");
 		URI ecoreURI_recommented = getProjectFileURI("test-recommented.ecore");
@@ -644,29 +644,29 @@ public class EditTests extends XtextTestCase
 		ocl_uncommented.dispose();
 		ocl_commented.dispose();
 		ocl_recommented.dispose();
-		ocl.dispose();		
-	}	
+		ocl.dispose();
+	}
 
 	public void testEdit_Refresh_ecore_382230() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-//		OCLDelegateDomain.initialize(null);
-//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
+		//		OCLDelegateDomain.initialize(null);
+		//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		OCL ocl0 = OCL.newInstance(getProjectMap());
-		String testDocument = 
-			"package tutorial : tuttut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +
-			"{\n" +
-			"	class Library\n" +
-			"	{\n" +
-			"		property books#library : Book[*] { composes };\n" +
-			"	}\n" +
-			"	class Book\n" +
-			"	{\n" +
-			"		property library#books : Library[?];\n" +
-			"		property name : String;\n" +
-			"		invariant NameNotEmpty: name->notEmpty();\n" +
-			"	}\n" +
-			"}\n";
+		String testDocument =
+				"package tutorial : tuttut = 'http://www.eclipse.org/mdt/ocl/oclinecore/tutorial'\n" +
+						"{\n" +
+						"	class Library\n" +
+						"	{\n" +
+						"		property books#library : Book[*] { composes };\n" +
+						"	}\n" +
+						"	class Book\n" +
+						"	{\n" +
+						"		property library#books : Library[?];\n" +
+						"		property name : String;\n" +
+						"		invariant NameNotEmpty: name->notEmpty();\n" +
+						"	}\n" +
+						"}\n";
 		URI ecoreURI = createEcoreFile(ocl0, "RefreshTest.ecore", testDocument, true);
 		ocl0.dispose();
 		//
@@ -682,7 +682,7 @@ public class EditTests extends XtextTestCase
 		Set<EObject> loadPivotContent = new HashSet<EObject>();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
-//			System.out.println(ClassUtil.debugSimpleName(eObject));
+			//			System.out.println(ClassUtil.debugSimpleName(eObject));
 			loadPivotContent.add(eObject);
 		}
 		{
@@ -696,13 +696,13 @@ public class EditTests extends XtextTestCase
 			Set<EObject> parsePivotContent = new HashSet<EObject>();
 			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
-//				System.out.println(ClassUtil.debugSimpleName(eObject));
+				//				System.out.println(ClassUtil.debugSimpleName(eObject));
 				parsePivotContent.add(eObject);
 			}
 			assertEquals(loadPivotContent.size(), parsePivotContent.size());
 			assertEquals(loadPivotContent, parsePivotContent);
 		}
-		
+
 		//
 		//	Reload and re-instrument test document
 		//
@@ -721,7 +721,7 @@ public class EditTests extends XtextTestCase
 		Set<EObject> newPivotContent = new HashSet<EObject>();
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
-//			System.out.println(PivotUtil.debugSimpleName(eObject));
+			//			System.out.println(PivotUtil.debugSimpleName(eObject));
 			newPivotContent.add(eObject);
 		}
 		assertEquals(loadPivotContent.size(), newPivotContent.size());
@@ -737,21 +737,21 @@ public class EditTests extends XtextTestCase
 			Set<EObject> reparsePivotContent = new HashSet<EObject>();
 			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 				EObject eObject = tit.next();
-//				System.out.println(PivotUtil.debugSimpleName(eObject));
+				//				System.out.println(PivotUtil.debugSimpleName(eObject));
 				reparsePivotContent.add(eObject);
 			}
 			assertEquals(loadPivotContent.size(), reparsePivotContent.size());
 			assertEquals(loadPivotContent, reparsePivotContent);
 		}
 		ocl.dispose();
-	}	
+	}
 
 	public void testEdit_Rename_ecore() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-		String testDocument = 
-			"module m1 \n" +
-			"package p1 : p2 = 'p3' {\n" +
-			"}\n";
+		String testDocument =
+				"module m1 \n" +
+						"package p1 : p2 = 'p3' {\n" +
+						"}\n";
 		URI ecoreURI0 = getProjectFileURI("test0.ecore");
 		OCL ocl1 = OCL.newInstance(getProjectMap());
 		Resource ecoreResource0 = getEcoreFromCS(ocl1, testDocument, ecoreURI0);
@@ -789,33 +789,33 @@ public class EditTests extends XtextTestCase
 		//	Changing "p1" to "pkg" renames the package.
 		//
 		{
-			replace(xtextResource, "p1", "pkg"); 
+			replace(xtextResource, "p1", "pkg");
 			assertNoResourceErrors("Renaming", xtextResource);
 			URI ecoreURI4 = getProjectFileURI("test4.ecore");
 			Resource ecoreResource4 = as2ecore(ocl, asResource, ecoreURI4, true);
 			((EPackage)ecoreResource0.getContents().get(0)).setName("pkg");
-			TestUtil.assertSameModel(ecoreResource0, ecoreResource4);		
+			TestUtil.assertSameModel(ecoreResource0, ecoreResource4);
 		}
 		ocl1.dispose();
 		ocl.dispose();
-	}	
+	}
 
 	public void testEdit_Rename_Restore_ecore() throws Exception {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		String testDocument = 
-			"package TestPackage : tp = 'TestPackage'\n" +
-			"{\n" +
-			"	class TestClass1 {\n" +
-			"		property testProperty1 : Integer;\n" +
-			"		operation testOperation(i : Integer) : Integer;\n" +
-			"		invariant testInvariant: 1 = 0;\n" +
-			"	}\n" +
-			"	class TestClass2 {\n" +
-			"		property testProperty2 : TestClass1[1];\n" +
-			"		property testProperty3 : Integer[*];\n" +
-			"		invariant testInvariant: testProperty2.testProperty1 = testProperty2.testOperation(123456);\n" +
-			"	}\n" +
-			"}\n";
+		String testDocument =
+				"package TestPackage : tp = 'TestPackage'\n" +
+						"{\n" +
+						"	class TestClass1 {\n" +
+						"		property testProperty1 : Integer;\n" +
+						"		operation testOperation(i : Integer) : Integer;\n" +
+						"		invariant testInvariant: 1 = 0;\n" +
+						"	}\n" +
+						"	class TestClass2 {\n" +
+						"		property testProperty2 : TestClass1[1];\n" +
+						"		property testProperty3 : Integer[*];\n" +
+						"		invariant testInvariant: testProperty2.testProperty1 = testProperty2.testOperation(123456);\n" +
+						"	}\n" +
+						"}\n";
 		URI ecoreURI0 = getProjectFileURI("test0.ecore");
 		OCL ocl1 = OCL.newInstance(getProjectMap());
 		Resource ecoreResource0 = getEcoreFromCS(ocl1, testDocument, ecoreURI0);
@@ -832,7 +832,7 @@ public class EditTests extends XtextTestCase
 		//	Changing "TestClass1" to "Testing" renames a type and breaks the invariant.
 		//
 		doRename(ocl, xtextResource, asResource, "TestClass1", "Testing",
-//			ClassUtil.bind(OCLMessages.Unresolved_ERROR_, "Type", pivotTestClass1.getName()),
+			//			ClassUtil.bind(OCLMessages.Unresolved_ERROR_, "Type", pivotTestClass1.getName()),
 			StringUtil.bind(PivotMessagesInternal.UnresolvedType_ERROR_, "", pivotTestClass1.getName()),
 			StringUtil.bind(PivotMessagesInternal.UnresolvedProperty_ERROR_, "OclInvalid", "testProperty1"),
 			StringUtil.bind(PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "testOperation", "123456"));
@@ -884,21 +884,21 @@ public class EditTests extends XtextTestCase
 
 	public void testEdit_StaleReference_ecore() throws Exception {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		String testDocument = 
-			"package TestPackage : tp = 'TestPackage'\n" +
-			"{\n" +
-			"	class TestClass1 {\n" +
-			"		property testProperty1 : Integer;\n" +
-			"		operation testOperation() : Integer;\n" +
-			"		invariant testInvariant: 1 = 0;\n" +
-			"	}\n" +
-			"	class TestClass2 {\n" +
-			"		property testProperty2 : TestClass1[*];\n" +
-			"		invariant testInvariant: testProperty2?->select(testOperation() = testProperty1)->isEmpty();\n" +
-			"	}\n" +
-			"}\n";
+		String testDocument =
+				"package TestPackage : tp = 'TestPackage'\n" +
+						"{\n" +
+						"	class TestClass1 {\n" +
+						"		property testProperty1 : Integer;\n" +
+						"		operation testOperation() : Integer;\n" +
+						"		invariant testInvariant: 1 = 0;\n" +
+						"	}\n" +
+						"	class TestClass2 {\n" +
+						"		property testProperty2 : TestClass1[*];\n" +
+						"		invariant testInvariant: testProperty2?->select(testOperation() = testProperty1)->isEmpty();\n" +
+						"	}\n" +
+						"}\n";
 		URI ecoreURI0 = getProjectFileURI("test0.ecore");
-//		System.out.println("*************load-reference*********************************************************");
+		//		System.out.println("*************load-reference*********************************************************");
 		OCL ocl1 = OCL.newInstance(getProjectMap());
 		Resource ecoreResource0 = getEcoreFromCS(ocl1, testDocument, ecoreURI0);
 		URI ecoreURI1 = getProjectFileURI("test1.ecore");
@@ -937,13 +937,13 @@ public class EditTests extends XtextTestCase
 
 	public void testEdit_StaleSpecialization() throws Exception {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
-		String testDocument = 
-			"import '" + LibraryConstants.STDLIB_URI + "';\n" + 
-			"library ocl : ocl = '" + LibraryConstants.STDLIB_URI + "' {\n" +
-			"type MyType conformsTo OclAny{\n" +
-			"operation testFunction() : Boolean;\n" +
-			"}\n" +
-			"}\n";
+		String testDocument =
+				"import '" + LibraryConstants.STDLIB_URI + "';\n" +
+						"library ocl : ocl = '" + LibraryConstants.STDLIB_URI + "' {\n" +
+						"type MyType conformsTo OclAny{\n" +
+						"operation testFunction() : Boolean;\n" +
+						"}\n" +
+						"}\n";
 		URI outputURI = getProjectFileURI("test.oclstdlib");
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		CompleteModelInternal completeModel = metamodelManager.getCompleteModel();
@@ -955,15 +955,15 @@ public class EditTests extends XtextTestCase
 		//
 		Type myType = ClassUtil.nonNullState(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
 		SequenceType sequenceType = ocl.getStandardLibrary().getSequenceType();
-		CollectionTypeParameters<@NonNull Type> typeParameters = new CollectionTypeParametersImpl<@NonNull Type>(myType, false, null, null);
+		CollectionTypeParameters<@NonNull Type> typeParameters = new CollectionTypeParametersImpl<@NonNull Type>(myType, true, null, null);
 		CompleteClassInternal sequenceCompleteClass = metamodelManager.getCompleteClass(sequenceType);
 		WeakReference<Type> sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
-		assertNull(sequenceMyType.get()); 
+		assertNull(sequenceMyType.get());
 		//
 		doRename(ocl, xtextResource, asResource, "Boolean", "Sequence(MyType)");
 		sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
-		assertNotNull(sequenceMyType.get()); 
-		//		
+		assertNotNull(sequenceMyType.get());
+		//
 		doRename(ocl, xtextResource, asResource, "Sequence(MyType)", "Set(MyType)");
 		System.gc();
 		sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
@@ -975,25 +975,25 @@ public class EditTests extends XtextTestCase
 
 	public void testEdit_Paste_CompleteOCL() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
-//		OCLDelegateDomain.initialize(null);
-//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
+		//		OCLDelegateDomain.initialize(null);
+		//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-		String testDocument = 
-			"package ocl\n" +
-			"context IterateExp\n" +
-			"inv True: true\n" +
-			"/*$$*/\n" +
-			"context IteratorExp\n" +
-			"def: IsTrue() : Boolean = true\n" +
-			"inv True: IsTrue()\n" +
-			"endpackage\n";
-		String pasteText = 
-			"context IterateExp\n" +
-			"inv False: true\n";
+		String testDocument =
+				"package ocl\n" +
+						"context IterateExp\n" +
+						"inv True: true\n" +
+						"/*$$*/\n" +
+						"context IteratorExp\n" +
+						"def: IsTrue() : Boolean = true\n" +
+						"inv True: IsTrue()\n" +
+						"endpackage\n";
+		String pasteText =
+				"context IterateExp\n" +
+						"inv False: true\n";
 		CSResource xtextResource;
 		Resource asResource;
 		{
-//			URI ecoreURI1 = getProjectFileURI("test1.ecore");
+			//			URI ecoreURI1 = getProjectFileURI("test1.ecore");
 			URI outputURI = getProjectFileURI("test.ocl");
 			xtextResource = ocl.getCSResource(outputURI, testDocument);
 			asResource = cs2as(ocl, xtextResource, null);
@@ -1001,7 +1001,7 @@ public class EditTests extends XtextTestCase
 			assertNoValidationErrors("Loading", xtextResource);
 			assertNoResourceErrors("Loading", asResource);
 			assertNoValidationErrors("Loading", asResource);
-//			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			//			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
 		}
 		//
 		//	Change "/*$$*/" to "pasteText".
@@ -1012,37 +1012,37 @@ public class EditTests extends XtextTestCase
 			assertNoValidationErrors("Pasting operation", xtextResource);
 			assertNoResourceErrors("Pasting operation", asResource);
 			assertNoValidationErrors("Pasting operation", asResource);
-//			URI ecoreURI2 = getProjectFileURI("test2.ecore");
-//			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
+			//			URI ecoreURI2 = getProjectFileURI("test2.ecore");
+			//			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
 		}
 		//
 		//	Change "pasteText" back to "/*$$*/".
 		//
 		{
-//			replace(xtextResource, pasteText, "/*$$*/");
-//			assertNoResourceErrors("Unpasting operation", xtextResource);
-//			assertNoValidationErrors("Unpasting operation", xtextResource);
-//			assertNoResourceErrors("Unpasting operation", asResource);
-//			assertNoValidationErrors("Unpasting operation", asResource);
-//			URI ecoreURI3 = getProjectFileURI("test3.ecore");
-//			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
+			//			replace(xtextResource, pasteText, "/*$$*/");
+			//			assertNoResourceErrors("Unpasting operation", xtextResource);
+			//			assertNoValidationErrors("Unpasting operation", xtextResource);
+			//			assertNoResourceErrors("Unpasting operation", asResource);
+			//			assertNoValidationErrors("Unpasting operation", asResource);
+			//			URI ecoreURI3 = getProjectFileURI("test3.ecore");
+			//			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
 		}
 		ocl.dispose();
-	}	
+	}
 
 	public void testEdit_Paste_OCLstdlib() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		String goodString = "coercion toUnlimitedNatural";
 		String badString = "coer cion toUnlimitedNatural";
-//		OCLDelegateDomain.initialize(null);
-//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
+		//		OCLDelegateDomain.initialize(null);
+		//		OCLDelegateDomain.initialize(null, OCLConstants.OCL_DELEGATE_URI);
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		CSResource xtextResource;
 		Resource asResource;
 		{
-//			URI ecoreURI1 = getProjectFileURI("test1.ecore");
-//			InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
-//			URI outputURI = getProjectFileURI("test.ocl");
+			//			URI ecoreURI1 = getProjectFileURI("test1.ecore");
+			//			InputStream inputStream = new URIConverter.ReadableInputStream(testDocument, "UTF-8");
+			//			URI outputURI = getProjectFileURI("test.ocl");
 			ProjectManager projectMap = ocl.getProjectManager();
 			projectMap.initializeResourceSet(ocl.getResourceSet());
 			@NonNull URI libURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib", true);
@@ -1052,7 +1052,7 @@ public class EditTests extends XtextTestCase
 			assertNoValidationErrors("Loading", xtextResource);
 			assertNoResourceErrors("Loading", asResource);
 			assertNoValidationErrors("Loading", asResource);
-//			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
+			//			@SuppressWarnings("unused") Resource ecoreResource1 = as2ecore(ocl, asResource, ecoreURI1, true);
 		}
 		//
 		//	Change "coercion" to "coer cion" - a catastrophic syntax error
@@ -1060,11 +1060,11 @@ public class EditTests extends XtextTestCase
 		{
 			replace(xtextResource, goodString, badString);
 			assertResourceErrors("Pasting operation", xtextResource, "mismatched input 'coer' expecting '}'", "no viable alternative at 'type'");
-//			assertNoValidationErrors("Pasting operation", xtextResource);
+			//			assertNoValidationErrors("Pasting operation", xtextResource);
 			assertNoResourceErrors("Pasting operation", asResource);
 			assertNoValidationErrors("Pasting operation", asResource);
-//			URI ecoreURI2 = getProjectFileURI("test2.ecore");
-//			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
+			//			URI ecoreURI2 = getProjectFileURI("test2.ecore");
+			//			@SuppressWarnings("unused") Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, false);
 		}
 		//
 		//	Change "coer cion" back to "coercion".
@@ -1075,9 +1075,9 @@ public class EditTests extends XtextTestCase
 			assertNoValidationErrors("Unpasting operation", xtextResource);
 			assertNoResourceErrors("Unpasting operation", asResource);
 			assertNoValidationErrors("Unpasting operation", asResource);
-//			URI ecoreURI3 = getProjectFileURI("test3.ecore");
-//			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
+			//			URI ecoreURI3 = getProjectFileURI("test3.ecore");
+			//			@SuppressWarnings("unused") Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, true);
 		}
 		ocl.dispose();
-	}	
+	}
 }

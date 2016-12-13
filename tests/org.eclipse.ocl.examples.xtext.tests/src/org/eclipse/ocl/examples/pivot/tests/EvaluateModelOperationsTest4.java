@@ -490,12 +490,12 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
 		ocl.assertQueryTrue(null, "let x : Type[*] = Bag{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
 		ocl.assertValidationErrorQuery(null, "let x : Type[*] = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_LetVariable_c_c_CompatibleTypeForInitializer, "x : Bag(Type) = Set{Integer, Real}");
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_LetVariable_c_c_CompatibleTypeForInitializer, "x : Bag(Type)[*|?] = Set{Integer, Real}");
 		ocl.assertQueryTrue(null, "let x : Collection(Type[*]) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Type[*] | x->size() > 0)");
 		ocl.assertValidationErrorQuery(null, "let x : Collection(Type[*]) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Type | x->size() > 0)",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IteratorExp_c_c_IteratorTypeIsSourceElementType, "x?->forAll(x : Type[1] | x.oclAsSet()->size().>(0))");
 		ocl.assertValidationErrorQuery(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type[*] | x->size() > 0)",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IteratorExp_c_c_IteratorTypeIsSourceElementType, "x?->forAll(x : Bag(Type) | x->size().>(0))");
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IteratorExp_c_c_IteratorTypeIsSourceElementType, "x?->forAll(x : Bag(Type)[*|?] | x->size().>(0))");
 		ocl.dispose();
 	}
 

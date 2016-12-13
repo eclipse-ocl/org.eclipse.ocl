@@ -54,15 +54,15 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 	protected @NonNull String getTestPackageName() {
 		return "EvaluateCollectionOperations";
 	}
-	
+
 	@BeforeClass public static void resetCounter() throws Exception {
 		PivotTestSuite.resetCounter();
-    }
+	}
 
-    @Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-    }
+	@Override
+	@Before public void setUp() throws Exception {
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
@@ -202,7 +202,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 		ocl.assertQueryResults(null, "Sequence{1, 2.0, '3'}", "Sequence{1, 2.0, '3'}->asSequence()");
 		ocl.assertQueryResults(null, "Sequence{1, 2.0, '3'}", "OrderedSet{1, 2.0, '3'}->asSequence()");
-//		ocl.assertQueryResults(null, "OrderedSet{1, 2.0, '3'}", "OrderedSet{1, 2.0, '3'}->asSequence()");
+		//		ocl.assertQueryResults(null, "OrderedSet{1, 2.0, '3'}", "OrderedSet{1, 2.0, '3'}->asSequence()");
 
 		/*
 		 * Bag and Set are not ordered, simply check that the result is a
@@ -211,7 +211,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertResultContainsAll(null, "Sequence{1, 2.0, '3'}", "Bag{1, 2.0, '3'}->asSequence()");
 		ocl.assertResultContainsAll(null, "Sequence{1, 2.0, '3'}", "Set{1, 2.0, '3'}->asSequence()");
 		// invalid collection
-//		ocl.assertQueryInvalid(null, "invalid->asSequence()");
+		//		ocl.assertQueryInvalid(null, "invalid->asSequence()");
 		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = invalid in s->asSequence()");
 		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = invalid in b->asSequence()");
 		ocl.assertQueryInvalid(null, "let s : Set(Integer) = invalid in s->asSequence()");
@@ -277,7 +277,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 		ocl.assertQueryInvalid(null, "Sequence{'a'}->at(2)");
 		ocl.assertQueryInvalid(null, "OrderedSet{'a'}->at(2)");
-		
+
 		ocl.assertQueryInvalid(null, "Sequence{-1..-3}->at(0)");
 		ocl.assertQueryInvalid(null, "Sequence{-1..-3}->at(4)");
 		ocl.dispose();
@@ -360,13 +360,13 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, standardLibrary.getOclAnyType(), "Sequence{1, 2.0, '3'}->oclType().elementType");
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Sequence{1, 2, 3}->oclType().elementType");
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "Sequence{1, 2, 3}->oclAsType(Collection(Real))->oclType().elementType");
-// FIXME fails because common type is Set(T) and then because T is not type-servable and has no OclAny inheritance
-//		ocl.assertQueryEquals(null, metamodelManager.getSetType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}->elementType");
-// FIXME fails because common type is inadequate for implicit collect
-//				ocl.assertQueryEquals(null, metamodelManager.getOclAnyType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}.elementType");
+		// FIXME fails because common type is Set(T) and then because T is not type-servable and has no OclAny inheritance
+		//		ocl.assertQueryEquals(null, metamodelManager.getSetType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}->elementType");
+		// FIXME fails because common type is inadequate for implicit collect
+		//				ocl.assertQueryEquals(null, metamodelManager.getOclAnyType(), "Sequence{Set{1}, Set{2.0}, Set{'3'}}.elementType");
 	}
 
-	@Test public void testCollectionEqual() {		
+	@Test public void testCollectionEqual() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryFalse(null, "Bag{1} = 1");
 		ocl.assertQueryFalse(null, "OrderedSet{1} = 1");
@@ -481,7 +481,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-	@Test public void testCollectionEqualNull() {				
+	@Test public void testCollectionEqualNull() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryFalse(null, "Bag{} = null");
 		ocl.assertQueryFalse(null, "OrderedSet{} = null");
@@ -494,7 +494,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "null = Set{}");
 
 		ocl.assertQueryFalse(null, "let b : Bag(Integer) = null in b = Bag{}");
-		ocl.assertQueryFalse(null, "let b : Bag(Integer) = null, s : Set(Integer) = Set{} in b = s");	
+		ocl.assertQueryFalse(null, "let b : Bag(Integer) = null, s : Set(Integer) = Set{} in b = s");
 		ocl.assertQueryFalse(null, "let s : Sequence(Integer) = null in s = Sequence{5}");
 		ocl.assertQueryFalse(null, "let b : Bag(Integer) = null in Bag{5} = b");
 		ocl.assertQueryFalse(null, "let s : Set(Integer) = null in s = Set{5}");
@@ -812,7 +812,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "OrderedSet{3, 4.0, 'test'}->includes(3.0)");
 		ocl.assertQueryTrue(null, "OrderedSet{3, 4.0, 'test'}->includes(4)");
 		ocl.assertQueryTrue(null, "OrderedSet{3, 4.0, 'test'}->includes('test')");
-		
+
 		ocl.assertQueryFalse(null, "Sequence{3, 4.0, 'test'}->includes(3.5)");
 		ocl.assertQueryFalse(null, "Bag{3, 4.0, 'test'}->includes(3.5)");
 		ocl.assertQueryFalse(null, "Set{3, 4.0, 'test'}->includes(3.5)");
@@ -1068,10 +1068,10 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		// null collection element
 		ocl.assertQueryResults(null, "Sequence{null, 'a'}", "Sequence{'a'}->insertAt(1, null)");
 		ocl.assertQueryResults(null, "Sequence{null, null}", "Sequence{null}->insertAt(1, null)");
-//		ocl.assertQueryResults(null, "Sequence{'a', null}", "Sequence{null}->insertAt(1, 'a')");
+		//		ocl.assertQueryResults(null, "Sequence{'a', null}", "Sequence{null}->insertAt(1, 'a')");
 		ocl.assertQueryResults(null, "OrderedSet{'a', null}", "OrderedSet{'a'}->insertAt(2, null)");
 		ocl.assertQueryResults(null, "OrderedSet{null}", "OrderedSet{null}->insertAt(1, null)");
-//		ocl.assertQueryResults(null, "OrderedSet{null, 'a'}", "OrderedSet{null}->insertAt(2, 'a')");
+		//		ocl.assertQueryResults(null, "OrderedSet{null, 'a'}", "OrderedSet{null}->insertAt(2, 'a')");
 		// out of bounds
 		ocl.assertQueryInvalid(null, "Sequence{'a'}->insertAt(0, 'b')");
 		ocl.assertQueryInvalid(null, "OrderedSet{'a'}->insertAt(0, 'b')");
@@ -1118,7 +1118,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Bag{'a', 'b'}", "Bag{'a', 'b', 'a'}->intersection(Bag{'a', 'b', 'c'})");
 
 		ocl.assertQueryResults(null, "Bag{'a'}", "Bag{'a', 'a', 'a', 'a'}->intersection(Bag{'a', 'b', 'b'})");
-		
+
 		// empty collection
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{3, 4}->intersection(Set{})");
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{3, 4}->intersection(Bag{})");
@@ -1128,10 +1128,10 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "1->intersection(Set{})");
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "2->intersection(Bag{})");
 
-//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-//        	"Set{}->intersection(Set{3, 4})",
-//        	OCLMessages.OperationNotFound_ERROR_, "intersection(Set(Integer))", "Set(OclVoid)");	
-		
+		//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+		//        	"Set{}->intersection(Set{3, 4})",
+		//        	OCLMessages.OperationNotFound_ERROR_, "intersection(Set(Integer))", "Set(OclVoid)");
+
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{}->intersection(Set{3, 4})");
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{}->intersection(Bag{3, 4})");
 		ocl.assertQueryEquals(null, ocl.getEmptyBagValue(), "Bag{}->intersection(Bag{3, 4})");
@@ -1142,10 +1142,10 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = invalid in b->intersection(Set{4})");
 		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = invalid in b->intersection(Bag{4})");
 
-//		assertSemanticErrorQuery("let s : Set(Integer) = invalid in Set{4}->intersection(s)",
-//		OCLMessages.UnresolvedOperationCall_ERROR_, "intersection", "Set(UnlimitedNatural)", "Set(Integer)");
-//		assertSemanticErrorQuery("let s : Set(Real) = invalid in Set{4}->intersection(s)",
-//			OCLMessages.UnresolvedOperationCall_ERROR_, "Set(Integer)", "intersection", "Set(Real)");
+		//		assertSemanticErrorQuery("let s : Set(Integer) = invalid in Set{4}->intersection(s)",
+		//		OCLMessages.UnresolvedOperationCall_ERROR_, "intersection", "Set(UnlimitedNatural)", "Set(Integer)");
+		//		assertSemanticErrorQuery("let s : Set(Real) = invalid in Set{4}->intersection(s)",
+		//			OCLMessages.UnresolvedOperationCall_ERROR_, "Set(Integer)", "intersection", "Set(Real)");
 		ocl.assertQueryInvalid(null, "let s : Set(Integer) = invalid in Set{4.0}->intersection(s)");
 		ocl.assertQueryInvalid(null, "let s : Set(Integer) = invalid in Bag{4.0}->intersection(s)");
 		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = invalid in Set{4.0}->intersection(b)");
@@ -1209,14 +1209,14 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "Set{invalid}->isEmpty()");
 		ocl.assertQueryInvalid(null, "OrderedSet{invalid}->isEmpty()");
 		// null collection
-//		ocl.assertQueryInvalid(null, "null->isEmpty()");
+		//		ocl.assertQueryInvalid(null, "null->isEmpty()");
 		ocl.assertQueryTrue(null, "null->isEmpty()");
 		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in s->isEmpty()");
 		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = null in b->isEmpty()");
 		ocl.assertQueryInvalid(null, "let s : Set(Integer) = null in s->isEmpty()");
 		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = null in o->isEmpty()");
 		// null collection element
-//		ocl.assertQueryInvalid(null, "let s : String = null in s->isEmpty()");
+		//		ocl.assertQueryInvalid(null, "let s : String = null in s->isEmpty()");
 		ocl.assertQueryTrue(null, "let s : String = null in s->isEmpty()");
 		ocl.assertQueryFalse(null, "Sequence{null}->isEmpty()");
 		ocl.assertQueryFalse(null, "Bag{null}->isEmpty()");
@@ -1264,15 +1264,15 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "OrderedSet{'hi', 'lo'}->max()");
 		ocl.assertQueryInvalid(null, "Set{}->max()");
 		ocl.assertQueryInvalid(null, "OrderedSet{true, 1, 'bad'}->max()");
-//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-//        	"OrderedSet{'hi', 'lo'}->max()",
-//        	OCLMessages.MaxOperator_ERROR_);
-//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-//        	"Set{}->max()",
-//        	OCLMessages.MaxOperator_ERROR_);
-//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-//        	"OrderedSet{true, 1, 'bad'}->max()",
-//        	OCLMessages.MaxOperator_ERROR_);		
+		//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+		//        	"OrderedSet{'hi', 'lo'}->max()",
+		//        	OCLMessages.MaxOperator_ERROR_);
+		//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+		//        	"Set{}->max()",
+		//        	OCLMessages.MaxOperator_ERROR_);
+		//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+		//        	"OrderedSet{true, 1, 'bad'}->max()",
+		//        	OCLMessages.MaxOperator_ERROR_);
 		// FIXME Bug 301351 Subtest-not-implemented user-defined max
 		ocl.dispose();
 	}
@@ -1285,15 +1285,15 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "OrderedSet{'hi', 'lo'}->min()");
 		ocl.assertQueryInvalid(null, "Set{}->min()");
 		ocl.assertQueryInvalid(null, "OrderedSet{true, 1, 'bad'}->min()");
-//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-//        	"OrderedSet{'hi', 'lo'}->min()",
-//        	OCLMessages.MinOperator_ERROR_);
-//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-//        	"Set{}->min()",
-//        	OCLMessages.MinOperator_ERROR_);
-//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-//        	"OrderedSet{true, 1, 'bad'}->min()",
-//        	OCLMessages.MinOperator_ERROR_);		
+		//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+		//        	"OrderedSet{'hi', 'lo'}->min()",
+		//        	OCLMessages.MinOperator_ERROR_);
+		//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+		//        	"Set{}->min()",
+		//        	OCLMessages.MinOperator_ERROR_);
+		//        assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+		//        	"OrderedSet{true, 1, 'bad'}->min()",
+		//        	OCLMessages.MinOperator_ERROR_);
 		// FIXME Bug 301351 Subtest-not-implemented user-defined min
 		ocl.dispose();
 	}
@@ -1351,7 +1351,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "Set{invalid}->notEmpty()", "invalid", InvalidValueException.class);
 		ocl.assertQueryInvalid(null, "OrderedSet{invalid}->notEmpty()", "invalid", InvalidValueException.class);
 		// null collection
-//		ocl.assertQueryInvalid(null, "null->notEmpty()");
+		//		ocl.assertQueryInvalid(null, "null->notEmpty()");
 		ocl.assertQueryFalse(null, "null->notEmpty()");
 		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in s->notEmpty()", "'Collection' rather than 'OclVoid' value required", InvalidValueException.class);
 		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = null in b->notEmpty()", "'Collection' rather than 'OclVoid' value required", InvalidValueException.class);
@@ -1365,7 +1365,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-	@Test public void testCollectionNotEqual() {		
+	@Test public void testCollectionNotEqual() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryTrue(null, "Bag{1} <> 1");
 		ocl.assertQueryTrue(null, "OrderedSet{1} <> 1");
@@ -1429,7 +1429,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 	@Test public void testCollectionNotEqualOrderedXOrdered() {
 		TestOCL ocl = createOCL();
 		// same order, same quantities
-/*		ocl.assertQueryFalse(null, "Sequence{4, 5, 'test'} <> Sequence{4, 5, 'test'}");
+		/*		ocl.assertQueryFalse(null, "Sequence{4, 5, 'test'} <> Sequence{4, 5, 'test'}");
 		ocl.assertQueryFalse(null, "Sequence{4, 5, 'test', 5} <> Sequence{4, 5, 'test', 5}");
 		ocl.assertQueryFalse(null, "OrderedSet{4, 5, 'test', 5} <> OrderedSet{4, 5, 'test'}");
 		ocl.assertQueryTrue(null, "Sequence{4, 5, 'test'} <> OrderedSet{4, 5, 'test', 5}");
@@ -1438,15 +1438,15 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		// distinct order, same quantities
 		ocl.assertQueryTrue(null, "Sequence{4, 5, 'test'} <> Sequence{4, 'test', 5}");
 		ocl.assertQueryTrue(null, "Sequence{4, 5, 'test', 5} <> Sequence{5, 4, 'test', 5}");
-*/		ocl.assertQueryTrue(null, "OrderedSet{4, 5, 'test', 5} <> OrderedSet{4, 'test', 5}");
-		ocl.assertQueryTrue(null, "Sequence{4, 5, 'test'} <> OrderedSet{5, 4, 'test', 5}");
-		ocl.assertQueryTrue(null, "OrderedSet{4, 5, 'test', 5} <> Sequence{5, 4, 'test'}");
+		 */		ocl.assertQueryTrue(null, "OrderedSet{4, 5, 'test', 5} <> OrderedSet{4, 'test', 5}");
+		 ocl.assertQueryTrue(null, "Sequence{4, 5, 'test'} <> OrderedSet{5, 4, 'test', 5}");
+		 ocl.assertQueryTrue(null, "OrderedSet{4, 5, 'test', 5} <> Sequence{5, 4, 'test'}");
 
-		// distinct quantities
-		ocl.assertQueryTrue(null, "Sequence{4, 5, 'test', 5} <> Sequence{4, 5, 'test'}");
-		ocl.assertQueryTrue(null, "Sequence{4, 5, 'test', 5} <> OrderedSet{4, 5, 'test', 5}");
-		ocl.assertQueryTrue(null, "OrderedSet{4, 5, 'test', 5} <> Sequence{4, 5, 'test', 5}");
-		ocl.dispose();
+		 // distinct quantities
+		 ocl.assertQueryTrue(null, "Sequence{4, 5, 'test', 5} <> Sequence{4, 5, 'test'}");
+		 ocl.assertQueryTrue(null, "Sequence{4, 5, 'test', 5} <> OrderedSet{4, 5, 'test', 5}");
+		 ocl.assertQueryTrue(null, "OrderedSet{4, 5, 'test', 5} <> Sequence{4, 5, 'test', 5}");
+		 ocl.dispose();
 	}
 
 	@Test public void testCollectionNotEqualOrderedXUnordered() {
@@ -1521,7 +1521,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionProduct() {
 		TestOCL ocl = createOCL();
-//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
+		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		String expectedResultExpression = "Set{Tuple{first = 3, second = 3.0}, Tuple{first = 3, second = 4.0}, Tuple{first = 4, second = 3.0}, Tuple{first = 4, second = 4.0}}";
 
 		// Sequence::product(Collection)
@@ -1548,7 +1548,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, expectedResultExpression, "OrderedSet{3, 4}->product(Set{3.0, 4.0})");
 		ocl.assertQueryResults(null, expectedResultExpression, "OrderedSet{3, 4}->product(OrderedSet{3.0, 4.0})");
 		// bug284129
-//		ocl.assertQueryResults(null, "Set{Tuple{first = 3, second = 3.0}, Tuple{first = 3, second = 4}, Tuple{first = 4.0, second = 3.0}, Tuple{first = 4.0, second = 4}}", "Sequence{3, 4.0}->product(Sequence{3.0, 4})");
+		//		ocl.assertQueryResults(null, "Set{Tuple{first = 3, second = 3.0}, Tuple{first = 3, second = 4}, Tuple{first = 4.0, second = 3.0}, Tuple{first = 4.0, second = 4}}", "Sequence{3, 4.0}->product(Sequence{3.0, 4})");
 		ocl.assertQueryResults(null, "Set{Tuple{first = 3.0, second = 3.0}, Tuple{first = 3.0, second = 4.0}, Tuple{first = 4.0, second = 3.0}, Tuple{first = 4.0, second = 4.0}}", "Sequence{3, 4.0}->product(Sequence{3.0, 4})");
 		// empty
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Sequence{3, 4}->product(OrderedSet{})");
@@ -1623,7 +1623,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionReverse() {
 		TestOCL ocl = createOCL();
-		ocl.assertSemanticErrorQuery(null, "Bag{1,3,null,2}->reverse()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Integer)", "reverse");
+		ocl.assertSemanticErrorQuery(null, "Bag{1,3,null,2}->reverse()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Integer)[*|?]", "reverse");
 		ocl.assertQueryResults(null, "OrderedSet{}", "OrderedSet{}->reverse()");
 		ocl.assertQueryResults(null, "OrderedSet{null}", "OrderedSet{null}->reverse()");
 		ocl.assertQueryResults(null, "OrderedSet{2,1}", "OrderedSet{1,2}->reverse()");
@@ -1633,7 +1633,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Sequence{2,null,3,1}", "Sequence{1,3,null,2}->reverse()");
 		ocl.assertQueryResults(null, "Sequence{21,20,19,18,17,16,15,14,13,24,23,22,4,15,14,12,11,10,9,null,8,7,6,5,4,3,4,3,2,1}", "Sequence{1..4,3..8,null,9..12,14..15,4,22..24,13..21}->reverse()");
 		ocl.assertQueryResults(null, "Sequence{Set{1..3},Sequence{1..3},OrderedSet{1,3},Bag{1,1,1}}", "Sequence{Bag{1,1,1},OrderedSet{1,3},Sequence{1..3},Set{1..3}}->reverse()");
-		ocl.assertSemanticErrorQuery(null, "Set{}->reverse()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(OclVoid)[*|1]", "reverse");
+		ocl.assertSemanticErrorQuery(null, "Set{}->reverse()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(OclVoid)", "reverse");
 		ocl.dispose();
 	}
 
@@ -1733,7 +1733,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "Bag{'a', 'b', invalid}->size()");
 		ocl.assertQueryInvalid(null, "Sequence{'a', 'b', invalid}->size()");
 		// null collection
-//		ocl.assertQueryInvalid(null, "let s : String = null in s->size()");
+		//		ocl.assertQueryInvalid(null, "let s : String = null in s->size()");
 		ocl.assertQueryEquals(null, 0, "let s : String = null in s->size()");
 		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in s->size()");
 		// null collection element
@@ -1841,7 +1841,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Bag{'a', 'b', 'a', 'b', 'c'}", "Bag{'a', 'b', 'a'}->union(Bag{'b', 'c'})");
 		ocl.assertQueryResults(null, "Bag{'a', 'b', 'a', 'b', 'c'}", "Bag{'a', 'b', 'a'}->union(Set{'b', 'c'})");
 
-//		ocl.assertQueryResults(null, "Sequence{'a', 'b', 'a', 'b', 'c'}", "Sequence{'a', 'b', 'a'}->union(Sequence{'b', 'c'})");
+		//		ocl.assertQueryResults(null, "Sequence{'a', 'b', 'a', 'b', 'c'}", "Sequence{'a', 'b', 'a'}->union(Sequence{'b', 'c'})");
 		ocl.assertQueryResults(null, "Bag{'a', 'b', 'a', 'b', 'c'}", "Sequence{'a', 'b', 'a'}->union(Sequence{'b', 'c'})");
 		ocl.dispose();
 	}
@@ -1849,7 +1849,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 	@Test public void testCollectionUnionEmptyCollection() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryResults(null, "Set{3, 4}", "Set{}->union(Set{3, 4})");
-//
+		//
 		ocl.assertQueryResults(null, "Set{3, 4}", "Set{3, 4}->union(Set{})");
 		ocl.assertQueryResults(null, "Bag{3, 4}", "Set{3, 4}->union(Bag{})");
 		ocl.assertQueryResults(null, "Bag{3, 4}", "Bag{3, 4}->union(Bag{})");
@@ -1909,7 +1909,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Bag{'a', 'b', 'c', 'd'}", "Bag{'a', 'b'}->union(Bag{'c', 'd'})");
 		ocl.assertQueryResults(null, "Bag{'a', 'b', 'c', 'd'}", "Bag{'a', 'b'}->union(Set{'c', 'd'})");
 
-//		ocl.assertQueryResults(null, "Sequence{'a', 'b', 'c', 'd'}", "Sequence{'a', 'b'}->union(Sequence{'c', 'd'})");
+		//		ocl.assertQueryResults(null, "Sequence{'a', 'b', 'c', 'd'}", "Sequence{'a', 'b'}->union(Sequence{'c', 'd'})");
 		ocl.assertQueryResults(null, "Bag{'a', 'b', 'c', 'd'}", "Sequence{'a', 'b'}->union(Sequence{'c', 'd'})");
 		ocl.dispose();
 	}
@@ -1936,7 +1936,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Bag{'a', null, 'b', null}", "Set{'a', null}->union(Bag{'b', null})");
 		ocl.assertQueryResults(null, "Bag{'a', null, 'b', null}", "Bag{'a', null}->union(Bag{'b', null})");
 		ocl.assertQueryResults(null, "Bag{'a', null, 'b', null}", "Bag{'a', null}->union(Set{'b', null})");
-//		ocl.assertQueryResults(null, "Sequence{'a', null, 'b', null}", "Sequence{'a', null}->union(Sequence{'b', null})");
+		//		ocl.assertQueryResults(null, "Sequence{'a', null, 'b', null}", "Sequence{'a', null}->union(Sequence{'b', null})");
 		ocl.assertQueryResults(null, "Bag{'a', null, 'b', null}", "Sequence{'a', null}->union(Sequence{'b', null})");
 		ocl.dispose();
 	}

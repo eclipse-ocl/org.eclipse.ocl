@@ -44,14 +44,14 @@ public class ErrorTests extends XtextTestCase
 	public void test_BadIterate() throws IOException {
 		OCL ocl = createOCL();
 		String metamodelText =
-			"package test : tst = 'http://test'\n" +
-			"{\n" +
-			"	class Test\n" +
-			"	{\n" +
-			"		invariant set: Set{1, 2, 3}->size() = 3;\n" +
-			"		invariant loop: Test.allInstances()->iterate(w, h; acc : String = '' | true);\n" +
-			"	}\n" +
-			"}\n";
+				"package test : tst = 'http://test'\n" +
+						"{\n" +
+						"	class Test\n" +
+						"	{\n" +
+						"		invariant set: Set{1, 2, 3}->size() = 3;\n" +
+						"		invariant loop: Test.allInstances()->iterate(w, h; acc : String = '' | true);\n" +
+						"	}\n" +
+						"}\n";
 		InputStream inputStream = new URIConverter.ReadableInputStream(metamodelText, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = ocl.getResourceSet();
@@ -59,24 +59,24 @@ public class ErrorTests extends XtextTestCase
 		ocl.getEnvironmentFactory().adapt(xtextResource);
 		xtextResource.load(inputStream, null);
 		assertResourceErrors("Loading Xtext", xtextResource,
-			StringUtil.bind(PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Set(test::Test)[*|1]", "iterate", "w, h; acc : String = ''| true"));
-        //
+			StringUtil.bind(PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Set(test::Test)", "iterate", "w, h; acc : String = ''| true"));
+		//
 		ocl.dispose();
 	}
-	
+
 	/**
 	 * Test a bad operation for bad iterate arguments. Inspired by Bug 352386.
 	 */
 	public void test_BadProperty() throws IOException {
 		OCL ocl = createOCL();
 		String metamodelText =
-			"package test : tst = 'http://test'\n" +
-			"{\n" +
-			"	class Test\n" +
-			"	{\n" +
-			"		invariant loop: Test.allInstances->iterate(w, h; acc : String = '' | true);\n" +
-			"	}\n" +
-			"}\n";
+				"package test : tst = 'http://test'\n" +
+						"{\n" +
+						"	class Test\n" +
+						"	{\n" +
+						"		invariant loop: Test.allInstances->iterate(w, h; acc : String = '' | true);\n" +
+						"	}\n" +
+						"}\n";
 		InputStream inputStream = new URIConverter.ReadableInputStream(metamodelText, "UTF-8");
 		URI xtextURI = URI.createURI("test.oclinecore");
 		ResourceSet resourceSet = ocl.getResourceSet();
@@ -85,19 +85,19 @@ public class ErrorTests extends XtextTestCase
 		xtextResource.load(inputStream, null);
 		assertResourceErrors("Loading Xtext", xtextResource,
 			StringUtil.bind(PivotMessagesInternal.UnresolvedStaticProperty_ERROR_, "test::Test", "allInstances"));
-        //
+		//
 		ocl.dispose();
 	}
-	
+
 	public void testBadEOF_419683() throws Exception {
 		OCLInternal ocl = createOCL();
 		TestCaseAppender.INSTANCE.uninstall();
 		String testFile =
-			"import 'platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore'\n" +
-			"package ecore\n" +
-			"context EPackage\n" +
-			"inv test:\n" +
-			"	let classifiers:Set(EClassifier) = self.eClassifiers in let filtered";
+				"import 'platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore'\n" +
+						"package ecore\n" +
+						"context EPackage\n" +
+						"inv test:\n" +
+						"	let classifiers:Set(EClassifier) = self.eClassifiers in let filtered";
 		Bag<String> bag = new BagImpl<String>();
 		bag.add("mismatched input 'inv' expecting '('");
 		bag.add("mismatched input '<EOF>' expecting 'endpackage'");
