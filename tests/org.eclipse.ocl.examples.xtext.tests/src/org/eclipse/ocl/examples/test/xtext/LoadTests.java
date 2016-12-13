@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
@@ -262,8 +263,8 @@ public class LoadTests extends XtextTestCase
 		//		return xmiResource;
 	}
 
-	public Model doLoadUML(@NonNull OCL ocl, @NonNull URI inputURI, boolean ignoreNonExistence, boolean validateEmbeddedOCL, boolean validateCompleteOCL) throws IOException, ParserException {
-		return doLoadUML(ocl, inputURI, new AbstractLoadCallBack(ignoreNonExistence, validateCompleteOCL, validateEmbeddedOCL));
+	public Model doLoadUML(@NonNull OCL ocl, @NonNull URI inputURI, boolean ignoreNonExistence, boolean validateEmbeddedOCL, boolean validateCompleteOCL, @NonNull String @Nullable [] messages) throws IOException, ParserException {
+		return doLoadUML(ocl, inputURI, new AbstractLoadCallBack(ignoreNonExistence, validateCompleteOCL, validateEmbeddedOCL), messages);
 	}
 
 	private static class AbstractLoadCallBack implements ILoadCallBack
@@ -312,7 +313,7 @@ public class LoadTests extends XtextTestCase
 		void validateEmbeddedOCL(@NonNull OCL ocl, @NonNull Constraint eObject) throws ParserException;
 	}
 
-	public Model doLoadUML(@NonNull OCL ocl, @NonNull URI inputURI, @NonNull ILoadCallBack loadCallBacks) throws IOException, ParserException {
+	public Model doLoadUML(@NonNull OCL ocl, @NonNull URI inputURI, @NonNull ILoadCallBack loadCallBacks, @NonNull String @Nullable [] messages) throws IOException, ParserException {
 		UMLStandaloneSetup.init();
 		//		long startTime = System.currentTimeMillis();
 		//		System.out.println("Start at " + startTime);
@@ -412,7 +413,7 @@ public class LoadTests extends XtextTestCase
 			}
 			//			System.out.printf("Exceptions %d, Parses %d\n", exceptions, parses);
 			/*for (Resource asResource : allResources)*/ {
-				assertNoValidationErrors("Overall validation", asResource);
+				assertValidationDiagnostics("Overall validation", asResource, messages);
 			}
 			assertEquals(s.toString(), 0, exceptions);
 			loadCallBacks.postLoad(ocl, asResource);
@@ -1158,14 +1159,14 @@ public class LoadTests extends XtextTestCase
 		//		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/UML/20120801", UMLPackage.eINSTANCE);
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", XMI2UMLResource.Factory.INSTANCE);
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.xtext.tests/model/Internationalized.profile.uml", true);
-		doLoadUML(ocl, uri, false, false, false);
+		doLoadUML(ocl, uri, false, false, false, null);
 		ocl.dispose();
 	}
 
 	public void testLoad_NullFree_uml() throws IOException, InterruptedException, ParserException {
 		OCLInternal ocl = createOCL();
 		URI uri = getProjectFileURI("NullFree.uml");
-		Model model = doLoadUML(ocl, uri, false, true, true);
+		Model model = doLoadUML(ocl, uri, false, true, true, null);
 		org.eclipse.ocl.pivot.Package asPackage = model.getOwnedPackages().get(0);
 		org.eclipse.ocl.pivot.Class asInheritedNullFree = NameUtil.getNameable(asPackage.getOwnedClasses(), "InheritedNullFree");
 		org.eclipse.ocl.pivot.Class asNonNullFree = NameUtil.getNameable(asPackage.getOwnedClasses(), "NonNullFree");
@@ -1200,8 +1201,7 @@ public class LoadTests extends XtextTestCase
 					}
 				}
 			}
-
-		});
+		}, null);
 		ocl.dispose();
 	}
 
