@@ -21,10 +21,6 @@ import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.MapLiteralExp;
-import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.ShadowExp;
-import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
@@ -34,6 +30,8 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
+import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -44,6 +42,8 @@ import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
+import org.eclipse.ocl.pivot.ShadowExp;
+import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
@@ -66,7 +66,7 @@ import org.eclipse.ocl.pivot.values.Value;
  * PrettyPrintOptions may be used to configure the printing.
  */
 public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
-{	
+{
 	public EssentialOCLPrettyPrintVisitor(@NonNull PrettyPrinter context) {
 		super(context);
 	}
@@ -76,8 +76,8 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		if (source != null) {
 			if (!(source instanceof VariableExp) || !((VariableExp)source).isIsImplicit()) {
 				if ((source instanceof OperationCallExp)
-				 && (((OperationCallExp)source).getReferredOperation() != null)
-				 && (((OperationCallExp)source).getReferredOperation().getPrecedence() != null)) {
+						&& (((OperationCallExp)source).getReferredOperation() != null)
+						&& (((OperationCallExp)source).getReferredOperation().getPrecedence() != null)) {
 					context.append("(");
 					context.precedenceVisit(source, null);
 					context.append(")");
@@ -134,7 +134,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 	public Object visitCollectionRange(@NonNull CollectionRange object) {
 		safeVisit(object.getOwnedFirst());
 		context.next("", "..", "");
-        safeVisit(object.getOwnedLast());
+		safeVisit(object.getOwnedLast());
 		return null;
 	}
 
@@ -167,7 +167,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			context.appendName(object);
 		}
 		context.push(":", " ");
-        safeVisit(object.getOwnedSpecification());
+		safeVisit(object.getOwnedSpecification());
 		context.pop();
 		return null;
 	}
@@ -203,7 +203,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		context.exdent(" ", "then", " ");
 		safeVisit(object.getOwnedThen());
 		context.exdent(" ", "else", " ");
-        safeVisit(object.getOwnedElse());
+		safeVisit(object.getOwnedElse());
 		context.exdent(" ", "endif", "");
 		context.pop();
 		return null;
@@ -239,7 +239,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 						if (prefix != null) {
 							context.next(null, prefix, " ");
 						}
-//						safeVisit(iterator);
+						//						safeVisit(iterator);
 						context.appendName(iterator);
 						prefix = ",";
 						hasExplicitIterator = true;
@@ -316,7 +316,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 							if (prefix != null) {
 								context.next(null, prefix, " ");
 							}
-//							safeVisit(iterator);
+							//							safeVisit(iterator);
 							context.appendName(iterator);
 							prefix = ",";
 							hasExplicitIterator = true;
@@ -370,7 +370,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		context.push("let", " ");
 		safeVisit(object.getOwnedVariable());
 		context.exdent(" ", "in", " ");
-        safeVisit(object.getOwnedIn());
+		safeVisit(object.getOwnedIn());
 		context.pop();
 		return null;
 	}
@@ -400,7 +400,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 	public Object visitMapLiteralPart(@NonNull MapLiteralPart object) {
 		safeVisit(object.getOwnedKey());
 		context.next("", " <- ", "");
-        safeVisit(object.getOwnedValue());
+		safeVisit(object.getOwnedValue());
 		return null;
 	}
 
@@ -430,7 +430,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 				if (!object.isIsImplicit()) {
 					context.appendName(referredOperation);
 					context.push("(", "");
-					String prefix = null; //$NON-NLS-1$
+					String prefix = null;
 					for (OCLExpression argument : arguments) {
 						if (prefix != null) {
 							context.next(null, prefix, " ");
@@ -559,7 +559,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		return null;
 	}
 
-    @Override
+	@Override
 	public Value visitShadowExp(@NonNull ShadowExp object) {
 		Type type = object.getType();
 		if (type != null) {
@@ -575,7 +575,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		context.exdent("", "}", "");
 		context.pop();
 		return null;
-    }
+	}
 
 	@Override
 	public String visitShadowPart(@NonNull ShadowPart part) {
@@ -646,8 +646,8 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		Type type = object.getType();
 		if (type != null) {
 			context.append(" : ");
-//			context.appendQualifiedType(type);
-			context.appendTypedMultiplicity(object);
+			context.appendQualifiedType(type);
+			context.appendTypeMultiplicity(object);
 		}
 		OCLExpression initExpression = object.getOwnedInit();
 		if (initExpression != null) {

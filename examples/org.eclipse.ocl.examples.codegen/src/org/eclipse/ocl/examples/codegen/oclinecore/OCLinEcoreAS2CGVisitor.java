@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 {
@@ -140,7 +141,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 								if (asStatusPart != null) {
 									OCLExpression asStatusInit = asStatusPart.getOwnedInit();
 									if (asStatusInit != null) {
-										statusExpression = PrettyPrinter.print(asStatusInit);
+										statusExpression = PrettyPrinter.print(asStatusInit, PrettyPrinter.createOptions(PivotUtil.getContainingNamespace(element)));
 									}
 									TupleLiteralPart asMessagePart = NameUtil.getNameable(asTupleParts, PivotConstants.MESSAGE_PART_NAME);
 									if (asMessagePart != null) {

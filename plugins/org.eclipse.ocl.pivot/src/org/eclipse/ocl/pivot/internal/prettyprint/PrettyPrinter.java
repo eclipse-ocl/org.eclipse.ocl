@@ -67,7 +67,7 @@ public class PrettyPrinter
 	public static @NonNull List<String> reservedNameList = Arrays.asList("and", "else", "endif", "false", "if", "implies", "in", "invalid", "let", "not", "null", "or", PivotConstants.SELF_NAME, "then", "true", "xor");
 	@SuppressWarnings("null")
 	public static @NonNull List<String> restrictedNameList = Arrays.asList(TypeId.BAG_NAME, TypeId.BOOLEAN_NAME, "Collection", TypeId.INTEGER_NAME, TypeId.OCL_ANY_NAME, TypeId.OCL_INVALID_NAME, TypeId.OCL_VOID_NAME, TypeId.ORDERED_SET_NAME, TypeId.REAL_NAME, TypeId.SEQUENCE_NAME, TypeId.SET_NAME, TypeId.STRING_NAME, TypeId.TUPLE_NAME, TypeId.UNLIMITED_NATURAL_NAME);
-	
+
 	private static class Fragment
 	{
 		private final int depth;
@@ -78,7 +78,7 @@ public class PrettyPrinter
 		private List<Fragment> children = null;
 		private boolean lineWrap = true;
 		private boolean exdented = false;
-		
+
 		public Fragment(@Nullable Fragment parent, int depth, @Nullable String prefix, @NonNull String text, @Nullable String suffix) {
 			this.parent = parent;
 			this.depth = depth;
@@ -86,9 +86,9 @@ public class PrettyPrinter
 			this.text = text;
 			this.suffix = suffix;
 		}
-		
+
 		public @NonNull Fragment addChild(@Nullable String prefix, @NonNull String text, @Nullable String suffix) {
-//			assert (prefix.length() + text.length() + suffix.length()) > 0;
+			//			assert (prefix.length() + text.length() + suffix.length()) > 0;
 			if (children == null) {
 				children = new ArrayList<Fragment>();
 			}
@@ -96,7 +96,7 @@ public class PrettyPrinter
 			children.add(child);
 			return child;
 		}
-		
+
 		public void configureLineWrapping(int spacesPerIndent, int lineLength) {
 			int firstColumn = depth * spacesPerIndent;
 			int lastColumn = firstColumn + text.length();
@@ -113,29 +113,29 @@ public class PrettyPrinter
 				}
 				int allChildrenLength = getChildrenLength(true);
 				if (lastColumn + allChildrenLength <= lineLength) {
-//					System.out.println(depth + " '" + prefix + "'+'" + text + "'+'" + suffix + "' "
-//							+ lastColumn + "+" + allChildrenLength + "<=" + lineLength);
+					//					System.out.println(depth + " '" + prefix + "'+'" + text + "'+'" + suffix + "' "
+					//							+ lastColumn + "+" + allChildrenLength + "<=" + lineLength);
 					for (Fragment child : children) {
 						child.lineWrap = false;
 					}
 				}
 				else {
-//					System.out.println(depth + " '" + prefix + "'+'" + text + "'+'" + suffix + "' "
-//							+ lastColumn + "+" + allChildrenLength + ">" + lineLength);
-//					int firstChildLength = getChildLength(0);
-//					if (lastColumn + allChildrenLength <= lineLength) {
-						for (Fragment child : children) {
-							child.lineWrap = child.exdented;
-						}
-//					}
+					//					System.out.println(depth + " '" + prefix + "'+'" + text + "'+'" + suffix + "' "
+					//							+ lastColumn + "+" + allChildrenLength + ">" + lineLength);
+					//					int firstChildLength = getChildLength(0);
+					//					if (lastColumn + allChildrenLength <= lineLength) {
+					for (Fragment child : children) {
+						child.lineWrap = child.exdented;
+					}
+					//					}
 				}
-//				while (lastColumn < lineLength) {
-//					lastColumn = getChildrenLength(spacesPerIndent, lineLength, lastColumn);				
-//				}
+				//				while (lastColumn < lineLength) {
+				//					lastColumn = getChildrenLength(spacesPerIndent, lineLength, lastColumn);
+				//				}
 			}
 			else {
-//				System.out.println(depth + " '" + prefix + "'+'" + text + "'+'" + suffix + "' "
-//						+ lastColumn);
+				//				System.out.println(depth + " '" + prefix + "'+'" + text + "'+'" + suffix + "' "
+				//						+ lastColumn);
 			}
 			if (parent == null) {
 				lineWrap = false;
@@ -168,7 +168,7 @@ public class PrettyPrinter
 			}
 			return childLength;
 		}
-		
+
 		public int length() {
 			int length = text.length();
 			if (prefix != null) {
@@ -193,7 +193,7 @@ public class PrettyPrinter
 			toString(s, null, "  ");
 			return s.toString();
 		}
-		
+
 		public String toString(@NonNull StringBuilder s, String newLine, String indent) {
 			if ((lineWrap || (newLine != null)) && (prefix != null)) {
 				if (lineWrap) {
@@ -215,12 +215,12 @@ public class PrettyPrinter
 				}
 			}
 			s.append(text);
-//			newLine = suffix != null ? lineWrap ? "\n" : suffix : null;
+			//			newLine = suffix != null ? lineWrap ? "\n" : suffix : null;
 			newLine = suffix;
 			if (children != null) {
 				for (Fragment child : children) {
 					newLine = child.toString(s, newLine, indent);
-				}				
+				}
 			}
 			return newLine;
 		}
@@ -238,7 +238,7 @@ public class PrettyPrinter
 		PrettyPrintOptions.Global options = new PrettyPrintOptions.Global(scope);
 		options.addReservedNames(PrettyPrinter.reservedNameList);
 		options.addRestrictedNames(PrettyPrinter.reservedNameList);
-//		options.setUseParentheses(true);
+		//		options.setUseParentheses(true);
 		return options;
 	}
 
@@ -301,9 +301,9 @@ public class PrettyPrinter
 			return printer.toString() + " ... " + e.getClass().getName() + " - " + e.getLocalizedMessage();
 		}
 	}
-	
+
 	private enum Mode { TYPE, NAME, FULL };
-	
+
 	private final @NonNull PrettyPrintOptions options;
 	private String pendingPrefix = "";
 	private final @NonNull StringBuilder pendingText;
@@ -315,7 +315,7 @@ public class PrettyPrinter
 
 	/**
 	 * Initializes me.
-	 * @param element 
+	 * @param element
 	 */
 	private PrettyPrinter(@NonNull PrettyPrintOptions options, @NonNull Mode mode, @NonNull Element element) {
 		this.options = options;
@@ -358,7 +358,7 @@ public class PrettyPrinter
 	public void appendName(NamedElement object) {
 		appendName(object, options.getRestrictedNames());
 	}
-		
+
 	public void appendName(NamedElement object, Set<String> keywords) {
 		append(getName(object, keywords));
 	}
@@ -404,51 +404,51 @@ public class PrettyPrinter
 	}
 
 	public void appendParent(EObject scope, Element element, String parentSeparator) { // FIXME Use appendQualifiedName instead
-        if (element instanceof org.eclipse.ocl.pivot.Package) {
-        	String alias = options.getAlias((org.eclipse.ocl.pivot.Package)element);
-        	if (alias != null) {
+		if (element instanceof org.eclipse.ocl.pivot.Package) {
+			String alias = options.getAlias((org.eclipse.ocl.pivot.Package)element);
+			if (alias != null) {
 				append(alias);
 				append(parentSeparator);
 				return;
-        	}
-        }
-    	Mode savedMode = pushMode(Mode.TYPE);
-    	try {
+			}
+		}
+		Mode savedMode = pushMode(Mode.TYPE);
+		try {
 			for (EObject eObject = scope; eObject != null; eObject = eObject.eContainer()) {
 				if (element == eObject) {
-					return;	
+					return;
 				}
 			}
-	//		if (toString().length() >= MONIKER_OVERFLOW_LIMIT) {
-	//			append(OVERFLOW_MARKER);
-	//		}
+			//		if (toString().length() >= MONIKER_OVERFLOW_LIMIT) {
+			//			append(OVERFLOW_MARKER);
+			//		}
 			if (element == null) {
-				append(NULL_PLACEHOLDER);	
+				append(NULL_PLACEHOLDER);
 			}
 			else {
-	//			EObject parent = element.eContainer();
+				//			EObject parent = element.eContainer();
 				EObject unspecializedElement = element instanceof TemplateableElement ? ((TemplateableElement)element).getUnspecializedElement() : element;
 				EObject parent = PivotUtil.getNamespace((unspecializedElement != null ? unspecializedElement : element).eContainer());
-	            if (parent instanceof org.eclipse.ocl.pivot.Package) {
-	            	String alias = options.getAlias((org.eclipse.ocl.pivot.Package)parent);
-	            	if (alias != null) {
+				if (parent instanceof org.eclipse.ocl.pivot.Package) {
+					String alias = options.getAlias((org.eclipse.ocl.pivot.Package)parent);
+					if (alias != null) {
 						append(alias);
 						append(parentSeparator);
 						return;
-	            	}
-	                String name = ((org.eclipse.ocl.pivot.Package)parent).getName();
-	                if (PivotConstants.ORPHANAGE_NAME.equals(name)) {
-	                    return;
-	                }
-	                if (PivotPackage.eNAME.equals(name)) {
-	                    return;
-	                }
-	                if ("ocl".equals(name)) {            // FIXME constant needed
-	                    return;
-	                }
+					}
+					String name = ((org.eclipse.ocl.pivot.Package)parent).getName();
+					if (PivotConstants.ORPHANAGE_NAME.equals(name)) {
+						return;
+					}
+					if (PivotPackage.eNAME.equals(name)) {
+						return;
+					}
+					if ("ocl".equals(name)) {            // FIXME constant needed
+						return;
+					}
 				}
 				if ((element instanceof Operation) &&
-					(parent instanceof Type) &&
+						(parent instanceof Type) &&
 						PivotConstants.ORPHANAGE_NAME.equals(((Type)parent).getName())) {
 					Operation operation = (Operation)element;
 					append(operation.getOwningClass().getName());
@@ -457,128 +457,128 @@ public class PrettyPrinter
 					return;
 				}
 				EnvironmentFactory environmentFactory = options.getGlobalOptions().getEnvironmentFactory();
-	            MetamodelManager metamodelManager = environmentFactory != null ? environmentFactory.getMetamodelManager() : null;
-	            if ((metamodelManager != null) && (parent instanceof Type)) {
-	            	parent = ((PivotMetamodelManager)metamodelManager).getPrimaryType((Type) parent);
-	            }
+				MetamodelManager metamodelManager = environmentFactory != null ? environmentFactory.getMetamodelManager() : null;
+				if ((metamodelManager != null) && (parent instanceof Type)) {
+					parent = ((PivotMetamodelManager)metamodelManager).getPrimaryType((Type) parent);
+				}
 				if (parent == scope) {
 					return;
 				}
-	            if (parent instanceof Visitable) {
-	                List<PathElement> parentPath = PathElement.getPath(parent, metamodelManager);
-	                int iMax = parentPath.size();
-	                int i = 0;
-	                if (scope != null) {
-	                    List<PathElement> scopePath = PathElement.getPath(scope, metamodelManager);
-	                    i = PathElement.getCommonLength(parentPath, scopePath);
-	                }
-	                if (i < iMax) {
-	//                    append(parentPath.get(i++).getName());
-	                	appendElement(parentPath.get(i++).getElement());
-	                    while (i < iMax) {
-	                        append("::");               
-	//                        append(parentPath.get(i++).getName());
-	                        appendElement(parentPath.get(i++).getElement());
-	                    }
-	                }
-	//                safeVisit((Visitable) parent);
+				if (parent instanceof Visitable) {
+					List<PathElement> parentPath = PathElement.getPath(parent, metamodelManager);
+					int iMax = parentPath.size();
+					int i = 0;
+					if (scope != null) {
+						List<PathElement> scopePath = PathElement.getPath(scope, metamodelManager);
+						i = PathElement.getCommonLength(parentPath, scopePath);
+					}
+					if (i < iMax) {
+						//                    append(parentPath.get(i++).getName());
+						appendElement(parentPath.get(i++).getElement());
+						while (i < iMax) {
+							append("::");
+							//                        append(parentPath.get(i++).getName());
+							appendElement(parentPath.get(i++).getElement());
+						}
+					}
+					//                safeVisit((Visitable) parent);
 				}
 				else  {
-					assert element instanceof org.eclipse.ocl.pivot.Package || element instanceof ExpressionInOCL : element.eClass().getName();	
+					assert element instanceof org.eclipse.ocl.pivot.Package || element instanceof ExpressionInOCL : element.eClass().getName();
 				}
 			}
 			append(parentSeparator);
-    	}
-    	finally {
-        	popMode(savedMode);
-    	}
+		}
+		finally {
+			popMode(savedMode);
+		}
 	}
 
-    public void appendQualifiedType(@NonNull Element element) {
-    	Mode savedMode = pushMode(Mode.TYPE);
-    	try {
+	public void appendQualifiedType(@NonNull Element element) {
+		Mode savedMode = pushMode(Mode.TYPE);
+		try {
 			EnvironmentFactory environmentFactory = options.getGlobalOptions().getEnvironmentFactory();
-            MetamodelManager metamodelManager = environmentFactory != null ? environmentFactory.getMetamodelManager() : null;
-	        Namespace parent = PivotUtil.getNamespace(element.eContainer());
-	        List<PathElement> parentPath = PathElement.getPath(parent, metamodelManager);
-	        int iMax = parentPath.size();
-	        int i = 0;
-	        Namespace scope = options.getScope();
-	        if (scope != null) {
+			MetamodelManager metamodelManager = environmentFactory != null ? environmentFactory.getMetamodelManager() : null;
+			Namespace parent = PivotUtil.getNamespace(element.eContainer());
+			List<PathElement> parentPath = PathElement.getPath(parent, metamodelManager);
+			int iMax = parentPath.size();
+			int i = 0;
+			Namespace scope = options.getScope();
+			if (scope != null) {
 				List<PathElement> scopePath = PathElement.getPath(scope, metamodelManager);
-	            i = PathElement.getCommonLength(parentPath, scopePath);
-	        }
-	        if ((i == 0) && (i < iMax)) {
-	        	for (int j = iMax - 1; j >= 0; j--) {
-		            PathElement rootPathElement = parentPath.get(j);
-		        	Element rootElement = rootPathElement.getElement();
+				i = PathElement.getCommonLength(parentPath, scopePath);
+			}
+			if ((i == 0) && (i < iMax)) {
+				for (int j = iMax - 1; j >= 0; j--) {
+					PathElement rootPathElement = parentPath.get(j);
+					Element rootElement = rootPathElement.getElement();
 					if (rootElement instanceof Namespace) {
 						String alias = options.getAlias((Namespace)rootElement);
-			        	if (alias != null) {
-			        		append(getName(alias, options.getReservedNames()));
-			        		append("::");               
-			                i = j + 1;
-			                break;
-			            }
+						if (alias != null) {
+							append(getName(alias, options.getReservedNames()));
+							append("::");
+							i = j + 1;
+							break;
+						}
 					}
-	        	}
-	        	if (i == 0) {
-		            PathElement rootPathElement = parentPath.get(0);
+				}
+				if (i == 0) {
+					PathElement rootPathElement = parentPath.get(0);
 					String name = rootPathElement.getName();
-		        	Element rootElement = rootPathElement.getElement();
+					Element rootElement = rootPathElement.getElement();
 					if (rootElement != null) {
 						if (PivotConstants.ORPHANAGE_NAME.equals(name)) {
-			                i++;
-			            }
-			            else if (PivotPackage.eNAME.equals(name)) {
-			                i++;
-			            }
-			            else if (PivotConstants.OCL_NAME.equals(name)) {
-			                i++;
-			            }
-			            else if (rootElement.eContainer() instanceof Model) {
-			                ;
-			            }
-			            else {
-			            	URI uri;
-			            	if (rootElement.getESObject() != null) {
-				            	EObject eTarget = rootElement.getESObject();
-				            	uri = EcoreUtil.getURI(eTarget);
-				            }
-				            else {
-				            	uri = rootElement.eResource().getURI();
-				            	if (uri != null) {
-				                	if (PivotUtilInternal.isASURI(uri)) {
-				                		uri = PivotUtilInternal.getNonASURI(uri);
-				                	}
-				            	}
-				            }
-		                	if (uri != null) {
-		                		URI baseURI = options.getBaseURI();
-		                    	if (baseURI != null) {
-		                    		uri = uri.deresolve(baseURI);
-		                    	}
-		                		append("_'" + uri.toString() + "'");
-		                	}
-		            		append("::");               
-		                    i++;
-			            }
+							i++;
+						}
+						//			            else if (PivotPackage.eNAME.equals(name)) {
+						//			                i++;
+						//			            }
+						else if (PivotConstants.OCL_NAME.equals(name)) {
+							i++;
+						}
+						else if (rootElement.eContainer() instanceof Model) {
+							;
+						}
+						else {
+							URI uri;
+							if (rootElement.getESObject() != null) {
+								EObject eTarget = rootElement.getESObject();
+								uri = EcoreUtil.getURI(eTarget);
+							}
+							else {
+								uri = rootElement.eResource().getURI();
+								if (uri != null) {
+									if (PivotUtilInternal.isASURI(uri)) {
+										uri = PivotUtilInternal.getNonASURI(uri);
+									}
+								}
+							}
+							if (uri != null) {
+								URI baseURI = options.getBaseURI();
+								if (baseURI != null) {
+									uri = uri.deresolve(baseURI);
+								}
+								append("_'" + uri.toString() + "'");
+							}
+							append("::");
+							i++;
+						}
 					}
-		        }
-	        }
-	        while (i < iMax) {
-	            appendElement(parentPath.get(i++).getElement());
-	            append("::");               
-	        }
-	        appendElement(element);
-    	}
-    	finally {
-        	popMode(savedMode);
-    	}
-    }
+				}
+			}
+			while (i < iMax) {
+				appendElement(parentPath.get(i++).getElement());
+				append("::");
+			}
+			appendElement(element);
+		}
+		finally {
+			popMode(savedMode);
+		}
+	}
 
-    public void appendTemplateBindings(@NonNull TemplateableElement typeRef) {
-    	Mode savedMode = pushMode(Mode.NAME);
+	public void appendTemplateBindings(@NonNull TemplateableElement typeRef) {
+		Mode savedMode = pushMode(Mode.NAME);
 		try {
 			List<TemplateBinding> templateBindings = typeRef.getOwnedBindings();
 			if (!templateBindings.isEmpty()) {
@@ -610,7 +610,7 @@ public class PrettyPrinter
 			}
 		}
 		finally {
-        	popMode(savedMode);
+			popMode(savedMode);
 		}
 	}
 
@@ -623,8 +623,8 @@ public class PrettyPrinter
 				String prefix = ""; //$NON-NLS-1$
 				for (TemplateParameter templateParameter : templateParameters) {
 					append(prefix);
-//					emittedTemplateParameter(templateParameter);
-//					appendName((NamedElement) templateParameter.getParameteredElement(), restrictedNames);
+					//					emittedTemplateParameter(templateParameter);
+					//					appendName((NamedElement) templateParameter.getParameteredElement(), restrictedNames);
 					Namespace savedScope = pushScope((Namespace) templateableElement);
 					try {
 						appendElement(templateParameter);
@@ -639,15 +639,23 @@ public class PrettyPrinter
 		}
 	}
 
-	public void appendTypedMultiplicity(TypedElement object) {
+	/**
+	 * @since 1.3
+	 */
+	public void appendTypeMultiplicity(TypedElement object) {
 		Type type = object.getType();
-		appendElement(type);
 		if (!object.isIsRequired()) {
 			append("[?]");
 		}
 		else if (!(type instanceof CollectionType)) {
 			append("[1]");
 		}
+	}
+
+	public void appendTypedMultiplicity(TypedElement object) {
+		Type type = object.getType();
+		appendElement(type);
+		appendTypeMultiplicity(object);
 	}
 
 	public @Nullable Precedence getCurrentPrecedence() {
@@ -669,28 +677,28 @@ public class PrettyPrinter
 	/**
 	 * Emit text to the current indented region.
 	 * Start a new indented region.
-	 * 
+	 *
 	 * If it is not necessary to start a new-line after text, emit suffix instead of the new-line.
 	 */
 	public void push(@NonNull String text, String suffix) {
 		append(text);
-//		if ((pendingPrefix.length() > 0) || (pendingText.length() > 0)) {
-			String string = pendingText.toString();
-			assert string != null;
-			fragment = fragment.addChild(pendingPrefix, string, suffix);
-			fragment.exdented = true;
-			pendingPrefix = "";
-			pendingText.setLength(0);
-//		}
+		//		if ((pendingPrefix.length() > 0) || (pendingText.length() > 0)) {
+		String string = pendingText.toString();
+		assert string != null;
+		fragment = fragment.addChild(pendingPrefix, string, suffix);
+		fragment.exdented = true;
+		pendingPrefix = "";
+		pendingText.setLength(0);
+		//		}
 	}
 
 	/**
 	 * Flush the current indented region.
 	 * Emit text exdented with respect to the current indented region.
 	 * Start a new indented region.
-	 * 
+	 *
 	 * If it is not necessary to start a new-line before text, emit prefix instead of the new-line.
-	 * 
+	 *
 	 * If it is not necessary to start a new-line after text, emit suffix instead of the new-line.
 	 */
 	public void exdent(@NonNull String prefix, @NonNull String text, @NonNull String suffix) {
@@ -733,9 +741,9 @@ public class PrettyPrinter
 	 * Flush the current indented region.
 	 * Emit text indented with respect to the current indented region.
 	 * Start a new indented region.
-	 * 
+	 *
 	 * If it is not necessary to start a new-line before text, emit prefix instead of the new-line.
-	 * 
+	 *
 	 * If it is not necessary to start a new-line after text, emit suffix instead of the new-line.
 	 */
 	public void next(@Nullable String prefix, @NonNull String text, @NonNull String suffix) {
@@ -747,9 +755,9 @@ public class PrettyPrinter
 			pendingPrefix = "";
 			pendingText.setLength(0);
 		}
-//		if ((prefix.length() > 0) || (text.length() > 0)) {
-			fragment.addChild(prefix, text, suffix);
-//		}
+		//		if ((prefix.length() > 0) || (text.length() > 0)) {
+		fragment.addChild(prefix, text, suffix);
+		//		}
 	}
 
 	/**
@@ -769,9 +777,9 @@ public class PrettyPrinter
 		fragment = fragment.getParent();
 	}
 
-    public void popMode(@NonNull Mode oldMode) {
-    	mode = oldMode;
-    }
+	public void popMode(@NonNull Mode oldMode) {
+		mode = oldMode;
+	}
 
 	public void popScope(@Nullable Namespace oldScope) {
 		scope = oldScope;
@@ -788,16 +796,16 @@ public class PrettyPrinter
 		}
 	}
 
-    public @NonNull Mode pushMode(@NonNull Mode newMode) {
-    	Mode oldMode = mode;
-    	mode = newMode;
-    	return oldMode;
-    }
+	public @NonNull Mode pushMode(@NonNull Mode newMode) {
+		Mode oldMode = mode;
+		mode = newMode;
+		return oldMode;
+	}
 
 	public @Nullable Namespace pushScope(@Nullable Namespace newScope) {
 		Namespace oldscope = scope;
-    	scope = newScope;
-    	return oldscope;
+		scope = newScope;
+		return oldscope;
 	}
 
 	public boolean showNames() {
@@ -814,7 +822,7 @@ public class PrettyPrinter
 		String newLine = fragment.toString(s, null, "  ");
 		return s.toString() + newLine + pendingPrefix + pendingText.toString();
 	}
-	
+
 	public @NonNull String toString(@NonNull String indent, int lineLength) {
 		if (fragment == null) {
 			return pendingPrefix + pendingText.toString();
@@ -822,7 +830,7 @@ public class PrettyPrinter
 		fragment.configureLineWrapping(indent.length(), lineLength);
 		StringBuilder s = new StringBuilder();
 		fragment.toString(s, null, indent);
-//		System.out.println(s.toString() + "--" + pendingPrefix + "--" + pendingText.toString());
+		//		System.out.println(s.toString() + "--" + pendingPrefix + "--" + pendingText.toString());
 		return s.toString() + pendingPrefix + pendingText.toString();
 	}
 }
