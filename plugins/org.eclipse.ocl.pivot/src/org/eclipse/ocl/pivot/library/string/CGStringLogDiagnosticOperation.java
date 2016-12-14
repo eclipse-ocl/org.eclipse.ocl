@@ -48,7 +48,7 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 	@Override
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + " should only be invoked directly.");
-/*		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
+		/*		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
 		OCLExpression argument0 = arguments.get(0);
 		OCLExpression argument1 = arguments.get(1);
 		OCLExpression argument2 = arguments.get(2);
@@ -69,13 +69,13 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 		Object sixthArgument = executor.evaluate(argument5);
 		return evaluate(executor, callExp.getTypeId(), sourceValue, firstArgument, secondArgument, thirdArgument, fourthArgument, fifthArgument, sixthArgument); */
 	}
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	public @NonNull Boolean evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object constraintName,
 			@Nullable Object object, @Nullable Object diagnostics, @Nullable Object context,
 			@Nullable Object severity, @Nullable Object status, @Nullable Object code) {
-		return evaluate(getExecutor(evaluator), returnTypeId, constraintName, object, diagnostics, context, severity, status, code); 
+		return evaluate(getExecutor(evaluator), returnTypeId, constraintName, object, diagnostics, context, severity, status, code);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 			@Nullable Object diagnostics, @Nullable Object context,
 			@Nullable Object message, @Nullable Object severity, @Nullable Object status, @Nullable Object code) {
 		if (status == Boolean.TRUE) {
-		    return ValueUtil.TRUE_VALUE;
+			return ValueUtil.TRUE_VALUE;
 		}
 		TupleValue tupleValue = null;
 		if (status instanceof TupleValue) {		// Overt tuples are unpacked in the caller. Obfuscated tuples are handled here.
@@ -96,14 +96,14 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 			if (statusPartId != null) {
 				status = tupleValue.getValue(statusPartId);
 				if (status == Boolean.TRUE) {
-				    return ValueUtil.TRUE_VALUE;
+					return ValueUtil.TRUE_VALUE;
 				}
 			}
 		}
 		if (diagnostics != null) {
-			String emfMessage = (String)message;
-		    int emfSeverity;
-		    int emfCode = ValueUtil.asIntegerValue(code).intValue();
+			String emfMessage = message != null ? message.toString() : null;
+			int emfSeverity;
+			int emfCode = ValueUtil.asIntegerValue(code).intValue();
 			if (tupleValue != null) {
 				TupleTypeId tupleTypeId = tupleValue.getTypeId();
 				TuplePartId severityPartId = tupleTypeId.getPartId(PivotConstants.SEVERITY_PART_NAME);
@@ -143,7 +143,7 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 				}
 				emfMessage = StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, new Object[]{constraintName, objectLabel});
 			}
-		    Object emfData[] = feature != null ? new Object [] { object, feature } : new Object [] { object };
+			Object emfData[] = feature != null ? new Object [] { object, feature } : new Object [] { object };
 			((DiagnosticChain) diagnostics).add(new BasicDiagnostic(emfSeverity, PivotValidator.DIAGNOSTIC_SOURCE, emfCode, emfMessage, emfData));
 		}
 		return ValueUtil.FALSE_VALUE;
@@ -151,14 +151,14 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 
 	/**
 	 * @since 1.1
-	 * @deprecated Add feature/message arguments 
+	 * @deprecated Add feature/message arguments
 	 */
 	@Deprecated
 	public @NonNull /*@Thrown*/ Boolean evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @NonNull String constraintName,
 			@NonNull Object object, @Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context,
 			@Nullable IntegerValue severity, @Nullable Object status, @Nullable Object code) {
 		return evaluate(executor, returnTypeId, constraintName, object, null, diagnostics, context, null, severity, status, code);
-/*		if (status == Boolean.TRUE) {
+		/*		if (status == Boolean.TRUE) {
 		    return ValueUtil.TRUE_VALUE;
 		}
 		if (diagnostics instanceof DiagnosticChain) {
@@ -183,11 +183,11 @@ public class CGStringLogDiagnosticOperation extends AbstractOperation
 		}
 		return ValueUtil.FALSE_VALUE; */
 	}
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	public @NonNull Boolean evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId,
 			String constraintName, DiagnosticChain diagnostics, Object severity, Object object) {
-		return evaluate(getExecutor(evaluator), returnTypeId, constraintName, diagnostics, severity, object); 
+		return evaluate(getExecutor(evaluator), returnTypeId, constraintName, diagnostics, severity, object);
 	}
 }
