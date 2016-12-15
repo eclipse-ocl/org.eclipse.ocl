@@ -17,31 +17,41 @@
  *******************************************************************************/
 package	org.eclipse.ocl.pivot.model;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.*;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociativityKind;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.CollectionKind;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.PseudostateKind;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TransitionKind;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -1972,6 +1982,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Feature_implementationClass = createProperty(PivotPackage.Literals.FEATURE__IMPLEMENTATION_CLASS, _String);
 		private final @NonNull Property pr_Feature_isStatic = createProperty(PivotPackage.Literals.FEATURE__IS_STATIC, _Boolean);
 		private final @NonNull Property pr_FeatureCallExp_isPre = createProperty(PivotPackage.Literals.FEATURE_CALL_EXP__IS_PRE, _Boolean);
+		private final @NonNull Property pr_IfExp_isElseIf = createProperty(PivotPackage.Literals.IF_EXP__IS_ELSE_IF, _Boolean);
 		private final @NonNull Property pr_IfExp_ownedCondition = createProperty(PivotPackage.Literals.IF_EXP__OWNED_CONDITION, _OCLExpression);
 		private final @NonNull Property pr_IfExp_ownedElse = createProperty(PivotPackage.Literals.IF_EXP__OWNED_ELSE, _OCLExpression);
 		private final @NonNull Property pr_IfExp_ownedThen = createProperty(PivotPackage.Literals.IF_EXP__OWNED_THEN, _OCLExpression);
@@ -2719,6 +2730,8 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsResolveProxies(true);
 
 			ownedProperties = _IfExp.getOwnedProperties();
+			ownedProperties.add(property = pr_IfExp_isElseIf);
+			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_IfExp_ownedCondition);
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
@@ -4391,6 +4404,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(_Feature, "A Feature declares a behavioral or structural characteristic of Classifiers.");
 			installComment(pr_Feature_isStatic, "Specifies whether this Feature characterizes individual instances classified by the Classifier (false) or the Classifier itself (true).");
 			installComment(_FinalState, "A special kind of State, which, when entered, signifies that the enclosing Region has completed. If the enclosing Region is directly contained in a StateMachine and all other Regions in that StateMachine also are completed, then it means that the entire StateMachine behavior is completed.");
+			installComment(pr_IfExp_isElseIf, "True if this IfExp corresponds to an \'elseif\' in the OCL source, false if it corresponds to an \'if\'. This attribute has no semantic significance; it merely supports more faithful reconstruction of the OCL source by a pretty printer.");
 			installComment(_InstanceSpecification, "An InstanceSpecification is a model element that represents an instance in a modeled system. An InstanceSpecification can act as a DeploymentTarget in a Deployment relationship, in the case that it represents an instance of a Node. It can also act as a DeployedArtifact, if it represents an instance of an Artifact.");
 			installComment(pr_InstanceSpecification_classes, "The Classifier or Classifiers of the represented instance. If multiple Classifiers are specified, the instance is classified by all of them.");
 			installComment(pr_InstanceSpecification_ownedSlots, "A Slot giving the value or values of a StructuralFeature of the instance. An InstanceSpecification can have one Slot per StructuralFeature of its Classifiers, including inherited features. It is not necessary to model a Slot for every StructuralFeature, in which case the InstanceSpecification is a partial description.");

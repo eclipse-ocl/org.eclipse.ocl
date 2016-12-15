@@ -515,6 +515,9 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIfExp" name="IfExp">
     <generalization xmi:id="Ppivot.TIfExp.g0" general="Ppivot.TOCLExpression"/>
+    <ownedAttribute xmi:id="Ppivot.TIfExp.PisElseIf" name="isElseIf" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TIfExp.PisElseIf.dlV" value="false"/>
+    </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TIfExp.PownedCondition" name="ownedCondition" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"
         association="Ppivot.A_ownedCondition_IfExp"/>
     <ownedAttribute xmi:id="Ppivot.TIfExp.PownedElse" name="ownedElse" type="Ppivot.TOCLExpression" isOrdered="true" aggregation="composite"

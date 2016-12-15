@@ -403,6 +403,9 @@
       <ownedInvariants xmi:id="cipivot.IfExp.TypeIsNotInvalid" isCallable="true" name="TypeIsNotInvalid">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;&#xA;"/>
       </ownedInvariants>
+      <ownedProperties xmi:id="p.pivot.IfExp.isElseIf" defaultValueString="false" name="isElseIf" type="#Boolean">
+        <ownedComments body="True if this IfExp corresponds to an 'elseif' in the OCL source, false if it corresponds to an 'if'. This attribute has no semantic significance; it merely supports more faithful reconstruction of the OCL source by a pretty printer."/>
+      </ownedProperties>
       <ownedProperties xmi:id="p.pivot.IfExp.ownedCondition" isComposite="true" name="ownedCondition" opposite="#op.pivot.IfExp.ownedCondition"
           type="#T.pivot.OCLExpression"/>
       <ownedProperties xmi:id="p.pivot.IfExp.ownedElse" isComposite="true" name="ownedElse" opposite="#op.pivot.IfExp.ownedElse" type="#T.pivot.OCLExpression"/>

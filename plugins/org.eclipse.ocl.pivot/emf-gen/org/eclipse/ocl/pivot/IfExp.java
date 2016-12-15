@@ -17,12 +17,14 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>If Exp</b></em>'.
+ * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.IfExp#isIsElseIf <em>Is Else If</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.IfExp#getOwnedCondition <em>Owned Condition</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.IfExp#getOwnedElse <em>Owned Else</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.IfExp#getOwnedThen <em>Owned Then</em>}</li>
@@ -32,7 +34,34 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface IfExp
-		extends OCLExpression {
+extends OCLExpression {
+
+	/**
+	 * Returns the value of the '<em><b>Is Else If</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * True if this IfExp corresponds to an 'elseif' in the OCL source, false if it corresponds to an 'if'. This attribute has no semantic significance; it merely supports more faithful reconstruction of the OCL source by a pretty printer.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Is Else If</em>' attribute.
+	 * @see #setIsElseIf(boolean)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getIfExp_IsElseIf()
+	 * @generated
+	 */
+	boolean isIsElseIf();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.IfExp#isIsElseIf <em>Is Else If</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Else If</em>' attribute.
+	 * @see #isIsElseIf()
+	 * @generated
+	 */
+	void setIsElseIf(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Owned Condition</b></em>' containment reference.

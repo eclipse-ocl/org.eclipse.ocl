@@ -10211,13 +10211,22 @@ extends EPackage
 	int IF_EXP__TYPE_VALUE = OCL_EXPRESSION__TYPE_VALUE;
 
 	/**
+	 * The feature id for the '<em><b>Is Else If</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IF_EXP__IS_ELSE_IF = OCL_EXPRESSION_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Owned Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IF_EXP__OWNED_CONDITION = OCL_EXPRESSION_FEATURE_COUNT + 0;
+	int IF_EXP__OWNED_CONDITION = OCL_EXPRESSION_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Owned Else</b></em>' containment reference.
@@ -10226,7 +10235,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int IF_EXP__OWNED_ELSE = OCL_EXPRESSION_FEATURE_COUNT + 1;
+	int IF_EXP__OWNED_ELSE = OCL_EXPRESSION_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Owned Then</b></em>' containment reference.
@@ -10235,7 +10244,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int IF_EXP__OWNED_THEN = OCL_EXPRESSION_FEATURE_COUNT + 2;
+	int IF_EXP__OWNED_THEN = OCL_EXPRESSION_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>If Exp</em>' class.
@@ -10244,7 +10253,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int IF_EXP_FEATURE_COUNT = OCL_EXPRESSION_FEATURE_COUNT + 3;
+	int IF_EXP_FEATURE_COUNT = OCL_EXPRESSION_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -25505,6 +25514,17 @@ extends EPackage
 	EClass getIfExp();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.IfExp#isIsElseIf <em>Is Else If</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Else If</em>'.
+	 * @see org.eclipse.ocl.pivot.IfExp#isIsElseIf()
+	 * @see #getIfExp()
+	 * @generated
+	 */
+	EAttribute getIfExp_IsElseIf();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.IfExp#getOwnedCondition <em>Owned Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -30816,6 +30836,14 @@ extends EPackage
 		 * @generated
 		 */
 		EClass IF_EXP = eINSTANCE.getIfExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Else If</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IF_EXP__IS_ELSE_IF = eINSTANCE.getIfExp_IsElseIf();
 
 		/**
 		 * The meta object literal for the '<em><b>Owned Condition</b></em>' containment reference feature.

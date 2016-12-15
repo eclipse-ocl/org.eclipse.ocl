@@ -2337,9 +2337,10 @@ public class PivotTables
 
 		public static final @NonNull ExecutorProperty _FeatureCallExp__isPre = new EcoreExecutorProperty(PivotPackage.Literals.FEATURE_CALL_EXP__IS_PRE, Types._FeatureCallExp, 0);
 
-		public static final @NonNull ExecutorProperty _IfExp__ownedCondition = new EcoreExecutorProperty(PivotPackage.Literals.IF_EXP__OWNED_CONDITION, Types._IfExp, 0);
-		public static final @NonNull ExecutorProperty _IfExp__ownedElse = new EcoreExecutorProperty(PivotPackage.Literals.IF_EXP__OWNED_ELSE, Types._IfExp, 1);
-		public static final @NonNull ExecutorProperty _IfExp__ownedThen = new EcoreExecutorProperty(PivotPackage.Literals.IF_EXP__OWNED_THEN, Types._IfExp, 2);
+		public static final @NonNull ExecutorProperty _IfExp__isElseIf = new EcoreExecutorProperty(PivotPackage.Literals.IF_EXP__IS_ELSE_IF, Types._IfExp, 0);
+		public static final @NonNull ExecutorProperty _IfExp__ownedCondition = new EcoreExecutorProperty(PivotPackage.Literals.IF_EXP__OWNED_CONDITION, Types._IfExp, 1);
+		public static final @NonNull ExecutorProperty _IfExp__ownedElse = new EcoreExecutorProperty(PivotPackage.Literals.IF_EXP__OWNED_ELSE, Types._IfExp, 2);
+		public static final @NonNull ExecutorProperty _IfExp__ownedThen = new EcoreExecutorProperty(PivotPackage.Literals.IF_EXP__OWNED_THEN, Types._IfExp, 3);
 
 		public static final @NonNull ExecutorProperty _Import__importedNamespace = new EcoreExecutorProperty(PivotPackage.Literals.IMPORT__IMPORTED_NAMESPACE, Types._Import, 0);
 		public static final @NonNull ExecutorProperty _Import__Model__ownedImports = new ExecutorPropertyWithImplementation("Model", Types._Import, 1, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MODEL__OWNED_IMPORTS));
@@ -12106,6 +12107,7 @@ public class PivotTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _IfExp = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._IfExp__isElseIf,
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
 			PivotTables.Properties._NamedElement__name,

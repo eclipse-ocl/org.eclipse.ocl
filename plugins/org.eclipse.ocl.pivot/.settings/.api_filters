@@ -305,8 +305,36 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="IF_EXP_FEATURE_COUNT"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="IF_EXP_OPERATION_COUNT"/>
                 <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="IF_EXP__OWNED_CONDITION"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="IF_EXP__OWNED_ELSE"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="IF_EXP__OWNED_THEN"/>
+                <message_argument value="11"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -2212,6 +2240,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="IF_EXP__IS_ELSE_IF"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="IF_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -2602,6 +2635,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="getIfExp_IsElseIf()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
@@ -2688,6 +2726,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
                 <message_argument value="FEATURE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="IF_EXP__IS_ELSE_IF"/>
             </message_arguments>
         </filter>
         <filter id="403767336">
@@ -2817,6 +2861,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="FEATURE___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="IF_EXP__IS_ELSE_IF"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -3081,6 +3130,11 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="getFeature__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="getIfExp_IsElseIf()"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">

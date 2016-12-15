@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.IfExpImpl#isIsElseIf <em>Is Else If</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.IfExpImpl#getOwnedCondition <em>Owned Condition</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.IfExpImpl#getOwnedElse <em>Owned Else</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.IfExpImpl#getOwnedThen <em>Owned Then</em>}</li>
@@ -57,8 +58,30 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * @generated
  */
 public class IfExpImpl
-		extends OCLExpressionImpl
-		implements IfExp {
+extends OCLExpressionImpl
+implements IfExp {
+
+	/**
+	 * The default value of the '{@link #isIsElseIf() <em>Is Else If</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @see #isIsElseIf()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_ELSE_IF_EDEFAULT = false;
+
+	/**
+	 * The flag representing the value of the '{@link #isIsElseIf() <em>Is Else If</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @see #isIsElseIf()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int IS_ELSE_IF_EFLAG = 1 << 9;
 
 	/**
 	 * The cached value of the '{@link #getOwnedCondition() <em>Owned Condition</em>}' containment reference.
@@ -107,6 +130,33 @@ public class IfExpImpl
 	@Override
 	protected EClass eStaticClass() {
 		return PivotPackage.Literals.IF_EXP;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isIsElseIf()
+	{
+		return (eFlags & IS_ELSE_IF_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setIsElseIf(boolean newIsElseIf)
+	{
+		boolean oldIsElseIf = (eFlags & IS_ELSE_IF_EFLAG) != 0;
+		if (newIsElseIf) eFlags |= IS_ELSE_IF_EFLAG; else eFlags &= ~IS_ELSE_IF_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.IF_EXP__IS_ELSE_IF, oldIsElseIf, newIsElseIf));
 	}
 
 	/**
@@ -403,6 +453,8 @@ public class IfExpImpl
 				return basicGetType();
 			case PivotPackage.IF_EXP__TYPE_VALUE:
 				return getTypeValue();
+			case PivotPackage.IF_EXP__IS_ELSE_IF:
+				return isIsElseIf();
 			case PivotPackage.IF_EXP__OWNED_CONDITION:
 				return getOwnedCondition();
 			case PivotPackage.IF_EXP__OWNED_ELSE:
@@ -451,6 +503,9 @@ public class IfExpImpl
 			case PivotPackage.IF_EXP__TYPE_VALUE:
 				setTypeValue((Type)newValue);
 				return;
+			case PivotPackage.IF_EXP__IS_ELSE_IF:
+				setIsElseIf((Boolean)newValue);
+				return;
 			case PivotPackage.IF_EXP__OWNED_CONDITION:
 				setOwnedCondition((OCLExpression)newValue);
 				return;
@@ -497,6 +552,9 @@ public class IfExpImpl
 			case PivotPackage.IF_EXP__TYPE_VALUE:
 				setTypeValue((Type)null);
 				return;
+			case PivotPackage.IF_EXP__IS_ELSE_IF:
+				setIsElseIf(IS_ELSE_IF_EDEFAULT);
+				return;
 			case PivotPackage.IF_EXP__OWNED_CONDITION:
 				setOwnedCondition((OCLExpression)null);
 				return;
@@ -537,6 +595,8 @@ public class IfExpImpl
 				return type != null;
 			case PivotPackage.IF_EXP__TYPE_VALUE:
 				return typeValue != null;
+			case PivotPackage.IF_EXP__IS_ELSE_IF:
+				return ((eFlags & IS_ELSE_IF_EFLAG) != 0) != IS_ELSE_IF_EDEFAULT;
 			case PivotPackage.IF_EXP__OWNED_CONDITION:
 				return ownedCondition != null;
 			case PivotPackage.IF_EXP__OWNED_ELSE:
@@ -572,6 +632,23 @@ public class IfExpImpl
 				return validateTypeIsNotInvalid((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (isElseIf: "); //$NON-NLS-1$
+		result.append((eFlags & IS_ELSE_IF_EFLAG) != 0);
+		result.append(')');
+		return result.toString();
 	}
 
 	@Override

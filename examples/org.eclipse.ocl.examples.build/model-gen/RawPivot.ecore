@@ -363,6 +363,11 @@
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IfExp" eSuperTypes="#//OCLExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isElseIf" lowerBound="1" eType="#//Boolean" defaultValueLiteral="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="True if this IfExp corresponds to an 'elseif' in the OCL source, false if it corresponds to an 'if'. This attribute has no semantic significance; it merely supports more faithful reconstruction of the OCL source by a pretty printer."/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCondition" lowerBound="1" eType="#//OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedElse" lowerBound="1" eType="#//OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedThen" lowerBound="1" eType="#//OCLExpression" containment="true"/>
