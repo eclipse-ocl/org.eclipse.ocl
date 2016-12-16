@@ -474,7 +474,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *     CurlyBracketedClauseCS returns CurlyBracketedClauseCS
 	 *
 	 * Constraint:
-	 *     ((ownedParts+=ShadowPartCS ownedParts+=ShadowPartCS*) | value=StringLiteral)?
+	 *     (ownedParts+=ShadowPartCS ownedParts+=ShadowPartCS*)?
 	 */
 	protected void sequence_CurlyBracketedClauseCS(ISerializationContext context, CurlyBracketedClauseCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -996,7 +996,10 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *     ShadowPartCS returns ShadowPartCS
 	 *
 	 * Constraint:
-	 *     (referredProperty=[Property|UnrestrictedName] (ownedInitExpression=ExpCS | ownedInitExpression=PatternExpCS))
+	 *     (
+	 *         (referredProperty=[Property|UnrestrictedName] (ownedInitExpression=ExpCS | ownedInitExpression=PatternExpCS)) |
+	 *         ownedInitExpression=StringLiteralExpCS
+	 *     )
 	 */
 	protected void sequence_ShadowPartCS(ISerializationContext context, ShadowPartCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

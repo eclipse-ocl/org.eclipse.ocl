@@ -1446,7 +1446,7 @@ ruleShadowPartCS returns [EObject current=null]
     @init { enterRule();
     }
     @after { leaveRule(); }:
-((
+(((
 (
 		{
 		  /* */
@@ -1457,7 +1457,7 @@ ruleShadowPartCS returns [EObject current=null]
 	        }
         }
 		{
-	        newCompositeNode(grammarAccess.getShadowPartCSAccess().getReferredPropertyPropertyCrossReference_0_0());
+	        newCompositeNode(grammarAccess.getShadowPartCSAccess().getReferredPropertyPropertyCrossReference_0_0_0());
 	    }
 		ruleUnrestrictedName		{
 	        afterParserOrEnumRuleCall();
@@ -1466,13 +1466,13 @@ ruleShadowPartCS returns [EObject current=null]
 )
 )	otherlv_1='='
     {
-    	newLeafNode(otherlv_1, grammarAccess.getShadowPartCSAccess().getEqualsSignKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getShadowPartCSAccess().getEqualsSignKeyword_0_1());
     }
 (
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getShadowPartCSAccess().getOwnedInitExpressionExpCSParserRuleCall_2_0_0());
+	        newCompositeNode(grammarAccess.getShadowPartCSAccess().getOwnedInitExpressionExpCSParserRuleCall_0_2_0_0());
 	    }
 		lv_ownedInitExpression_2_1=ruleExpCS		{
 	        if ($current==null) {
@@ -1487,7 +1487,7 @@ ruleShadowPartCS returns [EObject current=null]
 	    }
 
     |		{
-	        newCompositeNode(grammarAccess.getShadowPartCSAccess().getOwnedInitExpressionPatternExpCSParserRuleCall_2_0_1());
+	        newCompositeNode(grammarAccess.getShadowPartCSAccess().getOwnedInitExpressionPatternExpCSParserRuleCall_0_2_0_1());
 	    }
 		lv_ownedInitExpression_2_2=rulePatternExpCS		{
 	        if ($current==null) {
@@ -1502,6 +1502,25 @@ ruleShadowPartCS returns [EObject current=null]
 	    }
 
 )
+
+)
+))
+    |(
+(
+		{
+	        newCompositeNode(grammarAccess.getShadowPartCSAccess().getOwnedInitExpressionStringLiteralExpCSParserRuleCall_1_0());
+	    }
+		lv_ownedInitExpression_3_0=ruleStringLiteralExpCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getShadowPartCSRule());
+	        }
+       		set(
+       			$current,
+       			"ownedInitExpression",
+        		lv_ownedInitExpression_3_0,
+        		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.StringLiteralExpCS");
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 ))
@@ -3117,10 +3136,10 @@ ruleCurlyBracketedClauseCS returns [EObject current=null]
     {
     	newLeafNode(otherlv_1, grammarAccess.getCurlyBracketedClauseCSAccess().getLeftCurlyBracketKeyword_1());
     }
-(((
+((
 (
 		{
-	        newCompositeNode(grammarAccess.getCurlyBracketedClauseCSAccess().getOwnedPartsShadowPartCSParserRuleCall_2_0_0_0());
+	        newCompositeNode(grammarAccess.getCurlyBracketedClauseCSAccess().getOwnedPartsShadowPartCSParserRuleCall_2_0_0());
 	    }
 		lv_ownedParts_2_0=ruleShadowPartCS		{
 	        if ($current==null) {
@@ -3137,12 +3156,12 @@ ruleCurlyBracketedClauseCS returns [EObject current=null]
 )
 )(	otherlv_3=','
     {
-    	newLeafNode(otherlv_3, grammarAccess.getCurlyBracketedClauseCSAccess().getCommaKeyword_2_0_1_0());
+    	newLeafNode(otherlv_3, grammarAccess.getCurlyBracketedClauseCSAccess().getCommaKeyword_2_1_0());
     }
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getCurlyBracketedClauseCSAccess().getOwnedPartsShadowPartCSParserRuleCall_2_0_1_1_0());
+	        newCompositeNode(grammarAccess.getCurlyBracketedClauseCSAccess().getOwnedPartsShadowPartCSParserRuleCall_2_1_1_0());
 	    }
 		lv_ownedParts_4_0=ruleShadowPartCS		{
 	        if ($current==null) {
@@ -3157,28 +3176,9 @@ ruleCurlyBracketedClauseCS returns [EObject current=null]
 	    }
 
 )
-))*)?
-    |(
-(
-		{
-	        newCompositeNode(grammarAccess.getCurlyBracketedClauseCSAccess().getValueStringLiteralParserRuleCall_2_1_0());
-	    }
-		lv_value_5_0=ruleStringLiteral		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getCurlyBracketedClauseCSRule());
-	        }
-       		set(
-       			$current,
-       			"value",
-        		lv_value_5_0,
-        		"org.eclipse.ocl.xtext.base.Base.StringLiteral");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))	otherlv_6='}'
+))*)?	otherlv_5='}'
     {
-    	newLeafNode(otherlv_6, grammarAccess.getCurlyBracketedClauseCSAccess().getRightCurlyBracketKeyword_3());
+    	newLeafNode(otherlv_5, grammarAccess.getCurlyBracketedClauseCSAccess().getRightCurlyBracketKeyword_3());
     }
 )
 ;

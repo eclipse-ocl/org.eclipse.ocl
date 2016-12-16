@@ -138,7 +138,8 @@ CollectionPatternCS returns CollectionPatternCS:
 	'}';
 
 ShadowPartCS returns ShadowPartCS:		// PatternPartCS
-	referredProperty=[pivot::Property|UnrestrictedName] '='ownedInitExpression=(ExpCS|PatternExpCS);
+	(referredProperty=[pivot::Property|UnrestrictedName] '='ownedInitExpression=(ExpCS|PatternExpCS))
+	| ownedInitExpression=StringLiteralExpCS;
 
 PatternExpCS:
 	patternVariableName=UnrestrictedName? ':' ownedPatternType=TypeExpCS;
@@ -251,10 +252,7 @@ NameExpCS returns NameExpCS:
 
 /* A curly bracket clause is a generalized rule for the literal arguments of collections, maps, tuples and shadows.*/
 CurlyBracketedClauseCS:
-	{CurlyBracketedClauseCS} '{'
-		( ((ownedParts+=ShadowPartCS (',' ownedParts+=ShadowPartCS)*))?
-		| (value=StringLiteral)
-		) '}'
+	{CurlyBracketedClauseCS} '{' ((ownedParts+=ShadowPartCS (',' ownedParts+=ShadowPartCS)*))? '}'
 	;
 	
 /* A curly bracket clause is a generalized rule for template specialisations and operations arguments.*/

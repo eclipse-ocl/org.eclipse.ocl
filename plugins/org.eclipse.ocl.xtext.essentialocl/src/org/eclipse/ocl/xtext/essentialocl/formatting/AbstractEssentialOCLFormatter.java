@@ -91,9 +91,8 @@ public abstract class AbstractEssentialOCLFormatter extends BaseFormatter
 
 	protected void configureCurlyBracketedClauseCS(FormattingConfig c, CurlyBracketedClauseCSElements a) {
 		c.setNoSpace().around(a.getLeftCurlyBracketKeyword_1());
-		c.setNoSpace().before(a.getCommaKeyword_2_0_1_0());
 		c.setNoSpace().around(a.getRightCurlyBracketKeyword_3());
-	    c.setIndentation(a.getLeftCurlyBracketKeyword_1(), a.getRightCurlyBracketKeyword_3());
+		c.setIndentation(a.getLeftCurlyBracketKeyword_1(), a.getRightCurlyBracketKeyword_3());
 	}
 
 	protected void configureEssentialOCLNavigationOperatorCS(FormattingConfig c, EssentialOCLNavigationOperatorNameElements a) {
@@ -114,7 +113,7 @@ public abstract class AbstractEssentialOCLFormatter extends BaseFormatter
 	protected void configureRoundBracketedClauseCS(FormattingConfig c, RoundBracketedClauseCSElements a) {
 		c.setNoSpace().around(a.getLeftParenthesisKeyword_1());
 		c.setNoSpace().before(a.getRightParenthesisKeyword_3());
-	    c.setIndentation(a.getLeftParenthesisKeyword_1(), a.getRightParenthesisKeyword_3());
+		c.setIndentation(a.getLeftParenthesisKeyword_1(), a.getRightParenthesisKeyword_3());
 	}
 
 	protected void configureSquareBracketedClauseCS(FormattingConfig c, SquareBracketedClauseCSElements a) {
@@ -138,6 +137,6 @@ public abstract class AbstractEssentialOCLFormatter extends BaseFormatter
 	}
 
 	protected void configureURIPathNameCS(FormattingConfig c, URIPathNameCSElements a) {
-	    c.setNoSpace().around(a.getColonColonKeyword_1_0());
+		c.setNoSpace().around(a.getColonColonKeyword_1_0());
 	}
 }

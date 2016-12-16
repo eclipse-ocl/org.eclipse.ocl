@@ -451,7 +451,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 
 		//// Intended to be overridden
-		//UnrestrictedName
+		// UnrestrictedName
 		public RuleCall getUnrestrictedNameParserRuleCall() { return cUnrestrictedNameParserRuleCall; }
 	}
 
@@ -464,7 +464,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 
 		//// Intended to be overridden
-		//Identifier
+		// Identifier
 		public RuleCall getIdentifierParserRuleCall() { return cIdentifierParserRuleCall; }
 	}
 
@@ -557,12 +557,13 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		// * lookahead conflicts in simple lexers between a dot within a floating point number and the dot-dot in a CollectionLiteralPartCS. A
 		// * practical implementation should give high priority to a successful parse of INT ('.' INT)? (('e' | 'E') ('+' | '-')? INT)? than
 		// * to the unsuccessful partial parse of INT '..'. The type of the INT terminal is String to allow the floating point syntax to be used.
-		// * / NUMBER_LITERAL BigNumber:
+		// * /
+		//NUMBER_LITERAL BigNumber:
 		//	INT
 		@Override public ParserRule getRule() { return rule; }
 
 		//// Not terminal to allow parser backtracking to sort out "5..7"
-		//INT
+		// INT
 		public RuleCall getINTTerminalRuleCall() { return cINTTerminalRuleCall; }
 	}
 
@@ -571,7 +572,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSINGLE_QUOTED_STRINGTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 
 		//// EssentialOCLTokenSource pieces this together ('.' INT)? (('e' | 'E') ('+' | '-')? INT)?;
-		//StringLiteral:
+		// StringLiteral:
 		//	SINGLE_QUOTED_STRING;
 		@Override public ParserRule getRule() { return rule; }
 
@@ -910,7 +911,8 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	// * lookahead conflicts in simple lexers between a dot within a floating point number and the dot-dot in a CollectionLiteralPartCS. A
 	// * practical implementation should give high priority to a successful parse of INT ('.' INT)? (('e' | 'E') ('+' | '-')? INT)? than
 	// * to the unsuccessful partial parse of INT '..'. The type of the INT terminal is String to allow the floating point syntax to be used.
-	// * / NUMBER_LITERAL BigNumber:
+	// * /
+	//NUMBER_LITERAL BigNumber:
 	//	INT
 	public NUMBER_LITERALElements getNUMBER_LITERALAccess() {
 		return pNUMBER_LITERAL;
@@ -921,7 +923,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// EssentialOCLTokenSource pieces this together ('.' INT)? (('e' | 'E') ('+' | '-')? INT)?;
-	//StringLiteral:
+	// StringLiteral:
 	//	SINGLE_QUOTED_STRING;
 	public StringLiteralElements getStringLiteralAccess() {
 		return pStringLiteral;
