@@ -97,7 +97,6 @@
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGEcoreDataTypeShadowExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreDataTypeShadowExp/eDataType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGEcoreDataTypeShadowExp/string"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGEcoreExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreExp/eClassifier"/>

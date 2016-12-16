@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -17,32 +17,31 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreClassShadowExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNumber;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
-import org.eclipse.ocl.pivot.MapLiteralExp;
-import org.eclipse.ocl.pivot.ShadowExp;
-import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
+import org.eclipse.ocl.pivot.ShadowExp;
+import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -51,7 +50,7 @@ import org.eclipse.ocl.pivot.values.RealValue;
 
 /**
  * EquivalenceUtil provides the bodies for many of the isEquivalentToInternal operations.
- * 
+ *
  * These return:
  * <br>
  * true if two values are definitely the same.
@@ -111,7 +110,7 @@ public class EquivalenceUtil
 		}
 		return Boolean.TRUE;
 	}
-	
+
 	public static @Nullable Boolean isEquivalent(@NonNull CGCollectionPart thisValue, @NonNull CGCollectionPart thatValue) {
 		if (thisValue == thatValue) {
 			return Boolean.TRUE;
@@ -133,78 +132,6 @@ public class EquivalenceUtil
 			return null; 					// FIXME could support range/items comparison
 		}
 		return thisFirst.isEquivalentTo(thatFirst);
-	}
-
-	public static @Nullable Boolean isEquivalent(@NonNull CGShadowPart thisValue, @NonNull CGShadowPart thatValue) {
-		if (thisValue == thatValue) {
-			return Boolean.TRUE;
-		}
-		Element thisAST = thisValue.getAst();
-		Element thatAST = thatValue.getAst();
-		if (!(thisAST instanceof ShadowPart) || !(thatAST instanceof ShadowPart)) {
-			return null;					// Null ASTs should never happen
-		}
-		if (((ShadowPart)thisAST).getTypeId() != ((ShadowPart)thatAST).getTypeId()) {
-			return Boolean.FALSE;			// Distinct typeids are necessarily not equal
-		}
-		CGValuedElement thisPartInit = thisValue.getInit();
-		CGValuedElement thatPartInit = thatValue.getInit();
-		if ((thisPartInit == null) || (thatPartInit == null)) {
-			return null;			// Null inits should never happen
-		}
-		return thisPartInit.isEquivalentTo(thatPartInit);
-	}
-
-	public static @Nullable Boolean isEquivalent(@NonNull CGEcoreClassShadowExp thisValue, @NonNull CGEcoreClassShadowExp thatValue) {
-		if (thisValue == thatValue) {
-			return Boolean.TRUE;
-		}
-		Element thisAST = thisValue.getAst();
-		Element thatAST = thatValue.getAst();
-		if (!(thisAST instanceof ShadowExp) || !(thatAST instanceof ShadowExp)) {
-			return null;					// Null ASTs should never happen
-		}
-		if (((ShadowExp)thisAST).getTypeId() != ((ShadowExp)thatAST).getTypeId()) {
-			return Boolean.FALSE;			// Distinct typeids are necessarily not equal
-		}
-		List<CGShadowPart> theseParts = thisValue.getParts();
-		List<CGShadowPart> thoseParts = thatValue.getParts();
-		int iSize = theseParts.size();
-		if (iSize != thoseParts.size()) {
-			return Boolean.FALSE;			// Distinct part lists are necessarily not equal
-		}
-		for (int i = 0; i < iSize; i++) {
-			CGShadowPart thisPart = theseParts.get(i);
-			CGShadowPart thatPart = thoseParts.get(i);
-			if ((thisPart == null) || (thatPart == null)) {
-				return null;				// Null parts should never happen
-			}
-			Boolean equivalence = thisPart.isEquivalentTo(thatPart);
-			if (equivalence != Boolean.TRUE) {
-				return equivalence;			// Distinct parts are necessarily not equal
-			}
-		}
-		return Boolean.TRUE;
-	}
-
-	public static @Nullable Boolean isEquivalent(@NonNull CGEcoreDataTypeShadowExp thisValue, @NonNull CGEcoreDataTypeShadowExp thatValue) {
-		if (thisValue == thatValue) {
-			return Boolean.TRUE;
-		}
-		Element thisAST = thisValue.getAst();
-		Element thatAST = thatValue.getAst();
-		if (!(thisAST instanceof ShadowExp) || !(thatAST instanceof ShadowExp)) {
-			return null;					// Null ASTs should never happen
-		}
-		if (((ShadowExp)thisAST).getTypeId() != ((ShadowExp)thatAST).getTypeId()) {
-			return Boolean.FALSE;			// Distinct typeids are necessarily not equal
-		}
-		String thisString = thisValue.getString();
-		String thatString = thatValue.getString();
-		if ((thisString == null) || (thatString == null)) {
-			return null;			// Null bodies should never happen
-		}
-		return thisString.equals(thatString);
 	}
 
 	public static @Nullable Boolean isEquivalent(@NonNull CGIfExp thisValue, @NonNull CGIfExp thatValue) {
@@ -251,7 +178,7 @@ public class EquivalenceUtil
 		}
 		return Boolean.TRUE;
 	}
-	
+
 	public static @Nullable Boolean isEquivalent(@NonNull CGIterationCallExp thisValue, @NonNull CGIterationCallExp thatValue) {
 		if (thisValue == thatValue) {
 			return Boolean.TRUE;
@@ -370,7 +297,7 @@ public class EquivalenceUtil
 		}
 		return Boolean.TRUE;
 	}
-	
+
 	public static @Nullable Boolean isEquivalent(@NonNull CGMapPart thisPart, @NonNull CGMapPart thatPart) {
 		if (thisPart == thatPart) {
 			return Boolean.TRUE;
@@ -425,7 +352,7 @@ public class EquivalenceUtil
 			return thisDouble == thatDouble;
 		}
 	}
-	
+
 	public static @Nullable Boolean isEquivalent(@NonNull CGOperationCallExp thisValue, @NonNull CGOperationCallExp thatValue) {
 		if (thisValue == thatValue) {
 			return Boolean.TRUE;
@@ -471,7 +398,7 @@ public class EquivalenceUtil
 		}
 		return Boolean.TRUE;
 	}
-	
+
 	public static @Nullable Boolean isEquivalent(@NonNull CGNavigationCallExp thisValue, @NonNull CGNavigationCallExp thatValue) {
 		if (thisValue == thatValue) {
 			return Boolean.TRUE;
@@ -502,6 +429,58 @@ public class EquivalenceUtil
 			}
 		}
 		return Boolean.TRUE;
+	}
+
+	public static @Nullable Boolean isEquivalent(@NonNull CGShadowExp thisValue, @NonNull CGShadowExp thatValue) {
+		if (thisValue == thatValue) {
+			return Boolean.TRUE;
+		}
+		Element thisAST = thisValue.getAst();
+		Element thatAST = thatValue.getAst();
+		if (!(thisAST instanceof ShadowExp) || !(thatAST instanceof ShadowExp)) {
+			return null;					// Null ASTs should never happen
+		}
+		if (((ShadowExp)thisAST).getTypeId() != ((ShadowExp)thatAST).getTypeId()) {
+			return Boolean.FALSE;			// Distinct typeids are necessarily not equal
+		}
+		List<CGShadowPart> theseParts = thisValue.getParts();
+		List<CGShadowPart> thoseParts = thatValue.getParts();
+		int iSize = theseParts.size();
+		if (iSize != thoseParts.size()) {
+			return Boolean.FALSE;			// Distinct part lists are necessarily not equal
+		}
+		for (int i = 0; i < iSize; i++) {
+			CGShadowPart thisPart = theseParts.get(i);
+			CGShadowPart thatPart = thoseParts.get(i);
+			if ((thisPart == null) || (thatPart == null)) {
+				return null;				// Null parts should never happen
+			}
+			Boolean equivalence = thisPart.isEquivalentTo(thatPart);
+			if (equivalence != Boolean.TRUE) {
+				return equivalence;			// Distinct parts are necessarily not equal
+			}
+		}
+		return Boolean.TRUE;
+	}
+
+	public static @Nullable Boolean isEquivalent(@NonNull CGShadowPart thisValue, @NonNull CGShadowPart thatValue) {
+		if (thisValue == thatValue) {
+			return Boolean.TRUE;
+		}
+		Element thisAST = thisValue.getAst();
+		Element thatAST = thatValue.getAst();
+		if (!(thisAST instanceof ShadowPart) || !(thatAST instanceof ShadowPart)) {
+			return null;					// Null ASTs should never happen
+		}
+		if (((ShadowPart)thisAST).getTypeId() != ((ShadowPart)thatAST).getTypeId()) {
+			return Boolean.FALSE;			// Distinct typeids are necessarily not equal
+		}
+		CGValuedElement thisPartInit = thisValue.getInit();
+		CGValuedElement thatPartInit = thatValue.getInit();
+		if ((thisPartInit == null) || (thatPartInit == null)) {
+			return null;			// Null inits should never happen
+		}
+		return thisPartInit.isEquivalentTo(thatPartInit);
 	}
 
 	public static @Nullable Boolean isEquivalent(@NonNull CGTupleExp thisValue, @NonNull CGTupleExp thatValue) {

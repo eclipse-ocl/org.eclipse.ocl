@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreDataTypeShadowExpImpl#getEDataType <em>EData Type</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreDataTypeShadowExpImpl#getString <em>String</em>}</li>
  * </ul>
  *
  * @generated
@@ -47,26 +46,6 @@ public class CGEcoreDataTypeShadowExpImpl extends CGShadowExpImpl implements CGE
 	 * @ordered
 	 */
 	protected EDataType eDataType;
-
-	/**
-	 * The default value of the '{@link #getString() <em>String</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getString()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String STRING_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getString() <em>String</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getString()
-	 * @generated
-	 * @ordered
-	 */
-	protected String string = STRING_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -116,45 +95,10 @@ public class CGEcoreDataTypeShadowExpImpl extends CGShadowExpImpl implements CGE
 	 * @generated
 	 */
 	@Override
-	public String getString() {
-		return string;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setString(String newString) {
-		String oldString = string;
-		string = newString;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_ECORE_DATA_TYPE_SHADOW_EXP__STRING, oldString, string));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		return super.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case CGModelPackage.CG_ECORE_DATA_TYPE_SHADOW_EXP__EDATA_TYPE:
 				return getEDataType();
-			case CGModelPackage.CG_ECORE_DATA_TYPE_SHADOW_EXP__STRING:
-				return getString();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -169,9 +113,6 @@ public class CGEcoreDataTypeShadowExpImpl extends CGShadowExpImpl implements CGE
 		switch (featureID) {
 			case CGModelPackage.CG_ECORE_DATA_TYPE_SHADOW_EXP__EDATA_TYPE:
 				setEDataType((EDataType)newValue);
-				return;
-			case CGModelPackage.CG_ECORE_DATA_TYPE_SHADOW_EXP__STRING:
-				setString((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -188,9 +129,6 @@ public class CGEcoreDataTypeShadowExpImpl extends CGShadowExpImpl implements CGE
 			case CGModelPackage.CG_ECORE_DATA_TYPE_SHADOW_EXP__EDATA_TYPE:
 				setEDataType((EDataType)null);
 				return;
-			case CGModelPackage.CG_ECORE_DATA_TYPE_SHADOW_EXP__STRING:
-				setString(STRING_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -205,8 +143,6 @@ public class CGEcoreDataTypeShadowExpImpl extends CGShadowExpImpl implements CGE
 		switch (featureID) {
 			case CGModelPackage.CG_ECORE_DATA_TYPE_SHADOW_EXP__EDATA_TYPE:
 				return eDataType != null;
-			case CGModelPackage.CG_ECORE_DATA_TYPE_SHADOW_EXP__STRING:
-				return STRING_EDEFAULT == null ? string != null : !STRING_EDEFAULT.equals(string);
 		}
 		return super.eIsSet(featureID);
 	}

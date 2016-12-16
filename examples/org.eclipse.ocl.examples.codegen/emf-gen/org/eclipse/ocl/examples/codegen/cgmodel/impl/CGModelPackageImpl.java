@@ -1497,16 +1497,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCGEcoreDataTypeShadowExp_String() {
-		return (EAttribute)cgEcoreDataTypeShadowExpEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getCGEcoreExp() {
 		return cgEcoreExpEClass;
 	}
@@ -3155,7 +3145,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		cgEcoreDataTypeShadowExpEClass = createEClass(CG_ECORE_DATA_TYPE_SHADOW_EXP);
 		createEReference(cgEcoreDataTypeShadowExpEClass, CG_ECORE_DATA_TYPE_SHADOW_EXP__EDATA_TYPE);
-		createEAttribute(cgEcoreDataTypeShadowExpEClass, CG_ECORE_DATA_TYPE_SHADOW_EXP__STRING);
 
 		cgEcoreExpEClass = createEClass(CG_ECORE_EXP);
 		createEReference(cgEcoreExpEClass, CG_ECORE_EXP__ECLASSIFIER);
@@ -3582,7 +3571,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		initEClass(cgEcoreDataTypeShadowExpEClass, CGEcoreDataTypeShadowExp.class, "CGEcoreDataTypeShadowExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCGEcoreDataTypeShadowExp_EDataType(), ecorePackage.getEDataType(), null, "eDataType", null, 1, 1, CGEcoreDataTypeShadowExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCGEcoreDataTypeShadowExp_String(), ecorePackage.getEString(), "string", null, 1, 1, CGEcoreDataTypeShadowExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgEcoreExpEClass, CGEcoreExp.class, "CGEcoreExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCGEcoreExp_EClassifier(), ecorePackage.getEClassifier(), null, "eClassifier", null, 0, 1, CGEcoreExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

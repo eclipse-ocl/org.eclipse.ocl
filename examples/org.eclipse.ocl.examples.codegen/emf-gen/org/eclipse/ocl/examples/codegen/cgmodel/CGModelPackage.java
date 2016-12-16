@@ -3313,22 +3313,13 @@ public interface CGModelPackage extends EPackage {
 	int CG_ECORE_DATA_TYPE_SHADOW_EXP__EDATA_TYPE = CG_SHADOW_EXP_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>String</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CG_ECORE_DATA_TYPE_SHADOW_EXP__STRING = CG_SHADOW_EXP_FEATURE_COUNT + 1;
-
-	/**
 	 * The number of structural features of the '<em>CG Ecore Data Type Shadow Exp</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CG_ECORE_DATA_TYPE_SHADOW_EXP_FEATURE_COUNT = CG_SHADOW_EXP_FEATURE_COUNT + 2;
+	int CG_ECORE_DATA_TYPE_SHADOW_EXP_FEATURE_COUNT = CG_SHADOW_EXP_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -10028,17 +10019,6 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGEcoreDataTypeShadowExp_EDataType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp#getString <em>String</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>String</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp#getString()
-	 * @see #getCGEcoreDataTypeShadowExp()
-	 * @generated
-	 */
-	EAttribute getCGEcoreDataTypeShadowExp_String();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp <em>CG Ecore Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12115,14 +12095,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_ECORE_DATA_TYPE_SHADOW_EXP__EDATA_TYPE = eINSTANCE.getCGEcoreDataTypeShadowExp_EDataType();
-
-		/**
-		 * The meta object literal for the '<em><b>String</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CG_ECORE_DATA_TYPE_SHADOW_EXP__STRING = eINSTANCE.getCGEcoreDataTypeShadowExp_String();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreExpImpl <em>CG Ecore Exp</em>}' class.

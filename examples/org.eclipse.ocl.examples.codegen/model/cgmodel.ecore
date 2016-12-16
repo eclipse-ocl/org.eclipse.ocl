@@ -177,12 +177,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="CGEcoreDataTypeShadowExp" eSuperTypes="#//CGShadowExp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="eDataType" lowerBound="1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="the integer value"/>
-      </eAnnotations>
-    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGEcoreExp" eSuperTypes="#//CGCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

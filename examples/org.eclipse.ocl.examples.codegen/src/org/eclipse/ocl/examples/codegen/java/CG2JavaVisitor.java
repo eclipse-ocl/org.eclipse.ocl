@@ -146,7 +146,6 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.TupleValue;
-import org.eclipse.xtext.util.Strings;
 
 /**
  * A CG2JavaVisitor serializes the contributions of a tree of model elements in a StringBuilder whose result may be
@@ -1348,6 +1347,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			throw new IllegalStateException("Load class failure for " + cgShadowExp + " in CG2JavaVisitor.visitCGEcoreDataTypeShadowExp()", e);
 		}
 		//
+		CGValuedElement init = ClassUtil.nonNullState(cgShadowExp.getParts().get(0).getInit());
+		if (!js.appendLocalStatements(init)) {
+			return false;
+		}
 		js.appendDeclaration(cgShadowExp);
 		js.append(" = ");
 		js.append("(");
@@ -1356,15 +1359,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendClassReference(factoryClass);
 		js.append(".eINSTANCE.createFromString(");
 		js.appendClassReference(packageClass);
-		js.append(".Literals." + dataTypeName + ", \"");
-		String partString = cgShadowExp.getString();
-		//		EFactory eFactoryInstance = ePackage.getEFactoryInstance();
-		//		String partString = eFactoryInstance.convertToString(eDataType, object);
-		if (partString != null) {
-			@SuppressWarnings("null") @NonNull String javaString = Strings.convertToJavaString(partString);
-			js.append(javaString);
-		}
-		js.append("\");\n");
+		js.append(".Literals." + dataTypeName + ", ");
+		js.appendValueName(init);
+		js.append(");\n");
 		return true;
 	}
 

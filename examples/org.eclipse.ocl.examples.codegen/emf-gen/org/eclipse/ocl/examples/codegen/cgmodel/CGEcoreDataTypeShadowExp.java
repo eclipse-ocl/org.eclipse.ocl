@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EDataType;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp#getEDataType <em>EData Type</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp#getString <em>String</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGEcoreDataTypeShadowExp()
@@ -53,29 +52,5 @@ public interface CGEcoreDataTypeShadowExp extends CGShadowExp {
 	 * @generated
 	 */
 	void setEDataType(EDataType value);
-
-	/**
-	 * Returns the value of the '<em><b>String</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * the integer value
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>String</em>' attribute.
-	 * @see #setString(String)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGEcoreDataTypeShadowExp_String()
-	 * @generated
-	 */
-	String getString();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp#getString <em>String</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>String</em>' attribute.
-	 * @see #getString()
-	 * @generated
-	 */
-	void setString(String value);
 
 } // CGEcoreDataTypeConstructorExp

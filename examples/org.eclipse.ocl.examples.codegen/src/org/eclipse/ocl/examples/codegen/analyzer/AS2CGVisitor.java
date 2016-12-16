@@ -1600,7 +1600,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			if (eTarget instanceof EDataType) {
 				CGEcoreDataTypeShadowExp cgEShadowExp = CGModelFactory.eINSTANCE.createCGEcoreDataTypeShadowExp();
 				cgEShadowExp.setEDataType((EDataType)eTarget);
-				cgEShadowExp.setString(element.getValue());
 				cgShadowExp = cgEShadowExp;
 			}
 			else if (eTarget instanceof EClass) {
