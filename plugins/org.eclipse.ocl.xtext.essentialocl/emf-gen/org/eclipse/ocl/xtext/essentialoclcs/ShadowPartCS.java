@@ -74,7 +74,7 @@ public interface ShadowPartCS
 	 * @return the value of the '<em>Referred Property</em>' reference.
 	 * @see #setReferredProperty(Property)
 	 * @see org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage#getShadowPartCS_ReferredProperty()
-	 * @model required="true"
+	 * @model
 	 * @generated
 	 */
 	Property getReferredProperty();

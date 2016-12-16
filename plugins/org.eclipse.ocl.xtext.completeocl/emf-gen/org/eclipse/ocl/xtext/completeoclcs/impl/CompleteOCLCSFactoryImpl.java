@@ -33,8 +33,8 @@ import org.eclipse.ocl.xtext.completeoclcs.PropertyContextDeclCS;
  * @generated
  */
 public class CompleteOCLCSFactoryImpl
-		extends EFactoryImpl
-		implements CompleteOCLCSFactory {
+extends EFactoryImpl
+implements CompleteOCLCSFactory {
 
 	/**
 	 * Creates the default factory implementation.
