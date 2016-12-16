@@ -35,6 +35,13 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Classes-DataType" name="DataType">
         <generalization xmi:id="_XpnTEX7VEeOu79LxSz8Ylw" general="OCL-OCL_Classes-Class"/>
+        <ownedAttribute xmi:id="_URrXEMLtEea2bfSf7M-nEQ" name="value" type="_isqz0MNXEea2bfSf7M-nEQ" isReadOnly="true" aggregation="composite" isDerived="true">
+          <ownedComment xmi:id="_3UWjUMN0Eea0UM3PsfUeqg">
+            <body>The value pseudo-property accesses a String-valued representation of the DataType.</body>
+          </ownedComment>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_URrXEcLtEea2bfSf7M-nEQ" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_1XTuAMNXEea2bfSf7M-nEQ" value=""/>
+        </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_Nsf90Bu-EeSIos3S87O_rg" name="Feature" isAbstract="true">
         <generalization xmi:id="_SP0YABu-EeSIos3S87O_rg" general="_Qur8cBu-EeSIos3S87O_rg"/>
@@ -61,6 +68,7 @@
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_mcgHcBs0EeSM9LreJtBwBg"/>
         </ownedAttribute>
       </packagedElement>
+      <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_isqz0MNXEea2bfSf7M-nEQ" name="String"/>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Classes-Type" name="Type" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_Qur8cBu-EeSIos3S87O_rg" name="TypedElement" isAbstract="true"/>
       <packagedElement xmi:type="uml:Association" xmi:id="__J2DUBvWEeSIos3S87O_rg" memberEnd="_2yGVQBvWEeSIos3S87O_rg _qvzBABvWEeSIos3S87O_rg"/>

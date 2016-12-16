@@ -396,7 +396,7 @@ inv CompatibleNullityForInitializer: not ownedInit?.isRequired implies not isReq
 --def: allProperties() : Set(Property)[*|1] = self->closure(superClasses)?.ownedProperties->asSet()
 
 context ShadowExp
-inv ClassHasNoStringValueInitializer: not type.oclIsKindOf(DataType) implies value = null
+inv ClassHasNoStringValueInitializer: true -- obsolete
 inv InitializesAllClassProperties: if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''} else 
 	let partProperties = ownedParts.referredProperty->asSet() in
 	let allProperties = type.oclAsType(Class)->closure(superClasses)?.ownedProperties->asSet() in
@@ -408,8 +408,9 @@ inv InitializesAllClassProperties: if type.oclIsKindOf(DataType) then Tuple{stat
 	else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}
 	else Tuple{status:Boolean[1]=true, message:String[1]=''}
 	endif endif endif.status
-inv DataTypeHasStringValueInitializer: type.oclIsKindOf(DataType) implies value <> null
-inv DataTypeHasNoPartInitializers: type.oclIsKindOf(DataType) implies ownedParts->isEmpty()
+inv DataTypeHasStringValueInitializer: true -- obsolete
+inv DataTypeHasNoPartInitializers: true -- obsolete
+inv DataTypeHasOnePartInitializer: type.oclIsKindOf(DataType) implies ownedParts->size() = 1
 inv TypeIsNotInvalid : type <> OclInvalid
 
 context ShadowPart
