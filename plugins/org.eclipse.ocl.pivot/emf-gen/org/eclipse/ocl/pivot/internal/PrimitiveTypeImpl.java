@@ -150,6 +150,8 @@ public class PrimitiveTypeImpl
 				return basicGetBehavioralClass();
 			case PivotPackage.PRIMITIVE_TYPE__IS_SERIALIZABLE:
 				return isIsSerializable();
+			case PivotPackage.PRIMITIVE_TYPE__VALUE:
+				return getValue();
 			case PivotPackage.PRIMITIVE_TYPE__COERCIONS:
 				return getCoercions();
 		}
@@ -390,6 +392,8 @@ public class PrimitiveTypeImpl
 				return behavioralClass != null;
 			case PivotPackage.PRIMITIVE_TYPE__IS_SERIALIZABLE:
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
+			case PivotPackage.PRIMITIVE_TYPE__VALUE:
+				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case PivotPackage.PRIMITIVE_TYPE__COERCIONS:
 				return coercions != null && !coercions.isEmpty();
 		}

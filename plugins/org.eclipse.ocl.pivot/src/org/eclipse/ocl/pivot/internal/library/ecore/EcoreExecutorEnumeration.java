@@ -58,7 +58,7 @@ public class EcoreExecutorEnumeration extends EcoreExecutorType implements Enume
 		}
 		return null;
 	}
-	
+
 	@Override
 	public @NonNull EnumerationId getEnumerationId() {
 		return (EnumerationId) getTypeId();
@@ -69,7 +69,15 @@ public class EcoreExecutorEnumeration extends EcoreExecutorType implements Enume
 		assert literals != null;
 		return literals;
 	}
-	
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public String getValue() {
+		throw new UnsupportedOperationException();
+	}
+
 	public EcoreExecutorEnumeration initLiterals(EcoreExecutorEnumerationLiteral[] literals) {
 		assert this.literals == null;
 		this.literals = Lists.<EnumerationLiteral>newArrayList(literals);

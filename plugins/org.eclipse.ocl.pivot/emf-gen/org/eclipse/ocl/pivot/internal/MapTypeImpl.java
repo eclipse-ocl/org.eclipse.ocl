@@ -236,6 +236,8 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 				return basicGetBehavioralClass();
 			case PivotPackage.MAP_TYPE__IS_SERIALIZABLE:
 				return isIsSerializable();
+			case PivotPackage.MAP_TYPE__VALUE:
+				return getValue();
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
 				if (resolve) return getKeyType();
 				return basicGetKeyType();
@@ -485,6 +487,8 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 				return behavioralClass != null;
 			case PivotPackage.MAP_TYPE__IS_SERIALIZABLE:
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
+			case PivotPackage.MAP_TYPE__VALUE:
+				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
 				return keyType != null;
 			case PivotPackage.MAP_TYPE__VALUE_TYPE:

@@ -1208,14 +1208,15 @@ implements PivotPackage  {
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put
-			(thePivotPackage,
-			 new EValidator.Descriptor()
-			 {
-				 public EValidator getEValidator()
-				 {
-					 return PivotValidator.INSTANCE;
-				 }
-			 });
+		(thePivotPackage,
+			new EValidator.Descriptor()
+		{
+			@Override
+			public EValidator getEValidator()
+			{
+				return PivotValidator.INSTANCE;
+			}
+		});
 
 		// Mark meta-data to indicate it can't be changed
 		thePivotPackage.freeze();
@@ -1535,6 +1536,18 @@ implements PivotPackage  {
 	public EAttribute getDataType_IsSerializable()
 	{
 		return (EAttribute)dataTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getDataType_Value()
+	{
+		return (EAttribute)dataTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2063,6 +2076,7 @@ implements PivotPackage  {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIfExp_IsElseIf()
 	{
 		return (EAttribute)ifExpEClass.getEStructuralFeatures().get(0);
@@ -3851,11 +3865,12 @@ implements PivotPackage  {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.3
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public EOperation getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map()
+	public EOperation getShadowExp__ValidateDataTypeHasOnePartInitializer__DiagnosticChain_Map()
 	{
 		return shadowExpEClass.getEOperations().get(2);
 	}
@@ -3866,7 +3881,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getShadowExp__ValidateInitializesAllClassProperties__DiagnosticChain_Map()
+	public EOperation getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map()
 	{
 		return shadowExpEClass.getEOperations().get(3);
 	}
@@ -3877,9 +3892,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getShadowExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	public EOperation getShadowExp__ValidateInitializesAllClassProperties__DiagnosticChain_Map()
 	{
 		return shadowExpEClass.getEOperations().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getShadowExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map()
+	{
+		return shadowExpEClass.getEOperations().get(5);
 	}
 
 	/**
@@ -6920,6 +6946,7 @@ implements PivotPackage  {
 		dataTypeEClass = createEClass(DATA_TYPE);
 		createEReference(dataTypeEClass, DATA_TYPE__BEHAVIORAL_CLASS);
 		createEAttribute(dataTypeEClass, DATA_TYPE__IS_SERIALIZABLE);
+		createEAttribute(dataTypeEClass, DATA_TYPE__VALUE);
 
 		detailEClass = createEClass(DETAIL);
 		createEAttribute(detailEClass, DETAIL__VALUES);
@@ -7268,6 +7295,7 @@ implements PivotPackage  {
 		createEAttribute(shadowExpEClass, SHADOW_EXP__VALUE);
 		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_CLASS_HAS_NO_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP);
 		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS__DIAGNOSTICCHAIN_MAP);
+		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER__DIAGNOSTICCHAIN_MAP);
 		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP);
 		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP);
 		createEOperation(shadowExpEClass, SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP);
@@ -7838,6 +7866,7 @@ implements PivotPackage  {
 		initEClass(dataTypeEClass, DataType.class, "DataType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getDataType_BehavioralClass(), this.getClass_(), null, "behavioralClass", null, 0, 1, DataType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getDataType_IsSerializable(), this.getBoolean(), "isSerializable", "true", 1, 1, DataType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getDataType_Value(), this.getString(), "value", "", 1, 1, DataType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(detailEClass, Detail.class, "Detail", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getDetail_Values(), this.getString(), "values", null, 1, -1, Detail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
@@ -8687,6 +8716,15 @@ implements PivotPackage  {
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
+		op = initEOperation(getShadowExp__ValidateDataTypeHasOnePartInitializer__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateDataTypeHasOnePartInitializer", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
 		op = initEOperation(getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateDataTypeHasStringValueInitializer", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(ecorePackage.getEMap());
@@ -9036,11 +9074,11 @@ implements PivotPackage  {
 	{
 		String source = "http://www.eclipse.org/OCL/ASMetamodel"; //$NON-NLS-1$
 		addAnnotation
-		  (this,
-		   source,
-		   new String[]
-		   {
-		   });
+		(this,
+			source,
+			new String[]
+					{
+					});
 	}
 
 	/**
@@ -9053,11 +9091,11 @@ implements PivotPackage  {
 	{
 		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation
-		  (this,
-		   source,
-		   new String[]
-		   {
-		   });
+		(this,
+			source,
+			new String[]
+					{
+					});
 	}
 
 	/**
@@ -9071,613 +9109,620 @@ implements PivotPackage  {
 	{
 		String source = "http://www.eclipse.org/uml2/2.0.0/UML"; //$NON-NLS-1$
 		addAnnotation
-		  (getBooleanLiteralExp__ValidateTypeIsBoolean__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsBoolean" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCallExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getClass__ValidateNameIsNotNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "NameIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getClass__ValidateUniqueInvariantName__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "UniqueInvariantName" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollectionItem__ValidateTypeIsItemType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsItemType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollectionLiteralExp__ValidateBagKindIsBag__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "BagKindIsBag" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollectionLiteralExp__ValidateCollectionKindIsConcrete__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CollectionKindIsConcrete" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollectionLiteralExp__ValidateOrderedSetKindIsOrderedSet__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "OrderedSetKindIsOrderedSet" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollectionLiteralExp__ValidateSequenceKindIsSequence__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SequenceKindIsSequence" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollectionLiteralExp__ValidateSetKindIsSet__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SetKindIsSet" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollectionLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getConstraint__ValidateUniqueName__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "UniqueName" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getEnumLiteralExp__ValidateTypeIsEnumerationType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsEnumerationType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getFeature__ValidateNameIsNotNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "NameIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getFeature__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getFeature__ValidateTypeIsNotNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIfExp__ValidateConditionTypeIsBoolean__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "ConditionTypeIsBoolean" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIfExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIntegerLiteralExp__ValidateTypeIsInteger__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsInteger" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIterateExp__ValidateBodyTypeConformsToResultType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "BodyTypeConformsToResultType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIterateExp__ValidateOneInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "OneInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIterateExp__ValidateSafeIteratorIsRequired__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SafeIteratorIsRequired" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIterateExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SafeSourceCanBeNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIterateExp__ValidateTypeIsResultType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsResultType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIterateExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "UnsafeSourceCanNotBeNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateAnyBodyTypeIsBoolean__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "AnyBodyTypeIsBoolean" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateAnyHasOneIterator__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "AnyHasOneIterator" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateAnyTypeIsSourceElementType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "AnyTypeIsSourceElementType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "ClosureBodyElementTypeIsIteratorType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateClosureBodyTypeIsConformanttoIteratorType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "ClosureBodyTypeIsConformanttoIteratorType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateClosureElementTypeIsSourceElementType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "ClosureElementTypeIsSourceElementType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateClosureHasOneIterator__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "ClosureHasOneIterator" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateClosureSourceElementTypeIsBodyElementType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "ClosureSourceElementTypeIsBodyElementType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateClosureTypeIsUniqueCollection__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "ClosureTypeIsUniqueCollection" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateCollectElementTypeIsFlattenedBodyType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CollectElementTypeIsFlattenedBodyType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateCollectTypeIsUnordered__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CollectTypeIsUnordered" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateIteratorTypeIsSourceElementType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "IteratorTypeIsSourceElementType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateSafeIteratorIsRequired__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SafeIteratorIsRequired" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SafeSourceCanBeNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateSortedByElementTypeIsSourceElementType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SortedByElementTypeIsSourceElementType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateSortedByIsOrderedIfSourceIsOrdered__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SortedByIsOrderedIfSourceIsOrdered" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateSortedByIteratorTypeIsComparable__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SortedByIteratorTypeIsComparable" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "UnsafeSourceCanNotBeNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "HasNoInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getLetExp__ValidateCompatibleNullityForIn__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleNullityForIn" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getLetExp__ValidateTypeIsInType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsInType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getLetExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getLetVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleNullityForInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getLetVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleTypeForInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getLetVariable__ValidateHasInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "HasInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getLoopExp__ValidateNoInitializers__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "NoInitializers" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getLoopExp__ValidateSourceIsCollection__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SourceIsCollection" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMessageExp__ValidateOneCallOrOneSend__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "OneCallOrOneSend" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMessageExp__ValidateTargetIsNotACollection__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TargetIsNotACollection" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOperation__ValidateCompatibleReturn__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleReturn" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOperation__ValidateLoadableImplementation__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "LoadableImplementation" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOperation__ValidateUniquePostconditionName__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "UniquePostconditionName" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOperation__ValidateUniquePreconditionName__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "UniquePreconditionName" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOperationCallExp__ValidateArgumentCount__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "ArgumentCount" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOperationCallExp__ValidateArgumentTypeIsConformant__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "ArgumentTypeIsConformant" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SafeSourceCanBeNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getParameterVariable__ValidateHasNoInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "HasNoInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getProperty__ValidateCompatibleDefaultExpression__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleDefaultExpression" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getPropertyCallExp__ValidateCompatibleResultType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleResultType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getPropertyCallExp__ValidateNonStaticSourceTypeIsConformant__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "NonStaticSourceTypeIsConformant" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getPropertyCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "SafeSourceCanBeNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getPropertyCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "UnsafeSourceCanNotBeNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getResultVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleNullityForInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getResultVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleTypeForInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getResultVariable__ValidateHasInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "HasInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getShadowExp__ValidateClassHasNoStringValueInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "ClassHasNoStringValueInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getShadowExp__ValidateDataTypeHasNoPartInitializers__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "DataTypeHasNoPartInitializers" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "DataTypeHasStringValueInitializer" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getShadowExp__ValidateInitializesAllClassProperties__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "InitializesAllClassProperties" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getShadowExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getShadowPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleInitialiserType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getShadowPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getShadowPart__ValidateTypeIsNotNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getStateExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleInitialiserType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getVariable__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "CompatibleInitialiserType" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getVariableDeclaration__ValidateNameIsNotNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "NameIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getVariableDeclaration__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getVariableDeclaration__ValidateTypeIsNotNull__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getVariableExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
-		   source,
-		   new String[]
-		   {
-			 "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
+		(getBooleanLiteralExp__ValidateTypeIsBoolean__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsBoolean" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getCallExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getClass__ValidateNameIsNotNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "NameIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getClass__ValidateUniqueInvariantName__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "UniqueInvariantName" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getCollectionItem__ValidateTypeIsItemType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsItemType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getCollectionLiteralExp__ValidateBagKindIsBag__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "BagKindIsBag" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getCollectionLiteralExp__ValidateCollectionKindIsConcrete__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CollectionKindIsConcrete" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getCollectionLiteralExp__ValidateOrderedSetKindIsOrderedSet__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "OrderedSetKindIsOrderedSet" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getCollectionLiteralExp__ValidateSequenceKindIsSequence__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SequenceKindIsSequence" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getCollectionLiteralExp__ValidateSetKindIsSet__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SetKindIsSet" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getCollectionLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getConstraint__ValidateUniqueName__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "UniqueName" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getEnumLiteralExp__ValidateTypeIsEnumerationType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsEnumerationType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getFeature__ValidateNameIsNotNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "NameIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getFeature__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getFeature__ValidateTypeIsNotNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIfExp__ValidateConditionTypeIsBoolean__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ConditionTypeIsBoolean" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIfExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIntegerLiteralExp__ValidateTypeIsInteger__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsInteger" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIterateExp__ValidateBodyTypeConformsToResultType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "BodyTypeConformsToResultType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIterateExp__ValidateOneInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "OneInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIterateExp__ValidateSafeIteratorIsRequired__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SafeIteratorIsRequired" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIterateExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SafeSourceCanBeNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIterateExp__ValidateTypeIsResultType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsResultType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIterateExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "UnsafeSourceCanNotBeNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateAnyBodyTypeIsBoolean__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "AnyBodyTypeIsBoolean" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateAnyHasOneIterator__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "AnyHasOneIterator" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateAnyTypeIsSourceElementType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "AnyTypeIsSourceElementType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ClosureBodyElementTypeIsIteratorType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateClosureBodyTypeIsConformanttoIteratorType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ClosureBodyTypeIsConformanttoIteratorType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateClosureElementTypeIsSourceElementType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ClosureElementTypeIsSourceElementType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateClosureHasOneIterator__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ClosureHasOneIterator" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateClosureSourceElementTypeIsBodyElementType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ClosureSourceElementTypeIsBodyElementType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateClosureTypeIsUniqueCollection__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ClosureTypeIsUniqueCollection" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateCollectElementTypeIsFlattenedBodyType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CollectElementTypeIsFlattenedBodyType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateCollectTypeIsUnordered__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CollectTypeIsUnordered" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateIteratorTypeIsSourceElementType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "IteratorTypeIsSourceElementType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateSafeIteratorIsRequired__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SafeIteratorIsRequired" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SafeSourceCanBeNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateSortedByElementTypeIsSourceElementType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SortedByElementTypeIsSourceElementType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateSortedByIsOrderedIfSourceIsOrdered__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SortedByIsOrderedIfSourceIsOrdered" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateSortedByIteratorTypeIsComparable__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SortedByIteratorTypeIsComparable" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "UnsafeSourceCanNotBeNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "HasNoInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getLetExp__ValidateCompatibleNullityForIn__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleNullityForIn" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getLetExp__ValidateTypeIsInType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsInType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getLetExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getLetVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleNullityForInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getLetVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleTypeForInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getLetVariable__ValidateHasInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "HasInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getLoopExp__ValidateNoInitializers__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "NoInitializers" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getLoopExp__ValidateSourceIsCollection__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SourceIsCollection" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getMessageExp__ValidateOneCallOrOneSend__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "OneCallOrOneSend" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getMessageExp__ValidateTargetIsNotACollection__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TargetIsNotACollection" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getOperation__ValidateCompatibleReturn__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleReturn" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getOperation__ValidateLoadableImplementation__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "LoadableImplementation" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getOperation__ValidateUniquePostconditionName__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "UniquePostconditionName" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getOperation__ValidateUniquePreconditionName__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "UniquePreconditionName" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getOperationCallExp__ValidateArgumentCount__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ArgumentCount" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getOperationCallExp__ValidateArgumentTypeIsConformant__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ArgumentTypeIsConformant" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SafeSourceCanBeNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getParameterVariable__ValidateHasNoInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "HasNoInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getProperty__ValidateCompatibleDefaultExpression__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleDefaultExpression" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getPropertyCallExp__ValidateCompatibleResultType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleResultType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getPropertyCallExp__ValidateNonStaticSourceTypeIsConformant__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "NonStaticSourceTypeIsConformant" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getPropertyCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "SafeSourceCanBeNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getPropertyCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "UnsafeSourceCanNotBeNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getResultVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleNullityForInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getResultVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleTypeForInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getResultVariable__ValidateHasInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "HasInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getShadowExp__ValidateClassHasNoStringValueInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ClassHasNoStringValueInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getShadowExp__ValidateDataTypeHasNoPartInitializers__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "DataTypeHasNoPartInitializers" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getShadowExp__ValidateDataTypeHasOnePartInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "DataTypeHasOnePartInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getShadowExp__ValidateDataTypeHasStringValueInitializer__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "DataTypeHasStringValueInitializer" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getShadowExp__ValidateInitializesAllClassProperties__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "InitializesAllClassProperties" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getShadowExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getShadowPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleInitialiserType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getShadowPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getShadowPart__ValidateTypeIsNotNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getStateExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getTupleLiteralPart__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleInitialiserType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getVariable__ValidateCompatibleInitialiserType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "CompatibleInitialiserType" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getVariableDeclaration__ValidateNameIsNotNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "NameIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getVariableDeclaration__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getVariableDeclaration__ValidateTypeIsNotNull__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotNull" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getVariableExp__ValidateTypeIsNotInvalid__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+					});
 	}
 } //PivotPackageImpl

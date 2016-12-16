@@ -48,13 +48,14 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.DataTypeImpl#getBehavioralClass <em>Behavioral Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.DataTypeImpl#isIsSerializable <em>Is Serializable</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.DataTypeImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class DataTypeImpl
-		extends ClassImpl
-		implements DataType {
+extends ClassImpl
+implements DataType {
 
 	/**
 	 * The cached value of the '{@link #getBehavioralClass() <em>Behavioral Class</em>}' reference.
@@ -83,6 +84,16 @@ public class DataTypeImpl
 	 * @ordered
 	 */
 	protected static final int IS_SERIALIZABLE_EFLAG = 1 << 11;
+	/**
+	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @see #getValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String VALUE_EDEFAULT = ""; //$NON-NLS-1$
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -228,6 +239,8 @@ public class DataTypeImpl
 				return basicGetBehavioralClass();
 			case PivotPackage.DATA_TYPE__IS_SERIALIZABLE:
 				return isIsSerializable();
+			case PivotPackage.DATA_TYPE__VALUE:
+				return getValue();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -459,6 +472,8 @@ public class DataTypeImpl
 				return behavioralClass != null;
 			case PivotPackage.DATA_TYPE__IS_SERIALIZABLE:
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
+			case PivotPackage.DATA_TYPE__VALUE:
+				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 		}
 		return eDynamicIsSet(featureID);
 	}
@@ -491,7 +506,7 @@ public class DataTypeImpl
 		else {
 			Type behavioralType = getBehavioralClass();
 			if ((behavioralType != null) && (behavioralType != this)) {
-//				return behavioralType.getTypeId();
+				//				return behavioralType.getTypeId();
 			}
 			return IdManager.getDataTypeId(this);
 		}
@@ -501,5 +516,13 @@ public class DataTypeImpl
 	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class behavioralType = getBehavioralClass();
 		return standardLibrary.getInheritance(behavioralType != null ? behavioralType : this);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public String getValue() {
+		return VALUE_EDEFAULT;
 	}
 } //DataTypeImpl

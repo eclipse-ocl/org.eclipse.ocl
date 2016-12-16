@@ -65,8 +65,8 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * @generated
  */
 public class CollectionTypeImpl
-		extends DataTypeImpl
-		implements CollectionType {
+extends DataTypeImpl
+implements CollectionType {
 
 	/**
 	 * The cached value of the '{@link #getElementType() <em>Element Type</em>}' reference.
@@ -324,6 +324,8 @@ public class CollectionTypeImpl
 				return basicGetBehavioralClass();
 			case PivotPackage.COLLECTION_TYPE__IS_SERIALIZABLE:
 				return isIsSerializable();
+			case PivotPackage.COLLECTION_TYPE__VALUE:
+				return getValue();
 			case PivotPackage.COLLECTION_TYPE__ELEMENT_TYPE:
 				if (resolve) return getElementType();
 				return basicGetElementType();
@@ -585,6 +587,8 @@ public class CollectionTypeImpl
 				return behavioralClass != null;
 			case PivotPackage.COLLECTION_TYPE__IS_SERIALIZABLE:
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
+			case PivotPackage.COLLECTION_TYPE__VALUE:
+				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case PivotPackage.COLLECTION_TYPE__ELEMENT_TYPE:
 				return elementType != null;
 			case PivotPackage.COLLECTION_TYPE__IS_NULL_FREE:

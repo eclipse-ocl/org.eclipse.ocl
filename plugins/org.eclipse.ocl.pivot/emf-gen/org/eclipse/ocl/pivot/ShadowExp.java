@@ -11,14 +11,15 @@
 package org.eclipse.ocl.pivot;
 
 import java.util.List;
-
 import java.util.Map;
+
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Constructor Exp</b></em>'.
+ * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -87,6 +88,14 @@ public interface ShadowExp extends OCLExpression
 	 * @generated
 	 */
 	boolean validateDataTypeHasNoPartInitializers(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean validateDataTypeHasOnePartInitializer(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->

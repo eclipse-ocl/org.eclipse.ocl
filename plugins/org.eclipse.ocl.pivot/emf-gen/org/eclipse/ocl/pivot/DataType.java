@@ -14,6 +14,7 @@ package org.eclipse.ocl.pivot;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Data Type</b></em>'.
+ * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -26,13 +27,14 @@ package org.eclipse.ocl.pivot;
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.DataType#getBehavioralClass <em>Behavioral Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.DataType#isIsSerializable <em>Is Serializable</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.DataType#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getDataType()
  * @generated
  */
 public interface DataType
-		extends org.eclipse.ocl.pivot.Class {
+extends org.eclipse.ocl.pivot.Class {
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.DataType#isIsSerializable <em>Is Serializable</em>}' attribute.
@@ -43,6 +45,25 @@ public interface DataType
 	 * @generated
 	 */
 	void setIsSerializable(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Value</b></em>' attribute.
+	 * The default value is <code>""</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Value</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * @since 1.3
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The value pseudo-property accesses a String-valued representation of the DataType.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Value</em>' attribute.
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getDataType_Value()
+	 * @generated
+	 */
+	String getValue();
 
 	/**
 	 * Returns the value of the '<em><b>Behavioral Class</b></em>' reference.

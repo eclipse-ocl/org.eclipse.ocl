@@ -60,6 +60,14 @@ public class ExecutorTupleType extends AbstractExecutorClass implements TupleTyp
 		return typeId;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public String getValue() {
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {
@@ -70,7 +78,7 @@ public class ExecutorTupleType extends AbstractExecutorClass implements TupleTyp
 		}
 		return TypeUtil.isEqualToTupleType(standardLibrary, this, (TupleType)type);
 	}
-	
+
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		return standardLibrary.getOclTupleType().lookupActualOperation(standardLibrary, apparentOperation);

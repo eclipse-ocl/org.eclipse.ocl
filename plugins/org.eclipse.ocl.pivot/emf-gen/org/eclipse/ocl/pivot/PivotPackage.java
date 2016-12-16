@@ -3531,13 +3531,22 @@ extends EPackage
 	int DATA_TYPE__IS_SERIALIZABLE = CLASS_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_TYPE__VALUE = CLASS_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Data Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_TYPE_FEATURE_COUNT = CLASS_FEATURE_COUNT + 2;
+	int DATA_TYPE_FEATURE_COUNT = CLASS_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -3817,6 +3826,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int COLLECTION_TYPE__IS_SERIALIZABLE = DATA_TYPE__IS_SERIALIZABLE;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE__VALUE = DATA_TYPE__VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Element Type</b></em>' reference.
@@ -4141,6 +4159,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int BAG_TYPE__IS_SERIALIZABLE = COLLECTION_TYPE__IS_SERIALIZABLE;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BAG_TYPE__VALUE = COLLECTION_TYPE__VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Element Type</b></em>' reference.
@@ -8528,6 +8555,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ENUMERATION__IS_SERIALIZABLE = DATA_TYPE__IS_SERIALIZABLE;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION__VALUE = DATA_TYPE__VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Owned Literals</b></em>' containment reference list.
@@ -13606,6 +13642,15 @@ extends EPackage
 	int LAMBDA_TYPE__IS_SERIALIZABLE = DATA_TYPE__IS_SERIALIZABLE;
 
 	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LAMBDA_TYPE__VALUE = DATA_TYPE__VALUE;
+
+	/**
 	 * The feature id for the '<em><b>Context Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14901,6 +14946,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int MAP_TYPE__IS_SERIALIZABLE = DATA_TYPE__IS_SERIALIZABLE;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAP_TYPE__VALUE = DATA_TYPE__VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Key Type</b></em>' reference.
@@ -16425,6 +16479,15 @@ extends EPackage
 	int ORDERED_SET_TYPE__IS_SERIALIZABLE = COLLECTION_TYPE__IS_SERIALIZABLE;
 
 	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ORDERED_SET_TYPE__VALUE = COLLECTION_TYPE__VALUE;
+
+	/**
 	 * The feature id for the '<em><b>Element Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17533,6 +17596,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int PRIMITIVE_TYPE__IS_SERIALIZABLE = DATA_TYPE__IS_SERIALIZABLE;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_TYPE__VALUE = DATA_TYPE__VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Coercions</b></em>' reference list.
@@ -19768,6 +19840,15 @@ extends EPackage
 	int SEQUENCE_TYPE__IS_SERIALIZABLE = COLLECTION_TYPE__IS_SERIALIZABLE;
 
 	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEQUENCE_TYPE__VALUE = COLLECTION_TYPE__VALUE;
+
+	/**
 	 * The feature id for the '<em><b>Element Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -20092,6 +20173,15 @@ extends EPackage
 	int SET_TYPE__IS_SERIALIZABLE = COLLECTION_TYPE__IS_SERIALIZABLE;
 
 	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SET_TYPE__VALUE = COLLECTION_TYPE__VALUE;
+
+	/**
 	 * The feature id for the '<em><b>Element Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -20380,13 +20470,22 @@ extends EPackage
 	int SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 1;
 
 	/**
+	 * The operation id for the '<em>Validate Data Type Has One Part Initializer</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 2;
+
+	/**
 	 * The operation id for the '<em>Validate Data Type Has String Value Initializer</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 2;
+	int SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_STRING_VALUE_INITIALIZER__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Validate Initializes All Class Properties</em>' operation.
@@ -20395,7 +20494,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 3;
+	int SHADOW_EXP___VALIDATE_INITIALIZES_ALL_CLASS_PROPERTIES__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Invalid</em>' operation.
@@ -20404,7 +20503,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 4;
+	int SHADOW_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = OCL_EXPRESSION_OPERATION_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Shadow Exp</em>' class.
@@ -20413,7 +20512,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int SHADOW_EXP_OPERATION_COUNT = OCL_EXPRESSION_OPERATION_COUNT + 5;
+	int SHADOW_EXP_OPERATION_COUNT = OCL_EXPRESSION_OPERATION_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -23314,6 +23413,15 @@ extends EPackage
 	int TUPLE_TYPE__IS_SERIALIZABLE = DATA_TYPE__IS_SERIALIZABLE;
 
 	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUPLE_TYPE__VALUE = DATA_TYPE__VALUE;
+
+	/**
 	 * The number of structural features of the '<em>Tuple Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -25001,6 +25109,17 @@ extends EPackage
 	 * @generated
 	 */
 	EAttribute getDataType_IsSerializable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.DataType#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see org.eclipse.ocl.pivot.DataType#getValue()
+	 * @see #getDataType()
+	 * @generated
+	 */
+	EAttribute getDataType_Value();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.BooleanLiteralExp <em>Boolean Literal Exp</em>}'.
@@ -27231,6 +27350,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getShadowExp__ValidateDataTypeHasNoPartInitializers__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ShadowExp#validateDataTypeHasOnePartInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Data Type Has One Part Initializer</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Data Type Has One Part Initializer</em>' operation.
+	 * @see org.eclipse.ocl.pivot.ShadowExp#validateDataTypeHasOnePartInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getShadowExp__ValidateDataTypeHasOnePartInitializer__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.ShadowExp#validateDataTypeHasStringValueInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Data Type Has String Value Initializer</em>}' operation.
@@ -30416,6 +30545,14 @@ extends EPackage
 		EAttribute DATA_TYPE__IS_SERIALIZABLE = eINSTANCE.getDataType_IsSerializable();
 
 		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_TYPE__VALUE = eINSTANCE.getDataType_Value();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.BooleanLiteralExpImpl <em>Boolean Literal Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -32223,6 +32360,14 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_NO_PART_INITIALIZERS__DIAGNOSTICCHAIN_MAP = eINSTANCE.getShadowExp__ValidateDataTypeHasNoPartInitializers__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Data Type Has One Part Initializer</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getShadowExp__ValidateDataTypeHasOnePartInitializer__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Data Type Has String Value Initializer</b></em>' operation.

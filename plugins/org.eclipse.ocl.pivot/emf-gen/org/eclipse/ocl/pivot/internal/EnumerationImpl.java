@@ -235,6 +235,8 @@ public class EnumerationImpl
 				return basicGetBehavioralClass();
 			case PivotPackage.ENUMERATION__IS_SERIALIZABLE:
 				return isIsSerializable();
+			case PivotPackage.ENUMERATION__VALUE:
+				return getValue();
 			case PivotPackage.ENUMERATION__OWNED_LITERALS:
 				return getOwnedLiterals();
 		}
@@ -472,6 +474,8 @@ public class EnumerationImpl
 				return behavioralClass != null;
 			case PivotPackage.ENUMERATION__IS_SERIALIZABLE:
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
+			case PivotPackage.ENUMERATION__VALUE:
+				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case PivotPackage.ENUMERATION__OWNED_LITERALS:
 				return ownedLiterals != null && !ownedLiterals.isEmpty();
 		}

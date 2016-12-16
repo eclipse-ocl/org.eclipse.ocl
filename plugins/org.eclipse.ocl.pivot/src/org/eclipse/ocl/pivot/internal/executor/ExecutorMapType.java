@@ -27,7 +27,7 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	protected final @NonNull Type keyType;
 	protected final @NonNull Type valueType;
 	protected final @NonNull MapTypeId typeId;
-	
+
 	public ExecutorMapType(@NonNull String name,
 			org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, @NonNull Type valueType) {
 		super(name, containerType);
@@ -79,10 +79,10 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 		return keyType;
 	}
 
-//	@Override
-//	public @NonNull String getMetaTypeName() {
-//		return getTypeId().getCollectionTypeId().getMetaTypeName();
-//	}
+	//	@Override
+	//	public @NonNull String getMetaTypeName() {
+	//		return getTypeId().getCollectionTypeId().getMetaTypeName();
+	//	}
 
 	@Override
 	public @NonNull List<Operation> getOwnedOperations() {
@@ -92,6 +92,14 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	@Override
 	public @NonNull MapTypeId getTypeId() {
 		return typeId;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public String getValue() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

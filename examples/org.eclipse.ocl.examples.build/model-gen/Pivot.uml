@@ -364,6 +364,10 @@
     <ownedAttribute xmi:id="Ppivot.TDataType.PisSerializable" name="isSerializable" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TDataType.PisSerializable.dlV" value="true"/>
     </ownedAttribute>
+    <ownedAttribute xmi:id="Ppivot.TDataType.Pvalue" name="value" visibility="public" type="Ppivot.TString" isOrdered="true" isReadOnly="true"
+        isDerived="true">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TDataType.Pvalue.dlV" value=""/>
+    </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TDataType.PbehavioralClass" name="behavioralClass" type="Ppivot.TClass" isOrdered="true" association="Ppivot.A_behavioralClass_DataType">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TDataType.PbehavioralClass.lV"/>
     </ownedAttribute>

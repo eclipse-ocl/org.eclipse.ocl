@@ -44,7 +44,7 @@ public class EcoreReflectiveEnumeration extends EcoreReflectiveType implements E
 		}
 		return name2literal2.get(name);
 	}
-	
+
 	@Override
 	public @NonNull EnumerationId getEnumerationId() {
 		return (EnumerationId) getTypeId();
@@ -60,5 +60,13 @@ public class EcoreReflectiveEnumeration extends EcoreReflectiveType implements E
 			}
 		}
 		return literals2;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public String getValue() {
+		throw new UnsupportedOperationException();
 	}
 }

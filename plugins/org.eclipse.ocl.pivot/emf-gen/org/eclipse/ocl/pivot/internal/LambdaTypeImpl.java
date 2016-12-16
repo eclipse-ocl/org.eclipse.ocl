@@ -270,6 +270,8 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 				return basicGetBehavioralClass();
 			case PivotPackage.LAMBDA_TYPE__IS_SERIALIZABLE:
 				return isIsSerializable();
+			case PivotPackage.LAMBDA_TYPE__VALUE:
+				return getValue();
 			case PivotPackage.LAMBDA_TYPE__CONTEXT_TYPE:
 				if (resolve) return getContextType();
 				return basicGetContextType();
@@ -528,6 +530,8 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 				return behavioralClass != null;
 			case PivotPackage.LAMBDA_TYPE__IS_SERIALIZABLE:
 				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
+			case PivotPackage.LAMBDA_TYPE__VALUE:
+				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case PivotPackage.LAMBDA_TYPE__CONTEXT_TYPE:
 				return contextType != null;
 			case PivotPackage.LAMBDA_TYPE__PARAMETER_TYPE:

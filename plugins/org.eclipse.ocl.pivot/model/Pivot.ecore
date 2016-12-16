@@ -545,6 +545,13 @@
         name="behavioralClass" eType="#T-pivot-Class"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-DataType-isSerializable"
         name="isSerializable" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-DataType-value"
+        name="value" lowerBound="1" eType="#T-pivot-String" changeable="false" volatile="true"
+        transient="true" defaultValueLiteral="" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The value pseudo-property accesses a String-valued representation of the DataType."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Detail" name="Detail" eSuperTypes="#T-pivot-NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Detail-values"
@@ -2167,7 +2174,7 @@
       eSuperTypes="#T-pivot-OCLExpression">
     <eOperations name="validateClassHasNoStringValueInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="not type.oclIsKindOf(DataType) implies value = null&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClassHasNoStringValueInitializer"/>
@@ -2182,7 +2189,7 @@
     </eOperations>
     <eOperations name="validateDataTypeHasNoPartInitializers" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type.oclIsKindOf(DataType) implies ownedParts->isEmpty()&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="DataTypeHasNoPartInitializers"/>
@@ -2195,9 +2202,24 @@
         </eGenericType>
       </eParameters>
     </eOperations>
+    <eOperations name="validateDataTypeHasOnePartInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="type.oclIsKindOf(DataType) implies ownedParts->size() = 1&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="DataTypeHasOnePartInitializer"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
     <eOperations name="validateDataTypeHasStringValueInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="type.oclIsKindOf(DataType) implies value &lt;> null&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="DataTypeHasStringValueInitializer"/>

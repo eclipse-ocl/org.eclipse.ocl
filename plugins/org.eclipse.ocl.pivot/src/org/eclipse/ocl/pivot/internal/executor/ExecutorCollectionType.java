@@ -33,7 +33,7 @@ public class ExecutorCollectionType extends AbstractSpecializedType implements C
 	protected final @NonNull IntegerValue lower;
 	protected final @NonNull UnlimitedNaturalValue upper;
 	protected final @NonNull CollectionTypeId typeId;
-	
+
 	public ExecutorCollectionType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
 			@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		super(name, containerType);
@@ -112,10 +112,10 @@ public class ExecutorCollectionType extends AbstractSpecializedType implements C
 		return lower;
 	}
 
-//	@Override
-//	public @NonNull String getMetaTypeName() {
-//		return getTypeId().getCollectionTypeId().getMetaTypeName();
-//	}
+	//	@Override
+	//	public @NonNull String getMetaTypeName() {
+	//		return getTypeId().getCollectionTypeId().getMetaTypeName();
+	//	}
 
 	@Override
 	public @NonNull List<Operation> getOwnedOperations() {
@@ -135,6 +135,14 @@ public class ExecutorCollectionType extends AbstractSpecializedType implements C
 	@Override
 	public @NonNull UnlimitedNaturalValue getUpperValue() {
 		return upper;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public String getValue() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

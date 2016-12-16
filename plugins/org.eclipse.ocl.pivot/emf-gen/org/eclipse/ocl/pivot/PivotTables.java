@@ -264,6 +264,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ResultVariable_c_c_HasInitializer = "ResultVariable::HasInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_ClassHasNoStringValueInitializer = "ShadowExp::ClassHasNoStringValueInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_DataTypeHasNoPartInitializers = "ShadowExp::DataTypeHasNoPartInitializers";
+	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_DataTypeHasOnePartInitializer = "ShadowExp::DataTypeHasOnePartInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_DataTypeHasStringValueInitializer = "ShadowExp::DataTypeHasStringValueInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_InitializesAllClassProperties = "ShadowExp::InitializesAllClassProperties";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_TypeIsNotInvalid = "ShadowExp::TypeIsNotInvalid";
@@ -2292,6 +2293,7 @@ public class PivotTables
 
 		public static final @NonNull ExecutorProperty _DataType__behavioralClass = new EcoreExecutorProperty(PivotPackage.Literals.DATA_TYPE__BEHAVIORAL_CLASS, Types._DataType, 0);
 		public static final @NonNull ExecutorProperty _DataType__isSerializable = new EcoreExecutorProperty(PivotPackage.Literals.DATA_TYPE__IS_SERIALIZABLE, Types._DataType, 1);
+		public static final @NonNull ExecutorProperty _DataType__value = new EcoreExecutorProperty(PivotPackage.Literals.DATA_TYPE__VALUE, Types._DataType, 2);
 
 		public static final @NonNull ExecutorProperty _Detail__values = new EcoreExecutorProperty(PivotPackage.Literals.DETAIL__VALUES, Types._Detail, 0);
 		public static final @NonNull ExecutorProperty _Detail__Annotation__ownedDetails = new ExecutorPropertyWithImplementation("Annotation", Types._Detail, 1, new EcoreLibraryOppositeProperty(PivotPackage.Literals.ANNOTATION__OWNED_DETAILS));
@@ -11577,7 +11579,8 @@ public class PivotTables
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
 			PivotTables.Properties._TemplateableElement__unspecializedElement,
-			PivotTables.Properties._CollectionType__upper
+			PivotTables.Properties._CollectionType__upper,
+			PivotTables.Properties._DataType__value
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Behavior = {
@@ -11742,7 +11745,8 @@ public class PivotTables
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
 			PivotTables.Properties._TemplateableElement__unspecializedElement,
-			PivotTables.Properties._CollectionType__upper
+			PivotTables.Properties._CollectionType__upper,
+			PivotTables.Properties._DataType__value
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Comment = {
@@ -11853,7 +11857,8 @@ public class PivotTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._TemplateableElement__unspecializedElement,
+			PivotTables.Properties._DataType__value
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Detail = {
@@ -12014,7 +12019,8 @@ public class PivotTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._TemplateableElement__unspecializedElement,
+			PivotTables.Properties._DataType__value
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _EnumerationLiteral = {
@@ -12299,7 +12305,8 @@ public class PivotTables
 			PivotTables.Properties._LambdaType__parameterType,
 			PivotTables.Properties._LambdaType__resultType,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._TemplateableElement__unspecializedElement,
+			PivotTables.Properties._DataType__value
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _LanguageExpression = {
@@ -12441,6 +12448,7 @@ public class PivotTables
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
 			PivotTables.Properties._TemplateableElement__unspecializedElement,
+			PivotTables.Properties._DataType__value,
 			PivotTables.Properties._MapType__valueType
 		};
 
@@ -12668,7 +12676,8 @@ public class PivotTables
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
 			PivotTables.Properties._TemplateableElement__unspecializedElement,
-			PivotTables.Properties._CollectionType__upper
+			PivotTables.Properties._CollectionType__upper,
+			PivotTables.Properties._DataType__value
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OrphanCompletePackage = {
@@ -12790,7 +12799,8 @@ public class PivotTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._TemplateableElement__unspecializedElement,
+			PivotTables.Properties._DataType__value
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Profile = {
@@ -12991,7 +13001,8 @@ public class PivotTables
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
 			PivotTables.Properties._TemplateableElement__unspecializedElement,
-			PivotTables.Properties._CollectionType__upper
+			PivotTables.Properties._CollectionType__upper,
+			PivotTables.Properties._DataType__value
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _SetType = {
@@ -13020,7 +13031,8 @@ public class PivotTables
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
 			PivotTables.Properties._TemplateableElement__unspecializedElement,
-			PivotTables.Properties._CollectionType__upper
+			PivotTables.Properties._CollectionType__upper,
+			PivotTables.Properties._DataType__value
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _ShadowExp = {
@@ -13333,7 +13345,8 @@ public class PivotTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._TemplateableElement__unspecializedElement,
+			PivotTables.Properties._DataType__value
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Type = {
