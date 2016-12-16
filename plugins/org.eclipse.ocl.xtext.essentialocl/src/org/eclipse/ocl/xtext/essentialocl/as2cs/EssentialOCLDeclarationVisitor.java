@@ -694,10 +694,10 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		for (ShadowPart asPart : asShadowExp.getOwnedParts()) {
 			csOwnedParts.add(context.visitDeclaration(ShadowPartCS.class, asPart));
 		}
-		csCurlyBracketedClause.setValue(asShadowExp.getValue());
-		if ((csOwnedParts.size() == 0) && (csCurlyBracketedClause.getValue() == null)) {
-			csCurlyBracketedClause.setValue("bad-value");
-		}
+		//		csCurlyBracketedClause.setValue(asShadowExp.getValue());
+		//		if ((csOwnedParts.size() == 0) && (csCurlyBracketedClause.getValue() == null)) {
+		//			csCurlyBracketedClause.setValue("bad-value");
+		//		}
 		return csNameExp;
 	}
 

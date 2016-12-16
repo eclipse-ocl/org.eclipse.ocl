@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -132,9 +133,9 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryFalse(null, "ocl::CollectionKind::_'Collection' = ocl::CollectionKind::_'Set'");
 		//
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
-		ocl.assertQueryFalse(null, "ecore::EDate{'2000-01-25'} = ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-24'} = ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryFalse(null, "ecore::EDate{'2000-01-23'} = ecore::EDate{'2000-01-24'}");
+		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-25'} = ecore::EDate{value='2000-01-24'}");
+		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-24'} = ecore::EDate{value='2000-01-24'}");
+		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-23'} = ecore::EDate{value='2000-01-24'}");
 		//
 		// invalid
 		//
@@ -174,9 +175,9 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
-		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-25'} > ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryFalse(null, "ecore::EDate{'2000-01-24'} > ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryFalse(null, "ecore::EDate{'2000-01-23'} > ecore::EDate{'2000-01-24'}");
+		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-25'} > ecore::EDate{value='2000-01-24'}");
+		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-24'} > ecore::EDate{value='2000-01-24'}");
+		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-23'} > ecore::EDate{value='2000-01-24'}");
 		//
 		// invalid
 		//
@@ -202,9 +203,9 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
-		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-25'} >= ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-24'} >= ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryFalse(null, "ecore::EDate{'2000-01-23'} >= ecore::EDate{'2000-01-24'}");
+		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-25'} >= ecore::EDate{value='2000-01-24'}");
+		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-24'} >= ecore::EDate{value='2000-01-24'}");
+		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-23'} >= ecore::EDate{value='2000-01-24'}");
 		//
 		// invalid
 		//
@@ -230,9 +231,9 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
-		ocl.assertQueryFalse(null, "ecore::EDate{'2000-01-25'} < ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryFalse(null, "ecore::EDate{'2000-01-24'} < ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-23'} < ecore::EDate{'2000-01-24'}");
+		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-25'} < ecore::EDate{value='2000-01-24'}");
+		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-24'} < ecore::EDate{value='2000-01-24'}");
+		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-23'} < ecore::EDate{value='2000-01-24'}");
 		//
 		// invalid
 		//
@@ -259,8 +260,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
 		ocl.assertQueryFalse(null, "ecore::EDate{'2000-01-25'} <= ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-24'} <= ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-23'} <= ecore::EDate{'2000-01-24'}");
+		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-24'} <= ecore::EDate{value='2000-01-24'}");
+		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-23'} <= ecore::EDate{value='2000-01-24'}");
 		//
 		// invalid
 		//
@@ -283,6 +284,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	}
 
 	@Test public void testNotEqual() {
+		BaseLinkingService.DEBUG_RETRY.setState(true);
 		MyOCL ocl = createOCL();
 		ocl.assertQueryFalse(null, "Boolean <> Boolean");
 		ocl.assertQueryTrue(null, "Boolean <> Integer");
@@ -297,8 +299,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "ocl::CollectionKind::_'Collection' <> ocl::CollectionKind::_'Set'");
 		//
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
-		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-25'} <> ecore::EDate{'2000-01-24'}");
-		ocl.assertQueryFalse(null, "ecore::EDate{'2000-01-24'} <> ecore::EDate{'2000-01-24'}");
+		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-25'} <> ecore::EDate{value='2000-01-24'}");
+		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-24'} <> ecore::EDate{'2000-01-24'}");
 		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-23'} <> ecore::EDate{'2000-01-24'}");
 		//
 		// invalid
@@ -948,7 +950,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
 		@SuppressWarnings("null") @NonNull String emfString = EcoreFactory.eINSTANCE.createFromString(EcorePackage.Literals.EDATE, "2000-01-24").toString();
-		ocl.assertQueryEquals(null, emfString, "ecore::EDate{'2000-01-24'}.toString()");
+		ocl.assertQueryEquals(null, emfString, "ecore::EDate{value='2000-01-24'}.toString()");
 		ocl.dispose();
 	}
 }

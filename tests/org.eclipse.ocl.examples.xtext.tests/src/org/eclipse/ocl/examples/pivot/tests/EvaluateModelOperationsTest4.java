@@ -164,7 +164,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		Date nowDate = new Date();
 		eSet(eObject, "anEDate", nowDate);
 		ocl.assertQueryTrue(eObject, "anEDate = anEDate");
-		ocl.assertQueryFalse(eObject, "anEDate = ecore::EDate{'2345-12-23'}");
+		ocl.assertQueryFalse(eObject, "anEDate = ecore::EDate{value='2345-12-23'}");
 		//
 		eSet(eObject, "anEBigDecimal", BigDecimal.valueOf(0));
 		ocl.assertQueryEquals(eObject, 0, "anEBigDecimal");

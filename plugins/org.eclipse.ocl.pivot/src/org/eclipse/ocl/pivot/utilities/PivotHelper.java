@@ -69,6 +69,7 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -474,6 +475,14 @@ public class PivotHelper
 	public @NonNull VariableExp createVariableExp(@NonNull VariableDeclaration asVariable) {
 		VariableExp asVariableExp = PivotUtil.createVariableExp(asVariable);
 		return asVariableExp;
+	}
+
+	public org.eclipse.ocl.pivot.@NonNull Class getDataTypeClass() {
+		return ClassUtil.nonNullState(environmentFactory.getMetamodelManager().getASClass(TypeId.DATA_TYPE_NAME));
+	}
+
+	public @NonNull Property getDataTypeValueProperty() {
+		return ClassUtil.nonNullState(NameUtil.getNameable(getDataTypeClass().getOwnedProperties(), PivotConstants.DATA_TYPE_VALUE_NAME));
 	}
 
 	protected @NonNull PivotMetamodelManager getMetamodelManager() {

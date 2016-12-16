@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -426,50 +427,55 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 			shadowCache = new ShadowCache(this);
 		}
 		org.eclipse.ocl.pivot.Class asClass = ClassUtil.nonNullState(asShadowExp.getType());
-		String value = asShadowExp.getValue();
+		//		String value = asShadowExp.getValue();
 		Object object;
-		if (value == null) {
-			List<ShadowPart> asShadowParts = asShadowExp.getOwnedParts();
-			int iMax = asShadowParts.size();
-			@Nullable Object @NonNull [] values = new @Nullable Object[iMax];
-			for (int i = 0 ; i < iMax; i++) {
-				ShadowPart asShadowPart = asShadowParts.get(i);
-				assert asShadowPart != null;
-				values[i] = asShadowPart;
+		//		if (value == null) {
+		List<ShadowPart> asShadowParts = asShadowExp.getOwnedParts();
+		int iMax = asShadowParts.size();
+		@Nullable Object @NonNull [] values = new @Nullable Object[iMax];
+		for (int i = 0 ; i < iMax; i++) {
+			ShadowPart asShadowPart = asShadowParts.get(i);
+			assert asShadowPart != null;
+			values[i] = asShadowPart;
+		}
+		Arrays.sort(values, new Comparator<@Nullable Object>()
+		{
+			@Override
+			public int compare(@Nullable Object o1, @Nullable Object o2) {
+				ShadowPart s1 = (ShadowPart)o1;
+				ShadowPart s2 = (ShadowPart)o2;
+				assert (s1 != null) && (s2 != null);
+				Property p1 = s1.getReferredProperty();
+				Property p2 = s2.getReferredProperty();
+				String n1 = p1.getName();
+				String n2 = p2.getName();
+				return ClassUtil.safeCompareTo(n1, n2);
 			}
-			Arrays.sort(values, new Comparator<@Nullable Object>()
-			{
-				@Override
-				public int compare(@Nullable Object o1, @Nullable Object o2) {
-					ShadowPart s1 = (ShadowPart)o1;
-					ShadowPart s2 = (ShadowPart)o2;
-					assert (s1 != null) && (s2 != null);
-					Property p1 = s1.getReferredProperty();
-					Property p2 = s2.getReferredProperty();
-					String n1 = p1.getName();
-					String n2 = p2.getName();
-					return ClassUtil.safeCompareTo(n1, n2);
-				}
-			});
-			@NonNull Property @NonNull [] asProperties = new @NonNull Property[iMax];
-			for (int i = 0 ; i < iMax; i++) {
-				ShadowPart asShadowPart = (ShadowPart) values[i];
-				assert asShadowPart != null;
-				Property asProperty = asShadowPart.getReferredProperty();
-				assert asProperty != null;
-				asProperties[i] = asProperty;
-				Object boxedValue = null;
-				OCLExpression initExpression = asShadowPart.getOwnedInit();
-				if (initExpression != null) {
-					boxedValue = getEvaluationVisitor().evaluate(initExpression);
-				}
-				values[i] = boxedValue;
+		});
+		@NonNull Property @NonNull [] asProperties = new @NonNull Property[iMax];
+		for (int i = 0 ; i < iMax; i++) {
+			ShadowPart asShadowPart = (ShadowPart) values[i];
+			assert asShadowPart != null;
+			Property asProperty = asShadowPart.getReferredProperty();
+			assert asProperty != null;
+			asProperties[i] = asProperty;
+			Object boxedValue = null;
+			OCLExpression initExpression = asShadowPart.getOwnedInit();
+			if (initExpression != null) {
+				boxedValue = getEvaluationVisitor().evaluate(initExpression);
 			}
-			object = shadowCache.getCachedShadowObject(asClass, asProperties, values);
+			values[i] = boxedValue;
+		}
+		if (asClass instanceof DataType) {
+			object = asClass.createInstance(String.valueOf(values[0]));
 		}
 		else {
-			object = asClass.createInstance(value);
+			object = shadowCache.getCachedShadowObject(asClass, asProperties, values);
 		}
+		//		}
+		//		else {
+		//			object = asClass.createInstance(value);
+		//		}
 		return object;
 		//		return object != null ? ValueUtil.createObjectValue(type.getTypeId(), object) : null;
 	}

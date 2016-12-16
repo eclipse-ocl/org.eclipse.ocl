@@ -92,6 +92,7 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SingletonIterator;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -1369,7 +1370,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		Type asType = context.lookupType(csNameExp, pathName);
 		@NonNull ShadowExp pivotElement = context.refreshModelElement(ShadowExp.class, PivotPackage.Literals.SHADOW_EXP, csNameExp);
-		pivotElement.setValue(csCurlyBracketedClause.getValue());
 		pivotElement.setType(asType);
 		for (ShadowPartCS csPart : csCurlyBracketedClause.getOwnedParts()) {
 			assert csPart != null;
@@ -2054,6 +2054,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		ShadowPart pivotElement = PivotUtil.getPivot(ShadowPart.class, csShadowPart);
 		if (pivotElement != null) {
 			Property property = csShadowPart.getReferredProperty();
+			if (property == null) {
+				property = new PivotHelper(environmentFactory).getDataTypeValueProperty();
+			}
 			pivotElement.setReferredProperty(property);
 			context.refreshName(pivotElement, property.getName());
 			context.setType(pivotElement, property.getType(), property.isIsRequired());

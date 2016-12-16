@@ -148,6 +148,12 @@ public interface PivotConstants
 	static final @NonNull String SELF_NAME = "self"; //$NON-NLS-1$
 
 	/**
+	 * The name of the DataType value pseudo-property.
+	 * @since 1.3
+	 */
+	static final @NonNull String DATA_TYPE_VALUE_NAME = "value";
+
+	/**
 	 * The delegate URI for Ecore annotations using the Pivot evaluator.
 	 */
 	@NonNull String OCL_DELEGATE_URI_PIVOT = OCLConstants.OCL_DELEGATE_URI_SLASH + "Pivot"; //$NON-NLS-1$
