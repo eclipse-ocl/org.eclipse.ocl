@@ -34,6 +34,8 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CollectionLiteralExp;
+import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -75,6 +77,8 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.TupleLiteralExp;
+import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -960,15 +964,15 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
-	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getOwnedClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		return ClassUtil.nullFree(asPackage.getOwnedClasses());
+	public static @NonNull Iterable<@NonNull OCLExpression> getOwnedArguments(@NonNull OperationCallExp operationCallExp) {
+		return ClassUtil.nullFree(operationCallExp.getOwnedArguments());
 	}
 
 	/**
 	 * @since 1.3
 	 */
-	public static @NonNull Iterable<@NonNull Variable> getOwnedIterators(@NonNull LoopExp loopExp) {
-		return ClassUtil.nullFree(loopExp.getOwnedIterators());
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getOwnedClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return ClassUtil.nullFree(asPackage.getOwnedClasses());
 	}
 
 	/**
@@ -988,6 +992,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull Iterable<@NonNull Variable> getOwnedIterators(@NonNull LoopExp loopExp) {
+		return ClassUtil.nullFree(loopExp.getOwnedIterators());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getOwnedPackages(@NonNull Model asModel) {
 		return ClassUtil.nullFree(asModel.getOwnedPackages());
 	}
@@ -1002,8 +1013,15 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
-	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getPartialClasses(@NonNull CompleteClass completeClass) {
-		return ClassUtil.nullFree(completeClass.getPartialClasses());
+	public static @NonNull Iterable<@NonNull CollectionLiteralPart> getOwnedParts(@NonNull CollectionLiteralExp asCollectionLiteralExp) {
+		return ClassUtil.nullFree(asCollectionLiteralExp.getOwnedParts());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@NonNull TupleLiteralPart> getOwnedParts(@NonNull TupleLiteralExp asTupleLiteralExp) {
+		return ClassUtil.nullFree(asTupleLiteralExp.getOwnedParts());
 	}
 
 	/**
@@ -1011,6 +1029,13 @@ public class PivotUtil
 	 */
 	public static @NonNull Iterable<@NonNull Property> getOwnedProperties(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ClassUtil.nullFree(asClass.getOwnedProperties());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLExpression getOwnedSource(@NonNull CallExp object) {
+		return ClassUtil.nonNullState(object.getOwnedSource());
 	}
 
 	/**
@@ -1034,6 +1059,13 @@ public class PivotUtil
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getPartialClasses(@NonNull CompleteClass completeClass) {
+		return ClassUtil.nullFree(completeClass.getPartialClasses());
 	}
 
 	public static @Nullable <T extends Element> T getPivot(@NonNull Class<T> pivotClass, @Nullable Pivotable pivotableElement) {
@@ -1119,6 +1151,16 @@ public class PivotUtil
 	 */
 	public static @NonNull Type getType(@NonNull TypedElement typedElement) {
 		return ClassUtil.nonNullState(typedElement.getType());
+	}
+
+	/**
+	 * Return the type of a TupleLiteralExp, exploiting the known non-null characteristics.
+	 * @throws IllegalStateException for a null type
+	 *
+	 * @since 1.3
+	 */
+	public static @NonNull TupleType getType(@NonNull TupleLiteralExp tupleLiteralExp) {
+		return ClassUtil.nonNullState((TupleType)tupleLiteralExp.getType());
 	}
 
 	public static @NonNull <T extends TemplateableElement> T getUnspecializedTemplateableElement(@NonNull T templateableElement) {

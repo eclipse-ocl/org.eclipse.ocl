@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
@@ -60,11 +61,12 @@ import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.scoping.NullAttribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 
 public class PivotUtilInternal //extends PivotUtil
-{	
+{
 	private static final Logger logger = Logger.getLogger(PivotUtilInternal.class);
 	public static boolean noDebug = true;
 	private static long startTime = System.currentTimeMillis();
@@ -77,18 +79,18 @@ public class PivotUtilInternal //extends PivotUtil
 		assert !fileExtension.endsWith(PivotConstants.AS_EXTENSION_SUFFIX);
 		return uri.trimFileExtension().appendFileExtension(fileExtension + PivotConstants.AS_EXTENSION_SUFFIX);
 	}
-	
+
 	public static void debugPrintln(@Nullable Object string) {
 		if (!noDebug) {
 			System.out.printf("%6.3f [%s] %s\n", 0.001 * (System.currentTimeMillis() - startTime), Thread.currentThread().getName(), String.valueOf(string));
-		}		
+		}
 	}
-	
+
 	public static void debugReset() {
 		startTime = System.currentTimeMillis();
 		if (!noDebug) {
 			System.out.println("");
-		}		
+		}
 	}
 
 	public static @Nullable EnvironmentFactoryInternal findEnvironmentFactory(@Nullable EObject eObject) {
@@ -300,9 +302,9 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	public static @NonNull <T extends Element> T getNonNullAst(@NonNull Class<T> pivotClass, @NonNull Pivotable pivotableElement) {
-//		if (pivotableElement == null) {
-//			return null;
-//		}
+		//		if (pivotableElement == null) {
+		//			return null;
+		//		}
 		Element pivotElement = pivotableElement.getPivot();
 		if (pivotElement == null) {
 			throw new IllegalStateException("Null pivotElementfor a " + pivotClass.getName());
@@ -440,6 +442,17 @@ public class PivotUtilInternal //extends PivotUtil
 		}
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	public static @Nullable Property getStatusTupleTypeStatusPart(@NonNull TupleType tupleType) {
+		Property statusPart = NameUtil.getNameable(tupleType.getOwnedProperties(), PivotConstants.STATUS_PART_NAME);
+		if (statusPart == null) {
+			return null;
+		}
+		return statusPart.getTypeId() == TypeId.BOOLEAN ? statusPart : null;
+	}
+
 	public static String getStereotype(@NonNull Constraint object) {
 		EStructuralFeature eContainingFeature = object.eContainingFeature();
 		if (eContainingFeature == PivotPackage.Literals.CLASS__OWNED_INVARIANTS) {
@@ -468,7 +481,7 @@ public class PivotUtilInternal //extends PivotUtil
 		if (type == null) {
 			return null;
 		}
-//		type = getType(type);
+		//		type = getType(type);
 		type = getNonLambdaType(type);
 		if (type instanceof SelfType) {
 			if (typedElement instanceof Parameter) {
@@ -561,16 +574,16 @@ public class PivotUtilInternal //extends PivotUtil
 			return false;
 		}
 		else if (type instanceof TupleType) {
-			return false;			
+			return false;
 		}
 		else if (type instanceof TemplateableElement){
-			return ((TemplateableElement)type).getOwnedBindings().isEmpty();			
+			return ((TemplateableElement)type).getOwnedBindings().isEmpty();
 		}
 		else {
 			return false;
 		}
 	}
-	
+
 	public static boolean isValidIdentifier(@Nullable String value) {
 		if (value == null) {
 			return false;
@@ -578,13 +591,13 @@ public class PivotUtilInternal //extends PivotUtil
 		int iMax = value.length();
 		for (int i = 0; i < iMax; i++) {
 			char c = value.charAt(i);
-			if (('A' <= c) && (c <= 'Z')) {					
+			if (('A' <= c) && (c <= 'Z')) {
 			}
-			else if (('a' <= c) && (c <= 'z')) {					
+			else if (('a' <= c) && (c <= 'z')) {
 			}
-			else if (c == '_') {					
+			else if (c == '_') {
 			}
-			else if (('0' <= c) && (c <= '9') && (i > 0)) {					
+			else if (('0' <= c) && (c <= '9') && (i > 0)) {
 			}
 			else {
 				return false;

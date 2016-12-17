@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.oclinecore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -33,14 +35,22 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.BooleanLiteralExp;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CollectionItem;
+import org.eclipse.ocl.pivot.CollectionLiteralExp;
+import org.eclipse.ocl.pivot.CollectionLiteralPart;
+import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LetVariable;
-import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
@@ -48,14 +58,20 @@ import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
+import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * OCLinEcoreCodeGenerator supports generation of the inline OCL-defined content of a Ecore *Impl file.
@@ -101,6 +117,177 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
+	/**
+	 * StatusAnalyzer traverses an OCLExpression tree identifying those nodes that create status and can be rewritten.
+	 *
+	 * During the visit a Boolean return signals:
+	 * true - is a Boolean Tuple.status that can be rewritten as OclAny.
+	 * false - is a Boolean Tuple.status that cannot be rewritten as OclAny.
+	 * null- is not a Boolean Tuple.status
+	 */
+	protected static class StatusAnalyzer extends AbstractExtendingVisitor<@Nullable Boolean, @NonNull OCLinEcoreCodeGenerator>
+	{
+		private @NonNull Map<@NonNull VariableDeclaration, @Nullable Boolean> variable2verdict = new HashMap<>();
+		private @NonNull List<@NonNull OCLExpression> canBeOclAnyExpressions = new ArrayList<>();
+		private @NonNull List<@NonNull PropertyCallExp> statusAccesses = new ArrayList<>();
+
+		protected StatusAnalyzer(@NonNull OCLinEcoreCodeGenerator context) {
+			super(context);
+		}
+
+		protected @Nullable Boolean visit(/*@NonNull*/ OCLExpression object) {
+			Boolean itemVerdict = object.accept(this);
+			if (itemVerdict == Boolean.TRUE) {
+				assert !(object instanceof TupleLiteralExp);
+				assert !canBeOclAnyExpressions.contains(object);
+				canBeOclAnyExpressions.add(object);
+			}
+			return itemVerdict;
+		}
+
+		@Override
+		public @Nullable Boolean visiting(@NonNull Visitable visitable) {
+			throw new IllegalArgumentException("Unsupported " + visitable.eClass().getName() + " for " + getClass().getSimpleName());
+		}
+
+		//		@Override
+		//		public @Nullable Boolean visitBooleanLiteralExp(@NonNull BooleanLiteralExp object) {
+		//			return true;
+		//		}
+
+		@Override
+		public @Nullable Boolean visitCallExp(@NonNull CallExp object) {
+			Type asType = PivotUtil.getType(object);
+			if (asType != context.booleanType) {
+				return null;
+			}
+			OCLExpression asSource = PivotUtil.getOwnedSource(object);
+			Boolean sourceVerdict = visit(asSource);
+			if (sourceVerdict != Boolean.TRUE) {
+				return sourceVerdict;
+			}
+			if (PivotUtil.getType(asSource) != context.oclAnyType) {
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		public @Nullable Boolean visitCollectionItem(@NonNull CollectionItem object) {
+			return visit(object);
+		}
+
+		@Override
+		public @Nullable Boolean visitCollectionLiteralExp(@NonNull CollectionLiteralExp object) {
+			boolean canBeOclAny = true;
+			for (@NonNull CollectionLiteralPart part : PivotUtil.getOwnedParts(object)) {
+				Boolean itemVerdict = visit(part);
+				if (itemVerdict == null) {
+					return null;
+				}
+				if (itemVerdict == false) {
+					canBeOclAny = false;
+				}
+			}
+			return canBeOclAny;
+		}
+
+		@Override
+		public @Nullable Boolean visitCollectionRange(@NonNull CollectionRange object) {
+			return null;
+		}
+
+		@Override
+		public @Nullable Boolean visitExpressionInOCL(@NonNull ExpressionInOCL object) {
+			return visit(object.getOwnedBody());
+		}
+
+		@Override
+		public @Nullable Boolean visitIfExp(@NonNull IfExp object) {
+			Boolean thenVerdict = visit(object.getOwnedThen());
+			Boolean elseVerdict = visit(object.getOwnedElse());
+			if ((thenVerdict == null) || (elseVerdict == null)) {
+				return null;
+			}
+			return thenVerdict && elseVerdict;
+		}
+
+		@Override
+		public @Nullable Boolean visitLetExp(@NonNull LetExp object) {
+			object.getOwnedVariable().accept(this);
+			return visit(object.getOwnedIn());
+		}
+
+		@Override
+		public @Nullable Boolean visitLetVariable(@NonNull LetVariable object) {
+			Boolean verdict = visit(object.getOwnedInit());
+			variable2verdict.put(object, verdict);
+			return verdict;
+		}
+
+		@Override
+		public @Nullable Boolean visitOCLExpression(@NonNull OCLExpression object) {
+			System.out.println("Unsupported " + object.eClass().getName() + " for " + getClass().getSimpleName());
+			return null;
+		}
+
+		@Override
+		public @Nullable Boolean visitOperationCallExp(@NonNull OperationCallExp object) {
+			Boolean superVerdict = super.visitOperationCallExp(object);
+			if (superVerdict != Boolean.TRUE) {
+				return superVerdict;
+			}
+			for (@NonNull OCLExpression asArgument : PivotUtil.getOwnedArguments(object)) {
+				Boolean argumentVerdict = visit(asArgument);
+				if (argumentVerdict != Boolean.TRUE) {
+					return argumentVerdict;
+				}
+				if (PivotUtil.getType(asArgument) != context.oclAnyType) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		@Override
+		public @Nullable Boolean visitPrimitiveLiteralExp(@NonNull PrimitiveLiteralExp object) {
+			return null;
+		}
+
+		@Override
+		public @Nullable Boolean visitPropertyCallExp(@NonNull PropertyCallExp object) {
+			OCLExpression ownedSource = object.getOwnedSource();
+			if (ownedSource instanceof TupleLiteralExp){
+				TupleLiteralExp tupleLiteralExp = (TupleLiteralExp)ownedSource;
+				TupleType tupleType = PivotUtil.getType(tupleLiteralExp);
+				Property statusPart = PivotUtilInternal.getStatusTupleTypeStatusPart(tupleType);
+				if (statusPart != null){
+					statusAccesses.add(object);
+					return true;
+				}
+			}
+			//			Boolean superVerdict = super.visitPropertyCallExp(object);
+			//			if (superVerdict != Boolean.TRUE) {
+			//				return superVerdict;
+			//			}
+			return null;
+		}
+
+		@Override
+		public @Nullable Boolean visitTupleLiteralExp(@NonNull TupleLiteralExp object) {
+			Property statusPart = PivotUtilInternal.getStatusTupleTypeStatusPart(PivotUtil.getType(object));
+			if (statusPart != null){
+				return true;
+			}
+			return null;
+		}
+
+		@Override
+		public @Nullable Boolean visitVariableExp(@NonNull VariableExp object) {
+			return variable2verdict.get(object.getReferredVariable());
+		}
+	}
+
 	public static void generatePackage(@NonNull GenPackage genPackage,
 			@NonNull Map<String, String> uri2body, @NonNull Map<GenPackage, String> constantsTexts) {
 		Resource genResource = ClassUtil.nonNullState(genPackage.eResource());
@@ -110,13 +297,18 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	protected final @NonNull OCLinEcoreGlobalContext globalContext;
+	protected final @NonNull StandardLibraryInternal standardLibrary;
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull PivotHelper asHelper;
+	protected final @NonNull AnyType oclAnyType;
+	protected final @NonNull PrimitiveType booleanType;
+	protected final @NonNull PrimitiveType integerType;
 	private @Nullable Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery = null;
 
 	protected OCLinEcoreCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull GenPackage genPackage) {
 		super(environmentFactory);
+		this.standardLibrary = environmentFactory.getStandardLibrary();
 		GenModel genModel = ClassUtil.nonNullModel(genPackage.getGenModel());
 		genModel.reconcile();
 		metamodelManager.addGenModel(genModel);
@@ -125,6 +317,9 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		this.genPackage = genPackage;
 		this.globalContext = new OCLinEcoreGlobalContext(this, genPackage);
 		this.asHelper = new PivotHelper(environmentFactory);
+		this.oclAnyType = standardLibrary.getOclAnyType();
+		this.booleanType = standardLibrary.getBooleanType();
+		this.integerType = standardLibrary.getIntegerType();
 		//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
@@ -179,105 +374,63 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	protected @NonNull ExpressionInOCL rewriteQuery(@NonNull ExpressionInOCL oldQuery, @NonNull String qualifiedConstraintName) {
+		OCLExpression oldBody = oldQuery.getOwnedBody();
+		if ((oldBody instanceof BooleanLiteralExp) && ((BooleanLiteralExp)oldBody).isBooleanSymbol()) {
+			return oldQuery;		// Unconditionally true (typically obsolete) constraint needs no added comolexity
+		}
 		ExpressionInOCL asSynthesizedQuery = EcoreUtil.copy(oldQuery);
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
-		AnyType oclAnyType = standardLibrary.getOclAnyType();
-		PrimitiveType booleanType = standardLibrary.getBooleanType();
-		PrimitiveType integerType = standardLibrary.getIntegerType();
+		OCLExpression asBody = asSynthesizedQuery.getOwnedBody();
+		StatusAnalyzer statusAnalyzer = new StatusAnalyzer(this);
+		Boolean verdict = asSynthesizedQuery.accept(statusAnalyzer);
+
+		if (verdict == Boolean.TRUE) {
+			for (@NonNull PropertyCallExp asPropertyCallExp : statusAnalyzer.statusAccesses) {
+				TupleLiteralExp asTupleValue = (TupleLiteralExp)asPropertyCallExp.getOwnedSource();
+				assert asTupleValue != null;
+				OCLExpression asExpression = rewriteTupleLiteralExp(asTupleValue);
+				EObject eContainer = asPropertyCallExp.eContainer();
+				EReference eContainmentFeature = asPropertyCallExp.eContainmentFeature();
+				PivotUtilInternal.resetContainer(asPropertyCallExp);
+				eContainer.eSet(eContainmentFeature, asExpression);		// FIXME isMany
+			}
+			for (@NonNull OCLExpression asExpression : statusAnalyzer.canBeOclAnyExpressions) {
+				asExpression.setType(oclAnyType);
+			}
+		}
 		Variable asSelfVariable = ClassUtil.nonNullState(asSynthesizedQuery.getOwnedContext());
 		Variable asDiagnosticsVariable = asHelper.createParameterVariable("diagnostics", oclAnyType, false);
 		asSynthesizedQuery.getOwnedParameters().add(asDiagnosticsVariable);
 		Variable asContextVariable = asHelper.createParameterVariable("context", oclAnyType, false);
 		asSynthesizedQuery.getOwnedParameters().add(asContextVariable);
-		OCLExpression asStatusInit = null;
-		OCLExpression asMessageInit = null;
-		OCLExpression asSeverityInit = null;
-		OCLExpression asSource = null;
-		OCLExpression originalBody = asSynthesizedQuery.getOwnedBody();
-		if (originalBody instanceof PropertyCallExp) {
-			PropertyCallExp asPropertyCallExp = (PropertyCallExp)originalBody;
-			asSource = asPropertyCallExp.getOwnedSource();
-			Property asReferredProperty = asPropertyCallExp.getReferredProperty();
-			if ((asReferredProperty != null) && PivotConstants.STATUS_PART_NAME.equals(asReferredProperty.getName())) {
-				if (asSource instanceof TupleLiteralExp) {
-					TupleLiteralExp asTupleLiteralExp = (TupleLiteralExp)asSource;
-					List<TupleLiteralPart> asTupleParts = asTupleLiteralExp.getOwnedParts();
-					TupleLiteralPart asStatusPart = NameUtil.getNameable(asTupleParts, PivotConstants.STATUS_PART_NAME);
-					if (asStatusPart != null) {
-						asStatusInit = asStatusPart.getOwnedInit();
-						if (asStatusInit != null) {
-							PivotUtilInternal.resetContainer(asStatusInit);
-						}
-						TupleLiteralPart asMessagePart = NameUtil.getNameable(asTupleParts, PivotConstants.MESSAGE_PART_NAME);
-						if (asMessagePart != null) {
-							asMessageInit = asMessagePart.getOwnedInit();
-							if (asMessageInit != null) {
-								PivotUtilInternal.resetContainer(asMessageInit);
-							}
-						}
-						TupleLiteralPart asSeverityPart = NameUtil.getNameable(asTupleParts, PivotConstants.SEVERITY_PART_NAME);
-						if (asSeverityPart != null) {
-							asSeverityInit = asSeverityPart.getOwnedInit();
-							if (asSeverityInit != null) {
-								PivotUtilInternal.resetContainer(asSeverityInit);
-							}
-						}
-					}
-				}
-			}
-		}
 		//
 		//	Cache the status in a let-variable
 		//
-		OCLExpression asStatusVariableInit;
-		if (asStatusInit != null) {
-			asStatusVariableInit = asStatusInit;
-		}
-		else if ((asSource != null) && (asSource.getType() instanceof TupleType)) {
-			asStatusVariableInit = asSource;
-		}
-		else {
-			asStatusVariableInit = originalBody;
-		}
-		LetVariable asStatusVariable = asHelper.createLetVariable("status", booleanType, asStatusVariableInit.isIsRequired(), asStatusVariableInit);
+		OCLExpression asStatusVariableInit = asBody;
+		Type statusType = /* isRewrite ? oclAnyType : */ booleanType;
+		LetVariable asStatusVariable = asHelper.createLetVariable("status", statusType, asStatusVariableInit.isIsRequired(), asStatusVariableInit);
 		//
 		//	Cache the severity in a let-variable
 		//
-		OCLExpression asSeverityVariableInit;
-		if (asSeverityInit != null) {
-			asSeverityVariableInit = asSeverityInit;
-		}
-		else {
-			StringLiteralExp asConstraintName2 = asHelper.createStringLiteralExp(qualifiedConstraintName);
-			asSeverityVariableInit = asHelper.createOperationCallExp(asConstraintName2, "getSeverity");
-		}
+		StringLiteralExp asConstraintName2 = asHelper.createStringLiteralExp(qualifiedConstraintName);
+		OCLExpression asSeverityVariableInit = asHelper.createOperationCallExp(asConstraintName2, "getSeverity");
 		LetVariable asSeverityVariable = asHelper.createLetVariable("severity", integerType, asSeverityVariableInit.isIsRequired(), asSeverityVariableInit);
 		//
 		//	Build from the bottom, starting with logging the status.
 		//
-		OCLExpression asCondition1 = asHelper.createOperationCallExp(asHelper.createVariableExp(asStatusVariable), "<>", asHelper.createBooleanLiteralExp(true));
-		NullLiteralExp asNullExp = asHelper.createNullLiteralExp();
-		OCLExpression asMessageExp = asMessageInit != null ? asHelper.createIfExp(asCondition1, asMessageInit, asNullExp) : asNullExp;
 		OCLExpression asLogExpression = asHelper.createOperationCallExp(asHelper.createStringLiteralExp(qualifiedConstraintName), "logDiagnostic",
 			asHelper.createVariableExp(asSelfVariable), asHelper.createNullLiteralExp(),
 			asHelper.createVariableExp(asDiagnosticsVariable), asHelper.createVariableExp(asContextVariable),
-			asMessageExp, asHelper.createVariableExp(asSeverityVariable),
+			asHelper.createNullLiteralExp()/*asMessageExp*/, asHelper.createVariableExp(asSeverityVariable),
 			asHelper.createVariableExp(asStatusVariable), asHelper.createIntegerLiteralExp(0));
 		//
 		//	Wrapped in the status let-variable
 		//
-		LetExp asStatusExpression = asHelper.createLetExp(asStatusVariable, asLogExpression);
+		OCLExpression asStatusExpression = asHelper.createLetExp(asStatusVariable, asLogExpression);
 		//
 		//	Wrapped in an interesting severity guard
 		//
-		OCLExpression asSeverityExpression;
-		if (asSeverityInit != null) {
-			asSeverityExpression = asStatusExpression;
-		}
-		else {
-			OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asSeverityVariable), "<=", asHelper.createIntegerLiteralExp(0));
-			asSeverityExpression = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asStatusExpression);
-		}
+		OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asSeverityVariable), "<=", asHelper.createIntegerLiteralExp(0));
+		OCLExpression asSeverityExpression = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asStatusExpression);
 		//
 		//	Wrapped in the severity let-variable
 		//
@@ -292,5 +445,35 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		assert newQuery2oldQuery2 != null;
 		newQuery2oldQuery2.put(asSynthesizedQuery, oldQuery);
 		return asSynthesizedQuery;
+	}
+
+	private @NonNull OCLExpression rewriteTupleLiteralExp(@NonNull TupleLiteralExp asOldTupleLiteralExp) {
+		Iterable<@NonNull TupleLiteralPart> asTupleParts = PivotUtil.getOwnedParts(asOldTupleLiteralExp);
+		//
+		//	Cache the status in a let-variable
+		//
+		LetVariable asStatusVariable = null;
+		TupleLiteralPart asStatusPart = NameUtil.getNameable(asTupleParts, PivotConstants.STATUS_PART_NAME);
+		if (asStatusPart != null) {
+			OCLExpression asStatusInit = asStatusPart.getOwnedInit();
+			if (asStatusInit != null) {
+				PivotUtilInternal.resetContainer(asStatusInit);
+				asStatusVariable = asHelper.createLetVariable("status", standardLibrary.getBooleanType(), asStatusInit.isIsRequired(), asStatusInit);
+				asStatusPart.setOwnedInit(asHelper.createVariableExp(asStatusVariable));
+			}
+		}
+		//
+		//	Build from the bottom, starting with the revised tuple.
+		//
+		OCLExpression asResultExp = asHelper.createTupleLiteralExp(PivotUtil.getType(asOldTupleLiteralExp), asTupleParts);
+		//
+		//	Wrapped in a status guard for failure.
+		//
+		if (asStatusVariable != null) {
+			OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asStatusVariable), "=", asHelper.createBooleanLiteralExp(true));
+			OCLExpression asStatusExp = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asResultExp);
+			asResultExp = asHelper.createLetExp(asStatusVariable, asStatusExp);
+		}
+		return asResultExp;
 	}
 }

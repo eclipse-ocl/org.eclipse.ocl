@@ -415,7 +415,7 @@ public class PivotHelper
 		return asString;
 	}
 
-	public @NonNull OCLExpression createTupleLiteralExp(@NonNull TupleType asType, @NonNull Iterable<TupleLiteralPart> asParts) {
+	public @NonNull TupleLiteralExp createTupleLiteralExp(@NonNull TupleType asType, @NonNull Iterable<TupleLiteralPart> asParts) {
 		TupleLiteralExp tupleLiteralExp = PivotFactory.eINSTANCE.createTupleLiteralExp();
 		Iterables.addAll(tupleLiteralExp.getOwnedParts(), asParts);
 		tupleLiteralExp.setType(asType);

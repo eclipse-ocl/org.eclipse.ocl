@@ -397,17 +397,17 @@ inv CompatibleNullityForInitializer: not ownedInit?.isRequired implies not isReq
 
 context ShadowExp
 inv ClassHasNoStringValueInitializer: true -- obsolete
-inv InitializesAllClassProperties: if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''} else 
+inv InitializesAllClassProperties: if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''}.status else 
 	let partProperties = ownedParts.referredProperty->asSet() in
 	let allProperties = type.oclAsType(Class)->closure(superClasses)?.ownedProperties->asSet() in
 	let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name.startsWith('ocl')) in
 	let requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite?.isComposite) in
 	let extraProperties : Set(NamedElement)[*|1] = partProperties->excludingAll(classProperties) in
 	let missingProperties : Set(NamedElement)[*|1] = requiredClassProperties->excludingAll(partProperties) in
-	if extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String='Unexpected initializers:'|acc +' ' + p.name)}
-	else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}
-	else Tuple{status:Boolean[1]=true, message:String[1]=''}
-	endif endif endif.status
+	if extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String='Unexpected initializers:'|acc +' ' + p.name)}.status
+	else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}.status
+	else Tuple{status:Boolean[1]=true, message:String[1]=''}.status
+	endif endif endif
 inv DataTypeHasStringValueInitializer: true -- obsolete
 inv DataTypeHasNoPartInitializers: true -- obsolete
 inv DataTypeHasOnePartInitializer: type.oclIsKindOf(DataType) implies ownedParts->size() = 1

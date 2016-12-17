@@ -317,12 +317,12 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 		 * The Java source text defining the constants used by operation and property bodies that must be emitted
 		 * as part of the Tables class.
 		 */
-		private @NonNull Map<@NonNull GenPackage, @NonNull String> constantTexts = new HashMap<@NonNull GenPackage, @NonNull String>();
+		private @NonNull Map<@NonNull GenPackage, @NonNull String> constantTexts = new HashMap<>();
 
 		/**
 		 * The edits applied to the in-memory GenModel that must be undone during postGenerate.
 		 */
-		private @NonNull List<Edit> edits = new ArrayList<Edit>();
+		private @NonNull List<Edit> edits = new ArrayList<>();
 
 		private OCLinEcoreStateAdapter(@NonNull GenModel genModel) {
 			Resource eResource = genModel.eResource();
@@ -412,7 +412,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 										}
 									}
 									if (obsoleteAnnotations == null) {
-										obsoleteAnnotations = new ArrayList<EAnnotation>();
+										obsoleteAnnotations = new ArrayList<>();
 									}
 									obsoleteAnnotations.add(eAnnotation);
 								}
@@ -437,13 +437,13 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 		 * @throws IOException
 		 */
 		public @NonNull Map<@NonNull String, @NonNull String> createFeatureBodies(@NonNull GenModel genModel) throws IOException {
-			Map<@NonNull String, @NonNull String> allResults = new HashMap<@NonNull String, @NonNull String>();
+			Map<@NonNull String, @NonNull String> allResults = new HashMap<>();
 			@SuppressWarnings("null")@NonNull List<GenPackage> allGenPackagesWithClassifiers = genModel.getAllGenPackagesWithClassifiers();
 			List<@NonNull GenPackage> genPackages = ClassUtil.nullFree(allGenPackagesWithClassifiers);
 			for (GenPackage genPackage : genPackages) {
 				OCLinEcoreCodeGenerator.generatePackage(genPackage, allResults, constantTexts);
 			}
-			List<@NonNull String> resultsKeys = new ArrayList<@NonNull String>(allResults.keySet());
+			List<@NonNull String> resultsKeys = new ArrayList<>(allResults.keySet());
 			Collections.sort(resultsKeys);
 			return allResults;
 		}
@@ -555,7 +555,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 		}
 		protected @NonNull List<String> pruneDelegates(@Nullable List<String> oldDelegates) {
-			List<String> newDelegates = new ArrayList<String>();
+			List<String> newDelegates = new ArrayList<>();
 			if (oldDelegates != null) {
 				for (String aDelegate : oldDelegates) {
 					if (!OCLCommon.isDelegateURI(aDelegate)) {
