@@ -185,31 +185,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	public boolean validateClassHasNoStringValueInitializer(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 *
-		 * inv ClassHasNoStringValueInitializer:
-		 *   let
-		 *     severity : Integer[1] = 'ShadowExp::ClassHasNoStringValueInitializer'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let status : Boolean[1] = true
-		 *       in
-		 *         'ShadowExp::ClassHasNoStringValueInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
-		 *     endif
+		 * inv ClassHasNoStringValueInitializer: true
 		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ShadowExp_c_c_ClassHasNoStringValueInitializer);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_ClassHasNoStringValueInitializer, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
-		}
-		return Boolean.TRUE == symbol_0;
+		return Boolean.TRUE == ValueUtil.TRUE_VALUE;
 	}
 
 	/**
@@ -221,31 +199,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	public boolean validateDataTypeHasNoPartInitializers(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 *
-		 * inv DataTypeHasNoPartInitializers:
-		 *   let
-		 *     severity : Integer[1] = 'ShadowExp::DataTypeHasNoPartInitializers'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let status : Boolean[1] = true
-		 *       in
-		 *         'ShadowExp::DataTypeHasNoPartInitializers'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
-		 *     endif
+		 * inv DataTypeHasNoPartInitializers: true
 		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ShadowExp_c_c_DataTypeHasNoPartInitializers);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_DataTypeHasNoPartInitializers, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
-		}
-		return Boolean.TRUE == symbol_0;
+		return Boolean.TRUE == ValueUtil.TRUE_VALUE;
 	}
 
 	/**
@@ -326,31 +282,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 	public boolean validateDataTypeHasStringValueInitializer(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 *
-		 * inv DataTypeHasStringValueInitializer:
-		 *   let
-		 *     severity : Integer[1] = 'ShadowExp::DataTypeHasStringValueInitializer'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let status : Boolean[1] = true
-		 *       in
-		 *         'ShadowExp::DataTypeHasStringValueInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
-		 *     endif
+		 * inv DataTypeHasStringValueInitializer: true
 		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_ShadowExp_c_c_DataTypeHasStringValueInitializer);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_DataTypeHasStringValueInitializer, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
-		}
-		return Boolean.TRUE == symbol_0;
+		return Boolean.TRUE == ValueUtil.TRUE_VALUE;
 	}
 
 	/**
@@ -372,7 +306,13 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		 *     else
 		 *       let
 		 *         status : Boolean[1] = if type.oclIsKindOf(DataType)
-		 *         then Tuple{status = true, message = ''}
+		 *         then
+		 *           let status : Boolean[1] = true
+		 *           in
+		 *             if status = true
+		 *             then true
+		 *             else Tuple{status = status, message = ''}
+		 *             endif
 		 *         else
 		 *           let
 		 *             partProperties : Set(Property) = ownedParts.referredProperty->asSet()
@@ -400,18 +340,36 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		 *                     in
 		 *                       if extraProperties->notEmpty()
 		 *                       then
-		 *                         Tuple{
-		 *                           status = false, message = extraProperties->sortedBy(name)
-		 *                           ->iterate(p; acc : String[?] = 'Unexpected initializers:' | acc + ' ' + p.name)
-		 *                         }
+		 *                         let status : Boolean[1] = false
+		 *                         in
+		 *                           if status = true
+		 *                           then true
+		 *                           else
+		 *                             Tuple{
+		 *                               status = status, message = extraProperties->sortedBy(name)
+		 *                               ->iterate(p; acc : String[?] = 'Unexpected initializers:' | acc + ' ' + p.name)
+		 *                             }
+		 *                           endif
 		 *                       else
 		 *                         if missingProperties->notEmpty()
 		 *                         then
-		 *                           Tuple{
-		 *                             status = false, message = missingProperties->sortedBy(name)
-		 *                             ->iterate(p; acc : String[?] = 'Missing initializers:' | acc + ' ' + p.name)
-		 *                           }
-		 *                         else Tuple{status = true, message = ''}
+		 *                           let status : Boolean[1] = false
+		 *                           in
+		 *                             if status = true
+		 *                             then true
+		 *                             else
+		 *                               Tuple{
+		 *                                 status = status, message = missingProperties->sortedBy(name)
+		 *                                 ->iterate(p; acc : String[?] = 'Missing initializers:' | acc + ' ' + p.name)
+		 *                               }
+		 *                             endif
+		 *                         else
+		 *                           let status : Boolean[1] = true
+		 *                           in
+		 *                             if status = true
+		 *                             then true
+		 *                             else Tuple{status = status, message = ''}
+		 *                             endif
 		 *                         endif
 		 *                       endif
 		 *         endif
@@ -434,9 +392,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType_0 = idResolver.getClass(PivotTables.CLSSid_DataType, null);
 				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
 				final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType_0).booleanValue();
-				/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull TupleValue status;
+				/*@Thrown*/ java.lang.@NonNull Object status;
 				if (oclIsKindOf) {
-					status = PivotTables.symbol_0;
+					status = ValueUtil.TRUE_VALUE;
 				}
 				else {
 					final /*@Thrown*/ java.util.@NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
@@ -745,7 +703,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue extraProperties = (SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(partProperties, classProperties);
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue missingProperties = (SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(requiredClassProperties, partProperties);
 					final /*@Thrown*/ boolean notEmpty = CollectionNotEmptyOperation.INSTANCE.evaluate(extraProperties).booleanValue();
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull TupleValue symbol_7;
+					/*@Thrown*/ java.lang.@NonNull Object symbol_7;
 					if (notEmpty) {
 						final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_1 = executor.getStaticTypeOf(extraProperties);
 						final LibraryIteration.@org.eclipse.jdt.annotation.NonNull LibraryIterationExtension IMPL_sortedBy_1 = (LibraryIteration.LibraryIterationExtension)TYPE_sortedBy_1.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
@@ -794,7 +752,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					}
 					else {
 						final /*@Thrown*/ boolean notEmpty_0 = CollectionNotEmptyOperation.INSTANCE.evaluate(missingProperties).booleanValue();
-						/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull TupleValue symbol_6;
+						/*@Thrown*/ java.lang.@NonNull Object symbol_6;
 						if (notEmpty_0) {
 							final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_0_0 = executor.getStaticTypeOf(missingProperties);
 							final LibraryIteration.@org.eclipse.jdt.annotation.NonNull LibraryIterationExtension IMPL_sortedBy_0_0 = (LibraryIteration.LibraryIterationExtension)TYPE_sortedBy_0_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
@@ -842,7 +800,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							symbol_6 = symbol_5;
 						}
 						else {
-							symbol_6 = PivotTables.symbol_0;
+							symbol_6 = ValueUtil.TRUE_VALUE;
 						}
 						symbol_7 = symbol_6;
 					}

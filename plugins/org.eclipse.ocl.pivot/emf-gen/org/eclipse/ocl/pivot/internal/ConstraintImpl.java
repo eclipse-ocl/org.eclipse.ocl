@@ -35,15 +35,9 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
-import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
-import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
@@ -69,8 +63,8 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * @generated
  */
 public class ConstraintImpl
-		extends NamedElementImpl
-		implements Constraint {
+extends NamedElementImpl
+implements Constraint {
 
 	/**
 	 * The cached value of the '{@link #getConstrainedElements() <em>Constrained Elements</em>}' reference list.
@@ -432,30 +426,9 @@ public class ConstraintImpl
 	public boolean validateUniqueName(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 *
-		 * inv UniqueName:
-		 *   let severity : Integer[1] = 'Constraint::UniqueName'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let status : Boolean[1] = true
-		 *       in
-		 *         'Constraint::UniqueName'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
-		 *     endif
+		 * inv UniqueName: true
 		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Constraint_c_c_UniqueName);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_Constraint_c_c_UniqueName, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
-		}
-		return Boolean.TRUE == symbol_0;
+		return Boolean.TRUE == ValueUtil.TRUE_VALUE;
 	}
 
 	/**

@@ -828,31 +828,9 @@ implements Operation {
 	public boolean validateLoadableImplementation(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
-		 *
-		 * inv LoadableImplementation:
-		 *   let
-		 *     severity : Integer[1] = 'Operation::LoadableImplementation'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let status : Boolean[1] = true
-		 *       in
-		 *         'Operation::LoadableImplementation'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
-		 *     endif
+		 * inv LoadableImplementation: true
 		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_Operation_c_c_LoadableImplementation);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_Operation_c_c_LoadableImplementation, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, PivotTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
-		}
-		return Boolean.TRUE == symbol_0;
+		return Boolean.TRUE == ValueUtil.TRUE_VALUE;
 	}
 
 	/**

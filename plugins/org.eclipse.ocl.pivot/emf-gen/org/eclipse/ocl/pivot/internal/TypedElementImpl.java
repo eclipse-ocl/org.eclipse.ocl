@@ -188,9 +188,9 @@ public abstract class TypedElementImpl
 		catch (Exception e) {
 			CAUGHT_type = ValueUtil.createInvalidValue(e);
 		}
-		final /*@NonInvalid*/ @NonNull Object symbol_2 = CAUGHT_type == null;
+		final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_type == null;
 		/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
-		if (symbol_2 == Boolean.TRUE) {
+		if (symbol_0 == Boolean.TRUE) {
 			safe_conformsTo_source = null;
 		}
 		else {

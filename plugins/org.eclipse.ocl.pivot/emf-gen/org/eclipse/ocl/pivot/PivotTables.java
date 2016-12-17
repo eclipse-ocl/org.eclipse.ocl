@@ -188,7 +188,6 @@ public class PivotTables
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull TuplePartId PARTid__0 = org.eclipse.ocl.pivot.ids.IdManager.getTuplePartId(0, "message", org.eclipse.ocl.pivot.ids.TypeId.STRING);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId SEQ_PRIMid_Integer = org.eclipse.ocl.pivot.ids.TypeId.SEQUENCE.getSpecializedId(org.eclipse.ocl.pivot.ids.TypeId.INTEGER);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId SET_PRIMid_String = org.eclipse.ocl.pivot.ids.TypeId.SET.getSpecializedId(org.eclipse.ocl.pivot.ids.TypeId.STRING);
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ = "";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Boolean = "Boolean";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_BooleanLiteralExp_c_c_TypeIsBoolean = "BooleanLiteralExp::TypeIsBoolean";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CallExp_c_c_TypeIsNotInvalid = "CallExp::TypeIsNotInvalid";
@@ -201,7 +200,6 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CollectionLiteralExp_c_c_SequenceKindIsSequence = "CollectionLiteralExp::SequenceKindIsSequence";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CollectionLiteralExp_c_c_SetKindIsSet = "CollectionLiteralExp::SetKindIsSet";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_CollectionLiteralPart_c_c_TypeIsNotInvalid = "CollectionLiteralPart::TypeIsNotInvalid";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Constraint_c_c_UniqueName = "Constraint::UniqueName";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_EnumLiteralExp_c_c_TypeIsEnumerationType = "EnumLiteralExp::TypeIsEnumerationType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Feature_c_c_NameIsNotNull = "Feature::NameIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Feature_c_c_TypeIsNotInvalid = "Feature::TypeIsNotInvalid";
@@ -219,7 +217,6 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_AnyHasOneIterator = "IteratorExp::AnyHasOneIterator";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_AnyTypeIsSourceElementType = "IteratorExp::AnyTypeIsSourceElementType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureBodyElementTypeIsIteratorType = "IteratorExp::ClosureBodyElementTypeIsIteratorType";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureBodyTypeIsConformanttoIteratorType = "IteratorExp::ClosureBodyTypeIsConformanttoIteratorType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureElementTypeIsSourceElementType = "IteratorExp::ClosureElementTypeIsSourceElementType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureHasOneIterator = "IteratorExp::ClosureHasOneIterator";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_ClosureSourceElementTypeIsBodyElementType = "IteratorExp::ClosureSourceElementTypeIsBodyElementType";
@@ -231,7 +228,6 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_SafeSourceCanBeNull = "IteratorExp::SafeSourceCanBeNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_SortedByElementTypeIsSourceElementType = "IteratorExp::SortedByElementTypeIsSourceElementType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_SortedByIsOrderedIfSourceIsOrdered = "IteratorExp::SortedByIsOrderedIfSourceIsOrdered";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_SortedByIteratorTypeIsComparable = "IteratorExp::SortedByIteratorTypeIsComparable";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorExp_c_c_UnsafeSourceCanNotBeNull = "IteratorExp::UnsafeSourceCanNotBeNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_IteratorVariable_c_c_HasNoInitializer = "IteratorVariable::HasNoInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_LetExp_c_c_CompatibleNullityForIn = "LetExp::CompatibleNullityForIn";
@@ -250,7 +246,6 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OperationCallExp_c_c_ArgumentTypeIsConformant = "OperationCallExp::ArgumentTypeIsConformant";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_OperationCallExp_c_c_SafeSourceCanBeNull = "OperationCallExp::SafeSourceCanBeNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_CompatibleReturn = "Operation::CompatibleReturn";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_LoadableImplementation = "Operation::LoadableImplementation";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_UniquePostconditionName = "Operation::UniquePostconditionName";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Operation_c_c_UniquePreconditionName = "Operation::UniquePreconditionName";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ParameterVariable_c_c_HasNoInitializer = "ParameterVariable::HasNoInitializer";
@@ -262,10 +257,7 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ResultVariable_c_c_CompatibleNullityForInitializer = "ResultVariable::CompatibleNullityForInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ResultVariable_c_c_CompatibleTypeForInitializer = "ResultVariable::CompatibleTypeForInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ResultVariable_c_c_HasInitializer = "ResultVariable::HasInitializer";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_ClassHasNoStringValueInitializer = "ShadowExp::ClassHasNoStringValueInitializer";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_DataTypeHasNoPartInitializers = "ShadowExp::DataTypeHasNoPartInitializers";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_DataTypeHasOnePartInitializer = "ShadowExp::DataTypeHasOnePartInitializer";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_DataTypeHasStringValueInitializer = "ShadowExp::DataTypeHasStringValueInitializer";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_InitializesAllClassProperties = "ShadowExp::InitializesAllClassProperties";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowExp_c_c_TypeIsNotInvalid = "ShadowExp::TypeIsNotInvalid";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_ShadowPart_c_c_CompatibleInitialiserType = "ShadowPart::CompatibleInitialiserType";
@@ -279,7 +271,6 @@ public class PivotTables
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_VariableDeclaration_c_c_TypeIsNotInvalid = "VariableDeclaration::TypeIsNotInvalid";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_VariableDeclaration_c_c_TypeIsNotNull = "VariableDeclaration::TypeIsNotNull";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_VariableExp_c_c_TypeIsNotInvalid = "VariableExp::TypeIsNotInvalid";
-	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_Variable_c_c_CompatibleInitialiserType = "Variable::CompatibleInitialiserType";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR__32 = " ";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_any = "any";
 	public static final /*@NonInvalid*/ java.lang.@org.eclipse.jdt.annotation.NonNull String STR_closure = "closure";
@@ -391,7 +382,6 @@ public class PivotTables
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId SET_CLSSid_Type = org.eclipse.ocl.pivot.ids.TypeId.SET.getSpecializedId(org.eclipse.ocl.pivot.PivotTables.CLSSid_Type);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId SET_CLSSid_Vertex = org.eclipse.ocl.pivot.ids.TypeId.SET.getSpecializedId(org.eclipse.ocl.pivot.PivotTables.CLSSid_Vertex);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull TupleTypeId TUPLid_ = org.eclipse.ocl.pivot.ids.IdManager.getTupleTypeId("Tuple", org.eclipse.ocl.pivot.PivotTables.PARTid__0, org.eclipse.ocl.pivot.PivotTables.PARTid_);
-	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull TupleValue symbol_0 = org.eclipse.ocl.pivot.utilities.ValueUtil.createTupleOfEach(org.eclipse.ocl.pivot.PivotTables.TUPLid_, org.eclipse.ocl.pivot.PivotTables.STR_, org.eclipse.ocl.pivot.utilities.ValueUtil.TRUE_VALUE);
 
 	/**
 	 *	The type parameters for templated types and operations.
