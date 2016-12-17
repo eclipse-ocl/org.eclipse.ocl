@@ -666,7 +666,7 @@ implements org.eclipse.ocl.pivot.Class {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = ownedInvariants->isUnique(name)
+		 *       let status : Boolean[1] = ownedInvariants->isUnique(name)
 		 *       in
 		 *         'Class::UniqueInvariantName'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -1274,7 +1274,7 @@ implements org.eclipse.ocl.pivot.Class {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = name <> null
+		 *       let status : Boolean[1] = name <> null
 		 *       in
 		 *         'Class::NameIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

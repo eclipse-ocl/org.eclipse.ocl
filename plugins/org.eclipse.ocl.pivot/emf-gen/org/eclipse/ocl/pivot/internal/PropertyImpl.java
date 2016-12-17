@@ -1045,7 +1045,7 @@ public class PropertyImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = ownedExpression <> null and
+		 *       let status : Boolean[?] = ownedExpression <> null and
 		 *         ownedExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies
 		 *         CompatibleBody(ownedExpression)
 		 *       in

@@ -168,7 +168,7 @@ public class BooleanLiteralExpImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = self.type = Boolean
+		 *       let status : Boolean[1] = self.type = Boolean
 		 *       in
 		 *         'BooleanLiteralExp::TypeIsBoolean'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

@@ -237,7 +237,7 @@ implements Variable {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = true
+		 *       let status : Boolean[1] = true
 		 *       in
 		 *         'Variable::CompatibleInitialiserType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

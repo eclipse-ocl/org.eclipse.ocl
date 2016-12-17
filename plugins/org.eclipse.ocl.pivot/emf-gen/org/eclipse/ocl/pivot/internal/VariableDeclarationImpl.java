@@ -126,7 +126,7 @@ implements VariableDeclaration {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = name <> null
+		 *       let status : Boolean[1] = name <> null
 		 *       in
 		 *         'VariableDeclaration::NameIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -171,7 +171,7 @@ implements VariableDeclaration {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> OclInvalid
+		 *       let status : Boolean[1] = type <> OclInvalid
 		 *       in
 		 *         'VariableDeclaration::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -219,7 +219,7 @@ implements VariableDeclaration {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> null
+		 *       let status : Boolean[1] = type <> null
 		 *       in
 		 *         'VariableDeclaration::TypeIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

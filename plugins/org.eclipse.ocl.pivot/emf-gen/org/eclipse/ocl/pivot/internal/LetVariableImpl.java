@@ -81,7 +81,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = ownedInit?.isRequired = isRequired
+		 *       let status : Boolean[1] = ownedInit?.isRequired = isRequired
 		 *       in
 		 *         'LetVariable::CompatibleNullityForInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -144,7 +144,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = ownedInit <> null implies
+		 *       let status : Boolean[?] = ownedInit <> null implies
 		 *         ownedInit?.type?.conformsTo(type)
 		 *       in
 		 *         'LetVariable::CompatibleTypeForInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -239,7 +239,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = ownedInit <> null
+		 *       let status : Boolean[1] = ownedInit <> null
 		 *       in
 		 *         'LetVariable::HasInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

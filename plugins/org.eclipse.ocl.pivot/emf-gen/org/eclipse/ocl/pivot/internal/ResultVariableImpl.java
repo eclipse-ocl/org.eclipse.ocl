@@ -82,7 +82,7 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = not ownedInit?.isRequired implies not isRequired
+		 *       let status : Boolean[?] = not ownedInit?.isRequired implies not isRequired
 		 *       in
 		 *         'ResultVariable::CompatibleNullityForInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -175,7 +175,7 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = ownedInit <> null implies
+		 *       let status : Boolean[?] = ownedInit <> null implies
 		 *         ownedInit?.type?.conformsTo(type)
 		 *       in
 		 *         'ResultVariable::CompatibleTypeForInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -270,7 +270,7 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = ownedInit <> null
+		 *       let status : Boolean[1] = ownedInit <> null
 		 *       in
 		 *         'ResultVariable::HasInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

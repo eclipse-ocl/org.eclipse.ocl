@@ -193,7 +193,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = true
+		 *       let status : Boolean[1] = true
 		 *       in
 		 *         'ShadowExp::ClassHasNoStringValueInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -229,7 +229,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = true
+		 *       let status : Boolean[1] = true
 		 *       in
 		 *         'ShadowExp::DataTypeHasNoPartInitializers'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -267,7 +267,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[?] = type.oclIsKindOf(DataType) implies
+		 *         status : Boolean[?] = type.oclIsKindOf(DataType) implies
 		 *         ownedParts->size() = 1
 		 *       in
 		 *         'ShadowExp::DataTypeHasOnePartInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -334,7 +334,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = true
+		 *       let status : Boolean[1] = true
 		 *       in
 		 *         'ShadowExp::DataTypeHasStringValueInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -371,7 +371,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[1] = if type.oclIsKindOf(DataType)
+		 *         status : Boolean[1] = if type.oclIsKindOf(DataType)
 		 *         then Tuple{status = true, message = ''}
 		 *         else
 		 *           let
@@ -875,7 +875,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> OclInvalid
+		 *       let status : Boolean[1] = type <> OclInvalid
 		 *       in
 		 *         'ShadowExp::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

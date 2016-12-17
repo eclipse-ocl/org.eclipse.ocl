@@ -199,7 +199,7 @@ implements Feature {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = name <> null
+		 *       let status : Boolean[1] = name <> null
 		 *       in
 		 *         'Feature::NameIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -243,7 +243,7 @@ implements Feature {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> OclInvalid
+		 *       let status : Boolean[1] = type <> OclInvalid
 		 *       in
 		 *         'Feature::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -290,7 +290,7 @@ implements Feature {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> null
+		 *       let status : Boolean[1] = type <> null
 		 *       in
 		 *         'Feature::TypeIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

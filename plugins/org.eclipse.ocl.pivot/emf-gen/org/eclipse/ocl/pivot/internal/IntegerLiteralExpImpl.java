@@ -133,7 +133,7 @@ public class IntegerLiteralExpImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = self.type = Integer
+		 *       let status : Boolean[1] = self.type = Integer
 		 *       in
 		 *         'IntegerLiteralExp::TypeIsInteger'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

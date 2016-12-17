@@ -78,7 +78,7 @@ implements CollectionLiteralPart {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> OclInvalid
+		 *       let status : Boolean[1] = type <> OclInvalid
 		 *       in
 		 *         'CollectionLiteralPart::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

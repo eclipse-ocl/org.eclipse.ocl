@@ -206,7 +206,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = not isSafe and
+		 *       let status : Boolean[?] = not isSafe and
 		 *         ownedIterators->exists(isRequired) implies
 		 *         ownedSource?.type.oclAsType(CollectionType).isNullFree
 		 *       in
@@ -354,7 +354,8 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'any' implies ownedIterators->size() = 1
+		 *       let status : Boolean[?] = name = 'any' implies
+		 *         ownedIterators->size() = 1
 		 *       in
 		 *         'IteratorExp::AnyHasOneIterator'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -419,7 +420,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'any' implies type =
+		 *       let status : Boolean[?] = name = 'any' implies type =
 		 *         ownedSource?.type?.oclAsType(CollectionType).elementType
 		 *       in
 		 *         'IteratorExp::AnyTypeIsSourceElementType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -524,7 +525,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'closure' implies
+		 *       let status : Boolean[?] = name = 'closure' implies
 		 *         ownedBody.type.oclAsType(CollectionType)
 		 *         .elementType.conformsTo(ownedIterators->at(1).type)
 		 *       in
@@ -602,7 +603,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'any' implies ownedBody.type = 'Boolean'
+		 *       let status : Boolean[?] = name = 'any' implies ownedBody.type = 'Boolean'
 		 *       in
 		 *         'IteratorExp::AnyBodyTypeIsBoolean'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -666,7 +667,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'closure' implies
+		 *       let status : Boolean[?] = name = 'closure' implies
 		 *         ownedIterators->size() = 1
 		 *       in
 		 *         'IteratorExp::ClosureHasOneIterator'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -732,7 +733,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'closure' implies
+		 *       let status : Boolean[?] = name = 'closure' implies
 		 *         if
 		 *           ownedSource?.type?.oclIsKindOf(SequenceType) or
 		 *           ownedSource?.type.oclIsKindOf(OrderedSetType)
@@ -884,7 +885,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'collect' implies
+		 *       let status : Boolean[?] = name = 'collect' implies
 		 *         type.oclAsType(CollectionType).elementType =
 		 *         ownedBody.type.flattenedType()
 		 *       in
@@ -961,7 +962,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'closure' implies
+		 *       let status : Boolean[?] = name = 'closure' implies
 		 *         ownedSource?.type.oclAsType(CollectionType).elementType =
 		 *         if ownedBody.type.oclIsKindOf(CollectionType)
 		 *         then
@@ -1065,7 +1066,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'closure' implies
+		 *       let status : Boolean[?] = name = 'closure' implies
 		 *         type.oclAsType(CollectionType).elementType =
 		 *         ownedSource?.type.oclAsType(CollectionType).elementType
 		 *       in
@@ -1155,7 +1156,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'collect' implies
+		 *       let status : Boolean[?] = name = 'collect' implies
 		 *         if
 		 *           ownedSource?.type.oclIsKindOf(SequenceType) or
 		 *           ownedSource?.type.oclIsKindOf(OrderedSetType)
@@ -1292,7 +1293,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'sortedBy' implies
+		 *       let status : Boolean[?] = name = 'sortedBy' implies
 		 *         if
 		 *           ownedSource?.type.oclIsKindOf(SequenceType) or
 		 *           ownedSource?.type.oclIsKindOf(BagType)
@@ -1429,7 +1430,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name = 'sortedBy' implies
+		 *       let status : Boolean[?] = name = 'sortedBy' implies
 		 *         type.oclAsType(CollectionType).elementType =
 		 *         ownedBody.type.oclAsType(CollectionType).elementType
 		 *       in
@@ -1505,7 +1506,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[?] = self.ownedIterators->forAll(p |
+		 *         status : Boolean[?] = self.ownedIterators->forAll(p |
 		 *           ownedSource?.type.oclAsType(CollectionType)
 		 *           .elementType.conformsTo(p.type))
 		 *       in
@@ -1619,7 +1620,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = isSafe implies
+		 *       let status : Boolean[?] = isSafe implies
 		 *         ownedIterators->forAll(isRequired)
 		 *       in
 		 *         'IteratorExp::SafeIteratorIsRequired'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -1722,7 +1723,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = isSafe implies
+		 *       let status : Boolean[?] = isSafe implies
 		 *         not ownedSource?.type.oclAsType(CollectionType).isNullFree
 		 *       in
 		 *         'IteratorExp::SafeSourceCanBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)

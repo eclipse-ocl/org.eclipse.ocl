@@ -751,7 +751,7 @@ implements Operation {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = bodyExpression <> null and
+		 *       let status : Boolean[?] = bodyExpression <> null and
 		 *         bodyExpression.oclAsType(ExpressionInOCL).ownedBody <> null implies
 		 *         CompatibleBody(bodyExpression)
 		 *       in
@@ -836,7 +836,7 @@ implements Operation {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = true
+		 *       let status : Boolean[1] = true
 		 *       in
 		 *         'Operation::LoadableImplementation'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -872,7 +872,7 @@ implements Operation {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = ownedPreconditions->isUnique(name)
+		 *       let status : Boolean[1] = ownedPreconditions->isUnique(name)
 		 *       in
 		 *         'Operation::UniquePreconditionName'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -941,7 +941,7 @@ implements Operation {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = ownedPostconditions->isUnique(name)
+		 *       let status : Boolean[1] = ownedPostconditions->isUnique(name)
 		 *       in
 		 *         'Operation::UniquePostconditionName'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

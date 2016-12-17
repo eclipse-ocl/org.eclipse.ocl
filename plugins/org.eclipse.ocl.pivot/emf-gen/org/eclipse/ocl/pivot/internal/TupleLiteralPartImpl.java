@@ -159,7 +159,7 @@ implements TupleLiteralPart {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = ownedInit <> null implies
+		 *       let status : Boolean[?] = ownedInit <> null implies
 		 *         ownedInit?.type?.conformsTo(type)
 		 *       in
 		 *         'TupleLiteralPart::CompatibleInitialiserType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -255,7 +255,7 @@ implements TupleLiteralPart {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> OclInvalid
+		 *       let status : Boolean[1] = type <> OclInvalid
 		 *       in
 		 *         'TupleLiteralPart::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

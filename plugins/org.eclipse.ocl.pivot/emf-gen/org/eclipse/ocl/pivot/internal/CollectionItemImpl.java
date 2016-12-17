@@ -150,7 +150,7 @@ public class CollectionItemImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type = ownedItem.type
+		 *       let status : Boolean[1] = type = ownedItem.type
 		 *       in
 		 *         'CollectionItem::TypeIsItemType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

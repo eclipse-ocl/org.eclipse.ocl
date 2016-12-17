@@ -198,7 +198,7 @@ public class CollectionLiteralExpImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = kind <> CollectionKind::Collection
+		 *       let status : Boolean[1] = kind <> CollectionKind::Collection
 		 *       in
 		 *         'CollectionLiteralExp::CollectionKindIsConcrete'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -245,7 +245,7 @@ public class CollectionLiteralExpImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = kind = CollectionKind::Set implies
+		 *       let status : Boolean[?] = kind = CollectionKind::Set implies
 		 *         type.oclIsKindOf(SetType)
 		 *       in
 		 *         'CollectionLiteralExp::SetKindIsSet'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -312,7 +312,7 @@ public class CollectionLiteralExpImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = kind = CollectionKind::OrderedSet implies
+		 *       let status : Boolean[?] = kind = CollectionKind::OrderedSet implies
 		 *         type.oclIsKindOf(OrderedSetType)
 		 *       in
 		 *         'CollectionLiteralExp::OrderedSetKindIsOrderedSet'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -379,7 +379,7 @@ public class CollectionLiteralExpImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = kind = CollectionKind::Sequence implies
+		 *       let status : Boolean[?] = kind = CollectionKind::Sequence implies
 		 *         type.oclIsKindOf(SequenceType)
 		 *       in
 		 *         'CollectionLiteralExp::SequenceKindIsSequence'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -446,7 +446,7 @@ public class CollectionLiteralExpImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = kind = CollectionKind::Bag implies
+		 *       let status : Boolean[?] = kind = CollectionKind::Bag implies
 		 *         type.oclIsKindOf(BagType)
 		 *       in
 		 *         'CollectionLiteralExp::BagKindIsBag'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)

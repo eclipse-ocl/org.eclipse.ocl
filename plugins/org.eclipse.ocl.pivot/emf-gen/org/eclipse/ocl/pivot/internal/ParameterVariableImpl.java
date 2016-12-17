@@ -79,7 +79,7 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = ownedInit = null
+		 *       let status : Boolean[1] = ownedInit = null
 		 *       in
 		 *         'ParameterVariable::HasNoInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

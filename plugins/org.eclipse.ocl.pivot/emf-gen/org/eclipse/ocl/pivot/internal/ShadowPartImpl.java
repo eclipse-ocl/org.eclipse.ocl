@@ -162,7 +162,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = ownedInit.type?.conformsTo(type)
+		 *       let status : Boolean[?] = ownedInit.type?.conformsTo(type)
 		 *       in
 		 *         'ShadowPart::CompatibleInitialiserType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -224,7 +224,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> OclInvalid
+		 *       let status : Boolean[1] = type <> OclInvalid
 		 *       in
 		 *         'ShadowPart::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -271,7 +271,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> null
+		 *       let status : Boolean[1] = type <> null
 		 *       in
 		 *         'ShadowPart::TypeIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

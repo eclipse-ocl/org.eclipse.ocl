@@ -125,7 +125,7 @@ implements OCLExpression {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> null
+		 *       let status : Boolean[1] = type <> null
 		 *       in
 		 *         'OCLExpression::TypeIsNotNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

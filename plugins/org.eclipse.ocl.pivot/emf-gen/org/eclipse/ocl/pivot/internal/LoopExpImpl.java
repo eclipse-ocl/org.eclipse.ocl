@@ -245,7 +245,7 @@ public abstract class LoopExpImpl
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[1] = ownedSource?.type.oclIsKindOf(CollectionType)
+		 *         status : Boolean[1] = ownedSource?.type.oclIsKindOf(CollectionType)
 		 *       in
 		 *         'LoopExp::SourceIsCollection'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -309,7 +309,8 @@ public abstract class LoopExpImpl
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[?] = self.ownedIterators->forAll(ownedInit->isEmpty())
+		 *         status : Boolean[?] = self.ownedIterators->forAll(
+		 *           ownedInit->isEmpty())
 		 *       in
 		 *         'LoopExp::NoInitializers'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

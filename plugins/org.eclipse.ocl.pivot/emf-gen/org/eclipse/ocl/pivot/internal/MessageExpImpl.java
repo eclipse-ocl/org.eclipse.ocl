@@ -309,7 +309,7 @@ public class MessageExpImpl
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[1] = ownedCalledOperation->size() +
+		 *         status : Boolean[1] = ownedCalledOperation->size() +
 		 *         ownedSentSignal->size() = 1
 		 *       in
 		 *         'MessageExp::OneCallOrOneSend'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -362,7 +362,7 @@ public class MessageExpImpl
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[?] = not ownedTarget.type.oclIsKindOf(CollectionType)
+		 *         status : Boolean[?] = not ownedTarget.type.oclIsKindOf(CollectionType)
 		 *       in
 		 *         'MessageExp::TargetIsNotACollection'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

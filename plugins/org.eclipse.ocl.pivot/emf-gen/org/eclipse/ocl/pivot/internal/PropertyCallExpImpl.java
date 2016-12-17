@@ -499,7 +499,7 @@ implements PropertyCallExp {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = not referredProperty?.isStatic implies
+		 *       let status : Boolean[?] = not referredProperty?.isStatic implies
 		 *         ownedSource?.type.conformsTo(
 		 *           getSpecializedReferredPropertyOwningType())
 		 *       in
@@ -606,7 +606,7 @@ implements PropertyCallExp {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = ownedSource <> null and isSafe implies not ownedSource?.isRequired
+		 *       let status : Boolean[?] = ownedSource <> null and isSafe implies not ownedSource?.isRequired
 		 *       in
 		 *         'PropertyCallExp::SafeSourceCanBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -708,7 +708,7 @@ implements PropertyCallExp {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = ownedSource <> null and not isSafe implies ownedSource?.isRequired
+		 *       let status : Boolean[?] = ownedSource <> null and not isSafe implies ownedSource?.isRequired
 		 *       in
 		 *         'PropertyCallExp::UnsafeSourceCanNotBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -810,7 +810,7 @@ implements PropertyCallExp {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type = getSpecializedReferredPropertyType()
+		 *       let status : Boolean[1] = type = getSpecializedReferredPropertyType()
 		 *       in
 		 *         'PropertyCallExp::CompatibleResultType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

@@ -319,7 +319,7 @@ implements IfExp {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = self.ownedCondition.type = Boolean
+		 *       let status : Boolean[1] = self.ownedCondition.type = Boolean
 		 *       in
 		 *         'IfExp::ConditionTypeIsBoolean'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -367,7 +367,7 @@ implements IfExp {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> OclInvalid
+		 *       let status : Boolean[1] = type <> OclInvalid
 		 *       in
 		 *         'IfExp::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

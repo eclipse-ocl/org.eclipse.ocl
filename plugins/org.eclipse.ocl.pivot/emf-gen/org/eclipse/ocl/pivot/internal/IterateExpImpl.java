@@ -493,7 +493,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type = ownedResult?.type
+		 *       let status : Boolean[1] = type = ownedResult?.type
 		 *       in
 		 *         'IterateExp::TypeIsResultType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -556,7 +556,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = not isSafe and
+		 *       let status : Boolean[?] = not isSafe and
 		 *         ownedIterators->exists(isRequired) implies
 		 *         ownedSource?.type.oclAsType(CollectionType).isNullFree
 		 *       in
@@ -706,7 +706,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[1] = ownedBody.type.conformsTo(ownedResult?.type)
+		 *         status : Boolean[1] = ownedBody.type.conformsTo(ownedResult?.type)
 		 *       in
 		 *         'IterateExp::BodyTypeConformsToResultType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -770,7 +770,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = self.ownedResult?.ownedInit->size() = 1
+		 *       let status : Boolean[1] = self.ownedResult?.ownedInit->size() = 1
 		 *       in
 		 *         'IterateExp::OneInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -834,7 +834,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = isSafe implies
+		 *       let status : Boolean[?] = isSafe implies
 		 *         ownedIterators->forAll(isRequired)
 		 *       in
 		 *         'IterateExp::SafeIteratorIsRequired'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
@@ -937,7 +937,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = isSafe implies
+		 *       let status : Boolean[?] = isSafe implies
 		 *         not ownedSource?.type.oclAsType(CollectionType).isNullFree
 		 *       in
 		 *         'IterateExp::SafeSourceCanBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)

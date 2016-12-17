@@ -559,7 +559,7 @@ public class OperationCallExpImpl
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[?] = let operation : Operation[?] = self.referredOperation
+		 *         status : Boolean[?] = let operation : Operation[?] = self.referredOperation
 		 *         in
 		 *           let parameters : OrderedSet(Parameter)[?] = operation?.ownedParameters
 		 *           in
@@ -786,7 +786,7 @@ public class OperationCallExpImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = ownedSource <> null and isSafe implies not ownedSource?.isRequired
+		 *       let status : Boolean[?] = ownedSource <> null and isSafe implies not ownedSource?.isRequired
 		 *       in
 		 *         'OperationCallExp::SafeSourceCanBeNull'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -888,7 +888,7 @@ public class OperationCallExpImpl
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[1] = ownedArguments->size() =
+		 *         status : Boolean[1] = ownedArguments->size() =
 		 *         referredOperation?.ownedParameters->size()
 		 *       in
 		 *         'OperationCallExp::ArgumentCount'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)

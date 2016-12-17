@@ -144,7 +144,7 @@ public class EnumLiteralExpImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = self.type = referredLiteral?.owningEnumeration
+		 *       let status : Boolean[1] = self.type = referredLiteral?.owningEnumeration
 		 *       in
 		 *         'EnumLiteralExp::TypeIsEnumerationType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

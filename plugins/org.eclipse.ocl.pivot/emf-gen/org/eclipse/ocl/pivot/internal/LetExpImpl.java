@@ -212,7 +212,7 @@ implements LetExp {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = isRequired = ownedIn.isRequired
+		 *       let status : Boolean[1] = isRequired = ownedIn.isRequired
 		 *       in
 		 *         'LetExp::CompatibleNullityForIn'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -259,7 +259,7 @@ implements LetExp {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type = ownedIn.type
+		 *       let status : Boolean[1] = type = ownedIn.type
 		 *       in
 		 *         'LetExp::TypeIsInType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
@@ -306,7 +306,7 @@ implements LetExp {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = type <> OclInvalid
+		 *       let status : Boolean[1] = type <> OclInvalid
 		 *       in
 		 *         'LetExp::TypeIsNotInvalid'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif

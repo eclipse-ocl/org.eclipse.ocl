@@ -439,7 +439,7 @@ public class ConstraintImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[1] = true
+		 *       let status : Boolean[1] = true
 		 *       in
 		 *         'Constraint::UniqueName'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
 		 *     endif
