@@ -147,6 +147,8 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
+import com.google.common.collect.Iterables;
+
 /**
  * A CG2JavaVisitor serializes the contributions of a tree of model elements in a StringBuilder whose result may be
  * obtained by toString() on completion.
@@ -2641,9 +2643,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGTupleExp(@NonNull CGTupleExp cgTupleExp) {
-		List<CGTuplePart> parts = cgTupleExp.getParts();
-		for (CGTuplePart cgPart : parts) {
-			if (!js.appendLocalStatements(cgPart.getNamedValue())) {
+		Iterable<@NonNull CGTuplePart> parts = CGUtil.getParts(cgTupleExp);
+		for (@NonNull CGTuplePart cgPart : parts) {
+			if (!js.appendLocalStatements(CGUtil.getInit(cgPart))) {
 				return false;
 			}
 		}
@@ -2652,14 +2654,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendClassReference(ValueUtil.class);
 		js.append(".createTupleOfEach(");
 		js.appendIdReference(cgTupleExp.getTypeId().getElementId());
-		int iSize = parts.size();
-		for (int i = 0; i < iSize; i++) {
-			CGValuedElement cgPartValue = parts.get(i).getNamedValue();
+		int iSize = Iterables.size(parts);
+		for (@NonNull CGTuplePart cgPart : parts) {
+			CGValuedElement cgInit = CGUtil.getInit(cgPart);
 			js.append(", ");
-			if ((cgPartValue.isNull()) && (iSize == 1)) {
+			if ((cgInit.isNull()) && (iSize == 1)) {
 				js.append("(Object)");						// Disambiguate Object... from Object[]
 			}
-			js.appendValueName(cgPartValue);
+			js.appendValueName(cgInit);
 		}
 		js.append(");\n");
 		return true;

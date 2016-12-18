@@ -30,6 +30,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenOptions;
@@ -1001,7 +1002,12 @@ public class JavaStream
 			append("<<null-appendValueName>>");
 		}
 		else if (cgElement.isInlined()) {
-			cgElement.accept(cg2java);
+			if (cgElement instanceof CGVariableExp) {			// FIXME without this we get a blank name for a VariableExp
+				appendValueName(cgElement.getNamedValue());
+			}
+			else {
+				cgElement.accept(cg2java);
+			}
 		}
 		//		else if (cgElement.isInlined() && (cgElement.isInvalid() || cgElement.isNull() || cgElement.isTrue() || cgElement.isFalse() || !cgElement.isGlobal())) {	// FIXME
 		//			CGValuedElement cgValue = cgElement;

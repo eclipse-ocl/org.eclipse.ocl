@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -137,157 +138,20 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 
 	protected @NonNull String generateValidatorBody(@NonNull CGValuedElement cgBody, @NonNull Constraint asConstraint, org.eclipse.ocl.pivot.@NonNull Class asType) {
 		js.resetStream();
-		String ecoreConstraintName = asConstraint.getName();
-		String constraintName = ecoreConstraintName;
-		if (constraintName.startsWith("validate")) {		// FIXME use genmodel
-			constraintName = constraintName.substring(8);
-		}
 		GenClassifier genClassifier = genModelHelper.getGenClassifier(asType);
 		String genClassifierName = genClassifier != null ? genClassifier.getName() : null;
 		if (genClassifierName == null) {
 			genClassifierName = "";
 		}
-		//		String constraintLiteralName = CodeGenUtil.upperName(genClassifierName) + "__" + CodeGenUtil.upperName(ecoreConstraintName != null ? ecoreConstraintName : "");
-		//		String validatorClass = genModelHelper.getQualifiedValidatorClassName(genPackage);
-
 		js.appendCommentWithOCL(null, asConstraint);
-
-
-		/*		CGVariable cgEvaluator = null;
-		for (CGValuedElement cgElement = cgBody; cgElement instanceof CGLetExp; cgElement = ((CGLetExp)cgElement).getIn()) {
-			CGLetExp cgLetExp = (CGLetExp)cgBody;
-			CGVariable cgVariable = cgLetExp.getInit();
-			if (cgVariable.getASTypeId() == JavaConstants.EVALUATOR_TYPE_ID) {
-				cgEvaluator = cgVariable;
-				break;
-			}
-		}
-		if (cgEvaluator == null)  {
-			js.append("final ");
-			js.appendIsRequired(true);
-			js.append(" ");
-			js.appendClassReference(Evaluator.class);
-			js.append(" ");
-			js.append(JavaConstants.EVALUATOR_NAME);
-			js.append(" = ");
-			js.appendClassReference(PivotUtilInternal.class);
-			js.append(".getEvaluator(this);\n");
-		} */
-		/*		if (cgBody instanceof CGLetExp) {
-			CGLetExp cgLetExp = (CGLetExp)cgBody;
-			CGVariable cgInit = cgLetExp.getInit();
-			CGValuedElement cgIn = cgLetExp.getIn();
-			if ((cgInit != null) && (cgInit.getTypeId().getElementId() == JavaConstants.EVALUATOR_TYPE_ID) && (cgIn != null) && (constraintName != null)) {		// Inject a validationKey bypass below the evaluator
-				cgInit.accept(this);
-				//
-				js.append("int ");
-				js.append(getLocalContext().getSeverityName());
-				js.append(" = ");
-				js.append(JavaConstants.EVALUATOR_NAME);
-				js.append(".getSeverity(");
-				js.appendString(constraintName);
-				js.append(");\n");
-				//
-				js.append("if (");
-				js.append(getLocalContext().getSeverityName());
-				js.append(" <= 0) {\n");
-				//
-				js.pushIndentation(null);
-					js.append("return true;\n");
-				js.popIndentation();
-				//
-				js.append("}\n");
-				//
-				cgBody = cgIn;
-			}
-		} */
-		//
 		js.appendLocalStatements(cgBody);
-		//		CGInvalid cgInvalidValue = cgBody.getInvalidValue();
-		//		if (cgInvalidValue  != null) {
-		//			js.append("throw ");
-		//			js.appendValueName(cgInvalidValue);
-		//		}
-		//		else {
-		js.append("return Boolean.TRUE == ");
+		js.append("return ");
+		if (!cgBody.isNonNull() || (cgBody.getASTypeId() != TypeId.BOOLEAN)) {
+			js.append("Boolean.TRUE == ");
+		}
 		js.appendValueName(cgBody);
-		//		    js.appendEcoreValue("boolean", cgBody);
-		//		}
 		js.append(";");
 		return toString();
-
-		/*		if (js.appendLocalStatements(cgBody)) {		// FieldingAnalyzer override ensures this is caught
-			if (cgBody.isTrue()) {
-				js.append("return true;");
-			}
-			else {
-				js.append("if (");
-				js.appendValueName(cgBody);
-				js.append(" == ");
-				js.appendClassReference(ValueUtil.class);
-				js.append(".TRUE_VALUE) {\n");
-				js.pushIndentation(null);
-					js.append("return true;\n");
-				js.popIndentation();
-				js.append("}\n");
-				//
-//				int diagnosticSeverity = evaluator.getDiagnosticSeverity(severity, CAUGHT_implies);
-//			    int severity = CAUGHT_implies == null ? Diagnostic.ERROR : Diagnostic.WARNING;
-				js.append("if (diagnostics != null) {\n");
-				js.pushIndentation(null);
-					js.append("int ");
-					js.append(getLocalContext().getDiagnosticSeverityName());
-					js.append(" = ");
-					js.append(JavaConstants.EVALUATOR_NAME);
-					js.append(".getDiagnosticSeverity(");
-					js.append(getLocalContext().getSeverityName());
-					js.append(", ");
-					js.appendValueName(cgBody);
-					js.append(");\n");
-/*					js.append(getLocalContext().getSeverityName());
-					if (cgBody.isNull()) {
-						js.appendClassReference(Diagnostic.class);
-						js.append(".ERROR : ");
-					}
-					else if (cgBody.isNonNull()) {
-						js.appendClassReference(Diagnostic.class);
-						js.append(".WARNING;\n");
-					}
-					else {
-						js.appendValueName(cgBody);
-						js.append(" == null ? ");
-						js.appendClassReference(Diagnostic.class);
-						js.append(".ERROR : ");
-						js.appendClassReference(Diagnostic.class);
-						js.append(".WARNING;\n");
-					} * /
-					//
-					js.appendClassReference(String.class);
-					js.append(" " + getLocalContext().getMessageName() + " = ");
-					js.appendClassReference(StringUtil.class);
-					js.append(".bind(");
-					js.appendClassReference(PivotMessages.class);
-					js.append(".ValidationConstraintIsNotSatisfied_ERROR_, new Object[]{\"");
-					js.append(genClassifierName);
-					js.append("\", \"");
-					js.append(constraintName!= null ? constraintName : "UnnamedConstraint");
-					js.append("\", ");
-					js.appendClassReference(EObjectValidator.class);
-					js.append(".getObjectLabel(this, context)});\n");
-					//
-					js.append("diagnostics.add(new ");
-					js.appendClassReference(BasicDiagnostic.class);
-					js.append("(" + getLocalContext().getDiagnosticSeverityName() + ", ");
-					js.appendClassReference(validatorClass);
-					js.append(".DIAGNOSTIC_SOURCE, ");
-					js.appendClassReference(validatorClass);
-					js.append("." + constraintLiteralName + ", " + getLocalContext().getMessageName() + ", new Object [] { this }));\n");
-				js.popIndentation();
-				js.append("}\n");
-				js.append("return false;");
-			}
-		}
-		return toString(); */
 	}
 
 	protected @NonNull String getFragmentURI(@NonNull Element element) {

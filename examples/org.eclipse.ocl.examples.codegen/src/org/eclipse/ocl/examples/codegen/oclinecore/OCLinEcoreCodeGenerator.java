@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
@@ -379,10 +378,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			return oldQuery;		// Unconditionally true (typically obsolete) constraint needs no added comolexity
 		}
 		ExpressionInOCL asSynthesizedQuery = EcoreUtil.copy(oldQuery);
-		OCLExpression asBody = asSynthesizedQuery.getOwnedBody();
 		StatusAnalyzer statusAnalyzer = new StatusAnalyzer(this);
 		Boolean verdict = asSynthesizedQuery.accept(statusAnalyzer);
-
 		if (verdict == Boolean.TRUE) {
 			for (@NonNull PropertyCallExp asPropertyCallExp : statusAnalyzer.statusAccesses) {
 				TupleLiteralExp asTupleValue = (TupleLiteralExp)asPropertyCallExp.getOwnedSource();
@@ -394,8 +391,11 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 				eContainer.eSet(eContainmentFeature, asExpression);		// FIXME isMany
 			}
 			for (@NonNull OCLExpression asExpression : statusAnalyzer.canBeOclAnyExpressions) {
-				asExpression.setType(oclAnyType);
+				if (asExpression.eContainer() != null) {
+					asExpression.setType(oclAnyType);
+				}
 			}
+			asSynthesizedQuery.setBody(null);
 		}
 		Variable asSelfVariable = ClassUtil.nonNullState(asSynthesizedQuery.getOwnedContext());
 		Variable asDiagnosticsVariable = asHelper.createParameterVariable("diagnostics", oclAnyType, false);
@@ -403,16 +403,15 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		Variable asContextVariable = asHelper.createParameterVariable("context", oclAnyType, false);
 		asSynthesizedQuery.getOwnedParameters().add(asContextVariable);
 		//
-		//	Cache the status in a let-variable
+		//	Cache the result in a let-variable
 		//
-		OCLExpression asStatusVariableInit = asBody;
-		Type statusType = /* isRewrite ? oclAnyType : */ booleanType;
-		LetVariable asStatusVariable = asHelper.createLetVariable("status", statusType, asStatusVariableInit.isIsRequired(), asStatusVariableInit);
+		OCLExpression asResultVariableInit = asSynthesizedQuery.getOwnedBody();
+		assert asResultVariableInit != null;
+		LetVariable asResultVariable = asHelper.createLetVariable("result", asResultVariableInit);
 		//
 		//	Cache the severity in a let-variable
 		//
-		StringLiteralExp asConstraintName2 = asHelper.createStringLiteralExp(qualifiedConstraintName);
-		OCLExpression asSeverityVariableInit = asHelper.createOperationCallExp(asConstraintName2, "getSeverity");
+		OCLExpression asSeverityVariableInit = asHelper.createOperationCallExp(asHelper.createStringLiteralExp(qualifiedConstraintName), "getSeverity");
 		LetVariable asSeverityVariable = asHelper.createLetVariable("severity", integerType, asSeverityVariableInit.isIsRequired(), asSeverityVariableInit);
 		//
 		//	Build from the bottom, starting with logging the status.
@@ -421,16 +420,16 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			asHelper.createVariableExp(asSelfVariable), asHelper.createNullLiteralExp(),
 			asHelper.createVariableExp(asDiagnosticsVariable), asHelper.createVariableExp(asContextVariable),
 			asHelper.createNullLiteralExp()/*asMessageExp*/, asHelper.createVariableExp(asSeverityVariable),
-			asHelper.createVariableExp(asStatusVariable), asHelper.createIntegerLiteralExp(0));
+			asHelper.createVariableExp(asResultVariable), asHelper.createIntegerLiteralExp(0));
 		//
 		//	Wrapped in the status let-variable
 		//
-		OCLExpression asStatusExpression = asHelper.createLetExp(asStatusVariable, asLogExpression);
+		OCLExpression asResultExpression = asHelper.createLetExp(asResultVariable, asLogExpression);
 		//
 		//	Wrapped in an interesting severity guard
 		//
 		OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asSeverityVariable), "<=", asHelper.createIntegerLiteralExp(0));
-		OCLExpression asSeverityExpression = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asStatusExpression);
+		OCLExpression asSeverityExpression = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asResultExpression);
 		//
 		//	Wrapped in the severity let-variable
 		//
@@ -447,33 +446,29 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		return asSynthesizedQuery;
 	}
 
-	private @NonNull OCLExpression rewriteTupleLiteralExp(@NonNull TupleLiteralExp asOldTupleLiteralExp) {
-		Iterable<@NonNull TupleLiteralPart> asTupleParts = PivotUtil.getOwnedParts(asOldTupleLiteralExp);
+	private @NonNull OCLExpression rewriteTupleLiteralExp(@NonNull TupleLiteralExp asTupleLiteralExp) {
+		Iterable<@NonNull TupleLiteralPart> asTupleParts = PivotUtil.getOwnedParts(asTupleLiteralExp);
+		LetVariable asStatusVariable = null;
+		TupleLiteralPart asStatusPart = NameUtil.getNameable(asTupleParts, PivotConstants.STATUS_PART_NAME);
+		if (asStatusPart == null) {
+			return asTupleLiteralExp;
+		}
+		OCLExpression asStatusInit = asStatusPart.getOwnedInit();
+		if (asStatusInit == null) {
+			return asTupleLiteralExp;
+		}
 		//
 		//	Cache the status in a let-variable
 		//
-		LetVariable asStatusVariable = null;
-		TupleLiteralPart asStatusPart = NameUtil.getNameable(asTupleParts, PivotConstants.STATUS_PART_NAME);
-		if (asStatusPart != null) {
-			OCLExpression asStatusInit = asStatusPart.getOwnedInit();
-			if (asStatusInit != null) {
-				PivotUtilInternal.resetContainer(asStatusInit);
-				asStatusVariable = asHelper.createLetVariable("status", standardLibrary.getBooleanType(), asStatusInit.isIsRequired(), asStatusInit);
-				asStatusPart.setOwnedInit(asHelper.createVariableExp(asStatusVariable));
-			}
-		}
+		PivotUtilInternal.resetContainer(asStatusInit);
+		asStatusVariable = asHelper.createLetVariable("status", standardLibrary.getBooleanType(), asStatusInit.isIsRequired(), asStatusInit);
+		asStatusPart.setOwnedInit(asHelper.createVariableExp(asStatusVariable));
 		//
-		//	Build from the bottom, starting with the revised tuple.
+		//	Wrap the tuple in a status guard for failure.
 		//
-		OCLExpression asResultExp = asHelper.createTupleLiteralExp(PivotUtil.getType(asOldTupleLiteralExp), asTupleParts);
-		//
-		//	Wrapped in a status guard for failure.
-		//
-		if (asStatusVariable != null) {
-			OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asStatusVariable), "=", asHelper.createBooleanLiteralExp(true));
-			OCLExpression asStatusExp = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asResultExp);
-			asResultExp = asHelper.createLetExp(asStatusVariable, asStatusExp);
-		}
-		return asResultExp;
+		PivotUtilInternal.resetContainer(asTupleLiteralExp);
+		OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asStatusVariable), "=", asHelper.createBooleanLiteralExp(true));
+		OCLExpression asStatusExp = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asTupleLiteralExp);
+		return asHelper.createLetExp(asStatusVariable, asStatusExp);
 	}
 }

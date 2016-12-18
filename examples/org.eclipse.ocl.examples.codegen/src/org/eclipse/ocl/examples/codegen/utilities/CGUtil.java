@@ -26,12 +26,15 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class CGUtil
 {
@@ -172,6 +175,14 @@ public class CGUtil
 		}
 		return null;
 	} */
+
+	public static @NonNull CGValuedElement getInit(@NonNull CGTuplePart cgTuplePart) {
+		return ClassUtil.nonNullState(cgTuplePart.getInit());
+	}
+
+	public static Iterable<@NonNull CGTuplePart> getParts(@NonNull CGTupleExp cgTupleExp) {
+		return ClassUtil.nullFree(cgTupleExp.getParts());
+	}
 
 	public static boolean isInlinedId(@NonNull ElementId elementId) {
 		return (elementId instanceof PrimitiveTypeId)
