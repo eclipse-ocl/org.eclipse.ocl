@@ -309,10 +309,10 @@ public class MessageExpImpl
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : Boolean[1] = ownedCalledOperation->size() +
+		 *         result : Boolean[1] = ownedCalledOperation->size() +
 		 *         ownedSentSignal->size() = 1
 		 *       in
-		 *         'MessageExp::OneCallOrOneSend'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
+		 *         'MessageExp::OneCallOrOneSend'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
@@ -323,7 +323,7 @@ public class MessageExpImpl
 			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @NonNull Object CAUGHT_status;
+			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
 				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable CallOperationAction ownedCalledOperation = this.getOwnedCalledOperation();
 				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation);
@@ -332,13 +332,13 @@ public class MessageExpImpl
 				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet_0 = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_SendSignalAction, ownedSentSignal);
 				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet_0);
 				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue sum = (IntegerValue)NumericPlusOperation.INSTANCE.evaluate(size, size_0);
-				final /*@Thrown*/ boolean status = sum.equals(PivotTables.INT_1);
-				CAUGHT_status = status;
+				final /*@Thrown*/ boolean result = sum.equals(PivotTables.INT_1);
+				CAUGHT_result = result;
 			}
 			catch (Exception e) {
-				CAUGHT_status = ValueUtil.createInvalidValue(e);
+				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_OneCallOrOneSend, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_OneCallOrOneSend, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
@@ -362,9 +362,9 @@ public class MessageExpImpl
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : Boolean[?] = not ownedTarget.type.oclIsKindOf(CollectionType)
+		 *         result : Boolean[?] = not ownedTarget.type.oclIsKindOf(CollectionType)
 		 *       in
-		 *         'MessageExp::TargetIsNotACollection'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
+		 *         'MessageExp::TargetIsNotACollection'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
@@ -376,7 +376,7 @@ public class MessageExpImpl
 			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @Nullable Object CAUGHT_status;
+			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
 				/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 				try {
@@ -390,13 +390,13 @@ public class MessageExpImpl
 				catch (Exception e) {
 					CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf);
-				CAUGHT_status = status;
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_oclIsKindOf);
+				CAUGHT_result = result;
 			}
 			catch (Exception e) {
-				CAUGHT_status = ValueUtil.createInvalidValue(e);
+				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_MessageExp_c_c_TargetIsNotACollection, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;

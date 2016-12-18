@@ -225,7 +225,7 @@ implements Variable {
 		/**
 		 * inv CompatibleInitialiserType: true
 		 */
-		return Boolean.TRUE == ValueUtil.TRUE_VALUE;
+		return ValueUtil.TRUE_VALUE;
 	}
 
 	/**

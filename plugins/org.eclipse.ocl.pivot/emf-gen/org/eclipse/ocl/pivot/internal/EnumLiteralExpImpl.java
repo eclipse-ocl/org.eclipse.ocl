@@ -144,9 +144,9 @@ public class EnumLiteralExpImpl
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : Boolean[1] = self.type = referredLiteral?.owningEnumeration
+		 *       let result : Boolean[1] = self.type = referredLiteral?.owningEnumeration
 		 *       in
-		 *         'EnumLiteralExp::TypeIsEnumerationType'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
+		 *         'EnumLiteralExp::TypeIsEnumerationType'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
@@ -157,7 +157,7 @@ public class EnumLiteralExpImpl
 			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @NonNull Object CAUGHT_status;
+			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
 				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
 				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
@@ -179,13 +179,13 @@ public class EnumLiteralExpImpl
 					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Enumeration owningEnumeration = referredLiteral.getOwningEnumeration();
 					safe_owningEnumeration_source = owningEnumeration;
 				}
-				final /*@Thrown*/ boolean status = (type != null) && (safe_owningEnumeration_source != null) ? (type.getTypeId() == safe_owningEnumeration_source.getTypeId()) : false;
-				CAUGHT_status = status;
+				final /*@Thrown*/ boolean result = (type != null) && (safe_owningEnumeration_source != null) ? (type.getTypeId() == safe_owningEnumeration_source.getTypeId()) : false;
+				CAUGHT_result = result;
 			}
 			catch (Exception e) {
-				CAUGHT_status = ValueUtil.createInvalidValue(e);
+				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_EnumLiteralExp_c_c_TypeIsEnumerationType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_EnumLiteralExp_c_c_TypeIsEnumerationType, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
