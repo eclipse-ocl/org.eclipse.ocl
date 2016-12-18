@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StringLiteralExp;
+import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
@@ -122,6 +123,7 @@ public class NameManager
 	public static final String SET_NAME_HINT_PREFIX = "SET";
 	public static final String STRING_NAME_HINT_PREFIX = "STR_";
 	public static final int STRING_NAME_HINT_LIMIT = 64;
+	public static final String TUPLE_NAME_HINT_PREFIX = "TUP_";
 	public static final String TYPE_NAME_HINT_PREFIX = "TYP_";
 	public static final String VARIABLE_DECLARATION_NAME_HINT_PREFIX = "";
 
@@ -759,6 +761,9 @@ public class NameManager
 		else if (anObject instanceof PropertyCallExp) {
 			Property referredProperty = ((PropertyCallExp)anObject).getReferredProperty();
 			return referredProperty != null ? getPropertyNameHint(referredProperty) : null;
+		}
+		else if (anObject instanceof TupleLiteralExp) {
+			return TUPLE_NAME_HINT_PREFIX;
 		}
 		else if (anObject instanceof CGCallExp) {
 			if (anObject instanceof CGOppositePropertyCallExp) {
