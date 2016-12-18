@@ -274,7 +274,7 @@ public class JavaStream
 
 	public void appendBooleanValueName(@NonNull CGValuedElement cgValue, boolean isTrue) {
 		@NonNull TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
-		if (cgValue.isCaught() || cgValue.getNamedValue().isCaught() || (typeDescriptor.getJavaClass() == Object.class)) {
+		if (!cgValue.isNonNull() || cgValue.isCaught() || cgValue.getNamedValue().isCaught() || (typeDescriptor.getJavaClass() == Object.class)) {
 			appendValueName(cgValue);
 			append(" == ");
 			append(isTrue ? "Boolean.TRUE" : "Boolean.FALSE");
