@@ -19,15 +19,18 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 import org.eclipse.ocl.xtext.base.as2cs.BaseReferenceVisitor;
 import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.PrimitiveTypeRefCS;
+import org.eclipse.ocl.xtext.basecs.TuplePartCS;
 import org.eclipse.ocl.xtext.basecs.TupleTypeCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS;
@@ -38,7 +41,7 @@ import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 {
 	public static final Logger logger = Logger.getLogger(EssentialOCLReferenceVisitor.class);
-	
+
 	protected final @Nullable Namespace scope;
 
 	public EssentialOCLReferenceVisitor(@NonNull AS2CSConversion context, @Nullable Namespace scope) {
@@ -49,7 +52,7 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 	@Override
 	public ElementCS visitAnyType(@NonNull AnyType object) {
 		PrimitiveTypeRefCS csRef = BaseCSFactory.eINSTANCE.createPrimitiveTypeRefCS();
-		csRef.setPivot(object);	
+		csRef.setPivot(object);
 		csRef.setName(object.getName());
 		return csRef;
 	}
@@ -62,7 +65,7 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 	@Override
 	public ElementCS visitCollectionType(@NonNull CollectionType object) {
 		CollectionTypeCS csRef = EssentialOCLCSFactory.eINSTANCE.createCollectionTypeCS();
-		csRef.setPivot(object);	
+		csRef.setPivot(object);
 		csRef.setName(object.getName());
 		Type elementType = object.getElementType();
 		if (elementType != null) {
@@ -80,7 +83,7 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 	@Override
 	public ElementCS visitInvalidType(@NonNull InvalidType object) {
 		PrimitiveTypeRefCS csRef = BaseCSFactory.eINSTANCE.createPrimitiveTypeRefCS();
-		csRef.setPivot(object);	
+		csRef.setPivot(object);
 		csRef.setName(object.getName());
 		return csRef;
 	}
@@ -88,7 +91,7 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 	@Override
 	public ElementCS visitMapType(@NonNull MapType object) {
 		MapTypeCS csRef = EssentialOCLCSFactory.eINSTANCE.createMapTypeCS();
-		csRef.setPivot(object);	
+		csRef.setPivot(object);
 		csRef.setName(object.getName());
 		Type keyType = object.getKeyType();
 		Type valueType = object.getValueType();
@@ -114,7 +117,7 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 	@Override
 	public ElementCS visitPrimitiveType(@NonNull PrimitiveType object) {
 		PrimitiveTypeRefCS csRef = BaseCSFactory.eINSTANCE.createPrimitiveTypeRefCS();
-		csRef.setPivot(object);	
+		csRef.setPivot(object);
 		csRef.setName(object.getName());
 		return csRef;
 	}
@@ -122,8 +125,15 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 	@Override
 	public ElementCS visitTupleType(@NonNull TupleType object) {
 		TupleTypeCS csRef = BaseCSFactory.eINSTANCE.createTupleTypeCS();
-		csRef.setPivot(object);	
-//		csRef.setType(object.getElementType());		// FIXME parts
+		csRef.setPivot(object);
+		csRef.setName(object.getName());
+		for (@NonNull Property asTuplePart : PivotUtil.getOwnedProperties(object)) {
+			TuplePartCS csPart = BaseCSFactory.eINSTANCE.createTuplePartCS();
+			csPart.setPivot(asTuplePart);
+			csPart.setName(asTuplePart.getName());
+			csPart.setOwnedType((TypedRefCS) asTuplePart.getType().accept(this));
+			csRef.getOwnedParts().add(csPart);
+		}
 		return csRef;
 	}
 
@@ -131,7 +141,7 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 	public ElementCS visitType(@NonNull Type object) {
 		TypeNameExpCS csRef = EssentialOCLCSFactory.eINSTANCE.createTypeNameExpCS();
 		csRef.setPivot(object);
-//		csRef.setElement(object);
+		//		csRef.setElement(object);
 		PathNameCS csPathName = csRef.getOwnedPathName();
 		if (csPathName == null) {
 			csPathName = BaseCSFactory.eINSTANCE.createPathNameCS();
@@ -151,7 +161,7 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 	@Override
 	public ElementCS visitVoidType(@NonNull VoidType object) {
 		PrimitiveTypeRefCS csRef = BaseCSFactory.eINSTANCE.createPrimitiveTypeRefCS();
-		csRef.setPivot(object);	
+		csRef.setPivot(object);
 		csRef.setName(object.getName());
 		return csRef;
 	}
