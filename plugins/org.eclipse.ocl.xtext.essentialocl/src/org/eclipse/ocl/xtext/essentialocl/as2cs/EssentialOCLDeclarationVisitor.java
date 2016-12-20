@@ -453,11 +453,12 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			csIfExp.setOwnedCondition(createExpCS(asIfExp.getOwnedCondition()));
 			csIfExp.setOwnedThenExpression(createExpCS(asIfExp.getOwnedThen()));
 			OCLExpression asElse = asIfExp.getOwnedElse();
-			ExpCS csElse = createExpCS(asElse);
 			while ((asElse instanceof IfExp) && (((IfExp)asElse).isIsElseIf())) {
+				ExpCS csElse = createExpCS(asElse);
+				csIfExp.getOwnedIfThenExpressions().add((IfThenExpCS) csElse);
 				asElse = ((IfExp)asElse).getOwnedElse();
-				csElse = createExpCS(asElse);
 			}
+			ExpCS csElse = createExpCS(asElse);
 			csIfExp.setOwnedElseExpression(csElse);
 			return csIfExp;
 		}
