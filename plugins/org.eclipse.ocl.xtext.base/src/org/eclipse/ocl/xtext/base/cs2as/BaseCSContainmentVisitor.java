@@ -301,6 +301,19 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		}
 		pivotElement.setIsSerializable(csElement.isIsSerializable());
 		refreshClassifier(pivotElement, csElement);
+		String instanceClassName = pivotElement.getInstanceClassName();
+		if (instanceClassName != null) {
+			try {
+				Class<?> instanceClass = Class.forName(instanceClassName);
+				if (instanceClass != null) {
+					PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
+					if (behavioralClass != null) {
+						pivotElement.setBehavioralClass(behavioralClass);
+					}
+				}
+			}
+			catch (Throwable e) {}
+		}
 		return null;
 	}
 

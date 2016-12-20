@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS.MessageBinder;
+import org.eclipse.ocl.xtext.base.services.BaseLinkingService;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.as2cs.CompleteOCLSplitter;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -66,6 +67,8 @@ import org.eclipse.xtext.util.EmfFormatter;
  */
 public class RoundTripTests extends XtextTestCase
 {
+	private static final @NonNull String AS2ES_VALIDATION_ERRORS = "AS2ES_VALIDATION_ERRORS";
+
 	public @NonNull Resource createEcoreFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI ecoreURI) throws IOException {
 		Resource ecoreResource = AS2Ecore.createResource(environmentFactory, asResource, ecoreURI, null);
 		assertNoResourceErrors("To Ecore errors", ecoreResource);
@@ -205,8 +208,6 @@ public class RoundTripTests extends XtextTestCase
 		Resource asResource = pivotModel.eResource();
 		asResource.setURI(pivotURI);
 		assertNoResourceErrors("Ecore2AS failed", asResource);
-		asResource.save(null);
-		assertNoValidationErrors("Ecore2AS invalid", asResource);
 		//		int i = 0;
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
@@ -219,6 +220,9 @@ public class RoundTripTests extends XtextTestCase
 				tit.prune();
 			}
 		}
+		asResource.save(null);
+		@NonNull String @Nullable[] validationDiagnostics = saveOptions != null ? (@NonNull String @Nullable[])saveOptions.get(AS2ES_VALIDATION_ERRORS) : null;
+		assertValidationDiagnostics("Ecore2AS invalid", asResource, validationDiagnostics);
 		Resource outputResource = AS2Ecore.createResource(environmentFactory, asResource, inputURI, saveOptions);
 		assertNoResourceErrors("Ecore2AS failed", outputResource);
 		OutputStream outputStream = resourceSet.getURIConverter().createOutputStream(outputURI);
@@ -691,6 +695,15 @@ public class RoundTripTests extends XtextTestCase
 		options.put(DelegateInstaller.OPTION_BOOLEAN_INVARIANTS, true);
 		options.put(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), OCLConstants.OCL_DELEGATE_URI);
 		options.put(DelegateInstaller.OPTION_OMIT_SETTING_DELEGATES, true);
+		options.put(AS2ES_VALIDATION_ERRORS, new @NonNull String[] {
+			// FIXME result conformance invariant is inadequate
+			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::Association::endType() : Set(UML::Type)[+|1]'",
+			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::LiteralUnlimitedNatural::unlimitedValue() : UML::UnlimitedNaturalObject[?]'",
+			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::MultiplicityElement::upper() : UML::UnlimitedNaturalObject[?]'",
+			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::MultiplicityElement::upperBound() : UnlimitedNatural[1]'",
+			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::Operation::returnResult() : Set(UML::Parameter)'",
+			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::StructuredClassifier::part() : Set(UML::Property)'"
+		});
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		doRoundTripFromEcore(ocl.getEnvironmentFactory(), uri, uri, options);
 		ocl.dispose();
@@ -709,6 +722,51 @@ public class RoundTripTests extends XtextTestCase
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		doRoundTripFromOCLinEcore(ocl, "SysML");
 		ocl.dispose();
+	}
+
+	public void testTuplesRoundTrip_509533a() throws IOException, InterruptedException {
+		BaseLinkingService.DEBUG_RETRY.setState(true);
+		String testFile =
+				"package bug509533 : bug509533 = 'http://www.example.org/bug509533'\n" +
+						"{\n" +
+						"	datatype HSV : 'java.lang.String';\n" +
+						"	datatype RGB : 'java.lang.String';\n" +
+						"	class Bug509533\n" +
+						"	{\n" +
+						"		operation hsv2rgb(color : HSV) : RGB[1]\n" +
+						"{\n" +
+						"	body: let hsv : Sequence(String) = color.tokenize(',') in\n" +
+						"	let h : Integer = hsv->at(1).toReal().round() in\n" +
+						"	let s : Real = hsv->at(2).toReal()/100.0 in\n" +
+						"	let v : Real = hsv->at(3).toReal()/100.0 in\n" +
+						"	let c : Real = v * s in\n" +
+						"	let hh1 : Real = h/120 in\n" +
+						"	let hh2 : Real = 2 * (hh1 - hh1.floor()) in\n" +
+						"	let x : Real = c * (1 - (hh2 - 1).abs()) in\n" +
+						"	let m : Real = v -c in\n" +
+						"	let t : Tuple(r:Real,g:Real,b:Real) =\n" +
+						"	if h < 60 then Tuple{r=c,g=x,b=0.0}\n" +
+						"	elseif h < 120 then Tuple{r=x,g=c,b=0.0}\n" +
+						"	elseif h < 180 then Tuple{r=0.0,g=c,b=x}\n" +
+						"	elseif h < 240 then Tuple{r=0.0,g=x,b=c}\n" +
+						"	elseif h < 300 then Tuple{r=x,g=0.0,b=c}\n" +
+						"	else Tuple{r=c,g=0.0,b=x} endif in\n" +
+						"	let r = (255 * (t.r + m)).round() in\n" +
+						"	let g = (255 * (t.g + m)).round() in\n" +
+						"	let b = (255 * (t.b + m)).round() in\n" +
+						"	RGB{value=r.toString() + ',' + g.toString() + ',' + b.toString()};\n" +
+						"}\n" +
+						"\n" +
+						"	}\n" +
+						"}";
+		createOCLinEcoreFile("Bug509533a.oclinecore", testFile);
+		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
+		doRoundTripFromOCLinEcore(ocl, "Bug509533a");
+		ocl.dispose();
+	}
+
+	public void testTuplesRoundTrip_509533b() throws IOException, InterruptedException, ParserException {
+		doRoundTripFromEcore("Bug509533b");
 	}
 
 	public void testTypes_ecore() throws IOException, InterruptedException, ParserException {

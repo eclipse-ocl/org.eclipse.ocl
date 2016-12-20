@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bug509533" nsURI="http://www.example.org/bug509533" nsPrefix="bug509533">
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EDataType" name="HSV" instanceClassName="java.lang.String"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="RGB" instanceClassName="java.lang.String"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Bug509533">
+    <eOperations name="hsv2rgb" lowerBound="1" eType="#//RGB">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="let hsv : Sequence(String) = color.tokenize(',') in&#xA;&#x9;let h : Integer = hsv->at(1).toReal().round() in&#xA;&#x9;let s : Real = hsv->at(2).toReal()/100.0 in&#xA;&#x9;let v : Real = hsv->at(3).toReal()/100.0 in&#xA;&#x9;let c : Real = v * s in&#xA;&#x9;let hh1 : Real = h/120 in&#xA;&#x9;let hh2 : Real = 2 * (hh1 - hh1.floor()) in&#xA;&#x9;let x : Real = c * (1 - (hh2 - 1).abs()) in&#xA;&#x9;let m : Real = v -c in&#xA;&#x9;let t : Tuple(r:Real,g:Real,b:Real) =&#xA;&#x9;if h &lt; 60 then Tuple{r=c,g=x,b=0.0}&#xA;&#x9;elseif h &lt; 120 then Tuple{r=x,g=c,b=0.0}&#xA;&#x9;elseif h &lt; 180 then Tuple{r=0.0,g=c,b=x}&#xA;&#x9;elseif h &lt; 240 then Tuple{r=0.0,g=x,b=c}&#xA;&#x9;elseif h &lt; 300 then Tuple{r=x,g=0.0,b=c}&#xA;&#x9;else Tuple{r=c,g=0.0,b=x} endif in&#xA;&#x9;let r = (255 * (t.r + m)).round() in&#xA;&#x9;let g = (255 * (t.g + m)).round() in&#xA;&#x9;let b = (255 * (t.b + m)).round() in&#xA;&#x9;RGB{value=r.toString() + ',' + g.toString() + ',' + b.toString()}"/>
+      </eAnnotations>
+      <eParameters name="color" eType="#//HSV"/>
+    </eOperations>
+  </eClassifiers>
+</ecore:EPackage>
