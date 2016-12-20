@@ -199,6 +199,14 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		boolean isAggregate = PivotUtil.isAggregate(asType) ^ isConverted;
 		String operationName = PivotUtil.getNavigationOperator(asCallExp.isIsSafe(), isAggregate);
 		ExpCS csSource = context.visitDeclaration(ExpCS.class, asSource);
+		if (asSource instanceof OperationCallExp) {
+			Precedence precedence = ((OperationCallExp)asSource).getReferredOperation().getPrecedence();
+			if (precedence != null) {
+				NestedExpCS csNestedExp = EssentialOCLCSFactory.eINSTANCE.createNestedExpCS();
+				csNestedExp.setOwnedExpression(csSource);
+				csSource = csNestedExp;
+			}
+		}
 		return createInfixExpCS(csSource, operationName, csArgument);
 	}
 
@@ -614,7 +622,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			NameExpCS csNameExp = createNameExpCS(asOperationCallExp.getReferredOperation());
 			csNameExp.setPivot(asOperationCallExp);
 			RoundBracketedClauseCS csRoundBracketedClause = EssentialOCLCSFactory.eINSTANCE.createRoundBracketedClauseCS();
-			csNameExp.setOwnedRoundBracketedClause(csRoundBracketedClause);;
+			csNameExp.setOwnedRoundBracketedClause(csRoundBracketedClause);
 			String prefix = null;
 			for (OCLExpression asArgument : asArguments) {
 				csRoundBracketedClause.getOwnedArguments().add(createNavigatingArgCS(prefix, asArgument));
