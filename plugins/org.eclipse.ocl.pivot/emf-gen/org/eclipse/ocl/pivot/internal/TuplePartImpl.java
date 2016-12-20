@@ -11,15 +11,18 @@
 package org.eclipse.ocl.pivot.internal;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
-
+/**
+ * @deprecated use PropertyImpl
+ * -- if we want a TuplePart it must be modelled to be loadable from XMI
+ */
+@Deprecated
 public class TuplePartImpl
-		extends PropertyImpl {
+extends PropertyImpl {
 
 	protected TuplePartImpl() {
 		super();
@@ -36,9 +39,7 @@ public class TuplePartImpl
 	public @NonNull TuplePartId getTuplePartId() {
 		TuplePartId partId2 = partId;
 		if (partId2 == null) {
-			String name2 = NameUtil.getSafeName(this);
-			int index = ((TupleType)eContainer()).getOwnedProperties().indexOf(this);
-			partId = partId2 = IdManager.getTuplePartId(index, name2, getTypeId());
+			partId = partId2 = IdManager.getTuplePartId(this);
 		}
 		return partId2;
 	}

@@ -31,7 +31,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameters;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedCollectionTypeIdImpl;
@@ -52,11 +54,12 @@ import org.eclipse.ocl.pivot.internal.ids.WeakHashMapOfWeakReference;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * IdManager supervises the thread-safe allocation of unique hierarchical identifier to each metamodel element.
- * 
+ *
  * @see ElementId
  */
 public final class IdManager
@@ -70,94 +73,94 @@ public final class IdManager
 	public static final @NonNull RootPackageId METAMODEL = new RootPackageIdImpl(PRIVATE_INSTANCE, PivotConstants.METAMODEL_NAME);
 
 	/**
-	 * Map from the BindingsId hashCode to the elements with the same hash. 
+	 * Map from the BindingsId hashCode to the elements with the same hash.
 	 */
 	private static @Nullable WeakHashMapOfListOfWeakReference2<Integer, @NonNull ElementId @NonNull [], BindingsIdImpl> bindingsIds;
 
 	/**
-	 * Map from a Collection type name to the corresponding CollectionTypeId. 
+	 * Map from a Collection type name to the corresponding CollectionTypeId.
 	 */
 	private static @NonNull WeakHashMapOfWeakReference<String, CollectionTypeId> collectionNames =
-		new WeakHashMapOfWeakReference<String, CollectionTypeId>()
-		{
-			@Override
-			protected @NonNull CollectionTypeId newId(@NonNull String name) {
-				return new GeneralizedCollectionTypeIdImpl(PRIVATE_INSTANCE, name);
-			}
-		};
+			new WeakHashMapOfWeakReference<String, CollectionTypeId>()
+	{
+		@Override
+		protected @NonNull CollectionTypeId newId(@NonNull String name) {
+			return new GeneralizedCollectionTypeIdImpl(PRIVATE_INSTANCE, name);
+		}
+	};
 
 	/**
-	 * Map from a Map type name to the corresponding MapTypeId. 
+	 * Map from a Map type name to the corresponding MapTypeId.
 	 */
 	private static @NonNull WeakHashMapOfWeakReference<String, MapTypeId> mapNames =
-		new WeakHashMapOfWeakReference<String, MapTypeId>()
-		{
-			@Override
-			protected @NonNull MapTypeId newId(@NonNull String name) {
-				return new GeneralizedMapTypeIdImpl(PRIVATE_INSTANCE, name);
-			}
-		};
+			new WeakHashMapOfWeakReference<String, MapTypeId>()
+	{
+		@Override
+		protected @NonNull MapTypeId newId(@NonNull String name) {
+			return new GeneralizedMapTypeIdImpl(PRIVATE_INSTANCE, name);
+		}
+	};
 
 	/**
-	 * Map from an nsURI to the corresponding NsURITypeId. 
+	 * Map from an nsURI to the corresponding NsURITypeId.
 	 */
 	private static @NonNull WeakHashMapOfWeakReference<String, NsURIPackageId> nsURIs =
-		new WeakHashMapOfWeakReference<String, NsURIPackageId>()
-		{
-			@Override
-			protected @NonNull NsURIPackageId newId(@NonNull String nsURI) {
-				return new NsURIPackageIdImpl(PRIVATE_INSTANCE, nsURI, null, null);
-			}
-		};
-		
+			new WeakHashMapOfWeakReference<String, NsURIPackageId>()
+	{
+		@Override
+		protected @NonNull NsURIPackageId newId(@NonNull String nsURI) {
+			return new NsURIPackageIdImpl(PRIVATE_INSTANCE, nsURI, null, null);
+		}
+	};
+
 	/**
-	 * Map from the Lambda hashCode to the lambda typeIds with the same hash. 
+	 * Map from the Lambda hashCode to the lambda typeIds with the same hash.
 	 */
 	private static @Nullable WeakHashMapOfListOfWeakReference3<Integer, String, ParametersId, GeneralizedLambdaTypeIdImpl> lambdaTypes = null;
-	
+
 	/**
-	 * Map from the TuplePart hashCode to the tuplePartIds with the same hash. 
+	 * Map from the TuplePart hashCode to the tuplePartIds with the same hash.
 	 */
 	private static @Nullable WeakHashMapOfListOfWeakReference4<Integer, Integer, String, TypeId, TuplePartIdImpl> tupleParts = null;
 
 	/**
-	 * Map from a name to the corresponding URI-less unnested RootPackageTypeId. 
+	 * Map from a name to the corresponding URI-less unnested RootPackageTypeId.
 	 */
 	private static @NonNull WeakHashMapOfWeakReference<String, RootPackageId> roots =
-		new WeakHashMapOfWeakReference<String, RootPackageId>()
-		{
-			@Override
-			protected @NonNull RootPackageId newId(@NonNull String name) {
-				return new RootPackageIdImpl(PRIVATE_INSTANCE, name);
-			}
-		};
-		
+			new WeakHashMapOfWeakReference<String, RootPackageId>()
+	{
+		@Override
+		protected @NonNull RootPackageId newId(@NonNull String name) {
+			return new RootPackageIdImpl(PRIVATE_INSTANCE, name);
+		}
+	};
+
 	/**
 	 * List of template parameters; 0 index at least index ... up to most nested
 	 */
 	private static @NonNull List<TemplateParameterId> templateParameters = new ArrayList<TemplateParameterId>(10);
 
 	/**
-	 * Map from the Tuple hashCode to the tuple typeIds with the same hash. 
+	 * Map from the Tuple hashCode to the tuple typeIds with the same hash.
 	 */
 	private static @Nullable WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull TuplePartId @NonNull [], GeneralizedTupleTypeIdImpl> tupleTypes = null;
 
 	/**
-	 * Map from the ParametersId hashCode to the parametersId with the same hash. 
+	 * Map from the ParametersId hashCode to the parametersId with the same hash.
 	 */
 	private static @Nullable WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull TypeId @NonNull [], ParametersIdImpl> parametersIds;
 
 	/**
-	 * Map from a Primitive type name to the corresponding PrimitiveTypeId. 
+	 * Map from a Primitive type name to the corresponding PrimitiveTypeId.
 	 */
 	private static @NonNull WeakHashMapOfWeakReference<String, PrimitiveTypeId> primitiveTypes =
-		new WeakHashMapOfWeakReference<String, PrimitiveTypeId>()
-		{
-			@Override
-			protected @NonNull PrimitiveTypeId newId(@NonNull String name) {
-				return new PrimitiveTypeIdImpl(PRIVATE_INSTANCE, name);
-			}
-		};
+			new WeakHashMapOfWeakReference<String, PrimitiveTypeId>()
+	{
+		@Override
+		protected @NonNull PrimitiveTypeId newId(@NonNull String name) {
+			return new PrimitiveTypeIdImpl(PRIVATE_INSTANCE, name);
+		}
+	};
 
 	private static @Nullable Map<String, String> metamodelURI2name = null;
 
@@ -172,7 +175,7 @@ public final class IdManager
 		}
 		metamodelURI2name2.put(metamodelNsURI, metamodelName);
 	}
-		
+
 	public static @NonNull BindingsId getBindingsId(@NonNull Type... types) {
 		@NonNull ElementId @NonNull [] elementIds = new @NonNull ElementId @NonNull [types.length];
 		for (int i = 0; i < types.length; i++) {
@@ -184,29 +187,29 @@ public final class IdManager
 	/**
 	 * Return the bindingsId for a given type list.
 	 */
-    public static @NonNull BindingsId getBindingsId(@NonNull ElementId @NonNull ... elementIds) {
+	public static @NonNull BindingsId getBindingsId(@NonNull ElementId @NonNull ... elementIds) {
 		WeakHashMapOfListOfWeakReference2<Integer, @NonNull ElementId @NonNull [], BindingsIdImpl> bindingsIds2 = bindingsIds;
 		if (bindingsIds2 == null) {
-    		synchronized (IdManager.class) {
-    			bindingsIds2 = bindingsIds;
-    	    	if (bindingsIds2 == null) {
-    	    		bindingsIds = bindingsIds2 = new WeakHashMapOfListOfWeakReference2<Integer, @NonNull ElementId @NonNull [], BindingsIdImpl>()
-    				{
-    	    			@Override
-    	    			protected @NonNull BindingsIdImpl newId(@NonNull Integer hashCode, @NonNull ElementId @NonNull [] elementIds) {
-    	    			   	return new BindingsIdImpl(PRIVATE_INSTANCE, hashCode, elementIds);
-    	    			}		
+			synchronized (IdManager.class) {
+				bindingsIds2 = bindingsIds;
+				if (bindingsIds2 == null) {
+					bindingsIds = bindingsIds2 = new WeakHashMapOfListOfWeakReference2<Integer, @NonNull ElementId @NonNull [], BindingsIdImpl>()
+					{
+						@Override
+						protected @NonNull BindingsIdImpl newId(@NonNull Integer hashCode, @NonNull ElementId @NonNull [] elementIds) {
+							return new BindingsIdImpl(PRIVATE_INSTANCE, hashCode, elementIds);
+						}
 					};
-	    	   }
-    		}
-    	}
+				}
+			}
+		}
 		@NonNull Integer hashCode = IdHash.createParametersHash(BindingsId.class, elementIds);
 		return bindingsIds2.getId(hashCode, elementIds);
 	}
 
-    /**
-     * Return the classId for aType.
-     */
+	/**
+	 * Return the classId for aType.
+	 */
 	public static @NonNull ClassId getClassId(org.eclipse.ocl.pivot.@NonNull Class aType) {
 		if (aType.eIsProxy()) {
 			return getUnspecifiedTypeId(aType);		// FIXME This occurs for underspecified/wildcard types
@@ -224,9 +227,9 @@ public final class IdManager
 		}
 	}
 
-    /**
-     * Return the classId for eClass.
-     */
+	/**
+	 * Return the classId for eClass.
+	 */
 	public static @NonNull ClassId getClassId(@NonNull EClass eClass) {
 		EPackage ePackage = ClassUtil.nonNullEMF(eClass.getEPackage());
 		PackageId packageId = IdManager.getPackageId(ePackage);
@@ -242,9 +245,9 @@ public final class IdManager
 		return collectionNames.getId(collectionTypeName);
 	}
 
-    /**
-     * Return the dataTypeId for aType.
-      */
+	/**
+	 * Return the dataTypeId for aType.
+	 */
 	public static @NonNull DataTypeId getDataTypeId(org.eclipse.ocl.pivot.@NonNull Class aType) {
 		String name = aType.getName();
 		assert name != null;
@@ -259,9 +262,9 @@ public final class IdManager
 		}
 	}
 
-    /**
-     * Return the typeId for aType.
-      */
+	/**
+	 * Return the typeId for aType.
+	 */
 	public static @NonNull EnumerationId getEnumerationId(@NonNull Enumeration anEnumeration) {
 		String name = anEnumeration.getName();
 		assert name != null;
@@ -270,9 +273,9 @@ public final class IdManager
 		return parentPackage.getPackageId().getEnumerationId(name);
 	}
 
-    /**
-     * Return the typeId for an EEnum.
-      */
+	/**
+	 * Return the typeId for an EEnum.
+	 */
 	public static @NonNull EnumerationId getEnumerationId(@NonNull EEnum eEnum) {
 		String name = eEnum.getName();
 		assert name != null;
@@ -289,9 +292,9 @@ public final class IdManager
 		return enumerationLiteralId;
 	}
 
-    /**
-     * Return the typeId for aLambdaType.
-      */
+	/**
+	 * Return the typeId for aLambdaType.
+	 */
 	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull LambdaType lambdaType) {
 		String name = NameUtil.getSafeName(lambdaType);
 		return getLambdaTypeId(name, lambdaType.getParametersId());
@@ -301,7 +304,7 @@ public final class IdManager
 	 * Return the named lambda typeId with the defined type parameters.
 	 */
 	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull String name, @NonNull TypeId @NonNull ... typeIds) {
-    	return getLambdaTypeId(name, getParametersId(typeIds));
+		return getLambdaTypeId(name, getParametersId(typeIds));
 	}
 
 	/**
@@ -310,22 +313,22 @@ public final class IdManager
 	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull String name, @NonNull ParametersId parametersId) {
 		WeakHashMapOfListOfWeakReference3<Integer, String, ParametersId, GeneralizedLambdaTypeIdImpl> lambdaTypes2 = lambdaTypes;
 		if (lambdaTypes2 == null) {
-    		synchronized (IdManager.class) {
-    			lambdaTypes2 = lambdaTypes;
-    	    	if (lambdaTypes2 == null) {
-    	    		lambdaTypes = lambdaTypes2 = new WeakHashMapOfListOfWeakReference3<Integer, String, ParametersId, GeneralizedLambdaTypeIdImpl>()
-    				{
-    	    			@Override
-    	    			protected @NonNull GeneralizedLambdaTypeIdImpl newId(@NonNull Integer hashCode, @NonNull String name, @NonNull ParametersId parametersId) {
-    	    				return new GeneralizedLambdaTypeIdImpl(hashCode, name, parametersId);
-    	    			}		
+			synchronized (IdManager.class) {
+				lambdaTypes2 = lambdaTypes;
+				if (lambdaTypes2 == null) {
+					lambdaTypes = lambdaTypes2 = new WeakHashMapOfListOfWeakReference3<Integer, String, ParametersId, GeneralizedLambdaTypeIdImpl>()
+					{
+						@Override
+						protected @NonNull GeneralizedLambdaTypeIdImpl newId(@NonNull Integer hashCode, @NonNull String name, @NonNull ParametersId parametersId) {
+							return new GeneralizedLambdaTypeIdImpl(hashCode, name, parametersId);
+						}
 					};
-	    	   }
-    		}
-    	}
+				}
+			}
+		}
 		int childHash = IdHash.createGlobalHash(LambdaTypeId.class, name);
 		Integer hashCode = childHash + parametersId.hashCode();
-    	return lambdaTypes2.getId(hashCode, name, parametersId);
+		return lambdaTypes2.getId(hashCode, name, parametersId);
 	}
 
 	/**
@@ -338,7 +341,7 @@ public final class IdManager
 	/**
 	 * Return the URIed package typeId.
 	 */
-    public static @NonNull NsURIPackageId getNsURIPackageId(@NonNull String nsURI, @Nullable String nsPrefix, @Nullable EPackage ePackage) {
+	public static @NonNull NsURIPackageId getNsURIPackageId(@NonNull String nsURI, @Nullable String nsPrefix, @Nullable EPackage ePackage) {
 		WeakReference<NsURIPackageId> ref = nsURIs.get(nsURI);
 		if (ref != null) {
 			NsURIPackageId oldTypeId = ref.get();
@@ -361,11 +364,11 @@ public final class IdManager
 			nsURIs.put(nsURI, new WeakReference<NsURIPackageId>(newTypeId));
 			return newTypeId;
 		}
-    }
+	}
 
-    /**
-     * Return the OperationId for anOperation.
-      */
+	/**
+	 * Return the OperationId for anOperation.
+	 */
 	public static @NonNull OperationId getOperationId(@NonNull Operation anOperation) {
 		String name = NameUtil.getSafeName(anOperation);
 		org.eclipse.ocl.pivot.Class parentType = anOperation.getOwningClass();
@@ -379,29 +382,29 @@ public final class IdManager
 	/**
 	 * Return the named tuple typeId with the defined parts (which are alphabetically ordered by part name).
 	 */
-    public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull [] parts) {
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull [] parts) {
 		WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull TuplePartId @NonNull [], GeneralizedTupleTypeIdImpl> tupleTypes2 = tupleTypes;
 		if (tupleTypes2 == null) {
-    		synchronized (IdManager.class) {
-    			tupleTypes2 = tupleTypes;
-    	    	if (tupleTypes2 == null) {
-    	    		tupleTypes = tupleTypes2 = new WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull TuplePartId @NonNull [], GeneralizedTupleTypeIdImpl>()
-    				{
-    	    			@Override
-    	    			protected @NonNull GeneralizedTupleTypeIdImpl newId(@NonNull Integer hashCode, @NonNull String name, @NonNull TuplePartId @NonNull [] parts) {
-    	    				return new GeneralizedTupleTypeIdImpl(PRIVATE_INSTANCE, hashCode, name, parts);
-    	    			}		
+			synchronized (IdManager.class) {
+				tupleTypes2 = tupleTypes;
+				if (tupleTypes2 == null) {
+					tupleTypes = tupleTypes2 = new WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull TuplePartId @NonNull [], GeneralizedTupleTypeIdImpl>()
+					{
+						@Override
+						protected @NonNull GeneralizedTupleTypeIdImpl newId(@NonNull Integer hashCode, @NonNull String name, @NonNull TuplePartId @NonNull [] parts) {
+							return new GeneralizedTupleTypeIdImpl(PRIVATE_INSTANCE, hashCode, name, parts);
+						}
 					};
-	    	   }
-    		}
-    	}
+				}
+			}
+		}
 		int hash = IdHash.createTupleHash(name, parts);
 		return tupleTypes2.getId(hash, name, parts);
 	}
 
-    /**
-     * Return the typeId for aPackage.
-     */
+	/**
+	 * Return the typeId for aPackage.
+	 */
 	public static @NonNull PackageId getPackageId(org.eclipse.ocl.pivot.@NonNull Package aPackage) {
 		String nsURI = aPackage.getURI();
 		if (nsURI != null) {
@@ -418,9 +421,9 @@ public final class IdManager
 		}
 	}
 
-    /**
-     * Return the typeId for ePackage.
-     */
+	/**
+	 * Return the typeId for ePackage.
+	 */
 	public static @NonNull PackageId getPackageId(@NonNull EPackage aPackage) {
 		if (ClassUtil.basicGetMetamodelAnnotation(aPackage) != null) {
 			return METAMODEL;
@@ -433,12 +436,12 @@ public final class IdManager
 					return getRootPackageId(metamodelName);
 				}
 			}
-//			if (nsURI.equals(UMLPackage.eNS_URI)) {		// FIXME use extension point
-//				return getRootPackageId(PivotConstants.UML_METAMODEL_NAME);
-//			}
-//			else if (nsURI.equals(TypesPackage.eNS_URI)) {		// FIXME use extension point
-//				return getRootPackageId(PivotConstants.TYPES_METAMODEL_NAME);
-//			}
+			//			if (nsURI.equals(UMLPackage.eNS_URI)) {		// FIXME use extension point
+			//				return getRootPackageId(PivotConstants.UML_METAMODEL_NAME);
+			//			}
+			//			else if (nsURI.equals(TypesPackage.eNS_URI)) {		// FIXME use extension point
+			//				return getRootPackageId(PivotConstants.TYPES_METAMODEL_NAME);
+			//			}
 			return getNsURIPackageId(nsURI, aPackage.getNsPrefix(), aPackage);
 		}
 		String name = aPackage.getName();
@@ -449,7 +452,7 @@ public final class IdManager
 		}
 		return getNsURIPackageId(name, aPackage.getNsPrefix(), null);
 	}
-	
+
 	public static @NonNull ParametersId getParametersId(@NonNull Type @NonNull [] parameterTypes) {
 		int iSize = parameterTypes.length;
 		@NonNull TypeId @NonNull [] typeIds = new @NonNull TypeId[iSize];
@@ -464,22 +467,22 @@ public final class IdManager
 	/**
 	 * Return the parametersId for a given type list.
 	 */
-    public static @NonNull ParametersId getParametersId(@NonNull TypeId @NonNull ... typeIds) {
+	public static @NonNull ParametersId getParametersId(@NonNull TypeId @NonNull ... typeIds) {
 		WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull TypeId @NonNull [], ParametersIdImpl> parametersIds2 = parametersIds;
 		if (parametersIds2 == null) {
-    		synchronized (IdManager.class) {
-    			parametersIds2 = parametersIds;
-    	    	if (parametersIds2 == null) {
-    	    		parametersIds = parametersIds2 = new WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull TypeId @NonNull [], ParametersIdImpl>()
-    				{
-    	    			@Override
-    	    			protected @NonNull ParametersIdImpl newId(@NonNull Integer hashCode, @NonNull TypeId @NonNull [] typeIds) {
-    	    			   	return new ParametersIdImpl(PRIVATE_INSTANCE, hashCode, typeIds);
-    	    			}		
+			synchronized (IdManager.class) {
+				parametersIds2 = parametersIds;
+				if (parametersIds2 == null) {
+					parametersIds = parametersIds2 = new WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull TypeId @NonNull [], ParametersIdImpl>()
+					{
+						@Override
+						protected @NonNull ParametersIdImpl newId(@NonNull Integer hashCode, @NonNull TypeId @NonNull [] typeIds) {
+							return new ParametersIdImpl(PRIVATE_INSTANCE, hashCode, typeIds);
+						}
 					};
-	    	   }
-    		}
-    	}
+				}
+			}
+		}
 		@NonNull Integer hashCode = IdHash.createParametersHash(ParametersId.class, typeIds);
 		return parametersIds2.getId(hashCode, typeIds);
 	}
@@ -491,9 +494,9 @@ public final class IdManager
 		return primitiveTypes.getId(name);
 	}
 
-    /**
-     * Return the propertyId for an EStructuralFeature.
-     */
+	/**
+	 * Return the propertyId for an EStructuralFeature.
+	 */
 	public static @NonNull PropertyId getPropertyId(@NonNull EStructuralFeature eFeature) {
 		String name = NameUtil.getOriginalName(eFeature);
 		assert name != null;
@@ -506,10 +509,10 @@ public final class IdManager
 	/**
 	 * Return the URI-less unnested package typeId.
 	 */
-    public static @NonNull RootPackageId getRootPackageId(@NonNull String name) {
-    	if (PivotConstants.METAMODEL_NAME.equals(name)) {
-    		return METAMODEL;
-    	}
+	public static @NonNull RootPackageId getRootPackageId(@NonNull String name) {
+		if (PivotConstants.METAMODEL_NAME.equals(name)) {
+			return METAMODEL;
+		}
 		WeakReference<RootPackageId> ref = roots.get(name);
 		if (ref != null) {
 			RootPackageId oldTypeId = ref.get();
@@ -529,7 +532,7 @@ public final class IdManager
 			roots.put(name, new WeakReference<RootPackageId>(newTypeId));
 			return newTypeId;
 		}
-    }
+	}
 
 	public static @NonNull TemplateParameterId getTemplateParameterId(int index) {
 		if (index >= templateParameters.size()) {
@@ -542,27 +545,38 @@ public final class IdManager
 		TemplateParameterId templateParameterId = templateParameters.get(index);
 		assert templateParameterId != null;
 		return templateParameterId;
-    }
+	}
+
+	/**
+	 * Return the named tuplePartId for the givem property of a TupleType.
+	 * @since 1.3
+	 */
+	public static @NonNull TuplePartId getTuplePartId(@NonNull Property asProperty) {
+		TupleType tupleType = (TupleType) PivotUtil.getOwningClass(asProperty);
+		String name = NameUtil.getSafeName(asProperty);
+		int index = tupleType.getOwnedProperties().indexOf(asProperty);
+		return IdManager.getTuplePartId(index, name, asProperty.getTypeId());
+	}
 
 	/**
 	 * Return the named tuplePartId with the defined name and type.
 	 */
-    public static @NonNull TuplePartId getTuplePartId(int index, @NonNull String name, @NonNull TypeId typeId) {
+	public static @NonNull TuplePartId getTuplePartId(int index, @NonNull String name, @NonNull TypeId typeId) {
 		WeakHashMapOfListOfWeakReference4<Integer, Integer, String, TypeId, TuplePartIdImpl> tupleParts2 = tupleParts;
 		if (tupleParts2 == null) {
-    		synchronized (IdManager.class) {
-    			tupleParts2 = tupleParts;
-    	    	if (tupleParts2 == null) {
-    	    		tupleParts = tupleParts2 = new WeakHashMapOfListOfWeakReference4<Integer, Integer, String, TypeId, TuplePartIdImpl>()
-    				{
-    	    			@Override
-    	    			protected @NonNull TuplePartIdImpl newId(@NonNull Integer hashCode, @NonNull Integer index, @NonNull String name, @NonNull TypeId typeId) {
-    	    			   	return new TuplePartIdImpl(PRIVATE_INSTANCE, hashCode, index, name, typeId);
-    	    			}		
+			synchronized (IdManager.class) {
+				tupleParts2 = tupleParts;
+				if (tupleParts2 == null) {
+					tupleParts = tupleParts2 = new WeakHashMapOfListOfWeakReference4<Integer, Integer, String, TypeId, TuplePartIdImpl>()
+					{
+						@Override
+						protected @NonNull TuplePartIdImpl newId(@NonNull Integer hashCode, @NonNull Integer index, @NonNull String name, @NonNull TypeId typeId) {
+							return new TuplePartIdImpl(PRIVATE_INSTANCE, hashCode, index, name, typeId);
+						}
 					};
-	    	   }
-    		}
-    	}
+				}
+			}
+		}
 		Integer hashCode = name.hashCode() + 7 * typeId.hashCode() + 989 * index;
 		return tupleParts2.getId(hashCode, index, name, typeId);
 	}
@@ -590,9 +604,9 @@ public final class IdManager
 		return getOrderedTupleTypeId(name, orderedParts);
 	}
 
-    /**
-     * Return the typeId for an EClassifier.
-     */
+	/**
+	 * Return the typeId for an EClassifier.
+	 */
 	public static @NonNull TypeId getTypeId(@NonNull EClassifier eClassifier) {
 		String name = NameUtil.getOriginalName(eClassifier);
 		assert name != null;
@@ -613,14 +627,14 @@ public final class IdManager
 		}
 	}
 
-    /**
-     * Return the typeId for aType.
-      */
+	/**
+	 * Return the typeId for aType.
+	 */
 	public static @NonNull UnspecifiedIdImpl getUnspecifiedTypeId(@NonNull Type aType) {
 		UnspecifiedIdImpl newId = new UnspecifiedIdImpl(PRIVATE_INSTANCE, aType);
-//		System.out.println("Create " + newId.getClass().getSimpleName() + " " + newId + " => @" + Integer.toHexString(newId.hashCode()));
+		//		System.out.println("Create " + newId.getClass().getSimpleName() + " " + newId + " => @" + Integer.toHexString(newId.hashCode()));
 		return newId;
 	}
-	
+
 	private IdManager() {}
 }

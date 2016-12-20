@@ -99,10 +99,9 @@ import org.eclipse.ocl.pivot.values.Value;
  *
  * @generated
  */
-@SuppressWarnings("cast")
 public class PropertyImpl
-		extends FeatureImpl
-		implements Property {
+extends FeatureImpl
+implements Property {
 
 	/**
 	 * The cached value of the '{@link #getAssociationClass() <em>Association Class</em>}' reference.
@@ -694,7 +693,7 @@ public class PropertyImpl
 				defaultValue = Boolean.valueOf(defaultValueString2);
 			}
 			else if (typeId == TypeId.STRING) {
-				defaultValue = (String)defaultValueString2;
+				defaultValue = defaultValueString2;
 			}
 			else if (typeId == TypeId.REAL) {
 				defaultValue = ValueUtil.realValueOf(defaultValueString2);

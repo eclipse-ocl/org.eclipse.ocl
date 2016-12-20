@@ -73,13 +73,13 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  * of the self type incase one of the substitutions uses OclSelf.
  */
 public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisitor<Object, Map<Integer, Type>> implements TemplateParameterSubstitutions
-{	
+{
 	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Type formalType, @NonNull Type actualType) {
 		TemplateParameterSubstitutionVisitor visitor = createVisitor(actualType, environmentFactory, null, null);
 		visitor.analyzeType(formalType, actualType);
 		return visitor;
 	}
-	
+
 	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue, @NonNull Operation candidateOperation) {
 		TemplateParameterSubstitutionVisitor visitor = createVisitor(candidateOperation, environmentFactory, sourceType, sourceTypeValue);
 		visitor.analyzeType(candidateOperation.getOwningClass(), sourceType);
@@ -95,7 +95,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 				}
 			}
 		}
-		
+
 		return TemplateParameterSubstitutions.EMPTY;
 	}
 
@@ -127,19 +127,19 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	private final @Nullable Type selfType;
 	private final @Nullable Type selfTypeValue;
 	private @Nullable TypedElement excludedTarget = null;
-	
+
 	/**
 	 * Internal variable used to pass the actual corresponding to the visited formal.
 	 */
 	private Element actual;
-	
+
 	public TemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		super(new HashMap<Integer, Type>());
 		this.environmentFactory = environmentFactory;
 		this.selfType = selfType;
 		this.selfTypeValue = selfTypeValue;
 	}
-	
+
 	protected void analyzeFeature(@Nullable Feature formalFeature, @Nullable TypedElement actualElement) {
 		if ((formalFeature != null) && (actualElement != null)) {
 			Type formalType = formalFeature.getOwningClass();
@@ -249,13 +249,13 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 			return specializedTupleType;
 		}
 		else {
-			Map<String, Type> partMap = new HashMap<String, Type>();
+			Map<@NonNull String, @NonNull Type> partMap = new HashMap<>();
 			for (TypedElement part : type.getOwnedProperties()) {
 				Type type1 = part.getType();
 				if (type1 != null) {
 					Type type2 = metamodelManager.getPrimaryType(type1);
 					Type type3 = specializeType(type2);
-					partMap.put(part.getName(), type3);
+					partMap.put(PivotUtil.getName(part), type3);
 				}
 			}
 			return metamodelManager.getCompleteModel().getTupleManager().getTupleType(NameUtil.getSafeName(type), partMap);
@@ -375,7 +375,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		s.append("}");
 		return s.toString();
 	}
-	
+
 	@Override
 	public String visiting(@NonNull Visitable visitable) {
 		throw new UnsupportedOperationException("Unsupported " + getClass().getSimpleName() + " " + visitable.getClass().getSimpleName());
@@ -462,7 +462,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	@Override
 	public @Nullable Object visitOperationCallExp(@NonNull OperationCallExp object) {
 		Operation referredOperation = object.getReferredOperation();
-//		visit(referredOperation, object);
+		//		visit(referredOperation, object);
 		analyzeTypedElement(referredOperation, object);
 		OCLExpression source = object.getOwnedSource();
 		if (source != null) {

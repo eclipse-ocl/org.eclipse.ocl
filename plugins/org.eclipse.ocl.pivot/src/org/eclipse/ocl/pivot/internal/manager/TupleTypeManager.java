@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.TuplePartImpl;
 import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.TypedElementImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
@@ -39,6 +38,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
@@ -95,7 +95,7 @@ public class TupleTypeManager
 	 */
 	protected static class TemplateParameterReferencesVisitor extends TemplateParameterSubstitutionVisitor
 	{
-		protected final @NonNull Map<Integer, TemplateParameter> templateParameters = new HashMap<>();
+		protected final @NonNull Map<@NonNull Integer, @NonNull TemplateParameter> templateParameters = new HashMap<>();
 
 		public TemplateParameterReferencesVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, Collection<? extends Type> partValues) {
 			super(environmentFactory, null, null);
@@ -118,7 +118,7 @@ public class TupleTypeManager
 	/**
 	 * Map from the tuple typeId to the tuple type.
 	 */
-	private @Nullable Map<TupleTypeId, TupleType> tupleid2tuple = null;
+	private @Nullable Map<@NonNull TupleTypeId, @NonNull TupleType> tupleid2tuple = null;
 
 	public TupleTypeManager(@NonNull CompleteEnvironmentInternal allCompleteClasses) {
 		this.completeEnvironment = allCompleteClasses;
@@ -169,7 +169,7 @@ public class TupleTypeManager
 	}
 
 	public @NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId) {
-		Map<TupleTypeId, TupleType> tupleid2tuple2 = tupleid2tuple;
+		Map<@NonNull TupleTypeId, @NonNull TupleType> tupleid2tuple2 = tupleid2tuple;
 		if (tupleid2tuple2 == null) {
 			synchronized (this) {
 				tupleid2tuple2 = tupleid2tuple;
@@ -184,12 +184,13 @@ public class TupleTypeManager
 				tupleType = tupleid2tuple2.get(tupleTypeId);
 				if (tupleType == null) {
 					tupleType = new TupleTypeImpl(tupleTypeId);
-					TuplePartId[] partIds = tupleTypeId.getPartIds();
+					@NonNull TuplePartId[] partIds = tupleTypeId.getPartIds();
 					List<Property> ownedAttributes = tupleType.getOwnedProperties();
 					for (TuplePartId partId : partIds) {
 						Type partType = idResolver.getType(partId.getTypeId(), tupleType);
 						Type partType2 = metamodelManager.getPrimaryType(partType);
-						ownedAttributes.add(new TuplePartImpl(partId, partType2));
+						Property property = PivotUtil.createProperty(NameUtil.getSafeName(partId), partType2);
+						ownedAttributes.add(property);
 					}
 					tupleType.getSuperClasses().add(oclTupleType);
 					tupleid2tuple2.put(tupleTypeId, tupleType);
@@ -202,13 +203,13 @@ public class TupleTypeManager
 
 	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Collection<@NonNull? extends TypedElement> parts,
 			@Nullable TemplateParameterSubstitutions usageBindings) {
-		Map<String, Type> partMap = new HashMap<>();
+		Map<@NonNull String, @NonNull Type> partMap = new HashMap<>();
 		for (@NonNull TypedElement part : parts) {
 			Type type1 = part.getType();
 			if (type1 != null) {
 				Type type2 = metamodelManager.getPrimaryType(type1);
 				Type type3 = completeEnvironment.getSpecializedType(type2, usageBindings);
-				partMap.put(part.getName(), type3);
+				partMap.put(PivotUtil.getName(part), type3);
 			}
 		}
 		return getTupleType(tupleName, partMap);
@@ -217,7 +218,7 @@ public class TupleTypeManager
 	/**
 	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
 	 */
-	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<String, ? extends Type> parts) {
+	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts) {
 		//
 		//	Find the outgoing template parameter references
 		// FIXME this should be more readily and reliably computed in the caller
@@ -228,10 +229,10 @@ public class TupleTypeManager
 		//
 		int partsCount = parts.size();
 		@NonNull TuplePartId[] newPartIds = new @NonNull TuplePartId[partsCount];
-		List<String> sortedPartNames = new ArrayList<>(parts.keySet());
+		List<@NonNull String> sortedPartNames = new ArrayList<>(parts.keySet());
 		Collections.sort(sortedPartNames);
 		for (int i = 0; i < partsCount; i++) {
-			@SuppressWarnings("null")@NonNull String partName = sortedPartNames.get(i);
+			@NonNull String partName = sortedPartNames.get(i);
 			Type partType = parts.get(partName);
 			if (partType != null) {
 				TypeId partTypeId = partType.getTypeId();
