@@ -115,6 +115,30 @@ implements OCLExpression {
 	 * @generated
 	 */
 	@Override
+	public boolean isNonNull()
+	{
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!OCLExpression!isNonNull()
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isNull()
+	{
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!OCLExpression!isNull()
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public boolean validateTypeIsNotNull(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
 		/**
@@ -316,6 +340,10 @@ implements OCLExpression {
 				return getValue((Type)arguments.get(0), (String)arguments.get(1));
 			case PivotPackage.OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION:
 				return CompatibleBody((ValueSpecification)arguments.get(0));
+			case PivotPackage.OCL_EXPRESSION___IS_NON_NULL:
+				return isNonNull();
+			case PivotPackage.OCL_EXPRESSION___IS_NULL:
+				return isNull();
 			case PivotPackage.OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP:
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}

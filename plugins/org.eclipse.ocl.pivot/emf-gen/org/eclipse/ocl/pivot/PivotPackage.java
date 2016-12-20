@@ -2559,13 +2559,31 @@ extends EPackage
 	int OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION = TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OCL_EXPRESSION___IS_NON_NULL = TYPED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OCL_EXPRESSION___IS_NULL = TYPED_ELEMENT_OPERATION_COUNT + 1;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 0;
+	int OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = TYPED_ELEMENT_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>OCL Expression</em>' class.
@@ -2574,7 +2592,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int OCL_EXPRESSION_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 1;
+	int OCL_EXPRESSION_OPERATION_COUNT = TYPED_ELEMENT_OPERATION_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Annotating Comments</b></em>' reference list.
@@ -2719,6 +2737,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_EXP___IS_NON_NULL = OCL_EXPRESSION___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CALL_EXP___IS_NULL = OCL_EXPRESSION___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -2899,6 +2935,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int FEATURE_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_CALL_EXP___IS_NON_NULL = CALL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_CALL_EXP___IS_NULL = CALL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -3097,6 +3151,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int NAVIGATION_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = FEATURE_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAVIGATION_CALL_EXP___IS_NON_NULL = FEATURE_CALL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAVIGATION_CALL_EXP___IS_NULL = FEATURE_CALL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -3304,6 +3376,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int ASSOCIATION_CLASS_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NAVIGATION_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSOCIATION_CLASS_CALL_EXP___IS_NON_NULL = NAVIGATION_CALL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSOCIATION_CLASS_CALL_EXP___IS_NULL = NAVIGATION_CALL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -4692,6 +4782,24 @@ extends EPackage
 	int LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LITERAL_EXP___IS_NON_NULL = OCL_EXPRESSION___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LITERAL_EXP___IS_NULL = OCL_EXPRESSION___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4825,6 +4933,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int PRIMITIVE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_LITERAL_EXP___IS_NON_NULL = LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMITIVE_LITERAL_EXP___IS_NULL = LITERAL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -4969,6 +5095,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int BOOLEAN_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = PRIMITIVE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOOLEAN_LITERAL_EXP___IS_NON_NULL = PRIMITIVE_LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOOLEAN_LITERAL_EXP___IS_NULL = PRIMITIVE_LITERAL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -5491,6 +5635,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int COLLECTION_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_LITERAL_EXP___IS_NON_NULL = LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_LITERAL_EXP___IS_NULL = LITERAL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -8332,6 +8494,24 @@ extends EPackage
 	int ENUM_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUM_LITERAL_EXP___IS_NON_NULL = LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUM_LITERAL_EXP___IS_NULL = LITERAL_EXP___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10319,6 +10499,24 @@ extends EPackage
 	int IF_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IF_EXP___IS_NON_NULL = OCL_EXPRESSION___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IF_EXP___IS_NULL = OCL_EXPRESSION___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10562,6 +10760,24 @@ extends EPackage
 	int NUMERIC_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = PRIMITIVE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUMERIC_LITERAL_EXP___IS_NON_NULL = PRIMITIVE_LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUMERIC_LITERAL_EXP___IS_NULL = PRIMITIVE_LITERAL_EXP___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10706,6 +10922,24 @@ extends EPackage
 	int INTEGER_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NUMERIC_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTEGER_LITERAL_EXP___IS_NON_NULL = NUMERIC_LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTEGER_LITERAL_EXP___IS_NULL = NUMERIC_LITERAL_EXP___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10848,6 +11082,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int INVALID_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INVALID_LITERAL_EXP___IS_NON_NULL = LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INVALID_LITERAL_EXP___IS_NULL = LITERAL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -11309,6 +11561,24 @@ extends EPackage
 	int LOOP_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOOP_EXP___IS_NON_NULL = CALL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOOP_EXP___IS_NULL = CALL_EXP___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11532,6 +11802,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int ITERATE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LOOP_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_EXP___IS_NON_NULL = LOOP_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_EXP___IS_NULL = LOOP_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -12534,6 +12822,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int ITERATOR_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LOOP_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP___IS_NON_NULL = LOOP_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP___IS_NULL = LOOP_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -13903,6 +14209,24 @@ extends EPackage
 	int LET_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_EXP___IS_NON_NULL = OCL_EXPRESSION___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_EXP___IS_NULL = OCL_EXPRESSION___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14642,6 +14966,24 @@ extends EPackage
 	int MAP_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAP_LITERAL_EXP___IS_NON_NULL = LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAP_LITERAL_EXP___IS_NULL = LITERAL_EXP___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15216,6 +15558,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int MESSAGE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MESSAGE_EXP___IS_NON_NULL = OCL_EXPRESSION___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MESSAGE_EXP___IS_NULL = OCL_EXPRESSION___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -15812,6 +16172,24 @@ extends EPackage
 	int NULL_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = PRIMITIVE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NULL_LITERAL_EXP___IS_NON_NULL = PRIMITIVE_LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NULL_LITERAL_EXP___IS_NULL = PRIMITIVE_LITERAL_EXP___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16009,6 +16387,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int OPERATION_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = FEATURE_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION_CALL_EXP___IS_NON_NULL = FEATURE_CALL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPERATION_CALL_EXP___IS_NULL = FEATURE_CALL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -16252,6 +16648,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int OPPOSITE_PROPERTY_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NAVIGATION_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPPOSITE_PROPERTY_CALL_EXP___IS_NON_NULL = NAVIGATION_CALL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OPPOSITE_PROPERTY_CALL_EXP___IS_NULL = NAVIGATION_CALL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -18516,6 +18930,24 @@ extends EPackage
 	int PROPERTY_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NAVIGATION_CALL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_CALL_EXP___IS_NON_NULL = NAVIGATION_CALL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_CALL_EXP___IS_NULL = NAVIGATION_CALL_EXP___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -18865,6 +19297,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int REAL_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NUMERIC_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REAL_LITERAL_EXP___IS_NON_NULL = NUMERIC_LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REAL_LITERAL_EXP___IS_NULL = NUMERIC_LITERAL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -20443,6 +20893,24 @@ extends EPackage
 	int SHADOW_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_EXP___IS_NON_NULL = OCL_EXPRESSION___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SHADOW_EXP___IS_NULL = OCL_EXPRESSION___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -21251,6 +21719,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int STATE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE_EXP___IS_NON_NULL = OCL_EXPRESSION___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE_EXP___IS_NULL = OCL_EXPRESSION___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -22097,6 +22583,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int STRING_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = PRIMITIVE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_LITERAL_EXP___IS_NON_NULL = PRIMITIVE_LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_LITERAL_EXP___IS_NULL = PRIMITIVE_LITERAL_EXP___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -23026,6 +23530,24 @@ extends EPackage
 	int TUPLE_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUPLE_LITERAL_EXP___IS_NON_NULL = LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUPLE_LITERAL_EXP___IS_NULL = LITERAL_EXP___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -23638,6 +24160,24 @@ extends EPackage
 	int TYPE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_EXP___IS_NON_NULL = OCL_EXPRESSION___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_EXP___IS_NULL = OCL_EXPRESSION___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -23791,6 +24331,24 @@ extends EPackage
 	int UNLIMITED_NATURAL_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = NUMERIC_LITERAL_EXP___COMPATIBLE_BODY__VALUESPECIFICATION;
 
 	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNLIMITED_NATURAL_LITERAL_EXP___IS_NON_NULL = NUMERIC_LITERAL_EXP___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNLIMITED_NATURAL_LITERAL_EXP___IS_NULL = NUMERIC_LITERAL_EXP___IS_NULL;
+
+	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -23924,6 +24482,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int UNSPECIFIED_VALUE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNSPECIFIED_VALUE_EXP___IS_NON_NULL = OCL_EXPRESSION___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNSPECIFIED_VALUE_EXP___IS_NULL = OCL_EXPRESSION___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -24077,6 +24653,24 @@ extends EPackage
 	 * @ordered
 	 */
 	int VARIABLE_EXP___COMPATIBLE_BODY__VALUESPECIFICATION = OCL_EXPRESSION___COMPATIBLE_BODY__VALUESPECIFICATION;
+
+	/**
+	 * The operation id for the '<em>Is Non Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_EXP___IS_NON_NULL = OCL_EXPRESSION___IS_NON_NULL;
+
+	/**
+	 * The operation id for the '<em>Is Null</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_EXP___IS_NULL = OCL_EXPRESSION___IS_NULL;
 
 	/**
 	 * The operation id for the '<em>Validate Type Is Not Null</em>' operation.
@@ -25832,6 +26426,26 @@ extends EPackage
 	 * @generated
 	 */
 	EReference getOCLExpression_TypeValue();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OCLExpression#isNonNull() <em>Is Non Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Non Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OCLExpression#isNonNull()
+	 * @generated
+	 */
+	EOperation getOCLExpression__IsNonNull();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OCLExpression#isNull() <em>Is Null</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Is Null</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OCLExpression#isNull()
+	 * @generated
+	 */
+	EOperation getOCLExpression__IsNull();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OCLExpression#validateTypeIsNotNull(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Type Is Not Null</em>}' operation.
@@ -30439,6 +31053,22 @@ extends EPackage
 		 * @generated
 		 */
 		EReference OCL_EXPRESSION__TYPE_VALUE = eINSTANCE.getOCLExpression_TypeValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Non Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OCL_EXPRESSION___IS_NON_NULL = eINSTANCE.getOCLExpression__IsNonNull();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Null</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OCL_EXPRESSION___IS_NULL = eINSTANCE.getOCLExpression__IsNull();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Type Is Not Null</b></em>' operation.

@@ -1763,6 +1763,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Operation op_CompletePackage_getOwnedCompleteClass = createOperation("getOwnedCompleteClass", _CompleteClass, null, null);
 		private final @NonNull Operation op_Element_allOwnedElements = createOperation("allOwnedElements", _Set_Element_NullFree, null, null);
 		private final @NonNull Operation op_Element_getValue = createOperation("getValue", _Element, null, null);
+		private final @NonNull Operation op_OCLExpression_isNonNull = createOperation("isNonNull", _Boolean, null, null);
+		private final @NonNull Operation op_OCLExpression_isNull = createOperation("isNull", _Boolean, null, null);
 		private final @NonNull Operation op_Property_isAttribute = createOperation("isAttribute", _Boolean, null, null);
 		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyOwningType = createOperation("getSpecializedReferredPropertyOwningType", _Class, null, null);
 		private final @NonNull Operation op_PropertyCallExp_getSpecializedReferredPropertyType = createOperation("getSpecializedReferredPropertyType", _Class, null, null);
@@ -1807,6 +1809,10 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("stereotype", _Type, true));
 			ownedParameters.add(parameter = createParameter("propertyName", _String, true));
+
+			ownedOperations = _OCLExpression.getOwnedOperations();
+			ownedOperations.add(operation = op_OCLExpression_isNonNull);
+			ownedOperations.add(operation = op_OCLExpression_isNull);
 
 			ownedOperations = _Property.getOwnedOperations();
 			ownedOperations.add(operation = op_Property_isAttribute);

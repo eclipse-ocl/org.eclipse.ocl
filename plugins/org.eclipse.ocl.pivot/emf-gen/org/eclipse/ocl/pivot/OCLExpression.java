@@ -65,6 +65,22 @@ public interface OCLExpression extends TypedElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	boolean isNonNull();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	boolean isNull();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	boolean validateTypeIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // OCLExpression

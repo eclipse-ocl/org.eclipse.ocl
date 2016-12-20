@@ -679,6 +679,8 @@
       <ownedInvariants xmi:id="cipivot.OCLExpression.TypeIsNotNull" isCallable="true" name="TypeIsNotNull">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> null&#xA;&#xA;"/>
       </ownedInvariants>
+      <ownedOperations xmi:id="o.pivot.OCLExpression.isNonNull" name="isNonNull" type="#Boolean"/>
+      <ownedOperations xmi:id="o.pivot.OCLExpression.isNull" name="isNull" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.OCLExpression.typeValue" isRequired="false" isResolveProxies="false" isTransient="true" name="typeValue"
           opposite="#p.pivot.Type.OCLExpression" type="#T.pivot.Type"/>
       <ownedProperties xmi:id="p.pivot.OCLExpression.CallExp" isImplicit="true" isRequired="false" name="CallExp" opposite="#p.pivot.CallExp.ownedSource"

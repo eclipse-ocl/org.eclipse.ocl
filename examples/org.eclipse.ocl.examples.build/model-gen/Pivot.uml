@@ -750,6 +750,12 @@
     <ownedAttribute xmi:id="Ppivot.TOCLExpression.PtypeValue" name="typeValue" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_typeValue_OCLExpression">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TOCLExpression.PtypeValue.lV"/>
     </ownedAttribute>
+    <ownedOperation xmi:id="Ppivot.TOCLExpression.OisNonNull" name="isNonNull" visibility="public">
+      <ownedParameter xmi:id="Ppivot.TOCLExpression.OisNonNull.Pnull" type="Ppivot.TBoolean" isOrdered="true" direction="return"/>
+    </ownedOperation>
+    <ownedOperation xmi:id="Ppivot.TOCLExpression.OisNull" name="isNull" visibility="public">
+      <ownedParameter xmi:id="Ppivot.TOCLExpression.OisNull.Pnull" type="Ppivot.TBoolean" isOrdered="true" direction="return"/>
+    </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TOperation" name="Operation">
     <generalization xmi:id="Ppivot.TOperation.g0" general="Ppivot.TFeature"/>

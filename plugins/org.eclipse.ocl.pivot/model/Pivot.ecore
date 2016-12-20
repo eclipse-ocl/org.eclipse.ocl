@@ -1533,6 +1533,8 @@
       abstract="true" eSuperTypes="#T-pivot-PrimitiveLiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OCLExpression" name="OCLExpression"
       abstract="true" eSuperTypes="#T-pivot-TypedElement">
+    <eOperations name="isNonNull" lowerBound="1" eType="#T-pivot-Boolean"/>
+    <eOperations name="isNull" lowerBound="1" eType="#T-pivot-Boolean"/>
     <eOperations name="validateTypeIsNotNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="type &lt;> null&#xA;&#xA;"/>

@@ -386,6 +386,12 @@
         <ownedAttribute xmi:id="_x-pUsC9bEeSc2LncrXmagQ" name="typeValue" type="_4hPfAC9bEeSc2LncrXmagQ">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0q6GoC9bEeSc2LncrXmagQ"/>
         </ownedAttribute>
+        <ownedOperation xmi:id="_hE1YAMb0EeaH8MVbKmGAtg" name="isNonNull">
+          <ownedParameter xmi:id="_m4eKkMb0EeaH8MVbKmGAtg" name="result" type="_iauzUOLYEeGCOa0Md3lQkQ" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_yZMbwMb0EeaH8MVbKmGAtg" name="isNull">
+          <ownedParameter xmi:id="_yZMbwcb0EeaH8MVbKmGAtg" name="result" type="_iauzUOLYEeGCOa0Md3lQkQ" direction="return"/>
+        </ownedOperation>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_ZT_t8C9dEeSc2LncrXmagQ" name="Operation">
         <ownedAttribute xmi:id="_SmDkYS9fEeSc2LncrXmagQ" name="isTransient" type="_iauzUOLYEeGCOa0Md3lQkQ">

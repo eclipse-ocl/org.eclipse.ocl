@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java">
+        <filter id="0"/>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
         <filter id="388194388">
             <message_arguments>
@@ -2416,6 +2419,16 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="ASSOCIATION_CLASS_CALL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ASSOCIATION_CLASS_CALL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="ASSOCIATION_CLASS_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -2441,7 +2454,27 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="BOOLEAN_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="BOOLEAN_LITERAL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="BOOLEAN_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="CALL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="CALL_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2452,6 +2485,16 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="CLASS___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COLLECTION_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COLLECTION_LITERAL_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2506,7 +2549,27 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="ENUM_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENUM_LITERAL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="ENUM_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="FEATURE_CALL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="FEATURE_CALL_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2531,12 +2594,42 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="IF_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="IF_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="IF_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="INTEGER_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="INTEGER_LITERAL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="INTEGER_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="INVALID_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="INVALID_LITERAL_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2547,6 +2640,16 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="INVALID_TYPE___VALIDATE_NAME_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATE_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATE_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2562,6 +2665,16 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ITERATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATOR_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATOR_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2601,6 +2714,16 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="LET_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LET_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="LET_EXP___VALIDATE_COMPATIBLE_NULLITY_FOR_IN__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -2636,12 +2759,42 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LITERAL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="LOOP_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="LOOP_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="LOOP_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MAP_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MAP_LITERAL_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2661,6 +2814,16 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="MESSAGE_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MESSAGE_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="MESSAGE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -2671,7 +2834,27 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="NAVIGATION_CALL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="NAVIGATION_CALL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="NAVIGATION_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="NULL_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="NULL_LITERAL_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2681,12 +2864,42 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="NUMERIC_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="NUMERIC_LITERAL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="NUMERIC_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="OCL_EXPRESSION___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_EXPRESSION___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPERATION_CALL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPERATION_CALL_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2702,6 +2915,16 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="OPERATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OPPOSITE_PROPERTY_CALL_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2746,6 +2969,16 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="PRIMITIVE_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PRIMITIVE_LITERAL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="PRIMITIVE_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -2761,6 +2994,16 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="PROPERTY_CALL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="PROPERTY_CALL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="PROPERTY_CALL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -2772,6 +3015,16 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="PROPERTY___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="REAL_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="REAL_LITERAL_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2831,6 +3084,16 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="SHADOW_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="SHADOW_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="SHADOW_EXP___VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -2851,6 +3114,16 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="STATE_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="STATE_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="STATE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -2866,7 +3139,27 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="STRING_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="STRING_LITERAL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="STRING_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TUPLE_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TUPLE_LITERAL_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2896,12 +3189,42 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="TYPE_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TYPE_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="TYPE_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="UNLIMITED_NATURAL_LITERAL_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="UNLIMITED_NATURAL_LITERAL_EXP___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="UNLIMITED_NATURAL_LITERAL_EXP___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="UNSPECIFIED_VALUE_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="UNSPECIFIED_VALUE_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2917,6 +3240,16 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="VARIABLE_DECLARATION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="VARIABLE_EXP___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="VARIABLE_EXP___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2997,6 +3330,16 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getLetVariable__ValidateHasInitializer__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOCLExpression__IsNonNull()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOCLExpression__IsNull()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -3127,6 +3470,18 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="OCL_EXPRESSION___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="OCL_EXPRESSION___IS_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
                 <message_argument value="OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
@@ -3249,6 +3604,16 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="LET_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_EXPRESSION___IS_NON_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_EXPRESSION___IS_NULL"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">

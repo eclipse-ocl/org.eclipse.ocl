@@ -2119,6 +2119,11 @@ public class PivotTables
 		public static final @NonNull ExecutorOperation _Enumeration__allInstances = new ExecutorOperation("allInstances", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Enumeration,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation.INSTANCE);
 
+		public static final @NonNull ExecutorOperation _OCLExpression__isNonNull = new ExecutorOperation("isNonNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
+			0, TemplateParameters.EMPTY_LIST, null);
+		public static final @NonNull ExecutorOperation _OCLExpression__isNull = new ExecutorOperation("isNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OCLExpression,
+			1, TemplateParameters.EMPTY_LIST, null);
+
 		public static final @NonNull ExecutorOperation _Property__isAttribute = new ExecutorOperation("isAttribute", Parameters._Property, Types._Property,
 			0, TemplateParameters.EMPTY_LIST, null);
 
@@ -4873,7 +4878,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _AssociationClassCallExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _AssociationClassCallExp__NamedElement = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _AssociationClassCallExp__NavigationCallExp = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _AssociationClassCallExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _AssociationClassCallExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _AssociationClassCallExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -5045,7 +5053,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _BooleanLiteralExp__LiteralExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _BooleanLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _BooleanLiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _BooleanLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _BooleanLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _BooleanLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -5085,7 +5096,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _CallExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _CallExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _CallExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _CallExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _CallExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -5280,7 +5294,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _CollectionLiteralExp__LiteralExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _CollectionLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _CollectionLiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _CollectionLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _CollectionLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _CollectionLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -6067,7 +6084,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _EnumLiteralExp__LiteralExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _EnumLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _EnumLiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _EnumLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _EnumLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _EnumLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -6279,7 +6299,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _FeatureCallExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _FeatureCallExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _FeatureCallExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _FeatureCallExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _FeatureCallExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -6357,7 +6380,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _IfExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _IfExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _IfExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _IfExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _IfExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -6468,7 +6494,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _IntegerLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _IntegerLiteralExp__NamedElement = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _IntegerLiteralExp__NumericLiteralExp = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _IntegerLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _IntegerLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _IntegerLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -6509,7 +6538,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _InvalidLiteralExp__LiteralExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _InvalidLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _InvalidLiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _InvalidLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _InvalidLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _InvalidLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -6598,7 +6630,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _IterateExp__LoopExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _IterateExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _IterateExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _IterateExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _IterateExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _IterateExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -6684,7 +6719,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _IteratorExp__LoopExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _IteratorExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _IteratorExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _IteratorExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _IteratorExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _IteratorExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -6861,7 +6899,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _LetExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _LetExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _LetExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _LetExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _LetExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -6996,7 +7037,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _LiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _LiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _LiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _LiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _LiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -7036,7 +7080,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _LoopExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _LoopExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _LoopExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _LoopExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _LoopExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -7076,7 +7123,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _MapLiteralExp__LiteralExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _MapLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _MapLiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _MapLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _MapLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _MapLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -7197,7 +7247,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _MessageExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _MessageExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _MessageExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _MessageExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _MessageExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -7447,7 +7500,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _NavigationCallExp__FeatureCallExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _NavigationCallExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _NavigationCallExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _NavigationCallExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _NavigationCallExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _NavigationCallExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -7487,7 +7543,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _NullLiteralExp__LiteralExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _NullLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _NullLiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _NullLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _NullLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _NullLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -7528,7 +7587,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _NumericLiteralExp__LiteralExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _NumericLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _NumericLiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _NumericLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _NumericLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _NumericLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -7561,7 +7623,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _NumericLiteralExp__Visitable = {};
 
-		private static final @NonNull ExecutorOperation @NonNull [] _OCLExpression__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _OCLExpression__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OCLExpression__Element = {
 			PivotTables.Operations._Element__allOwnedElements /* allOwnedElements() */,
 			PivotTables.Operations._Element__getValue /* getValue(Type[1],String[1]) */
@@ -7668,7 +7733,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__FeatureCallExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OperationCallExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -7713,7 +7781,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _OppositePropertyCallExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _OppositePropertyCallExp__NamedElement = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _OppositePropertyCallExp__NavigationCallExp = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _OppositePropertyCallExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _OppositePropertyCallExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OppositePropertyCallExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -8057,7 +8128,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _PrimitiveLiteralExp__LiteralExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _PrimitiveLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _PrimitiveLiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _PrimitiveLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _PrimitiveLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _PrimitiveLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -8262,7 +8336,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _PropertyCallExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _PropertyCallExp__NamedElement = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _PropertyCallExp__NavigationCallExp = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _PropertyCallExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _PropertyCallExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _PropertyCallExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -8376,7 +8453,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _RealLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _RealLiteralExp__NamedElement = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _RealLiteralExp__NumericLiteralExp = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _RealLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _RealLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _RealLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -8707,7 +8787,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _ShadowExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _ShadowExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _ShadowExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _ShadowExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _ShadowExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -8936,7 +9019,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _StateExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _StateExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _StateExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _StateExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _StateExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -9106,7 +9192,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _StringLiteralExp__LiteralExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _StringLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _StringLiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _StringLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _StringLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _StringLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -9448,7 +9537,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _TupleLiteralExp__LiteralExp = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _TupleLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _TupleLiteralExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _TupleLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _TupleLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _TupleLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -9619,7 +9711,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _TypeExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _TypeExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _TypeExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _TypeExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _TypeExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -9700,7 +9795,10 @@ public class PivotTables
 		private static final @NonNull ExecutorOperation @NonNull [] _UnlimitedNaturalLiteralExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _UnlimitedNaturalLiteralExp__NamedElement = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _UnlimitedNaturalLiteralExp__NumericLiteralExp = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _UnlimitedNaturalLiteralExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _UnlimitedNaturalLiteralExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _UnlimitedNaturalLiteralExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -9740,7 +9838,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _UnspecifiedValueExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _UnspecifiedValueExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _UnspecifiedValueExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _UnspecifiedValueExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _UnspecifiedValueExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
@@ -9901,7 +10002,10 @@ public class PivotTables
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _VariableExp__Nameable = {};
 		private static final @NonNull ExecutorOperation @NonNull [] _VariableExp__NamedElement = {};
-		private static final @NonNull ExecutorOperation @NonNull [] _VariableExp__OCLExpression = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _VariableExp__OCLExpression = {
+			PivotTables.Operations._OCLExpression__isNonNull /* isNonNull() */,
+			PivotTables.Operations._OCLExpression__isNull /* isNull() */
+		};
 		private static final @NonNull ExecutorOperation @NonNull [] _VariableExp__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
