@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.internal.resource.OCLAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.scoping.NullAttribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -473,6 +474,13 @@ public class PivotUtilInternal //extends PivotUtil
 		return "";
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getSuperClassesList(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nullFree(asClass.getSuperClasses());
+	}
+
 	public static @Nullable Type getType(@Nullable TypedElement typedElement) {
 		if (typedElement == null) {
 			return null;
@@ -569,6 +577,10 @@ public class PivotUtilInternal //extends PivotUtil
 		return hasImplicits;
 	}
 
+	/**
+	 * @deprecated use the inverse of isOrphanType
+	 */
+	@Deprecated
 	public static boolean isLibraryType(@NonNull Type type) {	// FIXME org.eclipse.ocl.pivot.Class
 		if (type instanceof LambdaType) {
 			return false;
@@ -578,6 +590,36 @@ public class PivotUtilInternal //extends PivotUtil
 		}
 		else if (type instanceof TemplateableElement){
 			return ((TemplateableElement)type).getOwnedBindings().isEmpty();
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Return  true if this is a synthetic property whose definition is provided by the Orphanage.
+	 * @since 1.3
+	 */
+	public static boolean isOrphanProperty(@NonNull Property property) {
+		if (property.getOwningClass()instanceof TupleType) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Return  true if this is a synthetic type whose definition is provided by the Orphanage.
+	 * @since 1.3
+	 */
+	public static boolean isOrphanType(@NonNull Type type) {	// FIXME org.eclipse.ocl.pivot.Class
+		if (type instanceof LambdaType) {
+			return true;
+		}
+		else if (type instanceof TupleType) {
+			return true;
+		}
+		else if (type instanceof TemplateableElement){
+			return ((TemplateableElement)type).getOwnedBindings().size() > 0;
 		}
 		else {
 			return false;

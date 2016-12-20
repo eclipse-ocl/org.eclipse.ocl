@@ -17,9 +17,11 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.Type;
@@ -30,7 +32,7 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 
 /**
- * LocateVisitor locates references to shared specializations, so that 
+ * LocateVisitor locates references to shared specializations, so that
  * local copies can be created and then replaced by the ResolveVisitor.
  */
 public class ASSaverLocateVisitor extends AbstractExtendingVisitor<Object, ASSaver>
@@ -127,6 +129,18 @@ public class ASSaverLocateVisitor extends AbstractExtendingVisitor<Object, ASSav
 			assert eResource != null;
 		}
 		return super.visitProperty(object);
+	}
+
+	@Override
+	public Object visitPropertyCallExp(@NonNull PropertyCallExp object) {
+		OCLExpression ownedSource = object.getOwnedSource();
+		if (ownedSource != null) {
+			Property referredProperty = object.getReferredProperty();
+			if (referredProperty != null) {
+				context.addSpecializingElement(object, referredProperty);
+			}
+		}
+		return super.visitPropertyCallExp(object);
 	}
 
 	@Override

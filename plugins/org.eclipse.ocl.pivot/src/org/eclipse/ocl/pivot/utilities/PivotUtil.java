@@ -99,7 +99,6 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
-
 public class PivotUtil
 {
 	/**
@@ -1141,6 +1140,13 @@ public class PivotUtil
 	 */
 	public static @NonNull Resource getResource(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eResource());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nullFree(asClass.getSuperClasses());
 	}
 
 	/**

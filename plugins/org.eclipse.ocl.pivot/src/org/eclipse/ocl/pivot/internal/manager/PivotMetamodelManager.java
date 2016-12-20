@@ -1718,7 +1718,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		for (org.eclipse.ocl.pivot.Class type : asLibrary.getOwnedClasses()) {
 			if (type != null) {
 				org.eclipse.ocl.pivot.Class primaryType = getPrimaryClass(type);
-				if ((type == primaryType) && PivotUtilInternal.isLibraryType(type)) {
+				if ((type == primaryType) && !PivotUtilInternal.isOrphanType(type)) {
 					standardLibrary.defineLibraryType(primaryType);
 				}
 			}

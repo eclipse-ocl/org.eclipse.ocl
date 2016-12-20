@@ -13,8 +13,11 @@ package org.eclipse.ocl.pivot.internal.resource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -28,6 +31,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -37,7 +41,9 @@ import org.eclipse.ocl.pivot.utilities.ASSaverLocateVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverResolveVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * ASSaver ensures that all references to synthesized types are terminated
@@ -54,12 +60,17 @@ public class ASSaver
 	/**
 	 * The moniker to operation map for operations defined with the saved resource.
 	 */
-	private Map<String, Operation> operations = new HashMap<String, Operation>();
+	private Map<@NonNull String, @NonNull Operation> operations = new HashMap<>();
 
 	/**
-	 * TypedElements that refer to specializations.
+	 * TypedElements that refer to specializations that have yet to be resolved..
 	 */
-	private @NonNull List<Element> specializingElements = new ArrayList<Element>();
+	private @NonNull LinkedHashSet<@NonNull Element> unresolvedSpecializingElements = new LinkedHashSet<>();	// LinkedHashSet stabilises regeneration xmi:ids
+
+	/**
+	 * TypedElements that refer to specializations that have been resolved..
+	 */
+	private @NonNull Set<@NonNull Element> resolvedSpecializingElements = new HashSet<>();
 
 	/**
 	 * The extra package for copies of specializations.
@@ -69,7 +80,7 @@ public class ASSaver
 	/**
 	 * Map of original specialization to local specialization
 	 */
-	private @NonNull Map<org.eclipse.ocl.pivot.Class, org.eclipse.ocl.pivot.Class> specializations = new HashMap<org.eclipse.ocl.pivot.Class, org.eclipse.ocl.pivot.Class>();
+	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> specializations = new HashMap<>();
 
 	/**
 	 * The extra package for copies of specializations.
@@ -82,7 +93,19 @@ public class ASSaver
 	private /*@LazyNonNull*/ Map<@NonNull Resource, @NonNull ASSaverNormalizeVisitor> resource2normalizeVisitor = null;
 
 	public void addSpecializingElement(@NonNull Element object) {
-		specializingElements.add(object);
+		if (!resolvedSpecializingElements.contains(object)) {
+			unresolvedSpecializingElements.add(object);
+		}
+	}
+
+	public boolean addSpecializingElement(@NonNull Element object, org.eclipse.ocl.pivot.@NonNull Class referredType) {
+		if (!PivotUtilInternal.isOrphanType(referredType)) {
+			return false;
+		}
+		else {
+			addSpecializingElement(object);
+			return true;
+		}
 	}
 
 	public boolean addSpecializingElement(@NonNull Element object, @NonNull Operation referredOperation) {
@@ -90,17 +113,20 @@ public class ASSaver
 			return false;
 		}
 		else {
-			specializingElements.add(object);
+			addSpecializingElement(object);
 			return true;
 		}
 	}
 
-	public boolean addSpecializingElement(@NonNull Element object, org.eclipse.ocl.pivot.@NonNull Class referredType) {
-		if (PivotUtilInternal.isLibraryType(referredType)) {
+	/**
+	 * @since 1.3
+	 */
+	public boolean addSpecializingElement(@NonNull Element object, @NonNull Property referredProperty) {
+		if (!PivotUtilInternal.isOrphanProperty(referredProperty)) {
 			return false;
 		}
 		else {
-			specializingElements.add(object);
+			addSpecializingElement(object);
 			return true;
 		}
 	}
@@ -124,7 +150,7 @@ public class ASSaver
 			throw new IllegalStateException("Cannot locate " + ASSaverLocateVisitor.class.getName() + " for resource-less " + eObject.eClass().getName());
 		}
 		if (resource2normalizeVisitor == null) {
-			resource2normalizeVisitor = new HashMap<@NonNull Resource, @NonNull ASSaverNormalizeVisitor>();
+			resource2normalizeVisitor = new HashMap<>();
 		}
 		ASSaverNormalizeVisitor visitor = resource2normalizeVisitor.get(resource);
 		if (visitor != null) {
@@ -197,19 +223,17 @@ public class ASSaver
 	 */
 	public void localizeSpecializations() {
 		locateSpecializations(resource.getContents());
-		if (specializingElements.size() > 0) {
+		if (unresolvedSpecializingElements.size() > 0) {
 			loadOrphanage(resource);
-			for (int i = 0; i < specializingElements.size(); i++) {	// Domain may grow
-				Element element = specializingElements.get(i);
-				if (element != null) {
+			while (unresolvedSpecializingElements.size() > 0) {
+				List<@NonNull Element> elements = new ArrayList<>(unresolvedSpecializingElements);
+				for (@NonNull Element element : elements) {
 					ASSaverResolveVisitor resolveVisitor = getResolveVisitor(element);
 					resolveVisitor.safeVisit(element);
+					resolvedSpecializingElements.add(element);
+					unresolvedSpecializingElements.remove(element);
 				}
 			}
-			//			List<Type> ownedTypes = orphanage.getOwnedType();
-			//			List<Type> sorted = ownedTypes; //WIP PivotUtil.sortByMoniker(new ArrayList<Type>(ownedTypes));
-			//			ownedTypes.clear();
-			//			ownedTypes.addAll(sorted);
 		}
 	}
 
@@ -309,11 +333,24 @@ public class ASSaver
 	}
 
 	/**
+	 * @since 1.3
+	 */
+	public @NonNull Property resolveProperty(@NonNull Property referredProperty) {
+		if (!PivotUtilInternal.isOrphanProperty(referredProperty)) {
+			return referredProperty;
+		}
+		org.eclipse.ocl.pivot.Class referredClass = PivotUtil.getOwningClass(referredProperty);
+		org.eclipse.ocl.pivot.Class resolvedClass = resolveType(referredClass);
+		Property resolvedProperty = NameUtil.getNameable(resolvedClass.getOwnedProperties(), PivotUtil.getName(referredProperty));
+		return ClassUtil.nonNullState(resolvedProperty);
+	}
+
+	/**
 	 * Return the resolved variant of referredType, which may require creation
 	 * of a local copy of a specialization.
 	 */
 	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T resolveType(@NonNull T referredType) {
-		if (PivotUtilInternal.isLibraryType(referredType)) {
+		if (!PivotUtilInternal.isOrphanType(referredType)) {
 			return referredType;
 		}
 		org.eclipse.ocl.pivot.Class resolvedType = specializations.get(referredType);
@@ -330,23 +367,6 @@ public class ASSaver
 				orphanage.getOwnedClasses().add(resolvedType);
 			}
 		}
-		/*			String moniker = AS2Moniker.toString(referredType);
-		Type type = types.get(moniker);
-		if (type != null) {
-			@SuppressWarnings("unchecked")
-			T castType = (T) type;
-			return castType;
-		}
-		T resolvedType = EcoreUtil.copy(referredType);
-		orphanage.getOwnedType().add(resolvedType);
-		types.put(moniker, resolvedType);
-		String newMoniker = AS2Moniker.toString(resolvedType);
-//		assert moniker.equals(newMoniker) : newMoniker + " is not equal to " + moniker;
-		if (!moniker.equals(newMoniker)) {
-			String moniker2 = AS2Moniker.toString(referredType);
-			String newMoniker2 = AS2Moniker.toString(resolvedType);
-			assert moniker.equals(newMoniker) : newMoniker + " is not equal to " + moniker;
-		} */
 		locateSpecializations(Collections.singletonList(resolvedType));
 		@SuppressWarnings("unchecked")
 		T castType = (T)resolvedType;

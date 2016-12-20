@@ -64,7 +64,6 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -92,29 +91,29 @@ import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
 
 public class XtextTestCase extends PivotTestCase
-{	
+{
 	public static interface Normalizer {
 		void denormalize();
 		void normalize();
 	}
-	
+
 	public static class EAnnotationsNormalizer implements Normalizer
 	{
 		protected final @NonNull EModelElement eModelElement;
 		protected final List<EAnnotation> oldOrder;
-		
+
 		public EAnnotationsNormalizer(@NonNull EModelElement eModelElement) {
 			this.eModelElement = eModelElement;
 			this.oldOrder = new ArrayList<EAnnotation>(eModelElement.getEAnnotations());
 		}
-		
+
 		@Override
 		public void denormalize() {
 			EList<EAnnotation> eList = eModelElement.getEAnnotations();
 			eList.clear();
 			eList.addAll(oldOrder);
 		}
-		
+
 		@Override
 		public void normalize() {
 			EList<EAnnotation> eList = eModelElement.getEAnnotations();
@@ -124,22 +123,22 @@ public class XtextTestCase extends PivotTestCase
 			eList.addAll(newOrder);
 		}
 	}
-	
+
 	public static class EAnnotationConstraintsNormalizer implements Normalizer
 	{
 		protected final @NonNull EAnnotation eAnnotation;
 		protected final @Nullable String oldConstraints;
-		
+
 		public EAnnotationConstraintsNormalizer(@NonNull EAnnotation eAnnotation) {
 			this.eAnnotation = eAnnotation;
 			this.oldConstraints = eAnnotation.getDetails().get("constraints");
 		}
-		
+
 		@Override
 		public void denormalize() {
 			eAnnotation.getDetails().put("constraints", oldConstraints);
 		}
-		
+
 		@Override
 		public void normalize() {
 			StringBuilder s1 = new StringBuilder();
@@ -156,96 +155,98 @@ public class XtextTestCase extends PivotTestCase
 			eAnnotation.getDetails().put("constraints", s1.toString());
 		}
 	}
-	
+
 	public static class EDetailsNormalizer implements Normalizer
 	{
 		protected final @NonNull EAnnotation eAnnotation;
 		protected final List<Map.Entry<String, String>> oldOrder;
-		
+
 		public EDetailsNormalizer(@NonNull EAnnotation eAnnotation) {
 			this.eAnnotation = eAnnotation;
 			this.oldOrder = new ArrayList<Map.Entry<String, String>>(eAnnotation.getDetails());
 		}
-		
+
 		@Override
 		public void denormalize() {
 			EList<Map.Entry<String, String>> eDetails = eAnnotation.getDetails();
 			eDetails.clear();
 			eDetails.addAll(oldOrder);
 		}
-		
+
 		@Override
 		public void normalize() {
 			List<Map.Entry<String, String>> eDetails = eAnnotation.getDetails();
 			List<Map.Entry<String, String>> newOrder = new ArrayList<Map.Entry<String, String>>(eDetails);
 			Collections.sort(newOrder, new Comparator<Map.Entry<String, String>>()
-				{
-					public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
-						String n1 = o1.getKey();
-						String n2 = o2.getKey();
-						return n1.compareTo(n2);
-					}
+			{
+				@Override
+				public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
+					String n1 = o1.getKey();
+					String n2 = o2.getKey();
+					return n1.compareTo(n2);
 				}
-			);
+			}
+					);
 			eDetails.clear();
 			eDetails.addAll(newOrder);
 		}
 	}
-	
-/*	public static class ENamedElementNormalizer implements Normalizer
+
+	/*	public static class ENamedElementNormalizer implements Normalizer
 	{
 		protected final @NonNull ENamedElement eNamedElement;
-		
+
 		public ENamedElementNormalizer(@NonNull ENamedElement eNamedElement) {
 			this.eNamedElement = eNamedElement;
 		}
-		
+
 		@Override
 		public void denormalize() {
 			eNamedElement.setName(eNamedElement.getName().substring(1));
 		}
-		
+
 		@Override
 		public void normalize() {
 			eNamedElement.setName("#" + eNamedElement.getName());
 		}
 	} */
-	
+
 	public static class EOperationsNormalizer implements Normalizer
 	{
 		protected final @NonNull EClass eClass;
 		protected final List<EOperation> oldOrder;
-		
+
 		public EOperationsNormalizer(@NonNull EClass eClass) {
 			this.eClass = eClass;
 			this.oldOrder = new ArrayList<EOperation>(eClass.getEOperations());
 		}
-		
+
 		@Override
 		public void denormalize() {
 			EList<EOperation> eOperations = eClass.getEOperations();
 			eOperations.clear();
 			eOperations.addAll(oldOrder);
 		}
-		
+
 		@Override
 		public void normalize() {
 			EList<EOperation> eOperations = eClass.getEOperations();
 			List<EOperation> newOrder = new ArrayList<EOperation>(eOperations);
 			Collections.sort(newOrder, new Comparator<EOperation>()
-				{
-					public int compare(EOperation o1, EOperation o2) {
-						String n1 = o1.getName();
-						String n2 = o2.getName();
-						return n1.compareTo(n2);
-					}
+			{
+				@Override
+				public int compare(EOperation o1, EOperation o2) {
+					String n1 = o1.getName();
+					String n2 = o2.getName();
+					return n1.compareTo(n2);
 				}
-			);
+			}
+					);
 			eOperations.clear();
 			eOperations.addAll(newOrder);
 		}
 	}
-	
+
 	public static class ETypedElementNormalizer implements Normalizer
 	{
 		protected final @NonNull ETypedElement eTypedElement;
@@ -253,7 +254,7 @@ public class XtextTestCase extends PivotTestCase
 		protected final int wasLower;
 		protected final boolean wasOrdered;
 		protected final boolean wasUnique;
-		
+
 		public ETypedElementNormalizer(@NonNull ETypedElement eTypedElement) {
 			this.eTypedElement = eTypedElement;
 			this.wasType = eTypedElement.getEType();
@@ -261,7 +262,7 @@ public class XtextTestCase extends PivotTestCase
 			this.wasOrdered = eTypedElement.isOrdered();
 			this.wasUnique = eTypedElement.isUnique();
 		}
-		
+
 		@Override
 		public void denormalize() {
 			if (wasType == null) {
@@ -270,7 +271,7 @@ public class XtextTestCase extends PivotTestCase
 			eTypedElement.setOrdered(wasOrdered);
 			eTypedElement.setUnique(wasUnique);
 		}
-		
+
 		@Override
 		public void normalize() {
 			EClassifier wasType2 = wasType;
@@ -289,9 +290,9 @@ public class XtextTestCase extends PivotTestCase
 	protected void assertPivotIsValid(URI pivotURI) {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		ResourceSet reloadResourceSet = ocl.getMetamodelManager().getASResourceSet();
-//		reloadResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("pivot", new EcoreResourceFactoryImpl());
+		//		reloadResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("pivot", new EcoreResourceFactoryImpl());
 		Resource reloadedPivotResource = reloadResourceSet.getResource(pivotURI, true);
-//		MetamodelManager metamodelManager = PivotUtilInternal.getMetamodelManager(reloadedPivotResource);
+		//		MetamodelManager metamodelManager = PivotUtilInternal.getMetamodelManager(reloadedPivotResource);
 		assertNoValidationErrors("Pivot reload validation problems", reloadedPivotResource);
 		unloadResourceSet(reloadResourceSet);
 		ocl.dispose();
@@ -363,21 +364,21 @@ public class XtextTestCase extends PivotTestCase
 				&& Character.isDigit((((Variable)pivotElement).getName().charAt(0)))) {
 			return false;
 		}
-//		if (pivotElement instanceof TemplateBinding) {
-//			return false;
-//		}
-//		if ((pivotElement instanceof TemplateableElement) && (((TemplateableElement)pivotElement).getTemplateBinding().size() > 0)) {
-//			return false;
-//		}
+		//		if (pivotElement instanceof TemplateBinding) {
+		//			return false;
+		//		}
+		//		if ((pivotElement instanceof TemplateableElement) && (((TemplateableElement)pivotElement).getTemplateBinding().size() > 0)) {
+		//			return false;
+		//		}
 		return true;
 	}
 
-//	protected static boolean hasOptionalCS(MonikeredElement pivotElement) {
-//		if ((pivotElement instanceof LetExp) && (pivotElement.eContainer() instanceof LetExp)) {
-//			return false;
-//		}
-//		return true;
-//	}
+	//	protected static boolean hasOptionalCS(MonikeredElement pivotElement) {
+	//		if ((pivotElement instanceof LetExp) && (pivotElement.eContainer() instanceof LetExp)) {
+	//			return false;
+	//		}
+	//		return true;
+	//	}
 
 	public static boolean hasCorrespondingPivot(ModelElementCS csElement) {
 		if (csElement instanceof TupleTypeCS) {
@@ -386,9 +387,9 @@ public class XtextTestCase extends PivotTestCase
 		if (csElement instanceof TuplePartCS) {		// FIXME orphanage ambiguity
 			return false;
 		}
-//		if (csElement instanceof TypeRefCS) {
-//			return false;
-//		}
+		//		if (csElement instanceof TypeRefCS) {
+		//			return false;
+		//		}
 		if (csElement instanceof InfixExpCS) {
 			return false;
 		}
@@ -455,7 +456,7 @@ public class XtextTestCase extends PivotTestCase
 		}
 		return true;
 	}
-	
+
 	protected static boolean isValidPivot(Element pivotElement) {
 		if (pivotElement instanceof org.eclipse.ocl.pivot.Package) {
 			if ((pivotElement.eContainer() == null) && PivotConstants.ORPHANAGE_NAME.equals(((NamedElement) pivotElement).getName())) {
@@ -469,7 +470,7 @@ public class XtextTestCase extends PivotTestCase
 			return false;
 		}
 		if (pivotElement instanceof TupleType) {
-			return PivotUtilInternal.isLibraryType((TupleType)pivotElement);
+			return false;
 		}
 		if (pivotElement instanceof Type) {
 			EObject eContainer = pivotElement.eContainer();
@@ -487,7 +488,7 @@ public class XtextTestCase extends PivotTestCase
 		}
 		return true;
 	}
-	
+
 	public @NonNull String createEcoreString(@NonNull OCL ocl, @NonNull String fileName, @NonNull String fileContent, boolean assignIds) throws IOException {
 		String inputName = fileName + ".oclinecore";
 		createOCLinEcoreFile(inputName, fileContent);
@@ -498,7 +499,7 @@ public class XtextTestCase extends PivotTestCase
 			ResourceSet resourceSet2 = ocl.getResourceSet();
 			xtextResource = ClassUtil.nonNullState((BaseCSResource) resourceSet2.getResource(inputURI, true));
 			assertNoResourceErrors("Load failed", xtextResource);
-//			adapter = xtextResource.getCS2ASAdapter(null);
+			//			adapter = xtextResource.getCS2ASAdapter(null);
 			Resource asResource = xtextResource.getASResource();
 			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
 			assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
@@ -526,18 +527,18 @@ public class XtextTestCase extends PivotTestCase
 		ResourceSet resourceSet = new ResourceSetImpl();
 		ProjectMap.initializeURIResourceMap(resourceSet);
 		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
-    	if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-    		uriMap.putAll(EcorePlugin.computePlatformURIMap());
-    	}
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			uriMap.putAll(EcorePlugin.computePlatformURIMap());
+		}
 		Resource ecoreResource = ClassUtil.nonNullState(resourceSet.getResource(inputURI, true));
 		mapOwnURI(ecoreResource);
-//		List<String> conversionErrors = new ArrayList<String>();
-//		RootPackageCS documentCS = Ecore2OCLinEcore.importFromEcore(resourceSet, null, ecoreResource);
-//		Resource eResource = documentCS.eResource();
+		//		List<String> conversionErrors = new ArrayList<String>();
+		//		RootPackageCS documentCS = Ecore2OCLinEcore.importFromEcore(resourceSet, null, ecoreResource);
+		//		Resource eResource = documentCS.eResource();
 		assertNoResourceErrors("Load failed", ecoreResource);
-//		Resource xtextResource = resourceSet.createResource(outputURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
-//		XtextResource xtextResource = (XtextResource) resourceSet.createResource(outputURI);
-//		xtextResource.getContents().add(documentCS);
+		//		Resource xtextResource = resourceSet.createResource(outputURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
+		//		XtextResource xtextResource = (XtextResource) resourceSet.createResource(outputURI);
+		//		xtextResource.getContents().add(documentCS);
 		return ecoreResource;
 	}
 
@@ -564,30 +565,30 @@ public class XtextTestCase extends PivotTestCase
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-    	TestCaseAppender.INSTANCE.install();
+		TestCaseAppender.INSTANCE.install();
 		TestUtil.doCompleteOCLSetup();
 		TestUtil.doOCLinEcoreSetup();
 		TestUtil.doOCLstdlibSetup();
 		ResourceSet resourceSet = new ResourceSetImpl();
 		ProjectMap.initializeURIResourceMap(resourceSet);
 		Map<URI, URI> uriMap = resourceSet.getURIConverter().getURIMap();
-    	if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-    		uriMap.putAll(EcorePlugin.computePlatformURIMap());
-    	}
-//		for (Map.Entry<URI,URI> entry : uriMap.entrySet()) {
-//			System.out.println(entry.getKey() + " => " + entry.getValue());
-//		}
-//		URI platformOCLstdlibURI = URI.createURI(StandardDocumentAttribution.OCLSTDLIB_URI);
-//		URI projectURI = getProjectFileURI("dummy");
-//		URI projectOCLstdlibURI = URI.createURI("oclstdlib.oclstdlib").resolve(projectURI);
-//		uriMap.put(platformOCLstdlibURI, projectOCLstdlibURI);
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			uriMap.putAll(EcorePlugin.computePlatformURIMap());
+		}
+		//		for (Map.Entry<URI,URI> entry : uriMap.entrySet()) {
+		//			System.out.println(entry.getKey() + " => " + entry.getValue());
+		//		}
+		//		URI platformOCLstdlibURI = URI.createURI(StandardDocumentAttribution.OCLSTDLIB_URI);
+		//		URI projectURI = getProjectFileURI("dummy");
+		//		URI projectOCLstdlibURI = URI.createURI("oclstdlib.oclstdlib").resolve(projectURI);
+		//		uriMap.put(platformOCLstdlibURI, projectOCLstdlibURI);
 		OCLstdlib.install();
-        OCLDelegateDomain.initialize(null);
+		OCLDelegateDomain.initialize(null);
 	}
 
 	@Override

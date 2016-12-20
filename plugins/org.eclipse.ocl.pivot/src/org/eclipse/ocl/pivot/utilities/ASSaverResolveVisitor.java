@@ -20,12 +20,15 @@ import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 
@@ -41,13 +44,11 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
-		List<org.eclipse.ocl.pivot.Class> superClasses = object.getSuperClasses();
+		List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = PivotUtilInternal.getSuperClassesList(object);
 		for (int i = 0; i < superClasses.size(); i++) {
 			org.eclipse.ocl.pivot.Class referredClass = superClasses.get(i);
-			if (referredClass != null) {
-				org.eclipse.ocl.pivot.Class resolvedClass = context.resolveType(referredClass);
-				superClasses.set(i, resolvedClass);
-			}
+			org.eclipse.ocl.pivot.Class resolvedClass = context.resolveType(referredClass);
+			superClasses.set(i, resolvedClass);
 		}
 		return super.visitClass(object);
 	}
@@ -130,10 +131,22 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitOperationCallExp(@NonNull OperationCallExp object) {	// FIXME Obsolete once referredOperation is not a specialization
-		Operation referredOperation = ClassUtil.nonNullModel(object.getReferredOperation());
+		Operation referredOperation = PivotUtil.getReferredOperation(object);
 		Operation resolvedOperation = context.resolveOperation(referredOperation);
-		object.setReferredOperation(resolvedOperation);
+		if (resolvedOperation != referredOperation) {
+			object.setReferredOperation(resolvedOperation);
+		}
 		return super.visitOperationCallExp(object);
+	}
+
+	@Override
+	public Object visitPropertyCallExp(@NonNull PropertyCallExp object) {
+		Property referredProperty = PivotUtil.getReferredProperty(object);
+		Property resolvedProperty = context.resolveProperty(referredProperty);
+		if (resolvedProperty != referredProperty) {
+			object.setReferredProperty(resolvedProperty);
+		}
+		return super.visitPropertyCallExp(object);
 	}
 
 	@Override

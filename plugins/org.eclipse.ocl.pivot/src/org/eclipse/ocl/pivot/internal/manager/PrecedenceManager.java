@@ -146,7 +146,7 @@ public class PrecedenceManager
 		//			compilePrecedencePackage(errors, nestedPackage);
 		//		}
 		for (org.eclipse.ocl.pivot.Class type : library.getOwnedClasses()) {
-			if ((type != null) && PivotUtilInternal.isLibraryType(type)) {
+			if ((type != null) && !PivotUtilInternal.isOrphanType(type)) {
 				compilePrecedenceType(errors, type);
 			}
 		}

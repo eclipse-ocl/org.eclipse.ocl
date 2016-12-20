@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -49,7 +51,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 			return listFeatures;
 		}
 	}
-	
+
 	public PivotSaveImpl(XMLHelper helper) {
 		super(helper);
 	}
@@ -64,7 +66,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 		ASSaver asSaver = new ASSaver(asResource);
 		AS2XMIid as2xmIid = new AS2XMIid();
 		asSaver.localizeSpecializations();
-		Map<String, Object> saveOptions = new HashMap<String, Object>();
+		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<>();
 		if (options != null) {
 			for (Object key : options.keySet()) {
 				saveOptions.put(String.valueOf(key), options.get(key));
@@ -74,7 +76,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 		if ((optionNormalizeContents != null) && Boolean.valueOf(optionNormalizeContents.toString())) {
 			asSaver.normalizeContents();
 			int capacity = INDEX_LOOKUP+1;
-			List<Object> lookupTable = new ArrayList<Object>(capacity);
+			List<@Nullable Object> lookupTable = new ArrayList<>(capacity);
 			for (int i = 0; i < capacity; i++) {
 				if (i == INDEX_LOOKUP) {
 					lookupTable.add(new Lookup());
@@ -83,9 +85,9 @@ public final class PivotSaveImpl extends XMISaveImpl
 					lookupTable.add(null);
 				}
 			}
-			saveOptions.put(XMLResource.OPTION_USE_CACHED_LOOKUP_TABLE, lookupTable);
+			saveOptions.put(ClassUtil.nonNullState(XMLResource.OPTION_USE_CACHED_LOOKUP_TABLE), lookupTable);
 		}
-    	ResourceSet asResourceSet = asResource.getResourceSet();
+		ResourceSet asResourceSet = asResource.getResourceSet();
 		if (asResourceSet != null) {
 			as2xmIid.assignIds(asResourceSet, saveOptions);
 		}
