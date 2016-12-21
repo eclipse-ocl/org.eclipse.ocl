@@ -1704,7 +1704,7 @@
     </eOperations>
     <eOperations name="validateSafeSourceCanBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(ownedSource &lt;> null) and isSafe implies not ownedSource?.isRequired&#xA;"/>
+        <details key="body" value="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
@@ -2005,7 +2005,7 @@
     </eOperations>
     <eOperations name="validateSafeSourceCanBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(ownedSource &lt;> null) and isSafe implies not ownedSource?.isRequired&#xA;"/>
+        <details key="body" value="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SafeSourceCanBeNull"/>
@@ -2020,7 +2020,7 @@
     </eOperations>
     <eOperations name="validateUnsafeSourceCanNotBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="(ownedSource &lt;> null) and not isSafe implies ownedSource?.isRequired&#xA;&#xA;"/>
+        <details key="body" value="(ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull()&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="UnsafeSourceCanNotBeNull"/>

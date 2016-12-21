@@ -787,7 +787,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;let selfType : Type = operation?.owningClass in&#xA;&#x9;Sequence{1..ownedArguments->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter?.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter?.isTypeof then Class else parameterType.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;argument?.type.conformsTo(requiredType))&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.OperationCallExp.SafeSourceCanBeNull" isCallable="true" name="SafeSourceCanBeNull">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and isSafe implies not ownedSource?.isRequired&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
       </ownedInvariants>
       <ownedProperties xmi:id="p.pivot.OperationCallExp.isVirtual" defaultValueString="true" name="isVirtual" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.OperationCallExp.ownedArguments" isComposite="true" name="ownedArguments" opposite="#p.pivot.OCLExpression.OperationCallExp"
@@ -972,10 +972,10 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="not referredProperty?.isStatic implies &#xA;&#x9;ownedSource?.type.conformsTo(getSpecializedReferredPropertyOwningType())&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.PropertyCallExp.SafeSourceCanBeNull" isCallable="true" name="SafeSourceCanBeNull">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and isSafe implies not ownedSource?.isRequired&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and isSafe implies not ownedSource.isNonNull()&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.PropertyCallExp.UnsafeSourceCanNotBeNull" isCallable="true" name="UnsafeSourceCanNotBeNull">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and not isSafe implies ownedSource?.isRequired&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedSource &lt;> null) and not isSafe implies ownedSource.isNonNull()&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedOperations xmi:id="o.pivot.PropertyCallExp.getSpecializedReferredPropertyOwningType" name="getSpecializedReferredPropertyOwningType"
           type="#T.pivot.Class">
