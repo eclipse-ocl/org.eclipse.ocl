@@ -349,7 +349,7 @@ context OperationCallExp
 /** There must be exactly as many arguments as the referred operation has parameters. */
 inv ArgumentCount: ownedArguments->size() = referredOperation?.ownedParameters->size()
 /** Safe navigation is not necessary when the source cannot be null. */
-inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource?.isRequired
+inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource.isNonNull()
 /** Safe navigation is necessary when the source could be null. -- unless infix with an OclVoid overload */
 --inv UnsafeSourceCanNotBeNull: (ownedSource <> null) and not isSafe implies ownedSource?.isRequired
 
@@ -378,9 +378,9 @@ inv NonStaticSourceTypeIsConformant: not referredProperty?.isStatic implies
 /** The type of the call expression is the type of the referred property. */
 inv CompatibleResultType: type = getSpecializedReferredPropertyType()
 /** Safe navigation is not necessary when the source cannot be null. */
-inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource?.isRequired
+inv SafeSourceCanBeNull: (ownedSource <> null) and isSafe implies not ownedSource.isNonNull()
 /** Safe navigation is necessary when the source could be null. */
-inv UnsafeSourceCanNotBeNull: (ownedSource <> null) and not isSafe implies ownedSource?.isRequired
+inv UnsafeSourceCanNotBeNull: (ownedSource <> null) and not isSafe implies ownedSource.isNonNull()
 
 --inv StaticSourceIsNull: referredProperty.isStatic implies source.oclAsType(Type).conformsTo(getSpecializedReferredPropertyOwningType())
 
