@@ -140,7 +140,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 import com.google.common.collect.Iterables;
 
-public class PivotMetamodelManager implements MetamodelManagerInternal.MetamodelManagerInternalExtension, Adapter.Internal
+public class PivotMetamodelManager implements MetamodelManagerInternal.MetamodelManagerInternalExtension2, Adapter.Internal
 {
 	public class CompleteTypeOperationsIterable extends CompleteElementIterable<org.eclipse.ocl.pivot.Class, @NonNull Operation>
 	{
@@ -298,6 +298,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * Lazily computed, eagerly invalidated analysis of final classes and operations.
 	 */
 	private @Nullable FinalAnalysis finalAnalysis = null;
+
+	/**
+	 * Lazily computed, eagerly invalidated static analysis of the control flow within invariants and bodies.
+	 */
+	private @Nullable Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis = null;
 
 	private @Nullable Map<Resource,External2AS> es2ases = null;
 
@@ -1172,12 +1177,30 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return es2ases != null ? es2ases.get(esResource) : null;
 	}
 
+	@Override
 	public @NonNull FinalAnalysis getFinalAnalysis() {
 		FinalAnalysis finalAnalysis2 = finalAnalysis;
 		if (finalAnalysis2 == null) {
 			finalAnalysis = finalAnalysis2 = new FinalAnalysis(completeModel);
 		}
 		return finalAnalysis2;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression) {
+		Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis2 = oclExpression2flowAnalysis;
+		if (oclExpression2flowAnalysis2 == null) {
+			oclExpression2flowAnalysis2 = oclExpression2flowAnalysis = new HashMap<>();
+		}
+		FlowAnalysis flowAnalysis = oclExpression2flowAnalysis2.get(oclExpression);
+		if (flowAnalysis == null) {
+			flowAnalysis = new FlowAnalysis(environmentFactory, oclExpression);
+			oclExpression2flowAnalysis2.put(oclExpression, flowAnalysis);
+		}
+		return flowAnalysis;
 	}
 
 	@Override
@@ -2155,6 +2178,22 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				es2as.dispose();
 			}
 		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public void resetFinalAnalysis() {
+		finalAnalysis = null;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public void resetFlowAnalysis() {
+		oclExpression2flowAnalysis = null;
 	}
 
 	public void setASmetamodel(org.eclipse.ocl.pivot.Package asPackage) {

@@ -23,7 +23,7 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 	protected class Iterator implements java.util.Iterator<@NonNull ElementId>
 	{
 		private int index = 0;
-		
+
 		@Override
 		public boolean hasNext() {
 			return index < elementIds.length;
@@ -67,7 +67,7 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 	}
 
 	@Override
-	public java.util.Iterator<ElementId> iterator() {
+	public java.util.Iterator<@NonNull ElementId> iterator() {
 		return new Iterator();
 	}
 

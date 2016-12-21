@@ -55,8 +55,8 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * @generated
  */
 public class VariableExpImpl
-		extends OCLExpressionImpl
-		implements VariableExp {
+extends OCLExpressionImpl
+implements VariableExp {
 
 	/**
 	 * The default value of the '{@link #isIsImplicit() <em>Is Implicit</em>}' attribute.

@@ -10,11 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 
 /**
  * BindingsId provides a hashable list of elementIds suitable for use when indexing specializations.
  */
-public interface BindingsId extends IndexableIterable<ElementId>
+public interface BindingsId extends IndexableIterable<@NonNull ElementId>
 {
 }

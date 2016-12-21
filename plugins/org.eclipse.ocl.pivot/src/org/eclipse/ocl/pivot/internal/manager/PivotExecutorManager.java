@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.LazyModelManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
 /**
  * A PivotExecutorManager instance provides the bridge between a conventional EMF execution context
@@ -54,6 +55,24 @@ public class PivotExecutorManager extends ExecutorManager
 		return idResolver.getDynamicTypeOf(value);
 	}
 
+	/**
+	 * @since 1.1
+	 */
+	@Override
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
+		return environmentFactory;
+	}
+
+	@Override
+	public @NonNull IdResolver getIdResolver() {
+		return idResolver;
+	}
+
+	@Override
+	public @NonNull MetamodelManager getMetamodelManager() {
+		return environmentFactory.getMetamodelManager();
+	}
+
 	@Override
 	public @NonNull ModelManager getModelManager() {
 		ModelManager modelManager2 = modelManager;
@@ -69,18 +88,13 @@ public class PivotExecutorManager extends ExecutorManager
 							Type elementType = idResolver.getInheritance(eClass).getPivotClass();
 							return elementType.conformsTo(standardLibrary, type);
 						}
-						
+
 					};
 					modelManager = modelManager2;
 				}
 			}
 		}
 		return modelManager2;
-	}
-
-	@Override
-	public @NonNull IdResolver getIdResolver() {
-		return idResolver;
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public class ParametersIdImpl implements ParametersId, WeakHashMapOfListOfWeakRe
 	protected class Iterator implements java.util.Iterator<@NonNull TypeId>
 	{
 		private int index = 0;
-		
+
 		@Override
 		public boolean hasNext() {
 			return index < typeIds.length;
@@ -75,7 +75,7 @@ public class ParametersIdImpl implements ParametersId, WeakHashMapOfListOfWeakRe
 	}
 
 	@Override
-	public java.util.Iterator<TypeId> iterator() {
+	public java.util.Iterator<@NonNull TypeId> iterator() {
 		return new Iterator();
 	}
 

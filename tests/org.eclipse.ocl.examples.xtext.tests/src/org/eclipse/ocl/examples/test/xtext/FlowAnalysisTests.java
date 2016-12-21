@@ -1,0 +1,218 @@
+/*******************************************************************************
+ * Copyright (c) 2010, 2016 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.ocl.examples.test.xtext;
+
+import java.io.IOException;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.pivot.tests.TestOCL;
+import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
+import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.IfExp;
+import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NullLiteralExp;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.PropertyCallExp;
+import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
+import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
+import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.OCL;
+import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
+import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
+
+/**
+ * Tests the isNull/isNotNull/isNotKnown results of the FlowAnalysis.
+ */
+@SuppressWarnings("null")
+public class FlowAnalysisTests extends XtextTestCase
+{
+	public class MyOCL extends TestOCL
+	{
+		public MyOCL() {
+			super("FlowAnalysisTests", getName(), OCL.NO_PROJECTS);
+		}
+
+		public void assertIsNonNull(@NonNull OCLExpression asExpression) {
+			FlowAnalysis flowAnalysis = getFlowAnalysis(asExpression);
+			assertFalse("Expected not-isNull for '" + asExpression + "'", flowAnalysis.isNull());
+			assertTrue("Expected isNonNull for '" + asExpression + "'", flowAnalysis.isNonNull());
+		}
+
+		public void assertIsNotKnown(@NonNull OCLExpression asExpression) {
+			FlowAnalysis flowAnalysis = getFlowAnalysis(asExpression);
+			assertFalse("Expected not-isNull for '" + asExpression + "'", flowAnalysis.isNull());
+			assertFalse("Expected not-isNonNull for '" + asExpression + "'", flowAnalysis.isNonNull());
+		}
+
+		public void assertIsNull(@NonNull OCLExpression asExpression) {
+			FlowAnalysis flowAnalysis = getFlowAnalysis(asExpression);
+			assertTrue("Expected isNull for '" + asExpression + "'", flowAnalysis.isNull());
+			assertFalse("Expected not-isNonNull for '" + asExpression + "'", flowAnalysis.isNonNull());
+		}
+
+		protected @NonNull OCLExpression createTestModel(@NonNull String invariantName, @NonNull String invariantBody) throws IOException, ParserException {
+			String testContext =
+					"package deductions : ded = 'http://deductions'\n" +
+							"{\n" +
+							"  class Deductions\n" +
+							"  {\n" +
+							"    property x : Integer[?];\n" +
+							"    invariant " + invariantName + ": " + invariantBody + ";\n" +
+							"  }\n" +
+							"}";
+			String fileName = "FlowAnalysis_" + invariantName;
+			createOCLinEcoreFile(fileName + ".oclinecore", testContext);
+			Resource asResource = doLoad_Concrete(fileName, "oclinecore");
+			Model model = PivotUtil.getModel(asResource);
+			org.eclipse.ocl.pivot.Package deductionsPackage = NameUtil.getNameable(model.getOwnedPackages(), "deductions");
+			org.eclipse.ocl.pivot.Class deductionsClass = NameUtil.getNameable(deductionsPackage.getOwnedClasses(), "Deductions");
+			Constraint asInvariant = NameUtil.getNameable(deductionsClass.getOwnedInvariants(), invariantName);
+			return getMetamodelManager().parseSpecification(asInvariant.getOwnedSpecification()).getOwnedBody();
+		}
+
+		public Resource doLoad_Concrete(@NonNull String stem, @NonNull String extension) throws IOException {
+			String inputName = stem + "." + extension;
+			String pivotName = inputName + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
+			URI inputURI = getProjectFileURI(inputName);
+			URI pivotURI = getProjectFileURI(pivotName);
+			BaseCSResource xtextResource = (BaseCSResource) getResourceSet().createResource(inputURI);
+			xtextResource.setProjectManager(getProjectMap());
+			JavaClassScope.getAdapter(xtextResource,  getClass().getClassLoader());
+			getEnvironmentFactory().adapt(xtextResource);
+			xtextResource.load(null);
+			assertNoResourceErrors("Load failed", xtextResource);
+			CS2AS cs2as = xtextResource.findCS2AS();
+			if (cs2as != null) {
+				ASResource asResource = cs2as.getASResource();
+				assertNoValidationErrors("Loaded pivot", asResource);
+			}
+			Resource asResource = xtextResource.getASResource();
+			assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
+			assertNoResourceErrors("Save failed", xtextResource);
+			asResource.setURI(pivotURI);
+			assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
+			asResource.save(null);
+			return asResource;
+		}
+
+		protected FlowAnalysis getFlowAnalysis(@NonNull OCLExpression asExpression) {
+			MetamodelManagerInternal metamodelManager = getMetamodelManager();
+			return ((MetamodelManagerInternal.MetamodelManagerInternalExtension2)metamodelManager).getFlowAnalysis(asExpression);
+		}
+	}
+
+	public void testFlowAnalysis_SimpleProperty() throws Exception {
+		MyOCL ocl = new MyOCL();
+		OperationCallExp asBody = (OperationCallExp) ocl.createTestModel("SimpleProperty",
+				"x <> null");
+		PropertyCallExp asPropertyCallExp = (PropertyCallExp) PivotUtil.getOwnedSource(asBody);
+		NullLiteralExp asNullLiteralExp = (NullLiteralExp) PivotUtil.getOwnedArgument(asBody, 0);
+		ocl.assertIsNotKnown(asPropertyCallExp);
+		ocl.assertIsNull(asNullLiteralExp);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_SimpleNonNullVariable() throws Exception {
+		MyOCL ocl = new MyOCL();
+		LetExp asLetExp = (LetExp) ocl.createTestModel("SimpleNonNullVariable",
+				"let v : Integer[?] = 1 in v <> null");
+		OperationCallExp asIn = (OperationCallExp) PivotUtil.getOwnedIn(asLetExp);
+		VariableExp asVariableExp = (VariableExp) PivotUtil.getOwnedSource(asIn);
+		NullLiteralExp asNullLiteralExp = (NullLiteralExp) PivotUtil.getOwnedArgument(asIn, 0);
+		ocl.assertIsNonNull(asVariableExp);
+		ocl.assertIsNull(asNullLiteralExp);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_SimpleNullVariable() throws Exception {
+		MyOCL ocl = new MyOCL();
+		LetExp asLetExp = (LetExp) ocl.createTestModel("SimpleNullVariable",
+				"let v : Integer[?] = null in v <> null");
+		OperationCallExp asIn = (OperationCallExp) PivotUtil.getOwnedIn(asLetExp);
+		VariableExp asVariableExp = (VariableExp) PivotUtil.getOwnedSource(asIn);
+		NullLiteralExp asNullLiteralExp = (NullLiteralExp) PivotUtil.getOwnedArgument(asIn, 0);
+		ocl.assertIsNull(asVariableExp);
+		ocl.assertIsNull(asNullLiteralExp);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_SimpleNotKnownVariable() throws Exception {
+		MyOCL ocl = new MyOCL();
+		LetExp asLetExp = (LetExp) ocl.createTestModel("SimpleNotKnownVariable",
+				"let v : Integer[?] = x in v <> null");
+		OperationCallExp asIn = (OperationCallExp) PivotUtil.getOwnedIn(asLetExp);
+		VariableExp asVariableExp = (VariableExp) PivotUtil.getOwnedSource(asIn);
+		NullLiteralExp asNullLiteralExp = (NullLiteralExp) PivotUtil.getOwnedArgument(asIn, 0);
+		ocl.assertIsNotKnown(asVariableExp);
+		ocl.assertIsNull(asNullLiteralExp);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_SimpleIfGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		LetExp asLetExp = (LetExp) ocl.createTestModel("SimpleIfGuard",
+				"let v : Integer[?] = x in if v <> null then v.toString() else v.toString() endif");
+		IfExp asIn = (IfExp) PivotUtil.getOwnedIn(asLetExp);
+		OperationCallExp asCondition = (OperationCallExp) PivotUtil.getOwnedCondition(asIn);
+		OperationCallExp asThen = (OperationCallExp) PivotUtil.getOwnedThen(asIn);
+		OperationCallExp asElse = (OperationCallExp) PivotUtil.getOwnedElse(asIn);
+		VariableExp asConditionVariableExp = (VariableExp) PivotUtil.getOwnedSource(asCondition);
+		VariableExp asThenVariableExp = (VariableExp) PivotUtil.getOwnedSource(asThen);
+		VariableExp asElseVariableExp = (VariableExp) PivotUtil.getOwnedSource(asElse);
+		ocl.assertIsNotKnown(asConditionVariableExp);
+		ocl.assertIsNonNull(asThenVariableExp);
+		ocl.assertIsNull(asElseVariableExp);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_ImpliesGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		LetExp asLetExp = (LetExp) ocl.createTestModel("ImpliesGuard",
+				"let v : Integer[?] = x in v <> null implies v.toString() <> null");
+		OperationCallExp asImplies = (OperationCallExp) PivotUtil.getOwnedIn(asLetExp);
+		OperationCallExp asSource = (OperationCallExp) PivotUtil.getOwnedSource(asImplies);
+		OperationCallExp asArgument1 = (OperationCallExp) PivotUtil.getOwnedArgument(asImplies, 0);
+		OperationCallExp asArgument2 = (OperationCallExp) PivotUtil.getOwnedSource(asArgument1);
+		VariableExp asSourceVariableExp = (VariableExp) PivotUtil.getOwnedSource(asSource);
+		VariableExp asArgumentVariableExp = (VariableExp) PivotUtil.getOwnedSource(asArgument2);
+		ocl.assertIsNotKnown(asSourceVariableExp);
+		ocl.assertIsNonNull(asArgumentVariableExp);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_DoubleIfGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		LetExp asLetExp = (LetExp) ocl.createTestModel("DoubleIfGuard",
+				"let v : Integer[?] = x in if v <> null and x <> null then v.toString() else v.toString() endif");
+		IfExp asIn = (IfExp) PivotUtil.getOwnedIn(asLetExp);
+		OperationCallExp asCondition1 = (OperationCallExp) PivotUtil.getOwnedCondition(asIn);
+		OperationCallExp asCondition1left = (OperationCallExp) PivotUtil.getOwnedSource(asCondition1);
+		OperationCallExp asThen = (OperationCallExp) PivotUtil.getOwnedThen(asIn);
+		OperationCallExp asElse = (OperationCallExp) PivotUtil.getOwnedElse(asIn);
+		VariableExp asConditionVariableExp = (VariableExp) PivotUtil.getOwnedSource(asCondition1left);
+		VariableExp asThenVariableExp = (VariableExp) PivotUtil.getOwnedSource(asThen);
+		VariableExp asElseVariableExp = (VariableExp) PivotUtil.getOwnedSource(asElse);
+		ocl.assertIsNotKnown(asConditionVariableExp);
+		ocl.assertIsNonNull(asThenVariableExp);
+		ocl.assertIsNotKnown(asElseVariableExp);
+		ocl.dispose();
+	}
+}

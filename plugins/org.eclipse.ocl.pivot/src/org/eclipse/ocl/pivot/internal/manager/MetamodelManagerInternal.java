@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -45,7 +46,18 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	{
 		@NonNull LibraryProperty getImplementation(@Nullable Element asNavigationExp, @Nullable Object sourceValue, @NonNull Property property);
 	}
-	
+
+	/**
+	 * @since 1.3
+	 */
+	public interface MetamodelManagerInternalExtension2 extends MetamodelManagerInternalExtension
+	{
+		@NonNull FinalAnalysis getFinalAnalysis();
+		@NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression);
+		void resetFinalAnalysis();
+		void resetFlowAnalysis();
+	}
+
 	void addClassLoader(@NonNull ClassLoader classLoader);
 
 	void addExternal2AS(@NonNull External2AS external2as);
@@ -62,13 +74,13 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	@Nullable ParserContext createParserContext(@NonNull Element element, Object... todoParameters);
 
 	org.eclipse.ocl.pivot.@Nullable Package getASmetamodel();
-	
+
 	@NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType);
 
 	org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull String collectionTypeName, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType);
-	
+
 	@Override
 	@NonNull CompleteModelInternal getCompleteModel();
 
@@ -78,7 +90,7 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 
 	@Nullable GenPackage getGenPackage(@NonNull String nsURI);
-	
+
 
 	org.eclipse.ocl.pivot.@Nullable Class getPrimaryType(@NonNull String nsURI, @NonNull String path, String... extraPath);
 

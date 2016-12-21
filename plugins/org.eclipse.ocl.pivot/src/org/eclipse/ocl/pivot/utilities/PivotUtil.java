@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -963,6 +964,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull OCLExpression getOwnedArgument(@NonNull OperationCallExp object, int index) {
+		return ClassUtil.nonNullState(object.getOwnedArguments().get(index));
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull Iterable<@NonNull OCLExpression> getOwnedArguments(@NonNull OperationCallExp operationCallExp) {
 		return ClassUtil.nullFree(operationCallExp.getOwnedArguments());
 	}
@@ -979,6 +987,34 @@ public class PivotUtil
 	 */
 	public static @NonNull Iterable<@NonNull Operation> getOwnedClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ClassUtil.nullFree(asClass.getOwnedOperations());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLExpression getOwnedCondition(@NonNull IfExp ifExp) {
+		return ClassUtil.nonNullState(ifExp.getOwnedCondition());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLExpression getOwnedElse(@NonNull IfExp ifExp) {
+		return ClassUtil.nonNullState(ifExp.getOwnedElse());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLExpression getOwnedIn(@NonNull LetExp letExp) {
+		return ClassUtil.nonNullState(letExp.getOwnedIn());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLExpression getOwnedInit(@NonNull Variable variable) {
+		return ClassUtil.nonNullState(variable.getOwnedInit());
 	}
 
 	/**
@@ -1035,6 +1071,20 @@ public class PivotUtil
 	 */
 	public static @NonNull OCLExpression getOwnedSource(@NonNull CallExp object) {
 		return ClassUtil.nonNullState(object.getOwnedSource());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLExpression getOwnedThen(@NonNull IfExp ifExp) {
+		return ClassUtil.nonNullState(ifExp.getOwnedThen());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull /*Let*/Variable getOwnedVariable(@NonNull LetExp letExp) {
+		return ClassUtil.nonNullState(letExp.getOwnedVariable());
 	}
 
 	/**
@@ -1133,6 +1183,13 @@ public class PivotUtil
 		else {
 			throw new IllegalStateException();
 		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull VariableDeclaration getReferredVariable(@NonNull VariableExp variableExp) {
+		return ClassUtil.nonNullState(variableExp.getReferredVariable());
 	}
 
 	/**

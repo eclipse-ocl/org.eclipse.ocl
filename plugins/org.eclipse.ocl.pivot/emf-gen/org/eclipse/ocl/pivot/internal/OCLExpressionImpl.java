@@ -29,12 +29,15 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -106,30 +109,6 @@ implements OCLExpression {
 		typeValue = newTypeValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.OCL_EXPRESSION__TYPE_VALUE, oldTypeValue, typeValue));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * @since 1.3
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isNonNull()
-	{
-		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!OCLExpression!isNonNull()
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * @since 1.3
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isNull()
-	{
-		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!OCLExpression!isNull()
 	}
 
 	/**
@@ -353,6 +332,30 @@ implements OCLExpression {
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitOCLExpression(this);
+	}
+
+	/**
+	 * @since 1.3
+	 * @generated NOT
+	 */
+	@Override
+	public boolean isNonNull() {
+		Executor executor = PivotUtilInternal.getExecutor(this);
+		EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
+		FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, this);
+		return flowAnalysis.isNonNull();
+	}
+
+	/**
+	 * @since 1.3
+	 * @generated NOT
+	 */
+	@Override
+	public boolean isNull() {
+		Executor executor = PivotUtilInternal.getExecutor(this);
+		EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
+		FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, this);
+		return flowAnalysis.isNull();
 	}
 } //OCLExpressionImpl
 
