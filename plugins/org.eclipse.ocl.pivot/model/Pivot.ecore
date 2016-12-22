@@ -991,7 +991,7 @@
     </eOperations>
     <eOperations name="validateAnyTypeIsSourceElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'any' implies type = ownedSource?.type?.oclAsType(CollectionType).elementType&#xA;&#xA;"/>
+        <details key="body" value="name = 'any' implies type = ownedSource?.type?.oclAsType(CollectionType)?.elementType&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="AnyTypeIsSourceElementType"/>
@@ -1006,7 +1006,7 @@
     </eOperations>
     <eOperations name="validateClosureBodyElementTypeIsIteratorType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'closure' implies&#xA;ownedBody.type.oclAsType(CollectionType).elementType.conformsTo(ownedIterators->at(1).type)&#xA;&#xA;"/>
+        <details key="body" value="&#xA;&#x9;name = 'closure' implies&#xA;&#x9;&#x9;let bodyElementType = ownedBody.type.oclAsType(CollectionType).elementType in &#xA;&#x9;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;&#x9;&#x9;bodyElementType.conformsTo(iteratorType)&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureBodyElementTypeIsIteratorType"/>
@@ -1337,7 +1337,7 @@
     </eOperations>
     <eOperations name="validateCompatibleTypeForInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit &lt;> null implies ownedInit?.type?.conformsTo(type)&#xA;"/>
+        <details key="body" value="ownedInit &lt;> null implies ownedInit.type?.conformsTo(type)&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleTypeForInitializer"/>
@@ -1689,7 +1689,7 @@
     </eOperations>
     <eOperations name="validateArgumentTypeIsConformant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;let selfType : Type = operation?.owningClass in&#xA;&#x9;Sequence{1..ownedArguments->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter?.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter?.isTypeof then Class else parameterType.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;argument?.type.conformsTo(requiredType))&#xA;&#xA;"/>
+        <details key="body" value="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;let selfType : Type = operation?.owningClass in&#xA;&#x9;Sequence{1..ownedArguments->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;argument.type.conformsTo(requiredType))&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ArgumentTypeIsConformant"/>
@@ -2125,7 +2125,7 @@
     </eOperations>
     <eOperations name="validateCompatibleTypeForInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit &lt;> null implies ownedInit?.type?.conformsTo(type)&#xA;"/>
+        <details key="body" value="ownedInit &lt;> null implies ownedInit.type?.conformsTo(type)&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleTypeForInitializer"/>
@@ -2236,7 +2236,7 @@
     </eOperations>
     <eOperations name="validateInitializesAllClassProperties" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''}.status else &#xA;&#x9;let partProperties = ownedParts.referredProperty->asSet() in&#xA;&#x9;let allProperties = type.oclAsType(Class)->closure(superClasses)?.ownedProperties->asSet() in&#xA;&#x9;let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name.startsWith('ocl')) in&#xA;&#x9;let requiredClassProperties = classProperties->reject(defaultValueString &lt;> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite&lt;>null) and opposite?.isComposite) in&#xA;&#x9;let extraProperties : Set(NamedElement)[*|1] = partProperties->excludingAll(classProperties) in&#xA;&#x9;let missingProperties : Set(NamedElement)[*|1] = requiredClassProperties->excludingAll(partProperties) in&#xA;&#x9;if extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String='Unexpected initializers:'|acc +' ' + p.name)}.status&#xA;&#x9;else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}.status&#xA;&#x9;else Tuple{status:Boolean[1]=true, message:String[1]=''}.status&#xA;&#x9;endif endif endif&#xA;"/>
+        <details key="body" value="if type.oclIsKindOf(DataType) then Tuple{status:Boolean[1]=true, message:String[1]=''}.status else &#xA;&#x9;let partProperties = ownedParts.referredProperty->asSet() in&#xA;&#x9;let allProperties = type.oclAsType(Class)->closure(superClasses)?.ownedProperties->asSet() in&#xA;&#x9;let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name.startsWith('ocl')) in&#xA;&#x9;let requiredClassProperties = classProperties->reject(defaultValueString &lt;> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite&lt;>null) and opposite.isComposite) in&#xA;&#x9;let extraProperties : Set(NamedElement)[*|1] = partProperties->excludingAll(classProperties) in&#xA;&#x9;let missingProperties : Set(NamedElement)[*|1] = requiredClassProperties->excludingAll(partProperties) in&#xA;&#x9;if extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String='Unexpected initializers:'|acc +' ' + p.name)}.status&#xA;&#x9;else if missingProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=missingProperties->sortedBy(name)->iterate(p; acc:String='Missing initializers:'|acc +' ' + p.name)}.status&#xA;&#x9;else Tuple{status:Boolean[1]=true, message:String[1]=''}.status&#xA;&#x9;endif endif endif&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="InitializesAllClassProperties"/>
@@ -2704,7 +2704,7 @@
       eSuperTypes="#T-pivot-VariableDeclaration">
     <eOperations name="validateCompatibleInitialiserType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit &lt;> null implies ownedInit?.type?.conformsTo(type)&#xA;"/>
+        <details key="body" value="ownedInit &lt;> null and ownedInit.type &lt;> null implies ownedInit.type.conformsTo(type)&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="CompatibleInitialiserType"/>
