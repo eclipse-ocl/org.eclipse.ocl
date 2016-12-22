@@ -343,7 +343,7 @@ implements OCLExpression {
 		Executor executor = PivotUtilInternal.getExecutor(this);
 		EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
 		FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, this);
-		return flowAnalysis.isNonNull();
+		return flowAnalysis.isNonNull(this);
 	}
 
 	/**
@@ -355,7 +355,7 @@ implements OCLExpression {
 		Executor executor = PivotUtilInternal.getExecutor(this);
 		EnvironmentFactory environmentFactory = executor.getEnvironmentFactory();
 		FlowAnalysis flowAnalysis = FlowAnalysis.getFlowAnalysis(environmentFactory, this);
-		return flowAnalysis.isNull();
+		return flowAnalysis.isNull(this);
 	}
 } //OCLExpressionImpl
 

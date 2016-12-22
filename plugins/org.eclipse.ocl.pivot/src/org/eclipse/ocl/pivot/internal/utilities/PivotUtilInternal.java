@@ -31,22 +31,32 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionLiteralExp;
+import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
+import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.ShadowExp;
+import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -419,6 +429,41 @@ public class PivotUtilInternal //extends PivotUtil
 			s.append(".");
 			s.append(index);
 		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<@NonNull OCLExpression> getOwnedArgumentsList(@NonNull OperationCallExp operationCallExp) {
+		return ClassUtil.nullFree(operationCallExp.getOwnedArguments());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<@NonNull Variable> getOwnedIteratorsList(@NonNull LoopExp loopExp) {
+		return ClassUtil.nullFree(loopExp.getOwnedIterators());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<@NonNull CollectionLiteralPart> getOwnedPartsList(@NonNull CollectionLiteralExp collectionLiteralExp) {
+		return ClassUtil.nullFree(collectionLiteralExp.getOwnedParts());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<@NonNull MapLiteralPart> getOwnedPartsList(@NonNull MapLiteralExp mapLiteralExp) {
+		return ClassUtil.nullFree(mapLiteralExp.getOwnedParts());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<@NonNull ShadowPart> getOwnedPartsList(@NonNull ShadowExp shadowExp) {
+		return ClassUtil.nullFree(shadowExp.getOwnedParts());
 	}
 
 	public static String getSpecificationRole(@NonNull LanguageExpression specification) {

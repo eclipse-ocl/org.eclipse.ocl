@@ -34,8 +34,10 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
+import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -48,10 +50,12 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -72,6 +76,7 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -978,6 +983,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull OCLExpression getOwnedBody(@NonNull LoopExp loopExp) {
+		return ClassUtil.nonNullState(loopExp.getOwnedBody());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getOwnedClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		return ClassUtil.nullFree(asPackage.getOwnedClasses());
 	}
@@ -1006,8 +1018,22 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull OCLExpression getOwnedFirst(@NonNull CollectionRange collectionRange) {
+		return ClassUtil.nonNullState(collectionRange.getOwnedFirst());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull OCLExpression getOwnedIn(@NonNull LetExp letExp) {
 		return ClassUtil.nonNullState(letExp.getOwnedIn());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLExpression getOwnedInit(@NonNull ShadowPart shadowPart) {
+		return ClassUtil.nonNullState(shadowPart.getOwnedInit());
 	}
 
 	/**
@@ -1027,8 +1053,29 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull OCLExpression getOwnedItem(@NonNull CollectionItem collectionItem) {
+		return ClassUtil.nonNullState(collectionItem.getOwnedItem());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull Iterable<@NonNull Variable> getOwnedIterators(@NonNull LoopExp loopExp) {
 		return ClassUtil.nullFree(loopExp.getOwnedIterators());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLExpression getOwnedKey(@NonNull MapLiteralPart mapLiteralPart) {
+		return ClassUtil.nonNullState(mapLiteralPart.getOwnedKey());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLExpression getOwnedLast(@NonNull CollectionRange collectionRange) {
+		return ClassUtil.nonNullState(collectionRange.getOwnedLast());
 	}
 
 	/**
@@ -1069,6 +1116,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull Variable getOwnedResult(@NonNull IterateExp iterateExp) {
+		return ClassUtil.nonNullState(iterateExp.getOwnedResult());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull OCLExpression getOwnedSource(@NonNull CallExp object) {
 		return ClassUtil.nonNullState(object.getOwnedSource());
 	}
@@ -1078,6 +1132,13 @@ public class PivotUtil
 	 */
 	public static @NonNull OCLExpression getOwnedThen(@NonNull IfExp ifExp) {
 		return ClassUtil.nonNullState(ifExp.getOwnedThen());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull OCLExpression getOwnedValue(@NonNull MapLiteralPart mapLiteralPart) {
+		return ClassUtil.nonNullState(mapLiteralPart.getOwnedValue());
 	}
 
 	/**

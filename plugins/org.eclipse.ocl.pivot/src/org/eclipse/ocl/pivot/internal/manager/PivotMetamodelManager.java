@@ -1191,14 +1191,15 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 */
 	@Override
 	public @NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression) {
+		OCLExpression contextExpression = FlowAnalysis.getControlExpression(oclExpression);
 		Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis2 = oclExpression2flowAnalysis;
 		if (oclExpression2flowAnalysis2 == null) {
 			oclExpression2flowAnalysis2 = oclExpression2flowAnalysis = new HashMap<>();
 		}
-		FlowAnalysis flowAnalysis = oclExpression2flowAnalysis2.get(oclExpression);
+		FlowAnalysis flowAnalysis = oclExpression2flowAnalysis2.get(contextExpression);
 		if (flowAnalysis == null) {
-			flowAnalysis = new FlowAnalysis(environmentFactory, oclExpression);
-			oclExpression2flowAnalysis2.put(oclExpression, flowAnalysis);
+			flowAnalysis = new FlowAnalysis(environmentFactory, contextExpression);
+			oclExpression2flowAnalysis2.put(contextExpression, flowAnalysis);
 		}
 		return flowAnalysis;
 	}

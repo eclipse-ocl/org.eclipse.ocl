@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.IfExp;
+import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NullLiteralExp;
@@ -52,20 +53,26 @@ public class FlowAnalysisTests extends XtextTestCase
 
 		public void assertIsNonNull(@NonNull OCLExpression asExpression) {
 			FlowAnalysis flowAnalysis = getFlowAnalysis(asExpression);
-			assertFalse("Expected not-isNull for '" + asExpression + "'", flowAnalysis.isNull());
-			assertTrue("Expected isNonNull for '" + asExpression + "'", flowAnalysis.isNonNull());
+			assertFalse("Expected not-isNull for '" + asExpression + "'",
+				flowAnalysis.isNull(asExpression));
+			assertTrue("Expected isNonNull for '" + asExpression + "'",
+				flowAnalysis.isNonNull(asExpression));
 		}
 
 		public void assertIsNotKnown(@NonNull OCLExpression asExpression) {
 			FlowAnalysis flowAnalysis = getFlowAnalysis(asExpression);
-			assertFalse("Expected not-isNull for '" + asExpression + "'", flowAnalysis.isNull());
-			assertFalse("Expected not-isNonNull for '" + asExpression + "'", flowAnalysis.isNonNull());
+			assertFalse("Expected not-isNull for '" + asExpression + "'",
+				flowAnalysis.isNull(asExpression));
+			assertFalse("Expected not-isNonNull for '" + asExpression + "'",
+				flowAnalysis.isNonNull(asExpression));
 		}
 
 		public void assertIsNull(@NonNull OCLExpression asExpression) {
 			FlowAnalysis flowAnalysis = getFlowAnalysis(asExpression);
-			assertTrue("Expected isNull for '" + asExpression + "'", flowAnalysis.isNull());
-			assertFalse("Expected not-isNonNull for '" + asExpression + "'", flowAnalysis.isNonNull());
+			assertTrue("Expected isNull for '" + asExpression + "'",
+				flowAnalysis.isNull(asExpression));
+			assertFalse("Expected not-isNonNull for '" + asExpression + "'",
+				flowAnalysis.isNonNull(asExpression));
 		}
 
 		protected @NonNull OCLExpression createTestModel(@NonNull String invariantName, @NonNull String invariantBody) throws IOException, ParserException {
@@ -74,8 +81,14 @@ public class FlowAnalysisTests extends XtextTestCase
 							"{\n" +
 							"  class Deductions\n" +
 							"  {\n" +
+							"    property dummy : Dummy[?];\n" +
 							"    property x : Integer[?];\n" +
 							"    invariant " + invariantName + ": " + invariantBody + ";\n" +
+							"  }\n" +
+							"  class Dummy\n" +
+							"  {\n" +
+							"    property dummy : Dummy[?];\n" +
+							"    operation func(i : Integer, j : Integer) : Dummy[?];\n" +
 							"  }\n" +
 							"}";
 			String fileName = "FlowAnalysis_" + invariantName;
@@ -183,7 +196,21 @@ public class FlowAnalysisTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-	public void testFlowAnalysis_ImpliesGuard() throws Exception {
+	public void testFlowAnalysis_ImpliesPropertyGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("ImpliesVariableGuard",
+				"x <> null implies x.toString() <> null");
+		OperationCallExp asSource = (OperationCallExp) PivotUtil.getOwnedSource(asImplies);
+		OperationCallExp asArgument1 = (OperationCallExp) PivotUtil.getOwnedArgument(asImplies, 0);
+		OperationCallExp asArgument2 = (OperationCallExp) PivotUtil.getOwnedSource(asArgument1);
+		PropertyCallExp asSourcePropertyCallExp = (PropertyCallExp) PivotUtil.getOwnedSource(asSource);
+		PropertyCallExp asArgumentPropertyCallExp = (PropertyCallExp) PivotUtil.getOwnedSource(asArgument2);
+		ocl.assertIsNotKnown(asSourcePropertyCallExp);
+		ocl.assertIsNonNull(asArgumentPropertyCallExp);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_ImpliesVariableGuard() throws Exception {
 		MyOCL ocl = new MyOCL();
 		LetExp asLetExp = (LetExp) ocl.createTestModel("ImpliesGuard",
 				"let v : Integer[?] = x in v <> null implies v.toString() <> null");
@@ -213,6 +240,88 @@ public class FlowAnalysisTests extends XtextTestCase
 		ocl.assertIsNotKnown(asConditionVariableExp);
 		ocl.assertIsNonNull(asThenVariableExp);
 		ocl.assertIsNotKnown(asElseVariableExp);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_DoubleImpliesPropertyGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("DoubleImpliesVariableGuard",
+				"dummy <> null and dummy.dummy <> null implies dummy <> null xor dummy.dummy <> null xor dummy.dummy.dummy <> null");
+		OperationCallExp asAnd12 = (OperationCallExp) PivotUtil.getOwnedSource(asImplies);
+		OperationCallExp asGuard1 = (OperationCallExp) PivotUtil.getOwnedSource(asAnd12);
+		PropertyCallExp asRef1 = (PropertyCallExp) PivotUtil.getOwnedSource(asGuard1);
+		OperationCallExp asGuard2 = (OperationCallExp) PivotUtil.getOwnedArgument(asAnd12, 0);
+		PropertyCallExp asRef2 = (PropertyCallExp) PivotUtil.getOwnedSource(asGuard2);
+		OperationCallExp asOr123 = (OperationCallExp) PivotUtil.getOwnedArgument(asImplies, 0);
+		OperationCallExp asOr12 = (OperationCallExp) PivotUtil.getOwnedSource(asOr123);
+		OperationCallExp asOr3 = (OperationCallExp) PivotUtil.getOwnedArgument(asOr123, 0);
+		OperationCallExp asOr1 = (OperationCallExp) PivotUtil.getOwnedSource(asOr12);
+		OperationCallExp asOr2 = (OperationCallExp) PivotUtil.getOwnedArgument(asOr12, 0);
+		PropertyCallExp asUse1 = (PropertyCallExp) PivotUtil.getOwnedSource(asOr1);
+		PropertyCallExp asUse2 = (PropertyCallExp) PivotUtil.getOwnedSource(asOr2);
+		PropertyCallExp asUse3 = (PropertyCallExp) PivotUtil.getOwnedSource(asOr3);
+		ocl.assertIsNotKnown(asRef1);
+		ocl.assertIsNotKnown(asRef2);
+		ocl.assertIsNonNull(asUse1);
+		ocl.assertIsNonNull(asUse2);
+		ocl.assertIsNotKnown(asUse3);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_DoubleBiImpliesPropertyGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("DoubleBiImpliesVariableGuard",
+				"dummy <> null and dummy.dummy <> null implies dummy <> null or dummy.dummy <> null or dummy.dummy.dummy <> null");
+		OperationCallExp asAnd12 = (OperationCallExp) PivotUtil.getOwnedSource(asImplies);
+		OperationCallExp asGuard1 = (OperationCallExp) PivotUtil.getOwnedSource(asAnd12);
+		PropertyCallExp asRef1 = (PropertyCallExp) PivotUtil.getOwnedSource(asGuard1);
+		OperationCallExp asGuard2 = (OperationCallExp) PivotUtil.getOwnedArgument(asAnd12, 0);
+		PropertyCallExp asRef2 = (PropertyCallExp) PivotUtil.getOwnedSource(asGuard2);
+		OperationCallExp asOr123 = (OperationCallExp) PivotUtil.getOwnedArgument(asImplies, 0);
+		OperationCallExp asOr12 = (OperationCallExp) PivotUtil.getOwnedSource(asOr123);
+		OperationCallExp asOr3 = (OperationCallExp) PivotUtil.getOwnedArgument(asOr123, 0);
+		OperationCallExp asOr1 = (OperationCallExp) PivotUtil.getOwnedSource(asOr12);
+		OperationCallExp asOr2 = (OperationCallExp) PivotUtil.getOwnedArgument(asOr12, 0);
+		PropertyCallExp asUse1 = (PropertyCallExp) PivotUtil.getOwnedSource(asOr1);
+		PropertyCallExp asUse2 = (PropertyCallExp) PivotUtil.getOwnedSource(asOr2);
+		PropertyCallExp asUse3 = (PropertyCallExp) PivotUtil.getOwnedSource(asOr3);
+		ocl.assertIsNull(asRef1);
+		ocl.assertIsNull(asRef2);
+		ocl.assertIsNonNull(asUse1);
+		ocl.assertIsNonNull(asUse2);
+		ocl.assertIsNotKnown(asUse3);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_IterationExpressionGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("IterationExpressionGuard",
+				"dummy->select(s | s <> null) <> null implies dummy->select(s | s <> null) = null");
+		OperationCallExp asStartsWith = (OperationCallExp) PivotUtil.getOwnedArgument(asImplies, 0);
+		IteratorExp asCompare = (IteratorExp) PivotUtil.getOwnedSource(asStartsWith);
+		OperationCallExp asSource = (OperationCallExp) PivotUtil.getOwnedSource(asCompare);
+		ocl.assertIsNonNull(asSource);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_LetExpressionGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("LetExpressionGuard",
+				"dummy.func(4, let q : Integer = 7 in q) <> null implies dummy.func(4, let y : Integer = 7 in y) = null");
+		OperationCallExp asStartsWith = (OperationCallExp) PivotUtil.getOwnedArgument(asImplies, 0);
+		OperationCallExp asCompare = (OperationCallExp) PivotUtil.getOwnedSource(asStartsWith);
+		ocl.assertIsNonNull(asCompare);
+		ocl.dispose();
+	}
+
+	public void testFlowAnalysis_OperationExpressionGuard() throws Exception {
+		MyOCL ocl = new MyOCL();
+		OperationCallExp asImplies = (OperationCallExp) ocl.createTestModel("OperationExpressionGuard",
+				"dummy.func(2,5) <> null implies dummy.func(2,5).func(1,5) = null");
+		OperationCallExp asStartsWith = (OperationCallExp) PivotUtil.getOwnedArgument(asImplies, 0);
+		OperationCallExp asCompare = (OperationCallExp) PivotUtil.getOwnedSource(asStartsWith);
+		OperationCallExp asSource = (OperationCallExp) PivotUtil.getOwnedSource(asCompare);
+		ocl.assertIsNonNull(asSource);
 		ocl.dispose();
 	}
 }
