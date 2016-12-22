@@ -1291,19 +1291,21 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		//
 		//	The flattening of collect() and consequently implicit-collect is not modelled accurately so we need to code it.
 		//
+		boolean returnIsRequired = operation.isIsRequired();
 		LibraryFeature implementationClass = operation.getImplementation();
 		if (implementationClass != null) {
 			Class<? extends LibraryFeature> className = implementationClass.getClass();
 			TemplateParameterSubstitutionHelper helper = TemplateParameterSubstitutionHelper.getHelper(className);
 			if (helper != null) {
 				returnType = helper.resolveReturnType(metamodelManager, callExp, returnType);
+				returnIsRequired = helper.resolveReturnNullity(metamodelManager, callExp, returnIsRequired);
 			}
 		}
 		if (operation.isIsTypeof()) {
-			context.setType(callExp, standardLibrary.getClassType(), operation.isIsRequired(), returnType);
+			context.setType(callExp, standardLibrary.getClassType(), returnIsRequired, returnType);
 		}
 		else {
-			context.setType(callExp, returnType, operation.isIsRequired(), null);
+			context.setType(callExp, returnType, returnIsRequired, null);
 		}
 	}
 

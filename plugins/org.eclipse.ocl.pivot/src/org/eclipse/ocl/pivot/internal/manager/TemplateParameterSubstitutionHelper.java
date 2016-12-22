@@ -41,7 +41,7 @@ import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SortedByIteration;
 
 /**
- * TemplateParameterSubstitutionHelper instances support irregular YemplateParameterSubstitution deduction for difficult to
+ * TemplateParameterSubstitutionHelper instances support irregular TemplateParameterSubstitution deduction for difficult to
  * model operations such as flatten().
  * <p>
  * The TemplateParameterSubstitutionHelper maintains a registry of helpers indexed by their implementatin class.
@@ -52,6 +52,13 @@ public abstract class TemplateParameterSubstitutionHelper
 
 	public @Nullable Type resolveBodyType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type bodyType) {
 		return bodyType;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
+		return returnIsRequired;
 	}
 
 	public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
@@ -135,7 +142,25 @@ public abstract class TemplateParameterSubstitutionHelper
 	}
 
 	//
-	//	Special case processing for return types based on the source.
+	//	Special case processing for return types based on the source collection element typess.
+	//
+	private static class CollectionSourceElementHelper extends TemplateParameterSubstitutionHelper
+	{
+		@Override
+		public boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
+			OCLExpression ownedSource = callExp.getOwnedSource();
+			if (ownedSource != null) {
+				Type sourceType = ownedSource.getType();
+				if (sourceType instanceof CollectionType) {
+					returnIsRequired = ((CollectionType)sourceType).isIsNullFree();
+				}
+			}
+			return returnIsRequired;
+		}
+	}
+
+	//
+	//	Special case processing for return collection types based on the source collection types.
 	//
 	private static class CollectionSourceHelper extends TemplateParameterSubstitutionHelper
 	{
@@ -171,9 +196,9 @@ public abstract class TemplateParameterSubstitutionHelper
 		//		addHelper(CollectionIncludingAllOperation.class, new CollectionSourceAndArgumentHelper());
 		addHelper(CollectionIntersectionOperation.class, new CollectionSourceHelper()/*OrArgument*/);
 		addHelper(CollectionMinOperation.class, new CollectionSourceHelper());
-		addHelper(OrderedCollectionAtOperation.class, new CollectionSourceHelper());
-		addHelper(OrderedCollectionFirstOperation.class, new CollectionSourceHelper());
-		addHelper(OrderedCollectionLastOperation.class, new CollectionSourceHelper());
+		addHelper(OrderedCollectionAtOperation.class, new CollectionSourceElementHelper());
+		addHelper(OrderedCollectionFirstOperation.class, new CollectionSourceElementHelper());
+		addHelper(OrderedCollectionLastOperation.class, new CollectionSourceElementHelper());
 		addHelper(CollectionFlattenOperation.class, new CollectionFlattenHelper());
 		addHelper(RejectIteration.class, new CollectionSourceHelper());
 		addHelper(SelectIteration.class, new CollectionSourceHelper());
