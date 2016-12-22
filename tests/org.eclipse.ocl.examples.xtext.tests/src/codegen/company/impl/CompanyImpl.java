@@ -1,7 +1,7 @@
 /**
  * <copyright>
  * 
- * Copyright (c) 2015, 2016 Willink Transformations and others.
+ * Copyright (c) 2015, 2017 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,6 +32,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -40,18 +41,20 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
-import org.eclipse.ocl.pivot.ids.TypeId;
+
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
-import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
-import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
-import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
+
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -174,7 +177,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		/**
 		 *
 		 * let
-		 *   table : Set(Tuple(range:Sequence(Integer), size:company::CompanySizeKind[1])) = Set{
+		 *   table : Set(Tuple(range:Sequence(Integer)[*|?], size:company::CompanySizeKind[1])) = Set{
 		 *     Tuple{range = Sequence{0..49}, size = CompanySizeKind::small
 		 *     }
 		 *     , Tuple{range = Sequence{50..999}, size = CompanySizeKind::medium
@@ -244,30 +247,9 @@ public class CompanyImpl extends EObjectImpl implements Company {
 	 */
 	public boolean dummyInvariant(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
 		/**
-		 *
-		 * inv dummyInvariant:
-		 *   let severity : Integer[1] = 'Company::dummyInvariant'.getSeverity()
-		 *   in
-		 *     if severity <= 0
-		 *     then true
-		 *     else
-		 *       let status : OclAny[1] = true
-		 *       in
-		 *         'Company::dummyInvariant'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
-		 *     endif
+		 * inv dummyInvariant: true
 		 */
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, CodegencompanyTables.STR_Company_c_c_dummyInvariant);
-		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, CodegencompanyTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_0;
-		if (le) {
-			symbol_0 = ValueUtil.TRUE_VALUE;
-		}
-		else {
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, CodegencompanyTables.STR_Company_c_c_dummyInvariant, this, (Object)null, diagnostics, context, (Object)null, severity_0, ValueUtil.TRUE_VALUE, CodegencompanyTables.INT_0).booleanValue();
-			symbol_0 = logDiagnostic;
-		}
-		return Boolean.TRUE == symbol_0;
+		return ValueUtil.TRUE_VALUE;
 	}
 
 	/**

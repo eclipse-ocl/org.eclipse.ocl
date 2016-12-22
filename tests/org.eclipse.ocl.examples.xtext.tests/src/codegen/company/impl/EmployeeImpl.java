@@ -1,7 +1,7 @@
 /**
  * <copyright>
  * 
- * Copyright (c) 2015, 2016 Willink Transformations and others.
+ * Copyright (c) 2015, 2017 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -37,27 +37,37 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
+
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation;
+
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
+
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
+
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.library.string.StringSizeOperation;
+
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -246,7 +256,6 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	public EList<Employee> getDirectReports() {
 		/**
 		 * company.employees?->select(manager = self)
@@ -288,7 +297,6 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	public EList<Employee> getAllReports() {
 		/**
 		 * Employee.allInstances()->select(reportsTo(self))
@@ -325,7 +333,6 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	public EList<Employee> getReportingChain() {
 		/**
 		 *
@@ -439,10 +446,10 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[?] = manager.oclIsUndefined() implies
+		 *         result : Boolean[?] = manager.oclIsUndefined() implies
 		 *         directReports->size() > 0
 		 *       in
-		 *         'Employee::noManagerImpliesDirectReports'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
+		 *         'Employee::noManagerImpliesDirectReports'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
@@ -454,7 +461,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @Nullable Object CAUGHT_status;
+			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
 				/*@Caught*/ @Nullable Object CAUGHT_manager;
 				try {
@@ -477,13 +484,13 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 				catch (Exception e) {
 					CAUGHT_gt = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(symbol_0, CAUGHT_gt);
-				CAUGHT_status = status;
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(symbol_0, CAUGHT_gt);
+				CAUGHT_result = result;
 			}
 			catch (Exception e) {
-				CAUGHT_status = ValueUtil.createInvalidValue(e);
+				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, CodegencompanyTables.STR_Employee_c_c_noManagerImpliesDirectReports, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, CodegencompanyTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, CodegencompanyTables.STR_Employee_c_c_noManagerImpliesDirectReports, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, CodegencompanyTables.INT_0).booleanValue();
 			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;
@@ -504,27 +511,27 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 		 *     then true
 		 *     else
 		 *       let
-		 *         status : OclAny[?] = not name.oclIsUndefined() and hasNameAsAttribute and
-		 *         hasNameAsOperation()
-		 *       in
-		 *         let
-		 *           message : String[?] = if status <> true
-		 *           then 'Employee must have a name'
-		 *           else null
-		 *           endif
+		 *         result : OclAny[1] = let
+		 *           status : Boolean[?] = not name.oclIsUndefined() and hasNameAsAttribute and
+		 *           hasNameAsOperation()
 		 *         in
-		 *           'Employee::mustHaveName'.logDiagnostic(self, null, diagnostics, context, message, severity, status, 0)
+		 *           if status = true
+		 *           then true
+		 *           else Tuple{message = 'Employee must have a name', status = status}
+		 *           endif
+		 *       in
+		 *         'Employee::mustHaveName'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, CodegencompanyTables.STR_Employee_c_c_mustHaveName);
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, CodegencompanyTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_1;
+		/*@NonInvalid*/ java.lang.@NonNull Object symbol_4;
 		if (le) {
-			symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_4 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @Nullable Object CAUGHT_status;
+			/*@Caught*/ @NonNull Object CAUGHT_symbol_3;
 			try {
 				/*@Caught*/ @Nullable Object CAUGHT_and;
 				try {
@@ -561,26 +568,24 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 					CAUGHT_hasNameAsOperation = ValueUtil.createInvalidValue(e);
 				}
 				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_hasNameAsOperation);
-				CAUGHT_status = status;
+				final /*@Thrown*/ boolean symbol_1 = status == Boolean.TRUE;
+				/*@Thrown*/ java.lang.@NonNull Object symbol_3;
+				if (symbol_1) {
+					symbol_3 = ValueUtil.TRUE_VALUE;
+				}
+				else {
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull TupleValue symbol_2 = ValueUtil.createTupleOfEach(CodegencompanyTables.TUPLid__0, CodegencompanyTables.STR_Employee_32_must_32_have_32_a_32_name, status);
+					symbol_3 = symbol_2;
+				}
+				CAUGHT_symbol_3 = symbol_3;
 			}
 			catch (Exception e) {
-				CAUGHT_status = ValueUtil.createInvalidValue(e);
+				CAUGHT_symbol_3 = ValueUtil.createInvalidValue(e);
 			}
-			if (CAUGHT_status instanceof InvalidValueException) {
-				throw (InvalidValueException)CAUGHT_status;
-			}
-			final /*@Thrown*/ boolean ne = CAUGHT_status == Boolean.FALSE;
-			/*@NonInvalid*/ java.lang.@Nullable String message_0;
-			if (ne) {
-				message_0 = CodegencompanyTables.STR_Employee_32_must_32_have_32_a_32_name;
-			}
-			else {
-				message_0 = null;
-			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, CodegencompanyTables.STR_Employee_c_c_mustHaveName, this, (Object)null, diagnostics, context, message_0, severity_0, CAUGHT_status, CodegencompanyTables.INT_0).booleanValue();
-			symbol_1 = logDiagnostic;
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, CodegencompanyTables.STR_Employee_c_c_mustHaveName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_symbol_3, CodegencompanyTables.INT_0).booleanValue();
+			symbol_4 = logDiagnostic;
 		}
-		return Boolean.TRUE == symbol_1;
+		return Boolean.TRUE == symbol_4;
 	}
 
 	/**
@@ -597,9 +602,9 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let status : OclAny[?] = name->notEmpty() implies name.size() > 0
+		 *       let result : Boolean[?] = name->notEmpty() implies name.size() > 0
 		 *       in
-		 *         'Employee::mustHaveNonEmptyName'.logDiagnostic(self, null, diagnostics, context, null, severity, status, 0)
+		 *         'Employee::mustHaveNonEmptyName'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
@@ -610,7 +615,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @Nullable Object CAUGHT_status;
+			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
 				/*@Caught*/ @NonNull Object CAUGHT_notEmpty;
 				try {
@@ -632,13 +637,13 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 				catch (Exception e) {
 					CAUGHT_gt = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean status = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_notEmpty, CAUGHT_gt);
-				CAUGHT_status = status;
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_notEmpty, CAUGHT_gt);
+				CAUGHT_result = result;
 			}
 			catch (Exception e) {
-				CAUGHT_status = ValueUtil.createInvalidValue(e);
+				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, CodegencompanyTables.STR_Employee_c_c_mustHaveNonEmptyName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_status, CodegencompanyTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, CodegencompanyTables.STR_Employee_c_c_mustHaveNonEmptyName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, CodegencompanyTables.INT_0).booleanValue();
 			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;

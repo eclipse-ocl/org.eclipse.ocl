@@ -1,28 +1,29 @@
 /**
  * <copyright>
- * 
- * Copyright (c) 2015, 2016 Willink Transformations and others.
+ *
+ * Copyright (c) 2015, 2017 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
- * 
+ *
  * </copyright>
  */
 package codegen.company.util;
 
-import codegen.company.*;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
+
+import codegen.company.Bug418716;
+import codegen.company.CodegencompanyPackage;
+import codegen.company.Company;
+import codegen.company.Employee;
 
 /**
  * <!-- begin-user-doc -->
@@ -79,24 +80,24 @@ public class CodegencompanyAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	protected CodegencompanySwitch<@Nullable Adapter> modelSwitch =
-		new CodegencompanySwitch<@Nullable Adapter>() {
-			@Override
-			public Adapter caseCompany(Company object) {
-				return createCompanyAdapter();
-			}
-			@Override
-			public Adapter caseEmployee(Employee object) {
-				return createEmployeeAdapter();
-			}
-			@Override
-			public Adapter caseBug418716(Bug418716 object) {
-				return createBug418716Adapter();
-			}
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+			new CodegencompanySwitch<@Nullable Adapter>() {
+		@Override
+		public Adapter caseCompany(Company object) {
+			return createCompanyAdapter();
+		}
+		@Override
+		public Adapter caseEmployee(Employee object) {
+			return createEmployeeAdapter();
+		}
+		@Override
+		public Adapter caseBug418716(Bug418716 object) {
+			return createBug418716Adapter();
+		}
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
