@@ -164,7 +164,7 @@ inv AnyHasOneIterator: name = 'any' implies ownedIterators->size() = 1
 
 context IteratorExp
 /** The type is the same as the source element type */
-inv AnyTypeIsSourceElementType: name = 'any' implies type = ownedSource?.type?.oclAsType(CollectionType).elementType
+inv AnyTypeIsSourceElementType: name = 'any' implies type = ownedSource?.type?.oclAsType(CollectionType)?.elementType
 
 context IteratorExp
 /** The type of the body must be Boolean. */
@@ -199,8 +199,11 @@ inv ClosureElementTypeIsSourceElementType: name = 'closure' implies
 type.oclAsType(CollectionType).elementType
 = ownedSource?.type.oclAsType(CollectionType).elementType
 /** Each body element is assignable to the iterator. */
-inv ClosureBodyElementTypeIsIteratorType: name = 'closure' implies
-ownedBody.type.oclAsType(CollectionType).elementType.conformsTo(ownedIterators->at(1).type)
+inv ClosureBodyElementTypeIsIteratorType:
+	name = 'closure' implies
+		let bodyElementType = ownedBody.type.oclAsType(CollectionType).elementType in 
+		let iteratorType = ownedIterators->at(1).type in
+			bodyElementType.conformsTo(iteratorType)
 
 context IteratorExp
 /* The collection type for an OrderedSet or a Sequence type is a Sequence,
@@ -255,7 +258,7 @@ context LetVariable
 /** Let variable has an initializer.*/
 inv HasInitializer: ownedInit <> null
 /** The type of a Let variable initializer expression conforms to the type of the Let variable. */
-inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit.type?.conformsTo(type)
 /** The nullity of a Let variable initializer expression is the nullity of the Let variable. */
 inv CompatibleNullityForInitializer: ownedInit?.isRequired = isRequired
 
@@ -340,9 +343,9 @@ inv ArgumentTypeIsConformant:
 	Sequence{1..ownedArguments->size()}->forAll (i | 
 		let argument : OCLExpression = ownedArguments->at(i) in
 		let parameter : Parameter = parameters->at(i) in
-		let parameterType : Type = parameter?.type in
-		let requiredType : Type = if parameter?.isTypeof then Class else parameterType.specializeIn(self, selfType) endif in
-		argument?.type.conformsTo(requiredType))
+		let parameterType : Type = parameter.type in
+		let requiredType : Type = if parameter.isTypeof then Class else parameterType.specializeIn(self, selfType) endif in
+		argument.type.conformsTo(requiredType))
 
 /*------------- spelling: arguments */
 context OperationCallExp
@@ -388,7 +391,7 @@ context ResultVariable
 /** Result variable has an initializer.*/
 inv HasInitializer: ownedInit <> null
 /** The type of a Result variable initializer expression conforms to the type of the Result variable. */
-inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit.type?.conformsTo(type)
 /** A nullable expression cannot initialize a not-nullable Result variable. */
 inv CompatibleNullityForInitializer: not ownedInit?.isRequired implies not isRequired
 
@@ -401,7 +404,7 @@ inv InitializesAllClassProperties: if type.oclIsKindOf(DataType) then Tuple{stat
 	let partProperties = ownedParts.referredProperty->asSet() in
 	let allProperties = type.oclAsType(Class)->closure(superClasses)?.ownedProperties->asSet() in
 	let classProperties = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)->reject(name.startsWith('ocl')) in
-	let requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite?.isComposite) in
+	let requiredClassProperties = classProperties->reject(defaultValueString <> null)->reject(isVolatile or not isRequired)->reject(type.oclIsKindOf(CollectionType))->reject((opposite<>null) and opposite.isComposite) in
 	let extraProperties : Set(NamedElement)[*|1] = partProperties->excludingAll(classProperties) in
 	let missingProperties : Set(NamedElement)[*|1] = requiredClassProperties->excludingAll(partProperties) in
 	if extraProperties->notEmpty() then Tuple{status:Boolean[1]=false, message:String[1]=extraProperties->sortedBy(name)->iterate(p; acc:String='Unexpected initializers:'|acc +' ' + p.name)}.status
@@ -422,7 +425,7 @@ context StateExp
 inv TypeIsNotInvalid : type <> OclInvalid
 
 context TupleLiteralPart
-inv CompatibleInitialiserType: ownedInit <> null implies ownedInit?.type?.conformsTo(type)
+inv CompatibleInitialiserType: ownedInit <> null and ownedInit.type <> null implies ownedInit.type.conformsTo(type)
 inv TypeIsNotInvalid : type <> OclInvalid
 
 context Variable
