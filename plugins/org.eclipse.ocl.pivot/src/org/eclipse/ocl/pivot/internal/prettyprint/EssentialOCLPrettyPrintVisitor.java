@@ -495,12 +495,14 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 					context.next(null, prefix, " ");
 				}
 				safeVisit(argument.getType());
+				context.appendTypeMultiplicity(argument);
 				prefix = ",";
 			}
 			context.next("", ")", "");
 			context.pop();
 			context.append(" : ");
 			safeVisit(object.getType());
+			context.appendTypeMultiplicity(object);
 		}
 		return null;
 	}
@@ -525,6 +527,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			context.appendName(referredProperty);
 			context.append(" : ");
 			safeVisit(object.getType());
+			context.appendTypeMultiplicity(object);
 		}
 		return null;
 	}
@@ -560,6 +563,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 			context.appendName(referredProperty);
 			context.append(" : ");
 			safeVisit(object.getType());
+			context.appendTypeMultiplicity(object);
 		}
 		return null;
 	}
