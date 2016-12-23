@@ -257,6 +257,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningCurlyBracketClause"
         eType="#//CurlyBracketedClauseCS" eOpposite="#//CurlyBracketedClauseCS/ownedParts"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" eType="ecore:EClass ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Property"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="propName" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SquareBracketedClauseCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ContextLessElementCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedTerms" lowerBound="1"

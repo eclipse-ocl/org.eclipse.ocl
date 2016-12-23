@@ -138,7 +138,7 @@ CollectionPatternCS returns CollectionPatternCS:
 	'}';
 
 ShadowPartCS returns ShadowPartCS:		// PatternPartCS
-	(referredProperty=[pivot::Property|UnrestrictedName] '='ownedInitExpression=(ExpCS|PatternExpCS))
+	(propName = UnrestrictedName '='ownedInitExpression=(ExpCS|PatternExpCS))
 	| ownedInitExpression=StringLiteralExpCS;
 
 PatternExpCS:
