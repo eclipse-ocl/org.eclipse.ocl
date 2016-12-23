@@ -14,7 +14,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.values.OrderedSet;
+
+import com.google.common.collect.Iterables;
 
 /**
  * Default implementation of the {@link OrderedSet} interface.
@@ -31,7 +34,15 @@ public class OrderedSetImpl<E> extends LinkedHashSet<E> implements OrderedSet<E>
 		super();
 	}
 
-	public OrderedSetImpl(Collection<? extends E> elements) {
+	/**
+	 * @since 1.3
+	 */
+	public OrderedSetImpl(@NonNull Iterable<? extends E> elements) {
+		super(Math.max(2 *Iterables.size(elements), 11));
+		Iterables.addAll(this, elements);
+	}
+
+	public OrderedSetImpl(@NonNull Collection<? extends E> elements) {
 		super(elements);
 	}
 

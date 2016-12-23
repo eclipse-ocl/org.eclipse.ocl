@@ -93,17 +93,17 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 		return (IntegerRange) elements;
 	}
 
-//    public Type getType(TypeManager typeManager, Type staticType) {
-//    	if (type == null) {
-//    		if ((elements.getFirst() >= 0) && (elements.getLast() >= 0)) {
-//    			type = typeManager.getCollectionType(true, false, typeManager.getUnlimitedNaturalType());
-//    		}
-//    		else{
-//    			type = typeManager.getCollectionType(true, false, typeManager.getIntegerType());
-//    		}
-//    	}
-//		return type;
-//	}
+	//    public Type getType(TypeManager typeManager, Type staticType) {
+	//    	if (type == null) {
+	//    		if ((elements.getFirst() >= 0) && (elements.getLast() >= 0)) {
+	//    			type = typeManager.getCollectionType(true, false, typeManager.getUnlimitedNaturalType());
+	//    		}
+	//    		else{
+	//    			type = typeManager.getCollectionType(true, false, typeManager.getIntegerType());
+	//    		}
+	//    	}
+	//		return type;
+	//	}
 
 	@Override
 	public @NonNull OrderedSetValue including(@Nullable Object value) {
@@ -132,7 +132,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
-	public SequenceValue toSequenceValue() {
+	public @NonNull SequenceValue toSequenceValue() {
 		return new RangeSequenceValueImpl(getSequenceTypeId(), getElements());
 	}
 

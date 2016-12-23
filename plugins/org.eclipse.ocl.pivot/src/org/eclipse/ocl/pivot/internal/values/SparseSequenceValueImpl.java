@@ -20,6 +20,8 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 
+import com.google.common.collect.Lists;
+
 /**
  * @generated NOT
  */
@@ -33,11 +35,19 @@ public class SparseSequenceValueImpl extends SequenceValueImpl
 		return result;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<?> createSequenceOfEach(@NonNull Iterable<? extends Object> elements) {
+		List<?> list = elements instanceof List<?> ? (List<?>)elements : Lists.newArrayList(elements);
+		return list;
+	}
+
 	public static @NonNull List<?> createSequenceOfEach(@NonNull Collection<? extends Object> elements) {
 		List<?> list = elements instanceof List<?> ? (List<?>)elements : new ArrayList<Object>(elements);
 		return list;
 	}
-	
+
 	public static class Accumulator extends SparseSequenceValueImpl implements SequenceValue.Accumulator
 	{
 		public Accumulator(@NonNull CollectionTypeId typeId) {
@@ -51,15 +61,15 @@ public class SparseSequenceValueImpl extends SequenceValueImpl
 		@Override
 		@SuppressWarnings("unchecked")
 		public boolean add(@Nullable Object value) {
-			return ((Collection<Object>)elements).add(value);			
-		}		
+			return ((Collection<Object>)elements).add(value);
+		}
 
-	    @Override
+		@Override
 		public @NonNull SequenceValue append(@Nullable Object value) {
 			assert !(value instanceof InvalidValueException);
 			add(value);
-	        return this;
-	    }
+			return this;
+		}
 	}
 
 	public SparseSequenceValueImpl(@NonNull CollectionTypeId typeId, @NonNull List<? extends Object> boxedValues) {
