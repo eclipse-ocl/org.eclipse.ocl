@@ -95,7 +95,11 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	{
 		private static final long serialVersionUID = -4943324197108585350L;
 
-		private int value = 1;
+		private int value;
+
+		public ElementCounter(int value) {
+			this.value = value;
+		}
 
 		@Override
 		public double doubleValue() {
@@ -184,7 +188,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	public synchronized boolean add(E anElement) {
 		ElementCounter newCounter = spareCounter;
 		if (newCounter == null) {
-			newCounter = new ElementCounter();
+			newCounter = new ElementCounter(1);
 		}
 		else {
 			spareCounter = null;
@@ -274,6 +278,17 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 		else {
 			return ClassUtil.emptyIterator();
 		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public void put(E anElement, int count) {
+		assert count > 0;
+		ElementCounter oldCount = map.put(anElement, new ElementCounter(count));
+		assert oldCount == null;
+		size += count;
+		hashCode = null;
 	}
 
 	/**

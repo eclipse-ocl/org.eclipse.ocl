@@ -30,13 +30,13 @@ import org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl;
  * is thrown when an Invalid Value arises during
  * an evaluation, and when no EvaluationEnvironment is available to support
  * throwing an InvalidEvaluationException. When such an environment is
- * available the InvalidValueException is rethrown as an 
+ * available the InvalidValueException is rethrown as an
  * InvalidEvaluationException.
  *
  * * @generated NOT
  */
 public class InvalidValueException extends UndefinedValueImpl implements InvalidValue
-{	
+{
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -47,7 +47,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	protected EClass eStaticClass() {
 		return ValuesPackage.Literals.INVALID_VALUE;
 	}
-	
+
 	public InvalidValueException(@NonNull Exception exception, /*@NonNull*/ String message) {
 		super(exception, message);
 		assert !(exception instanceof InvalidValueException);
@@ -80,7 +80,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	public @NonNull Double asDouble() {
 		throw new InvalidValueException(this, "asDouble");
 	}
-	
+
 	@Override
 	public @NonNull List<Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		throw new InvalidValueException(this, "asEcoreObject");
@@ -135,7 +135,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	public @NonNull SetValue asSetValue() {
 		throw new InvalidValueException(this, "asSetValue");
 	}
-	
+
 	@Override
 	public @NonNull List<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
 		throw new InvalidValueException(this, "asUnboxedObject");
@@ -151,6 +151,14 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 		return obj instanceof InvalidValueException;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull TypeId getElementTypeId() {
+		return TypeId.OCL_INVALID;
+	}
+
 	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
 		return standardLibrary.getOclInvalidType();
 	}
@@ -162,8 +170,8 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 
 	@Override
 	public int intValue() {
-    	toInvalidValue();		// throws rather than returns
-    	return 0;
+		toInvalidValue();		// throws rather than returns
+		return 0;
 	}
 
 	@Override
@@ -186,13 +194,13 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 		return hashCode();
 	}
 
-//	@Override
-//	public String toString() {
-//		if (exception != null) {
-//			return Value.INVALID_NAME + "<" + exception.getMessage() + ">";
-//		}
-//		else {
-//			return exception.getMessage(); //Value.INVALID_NAME;
-//		}
-//	}
+	//	@Override
+	//	public String toString() {
+	//		if (exception != null) {
+	//			return Value.INVALID_NAME + "<" + exception.getMessage() + ">";
+	//		}
+	//		else {
+	//			return exception.getMessage(); //Value.INVALID_NAME;
+	//		}
+	//	}
 }

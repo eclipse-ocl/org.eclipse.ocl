@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
 /**
  * @generated NOT
  */
-public class BagValueImpl extends CollectionValueImpl implements BagValue
+public class BagValueImpl extends CollectionValueImpl implements BagValue.Internal
 {
 	/**
 	 * <!-- begin-user-doc -->

@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
  * @noimplement This interface is not intended to be implemented by clients.
@@ -86,10 +87,9 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	boolean flatten(@NonNull Collection<Object> flattenedElements);
 
 	/**
-	 * Return the CollectonTypeId of a Bag of these elements.
 	 * @since 1.3
 	 */
-	@NonNull CollectionTypeId getBagTypeId();
+	@NonNull TypeId getElementTypeId();
 
 	/**
 	 * @generated NOT
@@ -100,24 +100,6 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	String getKind();
-
-	/**
-	 * Return the CollectonTypeId of an OrderedSet of these elements.
-	 * @since 1.3
-	 */
-	@NonNull CollectionTypeId getOrderedSetTypeId();
-
-	/**
-	 * Return the CollectonTypeId of a Sequence of these elements.
-	 * @since 1.3
-	 */
-	@NonNull CollectionTypeId getSequenceTypeId();
-
-	/**
-	 * Return the CollectonTypeId of a Set of these elements.
-	 * @since 1.3
-	 */
-	@NonNull CollectionTypeId getSetTypeId();
 
 	/**
 	 * @generated NOT

@@ -31,13 +31,13 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
  * is thrown when an Invalid Value arises during
  * an evaluation, and when no EvaluationEnvironment is available to support
  * throwing an InvalidEvaluationException. When such an environment is
- * available the InvalidValueException is rethrown as an 
+ * available the InvalidValueException is rethrown as an
  * InvalidEvaluationException.
  *
  * * @generated NOT
  */
 public class NullValueImpl extends UndefinedValueImpl implements NullValue
-{	
+{
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -48,11 +48,11 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	protected EClass eStaticClass() {
 		return ValuesPackage.Literals.NULL_VALUE;
 	}
-	
+
 	public NullValueImpl() {
 		super(null);
 	}
-	
+
 	@Override
 	public List<Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		return null;
@@ -62,7 +62,7 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	public Element asElement() {
 		return null;
 	}
-	
+
 	@Override
 	public List<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
 		return null;
@@ -71,6 +71,14 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	@Override
 	public boolean equals(Object obj) {
 		return obj instanceof NullValueImpl;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull TypeId getElementTypeId() {
+		return TypeId.OCL_VOID;
 	}
 
 	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
@@ -89,8 +97,8 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 
 	@Override
 	public int intValue() {
-    	toInvalidValue();		// throws rather than returns
-    	return 0;
+		toInvalidValue();		// throws rather than returns
+		return 0;
 	}
 
 	@Override

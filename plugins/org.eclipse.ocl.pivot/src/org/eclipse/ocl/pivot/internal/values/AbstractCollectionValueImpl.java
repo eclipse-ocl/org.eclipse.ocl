@@ -662,7 +662,6 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		}
 	}
 
-	@Override
 	public @NonNull CollectionTypeId getBagTypeId() {
 		return TypeId.BAG.getSpecializedId(getElementTypeId());
 	}
@@ -683,6 +682,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	//		return TypeId.COLLECTION;
 	//	}
 
+	@Override
 	public @NonNull TypeId getElementTypeId() {
 		//    	DomainType elementType = standardLibrary.getOclVoidType();
 		//    	for (Object value : values) {
@@ -706,17 +706,14 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		return collectionFactory.getKind();
 	}
 
-	@Override
 	public @NonNull CollectionTypeId getOrderedSetTypeId() {
 		return TypeId.ORDERED_SET.getSpecializedId(getElementTypeId());
 	}
 
-	@Override
 	public @NonNull CollectionTypeId getSequenceTypeId() {
 		return TypeId.SEQUENCE.getSpecializedId(getElementTypeId());
 	}
 
-	@Override
 	public @NonNull CollectionTypeId getSetTypeId() {
 		return TypeId.SET.getSpecializedId(getElementTypeId());
 	}
@@ -1015,7 +1012,8 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 				return this.asBagValue();
 			}
 			else {
-				Bag<Object> result = new BagImpl<Object>(theseElements);
+				Iterable<? extends Object> theseIterables = theseElements;
+				Bag<Object> result = new BagImpl<>(theseIterables);
 				result.addAll(thoseElements);
 				return new BagValueImpl(getBagTypeId(), result);
 			}

@@ -25,6 +25,9 @@ public interface BagValue extends CollectionValue
 	/**
 	 * @since 1.3
 	 */
-	@Override
-	@NonNull Bag<? extends Object> getElements();
+	public interface Internal extends BagValue
+	{
+		@Override
+		@NonNull Bag<? extends Object> getElements();
+	}
 }
