@@ -6,7 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   IBM - Initial API and implementation
+ *   Christian W. Damus - Initial API and implementation
+ *   E.D.Willink - Polish
  *******************************************************************************/
 
 package org.eclipse.ocl.pivot.internal.values;
@@ -23,28 +24,117 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 
+import com.google.common.collect.Iterators;
+
 /**
  * Default implementation of the {@link Bag} interface.
  *
- * @author Christian W. Damus (cdamus)
  * @generated NOT
  */
-public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
+public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 {
-	private Map<E, @NonNull MutableInteger> coll;
+	/**
+	 * BagIterator iterates over the Bag content returning each multiple element multiple times.
+	 */
+	private static class BagIterator<E> implements Iterator<E>
+	{
+		private final @NonNull Map<E, @NonNull ElementCounter> map;
+		private final @NonNull Iterator<E> objectIterator;
+		private E currentObject;
+		private int residualCount;
 
-	private int size;
+		private BagIterator(@NonNull Map<E, @NonNull ElementCounter> map, @NonNull Iterator<E> objectIterator) {
+			this.map = map;
+			this.objectIterator = objectIterator;
+			assert objectIterator.hasNext();
+			currentObject = objectIterator.next();
+			ElementCounter count = map.get(currentObject);
+			assert count != null;
+			residualCount = count.intValue();
+		}
 
+		@Override
+		public boolean hasNext() {
+			return residualCount > 0;
+		}
 
-	public BagImpl() {
-		super();
-		this.coll = new HashMap<E, @NonNull MutableInteger>();
-		this.size = 0;
+		@Override
+		public E next() {
+			if (residualCount <= 0) {
+				throw new NoSuchElementException();
+			}
+			if (--residualCount > 0) {
+				return currentObject;
+			}
+			if (objectIterator.hasNext()) {
+				E savedObject = currentObject;
+				currentObject = objectIterator.next();
+				ElementCounter count = map.get(currentObject);
+				assert count != null;
+				residualCount = count.intValue();
+				return savedObject;
+			}
+			else {
+				residualCount = 0;
+				return currentObject;
+			}
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException("Remove not supported by OCL collections");	// Unimplemented optional operation
+		}
 	}
 
-	public BagImpl(Collection<? extends E> c) {
-		this();
-		addAll(c);
+	/**
+	 * ElementCounter is used as the count of a Bag element. It avoids thrashing Integer objects as counts evolve.
+	 */
+	private static class ElementCounter extends Number
+	{
+		private static final long serialVersionUID = -4943324197108585350L;
+
+		private int value = 1;
+
+		@Override
+		public double doubleValue() {
+			return value;
+		}
+
+		@Override
+		public boolean equals(Object thatElement) {
+			if (thatElement == this) {
+				return true;
+			}
+			if (!(thatElement instanceof Number)) {
+				return false;
+			}
+			return value == ((Number)thatElement).intValue();
+		}
+
+		@Override
+		public float floatValue() {
+			return value;
+		}
+
+		@Override
+		public int hashCode() {
+			return value;
+		}
+
+		@Override
+		public int intValue() {
+			return value;
+		}
+
+		@Override
+		public long longValue() {
+			return value;
+		}
+
+		@Override
+		public String toString() {
+			return Integer.toString(value);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -52,43 +142,138 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 		return (Bag<E>) ValueUtil.EMPTY_BAG;
 	}
 
+	private final @NonNull Map<E, @NonNull ElementCounter> map = new HashMap<>();
+	private int size = 0;
+	private @Nullable Integer hashCode = null;
+
+	public BagImpl() {}
+
 	/**
-	 * removes every occurrence of the object from the collection
+	 * @since 1.3
 	 */
-	@Override
-	public boolean remove(Object o) {
-		MutableInteger count = coll.remove(o);
-		if (count != null)
-			size -= count.i;
-		return count != null;
+	public BagImpl(@NonNull Iterable<? extends E> someElements) {
+		for (E anElement : someElements) {
+			add(anElement);
+		}
+	}
+
+	/* @deprecated retained only for API compatibility */
+	@Deprecated
+	public BagImpl(@NonNull Collection<? extends E> someElements) {
+		addAll(someElements);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public BagImpl(@NonNull Iterator<? extends E> someElements) {
+		while (someElements.hasNext()) {
+			add(someElements.next());
+		}
 	}
 
 	@Override
-	public boolean add(E o) {
-		MutableInteger count = coll.get(o);
-		if (count == null)
-			coll.put(o, new MutableInteger(1));
-		else
-			count.i++;
+	public boolean add(E anElement) {
+		ElementCounter count = map.get(anElement);
+		if (count == null) {
+			map.put(anElement, new ElementCounter());
+		}
+		else {
+			count.value++;
+		}
 		size++;
-		// the collection always changes as a result of this call
+		hashCode = null;
+		return true;	// the collection always changes as a result of this call
+	}
+
+	@Override
+	public void clear() {
+		hashCode = null;
+		size = 0;
+		map.clear();
+	}
+
+	@Override
+	public boolean contains(Object anElement) {
+		return count(anElement) > 0;
+	}
+
+	@Override
+	public int count(Object anElement) {
+		ElementCounter count = map.get(anElement);
+		return count != null ? count.value : 0;
+	}
+
+	/**
+	 * Returns true iff this bag and the argument bag have the same number of the same
+	 * elements.
+	 */
+	@Override
+	public boolean equals(Object thatElement) {
+		if (thatElement == this) {
+			return true;
+		}
+		if (!(thatElement instanceof Bag.Internal<?>)) {
+			return false;
+		}
+		Bag.Internal<?> thatBag = (Bag.Internal<?>) thatElement;
+		if (size() != thatBag.size()) {
+			return false;
+		}
+		Map<?, ? extends Number> thatMap = thatBag.getMap();
+		for (Object thisObject : map.keySet()) {
+			ElementCounter thisCount = map.get(thisObject);
+			assert thisCount !=  null;
+			Number thatCount = thatMap.get(thisObject);
+			if ((thatCount == null) || (thatCount.intValue() != thisCount.intValue()))
+				return false;
+		}
 		return true;
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
-	public boolean contains(Object o) {
-		return count(o) > 0;
+	public @NonNull Map<E, ? extends Number> getMap() {
+		return map;
 	}
 
 	@Override
-	public int count(Object o) {
-		MutableInteger count = coll.get(o);
-
-		if (count != null) {
-			return count.i;
+	public int hashCode() {
+		Integer hashCode2 = hashCode;
+		if (hashCode2 == null) {
+			int result = 37;
+			result = 37 * result + map.hashCode();
+			result = 37 * result + size;
+			hashCode2 = hashCode = result;
 		}
+		return hashCode2;
+	}
 
-		return 0;
+	@Override
+	public @NonNull Iterator<E> iterator() {
+		Iterator<E> objectIterator = map.keySet().iterator();
+		if (objectIterator.hasNext()) {
+			return new BagIterator<E>(map, objectIterator);
+		}
+		else {
+			return Iterators.emptyIterator();
+		}
+	}
+
+	/**
+	 * removes every occurrence of anElement from the collection
+	 */
+	@Override
+	public boolean remove(Object anElement) {
+		ElementCounter count = map.remove(anElement);
+		if (count == null) {
+			return false;
+		}
+		size -= count.value;
+		hashCode = null;
+		return true;
 	}
 
 	@Override
@@ -97,108 +282,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag<E>
 	}
 
 	@Override
-	public void clear() {
-		size = 0;
-		coll.clear();
-	}
-
-	/**
-	 * Returns true iff this bag and the argument bag have the same number of the same
-	 * elements.
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (o instanceof BagImpl<?>) {
-			BagImpl<?> b = (BagImpl<?>) o;
-			if (size() == b.size()) {
-				for (Iterator<?> it = iterator(); it.hasNext();) {
-					Object obj = it.next();
-					MutableInteger count = coll.get(obj);
-					MutableInteger otherCount = b.coll.get(obj);
-					if ((count == null) || (otherCount == null) || (otherCount.i != count.i))
-						return false;
-				}
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = 37;
-		result = 37 * result + coll.hashCode();
-		result = 37 * result + size;
-		return result;
-	}
-
-	@Override
-	public @NonNull Iterator<E> iterator() {
-		// local inner class
-		class MyIterator implements Iterator<E> {
-
-			private Iterator<E> it;
-			private int offset;
-			private int maxOffset;
-			private @Nullable E curr;
-
-			public MyIterator() {
-				it = coll.keySet().iterator();
-				offset = 0;
-				maxOffset = 0;
-			}
-
-			@Override
-			public boolean hasNext() {
-				return (offset < maxOffset) || it.hasNext();
-			}
-
-			@Override
-			public E next() {
-				if (offset < maxOffset) {
-					offset++;
-					@SuppressWarnings("null") E curr2 = (E)curr;
-					return curr2;
-				}
-				if (!it.hasNext())
-					throw new NoSuchElementException();
-				curr = it.next();
-				MutableInteger count = coll.get(curr);
-				assert count != null;
-				offset = 0;
-				maxOffset = count.i - 1;
-				@SuppressWarnings("null") E curr2 = (E)curr;
-				return curr2;
-			}
-
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException("Remove not supported by OCL collections");	// Unimplemented optional operation
-			}
-		} // end of local inner class MyIterator
-
-		return new MyIterator();
-	}
-
-	// static inner class for mutable integers
-	// TODO: Consider whether we should pull this class out and use
-	// it consistently throughout.
-	private static class MutableInteger {
-
-		public MutableInteger(int i) {
-			this.i = i;
-		}
-
-		@Override
-		public String toString() {
-			return Integer.toString(i);
-		}
-
-		public int i;
-	}
-
-	@Override
 	public String toString() {
-		return coll.toString();
+		return map.toString();
 	}
 }

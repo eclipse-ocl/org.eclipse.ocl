@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
+/**
+ * @noimplement This interface is not intended to be implemented by clients.
+ */
 public interface BagValue extends CollectionValue
 {
 	/**
