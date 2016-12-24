@@ -92,33 +92,9 @@ public abstract class AbstractCollectionFactory implements CollectionFactory
 
 	@Override
 	public @NonNull String getKind() {
-		if (this == TypeId.BAG) {
-			return TypeId.BAG_NAME;
-		}
-		//		else if (this == TypeId.COLLECTION) {
-		//			return "COLLECTION";
-		//		}
-		else if (this == TypeId.ORDERED_SET) {
-			return TypeId.ORDERED_SET_NAME;
-		}
-		else if (this == TypeId.SEQUENCE) {
-			return TypeId.SEQUENCE_NAME;
-		}
-		else if (this == TypeId.SET) {
-			return TypeId.SET_NAME;
-		}
-		//		else if (this == TypeId.UNIQUE_COLLECTION) {
-		//			return "UNIQUE_COLLECTION";
-		//		}
-		else {
-			throw new UnsupportedOperationException();
-		}
+		if (isOrdered) return isUnique ? TypeId.ORDERED_SET_NAME : TypeId.SEQUENCE_NAME;
+		else return isUnique ? TypeId.SET_NAME : TypeId.BAG_NAME;
 	}
-
-	//	@Override
-	//	public @NonNull CollectionTypeId getTypeId() {
-	//		return typeId;
-	//	}
 
 	@Override
 	public boolean isOrdered() {

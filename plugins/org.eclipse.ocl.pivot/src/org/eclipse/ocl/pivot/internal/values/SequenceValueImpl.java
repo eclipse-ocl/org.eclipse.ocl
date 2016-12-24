@@ -107,8 +107,8 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		if (!(obj instanceof SequenceValue) || (obj instanceof OrderedSetValue)) {
 			return false;
 		}
-		Iterator<@Nullable ? extends Object> theseElements = iterator();
-		Iterator<@Nullable ? extends Object> thoseElements = ((SequenceValue)obj).iterator();
+		Iterator<? extends Object> theseElements = iterator();
+		Iterator<? extends Object> thoseElements = ((SequenceValue)obj).iterator();
 		while (theseElements.hasNext() && thoseElements.hasNext()) {
 			Object thisValue = theseElements.next();
 			Object thatValue = thoseElements.next();

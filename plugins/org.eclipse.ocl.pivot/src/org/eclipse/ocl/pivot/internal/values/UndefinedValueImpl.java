@@ -54,7 +54,7 @@ import org.eclipse.ocl.pivot.values.Value;
  * @generated NOT
  */
 public abstract class UndefinedValueImpl extends EvaluationException implements NullValue
-{	
+{
 	private static final long serialVersionUID = 1L;
 
 	private static class Iterator implements java.util.Iterator<@Nullable Object>
@@ -134,7 +134,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	public @NonNull Double asDouble() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, "Double", getTypeName());
 	}
-	
+
 	@Override
 	public @NonNull <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> elementClass) {
 		throw new InvalidValueException(this, "asEcoreObjects");
@@ -233,32 +233,32 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	public @NonNull BigInteger bigIntegerValue() {
 		throw new InvalidValueException("undefined value has no BigInteger value");
 	}
-	
+
 	@Override
 	public @NonNull RealValue commutatedAdd(@NonNull RealValue left) {
 		return toInvalidValue();
 	}
-	
+
 	@Override
 	public @NonNull IntegerValue commutatedDiv(@NonNull IntegerValue left) {
 		return toInvalidValue();
 	}
-	
+
 	@Override
 	public @NonNull RealValue commutatedDivide(@NonNull RealValue left) {
 		return toInvalidValue();
 	}
-	
+
 	@Override
 	public @NonNull IntegerValue commutatedMod(@NonNull IntegerValue left) {
 		return toInvalidValue();
 	}
-	
+
 	@Override
 	public @NonNull RealValue commutatedMultiply(@NonNull RealValue left) {
 		return toInvalidValue();
 	}
-	
+
 	@Override
 	public @NonNull RealValue commutatedSubtract(@NonNull RealValue left) {
 		return toInvalidValue();
@@ -284,10 +284,10 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		return ValueUtil.throwUnsupportedCompareTo(this, right);
 	}
 
-    @Override
+	@Override
 	public @NonNull IntegerValue count(@Nullable Object value) {
-        return toInvalidValue();
-    }
+		return toInvalidValue();
+	}
 
 	public @NonNull CollectionValue createNew() {
 		return toInvalidValue();
@@ -322,16 +322,16 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		throw new UnsupportedOperationException("InvalidValue.compareTo");
 	}
 
-    @Override
+	@Override
 	public @NonNull Boolean excludes(@Nullable Object value) {
 		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
-    }
+	}
 
 
-    @Override
+	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
 		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
-    }
+	}
 
 	@Override
 	public @NonNull CollectionValue excluding(@Nullable Object value) {
@@ -343,15 +343,15 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		return toInvalidValue();
 	}
 
-    @Override
+	@Override
 	public @Nullable Value first() {
 		return toInvalidValue();
 	}
 
 	@Override
 	public @NonNull CollectionValue flatten() {
-    	return toInvalidValue();
-    }
+		return toInvalidValue();
+	}
 
 	@Override
 	public boolean flatten(@NonNull Collection<Object> flattenedElements) {
@@ -366,7 +366,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	public Type getElement() {
 		return null;
 	}
-    
+
 	@Override
 	public @NonNull List<? extends Object> getElements() {
 		throw new InvalidValueException("bad getElements()");
@@ -375,10 +375,10 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	public @NonNull Type getInstanceType() {
 		throw new InvalidValueException("undefined value has no instance type");
 	}
-	
+
 	@Override
 	public String getKind() {
-	    return TypeId.COLLECTION_NAME;		// FIXME UOE ??
+		return TypeId.COLLECTION_NAME;		// FIXME UOE ??
 	}
 
 	@Override
@@ -395,23 +395,23 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 
 	@Override
 	public @NonNull Value getValue(@NonNull TuplePartId partId) {
-    	return toInvalidValue();
+		return toInvalidValue();
 	}
 
 	@Override
 	public @NonNull Object getValue(int index) {
-    	return toInvalidValue();
+		return toInvalidValue();
 	}
 
-    @Override
+	@Override
 	public @NonNull Boolean includes(@Nullable Object value) {
 		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
-    }
+	}
 
-    @Override
+	@Override
 	public @NonNull Boolean includesAll(@NonNull CollectionValue c) {
 		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
-   }
+	}
 
 	@Override
 	public @NonNull CollectionValue including(@Nullable Object value) {
@@ -451,7 +451,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	public boolean isFalse() {
 		return false;
 	}
-	
+
 	@Override
 	public @Nullable IntegerValue isIntegerValue() {
 		return null;
@@ -480,19 +480,19 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	public boolean isUnlimited() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isUnlimitedNatural() {
 		return false;
 	}
-	
+
 	@Override
 	public @Nullable UnlimitedNaturalValue isUnlimitedNaturalValue() {
 		return null;
 	}
 
 	@Override
-	public @NonNull Iterable<? extends Object> iterable() {
+	public @NonNull Iterable<Object> iterable() {
 		return Collections.<Object>emptyList();
 	}
 
@@ -500,7 +500,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	public @NonNull Iterator iterator() {
 		return new Iterator();
 	}
-	
+
 	@Override
 	public @Nullable Value last() {
 		return toInvalidValue();
@@ -623,10 +623,10 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 
 	@Override
 	public @NonNull IntegerValue size() {
-    	return toInvalidValue();
+		return toInvalidValue();
 	}
 
-    @Override
+	@Override
 	public @NonNull SequenceValue sort(@NonNull Comparator<Object> comparator) {
 		return toInvalidValue();
 	}
@@ -663,7 +663,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	protected @NonNull NullValue toInvalidValue() {
 		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
 	}
-    
+
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {
 		return this;
@@ -676,6 +676,6 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 
 	@Override
 	public @NonNull CollectionValue union(@NonNull CollectionValue c) {
-        return this;
-    }
+		return this;
+	}
 }

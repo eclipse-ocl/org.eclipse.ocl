@@ -96,7 +96,7 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
  * @since 1.1
  */
 public abstract class ValueUtil
-{	
+{
 	private static final @NonNull String METAMODEL_NAME_PREFIX = PivotConstants.METAMODEL_NAME + "::";
 
 	public static final @NonNull String NULL_STRING = "null";
@@ -105,7 +105,7 @@ public abstract class ValueUtil
 	private static final int POSITIVE_INTEGERS = 1025;
 	private static final @Nullable IntegerValue @NonNull [] INTEGER_VALUES = new @Nullable IntegerValue[NEGATIVE_INTEGERS + POSITIVE_INTEGERS];
 
-	public static @NonNull Bag<?> EMPTY_BAG = new BagImpl<Object>();	
+	public static @NonNull Bag<?> EMPTY_BAG = new BagImpl<Object>();
 	public static final @NonNull Set<Object> EMPTY_SET = Collections.emptySet();
 
 	@SuppressWarnings("null")
@@ -117,17 +117,17 @@ public abstract class ValueUtil
 	@SuppressWarnings("null")
 	public static final @NonNull BigInteger LONG_MIN_VALUE = BigInteger.valueOf(Long.MIN_VALUE);
 	private static final String maxLongValue = Long.toString(Long.MAX_VALUE);
-	private static final int maxLongSize = maxLongValue.length();	
+	private static final int maxLongSize = maxLongValue.length();
 
 	public static final @NonNull Boolean FALSE_VALUE = Boolean.FALSE;
-	public static final @NonNull InvalidValueException INVALID_VALUE = new InvalidValueException("invalid"); 
-	public static final @NonNull NullValue NULL_VALUE = new NullValueImpl(); 
+	public static final @NonNull InvalidValueException INVALID_VALUE = new InvalidValueException("invalid");
+	public static final @NonNull NullValue NULL_VALUE = new NullValueImpl();
 	public static final @NonNull IntegerValue ONE_VALUE = integerValueOf(1);
 	public static final @NonNull UnlimitedNaturalValue UNLIMITED_ONE_VALUE = (UnlimitedNaturalValue)ONE_VALUE;
 	public static final @NonNull Boolean TRUE_VALUE = Boolean.TRUE;
-	public static final @NonNull UnlimitedValue UNLIMITED_VALUE = new UnlimitedValueImpl(); 
+	public static final @NonNull UnlimitedValue UNLIMITED_VALUE = new UnlimitedValueImpl();
 	public static final @NonNull IntegerValue ZERO_VALUE = integerValueOf(0);
-	
+
 	private static boolean allStaticsInitialized = false;
 
 	public static @NonNull BagValue asBagValue(@Nullable Object value) {
@@ -377,9 +377,9 @@ public abstract class ValueUtil
 		if (anObject instanceof BigDecimal) {
 			return (BigDecimal)anObject;
 		}
-//		else if (anObject instanceof Unlimited) {
-//			return BigDecimal.valueOf(Double.POSITIVE_INFINITY);
-//		}
+		//		else if (anObject instanceof Unlimited) {
+		//			return BigDecimal.valueOf(Double.POSITIVE_INFINITY);
+		//		}
 		else if (anObject instanceof Number) {
 			return BigDecimal.valueOf(((Number)anObject).doubleValue());
 		}
@@ -396,9 +396,9 @@ public abstract class ValueUtil
 		if (anObject instanceof BigInteger) {
 			return (BigInteger)anObject;
 		}
-//		else if (anObject instanceof Unlimited) {
-//			return UNLIMITED_VALUE;
-//		}
+		//		else if (anObject instanceof Unlimited) {
+		//			return UNLIMITED_VALUE;
+		//		}
 		else if (anObject instanceof Number) {
 			return BigInteger.valueOf(((Number)anObject).longValue());
 		}
@@ -409,7 +409,7 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.InvalidInteger, anObject);
 		}
 	}
-    
+
 	/**
 	 * @since 1.1
 	 */
@@ -427,9 +427,9 @@ public abstract class ValueUtil
 		if (anObject instanceof Character) {
 			return (Character)anObject;
 		}
-//		else if (anObject instanceof Unlimited) {
-//			return UNLIMITED_VALUE;
-//		}
+		//		else if (anObject instanceof Unlimited) {
+		//			return UNLIMITED_VALUE;
+		//		}
 		else if (anObject instanceof Number) {
 			return Character.valueOf((char)((Number)anObject).longValue());
 		}
@@ -470,7 +470,7 @@ public abstract class ValueUtil
 
 	public static BagValue.@NonNull Accumulator createBagAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new BagValueImpl.Accumulator(collectedId);
-	}	
+	}
 
 	public static @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
@@ -507,7 +507,7 @@ public abstract class ValueUtil
 		else /*if (collectionId == TypeId.SET)*/ {
 			return new SetValueImpl.Accumulator(collectedId);
 		}
-	}	
+	}
 
 	public static @NonNull InvalidValueException createInvalidValue(@NonNull Exception e) {
 		if (e instanceof InvalidValueException) {
@@ -517,7 +517,7 @@ public abstract class ValueUtil
 			return new InvalidValueException(e);
 		}
 	}
-	
+
 	public static @NonNull MapValue createMapOfEach(@NonNull MapTypeId typeId, @NonNull MapEntry @NonNull ... mapEntries) {
 		return MapValueImpl.createMapValueOfEach(typeId, mapEntries);
 	}
@@ -536,11 +536,11 @@ public abstract class ValueUtil
 
 	public static OrderedSetValue.@NonNull Accumulator createOrderedSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new SparseOrderedSetValueImpl.Accumulator(collectedId);
-	}	
+	}
 
-//	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
-//		return new RangeOrderedSetValueImpl(typeId, range);
-//	}
+	//	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
+	//		return new RangeOrderedSetValueImpl(typeId, range);
+	//	}
 
 	public static @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		return new SparseOrderedSetValueImpl(typeId, SparseOrderedSetValueImpl.createOrderedSetOfEach(boxedValues));
@@ -569,7 +569,7 @@ public abstract class ValueUtil
 
 	public static SequenceValue.@NonNull Accumulator createSequenceAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new SparseSequenceValueImpl.Accumulator(collectedId);
-	}	
+	}
 
 	public static @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		return new SparseSequenceValueImpl(typeId, SparseSequenceValueImpl.createSequenceOfEach(boxedValues));
@@ -598,7 +598,7 @@ public abstract class ValueUtil
 
 	public static SetValue.@NonNull Accumulator createSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new SetValueImpl.Accumulator(collectedId);
-	}	
+	}
 
 	public static @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		return new SetValueImpl(typeId, SetValueImpl.createSetOfEach(boxedValues));
@@ -628,7 +628,7 @@ public abstract class ValueUtil
 	public static @NonNull TupleValue createTupleOfEach(@NonNull TupleTypeId typeId, @NonNull Object... values) {
 		return new TupleValueImpl(typeId, values);
 	}
-    
+
 	/**
 	 * @since 1.1
 	 */
@@ -640,7 +640,7 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.InvalidReal, anObject);
 		}
 	}
-    
+
 	/**
 	 * @since 1.1
 	 */
@@ -661,8 +661,8 @@ public abstract class ValueUtil
 		}
 		return name;
 	}
-	
-	/** @deprecated only used to support deprecated code 
+
+	/** @deprecated only used to support deprecated code
 	 * @since 1.1*/
 	@Deprecated
 	public static @NonNull Executor getExecutor(@NonNull Evaluator evaluator) {
@@ -671,7 +671,7 @@ public abstract class ValueUtil
 		}
 		return ((EvaluationVisitor.EvaluationVisitorExtension)evaluator).getExecutor();
 	}
-	
+
 	public static String getTypeName(@Nullable Object value) {
 		if (value instanceof Boolean) {
 			return TypeId.BOOLEAN_NAME;
@@ -687,7 +687,7 @@ public abstract class ValueUtil
 		}
 		return "Object";
 	}
-	
+
 	/**
 	 * Initialize all static variables in this package to avoid thread contention between conflicting initializations.
 	 * <p>
@@ -704,10 +704,10 @@ public abstract class ValueUtil
 					// org.eclipse.ocl.domain.evaluation
 					ModelManager.NULL.getClass();
 					// org.eclipse.ocl.domain.ids
-//					IdManager.getClass();
+					//					IdManager.getClass();
 					TemplateableId.NULL_TEMPLATEABLE_ID_ARRAY.getClass();
-//					BindingsId.EMPTY_LIST.getClass();
-//					TemplateParameterId.NULL_TEMPLATE_PARAMETER_ID_ARRAY.getClass();
+					//					BindingsId.EMPTY_LIST.getClass();
+					//					TemplateParameterId.NULL_TEMPLATE_PARAMETER_ID_ARRAY.getClass();
 					TypeId.INTEGER.getClass();
 					// org.eclipse.ocl.domain.types
 					AbstractInheritance.initStatics();
@@ -729,15 +729,15 @@ public abstract class ValueUtil
 					CollectionValueImpl.initStatics();
 					RealValueImpl.initStatics();
 					// org.eclipse.ocl.domain.values.util
-//					new ValuesAdapterFactory();
-//					new ValuesSwitch<Object>();
+					//					new ValuesAdapterFactory();
+					//					new ValuesSwitch<Object>();
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-    
+
 	/**
 	 * @since 1.1
 	 */
@@ -765,7 +765,7 @@ public abstract class ValueUtil
 					}
 					return INTEGER_VALUES[index] = new IntIntegerValueImpl(value);
 				}
-			}			
+			}
 		}
 		return new IntIntegerValueImpl(value);
 	}
@@ -778,7 +778,7 @@ public abstract class ValueUtil
 			return new LongIntegerValueImpl(value);
 		}
 	}
-	
+
 	public static @NonNull IntegerValue integerValueOf(@Nullable BigInteger value) {
 		if (value == null) {
 			throw new InvalidValueException(PivotMessages.InvalidInteger, value);
@@ -806,9 +806,9 @@ public abstract class ValueUtil
 		if (aValue instanceof BigInteger) {
 			return integerValueOf((BigInteger)aValue);
 		}
-//		else if (aValue instanceof Unlimited) {
-//			return UNLIMITED_VALUE;
-//		}
+		//		else if (aValue instanceof Unlimited) {
+		//			return UNLIMITED_VALUE;
+		//		}
 		else if (aValue instanceof Number) {
 			return integerValueOf(((Number)aValue).longValue());
 		}
@@ -822,7 +822,7 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.InvalidInteger, aValue);
 		}
 	}
-	
+
 	/**
 	 * Creates an IntegerValue representation for aValue.
 	 * @param aValue the string representation of a (non-negative) integer number
@@ -865,7 +865,7 @@ public abstract class ValueUtil
 		}
 		return true;
 	}
-	
+
 	public static @Nullable CollectionValue isCollectionValue(@Nullable Object value) {
 		if ((value instanceof CollectionValue) && !(value instanceof NullValue)) {
 			return (CollectionValue)value;
@@ -893,15 +893,15 @@ public abstract class ValueUtil
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Return true if aNumber is a known integer representation that can be converted to an IntegerValue.
-	 * Returns false for other types including IntegerValue. 
+	 * Returns false for other types including IntegerValue.
 	 */
 	public static boolean isIntegerNumber(@NonNull Number aNumber) {
 		return (aNumber instanceof BigInteger) || (aNumber instanceof Long) || (aNumber instanceof Integer) || (aNumber instanceof Short) || (aNumber instanceof Byte);
 	}
-	
+
 	public static IntegerValue isIntegerValue(@Nullable Object value) {
 		if ((value instanceof IntegerValue) && !(value instanceof NullValue)) {
 			return (IntegerValue)value;
@@ -910,10 +910,10 @@ public abstract class ValueUtil
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Return true if aNumber is a known floating point representation that can be converted to a RealValue.
-	 * Returns false for other types including RealValue. 
+	 * Returns false for other types including RealValue.
 	 */
 	public static boolean isRealNumber(@NonNull Number aNumber) {
 		return (aNumber instanceof BigDecimal) || (aNumber instanceof Double) || (aNumber instanceof Float);
@@ -938,7 +938,7 @@ public abstract class ValueUtil
 	public static boolean isUnlimited(@Nullable Object value) {
 		return (value instanceof UnlimitedValue) && !(value instanceof NullValue);
 	}
-    
+
 	/**
 	 * @since 1.1
 	 */
@@ -950,7 +950,7 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.InvalidInteger, anObject);
 		}
 	}
-    
+
 	/**
 	 * @since 1.1
 	 */
@@ -994,7 +994,7 @@ public abstract class ValueUtil
 			throw new InvalidValueException(e, PivotMessages.InvalidInteger, integerValue);
 		}
 	}
-    
+
 	public static @NonNull RealValue realValueOf(@Nullable Number aNumber) {
 		if (aNumber instanceof RealValue) {
 			return (RealValue)aNumber;
@@ -1005,9 +1005,9 @@ public abstract class ValueUtil
 		else if (aNumber instanceof BigInteger) {
 			return new RealValueImpl(new BigDecimal((BigInteger)aNumber));
 		}
-//		else if (aNumber instanceof Unlimited) {
-//			return new RealValueImpl(Double.POSITIVE_INFINITY);
-//		}
+		//		else if (aNumber instanceof Unlimited) {
+		//			return new RealValueImpl(Double.POSITIVE_INFINITY);
+		//		}
 		else if (aNumber != null) {
 			return new RealValueImpl(aNumber.doubleValue());
 		}
@@ -1015,7 +1015,7 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.InvalidReal, aNumber);
 		}
 	}
-	
+
 	public static @NonNull RealValue realValueOf(@NonNull String aValue) {
 		try {
 			return new RealValueImpl(new BigDecimal(aValue.trim()));
@@ -1024,7 +1024,7 @@ public abstract class ValueUtil
 			throw new InvalidValueException(e, PivotMessages.InvalidReal, aValue);
 		}
 	}
-    
+
 	/**
 	 * @since 1.1
 	 */
@@ -1042,23 +1042,23 @@ public abstract class ValueUtil
 		if (aValue == null) {
 			stringValue = NULL_STRING;
 		}
-		else if (aValue instanceof Value) {							// Needed for Iterable Values such as CollectionValue 
+		else if (aValue instanceof Value) {							// Needed for Iterable Values such as CollectionValue
 			stringValue = ((Value)aValue).toString();
 		}
 		else if (aValue instanceof String) {
 			stringValue = "'" + StringUtil.convertToOCLString((String)aValue) + "'";
 		}
-//		else if (aValue instanceof DomainType) {
-//			return String.valueOf(aValue);
-//		}
-//		else if (aValue instanceof DomainEnumerationLiteral) {
-//			return String.valueOf(aValue);
-//		}
-//		else if (aValue instanceof EEnumLiteral) {
-//			return String.valueOf(aValue);
-//		}
+		//		else if (aValue instanceof DomainType) {
+		//			return String.valueOf(aValue);
+		//		}
+		//		else if (aValue instanceof DomainEnumerationLiteral) {
+		//			return String.valueOf(aValue);
+		//		}
+		//		else if (aValue instanceof EEnumLiteral) {
+		//			return String.valueOf(aValue);
+		//		}
 		else if ((aValue instanceof EObject) &&
-			!((aValue instanceof Element) || (aValue instanceof EEnumLiteral))) {
+				!((aValue instanceof Element) || (aValue instanceof EEnumLiteral))) {
 			stringValue = LabelUtil.getLabel(aValue);
 		}
 		else if (aValue.getClass().isArray()) {
@@ -1070,7 +1070,7 @@ public abstract class ValueUtil
 		else {
 			stringValue = String.valueOf(aValue);
 		}
-		return stringValue != null ? stringValue : "<<null>>"; 
+		return stringValue != null ? stringValue : "<<null>>";
 	}
 
 	public static boolean throwBooleanInvalidValueException(@NonNull String string) {
@@ -1087,9 +1087,9 @@ public abstract class ValueUtil
 	public static int throwUnsupportedCompareTo(@Nullable Object left, @Nullable Object right) {
 		throw new InvalidValueException(PivotMessages.UnsupportedCompareTo,
 			left != null ? left.getClass().getName() : "null", //$NON-NLS-1$
-			right != null ? right.getClass().getName() : "null"); //$NON-NLS-1$
+				right != null ? right.getClass().getName() : "null"); //$NON-NLS-1$
 	}
-	
+
 	public static void toString(@Nullable Object value, @NonNull StringBuilder s, int sizeLimit) {
 		if (value instanceof Value) {
 			((Value)value).toString(s, sizeLimit);
@@ -1128,7 +1128,7 @@ public abstract class ValueUtil
 	public static @NonNull <T> Iterable<T> typedIterable(Class<T> elementClass, @NonNull CollectionValue collectionValue) {
 		return (Iterable<T>)collectionValue;
 	}
-	
+
 	public static @NonNull UnlimitedNaturalValue unlimitedNaturalValueOf(@Nullable BigInteger value) {
 		return (UnlimitedNaturalValue)integerValueOf(value);
 	}
@@ -1161,7 +1161,7 @@ public abstract class ValueUtil
 			throw new InvalidValueException(PivotMessages.InvalidInteger, aValue);
 		}
 	}
-	
+
 	/**
 	 * Creates an IntegerValue representation for aValue.
 	 * @param aValue the string representation of a (non-negative) integer number

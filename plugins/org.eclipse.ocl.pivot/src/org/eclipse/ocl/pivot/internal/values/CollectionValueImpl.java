@@ -42,7 +42,6 @@ public abstract class CollectionValueImpl extends AbstractCollectionValueImpl
 	}
 
 	protected final @NonNull Collection<? extends Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
-	private int hashCode = 0;
 
 	/**
 	 * @since 1.3
@@ -134,7 +133,7 @@ public abstract class CollectionValueImpl extends AbstractCollectionValueImpl
 
 	/**
 	 * @since 1.1
-	 */
+	 *
 	@Override
 	public final int hashCode() {		// Need hash to be independent of the Set/List/OrderedSet/Bag actually in use as elements
 		if (hashCode == 0) {
@@ -145,7 +144,7 @@ public abstract class CollectionValueImpl extends AbstractCollectionValueImpl
 			}
 		}
 		return hashCode;
-	}
+	} */
 
 	@Override
 	public int intSize() {
@@ -160,13 +159,6 @@ public abstract class CollectionValueImpl extends AbstractCollectionValueImpl
 	@Override
 	public @NonNull Iterable<? extends Object> iterable() {
 		return elements;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		toString(s, 100);
-		return s.toString();
 	}
 
 	@Override

@@ -22,19 +22,22 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 
+/**
+ * @noimplement This interface is not intended to be implemented by clients.
+ */
 public interface CollectionValue extends Value, Iterable<@Nullable Object>
 {
 	/**
 	 * @generated NOT
 	 */
 	interface Accumulator extends CollectionValue {
-		boolean add(@Nullable Object value);	
+		boolean add(@Nullable Object value);
 	}
 
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Collection<? extends Object> asCollection();	
+	@NonNull Collection<? extends Object> asCollection();
 
 	/**
 	 * @generated NOT
@@ -55,7 +58,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean excludes(@Nullable Object value);	
+	@NonNull Boolean excludes(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -83,6 +86,12 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	boolean flatten(@NonNull Collection<Object> flattenedElements);
 
 	/**
+	 * Return the CollectonTypeId of a Bag of these elements.
+	 * @since 1.3
+	 */
+	@NonNull CollectionTypeId getBagTypeId();
+
+	/**
 	 * @generated NOT
 	 */
 	@NonNull Collection<? extends Object> getElements();
@@ -93,6 +102,24 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	String getKind();
 
 	/**
+	 * Return the CollectonTypeId of an OrderedSet of these elements.
+	 * @since 1.3
+	 */
+	@NonNull CollectionTypeId getOrderedSetTypeId();
+
+	/**
+	 * Return the CollectonTypeId of a Sequence of these elements.
+	 * @since 1.3
+	 */
+	@NonNull CollectionTypeId getSequenceTypeId();
+
+	/**
+	 * Return the CollectonTypeId of a Set of these elements.
+	 * @since 1.3
+	 */
+	@NonNull CollectionTypeId getSetTypeId();
+
+	/**
 	 * @generated NOT
 	 */
 	@Override
@@ -101,7 +128,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean includes(@Nullable Object value);	
+	@NonNull Boolean includes(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -156,7 +183,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@Nullable Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId);   	
+	@Nullable Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId);
 
 	/**
 	 * @generated NOT

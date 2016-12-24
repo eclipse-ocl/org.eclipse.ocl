@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * @noimplement This interface is not intended to be implemented by clients.
  */
@@ -19,4 +21,10 @@ public interface BagValue extends CollectionValue
 	 * @generated NOT
 	 */
 	interface Accumulator extends CollectionValue.Accumulator, BagValue {}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	@NonNull Bag<? extends Object> getElements();
 }

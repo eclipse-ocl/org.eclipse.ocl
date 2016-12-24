@@ -204,6 +204,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	protected final @NonNull CollectionTypeId typeId;
 	protected final @NonNull CollectionFactory collectionFactory;
+	private int hashCode = 0;
 
 	protected AbstractCollectionValueImpl(@NonNull CollectionTypeId typeId) {
 		this.typeId = typeId;
@@ -661,6 +662,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		}
 	}
 
+	@Override
 	public @NonNull CollectionTypeId getBagTypeId() {
 		return TypeId.BAG.getSpecializedId(getElementTypeId());
 	}
@@ -704,14 +706,17 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		return collectionFactory.getKind();
 	}
 
+	@Override
 	public @NonNull CollectionTypeId getOrderedSetTypeId() {
 		return TypeId.ORDERED_SET.getSpecializedId(getElementTypeId());
 	}
 
+	@Override
 	public @NonNull CollectionTypeId getSequenceTypeId() {
 		return TypeId.SEQUENCE.getSpecializedId(getElementTypeId());
 	}
 
+	@Override
 	public @NonNull CollectionTypeId getSetTypeId() {
 		return TypeId.SET.getSpecializedId(getElementTypeId());
 	}
@@ -719,6 +724,21 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	@Override
 	public @NonNull CollectionTypeId getTypeId() {
 		return typeId;
+	}
+
+	/**
+	 * @since 1.1
+	 */
+	@Override
+	public final int hashCode() {		// Need hash to be independent of the Set/List/OrderedSet/Bag actually in use as elements
+		if (hashCode == 0) {
+			synchronized (this) {
+				if (hashCode == 0) {
+					hashCode = computeCollectionHashCode(isOrdered(), isUnique(), iterable());
+				}
+			}
+		}
+		return hashCode;
 	}
 
 	@Override
@@ -838,7 +858,9 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue intersection(@NonNull CollectionValue that) {
-		assert !this.isUndefined() && !that.isUndefined();
+		return IntersectionEvaluator.intersection(this, that);
+
+		/*		assert !this.isUndefined() && !that.isUndefined();
 		Collection<? extends Object> theseElements = this.asCollection();
 		Collection<? extends Object> thoseElements = that.asCollection();
 		int thisSize = theseElements.size();
@@ -878,7 +900,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 				}
 			}
 			return new BagValueImpl(typeId, results.size() > 0 ? results : ValueUtil.EMPTY_BAG);
-		}
+		} */
 	}
 
 	@Override
@@ -958,6 +980,13 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		else {
 			return new SparseSequenceValueImpl(getSequenceTypeId(), Lists.newArrayList(elements));
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 100);
+		return s.toString();
 	}
 
 	@Override
