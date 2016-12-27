@@ -34,6 +34,16 @@ public interface EqualsStrategy
 		}
 	}
 
+	public static class NotEqualsStrategy implements EqualsStrategy
+	{
+		public static final @NonNull NotEqualsStrategy INSTANCE = new NotEqualsStrategy();
+
+		@Override
+		public boolean isEqual(@Nullable Object firstObject, @Nullable Object secondObject) {
+			return false;
+		}
+	}
+
 	public static class OCLEqualsStrategy implements EqualsStrategy
 	{
 		public static final @NonNull OCLEqualsStrategy INSTANCE = new OCLEqualsStrategy();

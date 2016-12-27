@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -332,6 +333,76 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 			}
 		}
 		return ValueUtil.integerValueOf(count);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof CollectionValue)) {
+			return false;
+		}
+		CollectionValue that = (CollectionValue)obj;
+		boolean isOrdered = isOrdered();
+		if (isOrdered != that.isOrdered()) {
+			return false;
+		}
+		boolean isUnique = isUnique();
+		if (isUnique != that.isUnique()) {
+			return false;
+		}
+		Collection<? extends Object> theseElements = this.getElements();
+		Collection<? extends Object> thoseElements = that.getElements();
+		if (isOrdered) {
+			if (isUnique) {
+				// This is probably a bug fix on LinkedHashSet that should consider ordering for equals
+				Iterator<? extends Object> thisElement = theseElements.iterator();
+				Iterator<? extends Object> thatElement = thoseElements.iterator();
+				while (thisElement.hasNext() && thatElement.hasNext()) {
+					Object thisValue = thisElement.next();
+					Object thatValue = thatElement.next();
+					if (thisValue == null) {
+						if (thatValue != null) {
+							return false;
+						}
+					}
+					else {
+						if (!thisValue.equals(thatValue)) {
+							return false;
+						}
+					}
+				}
+				return !thisElement.hasNext() && !thatElement.hasNext();
+			}
+			else {
+				Iterator<? extends Object> thisElement = theseElements.iterator();
+				Iterator<? extends Object> thatElement = thoseElements.iterator();
+				while (thisElement.hasNext() && thatElement.hasNext()) {
+					Object thisValue = thisElement.next();
+					Object thatValue = thatElement.next();
+					if (!ClassUtil.safeEquals(thisValue, thatValue)) {
+						return false;
+					}
+				}
+				return !thisElement.hasNext() && !thatElement.hasNext();
+			}
+		}
+		else {
+			if (isUnique) {
+				int thisSize = theseElements.size();
+				int thatSize = thoseElements.size();
+				if (thisSize != thatSize) {
+					return false;
+				}
+				if (thoseElements instanceof Set<?>) {
+					return thoseElements.containsAll(theseElements);
+				}
+				else {
+					return theseElements.containsAll(thoseElements);
+				}
+			}
+			else {
+				return theseElements.equals(thoseElements);
+			}
+		}
 	}
 
 	/**
@@ -795,7 +866,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue including(@Nullable Object value) {
-		return IncludingEvaluator.including(this, value);
+		return IncludingEvaluator.including(getTypeId(), this, value);
 		/*		Iterable<? extends Object> elements = iterable();
 		if (isOrdered()) {
 			if (isUnique()) {

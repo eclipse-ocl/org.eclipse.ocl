@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 
@@ -68,11 +69,6 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 		return new LazyIterable<>(this);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		throw new UnsupportedOperationException();	// This support class is not intended for more general use.
-	}
-
 	public @Nullable Object first() {
 		throw new UnsupportedOperationException();
 	}
@@ -104,7 +100,7 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 
 	@Override
 	public int intSize() {
-		throw new UnsupportedOperationException();
+		return iterable().size();
 	}
 
 	@Override
@@ -141,6 +137,10 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	}
 
 	public @NonNull OrderedCollectionValue reverse() {
+		throw new UnsupportedOperationException();
+	}
+
+	public @NonNull OrderedSetValue subOrderedSet(int lower, int upper) {
 		throw new UnsupportedOperationException();
 	}
 

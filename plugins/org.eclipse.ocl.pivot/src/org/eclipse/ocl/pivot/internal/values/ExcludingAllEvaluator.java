@@ -10,19 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.values;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.Bag;
+import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSet;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 import com.google.common.collect.Iterables;
 
@@ -33,105 +32,21 @@ import com.google.common.collect.Iterables;
 public class ExcludingAllEvaluator
 {
 	public static @NonNull CollectionValue excludingAll(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
-		Iterable<? extends Object> elements = firstValue.iterable();
 		if (firstValue.isOrdered()) {
 			if (firstValue.isUnique()) {
-				OrderedSet<Object> result = new OrderedSetImpl<Object>();
-				for (Object element : elements) {
-					boolean reject = false;
-					if (element == null) {
-						for (Object value : secondValue) {
-							if (value == null) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					else {
-						for (Object value : secondValue) {
-							if ((value != null) && value.equals(element)) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					if (!reject) {
-						result.add(element);
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SparseOrderedSetValueImpl(firstValue.getTypeId(), result);
-				}
-				else {
-					return firstValue;
-				}
+				return new OrderedSetExcludingAllIterator(firstValue, secondValue);
 			}
 			else {
 				return new SequenceExcludingAllIterator(firstValue, secondValue);
-				/*				List<Object> result = new ArrayList<Object>();
-				for (Object element : elements) {
-					boolean reject = false;
-					if (element == null) {
-						for (Object value : secondValue) {
-							if (value == null) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					else {
-						for (Object value : secondValue) {
-							if ((value != null) && value.equals(element)) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					if (!reject) {
-						result.add(element);
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SparseSequenceValueImpl(firstValue.getTypeId(), result);
-				}
-				else {
-					return firstValue;
-				} */
 			}
 		}
 		else {
 			if (firstValue.isUnique()) {
-				Set<Object> result = new HashSet<Object>();
-				for (Object element : elements) {
-					boolean reject = false;
-					if (element == null) {
-						for (Object value : secondValue) {
-							if (value == null) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					else {
-						for (Object value : secondValue) {
-							if ((value != null) && value.equals(element)) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					if (!reject) {
-						result.add(element);
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SetValueImpl(firstValue.getTypeId(), result);
-				}
-				else {
-					return firstValue;
-				}
+				return new SetExcludingAllIterator(firstValue, secondValue);
 			}
 			else {
+				//				return new BagExcludingAllIterator(firstValue, secondValue);
+				Iterable<? extends Object> elements = firstValue.iterable();
 				Bag<Object> result = new BagImpl<Object>();
 				for (Object element : elements) {
 					boolean reject = false;
@@ -165,7 +80,7 @@ public class ExcludingAllEvaluator
 		}
 	}
 
-	private static class SequenceExcludingAllIterator extends AbstractCollectionIterator implements SequenceValue
+	private static class AbstractExcludingAllIterator extends AbstractCollectionIterator
 	{
 		protected final @NonNull Iterator<@Nullable Object> iterator;
 		protected final @NonNull Iterable<? extends Object> exclusions;
@@ -173,8 +88,8 @@ public class ExcludingAllEvaluator
 		private boolean hasNext = false;
 		private @Nullable Object next;
 
-		public SequenceExcludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
-			super(TypeId.SEQUENCE.getSpecializedId(firstValue.getElementTypeId()));
+		public AbstractExcludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+			super(firstValue.getTypeId());
 			this.iterator = firstValue.iterator();
 			this.exclusions = secondValue.iterable();
 		}
@@ -224,11 +139,39 @@ public class ExcludingAllEvaluator
 
 		@Override
 		public void toString(@NonNull StringBuilder s, int sizeLimit) {
-			s.append("SeqExcAll{");
+			s.append("ExcludingAll{");
 			s.append(iterator);
-			s.append(",}");
+			s.append(",");
 			s.append(exclusions);
 			s.append("}");
+		}
+	}
+
+	private static class BagExcludingAllIterator extends AbstractExcludingAllIterator implements BagValue
+	{
+		public BagExcludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+			super(firstValue, secondValue);
+		}
+	}
+
+	private static class OrderedSetExcludingAllIterator extends AbstractExcludingAllIterator implements OrderedSetValue
+	{
+		public OrderedSetExcludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+			super(firstValue, secondValue);
+		}
+	}
+
+	private static class SequenceExcludingAllIterator extends AbstractExcludingAllIterator implements SequenceValue
+	{
+		public SequenceExcludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+			super(firstValue, secondValue);
+		}
+	}
+
+	private static class SetExcludingAllIterator extends AbstractExcludingAllIterator implements SetValue
+	{
+		public SetExcludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+			super(firstValue, secondValue);
 		}
 	}
 }

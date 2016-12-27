@@ -93,7 +93,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 		return unboxedValues;
 	}
 
-	@Override
+	/*	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof SetValue)) {
 			return false;
@@ -110,7 +110,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 		else {
 			return elements.containsAll(thoseElements);
 		}
-	}
+	} */
 
 	@Override
 	public @NonNull SetValue excluding(@Nullable Object value) {

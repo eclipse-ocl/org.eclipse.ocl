@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.values;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -23,13 +22,11 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
@@ -102,7 +99,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		return getElements().get(index);
 	}
 
-	@Override
+	/*	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof SequenceValue) || (obj instanceof OrderedSetValue)) {
 			return false;
@@ -117,7 +114,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 			}
 		}
 		return !theseElements.hasNext() && !thoseElements.hasNext();
-	}
+	} */
 
 	@Override
 	public @NonNull SequenceValue excluding(@Nullable Object value) {

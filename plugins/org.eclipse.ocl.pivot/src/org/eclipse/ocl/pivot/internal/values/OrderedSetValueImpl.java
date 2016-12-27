@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
@@ -104,7 +103,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 		throw new InvalidValueException("Null collection content");
 	}
 
-	@Override
+	/*	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof OrderedSetValue) || (obj instanceof NullValue)) {
 			return false;
@@ -127,7 +126,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 			}
 		}
 		return !theseElements.hasNext() && !thoseElements.hasNext();
-	}
+	} */
 
 	@Override
 	public @NonNull OrderedSetValue excluding(@Nullable Object value) {

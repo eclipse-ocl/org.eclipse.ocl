@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
+import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
@@ -194,7 +195,7 @@ public class TypeUtil
 		if (isNull) {
 			return SimpleEqualsStrategy.INSTANCE;
 		}
-		while (typeId instanceof CollectionTypeId) {
+		while ((typeId instanceof CollectionTypeId) && !(typeId instanceof OclVoidTypeId)) {
 			typeId = ((CollectionTypeId)typeId).getElementTypeId();
 		}
 		if (typeId instanceof PrimitiveTypeId) {

@@ -79,7 +79,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 		return unboxedValues;
 	}
 
-	@Override
+	/*	@Override
 	public boolean equals(Object thatObject) {
 		if (this == thatObject) {
 			return true;
@@ -87,7 +87,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 		if (!(thatObject instanceof BagValue)) {
 			return false;
 		}
-		/*		@Override
+		/ *		@Override
 		public boolean equals(Object obj) {
 			if (!(obj instanceof SetValue)) {
 				return false;
@@ -104,9 +104,9 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 			else {
 				return elements.containsAll(thoseElements);
 			}
-		} */
+		} * /
 		return elements.equals(((BagValue)thatObject).getElements());
-	}
+	} */
 
 	@Override
 	public @NonNull BagValue excluding(@Nullable Object value) {

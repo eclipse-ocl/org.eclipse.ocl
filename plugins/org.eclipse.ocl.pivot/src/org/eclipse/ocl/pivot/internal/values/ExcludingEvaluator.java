@@ -15,12 +15,11 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.Bag;
+import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSet;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 
@@ -33,82 +32,21 @@ import com.google.common.collect.Iterables;
 public class ExcludingEvaluator
 {
 	public static @NonNull CollectionValue excluding(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
-		Iterable<? extends Object> elements = firstValue.iterable();
 		if (firstValue.isOrdered()) {
 			if (firstValue.isUnique()) {
-				OrderedSet<Object> result = new OrderedSetImpl<Object>();
-				if (secondValue == null) {
-					for (Object element : elements) {
-						if (element != null) {
-							result.add(element);
-						}
-					}
-				}
-				else {
-					for (Object element : elements) {
-						if (!secondValue.equals(element)) {
-							result.add(element);
-						}
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SparseOrderedSetValueImpl(firstValue.getTypeId(), result);
-				}
-				else {
-					return firstValue;
-				}
+				return new OrderedSetExcludingIterator(firstValue, secondValue);
 			}
 			else {
 				return new SequenceExcludingIterator(firstValue, secondValue);
-				/*				List<Object> result = new ArrayList<Object>();
-				if (secondValue == null) {
-					for (Object element : elements) {
-						if (element != null) {
-							result.add(element);
-						}
-					}
-				}
-				else {
-					for (Object element : elements) {
-						if (!secondValue.equals(element)) {
-							result.add(element);
-						}
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SparseSequenceValueImpl(firstValue.getTypeId(), result);
-				}
-				else {
-					return firstValue;
-				} */
 			}
 		}
 		else {
 			if (firstValue.isUnique()) {
 				return new SetExcludingIterator(firstValue, secondValue);
-				/*				Set<Object> result = new HashSet<Object>();
-				if (secondValue == null) {
-					for (Object element : elements) {
-						if (element != null) {
-							result.add(element);
-						}
-					}
-				}
-				else {
-					for (Object element : elements) {
-						if (!secondValue.equals(element)) {
-							result.add(element);
-						}
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SetValueImpl(firstValue.getTypeId(), result);
-				}
-				else {
-					return firstValue;
-				} */
 			}
 			else {
+				//				return new BagExcludingIterator(firstValue, secondValue);
+				Iterable<? extends Object> elements = firstValue.iterable();
 				Bag<Object> result = new BagImpl<Object>();
 				if (secondValue == null) {
 					for (Object element : elements) {
@@ -142,8 +80,8 @@ public class ExcludingEvaluator
 		private boolean hasNext = false;
 		private @Nullable Object next;
 
-		public AbstractExcludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
-			super(collectionTypeId);
+		public AbstractExcludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(firstValue.getTypeId());
 			this.iterator = firstValue.iterator();
 			this.exclusion = secondValue;
 		}
@@ -188,24 +126,37 @@ public class ExcludingEvaluator
 		public void toString(@NonNull StringBuilder s, int sizeLimit) {
 			s.append("Excluding{");
 			s.append(iterator);
-			s.append(",}");
+			s.append(",");
 			s.append(exclusion instanceof String ? "'" + exclusion + "'" : exclusion);
 			s.append("}");
 		}
 	}
 
+	private static class BagExcludingIterator extends AbstractExcludingIterator implements BagValue
+	{
+		public BagExcludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(firstValue, secondValue);
+		}
+	}
+
+	private static class OrderedSetExcludingIterator extends AbstractExcludingIterator implements OrderedSetValue
+	{
+		public OrderedSetExcludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(firstValue, secondValue);
+		}
+	}
 
 	private static class SequenceExcludingIterator extends AbstractExcludingIterator implements SequenceValue
 	{
 		public SequenceExcludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
-			super(TypeId.SEQUENCE.getSpecializedId(firstValue.getElementTypeId()), firstValue, secondValue);
+			super(firstValue, secondValue);
 		}
 	}
 
 	private static class SetExcludingIterator extends AbstractExcludingIterator implements SetValue
 	{
 		public SetExcludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
-			super(TypeId.SET.getSpecializedId(firstValue.getElementTypeId()), firstValue, secondValue);
+			super(firstValue, secondValue);
 		}
 	}
 }

@@ -12,19 +12,18 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.Bag;
+import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.OrderedSet;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-
-import com.google.common.collect.Sets;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * @generated NOT
@@ -32,30 +31,21 @@ import com.google.common.collect.Sets;
  */
 public class IncludingEvaluator
 {
-	public static @NonNull CollectionValue including(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+	public static @NonNull CollectionValue including(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
 		if (firstValue.isOrdered()) {
 			if (firstValue.isUnique()) {
-				if (secondValue instanceof InvalidValueException) {
-					throw new InvalidValueException(PivotMessages.InvalidSource, "including");
-				}
-				Iterable<? extends Object> elements = firstValue.iterable();
-				OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
-				result.add(secondValue);
-				return new SparseOrderedSetValueImpl(firstValue.getTypeId(), result);
+				return new OrderedSetIncludingIterator(collectionTypeId, firstValue, secondValue);
 			}
 			else {
-				return new SequenceIncludingIterator(firstValue, secondValue);
+				return new SequenceIncludingIterator(collectionTypeId, firstValue, secondValue);
 			}
 		}
 		else {
 			if (firstValue.isUnique()) {
-				assert !(secondValue instanceof InvalidValueException);
-				Iterable<? extends Object> elements = firstValue.iterable();
-				Set<Object> result = Sets.newHashSet(elements);
-				result.add(secondValue);
-				return new SetValueImpl(firstValue.getTypeId(), result);
+				return new SetIncludingIterator(collectionTypeId, firstValue, secondValue);
 			}
 			else {
+				//				return new BagIncludingIterator(firstValue, secondValue);
 				assert !(secondValue instanceof InvalidValueException);
 				Iterable<? extends Object> elements = firstValue.iterable();
 				Bag<Object> result = new BagImpl<Object>(elements);
@@ -65,30 +55,29 @@ public class IncludingEvaluator
 		}
 	}
 
-	private static class SequenceIncludingIterator extends AbstractCollectionIterator implements SequenceValue
+	private static class AbstractIncludingIterator extends AbstractCollectionIterator
 	{
 		private enum NextIs { PREFIX, SUFFIX, END };
 
 		protected final @NonNull Iterator<@Nullable Object> prefix;
 		protected final @Nullable Object suffix;
-		private @Nullable NextIs nextIs = null;
+		private @Nullable EqualsStrategy equalsStrategy = null;		// Non-null once iteration starts
+		private @NonNull NextIs nextIs = NextIs.PREFIX;
+		private boolean suffixIsInPrefix = false;
 
-		public SequenceIncludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
-			super(TypeId.SEQUENCE.getSpecializedId(firstValue.getElementTypeId()));
+		public AbstractIncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(collectionTypeId);
 			this.prefix = firstValue.iterator();
 			this.suffix = secondValue;
 		}
 
 		@Override
 		protected boolean canBeIterable() {
-			return nextIs == null;
+			return equalsStrategy == null;
 		}
 
 		@Override
 		public boolean hasNext() {
-			if (nextIs == null) {
-				nextIs = NextIs.PREFIX;
-			}
 			if (nextIs == NextIs.PREFIX) {
 				if (prefix.hasNext()) {
 					return true;
@@ -96,23 +85,27 @@ public class IncludingEvaluator
 				nextIs = NextIs.SUFFIX;
 			}
 			if (nextIs == NextIs.SUFFIX) {
-				return true;
+				if (!suffixIsInPrefix) {
+					return true;
+				}
+				nextIs = NextIs.END;
 			}
 			return false;
 		}
 
-		//		@Override
-		//		public @Nullable Object last() {
-		//			return suffix;		-- need prefix.isNotInvalid check
-		//		}
-
 		@Override
 		public @Nullable Object next() {
-			if (nextIs == null) {
+			EqualsStrategy equalsStrategy2 = equalsStrategy;
+			if (equalsStrategy2 == null) {
+				equalsStrategy2 = equalsStrategy = isUnique() ? TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false) : EqualsStrategy.NotEqualsStrategy.INSTANCE;
 				hasNext();
 			}
 			if (nextIs == NextIs.PREFIX) {
-				return prefix.next();
+				Object next = prefix.next();
+				if (equalsStrategy2.isEqual(next, suffix)) {
+					suffixIsInPrefix = true;
+				}
+				return next;
 			}
 			else if (nextIs == NextIs.SUFFIX) {
 				nextIs = NextIs.END;
@@ -125,11 +118,44 @@ public class IncludingEvaluator
 
 		@Override
 		public void toString(@NonNull StringBuilder s, int sizeLimit) {
-			s.append("SeqInc{");
+			s.append("Including{");
 			s.append(prefix);
 			s.append(",");
 			s.append(suffix instanceof String ? "'" + suffix + "'" : suffix);
 			s.append("}");
+		}
+	}
+
+	private static class BagIncludingIterator extends AbstractIncludingIterator implements BagValue
+	{
+		public BagIncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(collectionTypeId, firstValue, secondValue);
+		}
+	}
+
+	private static class OrderedSetIncludingIterator extends AbstractIncludingIterator implements OrderedSetValue
+	{
+		public OrderedSetIncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(collectionTypeId, firstValue, secondValue);
+		}
+	}
+
+	private static class SequenceIncludingIterator extends AbstractIncludingIterator implements SequenceValue
+	{
+		public SequenceIncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(collectionTypeId, firstValue, secondValue);
+		}
+
+		//		@Override
+		//		public @Nullable Object last() {
+		//			return suffix;		-- need prefix.isNotInvalid check
+		//		}
+	}
+
+	private static class SetIncludingIterator extends AbstractIncludingIterator implements SetValue
+	{
+		public SetIncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(collectionTypeId, firstValue, secondValue);
 		}
 	}
 }
