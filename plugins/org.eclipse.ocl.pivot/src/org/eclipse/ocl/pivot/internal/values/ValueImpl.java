@@ -44,23 +44,23 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
  */
 public abstract class ValueImpl extends ValueUtil implements Value
 {
-    static class EmptyIterator implements Iterator<Value>
-    {
-        @Override
+	static class EmptyIterator implements Iterator<Value>
+	{
+		@Override
 		public boolean hasNext() {
-            return false;
-        }
-        @Override
+			return false;
+		}
+		@Override
 		public Value next() {
-            throw new NoSuchElementException();
-        }
-        @Override
+			throw new NoSuchElementException();
+		}
+		@Override
 		public void remove() {
-            throw new IllegalStateException();
-        }
-    }
+			throw new IllegalStateException();
+		}
+	}
 
-    /**
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -85,7 +85,7 @@ public abstract class ValueImpl extends ValueUtil implements Value
 	public @NonNull Double asDouble() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, "Double", getTypeName());
 	}
-	
+
 	@Override
 	public @Nullable Object asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		return asObject();
@@ -161,7 +161,7 @@ public abstract class ValueImpl extends ValueUtil implements Value
 	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, "Unique Collection", getTypeName());
 	}
-	
+
 	@Override
 	public @Nullable Object asUnboxedObject(@NonNull IdResolver idResolver) {
 		return asObject();
@@ -172,9 +172,9 @@ public abstract class ValueImpl extends ValueUtil implements Value
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.UNLIMITED_NATURAL_NAME, getTypeName());
 	}
 
-//	public @NonNull DomainType getActualType(@NonNull DomainStandardLibrary standardLibrary) {
-//		return getType(standardLibrary);
-//	}
+	//	public @NonNull DomainType getActualType(@NonNull DomainStandardLibrary standardLibrary) {
+	//		return getType(standardLibrary);
+	//	}
 
 	public @NonNull String getTypeName() {
 		return getTypeId().getDisplayName();
@@ -191,7 +191,7 @@ public abstract class ValueImpl extends ValueUtil implements Value
 	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append(toString());
+	public void toString(@NonNull StringBuilder s, int sizeLimit) {		// FIXME change to abstract once a major version permits the API change
+		s.append(getClass().getSimpleName());
 	}
 }

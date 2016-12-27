@@ -19,9 +19,9 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 public class JavaObjectValueImpl extends ObjectValueImpl
 {
 	protected final @NonNull Object object;
-//	protected DomainType type = null;
+	//	protected DomainType type = null;
 	protected TypeId typeId = null;
-	
+
 	public JavaObjectValueImpl(@NonNull TypeId typeId, @NonNull Object object) {
 		this.object = object;
 		this.typeId = typeId;
@@ -37,7 +37,7 @@ public class JavaObjectValueImpl extends ObjectValueImpl
 		return object;
 	}
 
-/*	public @NonNull DomainType getType(@NonNull DomainStandardLibrary standardLibrary) {
+	/*	public @NonNull DomainType getType(@NonNull DomainStandardLibrary standardLibrary) {
 		DomainType type2 = type;
 		if (type2 == null) {										// WIP A better type
 			if (object instanceof Comparable) {
@@ -52,7 +52,7 @@ public class JavaObjectValueImpl extends ObjectValueImpl
 
 	@Override
 	public @NonNull TypeId getTypeId() {
-//		return getType(valueFactory.getStandardLibrary()).getTypeId();
+		//		return getType(valueFactory.getStandardLibrary()).getTypeId();
 		TypeId typeId2 = typeId;
 		if (typeId2 == null) {
 			if (object instanceof Comparable) {
@@ -68,5 +68,10 @@ public class JavaObjectValueImpl extends ObjectValueImpl
 	@Override
 	public int hashCode() {
 		return object.hashCode();
+	}
+
+	@Override
+	public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		s.append(object.toString());
 	}
 }

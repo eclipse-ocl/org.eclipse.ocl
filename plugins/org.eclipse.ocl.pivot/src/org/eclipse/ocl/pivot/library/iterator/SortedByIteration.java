@@ -72,7 +72,7 @@ public class SortedByIteration extends AbstractIteration
 		public @NonNull Object asObject() {
 			return content;
 		}
-		
+
 		@Override
 		public int compare(Object o1, Object o2) {
 			if (o1 == o2) {
@@ -120,9 +120,9 @@ public class SortedByIteration extends AbstractIteration
 			}
 		}
 
-//		public @NonNull DomainType getType(@NonNull DomainStandardLibrary standardLibrary) {
-//			return type;
-//		}
+		//		public @NonNull DomainType getType(@NonNull DomainStandardLibrary standardLibrary) {
+		//			return type;
+		//		}
 
 		@Override
 		public @NonNull TypeId getTypeId() {
@@ -148,8 +148,8 @@ public class SortedByIteration extends AbstractIteration
 		}
 
 		@Override
-		public String toString() {
-			return content.toString();
+		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+			s.append(content.toString());
 		}
 	}
 
@@ -161,7 +161,7 @@ public class SortedByIteration extends AbstractIteration
 	public SortedByIteration.@NonNull SortingValue createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -178,7 +178,7 @@ public class SortedByIteration extends AbstractIteration
 		}
 		throw new InvalidValueException(PivotMessages.UndefinedOperation, String.valueOf(comparableType) + "::" + LibraryConstants.COMPARE_TO); //$NON-NLS-1$
 	}
-	
+
 	@Override
 	protected @NonNull Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
 		SortingValue accumulatorValue = (SortingValue) iterationManager.getAccumulatorValue();
@@ -187,12 +187,12 @@ public class SortedByIteration extends AbstractIteration
 	}
 
 	@Override
-    protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
-		Object bodyVal = iterationManager.evaluateBody();		
+	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
+		Object bodyVal = iterationManager.evaluateBody();
 		if (bodyVal == null) {
 			throw new InvalidValueException(PivotMessages.UndefinedBody, "sortedBy"); 	// Null body is invalid //$NON-NLS-1$
 		}
-		Object iterValue = iterationManager.get();		
+		Object iterValue = iterationManager.get();
 		SortingValue accumulatorValue = (SortingValue) iterationManager.getAccumulatorValue();
 		assert accumulatorValue != null;
 		accumulatorValue.put(iterValue, bodyVal);
