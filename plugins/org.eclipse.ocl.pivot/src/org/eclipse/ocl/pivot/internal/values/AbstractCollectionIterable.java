@@ -21,7 +21,24 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
  */
 public abstract class AbstractCollectionIterable extends AbstractCollectionValueImpl implements Iterable<@Nullable Object>
 {
+	private int hashCode = 0;
+
 	protected AbstractCollectionIterable(@NonNull CollectionTypeId typeId) {
 		super(typeId);
+	}
+
+	/**
+	 * @since 1.1
+	 */
+	@Override
+	public final int hashCode() {		// Need hash to be independent of the Set/List/OrderedSet/Bag actually in use as elements
+		if (hashCode == 0) {
+			synchronized (this) {
+				if (hashCode == 0) {
+					hashCode = computeCollectionHashCode(isOrdered(), isUnique(), iterable());
+				}
+			}
+		}
+		return hashCode;
 	}
 }

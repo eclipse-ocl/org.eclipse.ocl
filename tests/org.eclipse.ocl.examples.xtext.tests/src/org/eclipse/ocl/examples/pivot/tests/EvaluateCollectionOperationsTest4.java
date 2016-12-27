@@ -939,6 +939,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionIncluding() {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryResults(null, "Sequence{'a', 'b', 'c', 'd'}", "Sequence{'a'}->including('b')->including('c')->including('d')");
 		/*
 		 * FIXME OMG-issue to add OrderedSet::including
 		 * since it's defined in oclstdlib.ecore. However the defined

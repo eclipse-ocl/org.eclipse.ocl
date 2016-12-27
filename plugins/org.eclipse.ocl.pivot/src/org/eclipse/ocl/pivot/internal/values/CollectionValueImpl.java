@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
@@ -41,6 +40,7 @@ public abstract class CollectionValueImpl extends AbstractCollectionValueImpl
 		return ValuesPackage.Literals.COLLECTION_VALUE;
 	}
 
+	private int hashCode = 0;
 	protected final @NonNull Collection<? extends Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
 
 	/**
@@ -133,7 +133,7 @@ public abstract class CollectionValueImpl extends AbstractCollectionValueImpl
 
 	/**
 	 * @since 1.1
-	 *
+	 */
 	@Override
 	public final int hashCode() {		// Need hash to be independent of the Set/List/OrderedSet/Bag actually in use as elements
 		if (hashCode == 0) {
@@ -144,7 +144,7 @@ public abstract class CollectionValueImpl extends AbstractCollectionValueImpl
 			}
 		}
 		return hashCode;
-	} */
+	}
 
 	@Override
 	public int intSize() {
@@ -163,21 +163,6 @@ public abstract class CollectionValueImpl extends AbstractCollectionValueImpl
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
-		s.append("{");
-		boolean isFirst = true;
-		for (Object element : this.iterable()) {
-			if (!isFirst) {
-				s.append(",");
-			}
-			if (s.length() < lengthLimit) {
-				ValueUtil.toString(element, s, lengthLimit-1);
-			}
-			else {
-				s.append("...");
-				break;
-			}
-			isFirst = false;
-		}
-		s.append("}");
+		appendIterable(s, this.iterable(), lengthLimit);
 	}
 }

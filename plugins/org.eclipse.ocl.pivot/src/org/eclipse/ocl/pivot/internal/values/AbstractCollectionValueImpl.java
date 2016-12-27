@@ -138,6 +138,14 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append("List");
+			appendIterable(s, elements, 50);
+			return s.toString();
+		}
 	}
 
 	/**
@@ -197,13 +205,34 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	public static @NonNull NullIterator EMPTY_ITERATOR = new NullIterator();
 
 	/**
+	 * @since 1.3
+	 */
+	public static void appendIterable(StringBuilder s, @NonNull Iterable<? extends Object> iterable, int lengthLimit) {
+		s.append("{");
+		boolean isFirst = true;
+		for (Object element : iterable) {
+			if (!isFirst) {
+				s.append(",");
+			}
+			if (s.length() < lengthLimit) {
+				ValueUtil.toString(element, s, lengthLimit-1);
+			}
+			else {
+				s.append("...");
+				break;
+			}
+			isFirst = false;
+		}
+		s.append("}");
+	}
+
+	/**
 	 * A simple public static method that may be used to force class initialization.
 	 */
 	public static void initStatics() {}
 
 	protected final @NonNull CollectionTypeId typeId;
 	protected final @NonNull CollectionFactory collectionFactory;
-	private int hashCode = 0;
 
 	protected AbstractCollectionValueImpl(@NonNull CollectionTypeId typeId) {
 		this.typeId = typeId;
@@ -722,21 +751,6 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		return typeId;
 	}
 
-	/**
-	 * @since 1.1
-	 */
-	@Override
-	public final int hashCode() {		// Need hash to be independent of the Set/List/OrderedSet/Bag actually in use as elements
-		if (hashCode == 0) {
-			synchronized (this) {
-				if (hashCode == 0) {
-					hashCode = computeCollectionHashCode(isOrdered(), isUnique(), iterable());
-				}
-			}
-		}
-		return hashCode;
-	}
-
 	@Override
 	public @NonNull Boolean includes(@Nullable Object value) {
 		return Iterables.contains(iterable(), value) != false;			// FIXME redundant test to suppress warning
@@ -935,7 +949,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 			List<@Nullable Object> castElements = (List<@Nullable Object>)elements;
 			return new ListIterator<@Nullable Object>(castElements);
 		}
-		@SuppressWarnings({"null", "unchecked"}) @NonNull Iterator<@Nullable Object> result = (Iterator<@Nullable Object>)elements.iterator();
+		@SuppressWarnings({"unchecked"}) @NonNull Iterator<@Nullable Object> result = (Iterator<@Nullable Object>)elements.iterator();
 		return result;
 	}
 

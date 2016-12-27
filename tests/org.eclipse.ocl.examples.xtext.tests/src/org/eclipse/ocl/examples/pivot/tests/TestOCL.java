@@ -240,6 +240,12 @@ public class TestOCL extends OCLInternal
 	 */
 	public void assertOCLEquals(String message, Object expected, Object actual) {
 		IdResolver.IdResolverExtension idResolver = (IdResolver.IdResolverExtension)getIdResolver();
+		if (expected instanceof CollectionValue) {
+			((CollectionValue)expected).iterable();			// Need an Iterable to allow traversal by both equals and oclHashCode
+		}
+		if (actual instanceof CollectionValue) {
+			((CollectionValue)actual).iterable();			// Need an Iterable to allow traversal by both equals and oclHashCode
+		}
 		if (idResolver.oclEquals(expected, actual)) {
 			int expectedHash = idResolver.oclHashCode(expected);
 			int actualHash = idResolver.oclHashCode(actual);
@@ -300,8 +306,8 @@ public class TestOCL extends OCLInternal
 			Object expectedValue = expected instanceof Value ? expected : getIdResolver().boxedValueOf(expected);
 			//    		typeManager.addLockedElement(expectedValue.getType());
 			Object value = evaluate(null, context, expression);
-			String expectedAsString = String.valueOf(expected);
-			String valueAsString = String.valueOf(value);
+			//			String expectedAsString = String.valueOf(expected);
+			//			String valueAsString = String.valueOf(value);
 			assertOCLEquals(expression, expectedValue, value);
 			PivotTestSuite.appendLog(testName, context, expression, null, expectedValue != null ? expectedValue.toString() : null, null);
 			return value;

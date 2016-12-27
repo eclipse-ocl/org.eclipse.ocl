@@ -24,6 +24,12 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
  */
 public abstract class AbstractCollectionIterator extends AbstractCollectionValueImpl implements Iterator<@Nullable Object>
 {
+	public static class IllegalIteratorStateException extends IllegalStateException
+	{
+		private static final long serialVersionUID = 6688640904120706795L;
+
+	}
+
 	protected AbstractCollectionIterator(@NonNull CollectionTypeId typeId) {
 		super(typeId);
 	}
@@ -39,6 +45,16 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		throw new IllegalIteratorStateException();
+	}
+
+	@Override
+	public int hashCode() {
+		throw new IllegalIteratorStateException();
+	}
+
+	@Override
 	public int intSize() {
 		throw new UnsupportedOperationException();
 	}
@@ -49,4 +65,8 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public @NonNull Iterator<@Nullable Object> iterator() {
+		return this;
+	}
 }

@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
@@ -24,10 +24,10 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
  */
 public abstract class AbstractSequenceIterator extends AbstractCollectionIterator implements SequenceValue
 {
-	private @Nullable SequenceValue iterable = null;
+	//	private @Nullable SequenceValue iterable = null;
 
-	protected AbstractSequenceIterator(@NonNull CollectionTypeId typeId) {
-		super(typeId);
+	protected AbstractSequenceIterator(@NonNull TypeId elementTypeId) {
+		super(TypeId.SEQUENCE.getSpecializedId(elementTypeId));
 	}
 
 	@Override
