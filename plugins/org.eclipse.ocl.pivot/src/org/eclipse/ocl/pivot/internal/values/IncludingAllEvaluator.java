@@ -16,9 +16,11 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
+import org.eclipse.ocl.pivot.values.SequenceValue;
 
 import com.google.common.collect.Sets;
 
@@ -62,7 +64,7 @@ public class IncludingAllEvaluator
 		}
 	}
 
-	private static class SequenceIncludingAllIterator extends AbstractSequenceIterator
+	private static class SequenceIncludingAllIterator extends AbstractCollectionIterator implements SequenceValue
 	{
 		private enum NextIs { PREFIX, SUFFIX, END };
 
@@ -71,7 +73,7 @@ public class IncludingAllEvaluator
 		private @Nullable NextIs nextIs = null;
 
 		public SequenceIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
-			super(firstValue.getElementTypeId());
+			super(TypeId.SEQUENCE.getSpecializedId(firstValue.getElementTypeId()));
 			this.prefix = firstValue.iterator();
 			this.suffix = secondValue.iterator();
 		}

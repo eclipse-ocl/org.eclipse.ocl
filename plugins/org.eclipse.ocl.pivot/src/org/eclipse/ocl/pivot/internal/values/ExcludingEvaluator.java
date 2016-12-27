@@ -10,17 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.values;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
+import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 import com.google.common.collect.Iterables;
 
@@ -83,7 +85,8 @@ public class ExcludingEvaluator
 		}
 		else {
 			if (firstValue.isUnique()) {
-				Set<Object> result = new HashSet<Object>();
+				return new SetExcludingIterator(firstValue, secondValue);
+				/*				Set<Object> result = new HashSet<Object>();
 				if (secondValue == null) {
 					for (Object element : elements) {
 						if (element != null) {
@@ -103,7 +106,7 @@ public class ExcludingEvaluator
 				}
 				else {
 					return firstValue;
-				}
+				} */
 			}
 			else {
 				Bag<Object> result = new BagImpl<Object>();
@@ -131,7 +134,7 @@ public class ExcludingEvaluator
 		}
 	}
 
-	private static class SequenceExcludingIterator extends AbstractSequenceIterator
+	private static abstract class AbstractExcludingIterator extends AbstractCollectionIterator implements SequenceValue
 	{
 		protected final @NonNull Iterator<@Nullable Object> iterator;
 		protected final @Nullable Object exclusion;
@@ -139,8 +142,8 @@ public class ExcludingEvaluator
 		private boolean hasNext = false;
 		private @Nullable Object next;
 
-		public SequenceExcludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
-			super(firstValue.getElementTypeId());
+		public AbstractExcludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(collectionTypeId);
 			this.iterator = firstValue.iterator();
 			this.exclusion = secondValue;
 		}
@@ -183,11 +186,26 @@ public class ExcludingEvaluator
 
 		@Override
 		public void toString(@NonNull StringBuilder s, int sizeLimit) {
-			s.append("SeqExc{");
+			s.append("Excluding{");
 			s.append(iterator);
 			s.append(",}");
 			s.append(exclusion instanceof String ? "'" + exclusion + "'" : exclusion);
 			s.append("}");
+		}
+	}
+
+
+	private static class SequenceExcludingIterator extends AbstractExcludingIterator implements SequenceValue
+	{
+		public SequenceExcludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(TypeId.SEQUENCE.getSpecializedId(firstValue.getElementTypeId()), firstValue, secondValue);
+		}
+	}
+
+	private static class SetExcludingIterator extends AbstractExcludingIterator implements SetValue
+	{
+		public SetExcludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+			super(TypeId.SET.getSpecializedId(firstValue.getElementTypeId()), firstValue, secondValue);
 		}
 	}
 }

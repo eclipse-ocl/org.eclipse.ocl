@@ -17,10 +17,12 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
+import org.eclipse.ocl.pivot.values.SequenceValue;
 
 import com.google.common.collect.Iterables;
 
@@ -163,7 +165,7 @@ public class ExcludingAllEvaluator
 		}
 	}
 
-	private static class SequenceExcludingAllIterator extends AbstractSequenceIterator
+	private static class SequenceExcludingAllIterator extends AbstractCollectionIterator implements SequenceValue
 	{
 		protected final @NonNull Iterator<@Nullable Object> iterator;
 		protected final @NonNull Iterable<? extends Object> exclusions;
@@ -172,7 +174,7 @@ public class ExcludingAllEvaluator
 		private @Nullable Object next;
 
 		public SequenceExcludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
-			super(firstValue.getElementTypeId());
+			super(TypeId.SEQUENCE.getSpecializedId(firstValue.getElementTypeId()));
 			this.iterator = firstValue.iterator();
 			this.exclusions = secondValue.iterable();
 		}

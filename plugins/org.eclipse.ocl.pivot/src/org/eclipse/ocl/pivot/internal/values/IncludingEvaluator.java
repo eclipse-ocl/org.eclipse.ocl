@@ -16,11 +16,13 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSet;
+import org.eclipse.ocl.pivot.values.SequenceValue;
 
 import com.google.common.collect.Sets;
 
@@ -63,7 +65,7 @@ public class IncludingEvaluator
 		}
 	}
 
-	private static class SequenceIncludingIterator extends AbstractSequenceIterator
+	private static class SequenceIncludingIterator extends AbstractCollectionIterator implements SequenceValue
 	{
 		private enum NextIs { PREFIX, SUFFIX, END };
 
@@ -72,7 +74,7 @@ public class IncludingEvaluator
 		private @Nullable NextIs nextIs = null;
 
 		public SequenceIncludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
-			super(firstValue.getElementTypeId());
+			super(TypeId.SEQUENCE.getSpecializedId(firstValue.getElementTypeId()));
 			this.prefix = firstValue.iterator();
 			this.suffix = secondValue;
 		}
