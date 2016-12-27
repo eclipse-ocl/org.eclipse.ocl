@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -781,7 +780,8 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue including(@Nullable Object value) {
-		Iterable<? extends Object> elements = iterable();
+		return IncludingEvaluator.including(this, value);
+		/*		Iterable<? extends Object> elements = iterable();
 		if (isOrdered()) {
 			if (isUnique()) {
 				if (value instanceof InvalidValueException) {
@@ -813,7 +813,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 				result.add(value);
 				return new BagValueImpl(getTypeId(), result);
 			}
-		}
+		} */
 	}
 
 	@Override

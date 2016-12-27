@@ -300,8 +300,8 @@ public class TestOCL extends OCLInternal
 			Object expectedValue = expected instanceof Value ? expected : getIdResolver().boxedValueOf(expected);
 			//    		typeManager.addLockedElement(expectedValue.getType());
 			Object value = evaluate(null, context, expression);
-			//    		String expectedAsString = String.valueOf(expected);
-			//    		String valueAsString = String.valueOf(value);
+			String expectedAsString = String.valueOf(expected);
+			String valueAsString = String.valueOf(value);
 			assertOCLEquals(expression, expectedValue, value);
 			PivotTestSuite.appendLog(testName, context, expression, null, expectedValue != null ? expectedValue.toString() : null, null);
 			return value;
@@ -749,7 +749,6 @@ public class TestOCL extends OCLInternal
 	}
 
 	public @Nullable Object evaluate(Object unusedHelper, @Nullable Object context, @NonNull String expression) throws Exception {
-		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class classContext = getContextType(context);
 		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 		ExpressionInOCL query = parserContext.parse(classContext, expression);
@@ -757,6 +756,7 @@ public class TestOCL extends OCLInternal
 		try {
 			return evaluate(query, context);
 		} finally {
+			MetamodelManager metamodelManager = getMetamodelManager();
 			metamodelManager.getASResourceSet().getResources().remove(query.eResource());
 		}
 	}

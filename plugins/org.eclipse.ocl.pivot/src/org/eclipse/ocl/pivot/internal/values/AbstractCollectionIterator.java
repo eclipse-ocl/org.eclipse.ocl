@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.values;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -26,4 +27,26 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	protected AbstractCollectionIterator(@NonNull CollectionTypeId typeId) {
 		super(typeId);
 	}
+
+	@Override
+	public @NonNull Collection<? extends Object> asCollection() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull Object asObject() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int intSize() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull Iterable<? extends Object> iterable() {
+		//		return Lists.newArrayList((Iterator<?>)this);
+		throw new UnsupportedOperationException();
+	}
+
 }
