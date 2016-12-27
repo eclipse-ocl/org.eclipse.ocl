@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.values;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -25,6 +27,8 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
 public abstract class AbstractSequenceIterator extends AbstractCollectionIterator implements SequenceValue
 {
 	//	private @Nullable SequenceValue iterable = null;
+	private @Nullable LazyIterable<@Nullable Object> iterable = null;
+	private int hashCode = 0;
 
 	protected AbstractSequenceIterator(@NonNull TypeId elementTypeId) {
 		super(TypeId.SEQUENCE.getSpecializedId(elementTypeId));
@@ -46,8 +50,31 @@ public abstract class AbstractSequenceIterator extends AbstractCollectionIterato
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		throw new UnsupportedOperationException();	// This support class is not intended for more general use.
+	}
+
+	@Override
 	public @Nullable Object first() {
 		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Return true if this iterator has noy yet iterated and so it is not too late
+	 * to create a LazyIterable to support multiple access.
+	 */
+	protected abstract boolean canBeIterable();
+
+	@Override
+	public int hashCode() {
+		if (hashCode == 0) {
+			synchronized (this) {
+				if (hashCode == 0) {
+					hashCode = computeCollectionHashCode(isOrdered(), isUnique(), iterable().getElements());
+				}
+			}
+		}
+		return hashCode;
 	}
 
 	@Override
@@ -61,9 +88,20 @@ public abstract class AbstractSequenceIterator extends AbstractCollectionIterato
 	}
 
 	@Override
-	public @NonNull Iterable<? extends Object> iterable() {
-		// TODO Auto-generated method stub
-		return super.iterable();
+	public @NonNull LazyIterable<@Nullable Object> iterable() {
+		LazyIterable<@Nullable Object> iterable2 = iterable;
+		if (iterable2 == null) {
+			if (!canBeIterable()) {
+				throw new IllegalStateException();
+			}
+			iterable2 = iterable = new LazyIterable<>(this);
+		}
+		return iterable2;
+	}
+
+	@Override
+	public @NonNull Iterator<@Nullable Object> iterator() {
+		return iterable != null ? iterable.iterator() : this;
 	}
 
 	@Override

@@ -210,7 +210,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 
 		@Override
-		public Iterator<NamedElement> iterator() {
+		public @NonNull Iterator<NamedElement> iterator() {
 			return new SingletonIterator<NamedElement>(invocation);
 		}
 	}
@@ -236,7 +236,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 
 		@Override
-		public Iterator<NamedElement> iterator() {
+		public @NonNull Iterator<NamedElement> iterator() {
 			return invocations.iterator();
 		}
 	}

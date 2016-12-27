@@ -16,10 +16,8 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 
 import com.google.common.collect.Sets;
@@ -28,53 +26,54 @@ import com.google.common.collect.Sets;
  * @generated NOT
  * @since 1.3
  */
-public class IncludingEvaluator
+public class IncludingAllEvaluator
 {
-	public static @NonNull CollectionValue including(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+	public static @NonNull CollectionValue includingAll(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 		if (firstValue.isOrdered()) {
 			if (firstValue.isUnique()) {
-				if (secondValue instanceof InvalidValueException) {
-					throw new InvalidValueException(PivotMessages.InvalidSource, "including");
-				}
 				Iterable<? extends Object> elements = firstValue.iterable();
 				OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
-				result.add(secondValue);
+				for (Object value : secondValue) {
+					result.add(value);
+				}
 				return new SparseOrderedSetValueImpl(firstValue.getTypeId(), result);
 			}
 			else {
-				return new SequenceIncludingIterator(firstValue, secondValue);
+				return new SequenceIncludingAllIterator(firstValue, secondValue);
 			}
 		}
 		else {
 			if (firstValue.isUnique()) {
-				assert !(secondValue instanceof InvalidValueException);
 				Iterable<? extends Object> elements = firstValue.iterable();
 				Set<Object> result = Sets.newHashSet(elements);
-				result.add(secondValue);
+				for (Object value : secondValue) {
+					result.add(value);
+				}
 				return new SetValueImpl(firstValue.getTypeId(), result);
 			}
 			else {
-				assert !(secondValue instanceof InvalidValueException);
 				Iterable<? extends Object> elements = firstValue.iterable();
 				Bag<Object> result = new BagImpl<Object>(elements);
-				result.add(secondValue);
+				for (Object value : secondValue) {
+					result.add(value);
+				}
 				return new BagValueImpl(firstValue.getTypeId(), result);
 			}
 		}
 	}
 
-	private static class SequenceIncludingIterator extends AbstractSequenceIterator
+	private static class SequenceIncludingAllIterator extends AbstractSequenceIterator
 	{
 		private enum NextIs { PREFIX, SUFFIX, END };
 
 		protected final @NonNull Iterator<@Nullable Object> prefix;
-		protected final @Nullable Object suffix;
+		protected final @NonNull Iterator<@Nullable Object> suffix;
 		private @Nullable NextIs nextIs = null;
 
-		public SequenceIncludingIterator(@NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+		public SequenceIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 			super(firstValue.getElementTypeId());
 			this.prefix = firstValue.iterator();
-			this.suffix = secondValue;
+			this.suffix = secondValue.iterator();
 		}
 
 		@Override
@@ -94,15 +93,13 @@ public class IncludingEvaluator
 				nextIs = NextIs.SUFFIX;
 			}
 			if (nextIs == NextIs.SUFFIX) {
-				return true;
+				if (suffix.hasNext()) {
+					return true;
+				}
+				nextIs = NextIs.END;
 			}
 			return false;
 		}
-
-		//		@Override
-		//		public @Nullable Object last() {
-		//			return suffix;		-- need prefix.isNotInvalid check
-		//		}
 
 		@Override
 		public @Nullable Object next() {
@@ -113,8 +110,7 @@ public class IncludingEvaluator
 				return prefix.next();
 			}
 			else if (nextIs == NextIs.SUFFIX) {
-				nextIs = NextIs.END;
-				return suffix;
+				return suffix.next();
 			}
 			else {
 				throw new NoSuchElementException();
@@ -123,10 +119,10 @@ public class IncludingEvaluator
 
 		@Override
 		public void toString(@NonNull StringBuilder s, int sizeLimit) {
-			s.append("SeqInc{");
+			s.append("SeqIncAll{");
 			s.append(prefix);
 			s.append(",");
-			s.append(suffix instanceof String ? "'" + suffix + "'" : suffix);
+			s.append(suffix);
 			s.append("}");
 		}
 	}

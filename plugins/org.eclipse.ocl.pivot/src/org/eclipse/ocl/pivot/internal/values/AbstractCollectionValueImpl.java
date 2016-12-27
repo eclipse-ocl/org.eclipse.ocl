@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.values.Value;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 /**
  * AbstractCollectionValueImpl provides the common functionality for eager and lazy CollectionValues.
@@ -394,7 +393,8 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue excluding(@Nullable Object value) {
-		Iterable<? extends Object> elements = iterable();
+		return ExcludingEvaluator.excluding(this, value);
+		/*		Iterable<? extends Object> elements = iterable();
 		if (isOrdered()) {
 			if (isUnique()) {
 				OrderedSet<Object> result = new OrderedSetImpl<Object>();
@@ -490,12 +490,13 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 					return this;
 				}
 			}
-		}
+		} */
 	}
 
 	@Override
 	public @NonNull CollectionValue excludingAll(@NonNull CollectionValue values) {
-		Iterable<? extends Object> elements = iterable();
+		return ExcludingAllEvaluator.excludingAll(this, values);
+		/*		Iterable<? extends Object> elements = iterable();
 		if (isOrdered()) {
 			if (isUnique()) {
 				OrderedSet<Object> result = new OrderedSetImpl<Object>();
@@ -623,7 +624,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 					return this;
 				}
 			}
-		}
+		} */
 	}
 
 	/**
@@ -832,7 +833,8 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue includingAll(@NonNull CollectionValue values) {
-		Iterable<? extends Object> elements = iterable();
+		return IncludingAllEvaluator.includingAll(this, values);
+		/*		Iterable<? extends Object> elements = iterable();
 		if (isOrdered()) {
 			if (isUnique()) {
 				OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
@@ -864,7 +866,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 				}
 				return new BagValueImpl(getTypeId(), result);
 			}
-		}
+		} */
 	}
 
 	@Override
