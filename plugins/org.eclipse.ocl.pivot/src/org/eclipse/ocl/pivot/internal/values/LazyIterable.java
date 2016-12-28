@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,25 @@ import org.eclipse.ocl.pivot.utilities.IndexableIterable;
  *
  * @since 1.3
  */
-public abstract class LazyIterable<E> implements IndexableIterable<E>
+public class LazyIterable<E> implements IndexableIterable<E>
 {
+	/**
+	 * ElementCounter is used as the count of a Bag element. It avoids thrashing Integer objects as counts evolve.
+	 */
+	private static class ElementCount
+	{
+		private int value;
+
+		public ElementCount(int value) {
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			return Integer.toString(value);
+		}
+	}
+
 	/**
 	 * A LazyIterator support multiple access to the partially populated iteration cache provoking
 	 * additional population as required.
@@ -112,12 +130,21 @@ public abstract class LazyIterable<E> implements IndexableIterable<E>
 		}
 	}
 
-	public static class Bag<E> extends LazyIterable<E>
+	/*	public static class Bag<E> extends LazyIterable<E>
 	{
 		public Bag(@NonNull Iterator<E> internalIterator) {
 			super(internalIterator);
+			lazyMapOfElement2elementCount = new HashMap<>();
 		}
 
+
+		@Override
+		protected void add(E anElement) {
+			size++;
+			if (addToCounts(anElement)) {
+				lazyListOfElements.add(anElement);
+			}
+		}
 	}
 
 	public static class Sequence<E> extends LazyIterable<E>
@@ -130,8 +157,8 @@ public abstract class LazyIterable<E> implements IndexableIterable<E>
 		protected void add(E anElement) {
 			size++;
 			lazyListOfElements.add(anElement);
-			if (lazyBagOfElements != null) {
-				lazyBagOfElements.add(anElement);
+			if (lazyMapOfElement2elementCount != null) {
+				addToCounts(anElement);
 			}
 		}
 	}
@@ -140,23 +167,26 @@ public abstract class LazyIterable<E> implements IndexableIterable<E>
 	{
 		public Unique(@NonNull Iterator<E> internalIterator) {
 			super(internalIterator);
+			lazyMapOfElement2elementCount = new HashMap<>();
 		}
 
 		@Override
 		protected void add(E anElement) {
-			size++;
-			lazyListOfElements.add(anElement);
-			if (lazyBagOfElements != null) {
-				lazyBagOfElements.add(anElement);
+			if (addToCounts(anElement)) {
+				size++;
+				lazyListOfElements.add(anElement);
 			}
 		}
 
-	}
+	} */
 
 	/**
 	 * The iterator that provides the elements to be cached.
 	 */
 	private final @NonNull Iterator<E> internalIterator;
+
+	private final boolean isOrdered;
+	private final boolean isUnique;
 
 	/**
 	 * The lazily cached elements obtained by iterating internalIterator.
@@ -166,23 +196,48 @@ public abstract class LazyIterable<E> implements IndexableIterable<E>
 	/**
 	 * The lazily cached elements obtained by iterating internalIterator.
 	 */
-	//	protected @Nullable Set<E> lazySetOfElements = null;
+	protected @Nullable Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount = null;
 
 	/**
-	 * The lazily cached elements obtained by iterating internalIterator.
-	 */
-	protected @Nullable Map<E, Integer> lazyMapOfElement2count = null;
-
-	/**
-	 * A local copy of lazyListOfElements.size();
+	 * The number of elements in the collection. For a Sequence, this is lazyListOfElements.size().
+	 * For a Set/OrderedSet it is lazyMapOfElement2elementCount.keySet().size(). For a Bag it is
+	 * the sum of lazyMapOfElement2elementCount.values().
 	 */
 	protected int size = 0;
 
-	public LazyIterable(@NonNull Iterator<E> internalIterator) {
+	private @Nullable ElementCount spareElementCount = null;
+
+	public LazyIterable(@NonNull Iterator<E> internalIterator, boolean isOrdered, boolean isUnique) {
 		this.internalIterator = internalIterator;
+		this.isOrdered = isOrdered;
+		this.isUnique = isUnique;
+		if (!isOrdered || isUnique) {
+			lazyMapOfElement2elementCount = new HashMap<>();
+		}
 	}
 
-	protected abstract void add(E anElement);
+	/**
+	 * Add anElement to the collection updating elemnt occurrence counts. Returns true if this
+	 * results in a new distinct element value.
+	 */
+	private boolean addToCounts(E anElement) {
+		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
+		assert lazyMapOfElement2elementCount2 != null;
+		ElementCount newElementCount = spareElementCount;
+		if (newElementCount == null) {
+			newElementCount = new ElementCount(1);
+		}
+		ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, newElementCount);
+		if (oldElementCount != null) {
+			newElementCount.value += oldElementCount.value;
+			spareElementCount = oldElementCount;
+			return false;
+		}
+		else {
+			spareElementCount = null;
+			return true;
+		}
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -191,8 +246,35 @@ public abstract class LazyIterable<E> implements IndexableIterable<E>
 
 	@Override
 	public synchronized E get(int index) {
-		while ((size <= index) && internalIterator.hasNext()) {
-			add(internalIterator.next());
+		if (isUnique) {
+			while ((size <= index) && internalIterator.hasNext()) {
+				E anElement = internalIterator.next();
+				if (addToCounts(anElement)) {
+					size++;
+					lazyListOfElements.add(anElement);
+				}
+			}
+		}
+		else if (isOrdered) {
+			while ((size <= index) && internalIterator.hasNext()) {
+				E anElement = internalIterator.next();
+				size++;
+				lazyListOfElements.add(anElement);
+				if (lazyMapOfElement2elementCount != null) {
+					addToCounts(anElement);
+				}
+			}
+		}
+		else {
+			int indexes = 0;
+			while ((indexes <= index) && internalIterator.hasNext()) {
+				E anElement = internalIterator.next();
+				size++;
+				if (addToCounts(anElement)) {
+					indexes++;
+					lazyListOfElements.add(anElement);
+				}
+			}
 		}
 		if (index < size) {
 			return lazyListOfElements.get(index);
@@ -203,36 +285,64 @@ public abstract class LazyIterable<E> implements IndexableIterable<E>
 	}
 
 	/**
-	 * Ensure that all lazy iterations have completed and then return a bag of all elements.
-	 */
-	public synchronized @NonNull Bag<?> getBagOfElements() {
-		getListOfElements();
-		Bag<E> lazyBagOfElements2 = lazyBagOfElements;
-		if (lazyBagOfElements2 == null) {
-			lazyBagOfElements2 = lazyBagOfElements = new BagImpl<>();
-			for (E element : lazyListOfElements) {
-				lazyBagOfElements2.add(element);
-			}
-		}
-		return lazyBagOfElements2;
-	}
-
-	/**
 	 * Ensure that all lazy iterations have completed and then return a list of all elements.
 	 */
 	public synchronized @NonNull List<?> getListOfElements() {
-		while (internalIterator.hasNext()) {
-			add(internalIterator.next());
+		if (isUnique) {
+			while (internalIterator.hasNext()) {
+				E anElement = internalIterator.next();
+				if (addToCounts(anElement)) {
+					size++;
+					lazyListOfElements.add(anElement);
+				}
+			}
+		}
+		else if (isOrdered) {
+			while (internalIterator.hasNext()) {
+				E anElement = internalIterator.next();
+				size++;
+				lazyListOfElements.add(anElement);
+				if (lazyMapOfElement2elementCount != null) {
+					addToCounts(anElement);
+				}
+			}
+		}
+		else {
+			while (internalIterator.hasNext()) {
+				E anElement = internalIterator.next();
+				size++;
+				if (addToCounts(anElement)) {
+					lazyListOfElements.add(anElement);
+				}
+			}
 		}
 		return lazyListOfElements;
+	}
+
+	/**
+	 * Ensure that all lazy iterations have completed and then return a bag of all elements.
+	 */
+	public synchronized @NonNull Map<E, @NonNull ElementCount> getMapOfElement2elementCount() {
+		getListOfElements();
+		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
+		if (lazyMapOfElement2elementCount2 == null) {
+			lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
+			for (E element : lazyListOfElements) {
+				addToCounts(element);
+			}
+		}
+		return lazyMapOfElement2elementCount2;
 	}
 
 	/**
 	 * Ensure that all lazy iterations have completed and then return a set of all elements.
 	 */
 	public @NonNull Set<E> getSetOfElements() {
-		getBagOfElements();
-		return lazyBagOfElements.getMap().keySet();
+		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
+		if (lazyMapOfElement2elementCount2 == null) {
+			lazyMapOfElement2elementCount2 = getMapOfElement2elementCount();
+		}
+		return lazyMapOfElement2elementCount2.keySet();
 	}
 
 	@Override

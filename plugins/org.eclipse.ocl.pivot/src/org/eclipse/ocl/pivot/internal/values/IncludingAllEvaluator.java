@@ -68,14 +68,12 @@ public class IncludingAllEvaluator
 
 		private final @NonNull Iterator<@Nullable Object> prefix;
 		private final @NonNull Iterator<@Nullable Object> suffix;
-		private final @NonNull Iterable<? extends Object> reference;
 		private @Nullable NextIs nextIs = null;
 
 		public AbstractIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 			super(firstValue.getTypeId());
 			this.prefix = firstValue.iterator();
 			this.suffix = secondValue.iterator();
-			Iterable<? extends Object> reference = firstValue.basicGetIterable();
 		}
 
 		@Override

@@ -106,16 +106,7 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 			if (!canBeIterable()) {
 				throw new IllegalStateException();
 			}
-			if (isUnique()) {
-				iterable2 = new LazyIterable.Unique<>(this);
-			}
-			else if (isOrdered()) {
-				iterable2 = new LazyIterable.Sequence<>(this);
-			}
-			else {
-				iterable2 = new LazyIterable.Bag<>(this);
-			}
-			iterable = iterable2;
+			iterable = iterable2 = new LazyIterable<>(this, isOrdered(), isUnique());
 		}
 		return iterable2;
 	}
