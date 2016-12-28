@@ -464,7 +464,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue excluding(@Nullable Object value) {
-		return ExcludingEvaluator.excluding(this, value);
+		return ExcludingIterator.excluding(this, value);
 		/*		Iterable<? extends Object> elements = iterable();
 		if (isOrdered()) {
 			if (isUnique()) {
@@ -566,7 +566,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue excludingAll(@NonNull CollectionValue values) {
-		return ExcludingAllEvaluator.excludingAll(this, values);
+		return ExcludingAllIterator.excludingAll(this, values);
 		/*		Iterable<? extends Object> elements = iterable();
 		if (isOrdered()) {
 			if (isUnique()) {
@@ -866,7 +866,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue including(@Nullable Object value) {
-		return IncludingEvaluator.including(getTypeId(), this, value);
+		return IncludingIterator.including(getTypeId(), this, value);
 		/*		Iterable<? extends Object> elements = iterable();
 		if (isOrdered()) {
 			if (isUnique()) {
@@ -904,7 +904,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue includingAll(@NonNull CollectionValue values) {
-		return IncludingAllEvaluator.includingAll(this, values);
+		return IncludingAllIterator.includingAll(this, values);
 		/*		Iterable<? extends Object> elements = iterable();
 		if (isOrdered()) {
 			if (isUnique()) {

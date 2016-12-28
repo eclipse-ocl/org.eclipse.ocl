@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.IncludingEvaluator;
+import org.eclipse.ocl.pivot.internal.values.IncludingIterator;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
@@ -30,7 +30,7 @@ public class CollectionIncludingOperation extends AbstractBinaryOperation//Abstr
 	@Deprecated
 	public @NonNull CollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
 		CollectionValue leftCollectionValue = asCollectionValue(left);
-		return IncludingEvaluator.including(leftCollectionValue.getTypeId(), leftCollectionValue, right);
+		return IncludingIterator.including(leftCollectionValue.getTypeId(), leftCollectionValue, right);
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class CollectionIncludingOperation extends AbstractBinaryOperation//Abstr
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
-		return IncludingEvaluator.including((CollectionTypeId)returnTypeId, leftCollectionValue, argumentValue);
+		return IncludingIterator.including((CollectionTypeId)returnTypeId, leftCollectionValue, argumentValue);
 	}
 
 	/**
