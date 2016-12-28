@@ -29,6 +29,9 @@ import com.google.common.collect.Iterators;
 /**
  * Default implementation of the {@link Bag} interface.
  *
+ * The implementation is optimized for populate then use. Map entries returned while populating may be stale by the time
+ * subsequent usage occurs.
+ *
  * @generated NOT
  */
 public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
@@ -146,6 +149,12 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	private int size = 0;
 	private @Nullable Integer hashCode = null;
 
+	/**
+	 * The need for put-after-get is avoided by always putting. A previous value therefore goes stale and is
+	 * maintinaed for re-use s the spareCounter.
+	 */
+	private @Nullable ElementCounter spareCounter = null;
+
 	public BagImpl() {}
 
 	/**
@@ -173,13 +182,19 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	}
 
 	@Override
-	public boolean add(E anElement) {
-		ElementCounter count = map.get(anElement);
-		if (count == null) {
-			map.put(anElement, new ElementCounter());
+	public synchronized boolean add(E anElement) {
+		ElementCounter newCounter = spareCounter;
+		if (newCounter == null) {
+			newCounter = new ElementCounter();
 		}
 		else {
-			count.value++;
+			spareCounter = null;
+			newCounter.value = 1;
+		}
+		ElementCounter oldCounter = map.put(anElement, newCounter);
+		if (oldCounter != null) {
+			newCounter.value += oldCounter.value;
+			spareCounter = oldCounter;;
 		}
 		size++;
 		hashCode = null;
