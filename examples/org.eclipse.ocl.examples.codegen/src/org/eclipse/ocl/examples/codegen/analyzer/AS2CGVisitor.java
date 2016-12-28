@@ -613,6 +613,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgBuiltInIterationCallExp.setValidating(false);
 			//			cgBuiltInIterationCallExp.setNonNull();
 			setAst(cgBuiltInIterationCallExp, element);
+			cgBuiltInIterationCallExp.setBody(doVisit(CGValuedElement.class, element.getOwnedBody()));
+			if (asIteration.getOwnedParameters().get(0).isIsRequired()) {
+				cgBuiltInIterationCallExp.getBody().setRequired(true);
+			}
 			CGTypeId cgAccumulatorId = iterationHelper.getAccumulatorTypeId(context, cgBuiltInIterationCallExp);
 			if (cgAccumulatorId != null) {
 				CGAccumulator cgAccumulator = CGModelFactory.eINSTANCE.createCGAccumulator();
@@ -622,8 +626,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				if (asIteration.isIsRequired() || element.getOwnedBody().isIsRequired()) {
 					if ((libraryIteration != ExistsIteration.INSTANCE) && (libraryIteration != ForAllIteration.INSTANCE)) {		// FIXME Make generic
 						cgAccumulator.setNonNull();
+						cgBuiltInIterationCallExp.setNonNull();
 					}
-					cgBuiltInIterationCallExp.setNonNull();
+					else if (cgBuiltInIterationCallExp.getBody().isRequired()) {
+						cgBuiltInIterationCallExp.setNonNull();
+					}
 				}
 				if (!asIteration.isIsValidating()) {
 					cgAccumulator.setNonInvalid();
@@ -631,10 +638,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
 				//				variablesStack.putVariable(asVariable, cgAccumulator);
 				//				cgAccumulator.setNonInvalid();
-			}
-			cgBuiltInIterationCallExp.setBody(doVisit(CGValuedElement.class, element.getOwnedBody()));
-			if (asIteration.getOwnedParameters().get(0).isIsRequired()) {
-				cgBuiltInIterationCallExp.getBody().setRequired(true);
 			}
 			cgBuiltInIterationCallExp.setRequired(asIteration.isIsRequired());
 			return cgBuiltInIterationCallExp;

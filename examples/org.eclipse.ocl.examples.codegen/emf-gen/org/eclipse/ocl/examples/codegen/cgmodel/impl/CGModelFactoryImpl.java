@@ -151,7 +151,7 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case CGModelPackage.CG_ACCUMULATOR: return createCGAccumulator();
 			case CGModelPackage.CG_ASSERT_NON_NULL_EXP: return createCGAssertNonNullExp();
