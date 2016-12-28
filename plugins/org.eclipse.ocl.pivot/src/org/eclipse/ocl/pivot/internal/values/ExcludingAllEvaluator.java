@@ -16,14 +16,11 @@ import java.util.NoSuchElementException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
-
-import com.google.common.collect.Iterables;
 
 /**
  * @generated NOT
@@ -45,8 +42,8 @@ public class ExcludingAllEvaluator
 				return new SetExcludingAllIterator(firstValue, secondValue);
 			}
 			else {
-				//				return new BagExcludingAllIterator(firstValue, secondValue);
-				Iterable<? extends Object> elements = firstValue.iterable();
+				return new BagExcludingAllIterator(firstValue, secondValue);
+				/*				Iterable<? extends Object> elements = firstValue.iterable();
 				Bag<Object> result = new BagImpl<Object>();
 				for (Object element : elements) {
 					boolean reject = false;
@@ -75,7 +72,7 @@ public class ExcludingAllEvaluator
 				}
 				else {
 					return firstValue;
-				}
+				} */
 			}
 		}
 	}

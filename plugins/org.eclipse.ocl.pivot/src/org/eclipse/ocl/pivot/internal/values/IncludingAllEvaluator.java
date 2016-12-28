@@ -15,9 +15,9 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.values.Bag;
+import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSet;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 
@@ -30,12 +30,7 @@ public class IncludingAllEvaluator
 	public static @NonNull CollectionValue includingAll(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 		if (firstValue.isOrdered()) {
 			if (firstValue.isUnique()) {
-				Iterable<? extends Object> elements = firstValue.iterable();
-				OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
-				for (Object value : secondValue) {
-					result.add(value);
-				}
-				return new SparseOrderedSetValueImpl(firstValue.getTypeId(), result);
+				return new OrderedSetIncludingAllIterator(firstValue, secondValue);
 			}
 			else {
 				return new SequenceIncludingAllIterator(firstValue, secondValue);
@@ -44,20 +39,9 @@ public class IncludingAllEvaluator
 		else {
 			if (firstValue.isUnique()) {
 				return new SetIncludingAllIterator(firstValue, secondValue);
-				//				Iterable<? extends Object> elements = firstValue.iterable();
-				//				Set<Object> result = Sets.newHashSet(elements);
-				//				for (Object value : secondValue) {
-				//					result.add(value);
-				//				}
-				//				return new SetValueImpl(firstValue.getTypeId(), result);
 			}
 			else {
-				Iterable<? extends Object> elements = firstValue.iterable();
-				Bag<Object> result = new BagImpl<Object>(elements);
-				for (Object value : secondValue) {
-					result.add(value);
-				}
-				return new BagValueImpl(firstValue.getTypeId(), result);
+				return new BagIncludingAllIterator(firstValue, secondValue);
 			}
 		}
 	}
@@ -124,6 +108,20 @@ public class IncludingAllEvaluator
 			s.append(",");
 			s.append(suffix);
 			s.append("}");
+		}
+	}
+
+	private static class BagIncludingAllIterator extends AbstractIncludingAllIterator implements BagValue
+	{
+		public BagIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+			super(firstValue, secondValue);
+		}
+	}
+
+	private static class OrderedSetIncludingAllIterator extends AbstractIncludingAllIterator implements OrderedSetValue
+	{
+		public OrderedSetIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+			super(firstValue, secondValue);
 		}
 	}
 

@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.internal.values.EqualsStrategy;
 import org.eclipse.ocl.pivot.internal.values.EqualsStrategy.JavaEqualsStrategy;
-import org.eclipse.ocl.pivot.internal.values.EqualsStrategy.OCLEqualsStrategy;
 import org.eclipse.ocl.pivot.internal.values.EqualsStrategy.SimpleEqualsStrategy;
 import org.eclipse.ocl.pivot.internal.values.MapTypeParametersImpl;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
@@ -186,7 +185,7 @@ public class TypeUtil
 	}
 
 	/**
-	 * Return a suitable object to assist in the comparison of values of typeId.
+	 * Return a suitable object to assist in the comparison of boxed values of typeId.
 	 * If isNull, it is guaranteed that the second of two compared values will be null.
 	 *
 	 * @since 1.3
@@ -199,12 +198,12 @@ public class TypeUtil
 			typeId = ((CollectionTypeId)typeId).getElementTypeId();
 		}
 		if (typeId instanceof PrimitiveTypeId) {
-			if ((typeId == TypeId.BOOLEAN) || (typeId == TypeId.STRING)) {
-				return JavaEqualsStrategy.INSTANCE;
-			}
-			else {
-				return OCLEqualsStrategy.INSTANCE;
-			}
+			//			if ((typeId == TypeId.BOOLEAN) || (typeId == TypeId.STRING)) {
+			return JavaEqualsStrategy.INSTANCE;
+			//			}
+			//			else {
+			//				return OCLEqualsStrategy.INSTANCE;
+			//			}
 		}
 		else if (typeId instanceof DataTypeId) {
 			return JavaEqualsStrategy.INSTANCE;		// FIXME ??

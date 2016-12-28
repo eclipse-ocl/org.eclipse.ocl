@@ -15,11 +15,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
+
+import com.google.common.collect.Iterators;
 
 /**
  * A LazyIterable provides a lazy cache of the elements of an Iterator so that the elements are
@@ -31,14 +34,88 @@ import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 public class LazyIterable<E> implements IndexableIterable<E>
 {
 	/**
+	 * BagIterator iterates over the Bag content returning each multiple element multiple times.
+	 */
+	private static class BagIterator<E> implements Iterator<E>
+	{
+		private final @NonNull Map<E, @NonNull ElementCount> map;
+		private final @NonNull Iterator<E> objectIterator;
+		private E currentObject;
+		private int residualCount;
+
+		private BagIterator(@NonNull LazyIterable<E> iterable) {
+			this.map = iterable.getMapOfElement2elementCount();
+			this.objectIterator = iterable.iterator();
+			assert objectIterator.hasNext();
+			currentObject = objectIterator.next();
+			ElementCount count = map.get(currentObject);
+			assert count != null;
+			residualCount = count.value;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return residualCount > 0;
+		}
+
+		@Override
+		public E next() {
+			if (residualCount <= 0) {
+				throw new NoSuchElementException();
+			}
+			if (--residualCount > 0) {
+				return currentObject;
+			}
+			if (objectIterator.hasNext()) {
+				E savedObject = currentObject;
+				currentObject = objectIterator.next();
+				ElementCount count = map.get(currentObject);
+				assert count != null;
+				residualCount = count.value;
+				return savedObject;
+			}
+			else {
+				residualCount = 0;
+				return currentObject;
+			}
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException("Remove not supported by OCL collections");	// Unimplemented optional operation
+		}
+	}
+	/**
 	 * ElementCounter is used as the count of a Bag element. It avoids thrashing Integer objects as counts evolve.
 	 */
-	private static class ElementCount
+	private static class ElementCount extends Number
 	{
+		private static final long serialVersionUID = 6003094405498386037L;
+
 		private int value;
 
 		public ElementCount(int value) {
 			this.value = value;
+		}
+
+		@Override
+		public double doubleValue() {
+			return value;
+		}
+
+		@Override
+		public float floatValue() {
+			return value;
+		}
+
+		@Override
+		public int intValue() {
+			return value;
+		}
+
+		@Override
+		public long longValue() {
+			return value;
 		}
 
 		@Override
@@ -237,6 +314,25 @@ public class LazyIterable<E> implements IndexableIterable<E>
 			spareElementCount = null;
 			return true;
 		}
+	}
+
+	@Deprecated
+	public @NonNull Iterator<E> bagIterator() {
+		if (size > 0) {
+			return new BagIterator<>(this);
+		}
+		else {
+			return Iterators.emptyIterator();
+		}
+	}
+
+	@Deprecated
+	public int bagSize() {
+		int size = 0;
+		for (@NonNull ElementCount elementCount : getMapOfElement2elementCount().values()) {
+			size += elementCount.value;
+		}
+		return size;
 	}
 
 	@Override

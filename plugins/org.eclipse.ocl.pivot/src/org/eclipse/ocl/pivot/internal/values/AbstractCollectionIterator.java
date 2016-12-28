@@ -10,12 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.values;
 
+import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
@@ -69,9 +72,74 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 		throw new UnsupportedOperationException();
 	}
 
+	@Deprecated
+	private static class MyBag<E> extends AbstractCollection<E> implements Bag.Internal<E>
+	{
+		private final @NonNull LazyIterable<E> iterable;
+
+		public MyBag(@NonNull LazyIterable<E> iterable) {
+			this.iterable = iterable;
+		}
+
+		@Override
+		public boolean add(Object e) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean addAll(Collection<? extends E> c) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean containsAll(Collection<?> c) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int count(Object o) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull Map<E, ? extends Number> getMap() {
+			return iterable.getMapOfElement2elementCount();
+		}
+
+		@Override
+		public @NonNull Iterator<E> iterator() {
+			return iterable.bagIterator();
+		}
+
+		@Override
+		public boolean removeAll(Collection<?> c) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean retainAll(Collection<?> c) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int size() {
+			return iterable.bagSize();
+		}
+
+		@Override
+		public Object @NonNull [] toArray(Object @NonNull [] a) {
+			throw new UnsupportedOperationException();
+		}
+	}
+
 	@Override
 	public @NonNull Collection<? extends Object> getElements() {
-		return iterable().getListOfElements();
+		if (isUnique() || isOrdered()) {
+			return iterable().getListOfElements();
+		}
+		else {
+			return new MyBag<>(iterable());
+		}
 	}
 
 	@Override

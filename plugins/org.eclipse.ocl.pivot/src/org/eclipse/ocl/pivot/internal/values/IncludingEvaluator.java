@@ -17,10 +17,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -45,12 +43,7 @@ public class IncludingEvaluator
 				return new SetIncludingIterator(collectionTypeId, firstValue, secondValue);
 			}
 			else {
-				//				return new BagIncludingIterator(firstValue, secondValue);
-				assert !(secondValue instanceof InvalidValueException);
-				Iterable<? extends Object> elements = firstValue.iterable();
-				Bag<Object> result = new BagImpl<Object>(elements);
-				result.add(secondValue);
-				return new BagValueImpl(firstValue.getTypeId(), result);
+				return new BagIncludingIterator(collectionTypeId, firstValue, secondValue);
 			}
 		}
 	}
