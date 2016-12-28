@@ -987,6 +987,8 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionIncludingAll() {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryResults(null, "Set{1..9}", "Set{1..4,7,8..9}->includingAll(Set{5..7})");
+		//
 		ocl.assertQueryResults(null, "Sequence{'a', 'b', 'c', 'd'}", "Sequence{'a', 'b'}->includingAll(Sequence{'c', 'd'})");
 		ocl.assertQueryResults(null, "Bag{'c', 'b', 'a', 'd'}", "Bag{'a', 'b'}->includingAll(Bag{'c', 'd'})");
 		ocl.assertQueryResults(null, "Set{'a', 'c', 'b', 'd'}", "Set{'a', 'b'}->includingAll(Set{'c', 'd'})");

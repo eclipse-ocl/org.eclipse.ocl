@@ -13,8 +13,11 @@ package org.eclipse.ocl.pivot.internal.values;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 
 /**
@@ -24,7 +27,7 @@ import org.eclipse.ocl.pivot.utilities.IndexableIterable;
  *
  * @since 1.3
  */
-public class LazyIterable<E> implements IndexableIterable<E>
+public abstract class LazyIterable<E> implements IndexableIterable<E>
 {
 	/**
 	 * A LazyIterator support multiple access to the partially populated iteration cache provoking
@@ -57,7 +60,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		@Override
 		public E next() {
 			if (index < size) {
-				return lazilyCachedElements.get(index++);
+				return lazyListOfElements.get(index++);
 			}
 			E next = get(index);
 			index++;			// After IndexOutOfBoundsException has been thrown
@@ -109,6 +112,47 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		}
 	}
 
+	public static class Bag<E> extends LazyIterable<E>
+	{
+		public Bag(@NonNull Iterator<E> internalIterator) {
+			super(internalIterator);
+		}
+
+	}
+
+	public static class Sequence<E> extends LazyIterable<E>
+	{
+		public Sequence(@NonNull Iterator<E> internalIterator) {
+			super(internalIterator);
+		}
+
+		@Override
+		protected void add(E anElement) {
+			size++;
+			lazyListOfElements.add(anElement);
+			if (lazyBagOfElements != null) {
+				lazyBagOfElements.add(anElement);
+			}
+		}
+	}
+
+	public static class Unique<E> extends LazyIterable<E>
+	{
+		public Unique(@NonNull Iterator<E> internalIterator) {
+			super(internalIterator);
+		}
+
+		@Override
+		protected void add(E anElement) {
+			size++;
+			lazyListOfElements.add(anElement);
+			if (lazyBagOfElements != null) {
+				lazyBagOfElements.add(anElement);
+			}
+		}
+
+	}
+
 	/**
 	 * The iterator that provides the elements to be cached.
 	 */
@@ -117,16 +161,28 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	/**
 	 * The lazily cached elements obtained by iterating internalIterator.
 	 */
-	private final @NonNull List<E> lazilyCachedElements = new ArrayList<>();	// ArrayList reallocates arrays; could be better to do so ourselves with a smart estimatedSize()
+	protected final @NonNull List<E> lazyListOfElements = new ArrayList<>();	// ArrayList reallocates arrays; could be better to do so ourselves with a smart estimatedSize()
 
 	/**
-	 * A local copy of lazilyCachedElements.size();
+	 * The lazily cached elements obtained by iterating internalIterator.
 	 */
-	private int size = 0;
+	//	protected @Nullable Set<E> lazySetOfElements = null;
+
+	/**
+	 * The lazily cached elements obtained by iterating internalIterator.
+	 */
+	protected @Nullable Map<E, Integer> lazyMapOfElement2count = null;
+
+	/**
+	 * A local copy of lazyListOfElements.size();
+	 */
+	protected int size = 0;
 
 	public LazyIterable(@NonNull Iterator<E> internalIterator) {
 		this.internalIterator = internalIterator;
 	}
+
+	protected abstract void add(E anElement);
 
 	@Override
 	public boolean equals(Object obj) {
@@ -136,11 +192,10 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	@Override
 	public synchronized E get(int index) {
 		while ((size <= index) && internalIterator.hasNext()) {
-			lazilyCachedElements.add(internalIterator.next());
-			size++;
+			add(internalIterator.next());
 		}
 		if (index < size) {
-			return lazilyCachedElements.get(index);
+			return lazyListOfElements.get(index);
 		}
 		else {
 			throw new IndexOutOfBoundsException();
@@ -148,14 +203,36 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	}
 
 	/**
-	 * Ensure that all lazy iterations have completed and then return all elements.
+	 * Ensure that all lazy iterations have completed and then return a bag of all elements.
 	 */
-	public synchronized @NonNull List<?> getElements() {
-		while (internalIterator.hasNext()) {
-			lazilyCachedElements.add(internalIterator.next());
-			size++;
+	public synchronized @NonNull Bag<?> getBagOfElements() {
+		getListOfElements();
+		Bag<E> lazyBagOfElements2 = lazyBagOfElements;
+		if (lazyBagOfElements2 == null) {
+			lazyBagOfElements2 = lazyBagOfElements = new BagImpl<>();
+			for (E element : lazyListOfElements) {
+				lazyBagOfElements2.add(element);
+			}
 		}
-		return lazilyCachedElements;
+		return lazyBagOfElements2;
+	}
+
+	/**
+	 * Ensure that all lazy iterations have completed and then return a list of all elements.
+	 */
+	public synchronized @NonNull List<?> getListOfElements() {
+		while (internalIterator.hasNext()) {
+			add(internalIterator.next());
+		}
+		return lazyListOfElements;
+	}
+
+	/**
+	 * Ensure that all lazy iterations have completed and then return a set of all elements.
+	 */
+	public @NonNull Set<E> getSetOfElements() {
+		getBagOfElements();
+		return lazyBagOfElements.getMap().keySet();
 	}
 
 	@Override
@@ -169,7 +246,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 			return new LazyIterator();
 		}
 		else {
-			return new FasterListIterator<>(lazilyCachedElements);
+			return new FasterListIterator<>(lazyListOfElements);
 		}
 	}
 
@@ -178,7 +255,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	 */
 	@Override
 	public int size() {
-		getElements();
+		getListOfElements();
 		return size;
 	}
 

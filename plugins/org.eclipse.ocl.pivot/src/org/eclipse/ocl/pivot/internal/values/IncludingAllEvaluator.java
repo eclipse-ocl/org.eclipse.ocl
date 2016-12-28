@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -20,8 +19,7 @@ import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-
-import com.google.common.collect.Sets;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * @generated NOT
@@ -45,12 +43,13 @@ public class IncludingAllEvaluator
 		}
 		else {
 			if (firstValue.isUnique()) {
-				Iterable<? extends Object> elements = firstValue.iterable();
-				Set<Object> result = Sets.newHashSet(elements);
-				for (Object value : secondValue) {
-					result.add(value);
-				}
-				return new SetValueImpl(firstValue.getTypeId(), result);
+				return new SetIncludingAllIterator(firstValue, secondValue);
+				//				Iterable<? extends Object> elements = firstValue.iterable();
+				//				Set<Object> result = Sets.newHashSet(elements);
+				//				for (Object value : secondValue) {
+				//					result.add(value);
+				//				}
+				//				return new SetValueImpl(firstValue.getTypeId(), result);
 			}
 			else {
 				Iterable<? extends Object> elements = firstValue.iterable();
@@ -67,14 +66,16 @@ public class IncludingAllEvaluator
 	{
 		private enum NextIs { PREFIX, SUFFIX, END };
 
-		protected final @NonNull Iterator<@Nullable Object> prefix;
-		protected final @NonNull Iterator<@Nullable Object> suffix;
+		private final @NonNull Iterator<@Nullable Object> prefix;
+		private final @NonNull Iterator<@Nullable Object> suffix;
+		private final @NonNull Iterable<? extends Object> reference;
 		private @Nullable NextIs nextIs = null;
 
 		public AbstractIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 			super(firstValue.getTypeId());
 			this.prefix = firstValue.iterator();
 			this.suffix = secondValue.iterator();
+			Iterable<? extends Object> reference = firstValue.basicGetIterable();
 		}
 
 		@Override
@@ -131,6 +132,13 @@ public class IncludingAllEvaluator
 	private static class SequenceIncludingAllIterator extends AbstractIncludingAllIterator implements SequenceValue
 	{
 		public SequenceIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+			super(firstValue, secondValue);
+		}
+	}
+
+	private static class SetIncludingAllIterator extends AbstractIncludingAllIterator implements SetValue
+	{
+		public SetIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 			super(firstValue, secondValue);
 		}
 	}

@@ -60,14 +60,10 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	}
 
 	/**
-	 * Return true if this iterator has noy yet iterated and so it is not too late
+	 * Return true if this iterator has not yet iterated and so it is not too late
 	 * to create a LazyIterable to support multiple access.
 	 */
 	protected abstract boolean canBeIterable();
-
-	protected @NonNull LazyIterable<@Nullable Object> createLazyIterable() {
-		return new LazyIterable<>(this);
-	}
 
 	public @Nullable Object first() {
 		throw new UnsupportedOperationException();
@@ -75,7 +71,7 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 
 	@Override
 	public @NonNull Collection<? extends Object> getElements() {
-		return iterable().getElements();
+		return iterable().getListOfElements();
 	}
 
 	@Override
@@ -83,7 +79,7 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 		if (hashCode == 0) {
 			synchronized (this) {
 				if (hashCode == 0) {
-					hashCode = computeCollectionHashCode(isOrdered(), isUnique(), iterable().getElements());
+					hashCode = computeCollectionHashCode(isOrdered(), isUnique(), iterable().getListOfElements());
 				}
 			}
 		}
@@ -110,7 +106,16 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 			if (!canBeIterable()) {
 				throw new IllegalStateException();
 			}
-			iterable2 = iterable = createLazyIterable();
+			if (isUnique()) {
+				iterable2 = new LazyIterable.Unique<>(this);
+			}
+			else if (isOrdered()) {
+				iterable2 = new LazyIterable.Sequence<>(this);
+			}
+			else {
+				iterable2 = new LazyIterable.Bag<>(this);
+			}
+			iterable = iterable2;
 		}
 		return iterable2;
 	}
