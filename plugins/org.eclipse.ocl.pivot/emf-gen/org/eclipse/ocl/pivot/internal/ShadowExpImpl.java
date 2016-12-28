@@ -436,7 +436,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					};
 					final @NonNull  ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY_closure_0, oclAsSet, ACC_closure_0);
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue closure = ClassUtil.nonNullState((SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0));
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue safe_collect_sources = (SetValue)CollectionExcludingOperation.INSTANCE.evaluate(closure, (Object)null);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue safe_collect_sources = CollectionExcludingOperation.INSTANCE.evaluate(closure, (Object)null);
 					/*@Thrown*/ BagValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createBagAccumulatorValue(PivotTables.BAG_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_1 = safe_collect_sources.iterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull BagValue collect_0;
@@ -624,8 +624,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							accumulator_6.add(_1_7);
 						}
 					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue extraProperties = (SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(partProperties, classProperties);
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue missingProperties = (SetValue)CollectionExcludingAllOperation.INSTANCE.evaluate(requiredClassProperties, partProperties);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue extraProperties = CollectionExcludingAllOperation.INSTANCE.evaluate(partProperties, classProperties);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue missingProperties = CollectionExcludingAllOperation.INSTANCE.evaluate(requiredClassProperties, partProperties);
 					final /*@Thrown*/ boolean notEmpty = CollectionNotEmptyOperation.INSTANCE.evaluate(extraProperties).booleanValue();
 					/*@Thrown*/ java.lang.@NonNull Object symbol_6;
 					if (notEmpty) {

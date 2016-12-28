@@ -15,11 +15,7 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * @generated NOT
@@ -111,28 +107,28 @@ public class IncludingAllEvaluator
 		}
 	}
 
-	private static class BagIncludingAllIterator extends AbstractIncludingAllIterator implements BagValue
+	private static class BagIncludingAllIterator extends AbstractIncludingAllIterator
 	{
 		public BagIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 			super(firstValue, secondValue);
 		}
 	}
 
-	private static class OrderedSetIncludingAllIterator extends AbstractIncludingAllIterator implements OrderedSetValue
+	private static class OrderedSetIncludingAllIterator extends AbstractIncludingAllIterator
 	{
 		public OrderedSetIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 			super(firstValue, secondValue);
 		}
 	}
 
-	private static class SequenceIncludingAllIterator extends AbstractIncludingAllIterator implements SequenceValue
+	private static class SequenceIncludingAllIterator extends AbstractIncludingAllIterator
 	{
 		public SequenceIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 			super(firstValue, secondValue);
 		}
 	}
 
-	private static class SetIncludingAllIterator extends AbstractIncludingAllIterator implements SetValue
+	private static class SetIncludingAllIterator extends AbstractIncludingAllIterator
 	{
 		public SetIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 			super(firstValue, secondValue);

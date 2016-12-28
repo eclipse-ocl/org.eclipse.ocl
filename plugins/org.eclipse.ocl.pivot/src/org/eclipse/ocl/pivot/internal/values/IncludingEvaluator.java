@@ -17,11 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * @generated NOT
@@ -119,21 +115,21 @@ public class IncludingEvaluator
 		}
 	}
 
-	private static class BagIncludingIterator extends AbstractIncludingIterator implements BagValue
+	private static class BagIncludingIterator extends AbstractIncludingIterator
 	{
 		public BagIncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
 			super(collectionTypeId, firstValue, secondValue);
 		}
 	}
 
-	private static class OrderedSetIncludingIterator extends AbstractIncludingIterator implements OrderedSetValue
+	private static class OrderedSetIncludingIterator extends AbstractIncludingIterator
 	{
 		public OrderedSetIncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
 			super(collectionTypeId, firstValue, secondValue);
 		}
 	}
 
-	private static class SequenceIncludingIterator extends AbstractIncludingIterator implements SequenceValue
+	private static class SequenceIncludingIterator extends AbstractIncludingIterator
 	{
 		public SequenceIncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
 			super(collectionTypeId, firstValue, secondValue);
@@ -145,7 +141,7 @@ public class IncludingEvaluator
 		//		}
 	}
 
-	private static class SetIncludingIterator extends AbstractIncludingIterator implements SetValue
+	private static class SetIncludingIterator extends AbstractIncludingIterator
 	{
 		public SetIncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
 			super(collectionTypeId, firstValue, secondValue);

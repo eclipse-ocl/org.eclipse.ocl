@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,8 +20,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
@@ -93,63 +90,9 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 		return unboxedValues;
 	}
 
-	/*	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof SetValue)) {
-			return false;
-		}
-		int thisSize = elements.size();
-		Collection<? extends Object> thoseElements = ((SetValue)obj).getElements();
-		int thatSize = thoseElements.size();
-		if (thisSize != thatSize) {
-			return false;
-		}
-		if (thoseElements instanceof Set<?>) {
-			return thoseElements.containsAll(elements);
-		}
-		else {
-			return elements.containsAll(thoseElements);
-		}
-	} */
-
-	@Override
-	public @NonNull SetValue excluding(@Nullable Object value) {
-		return (SetValue)super.excluding(value);
-	}
-
-	@Override
-	public @NonNull SetValue excludingAll(@NonNull CollectionValue values) {
-		return (SetValue)super.excludingAll(values);
-	}
-
-	@Override
-	public @NonNull SetValue flatten() {
-		return (SetValue)super.flatten();
-	}
-
-	//    @Override
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.SET;
-	//	}
-
-	//	@Override
-	//	protected @NonNull Set<? extends Object> getElements() {
-	//		return (Set<? extends Object>) elements;
-	//	}
-
 	@Override
 	public @NonNull String getKind() {
 		return TypeId.SET_NAME;
-	}
-
-	@Override
-	public @NonNull SetValue including(@Nullable Object value) {
-		return (SetValue)super.including(value);
-	}
-
-	@Override
-	public @NonNull SetValue includingAll(@NonNull CollectionValue values) {
-		return (SetValue)super.includingAll(values);
 	}
 
 	@Override
@@ -167,11 +110,6 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 		Set<Object> result = new HashSet<Object>(elements);
 		result.removeAll(set.asCollection());
 		return new SetValueImpl(getTypeId(), result);
-	}
-
-	@Override
-	public @NonNull OrderedSetValue sort(@NonNull Comparator<Object> comparator) {
-		return (OrderedSetValue)super.sort(comparator);
 	}
 
 	@Override

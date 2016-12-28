@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -25,7 +24,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
@@ -103,54 +101,9 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 		throw new InvalidValueException("Null collection content");
 	}
 
-	/*	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof OrderedSetValue) || (obj instanceof NullValue)) {
-			return false;
-		}
-		// This is probably a bug fix on LinkedHashSet that should consider ordering for equals
-		Iterator<? extends Object> theseElements = iterator();
-		Iterator<? extends Object> thoseElements = ((OrderedSetValue)obj).iterator();
-		while (theseElements.hasNext() && thoseElements.hasNext()) {
-			Object thisElement = theseElements.next();
-			Object thatElement = thoseElements.next();
-			if (thisElement == null) {
-				if (thatElement != null) {
-					return false;
-				}
-			}
-			else {
-				if (!thisElement.equals(thatElement)) {
-					return false;
-				}
-			}
-		}
-		return !theseElements.hasNext() && !thoseElements.hasNext();
-	} */
-
-	@Override
-	public @NonNull OrderedSetValue excluding(@Nullable Object value) {
-		return (OrderedSetValue)super.excluding(value);
-	}
-
-	@Override
-	public @NonNull OrderedSetValue excludingAll(@NonNull CollectionValue values) {
-		return (OrderedSetValue)super.excludingAll(values);
-	}
-
-	//    @Override
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.ORDERED_SET;
-	//	}
-
 	@Override
 	public @NonNull String getKind() {
 		return TypeId.ORDERED_SET_NAME;
-	}
-
-	@Override
-	public @NonNull OrderedSetValue includingAll(@NonNull CollectionValue values) {
-		return (OrderedSetValue)super.includingAll(values);
 	}
 
 	@Override
@@ -250,11 +203,6 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 		List<? extends Object> elements = asList();
 		Collections.reverse(elements);
 		return new SparseOrderedSetValueImpl(getTypeId(), elements);
-	}
-
-	@Override
-	public @NonNull OrderedSetValue sort(@NonNull Comparator<Object> comparator) {
-		return (OrderedSetValue)super.sort(comparator);
 	}
 
 	@Override

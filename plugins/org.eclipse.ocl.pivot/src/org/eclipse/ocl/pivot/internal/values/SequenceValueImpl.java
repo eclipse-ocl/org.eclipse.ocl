@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -23,7 +22,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
@@ -99,33 +97,6 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		return getElements().get(index);
 	}
 
-	/*	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof SequenceValue) || (obj instanceof OrderedSetValue)) {
-			return false;
-		}
-		Iterator<? extends Object> theseElements = iterator();
-		Iterator<? extends Object> thoseElements = ((SequenceValue)obj).iterator();
-		while (theseElements.hasNext() && thoseElements.hasNext()) {
-			Object thisValue = theseElements.next();
-			Object thatValue = thoseElements.next();
-			if (!ClassUtil.safeEquals(thisValue, thatValue)) {
-				return false;
-			}
-		}
-		return !theseElements.hasNext() && !thoseElements.hasNext();
-	} */
-
-	@Override
-	public @NonNull SequenceValue excluding(@Nullable Object value) {
-		return (SequenceValue)super.excluding(value);
-	}
-
-	@Override
-	public @NonNull SequenceValue excludingAll(@NonNull CollectionValue values) {
-		return (SequenceValue)super.excludingAll(values);
-	}
-
 	@Override
 	public @Nullable Object first() {
 		if (elements.size() <= 0) {
@@ -135,16 +106,6 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull SequenceValue flatten() {
-		return (SequenceValue)super.flatten();
-	}
-
-	//    @Override
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.SEQUENCE;
-	//	}
-
-	@Override
 	public @NonNull List<? extends Object> getElements() {
 		return (List<? extends Object>) elements;
 	}
@@ -152,16 +113,6 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	@Override
 	public @NonNull String getKind() {
 		return TypeId.SEQUENCE_NAME;
-	}
-
-	@Override
-	public @NonNull SequenceValue including(@Nullable Object value) {
-		return (SequenceValue)super.including(value);
-	}
-
-	@Override
-	public @NonNull SequenceValue includingAll(@NonNull CollectionValue values) {
-		return (SequenceValue)super.includingAll(values);
 	}
 
 	@Override
@@ -229,11 +180,6 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		List<Object> elements = new ArrayList<Object>(this.elements);
 		Collections.reverse(elements);
 		return new SparseSequenceValueImpl(getTypeId(), elements);
-	}
-
-	@Override
-	public @NonNull SequenceValue sort(@NonNull Comparator<Object> comparator) {
-		return (SequenceValue)super.sort(comparator);
 	}
 
 	/**

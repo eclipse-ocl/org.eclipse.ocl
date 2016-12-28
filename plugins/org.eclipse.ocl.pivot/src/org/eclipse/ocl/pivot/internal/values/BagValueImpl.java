@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.Collection;
-import java.util.Comparator;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,7 +20,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
@@ -79,55 +77,6 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 		return unboxedValues;
 	}
 
-	/*	@Override
-	public boolean equals(Object thatObject) {
-		if (this == thatObject) {
-			return true;
-		}
-		if (!(thatObject instanceof BagValue)) {
-			return false;
-		}
-		/ *		@Override
-		public boolean equals(Object obj) {
-			if (!(obj instanceof SetValue)) {
-				return false;
-			}
-			int thisSize = elements.size();
-			Collection<? extends Object> thoseElements = ((SetValue)obj).getElements();
-			int thatSize = thoseElements.size();
-			if (thisSize != thatSize) {
-				return false;
-			}
-			if (thoseElements instanceof Set<?>) {
-				return thoseElements.containsAll(elements);
-			}
-			else {
-				return elements.containsAll(thoseElements);
-			}
-		} * /
-		return elements.equals(((BagValue)thatObject).getElements());
-	} */
-
-	@Override
-	public @NonNull BagValue excluding(@Nullable Object value) {
-		return (BagValue)super.excluding(value);
-	}
-
-	@Override
-	public @NonNull BagValue excludingAll(@NonNull CollectionValue values) {
-		return (BagValue)super.excludingAll(values);
-	}
-
-	@Override
-	public @NonNull BagValue flatten() {
-		return (BagValue)super.flatten();
-	}
-
-	//    @Override
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.BAG;
-	//	}
-
 	@Override
 	public @NonNull Bag<? extends Object> getElements() {
 		return (Bag<? extends Object>) elements;
@@ -139,16 +88,6 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	}
 
 	@Override
-	public @NonNull BagValue including(@Nullable Object value) {
-		return (BagValue)super.including(value);
-	}
-
-	@Override
-	public @NonNull BagValue includingAll(@NonNull CollectionValue values) {
-		return (BagValue)super.includingAll(values);
-	}
-
-	@Override
 	public boolean isOrdered() {
 		return false;
 	}
@@ -156,11 +95,6 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	@Override
 	public boolean isUnique() {
 		return false;
-	}
-
-	@Override
-	public @NonNull SequenceValue sort(@NonNull Comparator<Object> comparator) {
-		return (SequenceValue)super.sort(comparator);
 	}
 
 	@Override
