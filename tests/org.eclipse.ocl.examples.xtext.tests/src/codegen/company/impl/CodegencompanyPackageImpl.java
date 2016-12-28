@@ -111,7 +111,8 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 		if (isInited) return (CodegencompanyPackage)EPackage.Registry.INSTANCE.getEPackage(CodegencompanyPackage.eNS_URI);
 
 		// Obtain or create and register package
-		CodegencompanyPackageImpl theCodegencompanyPackage = (CodegencompanyPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CodegencompanyPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new CodegencompanyPackageImpl());
+		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		CodegencompanyPackageImpl theCodegencompanyPackage = (CodegencompanyPackageImpl)(ePackage instanceof CodegencompanyPackageImpl ? ePackage : new CodegencompanyPackageImpl());
 
 		isInited = true;
 

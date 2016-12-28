@@ -38,8 +38,8 @@ import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
 import codegen.company.CodegencompanyPackage;
@@ -195,10 +195,10 @@ public class CompanyImpl extends EObjectImpl implements Company {
 			 * range->includes(employees->size())
 			 */
 			@SuppressWarnings("null")
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue range = (SequenceValue)_1.getValue(0/*range*/);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue range = (CollectionValue)_1.getValue(0/*range*/);
 			@SuppressWarnings("null")
 			final /*@Thrown*/ java.util.@NonNull List<Employee> employees = this.getEmployees();
-			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
+			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
 			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
 			final /*@NonInvalid*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(range, size).booleanValue();
 			//

@@ -16,7 +16,7 @@
  * from:
  *   /org.eclipse.ocl.examples.xtext.tests/model/Company.ecore
  * using:
- *   /org.eclipse.ocl.examples.xtext.tests/model/CodeGenCompany.genmodel
+ *   /org.eclipse.ocl.examples.xtext.tests/model/CodeGenCompanySrc.genmodel
  *   org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTables
  *
  * Do not edit it.
@@ -69,7 +69,7 @@ public class CodegencompanyTables
 	 */
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull RootPackageId PACKid_$metamodel$ = org.eclipse.ocl.pivot.ids.IdManager.getRootPackageId("$metamodel$");
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_emf_s_2002_s_Ecore = org.eclipse.ocl.pivot.ids.IdManager.getNsURIPackageId("http://www.eclipse.org/emf/2002/Ecore", null, org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
-	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_test_s_Pivot_s_Company_ecore = org.eclipse.ocl.pivot.ids.IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/test/Pivot/Company.ecore", "co", codegen.company.CodegencompanyPackage.eINSTANCE);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull NsURIPackageId PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_test_s_Pivot_s_Company_ecore = org.eclipse.ocl.pivot.ids.IdManager.getNsURIPackageId("http://www.eclipse.org/ocl/test/Pivot/Company.ecore", null, codegen.company.CodegencompanyPackage.eINSTANCE);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Class = codegen.company.CodegencompanyTables.PACKid_$metamodel$.getClassId("Class", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Company = codegen.company.CodegencompanyTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_test_s_Pivot_s_Company_ecore.getClassId("Company", 0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull ClassId CLSSid_Employee = codegen.company.CodegencompanyTables.PACKid_http_c_s_s_www_eclipse_org_s_ocl_s_test_s_Pivot_s_Company_ecore.getClassId("Employee", 0);
@@ -96,7 +96,7 @@ public class CodegencompanyTables
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull EnumerationLiteralId ELITid_medium = codegen.company.CodegencompanyTables.ENUMid_CompanySizeKind.getEnumerationLiteralId("medium");
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull EnumerationLiteralId ELITid_small = codegen.company.CodegencompanyTables.ENUMid_CompanySizeKind.getEnumerationLiteralId("small");
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId ORD_CLSSid_Employee = org.eclipse.ocl.pivot.ids.TypeId.ORDERED_SET.getSpecializedId(codegen.company.CodegencompanyTables.CLSSid_Employee);
-	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull OrderedSetValue OrderedSet = org.eclipse.ocl.pivot.utilities.ValueUtil.createOrderedSetOfEach(codegen.company.CodegencompanyTables.ORD_NULLid);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue OrderedSet = org.eclipse.ocl.pivot.utilities.ValueUtil.createOrderedSetOfEach(codegen.company.CodegencompanyTables.ORD_NULLid);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull TuplePartId PARTid_ = org.eclipse.ocl.pivot.ids.IdManager.getTuplePartId(0, "range", codegen.company.CodegencompanyTables.SEQ_PRIMid_Integer);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull TuplePartId PARTid__0 = org.eclipse.ocl.pivot.ids.IdManager.getTuplePartId(1, "size", codegen.company.CodegencompanyTables.ENUMid_CompanySizeKind);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId SET_CLSSid_Employee = org.eclipse.ocl.pivot.ids.TypeId.SET.getSpecializedId(codegen.company.CodegencompanyTables.CLSSid_Employee);
@@ -104,15 +104,15 @@ public class CodegencompanyTables
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull IntegerRange symbol_0 = org.eclipse.ocl.pivot.utilities.ValueUtil.createRange(codegen.company.CodegencompanyTables.INT_0, codegen.company.CodegencompanyTables.INT_49);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull IntegerRange symbol_4 = org.eclipse.ocl.pivot.utilities.ValueUtil.createRange(codegen.company.CodegencompanyTables.INT_1000, codegen.company.CodegencompanyTables.INT_1000000);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull IntegerRange symbol_2 = org.eclipse.ocl.pivot.utilities.ValueUtil.createRange(codegen.company.CodegencompanyTables.INT_50, codegen.company.CodegencompanyTables.INT_999);
-	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull SequenceValue Sequence = org.eclipse.ocl.pivot.utilities.ValueUtil.createSequenceRange(codegen.company.CodegencompanyTables.SEQ_PRIMid_Integer, codegen.company.CodegencompanyTables.symbol_0);
-	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull SequenceValue Sequence_1 = org.eclipse.ocl.pivot.utilities.ValueUtil.createSequenceRange(codegen.company.CodegencompanyTables.SEQ_PRIMid_Integer, codegen.company.CodegencompanyTables.symbol_4);
-	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull SequenceValue Sequence_0 = org.eclipse.ocl.pivot.utilities.ValueUtil.createSequenceRange(codegen.company.CodegencompanyTables.SEQ_PRIMid_Integer, codegen.company.CodegencompanyTables.symbol_2);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue Sequence = org.eclipse.ocl.pivot.utilities.ValueUtil.createSequenceRange(codegen.company.CodegencompanyTables.SEQ_PRIMid_Integer, codegen.company.CodegencompanyTables.symbol_0);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue Sequence_1 = org.eclipse.ocl.pivot.utilities.ValueUtil.createSequenceRange(codegen.company.CodegencompanyTables.SEQ_PRIMid_Integer, codegen.company.CodegencompanyTables.symbol_4);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue Sequence_0 = org.eclipse.ocl.pivot.utilities.ValueUtil.createSequenceRange(codegen.company.CodegencompanyTables.SEQ_PRIMid_Integer, codegen.company.CodegencompanyTables.symbol_2);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull TupleTypeId TUPLid_ = org.eclipse.ocl.pivot.ids.IdManager.getTupleTypeId("Tuple", codegen.company.CodegencompanyTables.PARTid_, codegen.company.CodegencompanyTables.PARTid__0);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@org.eclipse.jdt.annotation.NonNull CollectionTypeId SET_TUPLid_ = org.eclipse.ocl.pivot.ids.TypeId.SET.getSpecializedId(codegen.company.CodegencompanyTables.TUPLid_);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull TupleValue symbol_1 = org.eclipse.ocl.pivot.utilities.ValueUtil.createTupleOfEach(codegen.company.CodegencompanyTables.TUPLid_, codegen.company.CodegencompanyTables.Sequence, codegen.company.CodegencompanyTables.ELITid_small);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull TupleValue symbol_5 = org.eclipse.ocl.pivot.utilities.ValueUtil.createTupleOfEach(codegen.company.CodegencompanyTables.TUPLid_, codegen.company.CodegencompanyTables.Sequence_1, codegen.company.CodegencompanyTables.ELITid_large);
 	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull TupleValue symbol_3 = org.eclipse.ocl.pivot.utilities.ValueUtil.createTupleOfEach(codegen.company.CodegencompanyTables.TUPLid_, codegen.company.CodegencompanyTables.Sequence_0, codegen.company.CodegencompanyTables.ELITid_medium);
-	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull SetValue table = org.eclipse.ocl.pivot.utilities.ValueUtil.createSetOfEach(codegen.company.CodegencompanyTables.SET_TUPLid_, codegen.company.CodegencompanyTables.symbol_1, codegen.company.CodegencompanyTables.symbol_3, codegen.company.CodegencompanyTables.symbol_5);
+	public static final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue table = org.eclipse.ocl.pivot.utilities.ValueUtil.createSetOfEach(codegen.company.CodegencompanyTables.SET_TUPLid_, codegen.company.CodegencompanyTables.symbol_1, codegen.company.CodegencompanyTables.symbol_3, codegen.company.CodegencompanyTables.symbol_5);
 
 	/**
 	 *	The type parameters for templated types and operations.
