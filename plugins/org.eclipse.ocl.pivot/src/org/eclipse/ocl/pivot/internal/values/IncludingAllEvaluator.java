@@ -16,7 +16,6 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
@@ -64,7 +63,7 @@ public class IncludingAllEvaluator
 		}
 	}
 
-	private static class SequenceIncludingAllIterator extends AbstractCollectionIterator implements SequenceValue
+	private static class AbstractIncludingAllIterator extends AbstractCollectionIterator
 	{
 		private enum NextIs { PREFIX, SUFFIX, END };
 
@@ -72,8 +71,8 @@ public class IncludingAllEvaluator
 		protected final @NonNull Iterator<@Nullable Object> suffix;
 		private @Nullable NextIs nextIs = null;
 
-		public SequenceIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
-			super(TypeId.SEQUENCE.getSpecializedId(firstValue.getElementTypeId()));
+		public AbstractIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+			super(firstValue.getTypeId());
 			this.prefix = firstValue.iterator();
 			this.suffix = secondValue.iterator();
 		}
@@ -121,11 +120,18 @@ public class IncludingAllEvaluator
 
 		@Override
 		public void toString(@NonNull StringBuilder s, int sizeLimit) {
-			s.append("SeqIncAll{");
+			s.append("IncludingAll{");
 			s.append(prefix);
 			s.append(",");
 			s.append(suffix);
 			s.append("}");
+		}
+	}
+
+	private static class SequenceIncludingAllIterator extends AbstractIncludingAllIterator implements SequenceValue
+	{
+		public SequenceIncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+			super(firstValue, secondValue);
 		}
 	}
 }
