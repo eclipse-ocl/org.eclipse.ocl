@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -201,6 +202,12 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	public static @NonNull NullIterator EMPTY_ITERATOR = new NullIterator();
 
+
+	/**
+	 * @since 1.3
+	 */
+	public static @Nullable Map<@NonNull Class<? extends CollectionValue>, @NonNull Integer> collectionClass2count = null;
+
 	/**
 	 * @since 1.3
 	 */
@@ -234,6 +241,13 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	protected AbstractCollectionValueImpl(@NonNull CollectionTypeId typeId) {
 		this.typeId = typeId;
 		this.collectionFactory = AbstractCollectionFactory.getCollectionFactory(typeId);
+		Map<Class<? extends CollectionValue>, Integer> collectionClass2count2 = collectionClass2count;
+		if (collectionClass2count2 != null) {
+			Class<? extends @NonNull CollectionValue> collectionClass = getClass();
+			Integer count = collectionClass2count2.get(collectionClass);
+			count = count != null ? count+1 : 1;
+			collectionClass2count2.put(collectionClass, count);
+		}
 	}
 
 	//	@Override
