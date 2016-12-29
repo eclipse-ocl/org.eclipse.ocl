@@ -47,6 +47,7 @@ import org.eclipse.ocl.examples.test.label.PluginLabelTests;
 import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
+import org.eclipse.ocl.pivot.internal.values.AbstractCollectionIterator;
 import org.eclipse.ocl.pivot.internal.values.CollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
@@ -86,12 +87,23 @@ extends TestCase {
 			public void run(TestResult result) {
 				Map<@NonNull Class<? extends CollectionValue>, @NonNull Integer> collectionClass2count = CollectionValueImpl.collectionClass2count = new HashMap<>();
 				super.run(result);
+				int iteratorCounts = 0;
+				int nonIteratorCounts = 0;
 				for (@NonNull Class<? extends CollectionValue> collectionClass : collectionClass2count.keySet()) {
 					Integer count = collectionClass2count.get(collectionClass);
 					System.out.println(collectionClass.getName() + " : " + count);
+					if (AbstractCollectionIterator.class.isAssignableFrom(collectionClass)) {
+						iteratorCounts += count;
+					}
+					else {
+						nonIteratorCounts += count;
+					}
 				}
+				System.out.println(">= " + AbstractCollectionIterator.class.getName() + " : " + iteratorCounts);
+				System.out.println("!>= " + AbstractCollectionIterator.class.getName() + " : " + nonIteratorCounts);
+				System.out.println("all " + CollectionValue.class.getName() + " : " + (iteratorCounts+nonIteratorCounts));
 			}
-			
+
 		};
 		result.addTestSuite(MonikerTests.class);
 		result.addTestSuite(PivotTests.class);

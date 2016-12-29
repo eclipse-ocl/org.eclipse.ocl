@@ -15,6 +15,7 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -24,8 +25,8 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  */
 public class IncludingAllIterator extends AbstractCollectionIterator
 {
-	public static @NonNull CollectionValue includingAll(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
-		return new IncludingAllIterator(firstValue, secondValue);
+	public static @NonNull CollectionValue includingAll(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+		return new IncludingAllIterator(collectionTypeId, firstValue, secondValue);
 	}
 
 	private enum NextIs { PREFIX, SUFFIX, END };
@@ -34,8 +35,8 @@ public class IncludingAllIterator extends AbstractCollectionIterator
 	private final @NonNull Iterator<@Nullable Object> suffix;
 	private @Nullable NextIs nextIs = null;
 
-	public IncludingAllIterator(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
-		super(firstValue.getTypeId());
+	public IncludingAllIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+		super(collectionTypeId);
 		this.prefix = firstValue.iterator();
 		this.suffix = secondValue.iterator();
 	}

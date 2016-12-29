@@ -611,7 +611,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue includingAll(@NonNull CollectionValue values) {
-		return IncludingAllIterator.includingAll(this, values);
+		return IncludingAllIterator.includingAll(getTypeId(), this, values);
 	}
 
 	@Override
@@ -759,7 +759,8 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue union(@NonNull CollectionValue that) {
-		return includingAll(that);
+		CollectionTypeId collectionTypeId = this.isUnique() && that.isUnique() ? TypeId.SET : TypeId.BAG;
+		return IncludingAllIterator.includingAll(collectionTypeId.getSpecializedId(getElementTypeId()), this, that);
 		/*		assert !this.isUndefined() && !that.isUndefined();
 		Collection<? extends Object> theseElements = this.asCollection();
 		Collection<? extends Object> thoseElements = that.asCollection();

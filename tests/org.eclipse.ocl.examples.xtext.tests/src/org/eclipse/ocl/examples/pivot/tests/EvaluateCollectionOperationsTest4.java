@@ -1851,7 +1851,6 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionUnionEmptyCollection() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryResults(null, "Set{3, 4}", "Set{}->union(Set{3, 4})");
 		//
 		ocl.assertQueryResults(null, "Set{3, 4}", "Set{3, 4}->union(Set{})");
 		ocl.assertQueryResults(null, "Bag{3, 4}", "Set{3, 4}->union(Bag{})");
