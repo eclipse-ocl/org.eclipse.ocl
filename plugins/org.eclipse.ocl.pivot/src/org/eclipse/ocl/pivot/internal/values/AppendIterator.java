@@ -20,27 +20,27 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
- * PrependIterator provides a lazy evaluation of the Collection::prepend operation.
+ * IncludingIterator provides a lazy evaluation of the Collection::including operation.
  *
  * @since 1.3
  */
-public class PrependIterator extends AbstractCollectionIterator
+public class AppendIterator extends AbstractCollectionIterator
 {
-	public static @NonNull CollectionValue prepend(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
-		return new PrependIterator(collectionTypeId, firstValue, secondValue);
+	public static @NonNull CollectionValue append(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+		return new AppendIterator(collectionTypeId, firstValue, secondValue);
 	}
 
-	protected final @Nullable Object prefix;
-	protected final @NonNull Iterator<@Nullable Object> suffix;
-	private @Nullable EqualsStrategy equalsStrategy = null;		// Non-null once iteration starts
-	private boolean hasNext = true;
-	private @Nullable Object next;
+	private enum NextIs { PREFIX, SUFFIX, END };
 
-	public PrependIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
+	protected final @NonNull Iterator<@Nullable Object> prefix;
+	protected final @Nullable Object suffix;
+	private @Nullable EqualsStrategy equalsStrategy = null;		// Non-null once iteration starts
+	private @NonNull NextIs nextIs = NextIs.PREFIX;
+
+	public AppendIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @Nullable Object secondValue) {
 		super(collectionTypeId);
-		this.prefix = secondValue;
-		this.suffix = firstValue.iterator();
-		this.next = prefix;
+		this.prefix = firstValue.iterator();
+		this.suffix = secondValue;
 	}
 
 	@Override
@@ -50,18 +50,16 @@ public class PrependIterator extends AbstractCollectionIterator
 
 	@Override
 	public boolean hasNext() {
-		if (!hasNext) {
-			EqualsStrategy equalsStrategy2 = equalsStrategy;
-			assert equalsStrategy2 != null;
-			while (suffix.hasNext()) {
-				next = suffix.next();
-				if (!equalsStrategy2.isEqual(next, suffix)) {
-					hasNext = true;
-					break;
-				}
+		if (nextIs == NextIs.PREFIX) {
+			if (prefix.hasNext()) {
+				return true;
 			}
+			nextIs = NextIs.SUFFIX;
 		}
-		return hasNext;
+		if (nextIs == NextIs.SUFFIX) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -69,20 +67,30 @@ public class PrependIterator extends AbstractCollectionIterator
 		EqualsStrategy equalsStrategy2 = equalsStrategy;
 		if (equalsStrategy2 == null) {
 			equalsStrategy2 = equalsStrategy = isUnique() ? TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false) : EqualsStrategy.NotEqualsStrategy.INSTANCE;
+			hasNext();
 		}
-		if (!hasNext) {
+		if (nextIs == NextIs.PREFIX) {
+			Object next = prefix.next();
+			while (equalsStrategy2.isEqual(next, suffix)) {
+				next = prefix.next();
+			}
+			return next;
+		}
+		else if (nextIs == NextIs.SUFFIX) {
+			nextIs = NextIs.END;
+			return suffix;
+		}
+		else {
 			throw new NoSuchElementException();
 		}
-		hasNext = false;
-		return next;
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append("Prepend{");
-		s.append(prefix instanceof String ? "'" + prefix + "'" : prefix);
+		s.append("Including{");
+		s.append(prefix);
 		s.append(",");
-		s.append(suffix);
+		s.append(suffix instanceof String ? "'" + suffix + "'" : suffix);
 		s.append("}");
 	}
 }

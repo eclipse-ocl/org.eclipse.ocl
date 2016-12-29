@@ -106,12 +106,12 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue append(@Nullable Object object) {
+	public @NonNull CollectionValue append(@Nullable Object object) {
 		return toInvalidValue();
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects) {
+	public @NonNull CollectionValue appendAll(@NonNull CollectionValue objects) {
 		return toInvalidValue();
 	}
 
@@ -592,12 +592,12 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue prepend(@Nullable Object object) {
+	public @NonNull CollectionValue prepend(@Nullable Object object) {
 		return toInvalidValue();
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue prependAll(@NonNull OrderedCollectionValue objects) {
+	public @NonNull CollectionValue prependAll(@NonNull CollectionValue objects) {
 		return toInvalidValue();
 	}
 

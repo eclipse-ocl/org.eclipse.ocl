@@ -52,7 +52,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 		super(typeId, boxedValues);
 	}
 
-	@Override
+	/*	@Override
 	public @NonNull OrderedSetValue append(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "append");
@@ -61,7 +61,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 		result.remove(object);  // appended object must be last
 		result.add(object);
 		return new SparseOrderedSetValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @Nullable Object first() {

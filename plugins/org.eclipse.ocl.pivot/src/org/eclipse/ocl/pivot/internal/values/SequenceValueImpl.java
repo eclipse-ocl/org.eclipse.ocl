@@ -57,12 +57,12 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		return new SparseSequenceValueImpl(getTypeId(), result);
 	} */
 
-	@Override
+	/*	@Override
 	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects) {
 		List<Object> result = new ArrayList<Object>(elements);
 		result.addAll(objects.getElements());
 		return new SparseSequenceValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull List<? extends Object> asList() {
@@ -168,12 +168,12 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		return new SparseSequenceValueImpl(getTypeId(), result);
 	} */
 
-	@Override
+	/*	@Override
 	public @NonNull SequenceValue prependAll(@NonNull OrderedCollectionValue objects) {
 		List<Object> result = new ArrayList<Object>(objects.getElements());
 		result.addAll(elements);
 		return new SparseSequenceValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull SequenceValue reverse() {

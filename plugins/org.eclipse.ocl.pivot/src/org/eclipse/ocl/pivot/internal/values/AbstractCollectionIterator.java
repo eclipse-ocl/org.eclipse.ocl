@@ -41,15 +41,6 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue append(@Nullable Object object) {
-		throw new UnsupportedOperationException();
-	}
-
-	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public @NonNull Collection<? extends Object> asCollection() {
 		throw new UnsupportedOperationException();
 	}
@@ -207,10 +198,6 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	}
 
 	public @NonNull UniqueCollectionValue minus(@NonNull UniqueCollectionValue set) {
-		throw new UnsupportedOperationException();
-	}
-
-	public @NonNull OrderedCollectionValue prependAll(@NonNull OrderedCollectionValue objects) {
 		throw new UnsupportedOperationException();
 	}
 

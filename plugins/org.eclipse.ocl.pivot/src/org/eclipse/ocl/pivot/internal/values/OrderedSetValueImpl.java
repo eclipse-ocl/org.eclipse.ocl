@@ -52,14 +52,14 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 		assert checkElementsAreUnique(this.elements);
 	}
 
-	@Override
+	/*	@Override
 	public @NonNull OrderedSetValue appendAll(@NonNull OrderedCollectionValue objects) {
 		OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
 		Collection<? extends Object> thoseElements = objects.getElements();
 		result.removeAll(thoseElements);  // appended objects must be last
 		result.addAll(thoseElements);
 		return new SparseOrderedSetValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
@@ -191,12 +191,12 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 		return new SparseOrderedSetValueImpl(getTypeId(), result);
 	}
 
-	@Override
+	/*	@Override
 	public @NonNull OrderedSetValue prependAll(@NonNull OrderedCollectionValue objects) {
 		OrderedSet<Object> result = new OrderedSetImpl<Object>(objects.getElements());
 		result.addAll(elements);
 		return new SparseOrderedSetValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull OrderedSetValue reverse() {

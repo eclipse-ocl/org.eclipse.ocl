@@ -240,7 +240,12 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	//	@Override
 	public @NonNull CollectionValue append(@Nullable Object object) {
-		return including(object);
+		return AppendIterator.append(getTypeId(), this, object);
+	}
+
+	//	@Override
+	public @NonNull CollectionValue appendAll(@NonNull CollectionValue values) {
+		return AppendAllIterator.appendAll(this, values);
 	}
 
 	@Override
@@ -684,8 +689,13 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	}
 
 	//	@Override
-	public @NonNull OrderedCollectionValue prepend(@Nullable Object value) {
+	public @NonNull CollectionValue prepend(@Nullable Object value) {
 		return PrependIterator.prepend(getTypeId(), this, value);
+	}
+
+	//	@Override
+	public @NonNull CollectionValue prependAll(@NonNull CollectionValue values) {
+		return PrependAllIterator.prependAll(this, values);
 	}
 
 	@Override

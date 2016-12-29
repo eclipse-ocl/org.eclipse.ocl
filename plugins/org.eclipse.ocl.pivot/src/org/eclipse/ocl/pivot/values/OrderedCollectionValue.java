@@ -34,7 +34,7 @@ public interface OrderedCollectionValue extends CollectionValue
 	/**
 	 * @generated NOT
 	 */
-	@NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects);
+	@NonNull /*Ordered*/CollectionValue appendAll(@NonNull /*Ordered*/CollectionValue objects);
 
 	/**
 	 * @generated NOT
@@ -64,12 +64,12 @@ public interface OrderedCollectionValue extends CollectionValue
 	/**
 	 * @generated NOT
 	 */
-	@NonNull OrderedCollectionValue prepend(@Nullable Object object);
+	@NonNull /*Ordered*/CollectionValue prepend(@Nullable Object object);
 
 	/**
 	 * @generated NOT
 	 */
-	@NonNull OrderedCollectionValue prependAll(@NonNull OrderedCollectionValue objects);
+	@NonNull /*Ordered*/CollectionValue prependAll(@NonNull /*Ordered*/CollectionValue objects);
 
 	/**
 	 * @generated NOT
