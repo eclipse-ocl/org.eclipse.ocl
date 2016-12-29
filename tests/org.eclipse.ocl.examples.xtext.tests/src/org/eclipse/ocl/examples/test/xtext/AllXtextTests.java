@@ -13,11 +13,14 @@ package org.eclipse.ocl.examples.test.xtext;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.tests.DelegatesTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateBooleanOperationsTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateClassifierOperationsTest;
@@ -44,10 +47,13 @@ import org.eclipse.ocl.examples.test.label.PluginLabelTests;
 import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
+import org.eclipse.ocl.pivot.internal.values.CollectionValueImpl;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestResult;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
@@ -74,7 +80,19 @@ extends TestCase {
 		if (testLogFile != null) {
 			PivotTestCase.createTestLog(new File(testLogFile));
 		}
-		TestSuite result = new TestSuite(testSuiteName);
+		TestSuite result = new TestSuite(testSuiteName) {
+
+			@Override
+			public void run(TestResult result) {
+				Map<@NonNull Class<? extends CollectionValue>, @NonNull Integer> collectionClass2count = CollectionValueImpl.collectionClass2count = new HashMap<>();
+				super.run(result);
+				for (@NonNull Class<? extends CollectionValue> collectionClass : collectionClass2count.keySet()) {
+					Integer count = collectionClass2count.get(collectionClass);
+					System.out.println(collectionClass.getName() + " : " + count);
+				}
+			}
+			
+		};
 		result.addTestSuite(MonikerTests.class);
 		result.addTestSuite(PivotTests.class);
 		result.addTestSuite(OCLstdlibTests.class);
@@ -141,7 +159,6 @@ extends TestCase {
 
 	public Object run(Object args)
 			throws Exception {
-
 		TestRunner.run(suite());
 		PivotTestCase.closeTestLog();
 		return Arrays

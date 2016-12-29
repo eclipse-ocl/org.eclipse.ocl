@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -209,10 +210,22 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	protected final @NonNull Collection<? extends Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
 	private int hashCode = 0;
 	
+	/**
+	 * @since 1.3
+	 */
+	public static @Nullable Map<@NonNull Class<? extends CollectionValue>, @NonNull Integer> collectionClass2count = null;
+	
 	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> values) {
 		this.typeId = typeId;
 		this.elements = values;
 		assert checkElementsAreValues(values);
+		Map<Class<? extends CollectionValue>, Integer> collectionClass2count2 = collectionClass2count;
+		if (collectionClass2count2 != null) {
+			Class<? extends @NonNull CollectionValueImpl> collectionClass = getClass();
+			Integer count = collectionClass2count2.get(collectionClass);
+			count = count != null ? count+1 : 1;
+			collectionClass2count2.put(collectionClass, count);
+		}
 	}
 	
 	protected boolean checkElementsAreUnique(Iterable<? extends Object> elements) {
