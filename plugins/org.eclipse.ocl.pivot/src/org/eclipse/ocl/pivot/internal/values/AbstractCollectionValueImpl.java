@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.values;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -465,244 +464,18 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	@Override
 	public @NonNull CollectionValue excluding(@Nullable Object value) {
 		return ExcludingIterator.excluding(this, value);
-		/*		Iterable<? extends Object> elements = iterable();
-		if (isOrdered()) {
-			if (isUnique()) {
-				OrderedSet<Object> result = new OrderedSetImpl<Object>();
-				if (value == null) {
-					for (Object element : elements) {
-						if (element != null) {
-							result.add(element);
-						}
-					}
-				}
-				else {
-					for (Object element : elements) {
-						if (!value.equals(element)) {
-							result.add(element);
-						}
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SparseOrderedSetValueImpl(getTypeId(), result);
-				}
-				else {
-					return this;
-				}
-			}
-			else {
-				List<Object> result = new ArrayList<Object>();
-				if (value == null) {
-					for (Object element : elements) {
-						if (element != null) {
-							result.add(element);
-						}
-					}
-				}
-				else {
-					for (Object element : elements) {
-						if (!value.equals(element)) {
-							result.add(element);
-						}
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SparseSequenceValueImpl(getTypeId(), result);
-				}
-				else {
-					return this;
-				}
-			}
-		}
-		else {
-			if (isUnique()) {
-				Set<Object> result = new HashSet<Object>();
-				if (value == null) {
-					for (Object element : elements) {
-						if (element != null) {
-							result.add(element);
-						}
-					}
-				}
-				else {
-					for (Object element : elements) {
-						if (!value.equals(element)) {
-							result.add(element);
-						}
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SetValueImpl(getTypeId(), result);
-				}
-				else {
-					return this;
-				}
-			}
-			else {
-				Bag<Object> result = new BagImpl<Object>();
-				if (value == null) {
-					for (Object element : elements) {
-						if (element != null) {
-							result.add(element);
-						}
-					}
-				}
-				else {
-					for (Object element : elements) {
-						if (!value.equals(element)) {
-							result.add(element);
-						}
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new BagValueImpl(getTypeId(), result);
-				}
-				else {
-					return this;
-				}
-			}
-		} */
 	}
 
 	@Override
 	public @NonNull CollectionValue excludingAll(@NonNull CollectionValue values) {
 		return ExcludingAllIterator.excludingAll(this, values);
-		/*		Iterable<? extends Object> elements = iterable();
-		if (isOrdered()) {
-			if (isUnique()) {
-				OrderedSet<Object> result = new OrderedSetImpl<Object>();
-				for (Object element : elements) {
-					boolean reject = false;
-					if (element == null) {
-						for (Object value : values) {
-							if (value == null) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					else {
-						for (Object value : values) {
-							if ((value != null) && value.equals(element)) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					if (!reject) {
-						result.add(element);
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SparseOrderedSetValueImpl(getTypeId(), result);
-				}
-				else {
-					return this;
-				}
-			}
-			else {
-				List<Object> result = new ArrayList<Object>();
-				for (Object element : elements) {
-					boolean reject = false;
-					if (element == null) {
-						for (Object value : values) {
-							if (value == null) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					else {
-						for (Object value : values) {
-							if ((value != null) && value.equals(element)) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					if (!reject) {
-						result.add(element);
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SparseSequenceValueImpl(getTypeId(), result);
-				}
-				else {
-					return this;
-				}
-			}
-		}
-		else {
-			if (isUnique()) {
-				Set<Object> result = new HashSet<Object>();
-				for (Object element : elements) {
-					boolean reject = false;
-					if (element == null) {
-						for (Object value : values) {
-							if (value == null) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					else {
-						for (Object value : values) {
-							if ((value != null) && value.equals(element)) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					if (!reject) {
-						result.add(element);
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new SetValueImpl(getTypeId(), result);
-				}
-				else {
-					return this;
-				}
-			}
-			else {
-				Bag<Object> result = new BagImpl<Object>();
-				for (Object element : elements) {
-					boolean reject = false;
-					if (element == null) {
-						for (Object value : values) {
-							if (value == null) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					else {
-						for (Object value : values) {
-							if ((value != null) && value.equals(element)) {
-								reject = true;
-								break;
-							}
-						}
-					}
-					if (!reject) {
-						result.add(element);
-					}
-				}
-				if (result.size() < Iterables.size(elements)) {
-					return new BagValueImpl(getTypeId(), result);
-				}
-				else {
-					return this;
-				}
-			}
-		} */
 	}
 
 	/**
 	 * Returns true if any element flattened.
 	 * @throws InvalidValueException
 	 */
-	@Override
+	@Override @Deprecated
 	public boolean flatten(@NonNull Collection<Object> flattenedElements) {
 		boolean flattened = false;
 		for (Object element : iterable()) {
@@ -720,67 +493,12 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue flatten() {
-		if (isOrdered()) {
-			if (isUnique()) {
-				OrderedSet<Object> flattened = new OrderedSetImpl<Object>();
-				if (flatten(flattened)) {
-					return new SparseOrderedSetValueImpl(getTypeId(), flattened);
-				}
-				else {
-					return this;
-				}
-			}
-			else {
-				List<Object> flattened = new ArrayList<Object>();
-				if (flatten(flattened)) {
-					return new SparseSequenceValueImpl(getTypeId(), flattened);
-				}
-				else {
-					return this;
-				}
-			}
-		}
-		else {
-			if (isUnique()) {
-				Set<Object> flattened = new HashSet<Object>();
-				if (flatten(flattened)) {
-					return new SetValueImpl(getTypeId(), flattened);
-				}
-				else {
-					return this;
-				}
-			}
-			else {
-				Bag<Object> flattened = new BagImpl<Object>();
-				if (flatten(flattened)) {
-					return new BagValueImpl(getTypeId(), flattened);
-				}
-				else {
-					return this;
-				}
-			}
-		}
+		return FlattenIterator.flatten(this);
 	}
 
 	public @NonNull CollectionTypeId getBagTypeId() {
 		return TypeId.BAG.getSpecializedId(getElementTypeId());
 	}
-
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.COLLECTION.getCollectedTypeId(getElementType().getTypeId());
-	//	}
-
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		CollectionTypeId typeId2 = typeId;
-	//		if (typeId2 == null) {
-	//			typeId2 = getCollectionTypeId().getCollectedTypeId(getElementTypeId());
-	//		}
-	//		return typeId2;
-	//	}
-
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.COLLECTION;
-	//	}
 
 	@Override
 	public @NonNull TypeId getElementTypeId() {
@@ -867,77 +585,11 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	@Override
 	public @NonNull CollectionValue including(@Nullable Object value) {
 		return IncludingIterator.including(getTypeId(), this, value);
-		/*		Iterable<? extends Object> elements = iterable();
-		if (isOrdered()) {
-			if (isUnique()) {
-				if (value instanceof InvalidValueException) {
-					throw new InvalidValueException(PivotMessages.InvalidSource, "including");
-				}
-				OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
-				result.add(value);
-				return new SparseOrderedSetValueImpl(getTypeId(), result);
-			}
-			else {
-				if (value instanceof InvalidValueException) {
-					throw new InvalidValueException(PivotMessages.InvalidSource, "including");
-				}
-				List<Object> result = Lists.newArrayList(elements);
-				result.add(value);
-				return new SparseSequenceValueImpl(getTypeId(), result);
-			}
-		}
-		else {
-			if (isUnique()) {
-				assert !(value instanceof InvalidValueException);
-				Set<Object> result = Sets.newHashSet(elements);
-				result.add(value);
-				return new SetValueImpl(getTypeId(), result);
-			}
-			else {
-				assert !(value instanceof InvalidValueException);
-				Bag<Object> result = new BagImpl<Object>(elements);
-				result.add(value);
-				return new BagValueImpl(getTypeId(), result);
-			}
-		} */
 	}
 
 	@Override
 	public @NonNull CollectionValue includingAll(@NonNull CollectionValue values) {
 		return IncludingAllIterator.includingAll(this, values);
-		/*		Iterable<? extends Object> elements = iterable();
-		if (isOrdered()) {
-			if (isUnique()) {
-				OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
-				for (Object value : values) {
-					result.add(value);
-				}
-				return new SparseOrderedSetValueImpl(getTypeId(), result);
-			}
-			else {
-				List<Object> result = Lists.newArrayList(elements);
-				for (Object value : values) {
-					result.add(value);
-				}
-				return new SparseSequenceValueImpl(getTypeId(), result);
-			}
-		}
-		else {
-			if (isUnique()) {
-				Set<Object> result = Sets.newHashSet(elements);
-				for (Object value : values) {
-					result.add(value);
-				}
-				return new SetValueImpl(getTypeId(), result);
-			}
-			else {
-				Bag<Object> result = new BagImpl<Object>(elements);
-				for (Object value : values) {
-					result.add(value);
-				}
-				return new BagValueImpl(getTypeId(), result);
-			}
-		} */
 	}
 
 	@Override

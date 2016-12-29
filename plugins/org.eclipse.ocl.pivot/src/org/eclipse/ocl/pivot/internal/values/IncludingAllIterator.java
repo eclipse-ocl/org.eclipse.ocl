@@ -27,6 +27,7 @@ public class IncludingAllIterator extends AbstractCollectionIterator
 	public static @NonNull CollectionValue includingAll(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 		return new IncludingAllIterator(firstValue, secondValue);
 	}
+
 	private enum NextIs { PREFIX, SUFFIX, END };
 
 	private final @NonNull Iterator<@Nullable Object> prefix;

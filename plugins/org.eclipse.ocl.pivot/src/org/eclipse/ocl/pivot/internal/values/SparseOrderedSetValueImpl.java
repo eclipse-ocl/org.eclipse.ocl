@@ -72,21 +72,6 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
-	public @NonNull OrderedSetValue flatten() {
-		return (OrderedSetValue)super.flatten();
-	}
-
-	//	@Override
-	//	protected @NonNull OrderedSet<? extends Object> getElements() {
-	//		return (OrderedSet<? extends Object>) elements;
-	//	}
-
-	@Override
-	public @NonNull OrderedSetValue including(@Nullable Object value) {
-		return (OrderedSetValue)super.including(value);
-	}
-
-	@Override
 	public @Nullable Object last() {
 		if (elements.size() <= 0) {
 			throw new InvalidValueException(PivotMessages.EmptyCollection, TypeId.ORDERED_SET_NAME, "last");

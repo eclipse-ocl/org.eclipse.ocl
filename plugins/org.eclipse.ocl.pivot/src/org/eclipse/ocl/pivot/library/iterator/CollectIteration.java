@@ -34,7 +34,7 @@ public class CollectIteration extends AbstractIteration
 	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -44,8 +44,8 @@ public class CollectIteration extends AbstractIteration
 	}
 
 	@Override
-    protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
-		Object bodyVal = iterationManager.evaluateBody();		
+	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
+		Object bodyVal = iterationManager.evaluateBody();
 		CollectionValue.Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
 		assert accumulatorValue != null;
 		if (bodyVal == null) {
@@ -53,15 +53,15 @@ public class CollectIteration extends AbstractIteration
 		}
 		else if (bodyVal instanceof CollectionValue) {
 			CollectionValue bodyColl = (CollectionValue) bodyVal;
-//			try {
-				for (Object value : bodyColl.flatten().iterable()) {
-					if (value != null) {
-						accumulatorValue.add(value);
-					}
+			//			try {
+			for (Object value : bodyColl.flatten()) {
+				if (value != null) {
+					accumulatorValue.add(value);
 				}
-//			} catch (InvalidValueException e) {
-//				iterationManager.throwInvalidEvaluation(e);
-//			}
+			}
+			//			} catch (InvalidValueException e) {
+			//				iterationManager.throwInvalidEvaluation(e);
+			//			}
 		}
 		else
 			accumulatorValue.add(bodyVal);

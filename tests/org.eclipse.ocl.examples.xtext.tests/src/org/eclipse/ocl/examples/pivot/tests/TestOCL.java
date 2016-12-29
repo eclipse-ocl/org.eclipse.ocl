@@ -591,7 +591,8 @@ public class TestOCL extends OCLInternal
 	public Object assertResultContainsAll(Object context, @NonNull CollectionValue expectedResult, @NonNull String expression) {
 		try {
 			Object result = evaluate(null, context, expression);
-			TestCase.assertTrue(expectedResult.getClass().isInstance(result));
+			TestCase.assertSame(expectedResult.isOrdered(), ((CollectionValue) result).isOrdered());
+			TestCase.assertSame(expectedResult.isUnique(), ((CollectionValue) result).isUnique());
 			TestCase.assertSame(expectedResult.intSize(), ((CollectionValue) result).intSize());
 			Object actualResult = ((CollectionValue) result).includesAll(expectedResult);
 			TestCase.assertTrue("Expected " + result + " to contain " + expectedResult, actualResult == ValueUtil.TRUE_VALUE);

@@ -468,6 +468,28 @@ public abstract class ValueUtil
 		return hashCode;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	public int computeCollectionHashCode(@NonNull Map<@Nullable Object, @NonNull ? extends Number> mapOfElement2elementCount) {
+		long hash = 0x7777777777777777L;
+		for (Object element : mapOfElement2elementCount.keySet()) {
+			if (element != null) {
+				Number count = mapOfElement2elementCount.get(element);
+				assert count != null;
+				hash += element.hashCode() * count.intValue();
+			}
+		}
+		int hashCode = (int) hash;
+		if (hashCode == 0) {
+			hashCode = (int) (hash >> 32);
+			if (hashCode == 0) {
+				hashCode = 0x98765432;
+			}
+		}
+		return hashCode;
+	}
+
 	public static BagValue.@NonNull Accumulator createBagAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new BagValueImpl.Accumulator(collectedId);
 	}

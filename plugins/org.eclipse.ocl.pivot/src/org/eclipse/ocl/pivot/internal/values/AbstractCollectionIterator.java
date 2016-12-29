@@ -147,7 +147,14 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 		if (hashCode == 0) {
 			synchronized (this) {
 				if (hashCode == 0) {
-					hashCode = computeCollectionHashCode(isOrdered(), isUnique(), iterable().getListOfElements());
+					boolean isOrdered = isOrdered();
+					boolean isUnique = isUnique();
+					if (isOrdered || isUnique) {
+						hashCode = computeCollectionHashCode(isOrdered, isUnique, iterable().getListOfElements());
+					}
+					else {
+						hashCode = computeCollectionHashCode(iterable().getMapOfElement2elementCount());
+					}
 				}
 			}
 		}
