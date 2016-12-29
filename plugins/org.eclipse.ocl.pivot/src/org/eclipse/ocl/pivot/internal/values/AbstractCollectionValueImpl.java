@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -44,7 +43,6 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 import com.google.common.collect.Iterables;
@@ -747,7 +745,8 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue union(@NonNull CollectionValue that) {
-		assert !this.isUndefined() && !that.isUndefined();
+		return includingAll(that);
+		/*		assert !this.isUndefined() && !that.isUndefined();
 		Collection<? extends Object> theseElements = this.asCollection();
 		Collection<? extends Object> thoseElements = that.asCollection();
 		if (this instanceof UniqueCollectionValue && that instanceof UniqueCollectionValue) {
@@ -776,6 +775,6 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 				result.addAll(thoseElements);
 				return new BagValueImpl(getBagTypeId(), result);
 			}
-		}
+		} */
 	}
 }
