@@ -238,6 +238,11 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		this.collectionFactory = AbstractCollectionFactory.getCollectionFactory(typeId);
 	}
 
+	//	@Override
+	public @NonNull CollectionValue append(@Nullable Object object) {
+		return including(object);
+	}
+
 	@Override
 	public @NonNull BagValue asBagValue() {
 		return new BagValueImpl(getBagTypeId(), new BagImpl<Object>(iterable()));
@@ -676,6 +681,11 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		}
 		@SuppressWarnings({"unchecked"}) @NonNull Iterator<@Nullable Object> result = (Iterator<@Nullable Object>)elements.iterator();
 		return result;
+	}
+
+	//	@Override
+	public @NonNull OrderedCollectionValue prepend(@Nullable Object value) {
+		return PrependIterator.prepend(getTypeId(), this, value);
 	}
 
 	@Override

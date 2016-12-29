@@ -47,7 +47,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		super(typeId, values);
 	}
 
-	@Override
+	/*	@Override
 	public @NonNull OrderedCollectionValue append(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "append");
@@ -55,7 +55,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		List<Object> result = new ArrayList<Object>(elements);
 		result.add(object);
 		return new SparseSequenceValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects) {
@@ -157,7 +157,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		return getElements().get(size-1);
 	}
 
-	@Override
+	/*	@Override
 	public @NonNull SequenceValue prepend(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "prepend");
@@ -166,7 +166,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		result.add(object);
 		result.addAll(elements);
 		return new SparseSequenceValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull SequenceValue prependAll(@NonNull OrderedCollectionValue objects) {

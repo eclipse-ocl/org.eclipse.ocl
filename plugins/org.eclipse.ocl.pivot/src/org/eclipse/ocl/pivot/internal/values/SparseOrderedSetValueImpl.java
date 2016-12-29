@@ -83,7 +83,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 		return result;
 	}
 
-	@Override
+	/*	@Override
 	public @NonNull OrderedSetValue prepend(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "prepend");
@@ -92,7 +92,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 		result.add(object);
 		result.addAll(elements);
 		return new SparseOrderedSetValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {

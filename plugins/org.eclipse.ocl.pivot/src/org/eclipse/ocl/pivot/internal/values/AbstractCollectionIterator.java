@@ -34,11 +34,13 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 {
 	private @Nullable LazyIterable<@Nullable Object> iterable = null;
 	private int hashCode = 0;
+	private boolean usedAsIterator = false;
 
 	protected AbstractCollectionIterator(@NonNull CollectionTypeId typeId) {
 		super(typeId);
 	}
 
+	@Override
 	public @NonNull OrderedCollectionValue append(@Nullable Object object) {
 		throw new UnsupportedOperationException();
 	}
@@ -188,7 +190,16 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 
 	@Override
 	public @NonNull Iterator<@Nullable Object> iterator() {
-		return iterable != null ? iterable.iterator() : this;
+		if (usedAsIterator) {
+			throw new IllegalStateException("Must invoke iterable() before first of multiple iterator() calls.");
+		}
+		else if (iterable != null) {
+			return iterable.iterator();
+		}
+		else {
+			usedAsIterator = true;
+			return this;
+		}
 	}
 
 	public @Nullable Object last() {
@@ -196,10 +207,6 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	}
 
 	public @NonNull UniqueCollectionValue minus(@NonNull UniqueCollectionValue set) {
-		throw new UnsupportedOperationException();
-	}
-
-	public @NonNull OrderedCollectionValue prepend(@Nullable Object object) {
 		throw new UnsupportedOperationException();
 	}
 
