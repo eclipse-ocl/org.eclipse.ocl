@@ -20,7 +20,7 @@ public class ArrayIterable<T> implements IndexableIterable<T>
 	protected class Iterator implements java.util.Iterator<T>
 	{
 		private int index = firstIndex;
-		
+
 		@Override
 		public boolean hasNext() {
 			return index < lastIndex;
@@ -40,13 +40,13 @@ public class ArrayIterable<T> implements IndexableIterable<T>
 	private final T[] array;
 	private final int firstIndex;
 	private final int lastIndex;
-	
+
 	public ArrayIterable(T[] array) {
 		this.array = array;
 		this.firstIndex = 0;
 		this.lastIndex = array.length;
 	}
-	
+
 	public ArrayIterable(T[] array, int firstIndex, int lastIndex) {
 		this.array = array;
 		this.firstIndex = firstIndex;
@@ -56,10 +56,10 @@ public class ArrayIterable<T> implements IndexableIterable<T>
 	@Override
 	public @NonNull T get(int index) {
 		return ClassUtil.nonNullState(array[firstIndex + index]);
-	}		
-	
+	}
+
 	@Override
-	public java.util.Iterator<T> iterator() {
+	public java.util.@NonNull Iterator<T> iterator() {
 		return new Iterator();
 	}
 

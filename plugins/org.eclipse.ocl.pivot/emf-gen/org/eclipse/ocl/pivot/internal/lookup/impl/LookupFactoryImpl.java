@@ -15,7 +15,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.ocl.pivot.internal.lookup.*;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.lookup.LookupEnvironment;
 import org.eclipse.ocl.pivot.internal.lookup.LookupFactory;
 import org.eclipse.ocl.pivot.internal.lookup.LookupPackage;
 
@@ -61,7 +62,7 @@ public class LookupFactoryImpl extends EFactoryImpl implements LookupFactory {
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case LookupPackage.LOOKUP_ENVIRONMENT: return createLookupEnvironment();
 			default:

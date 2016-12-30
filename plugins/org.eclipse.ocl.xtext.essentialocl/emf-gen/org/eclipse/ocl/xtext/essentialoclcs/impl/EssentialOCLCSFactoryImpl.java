@@ -17,7 +17,48 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.essentialoclcs.*;
+import org.eclipse.ocl.xtext.essentialoclcs.BooleanLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.CollectionLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.CollectionLiteralPartCS;
+import org.eclipse.ocl.xtext.essentialoclcs.CollectionPatternCS;
+import org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS;
+import org.eclipse.ocl.xtext.essentialoclcs.ContextCS;
+import org.eclipse.ocl.xtext.essentialoclcs.CurlyBracketedClauseCS;
+import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSFactory;
+import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
+import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.ExpSpecificationCS;
+import org.eclipse.ocl.xtext.essentialoclcs.IfExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.IfThenExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.InfixExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.InvalidLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.LambdaLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.LetExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.LetVariableCS;
+import org.eclipse.ocl.xtext.essentialoclcs.LiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.MapLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.MapLiteralPartCS;
+import org.eclipse.ocl.xtext.essentialoclcs.MapTypeCS;
+import org.eclipse.ocl.xtext.essentialoclcs.NameExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS;
+import org.eclipse.ocl.xtext.essentialoclcs.NavigationRole;
+import org.eclipse.ocl.xtext.essentialoclcs.NestedExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.NullLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.NumberLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.PatternExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.PrefixExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.PrimitiveLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.RoundBracketedClauseCS;
+import org.eclipse.ocl.xtext.essentialoclcs.SelfExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.ShadowPartCS;
+import org.eclipse.ocl.xtext.essentialoclcs.SquareBracketedClauseCS;
+import org.eclipse.ocl.xtext.essentialoclcs.StringLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.TupleLiteralPartCS;
+import org.eclipse.ocl.xtext.essentialoclcs.TypeLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.UnlimitedNaturalLiteralExpCS;
+import org.eclipse.ocl.xtext.essentialoclcs.VariableCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,8 +67,8 @@ import org.eclipse.ocl.xtext.essentialoclcs.*;
  * @generated
  */
 public class EssentialOCLCSFactoryImpl
-		extends EFactoryImpl
-		implements EssentialOCLCSFactory {
+extends EFactoryImpl
+implements EssentialOCLCSFactory {
 
 	/**
 	 * Creates the default factory implementation.
@@ -67,7 +108,7 @@ public class EssentialOCLCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
 			case EssentialOCLCSPackage.BOOLEAN_LITERAL_EXP_CS: return createBooleanLiteralExpCS();

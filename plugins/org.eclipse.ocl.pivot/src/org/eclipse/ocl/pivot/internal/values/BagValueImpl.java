@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
@@ -85,6 +86,14 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	@Override
 	public @NonNull String getKind() {
 		return TypeId.BAG_NAME;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	protected @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+		return ((BagImpl<? extends Object>) elements).getMap();
 	}
 
 	@Override

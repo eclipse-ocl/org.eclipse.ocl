@@ -40,17 +40,17 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	 */
 	private static class BagIterator<E> implements Iterator<E>
 	{
-		private final @NonNull Map<E, @NonNull ElementCounter> map;
+		private final @NonNull Map<E, @NonNull ElementCount> map;
 		private final @NonNull Iterator<E> objectIterator;
 		private E currentObject;
 		private int residualCount;
 
-		private BagIterator(@NonNull Map<E, @NonNull ElementCounter> map, @NonNull Iterator<E> objectIterator) {
+		private BagIterator(@NonNull Map<E, @NonNull ElementCount> map, @NonNull Iterator<E> objectIterator) {
 			this.map = map;
 			this.objectIterator = objectIterator;
 			assert objectIterator.hasNext();
 			currentObject = objectIterator.next();
-			ElementCounter count = map.get(currentObject);
+			ElementCount count = map.get(currentObject);
 			assert count != null;
 			residualCount = count.intValue();
 		}
@@ -71,7 +71,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 			if (objectIterator.hasNext()) {
 				E savedObject = currentObject;
 				currentObject = objectIterator.next();
-				ElementCounter count = map.get(currentObject);
+				ElementCount count = map.get(currentObject);
 				assert count != null;
 				residualCount = count.intValue();
 				return savedObject;
@@ -88,67 +88,12 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 		}
 	}
 
-	/**
-	 * ElementCounter is used as the count of a Bag element. It avoids thrashing Integer objects as counts evolve.
-	 */
-	private static class ElementCounter extends Number
-	{
-		private static final long serialVersionUID = -4943324197108585350L;
-
-		private int value;
-
-		public ElementCounter(int value) {
-			this.value = value;
-		}
-
-		@Override
-		public double doubleValue() {
-			return value;
-		}
-
-		@Override
-		public boolean equals(Object thatElement) {
-			if (thatElement == this) {
-				return true;
-			}
-			if (!(thatElement instanceof Number)) {
-				return false;
-			}
-			return value == ((Number)thatElement).intValue();
-		}
-
-		@Override
-		public float floatValue() {
-			return value;
-		}
-
-		@Override
-		public int hashCode() {
-			return value;
-		}
-
-		@Override
-		public int intValue() {
-			return value;
-		}
-
-		@Override
-		public long longValue() {
-			return value;
-		}
-
-		@Override
-		public String toString() {
-			return Integer.toString(value);
-		}
-	}
-
 	@SuppressWarnings("unchecked")
 	public static <E> Bag<E> emptyBag() {
 		return (Bag<E>) ValueUtil.EMPTY_BAG;
 	}
 
-	private final @NonNull Map<E, @NonNull ElementCounter> map = new HashMap<>();
+	private final @NonNull Map<E, @NonNull ElementCount> map = new HashMap<>();
 	private int size = 0;
 	private @Nullable Integer hashCode = null;
 
@@ -156,7 +101,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	 * The need for put-after-get is avoided by always putting. A previous value therefore goes stale and is
 	 * maintinaed for re-use s the spareCounter.
 	 */
-	private @Nullable ElementCounter spareCounter = null;
+	private @Nullable ElementCount spareCounter = null;
 
 	public BagImpl() {}
 
@@ -186,15 +131,15 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 
 	@Override
 	public synchronized boolean add(E anElement) {
-		ElementCounter newCounter = spareCounter;
+		ElementCount newCounter = spareCounter;
 		if (newCounter == null) {
-			newCounter = new ElementCounter(1);
+			newCounter = new ElementCount(1);
 		}
 		else {
 			spareCounter = null;
 			newCounter.value = 1;
 		}
-		ElementCounter oldCounter = map.put(anElement, newCounter);
+		ElementCount oldCounter = map.put(anElement, newCounter);
 		if (oldCounter != null) {
 			newCounter.value += oldCounter.value;
 			spareCounter = oldCounter;;
@@ -218,7 +163,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 
 	@Override
 	public int count(Object anElement) {
-		ElementCounter count = map.get(anElement);
+		ElementCount count = map.get(anElement);
 		return count != null ? count.value : 0;
 	}
 
@@ -240,7 +185,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 		}
 		Map<?, ? extends Number> thatMap = thatBag.getMap();
 		for (Object thisObject : map.keySet()) {
-			ElementCounter thisCount = map.get(thisObject);
+			ElementCount thisCount = map.get(thisObject);
 			assert thisCount !=  null;
 			Number thatCount = thatMap.get(thisObject);
 			if ((thatCount == null) || (thatCount.intValue() != thisCount.intValue()))
@@ -253,7 +198,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	 * @since 1.3
 	 */
 	@Override
-	public @NonNull Map<E, ? extends Number> getMap() {
+	public @NonNull Map<E, @NonNull ? extends Number> getMap() {
 		return map;
 	}
 
@@ -285,7 +230,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	 */
 	public void put(E anElement, int count) {
 		assert count > 0;
-		ElementCounter oldCount = map.put(anElement, new ElementCounter(count));
+		ElementCount oldCount = map.put(anElement, new ElementCount(count));
 		assert oldCount == null;
 		size += count;
 		hashCode = null;
@@ -296,7 +241,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	 */
 	@Override
 	public boolean remove(Object anElement) {
-		ElementCounter count = map.remove(anElement);
+		ElementCount count = map.remove(anElement);
 		if (count == null) {
 			return false;
 		}

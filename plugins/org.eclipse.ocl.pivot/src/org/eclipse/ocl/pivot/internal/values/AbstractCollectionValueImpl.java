@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -60,7 +59,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	 * Optimized iterator over an Array for use in OCL contents where the array is known to be stable
 	 * and any call to next() is guarded by hasNext().
 	 */
-	private static class ArrayIterator<T> implements Iterator<T>
+	private static class ArrayIterator<T> implements BagIterator<T>
 	{
 		protected final T @NonNull [] elements;
 		protected final int size;
@@ -84,6 +83,14 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		}
 
 		/**
+		 * Returns 1 if this iterator contains more elements.
+		 */
+		@Override
+		public int hasNextCount() {
+			return index < size ? 1 : 0;
+		}
+
+		/**
 		 * Returns the next element of this iterator.
 		 */
 		@Override
@@ -101,7 +108,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
 	 * and any call to next() is guarded by hasNext().
 	 */
-	private static class ListIterator<T> implements Iterator<T>
+	private static class ListIterator<T> implements BagIterator<T>
 	{
 		protected final @NonNull List<T> elements;
 		protected final int size;
@@ -122,6 +129,14 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		@Override
 		public boolean hasNext() {
 			return index < size;
+		}
+
+		/**
+		 * Returns 1 if this iterator contains more elements.
+		 */
+		@Override
+		public int hasNextCount() {
+			return index < size ? 1 : 0;
 		}
 
 		/**
@@ -149,7 +164,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	/**
 	 * Optimized iterator over an empty Collection.
 	 */
-	private static class NullIterator implements Iterator<@Nullable Object>
+	private static class NullIterator implements BagIterator<@Nullable Object>
 	{
 		/**
 		 * Returns new array iterator over the given object array
@@ -162,6 +177,14 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		@Override
 		public boolean hasNext() {
 			return false;
+		}
+
+		/**
+		 * Returns 1 if this iterator contains more elements.
+		 */
+		@Override
+		public int hasNextCount() {
+			return 0;
 		}
 
 		/**
@@ -231,6 +254,56 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	}
 
 	/**
+	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
+	 * and any call to next() is guarded by hasNext().
+	 */
+	public static class WrappedBagIterator<T> implements BagIterator<T>
+	{
+		protected final @NonNull Iterator<? extends T> iterator;
+
+		/**
+		 * Returns new array iterator over the given object array
+		 */
+		public WrappedBagIterator(@NonNull Iterator<? extends T> iterator) {
+			this.iterator = iterator;
+		}
+
+		/**
+		 * Returns true if this iterator contains more elements.
+		 */
+		@Override
+		public boolean hasNext() {
+			return iterator.hasNext();
+		}
+
+		/**
+		 * Returns 1 if this iterator contains more elements.
+		 */
+		@Override
+		public int hasNextCount() {
+			return iterator.hasNext() ? 1 : 0;
+		}
+
+		/**
+		 * Returns the next element of this iterator.
+		 */
+		@Override
+		public T next() {
+			return iterator.next();
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String toString() {
+			return iterator.toString();
+		}
+	}
+
+	/**
 	 * A simple public static method that may be used to force class initialization.
 	 */
 	public static void initStatics() {}
@@ -262,11 +335,14 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull BagValue asBagValue() {
-		return new BagValueImpl(getBagTypeId(), new BagImpl<Object>(iterable()));
+		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsBagIterator(this);
+		//		return new BagValueImpl(getBagTypeId(), new BagImpl<Object>(iterable()));
 	}
 
 	@Override
 	public @NonNull CollectionValue asCollectionValue() {
+		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return this;
 	}
 
@@ -288,32 +364,37 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	}
 
 	@Override
-	public @NonNull OrderedSetValue asOrderedSetValue() {
-		OrderedSet<Object> uniqueElements = new OrderedSetImpl<Object>();
-		for (Object element : iterable()) {
-			uniqueElements.add(element);
-		}
-		return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), uniqueElements);
-	}
-
-	@Override
 	@SuppressWarnings("unchecked")			// FIXME check element types
 	public @Nullable <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass) {
 		return (List<T>) asEcoreObject(idResolver, instanceClass);
 	}
 
 	@Override
+	public @NonNull OrderedSetValue asOrderedSetValue() {
+		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsOrderedSetIterator(this);
+		//		OrderedSet<Object> uniqueElements = new OrderedSetImpl<Object>();
+		//		for (Object element : iterable()) {
+		//			uniqueElements.add(element);
+		//		}
+		//		return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), uniqueElements);
+	}
+
+	@Override
 	public @NonNull SequenceValue asSequenceValue() {
-		return new SparseSequenceValueImpl(getSequenceTypeId(), Lists.newArrayList(iterable()));
+		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsSequenceIterator(this);
 	}
 
 	@Override
 	public @NonNull SetValue asSetValue() {
-		Set<Object> uniqueElements = new HashSet<Object>();
-		for (Object element : iterable()) {
-			uniqueElements.add(element);
-		}
-		return new SetValueImpl(getSetTypeId(), uniqueElements);
+		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsSetIterator(this);
+		//		Set<Object> uniqueElements = new HashSet<Object>();
+		//		for (Object element : iterable()) {
+		//			uniqueElements.add(element);
+		//		}
+		//		return new SetValueImpl(getSetTypeId(), uniqueElements);
 	}
 
 	protected boolean checkElementsAreValues(@NonNull Iterable<? extends Object> elements) {
@@ -370,11 +451,11 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		if (isUnique != that.isUnique()) {
 			return false;
 		}
-		Collection<? extends Object> theseElements = this.getElements();
-		Collection<? extends Object> thoseElements = that.getElements();
 		if (isOrdered) {
 			if (isUnique) {
 				// This is probably a bug fix on LinkedHashSet that should consider ordering for equals
+				Collection<? extends Object> theseElements = this.getElements();
+				Collection<? extends Object> thoseElements = that.getElements();
 				Iterator<? extends Object> thisElement = theseElements.iterator();
 				Iterator<? extends Object> thatElement = thoseElements.iterator();
 				while (thisElement.hasNext() && thatElement.hasNext()) {
@@ -394,6 +475,8 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 				return !thisElement.hasNext() && !thatElement.hasNext();
 			}
 			else {
+				Collection<? extends Object> theseElements = this.getElements();
+				Collection<? extends Object> thoseElements = that.getElements();
 				Iterator<? extends Object> thisElement = theseElements.iterator();
 				Iterator<? extends Object> thatElement = thoseElements.iterator();
 				while (thisElement.hasNext() && thatElement.hasNext()) {
@@ -408,6 +491,8 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		}
 		else {
 			if (isUnique) {
+				Collection<? extends Object> theseElements = this.getElements();
+				Collection<? extends Object> thoseElements = that.getElements();
 				int thisSize = theseElements.size();
 				int thatSize = thoseElements.size();
 				if (thisSize != thatSize) {
@@ -421,6 +506,10 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 				}
 			}
 			else {
+				Map<? extends Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount();
+				Map<? extends Object, @NonNull ? extends Number> thoseElements = ((AbstractCollectionValueImpl)that).getMapOfElement2elementCount();
+				//				Collection<? extends Object> theseElements = this.getElements();
+				//				Collection<? extends Object> thoseElements = that.getElements();
 				return theseElements.equals(thoseElements);
 			}
 		}
@@ -437,14 +526,14 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	@Override
 	public @NonNull Boolean excludes(@Nullable Object value) {
 		if (value == null) {
-			for (Object next : iterable()) {
+			for (Object next : this) {
 				if (next == null) {
 					return false;
 				}
 			}
 		}
 		else {
-			for (Object next : iterable()) {
+			for (Object next : this) {
 				if (value.equals(next)) {
 					return false;
 				}
@@ -464,7 +553,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	 */
 	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
-		for (Object e1 : iterable()) {
+		for (Object e1 : this) {
 			if (e1 == null) {
 				for (Object e2 : c.iterable()) {
 					if (e2 == null) {
@@ -546,6 +635,10 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		return collectionFactory.getKind();
 	}
 
+	protected @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+		throw new UnsupportedOperationException();
+	}
+
 	public @NonNull CollectionTypeId getOrderedSetTypeId() {
 		return TypeId.ORDERED_SET.getSpecializedId(getElementTypeId());
 	}
@@ -582,7 +675,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		for (Object e1 : c.iterable()) {
 			boolean gotIt = false;
 			if (e1 == null) {
-				for (Object e2 : iterable()) {
+				for (Object e2 : this) {
 					if (e2 == null) {
 						gotIt = true;
 						break;
@@ -590,7 +683,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 				}
 			}
 			else {
-				for (Object e2 : iterable()) {
+				for (Object e2 : this) {
 					if (e1.equals(e2)) {
 						gotIt = true;
 						break;
@@ -616,14 +709,14 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue intersection(@NonNull CollectionValue that) {
-		return IntersectionEvaluator.intersection(this, that);
+		return IntersectionIterator.intersection(this, that);
 
 		/*		assert !this.isUndefined() && !that.isUndefined();
 		Collection<? extends Object> theseElements = this.asCollection();
 		Collection<? extends Object> thoseElements = that.asCollection();
 		int thisSize = theseElements.size();
 		int thatSize = thoseElements.size();
-		if (this instanceof UniqueCollectionValue || that instanceof UniqueCollectionValue) {
+		if (this.isUnique() || that.isUnique()) {
 			@NonNull CollectionTypeId typeId = getSetTypeId();
 			if ((thisSize == 0) || (thatSize == 0)) {
 				return new SetValueImpl(typeId, ValueUtil.EMPTY_SET);
@@ -682,22 +775,27 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	}
 
 	@Override
-	public @NonNull Iterator<@Nullable Object> iterator() {
-		@NonNull
+	public @NonNull BagIterator<@Nullable Object> iterator() {
 		Iterable<? extends Object> elements = iterable();
-		if (elements instanceof BasicEList) {
+		if (elements instanceof BagIterator) {
+			@SuppressWarnings("unchecked")
+			BagIterator<@Nullable Object> castElements = (BagIterator<@Nullable Object>)elements;
+			return castElements;
+		}
+		else if (elements instanceof BasicEList) {
 			@SuppressWarnings("unchecked")
 			BasicEList<Object> castElements = (BasicEList<Object>)elements;
 			@SuppressWarnings("null")@Nullable Object[] data = castElements.data();
-			return data != null ? new ArrayIterator<@Nullable Object>(data, castElements.size()) : EMPTY_ITERATOR;
+			return data != null ? new ArrayIterator<>(data, castElements.size()) : EMPTY_ITERATOR;
 		}
-		if (elements instanceof List<?>) {
+		else if (elements instanceof List<?>) {
 			@SuppressWarnings("unchecked")
 			List<@Nullable Object> castElements = (List<@Nullable Object>)elements;
-			return new ListIterator<@Nullable Object>(castElements);
+			return new ListIterator<>(castElements);
 		}
-		@SuppressWarnings({"unchecked"}) @NonNull Iterator<@Nullable Object> result = (Iterator<@Nullable Object>)elements.iterator();
-		return result;
+		else {
+			return new WrappedBagIterator<>(elements.iterator());
+		}
 	}
 
 	//	@Override

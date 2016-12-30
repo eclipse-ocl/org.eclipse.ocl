@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.completeoclcs.ClassifierContextDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSFactory;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
@@ -74,7 +75,7 @@ implements CompleteOCLCSFactory {
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
 			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS: return createClassifierContextDeclCS();

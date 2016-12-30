@@ -75,7 +75,7 @@ public class ParametersIdImpl implements ParametersId, WeakHashMapOfListOfWeakRe
 	}
 
 	@Override
-	public java.util.Iterator<@NonNull TypeId> iterator() {
+	public java.util.@NonNull Iterator<@NonNull TypeId> iterator() {
 		return new Iterator();
 	}
 

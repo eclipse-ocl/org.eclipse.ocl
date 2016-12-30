@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.values;
 
-import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -18,19 +17,23 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.values.Bag;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
+
+import com.google.common.collect.Lists;
 
 /**
  * AbstractCollectionValueImpl provides the common functionality for eager and lazy CollectionValues.
  * @generated NOT
  * @since 1.3
  */
-public abstract class AbstractCollectionIterator extends AbstractCollectionValueImpl implements Iterator<@Nullable Object>
+public abstract class AbstractCollectionIterator extends AbstractCollectionValueImpl implements BagIterator<@Nullable Object>
 {
 	private @Nullable LazyIterable<@Nullable Object> iterable = null;
 	private int hashCode = 0;
@@ -42,17 +45,119 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 
 	@Override
 	public @NonNull Collection<? extends Object> asCollection() {
-		throw new UnsupportedOperationException();
+		return asEagerCollectionValue().asCollection();
+	}
+
+	private @NonNull CollectionValue asEagerCollectionValue() {
+		if (isOrdered()) {
+			if (isUnique()) {
+				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
+			}
+			else {
+				return new SparseSequenceValueImpl(getTypeId(), iterable().getListOfElements());
+			}
+		}
+		else {
+			if (isUnique()) {
+				return new SetValueImpl(getTypeId(), getElements());
+			}
+			else {
+				BagImpl<@Nullable Object> bagImpl = new BagImpl<>();
+				for (BagIterator<@Nullable Object> it = this; it.hasNext(); ) {
+					int count = it.hasNextCount();
+					Object next = it.next();
+					bagImpl.put(next,  count);
+				}
+				return new BagValueImpl(getTypeId(), bagImpl);
+			}
+		}
+	}
+
+	private @NonNull OrderedCollectionValue asEagerOrderedCollectionValue() {
+		if (isOrdered()) {
+			if (isUnique()) {
+				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
+			}
+			else {
+				return new SparseSequenceValueImpl(getTypeId(), iterable().getListOfElements());
+			}
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	private @NonNull OrderedSetValue asEagerOrderedSetValue() {
+		if (isOrdered() && isUnique()) {
+			return new SparseOrderedSetValueImpl(getTypeId(), getElements());
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	private @NonNull SequenceValue asEagerSequenceValue() {
+		if (isOrdered() && !isUnique()) {
+			return new SparseSequenceValueImpl(getTypeId(), iterable().getListOfElements());
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	/*	private @NonNull SetValue asEagerSetValue() {
+		if (!isOrdered() && isUnique()) {
+			return new SetValueImpl(getTypeId(), getElements());
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	} */
+
+	private @NonNull UniqueCollectionValue asEagerUniqueCollectionValue() {
+		if (isUnique()) {
+			if (isOrdered()) {
+				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
+			}
+			else {
+				return new SetValueImpl(getTypeId(), getElements());
+			}
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	@Override
 	public @NonNull Object asObject() {
-		throw new UnsupportedOperationException();
+		return asEagerCollectionValue().asCollection();
+	}
+
+	@Override
+	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
+		return isUnique() ? asOrderedSetValue() : asSequenceValue();
+	}
+
+	@Override
+	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
+		return isOrdered() ? asOrderedSetValue() : asSetValue();
 	}
 
 	//	@Override
-	public @Nullable Object at(int index) {
-		throw new UnsupportedOperationException();
+	public @Nullable Object at(int oclIndex) {
+		if (!isOrdered()) {
+			throw new UnsupportedOperationException();
+		}
+		int javaIindex = oclIndex - 1;
+		int size = intSize();
+		if (javaIindex < 0 || size <= javaIindex) {
+			throw new InvalidValueException(PivotMessages.IndexOutOfRange, oclIndex, size);
+		}
+		return iterable().get(javaIindex);
+	}
+
+	protected @Nullable LazyIterable<@Nullable Object> basicGetIterable() {
+		return iterable;
 	}
 
 	/**
@@ -62,10 +167,10 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	protected abstract boolean canBeIterable();
 
 	public @Nullable Object first() {
-		throw new UnsupportedOperationException();
+		return at(1);
 	}
 
-	@Deprecated
+	/*	@Deprecated
 	private static class MyBag<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	{
 		private final @NonNull LazyIterable<E> iterable;
@@ -95,8 +200,18 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 		}
 
 		@Override
+		public boolean equals(Object obj) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public @NonNull Map<E, ? extends Number> getMap() {
 			return iterable.getMapOfElement2elementCount();
+		}
+
+		@Override
+		public int hashCode() {
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -123,6 +238,22 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 		public Object @NonNull [] toArray(Object @NonNull [] a) {
 			throw new UnsupportedOperationException();
 		}
+	} */
+
+	public static @NonNull StringBuilder appendIterator(@NonNull StringBuilder s, int sizeLimit, @NonNull Iterator<? extends Object> iterator) {
+		if (iterator instanceof BagIterator) {
+			s.append(iterator);
+		}
+		else {
+			if ((s.length() < sizeLimit) && iterator.hasNext()) {
+				s.append(iterator.next());
+			}
+			while ((s.length() < sizeLimit) && iterator.hasNext()) {
+				s.append(",");
+				s.append(iterator.next());
+			}
+		}
+		return s;
 	}
 
 	@Override
@@ -131,8 +262,16 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 			return iterable().getListOfElements();
 		}
 		else {
-			return new MyBag<>(iterable());
+			return Lists.newArrayList(iterable());			// FIXME avoid this
 		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	protected @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+		return iterable().getMapOfElement2elementCount();
 	}
 
 	@Override
@@ -154,12 +293,18 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 		return hashCode;
 	}
 
-	public @NonNull IntegerValue indexOf(@Nullable Object object) {
+	@Override
+	public int hasNextCount() {				// FIXME move to derived classes to support Bags
 		throw new UnsupportedOperationException();
+		//		return hasNext() ? 1 : 0;
+	}
+
+	public @NonNull IntegerValue indexOf(@Nullable Object object) {
+		return asEagerOrderedCollectionValue().indexOf(object);
 	}
 
 	public @NonNull OrderedCollectionValue insertAt(int index, @Nullable Object object) {
-		throw new UnsupportedOperationException();
+		return asEagerOrderedCollectionValue().insertAt(index, object);
 	}
 
 	@Override
@@ -180,7 +325,7 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	}
 
 	@Override
-	public @NonNull Iterator<@Nullable Object> iterator() {
+	public @NonNull BagIterator<@Nullable Object> iterator() {
 		if (usedAsIterator) {
 			throw new IllegalStateException("Must invoke iterable() before first of multiple iterator() calls.");
 		}
@@ -194,26 +339,26 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	}
 
 	public @Nullable Object last() {
-		throw new UnsupportedOperationException();
+		return at(intSize());
 	}
 
 	public @NonNull UniqueCollectionValue minus(@NonNull UniqueCollectionValue set) {
-		throw new UnsupportedOperationException();
+		return asEagerUniqueCollectionValue().minus(set);
 	}
 
 	public @NonNull OrderedCollectionValue reverse() {
-		throw new UnsupportedOperationException();
+		return asEagerOrderedCollectionValue().reverse();
 	}
 
 	public @NonNull OrderedSetValue subOrderedSet(int lower, int upper) {
-		throw new UnsupportedOperationException();
+		return asEagerOrderedSetValue().subOrderedSet(lower, upper);
 	}
 
 	public @NonNull SequenceValue subSequence(int lower, int upper) {
-		throw new UnsupportedOperationException();
+		return asEagerSequenceValue().subSequence(lower, upper);
 	}
 
 	public @NonNull UniqueCollectionValue symmetricDifference(@NonNull UniqueCollectionValue set) {
-		throw new UnsupportedOperationException();
+		return asEagerUniqueCollectionValue().symmetricDifference(set);
 	}
 }

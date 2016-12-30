@@ -71,6 +71,7 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		}
 
 		public Object reset() {
+			collectionValue.iterable();
 			javaIter = collectionValue.iterator();
 			return next();
 		}

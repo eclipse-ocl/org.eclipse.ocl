@@ -16,9 +16,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.ocl.xtext.oclstdlibcs.*;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibConstraintCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS;
@@ -37,8 +38,8 @@ import org.eclipse.ocl.xtext.oclstdlibcs.PrecedenceCS;
  * @generated
  */
 public class OCLstdlibCSFactoryImpl
-		extends EFactoryImpl
-		implements OCLstdlibCSFactory {
+extends EFactoryImpl
+implements OCLstdlibCSFactory {
 
 	/**
 	 * Creates the default factory implementation.
@@ -78,7 +79,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
 			case OCLstdlibCSPackage.JAVA_CLASS_CS: return createJavaClassCS();

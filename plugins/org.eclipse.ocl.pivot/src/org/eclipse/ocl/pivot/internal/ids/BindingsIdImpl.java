@@ -67,7 +67,7 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 	}
 
 	@Override
-	public java.util.Iterator<@NonNull ElementId> iterator() {
+	public java.util.@NonNull Iterator<@NonNull ElementId> iterator() {
 		return new Iterator();
 	}
 

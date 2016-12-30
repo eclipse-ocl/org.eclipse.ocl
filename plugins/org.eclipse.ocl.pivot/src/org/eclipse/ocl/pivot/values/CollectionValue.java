@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.values;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +21,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.values.BagIterator;
 
 /**
  * @noimplement This interface is not intended to be implemented by clients.
@@ -155,7 +155,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@Override
-	@NonNull Iterator<@Nullable Object> iterator();
+	@NonNull BagIterator<@Nullable Object> iterator();
 
 	/**
 	 * @generated NOT

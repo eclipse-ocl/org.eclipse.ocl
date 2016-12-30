@@ -22,8 +22,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 
-import com.google.common.collect.Iterators;
-
 /**
  * A LazyIterable provides a lazy cache of the elements of an Iterator so that the elements are
  * available for access by more than one Iterator, and also so that the elements can be accessed
@@ -36,14 +34,25 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	/**
 	 * BagIterator iterates over the Bag content returning each multiple element multiple times.
 	 */
-	private static class BagIterator<E> implements Iterator<E>
+	private static class LazyBagIterator<E> implements BagIterator<E>
 	{
 		private final @NonNull Map<E, @NonNull ElementCount> map;
 		private final @NonNull Iterator<E> objectIterator;
 		private E currentObject;
+
+		/**
+		 * The number of repeats of the currentObject still to be returned by next().
+		 */
 		private int residualCount;
 
-		private BagIterator(@NonNull LazyIterable<E> iterable) {
+		/**
+		 * The number of repeats of the currentObject to be returned by next().
+		 * This is 1 if a conventional hasNext() guard has been used.
+		 * This is residualCount if the more efficuent hasNextCount() has been used.
+		 */
+		private int nextCount = 0;
+
+		private LazyBagIterator(@NonNull LazyIterable<E> iterable) {
 			this.map = iterable.getMapOfElement2elementCount();
 			this.objectIterator = iterable.iterator();
 			assert objectIterator.hasNext();
@@ -55,7 +64,20 @@ public class LazyIterable<E> implements IndexableIterable<E>
 
 		@Override
 		public boolean hasNext() {
-			return residualCount > 0;
+			if (residualCount > 0) {
+				nextCount = 1;
+				return true;
+			}
+			else {
+				nextCount = 0;
+				return false;
+			}
+		}
+
+		@Override
+		public int hasNextCount() {
+			nextCount = residualCount;
+			return residualCount;
 		}
 
 		@Override
@@ -63,7 +85,8 @@ public class LazyIterable<E> implements IndexableIterable<E>
 			if (residualCount <= 0) {
 				throw new NoSuchElementException();
 			}
-			if (--residualCount > 0) {
+			residualCount -= nextCount;
+			if (residualCount > 0) {		// If iterating a bag element by element
 				return currentObject;
 			}
 			if (objectIterator.hasNext()) {
@@ -85,50 +108,12 @@ public class LazyIterable<E> implements IndexableIterable<E>
 			throw new UnsupportedOperationException("Remove not supported by OCL collections");	// Unimplemented optional operation
 		}
 	}
-	/**
-	 * ElementCounter is used as the count of a Bag element. It avoids thrashing Integer objects as counts evolve.
-	 */
-	private static class ElementCount extends Number
-	{
-		private static final long serialVersionUID = 6003094405498386037L;
-
-		private int value;
-
-		public ElementCount(int value) {
-			this.value = value;
-		}
-
-		@Override
-		public double doubleValue() {
-			return value;
-		}
-
-		@Override
-		public float floatValue() {
-			return value;
-		}
-
-		@Override
-		public int intValue() {
-			return value;
-		}
-
-		@Override
-		public long longValue() {
-			return value;
-		}
-
-		@Override
-		public String toString() {
-			return Integer.toString(value);
-		}
-	}
 
 	/**
 	 * A LazyIterator support multiple access to the partially populated iteration cache provoking
 	 * additional population as required.
 	 */
-	private class LazyIterator implements Iterator<E>
+	private class LazyNonBagIterator implements BagIterator<E>
 	{
 		private int index = 0;
 
@@ -144,6 +129,16 @@ public class LazyIterable<E> implements IndexableIterable<E>
 			}
 			synchronized (LazyIterable.this) {
 				return (index < size) || internalIterator.hasNext();
+			}
+		}
+
+		@Override
+		public int hasNextCount() {
+			if (index < size) {
+				return 1;
+			}
+			synchronized (LazyIterable.this) {
+				return (index < size) || internalIterator.hasNext() ? 1 : 0;
 			}
 		}
 
@@ -169,16 +164,92 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	}
 
 	/**
-	 * A FasterListIterator provides better performance than the standard List Iterator by
+	 * A ImmutableBagIterator provides better performance than the standard List Iterator by
 	 * exploiting the immutability of a fully populated Iteration cache.
 	 */
-	private static class FasterListIterator<E> implements Iterator<E>
+	public static class ImmutableBagIterator<E> implements BagIterator<E>
+	{
+		private final @NonNull List<E> elements;
+		private final @NonNull Map<E, @NonNull ? extends Number> element2elementCount;
+		private final int size;
+		private int elementIndex = 0;
+		private int residualCount = 0;
+		private E currentElement;
+		private int nextCount = 0;
+
+		public ImmutableBagIterator(@NonNull List<E> elements, @NonNull Map<E, @NonNull ? extends Number> element2elementCount) {
+			this.elements = elements;
+			this.element2elementCount = element2elementCount;
+			this.size = elements.size();
+			if (elementIndex < size) {
+				currentElement = elements.get(elementIndex++);
+				Number number = element2elementCount.get(currentElement);
+				assert number != null;
+				residualCount = number.intValue();
+				assert residualCount > 0;
+			}
+			nextCount = 1;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
+		}
+
+		@Override
+		public boolean hasNext() {
+			nextCount = 1;
+			return (elementIndex < size) || (residualCount > 0);
+		}
+
+		@Override
+		public int hasNextCount() {
+			nextCount = residualCount;
+			return residualCount;
+		}
+
+		@Override
+		public final int hashCode() {
+			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
+		}
+
+		@Override
+		public E next() {
+			if (residualCount <= 0) {
+				throw new NoSuchElementException();
+			}
+			E savedElement = currentElement;
+			residualCount -= nextCount;
+			if ((residualCount <= 0) && (elementIndex < size)) {
+				currentElement = elements.get(elementIndex++);
+				Number number = element2elementCount.get(currentElement);
+				assert number != null;
+				residualCount = number.intValue();
+				assert residualCount > 0;
+			}
+			nextCount = 1;
+			return savedElement;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			appendBagIterable(s, elements, element2elementCount);
+			return s.toString();
+		}
+	}
+
+	/**
+	 * A ImmutableBagIterator provides better performance than the standard List Iterator by
+	 * exploiting the immutability of a fully populated Iteration cache.
+	 */
+	public static class ImmutableNonBagIterator<E> implements BagIterator<E>
 	{
 		private final @NonNull List<E> elements;
 		private final int size;
-		private int index = 0;
+		private int elementIndex = 0;
 
-		public FasterListIterator(@NonNull List<E> elements) {
+		public ImmutableNonBagIterator(@NonNull List<E> elements) {
 			this.elements = elements;
 			this.size = elements.size();
 		}
@@ -190,7 +261,12 @@ public class LazyIterable<E> implements IndexableIterable<E>
 
 		@Override
 		public boolean hasNext() {
-			return index < size;
+			return elementIndex < size;
+		}
+
+		@Override
+		public int hasNextCount() {
+			return elementIndex < size ? 1 : 0;
 		}
 
 		@Override
@@ -203,7 +279,23 @@ public class LazyIterable<E> implements IndexableIterable<E>
 			//	if (index >= size) {
 			//		throw new NoSuchElementException();		-- get will throw an IOOBE if the impossible happens
 			//	}
-			return elements.get(index++);
+			return elements.get(elementIndex++);
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append("[");
+			boolean isFirst = true;
+			for (Object element : elements) {
+				if (!isFirst) {
+					s.append(", ");
+				}
+				s.append(element instanceof String ? "'" + element + "'" : element);
+				isFirst = false;
+			}
+			s.append("]");
+			return s.toString();
 		}
 	}
 
@@ -257,6 +349,26 @@ public class LazyIterable<E> implements IndexableIterable<E>
 
 	} */
 
+	public static <E> void appendBagIterable(@NonNull StringBuilder s, @NonNull List<E> elements, @Nullable Map<E, @NonNull ? extends Number> element2elementCount) {
+		s.append("[");
+		boolean isFirst = true;
+		for (E element : elements) {
+			if (!isFirst) {
+				s.append(", ");
+			}
+			if (element2elementCount != null) {
+				Number count = element2elementCount.get(element);
+				if ((count == null) || (count.intValue() != 1)) {
+					s.append(count);
+					s.append("*");
+				}
+			}
+			s.append(element instanceof String ? "'" + element + "'" : element);
+			isFirst = false;
+		}
+		s.append("]");
+	}
+
 	/**
 	 * The iterator that provides the elements to be cached.
 	 */
@@ -304,6 +416,9 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		if (newElementCount == null) {
 			newElementCount = new ElementCount(1);
 		}
+		else {
+			newElementCount.value = 1;
+		}
 		ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, newElementCount);
 		if (oldElementCount != null) {
 			newElementCount.value += oldElementCount.value;
@@ -316,23 +431,28 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		}
 	}
 
-	@Deprecated
+	/*	@Deprecated
 	public @NonNull Iterator<E> bagIterator() {
 		if (size > 0) {
-			return new BagIterator<>(this);
+			return new LazyBagIterator<>(this);
 		}
 		else {
 			return Iterators.emptyIterator();
 		}
-	}
+	} */
 
-	@Deprecated
+	/*	@Deprecated
 	public int bagSize() {
 		int size = 0;
 		for (@NonNull ElementCount elementCount : getMapOfElement2elementCount().values()) {
 			size += elementCount.value;
 		}
 		return size;
+	} */
+
+	int count(Object object) {
+		ElementCount elementCount = getMapOfElement2elementCount().get(object);
+		return elementCount != null ? elementCount.intValue() : 0;
 	}
 
 	@Override
@@ -341,9 +461,9 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	}
 
 	@Override
-	public synchronized E get(int index) {
+	public synchronized E get(int javaIndex) {
 		if (isUnique) {
-			while ((size <= index) && internalIterator.hasNext()) {
+			while ((size <= javaIndex) && internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
 				if (addToCounts(anElement)) {
 					size++;
@@ -352,7 +472,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 			}
 		}
 		else if (isOrdered) {
-			while ((size <= index) && internalIterator.hasNext()) {
+			while ((size <= javaIndex) && internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
 				size++;
 				lazyListOfElements.add(anElement);
@@ -363,7 +483,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		}
 		else {
 			int indexes = 0;
-			while ((indexes <= index) && internalIterator.hasNext()) {
+			while ((indexes <= javaIndex) && internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
 				size++;
 				if (addToCounts(anElement)) {
@@ -372,12 +492,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 				}
 			}
 		}
-		if (index < size) {
-			return lazyListOfElements.get(index);
-		}
-		else {
-			throw new IndexOutOfBoundsException();
-		}
+		return lazyListOfElements.get(javaIndex);
 	}
 
 	/**
@@ -419,7 +534,6 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	 * Ensure that all lazy iterations have completed and then return a bag of all elements.
 	 */
 	public synchronized @NonNull Map<E, @NonNull ElementCount> getMapOfElement2elementCount() {
-		getListOfElements();
 		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
 		if (lazyMapOfElement2elementCount2 == null) {
 			lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
@@ -427,6 +541,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 				addToCounts(element);
 			}
 		}
+		getListOfElements();
 		return lazyMapOfElement2elementCount2;
 	}
 
@@ -447,12 +562,24 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	}
 
 	@Override
-	public @NonNull Iterator<E> iterator() {
-		if (internalIterator.hasNext()) {
-			return new LazyIterator();
+	public @NonNull BagIterator<E> iterator() {
+		if (!isOrdered && !isUnique) {
+			Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
+			assert lazyMapOfElement2elementCount2 != null;
+			if (internalIterator.hasNext()) {
+				return new LazyBagIterator<>(this);
+			}
+			else {
+				return new ImmutableBagIterator<>(lazyListOfElements, lazyMapOfElement2elementCount2);
+			}
 		}
 		else {
-			return new FasterListIterator<>(lazyListOfElements);
+			if (internalIterator.hasNext()) {
+				return new LazyNonBagIterator();
+			}
+			else {
+				return new ImmutableNonBagIterator<>(lazyListOfElements);
+			}
 		}
 	}
 
@@ -467,6 +594,13 @@ public class LazyIterable<E> implements IndexableIterable<E>
 
 	@Override
 	public @NonNull String toString() {
-		return String.valueOf(internalIterator);
+		if (internalIterator.hasNext()) {
+			return String.valueOf(internalIterator);
+		}
+		else {
+			StringBuilder s = new StringBuilder();
+			appendBagIterable(s, lazyListOfElements, lazyMapOfElement2elementCount);
+			return s.toString();
+		}
 	}
 }
