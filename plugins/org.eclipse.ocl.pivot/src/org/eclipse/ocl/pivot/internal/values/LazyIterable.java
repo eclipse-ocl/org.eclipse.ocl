@@ -188,6 +188,10 @@ public class LazyIterable<E> implements IndexableIterable<E>
 				residualCount = number.intValue();
 				assert residualCount > 0;
 			}
+			else {
+				@SuppressWarnings("null") E nullE = null;
+				currentElement = nullE;
+			}
 			nextCount = 1;
 		}
 
@@ -498,7 +502,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	/**
 	 * Ensure that all lazy iterations have completed and then return a list of all elements.
 	 */
-	public synchronized @NonNull List<?> getListOfElements() {
+	public synchronized @NonNull List<E> getListOfElements() {
 		if (isUnique) {
 			while (internalIterator.hasNext()) {
 				E anElement = internalIterator.next();

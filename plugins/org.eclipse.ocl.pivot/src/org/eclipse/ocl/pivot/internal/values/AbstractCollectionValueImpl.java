@@ -202,7 +202,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	}
 
 	@SuppressWarnings("serial")
-	private static final class UnmodifiableEcoreObjects extends EcoreEList.UnmodifiableEList<Object>
+	private static final class UnmodifiableEcoreObjects extends EcoreEList.UnmodifiableEList<@Nullable Object>
 	{
 		private static final /*@NonNull*/ EStructuralFeature unhangeableStructuralFeature;
 		static {
@@ -213,7 +213,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 			unhangeableStructuralFeature.setUpperBound(-1);
 			unhangeableStructuralFeature.setChangeable(false);
 		}
-		private UnmodifiableEcoreObjects(int size, Object[] data) {
+		private UnmodifiableEcoreObjects(int size, @Nullable Object[] data) {
 			super(null, unhangeableStructuralFeature, size, data);
 		}
 
@@ -337,7 +337,6 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	public @NonNull BagValue asBagValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return new AsBagIterator(this);
-		//		return new BagValueImpl(getBagTypeId(), new BagImpl<Object>(iterable()));
 	}
 
 	@Override
@@ -347,8 +346,10 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	}
 
 	@Override
-	public @NonNull List<Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
-		Object[] unboxedValues = new Object[intSize()];
+	public @NonNull List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+		//		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		//		return new AsEcoreIterator(this, idResolver, instanceClass).getListOfElements();
+		@Nullable Object[] unboxedValues = new @Nullable Object[intSize()];
 		int i= 0;
 		for (Object element : iterable()) {
 			if (element instanceof Value)
@@ -373,11 +374,6 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	public @NonNull OrderedSetValue asOrderedSetValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return new AsOrderedSetIterator(this);
-		//		OrderedSet<Object> uniqueElements = new OrderedSetImpl<Object>();
-		//		for (Object element : iterable()) {
-		//			uniqueElements.add(element);
-		//		}
-		//		return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), uniqueElements);
 	}
 
 	@Override
@@ -390,11 +386,6 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	public @NonNull SetValue asSetValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return new AsSetIterator(this);
-		//		Set<Object> uniqueElements = new HashSet<Object>();
-		//		for (Object element : iterable()) {
-		//			uniqueElements.add(element);
-		//		}
-		//		return new SetValueImpl(getSetTypeId(), uniqueElements);
 	}
 
 	protected boolean checkElementsAreValues(@NonNull Iterable<? extends Object> elements) {

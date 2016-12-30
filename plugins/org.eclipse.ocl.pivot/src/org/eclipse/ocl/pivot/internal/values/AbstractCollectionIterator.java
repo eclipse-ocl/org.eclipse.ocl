@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -269,8 +270,16 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	/**
 	 * @since 1.3
 	 */
+	//	@Override
+	protected @NonNull List<@Nullable Object> getListOfElements() {
+		return iterable().getListOfElements();
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	@Override
-	protected @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+	protected @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
 		return iterable().getMapOfElement2elementCount();
 	}
 
