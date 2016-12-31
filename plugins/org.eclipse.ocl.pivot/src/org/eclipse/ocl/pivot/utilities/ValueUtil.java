@@ -42,11 +42,11 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.values.AsBagIterator;
-import org.eclipse.ocl.pivot.internal.values.AsOrderedSetIterator;
-import org.eclipse.ocl.pivot.internal.values.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
 import org.eclipse.ocl.pivot.internal.values.BigIntegerValueImpl;
@@ -501,7 +501,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return new AsBagIterator(typeId, Iterators.forArray(boxedValues));
+		return new AsBagIterator(typeId, Iterators.forArray(boxedValues), false);
 		//		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
 	}
 
@@ -519,7 +519,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull BagValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<? extends Object> boxedValues) {
-		return new AsBagIterator(typeId, boxedValues.iterator());
+		return new AsBagIterator(typeId, boxedValues.iterator(), false);		// FIXME reuse Bag
 		//		return new BagValueImpl(typeId, boxedValues);
 	}
 
@@ -573,7 +573,7 @@ public abstract class ValueUtil
 	//	}
 
 	public static @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return new AsOrderedSetIterator(typeId, Iterators.forArray(boxedValues));
+		return new AsOrderedSetIterator(typeId, Iterators.forArray(boxedValues), false);
 		//		return new SparseOrderedSetValueImpl(typeId, SparseOrderedSetValueImpl.createOrderedSetOfEach(boxedValues));
 	}
 
@@ -591,7 +591,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull OrderedSetValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
-		return new AsOrderedSetIterator(typeId, boxedValues.iterator());
+		return new AsOrderedSetIterator(typeId, boxedValues.iterator(), boxedValues instanceof Set);
 	}
 
 	public static @NonNull IntegerRange createRange(@NonNull IntegerValue firstInteger, @NonNull IntegerValue lastInteger) {
@@ -652,7 +652,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
-		return new AsSetIterator(typeId, boxedValues.iterator(), false);
+		return new AsSetIterator(typeId, boxedValues.iterator(), boxedValues instanceof Set);
 		//		return new SetValueImpl(typeId, boxedValues);
 	}
 

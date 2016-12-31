@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.values;
+package org.eclipse.ocl.pivot.internal.iterators;
 
 import java.util.Iterator;
 
@@ -16,49 +16,51 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.values.LazyIterable;
+import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 
 /**
- * SequenceIterator provides a lazy evaluation of the Collection::asSequence operation.
+ * BagIterator provides a lazy evaluation of the Collection::asBag operation.
  *
  * @since 1.3
  */
-public class AsSequenceIterator extends AbstractCollectionIterator implements SequenceValue
+public class AsBagIterator extends AbstractBagIterator implements BagValue
 {
 	private final @NonNull Iterator<? extends Object> iterator;
-	private boolean canBeIterable = true;
+	private Object next;
 
-	public AsSequenceIterator(@NonNull CollectionValue firstValue) {
-		this(TypeId.SEQUENCE.getSpecializedId(firstValue.getElementTypeId()), firstValue.iterator());
+	public AsBagIterator(@NonNull CollectionValue collectionValue) {
+		this(TypeId.BAG.getSpecializedId(collectionValue.getElementTypeId()), collectionValue.iterator(), collectionValue.isUnique() || !collectionValue.isOrdered());
 	}
 
-	public AsSequenceIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> iterator) {
+	public AsBagIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> iterator, boolean sourceIteratorIsBagLike) {
 		super(typeId);
 		this.iterator = iterator;
-		assert isOrdered();
+		assert !isOrdered();
 		assert !isUnique();
+		if (!sourceIteratorIsBagLike) {
+			getMapOfElement2elementCount();
+		}
 	}
 
 	@Override
-	protected boolean canBeIterable() {
-		return canBeIterable;
+	protected Object getNext() {
+		return next;
 	}
 
 	@Override
-	public boolean hasNext() {
-		return iterator.hasNext();
-	}
-
-	@Override
-	public @Nullable Object next() {
-		canBeIterable = false;
-		return iterator.next();
+	protected int getNextCount() {
+		if (iterator.hasNext()) {
+			next = iterator.next();
+			return 1;
+		}
+		return 0;
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append("AsSequence{");
+		s.append("AsBag{");
 		LazyIterable<@Nullable Object> iterable = basicGetIterable();
 		if (iterable != null) {
 			s.append(iterable);

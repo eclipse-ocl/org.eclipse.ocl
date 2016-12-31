@@ -30,8 +30,8 @@ public class AsSetIterator extends AbstractBagIterator implements SetValue
 	private final @NonNull Iterator<? extends Object> iterator;
 	private Object next;
 
-	public AsSetIterator(@NonNull CollectionValue firstValue) {
-		this(TypeId.SET.getSpecializedId(firstValue.getElementTypeId()), firstValue.iterator(), firstValue.isUnique());
+	public AsSetIterator(@NonNull CollectionValue collectionValue) {
+		this(TypeId.SET.getSpecializedId(collectionValue.getElementTypeId()), collectionValue.iterator(), collectionValue.isUnique());
 	}
 
 	public AsSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> iterator, boolean sourceIteratorIsUnique) {
