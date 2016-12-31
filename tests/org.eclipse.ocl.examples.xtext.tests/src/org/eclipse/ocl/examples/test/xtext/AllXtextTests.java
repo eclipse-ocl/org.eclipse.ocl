@@ -12,8 +12,12 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
@@ -89,7 +93,20 @@ extends TestCase {
 				super.run(result);
 				int iteratorCounts = 0;
 				int nonIteratorCounts = 0;
-				for (@NonNull Class<? extends CollectionValue> collectionClass : collectionClass2count.keySet()) {
+				List<@NonNull Class<? extends CollectionValue>> keySet = new ArrayList<>(collectionClass2count.keySet());
+				Collections.sort(keySet, new Comparator<@NonNull Class<? extends CollectionValue>>()
+				{
+					@Override
+					public int compare(@NonNull Class<? extends CollectionValue> o1, @NonNull Class<? extends CollectionValue> o2) {
+						boolean h1 = AbstractCollectionIterator.class.isAssignableFrom(o1);
+						boolean h2 = AbstractCollectionIterator.class.isAssignableFrom(o2);
+						if (h1 != h2) {
+							return h1 ? 1 : -1;
+						}
+						return o1.getName().compareTo(o2.getName());
+					}
+				});
+				for (@NonNull Class<? extends CollectionValue> collectionClass : keySet) {
 					Integer count = collectionClass2count.get(collectionClass);
 					System.out.println(collectionClass.getName() + " : " + count);
 					if (AbstractCollectionIterator.class.isAssignableFrom(collectionClass)) {

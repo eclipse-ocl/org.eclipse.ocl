@@ -104,9 +104,9 @@ public class IntersectionIterator extends AbstractCollectionIterator
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("Intersection{");
-		appendIterator(s, sizeLimit, reference.iterator());
+		s.append(reference.iterator());
 		s.append(", ");
-		appendIterator(s, sizeLimit, iterator);
+		s.append(iterator);
 		s.append("}");
 	}
 }

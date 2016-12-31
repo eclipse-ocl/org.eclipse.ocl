@@ -5,6 +5,9 @@ concat
 emptyIterator
  <T:Ljava/lang/Object;>()Lcom/google/common/collect/UnmodifiableIterator<TT;>;
  <T:Ljava/lang/Object;>()L1com/google/common/collect/UnmodifiableIterator<TT;>;
+forArray
+ <T:Ljava/lang/Object;>([TT;)Lcom/google/common/collect/UnmodifiableIterator<TT;>;
+ <T:Ljava/lang/Object;>([TT;)L1com/google/common/collect/UnmodifiableIterator<TT;>;
 singletonIterator
  <T:Ljava/lang/Object;>(TT;)Lcom/google/common/collect/UnmodifiableIterator<TT;>;
  <T:Ljava/lang/Object;>(TT;)L1com/google/common/collect/UnmodifiableIterator<TT;>;

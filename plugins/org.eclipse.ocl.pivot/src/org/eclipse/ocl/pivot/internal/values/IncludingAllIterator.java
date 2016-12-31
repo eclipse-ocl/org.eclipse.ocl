@@ -85,9 +85,9 @@ public class IncludingAllIterator extends AbstractCollectionIterator
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("IncludingAll{");
-		appendIterator(s, sizeLimit, prefix);
+		s.append(prefix);
 		s.append(", ");
-		appendIterator(s, sizeLimit, suffix);
+		s.append(suffix);
 		s.append("}");
 	}
 }

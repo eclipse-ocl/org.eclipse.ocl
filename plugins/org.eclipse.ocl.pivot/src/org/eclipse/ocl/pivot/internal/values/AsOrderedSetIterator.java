@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
@@ -25,12 +26,18 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
  */
 public class AsOrderedSetIterator extends AbstractCollectionIterator implements OrderedSetValue
 {
-	private final @NonNull Iterator<@Nullable Object> iterator;
+	private final @NonNull Iterator<? extends Object> iterator;
 	private boolean canBeIterable = true;
 
 	public AsOrderedSetIterator(@NonNull CollectionValue firstValue) {
-		super(TypeId.ORDERED_SET.getSpecializedId(firstValue.getElementTypeId()));
-		this.iterator = firstValue.iterator();
+		this(TypeId.ORDERED_SET.getSpecializedId(firstValue.getElementTypeId()), firstValue.iterator());
+	}
+
+	public AsOrderedSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> iterator) {
+		super(typeId);
+		this.iterator = iterator;
+		assert isOrdered();
+		assert isUnique();
 	}
 
 	@Override
@@ -52,7 +59,16 @@ public class AsOrderedSetIterator extends AbstractCollectionIterator implements 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("AsOrderedSet{");
-		s.append(iterator);
+		LazyIterable<@Nullable Object> iterable = basicGetIterable();
+		if (iterable != null) {
+			s.append(iterable);
+			if (hasNext()) {
+				s.append(";«future»");
+			}
+		}
+		else {
+			s.append("«future»");
+		}
 		s.append("}");
 	}
 }

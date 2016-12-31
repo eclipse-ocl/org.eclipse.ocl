@@ -384,17 +384,20 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				dynamicType = standardLibrary.getOclInvalidType();
 			}
 			TypeId elementTypeId = dynamicType.getTypeId();
-			CollectionTypeId collectedTypeId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
 			if ((unboxedValue instanceof LinkedHashSet) || (unboxedValue instanceof OrderedSet)) {
+				CollectionTypeId collectedTypeId = TypeId.ORDERED_SET.getSpecializedId(elementTypeId);
 				return createOrderedSetOfAll(collectedTypeId, unboxedValues);
 			}
 			else if (unboxedValue instanceof Bag) {
+				CollectionTypeId collectedTypeId = TypeId.BAG.getSpecializedId(elementTypeId);
 				return createBagOfAll(collectedTypeId, unboxedValues);
 			}
 			else if (unboxedValue instanceof Set) {
+				CollectionTypeId collectedTypeId = TypeId.SET.getSpecializedId(elementTypeId);
 				return createSetOfAll(collectedTypeId, unboxedValues);
 			}
 			else {
+				CollectionTypeId collectedTypeId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
 				return createSequenceOfAll(collectedTypeId, unboxedValues);
 			}
 		}

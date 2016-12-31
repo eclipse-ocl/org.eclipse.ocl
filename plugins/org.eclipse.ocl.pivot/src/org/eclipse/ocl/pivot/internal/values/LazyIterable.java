@@ -599,7 +599,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	@Override
 	public @NonNull String toString() {
 		if (internalIterator.hasNext()) {
-			return String.valueOf(internalIterator);
+			return "«future»";
 		}
 		else {
 			StringBuilder s = new StringBuilder();

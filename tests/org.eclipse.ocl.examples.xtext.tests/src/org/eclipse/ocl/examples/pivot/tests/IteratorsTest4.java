@@ -549,6 +549,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.pkg1, idResolver.createSetOfEach(collectedId, ocl.pkg1), "self.oclAsType(Package)->closure(owningPackage)");
 		//WIP        ocl.assertQueryNotEquals(ocl.pkg1, getEmptySetValue(), "self->closure(owningPackage)");
 		// empty closure
+		collectedId = TypeId.ORDERED_SET.getSpecializedId(packageType.getTypeId());
 		ocl.assertQueryEquals(ocl.pkg1, idResolver.createOrderedSetOfEach(collectedId, ocl.pkg1), "self.oclAsType(Package)->asSequence()->closure(owningPackage)");
 		//WIP 		ocl.assertQueryNotEquals(ocl.pkg1, metamodelManager.createOrderedSetValue(metamodelManager.getOrderedSetType(elementType)), "self->asSequence()->closure(owningPackage)");
 		ocl.dispose();
@@ -834,7 +835,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	@Test public void test_isUnique_invalidBody_142518() {
 		MyOCL ocl = createOCL();
 		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-			"Bag{1, 2, 3}->isUnique(Sequence{}->first())");
+				"Bag{1, 2, 3}->isUnique(Sequence{}->first())");
 
 		ocl.assertQueryFalse(EcorePackage.eINSTANCE,
 				"let b:Boolean = null in Bag{1, 2, 3}->isUnique(null)");
@@ -849,14 +850,14 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
 		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-			"Bag{1, 2, 3}->collect(Sequence{}->first())");
+				"Bag{1, 2, 3}->collect(Sequence{}->first())");
 
 		// in the case of a null value, null is allowed in a collection, so
 		// it does not result in invalid
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.OCL_ANY);
 		BagValue expected = idResolver.createBagOfEach(typeId, null, null, null);
 		ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
-			"let b:Boolean = null in Bag{1, 2, 3}->collect(null)");
+				"let b:Boolean = null in Bag{1, 2, 3}->collect(null)");
 		ocl.dispose();
 	}
 
@@ -868,7 +869,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
 		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-			"Bag{1, 2, 3}->collectNested(Sequence{}->first())");
+				"Bag{1, 2, 3}->collectNested(Sequence{}->first())");
 
 		// in the case of a null value, null is allowed in a collection, so
 		// it does not result in invalid
@@ -878,7 +879,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.INTEGER);
 		BagValue expected = idResolver.createBagOfEach(typeId, e1, e2, e3);
 		ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
-			"let b:Boolean = null in Bag{1, 2, 3}->collectNested(e | if e = 2 then null else Set{e} endif)");
+				"let b:Boolean = null in Bag{1, 2, 3}->collectNested(e | if e = 2 then null else Set{e} endif)");
 		ocl.dispose();
 	}
 

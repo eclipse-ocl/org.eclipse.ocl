@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -240,22 +239,6 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 			throw new UnsupportedOperationException();
 		}
 	} */
-
-	public static @NonNull StringBuilder appendIterator(@NonNull StringBuilder s, int sizeLimit, @NonNull Iterator<? extends Object> iterator) {
-		if (iterator instanceof BagIterator) {
-			s.append(iterator);
-		}
-		else {
-			if ((s.length() < sizeLimit) && iterator.hasNext()) {
-				s.append(iterator.next());
-			}
-			while ((s.length() < sizeLimit) && iterator.hasNext()) {
-				s.append(",");
-				s.append(iterator.next());
-			}
-		}
-		return s;
-	}
 
 	@Override
 	public @NonNull Collection<? extends Object> getElements() {
