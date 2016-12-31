@@ -8,14 +8,13 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.values;
-
-import java.util.NoSuchElementException;
+package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.values.BagIterator;
+import org.eclipse.ocl.pivot.internal.values.LazyIterable;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -23,7 +22,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class IntersectionIterator extends AbstractCollectionIterator
+public class IntersectionIterator extends AbstractBagIterator
 {
 	public static @NonNull IntersectionIterator intersection(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 		TypeId elementTypeId = firstValue.getElementTypeId();
@@ -42,11 +41,8 @@ public class IntersectionIterator extends AbstractCollectionIterator
 	}
 
 	private final @NonNull LazyIterable<? extends Object> reference;
-	private final @NonNull BagIterator<@Nullable Object> iterator;
-	private boolean canBeIterable = true;
-	private int nextCount = 0;
-	private @Nullable Object next;
-	private int useCount = 0;
+	private final @NonNull BagIterator<Object> iterator;
+	private Object next;
 
 	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
 		super(collectionTypeId);
@@ -56,49 +52,20 @@ public class IntersectionIterator extends AbstractCollectionIterator
 	}
 
 	@Override
-	protected boolean canBeIterable() {
-		return canBeIterable;
+	protected Object getNext() {
+		return next;
 	}
 
 	@Override
-	public boolean hasNext() {
-		if (hasNextCount() >= 1) {
-			useCount = 1;
-			return true;
-		}
-		else {
-			useCount = 0;
-			return false;
-		}
-	}
-
-	@Override
-	public int hasNextCount() {
-		if (nextCount <= 0) {
-			while ((nextCount = iterator.hasNextCount()) > 0) {
-				next = iterator.next();
-				nextCount = Math.min(nextCount, reference.count(next));
-				if (nextCount > 0) {
-					break;
-				}
+	protected int getNextCount() {
+		for (int nextCount; (nextCount = iterator.hasNextCount()) > 0; ) {
+			next = iterator.next();
+			nextCount = Math.min(nextCount, reference.count(next));
+			if (nextCount > 0) {
+				return nextCount;
 			}
 		}
-		useCount = nextCount;
-		return nextCount;
-	}
-
-	@Override
-	public @Nullable Object next() {
-		canBeIterable = false;
-		if (useCount <= 0) {
-			hasNextCount();
-		}
-		if (nextCount <= 0) {
-			throw new NoSuchElementException();
-		}
-		nextCount -= useCount;
-		useCount = 0;
-		return next;
+		return 0;
 	}
 
 	@Override

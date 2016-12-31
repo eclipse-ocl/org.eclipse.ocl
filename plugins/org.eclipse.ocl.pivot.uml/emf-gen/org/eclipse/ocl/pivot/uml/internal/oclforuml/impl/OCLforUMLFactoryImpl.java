@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.BoundedInteger;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.Collection;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.Collections;
@@ -36,8 +37,8 @@ import org.eclipse.ocl.pivot.uml.internal.oclforuml.Validations;
  * @generated
  */
 public class OCLforUMLFactoryImpl
-		extends EFactoryImpl
-		implements OCLforUMLFactory {
+extends EFactoryImpl
+implements OCLforUMLFactory {
 
 	/**
 	 * Creates the default factory implementation.
@@ -77,7 +78,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
 			case OCLforUMLPackage.BOUNDED_INTEGER: return createBoundedInteger();

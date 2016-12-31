@@ -42,11 +42,11 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.values.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.values.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.values.AsSequenceIterator;
-import org.eclipse.ocl.pivot.internal.values.AsSetIterator;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
 import org.eclipse.ocl.pivot.internal.values.BigIntegerValueImpl;
@@ -634,7 +634,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return new AsSetIterator(typeId, Iterators.forArray(boxedValues));
+		return new AsSetIterator(typeId, Iterators.forArray(boxedValues), false);
 		//		return new SetValueImpl(typeId, SetValueImpl.createSetOfEach(boxedValues));
 	}
 
@@ -652,7 +652,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
-		return new AsSetIterator(typeId, boxedValues.iterator());
+		return new AsSetIterator(typeId, boxedValues.iterator(), false);
 		//		return new SetValueImpl(typeId, boxedValues);
 	}
 

@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.markupcs.BulletElement;
 import org.eclipse.ocl.xtext.markupcs.CompoundElement;
 import org.eclipse.ocl.xtext.markupcs.FigureElement;
@@ -75,7 +76,7 @@ public class MarkupFactoryImpl extends EFactoryImpl implements MarkupFactory {
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case MarkupPackage.BULLET_ELEMENT: return createBulletElement();
 			case MarkupPackage.COMPOUND_ELEMENT: return createCompoundElement();

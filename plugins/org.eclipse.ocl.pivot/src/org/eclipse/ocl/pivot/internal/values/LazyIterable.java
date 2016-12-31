@@ -454,7 +454,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		return size;
 	} */
 
-	int count(Object object) {
+	public int count(Object object) {
 		ElementCount elementCount = getMapOfElement2elementCount().get(object);
 		return elementCount != null ? elementCount.intValue() : 0;
 	}

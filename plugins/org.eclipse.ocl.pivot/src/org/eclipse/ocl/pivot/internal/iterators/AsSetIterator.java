@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.values;
+package org.eclipse.ocl.pivot.internal.iterators;
 
 import java.util.Iterator;
 
@@ -16,44 +16,46 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.values.LazyIterable;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
- * SetIterator provides a lazy evaluation of the Collection::asSet operation.
+ * SetIterator provides a BagIterator the beghaves as a SetValue for an arbitrary iterator.
  *
  * @since 1.3
  */
-public class AsSetIterator extends AbstractCollectionIterator implements SetValue
+public class AsSetIterator extends AbstractBagIterator implements SetValue
 {
 	private final @NonNull Iterator<? extends Object> iterator;
-	private boolean canBeIterable = true;
+	private Object next;
 
 	public AsSetIterator(@NonNull CollectionValue firstValue) {
-		this(TypeId.SET.getSpecializedId(firstValue.getElementTypeId()), firstValue.iterator());
+		this(TypeId.SET.getSpecializedId(firstValue.getElementTypeId()), firstValue.iterator(), firstValue.isUnique());
 	}
 
-	public AsSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> iterator) {
+	public AsSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> iterator, boolean sourceIteratorIsUnique) {
 		super(typeId);
 		this.iterator = iterator;
 		assert !isOrdered();
 		assert isUnique();
+		if (!sourceIteratorIsUnique) {
+			getMapOfElement2elementCount();
+		}
 	}
 
 	@Override
-	protected boolean canBeIterable() {
-		return canBeIterable;
+	protected Object getNext() {
+		return next;
 	}
 
 	@Override
-	public boolean hasNext() {
-		return iterator.hasNext();
-	}
-
-	@Override
-	public @Nullable Object next() {
-		canBeIterable = false;
-		return iterator.next();
+	protected int getNextCount() {
+		if (iterator.hasNext()) {
+			next = iterator.next();
+			return 1;
+		}
+		return 0;
 	}
 
 	@Override
