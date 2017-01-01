@@ -65,10 +65,11 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.internal.iterators.CollectionLiteralIterator;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.internal.values.CollectionLiteralIterator;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager;
 import org.eclipse.ocl.pivot.library.EvaluatorSingleIterationManager;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -214,7 +215,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 				literalElements.add(itemValue);
 			}
 		}
-		return new CollectionLiteralIterator(collectionLiteralExp, literalElements);
+		return new CollectionLiteralIterator((CollectionTypeId) collectionLiteralExp.getTypeId(), literalElements);
 		// construct the appropriate collection from the parts
 		// based on the collection kind.
 		/*		List<CollectionLiteralPart> parts = cl.getOwnedParts();

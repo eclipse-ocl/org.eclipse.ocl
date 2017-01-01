@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.values;
+package org.eclipse.ocl.pivot.internal.iterators;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -400,11 +400,35 @@ public class LazyIterable<E> implements IndexableIterable<E>
 
 	private @Nullable ElementCount spareElementCount = null;
 
+	/**
+	 * @since 1.3
+	 */
+	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyList = null;
+
+	/**
+	 * @since 1.3
+	 */
+	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyMap = null;
+
 	public LazyIterable(@NonNull Iterator<E> internalIterator, boolean isOrdered, boolean isUnique) {
 		this.internalIterator = internalIterator;
 		this.isOrdered = isOrdered;
 		this.isUnique = isUnique;
+		Map<Class<?>, Integer> collectionClass2lazyList2 = collectionClass2lazyList;
+		if (collectionClass2lazyList2 != null) {
+			Class<?> collectionClass = internalIterator.getClass();
+			Integer count = collectionClass2lazyList2.get(collectionClass);
+			count = count != null ? count+1 : 1;
+			collectionClass2lazyList2.put(collectionClass, count);
+		}
 		if (!isOrdered || isUnique) {
+			Map<Class<?>, Integer> collectionClass2lazyMap2 = collectionClass2lazyMap;
+			if (collectionClass2lazyMap2 != null) {
+				Class<?> collectionClass = internalIterator.getClass();
+				Integer count = collectionClass2lazyMap2.get(collectionClass);
+				count = count != null ? count+1 : 1;
+				collectionClass2lazyMap2.put(collectionClass, count);
+			}
 			lazyMapOfElement2elementCount = new HashMap<>();
 		}
 	}
@@ -540,6 +564,13 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	public synchronized @NonNull Map<E, @NonNull ElementCount> getMapOfElement2elementCount() {
 		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
 		if (lazyMapOfElement2elementCount2 == null) {
+			Map<Class<?>, Integer> collectionClass2lazyMap2 = collectionClass2lazyMap;
+			if (collectionClass2lazyMap2 != null) {
+				Class<?> collectionClass = internalIterator.getClass();
+				Integer count = collectionClass2lazyMap2.get(collectionClass);
+				count = count != null ? count+1 : 1;
+				collectionClass2lazyMap2.put(collectionClass, count);
+			}
 			lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
 			for (E element : lazyListOfElements) {
 				addToCounts(element);

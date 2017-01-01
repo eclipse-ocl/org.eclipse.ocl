@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.LazyIterable;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 
@@ -27,16 +26,15 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
  */
 public class AsOrderedSetIterator extends AbstractBagIterator implements OrderedSetValue
 {
-	private final @NonNull Iterator<? extends Object> iterator;
-	private Object next;
+	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsOrderedSetIterator(@NonNull CollectionValue collectionValue) {
-		this(TypeId.ORDERED_SET.getSpecializedId(collectionValue.getElementTypeId()), collectionValue.iterator(), collectionValue.isUnique());
+	public AsOrderedSetIterator(@NonNull CollectionValue sourceValue) {
+		this(TypeId.ORDERED_SET.getSpecializedId(sourceValue.getElementTypeId()), sourceValue.iterator(), sourceValue.isUnique());
 	}
 
-	public AsOrderedSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> iterator, boolean sourceIteratorIsUnique) {
+	public AsOrderedSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsUnique) {
 		super(typeId);
-		this.iterator = iterator;
+		this.sourceIterator = sourceIterator;
 		assert isOrdered();
 		assert isUnique();
 		if (!sourceIteratorIsUnique) {
@@ -45,14 +43,9 @@ public class AsOrderedSetIterator extends AbstractBagIterator implements Ordered
 	}
 
 	@Override
-	protected Object getNext() {
-		return next;
-	}
-
-	@Override
 	protected int getNextCount() {
-		if (iterator.hasNext()) {
-			next = iterator.next();
+		if (sourceIterator.hasNext()) {
+			setNext(sourceIterator.next());
 			return 1;
 		}
 		return 0;

@@ -13,8 +13,6 @@ package org.eclipse.ocl.pivot.internal.iterators;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.BagIterator;
-import org.eclipse.ocl.pivot.internal.values.LazyIterable;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -24,44 +22,40 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  */
 public class IntersectionIterator extends AbstractBagIterator
 {
-	public static @NonNull IntersectionIterator intersection(@NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
-		TypeId elementTypeId = firstValue.getElementTypeId();
-		if (firstValue.isUnique()) {
+	public static @NonNull IntersectionIterator intersection(@NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
+		TypeId elementTypeId = sourceValue.getElementTypeId();
+		if (sourceValue.isUnique()) {
 			CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(setTypeId, firstValue, secondValue);
+			return new IntersectionIterator(setTypeId, sourceValue, secondValue);
 		}
 		else if (secondValue.isUnique()) {
 			CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(setTypeId, secondValue, firstValue);
+			return new IntersectionIterator(setTypeId, secondValue, sourceValue);
 		}
 		else {
 			CollectionTypeId bagTypeId = TypeId.BAG.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(bagTypeId, firstValue, secondValue);
+			return new IntersectionIterator(bagTypeId, sourceValue, secondValue);
 		}
 	}
 
-	private final @NonNull LazyIterable<? extends Object> reference;
-	private final @NonNull BagIterator<Object> iterator;
-	private Object next;
+	private final @NonNull LazyIterable<? extends Object> sourceIterable;
+	private final @NonNull BagIterator<Object> secondIterator;
 
-	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue, @NonNull CollectionValue secondValue) {
+	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
 		super(collectionTypeId);
-		Iterable<? extends Object> iterable = firstValue.iterable();
-		this.reference = iterable instanceof LazyIterable ? (LazyIterable<? extends Object>)iterable : new LazyIterable<>(firstValue.iterator(), firstValue.isOrdered(), firstValue.isUnique());;
-		this.iterator = secondValue.iterator();
-	}
-
-	@Override
-	protected Object getNext() {
-		return next;
+		Iterable<? extends Object> sourceIterable = sourceValue.iterable();
+		this.sourceIterable = sourceIterable instanceof LazyIterable ? (LazyIterable<? extends Object>)sourceIterable : new LazyIterable<>(sourceValue.iterator(), sourceValue.isOrdered(), sourceValue.isUnique());;
+		this.secondIterator = secondValue.iterator();
 	}
 
 	@Override
 	protected int getNextCount() {
-		for (int nextCount; (nextCount = iterator.hasNextCount()) > 0; ) {
-			next = iterator.next();
-			nextCount = Math.min(nextCount, reference.count(next));
+		int nextCount = 0;
+		while ((nextCount = secondIterator.hasNextCount()) > 0) {
+			Object next = secondIterator.next();
+			nextCount = Math.min(nextCount, sourceIterable.count(next));
 			if (nextCount > 0) {
+				setNext(next);
 				return nextCount;
 			}
 		}
@@ -71,9 +65,9 @@ public class IntersectionIterator extends AbstractBagIterator
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("Intersection{");
-		s.append(reference.iterator());
+		s.append(sourceIterable.iterator());
 		s.append(", ");
-		s.append(iterator);
+		s.append(secondIterator);
 		s.append("}");
 	}
 }

@@ -1,0 +1,58 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Willink Transformations and others.
+ * All rights reserved.   This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   E.D.Willink - Initial API and implementation
+ *******************************************************************************/
+package org.eclipse.ocl.pivot.internal.iterators;
+
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.values.CollectionValue;
+
+/**
+ * ExcludingAllIterator provides a lazy evaluation of the Collection::excludingAll operation.
+ *
+ * @since 1.3
+ */
+public class ExcludingAllIterator extends AbstractBagIterator
+{
+	public static @NonNull CollectionValue excludingAll(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
+		return new ExcludingAllIterator(sourceValue, excludeValue);
+	}
+
+	private final @NonNull BagIterator<@Nullable Object> sourceIiterator;
+	private final @NonNull CollectionValue excludeValue;
+
+	public ExcludingAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
+		super(sourceValue.getTypeId());
+		this.sourceIiterator = sourceValue.iterator();
+		this.excludeValue = excludeValue;
+		//		this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
+	}
+
+	@Override
+	public int getNextCount() {
+		for (int nextCount; (nextCount = sourceIiterator.hasNextCount()) > 0; ) {
+			Object next = sourceIiterator.next();
+			if (!excludeValue.includes(next)) {
+				setNext(next);
+				return nextCount;
+			}
+		}
+		return 0;
+	}
+
+	@Override
+	public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		s.append("ExcludingAll{");
+		s.append(sourceIiterator);
+		s.append(",");
+		s.append(excludeValue);
+		s.append("}");
+	}
+}

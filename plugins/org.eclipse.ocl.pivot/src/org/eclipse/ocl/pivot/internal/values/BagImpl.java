@@ -21,6 +21,7 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
@@ -40,12 +41,12 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	 */
 	private static class BagIterator<E> implements Iterator<E>
 	{
-		private final @NonNull Map<E, @NonNull ElementCount> map;
+		private final @NonNull Map<E, org.eclipse.ocl.pivot.internal.iterators.ElementCount> map;
 		private final @NonNull Iterator<E> objectIterator;
 		private E currentObject;
 		private int residualCount;
 
-		private BagIterator(@NonNull Map<E, @NonNull ElementCount> map, @NonNull Iterator<E> objectIterator) {
+		private BagIterator(@NonNull Map<E, org.eclipse.ocl.pivot.internal.iterators.ElementCount> map, @NonNull Iterator<E> objectIterator) {
 			this.map = map;
 			this.objectIterator = objectIterator;
 			assert objectIterator.hasNext();
@@ -93,7 +94,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 		return (Bag<E>) ValueUtil.EMPTY_BAG;
 	}
 
-	private final @NonNull Map<E, @NonNull ElementCount> map = new HashMap<>();
+	private final @NonNull Map<E, org.eclipse.ocl.pivot.internal.iterators.@NonNull ElementCount> map = new HashMap<>();
 	private int size = 0;
 	private @Nullable Integer hashCode = null;
 
@@ -137,11 +138,11 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 		}
 		else {
 			spareCounter = null;
-			newCounter.value = 1;
+			newCounter.setValue(1);
 		}
 		ElementCount oldCounter = map.put(anElement, newCounter);
 		if (oldCounter != null) {
-			newCounter.value += oldCounter.value;
+			newCounter.setValue(newCounter.intValue() + oldCounter.intValue());
 			spareCounter = oldCounter;;
 		}
 		size++;
@@ -164,7 +165,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	@Override
 	public int count(Object anElement) {
 		ElementCount count = map.get(anElement);
-		return count != null ? count.value : 0;
+		return count != null ? count.intValue() : 0;
 	}
 
 	/**
@@ -245,7 +246,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 		if (count == null) {
 			return false;
 		}
-		size -= count.value;
+		size -= count.intValue();
 		hashCode = null;
 		return true;
 	}

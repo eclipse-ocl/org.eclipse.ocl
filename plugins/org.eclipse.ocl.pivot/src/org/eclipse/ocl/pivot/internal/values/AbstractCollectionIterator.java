@@ -17,6 +17,8 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.internal.iterators.BagIterator;
+import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -37,7 +39,7 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 {
 	private @Nullable LazyIterable<@Nullable Object> iterable = null;
 	private int hashCode = 0;
-	private boolean usedAsIterator = false;
+	//	private boolean usedAsIterator = false;
 
 	protected AbstractCollectionIterator(@NonNull CollectionTypeId typeId) {
 		super(typeId);
@@ -48,7 +50,7 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 		return asEagerCollectionValue().asCollection();
 	}
 
-	private @NonNull CollectionValue asEagerCollectionValue() {
+	public @NonNull CollectionValue asEagerCollectionValue() {
 		if (isOrdered()) {
 			if (isUnique()) {
 				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
@@ -164,6 +166,7 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 	 * Return true if this iterator has not yet iterated and so it is not too late
 	 * to create a LazyIterable to support multiple access.
 	 */
+	@Deprecated
 	protected abstract boolean canBeIterable();
 
 	public @Nullable Object first() {
@@ -316,7 +319,7 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 		return iterable2;
 	}
 
-	@Override
+	/*	@Override
 	public @NonNull BagIterator<@Nullable Object> iterator() {
 		if (usedAsIterator) {
 			throw new IllegalStateException("Must invoke iterable() before first of multiple iterator() calls.");
@@ -328,7 +331,7 @@ public abstract class AbstractCollectionIterator extends AbstractCollectionValue
 			usedAsIterator = true;
 			return this;
 		}
-	}
+	} */
 
 	public @Nullable Object last() {
 		return at(intSize());

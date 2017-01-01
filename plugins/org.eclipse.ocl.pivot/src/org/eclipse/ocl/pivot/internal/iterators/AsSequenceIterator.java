@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.LazyIterable;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 
@@ -27,29 +26,23 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
  */
 public class AsSequenceIterator extends AbstractBagIterator implements SequenceValue
 {
-	private final @NonNull Iterator<? extends Object> iterator;
-	private Object next;
+	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsSequenceIterator(@NonNull CollectionValue collectionValue) {
-		this(TypeId.SEQUENCE.getSpecializedId(collectionValue.getElementTypeId()), collectionValue.iterator());
+	public AsSequenceIterator(@NonNull CollectionValue sourceValue) {
+		this(TypeId.SEQUENCE.getSpecializedId(sourceValue.getElementTypeId()), sourceValue.iterator());
 	}
 
-	public AsSequenceIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> iterator) {
+	public AsSequenceIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator) {
 		super(typeId);
-		this.iterator = iterator;
+		this.sourceIterator = sourceIterator;
 		assert isOrdered();
 		assert !isUnique();
 	}
 
 	@Override
-	protected Object getNext() {
-		return next;
-	}
-
-	@Override
 	protected int getNextCount() {
-		if (iterator.hasNext()) {
-			next = iterator.next();
+		if (sourceIterator.hasNext()) {
+			setNext(sourceIterator.next());
 			return 1;
 		}
 		return 0;

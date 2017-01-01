@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
+import org.eclipse.ocl.pivot.internal.values.AbstractCollectionIterator;
 import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -254,7 +255,8 @@ public class TestOCL extends OCLInternal
 			}
 			PivotTestSuite.failNotEquals(message + " badHash", expectedHash, actualHash);
 		}
-		PivotTestSuite.failNotEquals(message, expected, actual);
+		Object actual2 = actual instanceof AbstractCollectionIterator ? ((AbstractCollectionIterator)actual).asEagerCollectionValue() : actual;
+		PivotTestSuite.failNotEquals(message, expected, actual2);
 	}
 
 	/**

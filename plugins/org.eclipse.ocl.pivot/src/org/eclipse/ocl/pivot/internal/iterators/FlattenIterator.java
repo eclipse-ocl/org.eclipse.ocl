@@ -8,10 +8,8 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.values;
+package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -26,15 +24,15 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class FlattenIterator extends AbstractCollectionIterator
+public class FlattenIterator extends AbstractBagIterator
 {
-	public static @NonNull CollectionValue flatten(@NonNull CollectionValue firstValue) {
-		CollectionTypeId collectionTypeId = firstValue.getTypeId();
+	public static @NonNull CollectionValue flatten(@NonNull CollectionValue sourceValue) {
+		CollectionTypeId collectionTypeId = sourceValue.getTypeId();
 		TypeId typeId = collectionTypeId;
 		while ((typeId instanceof CollectionTypeId) && !(typeId instanceof OclVoidTypeId)) {
 			typeId = ((CollectionTypeId)typeId).getElementTypeId();
 		}
-		return new FlattenIterator(collectionTypeId.getGeneralizedId().getSpecializedId(typeId), firstValue);
+		return new FlattenIterator(collectionTypeId.getGeneralizedId().getSpecializedId(typeId), sourceValue);
 		/*		if (isOrdered()) {
 			if (isUnique()) {
 				OrderedSet<Object> flattened = new OrderedSetImpl<Object>();
@@ -77,62 +75,45 @@ public class FlattenIterator extends AbstractCollectionIterator
 		} */
 	}
 
-	private @NonNull Iterator<@Nullable Object> iterator;
-	private @Nullable Stack<@NonNull Iterator<@Nullable Object>> iteratorStack = null;
-	private boolean canBeIterable = true;
-	private boolean hasNext = false;
-	private Object next;
+	private @NonNull BagIterator<@Nullable Object> sourceIterator;
+	private @Nullable Stack<@NonNull BagIterator<@Nullable Object>> iteratorStack = null;
 
-	public FlattenIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue firstValue) {
+	public FlattenIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue) {
 		super(collectionTypeId);
-		this.iterator = firstValue.iterator();
+		this.sourceIterator = sourceValue.iterator();
 	}
 
 	@Override
-	protected boolean canBeIterable() {
-		return canBeIterable;
-	}
-
-	@Override
-	public boolean hasNext() {
-		if (iterator.hasNext()) {
-			canBeIterable = false;
-			next = iterator.next();
+	public int getNextCount() {
+		int nextCount = sourceIterator.hasNextCount();
+		if (nextCount > 0) {
+			Object next = sourceIterator.next();
 			if (next instanceof CollectionValue) {
-				Stack<Iterator<@Nullable Object>> iteratorStack2 = iteratorStack;
+				Stack<BagIterator<@Nullable Object>> iteratorStack2 = iteratorStack;
 				if (iteratorStack2 == null) {
 					iteratorStack2 = iteratorStack = new Stack<>();
 				}
-				iteratorStack2.push(iterator);
-				iterator = ((CollectionValue)next).iterator();
-				return hasNext();
+				iteratorStack2.push(sourceIterator);
+				sourceIterator = ((CollectionValue)next).iterator();
+				return hasNextCount();
 			}
-			hasNext = true;
-			return true;
+			setNext(next);
+			return nextCount;
 		}
-		Stack<Iterator<@Nullable Object>> iteratorStack2 = iteratorStack;
+		Stack<BagIterator<@Nullable Object>> iteratorStack2 = iteratorStack;
 		if ((iteratorStack2 == null) || iteratorStack2.isEmpty()) {
-			return false;
+			return 0;
 		}
-		Iterator<@Nullable Object> popped = iteratorStack2.pop();
+		BagIterator<@Nullable Object> popped = iteratorStack2.pop();
 		assert popped != null;
-		iterator = popped;
-		return hasNext();
-	}
-
-	@Override
-	public @Nullable Object next() {
-		if (!hasNext) {
-			throw new NoSuchElementException();
-		}
-		hasNext = false;
-		return next;
+		sourceIterator = popped;
+		return hasNextCount();
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("Flatten{");
-		s.append(iterator);
+		s.append(sourceIterator);
 		s.append("}");
 	}
 }

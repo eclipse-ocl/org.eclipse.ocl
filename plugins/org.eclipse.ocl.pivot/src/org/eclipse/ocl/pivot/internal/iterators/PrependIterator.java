@@ -1,0 +1,139 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Willink Transformations and others.
+ * All rights reserved.   This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   E.D.Willink - Initial API and implementation
+ *******************************************************************************/
+package org.eclipse.ocl.pivot.internal.iterators;
+
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
+import org.eclipse.ocl.pivot.values.CollectionValue;
+
+/**
+ * PrependIterator provides a lazy evaluation of the Collection::prepend operation.
+ *
+ * @since 1.3
+ */
+public abstract class PrependIterator extends AbstractBagIterator
+{
+	public static @NonNull CollectionValue prepend(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
+		if (sourceValue.isUnique()) {
+			return new ToUnique(collectionTypeId, sourceValue, object);
+		}
+		else if (sourceValue.isOrdered()) {
+			return new ToSequence(collectionTypeId, sourceValue, object);
+		}
+		else {
+			return new ToBag(collectionTypeId, sourceValue, object);
+		}
+	}
+
+	protected final @NonNull BagIterator<@Nullable Object> sourceIterator;
+	protected final @Nullable Object object;
+	protected int prependCount = 0;
+
+	public PrependIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
+		super(collectionTypeId);
+		this.object = object;
+		this.sourceIterator = sourceValue.iterator();
+	}
+
+	@Override
+	public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		s.append("Prepend{");
+		s.append(sourceIterator);
+		s.append(",");
+		s.append(object instanceof String ? "'" + object + "'" : object);
+		s.append("}");
+	}
+
+	// The prepended value increments the coount of a pre-existing value else it goes at the end.
+	private static class ToBag extends PrependIterator
+	{
+		private final @NonNull CollectionValue sourceValue;
+		private final @NonNull EqualsStrategy equalsStrategy;
+
+		public ToBag(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+			super(collectionTypeId, sourceValue, secondValue);
+			this.sourceValue = sourceValue;
+			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
+		}
+
+		@Override
+		protected int getNextCount() {
+			if (prependCount <= 0) {
+				Object next = object;
+				prependCount = 1 + sourceValue.count(next).intValue();
+				setNext(next);
+				return prependCount;
+			}
+			for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
+				Object next = sourceIterator.next();
+				if ((prependCount == 0) || !equalsStrategy.isEqual(next, object)) {
+					setNext(next);
+					return nextCount;
+				}
+			}
+			return 0;
+		}
+	}
+
+	// The prepended value goes at the beginning.
+	private static class ToSequence extends PrependIterator
+	{
+		public ToSequence(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+			super(collectionTypeId, sourceValue, secondValue);
+		}
+
+		@Override
+		protected int getNextCount() {
+			if (prependCount <= 0) {
+				setNext(object);
+				prependCount = 1;
+				return 1;
+			}
+			int nextCount = sourceIterator.hasNextCount();
+			if (nextCount > 0) {
+				setNext(sourceIterator.next());
+				return nextCount;
+			}
+			return 0;
+		}
+	}
+
+	// The prepended value goes at the beginning.
+	private static class ToUnique extends PrependIterator
+	{
+		private final @NonNull EqualsStrategy equalsStrategy;
+
+		public ToUnique(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+			super(collectionTypeId, sourceValue, secondValue);
+			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
+		}
+
+		@Override
+		protected int getNextCount() {
+			if (prependCount <= 0) {
+				setNext(object);
+				prependCount = 1;
+				return 1;
+			}
+			for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
+				assert nextCount == 1;
+				Object next = sourceIterator.next();
+				if (!equalsStrategy.isEqual(next, object)) {
+					setNext(next);
+					return nextCount;
+				}
+			}
+			return 0;
+		}
+	}
+}

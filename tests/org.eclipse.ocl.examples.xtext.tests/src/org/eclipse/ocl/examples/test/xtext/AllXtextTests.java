@@ -51,6 +51,7 @@ import org.eclipse.ocl.examples.test.label.PluginLabelTests;
 import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
+import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.internal.values.AbstractCollectionIterator;
 import org.eclipse.ocl.pivot.internal.values.CollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -89,15 +90,17 @@ extends TestCase {
 
 			@Override
 			public void run(TestResult result) {
-				Map<@NonNull Class<? extends CollectionValue>, @NonNull Integer> collectionClass2count = CollectionValueImpl.collectionClass2count = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = CollectionValueImpl.collectionClass2count = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyList = LazyIterable.collectionClass2lazyList = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyMap = LazyIterable.collectionClass2lazyMap = new HashMap<>();
 				super.run(result);
 				int iteratorCounts = 0;
 				int nonIteratorCounts = 0;
-				List<@NonNull Class<? extends CollectionValue>> keySet = new ArrayList<>(collectionClass2count.keySet());
-				Collections.sort(keySet, new Comparator<@NonNull Class<? extends CollectionValue>>()
+				List<@NonNull Class<?>> keySet = new ArrayList<>(collectionClass2count.keySet());
+				Collections.sort(keySet, new Comparator<@NonNull Class<?>>()
 				{
 					@Override
-					public int compare(@NonNull Class<? extends CollectionValue> o1, @NonNull Class<? extends CollectionValue> o2) {
+					public int compare(@NonNull Class<?> o1, @NonNull Class<?> o2) {
 						boolean h1 = AbstractCollectionIterator.class.isAssignableFrom(o1);
 						boolean h2 = AbstractCollectionIterator.class.isAssignableFrom(o2);
 						if (h1 != h2) {
@@ -106,9 +109,11 @@ extends TestCase {
 						return o1.getName().compareTo(o2.getName());
 					}
 				});
-				for (@NonNull Class<? extends CollectionValue> collectionClass : keySet) {
+				for (@NonNull Class<?> collectionClass : keySet) {
 					Integer count = collectionClass2count.get(collectionClass);
-					System.out.println(collectionClass.getName() + " : " + count);
+					Integer lazyListCount = collectionClass2lazyList.get(collectionClass);
+					Integer lazyMapCount = collectionClass2lazyMap.get(collectionClass);
+					System.out.println(collectionClass.getName() + " : " + count + " : " + lazyListCount + " : " + lazyMapCount);
 					if (AbstractCollectionIterator.class.isAssignableFrom(collectionClass)) {
 						iteratorCounts += count;
 					}

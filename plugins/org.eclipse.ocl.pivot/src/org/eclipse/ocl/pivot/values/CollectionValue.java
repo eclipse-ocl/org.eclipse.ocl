@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.BagIterator;
+import org.eclipse.ocl.pivot.internal.iterators.BagIterator;
 
 /**
  * @noimplement This interface is not intended to be implemented by clients.

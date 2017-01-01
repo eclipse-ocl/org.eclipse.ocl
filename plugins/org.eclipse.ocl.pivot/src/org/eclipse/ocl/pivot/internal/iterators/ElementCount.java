@@ -9,12 +9,12 @@
  *   Christian W. Damus - Initial API and implementation
  *   E.D.Willink - Polish
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.values;
+package org.eclipse.ocl.pivot.internal.iterators;
 
 /**
  * ElementCount is used as the count of a Bag element. It avoids thrashing Integer objects as counts evolve.
  */
-class ElementCount extends Number
+public class ElementCount extends Number
 {
 	private static final long serialVersionUID = -4943324197108585350L;
 
@@ -58,6 +58,10 @@ class ElementCount extends Number
 	@Override
 	public long longValue() {
 		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
 	}
 
 	@Override

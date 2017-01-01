@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.LazyIterable;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
@@ -27,16 +26,15 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  */
 public class AsBagIterator extends AbstractBagIterator implements BagValue
 {
-	private final @NonNull Iterator<? extends Object> iterator;
-	private Object next;
+	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsBagIterator(@NonNull CollectionValue collectionValue) {
-		this(TypeId.BAG.getSpecializedId(collectionValue.getElementTypeId()), collectionValue.iterator(), collectionValue.isUnique() || !collectionValue.isOrdered());
+	public AsBagIterator(@NonNull CollectionValue sourceValue) {
+		this(TypeId.BAG.getSpecializedId(sourceValue.getElementTypeId()), sourceValue.iterator(), sourceValue.isUnique() || !sourceValue.isOrdered());
 	}
 
-	public AsBagIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> iterator, boolean sourceIteratorIsBagLike) {
+	public AsBagIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsBagLike) {
 		super(typeId);
-		this.iterator = iterator;
+		this.sourceIterator = sourceIterator;
 		assert !isOrdered();
 		assert !isUnique();
 		if (!sourceIteratorIsBagLike) {
@@ -45,14 +43,9 @@ public class AsBagIterator extends AbstractBagIterator implements BagValue
 	}
 
 	@Override
-	protected Object getNext() {
-		return next;
-	}
-
-	@Override
 	protected int getNextCount() {
-		if (iterator.hasNext()) {
-			next = iterator.next();
+		if (sourceIterator.hasNext()) {
+			setNext(sourceIterator.next());
 			return 1;
 		}
 		return 0;

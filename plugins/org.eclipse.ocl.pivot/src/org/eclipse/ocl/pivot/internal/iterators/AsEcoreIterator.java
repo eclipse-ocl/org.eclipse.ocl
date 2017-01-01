@@ -8,9 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.values;
-
-import java.util.Iterator;
+package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -24,48 +22,40 @@ import org.eclipse.ocl.pivot.values.Value;
  *
  * @since 1.3
  */
-public class AsEcoreIterator extends AbstractCollectionIterator
+public class AsEcoreIterator extends AbstractBagIterator
 {
 	private final @NonNull IdResolver idResolver;
 	private final @Nullable Class<?> instanceClass;
-	private final @NonNull Iterator<@Nullable Object> iterator;
-	private boolean canBeIterable = true;
+	private final @NonNull BagIterator<@Nullable Object> sourceIterator;
 
-	public AsEcoreIterator(@NonNull CollectionValue firstValue, @NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
-		super(firstValue.getTypeId());
+	public AsEcoreIterator(@NonNull CollectionValue sourceValue, @NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+		super(sourceValue.getTypeId());
 		this.idResolver = idResolver;
 		this.instanceClass = instanceClass;
-		this.iterator = firstValue.iterator();
+		this.sourceIterator = sourceValue.iterator();
 	}
 
 	@Override
-	protected boolean canBeIterable() {
-		return canBeIterable;
-	}
-
-	@Override
-	public boolean hasNext() {
-		return iterator.hasNext();
-	}
-
-	@Override
-	public @Nullable Object next() {
-		canBeIterable = false;
-		Object element = iterator.next();
-		if (element instanceof Value)
-			return ((Value)element).asEcoreObject(idResolver, instanceClass);
-		else if (element instanceof EnumerationLiteralId) {
-			return idResolver.unboxedValueOf(element);
+	public int getNextCount() {
+		int hasNextCount = sourceIterator.hasNextCount();
+		if (hasNextCount > 0) {
+			Object element = sourceIterator.next();
+			if (element instanceof Value)
+				setNext(((Value)element).asEcoreObject(idResolver, instanceClass));
+			else if (element instanceof EnumerationLiteralId) {
+				setNext(idResolver.unboxedValueOf(element));
+			}
+			else {
+				setNext(element);
+			}
 		}
-		else {
-			return element;
-		}
+		return hasNextCount;
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("AsEcore{");
-		s.append(iterator);
+		s.append(sourceIterator);
 		s.append("}");
 	}
 }

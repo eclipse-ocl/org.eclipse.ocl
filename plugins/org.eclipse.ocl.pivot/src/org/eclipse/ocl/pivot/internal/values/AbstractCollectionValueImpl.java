@@ -32,11 +32,21 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AppendAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AppendIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.BagIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
+import org.eclipse.ocl.pivot.internal.iterators.PrependAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.PrependIterator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -234,7 +244,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	/**
 	 * @since 1.3
 	 */
-	public static @Nullable Map<@NonNull Class<? extends CollectionValue>, @NonNull Integer> collectionClass2count = null;
+	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = null;
 
 	/**
 	 * @since 1.3
@@ -270,6 +280,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		 * Returns new array iterator over the given object array
 		 */
 		public WrappedBagIterator(@NonNull Iterator<? extends T> iterator) {
+			assert !(iterator instanceof BagIterator);
 			this.iterator = iterator;
 		}
 
@@ -319,7 +330,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	protected AbstractCollectionValueImpl(@NonNull CollectionTypeId typeId) {
 		this.typeId = typeId;
 		this.collectionFactory = AbstractCollectionFactory.getCollectionFactory(typeId);
-		Map<Class<? extends CollectionValue>, Integer> collectionClass2count2 = collectionClass2count;
+		Map<Class<?>, Integer> collectionClass2count2 = collectionClass2count;
 		if (collectionClass2count2 != null) {
 			Class<? extends @NonNull CollectionValue> collectionClass = getClass();
 			Integer count = collectionClass2count2.get(collectionClass);
@@ -760,9 +771,25 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		return intSize() != 0;
 	}
 
+	public boolean isBag() {
+		return collectionFactory.isBag();
+	}
+
 	@Override
 	public boolean isOrdered() {
 		return collectionFactory.isOrdered();
+	}
+
+	public boolean isOrderedSet() {
+		return collectionFactory.isOrderedSet();
+	}
+
+	public boolean isSequence() {
+		return collectionFactory.isSequence();
+	}
+
+	public boolean isSet() {
+		return collectionFactory.isSet();
 	}
 
 	@Override
@@ -773,7 +800,11 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	@Override
 	public @NonNull BagIterator<@Nullable Object> iterator() {
 		Iterable<? extends Object> elements = iterable();
-		if (elements instanceof BagIterator) {
+		if (this instanceof BagIterator) {
+			iterable();
+			return (BagIterator<@Nullable Object>) this;
+		}
+		else if (elements instanceof BagIterator) {
 			@SuppressWarnings("unchecked")
 			BagIterator<@Nullable Object> castElements = (BagIterator<@Nullable Object>)elements;
 			return castElements;

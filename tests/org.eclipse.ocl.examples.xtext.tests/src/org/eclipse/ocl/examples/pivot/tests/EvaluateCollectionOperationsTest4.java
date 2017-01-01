@@ -102,6 +102,8 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionAppendAll() {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', 'c', 'd'}", "OrderedSet{'a', 'b'}->appendAll(OrderedSet{'c', 'd'})");
+		//
 		ocl.assertQueryResults(null, "Sequence{'a', 'b', 'c', 'd'}", "Sequence{'a', 'b'}->appendAll(Sequence{'c', 'd'})");
 		ocl.assertQueryResults(null, "Sequence{'a', 'b', 'c', 'd'}", "Sequence{'a', 'b'}->appendAll(OrderedSet{'c', 'd'})");
 		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', 'c', 'd'}", "OrderedSet{'a', 'b'}->appendAll(Sequence{'c', 'd'})");
@@ -1093,6 +1095,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionIntersection() {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryResults(null, "Bag{'a', 'b'}", "Bag{'a', 'b'}->intersection(Bag{'a', 'b', 'a'})");
 		// No duplicates
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{'a', 'b'}->intersection(Set{'c', 'd'})");
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{'a', 'b'}->intersection(Sequence{'c', 'd'})");

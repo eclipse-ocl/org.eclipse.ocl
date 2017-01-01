@@ -20,6 +20,10 @@ import org.eclipse.jdt.annotation.NonNull;
 public interface CollectionFactory
 {
 	@NonNull String getKind();
+	boolean isBag();
 	boolean isOrdered();
+	boolean isOrderedSet();
+	boolean isSequence();
+	boolean isSet();
 	boolean isUnique();
 }

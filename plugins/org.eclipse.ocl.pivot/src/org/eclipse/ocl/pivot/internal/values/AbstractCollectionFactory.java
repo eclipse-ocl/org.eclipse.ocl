@@ -97,8 +97,28 @@ public abstract class AbstractCollectionFactory implements CollectionFactory
 	}
 
 	@Override
+	public boolean isBag() {
+		return !isUnique && !isOrdered;
+	}
+
+	@Override
 	public boolean isOrdered() {
 		return isOrdered;
+	}
+
+	@Override
+	public boolean isOrderedSet() {
+		return isUnique && isOrdered;
+	}
+
+	@Override
+	public boolean isSequence() {
+		return !isUnique && isOrdered;
+	}
+
+	@Override
+	public boolean isSet() {
+		return isUnique && !isOrdered;
 	}
 
 	@Override
