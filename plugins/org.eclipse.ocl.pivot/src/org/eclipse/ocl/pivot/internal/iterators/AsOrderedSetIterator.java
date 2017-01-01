@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
+import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 
 /**
  * AsOrderedSetIterator provides a BaggableIterator that behaves as an OrderedSetValue for an arbitrary iterator.
@@ -48,6 +49,24 @@ public class AsOrderedSetIterator extends AbstractBaggableIterator implements Or
 			return setNext(sourceIterator.next(), 1);
 		}
 		return 0;
+	}
+
+	@Override
+	@Deprecated
+	public @NonNull UniqueCollectionValue minus(@NonNull UniqueCollectionValue that) {
+		return super.minus(that).asUniqueCollectionValue();
+	}
+
+	@Override
+	@Deprecated
+	public @NonNull OrderedSetValue subOrderedSet(int lower, int upper) {
+		return super.subOrderedSet(lower, upper).asOrderedSetValue();
+	}
+
+	@Override
+	@Deprecated
+	public @NonNull UniqueCollectionValue symmetricDifference(@NonNull UniqueCollectionValue that) {
+		return symmetricDifference((CollectionValue)that).asUniqueCollectionValue();
 	}
 
 	@Override

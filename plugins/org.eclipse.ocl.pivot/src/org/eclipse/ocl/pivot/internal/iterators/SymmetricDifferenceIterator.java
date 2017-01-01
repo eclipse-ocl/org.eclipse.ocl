@@ -16,30 +16,42 @@ import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
- * ExcludingAllIterator provides a lazy evaluation of the Collection::excludingAll operation.
+ * SymmetricDifferenceIterator provides a lazy evaluation of the Collection::symmetricDifference operation.
  *
  * @since 1.3
  */
-public class ExcludingAllIterator extends AbstractBaggableIterator
+public class SymmetricDifferenceIterator extends AbstractBaggableIterator
 {
-	public static @NonNull CollectionValue excludingAll(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
-		return new ExcludingAllIterator(sourceValue, excludeValue);
+	public static @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
+		return new SymmetricDifferenceIterator(sourceValue, otherValue);
 	}
 
+	private final @NonNull CollectionValue sourceValue;
+	private final @NonNull CollectionValue otherValue;
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
-	private final @NonNull CollectionValue excludeValue;
+	private final @NonNull BaggableIterator<@Nullable Object> otherIterator;
 
-	public ExcludingAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
+	public SymmetricDifferenceIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
 		super(sourceValue.getTypeId());
+		sourceValue.iterable();
+		otherValue.iterable();
+		this.sourceValue = sourceValue;
+		this.otherValue = otherValue;
 		this.sourceIterator = sourceValue.iterator();
-		this.excludeValue = excludeValue;
+		this.otherIterator = otherValue.iterator();
 	}
 
 	@Override
 	public int getNextCount() {
 		for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 			Object next = sourceIterator.next();
-			if (!excludeValue.includes(next)) {
+			if (!otherValue.includes(next)) {
+				return setNext(next, nextCount);
+			}
+		}
+		for (int nextCount; (nextCount = otherIterator.hasNextCount()) > 0; ) {
+			Object next = otherIterator.next();
+			if (!sourceValue.includes(next)) {
 				return setNext(next, nextCount);
 			}
 		}
@@ -48,10 +60,10 @@ public class ExcludingAllIterator extends AbstractBaggableIterator
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append("ExcludingAll{");
-		s.append(sourceIterator);
+		s.append("SymDiff{");
+		s.append(sourceValue);
 		s.append(",");
-		s.append(excludeValue);
+		s.append(otherValue);
 		s.append("}");
 	}
 }

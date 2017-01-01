@@ -46,6 +46,9 @@ import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
 import org.eclipse.ocl.pivot.internal.iterators.PrependAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.PrependIterator;
+import org.eclipse.ocl.pivot.internal.iterators.SubOrderedSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.SubSequenceIterator;
+import org.eclipse.ocl.pivot.internal.iterators.SymmetricDifferenceIterator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -625,15 +628,6 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull TypeId getElementTypeId() {
-		//    	DomainType elementType = standardLibrary.getOclVoidType();
-		//    	for (Object value : values) {
-		//    		assert value != null;
-		//    		elementType = elementType.getCommonType(standardLibrary, standardLibrary.typeOf(value));
-		//    	}
-		//		for (Value element : iterable()) {
-		//
-		//		}
-
 		return getTypeId().getElementTypeId();
 	}
 
@@ -725,58 +719,11 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	@Override
 	public @NonNull CollectionValue intersection(@NonNull CollectionValue that) {
 		return IntersectionIterator.intersection(this, that);
-
-		/*		assert !this.isUndefined() && !that.isUndefined();
-		Collection<? extends Object> theseElements = this.asCollection();
-		Collection<? extends Object> thoseElements = that.asCollection();
-		int thisSize = theseElements.size();
-		int thatSize = thoseElements.size();
-		if (this.isUnique() || that.isUnique()) {
-			@NonNull CollectionTypeId typeId = getSetTypeId();
-			if ((thisSize == 0) || (thatSize == 0)) {
-				return new SetValueImpl(typeId, ValueUtil.EMPTY_SET);
-			}
-			Set<Object> results;
-			// loop over the smaller collection and add only elements
-			// that are in the larger collection
-			if (thisSize <= thatSize) {
-				results = new HashSet<Object>(theseElements);
-				results.retainAll(thoseElements);
-			}
-			else {
-				results = new HashSet<Object>(thoseElements);
-				results.retainAll(theseElements);
-			}
-			return new SetValueImpl(typeId, results.size() > 0 ? results : ValueUtil.EMPTY_SET);
-		}
-		else {
-			@NonNull CollectionTypeId typeId = getBagTypeId();
-			if ((thisSize == 0) || (thatSize == 0)) {
-				return new BagValueImpl(typeId, ValueUtil.EMPTY_BAG);
-			}
-			Bag<Object> results = new BagImpl<Object>();
-			// loop over the smaller collection and add only elements
-			// that are in the larger collection
-			Set<Object> minElements = new HashSet<Object>(thisSize < thatSize ? theseElements : thoseElements);
-			for (Object e : minElements) {
-				IntegerValue leftCount = this.count(e);
-				IntegerValue rightCount = that.count(e);
-				for (int i = Math.min(leftCount.asInteger(), rightCount.asInteger()); i > 0; i--) {
-					results.add(e);
-				}
-			}
-			return new BagValueImpl(typeId, results.size() > 0 ? results : ValueUtil.EMPTY_BAG);
-		} */
 	}
 
 	@Override
 	public @NonNull Boolean isEmpty() {
 		return intSize() == 0;
-	}
-
-	@Override
-	public @NonNull Boolean notEmpty() {
-		return intSize() != 0;
 	}
 
 	public boolean isBag() {
@@ -833,6 +780,15 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		}
 	}
 
+	public @NonNull CollectionValue minus(@NonNull CollectionValue that) {
+		return ExcludingAllIterator.excludingAll(this, that);
+	}
+
+	@Override
+	public @NonNull Boolean notEmpty() {
+		return intSize() != 0;
+	}
+
 	//	@Override
 	public @NonNull CollectionValue prepend(@Nullable Object value) {
 		return PrependIterator.prepend(getTypeId(), this, value);
@@ -869,6 +825,18 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		else {
 			return new SparseSequenceValueImpl(getTypeId(), values);
 		}
+	}
+
+	public @NonNull CollectionValue subOrderedSet(int lower, int upper) {
+		return SubOrderedSetIterator.subOrderedSet(this, lower, upper);
+	}
+
+	public @NonNull CollectionValue subSequence(int lower, int upper) {
+		return SubSequenceIterator.subSequence(this, lower, upper);
+	}
+
+	public @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue that) {
+		return SymmetricDifferenceIterator.symmetricDifference(this, that);
 	}
 
 	@Override

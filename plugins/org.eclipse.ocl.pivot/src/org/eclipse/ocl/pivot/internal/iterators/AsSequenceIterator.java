@@ -48,6 +48,12 @@ public class AsSequenceIterator extends AbstractBaggableIterator implements Sequ
 	}
 
 	@Override
+	@Deprecated
+	public @NonNull SequenceValue subSequence(int lower, int upper) {
+		return super.subSequence(lower, upper).asSequenceValue();
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("AsSequence{");
 		LazyIterable<@Nullable Object> iterable = basicGetIterable();

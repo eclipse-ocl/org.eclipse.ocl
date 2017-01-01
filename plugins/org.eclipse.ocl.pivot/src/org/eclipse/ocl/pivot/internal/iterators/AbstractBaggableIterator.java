@@ -32,8 +32,6 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 
 import com.google.common.collect.Lists;
@@ -133,38 +131,6 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 			}
 			else {
 				return new SparseSequenceValueImpl(getTypeId(), iterable().getListOfElements());
-			}
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	private @NonNull OrderedSetValue asEagerOrderedSetValue() {
-		if (isOrdered() && isUnique()) {
-			return new SparseOrderedSetValueImpl(getTypeId(), getElements());
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	private @NonNull SequenceValue asEagerSequenceValue() {
-		if (isOrdered() && !isUnique()) {
-			return new SparseSequenceValueImpl(getTypeId(), iterable().getListOfElements());
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	private @NonNull UniqueCollectionValue asEagerUniqueCollectionValue() {
-		if (isUnique()) {
-			if (isOrdered()) {
-				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
-			}
-			else {
-				return new SetValueImpl(getTypeId(), getElements());
 			}
 		}
 		else {
@@ -332,7 +298,7 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 			//			System.out.println(NameUtil.debugSimpleName(this) + " iterable() - withIterable: " + withIterable);
 			throw new IllegalStateException("Cannot invoke iterable() after exploiting an iterator().");
 		}
-		withIterable = Boolean.TRUE;
+		//		withIterable = Boolean.TRUE;
 		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
 		if (lazyIterable2 == null) {
 			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
@@ -365,10 +331,6 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 		return at(intSize());
 	}
 
-	public @NonNull UniqueCollectionValue minus(@NonNull UniqueCollectionValue set) {
-		return asEagerUniqueCollectionValue().minus(set);
-	}
-
 	@Override
 	public final Object next() {
 		assert withIterable != null;
@@ -389,17 +351,5 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 		this.next = next;
 		this.hasNextCount = nextCount;
 		return nextCount;
-	}
-
-	public @NonNull OrderedSetValue subOrderedSet(int lower, int upper) {
-		return asEagerOrderedSetValue().subOrderedSet(lower, upper);
-	}
-
-	public @NonNull SequenceValue subSequence(int lower, int upper) {
-		return asEagerSequenceValue().subSequence(lower, upper);
-	}
-
-	public @NonNull UniqueCollectionValue symmetricDifference(@NonNull UniqueCollectionValue set) {
-		return asEagerUniqueCollectionValue().symmetricDifference(set);
 	}
 }
