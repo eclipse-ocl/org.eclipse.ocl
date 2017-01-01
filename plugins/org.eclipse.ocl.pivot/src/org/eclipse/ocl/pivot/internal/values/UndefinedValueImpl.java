@@ -423,6 +423,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public int intCount(@Nullable Object value) {
+		return 0;
+	}
+
+	@Override
 	public int intSize() {
 		return 0;
 	}

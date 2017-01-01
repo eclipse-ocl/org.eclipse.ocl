@@ -25,6 +25,8 @@ import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -202,6 +204,11 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 		return lazyIterable;
 	}
 
+	@Override
+	public @NonNull IntegerValue count(@Nullable Object value) {
+		return ValueUtil.integerValueOf(iterable().count(value));
+	}
+
 	public @Nullable Object first() {
 		return at(1);
 	}
@@ -293,12 +300,22 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 		return hashCode;
 	}
 
+	@Override
+	public @NonNull Boolean includes(@Nullable Object value) {
+		return iterable().contains(value);
+	}
+
 	public @NonNull IntegerValue indexOf(@Nullable Object object) {
 		return asEagerOrderedCollectionValue().indexOf(object);
 	}
 
 	public @NonNull OrderedCollectionValue insertAt(int index, @Nullable Object object) {
 		return asEagerOrderedCollectionValue().insertAt(index, object);
+	}
+
+	@Override
+	public int intCount(@Nullable Object value) {
+		return iterable().count(value);
 	}
 
 	@Override
@@ -318,7 +335,8 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 		withIterable = Boolean.TRUE;
 		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
 		if (lazyIterable2 == null) {
-			lazyIterable = lazyIterable2 = new LazyIterable<>(this, collectionFactory);
+			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
+			lazyIterable = lazyIterable2 = new LazyIterable<>(this, collectionFactory, equalsStrategy);
 		}
 		return lazyIterable2;
 	}

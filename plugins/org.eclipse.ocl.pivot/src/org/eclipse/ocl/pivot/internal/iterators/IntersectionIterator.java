@@ -39,13 +39,12 @@ public class IntersectionIterator extends AbstractBaggableIterator
 		}
 	}
 
-	private final @NonNull LazyIterable<? extends Object> sourceIterable;
+	private final @NonNull CollectionValue sourceValue;
 	private final @NonNull BaggableIterator<Object> secondIterator;
 
 	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
 		super(collectionTypeId);
-		Iterable<? extends Object> sourceIterable = sourceValue.iterable();
-		this.sourceIterable = sourceIterable instanceof LazyIterable ? (LazyIterable<? extends Object>)sourceIterable : new LazyIterable<>(sourceValue.iterator(), sourceValue.getCollectionFactory());;
+		this.sourceValue = sourceValue;
 		this.secondIterator = secondValue.iterator();
 	}
 
@@ -54,7 +53,7 @@ public class IntersectionIterator extends AbstractBaggableIterator
 		int nextCount = 0;
 		while ((nextCount = secondIterator.hasNextCount()) > 0) {
 			Object next = secondIterator.next();
-			nextCount = Math.min(nextCount, sourceIterable.count(next));
+			nextCount = Math.min(nextCount, sourceValue.count(next).intValue());
 			if (nextCount > 0) {
 				return setNext(next, nextCount);
 			}
@@ -65,7 +64,7 @@ public class IntersectionIterator extends AbstractBaggableIterator
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("Intersection{");
-		s.append(sourceIterable.iterator());
+		s.append(sourceValue);
 		s.append(", ");
 		s.append(secondIterator);
 		s.append("}");

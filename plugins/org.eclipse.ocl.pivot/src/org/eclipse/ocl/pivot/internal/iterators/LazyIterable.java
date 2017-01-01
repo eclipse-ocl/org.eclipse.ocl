@@ -382,6 +382,8 @@ public class LazyIterable<E> implements IndexableIterable<E>
 
 	private final @NonNull CollectionFactory collectionFactory;
 
+	private final @NonNull EqualsStrategy equalsStrategy;
+
 	/**
 	 * The lazily cached elements obtained by iterating internalIterator.
 	 */
@@ -411,9 +413,10 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	 */
 	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyMap = null;
 
-	public LazyIterable(@NonNull Iterator<E> internalIterator, @NonNull CollectionFactory collectionFactory) {
+	public LazyIterable(@NonNull Iterator<E> internalIterator, @NonNull CollectionFactory collectionFactory, @NonNull EqualsStrategy equalsStrategy) {
 		this.internalIterator = internalIterator;
 		this.collectionFactory = collectionFactory;
+		this.equalsStrategy = equalsStrategy;
 		Map<Class<?>, Integer> collectionClass2lazyList2 = collectionClass2lazyList;
 		if (collectionClass2lazyList2 != null) {
 			Class<?> collectionClass = internalIterator.getClass();
@@ -459,28 +462,43 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		}
 	}
 
-	/*	@Deprecated
-	public @NonNull Iterator<E> bagIterator() {
-		if (size > 0) {
-			return new LazyBaggableIterator<>(this);
+	public @NonNull Boolean contains(@Nullable Object value) {
+		if (collectionFactory.isSequence()) {
+			for (Object element : getListOfElements()) {
+				if (equalsStrategy.isEqual(element, value)) {
+					return Boolean.TRUE;
+				}
+			}
+			return Boolean.FALSE;
 		}
 		else {
-			return Iterators.emptyIterator();
+			ElementCount elementCount = getMapOfElement2elementCount().get(value);
+			return elementCount != null ? Boolean.TRUE : Boolean.FALSE;
 		}
-	} */
-
-	/*	@Deprecated
-	public int bagSize() {
-		int size = 0;
-		for (@NonNull ElementCount elementCount : getMapOfElement2elementCount().values()) {
-			size += elementCount.value;
-		}
-		return size;
-	} */
+	}
 
 	public int count(Object object) {
-		ElementCount elementCount = getMapOfElement2elementCount().get(object);
-		return elementCount != null ? elementCount.intValue() : 0;
+		if (collectionFactory.isSequence()) {
+			int count = 0;
+			for (Object element : getListOfElements()) {
+				if (equalsStrategy.isEqual(element, object)) {
+					count++;
+				}
+			}
+			return count;
+		}
+		else {
+			ElementCount elementCount = getMapOfElement2elementCount().get(object);
+			if (elementCount == null) {
+				return 0;
+			}
+			else if (collectionFactory.isUnique()) {
+				return 1;
+			}
+			else {
+				return elementCount.intValue();
+			}
+		}
 	}
 
 	@Override

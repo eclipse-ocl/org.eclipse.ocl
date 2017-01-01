@@ -147,6 +147,11 @@ public abstract class CollectionValueImpl extends AbstractCollectionValueImpl
 	}
 
 	@Override
+	public int intCount(@Nullable Object value) {
+		return count(value).intValue();
+	}
+
+	@Override
 	public int intSize() {
 		return elements.size();
 	}

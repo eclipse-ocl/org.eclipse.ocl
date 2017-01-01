@@ -33,7 +33,6 @@ public class ExcludingAllIterator extends AbstractBaggableIterator
 		super(sourceValue.getTypeId());
 		this.sourceIiterator = sourceValue.iterator();
 		this.excludeValue = excludeValue;
-		//		this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
 	}
 
 	@Override
