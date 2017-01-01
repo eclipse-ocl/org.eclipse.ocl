@@ -863,7 +863,6 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		}
 	}
 
-
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {
 		Iterable<? extends Object> elements = iterable();
@@ -884,37 +883,6 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 
 	@Override
 	public @NonNull CollectionValue union(@NonNull CollectionValue that) {
-		CollectionTypeId collectionTypeId = this.isUnique() && that.isUnique() ? TypeId.SET : TypeId.BAG;
-		return IncludingAllIterator.includingAll(collectionTypeId.getSpecializedId(getElementTypeId()), this, that);
-		/*		assert !this.isUndefined() && !that.isUndefined();
-		Collection<? extends Object> theseElements = this.asCollection();
-		Collection<? extends Object> thoseElements = that.asCollection();
-		if (this instanceof UniqueCollectionValue && that instanceof UniqueCollectionValue) {
-			if (theseElements.isEmpty()) {
-				return that.asSetValue();
-			}
-			else if (thoseElements.isEmpty()) {
-				return this.asSetValue();
-			}
-			else {
-				Set<Object> result = new HashSet<Object>(theseElements);
-				result.addAll(thoseElements);
-				return new SetValueImpl(getSetTypeId(), result);
-			}
-		}
-		else {
-			if (theseElements.isEmpty()) {
-				return that.asBagValue();
-			}
-			else if (thoseElements.isEmpty()) {
-				return this.asBagValue();
-			}
-			else {
-				Iterable<? extends Object> theseIterables = theseElements;
-				Bag<Object> result = new BagImpl<>(theseIterables);
-				result.addAll(thoseElements);
-				return new BagValueImpl(getBagTypeId(), result);
-			}
-		} */
+		return IncludingAllIterator.union(this, that);
 	}
 }

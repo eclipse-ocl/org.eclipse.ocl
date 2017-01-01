@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -38,6 +39,16 @@ public abstract class IncludingAllIterator extends AbstractBagIterator
 		}
 	}
 
+	public static @NonNull CollectionValue union(@NonNull CollectionValue sourceValue, @NonNull CollectionValue unionValue) {
+		TypeId elementTypeId = sourceValue.getElementTypeId();
+		if (sourceValue.isUnique() && unionValue.isUnique()) {
+			return new ToUnique(TypeId.SET.getSpecializedId(elementTypeId), sourceValue, unionValue);
+		}
+		else {
+			return new ToBag(TypeId.BAG.getSpecializedId(elementTypeId), sourceValue, unionValue);
+		}
+	}
+
 	protected final @NonNull BagIterator<@Nullable Object> sourceIterator;
 	protected final @NonNull BagIterator<@Nullable Object> includeIterator;
 
@@ -56,7 +67,7 @@ public abstract class IncludingAllIterator extends AbstractBagIterator
 		s.append("}");
 	}
 
-	// The included values increment existing cpunys, otherwise they go at the end.
+	// The included values increment existing counts, otherwise they go at the end.
 	private static class ToBag extends IncludingAllIterator
 	{
 		private final @NonNull CollectionValue sourceValue;		// FIXME Use MapOfElement2ElementCount
@@ -89,7 +100,7 @@ public abstract class IncludingAllIterator extends AbstractBagIterator
 		}
 	}
 
-	// The includeed values go at the end.
+	// The included values go at the end.
 	private static class ToSequence extends IncludingAllIterator
 	{
 		public ToSequence(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
@@ -129,7 +140,7 @@ public abstract class IncludingAllIterator extends AbstractBagIterator
 				setNext(sourceIterator.next());
 				return 1;
 			}
-			if (includeIterator.hasNextCount() > 0) {
+			while (includeIterator.hasNextCount() > 0) {
 				Object next = includeIterator.next();
 				if (!sourceValue.includes(next)) {
 					setNext(next);

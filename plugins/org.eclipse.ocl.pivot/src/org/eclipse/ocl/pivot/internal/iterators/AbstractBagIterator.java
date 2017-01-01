@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.values.AbstractCollectionIterator;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * AbstractBagIterator provides the common functionality for lazy evaluation using the hasNextCount/next
@@ -50,18 +49,18 @@ public abstract class AbstractBagIterator extends AbstractCollectionIterator
 
 	protected AbstractBagIterator(@NonNull CollectionTypeId collectionTypeId) {
 		super(collectionTypeId);
-		System.out.println(NameUtil.debugSimpleName(this) + " ctor withIterable: " + withIterable);
+		//		System.out.println(NameUtil.debugSimpleName(this) + " ctor withIterable: " + withIterable);
 	}
 
 	@Override
 	protected final boolean canBeIterable() {
 		if (withIterable != Boolean.FALSE) {
 			withIterable = Boolean.TRUE;
-			System.out.println(NameUtil.debugSimpleName(this) + " canBeIterable() withIterable: " + withIterable);
+			//			System.out.println(NameUtil.debugSimpleName(this) + " canBeIterable() withIterable: " + withIterable);
 			return true;
 		}
 		else {
-			System.out.println(NameUtil.debugSimpleName(this) + " canBeIterable() withIterable: " + withIterable);
+			//			System.out.println(NameUtil.debugSimpleName(this) + " canBeIterable() withIterable: " + withIterable);
 			return false;
 		}
 	}
@@ -113,7 +112,7 @@ public abstract class AbstractBagIterator extends AbstractCollectionIterator
 			withIterable = Boolean.TRUE;
 		}
 		else if (withIterable == Boolean.FALSE) {
-			System.out.println(NameUtil.debugSimpleName(this) + " iterable() - withIterable: " + withIterable);
+			//			System.out.println(NameUtil.debugSimpleName(this) + " iterable() - withIterable: " + withIterable);
 			throw new IllegalStateException("Cannot invoke iterable() after exploiting an iterator().");
 		}
 		withIterable = Boolean.TRUE;
@@ -126,7 +125,7 @@ public abstract class AbstractBagIterator extends AbstractCollectionIterator
 			withIterable = Boolean.FALSE;
 		}
 		else if (withIterable == Boolean.FALSE) {
-			System.out.println(NameUtil.debugSimpleName(this) + " iterator() - withIterable: " + withIterable);
+			//			System.out.println(NameUtil.debugSimpleName(this) + " iterator() - withIterable: " + withIterable);
 			throw new IllegalStateException("Must invoke iterable() before first of multiple iterator() calls.");
 		}
 		LazyIterable<@Nullable Object> iterable = basicGetIterable();
@@ -135,7 +134,7 @@ public abstract class AbstractBagIterator extends AbstractCollectionIterator
 		}
 		else {
 			withIterable = Boolean.FALSE;
-			System.out.println(NameUtil.debugSimpleName(this) + " iterator() withIterable: " + withIterable);
+			//			System.out.println(NameUtil.debugSimpleName(this) + " iterator() withIterable: " + withIterable);
 			return this;
 		}
 	}
@@ -143,11 +142,8 @@ public abstract class AbstractBagIterator extends AbstractCollectionIterator
 	@Override
 	public final Object next() {
 		assert withIterable != null;
-		if (hasNextCount <= 0) {				// If no prior hasNext() / hasNextCount()
-			//			if (hasNextCount() <= 0) {
+		if (hasNextCount <= 0) {
 			throw new NoSuchElementException();
-			//			}
-			//			useCount = 1;						// Assume iterating one element at a time
 		}
 		hasNextCount -= useCount;
 		useCount = 0;
