@@ -43,8 +43,7 @@ public class ExcludingIterator extends AbstractBaggableIterator
 		for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 			Object next = sourceIterator.next();
 			if (!equalsStrategy.isEqual(next, object)) {
-				setNext(next);
-				return nextCount;
+				return setNext(next, nextCount);
 			}
 		}
 		return 0;

@@ -42,15 +42,15 @@ public class AsEcoreIterator extends AbstractBaggableIterator
 		if (hasNextCount > 0) {
 			Object element = sourceIterator.next();
 			if (element instanceof Value)
-				setNext(((Value)element).asEcoreObject(idResolver, instanceClass));
+				return setNext(((Value)element).asEcoreObject(idResolver, instanceClass), hasNextCount);
 			else if (element instanceof EnumerationLiteralId) {
-				setNext(idResolver.unboxedValueOf(element));
+				return setNext(idResolver.unboxedValueOf(element), hasNextCount);
 			}
 			else {
-				setNext(element);
+				return setNext(element, hasNextCount);
 			}
 		}
-		return hasNextCount;
+		return 0;
 	}
 
 	@Override

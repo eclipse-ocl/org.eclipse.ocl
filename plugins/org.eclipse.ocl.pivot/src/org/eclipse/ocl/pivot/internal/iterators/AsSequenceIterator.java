@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 
 /**
- * SequenceIterator provides a lazy evaluation of the Collection::asSequence operation.
+ * AsSequenceIterator provides a lazy evaluation of the Collection::asSequence operation.
  *
  * @since 1.3
  */
@@ -42,8 +42,7 @@ public class AsSequenceIterator extends AbstractBaggableIterator implements Sequ
 	@Override
 	protected int getNextCount() {
 		if (sourceIterator.hasNext()) {
-			setNext(sourceIterator.next());
-			return 1;
+			return setNext(sourceIterator.next(), 1);
 		}
 		return 0;
 	}

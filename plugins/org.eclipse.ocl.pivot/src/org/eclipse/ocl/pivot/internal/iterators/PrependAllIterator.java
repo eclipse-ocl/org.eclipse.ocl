@@ -74,15 +74,13 @@ public abstract class PrependAllIterator extends AbstractBaggableIterator
 			if (prependCount > 0) {
 				Object next = prependIterator.next();
 				int sourceCount = sourceValue.count(next).intValue();
-				setNext(next);
-				return prependCount + sourceCount;
+				return setNext(next, prependCount + sourceCount);
 			}
 			for (int sourceCount; (sourceCount = sourceIterator.hasNextCount()) > 0; ) {
 				Object next = sourceIterator.next();
 				prependCount = prependValue.count(next).intValue();
 				if (prependCount <= 0) {
-					setNext(next);
-					return sourceCount;
+					return setNext(next, sourceCount);
 				}
 			}
 			return 0;
@@ -100,13 +98,11 @@ public abstract class PrependAllIterator extends AbstractBaggableIterator
 		protected int getNextCount() {
 			int nextCount = prependIterator.hasNextCount();
 			if (nextCount > 0) {
-				setNext(prependIterator.next());
-				return nextCount;
+				return setNext(prependIterator.next(), nextCount);
 			}
 			nextCount = sourceIterator.hasNextCount();
 			if (nextCount > 0) {
-				setNext(sourceIterator.next());
-				return nextCount;
+				return setNext(sourceIterator.next(), nextCount);
 			}
 			return 0;
 		}
@@ -126,15 +122,13 @@ public abstract class PrependAllIterator extends AbstractBaggableIterator
 		protected int getNextCount() {
 			int nextCount = prependIterator.hasNextCount();
 			if (nextCount > 0) {
-				setNext(prependIterator.next());
-				return nextCount;
+				return setNext(prependIterator.next(), nextCount);
 			}
 			while ((nextCount = sourceIterator.hasNextCount()) > 0) {
 				assert nextCount == 1;
 				Object next = sourceIterator.next();
 				if (!prependValue.includes(next)) {
-					setNext(next);
-					return 1;
+					return setNext(next, 1);
 				}
 			}
 			return 0;

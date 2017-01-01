@@ -98,8 +98,7 @@ public class FlattenIterator extends AbstractBaggableIterator
 				sourceIterator = ((CollectionValue)next).iterator();
 				return hasNextCount();
 			}
-			setNext(next);
-			return nextCount;
+			return setNext(next, nextCount);
 		}
 		Stack<BaggableIterator<@Nullable Object>> iteratorStack2 = iteratorStack;
 		if ((iteratorStack2 == null) || iteratorStack2.isEmpty()) {

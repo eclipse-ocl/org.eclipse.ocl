@@ -56,8 +56,7 @@ public class IntersectionIterator extends AbstractBaggableIterator
 			Object next = secondIterator.next();
 			nextCount = Math.min(nextCount, sourceIterable.count(next));
 			if (nextCount > 0) {
-				setNext(next);
-				return nextCount;
+				return setNext(next, nextCount);
 			}
 		}
 		return 0;

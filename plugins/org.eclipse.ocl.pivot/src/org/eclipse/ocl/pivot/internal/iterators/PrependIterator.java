@@ -72,14 +72,12 @@ public abstract class PrependIterator extends AbstractBaggableIterator
 			if (prependCount <= 0) {
 				Object next = object;
 				prependCount = 1 + sourceValue.count(next).intValue();
-				setNext(next);
-				return prependCount;
+				return setNext(next, prependCount);
 			}
 			for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 				Object next = sourceIterator.next();
 				if ((prependCount == 0) || !equalsStrategy.isEqual(next, object)) {
-					setNext(next);
-					return nextCount;
+					return setNext(next, nextCount);
 				}
 			}
 			return 0;
@@ -96,14 +94,12 @@ public abstract class PrependIterator extends AbstractBaggableIterator
 		@Override
 		protected int getNextCount() {
 			if (prependCount <= 0) {
-				setNext(object);
 				prependCount = 1;
-				return 1;
+				return setNext(object, 1);
 			}
 			int nextCount = sourceIterator.hasNextCount();
 			if (nextCount > 0) {
-				setNext(sourceIterator.next());
-				return nextCount;
+				return setNext(sourceIterator.next(), nextCount);
 			}
 			return 0;
 		}
@@ -122,16 +118,14 @@ public abstract class PrependIterator extends AbstractBaggableIterator
 		@Override
 		protected int getNextCount() {
 			if (prependCount <= 0) {
-				setNext(object);
 				prependCount = 1;
-				return 1;
+				return setNext(object, 1);
 			}
 			for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 				assert nextCount == 1;
 				Object next = sourceIterator.next();
 				if (!equalsStrategy.isEqual(next, object)) {
-					setNext(next);
-					return nextCount;
+					return setNext(next, nextCount);
 				}
 			}
 			return 0;

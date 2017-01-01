@@ -54,8 +54,7 @@ public class CollectionLiteralIterator extends AbstractBaggableIterator
 	@Override
 	public int getNextCount() {
 		if (nextInt <= lastInt) {
-			setNext(ValueUtil.integerValueOf(nextInt++));
-			return 1;
+			return setNext(ValueUtil.integerValueOf(nextInt++), 1);
 		}
 		while (literalIterator.hasNext()) {
 			Object literalElement = literalIterator.next();
@@ -64,15 +63,13 @@ public class CollectionLiteralIterator extends AbstractBaggableIterator
 				nextInt = range.first;
 				lastInt = range.last;
 				if (nextInt <= lastInt) {
-					setNext(ValueUtil.integerValueOf(nextInt++));
-					return 1;
+					return setNext(ValueUtil.integerValueOf(nextInt++), 1);
 				}
 			}
 			else {
-				setNext(literalElement);
 				nextInt = 0;
 				lastInt = -1;
-				return 1;
+				return setNext(literalElement, 1);
 			}
 		}
 		return 0;

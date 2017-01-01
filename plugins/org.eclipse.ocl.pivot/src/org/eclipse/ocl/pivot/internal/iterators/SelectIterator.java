@@ -37,8 +37,7 @@ public abstract class SelectIterator extends AbstractBaggableIterator
 			Object next = sourceIterator.next();
 			boolean hasNext = body(next);
 			if (hasNext) {
-				setNext(next);
-				return nextCount;
+				return setNext(next, nextCount);
 			}
 		}
 		return 0;

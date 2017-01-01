@@ -34,7 +34,147 @@ import org.eclipse.ocl.pivot.values.BaggableIterator;
 public class LazyIterable<E> implements IndexableIterable<E>
 {
 	/**
-	 * BaggableIterator iterates over the Bag content returning each multiple element multiple times.
+	 * An ImmutableBaggableIterator provides better performance than the standard List Iterator by
+	 * exploiting the immutability of a fully populated Iteration cache.
+	 */
+	private static class ImmutableBaggableIterator<E> implements BaggableIterator<E>
+	{
+		private final @NonNull List<E> elements;
+		private final @NonNull Map<E, @NonNull ? extends Number> element2elementCount;
+		private final int size;
+		private int elementIndex = 0;
+		private int residualCount = 0;
+		private E currentElement;
+		private int nextCount = 0;
+
+		public ImmutableBaggableIterator(@NonNull List<E> elements, @NonNull Map<E, @NonNull ? extends Number> element2elementCount) {
+			this.elements = elements;
+			this.element2elementCount = element2elementCount;
+			this.size = elements.size();
+			if (elementIndex < size) {
+				currentElement = elements.get(elementIndex++);
+				Number number = element2elementCount.get(currentElement);
+				assert number != null;
+				residualCount = number.intValue();
+				assert residualCount > 0;
+			}
+			else {
+				@SuppressWarnings("null") E nullE = null;
+				currentElement = nullE;
+			}
+			nextCount = 1;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
+		}
+
+		@Override
+		public boolean hasNext() {
+			nextCount = 1;
+			return (elementIndex < size) || (residualCount > 0);
+		}
+
+		@Override
+		public int hasNextCount() {
+			nextCount = residualCount;
+			return residualCount;
+		}
+
+		@Override
+		public final int hashCode() {
+			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
+		}
+
+		@Override
+		public E next() {
+			if (residualCount <= 0) {
+				throw new NoSuchElementException();
+			}
+			E savedElement = currentElement;
+			residualCount -= nextCount;
+			if ((residualCount <= 0) && (elementIndex < size)) {
+				currentElement = elements.get(elementIndex++);
+				Number number = element2elementCount.get(currentElement);
+				assert number != null;
+				residualCount = number.intValue();
+				assert residualCount > 0;
+			}
+			nextCount = 1;
+			return savedElement;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			appendBagIterable(s, elements, element2elementCount);
+			return s.toString();
+		}
+	}
+
+	/**
+	 * An ImmutableNonBaggableIterator provides better performance than the standard List Iterator by
+	 * exploiting the immutability of a fully populated Iteration cache.
+	 */
+	private static class ImmutableNonBaggableIterator<E> implements BaggableIterator<E>
+	{
+		private final @NonNull List<E> elements;
+		private final int size;
+		private int elementIndex = 0;
+
+		public ImmutableNonBaggableIterator(@NonNull List<E> elements) {
+			this.elements = elements;
+			this.size = elements.size();
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
+		}
+
+		@Override
+		public boolean hasNext() {
+			return elementIndex < size;
+		}
+
+		@Override
+		public int hasNextCount() {
+			return elementIndex < size ? 1 : 0;
+		}
+
+		@Override
+		public final int hashCode() {
+			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
+		}
+
+		@Override
+		public E next() {
+			//	if (index >= size) {
+			//		throw new NoSuchElementException();		-- get will throw an IOOBE if the impossible happens
+			//	}
+			return elements.get(elementIndex++);
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append("[");
+			boolean isFirst = true;
+			for (Object element : elements) {
+				if (!isFirst) {
+					s.append(", ");
+				}
+				s.append(element instanceof String ? "'" + element + "'" : element);
+				isFirst = false;
+			}
+			s.append("]");
+			return s.toString();
+		}
+	}
+
+	/**
+	 * LazyBaggableIterator iterates over the Bag content returning each multiple element multiple times.
 	 */
 	private static class LazyBaggableIterator<E> implements BaggableIterator<E>
 	{
@@ -112,7 +252,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	}
 
 	/**
-	 * A LazyIterator support multiple access to the partially populated iteration cache provoking
+	 * A LazyNonBaggableIterator support multiple access to the partially populated iteration cache provoking
 	 * additional population as required.
 	 */
 	private class LazyNonBaggableIterator implements BaggableIterator<E>
@@ -162,146 +302,6 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		@Override
 		public String toString() {
 			return internalIterator.toString();
-		}
-	}
-
-	/**
-	 * A ImmutableBaggableIterator provides better performance than the standard List Iterator by
-	 * exploiting the immutability of a fully populated Iteration cache.
-	 */
-	public static class ImmutableBaggableIterator<E> implements BaggableIterator<E>
-	{
-		private final @NonNull List<E> elements;
-		private final @NonNull Map<E, @NonNull ? extends Number> element2elementCount;
-		private final int size;
-		private int elementIndex = 0;
-		private int residualCount = 0;
-		private E currentElement;
-		private int nextCount = 0;
-
-		public ImmutableBaggableIterator(@NonNull List<E> elements, @NonNull Map<E, @NonNull ? extends Number> element2elementCount) {
-			this.elements = elements;
-			this.element2elementCount = element2elementCount;
-			this.size = elements.size();
-			if (elementIndex < size) {
-				currentElement = elements.get(elementIndex++);
-				Number number = element2elementCount.get(currentElement);
-				assert number != null;
-				residualCount = number.intValue();
-				assert residualCount > 0;
-			}
-			else {
-				@SuppressWarnings("null") E nullE = null;
-				currentElement = nullE;
-			}
-			nextCount = 1;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
-		}
-
-		@Override
-		public boolean hasNext() {
-			nextCount = 1;
-			return (elementIndex < size) || (residualCount > 0);
-		}
-
-		@Override
-		public int hasNextCount() {
-			nextCount = residualCount;
-			return residualCount;
-		}
-
-		@Override
-		public final int hashCode() {
-			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
-		}
-
-		@Override
-		public E next() {
-			if (residualCount <= 0) {
-				throw new NoSuchElementException();
-			}
-			E savedElement = currentElement;
-			residualCount -= nextCount;
-			if ((residualCount <= 0) && (elementIndex < size)) {
-				currentElement = elements.get(elementIndex++);
-				Number number = element2elementCount.get(currentElement);
-				assert number != null;
-				residualCount = number.intValue();
-				assert residualCount > 0;
-			}
-			nextCount = 1;
-			return savedElement;
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder s = new StringBuilder();
-			appendBagIterable(s, elements, element2elementCount);
-			return s.toString();
-		}
-	}
-
-	/**
-	 * A ImmutableBaggableIterator provides better performance than the standard List Iterator by
-	 * exploiting the immutability of a fully populated Iteration cache.
-	 */
-	public static class ImmutableNonBaggableIterator<E> implements BaggableIterator<E>
-	{
-		private final @NonNull List<E> elements;
-		private final int size;
-		private int elementIndex = 0;
-
-		public ImmutableNonBaggableIterator(@NonNull List<E> elements) {
-			this.elements = elements;
-			this.size = elements.size();
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
-		}
-
-		@Override
-		public boolean hasNext() {
-			return elementIndex < size;
-		}
-
-		@Override
-		public int hasNextCount() {
-			return elementIndex < size ? 1 : 0;
-		}
-
-		@Override
-		public final int hashCode() {
-			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
-		}
-
-		@Override
-		public E next() {
-			//	if (index >= size) {
-			//		throw new NoSuchElementException();		-- get will throw an IOOBE if the impossible happens
-			//	}
-			return elements.get(elementIndex++);
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder s = new StringBuilder();
-			s.append("[");
-			boolean isFirst = true;
-			for (Object element : elements) {
-				if (!isFirst) {
-					s.append(", ");
-				}
-				s.append(element instanceof String ? "'" + element + "'" : element);
-				isFirst = false;
-			}
-			s.append("]");
-			return s.toString();
 		}
 	}
 

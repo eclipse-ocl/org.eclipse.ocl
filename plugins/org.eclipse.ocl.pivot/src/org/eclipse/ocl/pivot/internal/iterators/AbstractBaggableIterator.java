@@ -38,10 +38,10 @@ import com.google.common.collect.Lists;
 
 /**
  * AbstractBaggableIterator provides the common functionality for lazy evaluation using the hasNextCount/next
- * BaggableIterator protocol. Derived bag iterators must implement getNextCount() to describe the next entry that
- * may then be obtained by getNext().
+ * BaggableIterator protocol. Derived baggable iterators must implement getNextCount() to describe the next entry
+ * by a callback to setNext().
  *
- * The AbstractBaggableIterator may be only used as a simple iterator by invoking iterator() without invoking iterable().
+ * The AbstractBaggableIterator may only used as a simple iterator by invoking iterator() without invoking iterable().
  * If a usage of iterator() is followed by a usage of iterable() an IllegalStateException is thrown.
  *
  * The AbstractBaggableIterator may be used as an iterable by invoking iterable() before iterator(). Derived
@@ -55,7 +55,7 @@ import com.google.common.collect.Lists;
 public abstract class AbstractBaggableIterator extends AbstractCollectionValueImpl implements BaggableIterator<@Nullable Object>
 {
 	/**
-	 * The hashCode of the bxoed values in this collection.
+	 * The hashCode of the boxed values in this collection.
 	 */
 	private int hashCode = 0;
 
@@ -72,11 +72,6 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 	 * IllegalStateException.
 	 */
 	private Boolean withIterable = null;
-
-	/**
-	 * Whether next provides a next return value.
-	 */
-	private boolean hasNext = false;
 
 	/**
 	 * The next value to be returned by this itrerator, if hasNext is true.
@@ -161,15 +156,6 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 		}
 	}
 
-	/*	private @NonNull SetValue asEagerSetValue() {
-		if (!isOrdered() && isUnique()) {
-			return new SetValueImpl(getTypeId(), getElements());
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
-	} */
-
 	private @NonNull UniqueCollectionValue asEagerUniqueCollectionValue() {
 		if (isUnique()) {
 			if (isOrdered()) {
@@ -248,17 +234,19 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 
 	/**
 	 * Derived classes must implement to return the number of times the next element is repeated.
-	 * If the return is more than zero, the next eelment must be assigned prior to return by invoking setNext().
+	 * If the return is more than zero, the next element and count must be assigned prior to return
+	 * by invoking setNext().
 	 *
 	 * It is desirable, but not mandatory for derived classes to exploit the BaggableIterator protocol to avoid
 	 * redundant re-computation of repeated Bag elements. Repeated Bag elements may be returned one repeat at
-	 * a time, by returning 1 rather than the repeat. If this is to be done, the constructior must inhibit lazy
-	 * of this iterable/iterator by invoking getMapOfElement2elementCount().
+	 * a time, by returning 1 rather than the repeat. If this is to be done, the constructor must inhibit lazy
+	 * use of this iterable/iterator by invoking getMapOfElement2elementCount().
 	 */
 	protected abstract int getNextCount();
 
 	@Override
 	public final boolean hasNext() {
+		assert withIterable != null;
 		if ((hasNextCount > 0) || (hasNextCount() > 0)) {
 			useCount = 1;
 			return true;
@@ -276,10 +264,9 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 			//			if (withIterable == null) {
 			//				withIterable = Boolean.FALSE; System.out.println(NameUtil.debugSimpleName(this) + " hasNextCount() withIterable: " + withIterable);
 			//			}
-			hasNext = false;
-			hasNextCount = getNextCount();
-			assert hasNext == hasNextCount > 0;
-			if (!hasNext) {
+			int hasNextCount = getNextCount();
+			assert hasNextCount == this.hasNextCount;
+			if (hasNextCount <= 0) {
 				next = null;
 			}
 		}
@@ -372,7 +359,6 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 		}
 		hasNextCount -= useCount;
 		useCount = 0;
-		assert hasNext;
 		return next;
 	}
 
@@ -380,16 +366,10 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 		return asEagerOrderedCollectionValue().reverse();
 	}
 
-	@Deprecated
-	protected void setNext(Object next) {
-		this.next = next;
-		this.hasNext = true;
-	}
-
 	protected int setNext(Object next, int nextCount) {
 		assert nextCount > 0;
 		this.next = next;
-		this.hasNext = true;
+		this.hasNextCount = nextCount;
 		return nextCount;
 	}
 

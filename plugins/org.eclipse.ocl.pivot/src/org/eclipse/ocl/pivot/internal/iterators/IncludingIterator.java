@@ -69,19 +69,17 @@ public abstract class IncludingIterator extends AbstractBaggableIterator
 		protected int getNextCount() {
 			for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 				Object next = sourceIterator.next();
-				setNext(next);
 				if (equalsStrategy.isEqual(next, object)) {
 					doneInclude = true;
-					return nextCount+1;
+					return setNext(next, nextCount+1);
 				}
 				else {
-					return nextCount;
+					return setNext(next, nextCount);
 				}
 			}
 			if (!doneInclude) {
-				setNext(object);
 				doneInclude = true;
-				return 1;
+				return setNext(object, 1);
 			}
 			return 0;
 		}
@@ -98,13 +96,11 @@ public abstract class IncludingIterator extends AbstractBaggableIterator
 		protected int getNextCount() {
 			int nextCount = sourceIterator.hasNextCount();
 			if (nextCount > 0) {
-				setNext(sourceIterator.next());
-				return nextCount;
+				return setNext(sourceIterator.next(), nextCount);
 			}
 			if (!doneInclude) {
-				setNext(object);
 				doneInclude = true;
-				return 1;
+				return setNext(object, 1);
 			}
 			return 0;
 		}
@@ -128,13 +124,11 @@ public abstract class IncludingIterator extends AbstractBaggableIterator
 				if (equalsStrategy.isEqual(next, object)) {
 					doneInclude = true;
 				}
-				setNext(next);
-				return nextCount;
+				return setNext(next, nextCount);
 			}
 			if (!doneInclude) {
-				setNext(object);
 				doneInclude = true;
-				return 1;
+				return setNext(object, 1);
 			}
 			return 0;
 		}

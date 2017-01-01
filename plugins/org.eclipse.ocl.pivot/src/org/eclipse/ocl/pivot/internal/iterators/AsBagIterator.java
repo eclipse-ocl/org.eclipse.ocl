@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
- * AsBagIterator provides a lazy evaluation of the Collection::asBag operation.
+ * AsBagIterator provides a BaggableIterator that behaves as a BagValue for an arbitrary iterator.
  *
  * @since 1.3
  */
@@ -45,8 +45,7 @@ public class AsBagIterator extends AbstractBaggableIterator implements BagValue
 	@Override
 	protected int getNextCount() {
 		if (sourceIterator.hasNext()) {
-			setNext(sourceIterator.next());
-			return 1;
+			return setNext(sourceIterator.next(), 1);
 		}
 		return 0;
 	}

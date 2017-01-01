@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 
 /**
- * OrderedSetIterator provides a lazy evaluation of the Collection::asOrderedSet operation.
+ * AsOrderedSetIterator provides a BaggableIterator that behaves as an OrderedSetValue for an arbitrary iterator.
  *
  * @since 1.3
  */
@@ -45,8 +45,7 @@ public class AsOrderedSetIterator extends AbstractBaggableIterator implements Or
 	@Override
 	protected int getNextCount() {
 		if (sourceIterator.hasNext()) {
-			setNext(sourceIterator.next());
-			return 1;
+			return setNext(sourceIterator.next(), 1);
 		}
 		return 0;
 	}

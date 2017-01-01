@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
- * SetIterator provides a BaggableIterator that behaves as a SetValue for an arbitrary iterator.
+ * AsSetIterator provides a BaggableIterator that behaves as a SetValue for an arbitrary iterator.
  *
  * @since 1.3
  */
@@ -45,8 +45,7 @@ public class AsSetIterator extends AbstractBaggableIterator implements SetValue
 	@Override
 	protected int getNextCount() {
 		if (sourceIterator.hasNext()) {
-			setNext(sourceIterator.next());
-			return 1;
+			return setNext(sourceIterator.next(), 1);
 		}
 		return 0;
 	}
