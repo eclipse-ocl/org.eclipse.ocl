@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
  *
  * @since 1.3
  */
-public class AsOrderedSetIterator extends AbstractBagIterator implements OrderedSetValue
+public class AsOrderedSetIterator extends AbstractBaggableIterator implements OrderedSetValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 

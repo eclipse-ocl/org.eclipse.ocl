@@ -81,7 +81,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
-import org.eclipse.ocl.pivot.internal.values.AbstractCollectionIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AbstractBaggableIterator;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -696,8 +696,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 */
 	@Override
 	public @NonNull <T> EList<T> ecoreValueOfAll(@Nullable Class<T> instanceClass, @NonNull Iterable<? extends Object> values) {
-		if (values instanceof AbstractCollectionIterator) {
-			((AbstractCollectionIterator)values).iterable();
+		if (values instanceof AbstractBaggableIterator) {
+			((AbstractBaggableIterator)values).iterable();
 		}
 		Object[] ecoreValues = new Object[Iterables.size(values)];
 		int i= 0;

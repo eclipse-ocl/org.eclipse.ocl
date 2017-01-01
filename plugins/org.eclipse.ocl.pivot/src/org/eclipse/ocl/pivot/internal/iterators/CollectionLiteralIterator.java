@@ -19,12 +19,12 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
- * CollectionLiteralIterator adapts a CollectionLiteralExp to comply with the BagIterator protocol.
+ * CollectionLiteralIterator adapts a CollectionLiteralExp to comply with the BaggableIterator protocol.
  * Multiple entries are pruned from Sets and OrderedSets, counted in Bags,
  *
  * @since 1.3
  */
-public class CollectionLiteralIterator extends AbstractBagIterator
+public class CollectionLiteralIterator extends AbstractBaggableIterator
 {
 	public static class Range
 	{

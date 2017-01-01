@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -21,7 +22,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public abstract class IncludingIterator extends AbstractBagIterator
+public abstract class IncludingIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue including(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		if (sourceValue.isUnique()) {
@@ -35,7 +36,7 @@ public abstract class IncludingIterator extends AbstractBagIterator
 		}
 	}
 
-	protected final @NonNull BagIterator<@Nullable Object> sourceIterator;
+	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @Nullable Object object;
 	protected boolean doneInclude = false;
 

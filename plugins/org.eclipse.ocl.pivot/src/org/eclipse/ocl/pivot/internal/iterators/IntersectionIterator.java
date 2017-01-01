@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -20,7 +21,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class IntersectionIterator extends AbstractBagIterator
+public class IntersectionIterator extends AbstractBaggableIterator
 {
 	public static @NonNull IntersectionIterator intersection(@NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
 		TypeId elementTypeId = sourceValue.getElementTypeId();
@@ -39,12 +40,12 @@ public class IntersectionIterator extends AbstractBagIterator
 	}
 
 	private final @NonNull LazyIterable<? extends Object> sourceIterable;
-	private final @NonNull BagIterator<Object> secondIterator;
+	private final @NonNull BaggableIterator<Object> secondIterator;
 
 	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
 		super(collectionTypeId);
 		Iterable<? extends Object> sourceIterable = sourceValue.iterable();
-		this.sourceIterable = sourceIterable instanceof LazyIterable ? (LazyIterable<? extends Object>)sourceIterable : new LazyIterable<>(sourceValue.iterator(), sourceValue.isOrdered(), sourceValue.isUnique());;
+		this.sourceIterable = sourceIterable instanceof LazyIterable ? (LazyIterable<? extends Object>)sourceIterable : new LazyIterable<>(sourceValue.iterator(), sourceValue.getCollectionFactory());;
 		this.secondIterator = secondValue.iterator();
 	}
 

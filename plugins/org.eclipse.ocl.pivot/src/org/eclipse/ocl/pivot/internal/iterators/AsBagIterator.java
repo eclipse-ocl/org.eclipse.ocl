@@ -20,11 +20,11 @@ import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
- * BagIterator provides a lazy evaluation of the Collection::asBag operation.
+ * AsBagIterator provides a lazy evaluation of the Collection::asBag operation.
  *
  * @since 1.3
  */
-public class AsBagIterator extends AbstractBagIterator implements BagValue
+public class AsBagIterator extends AbstractBaggableIterator implements BagValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 

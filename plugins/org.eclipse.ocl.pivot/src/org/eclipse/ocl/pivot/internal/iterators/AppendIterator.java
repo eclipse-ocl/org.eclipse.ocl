@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -21,7 +22,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public abstract class AppendIterator extends AbstractBagIterator
+public abstract class AppendIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue append(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		if (sourceValue.isUnique()) {
@@ -35,7 +36,7 @@ public abstract class AppendIterator extends AbstractBagIterator
 		}
 	}
 
-	protected final @NonNull BagIterator<@Nullable Object> sourceIterator;
+	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @Nullable Object object;
 	protected boolean doneAppend = false;
 
@@ -73,14 +74,12 @@ public abstract class AppendIterator extends AbstractBagIterator
 					appendCount = nextCount;
 				}
 				else {
-					setNext(next);
-					return nextCount;
+					return setNext(next, nextCount);
 				}
 			}
 			if (!doneAppend) {
-				setNext(object);
 				doneAppend = true;
-				return appendCount + 1;
+				return setNext(object, appendCount + 1);
 			}
 			return 0;
 		}
@@ -97,13 +96,11 @@ public abstract class AppendIterator extends AbstractBagIterator
 		protected int getNextCount() {
 			int nextCount = sourceIterator.hasNextCount();
 			if (nextCount > 0) {
-				setNext(sourceIterator.next());
-				return nextCount;
+				return setNext(sourceIterator.next(), nextCount);
 			}
 			if (!doneAppend) {
-				setNext(object);
 				doneAppend = true;
-				return 1;
+				return setNext(object, 1);
 			}
 			return 0;
 		}
@@ -124,14 +121,12 @@ public abstract class AppendIterator extends AbstractBagIterator
 			for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 				Object next = sourceIterator.next();
 				if (!equalsStrategy.isEqual(next, object)) {
-					setNext(next);
-					return nextCount;
+					return setNext(next, nextCount);
 				}
 			}
 			if (!doneAppend) {
-				setNext(object);
 				doneAppend = true;
-				return 1;
+				return setNext(object, 1);
 			}
 			return 0;
 		}

@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
  *
  * @since 1.3
  */
-public class AsSequenceIterator extends AbstractBagIterator implements SequenceValue
+public class AsSequenceIterator extends AbstractBaggableIterator implements SequenceValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 

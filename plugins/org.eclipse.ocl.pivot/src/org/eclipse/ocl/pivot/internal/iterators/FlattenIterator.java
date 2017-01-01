@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -24,7 +25,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class FlattenIterator extends AbstractBagIterator
+public class FlattenIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue flatten(@NonNull CollectionValue sourceValue) {
 		CollectionTypeId collectionTypeId = sourceValue.getTypeId();
@@ -75,8 +76,8 @@ public class FlattenIterator extends AbstractBagIterator
 		} */
 	}
 
-	private @NonNull BagIterator<@Nullable Object> sourceIterator;
-	private @Nullable Stack<@NonNull BagIterator<@Nullable Object>> iteratorStack = null;
+	private @NonNull BaggableIterator<@Nullable Object> sourceIterator;
+	private @Nullable Stack<@NonNull BaggableIterator<@Nullable Object>> iteratorStack = null;
 
 	public FlattenIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue) {
 		super(collectionTypeId);
@@ -89,7 +90,7 @@ public class FlattenIterator extends AbstractBagIterator
 		if (nextCount > 0) {
 			Object next = sourceIterator.next();
 			if (next instanceof CollectionValue) {
-				Stack<BagIterator<@Nullable Object>> iteratorStack2 = iteratorStack;
+				Stack<BaggableIterator<@Nullable Object>> iteratorStack2 = iteratorStack;
 				if (iteratorStack2 == null) {
 					iteratorStack2 = iteratorStack = new Stack<>();
 				}
@@ -100,11 +101,11 @@ public class FlattenIterator extends AbstractBagIterator
 			setNext(next);
 			return nextCount;
 		}
-		Stack<BagIterator<@Nullable Object>> iteratorStack2 = iteratorStack;
+		Stack<BaggableIterator<@Nullable Object>> iteratorStack2 = iteratorStack;
 		if ((iteratorStack2 == null) || iteratorStack2.isEmpty()) {
 			return 0;
 		}
-		BagIterator<@Nullable Object> popped = iteratorStack2.pop();
+		BaggableIterator<@Nullable Object> popped = iteratorStack2.pop();
 		assert popped != null;
 		sourceIterator = popped;
 		return hasNextCount();

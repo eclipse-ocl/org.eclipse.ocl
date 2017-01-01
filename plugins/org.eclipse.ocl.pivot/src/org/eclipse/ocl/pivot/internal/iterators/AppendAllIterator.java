@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -19,7 +20,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public abstract class AppendAllIterator extends AbstractBagIterator
+public abstract class AppendAllIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue appendAll(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
 		if (sourceValue.isUnique()) {
@@ -37,8 +38,8 @@ public abstract class AppendAllIterator extends AbstractBagIterator
 		}
 	}
 
-	protected final @NonNull BagIterator<@Nullable Object> sourceIterator;
-	protected final @NonNull BagIterator<@Nullable Object> appendIterator;
+	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
+	protected final @NonNull BaggableIterator<@Nullable Object> appendIterator;
 
 	protected AppendAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
 		super(sourceValue.getTypeId());
@@ -72,16 +73,14 @@ public abstract class AppendAllIterator extends AbstractBagIterator
 			for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 				Object next = sourceIterator.next();
 				if (!appendedValue.includes(next)) {
-					setNext(next);
-					return nextCount;
+					return setNext(next, nextCount);
 				}
 			}
 			int nextCount = appendIterator.hasNextCount();
 			if (nextCount > 0) {
 				Object next = appendIterator.next();
 				nextCount += sourceValue.count(next).intValue();
-				setNext(next);
-				return nextCount;
+				return setNext(next, nextCount);
 			}
 			return 0;
 		}
@@ -98,13 +97,11 @@ public abstract class AppendAllIterator extends AbstractBagIterator
 		protected int getNextCount() {
 			boolean hasNext = sourceIterator.hasNext();
 			if (hasNext) {
-				setNext(sourceIterator.next());
-				return 1;
+				return setNext(sourceIterator.next(), 1);
 			}
 			hasNext = appendIterator.hasNext();
 			if (hasNext) {
-				setNext(appendIterator.next());
-				return 1;
+				return setNext(appendIterator.next(), 1);
 			}
 			return 0;
 		}
@@ -126,14 +123,12 @@ public abstract class AppendAllIterator extends AbstractBagIterator
 			while (sourceIterator.hasNextCount() > 0) {
 				Object next = sourceIterator.next();
 				if (!appendedValue.includes(next)) {
-					setNext(next);
-					return 1;
+					return setNext(next, 1);
 				}
 			}
 			if (appendIterator.hasNextCount() > 0) {
 				Object next = appendIterator.next();
-				setNext(next);
-				return 1;
+				return setNext(next, 1);
 			}
 			return 0;
 		}

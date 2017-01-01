@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -20,13 +21,13 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class ExcludingIterator extends AbstractBagIterator
+public class ExcludingIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue excluding(@NonNull CollectionValue sourceValue, @Nullable Object object) {
 		return new ExcludingIterator(sourceValue, object);
 	}
 
-	private final @NonNull BagIterator<@Nullable Object> sourceIterator;
+	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private final @Nullable Object object;
 	private final @NonNull EqualsStrategy equalsStrategy;
 

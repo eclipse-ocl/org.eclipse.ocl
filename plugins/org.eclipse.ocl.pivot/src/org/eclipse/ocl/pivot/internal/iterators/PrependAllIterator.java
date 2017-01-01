@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -19,7 +20,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public abstract class PrependAllIterator extends AbstractBagIterator
+public abstract class PrependAllIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue prependAll(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
 		if (sourceValue.isUnique()) {
@@ -37,8 +38,8 @@ public abstract class PrependAllIterator extends AbstractBagIterator
 		}
 	}
 
-	protected final @NonNull BagIterator<@Nullable Object> sourceIterator;
-	protected final @NonNull BagIterator<@Nullable Object> prependIterator;
+	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
+	protected final @NonNull BaggableIterator<@Nullable Object> prependIterator;
 
 	public PrependAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
 		super(sourceValue.getTypeId());

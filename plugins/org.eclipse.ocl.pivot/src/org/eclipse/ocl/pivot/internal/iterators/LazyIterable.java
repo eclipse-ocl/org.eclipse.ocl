@@ -20,7 +20,9 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 
 /**
  * A LazyIterable provides a lazy cache of the elements of an Iterator so that the elements are
@@ -32,9 +34,9 @@ import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 public class LazyIterable<E> implements IndexableIterable<E>
 {
 	/**
-	 * BagIterator iterates over the Bag content returning each multiple element multiple times.
+	 * BaggableIterator iterates over the Bag content returning each multiple element multiple times.
 	 */
-	private static class LazyBagIterator<E> implements BagIterator<E>
+	private static class LazyBaggableIterator<E> implements BaggableIterator<E>
 	{
 		private final @NonNull Map<E, @NonNull ElementCount> map;
 		private final @NonNull Iterator<E> objectIterator;
@@ -52,7 +54,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		 */
 		private int nextCount = 0;
 
-		private LazyBagIterator(@NonNull LazyIterable<E> iterable) {
+		private LazyBaggableIterator(@NonNull LazyIterable<E> iterable) {
 			this.map = iterable.getMapOfElement2elementCount();
 			this.objectIterator = iterable.iterator();
 			assert objectIterator.hasNext();
@@ -113,7 +115,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	 * A LazyIterator support multiple access to the partially populated iteration cache provoking
 	 * additional population as required.
 	 */
-	private class LazyNonBagIterator implements BagIterator<E>
+	private class LazyNonBaggableIterator implements BaggableIterator<E>
 	{
 		private int index = 0;
 
@@ -164,10 +166,10 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	}
 
 	/**
-	 * A ImmutableBagIterator provides better performance than the standard List Iterator by
+	 * A ImmutableBaggableIterator provides better performance than the standard List Iterator by
 	 * exploiting the immutability of a fully populated Iteration cache.
 	 */
-	public static class ImmutableBagIterator<E> implements BagIterator<E>
+	public static class ImmutableBaggableIterator<E> implements BaggableIterator<E>
 	{
 		private final @NonNull List<E> elements;
 		private final @NonNull Map<E, @NonNull ? extends Number> element2elementCount;
@@ -177,7 +179,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		private E currentElement;
 		private int nextCount = 0;
 
-		public ImmutableBagIterator(@NonNull List<E> elements, @NonNull Map<E, @NonNull ? extends Number> element2elementCount) {
+		public ImmutableBaggableIterator(@NonNull List<E> elements, @NonNull Map<E, @NonNull ? extends Number> element2elementCount) {
 			this.elements = elements;
 			this.element2elementCount = element2elementCount;
 			this.size = elements.size();
@@ -244,16 +246,16 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	}
 
 	/**
-	 * A ImmutableBagIterator provides better performance than the standard List Iterator by
+	 * A ImmutableBaggableIterator provides better performance than the standard List Iterator by
 	 * exploiting the immutability of a fully populated Iteration cache.
 	 */
-	public static class ImmutableNonBagIterator<E> implements BagIterator<E>
+	public static class ImmutableNonBaggableIterator<E> implements BaggableIterator<E>
 	{
 		private final @NonNull List<E> elements;
 		private final int size;
 		private int elementIndex = 0;
 
-		public ImmutableNonBagIterator(@NonNull List<E> elements) {
+		public ImmutableNonBaggableIterator(@NonNull List<E> elements) {
 			this.elements = elements;
 			this.size = elements.size();
 		}
@@ -378,8 +380,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	 */
 	private final @NonNull Iterator<E> internalIterator;
 
-	private final boolean isOrdered;
-	private final boolean isUnique;
+	private final @NonNull CollectionFactory collectionFactory;
 
 	/**
 	 * The lazily cached elements obtained by iterating internalIterator.
@@ -410,10 +411,9 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	 */
 	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyMap = null;
 
-	public LazyIterable(@NonNull Iterator<E> internalIterator, boolean isOrdered, boolean isUnique) {
+	public LazyIterable(@NonNull Iterator<E> internalIterator, @NonNull CollectionFactory collectionFactory) {
 		this.internalIterator = internalIterator;
-		this.isOrdered = isOrdered;
-		this.isUnique = isUnique;
+		this.collectionFactory = collectionFactory;
 		Map<Class<?>, Integer> collectionClass2lazyList2 = collectionClass2lazyList;
 		if (collectionClass2lazyList2 != null) {
 			Class<?> collectionClass = internalIterator.getClass();
@@ -421,7 +421,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 			count = count != null ? count+1 : 1;
 			collectionClass2lazyList2.put(collectionClass, count);
 		}
-		if (!isOrdered || isUnique) {
+		if (!collectionFactory.isSequence()) {
 			Map<Class<?>, Integer> collectionClass2lazyMap2 = collectionClass2lazyMap;
 			if (collectionClass2lazyMap2 != null) {
 				Class<?> collectionClass = internalIterator.getClass();
@@ -462,7 +462,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	/*	@Deprecated
 	public @NonNull Iterator<E> bagIterator() {
 		if (size > 0) {
-			return new LazyBagIterator<>(this);
+			return new LazyBaggableIterator<>(this);
 		}
 		else {
 			return Iterators.emptyIterator();
@@ -490,7 +490,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 
 	@Override
 	public synchronized E get(int javaIndex) {
-		if (isUnique) {
+		if (collectionFactory.isUnique()) {
 			while ((size <= javaIndex) && internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
 				if (addToCounts(anElement)) {
@@ -499,7 +499,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 				}
 			}
 		}
-		else if (isOrdered) {
+		else if (collectionFactory.isOrdered()) {
 			while ((size <= javaIndex) && internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
 				size++;
@@ -527,7 +527,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	 * Ensure that all lazy iterations have completed and then return a list of all elements.
 	 */
 	public synchronized @NonNull List<E> getListOfElements() {
-		if (isUnique) {
+		if (collectionFactory.isUnique()) {
 			while (internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
 				if (addToCounts(anElement)) {
@@ -536,7 +536,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 				}
 			}
 		}
-		else if (isOrdered) {
+		else if (collectionFactory.isOrdered()) {
 			while (internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
 				size++;
@@ -597,23 +597,23 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	}
 
 	@Override
-	public @NonNull BagIterator<E> iterator() {
-		if (!isOrdered && !isUnique) {
+	public @NonNull BaggableIterator<E> iterator() {
+		if (collectionFactory.isBag()) {
 			Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
 			assert lazyMapOfElement2elementCount2 != null;
 			if (internalIterator.hasNext()) {
-				return new LazyBagIterator<>(this);
+				return new LazyBaggableIterator<>(this);
 			}
 			else {
-				return new ImmutableBagIterator<>(lazyListOfElements, lazyMapOfElement2elementCount2);
+				return new ImmutableBaggableIterator<>(lazyListOfElements, lazyMapOfElement2elementCount2);
 			}
 		}
 		else {
 			if (internalIterator.hasNext()) {
-				return new LazyNonBagIterator();
+				return new LazyNonBaggableIterator();
 			}
 			else {
-				return new ImmutableNonBagIterator<>(lazyListOfElements);
+				return new ImmutableNonBaggableIterator<>(lazyListOfElements);
 			}
 		}
 	}

@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.BagIterator;
+import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
 
 /**
  * @noimplement This interface is not intended to be implemented by clients.
@@ -85,6 +85,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	boolean flatten(@NonNull Collection<Object> flattenedElements);
+
+	/**
+	 * @since 1.3
+	 */
+	@NonNull CollectionFactory getCollectionFactory();
 
 	/**
 	 * @since 1.3
@@ -155,7 +160,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@Override
-	@NonNull BagIterator<@Nullable Object> iterator();
+	@NonNull BaggableIterator<@Nullable Object> iterator();
 
 	/**
 	 * @generated NOT

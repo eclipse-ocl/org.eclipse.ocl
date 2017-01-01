@@ -20,11 +20,11 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
- * SetIterator provides a BagIterator the beghaves as a SetValue for an arbitrary iterator.
+ * SetIterator provides a BaggableIterator that behaves as a SetValue for an arbitrary iterator.
  *
  * @since 1.3
  */
-public class AsSetIterator extends AbstractBagIterator implements SetValue
+public class AsSetIterator extends AbstractBaggableIterator implements SetValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 

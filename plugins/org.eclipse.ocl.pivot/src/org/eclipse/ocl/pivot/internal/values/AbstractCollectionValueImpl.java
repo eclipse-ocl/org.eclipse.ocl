@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
-import org.eclipse.ocl.pivot.internal.iterators.BagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
 import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
@@ -50,6 +49,7 @@ import org.eclipse.ocl.pivot.internal.iterators.PrependIterator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -74,7 +74,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	 * Optimized iterator over an Array for use in OCL contents where the array is known to be stable
 	 * and any call to next() is guarded by hasNext().
 	 */
-	private static class ArrayIterator<T> implements BagIterator<T>
+	private static class ArrayIterator<T> implements BaggableIterator<T>
 	{
 		protected final T @NonNull [] elements;
 		protected final int size;
@@ -123,7 +123,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
 	 * and any call to next() is guarded by hasNext().
 	 */
-	private static class ListIterator<T> implements BagIterator<T>
+	private static class ListIterator<T> implements BaggableIterator<T>
 	{
 		protected final @NonNull List<T> elements;
 		protected final int size;
@@ -179,7 +179,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	/**
 	 * Optimized iterator over an empty Collection.
 	 */
-	private static class NullIterator implements BagIterator<@Nullable Object>
+	private static class NullIterator implements BaggableIterator<@Nullable Object>
 	{
 		/**
 		 * Returns new array iterator over the given object array
@@ -272,15 +272,15 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
 	 * and any call to next() is guarded by hasNext().
 	 */
-	public static class WrappedBagIterator<T> implements BagIterator<T>
+	public static class WrappedBaggableIterator<T> implements BaggableIterator<T>
 	{
 		protected final @NonNull Iterator<? extends T> iterator;
 
 		/**
 		 * Returns new array iterator over the given object array
 		 */
-		public WrappedBagIterator(@NonNull Iterator<? extends T> iterator) {
-			assert !(iterator instanceof BagIterator);
+		public WrappedBaggableIterator(@NonNull Iterator<? extends T> iterator) {
+			assert !(iterator instanceof BaggableIterator);
 			this.iterator = iterator;
 		}
 
@@ -619,6 +619,11 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	}
 
 	@Override
+	public @NonNull CollectionFactory getCollectionFactory() {
+		return collectionFactory;
+	}
+
+	@Override
 	public @NonNull TypeId getElementTypeId() {
 		//    	DomainType elementType = standardLibrary.getOclVoidType();
 		//    	for (Object value : values) {
@@ -662,6 +667,9 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	public @NonNull CollectionTypeId getTypeId() {
 		return typeId;
 	}
+
+	@Override
+	public abstract int hashCode();
 
 	@Override
 	public @NonNull Boolean includes(@Nullable Object value) {
@@ -798,15 +806,15 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	}
 
 	@Override
-	public @NonNull BagIterator<@Nullable Object> iterator() {
+	public @NonNull BaggableIterator<@Nullable Object> iterator() {
 		Iterable<? extends Object> elements = iterable();
-		if (this instanceof BagIterator) {
+		if (this instanceof BaggableIterator) {
 			iterable();
-			return (BagIterator<@Nullable Object>) this;
+			return (BaggableIterator<@Nullable Object>) this;
 		}
-		else if (elements instanceof BagIterator) {
+		else if (elements instanceof BaggableIterator) {
 			@SuppressWarnings("unchecked")
-			BagIterator<@Nullable Object> castElements = (BagIterator<@Nullable Object>)elements;
+			BaggableIterator<@Nullable Object> castElements = (BaggableIterator<@Nullable Object>)elements;
 			return castElements;
 		}
 		else if (elements instanceof BasicEList) {
@@ -821,7 +829,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 			return new ListIterator<>(castElements);
 		}
 		else {
-			return new WrappedBagIterator<>(elements.iterator());
+			return new WrappedBaggableIterator<>(elements.iterator());
 		}
 	}
 

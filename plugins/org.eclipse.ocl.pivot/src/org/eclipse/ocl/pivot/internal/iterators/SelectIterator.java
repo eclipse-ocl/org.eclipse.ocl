@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -19,9 +20,9 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public abstract class SelectIterator extends AbstractBagIterator
+public abstract class SelectIterator extends AbstractBaggableIterator
 {
-	private final @NonNull BagIterator<Object> sourceIterator;
+	private final @NonNull BaggableIterator<Object> sourceIterator;
 
 	protected SelectIterator(@NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue) {
 		super(typeId);

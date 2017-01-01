@@ -28,10 +28,10 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.BagIterator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.ComparableValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -347,6 +347,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		return toInvalidValue();
 	}
 
+	@Override
+	public @NonNull CollectionFactory getCollectionFactory() {
+		return AbstractCollectionFactory.getCollectionFactory(TypeId.SET);
+	}
+
 	public Type getElement() {
 		return null;
 	}
@@ -481,8 +486,8 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull BagIterator<@Nullable Object> iterator() {
-		return new BagIterator.Null<>();
+	public @NonNull BaggableIterator<@Nullable Object> iterator() {
+		return new BaggableIterator.Null<>();
 	}
 
 	@Override
