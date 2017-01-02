@@ -476,9 +476,17 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		} */
 		Object result = null;
 		try {
-			IterationManager iterationManager;
-			OCLExpression body = iteratorExp.getOwnedBody();
 			Type iterationType = PivotUtilInternal.getType(ClassUtil.nonNullModel(iteratorExp.getType()));
+			OCLExpression body = iteratorExp.getOwnedBody();
+			if (implementation instanceof LibraryIteration.LazyIteration) {
+				List<Variable> iterators = iteratorExp.getOwnedIterators();
+				int iSize = iterators.size();
+				if (iSize == 1) {
+					VariableDeclaration firstIterator = ClassUtil.nonNullModel(iterators.get(0));
+					return ((LibraryIteration.LazyIteration)implementation).evaluate(context, (CollectionTypeId)iterationType.getTypeId(), sourceValue, firstIterator, body);
+				}
+			}
+			IterationManager iterationManager;
 			Type bodyType = PivotUtilInternal.getType(ClassUtil.nonNullModel(body.getType()));
 			Object accumulatorValue = implementation.createAccumulatorValue(context, iterationType.getTypeId(), bodyType.getTypeId());
 			List<Variable> iterators = iteratorExp.getOwnedIterators();

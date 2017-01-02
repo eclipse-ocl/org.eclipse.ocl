@@ -197,6 +197,9 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionAsSequence() {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryEquals(null, 10, "let s = Sequence{1, 2.0, '3'}->including(2) in s->asSequence()->size() + s->asSet()->size() + s->asSet()->asSequence()->size()");
+
+
 		ocl.assertQueryEquals(null, ocl.getEmptySequenceValue(), "Sequence{}->asSequence()");
 		ocl.assertQueryEquals(null, ocl.getEmptySequenceValue(), "Bag{}->asSequence()");
 		ocl.assertQueryEquals(null, ocl.getEmptySequenceValue(), "Set{}->asSequence()");

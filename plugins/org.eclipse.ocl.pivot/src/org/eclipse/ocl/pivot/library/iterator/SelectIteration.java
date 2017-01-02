@@ -12,22 +12,27 @@ package org.eclipse.ocl.pivot.library.iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.SelectIterator;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
+import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.CollectionValue.Accumulator;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.Value;
 
 /**
  * SelectIteration realizes the Collection::select() library iteration.
  */
-public class SelectIteration extends AbstractIteration
+public class SelectIteration extends AbstractIteration implements LibraryIteration.LazyIteration
 {
 	public static final @NonNull SelectIteration INSTANCE = new SelectIteration();
 
@@ -37,7 +42,7 @@ public class SelectIteration extends AbstractIteration
 	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
@@ -45,16 +50,16 @@ public class SelectIteration extends AbstractIteration
 	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createCollectionAccumulatorValue((CollectionTypeId)accumulatorTypeId);
 	}
-	
+
 	@Override
-    protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
-		Object bodyVal = iterationManager.evaluateBody();		
+	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
+		Object bodyVal = iterationManager.evaluateBody();
 		assert !(bodyVal instanceof InvalidValueException);
 		if (bodyVal == null) {
 			throw new InvalidValueException(PivotMessages.UndefinedBody, "select"); 	// Null body is invalid //$NON-NLS-1$
 		}
 		else if (bodyVal == TRUE_VALUE) {
-			Object value = iterationManager.get();		
+			Object value = iterationManager.get();
 			Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
 			assert accumulatorValue != null;												// createAccumulatorValue is @NonNull
 			accumulatorValue.add(value);
@@ -63,5 +68,18 @@ public class SelectIteration extends AbstractIteration
 			throw new InvalidValueException(PivotMessages.NonBooleanBody, "select"); 	// Non boolean body is invalid //$NON-NLS-1$
 		}
 		return CARRY_ON;
+	}
+
+	@Override
+	public @NonNull Value evaluate(@NonNull Executor executor, @NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue, @NonNull VariableDeclaration firstIterator,
+			@NonNull OCLExpression body) {
+		// TODO Auto-generated method stub
+		return new SelectIterator(typeId, sourceValue) {
+
+			@Override
+			protected boolean body(Object next) {
+				executor.replace(firstIterator, next);
+				return ValueUtil.asBoolean(executor.evaluate(body)) == Boolean.TRUE;
+			}};
 	}
 }

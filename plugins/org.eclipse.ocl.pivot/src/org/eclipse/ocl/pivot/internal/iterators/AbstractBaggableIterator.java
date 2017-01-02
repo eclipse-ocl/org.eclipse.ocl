@@ -200,7 +200,7 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 
 	@Override
 	public @NonNull Collection<? extends Object> getElements() {
-		if (isUnique() || isOrdered()) {
+		if (!isBag()) {
 			return iterable().getListOfElements();
 		}
 		else {
