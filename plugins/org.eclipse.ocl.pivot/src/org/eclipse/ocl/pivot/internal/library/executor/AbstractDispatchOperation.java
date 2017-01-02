@@ -72,6 +72,7 @@ public abstract class AbstractDispatchOperation extends AbstractEvaluationOperat
 				abstractOperation = BAD_OPERATION;
 				class2operation.put(jClass, abstractOperation);
 			}
+			assert class2operation.get(jClass) == abstractOperation;
 		}
 		return abstractOperation.basicEvaluate(executor, caller, sourceAndArgumentValues);
 	}
@@ -90,6 +91,7 @@ public abstract class AbstractDispatchOperation extends AbstractEvaluationOperat
 			}
 			abstractOperation = resolve(jInterface);
 			if (abstractOperation != null) {
+				class2operation.put(jClass, abstractOperation);
 				return abstractOperation;
 			}
 		}
@@ -102,6 +104,7 @@ public abstract class AbstractDispatchOperation extends AbstractEvaluationOperat
 			}
 			abstractOperation = resolve(jSuperclass);
 			if (abstractOperation != null) {
+				class2operation.put(jClass, abstractOperation);
 				return abstractOperation;
 			}
 		}
