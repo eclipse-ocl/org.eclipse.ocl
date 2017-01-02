@@ -37,8 +37,8 @@ public class SymmetricDifferenceIterator extends AbstractBaggableIterator
 		otherValue.iterable();
 		this.sourceValue = sourceValue;
 		this.otherValue = otherValue;
-		this.sourceIterator = sourceValue.iterator();
-		this.otherIterator = otherValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
+		this.otherIterator = otherValue.baggableIterator();
 	}
 
 	@Override

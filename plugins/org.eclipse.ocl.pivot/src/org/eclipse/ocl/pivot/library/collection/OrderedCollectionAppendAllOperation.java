@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 
 /**
@@ -24,7 +23,7 @@ public class OrderedCollectionAppendAllOperation extends AbstractSimpleBinaryOpe
 	public static final @NonNull OrderedCollectionAppendAllOperation INSTANCE = new OrderedCollectionAppendAllOperation();
 
 	@Override
-	public @NonNull CollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
+	public @NonNull OrderedCollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
 		OrderedCollectionValue leftOrderedCollectionValue = asOrderedCollectionValue(left);
 		OrderedCollectionValue rightOrderedCollectionValue = asOrderedCollectionValue(right);
 		return leftOrderedCollectionValue.appendAll(rightOrderedCollectionValue);

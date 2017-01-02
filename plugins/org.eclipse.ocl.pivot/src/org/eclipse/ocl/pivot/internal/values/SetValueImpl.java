@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.values;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -20,6 +24,14 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.SymmetricDifferenceIterator;
+import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
@@ -91,8 +103,33 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 	}
 
 	@Override
+	public @NonNull SetValue excluding(@Nullable Object value) {
+		return ExcludingIterator.excluding(this, value).asSetValue();
+	}
+
+	@Override
+	public @NonNull SetValue excludingAll(@NonNull CollectionValue values) {
+		return ExcludingAllIterator.excludingAll(this, values).asSetValue();
+	}
+
+	@Override
+	public @NonNull SetValue flatten() {
+		return FlattenIterator.flatten(this).asSetValue();
+	}
+
+	@Override
 	public @NonNull String getKind() {
 		return TypeId.SET_NAME;
+	}
+
+	@Override
+	public @NonNull SetValue including(@Nullable Object value) {
+		return IncludingIterator.including(getTypeId(), this, value).asSetValue();
+	}
+
+	@Override
+	public @NonNull SetValue includingAll(@NonNull CollectionValue values) {
+		return IncludingAllIterator.includingAll(getTypeId(), this, values).asSetValue();
 	}
 
 	@Override
@@ -106,13 +143,30 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 	}
 
 	@Override
+	public @NonNull SetValue minus(@NonNull UniqueCollectionValue that) {
+		return ExcludingAllIterator.excludingAll(this, that).asSetValue();
+	}
+
+	/*	@Override
 	public @NonNull SetValue minus(@NonNull UniqueCollectionValue set) {
 		Set<Object> result = new HashSet<Object>(elements);
 		result.removeAll(set.asCollection());
 		return new SetValueImpl(getTypeId(), result);
+	} */
+
+	@Override
+	public @NonNull OrderedSetValue sort(@NonNull Comparator<Object> comparator) {
+		List<Object> values = new ArrayList<Object>(elements);
+		Collections.sort(values, comparator);
+		return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), values);
 	}
 
 	@Override
+	public @NonNull SetValue symmetricDifference(@NonNull UniqueCollectionValue that) {
+		return SymmetricDifferenceIterator.symmetricDifference(this, that).asSetValue();
+	}
+
+	/*	@Override
 	public @NonNull SetValue symmetricDifference(@NonNull UniqueCollectionValue set) {
 		Set<Object> result = new HashSet<Object>(elements);
 		for (Object e : set.iterable()) {
@@ -123,7 +177,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 			}
 		}
 		return new SetValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {

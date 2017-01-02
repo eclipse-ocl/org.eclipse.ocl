@@ -43,8 +43,8 @@ public abstract class PrependAllIterator extends AbstractBaggableIterator
 
 	public PrependAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
 		super(sourceValue.getTypeId());
-		this.sourceIterator = sourceValue.iterator();
-		this.prependIterator = prependValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
+		this.prependIterator = prependValue.baggableIterator();
 	}
 
 	@Override

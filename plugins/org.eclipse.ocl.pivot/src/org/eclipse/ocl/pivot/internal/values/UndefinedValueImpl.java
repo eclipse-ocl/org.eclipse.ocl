@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -58,6 +59,28 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 {
 	private static final long serialVersionUID = 1L;
 
+	private static class Iterator implements BaggableIterator<@Nullable Object>
+	{
+		@Override
+		public boolean hasNext() {
+			return false;
+		}
+
+		@Override
+		public int hasNextCount() {
+			return 0;
+		}
+
+		@Override
+		public Object next() {
+			return null;
+		}
+
+		@Override
+		public void remove() {
+		}
+	}
+
 	public UndefinedValueImpl(String message) {
 		super(message);
 	}
@@ -90,12 +113,12 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull CollectionValue append(@Nullable Object object) {
+	public @NonNull OrderedCollectionValue append(@Nullable Object object) {
 		return toInvalidValue();
 	}
 
 	@Override
-	public @NonNull CollectionValue appendAll(@NonNull CollectionValue objects) {
+	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects) {
 		return toInvalidValue();
 	}
 
@@ -206,6 +229,14 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @Nullable Value at(int index) {
 		return toInvalidValue();
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
+		return new BaggableIterator.Null<>();
 	}
 
 	@Override
@@ -371,6 +402,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+		return Collections.emptyMap();
+	}
+
+	@Override
 	public Object getObject() {
 		return null;
 	}
@@ -491,8 +527,8 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull BaggableIterator<@Nullable Object> iterator() {
-		return new BaggableIterator.Null<>();
+	public @NonNull Iterator iterator() {
+		return new Iterator();
 	}
 
 	@Override
@@ -586,12 +622,12 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull CollectionValue prepend(@Nullable Object object) {
+	public @NonNull OrderedCollectionValue prepend(@Nullable Object object) {
 		return toInvalidValue();
 	}
 
 	@Override
-	public @NonNull CollectionValue prependAll(@NonNull CollectionValue objects) {
+	public @NonNull OrderedCollectionValue prependAll(@NonNull OrderedCollectionValue objects) {
 		return toInvalidValue();
 	}
 

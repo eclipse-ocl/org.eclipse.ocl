@@ -16,18 +16,19 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
-import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
+import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * CollectionIncludingOperation realises the Collection::including() library operation.
  */
-public class CollectionIncludingOperation extends AbstractBinaryOperation//AbstractSimpleBinaryOperation
+public class CollectionIncludingOperation extends AbstractSimpleBinaryOperation//AbstractBinaryOperation
 {
 	public static final @NonNull CollectionIncludingOperation INSTANCE = new CollectionIncludingOperation();
 
 	/* @deprecated use return type id */
 	@Deprecated
+	@Override
 	public @NonNull CollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
 		CollectionValue leftCollectionValue = asCollectionValue(left);
 		return IncludingIterator.including(leftCollectionValue.getTypeId(), leftCollectionValue, right);

@@ -35,7 +35,7 @@ public class SubOrderedSetIterator extends AbstractBaggableIterator
 
 	public SubOrderedSetIterator(@NonNull CollectionValue sourceValue, int lower, int upper) {
 		super(sourceValue.getTypeId());
-		this.sourceIterator = sourceValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
 		this.lower = lower;
 		this.upper = upper;
 		if (lower < 1) {

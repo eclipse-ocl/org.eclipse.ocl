@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 
@@ -44,6 +45,18 @@ public class AsOrderedSetIterator extends AbstractBaggableIterator implements Or
 	}
 
 	@Override
+	@Deprecated
+	public @NonNull OrderedCollectionValue append(@Nullable Object object) {
+		return super.append(object).asOrderedCollectionValue();
+	}
+
+	@Override
+	@Deprecated
+	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue that) {
+		return super.appendAll(that).asOrderedCollectionValue();
+	}
+
+	@Override
 	protected int getNextCount() {
 		if (sourceIterator.hasNext()) {
 			return setNext(sourceIterator.next(), 1);
@@ -59,6 +72,18 @@ public class AsOrderedSetIterator extends AbstractBaggableIterator implements Or
 
 	@Override
 	@Deprecated
+	public @NonNull OrderedCollectionValue prepend(@Nullable Object object) {
+		return super.prepend(object).asOrderedCollectionValue();
+	}
+
+	@Override
+	@Deprecated
+	public @NonNull OrderedCollectionValue prependAll(@NonNull OrderedCollectionValue that) {
+		return super.prependAll(that).asOrderedCollectionValue();
+	}
+
+	@Override
+	@Deprecated
 	public @NonNull OrderedSetValue subOrderedSet(int lower, int upper) {
 		return super.subOrderedSet(lower, upper).asOrderedSetValue();
 	}
@@ -66,7 +91,7 @@ public class AsOrderedSetIterator extends AbstractBaggableIterator implements Or
 	@Override
 	@Deprecated
 	public @NonNull UniqueCollectionValue symmetricDifference(@NonNull UniqueCollectionValue that) {
-		return symmetricDifference((CollectionValue)that).asUniqueCollectionValue();
+		return super.symmetricDifference(that).asUniqueCollectionValue();
 	}
 
 	@Override

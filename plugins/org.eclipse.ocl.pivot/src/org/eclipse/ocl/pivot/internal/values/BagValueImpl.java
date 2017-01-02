@@ -10,7 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.values;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -19,8 +23,14 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
@@ -79,6 +89,21 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	}
 
 	@Override
+	public @NonNull BagValue excluding(@Nullable Object value) {
+		return ExcludingIterator.excluding(this, value).asBagValue();
+	}
+
+	@Override
+	public @NonNull BagValue excludingAll(@NonNull CollectionValue values) {
+		return ExcludingAllIterator.excludingAll(this, values).asBagValue();
+	}
+
+	@Override
+	public @NonNull BagValue flatten() {
+		return FlattenIterator.flatten(this).asBagValue();
+	}
+
+	@Override
 	public @NonNull Bag<? extends Object> getElements() {
 		return (Bag<? extends Object>) elements;
 	}
@@ -92,8 +117,18 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	 * @since 1.3
 	 */
 	@Override
-	protected @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+	public @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
 		return ((BagImpl<? extends Object>) elements).getMap();
+	}
+
+	@Override
+	public @NonNull BagValue including(@Nullable Object value) {
+		return IncludingIterator.including(getTypeId(), this, value).asBagValue();
+	}
+
+	@Override
+	public @NonNull BagValue includingAll(@NonNull CollectionValue values) {
+		return IncludingAllIterator.includingAll(getTypeId(), this, values).asBagValue();
 	}
 
 	@Override
@@ -104,6 +139,13 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	@Override
 	public boolean isUnique() {
 		return false;
+	}
+
+	@Override
+	public @NonNull SequenceValue sort(@NonNull Comparator<Object> comparator) {
+		List<Object> values = new ArrayList<Object>(elements);
+		Collections.sort(values, comparator);
+		return new SparseSequenceValueImpl(getSequenceTypeId(), values);
 	}
 
 	@Override

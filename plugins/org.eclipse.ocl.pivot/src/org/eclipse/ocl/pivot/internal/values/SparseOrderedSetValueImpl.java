@@ -16,6 +16,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AppendIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.PrependIterator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSet;
@@ -52,6 +56,11 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 		super(typeId, boxedValues);
 	}
 
+	@Override
+	public @NonNull OrderedSetValue append(@Nullable Object value) {
+		return AppendIterator.append(getTypeId(), this, value).asOrderedSetValue();
+	}
+
 	/*	@Override
 	public @NonNull OrderedSetValue append(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
@@ -72,6 +81,16 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
+	public @NonNull OrderedSetValue flatten() {
+		return FlattenIterator.flatten(this).asOrderedSetValue();
+	}
+
+	@Override
+	public @NonNull OrderedSetValue including(@Nullable Object value) {
+		return IncludingIterator.including(getTypeId(), this, value).asOrderedSetValue();
+	}
+
+	@Override
 	public @Nullable Object last() {
 		if (elements.size() <= 0) {
 			throw new InvalidValueException(PivotMessages.EmptyCollection, TypeId.ORDERED_SET_NAME, "last");
@@ -81,6 +100,11 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 			result = next;
 		}
 		return result;
+	}
+
+	@Override
+	public @NonNull OrderedSetValue prepend(@Nullable Object value) {
+		return PrependIterator.prepend(getTypeId(), this, value).asOrderedSetValue();
 	}
 
 	/*	@Override

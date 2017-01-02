@@ -33,7 +33,7 @@ public class AsEcoreIterator extends AbstractBaggableIterator
 		super(sourceValue.getTypeId());
 		this.idResolver = idResolver;
 		this.instanceClass = instanceClass;
-		this.sourceIterator = sourceValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
 	}
 
 	@Override

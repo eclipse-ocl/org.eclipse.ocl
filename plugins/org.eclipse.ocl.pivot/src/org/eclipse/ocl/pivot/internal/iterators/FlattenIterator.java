@@ -81,7 +81,7 @@ public class FlattenIterator extends AbstractBaggableIterator
 
 	public FlattenIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue) {
 		super(collectionTypeId);
-		this.sourceIterator = sourceValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class FlattenIterator extends AbstractBaggableIterator
 					iteratorStack2 = iteratorStack = new Stack<>();
 				}
 				iteratorStack2.push(sourceIterator);
-				sourceIterator = ((CollectionValue)next).iterator();
+				sourceIterator = ((CollectionValue)next).baggableIterator();
 				return hasNextCount();
 			}
 			return setNext(next, nextCount);

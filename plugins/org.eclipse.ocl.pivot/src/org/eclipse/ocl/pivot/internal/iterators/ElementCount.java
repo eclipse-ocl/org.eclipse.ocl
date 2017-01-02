@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 /**
  * ElementCount is used as the count of a Bag element. It avoids thrashing Integer objects as counts evolve.
+ * @since 1.3
  */
 public class ElementCount extends Number
 {

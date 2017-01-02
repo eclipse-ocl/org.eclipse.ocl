@@ -26,7 +26,7 @@ public abstract class SelectIterator extends AbstractBaggableIterator
 
 	protected SelectIterator(@NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue) {
 		super(typeId);
-		this.sourceIterator = sourceValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
 	}
 
 	protected abstract boolean body(Object next);

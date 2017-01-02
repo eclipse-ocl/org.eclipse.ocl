@@ -12,7 +12,9 @@ package org.eclipse.ocl.pivot.values;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -50,6 +52,12 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@Nullable <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass);
+
+	/**
+	 * @generated NOT
+	 * @since 1.3
+	 */
+	@NonNull BaggableIterator<@Nullable Object> baggableIterator();
 
 	/**
 	 * @generated NOT
@@ -107,6 +115,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	String getKind();
 
 	/**
+	 * @since 1.3
+	 */
+	@NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount();
+
+	/**
 	 * @generated NOT
 	 */
 	@Override
@@ -134,6 +147,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 
 	/**
 	 * @generated NOT
+	 * @since 1.3
 	 */
 	int intCount(@Nullable Object value);
 
@@ -165,7 +179,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@Override
-	@NonNull BaggableIterator<@Nullable Object> iterator();
+	@NonNull Iterator<@Nullable Object> iterator();
 
 	/**
 	 * @generated NOT

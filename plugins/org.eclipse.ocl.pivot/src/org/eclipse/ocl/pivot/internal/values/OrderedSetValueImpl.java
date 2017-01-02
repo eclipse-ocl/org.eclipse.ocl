@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.values;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -22,8 +24,15 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AppendAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.PrependAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.SubOrderedSetIterator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
@@ -50,6 +59,11 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	public OrderedSetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> elements) {
 		super(typeId, elements);
 		assert checkElementsAreUnique(this.elements);
+	}
+
+	@Override
+	public @NonNull OrderedSetValue appendAll(@NonNull OrderedCollectionValue values) {
+		return AppendAllIterator.appendAll(this, values).asOrderedSetValue();
 	}
 
 	/*	@Override
@@ -102,8 +116,23 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	}
 
 	@Override
+	public @NonNull OrderedSetValue excluding(@Nullable Object value) {
+		return ExcludingIterator.excluding(this, value).asOrderedSetValue();
+	}
+
+	@Override
+	public @NonNull OrderedSetValue excludingAll(@NonNull CollectionValue values) {
+		return ExcludingAllIterator.excludingAll(this, values).asOrderedSetValue();
+	}
+
+	@Override
 	public @NonNull String getKind() {
 		return TypeId.ORDERED_SET_NAME;
+	}
+
+	@Override
+	public @NonNull OrderedSetValue includingAll(@NonNull CollectionValue values) {
+		return IncludingAllIterator.includingAll(getTypeId(), this, values).asOrderedSetValue();
 	}
 
 	@Override
@@ -191,6 +220,11 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 		return new SparseOrderedSetValueImpl(getTypeId(), result);
 	}
 
+	@Override
+	public @NonNull OrderedSetValue prependAll(@NonNull OrderedCollectionValue values) {
+		return PrependAllIterator.prependAll(this, values).asOrderedSetValue();
+	}
+
 	/*	@Override
 	public @NonNull OrderedSetValue prependAll(@NonNull OrderedCollectionValue objects) {
 		OrderedSet<Object> result = new OrderedSetImpl<Object>(objects.getElements());
@@ -206,6 +240,18 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	}
 
 	@Override
+	public @NonNull OrderedSetValue sort(@NonNull Comparator<Object> comparator) {
+		List<Object> values = new ArrayList<Object>(elements);
+		Collections.sort(values, comparator);
+		return new SparseOrderedSetValueImpl(getTypeId(), values);
+	}
+
+	@Override
+	public @NonNull OrderedSetValue subOrderedSet(int lower, int upper) {
+		return SubOrderedSetIterator.subOrderedSet(this, lower, upper).asOrderedSetValue();
+	}
+
+	/*	@Override
 	public @NonNull OrderedSetValue subOrderedSet(int lower, int upper) {
 		lower = lower - 1;
 		upper = upper - 1;
@@ -232,7 +278,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 			curr++;
 		}
 		return new SparseOrderedSetValueImpl(getTypeId(), result);
-	}
+	} */
 
 	//	public @NonNull SequenceValue subSequence(int lower, int upper) {
 	//		return subOrderedSet(lower, upper);

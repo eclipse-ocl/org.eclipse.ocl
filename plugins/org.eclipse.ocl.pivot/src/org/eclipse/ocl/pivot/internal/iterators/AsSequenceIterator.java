@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 
 /**
@@ -40,11 +41,35 @@ public class AsSequenceIterator extends AbstractBaggableIterator implements Sequ
 	}
 
 	@Override
+	@Deprecated
+	public @NonNull OrderedCollectionValue append(@Nullable Object object) {
+		return super.append(object).asOrderedCollectionValue();
+	}
+
+	@Override
+	@Deprecated
+	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue that) {
+		return super.appendAll(that).asOrderedCollectionValue();
+	}
+
+	@Override
 	protected int getNextCount() {
 		if (sourceIterator.hasNext()) {
 			return setNext(sourceIterator.next(), 1);
 		}
 		return 0;
+	}
+
+	@Override
+	@Deprecated
+	public @NonNull OrderedCollectionValue prepend(@Nullable Object object) {
+		return super.prepend(object).asOrderedCollectionValue();
+	}
+
+	@Override
+	@Deprecated
+	public @NonNull OrderedCollectionValue prependAll(@NonNull OrderedCollectionValue that) {
+		return super.prependAll(that).asOrderedCollectionValue();
 	}
 
 	@Override

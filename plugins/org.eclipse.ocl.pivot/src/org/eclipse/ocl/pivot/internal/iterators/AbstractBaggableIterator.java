@@ -18,7 +18,6 @@ import java.util.NoSuchElementException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.internal.values.AbstractCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
@@ -52,7 +51,7 @@ import com.google.common.collect.Lists;
  *
  * @since 1.3
  */
-public abstract class AbstractBaggableIterator extends AbstractCollectionValueImpl implements BaggableIterator<@Nullable Object>
+public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl implements BaggableIterator<@Nullable Object>
 {
 	/**
 	 * The hashCode of the boxed values in this collection.
@@ -166,6 +165,26 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 		return iterable().get(javaIindex);
 	}
 
+	@Override
+	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
+		if (withIterable == null) {
+			withIterable = Boolean.FALSE;
+		}
+		else if (withIterable == Boolean.FALSE) {
+			//			System.out.println(NameUtil.debugSimpleName(this) + " iterator() - withIterable: " + withIterable);
+			throw new IllegalStateException("Must invoke iterable() before first of multiple iterator() calls.");
+		}
+		LazyIterable<@Nullable Object> iterable = basicGetIterable();
+		if (iterable != null) {
+			return iterable.iterator();
+		}
+		else {
+			withIterable = Boolean.FALSE;
+			//			System.out.println(NameUtil.debugSimpleName(this) + " iterator() withIterable: " + withIterable);
+			return this;
+		}
+	}
+
 	protected @Nullable LazyIterable<@Nullable Object> basicGetIterable() {
 		return lazyIterable;
 	}
@@ -201,7 +220,7 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 	 * @since 1.3
 	 */
 	@Override
-	protected @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
 		return iterable().getMapOfElement2elementCount();
 	}
 
@@ -309,22 +328,7 @@ public abstract class AbstractBaggableIterator extends AbstractCollectionValueIm
 
 	@Override
 	public @NonNull BaggableIterator<@Nullable Object> iterator() {
-		if (withIterable == null) {
-			withIterable = Boolean.FALSE;
-		}
-		else if (withIterable == Boolean.FALSE) {
-			//			System.out.println(NameUtil.debugSimpleName(this) + " iterator() - withIterable: " + withIterable);
-			throw new IllegalStateException("Must invoke iterable() before first of multiple iterator() calls.");
-		}
-		LazyIterable<@Nullable Object> iterable = basicGetIterable();
-		if (iterable != null) {
-			return iterable.iterator();
-		}
-		else {
-			withIterable = Boolean.FALSE;
-			//			System.out.println(NameUtil.debugSimpleName(this) + " iterator() withIterable: " + withIterable);
-			return this;
-		}
+		return baggableIterator();
 	}
 
 	public @Nullable Object last() {

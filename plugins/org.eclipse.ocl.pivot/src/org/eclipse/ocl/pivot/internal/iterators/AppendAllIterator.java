@@ -43,8 +43,8 @@ public abstract class AppendAllIterator extends AbstractBaggableIterator
 
 	protected AppendAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
 		super(sourceValue.getTypeId());
-		this.sourceIterator = sourceValue.iterator();
-		this.appendIterator = appendedValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
+		this.appendIterator = appendedValue.baggableIterator();
 	}
 
 	@Override

@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.values;
+package org.eclipse.ocl.pivot.internal.iterators;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -32,23 +32,12 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.AppendAllIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AppendIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
-import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
-import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
-import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
-import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
-import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
-import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
-import org.eclipse.ocl.pivot.internal.iterators.PrependAllIterator;
-import org.eclipse.ocl.pivot.internal.iterators.PrependIterator;
-import org.eclipse.ocl.pivot.internal.iterators.SubOrderedSetIterator;
-import org.eclipse.ocl.pivot.internal.iterators.SubSequenceIterator;
-import org.eclipse.ocl.pivot.internal.iterators.SymmetricDifferenceIterator;
+import org.eclipse.ocl.pivot.internal.values.AbstractCollectionFactory;
+import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
+import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
+import org.eclipse.ocl.pivot.internal.values.TupleValueImpl;
+import org.eclipse.ocl.pivot.internal.values.ValueImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -71,7 +60,7 @@ import com.google.common.collect.Lists;
  * @generated NOT
  * @since 1.3
  */
-public abstract class AbstractCollectionValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
+public abstract class AbstractBaggableValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
 {
 	/**
 	 * Optimized iterator over an Array for use in OCL contents where the array is known to be stable
@@ -330,7 +319,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 	protected final @NonNull CollectionTypeId typeId;
 	protected final @NonNull CollectionFactory collectionFactory;
 
-	protected AbstractCollectionValueImpl(@NonNull CollectionTypeId typeId) {
+	protected AbstractBaggableValueImpl(@NonNull CollectionTypeId typeId) {
 		this.typeId = typeId;
 		this.collectionFactory = AbstractCollectionFactory.getCollectionFactory(typeId);
 		Map<Class<?>, Integer> collectionClass2count2 = collectionClass2count;
@@ -517,7 +506,7 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 			}
 			else {
 				Map<? extends Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount();
-				Map<? extends Object, @NonNull ? extends Number> thoseElements = ((AbstractCollectionValueImpl)that).getMapOfElement2elementCount();
+				Map<? extends Object, @NonNull ? extends Number> thoseElements = that.getMapOfElement2elementCount();
 				//				Collection<? extends Object> theseElements = this.getElements();
 				//				Collection<? extends Object> thoseElements = that.getElements();
 				return theseElements.equals(thoseElements);
@@ -641,7 +630,8 @@ public abstract class AbstractCollectionValueImpl extends ValueImpl implements C
 		return collectionFactory.getKind();
 	}
 
-	protected @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+	@Override
+	public @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
 		throw new UnsupportedOperationException();
 	}
 

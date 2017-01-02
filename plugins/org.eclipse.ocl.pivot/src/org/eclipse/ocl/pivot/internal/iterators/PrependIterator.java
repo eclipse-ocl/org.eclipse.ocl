@@ -43,7 +43,7 @@ public abstract class PrependIterator extends AbstractBaggableIterator
 	public PrependIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		super(collectionTypeId);
 		this.object = object;
-		this.sourceIterator = sourceValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
 	}
 
 	@Override

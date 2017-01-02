@@ -45,7 +45,7 @@ public class IntersectionIterator extends AbstractBaggableIterator
 	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
 		super(collectionTypeId);
 		this.sourceValue = sourceValue;
-		this.secondIterator = secondValue.iterator();
+		this.secondIterator = secondValue.baggableIterator();
 	}
 
 	@Override

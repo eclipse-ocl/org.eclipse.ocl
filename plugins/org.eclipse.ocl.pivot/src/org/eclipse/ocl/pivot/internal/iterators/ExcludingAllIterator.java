@@ -31,7 +31,7 @@ public class ExcludingAllIterator extends AbstractBaggableIterator
 
 	public ExcludingAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
 		super(sourceValue.getTypeId());
-		this.sourceIterator = sourceValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
 		this.excludeValue = excludeValue;
 	}
 

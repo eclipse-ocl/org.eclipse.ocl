@@ -55,8 +55,8 @@ public abstract class IncludingAllIterator extends AbstractBaggableIterator
 
 	public IncludingAllIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
 		super(collectionTypeId);
-		this.sourceIterator = sourceValue.iterator();
-		this.includeIterator = includeValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
+		this.includeIterator = includeValue.baggableIterator();
 	}
 
 	@Override

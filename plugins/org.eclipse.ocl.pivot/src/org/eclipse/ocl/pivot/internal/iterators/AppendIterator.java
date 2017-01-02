@@ -42,7 +42,7 @@ public abstract class AppendIterator extends AbstractBaggableIterator
 
 	public AppendIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		super(collectionTypeId);
-		this.sourceIterator = sourceValue.iterator();
+		this.sourceIterator = sourceValue.baggableIterator();
 		this.object = object;
 	}
 
