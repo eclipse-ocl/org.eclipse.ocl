@@ -375,7 +375,7 @@ public class AS2Ecore extends AbstractConversion
 		return ecoreURI;
 	}
 
-	public @NonNull Map<String, Object> getOptions() {
+	public @NonNull Map<@NonNull String, @Nullable Object> getOptions() {
 		return options;
 	}
 

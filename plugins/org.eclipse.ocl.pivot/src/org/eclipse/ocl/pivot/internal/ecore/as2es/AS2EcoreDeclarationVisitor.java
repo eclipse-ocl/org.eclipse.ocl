@@ -304,28 +304,28 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			if (collectionType.isUnique() != PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE) {
 				unique = Boolean.toString(collectionType.isUnique());
 			}
-			if (!PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE.equals(lowerValue)) {
-				lower = lowerValue.toString();
-			}
-			if (!PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE.equals(upperValue)) {
-				upper = upperValue.toString();
-			}
 		}
 		else {
 			type = propertyType;
 			lowerValue = property.isIsRequired() ? ValueUtil.ONE_VALUE : ValueUtil.ZERO_VALUE;
 			upperValue = ValueUtil.UNLIMITED_ONE_VALUE;
-			if (!ValueUtil.ZERO_VALUE.equals(lowerValue)) {
-				lower = lowerValue.toString();
-			}
-			if (!ValueUtil.UNLIMITED_ONE_VALUE.equals(upperValue)) {
-				upper = upperValue.toString();
-			}
+		}
+		if (!PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE.equals(lowerValue)) {
+			lower = lowerValue.toString();
+		}
+		if (!(property.getOpposite().isIsComposite() ? ValueUtil.UNLIMITED_ONE_VALUE : PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE).equals(upperValue)) {
+			upper = upperValue.toString();
 		}
 		String name = property.getName();
+		//
+		//	If there is an exact match for the no-EAnnotation DEFAULT values, then no EAnnotation is required.
+		//
 		if (name.equals(type.getName()) && (lower == null) && (ordered == null) && (unique == null) && (upper == null)) {
 			return null;
 		}
+		//
+		//	Otherwise the with-EAnnotation ANNOTATED values are the reference.
+		//
 		lower = null;
 		ordered = null;
 		unique = null;
@@ -494,7 +494,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
 		@NonNull Iterable<Property> nonDuplicateProperties = Iterables.filter(pivotClass.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
-		Map<String, Object> options = context.getOptions();
+		Map<@NonNull String, @Nullable Object> options = context.getOptions();
 		String invariantPrefix = AS2Ecore.getInvariantPrefix(options);
 		for (Constraint pivotInvariant : nonDuplicateConstraints) {
 			if (pivotInvariant.isIsCallable()) {
