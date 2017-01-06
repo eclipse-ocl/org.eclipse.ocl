@@ -389,7 +389,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		}
 		else {
 			assert (pivotElement instanceof LambdaType)
-				|| (pivotElement instanceof TupleType);
+			|| (pivotElement instanceof TupleType);
 		}
 		pivotElement.setOwningPackage(ownedCompleteModel.getOrphanage());
 	}
@@ -412,10 +412,10 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		//
 		TemplateParameter secondTemplateParameter = secondType.isTemplateParameter();
 		if (secondTemplateParameter != null) {
-//			Type secondSubstitution = secondSubstitutions.get(secondTemplateParameter);
-//			if (secondSubstitution != null) {
-//				secondType = secondSubstitution;
-//			}
+			//			Type secondSubstitution = secondSubstitutions.get(secondTemplateParameter);
+			//			if (secondSubstitution != null) {
+			//				secondType = secondSubstitution;
+			//			}
 			secondType = secondSubstitutions.put(secondTemplateParameter, firstType);
 			return true;
 		}
@@ -457,7 +457,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return firstInheritance.isSubInheritanceOf(secondInheritance);
 	}
 
-/*	@Override
+	/*	@Override
 	public boolean conformsToCollectionType(@NonNull DomainCollectionType firstCollectionType, @NonNull DomainCollectionType secondCollectionType) {
 		CollectionType firstCollectionType2 = (CollectionType)firstCollectionType;
 		CollectionType secondCollectionType2 = (CollectionType)secondCollectionType;
@@ -536,17 +536,17 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	protected boolean conformsToMapType(@NonNull MapType firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull MapType secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
-//		org.eclipse.ocl.pivot.Class firstContainerType = firstType.getContainerType();
-//		org.eclipse.ocl.pivot.Class secondContainerType = secondType.getContainerType();
-//		if (firstContainerType != secondContainerType) {
-//			CompleteClass firstContainerCompleteClass = getCompleteClass(firstContainerType);
-//			CompleteClass secondContainerCompleteClass = getCompleteClass(secondContainerType);
-//			CompleteInheritance firstContainerInheritance = firstContainerCompleteClass.getCompleteInheritance();
-//			CompleteInheritance secondContainerInheritance = secondContainerCompleteClass.getCompleteInheritance();
-//			if (!firstContainerInheritance.isSubInheritanceOf(secondContainerInheritance)) {
-//				return false;
-//			}
-//		}
+		//		org.eclipse.ocl.pivot.Class firstContainerType = firstType.getContainerType();
+		//		org.eclipse.ocl.pivot.Class secondContainerType = secondType.getContainerType();
+		//		if (firstContainerType != secondContainerType) {
+		//			CompleteClass firstContainerCompleteClass = getCompleteClass(firstContainerType);
+		//			CompleteClass secondContainerCompleteClass = getCompleteClass(secondContainerType);
+		//			CompleteInheritance firstContainerInheritance = firstContainerCompleteClass.getCompleteInheritance();
+		//			CompleteInheritance secondContainerInheritance = secondContainerCompleteClass.getCompleteInheritance();
+		//			if (!firstContainerInheritance.isSubInheritanceOf(secondContainerInheritance)) {
+		//				return false;
+		//			}
+		//		}
 		Type firstKeyType = firstType.getKeyType();
 		Type secondKeyType = secondType.getKeyType();
 		if ((firstKeyType == null) || (secondKeyType == null)) {
@@ -589,7 +589,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
-//		assert partialClass.getUnspecializedElement() == null;
+		//		assert partialClass.getUnspecializedElement() == null;
 		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
 		assert (oldCompleteClass == null) ||(oldCompleteClass == completeClass);
 	}
@@ -733,7 +733,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<? extends Type> parameterTypes, @NonNull Type resultType,
+	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings) {
 		LambdaTypeManager lambdaManager = getLambdaManager();
 		return lambdaManager.getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
@@ -769,11 +769,11 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return specializedType;
 	}
 
-//	@Override
-//	public @NonNull MetamodelManager getMetamodelManager() {
-//		assert metamodelManager != null;
-//		return metamodelManager;
-//	}
+	//	@Override
+	//	public @NonNull MetamodelManager getMetamodelManager() {
+	//		assert metamodelManager != null;
+	//		return metamodelManager;
+	//	}
 
 	@Override
 	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
@@ -853,7 +853,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			LambdaType lambdaType = (LambdaType)type;
 			String typeName = ClassUtil.nonNullModel(lambdaType.getName());
 			Type contextType = ClassUtil.nonNullModel(lambdaType.getContextType());
-			@NonNull List<Type> parameterType = lambdaType.getParameterType();
+			@NonNull List<@NonNull Type> parameterType = PivotUtil.getParameterType(lambdaType);
 			Type resultType = ClassUtil.nonNullModel(lambdaType.getResultType());
 			return getLambdaManager().getLambdaType(typeName, contextType, parameterType, resultType, substitutions);
 		}
@@ -895,7 +895,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<? extends TypedElement> parts,
+	public @NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
 			@Nullable TemplateParameterSubstitutions bindings) {
 		return getTupleManager().getTupleType(typeName, parts, bindings);
 	}

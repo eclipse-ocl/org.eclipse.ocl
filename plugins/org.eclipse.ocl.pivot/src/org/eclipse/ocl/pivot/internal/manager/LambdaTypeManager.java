@@ -30,14 +30,14 @@ public class LambdaTypeManager
 {
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
 	protected final org.eclipse.ocl.pivot.@NonNull Class oclLambdaType;
-	
+
 	/**
-	 * Map from from context type via first parameter type, which may be null, to list of lambda types sharing context and first parameter types. 
+	 * Map from from context type via first parameter type, which may be null, to list of lambda types sharing context and first parameter types.
 	 */
-	private final @NonNull Map<Type, Map<Type, List<LambdaType>>> lambdaTypes = new HashMap<Type, Map<Type, List<LambdaType>>>();
-// FIXME Why does a List map give a moniker test failure
-//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<Type, Map<List<? extends Type>, LambdaType>>();
-	
+	private final @NonNull Map<@NonNull Type, @NonNull Map<@Nullable Type, @NonNull List<@NonNull LambdaType>>> lambdaTypes = new HashMap<>();
+	// FIXME Why does a List map give a moniker test failure
+	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
+
 	public LambdaTypeManager(@NonNull CompleteEnvironmentInternal allCompleteClasses) {
 		this.completeEnvironment = allCompleteClasses;
 		this.oclLambdaType = allCompleteClasses.getOwnedStandardLibrary().getOclLambdaType();
@@ -47,38 +47,36 @@ public class LambdaTypeManager
 		lambdaTypes.clear();
 	}
 
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<? extends Type> parameterTypes, @NonNull Type resultType,
+	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings) {
 		if (bindings == null) {
 			return getLambdaType(typeName, contextType, parameterTypes, resultType);
 		}
 		else {
 			Type specializedContextType = completeEnvironment.getSpecializedType(contextType, bindings);
-			List<Type> specializedParameterTypes = new ArrayList<Type>();
-			for (Type parameterType : parameterTypes) {
-				if (parameterType != null) {
-					specializedParameterTypes.add(completeEnvironment.getSpecializedType(parameterType, bindings));
-				}
+			List<@NonNull Type> specializedParameterTypes = new ArrayList<>();
+			for (@NonNull Type parameterType : parameterTypes) {
+				specializedParameterTypes.add(completeEnvironment.getSpecializedType(parameterType, bindings));
 			}
 			Type specializedResultType = completeEnvironment.getSpecializedType(resultType, bindings);
 			return getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
 		}
 	}
-	
-	private @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<? extends Type> parameterTypes, @NonNull Type resultType) {
-		Map<Type, List<LambdaType>> contextMap = lambdaTypes.get(contextType);
+
+	private @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
+		Map<@Nullable Type, @NonNull List<@NonNull LambdaType>> contextMap = lambdaTypes.get(contextType);
 		if (contextMap == null) {
-			contextMap = new HashMap<Type, List<LambdaType>>();
+			contextMap = new HashMap<>();
 			lambdaTypes.put(contextType, contextMap);
 		}
 		int iMax = parameterTypes.size();
 		Type firstParameterType = iMax > 0 ? parameterTypes.get(0) : null;
-		List<LambdaType> lambdasList = contextMap.get(firstParameterType);
+		List<@NonNull LambdaType> lambdasList = contextMap.get(firstParameterType);
 		if (lambdasList == null) {
-			lambdasList = new ArrayList<LambdaType>();
+			lambdasList = new ArrayList<>();
 			contextMap.put(firstParameterType, lambdasList);
 		}
-		for (LambdaType candidateLambda : lambdasList) {
+		for (@NonNull LambdaType candidateLambda : lambdasList) {
 			if (resultType == candidateLambda.getResultType()) {
 				List<? extends Type> candidateTypes = candidateLambda.getParameterType();
 				if (iMax == candidateTypes.size()) {
@@ -96,7 +94,7 @@ public class LambdaTypeManager
 					}
 				}
 			}
-		}			
+		}
 		LambdaType lambdaType = PivotFactory.eINSTANCE.createLambdaType();
 		lambdaType.setName(typeName);
 		lambdaType.setContextType(contextType);

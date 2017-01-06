@@ -104,6 +104,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.Unlimited;
 
 public class PivotUtil
 {
@@ -910,6 +911,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull Type getElementType(@NonNull CollectionType collectionType) {
+		return ClassUtil.nonNullState(collectionType.getElementType());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull Type getElementalType(@NonNull Type type) {
 		Type elementType = type;
 		while (elementType instanceof CollectionType) {
@@ -933,6 +941,24 @@ public class PivotUtil
 			}
 		}
 		throw new IllegalStateException();
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull String getMultiplicity(@NonNull TypedElement typedElement) {
+		StringBuilder s = new StringBuilder();
+		Type type = typedElement.getType();
+		if (type instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)type;
+			Number lower = collectionType.getLower();
+			Number upper = collectionType.getUpper();
+			StringUtil.appendMultiplicity(s, lower.intValue(), upper instanceof Unlimited ? -1 : upper.intValue(), collectionType.isIsNullFree());
+		}
+		else {
+			s.append(typedElement.isIsRequired() ? "[1]" : "[?]");
+		}
+		return s.toString();
 	}
 
 	/**
@@ -1081,6 +1107,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull Iterable<@NonNull Operation> getOwnedOperations(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nullFree(asClass.getOwnedOperations());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> getOwnedPackages(@NonNull Model asModel) {
 		return ClassUtil.nullFree(asModel.getOwnedPackages());
 	}
@@ -1169,6 +1202,13 @@ public class PivotUtil
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<@NonNull Type> getParameterType(@NonNull LambdaType lambdaType) {
+		return ClassUtil.nullFree(lambdaType.getParameterType());
 	}
 
 	/**

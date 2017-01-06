@@ -448,6 +448,13 @@ public class PivotUtilInternal //extends PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull List<@NonNull ? extends Operation> getOwnedOperationsList(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nullFree(asClass.getOwnedOperations());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull List<@NonNull CollectionLiteralPart> getOwnedPartsList(@NonNull CollectionLiteralExp collectionLiteralExp) {
 		return ClassUtil.nullFree(collectionLiteralExp.getOwnedParts());
 	}
