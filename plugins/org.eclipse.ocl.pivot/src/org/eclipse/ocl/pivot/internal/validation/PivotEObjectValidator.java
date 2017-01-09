@@ -57,11 +57,11 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 /**
  * A PivotEObjectValidator augments EValidator.Registry.INSTANCE validation by validation of
  * additional Pivot-defined invariants.
- * 
+ *
  * Since there is no per-ResourceSet EValidator.Registry it is necessary for the additional
  * functionality for a particular EPackage to be provided by displacing the global entry into
  * PivotEObjectValidator.eValidators and installing PivotEObjectValidator.INSTANCE in its stead.
- * 
+ *
  * When validation occurs, the static INSTANCE first invokes the displaced functionality and
  * then looks for a ValidationAdapter in the ResourceSet for the object to be validated.
  * This ValidationAdapter is only available if the ResourceSet is for an application for which
@@ -74,10 +74,10 @@ public class PivotEObjectValidator implements EValidator
 	 * A ValidationAdapter is installed in the ResourceSet of applications that register for additional
 	 * PIvot-defined constraints. The standard validation is performed by PivotEObjectValidator.INSTANCE
 	 * before additional functionality is provided by the ValidationAdapter.
-	 * 
+	 *
 	 * For non-Pivot applications the ValidationAdapter adapts the ResourceSet containing the validatable
 	 * (Ecore) instances. Validation is invoked for validatable (Ecore) instances.
-	 * 
+	 *
 	 * For Pivot applications the ValidationAdapter adapts the ResourceSet containing the validatable
 	 * metamodel elements. Validation is invoked for validatable (Pivot) elements so a redirection via
 	 * the MetamodelManager is needed to find the ValidationAdapter on the externalResourceSet.
@@ -103,7 +103,7 @@ public class PivotEObjectValidator implements EValidator
 		}
 
 		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-		
+
 		public ValidationAdapter(@NonNull EnvironmentFactoryInternal environmentFactory) {
 			this.environmentFactory = environmentFactory;
 		}
@@ -116,7 +116,7 @@ public class PivotEObjectValidator implements EValidator
 		 * Validate all of eClassifier's constraints for object, appending warnings and at most one error to diagnostics
 		 * using context to elaborate the validation context.
 		 */
-		@Deprecated		// Temporary internal API preservation for Mars RC3 
+		@Deprecated		// Temporary internal API preservation for Mars RC3
 		public boolean validate(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context) {
 			return validate(eClassifier, object, null, diagnostics, context);
 		}
@@ -162,9 +162,9 @@ public class PivotEObjectValidator implements EValidator
 			if (specification.getBody() == null) {	// May be null for declations of hand coded Java
 				return null;
 			}
-//			if ((specification.getBodyExpression() == null) && (specification.getBody().size() <= 0)) {	// May be null for declations of hand coded Java
-//				return null;
-//			}
+			//			if ((specification.getBodyExpression() == null) && (specification.getBody().size() <= 0)) {	// May be null for declations of hand coded Java
+			//				return null;
+			//			}
 			final PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			ExpressionInOCL query;
 			try {
@@ -177,10 +177,10 @@ public class PivotEObjectValidator implements EValidator
 			if (contextVariable == null) {
 				return null;
 			}
-//			OCLExpression bodyExpression = query.getBodyExpression();
-//			if (bodyExpression == null) {	// May be null for declations of hand coded Java
-//				return null;
-//			}
+			//			OCLExpression bodyExpression = query.getBodyExpression();
+			//			if (bodyExpression == null) {	// May be null for declations of hand coded Java
+			//				return null;
+			//			}
 			ModelManager oldModelManager = null;
 			if (context != null) {
 				oldModelManager = (ModelManager) context.get(ModelManager.class);
@@ -239,16 +239,16 @@ public class PivotEObjectValidator implements EValidator
 				}
 			};
 			Diagnostic diagnostic = constraintEvaluator.evaluate(evaluationVisitor);
-//			if (diagnostic != null) {			// FIXME Debugging
-//				constraintEvaluator.evaluate(evaluationVisitor);
-//			}
+			//			if (diagnostic != null) {			// FIXME Debugging
+			//				constraintEvaluator.evaluate(evaluationVisitor);
+			//			}
 			return diagnostic;
 		}
 	}
 
 	/**
 	 * The static instance that is installed in the EValidator.Registry.INSTANCE to compose
-	 * Pivot validation with whatever other validation was installed. 
+	 * Pivot validation with whatever other validation was installed.
 	 */
 	private static final @NonNull PivotEObjectValidator INSTANCE = new PivotEObjectValidator();
 
@@ -268,11 +268,11 @@ public class PivotEObjectValidator implements EValidator
 		}
 		return validationAdapter;
 	}
-	
+
 	/**
 	 * Install Pivot-defined validation support for ePackage.
 	 */
-	@Deprecated		// Temporary internal API preservation for Mars RC3 
+	@Deprecated		// Temporary internal API preservation for Mars RC3
 	public static synchronized void install(@NonNull EPackage ePackage) {
 		install(ePackage, null);
 	}
@@ -323,8 +323,8 @@ public class PivotEObjectValidator implements EValidator
 	}
 
 	protected final @Nullable List<Model> complementingModels;
-	
-	@Deprecated		// Temporary internal API preservation for Mars RC3 
+
+	@Deprecated		// Temporary internal API preservation for Mars RC3
 	protected PivotEObjectValidator() {
 		this.complementingModels = null;
 	}
@@ -360,7 +360,7 @@ public class PivotEObjectValidator implements EValidator
 			allOk &= validatePivot(eDataType, value, diagnostics, context);
 		}
 		return allOk;
-/*		assert value != null;
+		/*		assert value != null;
 		boolean allOk = true;
 		EPackage ePackage = eDataType.getEPackage();
 		EValidator eValidator = eValidators.get(ePackage);

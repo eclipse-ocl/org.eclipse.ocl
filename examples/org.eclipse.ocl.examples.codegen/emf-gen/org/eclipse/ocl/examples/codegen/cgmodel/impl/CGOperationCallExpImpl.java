@@ -28,6 +28,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -231,6 +232,31 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
 		return (getClass() == thatValue.getClass()) ? EquivalenceUtil.isEquivalent(this, (CGOperationCallExp)thatValue) : null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isNonInvalid() {
+		if (referredOperation == null) {
+			return false;
+		}
+		if (referredOperation.isIsInvalidating()) {
+			return false;
+		}
+		if (!referredOperation.isIsValidating()) {
+			if (!source.isNonNull() || !source.isNonInvalid()) {
+				return false;
+			}
+			for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {
+				if (!argument.isNonNull() || !argument.isNonInvalid()) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
