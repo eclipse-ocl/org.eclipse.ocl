@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -14,10 +14,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePartCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 
@@ -179,15 +178,6 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	 * @generated
 	 */
 	@Override
-	public @Nullable CGInvalid getInvalidValue() {
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public boolean isBoxed() {
 		return true;
 	}
@@ -207,7 +197,8 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	 */
 	@Override
 	public boolean isNonInvalid() {
-		return true;
+		CGValuedElement source = getSource();
+		return source.isNonNull() && source.isNonInvalid();
 	}
 
 	/**
