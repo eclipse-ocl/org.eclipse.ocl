@@ -2691,9 +2691,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.appendDeclaration(cgTuplePartCallExp);
 		js.append(" = ");
+		js.appendClassReference(ClassUtil.class);
+		js.append(".nonNullState(");
 		js.appendClassCast(cgTuplePartCallExp);
 		js.appendAtomicReferenceTo(TupleValue.class, source);
-		js.append(".getValue(" + partId.getIndex() + "/*" + partId.getName() + "*/);\n");
+		js.append(".getValue(" + partId.getIndex() + "/*" + partId.getName() + "*/));\n");
 		return true;
 	}
 
