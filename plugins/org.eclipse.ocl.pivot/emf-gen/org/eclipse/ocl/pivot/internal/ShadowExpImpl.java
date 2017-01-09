@@ -598,23 +598,16 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						catch (Exception e) {
 							CAUGHT_isVolatile = ValueUtil.createInvalidValue(e);
 						}
-						/*@Caught*/ @Nullable Object CAUGHT_not;
+						/*@Caught*/ @NonNull Object CAUGHT_isRequired;
 						try {
-							/*@Caught*/ @NonNull Object CAUGHT_isRequired;
-							try {
-								final /*@Thrown*/ boolean isRequired = _1_5.isIsRequired();
-								CAUGHT_isRequired = isRequired;
-							}
-							catch (Exception e) {
-								CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
-							}
-							final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isRequired);
-							CAUGHT_not = not;
+							final /*@Thrown*/ boolean isRequired = _1_5.isIsRequired();
+							CAUGHT_isRequired = isRequired;
 						}
 						catch (Exception e) {
-							CAUGHT_not = ValueUtil.createInvalidValue(e);
+							CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
 						}
-						final /*@Thrown*/ java.lang.@Nullable Boolean or_2 = BooleanOrOperation.INSTANCE.evaluate(CAUGHT_isVolatile, CAUGHT_not);
+						final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isRequired);
+						final /*@Thrown*/ java.lang.@Nullable Boolean or_2 = BooleanOrOperation.INSTANCE.evaluate(CAUGHT_isVolatile, not);
 						if (or_2 == null) {
 							throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
 						}

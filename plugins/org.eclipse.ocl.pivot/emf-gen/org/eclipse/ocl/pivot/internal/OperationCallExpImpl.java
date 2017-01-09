@@ -786,27 +786,20 @@ public class OperationCallExpImpl
 				catch (Exception e) {
 					CAUGHT_and = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @Nullable Object CAUGHT_not;
+				/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
-					try {
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-						if (ownedSource_0 == null) {
-							throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
-						}
-						final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
-						CAUGHT_isNonNull = isNonNull;
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+					if (ownedSource_0 == null) {
+						throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 					}
-					catch (Exception e) {
-						CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
-					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
-					CAUGHT_not = not;
+					final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
+					CAUGHT_isNonNull = isNonNull;
 				}
 				catch (Exception e) {
-					CAUGHT_not = ValueUtil.createInvalidValue(e);
+					CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_not);
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, not);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {

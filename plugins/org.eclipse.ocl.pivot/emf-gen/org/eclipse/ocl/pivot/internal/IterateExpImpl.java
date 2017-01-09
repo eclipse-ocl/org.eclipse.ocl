@@ -580,22 +580,15 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			try {
 				/*@Caught*/ @Nullable Object CAUGHT_and;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_not;
+					/*@Caught*/ @Nullable Object CAUGHT_isSafe;
 					try {
-						/*@Caught*/ @Nullable Object CAUGHT_isSafe;
-						try {
-							final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-							CAUGHT_isSafe = isSafe;
-						}
-						catch (Exception e) {
-							CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-						}
-						final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isSafe);
-						CAUGHT_not = not;
+						final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+						CAUGHT_isSafe = isSafe;
 					}
 					catch (Exception e) {
-						CAUGHT_not = ValueUtil.createInvalidValue(e);
+						CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
 					}
+					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isSafe);
 					/*@Caught*/ @NonNull Object CAUGHT_exists;
 					try {
 						final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
@@ -646,7 +639,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					catch (Exception e) {
 						CAUGHT_exists = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_not, CAUGHT_exists);
+					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(not, CAUGHT_exists);
 					CAUGHT_and = and;
 				}
 				catch (Exception e) {
@@ -966,43 +959,36 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				catch (Exception e) {
 					CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @Nullable Object CAUGHT_not;
+				/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+					/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
 					try {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-						/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-						try {
-							CAUGHT_ownedSource = ownedSource;
-						}
-						catch (Exception e) {
-							CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-						}
-						final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource == null;
-						/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
-						if (symbol_0 == Boolean.TRUE) {
-							safe_type_source = null;
-						}
-						else {
-							assert ownedSource != null;
-							final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
-							safe_type_source = type;
-						}
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType));
-						final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
-						CAUGHT_isNullFree = isNullFree;
+						CAUGHT_ownedSource = ownedSource;
 					}
 					catch (Exception e) {
-						CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
+						CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNullFree);
-					CAUGHT_not = not;
+					final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource == null;
+					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
+					if (symbol_0 == Boolean.TRUE) {
+						safe_type_source = null;
+					}
+					else {
+						assert ownedSource != null;
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
+						safe_type_source = type;
+					}
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType));
+					final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
+					CAUGHT_isNullFree = isNullFree;
 				}
 				catch (Exception e) {
-					CAUGHT_not = ValueUtil.createInvalidValue(e);
+					CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_isSafe, CAUGHT_not);
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNullFree);
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_isSafe, not);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {

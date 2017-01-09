@@ -521,39 +521,32 @@ implements PropertyCallExp {
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
-				/*@Caught*/ @Nullable Object CAUGHT_not;
+				/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Property referredProperty = this.getReferredProperty();
+					/*@Caught*/ @Nullable Object CAUGHT_referredProperty;
 					try {
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Property referredProperty = this.getReferredProperty();
-						/*@Caught*/ @Nullable Object CAUGHT_referredProperty;
-						try {
-							CAUGHT_referredProperty = referredProperty;
-						}
-						catch (Exception e) {
-							CAUGHT_referredProperty = ValueUtil.createInvalidValue(e);
-						}
-						final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_referredProperty == null;
-						/*@Thrown*/ java.lang.@Nullable Boolean safe_isStatic_source;
-						if (symbol_0 == Boolean.TRUE) {
-							safe_isStatic_source = null;
-						}
-						else {
-							assert referredProperty != null;
-							final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
-							safe_isStatic_source = isStatic;
-						}
-						CAUGHT_safe_isStatic_source = safe_isStatic_source;
+						CAUGHT_referredProperty = referredProperty;
 					}
 					catch (Exception e) {
-						CAUGHT_safe_isStatic_source = ValueUtil.createInvalidValue(e);
+						CAUGHT_referredProperty = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isStatic_source);
-					CAUGHT_not = not;
+					final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_referredProperty == null;
+					/*@Thrown*/ java.lang.@Nullable Boolean safe_isStatic_source;
+					if (symbol_0 == Boolean.TRUE) {
+						safe_isStatic_source = null;
+					}
+					else {
+						assert referredProperty != null;
+						final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
+						safe_isStatic_source = isStatic;
+					}
+					CAUGHT_safe_isStatic_source = safe_isStatic_source;
 				}
 				catch (Exception e) {
-					CAUGHT_not = ValueUtil.createInvalidValue(e);
+					CAUGHT_safe_isStatic_source = ValueUtil.createInvalidValue(e);
 				}
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isStatic_source);
 				/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 				try {
 					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
@@ -575,14 +568,14 @@ implements PropertyCallExp {
 						safe_type_source = type;
 					}
 					@SuppressWarnings("null")
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
 					final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
 					CAUGHT_conformsTo = conformsTo;
 				}
 				catch (Exception e) {
 					CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_not, CAUGHT_conformsTo);
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(not, CAUGHT_conformsTo);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {
@@ -652,27 +645,20 @@ implements PropertyCallExp {
 				catch (Exception e) {
 					CAUGHT_and = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @Nullable Object CAUGHT_not;
+				/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
-					try {
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-						if (ownedSource_0 == null) {
-							throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
-						}
-						final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
-						CAUGHT_isNonNull = isNonNull;
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+					if (ownedSource_0 == null) {
+						throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 					}
-					catch (Exception e) {
-						CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
-					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
-					CAUGHT_not = not;
+					final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
+					CAUGHT_isNonNull = isNonNull;
 				}
 				catch (Exception e) {
-					CAUGHT_not = ValueUtil.createInvalidValue(e);
+					CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, CAUGHT_not);
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, not);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {
@@ -728,23 +714,16 @@ implements PropertyCallExp {
 					catch (Exception e) {
 						CAUGHT_ne = ValueUtil.createInvalidValue(e);
 					}
-					/*@Caught*/ @Nullable Object CAUGHT_not;
+					/*@Caught*/ @Nullable Object CAUGHT_isSafe;
 					try {
-						/*@Caught*/ @Nullable Object CAUGHT_isSafe;
-						try {
-							final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-							CAUGHT_isSafe = isSafe;
-						}
-						catch (Exception e) {
-							CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-						}
-						final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isSafe);
-						CAUGHT_not = not;
+						final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+						CAUGHT_isSafe = isSafe;
 					}
 					catch (Exception e) {
-						CAUGHT_not = ValueUtil.createInvalidValue(e);
+						CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, CAUGHT_not);
+					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isSafe);
+					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, not);
 					CAUGHT_and = and;
 				}
 				catch (Exception e) {
@@ -808,7 +787,7 @@ implements PropertyCallExp {
 			try {
 				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
 				@SuppressWarnings("null")
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyType = this.getSpecializedReferredPropertyType();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class getSpecializedReferredPropertyType = this.getSpecializedReferredPropertyType();
 				final /*@Thrown*/ boolean result = (type != null) ? (type.getTypeId() == getSpecializedReferredPropertyType.getTypeId()) : false;
 				CAUGHT_result = result;
 			}

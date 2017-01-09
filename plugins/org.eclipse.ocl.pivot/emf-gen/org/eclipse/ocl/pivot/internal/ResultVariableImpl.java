@@ -98,56 +98,42 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
-				/*@Caught*/ @Nullable Object CAUGHT_not;
+				/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = this.getOwnedInit();
+					/*@Caught*/ @Nullable Object CAUGHT_ownedInit;
 					try {
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = this.getOwnedInit();
-						/*@Caught*/ @Nullable Object CAUGHT_ownedInit;
-						try {
-							CAUGHT_ownedInit = ownedInit;
-						}
-						catch (Exception e) {
-							CAUGHT_ownedInit = ValueUtil.createInvalidValue(e);
-						}
-						final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedInit == null;
-						/*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
-						if (symbol_0 == Boolean.TRUE) {
-							safe_isRequired_source = null;
-						}
-						else {
-							assert ownedInit != null;
-							final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
-							safe_isRequired_source = isRequired;
-						}
-						CAUGHT_safe_isRequired_source = safe_isRequired_source;
+						CAUGHT_ownedInit = ownedInit;
 					}
 					catch (Exception e) {
-						CAUGHT_safe_isRequired_source = ValueUtil.createInvalidValue(e);
+						CAUGHT_ownedInit = ValueUtil.createInvalidValue(e);
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isRequired_source);
-					CAUGHT_not = not;
+					final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedInit == null;
+					/*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
+					if (symbol_0 == Boolean.TRUE) {
+						safe_isRequired_source = null;
+					}
+					else {
+						assert ownedInit != null;
+						final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
+						safe_isRequired_source = isRequired;
+					}
+					CAUGHT_safe_isRequired_source = safe_isRequired_source;
 				}
 				catch (Exception e) {
-					CAUGHT_not = ValueUtil.createInvalidValue(e);
+					CAUGHT_safe_isRequired_source = ValueUtil.createInvalidValue(e);
 				}
-				/*@Caught*/ @Nullable Object CAUGHT_not_0;
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_safe_isRequired_source);
+				/*@Caught*/ @NonNull Object CAUGHT_isRequired_0;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_isRequired_0;
-					try {
-						final /*@Thrown*/ boolean isRequired_0 = this.isIsRequired();
-						CAUGHT_isRequired_0 = isRequired_0;
-					}
-					catch (Exception e) {
-						CAUGHT_isRequired_0 = ValueUtil.createInvalidValue(e);
-					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean not_0 = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isRequired_0);
-					CAUGHT_not_0 = not_0;
+					final /*@Thrown*/ boolean isRequired_0 = this.isIsRequired();
+					CAUGHT_isRequired_0 = isRequired_0;
 				}
 				catch (Exception e) {
-					CAUGHT_not_0 = ValueUtil.createInvalidValue(e);
+					CAUGHT_isRequired_0 = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_not, CAUGHT_not_0);
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean not_0 = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isRequired_0);
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(not, not_0);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {
