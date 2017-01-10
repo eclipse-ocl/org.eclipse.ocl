@@ -159,9 +159,9 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CallExp-isImplicit"
-        name="isImplicit" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
+        name="isImplicit" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CallExp-isSafe"
-        name="isSafe" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
+        name="isSafe" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CallExp-ownedSource"
         name="ownedSource" eType="#T-pivot-OCLExpression" containment="true"/>
   </eClassifiers>
@@ -1623,7 +1623,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isInvalidating"
         name="isInvalidating" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isTransient"
-        name="isTransient" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
+        name="isTransient" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isTypeof"
         name="isTypeof" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Operation-isValidating"
@@ -1915,7 +1915,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isImplicit"
-        name="isImplicit" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
+        name="isImplicit" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Property-isReadOnly"
         name="isReadOnly" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2796,7 +2796,7 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A ValueSpecification is the specification of a (possibly empty) set of values. A ValueSpecification is a ParameterableElement that may be exposed as a formal TemplateParameter and provided as the actual parameter in the binding of a template."/>
     </eAnnotations>
-    <eOperations name="booleanValue" eType="#T-pivot-Boolean">
+    <eOperations name="booleanValue" lowerBound="1" eType="#T-pivot-Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The query booleanValue() gives a single Boolean value when one can be computed."/>
       </eAnnotations>
@@ -2845,7 +2845,7 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Variable-isImplicit"
-        name="isImplicit" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
+        name="isImplicit" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Variable-ownedInit"
         name="ownedInit" eType="#T-pivot-OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Variable-representedParameter"
@@ -2919,7 +2919,7 @@
       </eParameters>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-VariableExp-isImplicit"
-        name="isImplicit" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
+        name="isImplicit" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-VariableExp-referredVariable"
         name="referredVariable" eType="#T-pivot-VariableDeclaration"/>
   </eClassifiers>

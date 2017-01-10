@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
-import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation;
@@ -472,28 +471,30 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						/**
 						 * isDerived or isImplicit or isStatic or isTransient
 						 */
-						/*@Caught*/ @Nullable Object CAUGHT_or_0;
-						try {
-							final /*@NonInvalid*/ boolean isDerived = _1_2.isIsDerived();
-							/*@NonInvalid*/ java.lang.@Nullable Boolean or;
-							if (isDerived) {
-								or = ValueUtil.TRUE_VALUE;
-							}
-							else {
-								final /*@NonInvalid*/ java.lang.@Nullable Boolean isImplicit = _1_2.isIsImplicit();
-								or = isImplicit;
-							}
+						final /*@NonInvalid*/ boolean isDerived = _1_2.isIsDerived();
+						/*@NonInvalid*/ boolean or;
+						if (isDerived) {
+							or = ValueUtil.TRUE_VALUE;
+						}
+						else {
+							final /*@NonInvalid*/ boolean isImplicit = _1_2.isIsImplicit();
+							or = isImplicit;
+						}
+						/*@NonInvalid*/ boolean or_0;
+						if (or) {
+							or_0 = ValueUtil.TRUE_VALUE;
+						}
+						else {
 							final /*@NonInvalid*/ boolean isStatic = _1_2.isIsStatic();
-							final /*@Thrown*/ java.lang.@Nullable Boolean or_0 = BooleanOrOperation.INSTANCE.evaluate(or, isStatic);
-							CAUGHT_or_0 = or_0;
+							or_0 = isStatic;
 						}
-						catch (Exception e) {
-							CAUGHT_or_0 = ValueUtil.createInvalidValue(e);
+						/*@NonInvalid*/ boolean or_1;
+						if (or_0) {
+							or_1 = ValueUtil.TRUE_VALUE;
 						}
-						final /*@NonInvalid*/ boolean isTransient = _1_2.isIsTransient();
-						final /*@Thrown*/ java.lang.@Nullable Boolean or_1 = BooleanOrOperation.INSTANCE.evaluate(CAUGHT_or_0, isTransient);
-						if (or_1 == null) {
-							throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
+						else {
+							final /*@NonInvalid*/ boolean isTransient = _1_2.isIsTransient();
+							or_1 = isTransient;
 						}
 						//
 						if (or_1 == ValueUtil.FALSE_VALUE) {

@@ -573,7 +573,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			try {
 				/*@Caught*/ @Nullable Object CAUGHT_and;
 				try {
-					final /*@NonInvalid*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
 					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
 					/*@Caught*/ @NonNull Object CAUGHT_exists;
 					try {
@@ -801,11 +801,11 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @Nullable Object CAUGHT_result;
+			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
-				final /*@NonInvalid*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-				/*@Caught*/ @NonNull Object CAUGHT_forAll;
-				try {
+				final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+				/*@Thrown*/ boolean result;
+				if (isSafe) {
 					final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 					/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
@@ -839,12 +839,11 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
 						}
 					}
-					CAUGHT_forAll = forAll;
+					result = forAll;
 				}
-				catch (Exception e) {
-					CAUGHT_forAll = ValueUtil.createInvalidValue(e);
+				else {
+					result = ValueUtil.TRUE_VALUE;
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(isSafe, CAUGHT_forAll);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {
@@ -887,9 +886,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			symbol_1 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @Nullable Object CAUGHT_result;
-			try {
-				final /*@NonInvalid*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+			final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+			/*@NonInvalid*/ java.lang.@Nullable Boolean result;
+			if (isSafe) {
 				/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
@@ -912,13 +911,12 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
 				}
 				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNullFree);
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(isSafe, not);
-				CAUGHT_result = result;
+				result = not;
 			}
-			catch (Exception e) {
-				CAUGHT_result = ValueUtil.createInvalidValue(e);
+			else {
+				result = ValueUtil.TRUE_VALUE;
 			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IterateExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 			symbol_1 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_1;

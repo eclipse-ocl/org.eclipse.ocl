@@ -65,8 +65,8 @@
       <ownedInvariants xmi:id="cipivot.CallExp.TypeIsNotInvalid" isCallable="true" name="TypeIsNotInvalid">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;&#xA;"/>
       </ownedInvariants>
-      <ownedProperties xmi:id="p.pivot.CallExp.isImplicit" defaultValueString="false" isRequired="false" name="isImplicit" type="#Boolean"/>
-      <ownedProperties xmi:id="p.pivot.CallExp.isSafe" defaultValueString="false" isRequired="false" name="isSafe" type="#Boolean"/>
+      <ownedProperties xmi:id="p.pivot.CallExp.isImplicit" defaultValueString="false" name="isImplicit" type="#Boolean"/>
+      <ownedProperties xmi:id="p.pivot.CallExp.isSafe" defaultValueString="false" name="isSafe" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.CallExp.ownedSource" isComposite="true" isRequired="false" name="ownedSource" opposite="#p.pivot.OCLExpression.CallExp"
           type="#T.pivot.OCLExpression"/>
     </ownedClasses>
@@ -740,7 +740,7 @@
       <ownedProperties xmi:id="p.pivot.Operation.bodyExpression" isComposite="true" isRequired="false" name="bodyExpression" opposite="#p.pivot.LanguageExpression.Operation"
           type="#T.pivot.LanguageExpression"/>
       <ownedProperties xmi:id="p.pivot.Operation.isInvalidating" defaultValueString="false" name="isInvalidating" type="#Boolean"/>
-      <ownedProperties xmi:id="p.pivot.Operation.isTransient" defaultValueString="false" isRequired="false" name="isTransient" type="#Boolean"/>
+      <ownedProperties xmi:id="p.pivot.Operation.isTransient" defaultValueString="false" name="isTransient" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.Operation.isTypeof" defaultValueString="false" name="isTypeof" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.Operation.isValidating" defaultValueString="false" name="isValidating" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.Operation.ownedParameters" isComposite="true" name="ownedParameters" opposite="#p.pivot.Parameter.owningOperation"
@@ -916,7 +916,7 @@
       <ownedProperties xmi:id="p.pivot.Property.isID" defaultValueString="false" name="isID" type="#Boolean">
         <ownedComments body="True indicates this property can be used to uniquely identify an instance of the containing Class."/>
       </ownedProperties>
-      <ownedProperties xmi:id="p.pivot.Property.isImplicit" defaultValueString="false" isRequired="false" name="isImplicit" type="#Boolean"/>
+      <ownedProperties xmi:id="p.pivot.Property.isImplicit" defaultValueString="false" name="isImplicit" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.Property.isReadOnly" defaultValueString="false" name="isReadOnly" type="#Boolean">
         <ownedComments body="If isReadOnly is true, the StructuralFeature may not be written to after initialization."/>
       </ownedProperties>
@@ -1438,7 +1438,7 @@
     <ownedClasses xmi:id="T.pivot.UnspecifiedValueExp" name="UnspecifiedValueExp" superClasses="#T.pivot.OCLExpression"/>
     <ownedClasses xmi:id="T.pivot.ValueSpecification" isAbstract="true" name="ValueSpecification" superClasses="#T.pivot.TypedElement">
       <ownedComments body="A ValueSpecification is the specification of a (possibly empty) set of values. A ValueSpecification is a ParameterableElement that may be exposed as a formal TemplateParameter and provided as the actual parameter in the binding of a template."/>
-      <ownedOperations xmi:id="o.pivot.ValueSpecification.booleanValue" isRequired="false" name="booleanValue" type="#Boolean">
+      <ownedOperations xmi:id="o.pivot.ValueSpecification.booleanValue" name="booleanValue" type="#Boolean">
         <ownedComments body="The query booleanValue() gives a single Boolean value when one can be computed."/>
       </ownedOperations>
       <ownedOperations xmi:id="o.pivot.ValueSpecification.integerValue" isRequired="false" name="integerValue" type="#Integer">
@@ -1463,7 +1463,7 @@
       <ownedInvariants xmi:id="cipivot.Variable.CompatibleInitialiserType" isCallable="true" name="CompatibleInitialiserType">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true&#xA;&#xA;"/>
       </ownedInvariants>
-      <ownedProperties xmi:id="p.pivot.Variable.isImplicit" defaultValueString="false" isRequired="false" name="isImplicit" type="#Boolean"/>
+      <ownedProperties xmi:id="p.pivot.Variable.isImplicit" defaultValueString="false" name="isImplicit" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.Variable.ownedInit" isComposite="true" isRequired="false" name="ownedInit" opposite="#p.pivot.OCLExpression.Variable"
           type="#T.pivot.OCLExpression"/>
       <ownedProperties xmi:id="p.pivot.Variable.representedParameter" isRequired="false" name="representedParameter" opposite="#p.pivot.Parameter.Variable"
@@ -1500,7 +1500,7 @@
       <ownedInvariants xmi:id="cipivot.VariableExp.TypeIsNotInvalid" isCallable="true" name="TypeIsNotInvalid">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> OclInvalid&#xA;&#xA;"/>
       </ownedInvariants>
-      <ownedProperties xmi:id="p.pivot.VariableExp.isImplicit" defaultValueString="false" isRequired="false" name="isImplicit" type="#Boolean"/>
+      <ownedProperties xmi:id="p.pivot.VariableExp.isImplicit" defaultValueString="false" name="isImplicit" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.VariableExp.referredVariable" isRequired="false" name="referredVariable" opposite="#p.pivot.VariableDeclaration.VariableExp"
           type="#T.pivot.VariableDeclaration"/>
     </ownedClasses>

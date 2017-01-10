@@ -603,18 +603,18 @@ implements PropertyCallExp {
 			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @Nullable Object CAUGHT_result;
-			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-				final /*@NonInvalid*/ boolean ne = ownedSource != null;
-				/*@NonInvalid*/ java.lang.@Nullable Boolean and;
-				if (ne) {
-					final /*@NonInvalid*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-					and = isSafe;
-				}
-				else {
-					and = ValueUtil.FALSE_VALUE;
-				}
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+			final /*@NonInvalid*/ boolean ne = ownedSource != null;
+			/*@NonInvalid*/ boolean and;
+			if (ne) {
+				final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+				and = isSafe;
+			}
+			else {
+				and = ValueUtil.FALSE_VALUE;
+			}
+			/*@NonInvalid*/ java.lang.@Nullable Boolean result;
+			if (and) {
 				/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 				try {
 					if (ownedSource == null) {
@@ -627,13 +627,12 @@ implements PropertyCallExp {
 					CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
 				}
 				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(and, not);
-				CAUGHT_result = result;
+				result = not;
 			}
-			catch (Exception e) {
-				CAUGHT_result = ValueUtil.createInvalidValue(e);
+			else {
+				result = ValueUtil.TRUE_VALUE;
 			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_PropertyCallExp_c_c_SafeSourceCanBeNull, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
@@ -676,7 +675,7 @@ implements PropertyCallExp {
 				final /*@NonInvalid*/ boolean ne = ownedSource != null;
 				/*@NonInvalid*/ java.lang.@Nullable Boolean and;
 				if (ne) {
-					final /*@NonInvalid*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
 					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
 					and = not;
 				}
