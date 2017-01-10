@@ -750,6 +750,17 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		copyAnnotatedElement(pivotElement, eTypedElement, excludedAnnotations2);
 		int lower = eTypedElement.getLowerBound();
+		if (lower == 0) {
+			EClassifier eType = eTypedElement.getEType();
+			if (eType != null) {
+				Class<?> instanceClass = eType.getInstanceClass();
+				if ((instanceClass != null) && ((instanceClass == boolean.class) || (instanceClass == byte.class)
+						|| (instanceClass == double.class) || (instanceClass == float.class)
+						|| (instanceClass == int.class) || (instanceClass == long.class) || (instanceClass == short.class))) {
+					lower = 1;				// Fixes Bug 510180, Ecore does not prohibit optional primitive types
+				}
+			}
+		}
 		int upper = eTypedElement.getUpperBound();
 		pivotElement.setIsRequired((upper == 1) && (lower == 1));
 		EGenericType eGenericType = eTypedElement.getEGenericType();
