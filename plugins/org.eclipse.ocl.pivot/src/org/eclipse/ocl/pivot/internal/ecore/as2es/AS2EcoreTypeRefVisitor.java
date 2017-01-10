@@ -48,15 +48,29 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
 public class AS2EcoreTypeRefVisitor
-	extends AbstractExtendingVisitor<EObject, AS2Ecore>
+extends AbstractExtendingVisitor<EObject, AS2Ecore>
 {
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
-	
+	/**
+	 * @since 1.3
+	 */
+	protected final boolean isRequired;
+
+	/* @deprecated provide isRequired argument */
+	@Deprecated
 	public AS2EcoreTypeRefVisitor(@NonNull AS2Ecore context) {
+		this(context, true);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public AS2EcoreTypeRefVisitor(@NonNull AS2Ecore context, boolean isRequired) {
 		super(context);
 		this.metamodelManager = context.getMetamodelManager();
 		this.standardLibrary = context.getStandardLibrary();
+		this.isRequired = isRequired;
 	}
 
 	public EGenericType resolveEGenericType(org.eclipse.ocl.pivot.@NonNull Class type) {
@@ -170,8 +184,8 @@ public class AS2EcoreTypeRefVisitor
 		Number upper = pivotType.getUpper();
 		if ((lower != null) && (upper != null) && ((lower.longValue() != 0) || !(upper instanceof  Unlimited))) {
 			// FIXME Ecore does not support nested multiplicities
-//			eGenericType.setLower(lower.longValue());
-//			eGenericType.setUpper(upper instanceof Unlimited) ? -1 : upper.longValue());
+			//			eGenericType.setLower(lower.longValue());
+			//			eGenericType.setUpper(upper instanceof Unlimited) ? -1 : upper.longValue());
 		}
 		return eGenericType;
 	}
@@ -185,7 +199,7 @@ public class AS2EcoreTypeRefVisitor
 		else {
 			return OCLstdlibPackage.Literals.OCL_INVALID;
 		}
-	}	
+	}
 
 	@Override
 	public EObject visitMapType(@NonNull MapType object) {
@@ -230,7 +244,7 @@ public class AS2EcoreTypeRefVisitor
 					return EcorePackage.Literals.ESTRING;
 				}
 				else if (aType == standardLibrary.getBooleanType()) {
-					return EcorePackage.Literals.EBOOLEAN;
+					return isRequired ? EcorePackage.Literals.EBOOLEAN : EcorePackage.Literals.EBOOLEAN_OBJECT;
 				}
 				else if (aType == standardLibrary.getIntegerType()) {
 					return EcorePackage.Literals.EBIG_INTEGER;
@@ -271,10 +285,10 @@ public class AS2EcoreTypeRefVisitor
 		return eGenericType;
 	}
 
-//	@Override
-//	public EObject visitTupleType(@NonNull TupleType object) {
-//		return getOCLstdlibType(/*TypeId.OCL_VOID_NAME*/"OclTuple", object);
-//	}	
+	//	@Override
+	//	public EObject visitTupleType(@NonNull TupleType object) {
+	//		return getOCLstdlibType(/*TypeId.OCL_VOID_NAME*/"OclTuple", object);
+	//	}
 
 	@Override
 	public EObject visitVoidType(@NonNull VoidType pivotType) {
@@ -285,5 +299,5 @@ public class AS2EcoreTypeRefVisitor
 		else {
 			return OCLstdlibPackage.Literals.OCL_VOID;
 		}
-	}	
+	}
 }

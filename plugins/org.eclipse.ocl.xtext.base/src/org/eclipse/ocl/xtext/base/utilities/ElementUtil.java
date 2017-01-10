@@ -83,7 +83,7 @@ import org.eclipse.xtext.util.ITextRegion;
 public class ElementUtil
 {
 	private static final String delegateExtensionPoints[] = {
-//		EcorePlugin.CONVERSION_DELEGATE_PPID, -- not available in EMF 2.7
+		//		EcorePlugin.CONVERSION_DELEGATE_PPID, -- not available in EMF 2.7
 		EcorePlugin.INVOCATION_DELEGATE_PPID,
 		EcorePlugin.QUERY_DELEGATE_PPID,
 		EcorePlugin.SETTING_DELEGATE_PPID,
@@ -108,12 +108,12 @@ public class ElementUtil
 		if (csTypeRef == null) {
 			return null;
 		}
-//		if (csTypeRef instanceof CollectionTypeRefCS) {
-//			Type csType = ((CollectionTypeRefCS)csTypeRef).getType();
-//			if (csType instanceof CollectionType) {
-//				return ((CollectionType)csType).getName();
-//			}
-//		}
+		//		if (csTypeRef instanceof CollectionTypeRefCS) {
+		//			Type csType = ((CollectionTypeRefCS)csTypeRef).getType();
+		//			if (csType instanceof CollectionType) {
+		//				return ((CollectionType)csType).getName();
+		//			}
+		//		}
 		//FIXME Obsolete compatibility
 		MultiplicityCS csMultiplicity = csTypeRef.getOwnedMultiplicity();
 		if (csMultiplicity == null) {
@@ -149,7 +149,7 @@ public class ElementUtil
 			return unique ? TypeId.SET_NAME : TypeId.BAG_NAME;
 		}
 	}
-	
+
 	public static @Nullable ModelElementCS getCsElement(@NonNull Element asElement) {
 		Resource asResource = asElement.eResource();
 		if (asResource == null) {
@@ -199,7 +199,7 @@ public class ElementUtil
 		}
 		return delegationModes;
 	}
-	
+
 	public static @Nullable RootCSAttribution getDocumentAttribution(@NonNull ElementCS context) {
 		for (ElementCS target = context, parent; (parent = target.getParent()) != null; target = parent) {
 			Attribution attribution = PivotUtilInternal.getAttribution(parent);
@@ -250,7 +250,7 @@ public class ElementUtil
 
 	/**
 	 * Extract the first embedded ExpressionInOCL.
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	public static @Nullable ExpressionInOCL getFirstQuery(@NonNull PivotMetamodelManager metamodelManager, BaseCSResource csResource) throws ParserException {
 		CS2AS cs2as = csResource.findCS2AS();
@@ -328,12 +328,12 @@ public class ElementUtil
 					return 1;
 				}
 			}
-			return 0;			// OCL legacy allows null even though UML lowerBound() default is 1. 
+			return 0;			// OCL legacy allows null even though UML lowerBound() default is 1.
 		}
 		return csMultiplicity.getLower();
 	}
 
-	public static @Nullable <T extends NamedElementCS> T getNamedElementCS(@NonNull Collection<T> namedElements, @NonNull String name) {
+	public static @Nullable <@NonNull T extends NamedElementCS> T getNamedElementCS(@NonNull Collection<T> namedElements, @NonNull String name) {
 		for (T namedElement : namedElements) {
 			if (name.equals(namedElement.getName())) {
 				return namedElement;
@@ -380,7 +380,7 @@ public class ElementUtil
 
 	public static @Nullable String getText(@NonNull ElementCS csElement, /*@NonNull*/ EReference feature) {
 		@SuppressWarnings("null")@NonNull List<INode> nodes = NodeModelUtils.findNodesForFeature(csElement, feature);
-//		assert (nodes.size() == 1;
+		//		assert (nodes.size() == 1;
 		if (nodes.isEmpty()) {
 			return null;
 		}
@@ -463,8 +463,8 @@ public class ElementUtil
 
 	public static boolean isPrimitiveInstanceClass(@NonNull EDataType esObject) {
 		Class<?> instanceClass = esObject.getInstanceClass();
-		return (instanceClass == byte.class) || (instanceClass == char.class) || (instanceClass == double.class) || (instanceClass == float.class)
-				|| (instanceClass == int.class) || (instanceClass == long.class) || (instanceClass == short.class);
+		return (instanceClass == boolean.class) || (instanceClass == byte.class) || (instanceClass == char.class) || (instanceClass == double.class)
+				|| (instanceClass == float.class) || (instanceClass == int.class) || (instanceClass == long.class) || (instanceClass == short.class);
 	}
 
 	public static boolean isRequired(@Nullable TypedRefCS csTypeRef) {

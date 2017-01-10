@@ -467,6 +467,21 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				int lower = eObject.getLowerBound();
 				int upper = eObject.getUpperBound();
 				if (upper == 1) {
+					if (lower == 0) {
+						if (converter.cannotBeOptional(eObject)) {
+							lower = 1;
+							Ecore2AS.NOT_OPTIONAL.println(NameUtil.qualifiedNameFor(eObject) + " converted to not-optional");
+						}
+						else {
+							EClassifier eClassifier = eType.getEClassifier();
+							if (eClassifier instanceof EDataType) {
+								Class<?> instanceClass = ((EDataType)eClassifier).getInstanceClass();
+								if ((instanceClass == Boolean.class) && (pivotType.getESObject() == EcorePackage.Literals.EBOOLEAN_OBJECT)) {
+									pivotType = standardLibrary.getBooleanType();		// Correct Ecore's BooleanObject but not UML's BooleanObject
+								}
+							}
+						}
+					}
 					isRequired = lower == 1;
 				}
 				else {

@@ -13,12 +13,14 @@ package org.eclipse.ocl.pivot.internal.ecore.es2as;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -41,12 +43,28 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	protected AbstractExternal2AS(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		super(environmentFactory);
 	}
-	
+
 	public abstract void addGenericType(@NonNull EGenericType eObject);
 
 	public abstract void addMapping(@NonNull EObject eObject, @NonNull Element pivotElement);
 
 	protected abstract Model basicGetPivotModel();
+
+	/**
+	 * @since 1.3
+	 */
+	public boolean cannotBeOptional(@NonNull ETypedElement eTypedElement) {	// Fixes Bug 510180, Ecore does not prohibit optional primitive types
+		EClassifier eType = eTypedElement.getEType();
+		if (eType != null) {
+			Class<?> instanceClass = eType.getInstanceClass();
+			if ((instanceClass != null) && ((instanceClass == boolean.class) || (instanceClass == byte.class)
+					|| (instanceClass == double.class) || (instanceClass == float.class)
+					|| (instanceClass == int.class) || (instanceClass == long.class) || (instanceClass == short.class))) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public void dispose() {
@@ -61,7 +79,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		}
 		metamodelManager.removeExternalResource(this);
 	}
-	
+
 	public abstract void error(@NonNull String message);
 
 	/**

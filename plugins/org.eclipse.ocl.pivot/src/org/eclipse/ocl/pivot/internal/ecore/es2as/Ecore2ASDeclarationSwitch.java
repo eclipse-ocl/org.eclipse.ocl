@@ -84,6 +84,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -750,16 +751,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		copyAnnotatedElement(pivotElement, eTypedElement, excludedAnnotations2);
 		int lower = eTypedElement.getLowerBound();
-		if (lower == 0) {
-			EClassifier eType = eTypedElement.getEType();
-			if (eType != null) {
-				Class<?> instanceClass = eType.getInstanceClass();
-				if ((instanceClass != null) && ((instanceClass == boolean.class) || (instanceClass == byte.class)
-						|| (instanceClass == double.class) || (instanceClass == float.class)
-						|| (instanceClass == int.class) || (instanceClass == long.class) || (instanceClass == short.class))) {
-					lower = 1;				// Fixes Bug 510180, Ecore does not prohibit optional primitive types
-				}
-			}
+		if ((lower == 0) && converter.cannotBeOptional(eTypedElement)) {
+			Ecore2AS.NOT_OPTIONAL.println(NameUtil.qualifiedNameFor(eTypedElement) + " converted to not-optional");
+			lower = 1;
 		}
 		int upper = eTypedElement.getUpperBound();
 		pivotElement.setIsRequired((upper == 1) && (lower == 1));

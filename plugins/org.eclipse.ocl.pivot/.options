@@ -30,6 +30,9 @@ org.eclipse.ocl.pivot/completeClasses=false
 # Trace maintenance of CompletePackages 
 org.eclipse.ocl.pivot/completePackages=false
 
+# Trace conversion of not-optional primitive types such as EBoolean
+org.eclipse.ocl.pivot/ecore2as/notOptional=false
+
 # Trace maintenance of cached evaluations 
 org.eclipse.ocl.pivot/evaluations=false
 

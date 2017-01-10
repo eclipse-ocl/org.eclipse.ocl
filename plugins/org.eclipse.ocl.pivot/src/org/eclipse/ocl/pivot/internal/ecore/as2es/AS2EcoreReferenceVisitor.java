@@ -61,20 +61,25 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	{
 		public final @Nullable Type type;
 		public final boolean isRequired;
-		
+
 		public OptionalType(@Nullable Type type, boolean isRequired) {
 			this.type = type;
 			this.isRequired = isRequired;
 		}
 	}
-	
+
 	private static final Logger logger = Logger.getLogger(AS2EcoreReferenceVisitor.class);
 
-	protected final @NonNull AS2EcoreTypeRefVisitor typeRefVisitor;
-	
+	protected final @NonNull AS2EcoreTypeRefVisitor typeRefVisitor;				// Optional
+	/**
+	 * @since 1.3
+	 */
+	protected final @NonNull AS2EcoreTypeRefVisitor requiredTypeRefVisitor;		// Required
+
 	public AS2EcoreReferenceVisitor(@NonNull AS2Ecore context) {
 		super(context);
-		typeRefVisitor = new AS2EcoreTypeRefVisitor(context);
+		typeRefVisitor = new AS2EcoreTypeRefVisitor(context, false);
+		requiredTypeRefVisitor = new AS2EcoreTypeRefVisitor(context, true);
 	}
 
 	protected @Nullable OptionalType addPropertyRedefinitionEAnnotations(@NonNull EStructuralFeature eStructuralFeature, @NonNull Property pivotProperty) {
@@ -229,8 +234,17 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 	}
 
+	/* @deprecated provide isRequired argument */
+	@Deprecated
 	protected void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType) {
-		EObject eObject = typeRefVisitor.safeVisit(pivotType);
+		setEType(eTypedElement, pivotType, false);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	protected void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType, boolean isRequired) {
+		EObject eObject = (isRequired ? requiredTypeRefVisitor : typeRefVisitor).safeVisit(pivotType);
 		if (eObject instanceof EGenericType) {
 			eTypedElement.setEGenericType((EGenericType)eObject);
 		}
@@ -245,7 +259,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		else {
 			@SuppressWarnings("unused")
 			EObject eObject2 = typeRefVisitor.safeVisit(pivotType);
-//			throw new IllegalArgumentException("Unsupported pivot type '" + pivotType + "' in AS2Ecore Reference pass");
+			//			throw new IllegalArgumentException("Unsupported pivot type '" + pivotType + "' in AS2Ecore Reference pass");
 		}
 	}
 
@@ -304,7 +318,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			}
 			eTypedElement.setUnique(true);
 			eTypedElement.setOrdered(true);		// Ecore default
-			setEType(eTypedElement, pivotType);
+			setEType(eTypedElement, pivotType, isRequired);
 		}
 	}
 
@@ -485,13 +499,13 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			if (pivotType == null) {
 				return null;				// Occurs for Operation return type
 			}
-//			setEType(eTypedElement, pivotType);
+			//			setEType(eTypedElement, pivotType);
 			setETypeAndMultiplicity(eTypedElement, pivotType, pivotTypedElement.isIsRequired());
 		}
 		return null;
 	}
-	
-/*	@Override
+
+	/*	@Override
 	public Object caseEAnnotation(EAnnotation eAnnotation) {
 		AnnotationCS csAnnotation = (AnnotationCS) deferMap.get(eAnnotation);
 		for (ModelElementCSRef csReference : csAnnotation.getReferences()) {
@@ -503,7 +517,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return null;
 	} */
 
-/*	@Override
+	/*	@Override
 	public Object caseEGenericType(EGenericType eGenericType) {
 		TypedTypeRefCS csTypeRef = (TypedTypeRefCS) deferMap.get(eGenericType);
 		TypeCS typeRef = csTypeRef.getType();
@@ -522,7 +536,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return null;
 	} */
 
-/*	@Override
+	/*	@Override
 	public Object caseEReference(EReference eReference) {
 		OCLinEcoreReferenceCS csReference = (OCLinEcoreReferenceCS) deferMap.get(eReference);
 		ReferenceCSRef csOpposite = csReference.getOpposite();
@@ -541,17 +555,17 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return null;
 	} */
 
-//	@Override
-//	public Object caseETypeParameter(ETypeParameter eTypeParameter) {
-//		TypeParameterCS csTypeParameter = (TypeParameterCS) deferMap.get(eTypeParameter);
-/*			ClassifierRef classifierRef = csTypedElement.getType();
+	//	@Override
+	//	public Object caseETypeParameter(ETypeParameter eTypeParameter) {
+	//		TypeParameterCS csTypeParameter = (TypeParameterCS) deferMap.get(eTypeParameter);
+	/*			ClassifierRef classifierRef = csTypedElement.getType();
 		if (classifierRef != null) {
 			EClassifier eClassifier = resolveClassifierRef(classifierRef);
 			if (eClassifier != null) {
 				eTypedElement.setEType(eClassifier);
 			}
 		} */
-//		return null;
-//	}
-	
+	//		return null;
+	//	}
+
 }
