@@ -185,9 +185,9 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	operation and2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2'
 	{
 		body: if self = false then false
-		      else if b = false then false
+		      elseif b = false then false
 		      else true
-		      endif endif;
+		      endif;
 	}
 	/**
 	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
@@ -200,16 +200,16 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
 		body: if self.oclIsInvalid() then
 		        if b.oclIsInvalid() then self
-		        else if b = false then false
+		        elseif b = false then false
 		        else self
-		        endif endif
-		      else if self = false then false
-		      else if b.oclIsInvalid() then b
-		      else if b = false then false
-		      else if self = null then null
-		      else if b = null then null
+		        endif
+		      elseif self = false then false
+		      elseif b.oclIsInvalid() then b
+		      elseif b = false then false
+		      elseif self = null then null
+		      elseif b = null then null
 		      else true
-		      endif endif endif endif endif endif;
+		      endif;
 	}
 	/**
 	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
@@ -218,9 +218,9 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	operation implies2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2'
 	{
 		body: if self = false then true
-		      else if b = true then true
+		      elseif b = true then true
 		      else false
-		      endif endif;
+		      endif;
 	}
 	/**
 	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
@@ -232,16 +232,16 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	{
 		body: if self.oclIsInvalid() then
 		        if b.oclIsInvalid() then self
-		        else if b = true then true
+		        elseif b = true then true
 		        else self
-		        endif endif
-		      else if self = false then true
-		      else if b.oclIsInvalid() then b
-		      else if b = true then true
-		      else if self = null then null
-		      else if b = null then b
+		        endif
+		      elseif self = false then true
+		      elseif b.oclIsInvalid() then b
+		      elseif b = true then true
+		      elseif self = null then null
+		      elseif b = null then b
 		      else false
-		      endif endif endif endif endif endif;
+		      endif;
 	}
 	/**
 	oclText[true] if oclText[self] is oclText[false].
@@ -260,9 +260,9 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	operation not() : Boolean[?] validating precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation'
 	{
 		body: if self.oclIsInvalid() then self
-		      else if self = null then null
+		      elseif self = null then null
 		      else self = false
-		      endif endif;
+		      endif;
 	}
 	/**
 	oclText[true] if either oclText[self] or oclText[b] is oclText[true].
@@ -271,9 +271,9 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	operation or2(b : Boolean[?]) : Boolean[?] => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2'
 	{
 		body: if self = true then true
-			  else if b = true then true
+			  elseif b = true then true
 		      else false
-		      endif endif;
+		      endif;
 	}
 	/**
 	oclText[true] if either oclText[self] or oclText[b] is oclText[true].
@@ -285,16 +285,16 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	{
 		body: if self.oclIsInvalid() then
 		        if b.oclIsInvalid() then self
-			    else if b = true then true
+			    elseif b = true then true
 		        else self
-		        endif endif
-		      else if self = true then true
-			  else if b.oclIsInvalid() then b
-			  else if b = true then true
-			  else if self = null then null
-			  else if b = null then null
+		        endif
+		      elseif self = true then true
+			  elseif b.oclIsInvalid() then b
+			  elseif b = true then true
+			  elseif self = null then null
+			  elseif b = null then null
 		      else false
-		      endif endif endif endif endif endif;
+		      endif;
 	}
 	/**
 	Converts oclText[self] to a string value.
@@ -317,11 +317,11 @@ type Boolean : PrimitiveType conformsTo OclAny {
 	operation xor(b : Boolean[?]) : Boolean[?] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation'
 	{
 		body: if self.oclIsInvalid() then self
-		      else if b.oclIsInvalid() then b
-		      else if self = null then null
-		      else if b = null then null
+		      elseif b.oclIsInvalid() then b
+		      elseif self = null then null
+		      elseif b = null then null
 		      else self <> b
-		      endif endif endif endif;
+		      endif;
 	}
 }
 
