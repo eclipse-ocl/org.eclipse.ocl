@@ -171,6 +171,12 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.iterator.ExistsIteration;
 import org.eclipse.ocl.pivot.library.iterator.ForAllIteration;
+import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2;
+import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2;
+import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation;
@@ -672,8 +678,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return cgIsUndefinedExp;
 		}
 		else if (libraryOperation instanceof OclAnyEqualOperation) {
-			OCLExpression pArgument = element.getOwnedArguments().get(0);
-			CGValuedElement cgArgument = pArgument != null ? doVisit(CGValuedElement.class, pArgument) : null;
+			OCLExpression pArgument = PivotUtil.getOwnedArgument(element, 0);
+			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
 			CGIsEqualExp cgIsEqualExp = CGModelFactory.eINSTANCE.createCGIsEqualExp();
 			cgIsEqualExp.setNotEquals(libraryOperation instanceof OclAnyNotEqualOperation);
 			cgIsEqualExp.setSource(cgSource);
@@ -682,6 +688,45 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgIsEqualExp.setInvalidating(false);
 			cgIsEqualExp.setValidating(true);
 			return cgIsEqualExp;
+		}
+		else if ((libraryOperation instanceof BooleanAndOperation2)
+				|| ((libraryOperation instanceof BooleanAndOperation) && (cgSource != null) && cgSource.isNonNull() && cgSource.isNonInvalid())) {
+			OCLExpression pArgument = PivotUtil.getOwnedArgument(element, 0);
+			CGIfExp cgIfExp = CGModelFactory.eINSTANCE.createCGIfExp();
+			setAst(cgIfExp, element);
+			CGValuedElement cgCondition = doVisit(CGValuedElement.class, pSource);
+			CGValuedElement cgThenExpression = doVisit(CGValuedElement.class, pArgument);
+			CGValuedElement cgElseExpression = context.createCGConstantExp(context.getBoolean(false));
+			cgIfExp.setCondition(cgCondition);
+			cgIfExp.setThenExpression(cgThenExpression);
+			cgIfExp.setElseExpression(cgElseExpression);
+			return cgIfExp;
+		}
+		else if ((libraryOperation instanceof BooleanImpliesOperation2)
+				|| ((libraryOperation instanceof BooleanImpliesOperation) && (cgSource != null) && cgSource.isNonNull() && cgSource.isNonInvalid())) {
+			OCLExpression pArgument = PivotUtil.getOwnedArgument(element, 0);
+			CGIfExp cgIfExp = CGModelFactory.eINSTANCE.createCGIfExp();
+			setAst(cgIfExp, element);
+			CGValuedElement cgCondition = doVisit(CGValuedElement.class, pSource);
+			CGValuedElement cgThenExpression = doVisit(CGValuedElement.class, pArgument);
+			CGValuedElement cgElseExpression = context.createCGConstantExp(context.getBoolean(true));
+			cgIfExp.setCondition(cgCondition);
+			cgIfExp.setThenExpression(cgThenExpression);
+			cgIfExp.setElseExpression(cgElseExpression);
+			return cgIfExp;
+		}
+		else if ((libraryOperation instanceof BooleanOrOperation2)
+				|| ((libraryOperation instanceof BooleanOrOperation) && (cgSource != null) && cgSource.isNonNull() && cgSource.isNonInvalid())) {
+			OCLExpression pArgument = PivotUtil.getOwnedArgument(element, 0);
+			CGIfExp cgIfExp = CGModelFactory.eINSTANCE.createCGIfExp();
+			setAst(cgIfExp, element);
+			CGValuedElement cgCondition = doVisit(CGValuedElement.class, pSource);
+			CGValuedElement cgThenExpression = context.createCGConstantExp(context.getBoolean(true));
+			CGValuedElement cgElseExpression = doVisit(CGValuedElement.class, pArgument);
+			cgIfExp.setCondition(cgCondition);
+			cgIfExp.setThenExpression(cgThenExpression);
+			cgIfExp.setElseExpression(cgElseExpression);
+			return cgIfExp;
 		}
 		/*		else if (libraryOperation instanceof OclAnyEqual2Operation) {
 			OCLExpression pArgument = element.getOwnedArguments().get(0);
