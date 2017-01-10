@@ -964,7 +964,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		cgPropertyCallExp.setReferredProperty(asProperty);
 		setAst(cgPropertyCallExp, element);
-		cgPropertyCallExp.setRequired(isRequired);
+		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
 	}

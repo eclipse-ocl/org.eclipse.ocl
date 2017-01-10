@@ -76,6 +76,12 @@ public interface CodeGenerator
 	@Nullable Boolean isNonNull(@NonNull Property asProperty);
 
 	/**
+	 * Return true is this is a built-in primitive type such as boolean or int.
+	 * Such types cannot have @NonNull annotations.
+	 */
+	boolean isPrimitive(@NonNull CGValuedElement cgValue);
+
+	/**
 	 * Return true if cgValue could be represented by a primitive value. i.e. if it cannot convey a null or invalid value.
 	 */
 	boolean maybePrimitive(@NonNull CGValuedElement cgValue);

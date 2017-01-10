@@ -203,7 +203,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		//
 		Boolean ecoreIsRequired = context.isNonNull(asProperty);
-		appendSuppressWarningsNull(cgPropertyCallExp, ecoreIsRequired);
+		boolean isPrimitive = js.isPrimitive(cgPropertyCallExp);
+		if (!isPrimitive) appendSuppressWarningsNull(cgPropertyCallExp, ecoreIsRequired);
 		//		js.append("/* " + ecoreIsRequired + " " + isRequired + " */\n");
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");

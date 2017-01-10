@@ -477,6 +477,44 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return getIsNonNull(leastDerivedMethod) == Boolean.TRUE;
 	}
 
+	/**
+	 * Return true is this is a built-in primitive type such as boolean or int.
+	 * Such types cannot have @NonNull annotations.
+	 */
+	@Override
+	public boolean isPrimitive(@NonNull CGValuedElement cgValue) {
+		if (cgValue.getNamedValue().isCaught()) {
+			return false;
+		}
+		TypeDescriptor typeDescriptor = getTypeDescriptor(cgValue);
+		Class<?> javaClass = typeDescriptor.getJavaClass();		// FIXME Rationalize with TypeDescriptor.isPrimitive()
+		if ((javaClass == boolean.class) || ((javaClass == Boolean.class) && cgValue.isNonNull())) {
+			return true;
+		}
+		if ((javaClass == byte.class) || ((javaClass == Byte.class) && cgValue.isNonNull())) {
+			return true;
+		}
+		if ((javaClass == char.class) || ((javaClass == Character.class) && cgValue.isNonNull())) {
+			return true;
+		}
+		if ((javaClass == double.class) || ((javaClass == Double.class) && cgValue.isNonNull())) {
+			return true;
+		}
+		if ((javaClass == float.class) || ((javaClass == Float.class) && cgValue.isNonNull())) {
+			return true;
+		}
+		if ((javaClass == int.class) || ((javaClass == Integer.class) && cgValue.isNonNull())) {
+			return true;
+		}
+		if ((javaClass == long.class) || ((javaClass == Long.class) && cgValue.isNonNull())) {
+			return true;
+		}
+		if ((javaClass == short.class) || ((javaClass == Short.class) && cgValue.isNonNull())) {
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public boolean maybePrimitive(@NonNull CGValuedElement cgValue) {
 		if (cgValue.getNamedValue().isCaught()) {
