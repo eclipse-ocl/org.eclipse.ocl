@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePartCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 
@@ -189,16 +188,6 @@ public class CGTuplePartCallExpImpl extends CGPropertyCallExpImpl implements CGT
 	@Override
 	public boolean isEcore() {
 		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isNonInvalid() {
-		CGValuedElement source = getSource();
-		return source.isNonNull() && source.isNonInvalid();
 	}
 
 	/**

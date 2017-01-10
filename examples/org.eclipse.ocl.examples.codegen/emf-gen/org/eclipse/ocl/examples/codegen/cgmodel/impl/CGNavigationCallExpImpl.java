@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -172,6 +172,16 @@ public abstract class CGNavigationCallExpImpl extends CGCallExpImpl implements C
 	@Override
 	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
 		return (getClass() == thatValue.getClass()) ? EquivalenceUtil.isEquivalent(this, (CGNavigationCallExp)thatValue) : null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isNonInvalid() {
+		CGValuedElement source = getSource();
+		return source.isNonNull() && source.isNonInvalid();
 	}
 
 	/**
