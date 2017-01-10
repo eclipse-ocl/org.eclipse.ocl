@@ -262,15 +262,8 @@ public abstract class LoopExpImpl
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-				/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-				try {
-					CAUGHT_ownedSource = ownedSource;
-				}
-				catch (Exception e) {
-					CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource == null;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedSource == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
 				if (symbol_0 == Boolean.TRUE) {
 					safe_type_source = null;
@@ -326,8 +319,8 @@ public abstract class LoopExpImpl
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
-				final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+				final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 				/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
 				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
 				/*@Thrown*/ boolean result;
@@ -348,7 +341,7 @@ public abstract class LoopExpImpl
 					 */
 					/*@Caught*/ @NonNull Object CAUGHT_isEmpty;
 					try {
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = _1.getOwnedInit();
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = _1.getOwnedInit();
 						final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OCLExpression, ownedInit);
 						final /*@Thrown*/ boolean isEmpty = CollectionIsEmptyOperation.INSTANCE.evaluate(oclAsSet).booleanValue();
 						CAUGHT_isEmpty = isEmpty;

@@ -159,16 +159,9 @@ public class EnumLiteralExpImpl
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
-				/*@Caught*/ @Nullable Object CAUGHT_referredLiteral;
-				try {
-					CAUGHT_referredLiteral = referredLiteral;
-				}
-				catch (Exception e) {
-					CAUGHT_referredLiteral = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_referredLiteral == null;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = referredLiteral == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Enumeration safe_owningEnumeration_source;
 				if (symbol_0 == Boolean.TRUE) {
 					safe_owningEnumeration_source = null;

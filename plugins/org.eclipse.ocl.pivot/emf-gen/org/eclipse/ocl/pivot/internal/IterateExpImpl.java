@@ -512,16 +512,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
-				/*@Caught*/ @Nullable Object CAUGHT_ownedResult;
-				try {
-					CAUGHT_ownedResult = ownedResult;
-				}
-				catch (Exception e) {
-					CAUGHT_ownedResult = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedResult == null;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedResult == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
 				if (symbol_0 == Boolean.TRUE) {
 					safe_type_source = null;
@@ -580,19 +573,12 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			try {
 				/*@Caught*/ @Nullable Object CAUGHT_and;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_isSafe;
-					try {
-						final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-						CAUGHT_isSafe = isSafe;
-					}
-					catch (Exception e) {
-						CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-					}
-					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isSafe);
+					final /*@NonInvalid*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
 					/*@Caught*/ @NonNull Object CAUGHT_exists;
 					try {
-						final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-						final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+						final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 						/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.FALSE_VALUE;
 						@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
 						/*@Thrown*/ boolean exists;
@@ -611,24 +597,14 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							/**
 							 * isRequired
 							 */
-							/*@Caught*/ @NonNull Object CAUGHT_isRequired;
-							try {
-								final /*@Thrown*/ boolean isRequired = _1.isIsRequired();
-								CAUGHT_isRequired = isRequired;
-							}
-							catch (Exception e) {
-								CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
-							}
+							final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
 							//
-							if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {					// Normal successful body evaluation result
+							if (isRequired == ValueUtil.TRUE_VALUE) {					// Normal successful body evaluation result
 								exists = ValueUtil.TRUE_VALUE;
 								break;														// Stop immediately
 							}
-							else if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
+							else if (isRequired == ValueUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
 								;															// Carry on
-							}
-							else if (CAUGHT_isRequired instanceof InvalidValueException) {		// Abnormal exception evaluation result
-								accumulator = CAUGHT_isRequired;									// Cache an exception failure
 							}
 							else {															// Impossible badly typed result
 								accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "exists");
@@ -648,15 +624,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-					/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-					try {
-						CAUGHT_ownedSource = ownedSource;
-					}
-					catch (Exception e) {
-						CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-					}
-					final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource == null;
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+					final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedSource == null;
 					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
 					if (symbol_0 == Boolean.TRUE) {
 						safe_type_source = null;
@@ -719,17 +688,10 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
 				@SuppressWarnings("null")
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedBody = this.getOwnedBody();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedBody.getType();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
-				/*@Caught*/ @Nullable Object CAUGHT_ownedResult;
-				try {
-					CAUGHT_ownedResult = ownedResult;
-				}
-				catch (Exception e) {
-					CAUGHT_ownedResult = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedResult == null;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedBody = this.getOwnedBody();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedBody.getType();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedResult == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
 				if (symbol_0 == Boolean.TRUE) {
 					safe_type_source = null;
@@ -782,15 +744,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
-				/*@Caught*/ @Nullable Object CAUGHT_ownedResult;
-				try {
-					CAUGHT_ownedResult = ownedResult;
-				}
-				catch (Exception e) {
-					CAUGHT_ownedResult = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedResult == null;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Variable ownedResult = this.getOwnedResult();
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedResult == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression safe_ownedInit_source;
 				if (symbol_0 == Boolean.TRUE) {
 					safe_ownedInit_source = null;
@@ -848,18 +803,11 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
-				/*@Caught*/ @Nullable Object CAUGHT_isSafe;
-				try {
-					final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-					CAUGHT_isSafe = isSafe;
-				}
-				catch (Exception e) {
-					CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-				}
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
 				/*@Caught*/ @NonNull Object CAUGHT_forAll;
 				try {
-					final /*@Thrown*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+					final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 					/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
 					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
 					/*@Thrown*/ boolean forAll;
@@ -878,24 +826,14 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						/**
 						 * isRequired
 						 */
-						/*@Caught*/ @NonNull Object CAUGHT_isRequired;
-						try {
-							final /*@Thrown*/ boolean isRequired = _1.isIsRequired();
-							CAUGHT_isRequired = isRequired;
-						}
-						catch (Exception e) {
-							CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
-						}
+						final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
 						//
-						if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
+						if (isRequired == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
 							forAll = ValueUtil.FALSE_VALUE;
 							break;														// Stop immediately
 						}
-						else if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
+						else if (isRequired == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
 							;															// Carry on
-						}
-						else if (CAUGHT_isRequired instanceof InvalidValueException) {		// Abnormal exception evaluation result
-							accumulator = CAUGHT_isRequired;									// Cache an exception failure
 						}
 						else {															// Impossible badly typed result
 							accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
@@ -906,7 +844,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				catch (Exception e) {
 					CAUGHT_forAll = ValueUtil.createInvalidValue(e);
 				}
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_isSafe, CAUGHT_forAll);
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(isSafe, CAUGHT_forAll);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {
@@ -951,26 +889,12 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
-				/*@Caught*/ @Nullable Object CAUGHT_isSafe;
-				try {
-					final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-					CAUGHT_isSafe = isSafe;
-				}
-				catch (Exception e) {
-					CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-				}
+				final /*@NonInvalid*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
 				/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-					/*@Caught*/ @Nullable Object CAUGHT_ownedSource;
-					try {
-						CAUGHT_ownedSource = ownedSource;
-					}
-					catch (Exception e) {
-						CAUGHT_ownedSource = ValueUtil.createInvalidValue(e);
-					}
-					final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_ownedSource == null;
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+					final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedSource == null;
 					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
 					if (symbol_0 == Boolean.TRUE) {
 						safe_type_source = null;
@@ -988,7 +912,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
 				}
 				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNullFree);
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_isSafe, not);
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(isSafe, not);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {

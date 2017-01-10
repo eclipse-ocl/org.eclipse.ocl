@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
@@ -53,8 +52,8 @@ import org.eclipse.ocl.pivot.values.UnlimitedValue;
  * @generated
  */
 public abstract class TypedElementImpl
-		extends NamedElementImpl
-		implements TypedElement {
+extends NamedElementImpl
+implements TypedElement {
 
 	/**
 	 * The default value of the '{@link #isIsMany() <em>Is Many</em>}' attribute.
@@ -180,21 +179,14 @@ public abstract class TypedElementImpl
 		 * bodySpecification.type?.conformsTo(self.type)
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = bodySpecification.getType();
-		/*@Caught*/ @Nullable Object CAUGHT_type;
-		try {
-			CAUGHT_type = type;
-		}
-		catch (Exception e) {
-			CAUGHT_type = ValueUtil.createInvalidValue(e);
-		}
-		final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_type == null;
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = bodySpecification.getType();
+		final /*@NonInvalid*/ @NonNull Object symbol_0 = type == null;
 		/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
 		if (symbol_0 == Boolean.TRUE) {
 			safe_conformsTo_source = null;
 		}
 		else {
-			final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
 			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
 			safe_conformsTo_source = conformsTo;
 		}

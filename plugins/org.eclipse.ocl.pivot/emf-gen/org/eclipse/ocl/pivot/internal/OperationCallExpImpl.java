@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation;
-import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -599,15 +598,8 @@ public class OperationCallExpImpl
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_forAll;
 			try {
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Operation operation = this.getReferredOperation();
-				/*@Caught*/ @Nullable Object CAUGHT_operation;
-				try {
-					CAUGHT_operation = operation;
-				}
-				catch (Exception e) {
-					CAUGHT_operation = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_operation == null;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Operation operation = this.getReferredOperation();
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = operation == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.values.@Nullable OrderedSetValue safe_ownedParameters_source;
 				if (symbol_0 == Boolean.TRUE) {
 					safe_ownedParameters_source = null;
@@ -618,14 +610,7 @@ public class OperationCallExpImpl
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
 					safe_ownedParameters_source = BOXED_ownedParameters;
 				}
-				/*@Caught*/ @Nullable Object CAUGHT_operation_0;
-				try {
-					CAUGHT_operation_0 = operation;
-				}
-				catch (Exception e) {
-					CAUGHT_operation_0 = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ @NonNull Object symbol_1 = CAUGHT_operation_0 == null;
+				final /*@NonInvalid*/ @NonNull Object symbol_1 = operation == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class safe_owningClass_source;
 				if (symbol_1 == Boolean.TRUE) {
 					safe_owningClass_source = null;
@@ -635,11 +620,11 @@ public class OperationCallExpImpl
 					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class owningClass = operation.getOwningClass();
 					safe_owningClass_source = owningClass;
 				}
-				final /*@Thrown*/ java.util.@NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerRange RNG = ValueUtil.createRange(PivotTables.INT_1, size);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue Sequence = ValueUtil.createSequenceRange(PivotTables.SEQ_PRIMid_Integer, RNG);
+				final /*@NonInvalid*/ java.util.@NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerRange RNG = ValueUtil.createRange(PivotTables.INT_1, size);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue Sequence = ValueUtil.createSequenceRange(PivotTables.SEQ_PRIMid_Integer, RNG);
 				/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
 				@NonNull Iterator<Object> ITERATOR_i = Sequence.iterator();
 				/*@Thrown*/ boolean forAll;
@@ -761,45 +746,29 @@ public class OperationCallExpImpl
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
-				/*@Caught*/ @Nullable Object CAUGHT_and;
-				try {
-					/*@Caught*/ @NonNull Object CAUGHT_ne;
-					try {
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
-						final /*@Thrown*/ boolean ne = ownedSource != null;
-						CAUGHT_ne = ne;
-					}
-					catch (Exception e) {
-						CAUGHT_ne = ValueUtil.createInvalidValue(e);
-					}
-					/*@Caught*/ @Nullable Object CAUGHT_isSafe;
-					try {
-						final /*@Thrown*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
-						CAUGHT_isSafe = isSafe;
-					}
-					catch (Exception e) {
-						CAUGHT_isSafe = ValueUtil.createInvalidValue(e);
-					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, CAUGHT_isSafe);
-					CAUGHT_and = and;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
+				final /*@NonInvalid*/ boolean ne = ownedSource != null;
+				/*@NonInvalid*/ java.lang.@Nullable Boolean and;
+				if (ne) {
+					final /*@NonInvalid*/ java.lang.@Nullable Boolean isSafe = this.isIsSafe();
+					and = isSafe;
 				}
-				catch (Exception e) {
-					CAUGHT_and = ValueUtil.createInvalidValue(e);
+				else {
+					and = ValueUtil.FALSE_VALUE;
 				}
 				/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 				try {
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-					if (ownedSource_0 == null) {
+					if (ownedSource == null) {
 						throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 					}
-					final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
+					final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
 					CAUGHT_isNonNull = isNonNull;
 				}
 				catch (Exception e) {
 					CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
 				}
 				final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(CAUGHT_isNonNull);
-				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(CAUGHT_and, not);
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanImpliesOperation.INSTANCE.evaluate(and, not);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {
@@ -845,18 +814,11 @@ public class OperationCallExpImpl
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
-				final /*@Thrown*/ java.util.@NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Operation referredOperation = this.getReferredOperation();
-				/*@Caught*/ @Nullable Object CAUGHT_referredOperation;
-				try {
-					CAUGHT_referredOperation = referredOperation;
-				}
-				catch (Exception e) {
-					CAUGHT_referredOperation = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ @NonNull Object symbol_0 = CAUGHT_referredOperation == null;
+				final /*@NonInvalid*/ java.util.@NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Operation referredOperation = this.getReferredOperation();
+				final /*@NonInvalid*/ @NonNull Object symbol_0 = referredOperation == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.values.@Nullable OrderedSetValue safe_ownedParameters_source;
 				if (symbol_0 == Boolean.TRUE) {
 					safe_ownedParameters_source = null;

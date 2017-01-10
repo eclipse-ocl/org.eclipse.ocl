@@ -1062,30 +1062,21 @@ implements Property {
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
-				/*@Caught*/ @Nullable Object CAUGHT_and;
+				/*@Caught*/ @NonNull Object CAUGHT_and;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_ne;
-					try {
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
-						final /*@Thrown*/ boolean ne = ownedExpression != null;
-						CAUGHT_ne = ne;
-					}
-					catch (Exception e) {
-						CAUGHT_ne = ValueUtil.createInvalidValue(e);
-					}
-					/*@Caught*/ @NonNull Object CAUGHT_ne_0;
-					try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
+					final /*@NonInvalid*/ boolean ne = ownedExpression != null;
+					/*@Thrown*/ boolean and;
+					if (ne) {
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull ExpressionInOCL oclAsType = ClassUtil.nonNullState((ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression_0, TYP_ExpressionInOCL_0));
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull ExpressionInOCL oclAsType = ClassUtil.nonNullState((ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, TYP_ExpressionInOCL_0));
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
 						final /*@Thrown*/ boolean ne_0 = ownedBody != null;
-						CAUGHT_ne_0 = ne_0;
+						and = ne_0;
 					}
-					catch (Exception e) {
-						CAUGHT_ne_0 = ValueUtil.createInvalidValue(e);
+					else {
+						and = ValueUtil.FALSE_VALUE;
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, CAUGHT_ne_0);
 					CAUGHT_and = and;
 				}
 				catch (Exception e) {
@@ -1093,7 +1084,7 @@ implements Property {
 				}
 				/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 				try {
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression_1 = this.getOwnedExpression();
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression ownedExpression_1 = this.getOwnedExpression();
 					final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression_1);
 					CAUGHT_CompatibleBody = CompatibleBody;
 				}

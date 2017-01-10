@@ -57,7 +57,6 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -769,30 +768,21 @@ implements Operation {
 		else {
 			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
-				/*@Caught*/ @Nullable Object CAUGHT_and;
+				/*@Caught*/ @NonNull Object CAUGHT_and;
 				try {
-					/*@Caught*/ @NonNull Object CAUGHT_ne;
-					try {
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression bodyExpression = this.getBodyExpression();
-						final /*@Thrown*/ boolean ne = bodyExpression != null;
-						CAUGHT_ne = ne;
-					}
-					catch (Exception e) {
-						CAUGHT_ne = ValueUtil.createInvalidValue(e);
-					}
-					/*@Caught*/ @NonNull Object CAUGHT_ne_0;
-					try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression bodyExpression = this.getBodyExpression();
+					final /*@NonInvalid*/ boolean ne = bodyExpression != null;
+					/*@Thrown*/ boolean and;
+					if (ne) {
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression bodyExpression_0 = this.getBodyExpression();
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull ExpressionInOCL oclAsType = ClassUtil.nonNullState((ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression_0, TYP_ExpressionInOCL));
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull ExpressionInOCL oclAsType = ClassUtil.nonNullState((ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression, TYP_ExpressionInOCL));
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
 						final /*@Thrown*/ boolean ne_0 = ownedBody != null;
-						CAUGHT_ne_0 = ne_0;
+						and = ne_0;
 					}
-					catch (Exception e) {
-						CAUGHT_ne_0 = ValueUtil.createInvalidValue(e);
+					else {
+						and = ValueUtil.FALSE_VALUE;
 					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(CAUGHT_ne, CAUGHT_ne_0);
 					CAUGHT_and = and;
 				}
 				catch (Exception e) {
@@ -800,7 +790,7 @@ implements Operation {
 				}
 				/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 				try {
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression bodyExpression_1 = this.getBodyExpression();
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable LanguageExpression bodyExpression_1 = this.getBodyExpression();
 					final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_1);
 					CAUGHT_CompatibleBody = CompatibleBody;
 				}
@@ -866,8 +856,8 @@ implements Operation {
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
-				final /*@Thrown*/ java.util.@NonNull List<Constraint> ownedPreconditions = this.getOwnedPreconditions();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
+				final /*@NonInvalid*/ java.util.@NonNull List<Constraint> ownedPreconditions = this.getOwnedPreconditions();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
 				/*@Thrown*/ SetValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
 				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPreconditions.iterator();
 				/*@Thrown*/ boolean result;
@@ -881,7 +871,7 @@ implements Operation {
 					/**
 					 * name
 					 */
-					final /*@Thrown*/ java.lang.@Nullable String name = _1.getName();
+					final /*@NonInvalid*/ java.lang.@Nullable String name = _1.getName();
 					//
 					if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
 						result = ValueUtil.FALSE_VALUE;			// Abort after second find
@@ -935,8 +925,8 @@ implements Operation {
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
-				final /*@Thrown*/ java.util.@NonNull List<Constraint> ownedPostconditions = this.getOwnedPostconditions();
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
+				final /*@NonInvalid*/ java.util.@NonNull List<Constraint> ownedPostconditions = this.getOwnedPostconditions();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
 				/*@Thrown*/ SetValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
 				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPostconditions.iterator();
 				/*@Thrown*/ boolean result;
@@ -950,7 +940,7 @@ implements Operation {
 					/**
 					 * name
 					 */
-					final /*@Thrown*/ java.lang.@Nullable String name = _1.getName();
+					final /*@NonInvalid*/ java.lang.@Nullable String name = _1.getName();
 					//
 					if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
 						result = ValueUtil.FALSE_VALUE;			// Abort after second find
