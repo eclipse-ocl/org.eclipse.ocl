@@ -1128,6 +1128,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull Iterable<@NonNull Parameter> getOwnedParameters(@NonNull Operation operation) {
+		return ClassUtil.nullFree(operation.getOwnedParameters());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull Iterable<@NonNull CollectionLiteralPart> getOwnedParts(@NonNull CollectionLiteralExp asCollectionLiteralExp) {
 		return ClassUtil.nullFree(asCollectionLiteralExp.getOwnedParts());
 	}

@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LetVariable;
+import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -54,13 +55,15 @@ import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -126,12 +129,15 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	 */
 	protected static class StatusAnalyzer extends AbstractExtendingVisitor<@Nullable Boolean, @NonNull OCLinEcoreCodeGenerator>
 	{
+		protected final @NonNull StandardLibrary standardLibrary;
 		private @NonNull Map<@NonNull VariableDeclaration, @Nullable Boolean> variable2verdict = new HashMap<>();
 		private @NonNull List<@NonNull OCLExpression> canBeOclAnyExpressions = new ArrayList<>();
+		private @NonNull List<@NonNull OperationCallExp> impliesExpressions = new ArrayList<>();
 		private @NonNull List<@NonNull PropertyCallExp> statusAccesses = new ArrayList<>();
 
 		protected StatusAnalyzer(@NonNull OCLinEcoreCodeGenerator context) {
 			super(context);
+			this.standardLibrary = context.getEnvironmentFactory().getStandardLibrary();
 		}
 
 		protected @Nullable Boolean visit(/*@NonNull*/ OCLExpression object) {
@@ -156,17 +162,13 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 		@Override
 		public @Nullable Boolean visitCallExp(@NonNull CallExp object) {
-			Type asType = PivotUtil.getType(object);
-			if (asType != context.booleanType) {
+			if (!context.booleanType.conformsTo(standardLibrary, PivotUtil.getType(object))) {
 				return null;
 			}
 			OCLExpression asSource = PivotUtil.getOwnedSource(object);
 			Boolean sourceVerdict = visit(asSource);
-			if (sourceVerdict != Boolean.TRUE) {
+			if (sourceVerdict == null) {
 				return sourceVerdict;
-			}
-			if (PivotUtil.getType(asSource) != context.oclAnyType) {
-				return false;
 			}
 			return true;
 		}
@@ -225,27 +227,76 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 
 		@Override
+		public @Nullable Boolean visitLoopExp(@NonNull LoopExp object) {
+			return null;
+		}
+
+		@Override
 		public @Nullable Boolean visitOCLExpression(@NonNull OCLExpression object) {
 			System.out.println("Unsupported " + object.eClass().getName() + " for " + getClass().getSimpleName());
 			return null;
 		}
 
+		//
+		// An OperationCallExp propagates a Tuple status if it is an implies guard for a Tyuple status
+		//
 		@Override
 		public @Nullable Boolean visitOperationCallExp(@NonNull OperationCallExp object) {
-			Boolean superVerdict = super.visitOperationCallExp(object);
-			if (superVerdict != Boolean.TRUE) {
-				return superVerdict;
+			Operation referredOperation = PivotUtil.getReferredOperation(object);
+			if (referredOperation.getOperationId() == OperationId.BOOLEAN_IMPLIES) {
+				OCLExpression argument = PivotUtil.getOwnedArgument(object, 0);
+				Boolean argumentVerdict = visit(argument);
+				if (argumentVerdict != null) {
+					impliesExpressions.add(object);
+				}
+				return argumentVerdict;
+
 			}
-			for (@NonNull OCLExpression asArgument : PivotUtil.getOwnedArguments(object)) {
+			/*
+		// - it can return a Boolean
+		// - one of more of source/arguments are a Tuple status passable as OclAny
+		//-- which is almost nothing
+ 			if (!context.booleanType.conformsTo(standardLibrary, PivotUtil.getType(object))) {
+				return null;
+			}
+			OCLExpression asSource = PivotUtil.getOwnedSource(object);
+			Boolean sourceVerdict = visit(asSource);
+			if (sourceVerdict == null) {  // ?? ==null
+				return null;
+			}
+			boolean canBeStatusExpression = false;
+			boolean canBeOclAnyExpression = sourceVerdict.booleanValue();
+			Type owningClass = PivotUtil.getOwningClass(referredOperation);
+			if (!context.oclAnyType.conformsTo(standardLibrary, owningClass)) {
+				canBeOclAnyExpression = false;
+			}
+			if (context.booleanType.conformsTo(standardLibrary, owningClass)) {
+				canBeStatusExpression = true;
+			}
+			Iterable<@NonNull Parameter> ownedParameters = PivotUtil.getOwnedParameters(referredOperation);
+			Iterable<@NonNull OCLExpression> ownedArguments = PivotUtil.getOwnedArguments(object);
+			Iterator<@NonNull Parameter> itParameter = ownedParameters.iterator();
+			Iterator<@NonNull OCLExpression> itArgument = ownedArguments.iterator();
+			while (itParameter.hasNext() && itArgument.hasNext()) {
+				Parameter asParameter = itParameter.next();
+				OCLExpression asArgument = itArgument.next();
 				Boolean argumentVerdict = visit(asArgument);
-				if (argumentVerdict != Boolean.TRUE) {
+				if (argumentVerdict == null) {
 					return argumentVerdict;
 				}
-				if (PivotUtil.getType(asArgument) != context.oclAnyType) {
-					return false;
+				Type parameterClass = PivotUtil.getType(asParameter);
+				if (!context.oclAnyType.conformsTo(standardLibrary, parameterClass)) {
+					canBeOclAnyExpression = false;
+				}
+				if (context.booleanType.conformsTo(standardLibrary, parameterClass)) {
+					canBeStatusExpression = true;
 				}
 			}
-			return true;
+			if (!canBeStatusExpression) {
+				return null;
+			}
+			return canBeOclAnyExpression; */
+			return null;
 		}
 
 		@Override
@@ -253,6 +304,9 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			return null;
 		}
 
+		//
+		// A PropertyCallExp can return a Tuple status if the source is a TupleLiteralExp and the status property is accessed.
+		//
 		@Override
 		public @Nullable Boolean visitPropertyCallExp(@NonNull PropertyCallExp object) {
 			OCLExpression ownedSource = object.getOwnedSource();
@@ -278,6 +332,11 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			if (statusPart != null){
 				return true;
 			}
+			return null;
+		}
+
+		@Override
+		public @Nullable Boolean visitTypeExp(@NonNull TypeExp object) {
 			return null;
 		}
 
@@ -315,10 +374,10 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		this.cgAnalyzer = new CodeGenAnalyzer(this);
 		this.genPackage = genPackage;
 		this.globalContext = new OCLinEcoreGlobalContext(this, genPackage);
-		this.asHelper = new PivotHelper(environmentFactory);
+		asHelper = new PivotHelper(environmentFactory);
 		this.oclAnyType = standardLibrary.getOclAnyType();
-		this.booleanType = standardLibrary.getBooleanType();
 		this.integerType = standardLibrary.getIntegerType();
+		this.booleanType = standardLibrary.getBooleanType();
 		//		CommonSubexpressionEliminator.CSE_BUILD.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PLACES.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PRUNE.setState(true);
@@ -373,9 +432,12 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	protected @NonNull ExpressionInOCL rewriteQuery(@NonNull ExpressionInOCL oldQuery, @NonNull String qualifiedConstraintName) {
+		if ("SetStatement::CompatibleTypeForTotalValue".equals(qualifiedConstraintName)) {
+			toString();
+		}
 		OCLExpression oldBody = oldQuery.getOwnedBody();
 		if ((oldBody instanceof BooleanLiteralExp) && ((BooleanLiteralExp)oldBody).isBooleanSymbol()) {
-			return oldQuery;		// Unconditionally true (typically obsolete) constraint needs no added comolexity
+			return oldQuery;		// Unconditionally true (typically obsolete) constraint needs no added complexity
 		}
 		ExpressionInOCL asSynthesizedQuery = EcoreUtil.copy(oldQuery);
 		StatusAnalyzer statusAnalyzer = new StatusAnalyzer(this);
@@ -394,6 +456,18 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 				if (asExpression.eContainer() != null) {
 					asExpression.setType(oclAnyType);
 				}
+			}
+			for (@NonNull OperationCallExp impliesExpression : statusAnalyzer.impliesExpressions) {
+				OCLExpression conditionExpression = PivotUtil.getOwnedSource(impliesExpression);
+				OCLExpression thenExpression = PivotUtil.getOwnedArgument(impliesExpression, 0);
+				OCLExpression elseExpression = asHelper.createBooleanLiteralExp(true);
+				PivotUtilInternal.resetContainer(conditionExpression);
+				PivotUtilInternal.resetContainer(thenExpression);
+				OCLExpression ifExpression = asHelper.createIfExp(conditionExpression, thenExpression, elseExpression);
+				EObject eContainer = impliesExpression.eContainer();
+				EReference eContainmentFeature = impliesExpression.eContainmentFeature();
+				PivotUtilInternal.resetContainer(impliesExpression);
+				eContainer.eSet(eContainmentFeature, ifExpression);		// FIXME isMany
 			}
 			asSynthesizedQuery.setBody(null);
 		}
