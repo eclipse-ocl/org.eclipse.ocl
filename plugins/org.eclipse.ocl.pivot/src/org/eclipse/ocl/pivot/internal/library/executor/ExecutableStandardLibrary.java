@@ -63,25 +63,25 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
 	 */
-	private @NonNull Map<Type, Map<CollectionTypeParameters<Type>, WeakReference<ExecutorCollectionType>>> collectionSpecializations = new WeakHashMap<Type, Map<CollectionTypeParameters<Type>, WeakReference<ExecutorCollectionType>>>();
+	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@NonNull ExecutorCollectionType>>> collectionSpecializations = new WeakHashMap<>();
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each map type.
 	 */
-	private @NonNull Map<Type, Map<MapTypeParameters<Type, Type>, WeakReference<ExecutorMapType>>> mapSpecializations = new WeakHashMap<Type, Map<MapTypeParameters<Type,Type>, WeakReference<ExecutorMapType>>>();
+	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull ExecutorMapType>>> mapSpecializations = new WeakHashMap<>();
 
 	/**
 	 * Shared cache of the lazily created lazily deleted tuples.
 	 */
-	private @NonNull Map<TupleTypeId, WeakReference<TupleType>> tupleTypeMap = new WeakHashMap<TupleTypeId, WeakReference<TupleType>>();
+	private @NonNull Map<@NonNull TupleTypeId, @NonNull WeakReference<@NonNull TupleType>> tupleTypeMap = new WeakHashMap<>();
 
 	/**
 	 * Configuration of validation preferences.
 	 */
-	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
+	private /*LazyNonNull*/ Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity = null;
 
-	protected @NonNull HashMap<Object, StatusCodes.Severity> createValidationKey2severityMap() {
-		HashMap<Object, StatusCodes.Severity> map = new HashMap<Object, StatusCodes.Severity>();
+	protected @NonNull HashMap<@Nullable Object, StatusCodes.@Nullable Severity> createValidationKey2severityMap() {
+		HashMap<@Nullable Object, StatusCodes.@Nullable Severity> map = new HashMap<>();
 		Set<Entry<String, EnumeratedOption<Severity>>> entrySet = PivotValidationOptions.safeValidationName2severityOption.entrySet();
 		for (Map.Entry<String, EnumeratedOption<StatusCodes.Severity>> entry : entrySet) {
 			EnumeratedOption<StatusCodes.Severity> value = entry.getValue();
@@ -137,11 +137,11 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		if (upper2 == null) {
 			upper2 = ValueUtil.UNLIMITED_VALUE;
 		}
-		CollectionTypeParameters<Type> typeParameters = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower2, upper2);
+		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower2, upper2);
 		ExecutorCollectionType specializedType = null;
-		Map<CollectionTypeParameters<Type>, WeakReference<ExecutorCollectionType>> map = collectionSpecializations.get(genericType);
+		Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@NonNull ExecutorCollectionType>> map = collectionSpecializations.get(genericType);
 		if (map == null) {
-			map = new WeakHashMap<CollectionTypeParameters<Type>, WeakReference<ExecutorCollectionType>>();
+			map = new WeakHashMap<>();
 			collectionSpecializations.put(genericType, map);
 		}
 		else {
@@ -149,7 +149,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		}
 		if (specializedType == null) {
 			specializedType = new ExecutorCollectionType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
-			map.put(typeParameters, new WeakReference<ExecutorCollectionType>(specializedType));
+			map.put(typeParameters, new WeakReference<>(specializedType));
 		}
 		return specializedType;
 	}
@@ -172,11 +172,11 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 
 	@Override
 	public synchronized @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
-		MapTypeParameters<Type, Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, valueType);
+		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, valueType);
 		ExecutorMapType specializedType = null;
-		Map<MapTypeParameters<Type, Type>, WeakReference<ExecutorMapType>> map = mapSpecializations.get(genericType);
+		Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@NonNull ExecutorMapType>> map = mapSpecializations.get(genericType);
 		if (map == null) {
-			map = new WeakHashMap<MapTypeParameters<Type, Type>, WeakReference<ExecutorMapType>>();
+			map = new WeakHashMap<>();
 			mapSpecializations.put(genericType, map);
 		}
 		else {
@@ -184,7 +184,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		}
 		if (specializedType == null) {
 			specializedType = new ExecutorMapType(ClassUtil.nonNullModel(genericType.getName()), genericType, keyType, valueType);
-			map.put(typeParameters, new WeakReference<ExecutorMapType>(specializedType));
+			map.put(typeParameters, new WeakReference<>(specializedType));
 		}
 		return specializedType;
 	}
@@ -395,7 +395,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 
 	//	@Override
 	public StatusCodes.@Nullable Severity getSeverity(@Nullable Object validationKey) {
-		Map<Object, StatusCodes.Severity> validationKey2severity2 = validationKey2severity;
+		Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity2 = validationKey2severity;
 		if (validationKey2severity2 == null) {
 			validationKey2severity = validationKey2severity2 = createValidationKey2severityMap();
 		}
@@ -443,11 +443,11 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 				}
 			}
 			else {
-				tupleTypes = new ArrayList<WeakReference<DomainTupleType>>();
+				tupleTypes = new ArrayList<>();
 				tupleTypeMap.put(key, tupleTypes);
 			}
 			DomainTupleType tupleType = new AbstractTupleType(this, parts);
-			tupleTypes.add(new WeakReference<DomainTupleType>(tupleType));
+			tupleTypes.add(new WeakReference<>(tupleType));
 			return tupleType;
 		}
 	} */
@@ -465,12 +465,12 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			}
 		}
 		TupleType domainTupleType = new ExecutorTupleType(typeId);
-		tupleTypeMap.put(typeId, new WeakReference<TupleType>(domainTupleType));
+		tupleTypeMap.put(typeId, new WeakReference<>(domainTupleType));
 		return domainTupleType;
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<? extends TypedElement> parts,
+	public @NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
 			@Nullable TemplateParameterSubstitutions bindings) {
 		throw new UnsupportedOperationException();
 	}
