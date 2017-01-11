@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Library;
@@ -35,7 +36,7 @@ public class PrecedenceTests extends XtextTestCase
 	}
 
 	public void testOkAssignPrecedences() {
-		Collection<Library> libraries = new ArrayList<Library>();
+		Collection<@NonNull Library> libraries = new ArrayList<>();
 		Library library1 = PivotFactory.eINSTANCE.createLibrary();
 		Precedence p1a = createPrecedence(library1, "A", AssociativityKind.LEFT);
 		Precedence p1b = createPrecedence(library1, "B", AssociativityKind.LEFT);
@@ -55,9 +56,9 @@ public class PrecedenceTests extends XtextTestCase
 		assertEquals(3, p2c.getOrder());
 		assertEquals(0, errors.size());
 	}
-	
+
 	public void testBadOrderingAssignPrecedences() {
-		Collection<Library> libraries = new ArrayList<Library>();
+		Collection<@NonNull Library> libraries = new ArrayList<>();
 		Library library1 = PivotFactory.eINSTANCE.createLibrary();
 		Precedence p1a = createPrecedence(library1, "A", AssociativityKind.LEFT);
 		Precedence p1b = createPrecedence(library1, "B", AssociativityKind.LEFT);
@@ -73,9 +74,9 @@ public class PrecedenceTests extends XtextTestCase
 		assertEquals(0, p2b.getOrder());
 		assertEquals(1, errors.size());
 	}
-	
+
 	public void testBadAssociativityAssignPrecedences() {
-		Collection<Library> libraries = new ArrayList<Library>();
+		Collection<@NonNull Library> libraries = new ArrayList<>();
 		Library library1 = PivotFactory.eINSTANCE.createLibrary();
 		Precedence p1a = createPrecedence(library1, "A", AssociativityKind.LEFT);
 		libraries.add(library1);
@@ -87,9 +88,9 @@ public class PrecedenceTests extends XtextTestCase
 		assertEquals(0, p2a.getOrder());
 		assertEquals(1, errors.size());
 	}
-	
+
 	public void testAmbiguousInternalAssignPrecedences() {
-		Collection<Library> libraries = new ArrayList<Library>();
+		Collection<@NonNull Library> libraries = new ArrayList<>();
 		Library library1 = PivotFactory.eINSTANCE.createLibrary();
 		Precedence p1a = createPrecedence(library1, "A", AssociativityKind.LEFT);
 		Precedence p1b = createPrecedence(library1, "B", AssociativityKind.LEFT);
@@ -109,9 +110,9 @@ public class PrecedenceTests extends XtextTestCase
 		assertEquals(3, p2c.getOrder());
 		assertEquals(1, errors.size());
 	}
-	
+
 	public void testAmbiguousTailAssignPrecedences() {
-		Collection<Library> libraries = new ArrayList<Library>();
+		Collection<@NonNull Library> libraries = new ArrayList<>();
 		Library library1 = PivotFactory.eINSTANCE.createLibrary();
 		Precedence p1a = createPrecedence(library1, "A", AssociativityKind.LEFT);
 		Precedence p1b = createPrecedence(library1, "B", AssociativityKind.LEFT);
