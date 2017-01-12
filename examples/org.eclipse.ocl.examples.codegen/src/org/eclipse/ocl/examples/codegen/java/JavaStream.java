@@ -698,7 +698,12 @@ public class JavaStream
 					appendValueName(cgValue);
 				}
 			}
-			else if (javaClass == Object.class) {						// Integer or UnlimitedNatural (source isn't a Real)
+			else if ((javaClass == Object.class)						// Integer or UnlimitedNatural (source isn't a Real)
+					|| (javaClass == byte.class)
+					|| (javaClass == char.class)
+					|| (javaClass == int.class)
+					|| (javaClass == long.class)
+					|| (javaClass == short.class)) {
 				if ("java.math.BigDecimal".equals(returnClassName)) {
 					appendClassReference(ValueUtil.class);
 					append(".bigDecimalValueOf(");
