@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.eclipse.ocl</groupId>
+    <artifactId>org.eclipse.ocl.root</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>org.eclipse.ocl.features</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <modules>
+      <module>org.eclipse.ocl-feature</module> 
+      <module>org.eclipse.ocl.all-feature</module>
+      <module>org.eclipse.ocl.all.sdk-feature</module>
+      <module>org.eclipse.ocl.core.sdk-feature</module>
+      <module>org.eclipse.ocl.doc-feature</module>
+      <module>org.eclipse.ocl.edit-feature</module>
+      <module>org.eclipse.ocl.examples-feature</module>
+      <module>org.eclipse.ocl.examples.classic-feature</module>
+      <module>org.eclipse.ocl.examples.tests-feature</module>
+      <module>org.eclipse.ocl.examples.unified-feature</module>
+      <module>org.eclipse.ocl.master-feature</module>
+      <module>org.eclipse.ocl.ui-feature</module>
+      <module>org.eclipse.ocl.uml-feature</module>
+      <module>org.eclipse.ocl.unified.core-feature</module>
+      <module>org.eclipse.ocl.unified.ui-feature</module>
+      <module>org.eclipse.ocl.tests-feature</module>
+  </modules>
+</project>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eclipse.ocl</groupId>
+  <artifactId>org.eclipse.ocl.releng.tycho</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <tycho.version>0.26.0</tycho.version>
+    <project.buildId>org.eclipse.ocl</project.buildId>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho.version}</version>
+        <extensions>true</extensions>
+      </plugin>
+
+      <!-- Generate source bundles (exclude target so we don't enter
+           an infinite loop for binary-only plugins, which have itself
+           as the source). -->
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-source-plugin</artifactId>
+        <version>${tycho.version}</version>
+        <executions>
+          <execution>
+            <id>plugin-source</id>
+            <goals>
+              <goal>plugin-source</goal>
+            </goals>
+          <!--   <configuration>
+              <excludes>
+                <exclude>target/**</exclude>
+              </excludes>
+            </configuration>-->
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho.extras</groupId>
+        <artifactId>tycho-source-feature-plugin</artifactId>
+        <version>${tycho.version}</version>
+	<!--   <configuration>
+	  <archive>
+	    <addMavenDescriptor>false</addMavenDescriptor>
+	  </archive>
+        </configuration>-->
+        <executions>
+          <execution>
+            <id>source-feature</id>
+            <goals>
+              <goal>source-feature</goal>
+            </goals>
+            <!-- 
+            <configuration>
+                 <excludes>
+                    <feature id="org.eclipse.ocl.all" />
+                </excludes>
+            </configuration>
+            -->
+          </execution>
+         
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho.version}</version>
+        <configuration>
+          <executionEnvironment>JavaSE-1.8</executionEnvironment>
+          <target>
+            <artifact>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.eclipse.ocl.releng.targetplatform</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            </artifact>
+          </target>
+          <dependency-resolution>
+	        <extraRequirements>
+              <requirement>
+                <type>eclipse-plugin</type>
+                <id>org.eclipse.jdt.annotation</id>
+                <versionRange>0.0.0</versionRange>
+              </requirement>
+            </extraRequirements>
+          </dependency-resolution>
+	  <environments>
+	    <environment>
+	      <os>linux</os>
+	      <ws>gtk</ws>
+	      <arch>x86</arch>
+	    </environment>
+	    <environment>
+	      <os>linux</os>
+	      <ws>gtk</ws>
+	      <arch>x86_64</arch>
+	    </environment>
+	    <environment>
+	      <os>win32</os>
+	      <ws>win32</ws>
+	      <arch>x86</arch>
+	    </environment>
+	    <environment>
+	      <os>win32</os>
+	      <ws>win32</ws>
+	      <arch>x86_64</arch>
+	    </environment>
+	    <environment>
+	      <os>macosx</os>
+	      <ws>cocoa</ws>
+	      <arch>x86_64</arch>
+	    </environment>
+	  </environments>
+     </configuration>
+      </plugin>
+  <!--    <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-compiler-plugin</artifactId>
+          <version>${tycho.version}</version>
+          <configuration>
+            <encoding>UTF-8</encoding>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin> -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.3</version>
+	<configuration>
+	  <sourceFileIncludes>
+	    <sourceFileInclude>org/eclipse/ocl/**/*.java</sourceFileInclude>
+	  </sourceFileIncludes>
+	  <doctitle>OCL Interim API</doctitle>
+	</configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>

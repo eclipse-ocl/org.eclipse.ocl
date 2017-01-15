@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.eclipse.ocl</groupId>
+    <artifactId>org.eclipse.ocl.root</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>org.eclipse.ocl.examples</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <modules>
+      <module>org.eclipse.ocl.examples</module>
+      <module>org.eclipse.ocl.examples.classic</module>
+      <module>org.eclipse.ocl.examples.codegen</module>
+      <module>org.eclipse.ocl.examples.debug</module> 
+      <module>org.eclipse.ocl.examples.debug.ui</module>
+      <module>org.eclipse.ocl.examples.debug.vm</module>
+      <module>org.eclipse.ocl.examples.debug.vm.ui</module>
+      <module>org.eclipse.ocl.examples.emf.validation.validity</module>
+      <module>org.eclipse.ocl.examples.emf.validation.validity.ui</module>
+      <module>org.eclipse.ocl.examples.eventmanager</module>
+      <module>org.eclipse.ocl.examples.impactanalyzer</module>
+      <module>org.eclipse.ocl.examples.impactanalyzer.ui</module>
+      <module>org.eclipse.ocl.examples.impactanalyzer.util</module>
+      <module>org.eclipse.ocl.examples.interpreter</module>
+      <module>org.eclipse.ocl.examples.project.royalandloyal</module>  
+      <module>org.eclipse.ocl.examples.standalone</module>
+      <module>org.eclipse.ocl.examples.ui</module>
+      <module>org.eclipse.ocl.examples.uml25</module>
+      <module>org.eclipse.ocl.examples.unified</module>
+      <module>org.eclipse.ocl.examples.validity</module>
+      <module>org.eclipse.ocl.examples.xtext.console</module>
+  </modules>
+</project>

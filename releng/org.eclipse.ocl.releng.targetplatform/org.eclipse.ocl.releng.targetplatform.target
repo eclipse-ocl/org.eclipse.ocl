@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL Build Target Platform" sequenceNumber="16">
+<locations>
+<location xmlns:targlets="http://www.eclipse.org/oomph/targlets/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="org.eclipse.ocl.releng.targetplatform" type="Targlet">
+  <targlet name="OCL Target Platform" xsi:type="targlets:Targlet">
+    <requirement name="org.eclipse.sdk.feature.group"/>
+    <requirement name="org.eclipse.emf.sdk.feature.group"/>
+    <requirement name="org.eclipse.uml2.sdk.feature.group"/>
+    <requirement name="org.eclipse.xtext.sdk.feature.group"/>
+    <requirement name="org.eclipse.emf.validation.feature.group"/>
+    <requirement name="org.eclipse.m2m.qvt.oml.sdk.feature.group"/>
+    <requirement name="org.eclipse.papyrus.sysml.feature.feature.group"/>
+    <requirement name="org.eclipse.papyrus.extra.marte.feature.feature.group"/>
+    <requirement name="lpg.runtime.java"/>
+    <requirement name="org.objectweb.asm" versionRange="[5.0.0,6.0.0)"/>
+    <repositoryList name="Neon">
+      <repository url="http://download.eclipse.org/releases/neon"/>
+      <repository url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/neon"/>
+    </repositoryList>
+    <repositoryList name="Mars">
+      <repository url="http://download.eclipse.org/releases/mars"/>
+      <repository url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/mars"/>
+    </repositoryList>
+    <repositoryList name="Luna">
+      <repository url="http://download.eclipse.org/releases/luna"/>
+      <repository url="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
+      <repository url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/luna"/>
+    </repositoryList>
+  </targlet>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="lpg.runtime.java" version="0.0.0"/>
+<unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.validation.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.m2m.qvt.oml.sdk.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/oxygen"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.papyrus.sysml.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.papyrus.extra.marte.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/neon"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.license.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/cbi/updates/license"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.emf.examples.library" version="0.0.0"/>
+<repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.12"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="lpg.runtime.java.source" version="0.0.0"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/"/>
+</location>
+</locations>
+</target>
