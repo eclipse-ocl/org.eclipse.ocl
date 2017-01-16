@@ -182,7 +182,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 * want just <code>"null"</code> because that would look like the OclVoid
 	 * literal.
 	 */
-	protected static @NonNull String NULL_PLACEHOLDER = "\"<null>\""; //$NON-NLS-1$
+	protected static @NonNull String NULL_PLACEHOLDER = "«null»"; //$NON-NLS-1$
 
 	/**
 	 * Initializes me.
@@ -417,7 +417,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			append(NULL_PLACEHOLDER);
 		}
 		else {
-			v.accept(this);
+			try {
+				v.accept(this);
+			}
+			catch (Throwable e) {
+				append("«");
+				append(e.getMessage());
+				append("»");
+			}
 		}
 		return null;
 	}

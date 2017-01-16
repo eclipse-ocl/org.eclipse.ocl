@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * E.D.Willink - initial API and implementation
  * E.D.Willink - Bug 360072
@@ -45,16 +45,16 @@ import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.LabelGeneratorRegistry;
 
 public class LabelUtil
-{	
+{
 	/**
-	 * The global QUALIFIED_NAME_REGISTRY is used by qualifiedNameFor to generate qualified names 
+	 * The global QUALIFIED_NAME_REGISTRY is used by qualifiedNameFor to generate qualified names
 	 * for objects; typically a :: separted hierarchical name.  The QUALIFIED_NAME_REGISTRY delegates unsupported
 	 * label generation to the SIMPLE_NAME_REGISTRY.
 	 */
 	public static ILabelGenerator.@NonNull Registry QUALIFIED_NAME_REGISTRY = new LabelGeneratorRegistry(ILabelGenerator.Registry.INSTANCE);
 
 	/**
-	 * The global SIMPLE_NAME_REGISTRY is used by simpleNameFor to generate simple names 
+	 * The global SIMPLE_NAME_REGISTRY is used by simpleNameFor to generate simple names
 	 * for objects; typically the name property. The SIMPLE_NAME_REGISTRY delegates unsupported
 	 * label generation to the global ILabelGenerator.Registry.INSTANCE.
 	 */
@@ -83,7 +83,7 @@ public class LabelUtil
 				}
 			}
 		});
-		
+
 		/**
 		 * Install an ENamedElement label generator that :: separates hierarchical names.
 		 */
@@ -126,24 +126,24 @@ public class LabelUtil
 	 * Returns null if there are no unresolved URIs.
 	 * <br>
 	 * Returns a String containing a title line containing the contextURI and
-	 * subsequent lines identifying each distinct unresolved URI. 
+	 * subsequent lines identifying each distinct unresolved URI.
 	 */
 	public static @Nullable String diagnoseUnresolvedProxies(@NonNull URI contextURI, @NonNull Map<EObject, Collection<EStructuralFeature.Setting>> map) {
-	    if (map.isEmpty())
-	    	return null;	    
-    	Map<String, Map.Entry<EObject, Collection<EStructuralFeature.Setting>>> unresolvedURIs = new HashMap<String, Map.Entry<EObject, Collection<EStructuralFeature.Setting>>>(map.size());
-    	for (Map.Entry<EObject, Collection<EStructuralFeature.Setting>> entry : map.entrySet()) {
-    		EObject key = entry.getKey();
-    		URI uri = EcoreUtil.getURI(key);
+		if (map.isEmpty())
+			return null;
+		Map<String, Map.Entry<EObject, Collection<EStructuralFeature.Setting>>> unresolvedURIs = new HashMap<String, Map.Entry<EObject, Collection<EStructuralFeature.Setting>>>(map.size());
+		for (Map.Entry<EObject, Collection<EStructuralFeature.Setting>> entry : map.entrySet()) {
+			EObject key = entry.getKey();
+			URI uri = EcoreUtil.getURI(key);
 			String uriString = uri.toString();
 			if (!unresolvedURIs.containsKey(uriString))
 				unresolvedURIs.put(uriString, entry);
-    	}
-    	StringBuilder s = new StringBuilder();
+		}
+		StringBuilder s = new StringBuilder();
 		s.append("Unresolved URIs in '" + String.valueOf(contextURI) + "' :");
-    	for (Map.Entry<String, Map.Entry<EObject, Collection<EStructuralFeature.Setting>>> unresolvedURI : unresolvedURIs.entrySet())
- 			s.append("\n    '" + unresolvedURI.getKey() + "'");
-    	return s.toString();
+		for (Map.Entry<String, Map.Entry<EObject, Collection<EStructuralFeature.Setting>>> unresolvedURI : unresolvedURIs.entrySet())
+			s.append("\n    '" + unresolvedURI.getKey() + "'");
+		return s.toString();
 	}
 
 	public static @Nullable <T extends Adapter> T getAdapter(@Nullable Notifier notifier, Class<T> adapterClass) {
@@ -151,7 +151,7 @@ public class LabelUtil
 			return null;
 		return getAdapter(notifier.eAdapters(), adapterClass);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static <T extends Adapter> T getAdapter(List<Adapter> eAdapters, Class<T> adapterClass) {
 		return (T) EcoreUtil.getAdapter(eAdapters, adapterClass);
@@ -160,7 +160,7 @@ public class LabelUtil
 	/**
 	 * Return the specialised value of feature.getEType() resolving any type parameters
 	 * from the specialised type of the sourceObject of the feature.
-	 * 
+	 *
 	 * @param sourceObject
 	 * @param feature
 	 */
@@ -188,7 +188,7 @@ public class LabelUtil
 
 	/**
 	 * Return the Ecore EStringToStringMapEntry that realises a given Constraint.
-	 * 
+	 *
 	 * @param constraint the constraint
 	 * @return the annotation detail entry, null if not found
 	 *
@@ -235,7 +235,7 @@ public class LabelUtil
 	    EMap<String, String> details = eAnnotation.getDetails();
 	    if (keyName != null) {
 	    	int indexOfKey = details.indexOfKey(keyName);
-		    if (indexOfKey >= 0) { 
+		    if (indexOfKey >= 0) {
 		    	return details.get(indexOfKey);
 		    }
 	    }
@@ -272,7 +272,7 @@ public class LabelUtil
 	/**
 	 * Return a simple readable description of eObject using an IItemLabelProvider if possible.
 	 */
-	public static String getLabel(@Nullable Object object) {
+	public static @NonNull String getLabel(@Nullable Object object) {
 		if (object instanceof Labelable) {
 			String text = ((Labelable)object).getText();
 			if (text != null) {
