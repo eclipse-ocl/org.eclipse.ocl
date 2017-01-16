@@ -125,6 +125,7 @@ import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -133,6 +134,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -206,6 +208,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	private static final Logger logger = Logger.getLogger(PivotMetamodelManager.class);
+
+	/**
+	 * @since 1.3
+	 */
+	public static final @NonNull TracingOption INSTALL_MODEL = new TracingOption(PivotPlugin.PLUGIN_ID, "install/model");
 
 	//	public static final @NonNull TracingOption CREATE_MUTABLE_CLONE = new TracingOption(PivotPlugin.PLUGIN_ID, "mm/createMutableClone");
 
@@ -1821,6 +1828,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public void installRoot(@NonNull Model pivotModel) {
 		if (completeModel.getPartialModels().contains(pivotModel)) {
 			return;
+		}
+		if (INSTALL_MODEL.isActive()) {
+			INSTALL_MODEL.println(NameUtil.debugSimpleName(this) + " " + pivotModel);
 		}
 		List<org.eclipse.ocl.pivot.Package> ownedPackages = pivotModel.getOwnedPackages();
 		List<Import> ownedImports = pivotModel.getOwnedImports();

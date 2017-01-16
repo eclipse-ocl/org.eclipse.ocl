@@ -39,6 +39,9 @@ org.eclipse.ocl.pivot/evaluations=false
 # Trace maintenance of FinalAnalysis 
 org.eclipse.ocl.pivot/finalAnaysis=false
 
+# Trace maintenance of Model installation in a PivotMetamodelManager
+org.eclipse.ocl.pivot/install/model=false
+
 # Trace maintenance of PartialClasses 
 org.eclipse.ocl.pivot/partialClasses=false
 
