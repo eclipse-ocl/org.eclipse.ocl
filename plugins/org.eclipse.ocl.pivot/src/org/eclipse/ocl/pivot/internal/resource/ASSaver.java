@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -292,12 +293,22 @@ public class ASSaver
 	}
 
 	public void normalizeContents() {
+		List<@NonNull EObject> allContents = new ArrayList<>();
 		for (@NonNull TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			if (eObject instanceof Visitable) {
-				ASSaverNormalizeVisitor normalizeVisitor = getNormalizeVisitor(eObject);
-				normalizeVisitor.safeVisit((Visitable) eObject);
+				allContents.add(eObject);
 			}
+		}
+		Map<EClass, @NonNull ASSaverNormalizeVisitor> eClass2normalizeVisitor = new HashMap<>();
+		for (@NonNull EObject eObject : allContents) {
+			EClass eClass = eObject.eClass();
+			ASSaverNormalizeVisitor normalizeVisitor = eClass2normalizeVisitor.get(eClass);
+			if (normalizeVisitor == null) {
+				normalizeVisitor = getNormalizeVisitor(eObject);
+				eClass2normalizeVisitor.put(eClass, normalizeVisitor);
+			}
+			normalizeVisitor.safeVisit((Visitable) eObject);
 		}
 	}
 
