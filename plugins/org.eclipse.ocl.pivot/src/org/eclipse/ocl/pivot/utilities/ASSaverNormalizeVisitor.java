@@ -15,13 +15,13 @@ import java.util.Comparator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
-import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 
 /**
- * ASSaverNormalizeVisitor normalizes contents by alphabeticizing 
+ * ASSaverNormalizeVisitor normalizes contents by alphabeticizing
  * - lists of Property.
  */
 public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, ASSaver>
@@ -44,15 +44,15 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AS
 			return n1.compareTo(n2);
 		}
 	}
-	
+
 	protected static final class TypeComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
 	{
 		public static final @NonNull Comparator<org.eclipse.ocl.pivot.@NonNull Class> INSTANCE = new TypeComparator();
 
 		@Override
 		public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
-			String n1 = AS2Moniker.toString(o1);
-			String n2 = AS2Moniker.toString(o2);
+			String n1 = PrettyPrinter.printType(o1);
+			String n2 = PrettyPrinter.printType(o2);
 			return n1.compareTo(n2);
 		}
 	}
