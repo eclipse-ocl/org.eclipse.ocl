@@ -26,11 +26,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.ocl.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ocl.uml.source"
+         id="org.eclipse.ocl.all.source"
          version="0.0.0"/>
 
 </feature>
