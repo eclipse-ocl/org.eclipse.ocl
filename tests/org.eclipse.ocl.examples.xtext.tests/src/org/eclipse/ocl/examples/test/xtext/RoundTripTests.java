@@ -604,6 +604,19 @@ public class RoundTripTests extends XtextTestCase
 		doRoundTripFromEcore("Bug492960");
 	}
 
+	public void testBug510729_oclinecore() throws IOException, InterruptedException {
+		String testFile =
+				"package bug510729 : pfx = 'http:/org/eclipse/ocl/examples/test/xtext/models/Bug510729.oclinecore' {\n" +
+						"	class Artefact {\n" +
+						"		operation paths(types : ocl::OclType) : ocl::Sequence(Artefact)[*];\n" +
+						"	}\n" +
+						"}\n";
+		createOCLinEcoreFile("Bug510729.oclinecore", testFile);
+		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
+		doRoundTripFromOCLinEcore(ocl, "Bug510729");
+		ocl.dispose();
+	}
+
 	public void testCompleteOCLRoundTrip_Bug496768() throws IOException, InterruptedException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		doRoundTripFromCompleteOCL(ocl, getProjectFileURI("Bug496768.ocl"));
