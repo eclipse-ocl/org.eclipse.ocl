@@ -2,12 +2,12 @@
 <feature
       id="org.eclipse.ocl.edit"
       label="%featureName"
-      version="5.0.400.qualifier"
+      version="5.1.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 
-   <description url="http://www.eclipse.org/modeling/mdt/ocl">
+   <description url="https://projects.eclipse.org/projects/modeling.mdt.ocl">
       %description
    </description>
 
