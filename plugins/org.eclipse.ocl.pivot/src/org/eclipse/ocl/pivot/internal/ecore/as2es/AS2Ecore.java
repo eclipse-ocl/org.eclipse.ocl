@@ -322,7 +322,10 @@ public class AS2Ecore extends AbstractConversion
 			}
 			for (@NonNull Element pivotElement : createMap.keySet()) {
 				EObject eObject = createMap.get(pivotElement);
-				((PivotObjectImpl) pivotElement).setESObject(eObject);
+				PivotObjectImpl pivotObjectImpl = (PivotObjectImpl) pivotElement;
+				if (pivotObjectImpl.getESObject() == null) {				// Bug 510729 avoid trashing OCLstdlib
+					pivotObjectImpl.setESObject(eObject);
+				}
 			}
 			if (Boolean.valueOf(String.valueOf(options.get(OPTION_GENERATE_STRUCTURAL_XMI_IDS)))) {
 				XMIUtil.assignIds(ecoreResource, new XMIUtil.StructuralENamedElementIdCreator(), null);
