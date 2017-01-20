@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
-    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java">
-        <filter id="0"/>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
         <filter id="388194388">
             <message_arguments>
@@ -3948,6 +3945,109 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="getVariableDeclaration__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibFactory.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibFactory">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="convertMapToString(EDataType, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createMapFromString(EDataType, String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibPackage.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage$Literals">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage.Literals"/>
+                <message_argument value="MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage.Literals"/>
+                <message_argument value="MAP__KEY_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage.Literals"/>
+                <message_argument value="MAP__VALUE_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage.Literals"/>
+                <message_argument value="OCL_ENUMERATION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage.Literals"/>
+                <message_argument value="OCL_SELF"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MAP__KEY_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MAP__VALUE_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ENUMERATION"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_SELF"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/util/OCLstdlibAdapterFactory.java" type="org.eclipse.ocl.pivot.oclstdlib.util.OCLstdlibAdapterFactory">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createMapAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createOclEnumerationAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createOclSelfAdapter()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/util/OCLstdlibSwitch.java" type="org.eclipse.ocl.pivot.oclstdlib.util.OCLstdlibSwitch">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseMap(Map&lt;K,V&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseOclEnumeration(Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseOclSelf(Object)"/>
             </message_arguments>
         </filter>
     </resource>

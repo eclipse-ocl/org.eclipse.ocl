@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
@@ -421,70 +422,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		copyClassifier(eClass, pivotClass);
-		Class<?> instanceClass = null;
-		boolean isAbstract = pivotClass.isIsAbstract();
-		boolean isInterface = pivotClass.isIsInterface();
-		String className = pivotClass.getName();
-		if ("OclComparable".equals(className)) {
-			instanceClass = Object.class;
-			isAbstract = true;
-			isInterface = true;
-		}
-		else if ("OclElement".equals(className)) {
-			instanceClass = Object.class;
-			isAbstract = true;
-			isInterface = true;
-		}
-		else if ("OclInvalid".equals(className)) {
-			instanceClass = Object.class;
-			isAbstract = true;
-			isInterface = true;
-		}
-		else if ("OclLambda".equals(className)) {
-			instanceClass = Object.class;
-			isAbstract = true;
-			isInterface = true;
-		}
-		else if ("OclMessage".equals(className)) {
-			instanceClass = Object.class;
-			isAbstract = true;
-			isInterface = true;
-		}
-		//		else if ("OclSelf".equals(className)) {
-		//			instanceClass = Object.class;
-		//			isAbstract = true;
-		//			isInterface = true;
-		//		}
-		else if ("OclState".equals(className)) {
-			instanceClass = Object.class;
-			isAbstract = true;
-			isInterface = true;
-		}
-		else if ("OclSummable".equals(className)) {
-			instanceClass = Object.class;
-			isAbstract = true;
-			isInterface = true;
-		}
-		else if ("OclTuple".equals(className)) {
-			instanceClass = Object.class;
-			isAbstract = true;
-			isInterface = true;
-		}
-		else if ("OclType".equals(className)) {
-			instanceClass = Object.class;
-			isAbstract = true;
-			isInterface = true;
-		}
-		else if ("OclVoid".equals(className)) {
-			instanceClass = Object.class;
-			isAbstract = true;
-			isInterface = true;
-		}
-		eClass.setAbstract(isAbstract);
-		eClass.setInterface(isInterface);
-		if (instanceClass != null) {
-			eClass.setInstanceClass(instanceClass);
-		}
+		eClass.setAbstract(pivotClass.isIsAbstract());
+		eClass.setInterface(pivotClass.isIsInterface());
 		context.defer(pivotClass);		// Defer superclass resolution
 		@SuppressWarnings("null")@NonNull List<EOperation> eOperations = eClass.getEOperations();
 		@NonNull Iterable<Constraint> nonDuplicateConstraints = Iterables.filter(pivotClass.getOwnedInvariants(), nonDuplicateConstraintsFilter);
@@ -648,6 +587,27 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			eEnumLiteral.eUnset(EcorePackage.Literals.EENUM_LITERAL__VALUE);
 		}
 		return eEnumLiteral;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public EObject visitMapType(@NonNull MapType pivotMapType) {
+		if (pivotMapType.getOwnedBindings().size() > 0) {
+			return null;
+		}
+		@SuppressWarnings("null")
+		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		copyClassifier(eClass, pivotMapType);
+		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
+		@NonNull Iterable<Property> nonDuplicateProperties = Iterables.filter(pivotMapType.getOwnedProperties(), nonDuplicatePropertiesFilter);
+		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
+		eClass.setInstanceClass(Map.class);
+		eClass.setAbstract(true);
+		eClass.setInterface(true);
+		context.defer(pivotMapType);		// Defer superclass resolution
+		return eClass;
 	}
 
 	@Override

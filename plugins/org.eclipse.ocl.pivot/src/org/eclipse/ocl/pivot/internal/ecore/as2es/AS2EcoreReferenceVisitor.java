@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
@@ -33,16 +34,19 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -76,10 +80,18 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	 */
 	protected final @NonNull AS2EcoreTypeRefVisitor requiredTypeRefVisitor;		// Required
 
+	private final @NonNull AnyType oclAnyType;
+	private final org.eclipse.ocl.pivot.@NonNull Class oclElementType;
+	private final org.eclipse.ocl.pivot.@NonNull Class oclTypeType;
+
 	public AS2EcoreReferenceVisitor(@NonNull AS2Ecore context) {
 		super(context);
 		typeRefVisitor = new AS2EcoreTypeRefVisitor(context, false);
 		requiredTypeRefVisitor = new AS2EcoreTypeRefVisitor(context, true);
+		StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+		oclAnyType = standardLibrary.getOclAnyType();
+		oclElementType = standardLibrary.getOclElementType();
+		oclTypeType = standardLibrary.getOclTypeType();
 	}
 
 	protected @Nullable OptionalType addPropertyRedefinitionEAnnotations(@NonNull EStructuralFeature eStructuralFeature, @NonNull Property pivotProperty) {
@@ -234,6 +246,29 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 	}
 
+	private void resolveSuperClasses(@NonNull EClass eClass, org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
+		List<org.eclipse.ocl.pivot.Class> superClasses = pivotClass.getSuperClasses();
+		EList<EGenericType> eGenericTypes = eClass.getEGenericSuperTypes();
+		EList<EClass> eTypes = eClass.getESuperTypes();
+		eTypes.clear();
+		eGenericTypes.clear();
+		for (org.eclipse.ocl.pivot.Class pivotObject : superClasses) {
+			// Skip OCL's pseudo-supertypes.
+			if ((pivotObject != oclAnyType) && (pivotObject != oclElementType) && (pivotObject != oclTypeType)) {
+				EObject superEClass = typeRefVisitor.safeVisit(pivotObject);
+				if (superEClass != null) {
+					if (superEClass instanceof EGenericType) {
+						eGenericTypes.add((EGenericType)superEClass);
+					}
+					else if (superEClass instanceof EClass){
+						eTypes.add((EClass)superEClass);
+					}
+				}
+				// else error
+			}
+		}
+	}
+
 	/* @deprecated provide isRequired argument */
 	@Deprecated
 	protected void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType) {
@@ -351,7 +386,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		if (eClass == null) {
 			return null;
 		}
-		safeVisitAll(EClass.class, eClass.getEGenericSuperTypes(), eClass.getESuperTypes(), pivotClass.getSuperClasses());
+		resolveSuperClasses(eClass, pivotClass);
 		return eClass;
 	}
 
@@ -361,7 +396,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		if (eClass == null) {
 			return null;
 		}
-		safeVisitAll(EClass.class, eClass.getEGenericSuperTypes(), eClass.getESuperTypes(), pivotClass.getSuperClasses());
+		resolveSuperClasses(eClass, pivotClass);
 		return eClass;
 	}
 
@@ -389,6 +424,19 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	public EObject visitDataType(@NonNull DataType pivotDataType) {
 		EDataType eDataType = getCreated(EDataType.class, pivotDataType);
 		return eDataType;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable EObject visitMapType(@NonNull MapType pivotClass) {
+		EClass eClass = getCreated(EClass.class, pivotClass);
+		if (eClass == null) {
+			return null;
+		}
+		resolveSuperClasses(eClass, pivotClass);
+		return eClass;
 	}
 
 	@Override

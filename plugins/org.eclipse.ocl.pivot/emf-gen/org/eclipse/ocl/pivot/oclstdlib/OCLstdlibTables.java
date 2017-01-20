@@ -156,15 +156,15 @@ public class OCLstdlibTables
 		public static final @NonNull EcoreExecutorType _Boolean = new EcoreExecutorType(TypeId.BOOLEAN, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _Collection = new EcoreExecutorType(TypeId.COLLECTION, PACKAGE, 0 | ExecutorType.ABSTRACT, TypeParameters._Collection_T);
 		public static final @NonNull EcoreExecutorType _Integer = new EcoreExecutorType(TypeId.INTEGER, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorType _Map = new EcoreExecutorType(TypeId.MAP, PACKAGE, 0, TypeParameters._Map_K, TypeParameters._Map_V);
+		public static final @NonNull EcoreExecutorType _Map = new EcoreExecutorType(OCLstdlibPackage.Literals.MAP, PACKAGE, 0, TypeParameters._Map_K, TypeParameters._Map_V);
 		public static final @NonNull EcoreExecutorType _OclAny = new EcoreExecutorType(TypeId.OCL_ANY, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclComparable = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_COMPARABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclElement = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_ELEMENT, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclEnumeration = new EcoreExecutorType("OclEnumeration", PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclEnumeration = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_ENUMERATION, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorInvalidType _OclInvalid = new EcoreExecutorInvalidType(TypeId.OCL_INVALID, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclLambda = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_LAMBDA, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclMessage = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_MESSAGE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclSelf = new EcoreExecutorType(TypeId.OCL_SELF, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclSelf = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_SELF, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclState = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_STATE, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclStereotype = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_STEREOTYPE, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclSummable = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_SUMMABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
@@ -1087,6 +1087,9 @@ public class OCLstdlibTables
 		public static final @NonNull ExecutorProperty _Collection__elementType = new ExecutorPropertyWithImplementation("elementType", Types._Collection, 0, org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _Collection__lower = new ExecutorPropertyWithImplementation("lower", Types._Collection, 1, org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _Collection__upper = new ExecutorPropertyWithImplementation("upper", Types._Collection, 2, org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
+
+		public static final @NonNull ExecutorProperty _Map__keyType = new ExecutorPropertyWithImplementation("keyType", Types._Map, 0, org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty.INSTANCE);
+		public static final @NonNull ExecutorProperty _Map__valueType = new ExecutorPropertyWithImplementation("valueType", Types._Map, 1, org.eclipse.ocl.pivot.library.map.MapValueTypeProperty.INSTANCE);
 
 		public static final @NonNull ExecutorProperty _OclElement__oclContainer = new ExecutorPropertyWithImplementation("oclContainer", Types._OclElement, 0, org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _OclElement__oclContents = new ExecutorPropertyWithImplementation("oclContents", Types._OclElement, 1, org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
@@ -2705,7 +2708,10 @@ public class OCLstdlibTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Integer = {};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _Map = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _Map = {
+			OCLstdlibTables.Properties._Map__keyType,
+			OCLstdlibTables.Properties._Map__valueType
+		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclAny = {};
 

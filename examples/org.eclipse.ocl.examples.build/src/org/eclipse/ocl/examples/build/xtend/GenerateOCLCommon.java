@@ -295,6 +295,15 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		generatedClassNameMap.put(mapping.getFrom(), mapping.getTo());
 	}
 
+	protected org.eclipse.ocl.pivot.Package findPackage(Iterable<org.eclipse.ocl.pivot.Package> packages) {
+		for (org.eclipse.ocl.pivot.Package pkg : packages) {
+			if (!"$$".equals(pkg.getName())) {
+				return pkg;
+			}
+		}
+		return null;
+	}
+
 	protected @NonNull Set<CollectionType> getAllCollectionTypes(@NonNull Model root) {
 		Set<CollectionType> allElements = new HashSet<>();
 		TreeIterator<EObject> tit = root.eAllContents();
@@ -478,6 +487,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 		}
 		return classTypes;
+	}
+
+	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Class elem) {
+		return nameQueries.getEcoreLiteral(elem);
 	}
 
 	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {

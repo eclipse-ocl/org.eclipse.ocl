@@ -119,6 +119,9 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		if (eClassifier != null) {
 			try {
 				Class<?> javaClass = genModelHelper.getEcoreInterfaceClassifier(eClassifier);
+				if (javaClass == Object.class) {
+					return new RootObjectDescriptor(id);
+				}
 				return new EObjectDescriptor(id, eClassifier, javaClass);
 			}
 			catch (Exception e) {

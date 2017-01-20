@@ -12,10 +12,30 @@ package org.eclipse.ocl.examples.build.xtend
 
 import org.eclipse.ocl.pivot.DataType
 import org.eclipse.ocl.pivot.Model
+import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 
 public class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
+	protected override String declareClassTypes(/*@NonNull*/ Model root) {
+		var pkge2classTypes = root.getSortedClassTypes();
+		if (pkge2classTypes.isEmpty()) return "";
+		var Package pkg = root.ownedPackages.findPackage();
+		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());
+		'''
+		«FOR pkge : sortedPackages»
+
+			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
+				«IF pkg == pkge && !"Class".equals(type.name) && !"Enumeration".equals(type.name) && !"EnumerationLiteral".equals(type.name) && !"State".equals(type.name) && !"Type".equals(type.name)»
+					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
+				«ELSE»
+					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
+				«ENDIF»
+			«ENDFOR»
+		«ENDFOR»
+		'''
+	}
+
 	protected def String defineConstantType(DataType type) {'''
 		«IF "Boolean".equals(type.name)»
 			private void PrimitiveType «type.getPrefixedSymbolName("_"+type.partialName())» = OCLstdlib._Boolean;«ELSEIF "Classifier".equals(type.name)»

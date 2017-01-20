@@ -14,6 +14,7 @@ package org.eclipse.ocl.pivot.oclstdlib.util;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -90,6 +91,10 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 			return createCollectionAdapter();
 		}
 		@Override
+		public <K, V> Adapter caseMap(Map<K, V> object) {
+			return createMapAdapter();
+		}
+		@Override
 		public Adapter caseOclAny(Object object) {
 			return createOclAnyAdapter();
 		}
@@ -102,6 +107,10 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 			return createOclElementAdapter();
 		}
 		@Override
+		public Adapter caseOclEnumeration(Object object) {
+			return createOclEnumerationAdapter();
+		}
+		@Override
 		public Adapter caseOclInvalid(Object object) {
 			return createOclInvalidAdapter();
 		}
@@ -112,6 +121,10 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseOclMessage(Object object) {
 			return createOclMessageAdapter();
+		}
+		@Override
+		public Adapter caseOclSelf(Object object) {
+			return createOclSelfAdapter();
 		}
 		@Override
 		public Adapter caseOclState(Object object) {
@@ -206,6 +219,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map <em>Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map
+	 * @generated
+	 */
+	public Adapter createMapAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link java.lang.Object <em>Ocl Any</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -248,6 +275,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link java.lang.Object <em>Ocl Enumeration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.lang.Object
+	 * @generated
+	 */
+	public Adapter createOclEnumerationAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link java.lang.Object <em>Ocl Invalid</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -286,6 +327,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOclMessageAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.lang.Object <em>Ocl Self</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.lang.Object
+	 * @generated
+	 */
+	public Adapter createOclSelfAdapter() {
 		return null;
 	}
 

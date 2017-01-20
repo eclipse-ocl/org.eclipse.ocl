@@ -110,15 +110,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		return null;
 	}
 
-	protected org.eclipse.ocl.pivot.Package findPackage(Iterable<org.eclipse.ocl.pivot.Package> packages) {
-		for (org.eclipse.ocl.pivot.Package pkg : packages) {
-			if (!"$$".equals(pkg.getName())) {
-				return pkg;
-			}
-		}
-		return null;
-	}
-
 	protected DataType findPrimitiveType(Iterable<org.eclipse.ocl.pivot.Class> types, String name) {
 		for (Type type : types) {
 			if ((type instanceof DataType) && (type.getName().equals(name))) {
@@ -137,10 +128,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	}
 
 	protected abstract String generateMetamodel(/*@NonNull*/ Model pivotModel);
-
-	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Class elem) {
-		return nameQueries.getEcoreLiteral(elem);
-	}
 
 	protected String getEcoreLiteral(@NonNull EnumerationLiteral elem) {
 		return nameQueries.getEcoreLiteral(elem);

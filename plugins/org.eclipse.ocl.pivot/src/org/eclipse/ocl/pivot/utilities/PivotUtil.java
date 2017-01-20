@@ -234,6 +234,16 @@ public class PivotUtil
 		return pivotType;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull AnyType createAnyType(/*@NonNull*/ EClass eClass) {
+		AnyType pivotType = PivotFactory.eINSTANCE.createAnyType();
+		pivotType.setName(eClass.getName());
+		((PivotObjectImpl)pivotType).setESObject(eClass);
+		return pivotType;
+	}
+
 	public static @NonNull BagType createBagType(@NonNull BagType unspecializedType, @NonNull Type elementType) {
 		return createCollectionType(PivotFactory.eINSTANCE.createBagType(), unspecializedType, elementType);
 	}
@@ -329,6 +339,16 @@ public class PivotUtil
 	public static @NonNull InvalidType createInvalidType(@NonNull String name) {
 		InvalidType pivotType = PivotFactory.eINSTANCE.createInvalidType();
 		pivotType.setName(name);
+		return pivotType;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull InvalidType createInvalidType(/*@NonNull*/ EClass eClass) {
+		InvalidType pivotType = PivotFactory.eINSTANCE.createInvalidType();
+		pivotType.setName(eClass.getName());
+		((PivotObjectImpl)pivotType).setESObject(eClass);
 		return pivotType;
 	}
 
@@ -559,6 +579,16 @@ public class PivotUtil
 		return pivotType;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull SelfType createSelfType(/*@NonNull*/ EClass eClass) {
+		SelfType pivotType = PivotFactory.eINSTANCE.createSelfType();
+		pivotType.setName(eClass.getName());
+		((PivotObjectImpl)pivotType).setESObject(eClass);
+		return pivotType;
+	}
+
 	public static @NonNull SequenceType createSequenceType(@NonNull SequenceType unspecializedType, @NonNull Type elementType) {
 		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), unspecializedType, elementType);
 	}
@@ -673,6 +703,16 @@ public class PivotUtil
 	public static @NonNull VoidType createVoidType(@NonNull String name) {
 		VoidType pivotType = PivotFactory.eINSTANCE.createVoidType();
 		pivotType.setName(name);
+		return pivotType;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull VoidType createVoidType(/*@NonNull*/ EClass eClass) {
+		VoidType pivotType = PivotFactory.eINSTANCE.createVoidType();
+		pivotType.setName(eClass.getName());
+		((PivotObjectImpl)pivotType).setESObject(eClass);
 		return pivotType;
 	}
 

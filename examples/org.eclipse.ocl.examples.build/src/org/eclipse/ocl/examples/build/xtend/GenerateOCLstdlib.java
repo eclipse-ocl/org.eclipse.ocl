@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -65,7 +66,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 
 	protected abstract /*@NonNull*/ String generateMetamodel(/*@NonNull*/ Model pivotModel);
 
-/*	@Override
+	/*	@Override
 	protected String getExternalReference(@NonNull Element element) {
 		String generatedClassName = getGeneratedClassName(element);
 		if (isOCLstdlib(element)) {
@@ -84,7 +85,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		}
 		return null;
 	}
-	
+
 	@Override
 	protected @NonNull Map<org.eclipse.ocl.pivot.Package, List<CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
 		return super.getSortedCollectionTypes(root, monikerComparator);
@@ -123,9 +124,9 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 					return;
 				}
 			}
-//			if (asResource == null) {
-//				return;
-//			}
+			//			if (asResource == null) {
+			//				return;
+			//			}
 			EObject pivotModel = ClassUtil.nonNullState(asResource.getContents().get(0));
 			setEnvironmentFactory(ClassUtil.nonNullState(PivotUtilInternal.findEnvironmentFactory(pivotModel)));
 			ASSaver saver = new ASSaver(asResource);
@@ -155,37 +156,42 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				if (libraryNsPrefix != null) {
 					ePackage.setNsPrefix(libraryNsPrefix);
 				}
-//				setInstanceClassName(ePackage, "Bag", Bag.class, null);
+				// FIXME EClass instanceClassNames are correct because they were loaded correct.
+				// FIXME EClass setInstanceClassName trashes EClasses that are set explicitly
+				//				setInstanceClassName(ePackage, "Bag", Bag.class, null);
 				setInstanceClassName(ePackage, "Boolean", Boolean.class, null);
-//				setInstanceClassName(ePackage, "Collection", Collection.class, null);
+				//				setInstanceClassName(ePackage, "Collection", Collection.class, null);
 				setInstanceClassName(ePackage, "Integer", IntegerValue.class, null);
-//				setInstanceClassName(ePackage, "OclAny", Object.class, "This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTRue functionality is only available once converted to a Pivot model.");
-	//			setInstanceClassName(ePackage, "OclInvalid", InvalidValue.class, null);
-	//			setInstanceClassName(ePackage, "OclVoid", NullValue.class, null);
-//				setInstanceClassName(ePackage, "OrderedSet", OrderedSet.class, null);
+				//				setInstanceClassName(ePackage, "OclAny", Object.class, "This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTRue functionality is only available once converted to a Pivot model.");
+				//			setInstanceClassName(ePackage, "OclInvalid", InvalidValue.class, null);
+				//			setInstanceClassName(ePackage, "OclVoid", NullValue.class, null);
+				//				setInstanceClassName(ePackage, "OrderedSet", OrderedSet.class, null);
 				setInstanceClassName(ePackage, "Real", RealValue.class, null);
-//				setInstanceClassName(ePackage, "Sequence", List.class, null);
-//				setInstanceClassName(ePackage, "Set", Set.class, null);
+				//				setInstanceClassName(ePackage, "Sequence", List.class, null);
+				//				setInstanceClassName(ePackage, "Set", Set.class, null);
 				setInstanceClassName(ePackage, "String", String.class, null);
-//				setInstanceClassName(ePackage, "UniqueCollection", Set.class, null);
+				//				setInstanceClassName(ePackage, "UniqueCollection", Set.class, null);
 				setInstanceClassName(ePackage, "UnlimitedNatural", UnlimitedNaturalValue.class, null);
 				EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
+				EClass eOclAny = (EClass) NameUtil.getENamedElement(eClassifiers, "OclAny");
+				EClass eOclElement = (EClass) NameUtil.getENamedElement(eClassifiers, "OclElement");
+				EClass eOclType = (EClass) NameUtil.getENamedElement(eClassifiers, "OclType");
 				for (EClassifier eClassifier : new ArrayList<EClassifier>(eClassifiers)) {
 					if (eClassifier instanceof EClass) {
 						EClass eClass = (EClass) eClassifier;
-//						eClass.getEGenericSuperTypes().clear();
+						//						eClass.getEGenericSuperTypes().clear();
 						eClass.getEOperations().clear();
-//						eClass.getEStructuralFeatures().clear();
+						//						eClass.getEStructuralFeatures().clear();
 					}
 					eClassifier.getEAnnotations().clear();
-	//				EAnnotation eAnnotation = eClassifier.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
-	//				if (eAnnotation != null) {
-	//					eClassifier.getEAnnotations().remove(eAnnotation);
-	//				}
-	//				eAnnotation = eClassifier.getEAnnotation(GenModelPackage.eNS_URI);
-	//				if (eAnnotation != null) {
-	//					eClassifier.getEAnnotations().remove(eAnnotation);
-	//				}
+					//				EAnnotation eAnnotation = eClassifier.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
+					//				if (eAnnotation != null) {
+					//					eClassifier.getEAnnotations().remove(eAnnotation);
+					//				}
+					//				eAnnotation = eClassifier.getEAnnotation(GenModelPackage.eNS_URI);
+					//				if (eAnnotation != null) {
+					//					eClassifier.getEAnnotations().remove(eAnnotation);
+					//				}
 					String name = eClassifier.getName();
 					if ("OclAny".equals(name)) {
 						String comment = "This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTrue functionality is only available once converted to a Pivot model.";
@@ -194,39 +200,77 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 						eAnnotation.getDetails().put("documentation", comment);
 						eClassifier.getEAnnotations().add(eAnnotation);
 					}
-/*					if (name.equals("OclComparable")
-					 || name.equals("OclElement")
-					 || name.equals("OclLambda")
-					 || name.equals("OclMessage")
-					 || name.equals("OclState")
-					 || name.equals("OclSummable")
-					 || name.equals("OclTuple")
-					 || name.equals("OclType")) {
-						((EClass)eClassifier).setAbstract(true);
-					} */
-					if (name.equals("OclStereotype")) {						// FIXME some old classes probably rely on historic model-gen/oclstdlib.ecore content
-						((EClass)eClassifier).setAbstract(true);
-						((EClass)eClassifier).setInterface(true);
-						eClassifier.setInstanceClass(Object.class);
+					//
+					//	Non-library classes are removed from the Ecore model and so do not appear as generated Java classes.
+					//
+					if (name.equals("Class")
+							|| name.equals("Enumeration")
+							|| name.equals("EnumerationLiteral")
+							|| name.equals("State")
+							|| name.equals("Type")) {
+						eClassifiers.remove(eClassifier);
 					}
-					else if ((eClassifier.getInstanceClassName() == null)
-							  && !name.equals("OclAny")
-							  && !name.equals("OclInvalid")
-							  && !name.equals("OclVoid")) {
-								eClassifiers.remove(eClassifier);
-							}
-	//				eClassifier.setName(LibraryConstants.ECORE_STDLIB_PREFIX + name);
-	//				eResource.setID(eClassifier, name);
+					//
+					//	Operations/properties referencing non-library classes are removed to avoid dangling references.
+					//
+					if (name.equals("OclEnumeration")) {
+						EClass eClass = (EClass)eClassifier;
+						assert eClass.isAbstract();
+						eClass.getEOperations().clear();
+						eClass.getEStructuralFeatures().clear();
+					}
+					//
+					//	FIXME Library classes removed for API compatibility.
+					//
+					//					if (name.equals("OclEnumeration")
+					//							  || name.equals("OclSelf")) {
+					//							eClassifiers.remove(eClassifier);
+					//					}
+					//
+					//	Library classes have a non-null instance class name to suppress generation of a Java class
+					//
+					if (name.equals("OclComparable")
+							|| name.equals("OclElement")
+							|| name.equals("OclEnumeration")
+							|| name.equals("OclInvalid")
+							|| name.equals("OclLambda")
+							|| name.equals("OclMessage")
+							|| name.equals("OclSelf")
+							|| name.equals("OclState")
+							|| name.equals("OclStereotype")
+							|| name.equals("OclSummable")
+							|| name.equals("OclTuple")
+							|| name.equals("OclType")
+							|| name.equals("OclVoid")) {
+						EClass eClass = (EClass)eClassifier;
+						assert eClass.isAbstract();
+						eClassifier.setInstanceClass(Object.class);
+						eClass.setInterface(true);
+						if (eClass.getESuperTypes().isEmpty()) {
+							eClass.getESuperTypes().add(name.equals("OclStereotype") ? eOclType : name.equals("OclType") ? eOclElement : eOclAny);
+						}
+					}
+					//					else if (name.equals("OclStereotype")) {						// FIXME some old classes probably rely on historic model-gen/oclstdlib.ecore content
+					//						((EClass)eClassifier).setAbstract(true);
+					//						((EClass)eClassifier).setInterface(true);
+					//						eClassifier.setInstanceClass(Object.class);
+					//					}
+					//					else if (name.equals("Map")) {
+					//						eClassifier.setInstanceClass(Object.class);
+					//							eClassifiers.remove(eClassifier);
+					//								}
+					//				eClassifier.setName(LibraryConstants.ECORE_STDLIB_PREFIX + name);
+					//				eResource.setID(eClassifier, name);
 				}
 				ePackage.getEAnnotations().clear();
-	//			EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
-	//			if (eAnnotation != null) {
-	//				ePackage.getEAnnotations().remove(eAnnotation);
-	//			}
-	//			eAnnotation = ePackage.getEAnnotation(GenModelPackage.eNS_URI);
-	//			if (eAnnotation != null) {
-	//				ePackage.getEAnnotations().remove(eAnnotation);
-	//			}
+				//			EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
+				//			if (eAnnotation != null) {
+				//				ePackage.getEAnnotations().remove(eAnnotation);
+				//			}
+				//			eAnnotation = ePackage.getEAnnotation(GenModelPackage.eNS_URI);
+				//			if (eAnnotation != null) {
+				//				ePackage.getEAnnotations().remove(eAnnotation);
+				//			}
 				EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 				eAnnotation.setSource(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
 				ePackage.getEAnnotations().add(eAnnotation);
@@ -244,6 +288,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		EClassifier eClassifier = ePackage.getEClassifier(typeName);
 		if (eClassifier != null) {
 			if (eClassifier instanceof EClass) {
+				assert false;
 				String name = eClassifier.getName();
 				ePackage.getEClassifiers().remove(eClassifier);
 				eClassifier = EcoreFactory.eINSTANCE.createEDataType();
@@ -287,7 +332,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 	public void setLibraryNsPrefix(String libraryNsPrefix) {
 		this.libraryNsPrefix = libraryNsPrefix;
 	}
-	
+
 	/**
 	 * Set true if this library uses and so requires the OCL stnadard library to be registered.
 	 */

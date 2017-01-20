@@ -2,11 +2,6 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="oclstdlib" nsURI="http://www.eclipse.org/ocl/2015/Library" nsPrefix="oclstdlib">
   <eAnnotations source="http://www.eclipse.org/OCL/ASLibrary"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Real" instanceClassName="org.eclipse.ocl.pivot.values.RealValue"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="Bag" instanceClassName="org.eclipse.ocl.pivot.values.Bag"
       abstract="true" interface="true">
     <eTypeParameters name="T"/>
@@ -14,8 +9,9 @@
       <eTypeArguments eTypeParameter="#//Bag/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean"/>
   <eClassifiers xsi:type="ecore:EClass" name="Collection" instanceClassName="java.util.Collection"
-      abstract="true" interface="true" eSuperTypes="#//OclAny">
+      abstract="true" interface="true">
     <eTypeParameters name="T"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elementType" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -32,6 +28,24 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Evaluates to the upper bound on the number of collection elements.&#xA;"/>
       </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Map" instanceClassName="java.util.Map"
+      abstract="true" interface="true">
+    <eTypeParameters name="K"/>
+    <eTypeParameters name="V"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The key type of the key-value pairs of oclText[self].&#xA;"/>
+      </eAnnotations>
+      <eGenericType eTypeParameter="#//Map/K"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The value type of the key-value pairs of oclText[self].&#xA;"/>
+      </eAnnotations>
+      <eGenericType eTypeParameter="#//Map/V"/>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclAny" instanceClassName="java.lang.Object"
@@ -56,11 +70,15 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OclEnumeration" instanceClassName="java.lang.Object"
+      abstract="true" interface="true" eSuperTypes="#//OclAny"/>
   <eClassifiers xsi:type="ecore:EClass" name="OclInvalid" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclVoid"/>
   <eClassifiers xsi:type="ecore:EClass" name="OclLambda" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclAny"/>
   <eClassifiers xsi:type="ecore:EClass" name="OclMessage" instanceClassName="java.lang.Object"
+      abstract="true" interface="true" eSuperTypes="#//OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclSelf" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclAny"/>
   <eClassifiers xsi:type="ecore:EClass" name="OclState" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclAny"/>
@@ -91,6 +109,7 @@
       <eTypeArguments eTypeParameter="#//OrderedSet/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Real" instanceClassName="org.eclipse.ocl.pivot.values.RealValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="Sequence" instanceClassName="java.util.List"
       abstract="true" interface="true">
     <eTypeParameters name="T"/>
@@ -105,6 +124,7 @@
       <eTypeArguments eTypeParameter="#//Set/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String"/>
   <eClassifiers xsi:type="ecore:EClass" name="UniqueCollection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
     <eTypeParameters name="T"/>
@@ -112,4 +132,5 @@
       <eTypeArguments eTypeParameter="#//UniqueCollection/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"/>
 </ecore:EPackage>
