@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.scoping;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Ann AbstractAttribution provides the basic behaviour for a family of derived
@@ -19,9 +20,9 @@ import org.eclipse.jdt.annotation.NonNull;
  * CS elements.
  */
 public abstract class AbstractAttribution implements Attribution
-{	
+{
 	@Override
-	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
+	public @Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 		return scopeView.getParent();
 	}
 }

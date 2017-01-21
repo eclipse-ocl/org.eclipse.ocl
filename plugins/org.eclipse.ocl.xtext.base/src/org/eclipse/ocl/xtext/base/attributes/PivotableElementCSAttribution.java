@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.attributes;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
@@ -25,10 +26,10 @@ public class PivotableElementCSAttribution extends AbstractAttribution
 	public static final PivotableElementCSAttribution INSTANCE = new PivotableElementCSAttribution();
 
 	@Override
-	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
+	public @Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 		Element pivot = PivotUtil.getPivot(Element.class, (PivotableElementCS)target);
 		if ((pivot != null) && (pivot.eResource() != null) && !(pivot instanceof InvalidType)) {
-			environmentView.computeLookups(pivot, null); //PivotUtil.getPivot(Element.class, scopeView.getChild());	
+			environmentView.computeLookups(pivot, null); //PivotUtil.getPivot(Element.class, scopeView.getChild());
 		}
 		return scopeView.getParent();
 	}

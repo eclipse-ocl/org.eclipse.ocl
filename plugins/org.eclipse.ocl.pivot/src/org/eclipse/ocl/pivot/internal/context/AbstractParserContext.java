@@ -32,6 +32,8 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
+import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
+import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -43,7 +45,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
-public abstract class AbstractParserContext /*extends AdapterImpl*/ implements ParserContext
+public abstract class AbstractParserContext /*extends AdapterImpl*/ implements ParserContext.ParserContextExtension
 {
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull URI uri;
@@ -57,6 +59,14 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		else {
 			this.uri = ClassUtil.nonNullEMF(URI.createURI(EcoreUtil.generateUUID() + ".essentialocl"));
 		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
+		return null;
 	}
 
 	@Override
@@ -138,9 +148,9 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 
 	@Override
 	public void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression) {
-//		List<String> language = expression.getLanguage();
-//		language.clear();
-//		language.add(PivotConstants.OCL_LANGUAGE);
+		//		List<String> language = expression.getLanguage();
+		//		language.clear();
+		//		language.add(PivotConstants.OCL_LANGUAGE);
 	}
 
 	@Override
@@ -156,7 +166,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 			expressionInOCL.setBody(expression);
 			return expressionInOCL;
 		} catch (IOException e) {
-//				throw new ParserException("Failed to load expression", e);
+			//				throw new ParserException("Failed to load expression", e);
 			@NonNull ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();
 			OCLExpression invalidValueBody = getMetamodelManager().createInvalidExpression();
 			PivotUtil.setBody(specification, invalidValueBody, null);
@@ -172,7 +182,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 			}
 		}
 	}
-	
+
 	@Override
 	public void setRootElement(@Nullable Element rootElement) {
 		this.rootElement = rootElement;

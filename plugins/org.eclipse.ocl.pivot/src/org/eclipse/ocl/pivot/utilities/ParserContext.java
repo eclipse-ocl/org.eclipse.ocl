@@ -19,11 +19,13 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.context.Base2ASConversion;
+import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
+import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.resource.CSResource;
 
 /**
  * A ParserContext captures the context in which source text is parsed.
- * 
+ *
  * A derived context is constructed with the relevant context, then createBaseResource
  * creates a Concrete Syntax resource for a Concrete Syntax expression string. Then parse creates
  * a corresponding Abstract Syntax ExpressionInOCL. initialize is invoked during the parse to
@@ -32,17 +34,42 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 public interface ParserContext // extends Adapter
 {
 	/**
+	 * @since 1.3
+	 */
+	public interface ParserContextExtension extends ParserContext
+	{
+		/**
+		 * Add the local lookup contributions to a view of an Environment.
+		 * <p>
+		 * The EnvironmentView contains the lookup matching criteria such as a specific name and
+		 * accumulates candidate results.
+		 * <p>
+		 * The input ScopeView identifies the CS node and the containment of the CS child from which
+		 * the lookup is made allowing derived implementations to present the alternative environments
+		 * specified as the <i>Inherited Attributes</i> in the OCL Specification.
+		 * <p>
+		 * The returned ScopeView identifies an outer scope in which the lookup may be continued if the
+		 * local candidate results are not suitable.
+		 *
+		 * @param environmentView the EnvironmentView to compute
+		 * @param scopeView the access selectivity to be applied by the lookup
+		 * @return an outer ScopeView in which to continue the lookup, or null if none
+		 */
+		@Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView);
+	}
+
+	/**
 	 * Create a Concrete Syntax resource containing the parsed expression.
-	 * 
+	 *
 	 * Semantic errors may be found at the Resource.errors
 	 * and may be converted to ParseExceptions by invoking
 	 * PivitUtil.checkResourceErrors.
-	 * 
+	 *
 	 * @throws IOException if resource loading fails
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	@NonNull CSResource createBaseResource(@NonNull String expression) throws IOException, ParserException;
-	
+
 	/**
 	 * Return the type of the self variable.
 	 */
@@ -50,7 +77,7 @@ public interface ParserContext // extends Adapter
 
 	/**
 	 * Extract an Abstract Syntax ExpressionInOCL fronm a Concrete Syntax resource.
-	 * 
+	 *
 	 * @throws ParserException if parsing fails
 	 */
 	@Nullable ExpressionInOCL getExpression(@NonNull CSResource resource) throws ParserException;
@@ -70,7 +97,7 @@ public interface ParserContext // extends Adapter
 	 * a contextvariable for the self type, parameter and result variables.
 	 */
 	void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression);
-	
+
 	/**
 	 * Create an Abstract Syntax ExpressionInOCL containing the parsed expression on behalf of a potential owner.
 	 * <p>
@@ -79,10 +106,10 @@ public interface ParserContext // extends Adapter
 	 * an operation body may specify the operation as the owner
 	 * <p>
 	 * The owner should be non-null but a null value is tolerated for deprecated compatibility.
-	 * 
+	 *
 	 * @throws ParserException if parsing fails
 	 */
 	@NonNull ExpressionInOCL parse(@Nullable EObject owner, @NonNull String expression) throws ParserException;
-	
+
 	void setRootElement(@Nullable Element rootElement);
 }

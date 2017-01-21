@@ -38,6 +38,7 @@ import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.SpecificationCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
+import org.eclipse.ocl.xtext.essentialocl.attributes.ContextCSAttribution;
 import org.eclipse.ocl.xtext.essentialocl.attributes.LetExpCSAttribution;
 import org.eclipse.ocl.xtext.essentialocl.attributes.LetVariableCSAttribution;
 import org.eclipse.ocl.xtext.essentialocl.attributes.NavigatingArgCSAttribution;
@@ -57,9 +58,10 @@ import org.eclipse.ocl.xtext.essentialoclcs.RoundBracketedClauseCS;
 import org.eclipse.ocl.xtext.essentialoclcs.TypeNameExpCS;
 
 public class EssentialOCLScoping
-{	
+{
 	public static void init() {
 		Map<EClassifier, Attribution> registry = Attribution.REGISTRY;
+		registry.put(EssentialOCLCSPackage.Literals.CONTEXT_CS, ContextCSAttribution.INSTANCE);
 		registry.put(EssentialOCLCSPackage.Literals.LET_EXP_CS, LetExpCSAttribution.INSTANCE);
 		registry.put(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS, LetVariableCSAttribution.INSTANCE);  // Needed for let deeply nested in Iterator/CollectionLiteral
 		registry.put(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS, NavigatingArgCSAttribution.INSTANCE);
@@ -67,13 +69,13 @@ public class EssentialOCLScoping
 		registry.put(EssentialOCLCSPackage.Literals.SHADOW_PART_CS, ShadowPartCSAttribution.INSTANCE);
 		CS2AS.addUnresolvedProxyMessageProvider(new PathElementCSUnresolvedProxyMessageProvider());
 	}
-	
+
 	private static final class PathElementCSUnresolvedProxyMessageProvider extends AbstractUnresolvedProxyMessageProvider
 	{
 		private PathElementCSUnresolvedProxyMessageProvider() {
 			super(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT);
 		}
-		
+
 		@Override
 		public String getMessage(@NonNull EObject eObject, @NonNull String linkText) {
 			PathElementCS csPathElement = (PathElementCS) eObject;
@@ -202,7 +204,7 @@ public class EssentialOCLScoping
 			}
 			return messageText;
 		}
-		
+
 		public String getOperationArguments(@NonNull RoundBracketedClauseCS csRoundBracketedClause) {
 			List<NavigatingArgCS> arguments = csRoundBracketedClause.getOwnedArguments();
 			StringBuilder s = new StringBuilder();
@@ -221,5 +223,5 @@ public class EssentialOCLScoping
 			}
 			return s.toString();
 		}
-	}		
+	}
 }
