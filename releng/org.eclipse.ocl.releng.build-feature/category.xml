@@ -12,12 +12,14 @@
    <feature id="org.eclipse.ocl.examples.unified" version="0.0.0">
       <category name="mdt.ocl"/>
    </feature>
+   <!-- For the time being, we deactivate the tests
    <feature id="org.eclipse.ocl.tests" version="0.0.0">
       <category name="mdt.ocl.tests"/>
    </feature>
    <feature id="org.eclipse.ocl.examples.tests" version="0.0.0">
       <category name="mdt.ocl.tests"/>
    </feature>
+   -->
    <category-def name="mdt.ocl" label="OCL">
       <description>
          Eclipse OCL features.

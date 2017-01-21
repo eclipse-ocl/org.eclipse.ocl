@@ -22,11 +22,11 @@
    </url>
 
    <includes
-         id="org.eclipse.ocl.examples.classic.source"
+         id="org.eclipse.ocl.all.sdk"
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.ocl.all.sdk"
+         id="org.eclipse.ocl.all.sdk.source"
          version="0.0.0"/>
 
    <plugin

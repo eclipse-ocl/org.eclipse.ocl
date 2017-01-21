@@ -22,6 +22,7 @@
     <module>org.eclipse.ocl.master</module>
     <module>org.eclipse.ocl.pivot</module>
     <module>org.eclipse.ocl.pivot.ui</module>
+    <module>org.eclipse.ocl.pivot.uml</module>
     <module>org.eclipse.ocl.ui</module>
     <module>org.eclipse.ocl.uml</module>
     <module>org.eclipse.ocl.uml.edit</module>

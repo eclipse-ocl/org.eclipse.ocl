@@ -21,17 +21,18 @@
    </url>
 
    <includes
-         id="org.eclipse.ocl.examples.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.ocl.examples.classic"
          version="0.0.0"/>
-
+         
+   <includes
+         id="org.eclipse.ocl.examples.classic.source"
+         version="0.0.0"/>
    <includes
          id="org.eclipse.ocl.examples.unified"
          version="0.0.0"/>
-
+   <includes
+         id="org.eclipse.ocl.examples.unified.source"
+         version="0.0.0"/>
    <plugin
          id="org.eclipse.ocl.examples"
          download-size="0"

@@ -18,6 +18,8 @@
    <module>features</module>
    <module>plugins</module>   
    <module>releng</module>
+   <!--  For the time being, deactivate tests
    <module>tests</module>
+   -->
   </modules>
 </project>

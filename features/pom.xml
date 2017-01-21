@@ -22,13 +22,17 @@
       <module>org.eclipse.ocl.edit-feature</module>
       <module>org.eclipse.ocl.examples-feature</module>
       <module>org.eclipse.ocl.examples.classic-feature</module>
+      <!-- 
       <module>org.eclipse.ocl.examples.tests-feature</module>
+       -->
       <module>org.eclipse.ocl.examples.unified-feature</module>
       <module>org.eclipse.ocl.master-feature</module>
       <module>org.eclipse.ocl.ui-feature</module>
       <module>org.eclipse.ocl.uml-feature</module>
       <module>org.eclipse.ocl.unified.core-feature</module>
       <module>org.eclipse.ocl.unified.ui-feature</module>
+      <!-- 
       <module>org.eclipse.ocl.tests-feature</module>
+       -->
   </modules>
 </project>

@@ -25,7 +25,7 @@
       <!-- Generate source bundles (exclude target so we don't enter
            an infinite loop for binary-only plugins, which have itself
            as the source). -->
-      <plugin>
+<plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-source-plugin</artifactId>
         <version>${tycho.version}</version>
@@ -58,13 +58,36 @@
             <goals>
               <goal>source-feature</goal>
             </goals>
-            <!-- 
             <configuration>
-                 <excludes>
-                    <feature id="org.eclipse.ocl.all" />
-                </excludes>
+              <excludes>
+              <!-- The following source features are manually included by some 
+              coordination features. We prevent to look for a "source of sources" -->
+                <feature id="org.eclipse.ocl.all.source"/>
+                <feature id="org.eclipse.ocl.all.sdk.source"/>
+                <feature id="org.eclipse.ocl.doc.source"/>
+                <feature id="org.eclipse.ocl.edit.source"/>
+                <feature id="org.eclipse.ocl.examples.classic.source"/>
+                <feature id="org.eclipse.ocl.examples.unified.source"/>
+                <feature id="org.eclipse.ocl.examples.source"/>
+                <feature id="org.eclipse.ocl.ui.source"/>
+                <feature id="org.eclipse.ocl.unified.core.source"/>
+                <feature id="org.eclipse.ocl.unified.ui.source"/>
+              </excludes>
             </configuration>
-            -->
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-plugin</artifactId>
+        <version>${tycho.version}</version>
+        <executions>
+          <execution>
+            <id>attached-p2-metadata</id>
+            <phase>package</phase>
+            <goals>
+              <goal>p2-metadata</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
