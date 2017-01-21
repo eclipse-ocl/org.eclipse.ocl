@@ -92,6 +92,22 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 	public static final @NonNull String TABLES_POSTAMBLE_KEY = "Tables Postamble";
 	public static final @NonNull String USE_DELEGATES_KEY = "Use Delegates";
 	public static final @NonNull String USE_NULL_ANNOTATIONS_KEY = "Use Null Annotations";
+	public static final @NonNull String INVARIANT_PREFIX_KEY = "Invariant Prefix";
+
+	/**
+	 * If the genModel has a {@link #OCL_GENMODEL_URI} GenAnnotation with a
+	 * {@link #INVARIANT_PREFIX_KEY} detail returns its value otherwise return null.
+	 */
+	public static @Nullable String getInvariantPrefix(@NonNull GenModel genModel) {
+		GenAnnotation genAnnotation = genModel.getGenAnnotation(OCL_GENMODEL_URI);
+		if (genAnnotation != null) {
+			EMap<String, String> details = genAnnotation.getDetails();
+			if (details.containsKey(INVARIANT_PREFIX_KEY)) {
+				return String.valueOf(details.get(INVARIANT_PREFIX_KEY));
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Return some non-null text to append before the final brace of the generated Tables file.
@@ -386,7 +402,10 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 					if (ruleName.equals(key)) {
 						String prefix = UML2GenModelUtil.getInvariantPrefix(genModel);
 						if (prefix == null) {
-							prefix = "";
+							prefix = getInvariantPrefix(genModel);
+							if (prefix == null) {
+								prefix = "";
+							}
 						}
 						EOperation eOperation = AS2Ecore.createConstraintEOperation(rule, prefix + ruleName, null);
 						addEOperation(eClass, eOperation);
