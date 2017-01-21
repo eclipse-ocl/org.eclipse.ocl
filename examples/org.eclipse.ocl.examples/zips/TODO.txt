@@ -1,0 +1,3 @@
+I still need to invoke the zip creation script.
+This temporary file is for creating the "zips" folder so the build can go on.
+When this file is removed remember to add "zips" folder to git:ignore
