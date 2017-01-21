@@ -71,6 +71,9 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
+import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
@@ -273,7 +276,16 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		pivotElement.setName(newName);
 		copyDataTypeOrEnum(pivotElement, eObject2);
-		if (!isPrimitive && (instanceClass != null)) {
+		if (isPrimitive) {
+			PivotMetamodelManager metamodelManager = converter.getMetamodelManager();
+			CompleteModelInternal completeModelInternal = metamodelManager.getCompleteModel();
+			PrimitiveCompletePackageImpl primitiveCompletePackage = completeModelInternal.getPrimitiveCompletePackage();
+			CompleteClassInternal completeClass = primitiveCompletePackage.getCompleteClass(pivotElement);
+			if (!completeClass.getPartialClasses().contains(pivotElement)) {
+				completeClass.addClass(pivotElement);
+			}
+		}
+		else if (instanceClass != null) {
 			try {
 				PivotMetamodelManager metamodelManager = converter.getMetamodelManager();
 				StandardLibraryInternal standardLibrary = metamodelManager.getStandardLibrary();
