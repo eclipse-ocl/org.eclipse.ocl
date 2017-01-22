@@ -8,7 +8,7 @@
     <artifactId>org.eclipse.ocl.root</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>org.eclipse.ocl.examples</artifactId>
+  <artifactId>org.eclipse.ocl.examples-folder</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
