@@ -89,8 +89,24 @@ import org.eclipse.uml2.codegen.ecore.genmodel.util.UML2GenModelUtil;
 public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 {
 	public static final @NonNull String OCL_GENMODEL_URI = "http://www.eclipse.org/OCL/GenModel";
+	public static final @NonNull String TABLES_POSTAMBLE_KEY = "Tables Postamble";
 	public static final @NonNull String USE_DELEGATES_KEY = "Use Delegates";
 	public static final @NonNull String USE_NULL_ANNOTATIONS_KEY = "Use Null Annotations";
+
+	/**
+	 * Return some non-null text to append before the final brace of the generated Tables file.
+	 * This may be used to insert manual text that remedies reported API changes.
+	 */
+	public static @Nullable String tablesPostamble(@NonNull GenModel genModel) {
+		GenAnnotation genAnnotation = genModel.getGenAnnotation(OCL_GENMODEL_URI);
+		if (genAnnotation != null) {
+			EMap<String, String> details = genAnnotation.getDetails();
+			if (details.containsKey(TABLES_POSTAMBLE_KEY)) {
+				return String.valueOf(details.get(TABLES_POSTAMBLE_KEY));
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Return true if the genModel has a {@link #OCL_GENMODEL_URI} GenAnnotation with a

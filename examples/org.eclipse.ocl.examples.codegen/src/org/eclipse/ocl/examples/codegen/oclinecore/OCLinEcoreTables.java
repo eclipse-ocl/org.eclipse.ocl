@@ -72,6 +72,7 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 {
 	protected final boolean useNullAnnotations;
+	private final @Nullable String tablesPostamble;
 	private @Nullable String precedingPackageName = null;		// Initialization linkage
 	private @Nullable String currentPackageName = null;			// Initialization linkage
 	protected final @NonNull ImportManager importManager;
@@ -80,12 +81,15 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		super(genPackage);
 		GenModel genModel = ClassUtil.nonNullState(genPackage.getGenModel());
 		this.useNullAnnotations = OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel);
+		this.tablesPostamble = OCLinEcoreGenModelGeneratorAdapter.tablesPostamble(genModel);
 		this.importManager = new ImportManager(getTablesPackageName());
 	}
 
+	@Deprecated /* no longer used */
 	public OCLinEcoreTables(@NonNull PivotMetamodelManager metamodelManager, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		super(metamodelManager, asPackage);
 		this.useNullAnnotations = true; //OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel);
+		this.tablesPostamble = null;
 		this.importManager = new ImportManager(getTablesPackageName());
 	}
 
@@ -1069,6 +1073,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 * Force initialization of outer fields. Inner fields are lazily initialized.\n");
 		s.append("	 */\n");
 		s.append("	public static void init() {}\n");
+		if (tablesPostamble != null) {
+			s.append(tablesPostamble);
+		}
 		s.append("}\n");
 		return s.toString();
 	}
