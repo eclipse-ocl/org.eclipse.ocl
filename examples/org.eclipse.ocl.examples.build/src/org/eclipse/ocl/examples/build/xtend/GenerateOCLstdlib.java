@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.build.xtend;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,8 +64,14 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 	protected String libraryName;
 	protected String libraryNsPrefix;
 	protected boolean useOCLstdlib = false;
+	protected @NonNull List<@NonNull String> excludedEClassifierNames = new ArrayList<>();
 
-	protected abstract /*@NonNull*/ String generateMetamodel(/*@NonNull*/ Model pivotModel);
+	protected abstract /*@NonNull*/ String generateMetamodel(/*@NonNull*/ Model pivotModel, @NonNull Collection<@NonNull String> excludedEClassifierNames);
+
+	public void addExcludedEClassifierName(String excludedEClassifierName) {
+		assert excludedEClassifierName != null;
+		excludedEClassifierNames.add(excludedEClassifierName);
+	}
 
 	/*	@Override
 	protected String getExternalReference(@NonNull Element element) {
@@ -133,7 +140,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			saver.localizeSpecializations();
 			String fileName = folder + "/" + javaClassName + ".java";
 			log.info("Generating '" + fileName + "'");
-			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel((Model)pivotModel);
+			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel((Model)pivotModel, excludedEClassifierNames);
 			MergeWriter fw = new MergeWriter(fileName);
 			fw.append(metamodel);
 			fw.close();
@@ -203,64 +210,51 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 					//
 					//	Non-library classes are removed from the Ecore model and so do not appear as generated Java classes.
 					//
-					if (name.equals("Class")
-							|| name.equals("Enumeration")
-							|| name.equals("EnumerationLiteral")
-							|| name.equals("State")
-							|| name.equals("Type")) {
+					if (excludedEClassifierNames.contains(name)) {
 						eClassifiers.remove(eClassifier);
 					}
-					//
-					//	Operations/properties referencing non-library classes are removed to avoid dangling references.
-					//
-					if (name.equals("OclEnumeration")) {
-						EClass eClass = (EClass)eClassifier;
-						assert eClass.isAbstract();
-						eClass.getEOperations().clear();
-						eClass.getEStructuralFeatures().clear();
-					}
-					//
-					//	FIXME Library classes removed for API compatibility.
-					//
-					//					if (name.equals("OclEnumeration")
-					//							  || name.equals("OclSelf")) {
-					//							eClassifiers.remove(eClassifier);
-					//					}
-					//
-					//	Library classes have a non-null instance class name to suppress generation of a Java class
-					//
-					if (name.equals("OclComparable")
-							|| name.equals("OclElement")
-							|| name.equals("OclEnumeration")
-							|| name.equals("OclInvalid")
-							|| name.equals("OclLambda")
-							|| name.equals("OclMessage")
-							|| name.equals("OclSelf")
-							|| name.equals("OclState")
-							|| name.equals("OclStereotype")
-							|| name.equals("OclSummable")
-							|| name.equals("OclTuple")
-							|| name.equals("OclType")
-							|| name.equals("OclVoid")) {
-						EClass eClass = (EClass)eClassifier;
-						assert eClass.isAbstract();
-						eClassifier.setInstanceClass(Object.class);
-						eClass.setInterface(true);
-						if (eClass.getESuperTypes().isEmpty()) {
-							eClass.getESuperTypes().add(name.equals("OclStereotype") ? eOclType : name.equals("OclType") ? eOclElement : eOclAny);
+					else {
+						//
+						//	Operations/properties referencing non-library classes are removed to avoid dangling references.
+						//
+						if (name.equals("OclEnumeration")) {
+							EClass eClass = (EClass)eClassifier;
+							assert eClass.isAbstract();
+							eClass.getEOperations().clear();
+							eClass.getEStructuralFeatures().clear();
+						}
+						//
+						//	FIXME Library classes removed for API compatibility.
+						//
+						//					if (name.equals("OclEnumeration")
+						//							  || name.equals("OclSelf")) {
+						//							eClassifiers.remove(eClassifier);
+						//					}
+						//
+						//	Library classes have a non-null instance class name to suppress generation of a Java class
+						//
+						if (name.equals("OclComparable")
+								|| name.equals("OclElement")
+								|| name.equals("OclEnumeration")
+								|| name.equals("OclInvalid")
+								|| name.equals("OclLambda")
+								|| name.equals("OclMessage")
+								|| name.equals("OclSelf")
+								|| name.equals("OclState")
+								|| name.equals("OclStereotype")
+								|| name.equals("OclSummable")
+								|| name.equals("OclTuple")
+								|| name.equals("OclType")
+								|| name.equals("OclVoid")) {
+							EClass eClass = (EClass)eClassifier;
+							assert eClass.isAbstract();
+							eClassifier.setInstanceClass(Object.class);
+							eClass.setInterface(true);
+							if (eClass.getESuperTypes().isEmpty()) {
+								eClass.getESuperTypes().add(name.equals("OclStereotype") ? eOclType : name.equals("OclType") ? eOclElement : eOclAny);
+							}
 						}
 					}
-					//					else if (name.equals("OclStereotype")) {						// FIXME some old classes probably rely on historic model-gen/oclstdlib.ecore content
-					//						((EClass)eClassifier).setAbstract(true);
-					//						((EClass)eClassifier).setInterface(true);
-					//						eClassifier.setInstanceClass(Object.class);
-					//					}
-					//					else if (name.equals("Map")) {
-					//						eClassifier.setInstanceClass(Object.class);
-					//							eClassifiers.remove(eClassifier);
-					//								}
-					//				eClassifier.setName(LibraryConstants.ECORE_STDLIB_PREFIX + name);
-					//				eResource.setID(eClassifier, name);
 				}
 				ePackage.getEAnnotations().clear();
 				//			EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
@@ -288,7 +282,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		EClassifier eClassifier = ePackage.getEClassifier(typeName);
 		if (eClassifier != null) {
 			if (eClassifier instanceof EClass) {
-				assert false;
+				//				assert false;
 				String name = eClassifier.getName();
 				ePackage.getEClassifiers().remove(eClassifier);
 				eClassifier = EcoreFactory.eINSTANCE.createEDataType();

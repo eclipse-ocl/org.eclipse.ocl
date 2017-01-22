@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.build.xtend;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -127,7 +128,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		return super.getExternalReference(element);
 	}
 
-	protected abstract String generateMetamodel(/*@NonNull*/ Model pivotModel);
+	protected abstract String generateMetamodel(/*@NonNull*/ Model pivotModel, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames);
 
 	protected String getEcoreLiteral(@NonNull EnumerationLiteral elem) {
 		return nameQueries.getEcoreLiteral(elem);
@@ -218,7 +219,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			addExternalReference(standardLibrary.getRealType(), asRoot2);
 			addExternalReference(standardLibrary.getStringType(), asRoot2);
 			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asRoot2);
-			String metamodel = generateMetamodel(asRoot2);
+			String metamodel = generateMetamodel(asRoot2, Collections.emptyList());
 			MergeWriter fw = new MergeWriter(fileName);
 			if (metamodel != null) {
 				fw.append(metamodel);

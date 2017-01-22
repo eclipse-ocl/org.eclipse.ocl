@@ -13,10 +13,11 @@ package org.eclipse.ocl.examples.build.xtend
 import org.eclipse.ocl.pivot.Model
 import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.utilities.ClassUtil
+import java.util.Collection
 
 public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 {
-	protected override String declareClassTypes(/*@NonNull*/ Model root) {
+	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
 		var Package pkg = root.ownedPackages.findPackage();
@@ -55,7 +56,7 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 		'''
 	}
 
-	protected override String generateMetamodel(Model root) {
+	protected override String generateMetamodel(Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		thisModel = root;
 		var Package pkg = root.ownedPackages.findPackage();
 		if (pkg == null) {
@@ -225,7 +226,7 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					}
 					«root.defineExternals()»
 					«root.definePackages()»
-					«root.declareClassTypes()»
+					«root.declareClassTypes(excludedEClassifierNames)»
 					«root.declarePrimitiveTypes()»
 					«root.declareEnumerations()»
 					«root.defineTemplateParameters()»

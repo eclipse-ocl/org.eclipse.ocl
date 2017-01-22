@@ -32,10 +32,11 @@ import org.eclipse.ocl.pivot.TemplateParameter
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution
 import org.eclipse.ocl.pivot.TemplateSignature
 import org.eclipse.ocl.pivot.utilities.ClassUtil
+import java.util.Collection
 
 public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
-	protected def String declareClassTypes(/*@NonNull*/ Model root) {
+	protected def String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
 		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());

@@ -14,10 +14,11 @@ import org.eclipse.ocl.pivot.DataType
 import org.eclipse.ocl.pivot.Model
 import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.utilities.ClassUtil
+import java.util.Collection
 
 public class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
-	protected override String declareClassTypes(/*@NonNull*/ Model root) {
+	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
 		var Package pkg = root.ownedPackages.findPackage();
@@ -26,7 +27,7 @@ public class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 		«FOR pkge : sortedPackages»
 
 			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-				«IF pkg == pkge && !"Class".equals(type.name) && !"Enumeration".equals(type.name) && !"EnumerationLiteral".equals(type.name) && !"State".equals(type.name) && !"Type".equals(type.name)»
+				«IF pkg == pkge && !excludedEClassifierNames.contains(type.name)»
 					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
 				«ELSE»
 					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
@@ -47,7 +48,7 @@ public class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			private void DataType «type.getPrefixedSymbolName("_"+type.partialName())» = createDataType("«type.name»");«ENDIF»
 	'''}
 
-	/*@NonNull*/ protected override String generateMetamodel(/*@NonNull*/ Model root) {
+	/*@NonNull*/ protected override String generateMetamodel(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		thisModel = root;
 		var lib = ClassUtil.nonNullState(root.getLibrary());
 		var externalPackages = root.getSortedExternalPackages();
@@ -336,7 +337,7 @@ public class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					}
 					«root.defineExternals()»
 					«root.definePackages()»
-					«root.declareClassTypes()»
+					«root.declareClassTypes(excludedEClassifierNames)»
 					«root.declarePrimitiveTypes()»
 					«root.declareEnumerations()»
 					«root.defineTemplateParameters()»
