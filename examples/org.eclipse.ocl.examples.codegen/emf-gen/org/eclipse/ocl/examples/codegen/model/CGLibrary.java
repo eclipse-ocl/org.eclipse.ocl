@@ -252,7 +252,6 @@ public class CGLibrary extends ASResourceImpl
 			model = createModel(asURI);
 			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL);
 			installPackages();
-			installClassTypes();
 			installOperations();
 			installComments();
 		}
@@ -266,23 +265,11 @@ public class CGLibrary extends ASResourceImpl
 		private final @NonNull PrimitiveType _Integer = getPrimitiveType(_ocl, "Integer");
 		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
 		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
+		private final @NonNull PrimitiveType _String = getPrimitiveType(_ocl, "String");
 		
 		private void installPackages() {
 			model.getOwnedPackages().add(ocl);
 			model.getOwnedImports().add(createImport(null, _ocl));
-		}
-		
-		private final @NonNull Class _String = createClass("String");
-		
-		private void installClassTypes() {
-			List<Class> ownedClasses;
-			List<Class> superClasses;
-			Class type;
-		
-			ownedClasses = ocl.getOwnedClasses();
-			ownedClasses.add(type = _String);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclElement);
 		}
 		
 		private final @NonNull Operation op_String_getSeverity = createOperation("getSeverity", _Integer, "org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation", org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation.INSTANCE);

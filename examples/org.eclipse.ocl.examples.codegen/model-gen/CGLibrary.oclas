@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" externalURI="platform:/resource/org.eclipse.ocl.examples.codegen/model/CGLibrary.oclstdlib" name="CGLibrary.oclstdlib">
   <ownedImports importedNamespace="pivot:Library http://www.eclipse.org/ocl/2015/Library.oclas#P.ocl"/>
   <ownedPackages xsi:type="pivot:Library" xmi:id="P.ocl" URI="http://www.eclipse.org/ocl/2015/Library" name="ocl" nsPrefix="ocl">
-    <ownedClasses xmi:id="T.ocl.String" name="String" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#T.ocl.OclElement">
+    <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="String" name="String" superClasses="http://www.eclipse.org/ocl/2015/Library.oclas#T.ocl.OclElement">
       <ownedOperations xmi:id="o.ocl.String.getSeverity" implementationClass="org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation"
           name="getSeverity" type="pivot:PrimitiveType http://www.eclipse.org/ocl/2015/Library.oclas#Integer"/>
       <ownedOperations xmi:id="o.ocl.String.logDiagnostic..ocl.OclAny..ocl.OclAny..ocl.OclAny..ocl.Integer..ocl.Boolean..ocl.Integer"

@@ -2,7 +2,7 @@ import 'http://www.eclipse.org/ocl/2015/Library';
 
 library ocl : ocl = 'http://www.eclipse.org/ocl/2015/Library'
 {
-type String {
+type String : PrimitiveType {
 	operation getSeverity() : Integer[1] => 'org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation';
 	-- @deprecated use longer signature with optional feature, message and potentially rich status
 	operation logDiagnostic(object: OclAny[1], diagnostics : OclAny[?], context : OclAny[?], severity : Integer[1], status : Boolean[?], code : Integer[1]) : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation';
