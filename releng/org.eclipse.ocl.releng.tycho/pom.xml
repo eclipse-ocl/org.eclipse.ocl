@@ -142,16 +142,18 @@
 	  </environments>
      </configuration>
       </plugin>
-  <!--    <plugin>
+      <plugin>
           <groupId>org.eclipse.tycho</groupId>
-          <artifactId>tycho-compiler-plugin</artifactId>
-          <version>${tycho.version}</version>
-          <configuration>
-            <encoding>UTF-8</encoding>
-            <source>1.8</source>
-            <target>1.8</target>
-          </configuration>
-        </plugin> -->
+           <artifactId>tycho-surefire-plugin</artifactId>
+           <version>${tycho.version}</version>
+           <configuration>
+            <failIfNoTests>false</failIfNoTests>
+           <!--  
+              <testSuite></testSuite>
+              <testClass></testClass>
+              -->
+           </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>

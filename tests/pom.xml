@@ -11,9 +11,10 @@
   <artifactId>org.eclipse.ocl.tests-folder</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-
   <modules>
+      <module>org.eclipse.ocl.tests</module>
       <module>org.eclipse.ocl.ecore.tests</module>
+      <module>org.eclipse.ocl.uml.tests</module>
       <module>org.eclipse.ocl.examples.eventmanager.tests</module>
       <module>org.eclipse.ocl.examples.impactanalyzer.testmodel.company</module>
       <module>org.eclipse.ocl.examples.impactanalyzer.testmodel.ngpm</module>
@@ -23,7 +24,5 @@
       <module>org.eclipse.ocl.examples.testutils</module>
       <module>org.eclipse.ocl.examples.validity.test</module>
       <module>org.eclipse.ocl.examples.xtext.tests</module>
-      <module>org.eclipse.ocl.tests</module>
-      <module>org.eclipse.ocl.uml.tests</module>
   </modules>
 </project>
