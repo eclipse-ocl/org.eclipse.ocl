@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -111,9 +112,18 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 
 	@Override
 	public Object visitCollectionLiteralExp(@NonNull CollectionLiteralExp object) {
-		context.appendName(object.getType(), context.getReservedNames());
+		Type collectionType = object.getType();
+		context.appendName(collectionType, context.getReservedNames());
 		List<CollectionLiteralPart> parts = object.getOwnedParts();
 		if (parts.isEmpty()) {
+			if (collectionType instanceof CollectionType) {
+				Type elementType = ((CollectionType)collectionType).getElementType();
+				if (!(elementType instanceof VoidType)) {
+					context.append("(");
+					context.appendElement(elementType);
+					context.append(")");
+				}
+			}
 			context.append("{}");
 		}
 		else {
