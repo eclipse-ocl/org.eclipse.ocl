@@ -959,6 +959,19 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		resolveIterationAccumulators(csRoundBracketedClause, expression);
 		resolveOperationArgumentTypes(null, csRoundBracketedClause);
 		resolveIterationBody(csRoundBracketedClause, expression);
+		if (expression instanceof IterateExp) {
+			IterateExp iterateExp = (IterateExp)expression;
+			OCLExpression ownedBody = iterateExp.getOwnedBody();
+			if ((ownedBody != null) && ownedBody.isIsRequired()) {
+				Variable ownedResult = iterateExp.getOwnedResult();
+				if (ownedResult != null) {
+					OCLExpression ownedInit = ownedResult.getOwnedInit();
+					if ((ownedInit != null) && ownedInit.isIsRequired()) {
+						ownedResult.setIsRequired(true);
+					}
+				}
+			}
+		}
 		resolveOperationReturnType(expression);
 	}
 
