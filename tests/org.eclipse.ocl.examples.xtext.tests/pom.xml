@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.eclipse.ocl</groupId>
-  <artifactId>org.eclipse.ocl.examples.impactanalyzer.tests</artifactId>
-  <version>3.3.500-SNAPSHOT</version>
+  <artifactId>org.eclipse.ocl.examples.xtext.tests</artifactId>
+  <version>3.8.0-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
   <parent>
     <groupId>org.eclipse.ocl</groupId>
@@ -18,9 +18,9 @@
      <artifactId>tycho-surefire-plugin</artifactId>
      <version>${tycho.version}</version>
      <configuration>
-       <testClass>org.eclipse.ocl.examples.impactanalyzer.tests.ImpactAnalyzerAllTests</testClass>
+       <testClass>org.eclipse.ocl.examples.test.xtext.AllXtextTests</testClass>
        <useUIThread>true</useUIThread>
-       <argLine>-DtestSuiteName="ImpactAnalysisTests with Traceback+UnusedChecks" -Dosgi.requiredJavaVersion=1.5 -Xms40m -Xmx1024m -XX:+UseParallelGC  -DunusedCheckIA=true</argLine>
+       <argLine>-DtestSuiteName="org.eclipse.ocl.examples.xtext.tests [plugin]" -Xms40m -Xmx1024m -ea</argLine>
      </configuration>
     </plugin>
   </plugins>
