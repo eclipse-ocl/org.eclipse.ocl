@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -214,6 +215,9 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		}
 	}
 	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {
+		if (type instanceof CollectionType) {
+			//			assert isRequired;
+		}
 		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
 		if (primaryType != pivotElement.getType()) {
 			pivotElement.setType(primaryType);

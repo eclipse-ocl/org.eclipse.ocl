@@ -1699,4 +1699,22 @@ implements Property {
 		}
 		setType(null);				// Easier to set them all than just the base_xxx ones
 	}
+
+	@Override
+	public void setName(String newName) {
+		if ("children".equals(newName)) {
+			super.setName(newName);
+		}
+		else {
+			super.setName(newName);
+		}
+	}
+
+	@Override
+	public void setIsRequired(boolean newIsRequired) {
+		if ("children".equals(name) && !newIsRequired) {
+			toString();
+		}
+		super.setIsRequired(newIsRequired);
+	}
 } //PropertyImpl

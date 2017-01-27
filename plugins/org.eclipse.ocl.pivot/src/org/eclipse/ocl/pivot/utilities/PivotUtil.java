@@ -553,14 +553,27 @@ public class PivotUtil
 		Property pivotProperty = PivotFactory.eINSTANCE.createProperty();
 		pivotProperty.setName(eFeature.getName());
 		pivotProperty.setType(type);
+		pivotProperty.setIsRequired(eFeature.isMany() || eFeature.isRequired());
 		((PivotObjectImpl)pivotProperty).setESObject(eFeature);
 		return pivotProperty;
 	}
 
+	/**
+	 * @deprecated provide isRequired argument
+	 */
+	@Deprecated
 	public static @NonNull Property createProperty(@NonNull String name, @NonNull Type type) {
+		return createProperty(name, type, type instanceof CollectionType);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Property createProperty(@NonNull String name, @NonNull Type type, boolean isRequired) {
 		Property pivotProperty = PivotFactory.eINSTANCE.createProperty();
 		pivotProperty.setName(name);
 		pivotProperty.setType(type);
+		pivotProperty.setIsRequired(isRequired);
 		return pivotProperty;
 	}
 

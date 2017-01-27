@@ -584,6 +584,12 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	}
 
 	@Override
+	public Continuation<?> visitTuplePartCS(@NonNull TuplePartCS object) {
+		// TODO Auto-generated method stub
+		return super.visitTuplePartCS(object);
+	}
+
+	@Override
 	public Continuation<?> visitTupleTypeCS(@NonNull TupleTypeCS csTupleType) {
 		return new TupleContinuation(context, csTupleType);
 	}

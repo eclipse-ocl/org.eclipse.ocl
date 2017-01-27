@@ -871,7 +871,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					else {
 						accType = initType;
 					}
-					context.setType(acc, accType, false, null);
+					context.setType(acc, accType, accType instanceof CollectionType, null);
 				}
 				acc.setRepresentedParameter(iteration.getOwnedAccumulators().get(pivotAccumulators.size()));
 				pivotAccumulators.add(acc);
@@ -2120,7 +2120,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				pivotElement.setOwnedInit(initExpression);
 				TypedRefCS csType = csTupleLiteralPart.getOwnedType();
 				Type type = csType != null ? PivotUtil.getPivot(Type.class, csType) : initExpression != null ? initExpression.getType() : null;
-				context.setType(pivotElement, type, (initExpression != null) && initExpression.isIsRequired(), null);
+				boolean isRequired = csType != null ? ElementUtil.isRequired(csType) : (initExpression != null) && initExpression.isIsRequired();
+				context.setType(pivotElement, type, isRequired, null);
 			}
 		}
 		return pivotElement;

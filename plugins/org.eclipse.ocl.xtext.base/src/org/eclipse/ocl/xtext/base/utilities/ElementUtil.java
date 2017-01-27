@@ -475,6 +475,14 @@ public class ElementUtil
 				if (lower > 0) {
 					return true;
 				}
+				int upper = csMultiplicity.getUpper();
+				if (upper > 1) {
+					return true;
+				}
+			}
+			Element variableType = csTypeRef.getPivot();
+			if (variableType instanceof CollectionType) {
+				return true;
 			}
 		}
 		return false;
