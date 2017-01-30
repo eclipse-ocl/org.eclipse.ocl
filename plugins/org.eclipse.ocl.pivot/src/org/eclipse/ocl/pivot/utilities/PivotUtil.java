@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
@@ -49,6 +50,7 @@ import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
+import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
@@ -1070,6 +1072,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull Iterable<@NonNull Comment> getOwnedComments(@NonNull Element asElement) {
+		return ClassUtil.nullFree(asElement.getOwnedComments());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull OCLExpression getOwnedCondition(@NonNull IfExp ifExp) {
 		return ClassUtil.nonNullState(ifExp.getOwnedCondition());
 	}
@@ -1086,6 +1095,13 @@ public class PivotUtil
 	 */
 	public static @NonNull OCLExpression getOwnedFirst(@NonNull CollectionRange collectionRange) {
 		return ClassUtil.nonNullState(collectionRange.getOwnedFirst());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@NonNull Import> getOwnedImports(@NonNull Model asModel) {
+		return ClassUtil.nullFree(asModel.getOwnedImports());
 	}
 
 	/**
@@ -1240,6 +1256,13 @@ public class PivotUtil
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Property property) {
 		return ClassUtil.nonNullState(property.getOwningClass());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Package getOwningPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nonNullState(asClass.getOwningPackage());
 	}
 
 	public static org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EObject object) {

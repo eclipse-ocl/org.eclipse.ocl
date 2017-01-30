@@ -441,6 +441,13 @@ public class PivotUtilInternal //extends PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getOwnedClassesList(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return ClassUtil.nullFree(asPackage.getOwnedClasses());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull List<@NonNull Variable> getOwnedIteratorsList(@NonNull LoopExp loopExp) {
 		return ClassUtil.nullFree(loopExp.getOwnedIterators());
 	}
@@ -448,8 +455,22 @@ public class PivotUtilInternal //extends PivotUtil
 	/**
 	 * @since 1.3
 	 */
-	public static @NonNull List<@NonNull ? extends Operation> getOwnedOperationsList(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public static @NonNull List<@NonNull Operation> getOwnedOperationsList(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ClassUtil.nullFree(asClass.getOwnedOperations());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getOwnedPackagesList(@NonNull Model asModel) {
+		return ClassUtil.nullFree(asModel.getOwnedPackages());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getOwnedPackagesList(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return ClassUtil.nullFree(asPackage.getOwnedPackages());
 	}
 
 	/**
