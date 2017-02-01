@@ -31,15 +31,23 @@ import org.eclipse.jdt.annotation.Nullable;
  * <p>
  * is motivated by http://www.toptal.com/java/java-wizardry-101-a-guide-to-java-class-reloading.
  */
-class ExplicitClassLoader extends ClassLoader
+public class ExplicitClassLoader extends ClassLoader
 {
 	protected final @NonNull File explicitClassPath;
 	protected final @NonNull String qualifiedClassNamePrefix;
+	protected final @Nullable ClassLoader fallBackClassLoader;
 	private final @NonNull Map<String, Class<?>> hitsAndMisses = new HashMap<String, Class<?>>();	// Miss signalled by ExplicitClassLoader.class
-	
+
 	public ExplicitClassLoader(@NonNull File explicitClassPath, @NonNull String qualifiedClassNamePrefix) {
 		this.explicitClassPath = explicitClassPath;
 		this.qualifiedClassNamePrefix = qualifiedClassNamePrefix;
+		this.fallBackClassLoader = null;
+	}
+
+	public ExplicitClassLoader(@NonNull File explicitClassPath, @NonNull String qualifiedClassNamePrefix, @Nullable ClassLoader fallBackClassLoader) {
+		this.explicitClassPath = explicitClassPath;
+		this.qualifiedClassNamePrefix = qualifiedClassNamePrefix;
+		this.fallBackClassLoader = fallBackClassLoader;
 	}
 
 	/**
@@ -67,6 +75,9 @@ class ExplicitClassLoader extends ClassLoader
 				throw new ClassNotFoundException(e.getMessage(), e);
 			}
 		}
+		else if (fallBackClassLoader != null) {
+			return fallBackClassLoader.loadClass(name);
+		}
 		else {
 			return super.loadClass(name, resolve);
 		}
@@ -74,26 +85,26 @@ class ExplicitClassLoader extends ClassLoader
 
 	/**
 	 * Load the class whose Java name is qualifiedClassName and whose class file can be found below explicitClassPath.
-	 * This method always loads the class and so ignores any previously cached loads. 
+	 * This method always loads the class and so ignores any previously cached loads.
 	 */
 	private @Nullable Class<?> loadExplicitClass(@NonNull String qualifiedClassName, boolean resolve) throws ClassNotFoundException, IOException {
 		String filePath = qualifiedClassName.replaceAll("\\.", "/") + ".class";
 		File classFile = new File(explicitClassPath, filePath);
 		FileInputStream inputStream = new FileInputStream(classFile);
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		try {
-            int bytes;
-            byte[] byteArray = new byte[16384];
-            while ((bytes = inputStream.read(byteArray)) >= 0) {
-            	byteStream.write(byteArray, 0, bytes);
-            }
+			int bytes;
+			byte[] byteArray = new byte[16384];
+			while ((bytes = inputStream.read(byteArray)) >= 0) {
+				byteStream.write(byteArray, 0, bytes);
+			}
 		}
 		finally {
 			try {
 				inputStream.close();
 			} catch (IOException e) {}
 		}
-        byte[] classBytes = byteStream.toByteArray();
+		byte[] classBytes = byteStream.toByteArray();
 		Class<?> theClass = defineClass(qualifiedClassName, classBytes, 0, classBytes.length);
 		if (theClass == null) {
 			return null;
