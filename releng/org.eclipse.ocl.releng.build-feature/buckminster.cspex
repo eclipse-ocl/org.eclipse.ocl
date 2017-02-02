@@ -9,6 +9,8 @@
 		<cs:dependency name="org.eclipse.pde.core" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.team.core" componentType="osgi.bundle" />
 		<cs:dependency name="org.apache.log4j" componentType="osgi.bundle" />
+		<!-- Internal Plugins that are otherwise ignored -->
+		<cs:dependency name="org.eclipse.jdt.compiler.tool" componentType="osgi.bundle" />
 		<!-- Tests Dependencies -->
 		<cs:dependency name="org.eclipse.test" componentType="osgi.bundle" />
 		<cs:dependency name="org.eclipse.ant.optional.junit" componentType="osgi.bundle" />
