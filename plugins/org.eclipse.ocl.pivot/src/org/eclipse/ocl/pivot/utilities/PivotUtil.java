@@ -1051,6 +1051,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull OCLExpression getOwnedBody(@NonNull ExpressionInOCL asExpression) {
+		return ClassUtil.nonNullState(asExpression.getOwnedBody());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull OCLExpression getOwnedBody(@NonNull LoopExp loopExp) {
 		return ClassUtil.nonNullState(loopExp.getOwnedBody());
 	}

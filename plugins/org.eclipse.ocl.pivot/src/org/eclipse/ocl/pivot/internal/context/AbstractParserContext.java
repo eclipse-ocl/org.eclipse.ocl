@@ -32,8 +32,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
-import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
-import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -45,7 +43,11 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
-public abstract class AbstractParserContext /*extends AdapterImpl*/ implements ParserContext.ParserContextExtension
+/**
+ * AbstractParserContext provides the default implementation of the ParserContext API that all clients
+ * should extend.
+ */
+public abstract class AbstractParserContext /*extends AdapterImpl*/ implements ParserContext
 {
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull URI uri;
@@ -59,14 +61,6 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		else {
 			this.uri = ClassUtil.nonNullEMF(URI.createURI(EcoreUtil.generateUUID() + ".essentialocl"));
 		}
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public @Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
-		return null;
 	}
 
 	@Override

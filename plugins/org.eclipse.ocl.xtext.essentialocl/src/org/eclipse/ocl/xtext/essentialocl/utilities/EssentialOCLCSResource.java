@@ -60,6 +60,7 @@ import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
+import org.eclipse.ocl.xtext.base.utilities.ExtendedParserContext;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementWithURICS;
@@ -83,7 +84,7 @@ import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.Triple;
 
 public class EssentialOCLCSResource extends LazyLinkingResource implements BaseCSResource
-{	
+{
 	protected static final class UnixOutputStream extends OutputStream // FIXME Workaround for Bug 439440
 	{
 		protected final @NonNull OutputStream outputStream;
@@ -141,7 +142,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	public static class TransientASResourceFactory extends AbstractASResourceFactory
 	{
 		public static @NonNull TransientASResourceFactory INSTANCE = new TransientASResourceFactory();
-		
+
 		public TransientASResourceFactory() {
 			super("transient");
 		}
@@ -165,7 +166,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			super(asURI, TransientASResourceFactory.INSTANCE);
 			this.asResourceSet = asResourceSet;
 		}
-		
+
 		@Override
 		public @NonNull ResourceSet getResourceSet() {
 			return asResourceSet;
@@ -176,16 +177,16 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	private static final String NO_VIABLE_ALTERNATIVE_FOLLOWING = "no viable alternative following input ";
 	private static final String NO_VIABLE_ALTERNATIVE_AT = "no viable alternative at ";
 	private static final String MISSING_EOF_AT = "missing EOF at ";
-	
+
 	private static final Logger logger = Logger.getLogger(EssentialOCLCSResource.class);
-	
+
 	private @Nullable ParserContext parserContext = null;
 	private @Nullable ProjectManager projectMap = null;
 	private boolean isDerived = false;		// True if this CSResource is the derived form of an edited ASResource.
-	
+
 	public EssentialOCLCSResource() {
 		super();
-//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));	
+		//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	protected void addLibraryError(List<Diagnostic> errors, IllegalLibraryException e) {
@@ -249,12 +250,12 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications) {
-//		if (resourceSet != null) {
-//			PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
-//FIXME This assertion is broken. It perhaps once tested for OCL-in-ResourceSet, but now is flaky depending on
-// the lazy construction time of the metamodelManager
-//			assert metamodelManager == null;
-//		}
+		//		if (resourceSet != null) {
+		//			PivotMetamodelManager metamodelManager = PivotMetamodelManager.findAdapter(resourceSet);
+		//FIXME This assertion is broken. It perhaps once tested for OCL-in-ResourceSet, but now is flaky depending on
+		// the lazy construction time of the metamodelManager
+		//			assert metamodelManager == null;
+		//		}
 		return super.basicSetResourceSet(resourceSet, notifications);
 	}
 
@@ -330,12 +331,12 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		if (cs2as != null) {
 			cs2as.dispose();
 		}
-//		unload();
+		//		unload();
 	}
 
 	@Override
 	protected void doLinking() {
-//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLinking start", false, +1);
+		//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLinking start", false, +1);
 		List<Diagnostic> errors = getErrors();
 		if (errors.size() > 0) {
 			for (int i = errors.size(); --i >= 0; ) {
@@ -346,17 +347,17 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			}
 		}
 		super.doLinking();
-//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLinking end", false, -1);
+		//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLinking end", false, -1);
 	}
 
 	@Override
 	protected void doLoad(InputStream inputStream, Map<?, ?> options) throws IOException {
-//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLoad start", false, +1);
+		//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLoad start", false, +1);
 		try {
 			super.doLoad(inputStream, options);
 		}
 		finally {
-//			CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLoad end", true, -1);
+			//			CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLoad end", true, -1);
 		}
 	}
 
@@ -369,7 +370,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 			super.doSave(outputStream, options);
 		}
 	}
-	
+
 	@Override
 	public final @Nullable CS2AS findCS2AS() {
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(this);
@@ -382,7 +383,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		}
 		return csi2asMapping.getCS2AS(this);
 	}
-	
+
 	@Override
 	public @NonNull String getASContentType() {
 		return ASResource.ESSENTIALOCL_CONTENT_TYPE;
@@ -424,10 +425,16 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		@SuppressWarnings("null")@NonNull Registry resourceFactoryRegistry = asResourceSet.getResourceFactoryRegistry();
 		initializeResourceFactory(resourceFactoryRegistry);
 		ASResource asResource = createASResource(asResourceSet);
-		CS2AS cs2as = createCS2AS(environmentFactory, asResource);
+		CS2AS cs2as = null;
+		if (parserContext instanceof ExtendedParserContext) {
+			cs2as = ((ExtendedParserContext)parserContext).createCS2AS(this, asResource);
+		}
+		if (cs2as == null) {
+			cs2as = createCS2AS(environmentFactory, asResource);
+		}
 		return cs2as;
 	}
-/*	@Override
+	/*	@Override
 	public @NonNull MetamodelManager createMetamodelManager() {
 		ResourceSet resourceSet = getResourceSet();
 		if (resourceSet != null) {
@@ -438,16 +445,16 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		}
 		return OCL.createEnvironmentFactory(projectMap).getMetamodelManager();
 	} */
-	
+
 	@Override
 	public final @NonNull CS2AS getCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource) {
 		@SuppressWarnings("null")@NonNull Registry resourceFactoryRegistry = environmentFactory.getMetamodelManager().getASResourceSet().getResourceFactoryRegistry();
 		initializeResourceFactory(resourceFactoryRegistry);
 		CS2AS cs2as = findCS2AS();
 		assert cs2as == null;
-//		if (cs2as == null) {
-			cs2as = createCS2AS(environmentFactory, asResource);
-//		}
+		//		if (cs2as == null) {
+		cs2as = createCS2AS(environmentFactory, asResource);
+		//		}
 		return cs2as;
 	}
 
@@ -561,97 +568,97 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.findEnvironmentFactory(this);
 		if (environmentFactory != null) {
 			StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
-//			if (metamodelManager.getLibraryResource() != org.eclipse.ocl.library.oclstdlib.OCLstdlib.INSTANCE) {
-//				metamodelManager.resetLibrary();		// FIXME is this needed; if so test it
-//			}
+			//			if (metamodelManager.getLibraryResource() != org.eclipse.ocl.library.oclstdlib.OCLstdlib.INSTANCE) {
+			//				metamodelManager.resetLibrary();		// FIXME is this needed; if so test it
+			//			}
 			try {
 				standardLibrary.getOclAnyType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getOclElementType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getOclVoidType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getOclInvalidType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getClassType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getBooleanType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getRealType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getIntegerType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getUnlimitedNaturalType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getStringType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getCollectionType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getBagType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getSequenceType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getSetType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getOrderedSetType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getOclEnumerationType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getOclTupleType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 			try {
 				standardLibrary.getOclLambdaType();
-			} catch (IllegalLibraryException e) {			
+			} catch (IllegalLibraryException e) {
 				addLibraryError(errors, e);
 			}
 		}
@@ -686,12 +693,12 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		this.projectMap = projectMap;
 	}
 
-//	@Override
-//	public void setURI(URI uri) {
-//		assert uri != null;
-//		assert !PivotUtilInternal.isASURI(uri);
-//		super.setURI(uri);
-//	}
+	//	@Override
+	//	public void setURI(URI uri) {
+	//		assert uri != null;
+	//		assert !PivotUtilInternal.isASURI(uri);
+	//		super.setURI(uri);
+	//	}
 
 	@Override
 	public void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
@@ -700,7 +707,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
-	public void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory) {		
+	public void updateFrom(@NonNull ASResource asResource, @NonNull EnvironmentFactory environmentFactory) {
 		Map<BaseCSResource, ASResource> cs2asResourceMap = new HashMap<BaseCSResource, ASResource>();
 		cs2asResourceMap.put(this, asResource);
 		AS2CS as2cs = createAS2CS(cs2asResourceMap, (EnvironmentFactoryInternal) environmentFactory);

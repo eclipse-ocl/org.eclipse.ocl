@@ -19,45 +19,22 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.context.Base2ASConversion;
-import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
-import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.resource.CSResource;
 
 /**
- * A ParserContext captures the context in which source text is parsed.
+ * A ParserContext captures the context in which source text is parsed. It may be used without knowledge of the CS classes.
  *
  * A derived context is constructed with the relevant context, then createBaseResource
  * creates a Concrete Syntax resource for a Concrete Syntax expression string. Then parse creates
  * a corresponding Abstract Syntax ExpressionInOCL. initialize is invoked during the parse to
  * install the derived context into the ExpressionInOCL.
+ *
+ * The derived ExtendedParserContext provides a richer API that exploits knwoledge of the CS classes.
+ *
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ParserContext // extends Adapter
 {
-	/**
-	 * @since 1.3
-	 */
-	public interface ParserContextExtension extends ParserContext
-	{
-		/**
-		 * Add the local lookup contributions to a view of an Environment.
-		 * <p>
-		 * The EnvironmentView contains the lookup matching criteria such as a specific name and
-		 * accumulates candidate results.
-		 * <p>
-		 * The input ScopeView identifies the CS node and the containment of the CS child from which
-		 * the lookup is made allowing derived implementations to present the alternative environments
-		 * specified as the <i>Inherited Attributes</i> in the OCL Specification.
-		 * <p>
-		 * The returned ScopeView identifies an outer scope in which the lookup may be continued if the
-		 * local candidate results are not suitable.
-		 *
-		 * @param environmentView the EnvironmentView to compute
-		 * @param scopeView the access selectivity to be applied by the lookup
-		 * @return an outer ScopeView in which to continue the lookup, or null if none
-		 */
-		@Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView);
-	}
-
 	/**
 	 * Create a Concrete Syntax resource containing the parsed expression.
 	 *
