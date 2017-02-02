@@ -595,7 +595,7 @@ implements OperationCallExp {
 			symbol_2 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @NonNull Object CAUGHT_forAll;
+			/*@Caught*/ @Nullable Object CAUGHT_forAll;
 			try {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Operation operation = this.getReferredOperation();
 				final /*@NonInvalid*/ @NonNull Object symbol_0 = operation == null;
@@ -626,7 +626,7 @@ implements OperationCallExp {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue Sequence = ValueUtil.createSequenceRange(PivotTables.SEQ_PRIMid_Integer, RNG);
 				/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
 				@NonNull Iterator<Object> ITERATOR_i = Sequence.iterator();
-				/*@Thrown*/ boolean forAll;
+				/*@Thrown*/ java.lang.@Nullable Boolean forAll;
 				while (true) {
 					if (!ITERATOR_i.hasNext()) {
 						if (accumulator == ValueUtil.TRUE_VALUE) {
