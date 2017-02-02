@@ -784,6 +784,7 @@ public class EnvironmentView
 		}
 		else {
 			EClass eClass = eObject.eClass();
+			assert eClass != null;
 			Attribution attribution = Attribution.REGISTRY.get(eClass);
 			if (attribution == null) {
 				for (EClass superClass = eClass; superClass.getESuperTypes().size() > 0;) {

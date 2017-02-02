@@ -22,16 +22,16 @@ import org.eclipse.jdt.annotation.Nullable;
  * An Attribution provides a helper to assist in evaluating the inheriteed or synthesized attributes
  * of a type. All helpers are static and stateless, although some may maintain state using an Adapter on the
  * target element.
- * 
+ *
  * The REGISTRY maintains the helpsers for each type. Missing entries may be lazily populated by following the
  * primary superclasses until an entry is found.
  */
 public interface Attribution
-{	
+{
 	/**
 	 * The per-classifier registry of attributions.
 	 */
-	public static Map<EClassifier, Attribution> REGISTRY = new HashMap<EClassifier, Attribution>();
+	public static @NonNull Map<@NonNull EClassifier, @NonNull Attribution> REGISTRY = new HashMap<>();
 
 	/**
 	 * Add the local lookup contributions to a view of an Environment.
@@ -45,7 +45,7 @@ public interface Attribution
 	 * <p>
 	 * The returned ScopeView identifies an outer scope in which the lookup may be continued if the
 	 * local candidate results are not suitable.
-	 * 
+	 *
 	 * @param environmentView the EnvironmentView to compute
 	 * @param scopeView the access selectivity to be applied by the lookup
 	 * @return an outer ScopeView in which to continue the lookup, or null if none

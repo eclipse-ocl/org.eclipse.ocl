@@ -12,11 +12,14 @@ package org.eclipse.ocl.pivot.internal.context;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -58,6 +61,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull URI uri;
 	protected @Nullable Element rootElement = null;
+	private @NonNull Map<@NonNull EClassifier, @NonNull Attribution> attributionRegistry = Attribution.REGISTRY;
 
 	protected AbstractParserContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri) {
 		this.environmentFactory = (EnvironmentFactoryInternal) environmentFactory;
@@ -67,6 +71,18 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		else {
 			this.uri = ClassUtil.nonNullEMF(URI.createURI(EcoreUtil.generateUUID() + ".essentialocl"));
 		}
+		this.attributionRegistry = Attribution.REGISTRY;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	protected void addAttribution(/*@NonNull*/ EClass eClass, @NonNull Attribution attribution) {
+		if (this.attributionRegistry == Attribution.REGISTRY) {
+			this.attributionRegistry = new HashMap<>(Attribution.REGISTRY);
+		}
+		assert eClass != null;
+		this.attributionRegistry.put(eClass, attribution);
 	}
 
 	@Override
@@ -103,11 +119,12 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		}
 		else {
 			EClass eClass = eObject.eClass();
-			Attribution attribution = Attribution.REGISTRY.get(eClass);
+			assert eClass != null;
+			Attribution attribution = attributionRegistry.get(eClass);
 			if (attribution == null) {
 				for (EClass superClass = eClass; superClass.getESuperTypes().size() > 0;) {
 					superClass = superClass.getESuperTypes().get(0);
-					attribution = Attribution.REGISTRY.get(superClass);
+					attribution = attributionRegistry.get(superClass);
 					if (attribution != null) {
 						break;
 					}
@@ -115,7 +132,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 				if (attribution == null) {
 					attribution = NullAttribution.INSTANCE;
 				}
-				Attribution.REGISTRY.put(eClass, attribution);
+				attributionRegistry.put(eClass, attribution);
 			}
 			return attribution;
 		}

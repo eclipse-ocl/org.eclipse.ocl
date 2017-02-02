@@ -11,12 +11,9 @@
 package org.eclipse.ocl.xtext.base.utilities;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.context.AbstractParserContext;
-import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
-import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -31,11 +28,6 @@ public abstract class AbstractExtendedParserContext extends AbstractParserContex
 {
 	protected AbstractExtendedParserContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri) {
 		super(environmentFactory, uri);
-	}
-
-	@Override
-	public @Nullable ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
-		return null;
 	}
 
 	@Override

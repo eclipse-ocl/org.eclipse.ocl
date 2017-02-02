@@ -38,7 +38,6 @@ import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.SpecificationCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
-import org.eclipse.ocl.xtext.essentialocl.attributes.ContextCSAttribution;
 import org.eclipse.ocl.xtext.essentialocl.attributes.LetExpCSAttribution;
 import org.eclipse.ocl.xtext.essentialocl.attributes.LetVariableCSAttribution;
 import org.eclipse.ocl.xtext.essentialocl.attributes.NavigatingArgCSAttribution;
@@ -61,7 +60,6 @@ public class EssentialOCLScoping
 {
 	public static void init() {
 		Map<EClassifier, Attribution> registry = Attribution.REGISTRY;
-		registry.put(EssentialOCLCSPackage.Literals.CONTEXT_CS, ContextCSAttribution.INSTANCE);
 		registry.put(EssentialOCLCSPackage.Literals.LET_EXP_CS, LetExpCSAttribution.INSTANCE);
 		registry.put(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS, LetVariableCSAttribution.INSTANCE);  // Needed for let deeply nested in Iterator/CollectionLiteral
 		registry.put(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS, NavigatingArgCSAttribution.INSTANCE);
