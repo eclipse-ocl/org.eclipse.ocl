@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.context.AbstractParserContext;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
@@ -464,7 +465,10 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	}
 
 	@Override
-	public final @Nullable ParserContext getParserContext() {
+	public final @Nullable ParserContext getParserContext() {		// FIXME only non-null for API compatibility
+		if (parserContext == null) {
+			parserContext = new AbstractParserContext(getEnvironmentFactory(), uri) {};
+		}
 		return parserContext;
 	}
 

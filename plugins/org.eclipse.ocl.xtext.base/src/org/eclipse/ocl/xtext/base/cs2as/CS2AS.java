@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.scoping.AbstractJavaClassScope;
@@ -392,12 +393,16 @@ public abstract class CS2AS extends AbstractConversion
 	 */
 	protected final @NonNull CSI2ASMapping csi2asMapping;
 
+	private final @Nullable ParserContext parserContext;		// FIXME only non-null for API compatibility
+
 	public CS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory);
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
 		this.csResource = csResource;
 		this.asResource = asResource;
 		csi2asMapping.add(csResource, this);
+		this.parserContext = csResource.getParserContext();
+		// assert this.parserContext != null;		// FIXME only non-null for API compatibility
 	}
 
 	protected CS2AS(@NonNull CS2AS aConverter) {
@@ -406,6 +411,7 @@ public abstract class CS2AS extends AbstractConversion
 		this.asResource = aConverter.asResource;
 		this.csi2asMapping = CSI2ASMapping.getCSI2ASMapping(environmentFactory);
 		//		csi2asMapping.add(this);
+		this.parserContext = aConverter.parserContext;
 	}
 
 	public @NonNull String bind(@NonNull EObject csContext, /*@NonNull*/ String messageTemplate, Object... bindings) {
@@ -536,7 +542,8 @@ public abstract class CS2AS extends AbstractConversion
 
 	public @Nullable VariableDeclaration lookupSelf(@NonNull ElementCS csElement) {
 		@SuppressWarnings("null") @NonNull EReference eReference = PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT;
-		EnvironmentView environmentView = new EnvironmentView(environmentFactory, eReference, PivotConstants.SELF_NAME);
+		@SuppressWarnings("deprecation")
+		EnvironmentView environmentView = parserContext != null ? new EnvironmentView(parserContext, eReference, PivotConstants.SELF_NAME) : new EnvironmentView(environmentFactory, eReference, PivotConstants.SELF_NAME);
 		ScopeView baseScopeView = BaseScopeView.getScopeView(environmentFactory, csElement, eReference);
 		environmentView.computeLookups(baseScopeView);
 		VariableDeclaration variableDeclaration = (VariableDeclaration) environmentView.getContent();

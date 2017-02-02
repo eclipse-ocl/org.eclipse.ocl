@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.context.Base2ASConversion;
+import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.resource.CSResource;
 
 /**
@@ -48,9 +49,21 @@ public interface ParserContext // extends Adapter
 	@NonNull CSResource createBaseResource(@NonNull String expression) throws IOException, ParserException;
 
 	/**
+	 * @since 1.3
+	 */
+	@NonNull Attribution getAttribution(@NonNull EObject eObject);
+
+	/**
 	 * Return the type of the self variable.
 	 */
 	@Nullable Type getClassContext();
+
+	/**
+	 * Return the EnvironmentFactory in use.
+	 *
+	 * @since 1.3
+	 */
+	@NonNull EnvironmentFactory getEnvironmentFactory();
 
 	/**
 	 * Extract an Abstract Syntax ExpressionInOCL fronm a Concrete Syntax resource.

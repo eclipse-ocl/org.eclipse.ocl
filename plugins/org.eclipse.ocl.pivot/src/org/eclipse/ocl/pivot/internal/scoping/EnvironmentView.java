@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -232,6 +233,7 @@ public class EnvironmentView
 		return disambiguatorMap.get(key);
 	}
 
+	private final @Nullable ParserContext parserContext;		// FIXME only non-null for API compatibility
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull EStructuralFeature reference;
 	private EClassifier requiredType;
@@ -244,7 +246,24 @@ public class EnvironmentView
 
 	private List<@NonNull ScopeFilter> matchers = null;	// Prevailing filters for matching
 
+	/**
+	 * @since 1.3
+	 */
+	public EnvironmentView(@NonNull ParserContext parserContext, @NonNull EStructuralFeature reference, @Nullable String name) {
+		this.parserContext = parserContext;
+		this.environmentFactory = (EnvironmentFactoryInternal)parserContext.getEnvironmentFactory();
+		this.reference = reference;
+		this.requiredType = reference.getEType();
+		this.isQualifier = false;
+		this.name = name;
+	}
+
+	/**
+	 * @deprecated Use ParserContext constructor
+	 */
+	@Deprecated
 	public EnvironmentView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EStructuralFeature reference, @Nullable String name) {
+		this.parserContext = null;
 		this.environmentFactory = environmentFactory;
 		this.reference = reference;
 		this.requiredType = reference.getEType();
@@ -261,18 +280,18 @@ public class EnvironmentView
 	}
 
 	public void addAllElements(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull ScopeView scopeView) {
-		Attribution attribution = PivotUtilInternal.getAttribution(asClass);
+		Attribution attribution = getAttribution(asClass);
 		attribution.computeLookup(asClass, this, scopeView);
 		org.eclipse.ocl.pivot.Class asUnspecializedClass = PivotUtil.getUnspecializedTemplateableElement(asClass);
 		org.eclipse.ocl.pivot.Package asPackage = asUnspecializedClass.getOwningPackage();
 		if (asPackage != null) {
-			attribution = PivotUtilInternal.getAttribution(asPackage);
+			attribution = getAttribution(asPackage);
 			attribution.computeLookup(asPackage, this, scopeView);
 		}
 		{	// FIXME redundant
 			asPackage = asUnspecializedClass.getOwningPackage();
 			if (asPackage != null) {
-				attribution = PivotUtilInternal.getAttribution(asPackage);
+				attribution = getAttribution(asPackage);
 				attribution.computeLookup(asPackage, this, scopeView);
 			}
 		}
@@ -630,7 +649,7 @@ public class EnvironmentView
 
 	public void addElementsOfScope(@Nullable Element asElement, @NonNull ScopeView scopeView) {
 		if (asElement != null) {
-			Attribution attribution = PivotUtilInternal.getAttribution(asElement);
+			Attribution attribution = getAttribution(asElement);
 			attribution.computeLookup(asElement, this, scopeView);
 		}
 	}
@@ -720,7 +739,8 @@ public class EnvironmentView
 	}
 
 	public int computeLookups(@NonNull Element target, @Nullable Element child) {
-		ScopeView pivotScopeView = new PivotScopeView(environmentFactory, target, child, false);
+		@SuppressWarnings("deprecation")
+		ScopeView pivotScopeView = parserContext != null ? new PivotScopeView(parserContext, target, child, false) : new PivotScopeView(environmentFactory, target, child, false);
 		return computeLookups(pivotScopeView);
 	}
 
@@ -746,8 +766,40 @@ public class EnvironmentView
 	}
 
 	public void computeQualifiedLookups(@NonNull Element target) {
-		ScopeView parentScopeView = new PivotScopeView(environmentFactory, target, null, true);
+		@SuppressWarnings("deprecation")
+		ScopeView parentScopeView = parserContext != null ? new PivotScopeView(parserContext, target, null, true) : new PivotScopeView(environmentFactory, target, null, true);
 		addElementsOfScope(target, parentScopeView);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public @NonNull Attribution getAttribution(@NonNull EObject eObject) {
+		if (parserContext != null) {
+			return parserContext.getAttribution(eObject);
+		}
+		if (eObject.eIsProxy()) {			// Shouldn't happen, but certainly does during development
+			logger.warn("getAttribution for proxy " + eObject);
+			return NullAttribution.INSTANCE;
+		}
+		else {
+			EClass eClass = eObject.eClass();
+			Attribution attribution = Attribution.REGISTRY.get(eClass);
+			if (attribution == null) {
+				for (EClass superClass = eClass; superClass.getESuperTypes().size() > 0;) {
+					superClass = superClass.getESuperTypes().get(0);
+					attribution = Attribution.REGISTRY.get(superClass);
+					if (attribution != null) {
+						break;
+					}
+				}
+				if (attribution == null) {
+					attribution = NullAttribution.INSTANCE;
+				}
+				Attribution.REGISTRY.put(eClass, attribution);
+			}
+			return attribution;
+		}
 	}
 
 	public @Nullable EObject getContent() {

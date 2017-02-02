@@ -37,8 +37,10 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.as2cs.AliasAnalysis;
+import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ContextLessElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -63,13 +65,13 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 	private static final Logger logger = Logger.getLogger(BaseScopeView.class);
 
 	/**
-     * The <code>NULLSCOPEVIEW</code> to be returned by the most outer scope
-     */
-    public static final @NonNull IScopeView NULLSCOPEVIEW = new IScopeView()
-    {
- 		@Override
+	 * The <code>NULLSCOPEVIEW</code> to be returned by the most outer scope
+	 */
+	public static final @NonNull IScopeView NULLSCOPEVIEW = new IScopeView()
+	{
+		@Override
 		public Iterable<IEObjectDescription> getAllElements() {
-	   		return Collections.emptyList();
+			return Collections.emptyList();
 		}
 
 		@Override
@@ -89,12 +91,12 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 
 		@Override
 		public Iterable<IEObjectDescription> getElements(EObject object) {
-	   		return Collections.emptyList();
+			return Collections.emptyList();
 		}
 
 		@Override
 		public Iterable<IEObjectDescription> getElements(QualifiedName name) {
-	   		return Collections.emptyList();
+			return Collections.emptyList();
 		}
 
 		@Override
@@ -126,7 +128,7 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		public boolean isQualified() {
 			return false;
 		}
-    };
+	};
 
 	public static @NonNull BaseScopeView getScopeView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ElementCS target, @NonNull EReference targetReference) {
 		return new BaseScopeView(environmentFactory, target, null, targetReference, false);
@@ -139,13 +141,15 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		}
 		return new BaseScopeView(environmentFactory, csParent, target, targetReference, isQualified);
 	}
-	
+
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull ElementCS target;							// CS node in which a lookup is to be performed
 	protected final @Nullable ElementCS child;							// CS node from which a lookup is to be performed
 	protected final @NonNull EReference targetReference;				// The AST reference to the location at which the lookup is to be stored
 	protected final boolean isQualified;
 	private Attribution attribution = null;								// Lazily computed Attributes helper for the target CS node
+
+	private final @Nullable ParserContext parserContext;		// FIXME only non-null for API compatibility
 
 	protected BaseScopeView(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ElementCS target, @Nullable ElementCS child, @NonNull EReference targetReference, boolean isQualified) {
 		super(getParent(environmentFactory, target, targetReference, isQualified), false);
@@ -154,35 +158,46 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		this.child = child;
 		this.targetReference = targetReference;
 		this.isQualified = isQualified;
+		this.parserContext = ElementUtil.basicGetParserContext(target);
+		if (parserContext != null) {
+			assert parserContext.getMetamodelManager().getEnvironmentFactory() == environmentFactory;
+		}
 	}
 
+	@SuppressWarnings("deprecation")
+	protected @NonNull EnvironmentView createEnvironmentView(@Nullable String name) {
+		return parserContext != null ? new EnvironmentView(parserContext, targetReference, name) : new EnvironmentView(environmentFactory, targetReference, name);
+	}
+
+	@SuppressWarnings("deprecation")
 	@Override
 	public @NonNull Attribution getAttribution() {
 		Attribution attribution2 = attribution;
 		if (attribution2 == null) {
-			attribution = attribution2 = PivotUtilInternal.getAttribution(target);
+			attribution2 = parserContext != null ? parserContext.getAttribution(target) : PivotUtilInternal.getAttribution(target);
+			attribution = attribution2;
 		}
 		return attribution2;
 	}
 
 	@Override
 	public Iterable<IEObjectDescription> getAllElements() {
-		EnvironmentView environmentView = new EnvironmentView(environmentFactory, targetReference, null);
+		EnvironmentView environmentView = createEnvironmentView(null);
 		try {
-//			computeLookupWithParents(environmentView);
+			//			computeLookupWithParents(environmentView);
 			Attribution attribution = getAttribution();
 			ScopeView aScope = attribution.computeLookup(target, environmentView, this);
 			if (aScope != null) {
 				environmentView.computeLookups(aScope);
 			}
-		} catch (IllegalLibraryException e) {			
+		} catch (IllegalLibraryException e) {
 		}
 		return getDescriptions(environmentView);
 	}
 
 	@Override
 	protected final Iterable<IEObjectDescription> getAllLocalElements() {
-		EnvironmentView environmentView = new EnvironmentView(environmentFactory, targetReference, null);
+		EnvironmentView environmentView = createEnvironmentView(null);
 		Attribution attribution = getAttribution();
 		attribution.computeLookup(target, environmentView, this);
 		return getDescriptions(environmentView);
@@ -195,7 +210,7 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 
 	@Override
 	public EStructuralFeature getContainmentFeature() {
-//		assert ((child == null) && (containmentFeature == null)) || ((child != null) && (child.eContainmentFeature() ==  containmentFeature));
+		//		assert ((child == null) && (containmentFeature == null)) || ((child != null) && (child.eContainmentFeature() ==  containmentFeature));
 		return child != null ? child.eContainmentFeature() : targetReference;
 	}
 
@@ -254,7 +269,7 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 	public /*@NonNull*/ Iterable<IEObjectDescription> getElements(QualifiedName name) {
 		if (name == null)
 			throw new NullPointerException("name"); //$NON-NLS-1$
-		EnvironmentView environmentView = new EnvironmentView(environmentFactory, targetReference, name.toString());
+		EnvironmentView environmentView = createEnvironmentView(name.toString());
 		int size = environmentView.computeLookups(this);
 		if (size <= 0) {
 			return Collections.emptyList();
@@ -344,10 +359,10 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		return super.getElements(object);		// FIXME Implement
 	}
 
-//	public MetamodelManager getMetamodelManager() {
-//		return metamodelManager;
-//	}
-	
+	//	public MetamodelManager getMetamodelManager() {
+	//		return metamodelManager;
+	//	}
+
 	private @Nullable String getNonASURI(@Nullable EObject object) {
 		URI uri = null;
 		if (object == null) {
@@ -400,7 +415,7 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 	public @Nullable IEObjectDescription getSingleElement(QualifiedName name) {
 		if (name == null)
 			throw new NullPointerException("name"); //$NON-NLS-1$
-		EnvironmentView environmentView = new EnvironmentView(environmentFactory, targetReference, name.toString());
+		EnvironmentView environmentView = createEnvironmentView(name.toString());
 		int size = environmentView.computeLookups(this);
 		if (size <= 0) {
 			return null;
@@ -410,7 +425,7 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 		}
 		else {
 			return null;			// FIXME Return an 'ambiguous' description
-//			return environmentView.getDescriptions().get(0);
+			//			return environmentView.getDescriptions().get(0);
 		}
 	}
 
@@ -418,7 +433,7 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 	public final @NonNull ElementCS getTarget() {
 		return target;
 	}
-	
+
 	@Override
 	public final boolean isQualified() {
 		return isQualified;

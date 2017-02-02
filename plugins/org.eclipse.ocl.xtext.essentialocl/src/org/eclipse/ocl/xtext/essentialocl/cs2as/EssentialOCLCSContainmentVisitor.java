@@ -21,7 +21,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
@@ -53,7 +52,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -252,12 +250,9 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 	public Continuation<?> visitContextCS(@NonNull ContextCS csElement) {
 		@NonNull ExpressionInOCL pivotElement = context.refreshModelElement(ExpressionInOCL.class, PivotPackage.Literals.EXPRESSION_IN_OCL, csElement);
 		PivotUtil.setBody(pivotElement, null, null);
-		Resource resource = csElement.eResource();
-		if (resource instanceof CSResource) {
-			ParserContext parserContext = ((CSResource)resource).getParserContext();
-			if (parserContext != null) {
-				parserContext.initialize(context, pivotElement);
-			}
+		ParserContext parserContext = ElementUtil.basicGetParserContext(csElement);
+		if (parserContext != null) {
+			parserContext.initialize(context, pivotElement);
 		}
 		return null;
 	}

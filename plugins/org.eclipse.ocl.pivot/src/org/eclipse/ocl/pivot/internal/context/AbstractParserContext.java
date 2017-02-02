@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -32,6 +34,8 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
+import org.eclipse.ocl.pivot.internal.scoping.Attribution;
+import org.eclipse.ocl.pivot.internal.scoping.NullAttribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -49,6 +53,8 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  */
 public abstract class AbstractParserContext /*extends AdapterImpl*/ implements ParserContext
 {
+	private static final Logger logger = Logger.getLogger(AbstractParserContext.class);
+
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull URI uri;
 	protected @Nullable Element rootElement = null;
@@ -86,6 +92,35 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		}
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull Attribution getAttribution(@NonNull EObject eObject) {
+		if (eObject.eIsProxy()) {			// Shouldn't happen, but certainly does during development
+			logger.warn("getAttribution for proxy " + eObject);
+			return NullAttribution.INSTANCE;
+		}
+		else {
+			EClass eClass = eObject.eClass();
+			Attribution attribution = Attribution.REGISTRY.get(eClass);
+			if (attribution == null) {
+				for (EClass superClass = eClass; superClass.getESuperTypes().size() > 0;) {
+					superClass = superClass.getESuperTypes().get(0);
+					attribution = Attribution.REGISTRY.get(superClass);
+					if (attribution != null) {
+						break;
+					}
+				}
+				if (attribution == null) {
+					attribution = NullAttribution.INSTANCE;
+				}
+				Attribution.REGISTRY.put(eClass, attribution);
+			}
+			return attribution;
+		}
+	}
+
 	@Override
 	public @Nullable Type getClassContext() {
 		return null;
@@ -102,6 +137,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		return "\n\tMake sure " + doSetup + " has been called.";
 	}
 
+	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return environmentFactory;
 	}

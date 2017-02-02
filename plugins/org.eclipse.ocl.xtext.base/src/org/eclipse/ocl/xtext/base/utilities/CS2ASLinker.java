@@ -74,7 +74,7 @@ public class CS2ASLinker extends LazyLinker
 				BaseCSResource csResource = (BaseCSResource) eResource;
 				try {
 					CS2AS cs2as = csResource.getCS2AS();
-					ParserContext parserContext = csResource.getParserContext();
+					ParserContext parserContext = ElementUtil.basicGetParserContext(model);
 					if (parserContext != null) {
 						Element rootElement = parserContext.getRootElement();
 						if (rootElement != null) {

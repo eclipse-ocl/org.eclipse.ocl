@@ -50,6 +50,8 @@ import org.eclipse.ocl.pivot.internal.scoping.Attribution;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
@@ -101,6 +103,13 @@ public class ElementUtil
 			s.append("null");
 		}
 		s.append(isSignificant ? "]" : ")");
+	}
+
+	public static @Nullable ParserContext basicGetParserContext(@NonNull EObject csElement) {
+		Resource eResource = csElement.eResource();
+		ParserContext parserContext = eResource instanceof CSResource ? ((CSResource)eResource).getParserContext() : null;
+		// assert parserContext != null;		// FIXME only non-null for API compatibility
+		return parserContext;
 	}
 
 	public static @Nullable String getCollectionTypeName(@NonNull TypedElementCS csTypedElement) {
@@ -201,8 +210,10 @@ public class ElementUtil
 	}
 
 	public static @Nullable RootCSAttribution getDocumentAttribution(@NonNull ElementCS context) {
+		ParserContext parserContext = basicGetParserContext(context);
 		for (ElementCS target = context, parent; (parent = target.getParent()) != null; target = parent) {
-			Attribution attribution = PivotUtilInternal.getAttribution(parent);
+			@SuppressWarnings("deprecation")
+			Attribution attribution = parserContext != null ? parserContext.getAttribution(parent) : PivotUtilInternal.getAttribution(parent);
 			if (attribution instanceof RootCSAttribution) {
 				return (RootCSAttribution) attribution;
 			}

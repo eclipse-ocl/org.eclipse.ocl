@@ -179,6 +179,10 @@ public class PivotUtilInternal //extends PivotUtil
 		return asURI;
 	}
 
+	/**
+	 * @deprecated use ElementUtil.getParserContext(eObject).getAttribution, or
+	 */
+	@Deprecated
 	public static @NonNull Attribution getAttribution(@NonNull EObject eObject) {
 		if (eObject.eIsProxy()) {			// Shouldn't happen, but certainly does during development
 			logger.warn("getAttribution for proxy " + eObject);

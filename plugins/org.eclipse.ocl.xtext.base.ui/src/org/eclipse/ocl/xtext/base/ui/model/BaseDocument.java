@@ -28,8 +28,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.ocl.pivot.internal.context.EInvocationContext;
 import org.eclipse.ocl.pivot.internal.context.EObjectContext;
-import org.eclipse.ocl.pivot.internal.scoping.Attribution;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -50,9 +48,9 @@ import com.google.inject.Inject;
 public class BaseDocument extends XtextDocument implements ConsoleContext
 {
 	private @Nullable EObject context;
-    private @Nullable Map<String, EClassifier> parameters;
+	private @Nullable Map<String, EClassifier> parameters;
 
-    @Inject
+	@Inject
 	public BaseDocument(DocumentTokenSource tokenSource, ITextEditComposer composer) {
 		super(tokenSource, composer);
 	}
@@ -82,7 +80,7 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 		}
 	}
 
-/*	@Override
+	/*	@Override
 	public void disposeInput() { -- should happen via BaseDocumentProvider.disconnected
 		MetamodelManager metamodelManager = readOnly(new IUnitOfWork<MetamodelManager, XtextResource>()
 			{
@@ -105,22 +103,22 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 
 	public @Nullable ASResource getASResource() throws CoreException {
 		return readOnly(new IUnitOfWork<@Nullable ASResource, @Nullable XtextResource>()
-			{
-				@Override
-				public ASResource exec(@Nullable XtextResource resource) throws Exception {
-					if (!(resource instanceof BaseCSResource)) {
-						return null;
-					}
-					BaseCSResource csResource = (BaseCSResource)resource;
-					CS2AS cs2as = csResource.findCS2AS();
-					if (cs2as  == null) {
-						return null;
-					}
-					ASResource asResource = cs2as.getASResource();
-					checkForErrors(asResource);
-					return asResource;
+		{
+			@Override
+			public ASResource exec(@Nullable XtextResource resource) throws Exception {
+				if (!(resource instanceof BaseCSResource)) {
+					return null;
 				}
-			});
+				BaseCSResource csResource = (BaseCSResource)resource;
+				CS2AS cs2as = csResource.findCS2AS();
+				if (cs2as  == null) {
+					return null;
+				}
+				ASResource asResource = cs2as.getASResource();
+				checkForErrors(asResource);
+				return asResource;
+			}
+		});
 	}
 
 	@Override
@@ -139,42 +137,42 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 
 	protected RootCSAttribution getDocumentAttribution() {
 		return readOnly(new IUnitOfWork<RootCSAttribution, XtextResource>()
-			{
-				@Override
-				public RootCSAttribution exec(@Nullable XtextResource resource) throws Exception {
-					if ((resource != null) && !resource.getContents().isEmpty()) {
-						ElementCS csElement = (ElementCS) resource.getContents().get(0);
-						if (csElement != null) {
-							@SuppressWarnings("unused")
-							Attribution attribution = PivotUtilInternal.getAttribution(csElement);
-//							if (attribution != null) {
-								return ElementUtil.getDocumentAttribution(csElement);
-//							}
-						}
-					}
-					return null;
+		{
+			@Override
+			public RootCSAttribution exec(@Nullable XtextResource resource) throws Exception {
+				if ((resource != null) && !resource.getContents().isEmpty()) {
+					ElementCS csElement = (ElementCS) resource.getContents().get(0);
+					//					if (csElement != null) {
+					//						@SuppressWarnings("unused")
+					//							Attribution attribution = PivotUtilInternal.getAttribution(csElement);
+					//							if (attribution != null) {
+					return ElementUtil.getDocumentAttribution(csElement);
+					//							}
+					//					}
 				}
-			});
+				return null;
+			}
+		});
 	}
 
-    @Override
+	@Override
 	public @Nullable EObject getOCLContext() {
-        return context;
-    }
+		return context;
+	}
 
-    @Override
+	@Override
 	public @Nullable Map<String, EClassifier> getOCLParameters() {
 		return parameters;
 	}
 
 	public @Nullable ResourceSet getResourceSet() {
 		return readOnly(new IUnitOfWork<@Nullable ResourceSet, @Nullable XtextResource>()
-			{
-				@Override
-				public ResourceSet exec(@Nullable XtextResource resource) throws Exception {
-					return resource != null ? resource.getResourceSet() : null;
-				}
-			});
+		{
+			@Override
+			public ResourceSet exec(@Nullable XtextResource resource) throws Exception {
+				return resource != null ? resource.getResourceSet() : null;
+			}
+		});
 	}
 
 	/**
@@ -201,9 +199,9 @@ public class BaseDocument extends XtextDocument implements ConsoleContext
 			}
 		});
 
-        this.context = ecoreContext;
-        this.parameters = ecoreParameters;
-    }
+		this.context = ecoreContext;
+		this.parameters = ecoreParameters;
+	}
 
 	public @Nullable Object setContext(@NonNull BaseCSResource csResource, @Nullable EObject eObject) {
 		csResource.setParserContext(new EObjectContext(csResource.getEnvironmentFactory(), csResource.getURI(), eObject));
