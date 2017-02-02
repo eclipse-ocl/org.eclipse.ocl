@@ -394,27 +394,33 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			org.eclipse.ocl.pivot.Class pType = ecore2as.getCreated(org.eclipse.ocl.pivot.Class.class, eClass);
 			if (pType != null) {
 				List<Constraint> ownedInvariants = pType.getOwnedInvariants();
-				for (Constraint rule : ownedInvariants) {
-					String ruleName = rule.getName();
-					if (ruleName == null) {
-						ruleName = "";
-					}
-					if (ruleName.equals(key)) {
-						String prefix = UML2GenModelUtil.getInvariantPrefix(genModel);
+				if (ownedInvariants.size() > 0) {
+					String prefix = UML2GenModelUtil.getInvariantPrefix(genModel);
+					if (prefix == null) {
+						prefix = getInvariantPrefix(genModel);
 						if (prefix == null) {
-							prefix = getInvariantPrefix(genModel);
-							if (prefix == null) {
-								prefix = "";
-							}
+							prefix = "";
 						}
-						EOperation eOperation = AS2Ecore.createConstraintEOperation(rule, prefix + ruleName, null);
-						addEOperation(eClass, eOperation);
-						ecore2as.addMapping(eOperation, rule);
-						if (message != null) {
-							body = PivotUtil.createTupleValuedConstraint(body, null, message);
-						}
-						addEAnnotationDetail(eOperation, PivotConstants.OCL_DELEGATE_URI_PIVOT, "body", body);
 					}
+					String names = "";
+					for (Constraint rule : ownedInvariants) {
+						String ruleName = rule.getName();
+						if (ruleName == null) {
+							ruleName = "";
+						}
+						if (ruleName.equals(key)) {
+							String prefixedName = prefix + ruleName;
+							names = names.length() == 0 ? prefixedName : names + " " + prefixedName;
+							EOperation eOperation = AS2Ecore.createConstraintEOperation(rule, prefixedName, null);
+							addEOperation(eClass, eOperation);
+							ecore2as.addMapping(eOperation, rule);
+							if (message != null) {
+								body = PivotUtil.createTupleValuedConstraint(body, null, message);
+							}
+							addEAnnotationDetail(eOperation, PivotConstants.OCL_DELEGATE_URI_PIVOT, "body", body);
+						}
+					}
+					addEAnnotationDetail(eClass, EcorePackage.eNS_URI, "constraints", names);
 				}
 			}
 		}
@@ -431,7 +437,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 						EClass eClass = genClass.getEcoreClass();
 						if (eClass != null) {
 							List<EAnnotation> obsoleteAnnotations = null;
-							for (EAnnotation eAnnotation : eClass.getEAnnotations()) {
+							for (EAnnotation eAnnotation : new ArrayList<>(eClass.getEAnnotations())) {
 								String source = eAnnotation.getSource();
 								if (OCLCommon.isDelegateURI(source)) {
 									@SuppressWarnings("deprecation")
