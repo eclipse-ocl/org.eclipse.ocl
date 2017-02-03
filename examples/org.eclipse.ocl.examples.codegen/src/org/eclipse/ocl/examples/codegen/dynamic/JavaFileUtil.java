@@ -13,8 +13,10 @@ package org.eclipse.ocl.examples.codegen.dynamic;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.ServiceLoader;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
@@ -22,6 +24,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -31,14 +34,12 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.jdt.internal.compiler.tool.EclipseCompiler;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.osgi.framework.Bundle;
 
-@SuppressWarnings("restriction")
 public abstract class JavaFileUtil
 {
-	private static @Nullable JavaCompiler compiler = new EclipseCompiler(); //ToolProvider.getSystemJavaCompiler();
+	private static @Nullable JavaCompiler compiler = getJavaCompiler();
 
 	public static void compileClasses(@NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull String sourcePath,
 			@NonNull String objectPath, @Nullable List<@NonNull String> classpathProjects)
@@ -140,7 +141,7 @@ public abstract class JavaFileUtil
 	}
 
 	/**
-	 * Return a list comprisiing a JavaFileObject for each *.java file in or below folder.
+	 * Return a list comprising a JavaFileObject for each *.java file in or below folder.
 	 * A non-null compilationUnits may be provided for use as the returned list.
 	 */
 	private static void deleteJavaFiles(@NonNull File folder) {
@@ -157,5 +158,21 @@ public abstract class JavaFileUtil
 			}
 		}
 		return;
+	}
+
+	private static @Nullable JavaCompiler getJavaCompiler() {
+		//
+		//	First try to find the EclipseCompiler
+		//
+		ServiceLoader<JavaCompiler> javaCompilerLoader = ServiceLoader.load(JavaCompiler.class);
+		Iterator<JavaCompiler> iterator = javaCompilerLoader.iterator();
+		while (iterator.hasNext()) {
+			JavaCompiler next = iterator.next();
+			return next;
+		}
+		//
+		//	Otherwise the JDK compiler
+		//
+		return ToolProvider.getSystemJavaCompiler();
 	}
 }
