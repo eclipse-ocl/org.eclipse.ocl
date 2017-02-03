@@ -20,16 +20,10 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.tools.DiagnosticCollector;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileObject;
 import javax.tools.SimpleJavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IContainer;
@@ -42,7 +36,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
@@ -69,6 +62,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.dynamic.JavaFileUtil;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGeneratorAdapterFactory;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
@@ -333,7 +327,7 @@ extends PivotTestSuite// XtextTestCase
 	}
 
 	protected boolean doCompile(@NonNull String testProjectName, @NonNull String... extraClasspathProjects) throws Exception {
-		List<String> classpathProjects = new ArrayList<String>();
+		List<@NonNull String> classpathProjects = new ArrayList<>();
 		classpathProjects.add("org.eclipse.emf.common");
 		classpathProjects.add("org.eclipse.emf.ecore");
 		classpathProjects.add("org.eclipse.jdt.annotation");
@@ -342,34 +336,34 @@ extends PivotTestSuite// XtextTestCase
 		for (String extraClasspathProject : extraClasspathProjects) {
 			classpathProjects.add(extraClasspathProject);
 		}
-		List<String> compilationOptions = new ArrayList<String>();
-		compilationOptions.add("-d");
-		compilationOptions.add("bin");
+		//		List<String> compilationOptions = new ArrayList<String>();
+		//		compilationOptions.add("-d");
+		//		compilationOptions.add("bin");
 		//		compilationOptions.add("-source");
 		//		compilationOptions.add("1.5");
 		//		compilationOptions.add("-target");
 		//		compilationOptions.add("1.5");
-		compilationOptions.add("-g");
-		List<JavaFileObject> compilationUnits = new ArrayList<JavaFileObject>();
+		//		compilationOptions.add("-g");
+		List<@NonNull JavaFileObject> compilationUnits = new ArrayList<>();
 		Object context = null;
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			IWorkspace workspace = ResourcesPlugin.getWorkspace();
 			IProject project = workspace.getRoot().getProject(testProjectName);
 			if (project != null) {
 				getCompilationUnits(compilationUnits, project);
-				java.net.URI locationURI = project.getLocationURI();
-				String binURI = URIUtil.toUnencodedString(locationURI) + "/bin";
-				URI uri = URI.createURI(binURI);
-				if (uri.isFile()) {
-					String fileString = uri.toFileString();
-					assert fileString != null;
-					binURI = fileString.replace("\\", "/");
-				}
-				compilationOptions.set(1, binURI);
-				new File(locationURI.getPath() + "/bin").mkdirs();
-				compilationOptions.add("-cp");
-				String path = createClassPath(classpathProjects);
-				compilationOptions.add(path);
+				//				java.net.URI locationURI = project.getLocationURI();
+				//				String binURI = URIUtil.toUnencodedString(locationURI) + "/bin";
+				//				URI uri = URI.createURI(binURI);
+				//				if (uri.isFile()) {
+				//					String fileString = uri.toFileString();
+				//					assert fileString != null;
+				//					binURI = fileString.replace("\\", "/");
+				//				}
+				//				compilationOptions.set(1, binURI);
+				//				new File(locationURI.getPath() + "/bin").mkdirs();
+				//				compilationOptions.add("-cp");
+				//				String path = createClassPath(classpathProjects);
+				//				compilationOptions.add(path);
 			}
 			context = project;
 		} else {
@@ -378,8 +372,16 @@ extends PivotTestSuite// XtextTestCase
 			context = dir;
 		}
 
-		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
+		/*		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
+
+		ServiceLoader<JavaCompiler> javaCompilerLoader = ServiceLoader.load(JavaCompiler.class);
+		Iterator<JavaCompiler> iterator = javaCompilerLoader.iterator();
+		while (iterator.hasNext()) {
+			JavaCompiler next = iterator.next();
+			next.getClass().toString();
+		}
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+
 		StandardJavaFileManager stdFileManager = compiler
 				.getStandardFileManager(null, Locale.getDefault(), null);
 
@@ -409,10 +411,15 @@ extends PivotTestSuite// XtextTestCase
 				throw new IOException("Failed to compile " + context + s.toString());
 			}
 			System.out.println("Compilation of " + context + " returned false but no diagnostics");
-		}
+		} */
+
+		JavaFileUtil.compileClasses(compilationUnits, String.valueOf(context), "bin", classpathProjects);
+
+
+
 		// System.out.printf("%6.3f close\n", 0.001 *
 		// (System.currentTimeMillis()-base));
-		stdFileManager.close(); // Close the file manager which re-opens automatically
+		//		stdFileManager.close(); // Close the file manager which re-opens automatically
 		// System.out.printf("%6.3f forName\n", 0.001 *
 		// (System.currentTimeMillis()-base));
 		// Class<?> testClass = Class.forName(qualifiedName);
