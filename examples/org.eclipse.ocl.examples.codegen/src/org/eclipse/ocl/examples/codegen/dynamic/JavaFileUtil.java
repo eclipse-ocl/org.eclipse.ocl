@@ -13,10 +13,8 @@ package org.eclipse.ocl.examples.codegen.dynamic;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.ServiceLoader;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
@@ -164,12 +162,12 @@ public abstract class JavaFileUtil
 		//
 		//	First try to find the EclipseCompiler
 		//
-		ServiceLoader<JavaCompiler> javaCompilerLoader = ServiceLoader.load(JavaCompiler.class);
+		/*		ServiceLoader<JavaCompiler> javaCompilerLoader = ServiceLoader.load(JavaCompiler.class);
 		Iterator<JavaCompiler> iterator = javaCompilerLoader.iterator();
 		while (iterator.hasNext()) {
 			JavaCompiler next = iterator.next();
 			return next;
-		}
+		} */
 		//
 		//	Otherwise the JDK compiler
 		//
