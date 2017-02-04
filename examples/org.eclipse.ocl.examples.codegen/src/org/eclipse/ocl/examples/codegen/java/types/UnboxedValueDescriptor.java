@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -25,6 +25,7 @@ public class UnboxedValueDescriptor extends AbstractValueDescriptor implements E
 {
 	public UnboxedValueDescriptor(@NonNull ElementId elementId, @NonNull Class<?> javaClass) {
 		super(elementId, javaClass);
+		assert javaClass != int.class;
 	}
 
 	@Override

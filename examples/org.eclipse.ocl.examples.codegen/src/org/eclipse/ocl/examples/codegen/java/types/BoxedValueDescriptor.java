@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -28,7 +28,7 @@ public abstract class BoxedValueDescriptor extends AbstractValueDescriptor imple
 {
 	private /*@LazyNonNull*/ EcoreDescriptor ecoreDescriptor;
 	private /*@LazyNonNull*/ UnboxedDescriptor unboxedDescriptor;
-	
+
 	public BoxedValueDescriptor(@NonNull ElementId elementId, @NonNull Class<?> javaClass) {
 		super(elementId, javaClass);
 	}
@@ -74,23 +74,23 @@ public abstract class BoxedValueDescriptor extends AbstractValueDescriptor imple
 				return new UnboxedValueDescriptor(elementId, char.class);
 			}
 			else if (double.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, double.class);
+				return new DoublePrimitiveDescriptor(elementId);
 			}
 			else if (float.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, float.class);
+				return new FloatPrimitiveDescriptor(elementId);
 			}
 			else if (int.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, int.class);
+				return new IntPrimitiveDescriptor(elementId);
 			}
 			else if (long.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, long.class);
+				return new LongPrimitiveDescriptor(elementId);
 			}
 			else if (short.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, short.class);
+				return new ShortPrimitiveDescriptor(elementId);
 			}
-//			else {
-//				return new SimpleDataTypeDescriptor(id, instanceClassName);
-//			}
+			//			else {
+			//				return new SimpleDataTypeDescriptor(id, instanceClassName);
+			//			}
 		}
 		EcoreDescriptor ecoreDescriptor2 = ecoreDescriptor;
 		if (ecoreDescriptor2 == null) {
