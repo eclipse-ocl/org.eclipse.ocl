@@ -1701,13 +1701,22 @@ public interface EssentialOCLCSPackage
 	int COLLECTION_TYPE_CS__NAME = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Owned Collection Multiplicity</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Owned Type</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE_CS__OWNED_TYPE = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 1;
+	int COLLECTION_TYPE_CS__OWNED_TYPE = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Collection Type CS</em>' class.
@@ -1716,7 +1725,7 @@ public interface EssentialOCLCSPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COLLECTION_TYPE_CS_FEATURE_COUNT = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 2;
+	int COLLECTION_TYPE_CS_FEATURE_COUNT = BaseCSPackage.TYPED_REF_CS_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.essentialoclcs.impl.ContextCSImpl <em>Context CS</em>}' class.
@@ -7105,6 +7114,17 @@ public interface EssentialOCLCSPackage
 	EAttribute getCollectionTypeCS_Name();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS#getOwnedCollectionMultiplicity <em>Owned Collection Multiplicity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Owned Collection Multiplicity</em>'.
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS#getOwnedCollectionMultiplicity()
+	 * @see #getCollectionTypeCS()
+	 * @generated
+	 */
+	EReference getCollectionTypeCS_OwnedCollectionMultiplicity();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS#getOwnedType <em>Owned Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8633,6 +8653,14 @@ public interface EssentialOCLCSPackage
 		 * @generated
 		 */
 		EAttribute COLLECTION_TYPE_CS__NAME = eINSTANCE.getCollectionTypeCS_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Collection Multiplicity</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY = eINSTANCE.getCollectionTypeCS_OwnedCollectionMultiplicity();
 
 		/**
 		 * The meta object literal for the '<em><b>Owned Type</b></em>' containment reference feature.

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.impl.TypedRefCSImpl;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
@@ -32,14 +33,15 @@ import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.CollectionTypeCSImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.CollectionTypeCSImpl#getOwnedCollectionMultiplicity <em>Owned Collection Multiplicity</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.impl.CollectionTypeCSImpl#getOwnedType <em>Owned Type</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class CollectionTypeCSImpl
-		extends TypedRefCSImpl
-		implements CollectionTypeCS {
+extends TypedRefCSImpl
+implements CollectionTypeCS {
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -60,6 +62,16 @@ public class CollectionTypeCSImpl
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getOwnedCollectionMultiplicity() <em>Owned Collection Multiplicity</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedCollectionMultiplicity()
+	 * @generated
+	 * @ordered
+	 */
+	protected MultiplicityCS ownedCollectionMultiplicity;
 
 	/**
 	 * The cached value of the '{@link #getOwnedType() <em>Owned Type</em>}' containment reference.
@@ -111,6 +123,56 @@ public class CollectionTypeCSImpl
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_TYPE_CS__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public MultiplicityCS getOwnedCollectionMultiplicity()
+	{
+		return ownedCollectionMultiplicity;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwnedCollectionMultiplicity(MultiplicityCS newOwnedCollectionMultiplicity, NotificationChain msgs)
+	{
+		MultiplicityCS oldOwnedCollectionMultiplicity = ownedCollectionMultiplicity;
+		ownedCollectionMultiplicity = newOwnedCollectionMultiplicity;
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, oldOwnedCollectionMultiplicity, newOwnedCollectionMultiplicity);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwnedCollectionMultiplicity(MultiplicityCS newOwnedCollectionMultiplicity)
+	{
+		if (newOwnedCollectionMultiplicity != ownedCollectionMultiplicity)
+		{
+			NotificationChain msgs = null;
+			if (ownedCollectionMultiplicity != null)
+				msgs = ((InternalEObject)ownedCollectionMultiplicity).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, null, msgs);
+			if (newOwnedCollectionMultiplicity != null)
+				msgs = ((InternalEObject)newOwnedCollectionMultiplicity).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, null, msgs);
+			msgs = basicSetOwnedCollectionMultiplicity(newOwnedCollectionMultiplicity, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, newOwnedCollectionMultiplicity, newOwnedCollectionMultiplicity));
 	}
 
 	/**
@@ -181,6 +243,8 @@ public class CollectionTypeCSImpl
 			int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
+			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY:
+				return basicSetOwnedCollectionMultiplicity(null, msgs);
 			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE:
 				return basicSetOwnedType(null, msgs);
 		}
@@ -198,6 +262,8 @@ public class CollectionTypeCSImpl
 		{
 			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__NAME:
 				return getName();
+			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY:
+				return getOwnedCollectionMultiplicity();
 			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE:
 				return getOwnedType();
 		}
@@ -215,6 +281,9 @@ public class CollectionTypeCSImpl
 		{
 			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__NAME:
 				setName((String)newValue);
+				return;
+			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY:
+				setOwnedCollectionMultiplicity((MultiplicityCS)newValue);
 				return;
 			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE:
 				setOwnedType((TypedRefCS)newValue);
@@ -235,6 +304,9 @@ public class CollectionTypeCSImpl
 			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__NAME:
 				setName(NAME_EDEFAULT);
 				return;
+			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY:
+				setOwnedCollectionMultiplicity((MultiplicityCS)null);
+				return;
 			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE:
 				setOwnedType((TypedRefCS)null);
 				return;
@@ -253,6 +325,8 @@ public class CollectionTypeCSImpl
 		{
 			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY:
+				return ownedCollectionMultiplicity != null;
 			case EssentialOCLCSPackage.COLLECTION_TYPE_CS__OWNED_TYPE:
 				return ownedType != null;
 		}

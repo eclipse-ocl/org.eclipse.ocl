@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2016 Willink Transformations and others.
+ * Copyright (c) 2011, 2017 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -167,6 +167,7 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 				if (rule == grammarAccess.getTypedRefCSRule()
 						|| rule == grammarAccess.getPrimitiveTypeCSRule()
 						|| rule == grammarAccess.getTypeLiteralCSRule()
+						|| rule == grammarAccess.getTypeExpWithoutMultiplicityCSRule()
 						|| rule == grammarAccess.getTypeRefCSRule()) {
 					sequence_PrimitiveTypeCS(context, (PrimitiveTypeRefCS) semanticObject);
 					return;
@@ -196,6 +197,7 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 				if (rule == grammarAccess.getTypedRefCSRule()
 						|| rule == grammarAccess.getTupleTypeCSRule()
 						|| rule == grammarAccess.getTypeLiteralCSRule()
+						|| rule == grammarAccess.getTypeExpWithoutMultiplicityCSRule()
 						|| rule == grammarAccess.getTypeRefCSRule()) {
 					sequence_TupleTypeCS(context, (TupleTypeCS) semanticObject);
 					return;
@@ -258,7 +260,8 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 				sequence_CollectionLiteralPartCS(context, (CollectionLiteralPartCS) semanticObject);
 				return;
 			case EssentialOCLCSPackage.COLLECTION_PATTERN_CS:
-				if (rule == grammarAccess.getCollectionPatternCSRule()) {
+				if (rule == grammarAccess.getCollectionPatternCSRule()
+						|| rule == grammarAccess.getTypeExpWithoutMultiplicityCSRule()) {
 					sequence_CollectionPatternCS(context, (CollectionPatternCS) semanticObject);
 					return;
 				}
@@ -271,6 +274,7 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 				if (rule == grammarAccess.getTypedRefCSRule()
 						|| rule == grammarAccess.getCollectionTypeCSRule()
 						|| rule == grammarAccess.getTypeLiteralCSRule()
+						|| rule == grammarAccess.getTypeExpWithoutMultiplicityCSRule()
 						|| rule == grammarAccess.getTypeRefCSRule()) {
 					sequence_CollectionTypeCS(context, (CollectionTypeCS) semanticObject);
 					return;
@@ -324,6 +328,7 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 				if (rule == grammarAccess.getTypedRefCSRule()
 						|| rule == grammarAccess.getMapTypeCSRule()
 						|| rule == grammarAccess.getTypeLiteralCSRule()
+						|| rule == grammarAccess.getTypeExpWithoutMultiplicityCSRule()
 						|| rule == grammarAccess.getTypeRefCSRule()) {
 					sequence_MapTypeCS(context, (MapTypeCS) semanticObject);
 					return;
@@ -415,7 +420,8 @@ public abstract class AbstractCompleteOCLSemanticSequencer extends EssentialOCLS
 					sequence_TypeExpCS_TypeNameExpCS(context, (TypeNameExpCS) semanticObject);
 					return;
 				}
-				else if (rule == grammarAccess.getTypeNameExpCSRule()) {
+				else if (rule == grammarAccess.getTypeNameExpCSRule()
+						|| rule == grammarAccess.getTypeExpWithoutMultiplicityCSRule()) {
 					sequence_TypeNameExpCS(context, (TypeNameExpCS) semanticObject);
 					return;
 				}

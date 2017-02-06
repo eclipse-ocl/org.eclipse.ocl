@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2016 Willink Transformations and others.
+ * Copyright (c) 2011, 2017 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -2588,9 +2588,9 @@ ruleCollectionTypeCS returns [EObject current=null]
 (
 (
 		{
-	        newCompositeNode(grammarAccess.getCollectionTypeCSAccess().getOwnedTypeTypeExpCSParserRuleCall_1_1_0());
+	        newCompositeNode(grammarAccess.getCollectionTypeCSAccess().getOwnedTypeTypeExpWithoutMultiplicityCSParserRuleCall_1_1_0());
 	    }
-		lv_ownedType_2_0=ruleTypeExpCS		{
+		lv_ownedType_2_0=ruleTypeExpWithoutMultiplicityCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getCollectionTypeCSRule());
 	        }
@@ -2598,14 +2598,32 @@ ruleCollectionTypeCS returns [EObject current=null]
        			$current,
        			"ownedType",
         		lv_ownedType_2_0,
-        		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.TypeExpCS");
+        		"org.eclipse.ocl.xtext.essentialocl.EssentialOCL.TypeExpWithoutMultiplicityCS");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_3=')'
+)(
+(
+		{
+	        newCompositeNode(grammarAccess.getCollectionTypeCSAccess().getOwnedCollectionMultiplicityMultiplicityCSParserRuleCall_1_2_0());
+	    }
+		lv_ownedCollectionMultiplicity_3_0=ruleMultiplicityCS		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getCollectionTypeCSRule());
+	        }
+       		set(
+       			$current,
+       			"ownedCollectionMultiplicity",
+        		lv_ownedCollectionMultiplicity_3_0,
+        		"org.eclipse.ocl.xtext.base.Base.MultiplicityCS");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?	otherlv_4=')'
     {
-    	newLeafNode(otherlv_3, grammarAccess.getCollectionTypeCSAccess().getRightParenthesisKeyword_1_2());
+    	newLeafNode(otherlv_4, grammarAccess.getCollectionTypeCSAccess().getRightParenthesisKeyword_1_3());
     }
 )?)
 ;
@@ -4208,6 +4226,65 @@ ruleTypeNameExpCS returns [EObject current=null]
 
 
 
+// Entry rule entryRuleTypeExpWithoutMultiplicityCS
+entryRuleTypeExpWithoutMultiplicityCS returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getTypeExpWithoutMultiplicityCSRule()); }
+	 iv_ruleTypeExpWithoutMultiplicityCS=ruleTypeExpWithoutMultiplicityCS
+	 { $current=$iv_ruleTypeExpWithoutMultiplicityCS.current; }
+	 EOF
+;
+
+// Rule TypeExpWithoutMultiplicityCS
+ruleTypeExpWithoutMultiplicityCS returns [EObject current=null]
+    @init { enterRule();
+    }
+    @after { leaveRule(); }:
+(
+	{
+	  /* */
+	}
+    {
+        newCompositeNode(grammarAccess.getTypeExpWithoutMultiplicityCSAccess().getTypeNameExpCSParserRuleCall_0());
+    }
+    this_TypeNameExpCS_0=ruleTypeNameExpCS
+    {
+        $current = $this_TypeNameExpCS_0.current;
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{
+	  /* */
+	}
+    {
+        newCompositeNode(grammarAccess.getTypeExpWithoutMultiplicityCSAccess().getTypeLiteralCSParserRuleCall_1());
+    }
+    this_TypeLiteralCS_1=ruleTypeLiteralCS
+    {
+        $current = $this_TypeLiteralCS_1.current;
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{
+	  /* */
+	}
+    {
+        newCompositeNode(grammarAccess.getTypeExpWithoutMultiplicityCSAccess().getCollectionPatternCSParserRuleCall_2());
+    }
+    this_CollectionPatternCS_2=ruleCollectionPatternCS
+    {
+        $current = $this_CollectionPatternCS_2.current;
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
 // Entry rule entryRuleTypeExpCS
 entryRuleTypeExpCS returns [EObject current=null]
 	:
@@ -4222,57 +4299,31 @@ ruleTypeExpCS returns [EObject current=null]
     @init { enterRule();
     }
     @after { leaveRule(); }:
-((
+(
 	{
 	  /* */
 	}
     {
-        newCompositeNode(grammarAccess.getTypeExpCSAccess().getTypeNameExpCSParserRuleCall_0_0());
+        newCompositeNode(grammarAccess.getTypeExpCSAccess().getTypeExpWithoutMultiplicityCSParserRuleCall_0());
     }
-    this_TypeNameExpCS_0=ruleTypeNameExpCS
+    this_TypeExpWithoutMultiplicityCS_0=ruleTypeExpWithoutMultiplicityCS
     {
-        $current = $this_TypeNameExpCS_0.current;
+        $current = $this_TypeExpWithoutMultiplicityCS_0.current;
         afterParserOrEnumRuleCall();
     }
-
-    |
-	{
-	  /* */
-	}
-    {
-        newCompositeNode(grammarAccess.getTypeExpCSAccess().getTypeLiteralCSParserRuleCall_0_1());
-    }
-    this_TypeLiteralCS_1=ruleTypeLiteralCS
-    {
-        $current = $this_TypeLiteralCS_1.current;
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{
-	  /* */
-	}
-    {
-        newCompositeNode(grammarAccess.getTypeExpCSAccess().getCollectionPatternCSParserRuleCall_0_2());
-    }
-    this_CollectionPatternCS_2=ruleCollectionPatternCS
-    {
-        $current = $this_CollectionPatternCS_2.current;
-        afterParserOrEnumRuleCall();
-    }
-)(
+(
 (
 		{
 	        newCompositeNode(grammarAccess.getTypeExpCSAccess().getOwnedMultiplicityMultiplicityCSParserRuleCall_1_0());
 	    }
-		lv_ownedMultiplicity_3_0=ruleMultiplicityCS		{
+		lv_ownedMultiplicity_1_0=ruleMultiplicityCS		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTypeExpCSRule());
 	        }
        		set(
        			$current,
        			"ownedMultiplicity",
-        		lv_ownedMultiplicity_3_0,
+        		lv_ownedMultiplicity_1_0,
         		"org.eclipse.ocl.xtext.base.Base.MultiplicityCS");
 	        afterParserOrEnumRuleCall();
 	    }

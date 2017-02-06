@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.essentialoclcs;
 
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 
 /**
@@ -23,6 +24,7 @@ import org.eclipse.ocl.xtext.basecs.TypedRefCS;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS#getOwnedCollectionMultiplicity <em>Owned Collection Multiplicity</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS#getOwnedType <em>Owned Type</em>}</li>
  * </ul>
  *
@@ -59,6 +61,32 @@ public interface CollectionTypeCS
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Owned Collection Multiplicity</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Collection Multiplicity</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Collection Multiplicity</em>' containment reference.
+	 * @see #setOwnedCollectionMultiplicity(MultiplicityCS)
+	 * @see org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage#getCollectionTypeCS_OwnedCollectionMultiplicity()
+	 * @model containment="true"
+	 * @generated
+	 */
+	MultiplicityCS getOwnedCollectionMultiplicity();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.essentialoclcs.CollectionTypeCS#getOwnedCollectionMultiplicity <em>Owned Collection Multiplicity</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Owned Collection Multiplicity</em>' containment reference.
+	 * @see #getOwnedCollectionMultiplicity()
+	 * @generated
+	 */
+	void setOwnedCollectionMultiplicity(MultiplicityCS value);
 
 	/**
 	 * Returns the value of the '<em><b>Owned Type</b></em>' containment reference.

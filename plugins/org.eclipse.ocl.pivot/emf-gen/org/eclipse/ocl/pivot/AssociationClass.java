@@ -34,7 +34,7 @@ import java.util.List;
  * @generated
  */
 public interface AssociationClass
-		extends org.eclipse.ocl.pivot.Class {
+extends org.eclipse.ocl.pivot.Class {
 
 	/**
 	 * Returns the value of the '<em><b>Unowned Attributes</b></em>' reference list.
