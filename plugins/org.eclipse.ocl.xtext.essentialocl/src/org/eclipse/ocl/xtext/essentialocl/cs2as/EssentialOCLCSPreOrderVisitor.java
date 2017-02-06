@@ -71,7 +71,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 					boolean isNullFree;
 					IntegerValue lowerValue;
 					UnlimitedNaturalValue upperValue;
-					MultiplicityCS csMultiplicity = csElement.getOwnedMultiplicity();
+					MultiplicityCS csMultiplicity = csElement.getOwnedCollectionMultiplicity();
 					if (csMultiplicity != null) {
 						isNullFree = csMultiplicity.isIsNullFree();
 						lowerValue = ValueUtil.integerValueOf(csMultiplicity.getLower());

@@ -81,36 +81,36 @@ public class IteratorsTest4 extends PivotTestSuite
 {
 	public static class MyOCL extends TestOCL
 	{
-        // need a metamodel that has a reflexive EReference.
-        // Ecore will do nicely. Create the following structure:
-        // pkg1
-        // pkg1::pkg2
-        // pkg1::pkg2::jim
-        // pkg1::bob
-        // pkg1::pkg3
-        // pkg1::pkg3::pkg4
-        // pkg1::pkg3::pkg5
-        // pkg1::pkg3::pkg5::george
-        @NonNull Model root = PivotUtil.createModel(null);
-        org.eclipse.ocl.pivot.@NonNull Package pkg1 = PivotUtil.createOwnedPackage(root, "pkg1");
-        org.eclipse.ocl.pivot.@NonNull Package pkg2 = PivotUtil.createOwnedPackage(pkg1, "pkg2");
-        org.eclipse.ocl.pivot.@NonNull Package jim = PivotUtil.createOwnedPackage(pkg2, "jim");
-        org.eclipse.ocl.pivot.@NonNull Package bob = PivotUtil.createOwnedPackage(pkg1, "bob");
-        org.eclipse.ocl.pivot.@NonNull Package pkg3 = PivotUtil.createOwnedPackage(pkg1, "pkg3");
-        org.eclipse.ocl.pivot.@NonNull Package pkg4 = PivotUtil.createOwnedPackage(pkg3, "pkg4");
-        org.eclipse.ocl.pivot.@NonNull Package pkg5 = PivotUtil.createOwnedPackage(pkg3, "pkg5");
-        org.eclipse.ocl.pivot.@NonNull Package george = PivotUtil.createOwnedPackage(pkg5, "george");
-		
+		// need a metamodel that has a reflexive EReference.
+		// Ecore will do nicely. Create the following structure:
+		// pkg1
+		// pkg1::pkg2
+		// pkg1::pkg2::jim
+		// pkg1::bob
+		// pkg1::pkg3
+		// pkg1::pkg3::pkg4
+		// pkg1::pkg3::pkg5
+		// pkg1::pkg3::pkg5::george
+		@NonNull Model root = PivotUtil.createModel(null);
+		org.eclipse.ocl.pivot.@NonNull Package pkg1 = PivotUtil.createOwnedPackage(root, "pkg1");
+		org.eclipse.ocl.pivot.@NonNull Package pkg2 = PivotUtil.createOwnedPackage(pkg1, "pkg2");
+		org.eclipse.ocl.pivot.@NonNull Package jim = PivotUtil.createOwnedPackage(pkg2, "jim");
+		org.eclipse.ocl.pivot.@NonNull Package bob = PivotUtil.createOwnedPackage(pkg1, "bob");
+		org.eclipse.ocl.pivot.@NonNull Package pkg3 = PivotUtil.createOwnedPackage(pkg1, "pkg3");
+		org.eclipse.ocl.pivot.@NonNull Package pkg4 = PivotUtil.createOwnedPackage(pkg3, "pkg4");
+		org.eclipse.ocl.pivot.@NonNull Package pkg5 = PivotUtil.createOwnedPackage(pkg3, "pkg5");
+		org.eclipse.ocl.pivot.@NonNull Package george = PivotUtil.createOwnedPackage(pkg5, "george");
+
 		public MyOCL(@NonNull String testPackageName, @NonNull String name) {
 			super(testPackageName, name, useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
-//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.nonNullState(metamodelManager.getASmetamodel()));
+			//			metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, ClassUtil.nonNullState(metamodelManager.getASmetamodel()));
 
-	        metamodelManager.installRoot(ClassUtil.nonNullState(root));
-//	        helper.setContext(ClassUtil.nonNullState(metamodelManager.getPivotType("Package")));
+			metamodelManager.installRoot(ClassUtil.nonNullState(root));
+			//	        helper.setContext(ClassUtil.nonNullState(metamodelManager.getPivotType("Package")));
 		}
 	}
-	
+
 	@Parameters
 	public static Collection<Object[]> data() {
 		Object[][] data = new Object[][]{{false}, {true}};
@@ -125,10 +125,10 @@ public class IteratorsTest4 extends PivotTestSuite
 	protected @NonNull String getTestPackageName() {
 		return "Iterators";
 	}
-	
+
 	@BeforeClass public static void resetCounter() throws Exception {
 		PivotTestSuite.resetCounter();
-    }
+	}
 
 	@Override
 	protected @NonNull MyOCL createOCL() {
@@ -136,462 +136,462 @@ public class IteratorsTest4 extends PivotTestSuite
 	}
 
 	@Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-        PivotTables.LIBRARY.getClass();
-    }
+	@Before public void setUp() throws Exception {
+		super.setUp();
+		PivotTables.LIBRARY.getClass();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {
 		super.tearDown();
 	}
 
-    /**
-     * Tests the generic iterate() iterator.
-     */
-    @Test public void test_iterate_143996() {
+	/**
+	 * Tests the generic iterate() iterator.
+	 */
+	@Test public void test_iterate_143996() {
 		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
-    	CollectionTypeId typeId = TypeId.SET.getSpecializedId(TypeId.STRING);
-    	SetValue expected = idResolver.createSetOfEach(typeId, "pkg2", "bob", "pkg3");
+		CollectionTypeId typeId = TypeId.SET.getSpecializedId(TypeId.STRING);
+		SetValue expected = idResolver.createSetOfEach(typeId, "pkg2", "bob", "pkg3");
 
-        // complete form
-        ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(p; s : Set(String) = Set{} | s->including(p.name))");
+		// complete form
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(p; s : Set(String) = Set{} | s->including(p.name))");
 
-        // shorter form
-        ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(p; s : Set(String) = Set{} | s->including(p.name))");
+		// shorter form
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(p; s : Set(String) = Set{} | s->including(p.name))");
 
-        // shortest form
-        ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(s : Set(String) = Set{} | s->including(name))");
+		// shortest form
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(s : Set(String) = Set{} | s->including(name))");
 
-        ocl.assertQueryEquals(ocl.pkg1, "pfx_a_b_c", "Sequence{'a','b','c'}->iterate(e : String; s : String = 'pfx' | s + '_' + e)");
+		ocl.assertQueryEquals(ocl.pkg1, "pfx_a_b_c", "Sequence{'a','b','c'}->iterate(e : String; s : String = 'pfx' | s + '_' + e)");
 		ocl.dispose();
-    }
-    
-    /**
-     * Tests the select() iterator.
-     */
+	}
+
+	/**
+	 * Tests the select() iterator.
+	 */
 	@Test public void test_select() {
 		MyOCL ocl = createOCL();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		IdResolver idResolver = ocl.getIdResolver();
-    	@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
+		@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected = idResolver.createSetOfEach(typeId, ocl.pkg2, ocl.pkg3);
 
-        // complete form
-        ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->select(p : ocl::Package | p.name <> 'bob')");
+		// complete form
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->select(p : ocl::Package | p.name <> 'bob')");
 
-        // shorter form
-        ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->select(p | p.name <> 'bob')");
+		// shorter form
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->select(p | p.name <> 'bob')");
 
-        // shortest form
-        ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->select(name <> 'bob')");
+		// shortest form
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->select(name <> 'bob')");
 
-        Value expected2 = idResolver.createSetOfEach(typeId, ocl.bob, ocl.pkg2, ocl.pkg3);
-        ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?->select(true)");
+		Value expected2 = idResolver.createSetOfEach(typeId, ocl.bob, ocl.pkg2, ocl.pkg3);
+		ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?->select(true)");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests the reject() iterator.
-     */
-    @Test public void test_reject() {
+	/**
+	 * Tests the reject() iterator.
+	 */
+	@Test public void test_reject() {
 		MyOCL ocl = createOCL();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		IdResolver idResolver = ocl.getIdResolver();
-    	@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
+		@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected = idResolver.createSetOfEach(typeId, ocl.pkg2, ocl.pkg3);
 
-        // complete form
-        ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->reject(p : ocl::Package | p.name = 'bob')");
+		// complete form
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->reject(p : ocl::Package | p.name = 'bob')");
 
-        // shorter form
-        ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->reject(p | p.name = 'bob')");
+		// shorter form
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->reject(p | p.name = 'bob')");
 
-        // shortest form
-        ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->reject(name = 'bob')");
+		// shortest form
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->reject(name = 'bob')");
 
-        expected = idResolver.createSetOfEach(typeId);
-        ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->reject(true)");
+		expected = idResolver.createSetOfEach(typeId);
+		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->reject(true)");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests the any() iterator.
-     */
-    @Test public void test_any() {
+	/**
+	 * Tests the any() iterator.
+	 */
+	@Test public void test_any() {
 		MyOCL ocl = createOCL();
 		ocl.getEnvironmentFactory().setSafeNavigationValidationSeverity(StatusCodes.Severity.WARNING);
 		org.eclipse.ocl.pivot.Class pkg1Type = ocl.getMetamodelManager().getASClass("Package");
-        // complete form
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op->any(p : ocl::Package | p?.name = 'bob')");
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op?->any(p : ocl::Package | p.name = 'bob')");
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op?->any(p : ocl::Package[1] | p.name = 'bob')");
-    	ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package)[*|?] = ownedPackages in op->any(p : ocl::Package[1] | p.name = 'bob')",
+		// complete form
+		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package | p?.name = 'bob')");
+		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p : ocl::Package | p.name = 'bob')");
+		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p : ocl::Package[1] | p.name = 'bob')");
+		ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package[1] | p.name = 'bob')",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IteratorExp_c_c_UnsafeSourceCanNotBeNull, "op->any(p : Package[1] | p.name.=('bob'))");
-		ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package)[*|?] = ownedPackages in op->any(p : ocl::Package | p.name = 'bob')",
+		ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package | p.name = 'bob')",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_PropertyCallExp_c_c_UnsafeSourceCanNotBeNull, "p.name");
 
-        // shorter form
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op->any(p | p?.name = 'bob')");
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op?->any(p | p.name = 'bob')");
-//		ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(p | p.name = 'bob')",
-//			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "UnsafeSourceMustBeNotNull", "p.name");
-//		ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages?->any(p | p?.name = 'bob')",
-//			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "SafeSourceCannotBeNull", "p?.name");
+		// shorter form
+		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op->any(p | p?.name = 'bob')");
+		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p | p.name = 'bob')");
+		//		ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(p | p.name = 'bob')",
+		//			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "UnsafeSourceMustBeNotNull", "p.name");
+		//		ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages?->any(p | p?.name = 'bob')",
+		//			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "SafeSourceCannotBeNull", "p?.name");
 
-        // shortest form
-//    	ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(name = 'bob')",
-//    		PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "UnsafeSourceMustBeNotNull", "1_.name");
-    	ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op?->any(name = 'bob')");
+		// shortest form
+		//    	ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(name = 'bob')",
+		//    		PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "UnsafeSourceMustBeNotNull", "1_.name");
+		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(name = 'bob')");
 
-        // negative
-        ocl.assertQueryNotSame(ocl.pkg1, ocl.bob, "let op : Set(Package)[*|?] = ownedPackages in op?->any(name = 'pkg2')");
-//        ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(name = 'pkg2')",
-//			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "UnsafeSourceMustBeNotNull", "1_.name");
+		// negative
+		ocl.assertQueryNotSame(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(name = 'pkg2')");
+		//        ocl.assertValidationErrorQuery(pkg1Type, "ownedPackages->any(name = 'pkg2')",
+		//			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp", "UnsafeSourceMustBeNotNull", "1_.name");
 
-        ocl.assertQueryInvalid(null, "Sequence{}->any(s | s = false)");		// OMG Issue 18504
-        ocl.assertQueryFalse(null, "Sequence{false}->any(s | s = false)");
-        ocl.assertQueryFalse(null, "Sequence{false, false}->any(s | s = false)");
+		ocl.assertQueryInvalid(null, "Sequence{}->any(s | s = false)");		// OMG Issue 18504
+		ocl.assertQueryFalse(null, "Sequence{false}->any(s | s = false)");
+		ocl.assertQueryFalse(null, "Sequence{false, false}->any(s | s = false)");
 
-        ocl.assertQueryInvalid(null, "Sequence{}->any(s | s = null)");		// OMG Issue 18504
-        ocl.assertQueryNull(null, "Sequence{null}->any(s | s = null)");
-        ocl.assertQueryNull(null, "Sequence{null, null}->any(s | s = null)");
+		ocl.assertQueryInvalid(null, "Sequence{}->any(s | s = null)");		// OMG Issue 18504
+		ocl.assertQueryNull(null, "Sequence{null}->any(s | s = null)");
+		ocl.assertQueryNull(null, "Sequence{null, null}->any(s | s = null)");
 
-        ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package)[*|?] = ownedPackages in op->any(true)");
-        ocl.assertQueryInvalid(ocl.pkg1, "let op : Set(Package)[*|?] = ownedPackages in op->any(false)");			// OMG Issue 18504
-        ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package)[*|?] = ownedPackages in op?->any(true)");
+		ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package[*|?]) = ownedPackages in op->any(true)");
+		ocl.assertQueryInvalid(ocl.pkg1, "let op : Set(Package[*|?]) = ownedPackages in op->any(false)");			// OMG Issue 18504
+		ocl.assertQueryDefined(ocl.pkg1, "let op : Set(Package[*|?]) = ownedPackages in op?->any(true)");
 		ocl.dispose();
-    }
-
-    /**
-     * Tests the isUnique() iterator.
-     */
-    @Test public void test_isUnique_126861() {
-		MyOCL ocl = createOCL();
-//    	Abstract2Moniker.TRACE_MONIKERS.setState(true);
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->isUnique(e | e)");
-
-        ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'c', 'c', 'e'}->isUnique(e | e)");
-
-        // when there are no values, they implicitly all evaluate to a
-        // different result
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{}->isUnique(e | e)");
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{null}->isUnique(e | e)");
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{null,1}->isUnique(e | e)");
-        ocl.assertQueryFalse(ocl.pkg1, "Sequence{null,null}->isUnique(e | e)");
-
-        ocl.assertQueryTrue(ocl.pkg1, "ownedPackages?->isUnique(name)");
-		ocl.dispose();
-    }
-
-    /**
-     * Tests the exists() iterator.
-     */
-    @Test public void test_exists() {
-		MyOCL ocl = createOCL();
-    	ocl.assertQueryFalse(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{false}, Sequence{false}}->exists(e | e->first())");
-    	ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{false}, Sequence{false}}->exists(e | e->first())");
-    	ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{null}, Sequence{true}}->exists(e | e->first())");
-    	ocl.assertQueryNull(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{null}, Sequence{false}}->exists(e | e->first())");
-    	ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{null}, Sequence{}}->exists(e | e->first())");
-    	ocl.assertQueryInvalid(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{null}, Sequence{}}->exists(e | e->first())");
-    	ocl.assertQueryInvalid(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{}, Sequence{null}}->exists(e | e->first())");
-       	ocl.assertQueryInvalid(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{false}, Sequence{}}->exists(e | e->first())");
-
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->exists(e | e = 'c')");
-
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'c', 'e'}->exists(e | e = 'c')");
-
-        ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'd', 'e'}->exists(e | e = 'c')");
-
-        // when there are no values, they the desired result implictly
-        // does not occur
-        ocl.assertQueryFalse(ocl.pkg1, "Sequence{}->exists(e | e = 'c')");
-
-        ocl.assertQueryTrue(ocl.pkg1, "ownedPackages->exists(true)");
-		ocl.dispose();
-    }
-
-    /**
-     * Tests the forAll() iterator.
-     */
-    @Test public void test_forAll() {
-		MyOCL ocl = createOCL();
-    	ocl.assertQueryTrue(null, "Sequence{Sequence{true}, Sequence{true}, Sequence{true}, Sequence{true}}->forAll(e | e->first())");
-    	ocl.assertQueryFalse(null, "Sequence{Sequence{true}, Sequence{false}, Sequence{true}, Sequence{true}}->forAll(e | e->first())");
-    	ocl.assertQueryFalse(null, "Sequence{Sequence{true}, Sequence{false}, Sequence{null}, Sequence{false}}->forAll(e | e->first())");
-    	ocl.assertQueryNull(null, "Sequence{Sequence{true}, Sequence{true}, Sequence{null}, Sequence{true}}->forAll(e | e->first())");
-       	ocl.assertQueryFalse(null, "Sequence{Sequence{true}, Sequence{false}, Sequence{null}, Sequence{}}->forAll(e | e->first())");
-       	ocl.assertQueryInvalid(null, "Sequence{Sequence{true}, Sequence{true}, Sequence{null}, Sequence{}}->forAll(e | e->first())");
-       	ocl.assertQueryInvalid(null, "Sequence{Sequence{true}, Sequence{true}, Sequence{}, Sequence{null}}->forAll(e | e->first())");
-       	ocl.assertQueryInvalid(null, "Sequence{Sequence{true}, Sequence{true}, Sequence{true}, Sequence{}}->forAll(e | e->first())");
-
-        ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->forAll(e | e = 'c')");
-
-        ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'd', 'e'}->forAll(e | e = 'c')");
-
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{'c', 'c', 'c', 'c'}->forAll(e | e = 'c')");
-
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{'c'}->forAll(e | e = 'c')");
-
-        // when there are no values, they implicitly all evaluate to the
-        // desired result
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{}->forAll(e | e = 'c')");
-
-        ocl.assertQueryTrue(ocl.pkg1, "ownedPackages->forAll(true)");
-        //
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{1..0}->forAll(false)");
-        ocl.assertQueryFalse(ocl.pkg1, "Sequence{1..1}->forAll(false)");
-		ocl.dispose();
-    }
-
-    /**
-     * Tests the one() iterator.
-     */
-    @Test public void test_one() {
-		MyOCL ocl = createOCL();
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->one(e | e = 'c')");
-
-        ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'c', 'c', 'e'}->one(e | e = 'c')");
-
-        ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'd', 'e'}->one(e | e = 'c')");
-
-        ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a'}->one(true)");
-		ocl.dispose();
-    }
-    
-    /**
-     * Tests the collect() iterator.
-     */
-    @Test public void test_collect() {
-		MyOCL ocl = createOCL();
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		IdResolver idResolver = ocl.getIdResolver();
-//    	Abstract2Moniker.TRACE_MONIKERS.setState(true);
-    	@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
-		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
-        CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
-
-        // complete form
-        ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collect(p : ocl::Package | p.name)");
-
-        // shorter form
-        ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collect(p | p.name)");
-
-        // yet shorter form
-        ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collect(name)");
-
-        // shortest form
-        ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?.name");
-
-        // flattening of nested collections
-        CollectionValue expected2 = idResolver.createBagOfEach(typeId, ocl.jim, ocl.pkg4, ocl.pkg5);
-        // ownedPackages is Set<Package>
-        // ownedPackages->collectNested(ownedPackages) is Bag<Set<Package>>
-        // ownedPackages->collectNested(ownedPackages)->flatten() is Bag<Package>
-        ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?.ownedPackages");
-        ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->collect(oclAsType(String)).size()");
-		ocl.dispose();
-    }
+	}
 
 	/**
-     * Tests that parsing fails, in the case of an unknown property in a
-     * collection navigation, with an appropriate parse failure, not a
-     * <code>ClassCastException</code>.
-     */
-    @Test public void test_implicitCollect_unknownAttribute_232669() {
+	 * Tests the isUnique() iterator.
+	 */
+	@Test public void test_isUnique_126861() {
+		MyOCL ocl = createOCL();
+		//    	Abstract2Moniker.TRACE_MONIKERS.setState(true);
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->isUnique(e | e)");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'c', 'c', 'e'}->isUnique(e | e)");
+
+		// when there are no values, they implicitly all evaluate to a
+		// different result
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{}->isUnique(e | e)");
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{null}->isUnique(e | e)");
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{null,1}->isUnique(e | e)");
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{null,null}->isUnique(e | e)");
+
+		ocl.assertQueryTrue(ocl.pkg1, "ownedPackages?->isUnique(name)");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests the exists() iterator.
+	 */
+	@Test public void test_exists() {
+		MyOCL ocl = createOCL();
+		ocl.assertQueryFalse(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{false}, Sequence{false}}->exists(e | e->first())");
+		ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{false}, Sequence{false}}->exists(e | e->first())");
+		ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{null}, Sequence{true}}->exists(e | e->first())");
+		ocl.assertQueryNull(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{null}, Sequence{false}}->exists(e | e->first())");
+		ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{null}, Sequence{}}->exists(e | e->first())");
+		ocl.assertQueryInvalid(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{null}, Sequence{}}->exists(e | e->first())");
+		ocl.assertQueryInvalid(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{}, Sequence{null}}->exists(e | e->first())");
+		ocl.assertQueryInvalid(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{false}, Sequence{}}->exists(e | e->first())");
+
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->exists(e | e = 'c')");
+
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'c', 'e'}->exists(e | e = 'c')");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'd', 'e'}->exists(e | e = 'c')");
+
+		// when there are no values, they the desired result implictly
+		// does not occur
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{}->exists(e | e = 'c')");
+
+		ocl.assertQueryTrue(ocl.pkg1, "ownedPackages->exists(true)");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests the forAll() iterator.
+	 */
+	@Test public void test_forAll() {
+		MyOCL ocl = createOCL();
+		ocl.assertQueryTrue(null, "Sequence{Sequence{true}, Sequence{true}, Sequence{true}, Sequence{true}}->forAll(e | e->first())");
+		ocl.assertQueryFalse(null, "Sequence{Sequence{true}, Sequence{false}, Sequence{true}, Sequence{true}}->forAll(e | e->first())");
+		ocl.assertQueryFalse(null, "Sequence{Sequence{true}, Sequence{false}, Sequence{null}, Sequence{false}}->forAll(e | e->first())");
+		ocl.assertQueryNull(null, "Sequence{Sequence{true}, Sequence{true}, Sequence{null}, Sequence{true}}->forAll(e | e->first())");
+		ocl.assertQueryFalse(null, "Sequence{Sequence{true}, Sequence{false}, Sequence{null}, Sequence{}}->forAll(e | e->first())");
+		ocl.assertQueryInvalid(null, "Sequence{Sequence{true}, Sequence{true}, Sequence{null}, Sequence{}}->forAll(e | e->first())");
+		ocl.assertQueryInvalid(null, "Sequence{Sequence{true}, Sequence{true}, Sequence{}, Sequence{null}}->forAll(e | e->first())");
+		ocl.assertQueryInvalid(null, "Sequence{Sequence{true}, Sequence{true}, Sequence{true}, Sequence{}}->forAll(e | e->first())");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->forAll(e | e = 'c')");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'd', 'e'}->forAll(e | e = 'c')");
+
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'c', 'c', 'c', 'c'}->forAll(e | e = 'c')");
+
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'c'}->forAll(e | e = 'c')");
+
+		// when there are no values, they implicitly all evaluate to the
+		// desired result
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{}->forAll(e | e = 'c')");
+
+		ocl.assertQueryTrue(ocl.pkg1, "ownedPackages->forAll(true)");
+		//
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{1..0}->forAll(false)");
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{1..1}->forAll(false)");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests the one() iterator.
+	 */
+	@Test public void test_one() {
+		MyOCL ocl = createOCL();
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a', 'b', 'c', 'd', 'e'}->one(e | e = 'c')");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'c', 'c', 'e'}->one(e | e = 'c')");
+
+		ocl.assertQueryFalse(ocl.pkg1, "Sequence{'a', 'b', 'd', 'e'}->one(e | e = 'c')");
+
+		ocl.assertQueryTrue(ocl.pkg1, "Sequence{'a'}->one(true)");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests the collect() iterator.
+	 */
+	@Test public void test_collect() {
 		MyOCL ocl = createOCL();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-        ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
-        	metamodelManager.getASClass("Package"), "ownedPackages.unknownAttribute",
-        	PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Package)", "unknownAttribute");
-		ocl.dispose();
-   }
-
-    /**
-     * Tests that parsing fails, in the case of an unknown operation in a
-     * collection navigation, with an appropriate parse failure, not a
-     * <code>ClassCastException</code>.
-     */
-    @Test public void test_implicitCollect_unknownOperation_232669() {
-		MyOCL ocl = createOCL();
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-    	ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
-    		metamodelManager.getASClass("Package"), "ownedPackages.unknownOperation(self)",
-        	PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Package)", "unknownOperation", PivotConstants.SELF_NAME);
-		ocl.dispose();
-   }
-
-    /**
-     * Tests that the collect() iterator correctly flattens its result.
-     */
-    @Test public void test_collect_flattens_217461() {
-		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
-        String self = "foo";
-    	CollectionTypeId typeId = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
-        SequenceValue expected = idResolver.createSequenceOfEach(typeId, "THIS AND", "THAT", "THE OTHER");
-
-        ocl.assertQueryEquals(self, expected, "Sequence{Sequence{'this and', 'that'}, Sequence{'the other'}}->collect(s : Sequence(String) | s.toUpperCase())");
-		ocl.dispose();
-    }
-
-    /**
-     * Tests that the collect() iterator correctly deals with empty collections.
-     */
-    @Test public void test_collect_empty_217461() {
-		MyOCL ocl = createOCL();
-        String self = "foo";
-        List<String> expected = Collections.emptyList();
-
-        ocl.assertQueryEquals(self, expected, "let c : Sequence(OrderedSet(String)) = Sequence{} in c->collect(s : OrderedSet(String) | s.toUpperCase())");
-		ocl.dispose();
-    }
-
-    /**
-     * Tests the collectNested() iterator.
-     */
-    @Test public void test_collectNested() {
-		MyOCL ocl = createOCL();
-		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-		IdResolver idResolver = ocl.getIdResolver();
-    	@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
+		//    	Abstract2Moniker.TRACE_MONIKERS.setState(true);
+		@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
-        CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
+		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
 
-        // complete form
-        ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collectNested(p : ocl::Package | p.name)");
+		// complete form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collect(p : ocl::Package | p.name)");
 
-        // shorter form
-        ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collectNested(p | p.name)");
+		// shorter form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collect(p | p.name)");
 
-        // shortest form
-        ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collectNested(name)");
+		// yet shorter form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collect(name)");
 
-        // nested collections not flattened
+		// shortest form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?.name");
+
+		// flattening of nested collections
+		CollectionValue expected2 = idResolver.createBagOfEach(typeId, ocl.jim, ocl.pkg4, ocl.pkg5);
+		// ownedPackages is Set<Package>
+		// ownedPackages->collectNested(ownedPackages) is Bag<Set<Package>>
+		// ownedPackages->collectNested(ownedPackages)->flatten() is Bag<Package>
+		ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?.ownedPackages");
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->collect(oclAsType(String)).size()");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests that parsing fails, in the case of an unknown property in a
+	 * collection navigation, with an appropriate parse failure, not a
+	 * <code>ClassCastException</code>.
+	 */
+	@Test public void test_implicitCollect_unknownAttribute_232669() {
+		MyOCL ocl = createOCL();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
+			metamodelManager.getASClass("Package"), "ownedPackages.unknownAttribute",
+			PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Package)", "unknownAttribute");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests that parsing fails, in the case of an unknown operation in a
+	 * collection navigation, with an appropriate parse failure, not a
+	 * <code>ClassCastException</code>.
+	 */
+	@Test public void test_implicitCollect_unknownOperation_232669() {
+		MyOCL ocl = createOCL();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		ocl.assertBadInvariant(SemanticException.class, Diagnostic.ERROR,
+			metamodelManager.getASClass("Package"), "ownedPackages.unknownOperation(self)",
+			PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Set(Package)", "unknownOperation", PivotConstants.SELF_NAME);
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests that the collect() iterator correctly flattens its result.
+	 */
+	@Test public void test_collect_flattens_217461() {
+		MyOCL ocl = createOCL();
+		IdResolver idResolver = ocl.getIdResolver();
+		String self = "foo";
+		CollectionTypeId typeId = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
+		SequenceValue expected = idResolver.createSequenceOfEach(typeId, "THIS AND", "THAT", "THE OTHER");
+
+		ocl.assertQueryEquals(self, expected, "Sequence{Sequence{'this and', 'that'}, Sequence{'the other'}}->collect(s : Sequence(String) | s.toUpperCase())");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests that the collect() iterator correctly deals with empty collections.
+	 */
+	@Test public void test_collect_empty_217461() {
+		MyOCL ocl = createOCL();
+		String self = "foo";
+		List<String> expected = Collections.emptyList();
+
+		ocl.assertQueryEquals(self, expected, "let c : Sequence(OrderedSet(String)) = Sequence{} in c->collect(s : OrderedSet(String) | s.toUpperCase())");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests the collectNested() iterator.
+	 */
+	@Test public void test_collectNested() {
+		MyOCL ocl = createOCL();
+		MetamodelManager metamodelManager = ocl.getMetamodelManager();
+		IdResolver idResolver = ocl.getIdResolver();
+		@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
+		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
+		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
+
+		// complete form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collectNested(p : ocl::Package | p.name)");
+
+		// shorter form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collectNested(p | p.name)");
+
+		// shortest form
+		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collectNested(name)");
+
+		// nested collections not flattened
 		Set<org.eclipse.ocl.pivot.Package> e1 = Collections.singleton(ocl.jim);
-        Set<?> e2 = Collections.EMPTY_SET;
-        HashSet<Object> e3 = new HashSet<Object>(Arrays.asList(new Object[] {ocl.pkg4, ocl.pkg5}));
+		Set<?> e2 = Collections.EMPTY_SET;
+		HashSet<Object> e3 = new HashSet<Object>(Arrays.asList(new Object[] {ocl.pkg4, ocl.pkg5}));
 		CollectionValue expected2 = idResolver.createBagOfEach(typeId, e1, e2, e3);
 
-        ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?->collectNested(ownedPackages)");
-        // Bug 423489 - ensure return is collection of body type not source type
-        ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->collectNested(oclAsType(String)).size()");
-        ocl.assertQueryResults(ocl.pkg1, "Sequence{Sequence{1,2},Sequence{3,4}}", "let s:Sequence(Sequence(OclAny)) = Sequence{Sequence{'a','bb'},Sequence{'ccc','dddd'}} in s->collectNested(oclAsType(Sequence(String)))->collectNested(s | s.size())");
-        // Bug 423490 - ensure nested iteration uses iterator as implicit source
-        ocl.assertQueryResults(ocl.pkg1, "Sequence{2,1}", "let s:Sequence(Sequence(OclAny)) = Sequence{Sequence{'a','bb'},Sequence{'ccc'}} in s->collectNested(size())");
+		ocl.assertQueryEquals(ocl.pkg1, expected2, "ownedPackages?->collectNested(ownedPackages)");
+		// Bug 423489 - ensure return is collection of body type not source type
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{1,2}", "let s:Sequence(OclAny) = Sequence{'a','bb'} in s->collectNested(oclAsType(String)).size()");
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{Sequence{1,2},Sequence{3,4}}", "let s:Sequence(Sequence(OclAny)) = Sequence{Sequence{'a','bb'},Sequence{'ccc','dddd'}} in s->collectNested(oclAsType(Sequence(String)))->collectNested(s | s.size())");
+		// Bug 423490 - ensure nested iteration uses iterator as implicit source
+		ocl.assertQueryResults(ocl.pkg1, "Sequence{2,1}", "let s:Sequence(Sequence(OclAny)) = Sequence{Sequence{'a','bb'},Sequence{'ccc'}} in s->collectNested(size())");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests the sortedBy() iterator.
-     */
-    @Test public void test_sortedBy() {
+	/**
+	 * Tests the sortedBy() iterator.
+	 */
+	@Test public void test_sortedBy() {
 		MyOCL ocl = createOCL();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		IdResolver idResolver = ocl.getIdResolver();
-    	@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
+		@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
 		CollectionTypeId typeId = TypeId.ORDERED_SET.getSpecializedId(packageType.getTypeId());
-        OrderedSetValue expectedSet = idResolver.createOrderedSetOfEach(typeId, ocl.bob, ocl.pkg2, ocl.pkg3);
+		OrderedSetValue expectedSet = idResolver.createOrderedSetOfEach(typeId, ocl.bob, ocl.pkg2, ocl.pkg3);
 
-        // complete form
-        ocl.assertQueryEquals(ocl.pkg1, expectedSet, "ownedPackages?->sortedBy(p : ocl::Package | p.name)");
+		// complete form
+		ocl.assertQueryEquals(ocl.pkg1, expectedSet, "ownedPackages?->sortedBy(p : ocl::Package | p.name)");
 
-        // shorter form
-        ocl.assertQueryEquals(ocl.pkg1, expectedSet, "ownedPackages?->sortedBy(p | p.name)");
+		// shorter form
+		ocl.assertQueryEquals(ocl.pkg1, expectedSet, "ownedPackages?->sortedBy(p | p.name)");
 
-        // shortest form
-        ocl.assertQueryEquals(ocl.pkg1, expectedSet, "ownedPackages?->sortedBy(name)");
+		// shortest form
+		ocl.assertQueryEquals(ocl.pkg1, expectedSet, "ownedPackages?->sortedBy(name)");
 
-    	CollectionTypeId stringsTypeId = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
-        SequenceValue expected = idResolver.createSequenceOfEach(stringsTypeId, "a", "b", "c", "d", "e");
-        ocl.assertQueryEquals(ocl.pkg1, expected, "Bag{'d', 'b', 'e', 'a', 'c'}->sortedBy(e | e)");
-        ocl.assertQueryResults(null, "Sequence{'x', 'aa', 'zzz', 'zzz', 'zzz', 'yyyy', 'yyyy'}", "Bag{'x', 'yyyy', 'zzz', 'aa', 'zzz', 'yyyy', 'zzz'}->sortedBy(size())");
+		CollectionTypeId stringsTypeId = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
+		SequenceValue expected = idResolver.createSequenceOfEach(stringsTypeId, "a", "b", "c", "d", "e");
+		ocl.assertQueryEquals(ocl.pkg1, expected, "Bag{'d', 'b', 'e', 'a', 'c'}->sortedBy(e | e)");
+		ocl.assertQueryResults(null, "Sequence{'x', 'aa', 'zzz', 'zzz', 'zzz', 'yyyy', 'yyyy'}", "Bag{'x', 'yyyy', 'zzz', 'aa', 'zzz', 'yyyy', 'zzz'}->sortedBy(size())");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests the closure() iterator.
-     */
-    // pkg1
-    // pkg1::pkg2
-    // pkg1::pkg2::jim
-    // pkg1::bob
-    // pkg1::pkg3
-    // pkg1::pkg3::pkg4
-    // pkg1::pkg3::pkg5
-    // pkg1::pkg3::pkg5::george
-    @Test public void test_closure() {
+	/**
+	 * Tests the closure() iterator.
+	 */
+	// pkg1
+	// pkg1::pkg2
+	// pkg1::pkg2::jim
+	// pkg1::bob
+	// pkg1::pkg3
+	// pkg1::pkg3::pkg4
+	// pkg1::pkg3::pkg5
+	// pkg1::pkg3::pkg5::george
+	@Test public void test_closure() {
 		MyOCL ocl = createOCL();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		IdResolver idResolver = ocl.getIdResolver();
-    	@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
+		@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
-    	CollectionValue expected1 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg3, ocl.pkg5, ocl.george); // closure does include sources (george)
-        ocl.assertQueryEquals(ocl.george, expected1, "self.oclAsType(Package)->closure(owningPackage)");
+		CollectionValue expected1 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg3, ocl.pkg5, ocl.george); // closure does include sources (george)
+		ocl.assertQueryEquals(ocl.george, expected1, "self.oclAsType(Package)->closure(owningPackage)");
 
-        CollectionValue expected2 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
-//        CollectionValue expected2a = metamodelManager.createOrderedSetValue(null, pkg2, jim, bob, pkg3, pkg4, pkg5, george);
-        ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages)");
-// FIXME not a valid test for UML's unordered nested packages
-//        ocl.assertQueryEquals(ocl.pkg1, expected2a, "self->asSequence()->closure(ownedPackages)");
-        ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages->asSequence())");
-	    SetValue expected3 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
-        ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->asBag()->closure(ownedPackages)");
-        ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->closure(ownedPackages->asBag())");
+		CollectionValue expected2 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
+		//        CollectionValue expected2a = metamodelManager.createOrderedSetValue(null, pkg2, jim, bob, pkg3, pkg4, pkg5, george);
+		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages)");
+		// FIXME not a valid test for UML's unordered nested packages
+		//        ocl.assertQueryEquals(ocl.pkg1, expected2a, "self->asSequence()->closure(ownedPackages)");
+		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages->asSequence())");
+		SetValue expected3 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
+		ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->asBag()->closure(ownedPackages)");
+		ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->closure(ownedPackages->asBag())");
 
-        // empty closure
-        CollectionTypeId collectedId = expected1.getTypeId();
-//        @SuppressWarnings("unused") DomainType elementType = collectionType.getElementType();
+		// empty closure
+		CollectionTypeId collectedId = expected1.getTypeId();
+		//        @SuppressWarnings("unused") DomainType elementType = collectionType.getElementType();
 		ocl.assertQueryEquals(ocl.pkg1, idResolver.createSetOfEach(collectedId, ocl.pkg1), "self.oclAsType(Package)->closure(owningPackage)");
-//WIP        ocl.assertQueryNotEquals(ocl.pkg1, getEmptySetValue(), "self->closure(owningPackage)");
-        // empty closure
-        ocl.assertQueryEquals(ocl.pkg1, idResolver.createOrderedSetOfEach(collectedId, ocl.pkg1), "self.oclAsType(Package)->asSequence()->closure(owningPackage)");
-//WIP 		ocl.assertQueryNotEquals(ocl.pkg1, metamodelManager.createOrderedSetValue(metamodelManager.getOrderedSetType(elementType)), "self->asSequence()->closure(owningPackage)");
+		//WIP        ocl.assertQueryNotEquals(ocl.pkg1, getEmptySetValue(), "self->closure(owningPackage)");
+		// empty closure
+		ocl.assertQueryEquals(ocl.pkg1, idResolver.createOrderedSetOfEach(collectedId, ocl.pkg1), "self.oclAsType(Package)->asSequence()->closure(owningPackage)");
+		//WIP 		ocl.assertQueryNotEquals(ocl.pkg1, metamodelManager.createOrderedSetValue(metamodelManager.getOrderedSetType(elementType)), "self->asSequence()->closure(owningPackage)");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that the closure() iterator handles cycles.
-     */
-    @Test public void test_closure_cycles() {
+	/**
+	 * Tests that the closure() iterator handles cycles.
+	 */
+	@Test public void test_closure_cycles() {
 		MyOCL ocl = createOCL();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		IdResolver idResolver = ocl.getIdResolver();
-    	@SuppressWarnings("null") org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = metamodelManager.getASClass("Package");
+		@SuppressWarnings("null") org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = metamodelManager.getASClass("Package");
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
-        Property ownedPackages = getAttribute(packageMetaclass, "ownedPackages", packageMetaclass);
-        Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
-        SetValue expected = idResolver.createSetOfEach(typeId, ownedPackages, owningPackage); // cyclic closure *does* include self
-        ocl.assertQueryEquals(owningPackage, expected, "self->closure(opposite)");
-        ocl.assertQueryEquals(ownedPackages, expected, "self->closure(opposite)");
+		Property ownedPackages = getAttribute(packageMetaclass, "ownedPackages", packageMetaclass);
+		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
+		SetValue expected = idResolver.createSetOfEach(typeId, ownedPackages, owningPackage); // cyclic closure *does* include self
+		ocl.assertQueryEquals(owningPackage, expected, "self->closure(opposite)");
+		ocl.assertQueryEquals(ownedPackages, expected, "self->closure(opposite)");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests parsing the closure of operation calls.
-     */
-    @Test public void test_closure_operations() {
+	/**
+	 * Tests parsing the closure of operation calls.
+	 */
+	@Test public void test_closure_operations() {
 		MyOCL ocl = createOCL();
-    	Resource fakeResource = new XMIResourceFactoryImpl().createResource(URI.createURI("fake"));
-    	Model fakeRoot = PivotUtil.createModel(null);
-    	org.eclipse.ocl.pivot.Package fakePkg = PivotUtil.createOwnedPackage(fakeRoot, "fake");
-    	fakeResource.getContents().add(fakePkg);
-        org.eclipse.ocl.pivot.Class fake = ocl.createOwnedClass(fakePkg, "Fake", false);
-        ocl.createGeneralization(fake, ocl.getStandardLibrary().getOclAnyType());
-        Operation getFakes = ocl.createOwnedOperation(fake, "getFakes", null, null, fake, true);
-        getFakes.setType(ocl.getCompleteEnvironment().getSetType(fake, false, null, null));
+		Resource fakeResource = new XMIResourceFactoryImpl().createResource(URI.createURI("fake"));
+		Model fakeRoot = PivotUtil.createModel(null);
+		org.eclipse.ocl.pivot.Package fakePkg = PivotUtil.createOwnedPackage(fakeRoot, "fake");
+		fakeResource.getContents().add(fakePkg);
+		org.eclipse.ocl.pivot.Class fake = ocl.createOwnedClass(fakePkg, "Fake", false);
+		ocl.createGeneralization(fake, ocl.getStandardLibrary().getOclAnyType());
+		Operation getFakes = ocl.createOwnedOperation(fake, "getFakes", null, null, fake, true);
+		getFakes.setType(ocl.getCompleteEnvironment().getSetType(fake, false, null, null));
 
-        ocl.assertQuery(fake, "self->closure(getFakes())");
+		ocl.assertQuery(fake, "self->closure(getFakes())");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests the validation of the closure() iterator.
-     *
+	/**
+	 * Tests the validation of the closure() iterator.
+	 *
     @Test public void test_closureValidation() {
 		MyOCL ocl = createMyOCL();
         // non-recursive reference
@@ -602,88 +602,88 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.dispose();
     } */
 
-    /**
-     * Tests the validation of the closure() iterator for conformance of the
-     * body type with the iterator variable (source element) type.
-     */
-    @Test public void test_closureValidation_typeConformance_154695() {
+	/**
+	 * Tests the validation of the closure() iterator for conformance of the
+	 * body type with the iterator variable (source element) type.
+	 */
+	@Test public void test_closureValidation_typeConformance_154695() {
 		MyOCL ocl = createOCL();
-        StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
-        CompleteEnvironment completeEnvironment = ocl.getCompleteEnvironment();
-    	Resource fakeResource = new XMIResourceFactoryImpl().createResource(URI.createURI("fake"));
-    	Model fakeRoot = PivotUtil.createModel(null);
-    	org.eclipse.ocl.pivot.Package fakePkg = PivotUtil.createOwnedPackage(fakeRoot, "fake");
-    	fakeResource.getContents().add(fakePkg);
-        org.eclipse.ocl.pivot.Class fake = ocl.createOwnedClass(fakePkg, "Fake", false);
+		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteEnvironment completeEnvironment = ocl.getCompleteEnvironment();
+		Resource fakeResource = new XMIResourceFactoryImpl().createResource(URI.createURI("fake"));
+		Model fakeRoot = PivotUtil.createModel(null);
+		org.eclipse.ocl.pivot.Package fakePkg = PivotUtil.createOwnedPackage(fakeRoot, "fake");
+		fakeResource.getContents().add(fakePkg);
+		org.eclipse.ocl.pivot.Class fake = ocl.createOwnedClass(fakePkg, "Fake", false);
 		@SuppressWarnings("unused")
-        Operation getFakes = ocl.createOwnedOperation(fake, "getFakes", null, null, completeEnvironment.getSetType(fake, false, null, null), true);
+		Operation getFakes = ocl.createOwnedOperation(fake, "getFakes", null, null, completeEnvironment.getSetType(fake, false, null, null), true);
 
-        // subclass the Fake class
-        org.eclipse.ocl.pivot.Class subFake = ocl.createOwnedClass(fakePkg, "Subfake", false);
-        ocl.createGeneralization(subFake, fake);
-        ocl.createGeneralization(fake, standardLibrary.getOclAnyType());
+		// subclass the Fake class
+		org.eclipse.ocl.pivot.Class subFake = ocl.createOwnedClass(fakePkg, "Subfake", false);
+		ocl.createGeneralization(subFake, fake);
+		ocl.createGeneralization(fake, standardLibrary.getOclAnyType());
 
-        // get sub-fakes from a fake
-        @SuppressWarnings("unused")
+		// get sub-fakes from a fake
+		@SuppressWarnings("unused")
 		Operation getSubFakes = ocl.createOwnedOperation(fake, "getSubFakes", null, null, completeEnvironment.getSetType(subFake, false, null, null), true);
- 
-//        helper.setContext(subFake);
 
-        // this should not parse because the result of the closure
-        // expression
-        // is more general than the iterator variable, so cannot be
-        // assigned recursively
-        ocl.assertValidationErrorQuery(subFake, "self->closure(getFakes())",
-        	PivotMessagesInternal.IncompatibleBodyType_WARNING_, fake, subFake);
+		//        helper.setContext(subFake);
 
-        // this should parse OK because the result of the closure expression
-        // is more specific than the iterator variable, so it can be
-        // assigned recursively
-        ocl.assertQuery(fake, "self->closure(getSubFakes())");
+		// this should not parse because the result of the closure
+		// expression
+		// is more general than the iterator variable, so cannot be
+		// assigned recursively
+		ocl.assertValidationErrorQuery(subFake, "self->closure(getFakes())",
+			PivotMessagesInternal.IncompatibleBodyType_WARNING_, fake, subFake);
+
+		// this should parse OK because the result of the closure expression
+		// is more specific than the iterator variable, so it can be
+		// assigned recursively
+		ocl.assertQuery(fake, "self->closure(getSubFakes())");
 		ocl.dispose();
-    }
-    /**
-     * Tests that the closure() body is not necessarily compatible.
-     */
-    @Test public void test_closure_body_393509() {
+	}
+	/**
+	 * Tests that the closure() body is not necessarily compatible.
+	 */
+	@Test public void test_closure_body_393509() {
 		MyOCL ocl = createOCL();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		IdResolver idResolver = ocl.getIdResolver();
-    	@SuppressWarnings("null") org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = metamodelManager.getASClass("Package");
-    	@SuppressWarnings("null") org.eclipse.ocl.pivot.@NonNull Class propertyMetaclass = metamodelManager.getASClass("Property");
+		@SuppressWarnings("null") org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = metamodelManager.getASClass("Package");
+		@SuppressWarnings("null") org.eclipse.ocl.pivot.@NonNull Class propertyMetaclass = metamodelManager.getASClass("Property");
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
-        Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
-        SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
-        ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
-        ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(oclContainer())", PivotMessagesInternal.IncompatibleBodyType_WARNING_, "OclElement", "Property");
+		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
+		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
+		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
+		ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(oclContainer())", PivotMessagesInternal.IncompatibleBodyType_WARNING_, "OclElement", "Property");
 		ocl.dispose();
-    }
+	}
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	@Test public void test_closure_recursions_401302() throws IOException {
 		MyOCL ocl = createOCL();
-    	if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
-    		OCLinEcoreStandaloneSetup.doSetup();
-    	}
+		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
+			OCLinEcoreStandaloneSetup.doSetup();
+		}
 		String nodeModel =
-			"package nodes : nodes = 'http://nodes'{\n" +
-//			"    class Root {\n" +
-//			"    	property nodes : Node[*] {composes};\n" +
-//			"	 }\n" +
-			"    class Node {\n" +
-			"    	property nodes : Node[*] {ordered,!unique};\n" +
-			"    	property name : String;\n" +
-			"	 }\n" +
-			"}\n";
+				"package nodes : nodes = 'http://nodes'{\n" +
+						//			"    class Root {\n" +
+						//			"    	property nodes : Node[*] {composes};\n" +
+						//			"	 }\n" +
+						"    class Node {\n" +
+						"    	property nodes : Node[*] {ordered,!unique};\n" +
+						"    	property name : String;\n" +
+						"	 }\n" +
+						"}\n";
 		URI uri = createEcoreFile(ocl, "NodeModel", nodeModel);
 		Resource ecoreResource = ocl.getResourceSet().getResource(uri, true);
 		EPackage nodesEPackage = (EPackage) ecoreResource.getContents().get(0);
-//		EClass rootEClass = (EClass) nodesEPackage.getEClassifier("Root");
+		//		EClass rootEClass = (EClass) nodesEPackage.getEClassifier("Root");
 		EClass nodeEClass = (EClass) nodesEPackage.getEClassifier("Node");
 		EAttribute nameEAttribute = (EAttribute) nodeEClass.getEStructuralFeature("name");
 		EReference nodesEReference = (EReference) nodeEClass.getEStructuralFeature("nodes");
 		EFactory nodesEFactory = nodesEPackage.getEFactoryInstance();
-//		EObject root = nodesEFactory.create(rootEClass);
+		//		EObject root = nodesEFactory.create(rootEClass);
 		EObject node1 = nodesEFactory.create(nodeEClass);
 		EObject node2 = nodesEFactory.create(nodeEClass);
 		EObject node3 = nodesEFactory.create(nodeEClass);
@@ -710,333 +710,333 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
-    /**
-     * Tests that when the body of an iterator results in invalid, the entire
-     * iterator expression's value is invalid.
-     */
-    @Test public void test_forAll_invalidBody_142518() {
+	/**
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
+	@Test public void test_forAll_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-        ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->forAll('true')");		// Bug 415669
-    	ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->forAll(2)");			// Bug 415669
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->forAll('true')");		// Bug 415669
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->forAll(2)");			// Bug 415669
 
-    	ocl.assertQueryNull(EcorePackage.eINSTANCE,
-            "let b:Boolean = null in Bag{1, 2, 3}->forAll(b and b)");
+		ocl.assertQueryNull(EcorePackage.eINSTANCE,
+				"let b:Boolean = null in Bag{1, 2, 3}->forAll(b and b)");
 
-        // check that the "check" API interprets invalid as a constraint
-        // violation
-    	ocl.assertInvariantFalse(EcorePackage.eINSTANCE,
-            "let b:Boolean = null in Bag{1}->forAll(b and b)");
+		// check that the "check" API interprets invalid as a constraint
+		// violation
+		ocl.assertInvariantFalse(EcorePackage.eINSTANCE,
+				"let b:Boolean = null in Bag{1}->forAll(b and b)");
 
-        // same deal for a null value (in the forAll case)
-        ocl.assertQueryNull(EcorePackage.eINSTANCE,
-            "Bag{1, 2, 3}->forAll(null)");
-    	ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-                "Bag{1, 2, 3}->forAll(Sequence{}->first())");
+		// same deal for a null value (in the forAll case)
+		ocl.assertQueryNull(EcorePackage.eINSTANCE,
+				"Bag{1, 2, 3}->forAll(null)");
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"Bag{1, 2, 3}->forAll(Sequence{}->first())");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that when the body of an iterator results in invalid, the entire
-     * iterator expression's value is invalid.
-     */
-    @Test public void test_exists_invalidBody_142518() {
+	/**
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
+	@Test public void test_exists_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-    	ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->exists('true')");		// Bug 415669
-    	ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->exists(2)");			// Bug 415669
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->exists('true')");		// Bug 415669
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->exists(2)");			// Bug 415669
 
-    	ocl.assertQueryNull(EcorePackage.eINSTANCE,
-            "let b:Boolean = null in Bag{1, 2, 3}->exists(b and b)");
+		ocl.assertQueryNull(EcorePackage.eINSTANCE,
+				"let b:Boolean = null in Bag{1, 2, 3}->exists(b and b)");
 
-        // same deal for a null value (in the exists case)
-    	ocl.assertQueryNull(EcorePackage.eINSTANCE,
-                "Bag{1, 2, 3}->exists(null)");
-    	ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-                "Bag{1, 2, 3}->exists(Sequence{}->first())");
+		// same deal for a null value (in the exists case)
+		ocl.assertQueryNull(EcorePackage.eINSTANCE,
+				"Bag{1, 2, 3}->exists(null)");
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"Bag{1, 2, 3}->exists(Sequence{}->first())");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that when the body of an iterator results in invalid, the entire
-     * iterator expression's value is invalid.
-     */
-    @Test public void test_one_invalidBody_142518() {
+	/**
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
+	@Test public void test_one_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-    	ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->one('true')");		// Bug 415669
-    	ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->one(2)");			// Bug 415669
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->one('true')");		// Bug 415669
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->one(2)");			// Bug 415669
 
-    	ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "let b:Boolean = null in Bag{1, 2, 3}->one(b and b)");
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"let b:Boolean = null in Bag{1, 2, 3}->one(b and b)");
 
-        // same deal for a null value (in the one case)
-        ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "Bag{1, 2, 3}->one(null.oclAsType(Boolean))");
+		// same deal for a null value (in the one case)
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"Bag{1, 2, 3}->one(null.oclAsType(Boolean))");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that when the body of an iterator results in invalid, the entire
-     * iterator expression's value is invalid.
-     */
-    @Test public void test_any_invalidBody_142518() {
+	/**
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
+	@Test public void test_any_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-	    ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->any('true')");		// Bug 415669
-	    ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->any(2)");			// Bug 415669   	
-    	
-        ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "let b:Boolean = null in Bag{1, 2, 3}->any(b and b)");
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->any('true')");		// Bug 415669
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->any(2)");			// Bug 415669
 
-        // same deal for a null value (in the any case)
-        ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "Bag{1, 2, 3}->any(null.oclAsType(Boolean))");
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"let b:Boolean = null in Bag{1, 2, 3}->any(b and b)");
+
+		// same deal for a null value (in the any case)
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"Bag{1, 2, 3}->any(null.oclAsType(Boolean))");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that when the body of an iterator results in invalid, the entire
-     * iterator expression's value is invalid.
-     */
-    @Test public void test_select_invalidBody_142518() {
+	/**
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
+	@Test public void test_select_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-    	ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->select('true')");		// Bug 415669
-    	ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->select(2)");			// Bug 415669
-    	
-        ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "let b:Boolean = null in Bag{1, 2, 3}->select(b and b)");
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->select('true')");		// Bug 415669
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->select(2)");			// Bug 415669
 
-        // same deal for a null value (in the exists case)
-        ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "Bag{1, 2, 3}->select(null.oclAsType(Boolean))");
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"let b:Boolean = null in Bag{1, 2, 3}->select(b and b)");
+
+		// same deal for a null value (in the exists case)
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"Bag{1, 2, 3}->select(null.oclAsType(Boolean))");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that when the body of an iterator results in invalid, the entire
-     * iterator expression's value is invalid.
-     */
-    @Test public void test_reject_invalidBody_142518() {
+	/**
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
+	@Test public void test_reject_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-    	ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->reject('true')");		// Bug 415669
-    	ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->reject(2)");			// Bug 415669
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->reject('true')");		// Bug 415669
+		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->reject(2)");			// Bug 415669
 
-    	ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "let b:Boolean = null in Bag{1, 2, 3}->reject(b and b)");
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"let b:Boolean = null in Bag{1, 2, 3}->reject(b and b)");
 
-        // same deal for a null value (in the exists case)
-        ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "Bag{1, 2, 3}->reject(null.oclAsType(Boolean))");
+		// same deal for a null value (in the exists case)
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"Bag{1, 2, 3}->reject(null.oclAsType(Boolean))");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that when the body of an iterator results in invalid, the
-     * isUnique iterator expression treats it like any other value.
-     */
-    @Test public void test_isUnique_invalidBody_142518() {
+	/**
+	 * Tests that when the body of an iterator results in invalid, the
+	 * isUnique iterator expression treats it like any other value.
+	 */
+	@Test public void test_isUnique_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-    	ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "Bag{1, 2, 3}->isUnique(Sequence{}->first())");
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+			"Bag{1, 2, 3}->isUnique(Sequence{}->first())");
 
-        ocl.assertQueryFalse(EcorePackage.eINSTANCE,
-            "let b:Boolean = null in Bag{1, 2, 3}->isUnique(null)");
+		ocl.assertQueryFalse(EcorePackage.eINSTANCE,
+				"let b:Boolean = null in Bag{1, 2, 3}->isUnique(null)");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that when the body of an iterator results in invalid, the entire
-     * iterator expression's value is invalid.
-     */
-    @Test public void test_collect_invalidBody_142518() {
+	/**
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
+	@Test public void test_collect_invalidBody_142518() {
 		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
-        ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "Bag{1, 2, 3}->collect(Sequence{}->first())");
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+			"Bag{1, 2, 3}->collect(Sequence{}->first())");
 
-        // in the case of a null value, null is allowed in a collection, so
-        // it does not result in invalid
-    	CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.OCL_ANY);
-        BagValue expected = idResolver.createBagOfEach(typeId, null, null, null);
-        ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
-            "let b:Boolean = null in Bag{1, 2, 3}->collect(null)");
+		// in the case of a null value, null is allowed in a collection, so
+		// it does not result in invalid
+		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.OCL_ANY);
+		BagValue expected = idResolver.createBagOfEach(typeId, null, null, null);
+		ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
+			"let b:Boolean = null in Bag{1, 2, 3}->collect(null)");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that when the body of an iterator results in invalid, the entire
-     * iterator expression's value is invalid.
-     */
+	/**
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
 	@Test public void test_collectNested_invalidBody_142518() {
 		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
-        ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "Bag{1, 2, 3}->collectNested(Sequence{}->first())");
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+			"Bag{1, 2, 3}->collectNested(Sequence{}->first())");
 
-        // in the case of a null value, null is allowed in a collection, so
-        // it does not result in invalid
-    	Set<BigInteger> e1 = Collections.singleton(BigInteger.valueOf(1));
-    	Object e2 = null;
-    	Set<BigInteger> e3 = Collections.singleton(BigInteger.valueOf(3));
-    	CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.INTEGER);
-        BagValue expected = idResolver.createBagOfEach(typeId, e1, e2, e3);
-        ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
-            "let b:Boolean = null in Bag{1, 2, 3}->collectNested(e | if e = 2 then null else Set{e} endif)");
+		// in the case of a null value, null is allowed in a collection, so
+		// it does not result in invalid
+		Set<BigInteger> e1 = Collections.singleton(BigInteger.valueOf(1));
+		Object e2 = null;
+		Set<BigInteger> e3 = Collections.singleton(BigInteger.valueOf(3));
+		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.INTEGER);
+		BagValue expected = idResolver.createBagOfEach(typeId, e1, e2, e3);
+		ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
+			"let b:Boolean = null in Bag{1, 2, 3}->collectNested(e | if e = 2 then null else Set{e} endif)");
 		ocl.dispose();
-    }
-
-    /**
-     * Tests that when the body of an iterator results in invalid, the entire
-     * iterator expression's value is invalid.
-     */
-    @Test public void test_closure_invalidBody_142518() {
-		MyOCL ocl = createOCL();
-        ocl.assertQueryInvalid(ocl.getUMLMetamodel(),
-            "let c : ocl::Type = invalid in ownedClasses->closure(c)", PivotMessages.InvalidLiteral, InvalidValueException.class);
-
-        // in the case of a null value, null is allowed in a collection, so
-        // it does not result in invalid
-        ocl.assertQueryResults(null, "Set{5, null}",
-    		"let c : Set(Integer) = Set{null} in 5->closure(c)");
- 
-//        Set<Object> expected = Collections.singleton(getNull());
-//        ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
-//        	"let c : Set(ocl::Type) = Set{null} in ownedType->closure(c)");
-		ocl.dispose();
-    }
+	}
 
 	/**
-     * Tests that when the body of an iterator results in invalid, the entire
-     * iterator expression's value is invalid.
-     */
-    @Test public void test_sortedBy_invalidBody_142518() {
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
+	@Test public void test_closure_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-        ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "let s : String = null in Bag{1, 2, 3}->sortedBy(s.size())", StringUtil.bind(PivotMessages.TypedValueRequired, TypeId.STRING_NAME, ValueUtil.getTypeName(null)), InvalidValueException.class);
+		ocl.assertQueryInvalid(ocl.getUMLMetamodel(),
+			"let c : ocl::Type = invalid in ownedClasses->closure(c)", PivotMessages.InvalidLiteral, InvalidValueException.class);
 
-        // same deal for null values
-        ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
-            "Bag{1, 2, 3}->sortedBy(null)", StringUtil.bind(PivotMessages.UndefinedBody, "sortedBy"), InvalidValueException.class);
+		// in the case of a null value, null is allowed in a collection, so
+		// it does not result in invalid
+		ocl.assertQueryResults(null, "Set{5, null}",
+				"let c : Set(Integer) = Set{null} in 5->closure(c)");
+
+		//        Set<Object> expected = Collections.singleton(getNull());
+		//        ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
+		//        	"let c : Set(ocl::Type) = Set{null} in ownedType->closure(c)");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that the generic iterate() iterator returns invalid when the
-     * source collection is null or invalid.
-     */
-    @Test public void test_iterateWithNullSource_143996() {
+	/**
+	 * Tests that when the body of an iterator results in invalid, the entire
+	 * iterator expression's value is invalid.
+	 */
+	@Test public void test_sortedBy_invalidBody_142518() {
 		MyOCL ocl = createOCL();
-        ocl.assertQueryInvalid(ocl.pkg1,
-            "let e : Collection(ocl::Package) = null in e->iterate(" +
-                "p : ocl::Package; s : String = '' | s.concat(p.name))", StringUtil.bind(PivotMessages.TypedValueRequired, TypeId.COLLECTION_NAME, ValueUtil.getTypeName(null)), InvalidValueException.class);
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+			"let s : String = null in Bag{1, 2, 3}->sortedBy(s.size())", StringUtil.bind(PivotMessages.TypedValueRequired, TypeId.STRING_NAME, ValueUtil.getTypeName(null)), InvalidValueException.class);
 
-        ocl.assertQueryInvalid(ocl.pkg1,
-            "let e : Collection(ocl::Package) = invalid in e->iterate(" +
-                "p : ocl::Package; s : String = '' | s.concat(p.name))", PivotMessages.InvalidLiteral, InvalidValueException.class);
+		// same deal for null values
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+			"Bag{1, 2, 3}->sortedBy(null)", StringUtil.bind(PivotMessages.UndefinedBody, "sortedBy"), InvalidValueException.class);
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests that the exists() iterator return invalid when the source
-     * collection is null or invalid.
-     */
-    @Test public void test_existsWithNullSource_143996() {
+	/**
+	 * Tests that the generic iterate() iterator returns invalid when the
+	 * source collection is null or invalid.
+	 */
+	@Test public void test_iterateWithNullSource_143996() {
 		MyOCL ocl = createOCL();
-    	ocl.assertQueryInvalid(ocl.pkg1,
-            "let e : Collection(ocl::Package) = null in e->exists(" +
-                "p : ocl::Package | p.name = 'bob')", StringUtil.bind(PivotMessages.TypedValueRequired, TypeId.COLLECTION_NAME, ValueUtil.getTypeName(null)), InvalidValueException.class);
+		ocl.assertQueryInvalid(ocl.pkg1,
+			"let e : Collection(ocl::Package) = null in e->iterate(" +
+					"p : ocl::Package; s : String = '' | s.concat(p.name))", StringUtil.bind(PivotMessages.TypedValueRequired, TypeId.COLLECTION_NAME, ValueUtil.getTypeName(null)), InvalidValueException.class);
 
-    	ocl.assertQueryInvalid(ocl.pkg1,
-            "let e : Collection(ocl::Package) = invalid in e->exists(" +
-                "p : ocl::Package | p.name = 'bob')", PivotMessages.InvalidLiteral, InvalidValueException.class);
+		ocl.assertQueryInvalid(ocl.pkg1,
+			"let e : Collection(ocl::Package) = invalid in e->iterate(" +
+					"p : ocl::Package; s : String = '' | s.concat(p.name))", PivotMessages.InvalidLiteral, InvalidValueException.class);
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests the exists iterator with multiple iterator variables.
-     */
-    @Test public void test_exists_multipleIteratorVariables() {
+	/**
+	 * Tests that the exists() iterator return invalid when the source
+	 * collection is null or invalid.
+	 */
+	@Test public void test_existsWithNullSource_143996() {
+		MyOCL ocl = createOCL();
+		ocl.assertQueryInvalid(ocl.pkg1,
+			"let e : Collection(ocl::Package) = null in e->exists(" +
+					"p : ocl::Package | p.name = 'bob')", StringUtil.bind(PivotMessages.TypedValueRequired, TypeId.COLLECTION_NAME, ValueUtil.getTypeName(null)), InvalidValueException.class);
+
+		ocl.assertQueryInvalid(ocl.pkg1,
+			"let e : Collection(ocl::Package) = invalid in e->exists(" +
+					"p : ocl::Package | p.name = 'bob')", PivotMessages.InvalidLiteral, InvalidValueException.class);
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests the exists iterator with multiple iterator variables.
+	 */
+	@Test public void test_exists_multipleIteratorVariables() {
 		MyOCL ocl = createOCL();
 		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | e1 = e2)");
 		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | (e1 + e2) = 7)");
-        ocl.assertInvariantFalse(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | (e1 + e2) = 0)");
+		ocl.assertInvariantFalse(ocl.pkg1, "Sequence{1, 2, 3, 4}->exists(e1, e2 | (e1 + e2) = 0)");
 
-        // when there are no values, the the desired result implictly
-        // does not occur
-        ocl.assertInvariantFalse(ocl.pkg1, "Sequence{}->exists(e1, e2 | e1 = e2)");
+		// when there are no values, the the desired result implictly
+		// does not occur
+		ocl.assertInvariantFalse(ocl.pkg1, "Sequence{}->exists(e1, e2 | e1 = e2)");
 		ocl.dispose();
-    }
+	}
 
-    /**
-     * Tests the forAll iterator with multiple iterator variables.
-     */
-    @Test public void test_forAll_multipleIteratorVariables() {
+	/**
+	 * Tests the forAll iterator with multiple iterator variables.
+	 */
+	@Test public void test_forAll_multipleIteratorVariables() {
 		MyOCL ocl = createOCL();
 		ocl.assertInvariantFalse(ocl.pkg1, "Sequence{1, 2, 3, 4}->forAll(e1, e2 | e1 = e2)");
 
 		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{1, 2, 3, 4}->forAll(e1, e2 | (e1 + e2) > e1)");
 
-	    // when there are no values, the the desired result implictly occurs
+		// when there are no values, the the desired result implictly occurs
 		ocl.assertInvariantTrue(ocl.pkg1, "Sequence{}->forAll(e1, e2 | e1 = e2)");
 		ocl.dispose();
-    }
-
-    /**
-     * Tests the validation the number of iterator variables for iterators that
-     * do not support multiple variables.
-     */
-    @Test public void test_invalidMultipleIteratorVariables() {
-		MyOCL ocl = createOCL();
-        ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,		// FIXME Bug 296990
-        	null, "Sequence{'a', 'b', 'c'}->exists(e1, e2, e3 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "exists", "e1, e2, e3| e1 = e2");
-
-        ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,		// FIXME Bug 296990
-        	null, "Sequence{'a', 'b', 'c'}->forAll(e1, e2, e3 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "forAll", "e1, e2, e3| e1 = e2");
-
-        ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-        	null, "Sequence{'a', 'b', 'c'}->collect(e1, e2 | Tuple{a : String = e1, b : String = e2})",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "collect", "e1, e2| Tuple{a : String = e1, b : String = e2}");
-
-        ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-        	null, "Sequence{'a', 'b', 'c'}->any(e1, e2 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "any", "e1, e2| e1 = e2");
-
-        ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-        	null, "Sequence{'a', 'b', 'c'}->one(e1, e2 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "one", "e1, e2| e1 = e2");
-
-        ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-        	null, "Sequence{'a', 'b', 'c'}->select(e1, e2 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "select", "e1, e2| e1 = e2");
-
-        ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-        	null, "Sequence{'a', 'b', 'c'}->reject(e1, e2 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "reject", "e1, e2| e1 = e2");
-
-        ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
-        	null, "Sequence{'a', 'b', 'c'}->isUnique(e1, e2 | e1 = e2)",
-        	PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "isUnique", "e1, e2| e1 = e2");
-		ocl.dispose();
-    }
+	}
 
 	/**
-     * Test to check the validation of the <tt>sortedBy</tt> iterator, that
-     * the body expression type has a <tt>&lt;</tt> operation.
-     */
-    @Test public void test_sortedByRequiresComparability_192729() {
+	 * Tests the validation the number of iterator variables for iterators that
+	 * do not support multiple variables.
+	 */
+	@Test public void test_invalidMultipleIteratorVariables() {
+		MyOCL ocl = createOCL();
+		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,		// FIXME Bug 296990
+			null, "Sequence{'a', 'b', 'c'}->exists(e1, e2, e3 | e1 = e2)",
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "exists", "e1, e2, e3| e1 = e2");
+
+		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,		// FIXME Bug 296990
+			null, "Sequence{'a', 'b', 'c'}->forAll(e1, e2, e3 | e1 = e2)",
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "forAll", "e1, e2, e3| e1 = e2");
+
+		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+			null, "Sequence{'a', 'b', 'c'}->collect(e1, e2 | Tuple{a : String = e1, b : String = e2})",
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "collect", "e1, e2| Tuple{a : String = e1, b : String = e2}");
+
+		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+			null, "Sequence{'a', 'b', 'c'}->any(e1, e2 | e1 = e2)",
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "any", "e1, e2| e1 = e2");
+
+		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+			null, "Sequence{'a', 'b', 'c'}->one(e1, e2 | e1 = e2)",
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "one", "e1, e2| e1 = e2");
+
+		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+			null, "Sequence{'a', 'b', 'c'}->select(e1, e2 | e1 = e2)",
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "select", "e1, e2| e1 = e2");
+
+		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+			null, "Sequence{'a', 'b', 'c'}->reject(e1, e2 | e1 = e2)",
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "reject", "e1, e2| e1 = e2");
+
+		ocl.assertBadQuery(SemanticException.class, Diagnostic.ERROR,
+			null, "Sequence{'a', 'b', 'c'}->isUnique(e1, e2 | e1 = e2)",
+			PivotMessagesInternal.UnresolvedIterationCall_ERROR_, "Sequence(String)", "isUnique", "e1, e2| e1 = e2");
+		ocl.dispose();
+	}
+
+	/**
+	 * Test to check the validation of the <tt>sortedBy</tt> iterator, that
+	 * the body expression type has a <tt>&lt;</tt> operation.
+	 */
+	@Test public void test_sortedByRequiresComparability_192729() {
 		MyOCL ocl = createOCL();
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
-    	org.eclipse.ocl.pivot.Class context = metamodelManager.getASClass("Package");
-    	org.eclipse.ocl.pivot.Class type = metamodelManager.getASClass("Class");
-     	ocl.assertValidationErrorQuery(context, "ownedClasses->sortedBy(e | e)",
-        	PivotMessagesInternal.UnresolvedOperation_ERROR_, type + "", LibraryConstants.COMPARE_TO);
-       
-    	ocl.assertQuery(context, "ownedClasses->sortedBy(e | e.name)");
-    	ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
-        
-        // EDate defines an OclComparable::compareTo by having a java.lang.Comparable instance class
-        ocl.assertQuery(context, "let dates : Sequence(ecore::EDate) = Sequence{} in dates->sortedBy(e | e)");
-        // EInt defines OclComparable::compareTo by having a behavioral mapping to the Integer type
-        ocl.assertQueryResults(context, "Sequence{1,7,9}", "let values : Sequence(ecore::EInt) = Sequence{1,9,7} in values->sortedBy(e | e)");
+		org.eclipse.ocl.pivot.Class context = metamodelManager.getASClass("Package");
+		org.eclipse.ocl.pivot.Class type = metamodelManager.getASClass("Class");
+		ocl.assertValidationErrorQuery(context, "ownedClasses->sortedBy(e | e)",
+			PivotMessagesInternal.UnresolvedOperation_ERROR_, type + "", LibraryConstants.COMPARE_TO);
+
+		ocl.assertQuery(context, "ownedClasses->sortedBy(e | e.name)");
+		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
+
+		// EDate defines an OclComparable::compareTo by having a java.lang.Comparable instance class
+		ocl.assertQuery(context, "let dates : Sequence(ecore::EDate) = Sequence{} in dates->sortedBy(e | e)");
+		// EInt defines OclComparable::compareTo by having a behavioral mapping to the Integer type
+		ocl.assertQueryResults(context, "Sequence{1,7,9}", "let values : Sequence(ecore::EInt) = Sequence{1,9,7} in values->sortedBy(e | e)");
 		ocl.dispose();
-    }
+	}
 }

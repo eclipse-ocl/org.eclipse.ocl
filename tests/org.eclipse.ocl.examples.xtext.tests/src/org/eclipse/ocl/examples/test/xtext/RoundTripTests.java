@@ -710,7 +710,7 @@ public class RoundTripTests extends XtextTestCase
 		options.put(DelegateInstaller.OPTION_OMIT_SETTING_DELEGATES, true);
 		options.put(AS2ES_VALIDATION_ERRORS, new @NonNull String[] {
 			// FIXME result conformance invariant is inadequate
-			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::Association::endType() : Set(UML::Type)[+|1]'",
+			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::Association::endType() : Set(UML::Type[+|1])'",
 			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::LiteralUnlimitedNatural::unlimitedValue() : UML::UnlimitedNaturalObject[?]'",
 			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::MultiplicityElement::upper() : UML::UnlimitedNaturalObject[?]'",
 			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::MultiplicityElement::upperBound() : UnlimitedNatural[1]'",

@@ -366,7 +366,6 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 					prefix = ",";
 				}
 			}
-			append(")");
 			if (collectionType != null) {
 				Number lower = collectionType.getLower();
 				Number upper = collectionType.getUpper();
@@ -376,6 +375,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 					StringUtil.appendMultiplicity(context, lowerValue, upperValue, collectionType.isIsNullFree());
 				}
 			}
+			append(")");
 		}
 	}
 

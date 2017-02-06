@@ -1251,7 +1251,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclType().lower");
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, 3}->oclAsType(Collection(Real))->oclType().lower");
-		ocl.assertQueryEquals(null, 3, "Set{1, 2.0, 3}->oclAsType(Collection(Real)[2..4])->oclType().lower"); // no change to dynamic bound
+		ocl.assertQueryEquals(null, 3, "Set{1, 2.0, 3}->oclAsType(Collection(Real[2..4]))->oclType().lower"); // no change to dynamic bound
 		ocl.dispose();
 	}
 
@@ -1623,7 +1623,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionReverse() {
 		TestOCL ocl = createOCL();
-		ocl.assertSemanticErrorQuery(null, "Bag{1,3,null,2}->reverse()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Integer)[*|?]", "reverse");
+		ocl.assertSemanticErrorQuery(null, "Bag{1,3,null,2}->reverse()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Integer[*|?])", "reverse");
 		ocl.assertQueryResults(null, "OrderedSet{}", "OrderedSet{}->reverse()");
 		ocl.assertQueryResults(null, "OrderedSet{null}", "OrderedSet{null}->reverse()");
 		ocl.assertQueryResults(null, "OrderedSet{2,1}", "OrderedSet{1,2}->reverse()");
@@ -1945,7 +1945,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclType().upper");
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, 3}->oclAsType(Collection(Real))->oclType().upper");
-		ocl.assertQueryEquals(null, 3, "Set{1, 2.0, 3}->oclAsType(Collection(Real)[2..4])->oclType().upper"); // no change to dynamic bound
+		ocl.assertQueryEquals(null, 3, "Set{1, 2.0, 3}->oclAsType(Collection(Real[2..4]))->oclType().upper"); // no change to dynamic bound
 		ocl.dispose();
 	}
 }

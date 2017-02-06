@@ -47,7 +47,7 @@ public abstract class AbstractEssentialOCLFormatter extends BaseFormatter
 
 	protected void configureCollectionTypeCS(FormattingConfig c, CollectionTypeCSElements a) {
 		c.setNoSpace().around(a.getLeftParenthesisKeyword_1_0());
-		c.setNoSpace().before(a.getRightParenthesisKeyword_1_2());
+		c.setNoSpace().before(a.getRightParenthesisKeyword_1_3());
 	}
 
 	protected void configureExpCS(FormattingConfig c, ExpCSElements a) {

@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -490,12 +491,12 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
 		ocl.assertQueryTrue(null, "let x : Type[*] = Bag{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
 		ocl.assertValidationErrorQuery(null, "let x : Type[*] = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_LetVariable_c_c_CompatibleTypeForInitializer, "x : Bag(Type)[*|?] = Set{Integer, Real}");
-		ocl.assertQueryTrue(null, "let x : Collection(Type[*]) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Type[*] | x->size() > 0)");
-		ocl.assertValidationErrorQuery(null, "let x : Collection(Type[*]) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Type | x->size() > 0)",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_LetVariable_c_c_CompatibleTypeForInitializer, "x : Bag(Type[*|?]) = Set{Integer, Real}");
+		ocl.assertQueryTrue(null, "let x : Collection(Collection(Type[*])) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Collection(Type[*]) | x->size() > 0)");
+		ocl.assertValidationErrorQuery(null, "let x : Collection(Collection(Type[*])) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Type | x->size() > 0)",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IteratorExp_c_c_IteratorTypeIsSourceElementType, "x?->forAll(x : Type[1] | x.oclAsSet()->size().>(0))");
 		ocl.assertValidationErrorQuery(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type[*] | x->size() > 0)",
-			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IteratorExp_c_c_IteratorTypeIsSourceElementType, "x?->forAll(x : Bag(Type)[*|?] | x->size().>(0))");
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_IteratorExp_c_c_IteratorTypeIsSourceElementType, "x?->forAll(x : Bag(Type[*|?]) | x->size().>(0))");
 		ocl.dispose();
 	}
 
@@ -503,39 +504,41 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 	public void test_ecore_collection_equality() {
 		TestOCL ocl = createOCL();
 		//
-		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, EcorePackage.Literals.ECLASS.getEStructuralFeatures(), "self.eStructuralFeatures");
+		EList<EStructuralFeature> eStructuralFeatures = EcorePackage.Literals.ECLASS.getEStructuralFeatures();
+		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, eStructuralFeatures, "self.eStructuralFeatures");
 		//
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, EcorePackage.Literals.ECLASS.getEStructuralFeatures(), "self.eStructuralFeatures->asBag()");
-		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, EcorePackage.Literals.ECLASS.getEStructuralFeatures(), "self.eStructuralFeatures->asOrderedSet()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, EcorePackage.Literals.ECLASS.getEStructuralFeatures(), "self.eStructuralFeatures->asSequence()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, EcorePackage.Literals.ECLASS.getEStructuralFeatures(), "self.eStructuralFeatures->asSet()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, eStructuralFeatures, "self.eStructuralFeatures->asBag()");
+		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, eStructuralFeatures, "self.eStructuralFeatures->asOrderedSet()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, eStructuralFeatures, "self.eStructuralFeatures->asSequence()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, eStructuralFeatures, "self.eStructuralFeatures->asSet()");
 		//
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new HashSet<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asBag()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new HashSet<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asOrderedSet()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new HashSet<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSequence()");
-		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, new HashSet<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSet()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new HashSet<>(eStructuralFeatures), "self.eStructuralFeatures->asBag()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new HashSet<>(eStructuralFeatures), "self.eStructuralFeatures->asOrderedSet()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new HashSet<>(eStructuralFeatures), "self.eStructuralFeatures->asSequence()");
+		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, new HashSet<>(eStructuralFeatures), "self.eStructuralFeatures->asSet()");
 		//
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new ArrayList<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asBag()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new ArrayList<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asOrderedSet()");
-		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, new ArrayList<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSequence()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new ArrayList<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSequence()->reverse()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new ArrayList<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSet()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new ArrayList<>(eStructuralFeatures), "self.eStructuralFeatures->asBag()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new ArrayList<>(eStructuralFeatures), "self.eStructuralFeatures->asOrderedSet()");
+		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, new ArrayList<>(eStructuralFeatures), "self.eStructuralFeatures->asSequence()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new ArrayList<>(eStructuralFeatures), "self.eStructuralFeatures->asSequence()->reverse()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new ArrayList<>(eStructuralFeatures), "self.eStructuralFeatures->asSet()");
 		//
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new LinkedHashSet<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asBag()");
-		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, new LinkedHashSet<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asOrderedSet()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new LinkedHashSet<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asOrderedSet()->reverse()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new LinkedHashSet<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSequence()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new LinkedHashSet<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSet()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new LinkedHashSet<>(eStructuralFeatures), "self.eStructuralFeatures->asBag()");
+		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, new LinkedHashSet<>(eStructuralFeatures), "self.eStructuralFeatures->asOrderedSet()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new LinkedHashSet<>(eStructuralFeatures), "self.eStructuralFeatures->asOrderedSet()->reverse()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new LinkedHashSet<>(eStructuralFeatures), "self.eStructuralFeatures->asSequence()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new LinkedHashSet<>(eStructuralFeatures), "self.eStructuralFeatures->asSet()");
 		//
-		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, new BagImpl<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asBag()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new BagImpl<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asOrderedSet()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new BagImpl<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSequence()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new BagImpl<EStructuralFeature>(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSet()");
+		Iterable<@NonNull EStructuralFeature> eStructuralFeatures2 = ClassUtil.nullFree(eStructuralFeatures);
+		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, new BagImpl<>(eStructuralFeatures2), "self.eStructuralFeatures->asBag()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new BagImpl<>(eStructuralFeatures2), "self.eStructuralFeatures->asOrderedSet()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new BagImpl<>(eStructuralFeatures2), "self.eStructuralFeatures->asSequence()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, new BagImpl<>(eStructuralFeatures2), "self.eStructuralFeatures->asSet()");
 		//
-		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, org.eclipse.ocl.util.CollectionUtil.createNewBag(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asBag()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, org.eclipse.ocl.util.CollectionUtil.createNewBag(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asOrderedSet()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, org.eclipse.ocl.util.CollectionUtil.createNewBag(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSequence()");
-		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, org.eclipse.ocl.util.CollectionUtil.createNewBag(EcorePackage.Literals.ECLASS.getEStructuralFeatures()), "self.eStructuralFeatures->asSet()");
+		ocl.assertQueryOCLEquals(EcorePackage.Literals.ECLASS, org.eclipse.ocl.util.CollectionUtil.createNewBag(eStructuralFeatures), "self.eStructuralFeatures->asBag()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, org.eclipse.ocl.util.CollectionUtil.createNewBag(eStructuralFeatures), "self.eStructuralFeatures->asOrderedSet()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, org.eclipse.ocl.util.CollectionUtil.createNewBag(eStructuralFeatures), "self.eStructuralFeatures->asSequence()");
+		ocl.assertQueryOCLNotEquals(EcorePackage.Literals.ECLASS, org.eclipse.ocl.util.CollectionUtil.createNewBag(eStructuralFeatures), "self.eStructuralFeatures->asSet()");
 		//
 		ocl.dispose();
 	}
