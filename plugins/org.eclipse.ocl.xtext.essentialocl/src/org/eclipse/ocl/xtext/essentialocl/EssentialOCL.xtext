@@ -107,7 +107,7 @@ CollectionTypeIdentifier returns ecore::EString:
 	| 'OrderedSet';
 
 CollectionTypeCS returns CollectionTypeCS:
-	name=CollectionTypeIdentifier ('(' ownedType=TypeExpCS ')')?;
+	name=CollectionTypeIdentifier ('(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS? ')')?;
 
 MapTypeCS returns MapTypeCS:
 	name='Map' ('(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')')?;
@@ -201,8 +201,11 @@ TypeLiteralExpCS returns TypeLiteralExpCS:
 TypeNameExpCS returns TypeNameExpCS:
 	ownedPathName=PathNameCS (ownedCurlyBracketedClause=CurlyBracketedClauseCS ('{' ownedPatternGuard=ExpCS '}')?)?;
 
+TypeExpWithoutMultiplicityCS returns base::TypedRefCS:
+	(TypeNameExpCS | TypeLiteralCS | CollectionPatternCS);
+
 TypeExpCS returns base::TypedRefCS:
-	(TypeNameExpCS | TypeLiteralCS | CollectionPatternCS) ownedMultiplicity=MultiplicityCS?;
+	TypeExpWithoutMultiplicityCS ownedMultiplicity=MultiplicityCS?;
 
 //---------------------------------------------------------------------
 //  Expressions
