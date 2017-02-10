@@ -1021,14 +1021,16 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				iterator.setRepresentedParameter(formalIterator);
 				Type varType = null;
 				TypedRefCS csType = csArgument.getOwnedType();
-				boolean iteratorIsRequired = ElementUtil.isRequired(csType);
+				Boolean iteratorIsRequired = null;
 				if (csType != null) {
+					iteratorIsRequired = context.isRequired(csType);
 					varType = PivotUtil.getPivot(Type.class, csType);
 				}
 				if (varType == null) {
 					varType = sourceElementType;
 				}
-				context.setType(iterator, varType, isSafe || iteratorIsRequired || formalIterator.isIsRequired(), null);
+				boolean isRequired = iteratorIsRequired != null ? iteratorIsRequired.booleanValue() : isSafe || formalIterator.isIsRequired();
+				context.setType(iterator, varType, isRequired, null);
 				pivotIterators.add(iterator);
 				iteratorIndex++;
 			}
@@ -1798,8 +1800,12 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				ExpCS csInitExpression = csLetVariable.getOwnedInitExpression();
 				if (csInitExpression != null) {
 					TypedRefCS csVariableType = csLetVariable.getOwnedType();
-					Type variableType = csVariableType != null ? PivotUtil.getPivot(Type.class, csVariableType) : null;
-					boolean variableIsRequired = ElementUtil.isRequired(csVariableType);
+					Boolean variableIsRequired = null;
+					Type variableType = null;
+					if (csVariableType != null) {
+						variableType = PivotUtil.getPivot(Type.class, csVariableType);
+						variableIsRequired = context.isRequired(csVariableType);
+					}
 					boolean initIsRequired = false;
 					OCLExpression initExpression = context.visitLeft2Right(OCLExpression.class, csInitExpression);
 					Type initType = null;
@@ -1819,7 +1825,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					if (variableType == null) {
 						variableType = initType;
 					}
-					context.setType(variable, variableType, initIsRequired || variableIsRequired, initTypeValue);
+					boolean isRequired = variableIsRequired != null ? variableIsRequired.booleanValue() : initIsRequired;
+					context.setType(variable, variableType, isRequired, initTypeValue);
 					if (lastLetExp != null) {
 						lastLetExp.setOwnedIn(letExp);
 						context.installPivotUsage(csLetExp, letExp);

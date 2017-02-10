@@ -793,6 +793,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return false;
 	}
 
+	public @Nullable Boolean isRequired(@NonNull TypedRefCS csTypeRef) {
+		return converter.isRequired(csTypeRef);
+	}
+
 	public @Nullable Iteration lookupIteration(@NonNull ElementCS csElement, @NonNull PathNameCS csPathName, @Nullable ScopeFilter scopeFilter) {
 		return converter.lookupIteration(csElement, csPathName, scopeFilter);
 	}
@@ -1064,7 +1068,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	public void refreshRequiredType(@NonNull TypedElement pivotElement, @NonNull TypedRefCS csTypeRef) {
 		org.eclipse.ocl.pivot.Class type = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csTypeRef);
-		setType(pivotElement, type, ElementUtil.isRequired(csTypeRef));
+		Boolean isRequired = converter.isRequired(csTypeRef);
+		setType(pivotElement, type, isRequired == Boolean.TRUE);
 	}
 
 	public void refreshTemplateSignature(@NonNull TemplateableElementCS csTemplateableElement, @NonNull TemplateableElement pivotTemplateableElement) {

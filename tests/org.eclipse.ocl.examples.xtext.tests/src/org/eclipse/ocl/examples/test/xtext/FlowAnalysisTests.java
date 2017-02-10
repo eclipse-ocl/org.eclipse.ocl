@@ -146,7 +146,7 @@ public class FlowAnalysisTests extends XtextTestCase
 	public void testFlowAnalysis_SimpleNonNullVariable() throws Exception {
 		MyOCL ocl = new MyOCL();
 		LetExp asLetExp = (LetExp) ocl.createTestModel("SimpleNonNullVariable",
-				"let v : Integer[?] = 1 in v <> null");
+				"let v : Integer[1] = 1 in v <> null");
 		OperationCallExp asIn = (OperationCallExp) PivotUtil.getOwnedIn(asLetExp);
 		VariableExp asVariableExp = (VariableExp) PivotUtil.getOwnedSource(asIn);
 		NullLiteralExp asNullLiteralExp = (NullLiteralExp) PivotUtil.getOwnedArgument(asIn, 0);

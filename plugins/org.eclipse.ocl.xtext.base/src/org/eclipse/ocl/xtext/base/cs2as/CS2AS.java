@@ -56,9 +56,11 @@ import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementRefCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
+import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
+import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
 import org.eclipse.osgi.util.NLS;
@@ -505,6 +507,27 @@ public abstract class CS2AS extends AbstractConversion
 			assert !newPivotElement.eIsProxy();
 			csElement.setPivot(newPivotElement);
 		}
+	}
+
+	/**
+	 * Return true if csTYpeRef referes to a type that cannot be null, e.g. T[1],
+	 * or false if it refers to a type that may be null, e.g. T[?],
+	 * or null if the nulloty is unspecifued.
+	 *
+	 * Note that a lazy UML Set such as T[*] is always required; UML collections cannot be null.
+	 */
+	public @Nullable Boolean isRequired(@NonNull TypedRefCS csTypeRef) {
+		MultiplicityCS csMultiplicity = csTypeRef.getOwnedMultiplicity();
+		if (csMultiplicity != null) {
+			int upper = csMultiplicity.getUpper();
+			if (upper != 1) {		// Lazy UML-style Set
+				assert !csTypeRef.eContainer().eClass().getName().equals("CollectionTypeCS");
+				return true;
+			}
+			int lower = csMultiplicity.getLower();
+			return lower > 0;
+		}
+		return null;
 	}
 
 	public @Nullable Iteration lookupIteration(@NonNull ElementCS csElement, @NonNull PathNameCS csPathName, @Nullable ScopeFilter scopeFilter) {

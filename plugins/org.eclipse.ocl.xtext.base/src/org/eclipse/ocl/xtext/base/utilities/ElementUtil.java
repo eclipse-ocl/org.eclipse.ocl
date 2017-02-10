@@ -478,6 +478,10 @@ public class ElementUtil
 				|| (instanceClass == float.class) || (instanceClass == int.class) || (instanceClass == long.class) || (instanceClass == short.class);
 	}
 
+	/**
+	 * @deprecated  Use CS2AS.isRequired to handle [?]/[1]/blank
+	 */
+	@Deprecated
 	public static boolean isRequired(@Nullable TypedRefCS csTypeRef) {
 		if (csTypeRef != null) {
 			MultiplicityCS csMultiplicity = csTypeRef.getOwnedMultiplicity();
