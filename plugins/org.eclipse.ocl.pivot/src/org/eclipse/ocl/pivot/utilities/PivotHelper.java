@@ -485,8 +485,16 @@ public class PivotHelper
 		return ClassUtil.nonNullState(NameUtil.getNameable(getDataTypeClass().getOwnedProperties(), PivotConstants.DATA_TYPE_VALUE_NAME));
 	}
 
+	public @NonNull EnvironmentFactory getEnvironmentFactory() {
+		return environmentFactory;
+	}
+
 	protected @NonNull PivotMetamodelManager getMetamodelManager() {
 		return (PivotMetamodelManager) environmentFactory.getMetamodelManager();			// FIXME avoid this cast
+	}
+
+	public @NonNull StandardLibrary getStandardLibrary() {
+		return standardLibrary;
 	}
 
 	/**
