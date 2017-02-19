@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.ocl" version="2">
+    <resource path="src/org/eclipse/ocl/AbstractEnvironmentFactory.java" type="org.eclipse.ocl.AbstractEnvironmentFactory">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="EnvironmentFactory&lt;PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E&gt;"/>
+                <message_argument value="AbstractEnvironmentFactory&lt;PK, C, O, P, EL, PM, S, COA, SSA, CT, CLS, E&gt;"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/parser/OCLKWLexerprs.java" type="org.eclipse.ocl.parser.OCLKWLexerprs">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="OCLKWLexersym"/>
+                <message_argument value="OCLKWLexerprs"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/parser/OCLLexerprs.java" type="org.eclipse.ocl.parser.OCLLexerprs">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="OCLLexersym"/>
+                <message_argument value="OCLLexerprs"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/parser/OCLParserprs.java" type="org.eclipse.ocl.parser.OCLParserprs">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="OCLParsersym"/>
+                <message_argument value="OCLParserprs"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/parser/backtracking/OCLBacktrackingKWLexerprs.java" type="org.eclipse.ocl.parser.backtracking.OCLBacktrackingKWLexerprs">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="OCLBacktrackingKWLexersym"/>
+                <message_argument value="OCLBacktrackingKWLexerprs"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/parser/backtracking/OCLBacktrackingLexerprs.java" type="org.eclipse.ocl.parser.backtracking.OCLBacktrackingLexerprs">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="OCLBacktrackingLexersym"/>
+                <message_argument value="OCLBacktrackingLexerprs"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/parser/backtracking/OCLBacktrackingParserprs.java" type="org.eclipse.ocl.parser.backtracking.OCLBacktrackingParserprs">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="OCLBacktrackingParsersym"/>
+                <message_argument value="OCLBacktrackingParserprs"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

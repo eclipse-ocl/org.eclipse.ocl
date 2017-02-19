@@ -7,6 +7,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/uml/internal/utilities/UML2Moniker.java" type="org.eclipse.ocl.pivot.uml.internal.utilities.UML2Moniker">
+        <filter comment="Bug 512402 workaround" id="574619656">
+            <message_arguments>
+                <message_argument value="PivotConstantsInternal"/>
+                <message_argument value="UML2Moniker"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/uml/internal/validation/LoadableConstraintProvider.java" type="org.eclipse.ocl.pivot.uml.internal.validation.LoadableConstraintProvider">
         <filter id="643846161">
             <message_arguments>

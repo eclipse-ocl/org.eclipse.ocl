@@ -1,5 +1,141 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="Bug 512402 workaround" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/AnyType.java" type="org.eclipse.ocl.pivot.AnyType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="AnyType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/AssociationClass.java" type="org.eclipse.ocl.pivot.AssociationClass">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="AssociationClass"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Behavior.java" type="org.eclipse.ocl.pivot.Behavior">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="Behavior"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/CallExp.java" type="org.eclipse.ocl.pivot.CallExp">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="OCLExpression"/>
+                <message_argument value="CallExp"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/CollectionType.java" type="org.eclipse.ocl.pivot.CollectionType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="DataType"/>
+                <message_argument value="CollectionType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/DynamicType.java" type="org.eclipse.ocl.pivot.DynamicType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="DynamicType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/ElementExtension.java" type="org.eclipse.ocl.pivot.ElementExtension">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="ElementExtension"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Enumeration.java" type="org.eclipse.ocl.pivot.Enumeration">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="DataType"/>
+                <message_argument value="Enumeration"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/InvalidType.java" type="org.eclipse.ocl.pivot.InvalidType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="InvalidType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Iteration.java" type="org.eclipse.ocl.pivot.Iteration">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Operation"/>
+                <message_argument value="Iteration"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/LambdaType.java" type="org.eclipse.ocl.pivot.LambdaType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="DataType"/>
+                <message_argument value="LambdaType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/LiteralExp.java" type="org.eclipse.ocl.pivot.LiteralExp">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="OCLExpression"/>
+                <message_argument value="LiteralExp"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/MapType.java" type="org.eclipse.ocl.pivot.MapType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="DataType"/>
+                <message_argument value="MapType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/MessageExp.java" type="org.eclipse.ocl.pivot.MessageExp">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="OCLExpression"/>
+                <message_argument value="MessageExp"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/MessageType.java" type="org.eclipse.ocl.pivot.MessageType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="MessageType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Parameter.java" type="org.eclipse.ocl.pivot.Parameter">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="VariableDeclaration"/>
+                <message_argument value="Parameter"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
         <filter id="388194388">
             <message_arguments>
@@ -3660,6 +3796,156 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="BAG_CLSSid_OCLExpression"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="BAG_CLSSid_TemplateableElement"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="BAG_CLSSid_VariableDeclaration"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_IteratorVariable"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_LetVariable"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_ParameterVariable"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_ResultVariable"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_Class_c_c_NameIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_Feature_c_c_NameIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_Feature_c_c_TypeIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_IteratorExp_c_c_ClosureBodyElementTypeIsIteratorType"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_IteratorVariable_c_c_HasNoInitializer"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_LetExp_c_c_CompatibleNullityForIn"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_LetVariable_c_c_CompatibleNullityForInitializer"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_LetVariable_c_c_CompatibleTypeForInitializer"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_LetVariable_c_c_HasInitializer"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_OCLExpression_c_c_TypeIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_ParameterVariable_c_c_HasNoInitializer"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_ResultVariable_c_c_CompatibleNullityForInitializer"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_ResultVariable_c_c_CompatibleTypeForInitializer"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_ResultVariable_c_c_HasInitializer"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_ShadowExp_c_c_DataTypeHasOnePartInitializer"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_ShadowPart_c_c_TypeIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_VariableDeclaration_c_c_NameIsNotNull"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="STR_VariableDeclaration_c_c_TypeIsNotNull"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="BAG_CLSSid_OCLExpression"/>
@@ -3787,6 +4073,30 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Types">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
+                <message_argument value="_IteratorVariable"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
+                <message_argument value="_LetVariable"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
+                <message_argument value="_ParameterVariable"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
+                <message_argument value="_ResultVariable"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="_IteratorVariable"/>
@@ -3808,7 +4118,213 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PrimitiveType.java" type="org.eclipse.ocl.pivot.PrimitiveType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="DataType"/>
+                <message_argument value="PrimitiveType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Property.java" type="org.eclipse.ocl.pivot.Property">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Feature"/>
+                <message_argument value="Property"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/SelfType.java" type="org.eclipse.ocl.pivot.SelfType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="SelfType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Signal.java" type="org.eclipse.ocl.pivot.Signal">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="Signal"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/StandardLibrary.java" type="org.eclipse.ocl.pivot.StandardLibrary$StandardLibraryExtension">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="StandardLibrary"/>
+                <message_argument value="StandardLibraryExtension"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/StateExp.java" type="org.eclipse.ocl.pivot.StateExp">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="OCLExpression"/>
+                <message_argument value="StateExp"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Stereotype.java" type="org.eclipse.ocl.pivot.Stereotype">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="Stereotype"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/TupleLiteralPart.java" type="org.eclipse.ocl.pivot.TupleLiteralPart">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="VariableDeclaration"/>
+                <message_argument value="TupleLiteralPart"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/TupleType.java" type="org.eclipse.ocl.pivot.TupleType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="DataType"/>
+                <message_argument value="TupleType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/TypeExp.java" type="org.eclipse.ocl.pivot.TypeExp">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="OCLExpression"/>
+                <message_argument value="TypeExp"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/UnspecifiedValueExp.java" type="org.eclipse.ocl.pivot.UnspecifiedValueExp">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="OCLExpression"/>
+                <message_argument value="UnspecifiedValueExp"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Variable.java" type="org.eclipse.ocl.pivot.Variable">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="VariableDeclaration"/>
+                <message_argument value="Variable"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/VariableExp.java" type="org.eclipse.ocl.pivot.VariableExp">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="OCLExpression"/>
+                <message_argument value="VariableExp"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/VoidType.java" type="org.eclipse.ocl.pivot.VoidType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="VoidType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/WildcardType.java" type="org.eclipse.ocl.pivot.WildcardType">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="WildcardType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ClassImpl.java" type="org.eclipse.ocl.pivot.internal.ClassImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="ClassImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/DataTypeImpl.java" type="org.eclipse.ocl.pivot.internal.DataTypeImpl">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.DataTypeImpl"/>
+                <message_argument value="VALUE_EDEFAULT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="DataType"/>
+                <message_argument value="DataTypeImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/FeatureImpl.java" type="org.eclipse.ocl.pivot.internal.FeatureImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Feature"/>
+                <message_argument value="FeatureImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IfExpImpl.java" type="org.eclipse.ocl.pivot.internal.IfExpImpl">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IfExpImpl"/>
+                <message_argument value="IS_ELSE_IF_EDEFAULT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.IfExpImpl"/>
+                <message_argument value="IS_ELSE_IF_EFLAG"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="IfExp"/>
+                <message_argument value="IfExpImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IteratorExpImpl.java" type="org.eclipse.ocl.pivot.internal.IteratorExpImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="IteratorExp"/>
+                <message_argument value="IteratorExpImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/LetExpImpl.java" type="org.eclipse.ocl.pivot.internal.LetExpImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="LetExp"/>
+                <message_argument value="LetExpImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/OCLExpressionImpl.java" type="org.eclipse.ocl.pivot.internal.OCLExpressionImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="OCLExpression"/>
+                <message_argument value="OCLExpressionImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/OperationImpl.java" type="org.eclipse.ocl.pivot.internal.OperationImpl">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.OperationImpl"/>
+                <message_argument value="IS_TRANSIENT_EDEFAULT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.OperationImpl"/>
+                <message_argument value="IS_TRANSIENT_EFLAG"/>
+            </message_arguments>
+        </filter>
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.OperationImpl"/>
@@ -3823,8 +4339,20 @@
                 <message_argument value="4096"/>
             </message_arguments>
         </filter>
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Operation"/>
+                <message_argument value="OperationImpl"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotFactoryImpl.java" type="org.eclipse.ocl.pivot.internal.PivotFactoryImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="PivotFactory"/>
+                <message_argument value="PivotFactoryImpl"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="createIteratorVariable()"/>
@@ -3847,6 +4375,12 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotPackageImpl.java" type="org.eclipse.ocl.pivot.internal.PivotPackageImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="PivotPackage"/>
+                <message_argument value="PivotPackageImpl"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="getFeature__ValidateNameIsNotNull__DiagnosticChain_Map()"/>
@@ -3945,6 +4479,52 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="getVariableDeclaration__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ShadowExpImpl.java" type="org.eclipse.ocl.pivot.internal.ShadowExpImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="ShadowExp"/>
+                <message_argument value="ShadowExpImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ShadowPartImpl.java" type="org.eclipse.ocl.pivot.internal.ShadowPartImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="ShadowPart"/>
+                <message_argument value="ShadowPartImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.StandardLibraryImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="StandardLibrary"/>
+                <message_argument value="StandardLibraryImpl"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="StandardLibraryInternal"/>
+                <message_argument value="StandardLibraryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/VariableDeclarationImpl.java" type="org.eclipse.ocl.pivot.internal.VariableDeclarationImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="VariableDeclaration"/>
+                <message_argument value="VariableDeclarationImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/impl/LookupPackageImpl.java" type="org.eclipse.ocl.pivot.internal.lookup.impl.LookupPackageImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="LookupPackage"/>
+                <message_argument value="LookupPackageImpl"/>
             </message_arguments>
         </filter>
     </resource>
@@ -4052,6 +4632,12 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractDelegatingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractDelegatingVisitor">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Visitor&lt;R&gt;"/>
+                <message_argument value="AbstractDelegatingVisitor&lt;R, C, D&gt;"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="visitIteratorVariable(IteratorVariable)"/>
@@ -4074,6 +4660,12 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractExtendingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractExtendingVisitor">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Visitor&lt;R&gt;"/>
+                <message_argument value="AbstractExtendingVisitor&lt;R, C&gt;"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="visitIteratorVariable(IteratorVariable)"/>
@@ -4096,6 +4688,12 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractMergedVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractMergedVisitor">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Visitor&lt;R&gt;"/>
+                <message_argument value="AbstractMergedVisitor&lt;R, C&gt;"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="visitIteratorVariable(IteratorVariable)"/>
@@ -4139,7 +4737,21 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractVisitor">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Visitor&lt;R&gt;"/>
+                <message_argument value="AbstractVisitor&lt;R, C&gt;"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractWrappingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractWrappingVisitor">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Visitor&lt;R&gt;"/>
+                <message_argument value="AbstractWrappingVisitor&lt;R, C, D, P&gt;"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="visitIteratorVariable(IteratorVariable)"/>
@@ -4162,6 +4774,114 @@
         </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="CLASS__VALIDATE_NAME_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="FEATURE__VALIDATE_NAME_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="FEATURE__VALIDATE_TYPE_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_EXP__VALIDATE_CLOSURE_BODY_ELEMENT_TYPE_IS_ITERATOR_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="ITERATOR_VARIABLE__VALIDATE_HAS_NO_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LET_EXP__VALIDATE_COMPATIBLE_NULLITY_FOR_IN"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LET_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LET_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="LET_VARIABLE__VALIDATE_HAS_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="OCL_EXPRESSION__VALIDATE_TYPE_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="PARAMETER_VARIABLE__VALIDATE_HAS_NO_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="RESULT_VARIABLE__VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="RESULT_VARIABLE__VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="RESULT_VARIABLE__VALIDATE_HAS_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_EXP__VALIDATE_DATA_TYPE_HAS_ONE_PART_INITIALIZER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="SHADOW_PART__VALIDATE_TYPE_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="VARIABLE_DECLARATION__VALIDATE_NAME_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
+                <message_argument value="VARIABLE_DECLARATION__VALIDATE_TYPE_IS_NOT_NULL"/>
+            </message_arguments>
+        </filter>
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.util.PivotValidator"/>
@@ -4815,6 +5535,318 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="visitResultVariable(ResultVariable)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/evaluation/EvaluationVisitor.java" type="org.eclipse.ocl.pivot.evaluation.EvaluationVisitor">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Visitor&lt;R&gt;"/>
+                <message_argument value="EvaluationVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/BuiltInTypeId.java" type="org.eclipse.ocl.pivot.ids.BuiltInTypeId">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="TypeId"/>
+                <message_argument value="BuiltInTypeId"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/LambdaTypeId.java" type="org.eclipse.ocl.pivot.ids.LambdaTypeId">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="TypeId"/>
+                <message_argument value="LambdaTypeId"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/NestedTypeId.java" type="org.eclipse.ocl.pivot.ids.NestedTypeId">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="TypeId"/>
+                <message_argument value="NestedTypeId"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TemplateBinding.java" type="org.eclipse.ocl.pivot.ids.TemplateBinding">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="TypeId"/>
+                <message_argument value="TemplateBinding"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TemplateParameterId.java" type="org.eclipse.ocl.pivot.ids.TemplateParameterId">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="TypeId"/>
+                <message_argument value="TemplateParameterId"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TemplateableTypeId.java" type="org.eclipse.ocl.pivot.ids.TemplateableTypeId">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="TypeId"/>
+                <message_argument value="TemplateableTypeId"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TupleTypeId.java" type="org.eclipse.ocl.pivot.ids.TupleTypeId">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="TypeId"/>
+                <message_argument value="TupleTypeId"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/UnspecifiedId.java" type="org.eclipse.ocl.pivot.ids.UnspecifiedId">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="TypeId"/>
+                <message_argument value="UnspecifiedId"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/context/AbstractParserContext.java" type="org.eclipse.ocl.pivot.internal.context.AbstractParserContext">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="ParserContext"/>
+                <message_argument value="AbstractParserContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/Ecore2Moniker.java" type="org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="PivotConstantsInternal"/>
+                <message_argument value="Ecore2Moniker"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/as2es/AS2Ecore.java" type="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore"/>
+                <message_argument value="OPTION_GENERATE_STRUCTURAL_XMI_IDS"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/as2es/AS2EcoreReferenceVisitor.java" type="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2EcoreReferenceVisitor">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2EcoreReferenceVisitor"/>
+                <message_argument value="requiredTypeRefVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/as2es/AS2EcoreTypeRefVisitor.java" type="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2EcoreTypeRefVisitor">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.as2es.AS2EcoreTypeRefVisitor"/>
+                <message_argument value="isRequired"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/es2as/AbstractExternal2AS.java" type="org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="PivotConstantsInternal"/>
+                <message_argument value="AbstractExternal2AS"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ecore/es2as/Ecore2AS.java" type="org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS"/>
+                <message_argument value="NOT_OPTIONAL"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/elements/AbstractExecutorClass.java" type="org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="AbstractExecutorClass"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/elements/AbstractExecutorFeature.java" type="org.eclipse.ocl.pivot.internal.elements.AbstractExecutorFeature">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Feature"/>
+                <message_argument value="AbstractExecutorFeature"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/elements/AbstractExecutorOperation.java" type="org.eclipse.ocl.pivot.internal.elements.AbstractExecutorOperation">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Operation"/>
+                <message_argument value="AbstractExecutorOperation"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/evaluation/AbstractExecutor.java" type="org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor"/>
+                <message_argument value="idResolver"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/evaluation/BasicEvaluationEnvironment.java" type="org.eclipse.ocl.pivot.internal.evaluation.BasicEvaluationEnvironment">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.evaluation.BasicEvaluationEnvironment"/>
+                <message_argument value="caller"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/AbstractTypeId.java" type="org.eclipse.ocl.pivot.internal.ids.AbstractTypeId">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="TypeId"/>
+                <message_argument value="AbstractTypeId"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/GeneralizedOperationIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.GeneralizedOperationIdImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="OperationId"/>
+                <message_argument value="GeneralizedOperationIdImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/ParametersIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.ParametersIdImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="ParametersId"/>
+                <message_argument value="ParametersIdImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/ids/SpecializedOperationIdImpl.java" type="org.eclipse.ocl.pivot.internal.ids.SpecializedOperationIdImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="OperationId"/>
+                <message_argument value="SpecializedOperationIdImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/executor/AbstractReflectiveInheritanceType.java" type="org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Class"/>
+                <message_argument value="AbstractReflectiveInheritanceType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/manager/FinalAnalysis.java" type="org.eclipse.ocl.pivot.internal.manager.FinalAnalysis">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.FinalAnalysis"/>
+                <message_argument value="FINAL_ANALYSIS"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/manager/PivotMetamodelManager.java" type="org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager"/>
+                <message_argument value="INSTALL_MODEL"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/resource/StandaloneProjectMap.java" type="org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="ProjectManager"/>
+                <message_argument value="StandaloneProjectMap"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AS2Moniker.java" type="org.eclipse.ocl.pivot.internal.utilities.AS2Moniker">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="PivotConstantsInternal"/>
+                <message_argument value="AS2Moniker"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AbstractTechnology.java" type="org.eclipse.ocl.pivot.internal.utilities.AbstractTechnology">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="Technology"/>
+                <message_argument value="AbstractTechnology"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/values/BagValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.BagValueImpl">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="BagValue"/>
+                <message_argument value="BagValueImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/messages/PivotMessages.java" type="org.eclipse.ocl.pivot.messages.PivotMessages">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.messages.PivotMessages"/>
+                <message_argument value="UnspecifiedSelfContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/resource/BasicProjectManager.java" type="org.eclipse.ocl.pivot.resource.BasicProjectManager">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="ProjectManager"/>
+                <message_argument value="BasicProjectManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/AS2MonikerVisitor.java" type="org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="PivotConstantsInternal"/>
+                <message_argument value="AS2MonikerVisitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/AS2XMIidVisitor.java" type="org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor"/>
+                <message_argument value="OPPOSITE_PROPERTY_PREFIX"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/NameUtil.java" type="org.eclipse.ocl.pivot.utilities.NameUtil">
+        <filter comment="Bug 512402 workaround" id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.NameUtil"/>
+                <message_argument value="TO_STRING_COMPARATOR"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/values/BagValue.java" type="org.eclipse.ocl.pivot.values.BagValue$Accumulator">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="BagValue"/>
+                <message_argument value="Accumulator"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/values/NullValue.java" type="org.eclipse.ocl.pivot.values.NullValue">
+        <filter comment="Bug 512402 workaround" id="576720909">
+            <message_arguments>
+                <message_argument value="BagValue"/>
+                <message_argument value="NullValue"/>
             </message_arguments>
         </filter>
     </resource>

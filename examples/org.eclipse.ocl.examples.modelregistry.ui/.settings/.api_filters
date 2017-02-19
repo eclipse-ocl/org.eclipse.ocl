@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.ocl.examples.modelregistry.ui" version="2">
+    <resource path="src/org/eclipse/ocl/examples/modelregistry/ui/properties/PropertyPage.java" type="org.eclipse.ocl.examples.modelregistry.ui.properties.PropertyPage">
+        <filter comment="Bug 512402 workaround" id="576725006">
+            <message_arguments>
+                <message_argument value="ModelRegistryHelpIds"/>
+                <message_argument value="PropertyPage"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>
