@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.validation;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreValidator;
@@ -609,6 +611,9 @@ public class EcoreOCLEValidator implements EValidator
 						return false;
 					}
 				}
+				Map<Object,Object> newContext = new HashMap<>(context);
+				newContext.remove(EObjectValidator.ROOT_OBJECT);
+				return Diagnostician.INSTANCE.validate(expressionInOCL, diagnostics, newContext);
 			}
 		}
 		catch (ParserException e) {
