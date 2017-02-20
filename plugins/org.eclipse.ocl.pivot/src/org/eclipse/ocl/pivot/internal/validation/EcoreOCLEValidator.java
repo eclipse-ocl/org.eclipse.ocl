@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
@@ -276,6 +277,23 @@ public class EcoreOCLEValidator implements EValidator
 		return false;
 	}
 
+	private boolean isStaleStereotypeContent(EObject eObject) {
+		for (; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof EPackage) {
+				EObject eContainer = eObject.eContainer();
+				if (eContainer instanceof EAnnotation) {
+					EAnnotation eAnnotation = (EAnnotation)eContainer;
+					if (DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI.equals(eAnnotation.getSource())) {
+						int index = eAnnotation.getContents().indexOf(eObject);
+						return index != 0;		// Anything other than the first stereotype is ignored.
+					}
+				}
+				break;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public boolean validate(EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate(eObject.eClass(), eObject, diagnostics, context);
@@ -284,6 +302,9 @@ public class EcoreOCLEValidator implements EValidator
 
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (isStaleStereotypeContent(eObject)) {
+			return true;
+		}
 		assert context != null;
 		boolean allOk = true;
 		if (eObject instanceof EPackage) {
