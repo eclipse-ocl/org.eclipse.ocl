@@ -10,6 +10,7 @@
  */
 package org.eclipse.ocl.pivot.uml.internal.validation;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -145,7 +147,7 @@ public class UMLOCLEValidator implements EValidator
 				message = message.replace("\n", "");
 			}
 			diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, UMLValidator.DIAGNOSTIC_SOURCE,
-					0, message,  new Object[] { diagnosticEObject }));
+				0, message,  new Object[] { diagnosticEObject }));
 			return Boolean.FALSE;
 		}
 
@@ -218,7 +220,7 @@ public class UMLOCLEValidator implements EValidator
 			}
 		}
 	}
-	
+
 	protected final boolean mayUseNewLines;
 
 	public UMLOCLEValidator(boolean mayUseNewLines) {
@@ -227,8 +229,8 @@ public class UMLOCLEValidator implements EValidator
 
 	@Override
 	public boolean validate(EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-	    return validate(eObject.eClass(), eObject, diagnostics, context); 
-//		return true;
+		return validate(eObject.eClass(), eObject, diagnostics, context);
+		//		return true;
 	}
 
 	@Override
@@ -289,8 +291,8 @@ public class UMLOCLEValidator implements EValidator
 											}
 										} catch (ParserException e) {
 											// TODO Auto-generated catch block
-//											e.printStackTrace();
-										}						
+											//											e.printStackTrace();
+										}
 									}
 								}
 							}
@@ -412,7 +414,7 @@ public class UMLOCLEValidator implements EValidator
 	 */
 	public boolean validateOpaqueAction(@NonNull OpaqueAction opaqueAction, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return UMLOCLEValidator.INSTANCE.validateOpaqueElement(opaqueAction.getLanguages(),
-				opaqueAction.getBodies(), opaqueAction, diagnostics, context);
+			opaqueAction.getBodies(), opaqueAction, diagnostics, context);
 	}
 
 	/**
@@ -422,9 +424,9 @@ public class UMLOCLEValidator implements EValidator
 	 */
 	public boolean validateOpaqueBehavior(@NonNull OpaqueBehavior opaqueBehavior, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return UMLOCLEValidator.INSTANCE.validateOpaqueElement(opaqueBehavior.getLanguages(),
-				opaqueBehavior.getBodies(), opaqueBehavior, diagnostics, context);
+			opaqueBehavior.getBodies(), opaqueBehavior, diagnostics, context);
 	}
-	
+
 	/**
 	 * Validate the syntax and semantics of any OCL bofy.
 	 * <p>
@@ -432,7 +434,7 @@ public class UMLOCLEValidator implements EValidator
 	 */
 	public boolean validateOpaqueExpression(@NonNull OpaqueExpression opaqueExpression, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return UMLOCLEValidator.INSTANCE.validateOpaqueElement(opaqueExpression.getLanguages(),
-				opaqueExpression.getBodies(), opaqueExpression, diagnostics, context);
+			opaqueExpression.getBodies(), opaqueExpression, diagnostics, context);
 	}
 
 	/**
@@ -497,6 +499,9 @@ public class UMLOCLEValidator implements EValidator
 			}
 			@SuppressWarnings("unused")
 			ExpressionInOCL asQuery = metamodelManager.parseSpecification(asSpecification);
+			Map<Object,Object> newContext = new HashMap<>(context);
+			newContext.remove(EObjectValidator.ROOT_OBJECT);
+			return Diagnostician.INSTANCE.validate(asQuery, diagnostics, newContext);
 		} catch (ParserException e) {
 			if (diagnostics != null) {
 				String objectLabel = LabelUtil.getLabel(opaqueElement);
@@ -509,7 +514,6 @@ public class UMLOCLEValidator implements EValidator
 			}
 			return false;
 		}
-		return true;
 	}
 	protected boolean validateSyntax2(@NonNull EObject instance, @NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
 		OCL ocl = PivotDiagnostician.getOCL(context);
@@ -530,6 +534,11 @@ public class UMLOCLEValidator implements EValidator
 				return false;
 			}
 			asQuery = metamodelManager.parseSpecification(asSpecification);
+			Map<Object,Object> newContext = new HashMap<>(context);
+			newContext.remove(EObjectValidator.ROOT_OBJECT);
+			if (!Diagnostician.INSTANCE.validate(asQuery, diagnostics, newContext)) {
+				return false;
+			}
 		} catch (ParserException e) {
 			if (diagnostics != null) {
 				String objectLabel = LabelUtil.getLabel(opaqueElement);

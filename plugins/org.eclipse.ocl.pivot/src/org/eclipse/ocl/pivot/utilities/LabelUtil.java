@@ -108,7 +108,7 @@ public class LabelUtil
 	}
 
 	/**
-	 * Return a context map for use by EValidator.validate in which the EVlaidator.class key
+	 * Return a context map for use by EValidator.validate in which the EValidator.class key
 	 * is mapped to the eValidator, and the EValidator.SubstitutionLabelProvider.class key
 	 * is mapped to a SubstitutionLabelProvider that uses getLabel().
 	 */
