@@ -161,7 +161,7 @@ public class EcoreOCLEValidator implements EValidator
 				message = message.replace("\n", "");
 			}
 			diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreValidator.DIAGNOSTIC_SOURCE,
-					0, message,  new Object[] { diagnosticEObject }));
+				0, message,  new Object[] { diagnosticEObject }));
 			return Boolean.FALSE;
 		}
 
@@ -210,7 +210,7 @@ public class EcoreOCLEValidator implements EValidator
 	protected static final class WeakOCLReference extends WeakReference<OCLInternal>
 	{
 		protected final @NonNull OCLInternal ocl;
-		
+
 		protected WeakOCLReference(@NonNull OCLInternal ocl) {
 			super(ocl);
 			this.ocl = ocl;
@@ -243,7 +243,7 @@ public class EcoreOCLEValidator implements EValidator
 			}
 		}
 	}
-	
+
 	protected final boolean mayUseNewLines;
 
 	public EcoreOCLEValidator(boolean mayUseNewLines) {
@@ -278,8 +278,8 @@ public class EcoreOCLEValidator implements EValidator
 
 	@Override
 	public boolean validate(EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-	    return validate(eObject.eClass(), eObject, diagnostics, context); 
-//		return true;
+		return validate(eObject.eClass(), eObject, diagnostics, context);
+		//		return true;
 	}
 
 	@Override
@@ -378,7 +378,7 @@ public class EcoreOCLEValidator implements EValidator
 			if (eClassifier instanceof EClass) {
 				EClass eClass = (EClass)eClassifier;
 				for (EOperation eOperation : eClass.getEOperations()) {
-					if (OCLCommon.getDelegateAnnotation(eOperation) != null) {
+					if (!EcoreUtil.isInvariant(eOperation) && (OCLCommon.getDelegateAnnotation(eOperation) != null)) {
 						needsInvocationDelegates = true;
 					}
 				}
@@ -576,7 +576,7 @@ public class EcoreOCLEValidator implements EValidator
 				assert asType != null;
 				assert asExpressionType != null;
 				if (!metamodelManager.conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, asType, TemplateParameterSubstitutions.EMPTY)) {
-//					metamodelManager.conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, asType, TemplateParameterSubstitutions.EMPTY);			// Debugging
+					//					metamodelManager.conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, asType, TemplateParameterSubstitutions.EMPTY);			// Debugging
 					if (diagnostics != null) {
 						String objectLabel = EObjectValidator.getObjectLabel(eNamedElement, context);
 						String message = role == null ? StringUtil.bind(INCOMPATIBLE_TYPE_1, asExpressionType, objectLabel)
