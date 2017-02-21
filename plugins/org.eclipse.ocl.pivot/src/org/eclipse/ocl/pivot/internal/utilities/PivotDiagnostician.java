@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
@@ -30,6 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
+import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.OCL;
 
 public abstract class PivotDiagnostician extends Diagnostician
@@ -98,7 +100,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 			return super.getObjectLabel(eObject);
 		}
 	}
-	
+
 	protected final static class Diagnostician_2_9 extends PivotDiagnostician
 	{
 		private final @NonNull ResourceSet resourceSet;
@@ -139,7 +141,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 	public static final class WeakOCLReference extends WeakReference<OCL>
 	{
 		protected final @NonNull OCL ocl;
-		
+
 		protected WeakOCLReference(@NonNull OCL ocl) {
 			super(ocl);
 			this.ocl = ocl;
@@ -166,19 +168,22 @@ public abstract class PivotDiagnostician extends Diagnostician
 		this.technology = ASResourceFactoryRegistry.INSTANCE.getTechnology();
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 	}
-	
+
 	@Override
 	public Map<Object, Object> createDefaultContext() {
 		Map<Object, Object> context = super.createDefaultContext();
-	    if (context != null) {
-	    	OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(context);
-	    }
+		if (context != null) {
+			OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(context);
+		}
 		return context;
 	}
-	
+
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if ((eClass != null) && !technology.isValidatable(eClass)) {
+			return true;
+		}
+		if ((eObject instanceof EAnnotation) && DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI.equals(((EAnnotation)eObject).getSource())) {	// FIXME move stereotype discard to technology
 			return true;
 		}
 		return super.validate(eClass, eObject, diagnostics, context);
