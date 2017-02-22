@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *  C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  * 	E.D.Willink - Bug 306079, 322159, 353171
@@ -68,7 +68,7 @@ public class UMLValidateTest extends AbstractValidateTests
 	public static final class LoaderWithLog extends CompleteOCLLoader
 	{
 		StringBuilder s = new StringBuilder();
-		
+
 		public LoaderWithLog(@NonNull EnvironmentFactory environmentFactory) {
 			super(environmentFactory);
 		}
@@ -81,7 +81,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			s.append(detailMessage);
 			return false;
 		}
-		
+
 		@Override
 		public String toString() {
 			return s.toString();
@@ -114,22 +114,22 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		EValidator.Registry.INSTANCE.put(null, new OCLinEcoreEObjectValidator());
 
-//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-//			"xmi", new EcoreResourceFactoryImpl());		
+		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+		//			"xmi", new EcoreResourceFactoryImpl());
 	}
 
 	@Override
 	@After public void tearDown() throws Exception {
 		EValidator.Registry.INSTANCE.remove(null);
 		GlobalEnvironmentFactory.disposeInstance();
-//		OCLstdlib.uninstall();
+		//		OCLstdlib.uninstall();
 		super.tearDown();
 	}
 
 	public void testValidate_Bug417062_uml() throws IOException, InterruptedException, ParserException {
-//		EcorePlugin.ExtensionProcessor.process(getClass().getClassLoader());
-//		UMLPlugin.ExtensionProcessor.process(getClass().getClassLoader());
-//		new UMLPlugin.BodySupportRegistryReader().readRegistry();
+		//		EcorePlugin.ExtensionProcessor.process(getClass().getClassLoader());
+		//		UMLPlugin.ExtensionProcessor.process(getClass().getClassLoader());
+		//		new UMLPlugin.BodySupportRegistryReader().readRegistry();
 		//
 		//	Create model
 		//
@@ -137,21 +137,21 @@ public class UMLValidateTest extends AbstractValidateTests
 		Resource umlResource = doLoadUML(ocl, "Bug417062");
 		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model) umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class book = (org.eclipse.uml2.uml.Class) model.getOwnedType("Book");
-//		org.eclipse.uml2.uml.Property price = book.getOwnedAttribute("price", null);
+		//		org.eclipse.uml2.uml.Property price = book.getOwnedAttribute("price", null);
 		org.eclipse.uml2.uml.Constraint constraint = book.getOwnedRules().get(0);
-//		org.eclipse.uml2.uml.InstanceSpecification validBook = (org.eclipse.uml2.uml.InstanceSpecification) model.getOwnedMember("1) Valid book");
+		//		org.eclipse.uml2.uml.InstanceSpecification validBook = (org.eclipse.uml2.uml.InstanceSpecification) model.getOwnedMember("1) Valid book");
 		org.eclipse.uml2.uml.InstanceSpecification invalidBook = (org.eclipse.uml2.uml.InstanceSpecification) model.getOwnedMember("2) Invalid book");
 		org.eclipse.uml2.uml.InstanceSpecification partialBook = (org.eclipse.uml2.uml.InstanceSpecification) model.getOwnedMember("3) Book with undefined price");
-//		org.eclipse.uml2.uml.InstanceSpecification confusingBook = (org.eclipse.uml2.uml.InstanceSpecification) model.getOwnedMember("4) Opaque expressions and other things");
-//		org.eclipse.uml2.uml.Slot slot = confusingBook.getSlots().get(0);
-//		org.eclipse.uml2.uml.OpaqueExpression opaqueExpression = (org.eclipse.uml2.uml.OpaqueExpression) slot.getOwnedElements().get(0);
-//		Property asPrice = ocl.getMetamodelManager().getPivotOf(Property.class, price);
+		//		org.eclipse.uml2.uml.InstanceSpecification confusingBook = (org.eclipse.uml2.uml.InstanceSpecification) model.getOwnedMember("4) Opaque expressions and other things");
+		//		org.eclipse.uml2.uml.Slot slot = confusingBook.getSlots().get(0);
+		//		org.eclipse.uml2.uml.OpaqueExpression opaqueExpression = (org.eclipse.uml2.uml.OpaqueExpression) slot.getOwnedElements().get(0);
+		//		Property asPrice = ocl.getMetamodelManager().getPivotOf(Property.class, price);
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
-//			ClassUtil.bind(UMLMessages.BodyLanguageSupportError, IllegalStateException.class.getName() + ": " + NLS.bind(UMLMessages.MissingBodyLanguageSupport, "Natural language"), ClassUtil.getLabel(opaqueExpression)),
+			//			ClassUtil.bind(UMLMessages.BodyLanguageSupportError, IllegalStateException.class.getName() + ": " + NLS.bind(UMLMessages.MissingBodyLanguageSupport, "Natural language"), ClassUtil.getLabel(opaqueExpression)),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, book.getName() + "::" + constraint.getName(), LabelUtil.getLabel(invalidBook)),
 			StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, book.getName(), constraint.getName(), LabelUtil.getLabel(partialBook),
 				StringUtil.bind(PivotMessages.UnsupportedCompareTo, "null", IntIntegerValueImpl.class.getName())));
-//		ocl.dispose();
+		//		ocl.dispose();
 		ocl = null;		// UMLOCLEValidator.WeakOCLReference will dispose.
 	}
 
@@ -159,7 +159,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(OCLConstants.OCL_DELEGATE_URI_LPG);
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			assertNull(UML2AS.initialize(resourceSet));
 		}
@@ -168,7 +168,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertNoResourceErrors("Loading", umlResource);
 		String label = NameUtil.qualifiedNameFor(umlResource.getContents().get(1));
 		assertValidationDiagnostics("Loading", umlResource, StringUtil.bind(VIOLATED_TEMPLATE, "Stereotype1::IntegerConstraint", label));
-//		disposeResourceSet(resourceSet);
+		//		disposeResourceSet(resourceSet);
 		ocl.dispose();
 	}
 
@@ -176,8 +176,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
-		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			assertNull(UML2AS.initialize(resourceSet));
 		}
@@ -191,7 +191,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		assert (umlClass1 != null) && (umlStereotype1 != null);
 		String label = NameUtil.qualifiedNameFor(getStereotypeApplication(umlClass1, umlStereotype1));
 		assertValidationDiagnostics("Loading", umlResource, StringUtil.bind(VIOLATED_TEMPLATE, "Stereotype1::IntegerConstraint", label));
-//		disposeResourceSet(resourceSet);
+		//		disposeResourceSet(resourceSet);
 		ocl.dispose();
 	}
 
@@ -232,8 +232,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		helper.installPackages();
 		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class umlClass1 = (org.eclipse.uml2.uml.Class)umlModel.getOwnedType("lowercase");
-//BUG 437450		assertValidationDiagnostics("Loading", umlClass1,
-//		ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class", "CamelCaseName", EcoreUtils.qualifiedNameFor(umlClass1)));
+		//BUG 437450		assertValidationDiagnostics("Loading", umlClass1,
+		//		ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class", "CamelCaseName", EcoreUtils.qualifiedNameFor(umlClass1)));
 		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(umlClass1, validationContext);
@@ -241,7 +241,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertDiagnostics("Loading", diagnostics,
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlClass1)));
 		//
-//		disposeResourceSet(resourceSet);
+		//		disposeResourceSet(resourceSet);
 		helper.dispose();
 		ocl.dispose();
 	}
@@ -275,9 +275,9 @@ public class UMLValidateTest extends AbstractValidateTests
 			fail("Failed to loadDocument '" + oclURI + "'");
 		}
 		helper.installPackages();
-//BUG 437450				assertValidationDiagnostics("Loading", umlResource);
+		//BUG 437450				assertValidationDiagnostics("Loading", umlResource);
 		//
-//		disposeResourceSet(resourceSet);
+		//		disposeResourceSet(resourceSet);
 		helper.dispose();
 		ocl.dispose();
 	}
@@ -311,9 +311,9 @@ public class UMLValidateTest extends AbstractValidateTests
 			fail("Failed to loadDocument '" + oclURI + "'\n" + helper);
 		}
 		helper.installPackages();
-//BUG 437450				assertValidationDiagnostics("Loading", umlResource);
+		//BUG 437450				assertValidationDiagnostics("Loading", umlResource);
 		//
-//		disposeResourceSet(resourceSet);
+		//		disposeResourceSet(resourceSet);
 		helper.dispose();
 		ocl.dispose();
 	}
@@ -323,8 +323,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
-		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			assertNull(UML2AS.initialize(resourceSet));
 		}
@@ -350,27 +350,27 @@ public class UMLValidateTest extends AbstractValidateTests
 		String string5 = NameUtil.qualifiedNameFor(getStereotypeApplication(umlAttribute1, umlMyPropertyExtension));
 		assertValidationDiagnostics("Loading", umlResource, validationContext,
 			StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "MyClassExtension", "ClassConstraint1", string1,
-				  StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "UML::LiteralUnlimitedNatural", "UML::Class")),
+				StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "UML::LiteralUnlimitedNatural", "UML::Class")),
 			StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "MyPropertyExtension", "Constraint1", string2,
-				  StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "UML::LiteralUnlimitedNatural", "UML::Property")),
+				StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "UML::LiteralUnlimitedNatural", "UML::Property")),
 			StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "MyClassExtension", "ClassConstraint1", string3,
-				  StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "UML::LiteralInteger", "UML::Class")),
+				StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "UML::LiteralInteger", "UML::Class")),
 			StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "MyPropertyExtension", "Constraint1", string4,
-			  StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "UML::LiteralInteger", "UML::Property")),
+				StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "UML::LiteralInteger", "UML::Property")),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "MyPropertyExtension::Constraint1", string5),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "MyPropertyExtension::Constraint2", string2),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "MyPropertyExtension::Constraint2", string4));
-//		disposeResourceSet(resourceSet);
+		//		disposeResourceSet(resourceSet);
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_434433() {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
-		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			assertNull(UML2AS.initialize(resourceSet));
 		}
@@ -388,19 +388,19 @@ public class UMLValidateTest extends AbstractValidateTests
 		String label = NameUtil.qualifiedNameFor(getStereotypeApplication(umlClass1, umlStereotype1));
 		assertValidationDiagnostics("Loading", umlResource, validationContext,
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::Constraint3", label));
-//		disposeResourceSet(resourceSet);
+		//		disposeResourceSet(resourceSet);
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug434356() {
-//		EssentialOCLLinkingService.DEBUG_RETRY = true;
-//		UML2AS.TYPE_EXTENSIONS.setState(true);
+		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
+		//		UML2AS.TYPE_EXTENSIONS.setState(true);
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
-		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		OCLDelegateDomain.initialize(resourceSet, PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			assertNull(UML2AS.initialize(resourceSet));
 		}
@@ -418,39 +418,39 @@ public class UMLValidateTest extends AbstractValidateTests
 		String label = NameUtil.qualifiedNameFor(getStereotypeApplication(umlRealization1, umlStereotype1));
 		assertValidationDiagnostics("Loading", umlResource, validationContext,
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "ParentRealization::In case of a ParentRealization relationship, the supplier should be a child of the client", label));
-//		disposeResourceSet(resourceSet);
+		//		disposeResourceSet(resourceSet);
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug436945() throws IOException {   // This is org.eclipse.ocl.doc/doc/models/1710-m1.uml
-//		UML2AS.TYPE_EXTENSIONS.setState(true);
-//		resetRegistries();
-//		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(OCLDelegateDomain.OCL_DELEGATE_URI_PIVOT);
-//		ResourceSet resourceSet = createResourceSet();
-//		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
-//		OCLDelegateDomain.initialize(resourceSet, OCLDelegateDomain.OCL_DELEGATE_URI_PIVOT);			
-//		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
-//			assertNull(UML2AS.initialize(resourceSet));
-//		}
-//		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
-//		URI uri = getProjectFileURI("Bug436945.uml");
-//		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
+		//		UML2AS.TYPE_EXTENSIONS.setState(true);
+		//		resetRegistries();
+		//		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(OCLDelegateDomain.OCL_DELEGATE_URI_PIVOT);
+		//		ResourceSet resourceSet = createResourceSet();
+		//		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		//		OCLDelegateDomain.initialize(resourceSet, OCLDelegateDomain.OCL_DELEGATE_URI_PIVOT);
+		//		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
+		//			assertNull(UML2AS.initialize(resourceSet));
+		//		}
+		//		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
+		//		URI uri = getProjectFileURI("Bug436945.uml");
+		//		Resource umlResource = ClassUtil.nonNullState(resourceSet.getResource(uri, true));
 		OCL ocl = createOCL();
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug436945");
 		assertNoResourceErrors("Loading", umlResource);
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
-//		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
+		//		org.eclipse.uml2.uml.Model umlModel = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		assertValidationDiagnostics("Loading", umlResource, validationContext); //,
-//			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "ParentRealization::In case of a ParentRealization relationship, the supplier should be a child of the client", label));
+		//			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, "ParentRealization::In case of a ParentRealization relationship, the supplier should be a child of the client", label));
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource); //,
-//			ClassUtil.bind(UMLMessages.BodyLanguageSupportError, IllegalStateException.class.getName() + ": " + NLS.bind(UMLMessages.MissingBodyLanguageSupport, "Natural language"), ClassUtil.getLabel(opaqueExpression)),
-//			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, book.getName(), constraint.getName(), ClassUtil.getLabel(invalidBook)),
-//			ClassUtil.bind(OCLMessages.ValidationResultIsInvalid_ERROR_, book.getName(), constraint.getName(), ClassUtil.getLabel(partialBook),
-//				ClassUtil.bind(EvaluatorMessages.TypedValueRequired, "Real", "OclVoid")),
-//			ClassUtil.bind(OCLMessages.ValidationResultIsInvalid_ERROR_, book.getName(), constraint.getName(), ClassUtil.getLabel(confusingBook),
-//				"Failed to evaluate " + asPrice),
-//			ClassUtil.bind(OCLMessages.ParsingError, ClassUtil.getLabel(opaqueExpression), "No containing namespace for 3 + 0.4"));
+		//			ClassUtil.bind(UMLMessages.BodyLanguageSupportError, IllegalStateException.class.getName() + ": " + NLS.bind(UMLMessages.MissingBodyLanguageSupport, "Natural language"), ClassUtil.getLabel(opaqueExpression)),
+		//			ClassUtil.bind(EvaluatorMessages.ValidationConstraintIsNotSatisfied_ERROR_, book.getName(), constraint.getName(), ClassUtil.getLabel(invalidBook)),
+		//			ClassUtil.bind(OCLMessages.ValidationResultIsInvalid_ERROR_, book.getName(), constraint.getName(), ClassUtil.getLabel(partialBook),
+		//				ClassUtil.bind(EvaluatorMessages.TypedValueRequired, "Real", "OclVoid")),
+		//			ClassUtil.bind(OCLMessages.ValidationResultIsInvalid_ERROR_, book.getName(), constraint.getName(), ClassUtil.getLabel(confusingBook),
+		//				"Failed to evaluate " + asPrice),
+		//			ClassUtil.bind(OCLMessages.ParsingError, ClassUtil.getLabel(opaqueExpression), "No containing namespace for 3 + 0.4"));
 		ocl.dispose();
 		ocl = null;		// UMLOCLEValidator.WeakOCLReference will dispose too in due course.
 	}
@@ -493,15 +493,15 @@ public class UMLValidateTest extends AbstractValidateTests
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(umlModel, validationContext);
 		diagnostics.addAll(diagnostic.getChildren());
 		assertDiagnostics("Loading", diagnostics); //,
-//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlModel)));
-		
+		//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class::CamelCaseName", NameUtil.qualifiedNameFor(umlModel)));
+
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "St1::ff", NameUtil.qualifiedNameFor(stereotypeApplication))); //,
 		//
 		helper.dispose();
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug448470() throws IOException { // formerly Bug 447557
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -510,7 +510,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug448470");
 		assertNoResourceErrors("Loading", umlResource);
@@ -528,7 +528,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "Constraint2", "«MyEnum»" + LabelUtil.getLabel(xx) }));
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug452621() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -537,7 +537,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug452621");
 		assertNoResourceErrors("Loading", umlResource);
@@ -552,7 +552,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx) }));
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug458326() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -561,30 +561,30 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug458326");
 		assertNoResourceErrors("Loading", umlResource);
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext); //,
-//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx)));
+		//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx)));
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource); //,
-//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx)),
-//			EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx) }));
+		//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx)),
+		//			EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx) }));
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug458394() throws IOException {
 		BaseLinkingService.DEBUG_RETRY.setState(true);
 		resetRegistries();
-//		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
-//		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
-//			new CommonPreferenceInitializer().initializeDefaultPreferences();
-//		}
+		//		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
+		//		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
+		//			new CommonPreferenceInitializer().initializeDefaultPreferences();
+		//		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug458394");
 		assertNoResourceErrors("Loading", umlResource);
@@ -592,9 +592,9 @@ public class UMLValidateTest extends AbstractValidateTests
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		Model model = (Model) umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.InstanceSpecification xx = (org.eclipse.uml2.uml.InstanceSpecification)model.getOwnedMember("Class1BadInstance");
-//		org.eclipse.uml2.uml.Package pack = model.getOwnedMember("Class1BadInstance");
+		//		org.eclipse.uml2.uml.Package pack = model.getOwnedMember("Class1BadInstance");
 		assertValidationDiagnostics("Loading", umlResource, validationContext); //,
-//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx)));
+		//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx)));
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class1::Constraint1a", LabelUtil.getLabel(xx)),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class1::Constraint1b", LabelUtil.getLabel(xx)),
@@ -603,7 +603,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Class1::ModelTypes", LabelUtil.getLabel(xx)));
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug458470() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -612,7 +612,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug458470");
 		assertNoResourceErrors("Loading", umlResource);
@@ -622,13 +622,13 @@ public class UMLValidateTest extends AbstractValidateTests
 		org.eclipse.uml2.uml.Package pack = model.getNestedPackage("Package2");
 		org.eclipse.uml2.uml.Type xx = pack.getOwnedType("ClassWith");
 		assertValidationDiagnostics("Loading", umlResource, validationContext); //,
-//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx)));
+		//			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::unique_default_values", "«Stereotype1»" + LabelUtil.getLabel(xx)));
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype1::Constraint1", "«Stereotype1»" + LabelUtil.getLabel(xx)),
 			StringUtil.bind(PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "Stereotype2::Constraint2", "«Stereotype2»" + LabelUtil.getLabel(xx)));
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug464808() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -637,7 +637,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug464808");
 		assertNoResourceErrors("Loading", umlResource);
@@ -652,7 +652,7 @@ public class UMLValidateTest extends AbstractValidateTests
 			EcorePlugin.INSTANCE.getString("_UI_GenericInvariant_diagnostic", new Object[] { "Constraint1", "«Stereotype1»" + LabelUtil.getLabel(xx) }));
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug467192() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -661,36 +661,37 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug467192");
 		assertNoResourceErrors("Loading", umlResource);
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
-//		Model model = (Model) umlResource.getContents().get(0);
-//		org.eclipse.uml2.uml.NamedElement xx = model.getOwnedMember("InstanceSpecification1");
+		//		Model model = (Model) umlResource.getContents().get(0);
+		//		org.eclipse.uml2.uml.NamedElement xx = model.getOwnedMember("InstanceSpecification1");
 		assertValidationDiagnostics("Loading", umlResource, validationContext);//,
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
 			StringUtil.bind(PivotMessagesInternal.ParsingError, "CustomPrimitiveTypes::Class1::SimpleDataTypeArithmetic::" +
-			"self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute ",
-			 "The 'Class1::SimpleDataTypeArithmetic' constraint is invalid: 'self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute'\n" +
-			"1: Unresolved Operation 'CustomPrimitiveTypes::SimpleDataType::+(CustomPrimitiveTypes::SimpleDataType)'"),
-			"The 'CallExp::TypeIsNotInvalid' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'",
-			"The 'OperationCallExp::ArgumentCount' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'",
-			"The 'OperationCallExp::ArgumentTypeIsConformant' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'"	
-		);
-//		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
-//			StringUtil.bind(PivotMessagesInternal.ParsingError, "CustomPrimitiveTypes::Class1::SimpleDataTypeArithmetic::" +
-//				"self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute ", 
-//			 "The 'Class1::SimpleDataTypeArithmetic' constraint is invalid: 'self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute'\n" +
-//			"1: Unresolved Operation 'CustomPrimitiveTypes::SimpleDataType::+(CustomPrimitiveTypes::SimpleDataType)'"),
-//			StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "Class1", "SimpleDataTypeArithmetic", LabelUtil.getLabel(xx),
-//					StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "OclInvalid::oclBadOperation() : OclInvalid[1]", "6.0", "self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)"))); //,
+					"self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute ",
+					"The 'Class1::SimpleDataTypeArithmetic' constraint is invalid: 'self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute'\n" +
+					"1: Unresolved Operation 'CustomPrimitiveTypes::SimpleDataType::+(CustomPrimitiveTypes::SimpleDataType)'"),
+			"OCL Validation error for \"self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute\"\n" +
+					"\tThe 'CallExp::TypeIsNotInvalid' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'\n" +
+					"\tThe 'OperationCallExp::ArgumentCount' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'\n" +
+					"\tThe 'OperationCallExp::ArgumentTypeIsConformant' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)'"
+				);
+		//		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
+		//			StringUtil.bind(PivotMessagesInternal.ParsingError, "CustomPrimitiveTypes::Class1::SimpleDataTypeArithmetic::" +
+		//				"self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute ",
+		//			 "The 'Class1::SimpleDataTypeArithmetic' constraint is invalid: 'self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute'\n" +
+		//			"1: Unresolved Operation 'CustomPrimitiveTypes::SimpleDataType::+(CustomPrimitiveTypes::SimpleDataType)'"),
+		//			StringUtil.bind(PivotMessagesInternal.ValidationResultIsInvalid_ERROR_, "Class1", "SimpleDataTypeArithmetic", LabelUtil.getLabel(xx),
+		//					StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "OclInvalid::oclBadOperation() : OclInvalid[1]", "6.0", "self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)"))); //,
 		ocl.dispose();
 	}
-//	Diagnostic ERROR source=org.eclipse.emf.ecore code=0 Diagnosis of org.eclipse.uml2.uml.internal.impl.ModelImpl@6325f352{file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.xtext.tests/bin/org/eclipse/ocl/examples/pivot/tests/models/Bug467192.uml#_7AJBoNeUEeSuVqZ4Q6mWmQ} data=[org.eclipse.uml2.uml.internal.impl.ModelImpl@6325f352 (name: CustomPrimitiveTypes, visibility: <unset>) (URI: null) (viewpoint: <unset>)] [Diagnostic ERROR source=org.eclipse.uml2.uml code=0 "Parsing error for CustomPrimitiveTypes::Class1::SimpleDataTypeArithmetic::self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute :
-//			 The 'Class1::SimpleDataTypeArithmetic' constraint is invalid: 'self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute'
-//			1: Unresolved Operation 'CustomPrimitiveTypes::SimpleDataType::+(CustomPrimitiveTypes::SimpleDataType)'" data=[org.eclipse.uml2.uml.internal.impl.OpaqueExpressionImpl@15405bd6 (name: <unset>, visibility: <unset>) (body: [self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute ], language: [OCL])], Diagnostic WARNING source=org.eclipse.ocl.pivot code=0 The 'CallExp::TypeIsNotInvalid' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)' data=[self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)], Diagnostic WARNING source=org.eclipse.ocl.pivot code=0 The 'OperationCallExp::ArgumentCount' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)' data=[self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)], Diagnostic WARNING source=org.eclipse.ocl.pivot code=0 The 'OperationCallExp::ArgumentTypeIsConformant' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)' data=[self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)]]	
+	//	Diagnostic ERROR source=org.eclipse.emf.ecore code=0 Diagnosis of org.eclipse.uml2.uml.internal.impl.ModelImpl@6325f352{file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.xtext.tests/bin/org/eclipse/ocl/examples/pivot/tests/models/Bug467192.uml#_7AJBoNeUEeSuVqZ4Q6mWmQ} data=[org.eclipse.uml2.uml.internal.impl.ModelImpl@6325f352 (name: CustomPrimitiveTypes, visibility: <unset>) (URI: null) (viewpoint: <unset>)] [Diagnostic ERROR source=org.eclipse.uml2.uml code=0 "Parsing error for CustomPrimitiveTypes::Class1::SimpleDataTypeArithmetic::self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute :
+	//			 The 'Class1::SimpleDataTypeArithmetic' constraint is invalid: 'self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute'
+	//			1: Unresolved Operation 'CustomPrimitiveTypes::SimpleDataType::+(CustomPrimitiveTypes::SimpleDataType)'" data=[org.eclipse.uml2.uml.internal.impl.OpaqueExpressionImpl@15405bd6 (name: <unset>, visibility: <unset>) (body: [self.simpleDataTypeAttribute + self.simpleDataTypeAttribute <> self.simpleDataTypeAttribute ], language: [OCL])], Diagnostic WARNING source=org.eclipse.ocl.pivot code=0 The 'CallExp::TypeIsNotInvalid' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)' data=[self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)], Diagnostic WARNING source=org.eclipse.ocl.pivot code=0 The 'OperationCallExp::ArgumentCount' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)' data=[self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)], Diagnostic WARNING source=org.eclipse.ocl.pivot code=0 The 'OperationCallExp::ArgumentTypeIsConformant' constraint is violated for 'self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)' data=[self.simpleDataTypeAttribute.oclBadOperation(self.simpleDataTypeAttribute)]]
 	public void test_umlValidation_Bug472461() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -699,7 +700,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug472461");
 		assertNoResourceErrors("Loading", umlResource);
@@ -709,7 +710,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug472469() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -718,7 +719,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug472469");
 		assertNoResourceErrors("Loading", umlResource);
@@ -728,7 +729,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug476662() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -737,7 +738,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug476662");
 		assertNoResourceErrors("Loading", umlResource);
@@ -747,7 +748,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug478416() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -756,7 +757,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug478416");
 		assertNoResourceErrors("Loading", umlResource);
@@ -766,7 +767,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug485586() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -775,7 +776,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug485586");
 		assertNoResourceErrors("Loading", umlResource);
@@ -785,7 +786,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
 		ocl.dispose();
 	}
-	
+
 	public void test_umlValidation_Bug506191() throws IOException {
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
@@ -794,7 +795,7 @@ public class UMLValidateTest extends AbstractValidateTests
 		}
 		OCL ocl = createOCL();
 		ResourceSet resourceSet = ocl.getResourceSet();
-		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);			
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
 		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug506191");
 		assertNoResourceErrors("Loading", umlResource);

@@ -475,6 +475,32 @@ public class UMLOCLEValidator implements EValidator
 	}
 
 	/**
+	 * @since 1.3
+	 */
+	protected boolean validateSemantics(org.eclipse.uml2.uml.@NonNull Element umlElement, @NonNull ExpressionInOCL expressionInOCL, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		Diagnostician nestedDiagnostician = Diagnostician.INSTANCE;
+		BasicDiagnostic nestedDiagnostic = nestedDiagnostician.createDefaultDiagnostic(umlElement);
+		Map<Object,Object> nestedContext = new HashMap<>(context);
+		nestedContext.remove(EObjectValidator.ROOT_OBJECT);
+		if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext)) {
+			if (diagnostics != null) {
+				StringBuilder s = new StringBuilder();
+				s.append("OCL Validation error for \"" + expressionInOCL.getBody() + "\"");
+				for (Diagnostic childDiagnostic : nestedDiagnostic.getChildren()) {
+					if (childDiagnostic != null) {
+						s.append("\n\t");
+						s.append(childDiagnostic.getMessage());
+					}
+				}
+				diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, UMLValidator.DIAGNOSTIC_SOURCE,
+					0, s.toString(), new Object[] { umlElement }));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Perform the validation of the body text for an opaqueElement and if instance is non-null use the body to validate
 	 * the instance. If diagnostics is non-null, problems should be identified by Diagnostic instances added to diagnostics.
 	 * context may be used to pass additional options from a calling context to the validation, and may be used to pass
@@ -497,11 +523,8 @@ public class UMLOCLEValidator implements EValidator
 				}
 				return false;
 			}
-			@SuppressWarnings("unused")
 			ExpressionInOCL asQuery = metamodelManager.parseSpecification(asSpecification);
-			Map<Object,Object> newContext = new HashMap<>(context);
-			newContext.remove(EObjectValidator.ROOT_OBJECT);
-			return Diagnostician.INSTANCE.validate(asQuery, diagnostics, newContext);
+			return validateSemantics(opaqueElement, asQuery, diagnostics, context);
 		} catch (ParserException e) {
 			if (diagnostics != null) {
 				String objectLabel = LabelUtil.getLabel(opaqueElement);
@@ -515,6 +538,7 @@ public class UMLOCLEValidator implements EValidator
 			return false;
 		}
 	}
+
 	protected boolean validateSyntax2(@NonNull EObject instance, @NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
 		OCL ocl = PivotDiagnostician.getOCL(context);
 		ExpressionInOCL asQuery = null;
@@ -534,9 +558,7 @@ public class UMLOCLEValidator implements EValidator
 				return false;
 			}
 			asQuery = metamodelManager.parseSpecification(asSpecification);
-			Map<Object,Object> newContext = new HashMap<>(context);
-			newContext.remove(EObjectValidator.ROOT_OBJECT);
-			if (!Diagnostician.INSTANCE.validate(asQuery, diagnostics, newContext)) {
+			if (!validateSemantics(opaqueElement, asQuery, diagnostics, context)) {
 				return false;
 			}
 		} catch (ParserException e) {

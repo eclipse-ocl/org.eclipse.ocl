@@ -611,9 +611,26 @@ public class EcoreOCLEValidator implements EValidator
 						return false;
 					}
 				}
-				Map<Object,Object> newContext = new HashMap<>(context);
-				newContext.remove(EObjectValidator.ROOT_OBJECT);
-				return Diagnostician.INSTANCE.validate(expressionInOCL, diagnostics, newContext);
+				Diagnostician nestedDiagnostician = Diagnostician.INSTANCE;
+				BasicDiagnostic nestedDiagnostic = nestedDiagnostician.createDefaultDiagnostic(eNamedElement);
+				Map<Object,Object> nestedContext = new HashMap<>(context);
+				nestedContext.remove(EObjectValidator.ROOT_OBJECT);
+				if (!nestedDiagnostician.validate(expressionInOCL, nestedDiagnostic, nestedContext)) {
+					if (diagnostics != null) {
+						StringBuilder s = new StringBuilder();
+						s.append("OCL Validation error for \"" + expressionInOCL.getBody() + "\"");
+						for (Diagnostic childDiagnostic : nestedDiagnostic.getChildren()) {
+							if (childDiagnostic != null) {
+								s.append("\n\t");
+								s.append(childDiagnostic.getMessage());
+							}
+						}
+						diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, EcoreValidator.DIAGNOSTIC_SOURCE,
+							0, s.toString(), new Object[] { eNamedElement }));
+					}
+					return false;
+				}
+				return true;
 			}
 		}
 		catch (ParserException e) {
