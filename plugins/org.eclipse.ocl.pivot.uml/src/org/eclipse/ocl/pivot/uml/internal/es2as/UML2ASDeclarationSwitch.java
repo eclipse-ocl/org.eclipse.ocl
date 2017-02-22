@@ -342,6 +342,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		assert umlOperation != null;
 		Operation pivotElement = converter.refreshNamedElement(Operation.class, PivotPackage.Literals.OPERATION, umlOperation);
 		copyNamedElement(pivotElement, umlOperation);
+		pivotElement.setIsStatic(umlOperation.isStatic());
 		for (org.eclipse.uml2.uml.Parameter umlParameter : umlOperation.getOwnedParameters()) {
 			org.eclipse.uml2.uml.ParameterDirectionKind direction = umlParameter.getDirection();
 			if (direction == org.eclipse.uml2.uml.ParameterDirectionKind.IN_LITERAL) {
@@ -488,6 +489,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		pivotElement.setIsImplicit(!isComposer);
 //		pivotElement.setIsID(umlProperty.isID());			
 //		pivotElement.setIsResolveProxies(umlProperty.isResolveProxies());
+		pivotElement.setIsStatic(umlProperty.isStatic());
 //		converter.addProperty(umlProperty);
 		converter.queueReference(umlProperty);	// type
 		converter.queueUse(umlProperty);	// Defer

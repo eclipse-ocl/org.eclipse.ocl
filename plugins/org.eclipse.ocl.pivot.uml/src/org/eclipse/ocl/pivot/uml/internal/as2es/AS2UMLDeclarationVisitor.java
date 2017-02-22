@@ -272,6 +272,7 @@ public class AS2UMLDeclarationVisitor
 		@SuppressWarnings("null")
 		org.eclipse.uml2.uml.@NonNull Operation umlOperation = UMLFactory.eINSTANCE.createOperation();
 		copyNamedElement(umlOperation, pivotOperation);
+		umlOperation.setIsStatic(pivotOperation.isIsStatic());
 //		safeVisitAll(umlOperation.getEAnnotations(), pivotOperation.getOwnedAnnotation());
 		context.defer(pivotOperation);		// Defer type setting
 		TemplateSignature pivotTemplateSignature = pivotOperation.getOwnedSignature();
@@ -333,6 +334,7 @@ public class AS2UMLDeclarationVisitor
 //		umlProperty.setIsResolveProxies(pivotProperty.isResolveProxies());
 		umlProperty.setIsReadOnly(pivotProperty.isIsReadOnly());
 		umlProperty.setIsDerived(pivotProperty.isIsDerived());
+		umlProperty.setIsStatic(pivotProperty.isIsStatic());
 //		umlProperty.setIsTransient(pivotProperty.isTransient());
 //		umlProperty.setIsUnsettable(pivotProperty.isUnsettable());
 //		umlProperty.setIsVolatile(pivotProperty.isVolatile());
