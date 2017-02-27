@@ -39,6 +39,11 @@ import org.eclipse.ocl.pivot.library.iterator.CollectIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SortedByIteration;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * TemplateParameterSubstitutionHelper instances support irregular TemplateParameterSubstitution deduction for difficult to
@@ -160,6 +165,30 @@ public abstract class TemplateParameterSubstitutionHelper
 	}
 
 	//
+	//	Special case processing for return collection types based on the source collection types and multiplicities.
+	//
+	private static class CollectionAsCollectionHelper extends TemplateParameterSubstitutionHelper
+	{
+		@Override
+		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
+			if (returnType instanceof CollectionType) {
+				OCLExpression ownedSource = callExp.getOwnedSource();
+				if (ownedSource != null) {
+					Type sourceType = ownedSource.getType();
+					CollectionType returnCollectionType = (CollectionType)returnType;
+					if (sourceType instanceof CollectionType) {
+						CollectionType sourceCollectionType = (CollectionType)sourceType;
+						Type elementType = PivotUtil.getElementType(sourceCollectionType);
+						returnType = metamodelManager.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique(),
+							elementType, sourceCollectionType.isIsNullFree(), sourceCollectionType.getLowerValue(), sourceCollectionType.getUpperValue());
+					}
+				}
+			}
+			return returnType;
+		}
+	}
+
+	//
 	//	Special case processing for return collection types based on the source collection types.
 	//
 	private static class CollectionSourceHelper extends TemplateParameterSubstitutionHelper
@@ -182,14 +211,34 @@ public abstract class TemplateParameterSubstitutionHelper
 		}
 	}
 
+	private static class OclAnyOclAsSetHelper extends TemplateParameterSubstitutionHelper  // Working around Bug 512758
+	{
+		@Override
+		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
+			if (returnType instanceof CollectionType) {
+				OCLExpression ownedSource = callExp.getOwnedSource();
+				if (ownedSource != null) {
+					CollectionType collectionType = (CollectionType)returnType;
+					int collectionBound = ownedSource.isIsRequired() ? 1 : 0;
+					IntegerValue lowerBound = ValueUtil.integerValueOf(collectionBound);
+					UnlimitedNaturalValue upperBound = ValueUtil.unlimitedNaturalValueOf(collectionBound);
+					Type elementType = PivotUtil.getElementType(collectionType);
+					returnType = metamodelManager.getCollectionType(collectionType.isOrdered(), collectionType.isUnique(),
+						elementType, true, lowerBound, upperBound);
+				}
+			}
+			return returnType;
+		}
+	}
+
 	static
 	{
 		addHelper(AnyIteration.class, new CollectionSourceHelper());
 		addHelper(CollectIteration.class, new CollectionCollectHelper());
-		addHelper(CollectionAsBagOperation.class, new CollectionSourceHelper());
-		addHelper(CollectionAsOrderedSetOperation.class, new CollectionSourceHelper());
-		addHelper(CollectionAsSequenceOperation.class, new CollectionSourceHelper());
-		addHelper(CollectionAsSetOperation.class, new CollectionSourceHelper());
+		addHelper(CollectionAsBagOperation.class, new CollectionAsCollectionHelper());
+		addHelper(CollectionAsOrderedSetOperation.class, new CollectionAsCollectionHelper());
+		addHelper(CollectionAsSequenceOperation.class, new CollectionAsCollectionHelper());
+		addHelper(CollectionAsSetOperation.class, new CollectionAsCollectionHelper());
 		addHelper(CollectionExcludingOperation.class, new CollectionSourceHelper());
 		addHelper(CollectionExcludingAllOperation.class, new CollectionSourceHelper());
 		//		addHelper(CollectionIncludingOperation.class, new CollectionSourceAndArgumentHelper());
@@ -200,6 +249,7 @@ public abstract class TemplateParameterSubstitutionHelper
 		addHelper(OrderedCollectionFirstOperation.class, new CollectionSourceElementHelper());
 		addHelper(OrderedCollectionLastOperation.class, new CollectionSourceElementHelper());
 		addHelper(CollectionFlattenOperation.class, new CollectionFlattenHelper());
+		addHelper(OclAnyOclAsSetOperation.class, new OclAnyOclAsSetHelper());
 		addHelper(RejectIteration.class, new CollectionSourceHelper());
 		addHelper(SelectIteration.class, new CollectionSourceHelper());
 		addHelper(SortedByIteration.class, new CollectionSourceHelper());
