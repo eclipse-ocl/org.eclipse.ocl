@@ -33,8 +33,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.ReferringElement;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -102,15 +100,15 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 				while (i < start) {
 					htmlBuffer.append(documentation.charAt(i++));
 				}
-				htmlBuffer.startFontColor("red"); 
+				htmlBuffer.startFontColor("red");
 				htmlBuffer.startUnderline();
 				while (i < end) {
 					htmlBuffer.append(documentation.charAt(i++));
 				}
 				htmlBuffer.endUnderline();
-				htmlBuffer.endFontColor(); 
+				htmlBuffer.endFontColor();
 			}
-			htmlBuffer.startFontColor("red"); 
+			htmlBuffer.startFontColor("red");
 			htmlBuffer.startParagraph();
 			htmlBuffer.endParagraph();
 			for (INode parseError :parseErrors) {
@@ -118,7 +116,7 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 				htmlBuffer.append(parseError.getSyntaxErrorMessage().getMessage());
 				htmlBuffer.endParagraph();
 			}
-			htmlBuffer.endFontColor(); 
+			htmlBuffer.endFontColor();
 			return htmlBuffer.toString();
 		}
 		if (o instanceof Pivotable) {
@@ -178,7 +176,7 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 
 	@Override
 	protected String getFirstLine(EObject eObject) {
-//		System.out.println("getFirstLine " + eObject.eClass().getName());
+		//		System.out.println("getFirstLine " + eObject.eClass().getName());
 		Element pivotElement = null;
 		if (eObject instanceof Pivotable) {
 			pivotElement = PivotUtil.getPivot(Element.class, (Pivotable)eObject);
@@ -202,7 +200,7 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 				@Override
 				public @Nullable Set<String> getRestrictedNames() {
 					return null;
-				}				
+				}
 			};
 			if (namespace != null) {
 				EnvironmentFactory environmentFactory = PivotUtilInternal.findEnvironmentFactory(namespace);
@@ -213,10 +211,10 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 			if (pivotElement instanceof CallExp) {
 				description = PrettyPrinter.printType(pivotElement, prettyPrintOptions);
 			}
-			else if (pivotElement instanceof VariableExp) {
-				VariableDeclaration referredVariable = ((VariableExp)pivotElement).getReferredVariable();
-				if (referredVariable != null) {
-					description = PrettyPrinter.print(referredVariable, prettyPrintOptions);
+			else if (pivotElement instanceof ReferringElement) {
+				Element referredElement = ((ReferringElement)pivotElement).getReferredElement();
+				if (referredElement != null) {
+					description = PrettyPrinter.print(referredElement, prettyPrintOptions);
 				}
 			}
 			else if (pivotElement instanceof OCLExpression) {
@@ -228,13 +226,13 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 			if (description == null) {
 				description = PrettyPrinter.print(pivotElement, prettyPrintOptions);
 			}
-//			System.out.println(" => " + description);
+			//			System.out.println(" => " + description);
 			return pivotElement.eClass().getName() + " <b>" + description + "</b>";
 		}
 		else {
 			String firstLine = super.getFirstLine(eObject);
-//			System.out.println(" => " + firstLine);
-			return firstLine + "\n<br>" + eObject.eClass().getName();		// FIXME do better					
+			//			System.out.println(" => " + firstLine);
+			return firstLine + "\n<br>" + eObject.eClass().getName();		// FIXME do better
 		}
 	}
 
@@ -281,7 +279,7 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 
 			@Override
 			public Object getInfo() {
-//				return getHoverInfo(object, region, null);
+				//				return getHoverInfo(object, region, null);
 				return getHoverInfo(object, viewer, region, null);
 			}
 		};
@@ -289,7 +287,7 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 
 	protected XtextBrowserInformationControlInput getHoverInfo(EObject element,
 			ITextViewer viewer, IRegion hoverRegion, XtextBrowserInformationControlInput previous) {
-//		IXtextDocument xtextDocument = XtextDocumentUtil.get(viewer);
+		//		IXtextDocument xtextDocument = XtextDocumentUtil.get(viewer);
 		return super.getHoverInfo(element, hoverRegion, previous);
 	}
 }
