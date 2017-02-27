@@ -114,6 +114,12 @@ import org.eclipse.ocl.pivot.values.Unlimited;
  */
 public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, @NonNull StringBuilder>
 {
+	/**
+	 * Set this value true to avoid default multiplicities bing hidden.
+	 * @since 1.3
+	 */
+	public static boolean SHOW_ALL_MULTIPLICITIES = false;
+
 	private static final Logger logger = Logger.getLogger(ToStringVisitor.class);
 
 	public static interface Factory {
@@ -371,7 +377,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 				Number upper = collectionType.getUpper();
 				long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
 				long upperValue = (upper != null) && !(upper instanceof Unlimited) ? upper.longValue() : -1l;
-				if ((lowerValue != 0) || (upperValue != -1) || !collectionType.isIsNullFree()) {
+				if (SHOW_ALL_MULTIPLICITIES || (lowerValue != 0) || (upperValue != -1) || !collectionType.isIsNullFree()) {
 					StringUtil.appendMultiplicity(context, lowerValue, upperValue, collectionType.isIsNullFree());
 				}
 			}

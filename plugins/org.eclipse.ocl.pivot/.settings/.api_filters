@@ -5834,6 +5834,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/ToStringVisitor.java" type="org.eclipse.ocl.pivot.utilities.ToStringVisitor">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.ToStringVisitor"/>
+                <message_argument value="SHOW_ALL_MULTIPLICITIES"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/values/BagValue.java" type="org.eclipse.ocl.pivot.values.BagValue$Accumulator">
         <filter comment="Bug 512402 workaround" id="576720909">
             <message_arguments>
