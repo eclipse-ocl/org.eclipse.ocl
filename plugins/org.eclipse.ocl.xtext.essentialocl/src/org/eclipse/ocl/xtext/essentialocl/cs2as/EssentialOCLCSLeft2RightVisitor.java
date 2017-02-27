@@ -1293,6 +1293,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				}
 			}
 		}
+		// FIXME following code is now in PivotHelper.createOperationCallExp too
 		Type returnType = null;
 		Type formalType = operation.getType();
 		if ((formalType != null) && (sourceType != null)) {

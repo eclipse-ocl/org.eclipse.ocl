@@ -71,7 +71,9 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionHelper;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 import com.google.common.collect.Iterables;
@@ -341,8 +343,24 @@ public class PivotHelper
 			else {
 				returnType = metamodelManager.specializeType(formalType, asOperationCallExp, sourceType, sourceTypeValue);
 			}
+
+			boolean returnIsRequired = asOperation.isIsRequired();
+			LibraryFeature implementationClass = asOperation.getImplementation();
+			if (implementationClass != null) {
+				Class<? extends LibraryFeature> className = implementationClass.getClass();
+				TemplateParameterSubstitutionHelper helper = TemplateParameterSubstitutionHelper.getHelper(className);
+				if (helper != null) {
+					returnType = helper.resolveReturnType(metamodelManager, asOperationCallExp, returnType);
+					returnIsRequired = helper.resolveReturnNullity(metamodelManager, asOperationCallExp, returnIsRequired);
+				}
+			}
+			if (asOperation.isIsTypeof()) {
+				setType(asOperationCallExp, standardLibrary.getClassType(), returnIsRequired, returnType);
+			}
+			else {
+				setType(asOperationCallExp, returnType, returnIsRequired, null);
+			}
 		}
-		asOperationCallExp.setType(returnType);
 		return asOperationCallExp;
 	}
 
@@ -584,5 +602,42 @@ public class PivotHelper
 		LetExp safeExp = createLetExp(unsafeSourceVariable, safeObjectCallExp);
 		//
 		eContainer.eSet(eContainmentFeature, safeExp);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public void setType(@NonNull OCLExpression asExpression, Type type, boolean isRequired, @Nullable Type typeValue) {
+		setType(asExpression, type, isRequired);
+		Type primaryTypeValue = typeValue != null ? getMetamodelManager().getPrimaryType(typeValue) : null;
+		if (primaryTypeValue != asExpression.getTypeValue()) {
+			asExpression.setTypeValue(primaryTypeValue);
+		}
+	}
+
+	/*	private void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
+		setType(pivotElement, type, isRequired);
+		PivotMetamodelManager metamodelManager = getMetamodelManager();
+		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
+		if (primaryTypeValue != pivotElement.getTypeValue()) {
+			pivotElement.setTypeValue(primaryTypeValue);
+		}
+	} */
+
+	/**
+	 * @since 1.3
+	 */
+	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
+		Type primaryType = type != null ? getMetamodelManager().getPrimaryType(type) : null;
+		if (primaryType != asTypedElement.getType()) {
+			asTypedElement.setType(primaryType);
+		}
+		boolean wasRequired = asTypedElement.isIsRequired();
+		if (wasRequired != isRequired) {
+			asTypedElement.setIsRequired(isRequired);
+		}
+		if (primaryType != null) {
+			PivotUtil.debugWellContainedness(primaryType);
+		}
 	}
 }

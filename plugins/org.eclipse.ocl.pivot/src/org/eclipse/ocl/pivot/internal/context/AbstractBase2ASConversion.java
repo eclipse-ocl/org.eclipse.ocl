@@ -199,21 +199,21 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 	public void setType(@NonNull TypedElement pivotElement, Type type) {
 		setType(pivotElement, type, pivotElement.isIsRequired());
 	}
-	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
+	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
 		setType(pivotElement, type, isRequired);
 		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
 		if (primaryTypeValue != pivotElement.getTypeValue()) {
 			pivotElement.setTypeValue(primaryTypeValue);
 		}
 	}
-	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
+	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
 		setType(pivotElement, type, isRequired);
 		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
 		if (primaryTypeValue != pivotElement.getTypeValue()) {
 			pivotElement.setTypeValue(primaryTypeValue);
 		}
 	}
-	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {
+	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {	// FIXME redirect to PivotHelper
 		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
 		if (primaryType != pivotElement.getType()) {
 			pivotElement.setType(primaryType);
