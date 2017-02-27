@@ -192,6 +192,8 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 			String description = null;
 			PrettyPrintOptions.Global prettyPrintOptions = new PrettyPrintOptions.Global(namespace)
 			{
+				{ setShowDefaultMultiplicities(true); }
+
 				@Override
 				public @Nullable Set<String> getReservedNames() {
 					return null;

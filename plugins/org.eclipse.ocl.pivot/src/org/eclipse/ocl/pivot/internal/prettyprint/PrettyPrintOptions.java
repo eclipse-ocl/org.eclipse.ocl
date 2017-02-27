@@ -33,20 +33,21 @@ public abstract class PrettyPrintOptions
 	{
 		private @NonNull String indentStep = "  ";
 		private int linelength = Integer.MAX_VALUE;
+		private boolean showDefaultMultiplicities = false;
 		private final @NonNull Set<String> reservedNames = new HashSet<String>();
 		private final @NonNull Set<String> restrictedNames = new HashSet<String>();
 		private @NonNull Map<Namespace, String> namespace2alias = new HashMap<Namespace, String>();
 		private @Nullable URI baseURI = null;
 		private @Nullable EnvironmentFactory environmentFactory = null;
-		
+
 		public Global(@Nullable Namespace scope) {
 			super(scope);
 		}
-		
+
 		public void addAliases(@NonNull Namespace namespace, @NonNull String alias) {
 			namespace2alias.put(namespace, alias);
 		}
-		
+
 		@Override
 		public void addReservedNames(@NonNull Iterable<String> names) {
 			for (String name : names) {
@@ -54,14 +55,14 @@ public abstract class PrettyPrintOptions
 				restrictedNames.add(name);
 			}
 		}
-		
+
 		@Override
 		public  void addRestrictedNames(@NonNull Iterable<String> names) {
 			for (String name : names) {
 				restrictedNames.add(name);
 			}
 		}
-		
+
 		@Override
 		public @Nullable String getAlias(@NonNull Namespace namespace) {
 			return namespace2alias.get(namespace);
@@ -95,7 +96,7 @@ public abstract class PrettyPrintOptions
 		public @NonNull Set<Namespace> getAliasedNamespaces() {
 			return namespace2alias.keySet();
 		}
-		
+
 		@Override
 		public @Nullable Set<String> getReservedNames() {
 			return reservedNames;
@@ -105,7 +106,12 @@ public abstract class PrettyPrintOptions
 		public @Nullable Set<String> getRestrictedNames() {
 			return restrictedNames;
 		}
-		
+
+		@Override
+		public boolean isShowDefaultMultiplicities() {
+			return showDefaultMultiplicities;
+		}
+
 		public void setAliases(@NonNull Map<Namespace,String> namespace2alias) {
 			this.namespace2alias = namespace2alias;
 		}
@@ -127,8 +133,13 @@ public abstract class PrettyPrintOptions
 		public void setLinelength(int linelength) {
 			this.linelength = linelength;
 		}
+
+		@Override
+		public void setShowDefaultMultiplicities(boolean showDefaultMultiplicities) {
+			this.showDefaultMultiplicities = showDefaultMultiplicities;
+		}
 	}
-	
+
 	/**
 	 * Local PrettyPrintOptions may be overridden in nested pretty printer contexts.
 	 */
@@ -137,12 +148,13 @@ public abstract class PrettyPrintOptions
 		private @NonNull PrettyPrintOptions options;
 		private @Nullable Set<String> reservedNames = null;
 		private @Nullable Set<String> restrictedNames = null;
+		private boolean showDefaultMultiplicities = false;
 
 		public Local(@NonNull PrettyPrintOptions options, @Nullable Namespace scope) {
 			super(scope);
 			this.options = options;
 		}
-		
+
 		@Override
 		public void addReservedNames(@NonNull Iterable<String> names) {
 			Set<String> reservedNames2 = reservedNames;
@@ -158,7 +170,7 @@ public abstract class PrettyPrintOptions
 				restrictedNames2.add(name);
 			}
 		}
-		
+
 		@Override
 		public  void addRestrictedNames(@NonNull Iterable<String> names) {
 			Set<String> reservedNames2 = reservedNames;
@@ -173,7 +185,7 @@ public abstract class PrettyPrintOptions
 				restrictedNames2.add(name);
 			}
 		}
-		
+
 		@Override
 		public @NonNull Global getGlobalOptions() {
 			return options.getGlobalOptions();
@@ -188,16 +200,26 @@ public abstract class PrettyPrintOptions
 		public Set<String> getRestrictedNames() {
 			return restrictedNames != null ? restrictedNames : options.getRestrictedNames();
 		}
+
+		@Override
+		public boolean isShowDefaultMultiplicities() {
+			return showDefaultMultiplicities;
+		}
+
+		@Override
+		public void setShowDefaultMultiplicities(boolean showDefaultMultiplicities) {
+			this.showDefaultMultiplicities = showDefaultMultiplicities;
+		}
 	}
-	
+
 	protected final @Nullable Namespace scope;
-	
+
 	public PrettyPrintOptions(@Nullable Namespace scope) {
 		this.scope = scope;
 	}
 
 	public abstract void addReservedNames(@NonNull Iterable<String> names);
-	
+
 	public abstract void addRestrictedNames(@NonNull Iterable<String> names);
 
 	/**
@@ -231,17 +253,31 @@ public abstract class PrettyPrintOptions
 
 	public abstract @Nullable Set<String> getReservedNames();
 
-	public abstract @Nullable Set<String> getRestrictedNames();
+	/**
+	 * @since 1.3
+	 */
+	public boolean isShowDefaultMultiplicities() {
+		return getGlobalOptions().isShowDefaultMultiplicities();
+	}
 
 	public @Nullable Namespace getScope() {
 		return scope;
 	}
 
+	public abstract @Nullable Set<String> getRestrictedNames();
+
 	public void setIndentStep(@NonNull String indentStep) {
 		getGlobalOptions().setIndentStep(indentStep);
 	}
-	
+
 	public void setLinelength(int linelength) {
 		getGlobalOptions().setLinelength(linelength);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public void setShowDefaultMultiplicities(boolean showDefaultMultiplicities) {
+		getGlobalOptions().setShowDefaultMultiplicities(showDefaultMultiplicities);
 	}
 }

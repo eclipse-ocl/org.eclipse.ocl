@@ -613,7 +613,7 @@ public class PrettyPrinter
 					Number lower = collectionType.getLower();
 					Number upper = collectionType.getUpper();
 					boolean isNullFree = collectionType.isIsNullFree();
-					if (!isNullFree || ((lower != null) && (upper != null) && ((lower.longValue() != 0) || !(upper instanceof  Unlimited)))) {
+					if (options.isShowDefaultMultiplicities() || !isNullFree || ((lower != null) && (upper != null) && ((lower.longValue() != 0) || !(upper instanceof  Unlimited)))) {
 						appendMultiplicity(lower, upper, isNullFree);
 					}
 				}
@@ -658,7 +658,7 @@ public class PrettyPrinter
 		if (!object.isIsRequired()) {
 			append("[?]");
 		}
-		else if (!(type instanceof CollectionType)) {
+		else if (options.isShowDefaultMultiplicities() || !(type instanceof CollectionType)) {
 			append("[1]");
 		}
 	}
