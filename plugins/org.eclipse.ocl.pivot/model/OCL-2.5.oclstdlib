@@ -774,7 +774,7 @@ abstract type OclAny : AnyType {
 	/**
 	Returns a Set with oclText[self] as the sole content, unless oclText[self] is oclText[null] in which case returns an empty set,
 	*/
-	operation oclAsSet() : Set(OclSelf[1|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation';
+	operation oclAsSet() : Set(OclSelf[1..1|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation';
 	/**
 	Evaluates to oclText[self], where oclText[self] is of the type identified by oclText[TT].
 	The type oclText[TT] may be any classifier defined by OCL or a user metamodel;
@@ -1148,6 +1148,7 @@ abstract type OclVoid : VoidType conformsTo OclAny {
 	operation and(b : Boolean[?]) : Boolean[?] precedence=AND => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation';
 	operation implies(b : Boolean[?]) : Boolean[?] precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation';
 	operation or(b : Boolean[?]) : Boolean[?] precedence=OR => 'org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation';
+	operation oclAsSet() : Set(OclSelf[0..0|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation';
 	operation oclIsInvalid() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation';
 	operation oclIsUndefined() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation';
 	/**
