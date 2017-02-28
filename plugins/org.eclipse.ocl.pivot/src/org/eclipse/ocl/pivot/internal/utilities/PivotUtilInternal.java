@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -190,6 +191,7 @@ public class PivotUtilInternal //extends PivotUtil
 		}
 		else {
 			EClass eClass = eObject.eClass();
+			assert eClass != null;
 			Attribution attribution = Attribution.REGISTRY.get(eClass);
 			if (attribution == null) {
 				for (EClass superClass = eClass; superClass.getESuperTypes().size() > 0;) {
@@ -447,6 +449,13 @@ public class PivotUtilInternal //extends PivotUtil
 	 */
 	public static @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getOwnedClassesList(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		return ClassUtil.nullFree(asPackage.getOwnedClasses());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<@NonNull Import> getOwnedImportsList(@NonNull Model asModel) {
+		return ClassUtil.nullFree(asModel.getOwnedImports());
 	}
 
 	/**

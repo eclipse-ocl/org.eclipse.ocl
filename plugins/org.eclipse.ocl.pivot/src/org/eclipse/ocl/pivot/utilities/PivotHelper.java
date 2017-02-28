@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IfExp;
@@ -127,6 +128,12 @@ public class PivotHelper
 		return collectionRange;
 	}
 
+	public @NonNull Comment createComment(@NonNull String comment) {
+		Comment asComment = PivotFactory.eINSTANCE.createComment();
+		asComment.setBody(comment);
+		return asComment;
+	}
+
 	public @NonNull IfExp createIfExp(@NonNull OCLExpression asCondition, @NonNull OCLExpression asThen, @NonNull OCLExpression asElse) {
 		Type commonType = getMetamodelManager().getCommonType(ClassUtil.nonNullState(asThen.getType()), TemplateParameterSubstitutions.EMPTY,
 			ClassUtil.nonNullState(asElse.getType()), TemplateParameterSubstitutions.EMPTY);
@@ -224,6 +231,14 @@ public class PivotHelper
 		asVariable.setType(asInitExpression.getType());
 		asVariable.setIsRequired(asInitExpression.isIsRequired());
 		asVariable.setOwnedInit(asInitExpression);
+		return asVariable;
+	}
+
+	public @NonNull LetVariable createLetVariable(@NonNull String name, @NonNull Type asType, boolean isRequired) {
+		LetVariable asVariable = PivotFactory.eINSTANCE.createLetVariable();
+		asVariable.setName(name);
+		asVariable.setType(asType);
+		asVariable.setIsRequired(isRequired);
 		return asVariable;
 	}
 
@@ -604,9 +619,6 @@ public class PivotHelper
 		eContainer.eSet(eContainmentFeature, safeExp);
 	}
 
-	/**
-	 * @since 1.3
-	 */
 	public void setType(@NonNull OCLExpression asExpression, Type type, boolean isRequired, @Nullable Type typeValue) {
 		setType(asExpression, type, isRequired);
 		Type primaryTypeValue = typeValue != null ? getMetamodelManager().getPrimaryType(typeValue) : null;
@@ -624,9 +636,6 @@ public class PivotHelper
 		}
 	} */
 
-	/**
-	 * @since 1.3
-	 */
 	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
 		Type primaryType = type != null ? getMetamodelManager().getPrimaryType(type) : null;
 		if (primaryType != asTypedElement.getType()) {

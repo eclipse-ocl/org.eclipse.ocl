@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -89,6 +91,7 @@ import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
@@ -103,6 +106,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -1037,6 +1041,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull Property getOpposite(@NonNull Property asProperty) {
+		return ClassUtil.nonNullState(asProperty.getOpposite());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull OCLExpression getOwnedArgument(@NonNull OperationCallExp object, int index) {
 		return ClassUtil.nonNullState(object.getOwnedArguments().get(index));
 	}
@@ -1366,6 +1377,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull Type getReferredType(@NonNull TypeExp typeExp) {
+		return ClassUtil.nonNullState(typeExp.getReferredType());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull VariableDeclaration getReferredVariable(@NonNull VariableExp variableExp) {
 		return ClassUtil.nonNullState(variableExp.getReferredVariable());
 	}
@@ -1477,6 +1495,26 @@ public class PivotUtil
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Replace oldChild at its eContainer.eContainmentFeature by newChild.
+	 * @since 1.3
+	 */
+	public static void replaceChild(@NonNull EObject oldChild, @NonNull EObject newChild) {
+		EObject eContainer = oldChild.eContainer();
+		EReference eContainmentFeature = oldChild.eContainmentFeature();
+		if (eContainmentFeature.isMany()) {
+			@SuppressWarnings("unchecked") EList<EObject> list = (EList<EObject>)eContainer.eGet(eContainmentFeature);
+			int index = list.indexOf(oldChild);
+			assert index >= 0;
+			PivotUtilInternal.resetContainer(oldChild);
+			list.add(index, newChild);
+		}
+		else {
+			PivotUtilInternal.resetContainer(oldChild);
+			eContainer.eSet(eContainmentFeature, newChild);
+		}
 	}
 
 	/**
