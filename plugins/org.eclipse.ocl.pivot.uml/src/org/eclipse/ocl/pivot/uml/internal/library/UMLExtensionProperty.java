@@ -20,15 +20,15 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 
 /**
- * The static instance of ExplicitNavigationProperty supports evaluation of
- * a property call that navigates a relationship.
+ * An instance of UMLExtensionProperty supports evaluation of an implicit (unnavigable opposite) property
+ * using the UMLElementExtension associated with the source. This is used by UML dynamic profiles.
  */
 public class UMLExtensionProperty extends ExtensionProperty
 {
 	public UMLExtensionProperty(@NonNull Property property) {
 		super(property);
 	}
-	
+
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		Type staticType = property.getType();

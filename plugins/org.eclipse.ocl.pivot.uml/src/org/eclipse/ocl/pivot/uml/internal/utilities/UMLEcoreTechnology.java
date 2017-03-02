@@ -27,11 +27,15 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Profile;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Stereotype;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
+import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractTechnology;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -97,7 +101,18 @@ public class UMLEcoreTechnology extends AbstractTechnology
 
 	@Override
 	public @NonNull LibraryProperty createExtensionPropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property) {
-		return new UMLExtensionProperty(property);
+		if (property.isIsImplicit()) {
+			Type type = property.getType();
+			assert type instanceof Stereotype;
+			EObject eTarget = type.getESObject();
+			if (eTarget instanceof EClass) {							// A static profile
+				return new ImplicitNonCompositionProperty(property);
+			}
+			if (eTarget instanceof org.eclipse.uml2.uml.Stereotype) {	// A dynamic profile
+				return new UMLExtensionProperty(property);
+			}
+		}
+		return new ExtensionProperty(property);
 	}
 
 	@Override

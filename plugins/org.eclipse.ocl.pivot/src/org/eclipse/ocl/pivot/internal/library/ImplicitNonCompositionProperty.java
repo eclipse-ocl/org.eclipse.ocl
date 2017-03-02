@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -29,17 +30,19 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
- * The static instance of ImplicitNonCompositionProperty supports evaluation of
- * implicit properties for opposites of non-composition relationships.
+ * An instance of ImplicitNonCompositionProperty supports evaluation of an implicit (unnavigable opposite) property
+ * searching the ModelManager's cache of opposite types for the one that has the source as an opposite opposite target.
+ *
+ * This includes the implicit opposite for a UML extension_XXXX in a statically compiled profile.
  */
 public class ImplicitNonCompositionProperty extends AbstractProperty
 {
 	protected @NonNull Property property;
-	
+
 	public ImplicitNonCompositionProperty(@NonNull Property property) {
 		this.property = property;
 	}
-	
+
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		ModelManager.ModelManagerExtension modelManager = (ModelManager.ModelManagerExtension)executor.getModelManager();
@@ -53,7 +56,8 @@ public class ImplicitNonCompositionProperty extends AbstractProperty
 		if (thatType instanceof org.eclipse.ocl.pivot.Class) {
 			for (@NonNull Object eObject : modelManager.get((org.eclipse.ocl.pivot.Class)thatType)) {
 				EClass eClass = modelManager.eClass(eObject);
-				EStructuralFeature eFeature = eClass.getEStructuralFeature(thatProperty.getName());
+				EObject esProperty = thatProperty.getESObject();
+				EStructuralFeature eFeature = esProperty instanceof EStructuralFeature ? (EStructuralFeature)esProperty :  eClass.getEStructuralFeature(thatProperty.getName());
 				assert eFeature != null;
 				Object eGet = modelManager.eGet(eObject, eFeature);
 				if (eFeature.isMany()) {
