@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bug427289" nsURI="http://Bug427289" nsPrefix="bug">
+  <eClassifiers xsi:type="ecore:EClass" name="Bug427289">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eClassifier" eType="ecore:EClass ../../../../../../../../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClassifier"/>
+  </eClassifiers>
+</ecore:EPackage>

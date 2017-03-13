@@ -604,6 +604,11 @@ public class RoundTripTests extends XtextTestCase
 		doRoundTripFromEcore("Bug492960");
 	}
 
+	public void testRoundTrip_Bug427289() throws IOException, InterruptedException, ParserException {
+		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.xtext.tests/src/org/eclipse/ocl/examples/test/xtext/models/Bug427289.ecore", true);
+		doRoundTripFromEcore(uri, uri, null);
+	}
+
 	public void testBug510729_oclinecore() throws IOException, InterruptedException {
 		String testFile =
 				"package bug510729 : pfx = 'http:/org/eclipse/ocl/examples/test/xtext/models/Bug510729.oclinecore' {\n" +
