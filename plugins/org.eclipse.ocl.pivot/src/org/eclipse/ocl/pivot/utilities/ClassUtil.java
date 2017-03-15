@@ -45,7 +45,7 @@ public class ClassUtil
 		}
 	}
 
-	public static final @NonNull Iterator<?> EMPTY_ITERATOR = new EmptyIterator();
+	private static final @NonNull Iterator<?> EMPTY_ITERATOR = new EmptyIterator();
 
 	/**
 	 * Return object cast to requiredClass.
@@ -113,6 +113,8 @@ public class ClassUtil
 	/**
 	 * Return an iterator over no content. This replaces com.google.common.collect.Iterators.emptyIterator() for which no
 	 * alternative exists on an adequate range of Guava versions.
+	 *
+	 * @since 1.3
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> @NonNull Iterator<T> emptyIterator() {
