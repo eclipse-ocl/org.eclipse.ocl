@@ -21,10 +21,9 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
-
-import com.google.common.collect.Iterators;
 
 /**
  * Default implementation of the {@link Bag} interface.
@@ -273,7 +272,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 			return new BagIterator<E>(map, objectIterator);
 		}
 		else {
-			return Iterators.emptyIterator();
+			return ClassUtil.emptyIterator();
 		}
 	}
 

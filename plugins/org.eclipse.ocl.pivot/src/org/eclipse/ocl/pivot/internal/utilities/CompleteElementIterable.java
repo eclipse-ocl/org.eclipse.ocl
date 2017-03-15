@@ -17,9 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
-import com.google.common.collect.Iterators;
-import com.google.common.collect.UnmodifiableIterator;
-
 /**
  * A CompleteElementIterable supports iteration over the multiple iterable contributions
  * to a Complete Element as if all were merged in a composite element.
@@ -124,7 +121,7 @@ public abstract class CompleteElementIterable<O,I> implements Iterable<I>
 			@SuppressWarnings("unchecked")
 			List<O> list = (List<O>)iterables;
 			if (list.size() == 0) {
-				@NonNull UnmodifiableIterator<I> result = Iterators.<I>emptyIterator();
+				java.util.@NonNull Iterator<I> result = ClassUtil.<I>emptyIterator();
 				return result;
 			}
 			else if (list.size() == 1) {
@@ -136,7 +133,7 @@ public abstract class CompleteElementIterable<O,I> implements Iterable<I>
 						return result;
 					}
 				}
-				@NonNull UnmodifiableIterator<I> result = Iterators.<I>emptyIterator();
+				java.util.@NonNull Iterator<I> result = ClassUtil.<I>emptyIterator();
 				return result;
 			}
 		}

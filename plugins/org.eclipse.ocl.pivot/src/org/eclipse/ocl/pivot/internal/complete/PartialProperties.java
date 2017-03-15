@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.Disambiguator;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import com.google.common.collect.Iterators;
 
@@ -140,10 +141,10 @@ public class PartialProperties implements Iterable<@NonNull Property>
 			return partials.iterator();
 		}
 		else {
-			return Iterators.emptyIterator();
+			return ClassUtil.emptyIterator();
 		}
 	}
-	
+
 	public synchronized void remove(@NonNull Property pivotProperty) {
 		if (pivotProperty == resolution) {
 			resolution = null;

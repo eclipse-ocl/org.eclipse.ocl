@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.ids.ParametersId;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 
@@ -35,7 +36,7 @@ import com.google.common.collect.Iterators;
 
 public class PartialOperations //extends HashMap<ParametersId, List<DomainOperation>>
 {
-//	private static final long serialVersionUID = 1L;
+	//	private static final long serialVersionUID = 1L;
 	public static final @NonNull Function<PartialOperations, Iterable<Iterable<Operation>>> partialOperations2allOperations =
 			new Function<PartialOperations, Iterable<Iterable<Operation>>>() {
 
@@ -44,7 +45,7 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 			return partialOperations.getOperationsInternal(null);
 		}
 	};
-	
+
 	/**
 	 * An OverloadsList is a non-empty list of Operations sharing the same name and parameter types.
 	 * It can be sorted into most-derived first order.
@@ -80,7 +81,7 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
 				CompleteInheritance inheritance = owningClass.getInheritance(standardLibrary);
 				int depth = inheritance.getDepth();
-//				int isRedefinition = (operation instanceof Operation) && (((Operation)operation).getRedefinedOperation().size() > 0) ? 1 : 0;
+				//				int isRedefinition = (operation instanceof Operation) && (((Operation)operation).getRedefinedOperation().size() > 0) ? 1 : 0;
 				metric = depth;
 				metrics[index] = metric;
 				index++;
@@ -163,11 +164,11 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 					return nonStaticOperations2.iterator();
 				}
 				else {
-					return Iterators.emptyIterator();
+					return ClassUtil.emptyIterator();
 				}
 			}
 		}
-		
+
 		public boolean remove(@NonNull Operation pivotOperation) {
 			if (pivotOperation.isIsStatic()) {
 				OverloadsList staticOperations2 = staticOperations;
@@ -191,7 +192,7 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 			}
 			return false;
 		}
-		
+
 		public int size() {
 			OverloadsList staticOperations2 = staticOperations;
 			OverloadsList nonStaticOperations2 = nonStaticOperations;
@@ -202,7 +203,7 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 	protected final @NonNull CompleteClassInternal completeClass;
 	protected final @NonNull String name;
 	private final @NonNull Map<@NonNull ParametersId, Object> map = new HashMap<@NonNull ParametersId, Object>();
-	
+
 	public PartialOperations(@NonNull CompleteClassInternal completeClass, @NonNull String name) {
 		this.completeClass = completeClass;
 		this.name = name;
@@ -283,12 +284,12 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 				return overloads;
 			}
 			return Iterables.filter(overloads, new Predicate<@NonNull Operation>()
-				{
-					@Override
-					public boolean apply(@NonNull Operation input) {
-						return featureFilter.accept(input);
-					}
-				});
+			{
+				@Override
+				public boolean apply(@NonNull Operation input) {
+					return featureFilter.accept(input);
+				}
+			});
 		}
 		else if (partials != null) {			// Must be an Operation
 			Operation operation = (Operation) partials;
@@ -321,9 +322,9 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 
 	@SuppressWarnings("null")
 	public @NonNull Iterable<@NonNull ? extends Operation> getOperations(final @Nullable FeatureFilter featureFilter) {
-//		if (featureFilter == FeatureFilter.SELECT_NON_STATIC) {
-//			return 
-//		}
+		//		if (featureFilter == FeatureFilter.SELECT_NON_STATIC) {
+		//			return
+		//		}
 		return Iterables.transform(map.keySet(), new Function<ParametersId, Operation>()
 		{
 			@Override
@@ -355,7 +356,7 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 
 	protected void initMemberOperationsPostProcess(String name, @NonNull Overloads operations) {
 		if (operations.size() > 1) {
-			
+
 		}
 	}
 }

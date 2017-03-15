@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -12,7 +12,9 @@ package org.eclipse.ocl.pivot.utilities;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.Adapter;
@@ -29,7 +31,22 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 public class ClassUtil
-{	
+{
+	private static final class EmptyIterator implements Iterator<Object>
+	{
+		@Override
+		public boolean hasNext() {
+			return false;
+		}
+
+		@Override
+		public Object next() {
+			throw new NoSuchElementException();
+		}
+	}
+
+	public static final @NonNull Iterator<?> EMPTY_ITERATOR = new EmptyIterator();
+
 	/**
 	 * Return object cast to requiredClass.
 	 * @param object to cast.
@@ -47,7 +64,7 @@ public class ClassUtil
 			return null;
 		return (T) object;
 	}
-	
+
 	/**
 	 * Return object cast to T without a check.
 	 * <p>
@@ -66,7 +83,7 @@ public class ClassUtil
 	public static <T> T asClassUnchecked(Object object, T requiredClassObject) {
 		return (T) object;
 	}
-	
+
 	/**
 	 * Return object cast to T without a check.
 	 * <p>
@@ -92,16 +109,43 @@ public class ClassUtil
 		EAnnotation asMetamodelAnnotation = ePackage.getEAnnotation(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE);
 		return asMetamodelAnnotation;
 	}
-	
+
+	/**
+	 * Return an iterator over no content. This replaces com.google.common.collect.Iterators.emptyIterator() for which no
+	 * alternative exists on an adequate range of Guava versions.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> @NonNull Iterator<T> emptyIterator() {
+		return (Iterator<T>) EMPTY_ITERATOR;
+	}
+
 	/**
 	 * Return the non-null adapterClass if iAdfaptable has an adapterClass adapter.
-	 * 
+	 *
 	 * This method just delegates to IAdaptable.getAdapter() but avoids the hazard from the unconstrained Class&lt;T&gt; declaration.
-	 * 
+	 *
 	 * @since 1.1
 	 */
 	public static <T> @Nullable T getAdapter(@Nullable IAdaptable iAdaptable, @NonNull Class<T> adapterClass) {
 		return iAdaptable != null ? iAdaptable.getAdapter(adapterClass) : null;
+	}
+
+	public static <T> @Nullable T getAdapter(@NonNull Class<T> adapterClass, @NonNull Notifier notifier) {
+		List<Adapter> eAdapters = nonNullEMF(notifier.eAdapters());
+		return getAdapter(adapterClass, eAdapters);
+	}
+
+	public static <T> @Nullable T getAdapter(@NonNull Class<T> adapterClass, @NonNull List<Adapter> eAdapters) {
+		Adapter adapter = EcoreUtil.getAdapter(eAdapters, adapterClass);
+		if (adapter == null) {
+			return null;
+		}
+		if (!adapterClass.isAssignableFrom(adapter.getClass())) {
+			throw new ClassCastException(adapter.getClass().getName() + " is not assignable to " + adapterClass.getName());
+		}
+		@SuppressWarnings("unchecked")
+		T castAdapter = (T) adapter;
+		return castAdapter;
 	}
 
 	/**
@@ -262,7 +306,7 @@ public class ClassUtil
 	 * Safely determines whether <code>object</code> equals
 	 * <code>otherObject</code>, i.e. without throwing an exception if
 	 * <code>object</code> is <code>null</code>.
-	 * 
+	 *
 	 * @param object
 	 *            The first object to compare.
 	 * @param otherObject
@@ -272,8 +316,8 @@ public class ClassUtil
 	 */
 	public static boolean safeEquals(@Nullable Object object, @Nullable Object otherObject) {
 		return object == null
-			? otherObject == null
-			: object.equals(otherObject);
+				? otherObject == null
+				: object.equals(otherObject);
 	}
 
 	/**
@@ -288,24 +332,6 @@ public class ClassUtil
 				Collections.sort(aList, comparator);
 			}
 		}
-	}
-
-	public static <T> @Nullable T getAdapter(@NonNull Class<T> adapterClass, @NonNull Notifier notifier) {
-		List<Adapter> eAdapters = nonNullEMF(notifier.eAdapters());
-		return getAdapter(adapterClass, eAdapters);
-	}
-
-	public static <T> @Nullable T getAdapter(@NonNull Class<T> adapterClass, @NonNull List<Adapter> eAdapters) {
-		Adapter adapter = EcoreUtil.getAdapter(eAdapters, adapterClass);
-		if (adapter == null) {
-			return null;
-		}
-		if (!adapterClass.isAssignableFrom(adapter.getClass())) {
-			throw new ClassCastException(adapter.getClass().getName() + " is not assignable to " + adapterClass.getName());
-		}
-		@SuppressWarnings("unchecked")
-		T castAdapter = (T) adapter;
-		return castAdapter;
 	}
 
 	/**
