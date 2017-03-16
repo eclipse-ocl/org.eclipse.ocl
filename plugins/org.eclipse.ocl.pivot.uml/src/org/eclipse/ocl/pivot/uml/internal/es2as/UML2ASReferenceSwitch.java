@@ -55,7 +55,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	private Set<EClass> doneWarnings = null;
-	
+
 	public UML2ASReferenceSwitch(@NonNull UML2AS converter) {
 		this.converter = converter;
 		this.environmentFactory = converter.getEnvironmentFactory();
@@ -209,7 +209,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 				converter.addProperty(pivotType, asProperty);
 			}
 			else {
-//				System.err.println("Failed to find parent for " + umlProperty);
+				//				System.err.println("Failed to find parent for " + umlProperty);
 			}
 		}
 		return asProperty;
@@ -230,7 +230,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 	@Override
 	public Object caseStereotype(org.eclipse.uml2.uml.Stereotype umlStereotype) {
 		assert umlStereotype != null;
-//		caseClass(umlStereotype);
+		//		caseClass(umlStereotype);
 		Stereotype asStereotype = converter.getCreated(Stereotype.class, umlStereotype);
 		if (asStereotype != null) {
 			List<org.eclipse.ocl.pivot.@NonNull Class> asSuperClasses = ClassUtil.nullFree(asStereotype.getSuperClasses());
@@ -255,7 +255,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 	}
 
 	private @NonNull AssociationClass createAssociationClassProperties(org.eclipse.uml2.uml.@NonNull Association umlAssociation) {
-//		System.out.println("Association " + umlAssociation.getName() + ", " + NameUtil.debugSimpleName(umlAssociation) + " in " + NameUtil.debugSimpleName(converter.getCreatedMap()) + " ? ");
+		//		System.out.println("Association " + umlAssociation.getName() + ", " + NameUtil.debugSimpleName(umlAssociation) + " in " + NameUtil.debugSimpleName(converter.getCreatedMap()) + " ? ");
 		AssociationClass asAssociationClass = converter.getCreated(AssociationClass.class, umlAssociation);
 		assert asAssociationClass != null;
 		List<org.eclipse.uml2.uml.@NonNull Property> umlMemberEnds = converter.getSafeMemberEnds(umlAssociation);
@@ -357,8 +357,12 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 					if (!(eObject instanceof org.eclipse.uml2.uml.Constraint)) {
 						System.out.println("Reference switching " + eObject);
 					}
-					@SuppressWarnings("unchecked")T doSwitchResult = (T) doSwitch(eObject);
-					pivotElement = doSwitchResult;
+					Object doSwitchResult = doSwitch(eObject);
+					if (doSwitchResult != this) {
+						@SuppressWarnings("unchecked")
+						T castSwitchResult = (T)doSwitchResult;
+						pivotElement = castSwitchResult;
+					}
 				}
 				if (pivotElement != null) {
 					pivotElements.add(pivotElement);
@@ -411,14 +415,14 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 
 	private boolean getToAssociationEndIsRequired(org.eclipse.uml2.uml.@NonNull Property umlProperty, @NonNull List<org.eclipse.uml2.uml.@NonNull Property> umlMemberEnds) {
 		return umlProperty.getLower() != 0;
-//		for (org.eclipse.uml2.uml.@NonNull Property umlOtherProperty : umlMemberEnds) {
-//			if (umlOtherProperty != umlProperty) {
-//				if (umlOtherProperty.getLower() != 0) {
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
+		//		for (org.eclipse.uml2.uml.@NonNull Property umlOtherProperty : umlMemberEnds) {
+		//			if (umlOtherProperty != umlProperty) {
+		//				if (umlOtherProperty.getLower() != 0) {
+		//					return true;
+		//				}
+		//			}
+		//		}
+		//		return false;
 	}
 
 	private @NonNull Type getToAssociationEndType(org.eclipse.ocl.pivot.@NonNull Class asClass, org.eclipse.uml2.uml.@NonNull Property umlProperty, @NonNull List<org.eclipse.uml2.uml.@NonNull Property> umlMemberEnds) {
