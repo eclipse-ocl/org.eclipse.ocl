@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -36,8 +36,8 @@ import org.objectweb.asm.TypeReference;
 
 /**
  * JavaAnnotationReader supports determination of the declared @NonNull, @Nullable return annotation of a method.
- * 
- * (The internal processing also determines the parameter type annotations, but as yet there is no API to exploit this.) 
+ *
+ * (The internal processing also determines the parameter type annotations, but as yet there is no API to exploit this.)
  */
 public class ASM5JavaAnnotationReader
 {
@@ -51,9 +51,19 @@ public class ASM5JavaAnnotationReader
 	private final @NonNull String nullableDesc = Type.getDescriptor(Nullable.class);
 
 	/**
+	 * Set true if ASM has Java 9 support, else false and Java 9 classes will be downgraded to look like Java 8.
+	 */
+	private boolean hasOpcodes_V1_9 = false;
+
+	/**
 	 * Return true for an @NonNull annotation, false for an @Nullable annotation, null otherwise.
 	 */
-	public ASM5JavaAnnotationReader() {}
+	public ASM5JavaAnnotationReader() {
+		try {
+			hasOpcodes_V1_9 = Opcodes.class.getField("V1_9") != null;
+		}
+		catch (Exception e) {}
+	}
 
 	public @Nullable Boolean getIsNonNull(@NonNull Method method) {
 		final String className = method.getDeclaringClass().getName();
@@ -66,15 +76,15 @@ public class ASM5JavaAnnotationReader
 		if (!readClasses.add(className)) {
 			return null;
 		}
-//		System.out.println("getIsNonNull: " + requiredDesc + " " + Integer.toHexString(returnTypeReference));
-		InputStream classStream = null;		
+		//		System.out.println("getIsNonNull: " + requiredDesc + " " + Integer.toHexString(returnTypeReference));
+		InputStream classStream = null;
 		try {
 			final int flags = ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES | ClassReader.SKIP_CODE;
 			ClassLoader methodClassLoader = method.getDeclaringClass().getClassLoader();
 			String classFileName = className.replace('.', '/') + ".class";
-			classStream = methodClassLoader.getResourceAsStream(classFileName);		
-			final ClassReader cr = new ClassReader(classStream) {
-
+			classStream = methodClassLoader.getResourceAsStream(classFileName);
+			final ClassReader cr = new ClassReader(classStream)
+			{
 				@Override
 				public void accept(ClassVisitor classVisitor, int flags) {
 					super.accept(classVisitor, flags);
@@ -84,7 +94,15 @@ public class ASM5JavaAnnotationReader
 				public void accept(ClassVisitor classVisitor, Attribute[] attrs, int flags) {
 					super.accept(classVisitor, attrs, flags);
 				}
-				
+
+				@Override
+				public short readShort(int index) {
+					short readShort = super.readShort(index);
+					if ((index == 6) && !hasOpcodes_V1_9 && (readShort > Opcodes.V1_8)) {		// FIXME Bug 513663, eliminate once Opcodes.V1_9 available and supported
+						return Opcodes.V1_8;
+					}
+					return readShort;
+				}
 			};
 			ClassVisitor cv = new ClassVisitor(Opcodes.ASM5)
 			{
@@ -113,7 +131,7 @@ public class ASM5JavaAnnotationReader
 				@Override
 				public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 					final String methodDesc = getMethodKey(className, name, desc);// + " " + signature;
-//					System.out.println("  ClassVisitor.visitMethod: " + methodDesc);
+					//					System.out.println("  ClassVisitor.visitMethod: " + methodDesc);
 					final HashMap<@NonNull Integer, @Nullable Boolean> typerefValue2state = new HashMap<@NonNull Integer, @Nullable Boolean>();
 					desc2typerefValue2state.put(methodDesc, typerefValue2state);
 					return new MethodVisitor(Opcodes.ASM5)
@@ -216,15 +234,15 @@ public class ASM5JavaAnnotationReader
 
 						@Override
 						public AnnotationVisitor visitTypeAnnotation(int typeRef, TypePath typePath, String desc, boolean visible) {
-//							System.out.println("    MethodVisitor-TypeAnnotation:" + Integer.toHexString(typeRef) + " " + typePath + " " + desc + " " + visible);
-//							TypeReference typeReference = new TypeReference(typeRef);
-//							System.out.println("    : " + Integer.toHexString(typeReference.getValue()) + ":" + typeReference.getSort() + ":" + typeReference.getTypeParameterIndex());
+							//							System.out.println("    MethodVisitor-TypeAnnotation:" + Integer.toHexString(typeRef) + " " + typePath + " " + desc + " " + visible);
+							//							TypeReference typeReference = new TypeReference(typeRef);
+							//							System.out.println("    : " + Integer.toHexString(typeReference.getValue()) + ":" + typeReference.getSort() + ":" + typeReference.getTypeParameterIndex());
 							if (desc.equals(nonNullDesc)) {
-//								System.out.println("    MethodVisitor-TypeAnnotation:" + Integer.toHexString(typeRef) + " " + typePath + " " + desc);
+								//								System.out.println("    MethodVisitor-TypeAnnotation:" + Integer.toHexString(typeRef) + " " + typePath + " " + desc);
 								typerefValue2state.put(typeRef, true);
 							}
 							else if (desc.equals(nullableDesc)) {
-//								System.out.println("    MethodVisitor-TypeAnnotation:" + Integer.toHexString(typeRef) + " " + typePath + " " + desc);
+								//								System.out.println("    MethodVisitor-TypeAnnotation:" + Integer.toHexString(typeRef) + " " + typePath + " " + desc);
 								typerefValue2state.put(typeRef, false);
 							}
 							return null;
@@ -246,7 +264,7 @@ public class ASM5JavaAnnotationReader
 
 				@Override
 				public AnnotationVisitor visitTypeAnnotation(int typeRef, TypePath typePath, String desc, boolean visible) {
-//					System.out.println("  ClassVisitor-TypeAnnotation:" + typeRef + " " + typePath + " " + desc + " " + visible);
+					//					System.out.println("  ClassVisitor-TypeAnnotation:" + typeRef + " " + typePath + " " + desc + " " + visible);
 					return null;
 				}
 			};
@@ -265,7 +283,7 @@ public class ASM5JavaAnnotationReader
 			return null;
 		}
 		Boolean state = typeref2state.get(returnTypeReference);
-//		System.out.println("  => " + state);
+		//		System.out.println("  => " + state);
 		return state;
 	}
 
