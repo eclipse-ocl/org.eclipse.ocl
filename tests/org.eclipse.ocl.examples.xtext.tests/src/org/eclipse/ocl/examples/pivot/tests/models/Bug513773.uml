@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_VrxWEAo0Eeez8M0VHKxR9Q" name="Bug513773">
+  <packagedElement xmi:type="uml:Package" xmi:id="_naTRsApSEeez8M0VHKxR9Q" name="Structure">
+    <packagedElement xmi:type="uml:Class" xmi:id="_CrH6MAo1Eeez8M0VHKxR9Q" name="Class1">
+      <ownedRule xmi:id="_zw33sApQEeez8M0VHKxR9Q" name="Constraint1">
+        <specification xmi:type="uml:OpaqueExpression" xmi:id="__1qfQApQEeez8M0VHKxR9Q">
+          <language>OCL</language>
+          <body>self.Attribute1 = self.Attribute2</body>
+        </specification>
+      </ownedRule>
+      <ownedAttribute xmi:id="_Tft4wAo1Eeez8M0VHKxR9Q" name="Attribute1">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_MpfLUAo2Eeez8M0VHKxR9Q" name="Attribute2" visibility="public" isDerived="true">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
+        <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_a2xwcAo2Eeez8M0VHKxR9Q">
+          <language>OCL</language>
+          <body>Attribute1 	</body>
+        </defaultValue>
+      </ownedAttribute>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_Uk6DkApTEeez8M0VHKxR9Q" name="Behaviour">
+    <packagedElement xmi:type="uml:Activity" xmi:id="_Weh3oApTEeez8M0VHKxR9Q" name="Activity1">
+      <ownedAttribute xmi:id="_YbBDYApcEeez8M0VHKxR9Q" name="class1" type="_CrH6MAo1Eeez8M0VHKxR9Q" association="_Ya_OMApcEeez8M0VHKxR9Q"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_Ya_OMApcEeez8M0VHKxR9Q" memberEnd="_YbBDYApcEeez8M0VHKxR9Q _YbBDYQpcEeez8M0VHKxR9Q">
+      <eAnnotations xmi:id="_YbAcUApcEeez8M0VHKxR9Q" source="org.eclipse.papyrus">
+        <details xmi:id="_YbAcUQpcEeez8M0VHKxR9Q" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:id="_YbBDYQpcEeez8M0VHKxR9Q" name="activity1" type="_Weh3oApTEeez8M0VHKxR9Q" association="_Ya_OMApcEeez8M0VHKxR9Q"/>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>
