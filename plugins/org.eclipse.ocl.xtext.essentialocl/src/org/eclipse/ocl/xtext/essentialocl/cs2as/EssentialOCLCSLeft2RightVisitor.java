@@ -428,10 +428,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (asType == null) {
 				return null;
 			}
-			Invocations invocations = getInvocations(asType, null, name, iteratorCount, expressionCount);
+			Invocations invocations = getInvocations(asType, asType, name, iteratorCount, expressionCount);
 			if ((invocations == null) && name.startsWith("_")) {
 				@SuppressWarnings("null")@NonNull String unescapedName = name.substring(1);				// FIXME Compatibility
-				invocations = getInvocations(asType, null, unescapedName, iteratorCount, expressionCount);
+				invocations = getInvocations(asType, asType, unescapedName, iteratorCount, expressionCount);
 			}
 			return invocations;
 		}
@@ -470,7 +470,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	/**
 	 * Return all operations/iterations in asType and its superclasses whose name is name. For iterations the number of iteration iterators must
 	 * match iteratorCount unless iteratorCount is zero. For operations the number of parameters must be expressionCount. Returns null if
-	 * nothing is found.
+	 * nothing is found. If asTypeValue is non-null a fall-back attempt to look up a static operation in asTypeValue is made.
 	 */
 	protected @Nullable Invocations getInvocations(@NonNull Type asType, @Nullable Type asTypeValue, @NonNull String name, int iteratorCount, int expressionCount) {
 		TemplateParameter asTemplateParameter = asType.isTemplateParameter();
