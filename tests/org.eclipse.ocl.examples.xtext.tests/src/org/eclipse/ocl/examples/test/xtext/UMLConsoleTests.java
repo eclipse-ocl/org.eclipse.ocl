@@ -141,9 +141,14 @@ public class UMLConsoleTests extends AbstractConsoleTests
 		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		org.eclipse.uml2.uml.Class person = (org.eclipse.uml2.uml.Class)model.getOwnedType("Person");
 		//
+		assertConsoleResult(consolePage, person, "isLower('john')", "true\n");
+		assertConsoleResult(consolePage, person, "Person::isLower('John')", "false\n");
+		assertConsoleResult(consolePage, person, "test::Person::isLower('John')", "false\n");
+		assertConsoleResult(consolePage, person, "test::Person::isLower('john')", "true\n");
 		assertConsoleResult(consolePage, person, "test::Person.isLower('John')", "false\n");
 		assertConsoleResult(consolePage, person, "test::Person.isLower('john')", "true\n");
-		assertConsoleResult(consolePage, person, "test::Person::isLower('john')", "<b><error>Parsing failure\n</error></b><error>\n1: Unresolved Operation '::isLower('john')'\n</error>");
+		//		assertConsoleResult(consolePage, person, "test::Person.isLower('John')", "<b><error>Parsing failure\n</error></b><error>\n1: Unresolved Static Operation 'test::Person::isLower('John')'\n</error>");
+		//		assertConsoleResult(consolePage, person, "test::Person.isLower('john')", "<b><error>Parsing failure\n</error></b><error>\n1: Unresolved Static Operation 'test::Person::isLower('john')'\n</error>");
 		//
 		consolePage.cancelValidation();
 	}
