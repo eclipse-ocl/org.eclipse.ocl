@@ -70,6 +70,10 @@ public class ExpressionInOCLAttribution extends AbstractAttribution
 								environmentView.addElementsOfScope(contextPackage, scopeView);
 								PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 								if (environmentView.accepts(PivotPackage.Literals.TYPE)) {
+									Type typeValue = contextVariable.getTypeValue();
+									if (typeValue != null) {
+										environmentView.addNamedElement(typeValue);
+									}
 									for (Type gType : metamodelManager.getGlobalTypes()) {
 										if (gType != null) {
 											environmentView.addNamedElement(gType);

@@ -454,7 +454,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			Invocations invocations = null;
 			for (ImplicitSourceTypeIterator it = createImplicitSourceTypeIterator(csNameExp); (invocations == null) && it.hasNext(); ) {
 				Type asType = it.next();
-				invocations = getInvocations(asType, null, name, iteratorCount, expressionCount);
+				invocations = getInvocations(asType, it.nextValue(), name, iteratorCount, expressionCount);
 			}
 			if ((invocations == null) && name.startsWith("_")) {
 				@SuppressWarnings("null")@NonNull String unescapedName = name.substring(1);				// FIXME Compatibility

@@ -131,12 +131,12 @@ import com.google.inject.Injector;
  */
 public class OCLConsolePage extends Page //implements MetamodelManagerListener
 {
-    public static enum ColorChoices
-    {
-    	DEFAULT,
-    	ERROR
-    }
-	
+	public static enum ColorChoices
+	{
+		DEFAULT,
+		ERROR
+	}
+
 	public static class InterrogatableContentAssistantFactory extends DefaultContentAssistantFactory
 	{
 		@Override
@@ -144,7 +144,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 			return new InterrogatableContentAssistant();
 		}
 	}
-	
+
 	public static final class InterrogatableContentAssistant extends ContentAssistant
 	{
 		@Override
@@ -152,13 +152,13 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 			return super.isProposalPopupActive();
 		}
 	}
-	
+
 	private class EvaluationRunnable implements IRunnableWithProgress
 	{
 		private final @NonNull CSResource resource;
 		private final @NonNull String expression;
 		private Object value = null;
-		
+
 		public EvaluationRunnable(@NonNull CSResource resource, @NonNull String expression) {
 			this.resource = resource;
 			this.expression = expression;
@@ -173,17 +173,17 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 			monitor.beginTask(NLS.bind(ConsoleMessages.Progress_Title, expression), 10);
 			monitor.subTask(ConsoleMessages.Progress_Synchronising);
 			monitor.worked(1);
-//			CS2ASResourceAdapter csAdapter = CS2ASResourceAdapter.getAdapter((BaseCSResource)resource, metamodelManager);
+			//			CS2ASResourceAdapter csAdapter = CS2ASResourceAdapter.getAdapter((BaseCSResource)resource, metamodelManager);
 			EnvironmentFactory environmentFactory = editor.getEnvironmentFactory();
-//			monitor.subTask(ConsoleMessages.Progress_CST);
-//			try {
-//				csAdapter.refreshPivotMappings();
-//			} catch (Exception e) {
-//				value = new ExceptionValue(valueFactory, ConsoleMessages.Result_MappingFailure, e);
-//				return;
-//			}
-//			monitor.worked(2);
-//			monitor.subTask(ConsoleMessages.Progress_AST);
+			//			monitor.subTask(ConsoleMessages.Progress_CST);
+			//			try {
+			//				csAdapter.refreshPivotMappings();
+			//			} catch (Exception e) {
+			//				value = new ExceptionValue(valueFactory, ConsoleMessages.Result_MappingFailure, e);
+			//				return;
+			//			}
+			//			monitor.worked(2);
+			//			monitor.subTask(ConsoleMessages.Progress_AST);
 			ExpressionInOCL expressionInOCL;
 			try {
 				PivotUtil.checkResourceErrors("", resource); //$NON-NLS-1$
@@ -193,10 +193,10 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 				return;
 			}
 			if (expressionInOCL != null) {
-	//			monitor.worked(2);
+				//			monitor.worked(2);
 				monitor.subTask(ConsoleMessages.Progress_Extent);
 				ModelManager modelManager = environmentFactory.createModelManager(contextObject);
-//				EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(expressionInOCL, modelManager);
+				//				EvaluationEnvironment evaluationEnvironment = environmentFactory.createEvaluationEnvironment(expressionInOCL, modelManager);
 				ExecutorInternal executor = ((EnvironmentFactoryExtension)environmentFactory).createExecutor(modelManager);
 				executor.initializeEvaluationEnvironment(expressionInOCL);
 				EvaluationEnvironment evaluationEnvironment = executor.getRootEvaluationEnvironment();
@@ -205,7 +205,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 				monitor.worked(2);
 				monitor.subTask(ConsoleMessages.Progress_Evaluating);
 				try {
-	//				metamodelManager.setMonitor(monitor);
+					//				metamodelManager.setMonitor(monitor);
 					EvaluationVisitor evaluationVisitor = executor.getEvaluationVisitor();
 					evaluationVisitor.setMonitor(BasicMonitor.toMonitor(monitor));
 					executor.setLogger(new AbstractLogger()
@@ -219,9 +219,9 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 									OCLConsolePage.this.append(message, ColorManager.DEFAULT, false);
 								}
 							});
-						}				
+						}
 					});
-			        value = evaluationVisitor.visitExpressionInOCL(expressionInOCL);
+					value = evaluationVisitor.visitExpressionInOCL(expressionInOCL);
 				} catch (EvaluationHaltedException e) {
 					value = new InvalidValueException(ConsoleMessages.Result_EvaluationTerminated);
 				} catch (InvalidValueException e) {
@@ -229,87 +229,87 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 				} catch (Exception e) {
 					value = new InvalidValueException(e, ConsoleMessages.Result_EvaluationFailure);
 				} finally {
-	//				metamodelManager.setMonitor(null);
+					//				metamodelManager.setMonitor(null);
 				}
 			}
 			monitor.worked(4);
 		}
 	}
-	
+
 	/**
 	 * A key listener that listens for the Enter key to evaluate the OCL
 	 * expression.
 	 */
 	private class InputKeyListener implements KeyListener {
-		private boolean evaluationSuccess = false;		
+		private boolean evaluationSuccess = false;
 		private List<String> history = new ArrayList<String>();
 		private int currentHistoryPointer = 0;
-		
+
 		@Override
 		public void keyPressed(KeyEvent e) {
 			IContentAssistant contentAssistant = editor.getViewer().getContentAssistant();
-	    	if ((contentAssistant instanceof InterrogatableContentAssistant)
-	    	 && ((InterrogatableContentAssistant)contentAssistant).isProposalPopupActive()) {
-	    		return;
-	    	}
+			if ((contentAssistant instanceof InterrogatableContentAssistant)
+					&& ((InterrogatableContentAssistant)contentAssistant).isProposalPopupActive()) {
+				return;
+			}
 			switch (e.keyCode) {
-			case SWT.CR :
-			    if ((e.stateMask & (SWT.CTRL | SWT.SHIFT)) == 0) {
-			    	String text = getEditorDocument().get();
-					evaluationSuccess = evaluate(text.trim());
-				}		
-				break;
-			case SWT.PAGE_UP :
-				if ((e.stateMask & (SWT.CTRL | SWT.SHIFT)) == 0) {					
-					// history
-					if (currentHistoryPointer == 0 && history.size() > 0) {
-						if (history.size() > 0 && history.get(0).length() == 0) {
-							history.remove(0);
+				case SWT.CR :
+					if ((e.stateMask & (SWT.CTRL | SWT.SHIFT)) == 0) {
+						String text = getEditorDocument().get();
+						evaluationSuccess = evaluate(text.trim());
+					}
+					break;
+				case SWT.PAGE_UP :
+					if ((e.stateMask & (SWT.CTRL | SWT.SHIFT)) == 0) {
+						// history
+						if (currentHistoryPointer == 0 && history.size() > 0) {
+							if (history.size() > 0 && history.get(0).length() == 0) {
+								history.remove(0);
+							}
+							history.add(0, getEditorDocument().get().trim());
+							currentHistoryPointer = 1;
+							setTextFromHistory();
+						} else if (currentHistoryPointer < history.size() - 1) {
+							currentHistoryPointer++;
+							setTextFromHistory();
 						}
-						history.add(0, getEditorDocument().get().trim());
-						currentHistoryPointer = 1;
-						setTextFromHistory();
-					} else if (currentHistoryPointer < history.size() - 1) {
-						currentHistoryPointer++;
-						setTextFromHistory();
 					}
-				}			
-				break;
-			case SWT.PAGE_DOWN :
-				if ((e.stateMask & (SWT.CTRL | SWT.SHIFT)) == 0) {					
-					// history
-					if (currentHistoryPointer > 0) {
-						currentHistoryPointer--;
-						setTextFromHistory();
+					break;
+				case SWT.PAGE_DOWN :
+					if ((e.stateMask & (SWT.CTRL | SWT.SHIFT)) == 0) {
+						// history
+						if (currentHistoryPointer > 0) {
+							currentHistoryPointer--;
+							setTextFromHistory();
+						}
 					}
-				}		
-				break;
+					break;
 			}
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
 			switch (e.keyCode) {
-			case SWT.CR :
-				if ((e.stateMask & (SWT.CTRL | SWT.SHIFT)) == 0) {
-					if (evaluationSuccess) {
-						getEditorDocument().set(""); //$NON-NLS-1$
-						// history
-						if (history.size() > 0 && history.get(0).trim().length() == 0) {
-							history.remove(0);
+				case SWT.CR :
+					if ((e.stateMask & (SWT.CTRL | SWT.SHIFT)) == 0) {
+						if (evaluationSuccess) {
+							getEditorDocument().set(""); //$NON-NLS-1$
+							// history
+							if (history.size() > 0 && history.get(0).trim().length() == 0) {
+								history.remove(0);
+							}
+							if (history.size() == 0 || !history.get(0).equals(lastOCLExpression.trim())) {
+								history.add(0, lastOCLExpression.trim());
+							}
+							currentHistoryPointer = 0;
 						}
-						if (history.size() == 0 || !history.get(0).equals(lastOCLExpression.trim())) {
-							history.add(0, lastOCLExpression.trim());
-						}
-						currentHistoryPointer = 0;
-					}					
-					evaluationSuccess = false;
-				}				
-				break;
-//			case ' ':
-//			    if ((e.stateMask & SWT.CTRL) == SWT.CTRL) {
-//			        input.getContentAssistant().showPossibleCompletions();
-//			    }
+						evaluationSuccess = false;
+					}
+					break;
+					//			case ' ':
+					//			    if ((e.stateMask & SWT.CTRL) == SWT.CTRL) {
+					//			        input.getContentAssistant().showPossibleCompletions();
+					//			    }
 			}
 		}
 
@@ -330,66 +330,66 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 	private EmbeddedXtextEditor editor;
 	private String lastOCLExpression;
 	private DebugAction debugAction;
-	
+
 	private ISelectionService selectionService;
 	private ISelectionListener selectionListener;
 	private @Nullable EObject contextObject = null;
 	private @Nullable Iterable<org.eclipse.ocl.pivot.@NonNull Class> contextModelClasses = null;
 	private ParserContext parserContext;
 
-/*	public IItemLabelProvider tupleTypeLabelProvider = new IItemLabelProvider() {
-	
+	/*	public IItemLabelProvider tupleTypeLabelProvider = new IItemLabelProvider() {
+
 		public Object getImage(Object object) {
 			return null;
 		}
-	
+
 		public String getText(Object object) {
 		    @SuppressWarnings("unchecked")
             TupleValue tuple = (TupleValue) object;
 			TupleType tupleType = tuple.getTupleType();
-			
+
 			StringBuilder result = new StringBuilder();
 			result.append("Tuple{");//$NON-NLS-1$
-			
+
 			for (Iterator<?> iter = tupleType.oclProperties().iterator();
 					iter.hasNext();) {
-				
+
 				Object next = iter.next();
-				
+
 				result.append(oclFactory.getName(next));
 				result.append(" = "); //$NON-NLS-1$
 				result.append(OCLConsolePage.this.toString(tuple.getValue(next)));
-				
+
 				if (iter.hasNext()) {
 					result.append(", "); //$NON-NLS-1$
 				}
 			}
-			
+
 			result.append('}');
-			
+
 			return result.toString();
 		}}; */
-	
+
 	/**
 	 * Initializes me.
-	 * @param console 
+	 * @param console
 	 */
 	protected OCLConsolePage(OCLConsole console) {
 		super();
-//		this.metamodelManager = new CancelableMetamodelManager();
+		//		this.metamodelManager = new CancelableMetamodelManager();
 		this.console = console;
-//		System.out.println("Create " + getClass() + "@" + Integer.toHexString(System.identityHashCode(this)));
+		//		System.out.println("Create " + getClass() + "@" + Integer.toHexString(System.identityHashCode(this)));
 	}
 
 	/**
 	 * Appends the specified text to the output viewer.
-	 * 
+	 *
 	 * @param text the text to append
 	 * @param rgb the color to print the text with
 	 * @param bold whether to print the text bold
 	 */
 	protected void append(String text, RGB rgb, boolean bold) {
-		
+
 		IDocument doc = getDocument();
 		try {
 			int offset = doc.getLength();
@@ -404,11 +404,11 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 			style.start = offset;
 			style.length = length;
 			style.foreground = colorManager.getColor(rgb);
-			
+
 			if (bold) {
 				style.fontStyle = SWT.BOLD;
 			}
-			
+
 			output.getTextWidget().setStyleRange(style);
 		} catch (BadLocationException e) {
 			IStatus status = new Status(IStatus.ERROR, XtextConsolePlugin.getPluginId(),
@@ -433,13 +433,13 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 			};
 		}
 	}
-	
+
 	@Override
-    public void createControl(Composite parent) {
+	public void createControl(Composite parent) {
 		// force left-to-right text direction in the console, because it
 		//    works with OCL text and the OCL language is based on English
 		page = new SashForm(parent, SWT.VERTICAL | SWT.LEFT_TO_RIGHT);
-		
+
 		output = new TextViewer(page, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		output.getTextWidget().setLayoutData(new GridData(GridData.FILL_BOTH));
 		output.getTextWidget().setFont(JFaceResources.getFont(JFaceResources.TEXT_FONT));
@@ -447,32 +447,32 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 		output.setDocument(new Document());
 
 		colorManager = new ColorManager();
-//		document.setOCLFactory(oclFactory);
-//		document.setModelingLevel(modelingLevel);
-		
+		//		document.setOCLFactory(oclFactory);
+		//		document.setModelingLevel(modelingLevel);
+
 		createEditor(page);
 		input = editor.getViewer();
 		input.getTextWidget().addKeyListener(new InputKeyListener());
 		input.getTextWidget().setFont(JFaceResources.getFont(JFaceResources.TEXT_FONT));
-		
+
 		selectionListener = new ISelectionListener() {
-            @Override
+			@Override
 			public void selectionChanged(IWorkbenchPart part, final ISelection selection) {
-//				System.out.println("selectionChanged: ");
-            	if (part instanceof IConsoleView) {
-            		IConsole console = ((IConsoleView)part).getConsole();
-                	if (console instanceof OCLConsole) {
-                		return;
-                	}
-            	}
-            	if (part instanceof ContentOutline) {
-            		ContentOutline contentOutline = (ContentOutline)part;
-            		IPage currentPage = contentOutline.getCurrentPage();
-                	if (currentPage instanceof OutlinePage) {
-                		OutlinePage outlinePage = (OutlinePage)currentPage;
-                		IXtextDocument xtextDocument = outlinePage.getXtextDocument();
-                		Element pivotElement = xtextDocument.readOnly(new IUnitOfWork<Element, XtextResource>()
-                		{
+				//				System.out.println("selectionChanged: ");
+				if (part instanceof IConsoleView) {
+					IConsole console = ((IConsoleView)part).getConsole();
+					if (console instanceof OCLConsole) {
+						return;
+					}
+				}
+				if (part instanceof ContentOutline) {
+					ContentOutline contentOutline = (ContentOutline)part;
+					IPage currentPage = contentOutline.getCurrentPage();
+					if (currentPage instanceof OutlinePage) {
+						OutlinePage outlinePage = (OutlinePage)currentPage;
+						IXtextDocument xtextDocument = outlinePage.getXtextDocument();
+						Element pivotElement = xtextDocument.readOnly(new IUnitOfWork<Element, XtextResource>()
+						{
 							@Override
 							public Element exec(@Nullable XtextResource state) throws Exception {
 								if ((state != null) && (selection instanceof IStructuredSelection)) {
@@ -493,73 +493,73 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 											}
 										}
 									}
-								}		
+								}
 								return null;
 							}
 						});
-                		if (pivotElement != null) {
-                            OCLConsolePage.this.selectionChanged(new StructuredSelection(pivotElement));
-                            return;
-                		}
-                	}
-            	}
-                OCLConsolePage.this.selectionChanged(selection);
-            }};
-		selectionService = getSite().getWorkbenchWindow().getSelectionService();
-		selectionService.addPostSelectionListener(selectionListener);
-		
-		// get current selection
-//		ISelection selection = selectionService.getSelection();			// Doesn't have a value preceding console start
-		ISelection selection = BaseUIUtil.getActiveSelection(getSite());
-		selectionChanged(selection);
-		
-		((SashForm) page).setWeights(new int[] {2, 1});
-		
-		ClearOutputAction clear = new ClearOutputAction(output);
-		CloseAction close = new CloseAction();
-		SaveExpressionAction saveExpression = new SaveExpressionAction(this);
-		LoadExpressionAction loadExpression = new LoadExpressionAction(this);
-		debugAction = new DebugAction(this);
-		
-		IMenuManager menu = getSite().getActionBars().getMenuManager();
-		menu.add(loadExpression);
-		menu.add(saveExpression);
-		menu.add(clear);
-		menu.add(close);
-		menu.add(debugAction);
-		
-		IToolBarManager toolbar = getSite().getActionBars().getToolBarManager();
-		toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, loadExpression);
-		toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, saveExpression);
-		toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, clear);
-		toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, close);
-		toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, debugAction);
+						if (pivotElement != null) {
+							OCLConsolePage.this.selectionChanged(new StructuredSelection(pivotElement));
+							return;
+						}
+					}
+				}
+				OCLConsolePage.this.selectionChanged(selection);
+			}};
+			selectionService = getSite().getWorkbenchWindow().getSelectionService();
+			selectionService.addPostSelectionListener(selectionListener);
+
+			// get current selection
+			//		ISelection selection = selectionService.getSelection();			// Doesn't have a value preceding console start
+			ISelection selection = BaseUIUtil.getActiveSelection(getSite());
+			selectionChanged(selection);
+
+			((SashForm) page).setWeights(new int[] {2, 1});
+
+			ClearOutputAction clear = new ClearOutputAction(output);
+			CloseAction close = new CloseAction();
+			SaveExpressionAction saveExpression = new SaveExpressionAction(this);
+			LoadExpressionAction loadExpression = new LoadExpressionAction(this);
+			debugAction = new DebugAction(this);
+
+			IMenuManager menu = getSite().getActionBars().getMenuManager();
+			menu.add(loadExpression);
+			menu.add(saveExpression);
+			menu.add(clear);
+			menu.add(close);
+			menu.add(debugAction);
+
+			IToolBarManager toolbar = getSite().getActionBars().getToolBarManager();
+			toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, loadExpression);
+			toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, saveExpression);
+			toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, clear);
+			toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, close);
+			toolbar.appendToGroup(IConsoleConstants.OUTPUT_GROUP, debugAction);
 	}
 
 	private int convertHeightInCharsToPixels(int i) {
 		// Create a GC to calculate font's dimensions
-	    GC gc = new GC(Display.getDefault());
-	    gc.setFont(editor.getViewer().getTextWidget().getFont());
+		GC gc = new GC(Display.getDefault());
+		gc.setFont(editor.getViewer().getTextWidget().getFont());
 
-	    // Determine string's dimensions
-	    FontMetrics fontMetrics = gc.getFontMetrics();
+		// Determine string's dimensions
+		FontMetrics fontMetrics = gc.getFontMetrics();
 
-	    int ret = (fontMetrics.getHeight() + fontMetrics.getAscent() + fontMetrics.getDescent() + fontMetrics.getLeading()) * i;
-	    
-	    // Dispose that gc
-	    gc.dispose();
-		
-	    return ret;
+		int ret = (fontMetrics.getHeight() + fontMetrics.getAscent() + fontMetrics.getDescent() + fontMetrics.getLeading()) * i;
+
+		// Dispose that gc
+		gc.dispose();
+
+		return ret;
 	}
 
-    protected @Nullable EnvironmentFactoryAdapter createEditor(Composite s1) {
+	protected @Nullable EnvironmentFactoryAdapter createEditor(Composite s1) {
 		Composite client = s1; //new Composite(s1, SWT.NULL);
 		Injector injector = XtextConsolePlugin.getInstance().getInjector(EssentialOCLPlugin.LANGUAGE_ID);
 		Composite editorComposite = client; //new Composite(client, SWT.NULL);
 		editor = new EmbeddedXtextEditor(editorComposite, injector, /*SWT.BORDER |*/ SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
-//		MetamodelManagerResourceSetAdapter.getAdapter(editor.getResourceSet(), metamodelManager);
+		//		MetamodelManagerResourceSetAdapter.getAdapter(editor.getResourceSet(), metamodelManager);
 
-/*		editor.getViewer().getTextWidget().addModifyListener(new ModifyListener() {
+		/*		editor.getViewer().getTextWidget().addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				String text = editor.getViewer().getTextWidget().getText();
 				System.out.println("modifyText: " + text);
@@ -569,158 +569,158 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 //				} else {
 //					getEditor().setDirty(false);
 //					getEditor().firePropertyChange(IEditorPart.PROP_DIRTY);
-//				} 
+//				}
 			}
 		}); */
-/*		editor.getDocument().addModelListener(new IXtextModelListener() {
+		/*		editor.getDocument().addModelListener(new IXtextModelListener() {
 			public void modelChanged(XtextResource resource) {
 				System.out.println("modelChanged: " + resource);
 //				reconcileChangedModel();
 			}
 		}); */
-		
+
 		editor.getViewer().getTextWidget().addVerifyKeyListener(new VerifyKeyListener() {
 			@Override
 			public void verifyKey(VerifyEvent e) {
-//				System.out.println("verifyKey: " + e.keyCode);
+				//				System.out.println("verifyKey: " + e.keyCode);
 				if (e.keyCode == SWT.KEYPAD_CR || e.keyCode == SWT.CR) {
-					if ((e.stateMask & (SWT.CTRL | SWT.SHIFT)) == 0) {					
+					if ((e.stateMask & (SWT.CTRL | SWT.SHIFT)) == 0) {
 						e.doit = false;
 					}
 				}
 			}
 		});
-		
+
 		GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
 		data.heightHint= convertHeightInCharsToPixels(1);
 		editorComposite.setLayoutData(data);
-		
+
 		ResourceSet resourceSet = editor.getResourceSet();
 		return resourceSet != null ? EnvironmentFactoryAdapter.find(resourceSet) : null;
 	}
-	
+
 	/**
 	 * Extends the inherited method to dispose of additional colour resources.
 	 */
 	@Override
-    public void dispose() {
-//		System.out.println("Dispose " + getClass() + "@" + Integer.toHexString(System.identityHashCode(this)));
+	public void dispose() {
+		//		System.out.println("Dispose " + getClass() + "@" + Integer.toHexString(System.identityHashCode(this)));
 		if (editor != null) {
 			editor.dispose();
 			editor = null;
 		}
-	    colorManager.dispose();
-	    selectionService.removePostSelectionListener(selectionListener);
-	    reset();	    
+		colorManager.dispose();
+		selectionService.removePostSelectionListener(selectionListener);
+		reset();
 		super.dispose();
 	}
-	
+
 	/**
 	 * Prints an error message to the output viewer, in red text.
-	 * 
+	 *
 	 * @param message the error message to print
 	 */
 	private void error(String message) {
 		append(message, ColorManager.OUTPUT_ERROR, false);
 		scrollText();
 	}
-	
+
 	/**
 	 * Evaluates an OCL expression using the OCL Interpreter's {@link OCLHelper}
 	 * API.
-	 * 
+	 *
 	 * @param expression an OCL expression
-	 * 
+	 *
 	 * @return <code>true</code> on successful evaluation; <code>false</code>
 	 *    if the expression failed to parse or evaluate
 	 */
-	protected boolean evaluate(final String expression) {        
-//		if (contextObject == null) {
-//			error(OCLInterpreterMessages.console_noContext);
-//			return false;
-//		} 
+	protected boolean evaluate(final String expression) {
+		//		if (contextObject == null) {
+		//			error(OCLInterpreterMessages.console_noContext);
+		//			return false;
+		//		}
 		if ((expression == null) || (expression.trim().length() <= 0)) {
 			error(ConsoleMessages.Result_NoExpression);
 			return false;
-		} 
-//		editorDocument.getResource();
+		}
+		//		editorDocument.getResource();
 		// create an OCL helper to do our parsing and evaluating
-//      ocl = oclFactory.createOCL(modelingLevel);
-//      OCLHelper helper = ocl.createOCLHelper();
-		boolean result = true;			
+		//      ocl = oclFactory.createOCL(modelingLevel);
+		//      OCLHelper helper = ocl.createOCLHelper();
+		boolean result = true;
 		try {
-				// set our helper's context classifier to parse against it
-//	        ConstraintKind kind = modelingLevel.setContext(helper, context, oclFactory);
-				
+			// set our helper's context classifier to parse against it
+			//	        ConstraintKind kind = modelingLevel.setContext(helper, context, oclFactory);
+
 			IDocument doc = getDocument();
-				
-            if (doc.getLength() > 0) {
+
+			if (doc.getLength() > 0) {
 				// separate previous output by a blank line
 				append("", ColorManager.DEFAULT, false); //$NON-NLS-1$
 			}
-			
+
 			append(ConsoleMessages.Heading_Evaluating, ColorManager.DEFAULT, true);
 			append(expression, ColorManager.DEFAULT, false);
 			append(ConsoleMessages.Heading_Results, ColorManager.DEFAULT, true);
-            
-        	final BaseDocument editorDocument = getEditorDocument();
-        	Object value = null;
-        	try {
-        		value = editorDocument.readOnly(new IUnitOfWork<Object, XtextResource>() {
 
-				@Override
-				public Object exec(@Nullable XtextResource state) throws Exception {
-					if (state != null) {
-						IProgressService progressService = PlatformUI.getWorkbench().getProgressService();
-						EvaluationRunnable runnable = new EvaluationRunnable((CSResource) state, expression);
-						progressService.busyCursorWhile(runnable);
-						return runnable.getValue();
+			final BaseDocument editorDocument = getEditorDocument();
+			Object value = null;
+			try {
+				value = editorDocument.readOnly(new IUnitOfWork<Object, XtextResource>() {
+
+					@Override
+					public Object exec(@Nullable XtextResource state) throws Exception {
+						if (state != null) {
+							IProgressService progressService = PlatformUI.getWorkbench().getProgressService();
+							EvaluationRunnable runnable = new EvaluationRunnable((CSResource) state, expression);
+							progressService.busyCursorWhile(runnable);
+							return runnable.getValue();
+						}
+						else {
+							return null;
+						}
+					}});
+			}
+			catch (Exception e) {
+				append(e.getMessage(), ColorManager.OUTPUT_ERROR, false);
+			}
+			if (value instanceof InvalidValueException) {
+				InvalidValueException exception = (InvalidValueException)value;
+				append(exception.getMessage(), ColorManager.OUTPUT_ERROR, true);
+				Throwable cause = exception.getCause();
+				if ((cause != null) && (cause != exception)) {
+					if (cause instanceof ParserException) {
+						append(cause.getMessage(), ColorManager.OUTPUT_ERROR, false);
 					}
 					else {
-						return null;
+						append(cause.toString(), ColorManager.OUTPUT_ERROR, false);
 					}
-				}});
-           	}
-        	catch (Exception e) {
-        		append(e.getMessage(), ColorManager.OUTPUT_ERROR, false);
-        	}
-        	if (value instanceof InvalidValueException) {
-        		InvalidValueException exception = (InvalidValueException)value;
-        		append(exception.getMessage(), ColorManager.OUTPUT_ERROR, true);
-        		Throwable cause = exception.getCause();
-        		if ((cause != null) && (cause != exception)) {
-        			if (cause instanceof ParserException) {
-        				append(cause.getMessage(), ColorManager.OUTPUT_ERROR, false);
-        			}
-        			else {
-        				append(cause.toString(), ColorManager.OUTPUT_ERROR, false);
-        			}
-        		}
-        	}
-        	else if (value != null) {
-        		CollectionValue collectionValue = ValueUtil.isCollectionValue(value);
+				}
+			}
+			else if (value != null) {
+				CollectionValue collectionValue = ValueUtil.isCollectionValue(value);
 				if (collectionValue != null) {
 					for (Object elementValue : collectionValue.iterable()) {
 						append(ValueUtil.stringValueOf(elementValue), ColorManager.OUTPUT_RESULTS, false);
-	        		}
+					}
 				}
-	        	else {
-	        		append(ValueUtil.stringValueOf(value), ColorManager.OUTPUT_RESULTS, false);
-	        	}
-        	}
-        	else {
-        		append(ValueUtil.stringValueOf(value), ColorManager.OUTPUT_ERROR, false);
-        	}
-            scrollText();
-            
+				else {
+					append(ValueUtil.stringValueOf(value), ColorManager.OUTPUT_RESULTS, false);
+				}
+			}
+			else {
+				append(ValueUtil.stringValueOf(value), ColorManager.OUTPUT_ERROR, false);
+			}
+			scrollText();
+
 			// store the successfully parsed expression
 			lastOCLExpression = expression;
 		} catch (Exception e) {
 			result = false;
 			error((e.getLocalizedMessage() == null) ? e.getClass().getName()
-					: e.getLocalizedMessage());
+				: e.getLocalizedMessage());
 		}
-		
+
 		return result;
 	}
 
@@ -734,13 +734,13 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 	}
 
 	@Override
-    public Control getControl() {
+	public Control getControl() {
 		return page;
 	}
-	
+
 	/**
 	 * Obtains the document in the output viewer.
-	 * 
+	 *
 	 * @return the output document
 	 */
 	private IDocument getDocument() {
@@ -750,11 +750,11 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 	public IXtextDocument getDocument(URI trimFragment) {
 		return getEditorDocument();
 	}
-	
+
 	public BaseDocument getEditorDocument() {
 		return (BaseDocument) editor.getDocument();
 	}
-	
+
 	public OCL getEditorOCL() {
 		return editor.getOCL();
 	}
@@ -787,10 +787,10 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 				@Override
 				public void run() {
 					MessageDialog.openInformation(shell, ConsoleMessages.ModelTypesUsage_Title, ConsoleMessages.ModelTypesUsage_Message);
-//						MessageDialogWithToggle openInformation = MessageDialogWithToggle.openInformation(getControl().getShell(), ConsoleMessages.ModelTypesUsage_Title, ConsoleMessages.ModelTypesUsage_Message, ConsoleMessages.ModelTypesUsage_Question, false, null, null);
-//						if (openInformation.getToggleState()) {		// Don't show again
-//							option.setDefaultValue(false);			// Don't know how to persist this so don't offer toggle
-//						}
+					//						MessageDialogWithToggle openInformation = MessageDialogWithToggle.openInformation(getControl().getShell(), ConsoleMessages.ModelTypesUsage_Title, ConsoleMessages.ModelTypesUsage_Message, ConsoleMessages.ModelTypesUsage_Question, false, null, null);
+					//						if (openInformation.getToggleState()) {		// Don't show again
+					//							option.setDefaultValue(false);			// Don't know how to persist this so don't offer toggle
+					//						}
 				}
 			});
 		}
@@ -807,26 +807,26 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 				@Override
 				public Value exec(@Nullable XtextResource resource) throws Exception {
 					Object selectedObject = selected;
-			    	if (selectedObject instanceof IAdaptable) {
-			    		@Nullable Object adapted = ((IAdaptable) selectedObject).getAdapter(EObject.class);
+					if (selectedObject instanceof IAdaptable) {
+						@Nullable Object adapted = ((IAdaptable) selectedObject).getAdapter(EObject.class);
 						@SuppressWarnings("null")boolean isNonNull = adapted != null;			// FIXME BUG 485093
 						if (isNonNull){
 							selectedObject = adapted;
 						}
-		            }
-			    	if (selectedObject instanceof EObject) {
-		            	contextObject = (EObject) selectedObject;
-		            }
-		            else {		// FIXME else Value in particular CollectionValue
-		            	contextObject = null;
-		            }
-			    	if (resource instanceof BaseCSResource) {
-			    		((BaseCSResource)resource).dispose();
-			    	}
-	
+					}
+					if (selectedObject instanceof EObject) {
+						contextObject = (EObject) selectedObject;
+					}
+					else {		// FIXME else Value in particular CollectionValue
+						contextObject = null;
+					}
+					if (resource instanceof BaseCSResource) {
+						((BaseCSResource)resource).dispose();
+					}
+
 					EnvironmentFactory environmentFactory = getEnvironmentFactory(contextObject);
 					IdResolver.IdResolverExtension idResolver = (IdResolver.IdResolverExtension)environmentFactory.getIdResolver();
-	//				DomainType staticType = idResolver.getStaticTypeOf(selectedObject);
+					//				DomainType staticType = idResolver.getStaticTypeOf(selectedObject);
 					org.eclipse.ocl.pivot.Class staticType = idResolver.getStaticTypeOf(contextObject);
 					org.eclipse.ocl.pivot.Class contextType = environmentFactory.getMetamodelManager().getPrimaryClass(staticType);
 					Iterable<org.eclipse.ocl.pivot.@NonNull Class> savedContextModelClasses = contextModelClasses;
@@ -835,15 +835,18 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					if ((contextModelClasses != null) && !contextModelClasses.equals(savedContextModelClasses) && option.getPreferredValue()) {
 						popUpModelTypesUsageInformation();
 					}
-	//				if (contextType != null) {
-						parserContext = new ClassContext(environmentFactory, null, contextType, contextObject instanceof Type ? (Type)contextObject : null);
-	//				}
-	//				else {
-	//					parserContext = new ModelContext(metamodelManager, null);
-	//				}
-	//		        parserContext = new EObjectContext(metamodelManager, null, contextObject);
-				    EssentialOCLCSResource csResource = (EssentialOCLCSResource) resource;
-				    if (csResource != null) {
+					EObject instanceContext = contextObject;
+					if ((instanceContext != null) && !(instanceContext instanceof Element)) {
+						instanceContext = environmentFactory.getMetamodelManager().getASOf(Element.class, instanceContext);
+					}
+					parserContext = new ClassContext(environmentFactory, null, contextType, instanceContext instanceof Type ? (Type)instanceContext : null);
+					//				}
+					//				else {
+					//					parserContext = new ModelContext(metamodelManager, null);
+					//				}
+					//		        parserContext = new EObjectContext(metamodelManager, null, contextObject);
+					EssentialOCLCSResource csResource = (EssentialOCLCSResource) resource;
+					if (csResource != null) {
 						if (contextObject != null) {
 							csResource.getCS2AS();
 						}
@@ -851,10 +854,10 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 						if (resourceSet != null) {
 							environmentFactory.adapt(resourceSet);
 						}
-				        csResource.setParserContext(parserContext);
-				    }
-			        console.setSelection(contextObject, contextType);
-			        return null;
+						csResource.setParserContext(parserContext);
+					}
+					console.setSelection(contextObject, contextType);
+					return null;
 				}
 			});
 		}
@@ -864,7 +867,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 				Throwable t = e.getCause();
 				IStatus status = new Status(IStatus.ERROR, XtextConsolePlugin.PLUGIN_ID, t.getLocalizedMessage(), t);
 				ErrorDialog.openError(shell, ConsoleMessages.SelectionError_Title, ConsoleMessages.SelectionError_Message, status);
-		        console.setSelection(null, null);
+				console.setSelection(null, null);
 			}
 		}
 		catch (Exception e) {
@@ -891,14 +894,14 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 			doc.set(""); //$NON-NLS-1$
 		}
 	}
-	
+
 	/**
 	 * Ensures that the last text printed to the output viewer is shown.
 	 */
 	private void scrollText() {
 		output.revealRange(getDocument().getLength(), 0);
 	}
-	
+
 	private void selectionChanged(ISelection sel) {
 		Object selectedObject = BaseUIUtil.getSelectedObject(sel, getSite());
 		if (selectedObject instanceof VMVariable) {					// FIXME move to BaseUIUtil once additional dependency acceptable
@@ -907,11 +910,11 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 				selectedObject = vmVar.valueObject;
 			}
 		}
-        refreshSelection(selectedObject);
+		refreshSelection(selectedObject);
 	}
 
 	@Override
-    public void setFocus() {
+	public void setFocus() {
 		input.getTextWidget().setFocus();
 	}
 }
