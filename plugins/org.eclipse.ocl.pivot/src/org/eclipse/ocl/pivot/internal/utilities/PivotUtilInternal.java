@@ -507,6 +507,13 @@ public class PivotUtilInternal //extends PivotUtil
 		return ClassUtil.nullFree(shadowExp.getOwnedParts());
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	public static @Nullable List<@NonNull Property> getOwnedPropertiesList(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ClassUtil.nullFree(asClass.getOwnedProperties());
+	}
+
 	public static String getSpecificationRole(@NonNull LanguageExpression specification) {
 		EReference eContainmentFeature = specification.eContainmentFeature();
 		if (eContainmentFeature == PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS) {

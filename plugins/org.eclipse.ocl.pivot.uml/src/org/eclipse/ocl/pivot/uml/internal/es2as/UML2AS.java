@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -410,12 +411,12 @@ public abstract class UML2AS extends AbstractExternal2AS
 		/**
 		 * Set of all UML objects requiring further work during the reference pass.
 		 */
-		private @NonNull Set<EObject> referencers = new HashSet<>();
+		private @NonNull Set<@NonNull EObject> referencers = new HashSet<>();
 
 		/**
 		 * Set of all UML objects requiring further work after the reference pass.
 		 */
-		private @NonNull Set<EObject> users = new HashSet<>();
+		private @NonNull Set<@NonNull EObject> users = new HashSet<>();
 
 		/**
 		 * Set of all converters used during session.
@@ -429,10 +430,10 @@ public abstract class UML2AS extends AbstractExternal2AS
 		protected final @NonNull UML2ASDeclarationSwitch declarationPass = new UML2ASDeclarationSwitch(this);
 		protected final @NonNull UML2ASReferenceSwitch referencePass = new UML2ASReferenceSwitch(this);
 		protected final @NonNull UML2ASUseSwitch usePass = new UML2ASUseSwitch(this);
-		private @Nullable List<Resource> importedResources = null;
+		private @Nullable List<@NonNull Resource> importedResources = null;
 
 		//		private @NonNull Set<org.eclipse.uml2.uml.Property> umlProperties = new HashSet<>();
-		private @NonNull Map<org.eclipse.ocl.pivot.Class, List<Property>> type2properties = new HashMap<>();
+		private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> type2properties = new HashMap<>();
 		//		private @NonNull Map<Type, List<Property>> stereotypeProperties = new HashMap<Type, List<>>();
 		private final @NonNull Map<org.eclipse.uml2.uml.NamedElement, Boolean> namedElement2isNullFree = new HashMap<>();
 
@@ -469,7 +470,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		@Override
 		public void addImportedResource(@NonNull Resource importedResource) {
 			if (importedResource != umlResource) {
-				List<Resource> importedResources2 = importedResources;
+				List<@NonNull Resource> importedResources2 = importedResources;
 				if (importedResources2 == null) {
 					importedResources = importedResources2 = new ArrayList<>();
 				}
@@ -522,7 +523,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 		@Override
 		public void addProperty(org.eclipse.ocl.pivot.@NonNull Class asType, @NonNull Property asProperty) {
-			List<Property> asProperties = type2properties.get(asType);
+			List<@NonNull Property> asProperties = type2properties.get(asType);
 			if (asProperties == null) {
 				asProperties = new ArrayList<>();
 				type2properties.put(asType, asProperties);
@@ -578,6 +579,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			if (pivotModel2 == null) {
 				URI pivotURI = createPivotURI();
 				ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.UML_CONTENT_TYPE);
+				List<@NonNull Diagnostic> errors2 = errors;
 				try {
 					pivotModel2 = installDeclarations(asResource);
 					//					Map<String, Type> resolvedSpecializations = new HashMap<>();
@@ -590,6 +592,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 					//							metamodelManager.addOrphanType((Type)pivotElement);
 					//						}
 					//					}
+					if (errors2 != null) {
+						if ((errors2.size() == 1) && (errors2.get(0) instanceof Exception)) {
+							throw (Exception)errors2.get(0);
+						}
+						else {
+							throw new XMIException(PivotUtil.formatResourceDiagnostics(errors2, "", "\n"));
+						}
+					}
 					installImports();
 					installReferencers();
 					modelAnalysis.installStereotypes();
@@ -688,7 +698,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			return declarationPass;
 		}
 
-		public @Nullable List<Resource> getImportedResources() {
+		public @Nullable List<@NonNull Resource> getImportedResources() {
 			return importedResources;
 		}
 
@@ -843,10 +853,13 @@ public abstract class UML2AS extends AbstractExternal2AS
 			}
 			Set<Type> allPropertiedTypes = new HashSet<>(typeProperties.keySet()); */
 			//			allPropertiedTypes.addAll(stereotypeProperties.keySet());
-			for (org.eclipse.ocl.pivot.Class pivotType : type2properties.keySet()) {
-				List<Property> asProperties = type2properties.get(pivotType);
+			for (org.eclipse.ocl.pivot.@NonNull Class pivotType : type2properties.keySet()) {
+				if ("Class1".equals(pivotType.getName())) {
+					toString();
+				}
+				List<@NonNull Property> asProperties = type2properties.get(pivotType);
 				Collections.sort(asProperties, NameUtil.NAMEABLE_COMPARATOR);
-				refreshList(ClassUtil.nonNullEMF(pivotType.getOwnedProperties()), asProperties);
+				refreshList(PivotUtilInternal.getOwnedPropertiesList(pivotType), asProperties);
 			}
 		}
 
