@@ -106,7 +106,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		assert umlAssociation != null;
 		//
 		//	It would be nice to create Pivot AssociationClass instances lazily, but UML defines these objects and it is hard
-		//	to be lazy; the proxies could be nearly as costly as their trurths.
+		//	to be lazy; the proxies could be nearly as costly as their truths.
 		//
 		AssociationClass asAssociationClass = converter.refreshNamedElement(org.eclipse.ocl.pivot.AssociationClass.class, PivotPackage.Literals.ASSOCIATION_CLASS, umlAssociation);
 		//		System.out.println("Association " + umlAssociation.getName() + ", " + NameUtil.debugSimpleName(umlAssociation) + " => " + NameUtil.debugSimpleName(asAssociationClass));
@@ -631,6 +631,15 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		} */
 		//		doSwitchAll(pivotElement.getNestedClassifier(), umlClass.getNestedClassifiers(), null);
 		doSwitchAll(pivotElement.getOwnedBehaviors(), umlClass.getOwnedBehaviors(), null);
+		for (org.eclipse.uml2.uml.Classifier umlNestedClassifier : umlClass.getNestedClassifiers()) {
+			if (umlNestedClassifier instanceof org.eclipse.uml2.uml.Association) {
+				doSwitch(umlNestedClassifier);
+			}
+			/*				else if (umlNestedClassifier instanceof org.eclipse.uml2.uml.Behavior) {}		// Handled above
+				else { // FIXME Bug 514353 Class::nestedClassifiers
+					converter.error("Unsupported Class::nestedClassifiers for \"" + umlClass.getPackage().getName() + "::" + umlClass.getName() + "::" + umlNestedClassifier.getName() + "\"");
+				} */
+		}
 	}
 
 	protected void copyClassifier(org.eclipse.ocl.pivot.@NonNull Class pivotElement, org.eclipse.uml2.uml.@NonNull Classifier umlClassifier) {
