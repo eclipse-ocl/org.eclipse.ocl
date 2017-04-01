@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_M6oY8BPqEeeYG4XOVuuZwg" name="RootElement" URI="http://Bug514353">
+  <packageImport xmi:id="_NBTosBPqEeeYG4XOVuuZwg">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Pcw-gBPqEeeYG4XOVuuZwg" name="Class1">
+    <ownedAttribute xmi:id="_SBNRMBPqEeeYG4XOVuuZwg" name="Attribute1" isDerived="true">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
+      <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_f9T_sBPqEeeYG4XOVuuZwg">
+        <language>OCL</language>
+        <body>class2.Attribute1 + 1.0</body>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_WceioBPqEeeYG4XOVuuZwg" name="class2" type="_PyCq8BPqEeeYG4XOVuuZwg" aggregation="composite" association="_WcYcABPqEeeYG4XOVuuZwg"/>
+    <nestedClassifier xmi:type="uml:Association" xmi:id="_WcYcABPqEeeYG4XOVuuZwg" memberEnd="_WceioBPqEeeYG4XOVuuZwg _WciNABPqEeeYG4XOVuuZwg">
+      <eAnnotations xmi:id="_WcctcBPqEeeYG4XOVuuZwg" source="org.eclipse.papyrus">
+        <details xmi:id="_WcdUgBPqEeeYG4XOVuuZwg" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:id="_WciNABPqEeeYG4XOVuuZwg" name="class1" type="_Pcw-gBPqEeeYG4XOVuuZwg" association="_WcYcABPqEeeYG4XOVuuZwg"/>
+    </nestedClassifier>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_PyCq8BPqEeeYG4XOVuuZwg" name="Class2">
+    <ownedAttribute xmi:id="_RdmN0BPqEeeYG4XOVuuZwg" name="Attribute1">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
+    </ownedAttribute>
+  </packagedElement>
+</uml:Model>
