@@ -674,6 +674,6 @@ public class AbstractGenModelHelper implements GenModelHelper
 
 	@Override
 	public @NonNull String getTablesClassName(@NonNull GenPackage genPackage) {
-		return ImportUtils.getAffixedName(genPackage.getQualifiedPackageName() + "." + genPackage.getPrefix() + TABLES_CLASS_SUFFIX);
+		return ImportUtils.getAffixedName(genPackage.getReflectionPackageName() + "." + genPackage.getPrefix() + TABLES_CLASS_SUFFIX);
 	}
 }
