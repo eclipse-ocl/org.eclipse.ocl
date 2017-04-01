@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -265,7 +266,10 @@ extends PivotTestSuite// XtextTestCase
 		return s.toString();
 	}
 
-	public @NonNull String createGenModelContent(@NonNull String testProjectPath, @NonNull String fileName, @Nullable String usedGenPackages) {
+	public @NonNull String createGenModelContent(@NonNull String testProjectPath, @NonNull String fileName, @Nullable Map<@NonNull String, @Nullable String> genOptions) {
+		String interfacePackageSuffix = genOptions != null ? genOptions.get("interfacePackageSuffix") : null;
+		String metaDataPackageSuffix = genOptions != null ? genOptions.get("metaDataPackageSuffix") : null;
+		String usedGenPackages = genOptions != null ? genOptions.get("usedGenPackages") : null;
 		StringBuilder s = new StringBuilder();
 		s.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		s.append("<genmodel:GenModel xmi:version=\"2.0\"\n");
@@ -294,8 +298,14 @@ extends PivotTestSuite// XtextTestCase
 		s.append("  <foreignModel>" + fileName + ".ecore</foreignModel>\n");
 		s.append("  <genPackages prefix=\"" + fileName + "\"\n");
 		s.append("    disposableProviderFactory=\"true\"\n");
-		s.append("    ecorePackage=\"" + fileName + ".ecore#/\">\n");
-		s.append("  </genPackages>\n");
+		s.append("    ecorePackage=\"" + fileName + ".ecore#/\"\n");
+		if (interfacePackageSuffix != null) {
+			s.append("    interfacePackageSuffix=\"" + interfacePackageSuffix + "\"\n");
+		}
+		if (metaDataPackageSuffix != null) {
+			s.append("    metaDataPackageSuffix=\"" + metaDataPackageSuffix + "\"\n");
+		}
+		s.append("  />\n");
 		s.append("</genmodel:GenModel>\n");
 		s.append("\n");;
 		return s.toString();
@@ -761,13 +771,16 @@ extends PivotTestSuite// XtextTestCase
 				+ "        operation test(a : ecore::EInt, b : ecore::EInt, c : ecore::EInt) : ecore::EInt { body: if a + b + c > 0 then a + b + c else a + b endif; }\n"
 				+ "    }\n"
 				+ "}\n";
-		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, null);
+		Map <@NonNull String, @Nullable String> genOptions = new HashMap<>();
+		genOptions.put("interfacePackageSuffix", "coreI");
+		genOptions.put("metaDataPackageSuffix", "coreM");
+		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, genOptions);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(testProjectPath, genModelURI);
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) { // FIXME find out how to get dynamic project onto classpath
 			doCompile(testProjectName);
-			String qualifiedPackageName = testProjectName + "." + testFileStem + "Package";
+			String qualifiedPackageName = testProjectName + ".coreM." + testFileStem + "Package";
 			EPackage ePackage = doLoadPackage(qualifiedPackageName);
 			EClass eClass = (EClass) ePackage.getEClassifier("CSEs");
 			EFactory eFactory = ePackage.getEFactoryInstance();
@@ -1094,7 +1107,9 @@ extends PivotTestSuite// XtextTestCase
 						+ "    datatype MyString : 'java.lang.String' { serializable };\n"
 						+ "    class ClassExtension extends pivot::Class {}\n"
 						+ "}\n";
-		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, "platform:/plugin/org.eclipse.ocl.pivot/model/Pivot.genmodel#//pivot");
+		Map <@NonNull String, @Nullable String> genOptions = new HashMap<>();
+		genOptions.put("usedGenPackages", "platform:/plugin/org.eclipse.ocl.pivot/model/Pivot.genmodel#//pivot");
+		String genmodelFile = createGenModelContent(testProjectPath, testFileStem, genOptions);
 		doDelete(testProjectName);
 		URI genModelURI = createModels(testProjectPath, testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(testProjectPath, genModelURI);
@@ -1163,7 +1178,9 @@ extends PivotTestSuite// XtextTestCase
 						+ "		}\n"
 						+ "	}\n"
 						+ "}\n";
-		String genmodelFileB = createGenModelContent(testProjectPathB, testFileStemB, "Bug416421A.genmodel#//bug416421A");
+		Map <@NonNull String, @Nullable String> genOptions = new HashMap<>();
+		genOptions.put("usedGenPackages", "Bug416421A.genmodel#//bug416421A");
+		String genmodelFileB = createGenModelContent(testProjectPathB, testFileStemB, genOptions);
 		doDelete(testProjectNameA);
 		doDelete(testProjectNameB);
 		URI genModelURIA = createModels(testProjectPathA, testFileStemA, oclinecoreFileA, genmodelFileA);
