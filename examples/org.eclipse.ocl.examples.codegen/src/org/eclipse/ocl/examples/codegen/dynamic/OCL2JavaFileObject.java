@@ -55,14 +55,14 @@ public class OCL2JavaFileObject extends SimpleJavaFileObject
 
 	/** @deprecated provide explicitClassPath to avoid default directory indeterminacy */
 	@Deprecated
-	public static void saveClass(@NonNull String qualifiedName, @NonNull String javaCodeSource) throws Exception {
+	public static void saveClass(@NonNull String qualifiedName, @NonNull String javaCodeSource) {
 		saveClass("bin", qualifiedName, javaCodeSource);
 	}
 
-	public static void saveClass(@NonNull String explicitClassPath, @NonNull String qualifiedName, @NonNull String javaCodeSource) throws IOException {
+	public static @Nullable String saveClass(@NonNull String explicitClassPath, @NonNull String qualifiedName, @NonNull String javaCodeSource) {
 		List<@NonNull JavaFileObject> compilationUnits = Collections.singletonList(
 			new OCL2JavaFileObject(qualifiedName, javaCodeSource));
-		JavaFileUtil.compileClasses(compilationUnits, qualifiedName, explicitClassPath, null);
+		return JavaFileUtil.compileClasses(compilationUnits, qualifiedName, explicitClassPath, null);
 	}
 
 	private @NonNull String javaCode;

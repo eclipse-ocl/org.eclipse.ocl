@@ -39,9 +39,11 @@ public abstract class JavaFileUtil
 {
 	private static @Nullable JavaCompiler compiler = getJavaCompiler();
 
-	public static void compileClasses(@NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull String sourcePath,
-			@NonNull String objectPath, @Nullable List<@NonNull String> classpathProjects)
-					throws IOException {
+	/**
+	 * Returns a non-null string describing any problems, null if all ok.
+	 */
+	public static @Nullable String compileClasses(@NonNull List<@NonNull JavaFileObject> compilationUnits, @NonNull String sourcePath,
+			@NonNull String objectPath, @Nullable List<@NonNull String> classpathProjects)  {
 		JavaCompiler compiler2 = compiler;
 		if (compiler2 == null) {
 			throw new IllegalStateException("No JavaCompiler provided by the Java platform - you need to use a JDK rather than a JRE");
@@ -50,41 +52,54 @@ public abstract class JavaFileUtil
 		if (stdFileManager2 == null) {
 			throw new IllegalStateException("No StandardJavaFileManager provided by the Java platform");
 		}
-		//			System.out.printf("%6.3f start\n", 0.001 * (System.currentTimeMillis()-base));
-		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-		List<@NonNull String> compilationOptions = new ArrayList<>();
-		compilationOptions.add("-d");
-		compilationOptions.add(objectPath);
-		compilationOptions.add("-g");
-		if (true/*useNullAnnotations*/) {
-			compilationOptions.add("-source");
-			compilationOptions.add("1.8");
-		}
-		if (EcorePlugin.IS_ECLIPSE_RUNNING && (classpathProjects != null)) {
-			compilationOptions.add("-cp");
-			compilationOptions.add(createClassPath(classpathProjects));
-		}
+		try {
+			//			System.out.printf("%6.3f start\n", 0.001 * (System.currentTimeMillis()-base));
+			DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
+			List<@NonNull String> compilationOptions = new ArrayList<>();
+			compilationOptions.add("-d");
+			compilationOptions.add(objectPath);
+			compilationOptions.add("-g");
+			if (true/*useNullAnnotations*/) {
+				compilationOptions.add("-source");
+				compilationOptions.add("1.8");
+			}
+			if (EcorePlugin.IS_ECLIPSE_RUNNING && (classpathProjects != null)) {
+				compilationOptions.add("-cp");
+				compilationOptions.add(createClassPath(classpathProjects));
+			}
 
-		//			System.out.printf("%6.3f getTask\n", 0.001 * (System.currentTimeMillis()-base));
-		CompilationTask compilerTask = compiler2.getTask(null, stdFileManager2, diagnostics, compilationOptions, null, compilationUnits);
-		//			System.out.printf("%6.3f call\n", 0.001 * (System.currentTimeMillis()-base));
-		if (!compilerTask.call()) {
+			//			System.out.printf("%6.3f getTask\n", 0.001 * (System.currentTimeMillis()-base));
+			CompilationTask compilerTask = compiler2.getTask(null, stdFileManager2, diagnostics, compilationOptions, null, compilationUnits);
+			//			System.out.printf("%6.3f call\n", 0.001 * (System.currentTimeMillis()-base));
+			if (compilerTask.call()) {
+				return null;
+			}
 			StringBuilder s = new StringBuilder();
 			for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
 				s.append("\n" + diagnostic.getMessage(null));
 			}
+			String message;
 			if (s.length() > 0) {
 				//					throw new IOException("Failed to compile " + sourcePath + s.toString());
 				// If a previous generation was bad we may get many irrelevant errors.
-				System.err.println("Failed to compile " + sourcePath + s.toString());
+				message = "Failed to compile " + sourcePath + s.toString();
 			}
 			else {
-				System.out.println("Compilation of " + sourcePath + " returned false but no diagnostics");
+				message = "Compilation of " + sourcePath + " returned false but no diagnostics";
 			}
+			System.out.println(message);
+			return message;
 		}
-		//			System.out.printf("%6.3f close\n", 0.001 * (System.currentTimeMillis()-base));
-		stdFileManager2.close();		// Close the file manager which re-opens automatically
-		//			System.out.printf("%6.3f forName\n", 0.001 * (System.currentTimeMillis()-base));
+		finally {
+			//			System.out.printf("%6.3f close\n", 0.001 * (System.currentTimeMillis()-base));
+			try {
+				stdFileManager2.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		// Close the file manager which re-opens automatically
+			//			System.out.printf("%6.3f forName\n", 0.001 * (System.currentTimeMillis()-base));
+		}
 	}
 
 	public static @NonNull String createClassPath(@NonNull List<String> projectNames) {
