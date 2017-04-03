@@ -134,12 +134,14 @@
    <extension point="org.eclipse.ocl.pivot.label_generator">
       <generator for="java.lang.Boolean"
       	class="org.eclipse.ocl.pivot.internal.labels.BooleanLabelGenerator"/>
+      <generator for="java.lang.Class"
+      	class="org.eclipse.ocl.pivot.internal.labels.ClassLabelGenerator"/>
       <generator for="org.eclipse.emf.ecore.impl.DynamicEObjectImpl"
       	class="org.eclipse.ocl.pivot.internal.labels.DynamicEObjectImplLabelGenerator"/>
       <generator for="org.eclipse.emf.ecore.EAnnotation"
       	class="org.eclipse.ocl.pivot.internal.labels.EAnnotationLabelGenerator"/>
-      <generator for="org.eclipse.emf.common.util.URI"
-      	class="org.eclipse.ocl.pivot.internal.labels.EcoreURILabelGenerator"/>
+      <generator for="java.io.File"
+      	class="org.eclipse.ocl.pivot.internal.labels.FileLabelGenerator"/>
       <generator for="org.eclipse.emf.ecore.EGenericType"
       	class="org.eclipse.ocl.pivot.internal.labels.EGenericTypeLabelGenerator"/>
       <generator for="org.eclipse.ocl.pivot.ids.ElementId"
@@ -156,8 +158,12 @@
       	class="org.eclipse.ocl.pivot.internal.labels.NameableLabelGenerator"/>
       <generator for="java.lang.Number"
       	class="org.eclipse.ocl.pivot.internal.labels.NumberLabelGenerator"/>
+      <generator for="org.eclipse.emf.ecore.resource.Resource"
+      	class="org.eclipse.ocl.pivot.internal.labels.ResourceLabelGenerator"/>
       <generator for="java.lang.String"
       	class="org.eclipse.ocl.pivot.internal.labels.StringLabelGenerator"/>
+      <generator for="org.eclipse.emf.common.util.URI"
+      	class="org.eclipse.ocl.pivot.internal.labels.EcoreURILabelGenerator"/>
       <generator for="org.eclipse.ocl.pivot.values.Value"
       	class="org.eclipse.ocl.pivot.internal.labels.ValueLabelGenerator"/>
    </extension>
