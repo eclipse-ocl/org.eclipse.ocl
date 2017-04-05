@@ -16,6 +16,9 @@ import java.io.IOException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
 
+/**
+ * @since 1.3
+ */
 public final class FileLabelGenerator extends AbstractLabelGenerator<File>
 {
 	public static void initialize(@NonNull Registry registry) {

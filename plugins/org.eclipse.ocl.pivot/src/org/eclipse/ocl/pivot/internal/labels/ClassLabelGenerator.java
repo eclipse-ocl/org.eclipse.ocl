@@ -13,6 +13,9 @@ package org.eclipse.ocl.pivot.internal.labels;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.labels.AbstractLabelGenerator;
 
+/**
+ * @since 1.3
+ */
 public final class ClassLabelGenerator extends AbstractLabelGenerator<Class<?>>
 {
 	public static void initialize(@NonNull Registry registry) {
