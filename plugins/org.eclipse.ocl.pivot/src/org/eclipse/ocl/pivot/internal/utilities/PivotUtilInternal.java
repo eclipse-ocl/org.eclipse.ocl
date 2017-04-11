@@ -510,7 +510,7 @@ public class PivotUtilInternal //extends PivotUtil
 	/**
 	 * @since 1.3
 	 */
-	public static @Nullable List<@NonNull Property> getOwnedPropertiesList(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public static @NonNull List<@NonNull Property> getOwnedPropertiesList(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ClassUtil.nullFree(asClass.getOwnedProperties());
 	}
 
