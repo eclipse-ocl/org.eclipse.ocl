@@ -549,7 +549,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 		if (type != null) {
 			context.append(" : ");
 			context.appendQualifiedType(type);
-			context.appendTypedMultiplicity(object);
+			context.appendTypeMultiplicity(object);
 		}
 		return null;
 	}
