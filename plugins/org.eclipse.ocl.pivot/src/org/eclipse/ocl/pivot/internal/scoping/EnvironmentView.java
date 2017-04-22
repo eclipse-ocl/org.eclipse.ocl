@@ -428,9 +428,6 @@ public class EnvironmentView
 			CompleteClass completeClass = environmentFactory.getMetamodelManager().getCompleteClass(type);
 			String name2 = name;
 			if (name2 != null) {
-				if ("region".equals(name2)) {
-					name2 = name;
-				}
 				for (@NonNull Property property : completeClass.getProperties(featureFilter, name2)) {
 					addNamedElement(property);
 				}

@@ -1613,30 +1613,33 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			return pivotProperty;
 		}
 		CompleteInheritance owningInheritance = pivotProperty.getInheritance(standardLibrary);
-		if (owningInheritance != null) {
-			@NonNull String name = ClassUtil.nonNullModel(pivotProperty.getName());
-			Property opposite = pivotProperty.getOpposite();
-			String oppositeName = opposite != null ? opposite.getName() : null;
-			CompleteClass completeClass = completeModel.getCompleteClass(owningInheritance.getPivotClass());
-			Iterable<? extends Property> memberProperties = completeClass.getProperties(pivotProperty.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC, name);
-			Property bestProperty = null;
-			for (Property memberProperty : memberProperties) {
-				if (memberProperty != null) {
-					Property memberOpposite = memberProperty.getOpposite();
-					String memberOppositeName = memberOpposite != null ? memberOpposite.getName() : null;
-					if ((oppositeName != null) && oppositeName.equals(memberOppositeName)) {
-						return memberProperty;
-					}
-					else if ((bestProperty == null) || (oppositeName == null) || oppositeName.equals(memberOppositeName)) {
-						bestProperty = memberProperty;
+		if (owningInheritance == null) {
+			return pivotProperty;
+		}
+		String name = PivotUtil.getName(pivotProperty);
+		CompleteClass completeClass = completeModel.getCompleteClass(owningInheritance.getPivotClass());
+		Iterable<@NonNull Property> memberProperties = completeClass.getProperties(pivotProperty.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC, name);
+		if (Iterables.size(memberProperties) <= 1) {					// No ambiguity
+			return memberProperties.iterator().next();					// use merged unambiguous result (not necessarily pivotProperty)
+		}
+		Property opposite = pivotProperty.getOpposite();
+		if (opposite == null) {											// No opposite, first one must be ok
+			return memberProperties.iterator().next();
+		}
+		String oppositeName = PivotUtil.getName(opposite);
+		CompleteClass oppositeCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(opposite));
+		for (@NonNull Property memberProperty : memberProperties) {
+			Property memberOpposite = memberProperty.getOpposite();
+			if (memberOpposite != null) {
+				if (oppositeName.equals(memberOpposite.getName())) {
+					CompleteClass memberOppositeCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(memberOpposite));
+					if (oppositeCompleteClass == memberOppositeCompleteClass) {
+						return memberProperty;							// First exact opposite is the primary
 					}
 				}
 			}
-			if (bestProperty != null) {
-				return bestProperty;
-			}
 		}
-		return pivotProperty;
+		return memberProperties.iterator().next();						// Fallback, first one must be ok
 	}
 
 	@Override
