@@ -56,7 +56,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 /**
- * AbstractCollectionValueImpl provides the common functionality for eager and lazy CollectionValues.
+ * AbstractBaggableValueImpl provides the common functionality for eager and lazy CollectionValues.
  * @generated NOT
  * @since 1.3
  */

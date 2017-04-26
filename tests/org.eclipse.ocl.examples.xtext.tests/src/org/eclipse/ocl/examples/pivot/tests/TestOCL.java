@@ -384,6 +384,9 @@ public class TestOCL extends OCLInternal
 	public Value assertQueryInvalid(Object context, @NonNull String expression) {
 		try {
 			Object value = evaluateWithoutValidation(null, context, expression);
+			if (value != null) {
+				value.hashCode();	// Force eager Collection evaluation
+			}
 			TestCase.fail(expression + " expected: invalid but was: " + value);
 		} catch (InvalidValueException e) {		// OCL invalid is always an InvalidValueException
 			PivotTestSuite.appendLog(testName, context, expression, null, "invalid", null);
@@ -397,6 +400,9 @@ public class TestOCL extends OCLInternal
 		try {
 			Object value = evaluateWithoutValidation(null, context, expression);
 			//    		if (!ValuesUtil.isInvalid(value)) {
+			if (value != null) {
+				value.hashCode();	// Force eager Collection evaluation
+			}
 			TestCase.fail(expression + " expected: invalid but was: " + value);
 			//    		}
 			//    		InvalidValue invalidValue = (InvalidValue)value;

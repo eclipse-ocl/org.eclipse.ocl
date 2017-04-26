@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -41,5 +42,21 @@ public abstract class SelectIterator extends AbstractBaggableIterator
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		s.append("Select{");
+		LazyIterable<@Nullable Object> iterable = basicGetIterable();
+		if (iterable != null) {
+			s.append(iterable);
+			if (hasNext()) {
+				s.append(";«future»");
+			}
+		}
+		else {
+			s.append("«future»");
+		}
+		s.append("}");
 	}
 }

@@ -66,8 +66,8 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 
 	/**
 	 * Whether this AbstractBaggableIterator behaves as a multi-iterable iterable or as a single iterable iterator.
-	 * Initially null and indertetminate. Set true by invocatio  of iterable(). Set false by invocation of iterator().
-	 * Conflicting usag, that is attempting to use a single use iterable for multi[le purposes throws an
+	 * Initially null and indeterminate. Set true by invocation of iterable(). Set false by invocation of iterator().
+	 * Conflicting usage, that is attempting to use a single use iterable for multiple purposes throws an
 	 * IllegalStateException.
 	 */
 	private Boolean withIterable = null;

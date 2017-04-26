@@ -40,7 +40,7 @@ import org.eclipse.ui.internal.Workbench;
  */
 @SuppressWarnings("restriction")
 public class ConsoleTests extends AbstractConsoleTests
-{	
+{
 	public void testConsole_oclLog() throws Exception {
 		assertConsoleResult(consolePage, null, "7", "7\n");
 		assertConsoleResult(consolePage, null, "7.oclLog('seven = ')", "seven = 7\n7\n");
@@ -49,13 +49,13 @@ public class ConsoleTests extends AbstractConsoleTests
 	public void testConsole_debugger() throws Exception {
 		ILaunch launch = null;
 		try {
-//		VMVirtualMachine.LOCATION.setState(true);
-//		VMVirtualMachine.PRE_VISIT.setState(true);
-//		VMVirtualMachine.POST_VISIT.setState(true);
-//		VMVirtualMachine.VISITOR_STACK.setState(true);
-//		VMVirtualMachine.VM_EVENT.setState(true);
-//		VMVirtualMachine.VM_REQUEST.setState(true);
-//		VMVirtualMachine.VM_RESPONSE.setState(true);
+			//		VMVirtualMachine.LOCATION.setState(true);
+			//		VMVirtualMachine.PRE_VISIT.setState(true);
+			//		VMVirtualMachine.POST_VISIT.setState(true);
+			//		VMVirtualMachine.VISITOR_STACK.setState(true);
+			//		VMVirtualMachine.VM_EVENT.setState(true);
+			//		VMVirtualMachine.VM_REQUEST.setState(true);
+			//		VMVirtualMachine.VM_RESPONSE.setState(true);
 			TestUIUtil.enableSwitchToDebugPerspectivePreference();
 			assertConsoleResult(consolePage, EcorePackage.Literals.ECLASS, "self.name <> null", "true\n");
 			launch = consolePage.launchDebugger();
@@ -129,7 +129,7 @@ public class ConsoleTests extends AbstractConsoleTests
 			//
 			ILaunch[] launches = DebugPlugin.getDefault().getLaunchManager().getLaunches();
 			TestUIUtil.removeTerminatedLaunches(launches);
-	//		SourceLookupFacility.shutdown();		// BUG 468902 this doesn't work
+			//		SourceLookupFacility.shutdown();		// BUG 468902 this doesn't work
 			Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false);
 			TestUIUtil.wait(1000);
 		}
@@ -143,10 +143,10 @@ public class ConsoleTests extends AbstractConsoleTests
 		// nested collections
 		assertConsoleResult(consolePage, null, "Set{Set{}}", "Set{}\n");
 		assertConsoleResult(consolePage, null, "Sequence{OrderedSet{42, 314}, OrderedSet{271}}",
-			"OrderedSet{42,314}\nOrderedSet{271}\n");
+				"OrderedSet{42,314}\nOrderedSet{271}\n");
 		assertConsoleResult(consolePage, null,
 			"OrderedSet{Sequence{Bag{2, 2}, Bag{3}, Bag{4, 4, 4}}, Sequence{Bag{5}}, Sequence{Bag{}, Bag{5, 5}}, Sequence{Bag{4}}}",
-			"Sequence{Bag{2,2},Bag{3},Bag{4,4,4}}\nSequence{Bag{5}}\nSequence{Bag{},Bag{5,5}}\nSequence{Bag{4}}\n");
+				"Sequence{Bag{2,2},Bag{3},Bag{4,4,4}}\nSequence{Bag{5}}\nSequence{Bag{},Bag{5,5}}\nSequence{Bag{4}}\n");
 	}
 
 	private void checkPosition(@NonNull IThread vmThread, int lineNumber, int charStart, int charEnd) throws DebugException {
@@ -156,7 +156,7 @@ public class ConsoleTests extends AbstractConsoleTests
 		assertEquals("charEnd", charEnd, topStackFrame.getCharEnd());
 	}
 
-/*	private void checkVariable(@NonNull IThread vmThread, @NonNull String name, @NonNull Class<?> expectedClass) throws DebugException {
+	/*	private void checkVariable(@NonNull IThread vmThread, @NonNull String name, @NonNull Class<?> expectedClass) throws DebugException {
 		IStackFrame topStackFrame = vmThread.getTopStackFrame();
 		IVariable[] variables = topStackFrame.getVariables();
 		if (variables != null){

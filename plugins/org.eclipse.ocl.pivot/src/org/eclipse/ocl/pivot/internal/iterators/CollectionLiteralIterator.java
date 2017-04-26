@@ -82,7 +82,7 @@ public class CollectionLiteralIterator extends AbstractBaggableIterator
 		boolean isFirst = true;
 		for (Object literalElement : literalElements) {
 			if (!isFirst) {
-				s.append(", ");
+				s.append(",");
 			}
 			if (literalElement instanceof Range) {
 				Range range = (Range)literalElement;
