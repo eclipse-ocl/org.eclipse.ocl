@@ -21,11 +21,18 @@ import java.io.PrintWriter;
 
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
+import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 
+import junit.framework.TestCase;
+
 /**
- * A test case that demonstrates a memory leak in the OCL Validation infrastructure.
+ * These tests contribute to the OCL 2017 Deterministic Lazy OCL Collections paper.
  */
 public class SpeedTests extends PivotTestCase
 {
@@ -33,9 +40,10 @@ public class SpeedTests extends PivotTestCase
 	{
 		public static int[] getTestSizes() {
 			int[] testSizes = new int[38];
-			testSizes[0] = 5000;
-			for (int i = 1; i < testSizes.length; i++) {
-				testSizes[i] = (int)Math.round(Math.pow(10.0, (i+5)/6.0));
+			int j = 0;
+			testSizes[j++] = 500000;
+			for (int i = testSizes.length-1; i >= 1; i--) {
+				testSizes[j++] = (int)Math.round(Math.pow(10.0, (i+5)/6.0));
 			}
 			return testSizes;
 		}
@@ -74,8 +82,7 @@ public class SpeedTests extends PivotTestCase
 		}
 	}
 
-	public void testNewCollection() throws Exception {
-		//		OCL ocl = OCL.newInstance(OCL.NO_PROJECTS);
+	public void testCreateAndIterateCollection() throws Exception {		// Old (master) and New (ewillink/509670)
 		PrintAndLog logger = new PrintAndLog(getName());
 		logger.printf("%s\n", getName());
 		TypeId elementTypeId = TypeId.INTEGER;
@@ -84,12 +91,13 @@ public class SpeedTests extends PivotTestCase
 		for (int testSize : tests) {
 			garbageCollect();
 			logger.printf("%9d, ", testSize);
-			Object[] values = new Integer[testSize];
+			Object[] values = new IntegerValue[testSize];
 			long startTime0 = System.nanoTime();
 			int hashIn = 0;
-			for (Integer i = 0; i < testSize; i++) {
-				values[i] = i;
-				hashIn += i.hashCode();
+			for (int i = 0; i < testSize; i++) {
+				IntegerValue integerValue = ValueUtil.integerValueOf(i);
+				values[i] = integerValue;
+				hashIn += integerValue.hashCode();
 			}
 			long endTime0 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime0 - startTime0) / 1.0e9);
@@ -108,9 +116,102 @@ public class SpeedTests extends PivotTestCase
 			}
 			long endTime3 = System.nanoTime();
 			logger.printf("%9.6f\n", (endTime3 - startTime3) / 1.0e9);
-			assert hashOut == hashIn;
+			TestCase.assertEquals(hashOut, hashIn);
 			garbageCollect();
 		}
-		//		ocl.dispose();
+	}
+
+	public void testDoubleIncludingNew() throws Exception {	// New (ewillink/509670)
+		PrintAndLog logger = new PrintAndLog(getName());
+		logger.printf("%s\n", getName());
+		TypeId elementTypeId = TypeId.INTEGER;
+		CollectionTypeId collectionTypedId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
+		int[] tests = PrintAndLog.getTestSizes();
+		for (int testSize : tests) {
+			garbageCollect();
+			logger.printf("%9d, ", testSize);
+			Object[] values = new IntegerValue[testSize-2];
+			long startTime0 = System.nanoTime();
+			int hashIn = 0;
+			int b = testSize / 3;
+			int c = (2*testSize) / 3;
+			for (int i = 0, j = 0; i < testSize; i++) {
+				IntegerValue integerValue = ValueUtil.integerValueOf(i);
+				if ((i != b) && (i != c)) {
+					values[j++] = integerValue;
+				}
+				hashIn += integerValue.hashCode();
+				//				System.out.println(integerValue + " " + hashIn);
+			}
+			long endTime0 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime0 - startTime0) / 1.0e9);
+			long startTime1 = System.nanoTime();
+			SequenceValue seqValue = ValueUtil.createSequenceOfEach(collectionTypedId, values);
+			long endTime1 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
+			long startTime2 = System.nanoTime();
+			CollectionValue includingB = IncludingIterator.including(collectionTypedId, seqValue, ValueUtil.integerValueOf(b));
+			CollectionValue includingC = IncludingIterator.including(collectionTypedId, includingB, ValueUtil.integerValueOf(c));
+			long endTime2 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime2 - startTime2) / 1.0e9);
+			long startTime3 = System.nanoTime();
+			int hashOut = 0;
+			for (Object o : includingC) {
+				hashOut += o.hashCode();
+				//				System.out.println(o + " " + hashOut);
+			}
+			long endTime3 = System.nanoTime();
+			logger.printf("%9.6f\n", (endTime3 - startTime3) / 1.0e9);
+			TestCase.assertEquals(hashOut, hashIn);
+			garbageCollect();
+		}
+	}
+
+	public void testDoubleIncludingOld() throws Exception {	// Old (master)
+		PrintAndLog logger = new PrintAndLog(getName());
+		logger.printf("%s\n", getName());
+		TypeId elementTypeId = TypeId.INTEGER;
+		CollectionTypeId collectionTypedId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
+		int[] tests = PrintAndLog.getTestSizes();
+		//		for (int t = tests.length; --t >= 0; ) {
+		//			int testSize = tests[t];
+		for (int testSize : tests) {
+			garbageCollect();
+			logger.printf("%9d, ", testSize);
+			Object[] values = new IntegerValue[testSize-2];
+			long startTime0 = System.nanoTime();
+			int hashIn = 0;
+			int b = testSize / 3;
+			int c = (2*testSize) / 3;
+			for (int i = 0, j = 0; i < testSize; i++) {
+				IntegerValue integerValue = ValueUtil.integerValueOf(i);
+				if ((i != b) && (i != c)) {
+					values[j++] = integerValue;
+				}
+				hashIn += integerValue.hashCode();
+				//				System.out.println(integerValue + " " + hashIn);
+			}
+			long endTime0 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime0 - startTime0) / 1.0e9);
+			long startTime1 = System.nanoTime();
+			SequenceValue seqValue = ValueUtil.createSequenceOfEach(collectionTypedId, values);
+			long endTime1 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
+			long startTime2 = System.nanoTime();
+			CollectionValue includingB = CollectionIncludingOperation.INSTANCE.evaluate(seqValue, ValueUtil.integerValueOf(b));
+			CollectionValue includingC = CollectionIncludingOperation.INSTANCE.evaluate(includingB, ValueUtil.integerValueOf(c));
+			long endTime2 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime2 - startTime2) / 1.0e9);
+			long startTime3 = System.nanoTime();
+			int hashOut = 0;
+			for (Object o : includingC) {
+				hashOut += o.hashCode();
+				//				System.out.println(o + " " + hashOut);
+			}
+			long endTime3 = System.nanoTime();
+			logger.printf("%9.6f\n", (endTime3 - startTime3) / 1.0e9);
+			TestCase.assertEquals(hashOut, hashIn);
+			garbageCollect();
+		}
 	}
 }
