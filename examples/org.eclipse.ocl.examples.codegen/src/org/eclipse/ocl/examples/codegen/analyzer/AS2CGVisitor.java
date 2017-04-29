@@ -31,6 +31,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
@@ -169,6 +170,8 @@ import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingOperation;
 import org.eclipse.ocl.pivot.library.iterator.ExistsIteration;
 import org.eclipse.ocl.pivot.library.iterator.ForAllIteration;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
@@ -348,6 +351,23 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		return cgOperationCallExp;
+	}
+
+	private boolean canBeMutable(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp element) {
+		if (cgSource == null) {
+			return false;
+		}
+		if (cgSource instanceof CGCollectionExp) {
+			return false;
+		}
+		if (cgSource instanceof CGCallExp) {
+			return true;
+		}
+		if (cgSource instanceof CGVariableExp) {
+			///	analyze single use
+			return false;
+		}
+		return false;
 	}
 
 	protected @NonNull CGValuedElement constrainedOperationCall(@NonNull OperationCallExp element,
@@ -664,6 +684,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		OCLExpression pSource = element.getOwnedSource();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		CGOperationCallExp cgOperationCallExp = null;
+		if (libraryOperation instanceof CollectionIncludingOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableIncludingOperation.INSTANCE;
+			}
+		}
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {
 			CGIsInvalidExp cgIsInvalidExp = CGModelFactory.eINSTANCE.createCGIsInvalidExp();
 			cgIsInvalidExp.setSource(cgSource);

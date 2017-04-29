@@ -944,6 +944,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionIncluding() {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryResults(null, "Set{'c', 'b', 'a'}", "Set{'a'}->union(Set{'b'})->including('c')");
 		ocl.assertQueryResults(null, "Bag{'c', 'b', 'a'}", "Bag{'a', 'b'}->including('c')");
 		/*
 		 * FIXME OMG-issue to add OrderedSet::including

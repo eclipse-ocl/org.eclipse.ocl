@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * A LazyIterable provides a lazy cache of the elements of an Iterator so that the elements are
@@ -634,6 +635,18 @@ public class LazyIterable<E> implements IndexableIterable<E>
 				return new ImmutableNonBaggableIterator<>(lazyListOfElements);
 			}
 		}
+	}
+
+	public @NonNull CollectionValue mutableIncluding(@NonNull CollectionValue leftCollectionValue, @Nullable E rightValue) {
+		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
+			if (addToCounts(rightValue)) {
+				lazyListOfElements.add(rightValue);
+			}
+		}
+		else {
+			lazyListOfElements.add(rightValue);
+		}
+		return leftCollectionValue;
 	}
 
 	/**

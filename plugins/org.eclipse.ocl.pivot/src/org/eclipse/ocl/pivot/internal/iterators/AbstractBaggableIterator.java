@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
@@ -171,8 +172,8 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 			withIterable = Boolean.FALSE;
 		}
 		else if (withIterable == Boolean.FALSE) {
-			//			System.out.println(NameUtil.debugSimpleName(this) + " iterator() - withIterable: " + withIterable);
-			throw new IllegalStateException("Must invoke iterable() before first of multiple iterator() calls.");
+			System.err.println(NameUtil.debugSimpleName(this) + " iterator() - withIterable: " + withIterable);
+			//			throw new IllegalStateException("Must invoke iterable() before first of multiple iterator() calls.");
 		}
 		LazyIterable<@Nullable Object> iterable = basicGetIterable();
 		if (iterable != null) {
@@ -314,8 +315,8 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 			withIterable = Boolean.TRUE;
 		}
 		else if (withIterable == Boolean.FALSE) {
-			//			System.out.println(NameUtil.debugSimpleName(this) + " iterable() - withIterable: " + withIterable);
-			throw new IllegalStateException("Cannot invoke iterable() after exploiting an iterator().");
+			System.err.println(NameUtil.debugSimpleName(this) + " iterable() - withIterable: " + withIterable);
+			//			throw new IllegalStateException("Cannot invoke iterable() after exploiting an iterator().");
 		}
 		//		withIterable = Boolean.TRUE;
 		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
