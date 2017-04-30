@@ -173,7 +173,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Iterable<? extends Object> iterable();
+	@NonNull Iterable<@Nullable Object> iterable();
 
 	/**
 	 * @generated NOT

@@ -19,12 +19,12 @@ import org.eclipse.jdt.annotation.NonNull;
  * A range of integer values from the first up to and including the last.
  * If last is less than the first. the range is empty.
  */
-public interface IntegerRange extends List<Value>
+public interface IntegerRange extends List<@NonNull Value>
 {
 	@NonNull IntegerValue getFirst();
 	@NonNull IntegerValue getLast();
-	@NonNull IntegerValue getSize();	
-//	@NonNull ValueFactory getValueFactory();
+	@NonNull IntegerValue getSize();
+	//	@NonNull ValueFactory getValueFactory();
 	@Override
-	@NonNull Iterator<Value> iterator();
+	@NonNull Iterator<@NonNull Value> iterator();
 }

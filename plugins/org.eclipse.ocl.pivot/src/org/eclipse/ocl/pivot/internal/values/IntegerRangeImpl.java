@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -24,14 +25,14 @@ import org.eclipse.ocl.pivot.values.Value;
 /**
  * @generated NOT
  */
-public class IntegerRangeImpl extends AbstractList<Value> implements IntegerRange
+public class IntegerRangeImpl extends AbstractList<@NonNull Value> implements IntegerRange
 {
 	// local iterator class that provides
 	// hasNext() and next() methods appropriate
 	// for this range set
-	class IntegerRangeIterator implements Iterator<Value>
+	class IntegerRangeIterator implements Iterator<@NonNull Value>
 	{
-		private IntegerValue curr = null;		// null before first next(), last once finished
+		private @Nullable IntegerValue curr = null;		// null before first next(), last once finished
 
 		//		public Value get() {
 		//			assert curr != null;
@@ -49,13 +50,14 @@ public class IntegerRangeImpl extends AbstractList<Value> implements IntegerRang
 		}
 
 		@Override
-		public IntegerValue next() {
-			if (curr == null) {
-				curr = first;
+		public @NonNull IntegerValue next() {
+			IntegerValue curr2 = curr;
+			if (curr2 == null) {
+				curr = curr2 = first;
 			}
-			else if (curr.commutatedCompareToInteger(last) < 0) {
+			else if (curr2.commutatedCompareToInteger(last) < 0) {
 				try {
-					curr = curr.addInteger(ValueUtil.ONE_VALUE);
+					curr = curr2 = curr2.addInteger(ValueUtil.ONE_VALUE);
 				} catch (InvalidValueException e) {
 					throw new NoSuchElementException();
 				}
@@ -63,7 +65,7 @@ public class IntegerRangeImpl extends AbstractList<Value> implements IntegerRang
 			else {
 				throw new NoSuchElementException();
 			}
-			return curr;
+			return curr2;
 		}
 
 		@Override
@@ -138,7 +140,7 @@ public class IntegerRangeImpl extends AbstractList<Value> implements IntegerRang
 	//	}
 
 	@Override
-	public @NonNull Iterator<Value> iterator() {
+	public @NonNull Iterator<@NonNull Value> iterator() {
 		return new IntegerRangeIterator();
 	}
 

@@ -34,9 +34,9 @@ public class CollectionMutableIncludingOperation extends AbstractSimpleBinaryOpe
 	@Override
 	public @NonNull CollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
 		CollectionValue leftCollectionValue = asCollectionValue(left);
-		Iterable<? extends Object> iterable = leftCollectionValue.iterable();
+		Iterable<@Nullable Object> iterable = leftCollectionValue.iterable();
 		if (iterable instanceof LazyIterable<?>) {
-			return ((LazyIterable<Object>)iterable).mutableIncluding(leftCollectionValue, right);
+			return ((LazyIterable<@Nullable Object>)iterable).mutableIncluding(leftCollectionValue, right);
 		}
 		else {
 			return IncludingIterator.including(leftCollectionValue.getTypeId(), leftCollectionValue, right);
@@ -49,9 +49,9 @@ public class CollectionMutableIncludingOperation extends AbstractSimpleBinaryOpe
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
-		Iterable<? extends Object> iterable = leftCollectionValue.iterable();
+		Iterable<@Nullable Object> iterable = leftCollectionValue.iterable();
 		if (iterable instanceof LazyIterable<?>) {
-			return ((LazyIterable<Object>)iterable).mutableIncluding(leftCollectionValue, argumentValue);
+			return ((LazyIterable<@Nullable Object>)iterable).mutableIncluding(leftCollectionValue, argumentValue);
 		}
 		else {
 			return IncludingIterator.including((CollectionTypeId)returnTypeId, leftCollectionValue, argumentValue);

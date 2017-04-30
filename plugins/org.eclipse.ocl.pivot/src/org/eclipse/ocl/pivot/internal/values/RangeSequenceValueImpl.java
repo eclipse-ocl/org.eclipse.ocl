@@ -88,7 +88,7 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 
 	@Override
 	public @NonNull IntegerRange getElements() {
-		return (IntegerRange) elements;
+		return (IntegerRange)(Object)elements;
 	}
 
 	@Override

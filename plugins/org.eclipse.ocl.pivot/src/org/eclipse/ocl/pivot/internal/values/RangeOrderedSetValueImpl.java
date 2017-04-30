@@ -90,7 +90,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 
 	@Override
 	public @NonNull IntegerRange getElements() {
-		return (IntegerRange) elements;
+		return (IntegerRange)(Object)elements;
 	}
 
 	//    public Type getType(TypeManager typeManager, Type staticType) {

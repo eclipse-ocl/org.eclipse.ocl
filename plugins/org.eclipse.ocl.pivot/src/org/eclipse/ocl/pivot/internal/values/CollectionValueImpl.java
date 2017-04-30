@@ -329,14 +329,14 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	public static void initStatics() {}
 
 	private int hashCode = 0;
-	protected final @NonNull Collection<? extends Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
+	protected final @NonNull Collection<@Nullable Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
 	protected final @NonNull CollectionTypeId typeId;
 	/**
 	 * @since 1.3
 	 */
 	protected final @NonNull CollectionFactory collectionFactory;
 
-	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> values) {
+	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> values) {
 		this.typeId = typeId;
 		this.collectionFactory = AbstractCollectionFactory.getCollectionFactory(typeId);
 		Map<Class<?>, Integer> collectionClass2count2 = collectionClass2count;
@@ -865,7 +865,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull Iterable<? extends Object> iterable() {
+	public @NonNull Iterable<@Nullable Object> iterable() {
 		return elements;
 	}
 

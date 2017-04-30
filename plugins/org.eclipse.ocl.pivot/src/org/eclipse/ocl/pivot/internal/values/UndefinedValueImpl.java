@@ -522,8 +522,8 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull Iterable<Object> iterable() {
-		return Collections.<Object>emptyList();
+	public @NonNull Iterable<@Nullable Object> iterable() {
+		return Collections.<@Nullable Object>emptyList();
 	}
 
 	@Override
