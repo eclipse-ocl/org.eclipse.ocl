@@ -4512,14 +4512,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/impl/LookupPackageImpl.java" type="org.eclipse.ocl.pivot.internal.lookup.impl.LookupPackageImpl">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="LookupPackage"/>
-                <message_argument value="LookupPackageImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibFactory.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibFactory">
         <filter id="1143996420">
             <message_arguments>
