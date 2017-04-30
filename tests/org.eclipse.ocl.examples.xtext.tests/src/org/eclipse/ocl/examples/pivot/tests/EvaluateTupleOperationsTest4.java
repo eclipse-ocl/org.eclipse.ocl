@@ -111,6 +111,13 @@ public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 		ocl.dispose();
 	}
 
+	@Test public void testTupleType_Iterations() {
+		TestOCL ocl = createOCL();
+		ocl.assertQueryTrue(null, "let s = Set{1..100} in let t = s->collect(i|Tuple{x=i}) in s->collect(i | t->select(x = i)).x->asSet() = s");
+		//
+		ocl.dispose();
+	}
+
 	@Test public void testTupleType_Equals() {
 		TestOCL ocl = createOCL();
 		ocl.assertQueryTrue(null, "Tuple{a = 3, b = Tuple{a = '3', b = Tuple{a = 3.1}}}.b = Tuple{b = 3, a = Tuple{a = '3', b = Tuple{a = 3.1}}}.a");

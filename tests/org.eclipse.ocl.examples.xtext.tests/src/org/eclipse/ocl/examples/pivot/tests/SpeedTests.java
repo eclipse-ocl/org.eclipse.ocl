@@ -18,18 +18,27 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingOperation;
+import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.TupleValue;
 
 import junit.framework.TestCase;
 
@@ -407,5 +416,151 @@ public class SpeedTests extends PivotTestCase
 			TestCase.assertEquals(hashOut, hashIn);
 			garbageCollect();
 		}
+	}
+
+	/** Based on EvaluateTupleOperationsTest4.testTupleType_Iterations */
+	public void testSelectionOld() throws Exception {	// New (ewillink/509670)
+		OCL ocl = OCL.newInstance(OCL.NO_PROJECTS);
+		PrintAndLog logger = new PrintAndLog(getName());
+		logger.printf("%s\n", getName());
+		int[] tests = PrintAndLog.getTestSizes(50000, 26);
+		TuplePartId PARTid_ = IdManager.getTuplePartId(0, "x", TypeId.INTEGER);
+		TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", PARTid_);
+		CollectionTypeId SEQ_TUPLid_ = TypeId.SEQUENCE.getSpecializedId(TUPLid_);
+		for (int testSize : tests) {
+			garbageCollect();
+			logger.printf("%9d, ", testSize);
+			Object[] values = new IntegerValue[testSize];
+			TupleValue[] tupleValues = new TupleValue[testSize];
+			long startTime0 = System.nanoTime();
+			int hashIn = 0;
+			for (int i = 0; i < testSize; i++) {
+				IntegerValue integerValue = ValueUtil.integerValueOf(i);
+				values[i] = integerValue;
+				TupleValue tupleValue = ValueUtil.createTupleOfEach(TUPLid_, integerValue);
+				tupleValues[i] = tupleValue;
+				hashIn += integerValue.hashCode();
+				//				System.out.println(integerValue + " " + hashIn);
+			}
+
+
+
+
+			long endTime0 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime0 - startTime0) / 1.0e9);
+			long startTime1 = System.nanoTime();
+			//			CollectionValue setValue = ValueUtil.createSetOfEach(collectionTypedId, noValues);
+			long endTime1 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
+			/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
+			long startTime2 = System.nanoTime();
+			for (int i = 0, j = 0; i < testSize; i++) {
+				/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue collect;
+				Object i_0 = values[i];
+				/**
+				 * t->select(x = i)
+				 */
+				/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_1 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
+				for (TupleValue aTupleValue : tupleValues) {
+					Object x = aTupleValue.getValue(0);
+					if (x.equals(i_0)) {
+						accumulator_1.add(aTupleValue);
+					}
+				}
+				//
+				for (Object value : accumulator_1.flatten().getElements()) {
+					accumulator_0.add(value);
+				}
+			}
+			long endTime2 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime2 - startTime2) / 1.0e9);
+			long startTime3 = System.nanoTime();
+			int hashOut = 0;
+			for (Object o : accumulator_0) {
+				hashOut += ((TupleValue)o).getValue(0).hashCode();
+			}
+			long endTime3 = System.nanoTime();
+			logger.printf("%9.6f\n", (endTime3 - startTime3) / 1.0e9);
+			TestCase.assertEquals(hashOut, hashIn);
+			garbageCollect();
+		}
+		ocl.dispose();
+	}
+
+	/** Based on EvaluateTupleOperationsTest4.testTupleType_Iterations */
+	public void testSelectionNew() throws Exception {	// New (ewillink/509670)
+		OCL ocl = OCL.newInstance(OCL.NO_PROJECTS);
+		PrintAndLog logger = new PrintAndLog(getName());
+		logger.printf("%s\n", getName());
+		int[] tests = PrintAndLog.getTestSizes();
+		TuplePartId PARTid_ = IdManager.getTuplePartId(0, "x", TypeId.INTEGER);
+		TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", PARTid_);
+		CollectionTypeId SEQ_TUPLid_ = TypeId.SEQUENCE.getSpecializedId(TUPLid_);
+		for (int testSize : tests) {
+			garbageCollect();
+			logger.printf("%9d, ", testSize);
+			Object[] values = new IntegerValue[testSize];
+			TupleValue[] tupleValues = new TupleValue[testSize];
+			long startTime0 = System.nanoTime();
+			int hashIn = 0;
+			for (int i = 0; i < testSize; i++) {
+				IntegerValue integerValue = ValueUtil.integerValueOf(i);
+				values[i] = integerValue;
+				TupleValue tupleValue = ValueUtil.createTupleOfEach(TUPLid_, integerValue);
+				tupleValues[i] = tupleValue;
+				hashIn += integerValue.hashCode();
+				//				System.out.println(integerValue + " " + hashIn);
+			}
+
+
+
+
+			long endTime0 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime0 - startTime0) / 1.0e9);
+			long startTime1 = System.nanoTime();
+			//			CollectionValue setValue = ValueUtil.createSetOfEach(collectionTypedId, noValues);
+			Map<Object, List<TupleValue>> content2address = new HashMap<>();
+			//			for (int i = 0, j = 0; i < testSize; i++) {
+			/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue collect;
+			//				Object i_0 = values[i];
+			/**
+			 * t->select(x = i)
+			 */
+			/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_1 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
+			for (TupleValue aTupleValue : tupleValues) {
+				Object x = aTupleValue.getValue(0);
+				List<TupleValue> list = content2address.get(x);
+				if (list == null) {
+					list = new ArrayList<>();
+					content2address.put(x, list);
+				}
+				list.add(aTupleValue);
+			}
+			//			}
+			long endTime1 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
+			/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
+			long startTime2 = System.nanoTime();
+			for (int i = 0, j = 0; i < testSize; i++) {
+				Object i_0 = values[i];
+				List<TupleValue> list = content2address.get(i_0);
+				//
+				for (Object value : list) {
+					accumulator_0.add(value);
+				}
+			}
+			long endTime2 = System.nanoTime();
+			logger.printf("%9.6f, ", (endTime2 - startTime2) / 1.0e9);
+			long startTime3 = System.nanoTime();
+			int hashOut = 0;
+			for (Object o : accumulator_0) {
+				hashOut += ((TupleValue)o).getValue(0).hashCode();
+			}
+			long endTime3 = System.nanoTime();
+			logger.printf("%9.6f\n", (endTime3 - startTime3) / 1.0e9);
+			TestCase.assertEquals(hashOut, hashIn);
+			garbageCollect();
+		}
+		ocl.dispose();
 	}
 }
