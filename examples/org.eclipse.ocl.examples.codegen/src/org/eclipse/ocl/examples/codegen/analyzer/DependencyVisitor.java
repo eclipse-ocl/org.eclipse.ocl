@@ -434,7 +434,7 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		@Override
 		public @Nullable Object visitOperationId(final @NonNull OperationId id) {
 			addElementIdDependency(id, id.getParent());
-			for (@SuppressWarnings("null")@NonNull TypeId parameterId : id.getParametersId()) {
+			for (@NonNull TypeId parameterId : id.getParametersId()) {
 				addElementIdDependency(id, parameterId);
 			}
 			return null;

@@ -111,7 +111,7 @@ public abstract class ValueUtil
 	private static final int POSITIVE_INTEGERS = 1025;
 	private static final @Nullable IntegerValue @NonNull [] INTEGER_VALUES = new @Nullable IntegerValue[NEGATIVE_INTEGERS + POSITIVE_INTEGERS];
 
-	public static @NonNull Bag<?> EMPTY_BAG = new BagImpl<Object>();
+	public static @NonNull Bag<?> EMPTY_BAG = new BagImpl<>();
 	public static final @NonNull Set<Object> EMPTY_SET = Collections.emptySet();
 
 	@SuppressWarnings("null")
@@ -506,7 +506,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull BagValue createBagRange(@NonNull CollectionTypeId typeId, @Nullable Object... values) {
-		Bag<Object> allValues = new BagImpl<Object>();
+		Bag<@Nullable Object> allValues = new BagImpl<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
 				allValues.addAll((IntegerRange)value);
@@ -578,7 +578,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		OrderedSet<Object> allValues = new OrderedSetImpl<Object>();
+		OrderedSet<@Nullable Object> allValues = new OrderedSetImpl<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
 				allValues.addAll((IntegerRange)value);
@@ -612,7 +612,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SequenceValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		List<Object> allValues = new ArrayList<Object>();
+		List<@Nullable Object> allValues = new ArrayList<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
 				allValues.addAll((IntegerRange)value);
@@ -639,7 +639,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SetValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		Set<Object> allValues = new HashSet<Object>();
+		Set<@Nullable Object> allValues = new HashSet<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
 				allValues.addAll((IntegerRange)value);
@@ -688,7 +688,6 @@ public abstract class ValueUtil
 		}
 	}
 
-	@SuppressWarnings("null")
 	public static @NonNull String getElementIdName(@NonNull ElementId elementId) {
 		String name = elementId.toString();
 		if (name.startsWith(METAMODEL_NAME_PREFIX)) {

@@ -23,13 +23,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.PivotTables;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingOperation;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -136,6 +140,7 @@ public class SpeedTests extends PivotTestCase
 		}
 	}
 
+	@SuppressWarnings("null")
 	public void testDoubleIncludingNew() throws Exception {	// New (ewillink/509670)
 		PrintAndLog logger = new PrintAndLog(getName());
 		logger.printf("%s\n", getName());
@@ -182,9 +187,11 @@ public class SpeedTests extends PivotTestCase
 		}
 	}
 
+	@SuppressWarnings("null")
 	public void testDoubleIncludingOld() throws Exception {	// Old (master)
 		PrintAndLog logger = new PrintAndLog(getName());
 		logger.printf("%s\n", getName());
+		Executor executor = new EcoreExecutorManager(EcorePackage.Literals.ETREE_ITERATOR, PivotTables.LIBRARY);
 		TypeId elementTypeId = TypeId.INTEGER;
 		CollectionTypeId collectionTypedId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
 		int[] tests = PrintAndLog.getTestSizes();
@@ -213,8 +220,8 @@ public class SpeedTests extends PivotTestCase
 			long endTime1 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
 			long startTime2 = System.nanoTime();
-			CollectionValue includingB = CollectionIncludingOperation.INSTANCE.evaluate(seqValue, ValueUtil.integerValueOf(b));
-			CollectionValue includingC = CollectionIncludingOperation.INSTANCE.evaluate(includingB, ValueUtil.integerValueOf(c));
+			CollectionValue includingB = CollectionIncludingOperation.INSTANCE.evaluate(executor, collectionTypedId, seqValue, ValueUtil.integerValueOf(b));
+			CollectionValue includingC = CollectionIncludingOperation.INSTANCE.evaluate(executor, collectionTypedId, includingB, ValueUtil.integerValueOf(c));
 			long endTime2 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime2 - startTime2) / 1.0e9);
 			long startTime3 = System.nanoTime();
@@ -230,9 +237,11 @@ public class SpeedTests extends PivotTestCase
 		}
 	}
 
+	@SuppressWarnings("null")
 	public void testImmutableSequenceIncludingOld() throws Exception {	// Old (master)
 		PrintAndLog logger = new PrintAndLog(getName());
 		logger.printf("%s\n", getName());
+		Executor executor = new EcoreExecutorManager(EcorePackage.Literals.ETREE_ITERATOR, PivotTables.LIBRARY);
 		TypeId elementTypeId = TypeId.INTEGER;
 		CollectionTypeId collectionTypedId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
 		int[] tests = PrintAndLog.getTestSizes(50000, 30);
@@ -258,8 +267,8 @@ public class SpeedTests extends PivotTestCase
 			long endTime1 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
 			long startTime2 = System.nanoTime();
-			for (int i = 0, j = 0; i < testSize; i++) {
-				seqValue = CollectionIncludingOperation.INSTANCE.evaluate(seqValue, values[i]);
+			for (int i = 0; i < testSize; i++) {
+				seqValue = CollectionIncludingOperation.INSTANCE.evaluate(executor, collectionTypedId, seqValue, values[i]);
 				//				System.out.println(integerValue + " " + hashIn);
 			}
 			long endTime2 = System.nanoTime();
@@ -277,9 +286,11 @@ public class SpeedTests extends PivotTestCase
 		}
 	}
 
+	@SuppressWarnings("null")
 	public void testImmutableSetIncludingOld() throws Exception {	// Old (master)
 		PrintAndLog logger = new PrintAndLog(getName());
 		logger.printf("%s\n", getName());
+		Executor executor = new EcoreExecutorManager(EcorePackage.Literals.ETREE_ITERATOR, PivotTables.LIBRARY);
 		TypeId elementTypeId = TypeId.INTEGER;
 		CollectionTypeId collectionTypedId = TypeId.SET.getSpecializedId(elementTypeId);
 		int[] tests = PrintAndLog.getTestSizes(50000, 25);
@@ -305,8 +316,8 @@ public class SpeedTests extends PivotTestCase
 			long endTime1 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
 			long startTime2 = System.nanoTime();
-			for (int i = 0, j = 0; i < testSize; i++) {
-				setValue = CollectionIncludingOperation.INSTANCE.evaluate(setValue, values[i]);
+			for (int i = 0; i < testSize; i++) {
+				setValue = CollectionIncludingOperation.INSTANCE.evaluate(executor, collectionTypedId, setValue, values[i]);
 				//				System.out.println(integerValue + " " + hashIn);
 			}
 			long endTime2 = System.nanoTime();
@@ -324,9 +335,11 @@ public class SpeedTests extends PivotTestCase
 		}
 	}
 
+	@SuppressWarnings("null")
 	public void testMutableSequenceIncludingNew() throws Exception {	// New (ewillink/509670)
 		PrintAndLog logger = new PrintAndLog(getName());
 		logger.printf("%s\n", getName());
+		Executor executor = new EcoreExecutorManager(EcorePackage.Literals.ETREE_ITERATOR, PivotTables.LIBRARY);
 		TypeId elementTypeId = TypeId.INTEGER;
 		CollectionTypeId collectionTypedId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
 		int[] tests = PrintAndLog.getTestSizes();
@@ -352,8 +365,8 @@ public class SpeedTests extends PivotTestCase
 			long endTime1 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
 			long startTime2 = System.nanoTime();
-			for (int i = 0, j = 0; i < testSize; i++) {
-				seqValue = CollectionMutableIncludingOperation.INSTANCE.evaluate(seqValue, values[i]);
+			for (int i = 0; i < testSize; i++) {
+				seqValue = CollectionMutableIncludingOperation.INSTANCE.evaluate(executor, collectionTypedId, seqValue, values[i]);
 				//				System.out.println(integerValue + " " + hashIn);
 			}
 			long endTime2 = System.nanoTime();
@@ -371,8 +384,10 @@ public class SpeedTests extends PivotTestCase
 		}
 	}
 
+	@SuppressWarnings("null")
 	public void testMutableSetIncludingNew() throws Exception {	// New (ewillink/509670)
 		PrintAndLog logger = new PrintAndLog(getName());
+		Executor executor = new EcoreExecutorManager(EcorePackage.Literals.ETREE_ITERATOR, PivotTables.LIBRARY);
 		logger.printf("%s\n", getName());
 		TypeId elementTypeId = TypeId.INTEGER;
 		CollectionTypeId collectionTypedId = TypeId.SET.getSpecializedId(elementTypeId);
@@ -399,8 +414,8 @@ public class SpeedTests extends PivotTestCase
 			long endTime1 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
 			long startTime2 = System.nanoTime();
-			for (int i = 0, j = 0; i < testSize; i++) {
-				setValue = CollectionMutableIncludingOperation.INSTANCE.evaluate(setValue, values[i]);
+			for (int i = 0; i < testSize; i++) {
+				setValue = CollectionMutableIncludingOperation.INSTANCE.evaluate(executor, collectionTypedId, setValue, values[i]);
 				//				System.out.println(integerValue + " " + hashIn);
 			}
 			long endTime2 = System.nanoTime();
@@ -419,6 +434,7 @@ public class SpeedTests extends PivotTestCase
 	}
 
 	/** Based on EvaluateTupleOperationsTest4.testTupleType_Iterations */
+	@SuppressWarnings("null")
 	public void testSelectionOld() throws Exception {	// New (ewillink/509670)
 		OCL ocl = OCL.newInstance(OCL.NO_PROJECTS);
 		PrintAndLog logger = new PrintAndLog(getName());
@@ -454,8 +470,7 @@ public class SpeedTests extends PivotTestCase
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
 			/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
 			long startTime2 = System.nanoTime();
-			for (int i = 0, j = 0; i < testSize; i++) {
-				/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue collect;
+			for (int i = 0; i < testSize; i++) {
 				Object i_0 = values[i];
 				/**
 				 * t->select(x = i)
@@ -488,6 +503,7 @@ public class SpeedTests extends PivotTestCase
 	}
 
 	/** Based on EvaluateTupleOperationsTest4.testTupleType_Iterations */
+	@SuppressWarnings("null")
 	public void testSelectionNew() throws Exception {	// New (ewillink/509670)
 		OCL ocl = OCL.newInstance(OCL.NO_PROJECTS);
 		PrintAndLog logger = new PrintAndLog(getName());
@@ -521,12 +537,10 @@ public class SpeedTests extends PivotTestCase
 			//			CollectionValue setValue = ValueUtil.createSetOfEach(collectionTypedId, noValues);
 			Map<Object, List<TupleValue>> content2address = new HashMap<>();
 			//			for (int i = 0, j = 0; i < testSize; i++) {
-			/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue collect;
 			//				Object i_0 = values[i];
 			/**
 			 * t->select(x = i)
 			 */
-			/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_1 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
 			for (TupleValue aTupleValue : tupleValues) {
 				Object x = aTupleValue.getValue(0);
 				List<TupleValue> list = content2address.get(x);
@@ -541,7 +555,7 @@ public class SpeedTests extends PivotTestCase
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
 			/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
 			long startTime2 = System.nanoTime();
-			for (int i = 0, j = 0; i < testSize; i++) {
+			for (int i = 0; i < testSize; i++) {
 				Object i_0 = values[i];
 				List<TupleValue> list = content2address.get(i_0);
 				//

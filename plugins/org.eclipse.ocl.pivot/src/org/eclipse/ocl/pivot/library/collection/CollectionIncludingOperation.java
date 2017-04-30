@@ -35,10 +35,10 @@ public class CollectionIncludingOperation extends AbstractSimpleBinaryOperation/
 	}
 
 	/**
-	 * @since 1.1
+	 * @since 1.3
 	 */
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
+	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		return IncludingIterator.including((CollectionTypeId)returnTypeId, leftCollectionValue, argumentValue);
 	}

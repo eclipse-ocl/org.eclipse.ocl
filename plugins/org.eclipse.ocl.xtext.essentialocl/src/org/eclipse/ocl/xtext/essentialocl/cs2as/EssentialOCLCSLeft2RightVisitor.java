@@ -430,7 +430,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 			Invocations invocations = getInvocations(asType, asType, name, iteratorCount, expressionCount);
 			if ((invocations == null) && name.startsWith("_")) {
-				@SuppressWarnings("null")@NonNull String unescapedName = name.substring(1);				// FIXME Compatibility
+				@NonNull String unescapedName = name.substring(1);				// FIXME Compatibility
 				invocations = getInvocations(asType, asType, unescapedName, iteratorCount, expressionCount);
 			}
 			return invocations;

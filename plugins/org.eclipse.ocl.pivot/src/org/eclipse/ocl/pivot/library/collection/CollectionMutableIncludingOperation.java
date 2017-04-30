@@ -43,11 +43,8 @@ public class CollectionMutableIncludingOperation extends AbstractSimpleBinaryOpe
 		}
 	}
 
-	/**
-	 * @since 1.1
-	 */
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
+	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		Iterable<@Nullable Object> iterable = leftCollectionValue.iterable();
 		if (iterable instanceof LazyIterable) {
