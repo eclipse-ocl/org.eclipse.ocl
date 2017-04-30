@@ -82,7 +82,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	@Override
-	public @NonNull List<Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+	public @Nullable List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		throw new InvalidValueException(this, "asEcoreObject");
 	}
 

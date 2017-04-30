@@ -49,7 +49,7 @@ public class UnlimitedValueImpl extends NumberValueImpl implements UnlimitedValu
 	public UnlimitedValueImpl() {}
 
 	@Override
-	public Object asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+	public @Nullable Object asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		return -1;
 	}
 

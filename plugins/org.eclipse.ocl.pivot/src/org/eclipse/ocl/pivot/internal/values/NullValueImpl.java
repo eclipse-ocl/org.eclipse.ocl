@@ -54,7 +54,7 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	}
 
 	@Override
-	public List<Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+	public @Nullable List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		return null;
 	}
 

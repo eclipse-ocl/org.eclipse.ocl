@@ -33,7 +33,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * <p>
  * A boxed value is useful/needed for collections to provide OCL polymorphism.
  * <p>
- * A boxed value is not needed for the large number of ordinary EObjects not in the above list. 
+ * A boxed value is not needed for the large number of ordinary EObjects not in the above list.
  * <p>
  * asXXX returns a non-null XXX if self is convertible to an XXX and is not NullValue/InvalidValue
  * throws an InvalidValueException for a NullValue/InvalidValue. A Value object may be converted
@@ -42,7 +42,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  * isXXX returns an XXX-related value if self is an XXX and is not a NullValue/InvalidValue, returns null otherwise.
  */
 public interface Value
-{	
+{
 	/**
 	 * @generated NOT
 	 */
@@ -62,7 +62,7 @@ public interface Value
 	 * @generated NOT
 	 */
 	@NonNull Double asDouble();
-	
+
 	/**
 	 * Return the Ecore representation of this value, which should be fully compatible with the Ecore return
 	 * from a similarly typed eGet(). The instanceClass may be used to ensure that numeric values use the
@@ -74,15 +74,15 @@ public interface Value
 	 * Java-null for a null OCL value
 	 * <p>
 	 * Objects for other things, List&lt;?&gt; for collections
-	 * 
+	 *
 	 * @generated NOT
 	 */
-	Object asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass);
+	@Nullable Object asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass);
 
 	/**
 	 * @generated NOT
 	 */
-	Element asElement(); 
+	Element asElement();
 
 	/**
 	 * @generated NOT
@@ -143,7 +143,7 @@ public interface Value
 	 * @generated NOT
 	 */
 	@NonNull TupleValue asTupleValue();
-	
+
 	/**
 	 * Return the unboxed representation of this value.
 	 * <p>
@@ -152,7 +152,7 @@ public interface Value
 	 * Java-null for a null OCL value
 	 * <p>
 	 * Objects for other things, Bag/Set/OrderedSet/List for collections
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	Object asUnboxedObject(@NonNull IdResolver idResolver);
@@ -166,23 +166,23 @@ public interface Value
 	 * @generated NOT
 	 */
 	@NonNull UnlimitedNaturalValue asUnlimitedNaturalValue();
-	
+
 	/**
 	 * Return the type of this value determined from its content. In the case of collections
 	 * this may differ from the constructed type. The actual type is used for validating
 	 * oclAsType conversions.
-	 * @throws InvalidValueException 
+	 * @throws InvalidValueException
 	 * @generated NOT
 	 */
-//	@NonNull DomainType getActualType(@NonNull DomainStandardLibrary standardLibrary);
+	//	@NonNull DomainType getActualType(@NonNull DomainStandardLibrary standardLibrary);
 
 	/**
-	 * 
+	 *
 	 * Return the type of this value determined from its construction context. In the case of collections
 	 * this may differ from the actual type.
 	 * @generated NOT
 	 */
-//	@NonNull DomainType getType(@NonNull DomainStandardLibrary standardLibrary);
+	//	@NonNull DomainType getType(@NonNull DomainStandardLibrary standardLibrary);
 	@NonNull TypeId getTypeId();
 
 	/**

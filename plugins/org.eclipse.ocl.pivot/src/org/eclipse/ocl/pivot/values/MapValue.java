@@ -25,19 +25,19 @@ public interface MapValue extends Value//, Iterable<Object>
 	 * @generated NOT
 	 */
 	interface Accumulator extends MapValue {
-		boolean add(@Nullable Object value);	
+		boolean add(@Nullable Object value);
 	}
 
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Map<? extends Object, ? extends Object> asMap();	
+	@NonNull Map<? extends Object, ? extends Object> asMap();
 
 	/**
 	 * @generated NOT
 	 */
 	@Override
-	@Nullable List<?> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass);
+	@Nullable List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass);
 
 	/**
 	 * @generated NOT
@@ -57,7 +57,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean excludes(@Nullable Object value);	
+	@NonNull Boolean excludes(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -77,7 +77,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean excludesValue(@Nullable Object value);	
+	@NonNull Boolean excludesValue(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -123,7 +123,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean includes(@Nullable Object value);	
+	@NonNull Boolean includes(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -143,7 +143,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean includesValue(@Nullable Object value);	
+	@NonNull Boolean includesValue(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -169,7 +169,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	 * @generated NOT
 	 */
 	@NonNull Set<Object> keySet();
-	
+
 	/**
 	 * @generated NOT
 	 */
