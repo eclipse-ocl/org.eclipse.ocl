@@ -378,6 +378,9 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		return toInvalidValue();
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public @NonNull CollectionFactory getCollectionFactory() {
 		return AbstractCollectionFactory.getCollectionFactory(TypeId.SET);
@@ -401,6 +404,9 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		return TypeId.COLLECTION_NAME;		// FIXME UOE ??
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
 		return Collections.<@Nullable Object, @NonNull Number>emptyMap();
@@ -458,6 +464,9 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		return toInvalidValue();
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public int intCount(@Nullable Object value) {
 		return 0;

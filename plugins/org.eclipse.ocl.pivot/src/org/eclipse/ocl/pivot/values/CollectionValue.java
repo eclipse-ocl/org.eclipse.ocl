@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
 
 /**
- * zznoimplement This interface is not intended to be implemented by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CollectionValue extends Value, Iterable<@Nullable Object>
 {

@@ -70,6 +70,9 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 		return CARRY_ON;
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public @NonNull Value evaluate(@NonNull Executor executor, @NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue, @NonNull VariableDeclaration firstIterator,
 			@NonNull OCLExpression body) {

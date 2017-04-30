@@ -441,6 +441,9 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return new AsSetIterator(this);
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
 		Iterable<@Nullable Object> elements = iterable();
@@ -707,6 +710,9 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return TypeId.BAG.getSpecializedId(getElementTypeId());
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public @NonNull CollectionFactory getCollectionFactory() {
 		return collectionFactory;
@@ -722,6 +728,9 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return asCollection();
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public @NonNull String getKind() {
 		return collectionFactory.getKind();
@@ -812,6 +821,9 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return true;
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public int intCount(@Nullable Object value) {
 		return count(value).intValue();
@@ -841,6 +853,9 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return intSize() == 0;
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public boolean isOrdered() {
 		return collectionFactory.isOrdered();
@@ -858,6 +873,9 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	//		return collectionFactory.isSet();
 	//	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public boolean isUnique() {
 		return collectionFactory.isUnique();
@@ -894,6 +912,9 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return ValueUtil.integerValueOf(intSize());
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public @NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
 		List<@Nullable Object> values = Lists.newArrayList(iterable());
@@ -906,6 +927,9 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		}
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {
 		Iterable<@Nullable Object> elements = iterable();
