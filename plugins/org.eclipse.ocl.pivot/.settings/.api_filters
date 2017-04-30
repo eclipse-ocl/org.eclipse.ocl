@@ -4345,132 +4345,12 @@
                 <message_argument value="PivotFactoryImpl"/>
             </message_arguments>
         </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="createIteratorVariable()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="createLetVariable()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="createParameterVariable()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="createResultVariable()"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotPackageImpl.java" type="org.eclipse.ocl.pivot.internal.PivotPackageImpl">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
                 <message_argument value="PivotPackage"/>
                 <message_argument value="PivotPackageImpl"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getFeature__ValidateNameIsNotNull__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getFeature__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getIfExp_IsElseIf()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getIteratorVariable()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getLetExp__ValidateCompatibleNullityForIn__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getLetVariable()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getLetVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getLetVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getLetVariable__ValidateHasInitializer__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getParameterVariable()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getParameterVariable__ValidateHasNoInitializer__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getResultVariable()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getResultVariable__ValidateCompatibleNullityForInitializer__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getResultVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getResultVariable__ValidateHasInitializer__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getShadowPart__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getVariableDeclaration__ValidateNameIsNotNull__DiagnosticChain_Map()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="getVariableDeclaration__ValidateTypeIsNotNull__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -4517,18 +4397,6 @@
             <message_arguments>
                 <message_argument value="LookupPackage"/>
                 <message_argument value="LookupPackageImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibFactory.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibFactory">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="convertMapToString(EDataType, Object)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="createMapFromString(EDataType, String)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -4630,26 +4498,6 @@
                 <message_argument value="AbstractDelegatingVisitor&lt;R, C, D&gt;"/>
             </message_arguments>
         </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitIteratorVariable(IteratorVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitLetVariable(LetVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitParameterVariable(ParameterVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitResultVariable(ResultVariable)"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractExtendingVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractExtendingVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
@@ -4658,74 +4506,12 @@
                 <message_argument value="AbstractExtendingVisitor&lt;R, C&gt;"/>
             </message_arguments>
         </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitIteratorVariable(IteratorVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitLetVariable(LetVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitParameterVariable(ParameterVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitResultVariable(ResultVariable)"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractMergedVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractMergedVisitor">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
                 <message_argument value="Visitor&lt;R&gt;"/>
                 <message_argument value="AbstractMergedVisitor&lt;R, C&gt;"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitIteratorVariable(IteratorVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitLetVariable(LetVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitParameterVariable(ParameterVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitResultVariable(ResultVariable)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/util/AbstractNullVisitor.java" type="org.eclipse.ocl.pivot.util.AbstractNullVisitor">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitIteratorVariable(IteratorVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitLetVariable(LetVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitParameterVariable(ParameterVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitResultVariable(ResultVariable)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -4742,26 +4528,6 @@
             <message_arguments>
                 <message_argument value="Visitor&lt;R&gt;"/>
                 <message_argument value="AbstractWrappingVisitor&lt;R, C, D, P&gt;"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitIteratorVariable(IteratorVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitLetVariable(LetVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitParameterVariable(ParameterVariable)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="visitResultVariable(ResultVariable)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -5775,14 +5541,6 @@
             <message_arguments>
                 <message_argument value="Technology"/>
                 <message_argument value="AbstractTechnology"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/values/BagValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.BagValueImpl">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="BagValue"/>
-                <message_argument value="BagValueImpl"/>
             </message_arguments>
         </filter>
     </resource>
