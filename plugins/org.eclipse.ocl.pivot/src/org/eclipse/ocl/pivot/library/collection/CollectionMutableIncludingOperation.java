@@ -35,7 +35,7 @@ public class CollectionMutableIncludingOperation extends AbstractSimpleBinaryOpe
 	public @NonNull CollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
 		CollectionValue leftCollectionValue = asCollectionValue(left);
 		Iterable<@Nullable Object> iterable = leftCollectionValue.iterable();
-		if (iterable instanceof LazyIterable<?>) {
+		if (iterable instanceof LazyIterable) {
 			return ((LazyIterable<@Nullable Object>)iterable).mutableIncluding(leftCollectionValue, right);
 		}
 		else {
@@ -50,7 +50,7 @@ public class CollectionMutableIncludingOperation extends AbstractSimpleBinaryOpe
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		Iterable<@Nullable Object> iterable = leftCollectionValue.iterable();
-		if (iterable instanceof LazyIterable<?>) {
+		if (iterable instanceof LazyIterable) {
 			return ((LazyIterable<@Nullable Object>)iterable).mutableIncluding(leftCollectionValue, argumentValue);
 		}
 		else {
