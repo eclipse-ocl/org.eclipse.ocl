@@ -45,7 +45,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		private final int size;
 		private int elementIndex = 0;
 		private int residualCount = 0;
-		private E currentElement;
+		private @Nullable E currentElement;
 		private int nextCount = 0;
 
 		public ImmutableBaggableIterator(@NonNull List<E> elements, @NonNull Map<E, @NonNull ? extends Number> element2elementCount) {
@@ -60,8 +60,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 				assert residualCount > 0;
 			}
 			else {
-				@SuppressWarnings("null") E nullE = null;
-				currentElement = nullE;
+				currentElement = null;
 			}
 			nextCount = 1;
 		}
@@ -93,7 +92,8 @@ public class LazyIterable<E> implements IndexableIterable<E>
 			if (residualCount <= 0) {
 				throw new NoSuchElementException();
 			}
-			E savedElement = currentElement;
+			@Nullable E savedElement = currentElement;
+			assert savedElement != null;
 			residualCount -= nextCount;
 			if ((residualCount <= 0) && (elementIndex < size)) {
 				currentElement = elements.get(elementIndex++);

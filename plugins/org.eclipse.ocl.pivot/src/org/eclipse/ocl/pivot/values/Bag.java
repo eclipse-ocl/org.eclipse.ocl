@@ -31,7 +31,7 @@ public interface Bag<E> extends Collection<E>
 		/**
 		 * Return the internal map of distinct object to count of that object.
 		 */
-		@NonNull Map<E, ? extends Number> getMap();
+		@NonNull Map<E, @NonNull ? extends Number> getMap();
 	}
 
 	/**

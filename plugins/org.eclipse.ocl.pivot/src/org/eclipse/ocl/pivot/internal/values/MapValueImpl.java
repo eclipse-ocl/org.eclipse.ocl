@@ -83,7 +83,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	}
 
 	@Override
-	public @Nullable List<?> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+	public @Nullable List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		throw new UnsupportedOperationException();
 	}
 
