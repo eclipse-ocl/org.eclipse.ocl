@@ -104,7 +104,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public JavaClassCS createJavaClassCS()
+	public @NonNull JavaClassCS createJavaClassCS()
 	{
 		JavaClassCSImpl javaClassCS = new JavaClassCSImpl();
 		return javaClassCS;
@@ -116,7 +116,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public LibClassCS createLibClassCS() {
+	public @NonNull LibClassCS createLibClassCS() {
 		LibClassCSImpl libClassCS = new LibClassCSImpl();
 		return libClassCS;
 	}
@@ -127,7 +127,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public LibCoercionCS createLibCoercionCS()
+	public @NonNull LibCoercionCS createLibCoercionCS()
 	{
 		LibCoercionCSImpl libCoercionCS = new LibCoercionCSImpl();
 		return libCoercionCS;
@@ -139,7 +139,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public LibConstraintCS createLibConstraintCS() {
+	public @NonNull LibConstraintCS createLibConstraintCS() {
 		LibConstraintCSImpl libConstraintCS = new LibConstraintCSImpl();
 		return libConstraintCS;
 	}
@@ -150,7 +150,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public LibIterationCS createLibIterationCS() {
+	public @NonNull LibIterationCS createLibIterationCS() {
 		LibIterationCSImpl libIterationCS = new LibIterationCSImpl();
 		return libIterationCS;
 	}
@@ -161,7 +161,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public LibOperationCS createLibOperationCS() {
+	public @NonNull LibOperationCS createLibOperationCS() {
 		LibOperationCSImpl libOperationCS = new LibOperationCSImpl();
 		return libOperationCS;
 	}
@@ -172,7 +172,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public LibPackageCS createLibPackageCS()
+	public @NonNull LibPackageCS createLibPackageCS()
 	{
 		LibPackageCSImpl libPackageCS = new LibPackageCSImpl();
 		return libPackageCS;
@@ -184,7 +184,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public LibPropertyCS createLibPropertyCS() {
+	public @NonNull LibPropertyCS createLibPropertyCS() {
 		LibPropertyCSImpl libPropertyCS = new LibPropertyCSImpl();
 		return libPropertyCS;
 	}
@@ -195,7 +195,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public LibRootPackageCS createLibRootPackageCS()
+	public @NonNull LibRootPackageCS createLibRootPackageCS()
 	{
 		LibRootPackageCSImpl libRootPackageCS = new LibRootPackageCSImpl();
 		return libRootPackageCS;
@@ -207,7 +207,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public MetaclassNameCS createMetaclassNameCS()
+	public @NonNull MetaclassNameCS createMetaclassNameCS()
 	{
 		MetaclassNameCSImpl metaclassNameCS = new MetaclassNameCSImpl();
 		return metaclassNameCS;
@@ -219,7 +219,7 @@ implements OCLstdlibCSFactory {
 	 * @generated
 	 */
 	@Override
-	public PrecedenceCS createPrecedenceCS() {
+	public @NonNull PrecedenceCS createPrecedenceCS() {
 		PrecedenceCSImpl precedenceCS = new PrecedenceCSImpl();
 		return precedenceCS;
 	}

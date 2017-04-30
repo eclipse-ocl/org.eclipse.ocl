@@ -84,7 +84,7 @@ public class OCLinEcoreCSFactoryImpl extends EFactoryImpl implements OCLinEcoreC
 	 * @generated
 	 */
 	@Override
-	public OCLinEcoreConstraintCS createOCLinEcoreConstraintCS()
+	public @NonNull OCLinEcoreConstraintCS createOCLinEcoreConstraintCS()
 	{
 		OCLinEcoreConstraintCSImpl ocLinEcoreConstraintCS = new OCLinEcoreConstraintCSImpl();
 		return ocLinEcoreConstraintCS;
@@ -96,7 +96,7 @@ public class OCLinEcoreCSFactoryImpl extends EFactoryImpl implements OCLinEcoreC
 	 * @generated
 	 */
 	@Override
-	public SysMLCS createSysMLCS()
+	public @NonNull SysMLCS createSysMLCS()
 	{
 		SysMLCSImpl sysMLCS = new SysMLCSImpl();
 		return sysMLCS;
@@ -108,7 +108,7 @@ public class OCLinEcoreCSFactoryImpl extends EFactoryImpl implements OCLinEcoreC
 	 * @generated
 	 */
 	@Override
-	public TopLevelCS createTopLevelCS()
+	public @NonNull TopLevelCS createTopLevelCS()
 	{
 		TopLevelCSImpl topLevelCS = new TopLevelCSImpl();
 		return topLevelCS;

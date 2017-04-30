@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
       </category>
       <constraintProvider cache="true">
          <package namespaceUri="platform:/resource/Play/Loans.ecore"/>
-         
+
          <constraints categories="org.eclipse.ocl.xtext.completeocl.validation.CompleteOCL/Loans.ocl">
             <constraint id="placeholder" lang="CompleteOCL" mode="Batch" statusCode="101"
                 name="=== The Loans.ocl Constraints ===">
@@ -84,11 +84,11 @@ public class CompleteOCLConstraintProvider extends LoadableConstraintProvider
 	private static final Logger logger = Logger.getLogger(CompleteOCLConstraintProvider.class);
 
 	public CompleteOCLConstraintProvider() {
-    	System.out.println("new CompleteOCLConstraintProvider");
+		System.out.println("new CompleteOCLConstraintProvider");
 	}
 
 	@Override
-	protected boolean load(@NonNull EnvironmentFactory environmentFactory, @NonNull URI uri, @NonNull Set<Category> categories) {
+	protected boolean load(@NonNull EnvironmentFactory environmentFactory, @NonNull URI uri, @NonNull Set<@NonNull Category> categories) {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		CSResource xtextResource = null;
 		try {
