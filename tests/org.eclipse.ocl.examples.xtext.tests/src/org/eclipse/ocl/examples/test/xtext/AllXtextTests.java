@@ -66,7 +66,6 @@ import junit.textui.TestRunner;
 /**
  * Tests for the Xtext editor support.
  */
-@SuppressWarnings("nls")
 public class AllXtextTests
 extends TestCase {
 
@@ -90,7 +89,7 @@ extends TestCase {
 
 			@Override
 			public void run(TestResult result) {
-				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = CollectionValueImpl.collectionClass2count = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = CollectionValueImpl.ExtensionImpl.collectionClass2count = new HashMap<>();
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyList = LazyIterable.collectionClass2lazyList = new HashMap<>();
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyMap = LazyIterable.collectionClass2lazyMap = new HashMap<>();
 				super.run(result);

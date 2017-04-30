@@ -29,7 +29,7 @@ public class AsSequenceIterator extends AbstractBaggableIterator implements Sequ
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsSequenceIterator(@NonNull CollectionValue sourceValue) {
+	public AsSequenceIterator(CollectionValue.@NonNull Extension sourceValue) {
 		this(TypeId.SEQUENCE.getSpecializedId(sourceValue.getElementTypeId()), sourceValue.iterator());
 	}
 

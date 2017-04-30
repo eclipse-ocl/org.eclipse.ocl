@@ -30,30 +30,30 @@ public abstract class IncludingAllIterator extends AbstractBaggableIterator
 				includeValue = includeValue.asUniqueCollectionValue();
 			}
 			includeValue.iterable();
-			return new ToUnique(collectionTypeId, sourceValue, includeValue);
+			return new ToUnique(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)includeValue);
 		}
 		else if (sourceValue.isOrdered()) {
-			return new ToSequence(collectionTypeId, sourceValue, includeValue);
+			return new ToSequence(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)includeValue);
 		}
 		else {
-			return new ToBag(collectionTypeId, sourceValue, includeValue);
+			return new ToBag(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)includeValue);
 		}
 	}
 
 	public static @NonNull CollectionValue union(@NonNull CollectionValue sourceValue, @NonNull CollectionValue unionValue) {
-		TypeId elementTypeId = sourceValue.getElementTypeId();
+		TypeId elementTypeId = ((CollectionValue.@NonNull Extension)sourceValue).getElementTypeId();
 		if (sourceValue.isUnique() && unionValue.isUnique()) {
-			return new ToUnique(TypeId.SET.getSpecializedId(elementTypeId), sourceValue, unionValue);
+			return new ToUnique(TypeId.SET.getSpecializedId(elementTypeId), (CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)unionValue);
 		}
 		else {
-			return new ToBag(TypeId.BAG.getSpecializedId(elementTypeId), sourceValue, unionValue);
+			return new ToBag(TypeId.BAG.getSpecializedId(elementTypeId), (CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)unionValue);
 		}
 	}
 
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @NonNull BaggableIterator<@Nullable Object> includeIterator;
 
-	public IncludingAllIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
+	public IncludingAllIterator(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension includeValue) {
 		super(collectionTypeId);
 		this.sourceIterator = sourceValue.baggableIterator();
 		this.includeIterator = includeValue.baggableIterator();
@@ -71,10 +71,10 @@ public abstract class IncludingAllIterator extends AbstractBaggableIterator
 	// The included values increment existing counts, otherwise they go at the end.
 	private static class ToBag extends IncludingAllIterator
 	{
-		private final @NonNull CollectionValue sourceValue;		// FIXME Use MapOfElement2ElementCount
-		private final @NonNull CollectionValue includeValue;		// FIXME Use MapOfElement2ElementCount
+		private final CollectionValue.@NonNull Extension sourceValue;		// FIXME Use MapOfElement2ElementCount
+		private final CollectionValue.@NonNull Extension includeValue;		// FIXME Use MapOfElement2ElementCount
 
-		public ToBag(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
+		public ToBag(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension includeValue) {
 			super(collectionTypeId, sourceValue, includeValue);
 			this.sourceValue = sourceValue;
 			this.includeValue = includeValue;
@@ -102,7 +102,7 @@ public abstract class IncludingAllIterator extends AbstractBaggableIterator
 	// The included values go at the end.
 	private static class ToSequence extends IncludingAllIterator
 	{
-		public ToSequence(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
+		public ToSequence(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension includeValue) {
 			super(collectionTypeId, sourceValue, includeValue);
 		}
 
@@ -123,9 +123,9 @@ public abstract class IncludingAllIterator extends AbstractBaggableIterator
 	// The included values goes at the end unless there are already previous values.
 	private static class ToUnique extends IncludingAllIterator
 	{
-		private final @NonNull CollectionValue sourceValue;		// FIXME Use MapOfElement2ElementCount
+		private final CollectionValue.@NonNull Extension sourceValue;		// FIXME Use MapOfElement2ElementCount
 
-		public ToUnique(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
+		public ToUnique(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension includeValue) {
 			super(collectionTypeId, sourceValue, includeValue);
 			this.sourceValue = sourceValue;
 

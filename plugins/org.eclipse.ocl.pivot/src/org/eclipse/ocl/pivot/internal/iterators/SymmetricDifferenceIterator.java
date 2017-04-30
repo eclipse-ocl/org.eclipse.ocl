@@ -23,15 +23,15 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class SymmetricDifferenceIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
-		return new SymmetricDifferenceIterator(sourceValue, otherValue);
+		return new SymmetricDifferenceIterator((CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)otherValue);
 	}
 
-	private final @NonNull CollectionValue sourceValue;
-	private final @NonNull CollectionValue otherValue;
+	private final CollectionValue.@NonNull Extension sourceValue;
+	private final CollectionValue.@NonNull Extension otherValue;
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private final @NonNull BaggableIterator<@Nullable Object> otherIterator;
 
-	public SymmetricDifferenceIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
+	public SymmetricDifferenceIterator(CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension otherValue) {
 		super(sourceValue.getTypeId());
 		sourceValue.iterable();
 		otherValue.iterable();

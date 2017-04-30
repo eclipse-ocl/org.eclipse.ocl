@@ -54,7 +54,6 @@ public abstract class ExecutorManager implements ExecutorExtension
 		@Override
 		public void clear() {}
 
-		@SuppressWarnings("null")
 		@Override
 		public @NonNull Map<Option<?>, Object> clearOptions() {
 			return Collections.emptyMap();
@@ -132,7 +131,6 @@ public abstract class ExecutorManager implements ExecutorExtension
 			return null;
 		}
 
-		@SuppressWarnings("null")
 		@Override
 		public <@Nullable T> @NonNull Map<Option<T>, T> removeOptions(@NonNull Collection<Option<T>> options) {
 			return Collections.emptyMap();

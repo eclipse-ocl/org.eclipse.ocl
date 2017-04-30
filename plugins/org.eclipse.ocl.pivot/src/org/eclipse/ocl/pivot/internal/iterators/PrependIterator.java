@@ -26,13 +26,13 @@ public abstract class PrependIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue prepend(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		if (sourceValue.isUnique()) {
-			return new ToUnique(collectionTypeId, sourceValue, object);
+			return new ToUnique(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, object);
 		}
 		else if (sourceValue.isOrdered()) {
-			return new ToSequence(collectionTypeId, sourceValue, object);
+			return new ToSequence(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, object);
 		}
 		else {
-			return new ToBag(collectionTypeId, sourceValue, object);
+			return new ToBag(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, object);
 		}
 	}
 
@@ -40,7 +40,7 @@ public abstract class PrependIterator extends AbstractBaggableIterator
 	protected final @Nullable Object object;
 	protected int prependCount = 0;
 
-	public PrependIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
+	public PrependIterator(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object object) {
 		super(collectionTypeId);
 		this.object = object;
 		this.sourceIterator = sourceValue.baggableIterator();
@@ -58,10 +58,10 @@ public abstract class PrependIterator extends AbstractBaggableIterator
 	// The prepended value increments the coount of a pre-existing value else it goes at the end.
 	private static class ToBag extends PrependIterator
 	{
-		private final @NonNull CollectionValue sourceValue;
+		private final CollectionValue.@NonNull Extension sourceValue;
 		private final @NonNull EqualsStrategy equalsStrategy;
 
-		public ToBag(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+		public ToBag(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object secondValue) {
 			super(collectionTypeId, sourceValue, secondValue);
 			this.sourceValue = sourceValue;
 			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
@@ -87,7 +87,7 @@ public abstract class PrependIterator extends AbstractBaggableIterator
 	// The prepended value goes at the beginning.
 	private static class ToSequence extends PrependIterator
 	{
-		public ToSequence(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+		public ToSequence(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object secondValue) {
 			super(collectionTypeId, sourceValue, secondValue);
 		}
 
@@ -110,7 +110,7 @@ public abstract class PrependIterator extends AbstractBaggableIterator
 	{
 		private final @NonNull EqualsStrategy equalsStrategy;
 
-		public ToUnique(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+		public ToUnique(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object secondValue) {
 			super(collectionTypeId, sourceValue, secondValue);
 			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
 		}

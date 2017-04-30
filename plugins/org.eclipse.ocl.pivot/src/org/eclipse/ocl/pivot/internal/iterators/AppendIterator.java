@@ -26,13 +26,13 @@ public abstract class AppendIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue append(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		if (sourceValue.isUnique()) {
-			return new ToUnique(collectionTypeId, sourceValue, object);
+			return new ToUnique(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, object);
 		}
 		else if (sourceValue.isOrdered()) {
-			return new ToSequence(collectionTypeId, sourceValue, object);
+			return new ToSequence(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, object);
 		}
 		else {
-			return new ToBag(collectionTypeId, sourceValue, object);
+			return new ToBag(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, object);
 		}
 	}
 
@@ -40,7 +40,7 @@ public abstract class AppendIterator extends AbstractBaggableIterator
 	protected final @Nullable Object object;
 	protected boolean doneAppend = false;
 
-	public AppendIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
+	public AppendIterator(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object object) {
 		super(collectionTypeId);
 		this.sourceIterator = sourceValue.baggableIterator();
 		this.object = object;
@@ -61,7 +61,7 @@ public abstract class AppendIterator extends AbstractBaggableIterator
 		private final @NonNull EqualsStrategy equalsStrategy;
 		protected int appendCount = 0;
 
-		public ToBag(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+		public ToBag(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object secondValue) {
 			super(collectionTypeId, sourceValue, secondValue);
 			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
 		}
@@ -88,7 +88,7 @@ public abstract class AppendIterator extends AbstractBaggableIterator
 	// The appended value goes at the end.
 	private static class ToSequence extends AppendIterator
 	{
-		public ToSequence(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+		public ToSequence(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object secondValue) {
 			super(collectionTypeId, sourceValue, secondValue);
 		}
 
@@ -111,7 +111,7 @@ public abstract class AppendIterator extends AbstractBaggableIterator
 	{
 		private final @NonNull EqualsStrategy equalsStrategy;
 
-		public ToUnique(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+		public ToUnique(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object secondValue) {
 			super(collectionTypeId, sourceValue, secondValue);
 			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
 		}

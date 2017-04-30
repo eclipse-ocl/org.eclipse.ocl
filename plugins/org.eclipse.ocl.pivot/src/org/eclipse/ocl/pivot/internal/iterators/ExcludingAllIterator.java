@@ -23,13 +23,13 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class ExcludingAllIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue excludingAll(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
-		return new ExcludingAllIterator(sourceValue, excludeValue);
+		return new ExcludingAllIterator((CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)excludeValue);
 	}
 
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
-	private final @NonNull CollectionValue excludeValue;
+	private final CollectionValue.@NonNull Extension excludeValue;
 
-	public ExcludingAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
+	public ExcludingAllIterator(CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension excludeValue) {
 		super(sourceValue.getTypeId());
 		this.sourceIterator = sourceValue.baggableIterator();
 		this.excludeValue = excludeValue;

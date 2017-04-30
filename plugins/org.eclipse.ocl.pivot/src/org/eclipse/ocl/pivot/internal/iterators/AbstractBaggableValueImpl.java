@@ -60,7 +60,7 @@ import com.google.common.collect.Lists;
  * @generated NOT
  * @since 1.3
  */
-public abstract class AbstractBaggableValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
+public abstract class AbstractBaggableValueImpl extends ValueImpl implements CollectionValue.Extension, Iterable<@Nullable Object>
 {
 	/**
 	 * Optimized iterator over an Array for use in OCL contents where the array is known to be stable
@@ -441,7 +441,7 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 		if (!(obj instanceof CollectionValue)) {
 			return false;
 		}
-		CollectionValue that = (CollectionValue)obj;
+		CollectionValue.Extension that = (CollectionValue.Extension)obj;
 		boolean isOrdered = isOrdered();
 		if (isOrdered != that.isOrdered()) {
 			return false;

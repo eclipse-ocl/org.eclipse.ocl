@@ -36,6 +36,17 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	}
 
 	/**
+	 * @since 1.3
+	 */
+	interface Extension extends CollectionValue {
+		@NonNull BaggableIterator<@Nullable Object> baggableIterator();
+		@NonNull CollectionFactory getCollectionFactory();
+		@NonNull TypeId getElementTypeId();
+		@NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount();
+		int intCount(@Nullable Object value);
+	}
+
+	/**
 	 * @generated NOT
 	 */
 	@NonNull Collection<@Nullable Object> asCollection();
@@ -50,12 +61,6 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@Nullable <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass);
-
-	/**
-	 * @generated NOT
-	 * @since 1.3
-	 */
-	@NonNull BaggableIterator<@Nullable Object> baggableIterator();
 
 	/**
 	 * @generated NOT
@@ -93,16 +98,6 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	boolean flatten(@NonNull Collection<Object> flattenedElements);
 
 	/**
-	 * @since 1.3
-	 */
-	@NonNull CollectionFactory getCollectionFactory();
-
-	/**
-	 * @since 1.3
-	 */
-	@NonNull TypeId getElementTypeId();
-
-	/**
 	 * @generated NOT
 	 */
 	@NonNull Collection<@Nullable Object> getElements();
@@ -111,11 +106,6 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	String getKind();
-
-	/**
-	 * @since 1.3
-	 */
-	@NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount();
 
 	/**
 	 * @generated NOT
@@ -142,12 +132,6 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@NonNull CollectionValue includingAll(@NonNull CollectionValue c);
-
-	/**
-	 * @generated NOT
-	 * @since 1.3
-	 */
-	int intCount(@Nullable Object value);
 
 	/**
 	 * @generated NOT

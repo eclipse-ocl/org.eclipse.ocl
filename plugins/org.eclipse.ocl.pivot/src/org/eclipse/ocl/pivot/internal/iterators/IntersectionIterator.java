@@ -24,25 +24,25 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class IntersectionIterator extends AbstractBaggableIterator
 {
 	public static @NonNull IntersectionIterator intersection(@NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
-		TypeId elementTypeId = sourceValue.getElementTypeId();
+		TypeId elementTypeId = ((CollectionValue.@NonNull Extension)sourceValue).getElementTypeId();
 		if (sourceValue.isUnique()) {
 			CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(setTypeId, sourceValue, secondValue);
+			return new IntersectionIterator(setTypeId, (CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)secondValue);
 		}
 		else if (secondValue.isUnique()) {
 			CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(setTypeId, secondValue, sourceValue);
+			return new IntersectionIterator(setTypeId, (CollectionValue.@NonNull Extension)secondValue, (CollectionValue.@NonNull Extension)sourceValue);
 		}
 		else {
 			CollectionTypeId bagTypeId = TypeId.BAG.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(bagTypeId, sourceValue, secondValue);
+			return new IntersectionIterator(bagTypeId, (CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)secondValue);
 		}
 	}
 
-	private final @NonNull CollectionValue sourceValue;
+	private final CollectionValue.@NonNull Extension sourceValue;
 	private final @NonNull BaggableIterator<Object> secondIterator;
 
-	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
+	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension secondValue) {
 		super(collectionTypeId);
 		this.sourceValue = sourceValue;
 		this.secondIterator = secondValue.baggableIterator();

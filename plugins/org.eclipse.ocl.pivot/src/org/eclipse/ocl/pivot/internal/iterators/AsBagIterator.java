@@ -28,7 +28,7 @@ public class AsBagIterator extends AbstractBaggableIterator implements BagValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsBagIterator(@NonNull CollectionValue sourceValue) {
+	public AsBagIterator(CollectionValue.@NonNull Extension sourceValue) {
 		this(TypeId.BAG.getSpecializedId(sourceValue.getElementTypeId()), sourceValue.iterator(), sourceValue.isUnique() || !sourceValue.isOrdered());
 	}
 

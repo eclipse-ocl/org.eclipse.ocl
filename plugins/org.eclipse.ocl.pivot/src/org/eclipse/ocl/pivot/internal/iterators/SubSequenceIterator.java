@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class SubSequenceIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue subSequence(@NonNull CollectionValue sourceValue, int lower, int upper) {
-		return new SubSequenceIterator(sourceValue, lower, upper);
+		return new SubSequenceIterator((CollectionValue.@NonNull Extension)sourceValue, lower, upper);
 	}
 
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
@@ -33,7 +33,7 @@ public class SubSequenceIterator extends AbstractBaggableIterator
 	private final int upper;
 	private int size = 0;
 
-	public SubSequenceIterator(@NonNull CollectionValue sourceValue, int lower, int upper) {
+	public SubSequenceIterator(CollectionValue.@NonNull Extension sourceValue, int lower, int upper) {
 		super(sourceValue.getTypeId());
 		this.sourceIterator = sourceValue.baggableIterator();
 		this.lower = lower;

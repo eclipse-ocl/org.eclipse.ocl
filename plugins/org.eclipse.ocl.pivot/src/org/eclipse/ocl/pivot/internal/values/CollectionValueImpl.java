@@ -61,7 +61,7 @@ import com.google.common.collect.Lists;
 /**
  * @generated NOT
  */
-public abstract class CollectionValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
+public abstract class CollectionValueImpl extends ValueImpl implements CollectionValue.Extension, Iterable<@Nullable Object>
 {
 	/**
 	 * Optimized iterator over an Array for use in OCL contents where the array is known to be stable
@@ -285,11 +285,16 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	public static @NonNull NullIterator EMPTY_ITERATOR = new NullIterator();
 
-
 	/**
 	 * @since 1.3
 	 */
-	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = null;
+	public static class ExtensionImpl
+	{
+		/**
+		 * @since 1.3
+		 */
+		public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = null;
+	}
 
 	/**
 	 * @since 1.3
@@ -331,15 +336,12 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	private int hashCode = 0;
 	protected final @NonNull Collection<@Nullable Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
 	protected final @NonNull CollectionTypeId typeId;
-	/**
-	 * @since 1.3
-	 */
-	protected final @NonNull CollectionFactory collectionFactory;
+	private final @NonNull CollectionFactory collectionFactory;
 
 	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> values) {
 		this.typeId = typeId;
 		this.collectionFactory = AbstractCollectionFactory.getCollectionFactory(typeId);
-		Map<Class<?>, Integer> collectionClass2count2 = collectionClass2count;
+		Map<Class<?>, Integer> collectionClass2count2 = ExtensionImpl.collectionClass2count;
 		if (collectionClass2count2 != null) {
 			Class<? extends @NonNull CollectionValue> collectionClass = getClass();
 			Integer count = collectionClass2count2.get(collectionClass);
@@ -522,7 +524,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		if (!(obj instanceof CollectionValue)) {
 			return false;
 		}
-		CollectionValue that = (CollectionValue)obj;
+		CollectionValue.Extension that = (CollectionValue.Extension)obj;
 		boolean isOrdered = isOrdered();
 		if (isOrdered != that.isOrdered()) {
 			return false;

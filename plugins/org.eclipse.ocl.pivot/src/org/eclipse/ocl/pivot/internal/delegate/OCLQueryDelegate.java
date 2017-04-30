@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   Kenn Hussey - Initial API and implementation
  *******************************************************************************/
@@ -38,7 +38,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 
 /**
  * An implementation of a query delegate for OCL expressions.
- * 
+ *
  * @see OCLQueryDelegateFactory
  */
 public class OCLQueryDelegate implements QueryDelegate
@@ -50,7 +50,7 @@ public class OCLQueryDelegate implements QueryDelegate
 
 	/**
 	 * Initializes me with my domain, context, variables, and expression.
-	 * 
+	 *
 	 * @param delegateDomain
 	 *            my domain
 	 * @param context
@@ -59,7 +59,7 @@ public class OCLQueryDelegate implements QueryDelegate
 	 *            name and types of variables used in my expression
 	 * @param expression
 	 *            the expression that I handle
-	 * 
+	 *
 	 * @throws ParserException
 	 *             if the expression is invalid
 	 */
@@ -78,7 +78,7 @@ public class OCLQueryDelegate implements QueryDelegate
 	 * is the OCL evaluation result which may be a Number, String, Collection or
 	 * other object for normal returns or a NullLiteralExp for null, or an
 	 * InvalidLiteralExp for invalid.
-	 * 
+	 *
 	 * @param target
 	 *            the object on which to execute the query; this must be an
 	 *            instance of the context with which the delegate was created
@@ -92,7 +92,6 @@ public class OCLQueryDelegate implements QueryDelegate
 	 */
 	@Override
 	public Object execute(@Nullable Object target, Map<String, ?> arguments) throws InvocationTargetException {
-		@SuppressWarnings("null")
 		@NonNull Map<String, ?> nonNullArguments = (arguments != null ? arguments : (Map<String, ?>)Collections.<String, Object>emptyMap());
 		try {
 			if (specification == null) {
@@ -135,19 +134,19 @@ public class OCLQueryDelegate implements QueryDelegate
 				env.add(parameterVariable, value);
 			}
 			Object result = evaluate(query, target);
-//			if (result.isInvalid()) {
-//				String message = ClassUtil.bind(OCLMessages.EvaluationResultIsInvalid_ERROR_, getOperationName());
-//				throw new OCLDelegateException(message);
-//			}
-	//		if ((result == null) / * || ocl.isInvalid(result) * /) {
-	//			String message = ClassUtil.bind(OCLMessages.EvaluationResultIsNull_ERROR_, getOperationName());
-	//			throw new OCLDelegateException(message);
-	//		}
-	//		return converter.convert(ocl, result);
-//			if (result == null) {
-//				String message = NLS.bind(OCLMessages.EvaluationResultIsInvalid_ERROR_, PivotUtil.getBody(specification));
-//				throw new InvocationTargetException(new OCLDelegateException(message));
-//			}
+			//			if (result.isInvalid()) {
+			//				String message = ClassUtil.bind(OCLMessages.EvaluationResultIsInvalid_ERROR_, getOperationName());
+			//				throw new OCLDelegateException(message);
+			//			}
+			//		if ((result == null) / * || ocl.isInvalid(result) * /) {
+			//			String message = ClassUtil.bind(OCLMessages.EvaluationResultIsNull_ERROR_, getOperationName());
+			//			throw new OCLDelegateException(message);
+			//		}
+			//		return converter.convert(ocl, result);
+			//			if (result == null) {
+			//				String message = NLS.bind(OCLMessages.EvaluationResultIsInvalid_ERROR_, PivotUtil.getBody(specification));
+			//				throw new InvocationTargetException(new OCLDelegateException(message));
+			//			}
 			return idResolver.ecoreValueOf(null, result);
 		}
 		catch (InvocationTargetException e) {
@@ -170,7 +169,7 @@ public class OCLQueryDelegate implements QueryDelegate
 	 * This method is lazily invoked from execute, but may be invoked eagerly
 	 * to detect compilation errors earlier or incur compilation costs at a more
 	 * convenient time.
-	 *  
+	 *
 	 * @throws InvocationTargetException wrapping any parser, io exceptions
 	 */
 	@Override

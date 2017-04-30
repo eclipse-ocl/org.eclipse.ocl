@@ -77,7 +77,7 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 	public @NonNull Value evaluate(@NonNull Executor executor, @NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue, @NonNull VariableDeclaration firstIterator,
 			@NonNull OCLExpression body) {
 		// TODO Auto-generated method stub
-		return new SelectIterator(typeId, sourceValue) {
+		return new SelectIterator(typeId, (CollectionValue.@NonNull Extension)sourceValue) {
 
 			@Override
 			protected boolean body(Object next) {

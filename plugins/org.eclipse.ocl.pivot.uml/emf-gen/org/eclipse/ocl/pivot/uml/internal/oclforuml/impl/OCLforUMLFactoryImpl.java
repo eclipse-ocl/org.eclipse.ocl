@@ -137,7 +137,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public BoundedInteger createBoundedInteger() {
+	public @NonNull BoundedInteger createBoundedInteger() {
 		BoundedIntegerImpl boundedInteger = new BoundedIntegerImpl();
 		return boundedInteger;
 	}
@@ -148,7 +148,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public org.eclipse.ocl.pivot.uml.internal.oclforuml.Integer createInteger() {
+	public org.eclipse.ocl.pivot.uml.internal.oclforuml.@NonNull Integer createInteger() {
 		IntegerImpl integer = new IntegerImpl();
 		return integer;
 	}
@@ -159,7 +159,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public Collection createCollection() {
+	public @NonNull Collection createCollection() {
 		CollectionImpl collection = new CollectionImpl();
 		return collection;
 	}
@@ -170,7 +170,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public Collections createCollections() {
+	public @NonNull Collections createCollections() {
 		CollectionsImpl collections = new CollectionsImpl();
 		return collections;
 	}
@@ -181,7 +181,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public FixedPoint createFixedPoint() {
+	public @NonNull FixedPoint createFixedPoint() {
 		FixedPointImpl fixedPoint = new FixedPointImpl();
 		return fixedPoint;
 	}
@@ -192,7 +192,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public Real createReal() {
+	public @NonNull Real createReal() {
 		RealImpl real = new RealImpl();
 		return real;
 	}
@@ -203,7 +203,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public FloatingPoint createFloatingPoint() {
+	public @NonNull FloatingPoint createFloatingPoint() {
 		FloatingPointImpl floatingPoint = new FloatingPointImpl();
 		return floatingPoint;
 	}
@@ -214,7 +214,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public Validation createValidation() {
+	public @NonNull Validation createValidation() {
 		ValidationImpl validation = new ValidationImpl();
 		return validation;
 	}
@@ -225,7 +225,7 @@ implements OCLforUMLFactory {
 	 * @generated
 	 */
 	@Override
-	public Validations createValidations() {
+	public @NonNull Validations createValidations() {
 		ValidationsImpl validations = new ValidationsImpl();
 		return validations;
 	}

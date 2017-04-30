@@ -28,20 +28,20 @@ public abstract class AppendAllIterator extends AbstractBaggableIterator
 				appendedValue = appendedValue.asUniqueCollectionValue();
 			}
 			appendedValue.iterable();
-			return new ToUnique(sourceValue, appendedValue);
+			return new ToUnique((CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)appendedValue);
 		}
 		else if (sourceValue.isOrdered()) {
-			return new ToSequence(sourceValue, appendedValue);
+			return new ToSequence((CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)appendedValue);
 		}
 		else {
-			return new ToBag(sourceValue, appendedValue);
+			return new ToBag((CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)appendedValue);
 		}
 	}
 
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @NonNull BaggableIterator<@Nullable Object> appendIterator;
 
-	protected AppendAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
+	protected AppendAllIterator(CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension appendedValue) {
 		super(sourceValue.getTypeId());
 		this.sourceIterator = sourceValue.baggableIterator();
 		this.appendIterator = appendedValue.baggableIterator();
@@ -59,10 +59,10 @@ public abstract class AppendAllIterator extends AbstractBaggableIterator
 	// The appended values go at the end accruing any counts from pre-existing values.
 	private static class ToBag extends AppendAllIterator
 	{
-		private final @NonNull CollectionValue sourceValue;		// FIXME Use MapOfElement2ElementCount
-		private final @NonNull CollectionValue appendedValue;		// FIXME Use MapOfElement2ElementCount
+		private final CollectionValue.@NonNull Extension sourceValue;		// FIXME Use MapOfElement2ElementCount
+		private final CollectionValue.@NonNull Extension appendedValue;		// FIXME Use MapOfElement2ElementCount
 
-		public ToBag(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
+		public ToBag(CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension appendedValue) {
 			super(sourceValue, appendedValue);
 			this.sourceValue = sourceValue;
 			this.appendedValue = appendedValue;
@@ -89,7 +89,7 @@ public abstract class AppendAllIterator extends AbstractBaggableIterator
 	// The appended values go at the end.
 	private static class ToSequence extends AppendAllIterator
 	{
-		public ToSequence(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
+		public ToSequence(CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension appendedValue) {
 			super(sourceValue, appendedValue);
 		}
 
@@ -110,9 +110,9 @@ public abstract class AppendAllIterator extends AbstractBaggableIterator
 	// The appended values go at the end displacing any previous values.
 	private static class ToUnique extends AppendAllIterator
 	{
-		private final @NonNull CollectionValue appendedValue;		// FIXME Use MapOfElement2ElementCount
+		private final CollectionValue.@NonNull Extension appendedValue;		// FIXME Use MapOfElement2ElementCount
 
-		public ToUnique(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
+		public ToUnique(CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension appendedValue) {
 			super(sourceValue, appendedValue);
 			this.appendedValue = appendedValue;
 

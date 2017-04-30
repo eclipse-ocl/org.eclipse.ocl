@@ -29,7 +29,7 @@ public class AsEcoreIterator extends AbstractBaggableIterator
 	private final @Nullable Class<?> instanceClass;
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 
-	public AsEcoreIterator(@NonNull CollectionValue sourceValue, @NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+	public AsEcoreIterator(CollectionValue.@NonNull Extension sourceValue, @NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		super(sourceValue.getTypeId());
 		this.idResolver = idResolver;
 		this.instanceClass = instanceClass;

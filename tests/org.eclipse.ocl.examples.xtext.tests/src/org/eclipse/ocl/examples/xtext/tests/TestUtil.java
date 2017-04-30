@@ -302,7 +302,7 @@ public class TestUtil
 
 	public static @NonNull URI getFileURI(@NonNull Class<?> loadedClass, @NonNull String classRelativeName) {
 		File file = getFile(loadedClass, classRelativeName);
-		@SuppressWarnings("null")@NonNull URI uri = URI.createFileURI(file.toString());
+		@NonNull URI uri = URI.createFileURI(file.toString());
 		return uri;
 	}
 

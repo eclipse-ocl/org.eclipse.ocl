@@ -55,7 +55,7 @@ import org.eclipse.ocl.pivot.values.Value;
 /**
  * @generated NOT
  */
-public abstract class UndefinedValueImpl extends EvaluationException implements NullValue
+public abstract class UndefinedValueImpl extends EvaluationException implements NullValue,CollectionValue.Extension
 {
 	private static final long serialVersionUID = 1L;
 
