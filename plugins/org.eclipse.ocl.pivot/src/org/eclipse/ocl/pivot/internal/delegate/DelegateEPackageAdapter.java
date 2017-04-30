@@ -4,8 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: 
+ *
+ * Contributors:
  *   E.D.Willink - Initial API and implementation
  *   E.D.Willink - Bug 353171
  *   Christian W. Damus (CEA LIST) - Bug 434554
@@ -91,7 +91,7 @@ public class DelegateEPackageAdapter extends AdapterImpl
 	}
 
 	/**
-	 * Return the DelegateDomain for this package and for delegateURI, returning null it does not exist. 
+	 * Return the DelegateDomain for this package and for delegateURI, returning null it does not exist.
 	 */
 	public @Nullable DelegateDomain getDelegateDomain(@NonNull String delegateURI) {
 		if (delegateDomainMap == null) {
@@ -136,7 +136,7 @@ public class DelegateEPackageAdapter extends AdapterImpl
 	}
 
 	/**
-	 * Return the DelegateDomain for this package and for delegateURI, creating one if it does not already exist. 
+	 * Return the DelegateDomain for this package and for delegateURI, creating one if it does not already exist.
 	 */
 	public @NonNull DelegateDomain loadDelegateDomain(@NonNull String delegateURI) {
 		if (delegateDomainMap == null) {
@@ -166,14 +166,14 @@ public class DelegateEPackageAdapter extends AdapterImpl
 			List<DelegateDomain> delegateDomains;
 			synchronized (delegateDomainMap) {
 				delegateDomains = new ArrayList<DelegateDomain>(delegateDomainMap.values());
-//				delegateDomainMap.clear(); -- don't clear else tests fail since registrations do not occur
+				//				delegateDomainMap.clear(); -- don't clear else tests fail since registrations do not occur
 			}
 			for (DelegateDomain delegateDomain : delegateDomains) {
 				delegateDomain.reset();
 			}
 		}
 	}
-	
+
 	@Override
 	public void unsetTarget(Notifier oldTarget) {
 		super.unsetTarget(oldTarget);

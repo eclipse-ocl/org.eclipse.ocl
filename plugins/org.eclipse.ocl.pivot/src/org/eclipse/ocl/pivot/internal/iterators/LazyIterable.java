@@ -32,20 +32,20 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class LazyIterable<E> implements IndexableIterable<E>
+public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 {
 	/**
 	 * An ImmutableBaggableIterator provides better performance than the standard List Iterator by
 	 * exploiting the immutability of a fully populated Iteration cache.
 	 */
-	private static class ImmutableBaggableIterator<E> implements BaggableIterator<E>
+	private static class ImmutableBaggableIterator<@Nullable E> implements BaggableIterator<E>
 	{
 		private final @NonNull List<E> elements;
 		private final @NonNull Map<E, @NonNull ? extends Number> element2elementCount;
 		private final int size;
 		private int elementIndex = 0;
 		private int residualCount = 0;
-		private @Nullable E currentElement;
+		private E currentElement;
 		private int nextCount = 0;
 
 		public ImmutableBaggableIterator(@NonNull List<E> elements, @NonNull Map<E, @NonNull ? extends Number> element2elementCount) {
@@ -92,8 +92,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 			if (residualCount <= 0) {
 				throw new NoSuchElementException();
 			}
-			@Nullable E savedElement = currentElement;
-			assert savedElement != null;
+			E savedElement = currentElement;
 			residualCount -= nextCount;
 			if ((residualCount <= 0) && (elementIndex < size)) {
 				currentElement = elements.get(elementIndex++);
@@ -118,7 +117,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	 * An ImmutableNonBaggableIterator provides better performance than the standard List Iterator by
 	 * exploiting the immutability of a fully populated Iteration cache.
 	 */
-	private static class ImmutableNonBaggableIterator<E> implements BaggableIterator<E>
+	private static class ImmutableNonBaggableIterator<@Nullable E> implements BaggableIterator<E>
 	{
 		private final @NonNull List<E> elements;
 		private final int size;
@@ -177,7 +176,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 	/**
 	 * LazyBaggableIterator iterates over the Bag content returning each multiple element multiple times.
 	 */
-	private static class LazyBaggableIterator<E> implements BaggableIterator<E>
+	private static class LazyBaggableIterator<@Nullable E> implements BaggableIterator<E>
 	{
 		private final @NonNull Map<E, @NonNull ElementCount> map;
 		private final @NonNull Iterator<E> objectIterator;
