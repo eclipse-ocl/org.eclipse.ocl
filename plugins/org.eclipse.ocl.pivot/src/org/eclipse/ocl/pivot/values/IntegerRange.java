@@ -10,21 +10,21 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A range of integer values from the first up to and including the last.
  * If last is less than the first. the range is empty.
  */
-public interface IntegerRange extends List<@NonNull Value>
+public interface IntegerRange extends List<@Nullable Object>
 {
 	@NonNull IntegerValue getFirst();
 	@NonNull IntegerValue getLast();
 	@NonNull IntegerValue getSize();
 	//	@NonNull ValueFactory getValueFactory();
-	@Override
-	@NonNull Iterator<@NonNull Value> iterator();
+	//	@Override
+	//	@NonNull Iterator<@NonNull Object> iterator();
 }

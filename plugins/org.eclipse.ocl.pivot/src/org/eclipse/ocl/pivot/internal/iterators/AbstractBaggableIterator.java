@@ -200,7 +200,7 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 	}
 
 	@Override
-	public @NonNull Collection<? extends Object> getElements() {
+	public @NonNull Collection<@Nullable Object> getElements() {
 		if (!isBag()) {
 			return iterable().getListOfElements();
 		}

@@ -41,7 +41,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 			return new RangeOrderedSetValueImpl(getTypeId(), range);
 		}
 		else {
-			List<Object> elements = createElements();
+			List<@Nullable Object> elements = createElements();
 			elements.remove(value);
 			elements.add(value);
 			return new SparseOrderedSetValueImpl(getTypeId(), elements);
@@ -59,8 +59,8 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 		return ZERO_VALUE;
 	}
 
-	protected List<Object> createElements() {
-		List<Object> elements = new ArrayList<Object>(intSize());
+	protected @NonNull List<@Nullable Object> createElements() {
+		List<@Nullable Object> elements = new ArrayList<>(intSize());
 		for (Object value : iterable()) {
 			elements.add(value);
 		}
@@ -90,7 +90,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 
 	@Override
 	public @NonNull IntegerRange getElements() {
-		return (IntegerRange)(Object)elements;
+		return (IntegerRange)elements;
 	}
 
 	//    public Type getType(TypeManager typeManager, Type staticType) {
@@ -124,7 +124,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 			return new RangeOrderedSetValueImpl(getTypeId(), range);
 		}
 		else {
-			List<Object> elements = createElements();
+			List<@Nullable Object> elements = createElements();
 			elements.remove(value);
 			elements.add(0, value);
 			return new SparseOrderedSetValueImpl(getTypeId(), elements);

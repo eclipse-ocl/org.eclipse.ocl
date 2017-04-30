@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
 public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 {
 	public static @NonNull OrderedSet<Object> createOrderedSetOfEach(@Nullable Object @NonNull [] boxedValues) {
-		OrderedSet<Object> result = new OrderedSetImpl<Object>();
+		OrderedSet<@Nullable Object> result = new OrderedSetImpl<>();
 		for (Object boxedValue : boxedValues) {
 			result.add(boxedValue);
 		}
@@ -42,17 +42,16 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	public static class Accumulator extends SparseOrderedSetValueImpl implements OrderedSetValue.Accumulator
 	{
 		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new OrderedSetImpl<Object>());
+			super(typeId, new OrderedSetImpl<>());
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
 		public boolean add(@Nullable Object value) {
-			return ((Collection<Object>)elements).add(value);
+			return elements.add(value);
 		}
 	}
 
-	public SparseOrderedSetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
+	public SparseOrderedSetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> boxedValues) {
 		super(typeId, boxedValues);
 	}
 

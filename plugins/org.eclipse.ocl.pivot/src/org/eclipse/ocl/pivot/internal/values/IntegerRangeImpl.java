@@ -20,17 +20,16 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.Value;
 
 /**
  * @generated NOT
  */
-public class IntegerRangeImpl extends AbstractList<@NonNull Value> implements IntegerRange
+public class IntegerRangeImpl extends AbstractList<@Nullable Object> implements IntegerRange
 {
 	// local iterator class that provides
 	// hasNext() and next() methods appropriate
 	// for this range set
-	class IntegerRangeIterator implements Iterator<@NonNull Value>
+	class IntegerRangeIterator implements Iterator<@Nullable Object>
 	{
 		private @Nullable IntegerValue curr = null;		// null before first next(), last once finished
 
@@ -140,7 +139,7 @@ public class IntegerRangeImpl extends AbstractList<@NonNull Value> implements In
 	//	}
 
 	@Override
-	public @NonNull Iterator<@NonNull Value> iterator() {
+	public @NonNull Iterator<@Nullable Object> iterator() {
 		return new IntegerRangeIterator();
 	}
 

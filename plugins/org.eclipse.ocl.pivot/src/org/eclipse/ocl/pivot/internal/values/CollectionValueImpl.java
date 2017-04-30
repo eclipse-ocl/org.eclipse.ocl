@@ -60,6 +60,7 @@ import com.google.common.collect.Lists;
 
 /**
  * @generated NOT
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public abstract class CollectionValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
 {
@@ -336,7 +337,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	 */
 	protected final @NonNull CollectionFactory collectionFactory;
 
-	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> values) {
+	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> values) {
 		this.typeId = typeId;
 		this.collectionFactory = AbstractCollectionFactory.getCollectionFactory(typeId);
 		Map<Class<?>, Integer> collectionClass2count2 = collectionClass2count;
@@ -413,8 +414,8 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return (List<T>) asEcoreObject(idResolver, instanceClass);
 	}
 
-	public @NonNull List<? extends Object> asList() {
-		return new ArrayList<Object>(elements);
+	public @NonNull List<@Nullable Object> asList() {
+		return new ArrayList<>(elements);
 	}
 
 	@Override
@@ -896,8 +897,8 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue sort(@NonNull Comparator<Object> comparator) {
-		List<Object> values = Lists.newArrayList(iterable());
+	public @NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+		List<@Nullable Object> values = Lists.newArrayList(iterable());
 		Collections.sort(values, comparator);
 		if (isUnique()) {
 			return new SparseOrderedSetValueImpl(getTypeId(), values);
@@ -909,7 +910,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {
-		Iterable<? extends Object> elements = iterable();
+		Iterable<@Nullable Object> elements = iterable();
 		if (isUnique()) {
 			return new SparseSequenceValueImpl(getSequenceTypeId(), SparseSequenceValueImpl.createSequenceOfEach(elements));
 		}

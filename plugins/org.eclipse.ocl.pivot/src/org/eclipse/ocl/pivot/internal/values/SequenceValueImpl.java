@@ -55,7 +55,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		return ValuesPackage.Literals.SEQUENCE_VALUE;
 	}
 
-	public SequenceValueImpl(@NonNull CollectionTypeId typeId, @NonNull List<? extends Object> values) {
+	public SequenceValueImpl(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable Object> values) {
 		super(typeId, values);
 	}
 
@@ -87,7 +87,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	} */
 
 	@Override
-	public @NonNull List<? extends Object> asList() {
+	public @NonNull List<@Nullable Object> asList() {
 		return getElements();
 	}
 
@@ -143,8 +143,8 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull List<? extends Object> getElements() {
-		return (List<? extends Object>) elements;
+	public @NonNull List<@Nullable Object> getElements() {
+		return (List<@Nullable Object>) elements;
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		if (index < 0 || index > elements.size()) {
 			throw new InvalidValueException(PivotMessages.IndexOutOfRange, index + 1, size());
 		}
-		List<Object> result = new ArrayList<Object>(elements);
+		List<@Nullable Object> result = new ArrayList<>(elements);
 		result.add(index, object);
 		return new SparseSequenceValueImpl(getTypeId(), result);
 	}
@@ -234,14 +234,14 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 
 	@Override
 	public @NonNull SequenceValue reverse() {
-		List<Object> elements = new ArrayList<Object>(this.elements);
+		List<@Nullable Object> elements = new ArrayList<>(this.elements);
 		Collections.reverse(elements);
 		return new SparseSequenceValueImpl(getTypeId(), elements);
 	}
 
 	@Override
-	public @NonNull SequenceValue sort(@NonNull Comparator<Object> comparator) {
-		List<Object> values = new ArrayList<Object>(elements);
+	public @NonNull SequenceValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+		List<@Nullable Object> values = new ArrayList<>(elements);
 		Collections.sort(values, comparator);
 		return new SparseSequenceValueImpl(getTypeId(), values);
 	}

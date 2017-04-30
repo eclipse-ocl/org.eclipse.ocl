@@ -402,8 +402,8 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
-		return Collections.emptyMap();
+	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+		return Collections.<@Nullable Object, @NonNull Number>emptyMap();
 	}
 
 	@Override
@@ -657,7 +657,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull SequenceValue sort(@NonNull Comparator<Object> comparator) {
+	public @NonNull SequenceValue sort(@NonNull Comparator<@Nullable Object> comparator) {
 		return toInvalidValue();
 	}
 

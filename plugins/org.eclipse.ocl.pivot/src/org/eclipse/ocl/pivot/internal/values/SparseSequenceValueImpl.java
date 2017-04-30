@@ -38,8 +38,8 @@ public class SparseSequenceValueImpl extends SequenceValueImpl
 	/**
 	 * @since 1.3
 	 */
-	public static @NonNull List<?> createSequenceOfEach(@NonNull Iterable<? extends Object> elements) {
-		List<?> list = elements instanceof List<?> ? (List<?>)elements : Lists.newArrayList(elements);
+	public static @NonNull List<@Nullable Object> createSequenceOfEach(@NonNull Iterable<@Nullable Object> elements) {
+		List<@Nullable Object> list = elements instanceof List<?> ? (List<@Nullable Object>)elements : Lists.newArrayList(elements);
 		return list;
 	}
 
@@ -51,17 +51,16 @@ public class SparseSequenceValueImpl extends SequenceValueImpl
 	public static class Accumulator extends SparseSequenceValueImpl implements SequenceValue.Accumulator
 	{
 		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new ArrayList<Object>());
+			super(typeId, new ArrayList<>());
 		}
 
-		public Accumulator(@NonNull CollectionTypeId typeId, @NonNull List<? extends Object> values) {
+		public Accumulator(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable Object> values) {
 			super(typeId, values);
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
 		public boolean add(@Nullable Object value) {
-			return ((Collection<Object>)elements).add(value);
+			return elements.add(value);
 		}
 
 		@Override
@@ -72,7 +71,7 @@ public class SparseSequenceValueImpl extends SequenceValueImpl
 		}
 	}
 
-	public SparseSequenceValueImpl(@NonNull CollectionTypeId typeId, @NonNull List<? extends Object> boxedValues) {
+	public SparseSequenceValueImpl(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable Object> boxedValues) {
 		super(typeId, boxedValues);
 	}
 

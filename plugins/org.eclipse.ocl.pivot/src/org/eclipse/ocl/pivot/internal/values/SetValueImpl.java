@@ -58,7 +58,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 	}
 
 	public static @NonNull Set<Object> createSetOfEach(@Nullable Object @NonNull [] boxedValues) {
-		Set<Object> result = new HashSet<Object>();
+		Set<@Nullable Object> result = new HashSet<>();
 		for (Object boxedValue : boxedValues) {
 			result.add(boxedValue);
 		}
@@ -68,17 +68,16 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 	public static class Accumulator extends SetValueImpl implements SetValue.Accumulator
 	{
 		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new HashSet<Object>());
+			super(typeId, new HashSet<>());
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
 		public boolean add(@Nullable Object value) {
-			return ((Collection<Object>)elements).add(value);
+			return elements.add(value);
 		}
 	}
 
-	public SetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
+	public SetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> boxedValues) {
 		super(typeId, boxedValues);
 		assert checkElementsAreUnique(elements);
 	}
@@ -95,7 +94,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 
 	@Override
 	public @NonNull Set<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
-		Set<Object> unboxedValues = new HashSet<Object>();
+		Set<@Nullable Object> unboxedValues = new HashSet<>();
 		for (Object boxedValue : elements) {
 			unboxedValues.add(idResolver.unboxedValueOf(boxedValue));
 		}
@@ -155,8 +154,8 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 	} */
 
 	@Override
-	public @NonNull OrderedSetValue sort(@NonNull Comparator<Object> comparator) {
-		List<Object> values = new ArrayList<Object>(elements);
+	public @NonNull OrderedSetValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+		List<@Nullable Object> values = new ArrayList<>(elements);
 		Collections.sort(values, comparator);
 		return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), values);
 	}

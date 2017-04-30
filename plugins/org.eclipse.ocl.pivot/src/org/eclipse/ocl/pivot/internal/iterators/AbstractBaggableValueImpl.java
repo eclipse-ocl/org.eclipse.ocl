@@ -59,6 +59,7 @@ import com.google.common.collect.Lists;
  * AbstractBaggableValueImpl provides the common functionality for eager and lazy CollectionValues.
  * @generated NOT
  * @since 1.3
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public abstract class AbstractBaggableValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
 {
@@ -744,10 +745,12 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 
 	@Override
 	public @NonNull BaggableIterator<@Nullable Object> iterator() {
-		Iterable<? extends Object> elements = iterable();
+		Iterable<@Nullable Object> elements = iterable();
 		if (this instanceof BaggableIterator) {
 			iterable();
-			return (BaggableIterator<@Nullable Object>) this;
+			@SuppressWarnings("unchecked")
+			BaggableIterator<@Nullable Object> castElements = (BaggableIterator<@Nullable Object>)this;
+			return castElements;
 		}
 		else if (elements instanceof BaggableIterator) {
 			@SuppressWarnings("unchecked")
@@ -755,13 +758,11 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 			return castElements;
 		}
 		else if (elements instanceof BasicEList) {
-			@SuppressWarnings("unchecked")
 			BasicEList<Object> castElements = (BasicEList<Object>)elements;
 			@SuppressWarnings("null")@Nullable Object[] data = castElements.data();
 			return data != null ? new ArrayIterator<>(data, castElements.size()) : EMPTY_ITERATOR;
 		}
 		else if (elements instanceof List<?>) {
-			@SuppressWarnings("unchecked")
 			List<@Nullable Object> castElements = (List<@Nullable Object>)elements;
 			return new ListIterator<>(castElements);
 		}
@@ -806,8 +807,8 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue sort(@NonNull Comparator<Object> comparator) {
-		List<Object> values = Lists.newArrayList(iterable());
+	public @NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+		List<@Nullable Object> values = Lists.newArrayList(iterable());
 		Collections.sort(values, comparator);
 		if (isUnique()) {
 			return new SparseOrderedSetValueImpl(getTypeId(), values);
@@ -831,7 +832,7 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {
-		Iterable<? extends Object> elements = iterable();
+		Iterable<@Nullable Object> elements = iterable();
 		if (isUnique()) {
 			return new SparseSequenceValueImpl(getSequenceTypeId(), SparseSequenceValueImpl.createSequenceOfEach(elements));
 		}

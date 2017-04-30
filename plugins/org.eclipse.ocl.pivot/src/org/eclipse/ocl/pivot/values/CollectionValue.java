@@ -32,6 +32,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 {
 	/**
 	 * @generated NOT
+	 * @noimplement This interface is not intended to be implemented by clients.
 	 */
 	interface Accumulator extends CollectionValue {
 		boolean add(@Nullable Object value);
@@ -199,7 +200,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull OrderedCollectionValue sort(@NonNull Comparator<Object> comparator);
+	@NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator);
 
 	/**
 	 * @generated NOT
