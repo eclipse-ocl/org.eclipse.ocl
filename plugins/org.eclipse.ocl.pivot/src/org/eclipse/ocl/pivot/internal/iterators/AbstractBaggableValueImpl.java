@@ -59,7 +59,6 @@ import com.google.common.collect.Lists;
  * AbstractBaggableValueImpl provides the common functionality for eager and lazy CollectionValues.
  * @generated NOT
  * @since 1.3
- * @noextend This class is not intended to be subclassed by clients.
  */
 public abstract class AbstractBaggableValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
 {

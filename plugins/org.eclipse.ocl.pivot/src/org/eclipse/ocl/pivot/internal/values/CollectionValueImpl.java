@@ -60,7 +60,6 @@ import com.google.common.collect.Lists;
 
 /**
  * @generated NOT
- * @noextend This class is not intended to be subclassed by clients.
  */
 public abstract class CollectionValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
 {

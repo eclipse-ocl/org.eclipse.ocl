@@ -25,9 +25,6 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
 
-/**
- * @noimplement This interface is not intended to be implemented by clients.
- */
 public interface CollectionValue extends Value, Iterable<@Nullable Object>
 {
 	/**
