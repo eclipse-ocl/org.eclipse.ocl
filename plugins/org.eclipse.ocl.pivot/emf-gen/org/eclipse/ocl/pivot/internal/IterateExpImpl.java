@@ -578,7 +578,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					/*@Caught*/ @NonNull Object CAUGHT_exists;
 					try {
 						final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 						/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.FALSE_VALUE;
 						@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
 						/*@Thrown*/ boolean exists;
@@ -755,7 +755,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = ownedResult.getOwnedInit();
 					safe_ownedInit_source = ownedInit;
 				}
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OCLExpression, safe_ownedInit_source);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OCLExpression, safe_ownedInit_source);
 				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(oclAsSet);
 				final /*@Thrown*/ boolean result = size.equals(PivotTables.INT_1);
 				CAUGHT_result = result;
@@ -807,7 +807,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				/*@Thrown*/ boolean result;
 				if (isSafe) {
 					final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 					/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
 					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
 					/*@Thrown*/ boolean forAll;

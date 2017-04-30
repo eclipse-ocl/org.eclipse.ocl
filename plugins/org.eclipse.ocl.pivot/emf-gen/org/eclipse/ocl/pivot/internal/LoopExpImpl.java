@@ -320,7 +320,7 @@ public abstract class LoopExpImpl
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
 				final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 				/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
 				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
 				/*@Thrown*/ boolean result;
@@ -342,7 +342,7 @@ public abstract class LoopExpImpl
 					/*@Caught*/ @NonNull Object CAUGHT_isEmpty;
 					try {
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = _1.getOwnedInit();
-						final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OCLExpression, ownedInit);
+						final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OCLExpression, ownedInit);
 						final /*@Thrown*/ boolean isEmpty = CollectionIsEmptyOperation.INSTANCE.evaluate(oclAsSet).booleanValue();
 						CAUGHT_isEmpty = isEmpty;
 					}

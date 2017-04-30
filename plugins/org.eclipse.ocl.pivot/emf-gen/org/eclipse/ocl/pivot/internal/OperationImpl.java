@@ -66,7 +66,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -857,8 +857,8 @@ implements Operation {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
 				final /*@NonInvalid*/ java.util.@NonNull List<Constraint> ownedPreconditions = this.getOwnedPreconditions();
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
-				/*@Thrown*/ SetValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
+				/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
 				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPreconditions.iterator();
 				/*@Thrown*/ boolean result;
 				while (true) {
@@ -926,8 +926,8 @@ implements Operation {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
 				final /*@NonInvalid*/ java.util.@NonNull List<Constraint> ownedPostconditions = this.getOwnedPostconditions();
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
-				/*@Thrown*/ SetValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
+				/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
 				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPostconditions.iterator();
 				/*@Thrown*/ boolean result;
 				while (true) {
