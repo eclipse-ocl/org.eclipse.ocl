@@ -121,7 +121,7 @@ public class SpeedTests extends PivotTestCase
 			long endTime1 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
 			long startTime2 = System.nanoTime();
-			Iterable setValue2 = setValue.iterable();
+			Iterable<Object> setValue2 = setValue.iterable();
 			long endTime2 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime2 - startTime2) / 1.0e9);
 			long startTime3 = System.nanoTime();

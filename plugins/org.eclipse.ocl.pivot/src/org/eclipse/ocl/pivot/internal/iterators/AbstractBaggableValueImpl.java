@@ -622,7 +622,7 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	@Override
-	public @NonNull Collection<? extends Object> getElements() {
+	public @NonNull Collection<@Nullable Object> getElements() {
 		return asCollection();
 	}
 
@@ -632,7 +632,7 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	@Override
-	public @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -791,8 +791,8 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	@Override
-	public @NonNull Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {
-		Set<TupleValue> result = new HashSet<TupleValue>();
+	public @NonNull Set<@NonNull TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {
+		Set<@NonNull TupleValue> result = new HashSet<>();
 		for (Object next1 : iterable()) {
 			for (Object next2 : c.iterable()) {
 				result.add(new TupleValueImpl(tupleTypeId, next1, next2));

@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
 
 /**
- * @noimplement This interface is not intended to be implemented by clients.
+ * zznoimplement This interface is not intended to be implemented by clients.
  */
 public interface CollectionValue extends Value, Iterable<@Nullable Object>
 {
@@ -41,7 +41,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Collection<? extends Object> asCollection();
+	@NonNull Collection<@Nullable Object> asCollection();
 
 	/**
 	 * @generated NOT
@@ -108,7 +108,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Collection<? extends Object> getElements();
+	@NonNull Collection<@Nullable Object> getElements();
 
 	/**
 	 * @generated NOT
@@ -118,7 +118,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @since 1.3
 	 */
-	@NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount();
+	@NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount();
 
 	/**
 	 * @generated NOT
@@ -190,7 +190,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@Nullable Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId);
+	@Nullable Set<@NonNull TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId);
 
 	/**
 	 * @generated NOT

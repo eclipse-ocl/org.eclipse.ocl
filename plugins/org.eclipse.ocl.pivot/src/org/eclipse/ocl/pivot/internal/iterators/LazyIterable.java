@@ -637,7 +637,7 @@ public class LazyIterable<E> implements IndexableIterable<E>
 		}
 	}
 
-	public @NonNull CollectionValue mutableIncluding(@NonNull CollectionValue leftCollectionValue, @Nullable E rightValue) {
+	public @NonNull CollectionValue mutableIncluding(@NonNull CollectionValue leftCollectionValue, E rightValue) {
 		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
 			if (addToCounts(rightValue)) {
 				lazyListOfElements.add(rightValue);

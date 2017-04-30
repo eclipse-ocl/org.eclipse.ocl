@@ -95,7 +95,7 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 	}
 
 	@Override
-	public @NonNull Collection<? extends Object> asCollection() {
+	public @NonNull Collection<@Nullable Object> asCollection() {
 		return asEagerCollectionValue().asCollection();
 	}
 

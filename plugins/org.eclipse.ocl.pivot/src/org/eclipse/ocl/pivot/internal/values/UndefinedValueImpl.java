@@ -128,7 +128,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull Collection<Object> asCollection() {
+	public @NonNull Collection<@Nullable Object> asCollection() {
 		throw new InvalidValueException("Collection value required");
 	}
 
@@ -388,7 +388,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull List<? extends Object> getElements() {
+	public @NonNull List<@Nullable Object> getElements() {
 		throw new InvalidValueException("bad getElements()");
 	}
 
@@ -632,7 +632,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @Nullable Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {
+	public @Nullable Set<@NonNull TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {
 		return null;
 	}
 

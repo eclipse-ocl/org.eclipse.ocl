@@ -102,8 +102,8 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	}
 
 	@Override
-	public @NonNull Bag<? extends Object> getElements() {
-		return (Bag<? extends Object>) elements;
+	public @NonNull Bag<@Nullable Object> getElements() {
+		return (Bag<@Nullable Object>) elements;
 	}
 
 	@Override
@@ -115,8 +115,8 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	 * @since 1.3
 	 */
 	@Override
-	public @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
-		return ((BagImpl<? extends Object>) elements).getMap();
+	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+		return ((BagImpl<@Nullable Object>) elements).getMap();
 	}
 
 	@Override

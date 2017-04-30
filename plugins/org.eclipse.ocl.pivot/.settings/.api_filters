@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
-    <resource path="META-INF/MANIFEST.MF">
-        <filter comment="Bug 512402 workaround" id="923795461">
-            <message_arguments>
-                <message_argument value="1.3.0"/>
-                <message_argument value="1.1.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/AnyType.java" type="org.eclipse.ocl.pivot.AnyType">
         <filter comment="Bug 512402 workaround" id="576720909">
             <message_arguments>

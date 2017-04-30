@@ -379,7 +379,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull Collection<? extends Object> asCollection() {
+	public @NonNull Collection<@Nullable Object> asCollection() {
 		return elements;
 	}
 
@@ -443,7 +443,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
-		Iterable<? extends Object> elements = iterable();
+		Iterable<@Nullable Object> elements = iterable();
 		if (this instanceof BaggableIterator) {
 			iterable();
 			return baggableIterator();
@@ -454,13 +454,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 			return castElements;
 		}
 		else if (elements instanceof BasicEList) {
-			@SuppressWarnings("unchecked")
-			BasicEList<Object> castElements = (BasicEList<Object>)elements;
+			BasicEList<@Nullable Object> castElements = (BasicEList<@Nullable Object>)elements;
 			@SuppressWarnings("null")@Nullable Object[] data = castElements.data();
 			return data != null ? new ArrayIterator<>(data, castElements.size()) : EMPTY_ITERATOR;
 		}
 		else if (elements instanceof List<?>) {
-			@SuppressWarnings("unchecked")
 			List<@Nullable Object> castElements = (List<@Nullable Object>)elements;
 			return new ListIterator<>(castElements);
 		}
@@ -469,15 +467,15 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		}
 	}
 
-	protected boolean checkElementsAreUnique(Iterable<? extends Object> elements) {
-		Set<Object> knownElements = new HashSet<Object>();
+	protected boolean checkElementsAreUnique(@NonNull Iterable<@Nullable ? extends Object> elements) {
+		Set<@Nullable Object> knownElements = new HashSet<>();
 		for (Object element : elements) {
 			assert knownElements.add(element);
 		}
 		return true;
 	}
 
-	private boolean checkElementsAreValues(@NonNull Iterable<? extends Object> elements) {
+	private boolean checkElementsAreValues(@NonNull Iterable<@Nullable ? extends Object> elements) {
 		for (Object element : elements) {
 			assert ValueUtil.isBoxed(element);
 			//			if (element instanceof Collection<?>) {
@@ -534,10 +532,10 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		if (isOrdered) {
 			if (isUnique) {
 				// This is probably a bug fix on LinkedHashSet that should consider ordering for equals
-				Collection<? extends Object> theseElements = this.getElements();
-				Collection<? extends Object> thoseElements = that.getElements();
-				Iterator<? extends Object> thisElement = theseElements.iterator();
-				Iterator<? extends Object> thatElement = thoseElements.iterator();
+				Collection<@Nullable Object> theseElements = this.getElements();
+				Collection<@Nullable Object> thoseElements = that.getElements();
+				Iterator<@Nullable Object> thisElement = theseElements.iterator();
+				Iterator<@Nullable Object> thatElement = thoseElements.iterator();
 				while (thisElement.hasNext() && thatElement.hasNext()) {
 					Object thisValue = thisElement.next();
 					Object thatValue = thatElement.next();
@@ -555,10 +553,10 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 				return !thisElement.hasNext() && !thatElement.hasNext();
 			}
 			else {
-				Collection<? extends Object> theseElements = this.getElements();
-				Collection<? extends Object> thoseElements = that.getElements();
-				Iterator<? extends Object> thisElement = theseElements.iterator();
-				Iterator<? extends Object> thatElement = thoseElements.iterator();
+				Collection<@Nullable Object> theseElements = this.getElements();
+				Collection<@Nullable Object> thoseElements = that.getElements();
+				Iterator<@Nullable Object> thisElement = theseElements.iterator();
+				Iterator<@Nullable Object> thatElement = thoseElements.iterator();
 				while (thisElement.hasNext() && thatElement.hasNext()) {
 					Object thisValue = thisElement.next();
 					Object thatValue = thatElement.next();
@@ -571,8 +569,8 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		}
 		else {
 			if (isUnique) {
-				Collection<? extends Object> theseElements = this.getElements();
-				Collection<? extends Object> thoseElements = that.getElements();
+				Collection<@Nullable Object> theseElements = this.getElements();
+				Collection<@Nullable Object> thoseElements = that.getElements();
 				int thisSize = theseElements.size();
 				int thatSize = thoseElements.size();
 				if (thisSize != thatSize) {
@@ -586,8 +584,8 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 				}
 			}
 			else {
-				Map<? extends Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount();
-				Map<? extends Object, @NonNull ? extends Number> thoseElements = that.getMapOfElement2elementCount();
+				Map<@Nullable Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount();
+				Map<@Nullable Object, @NonNull ? extends Number> thoseElements = that.getMapOfElement2elementCount();
 				//				Collection<? extends Object> theseElements = this.getElements();
 				//				Collection<? extends Object> thoseElements = that.getElements();
 				return theseElements.equals(thoseElements);
@@ -720,7 +718,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull Collection<? extends Object> getElements() {
+	public @NonNull Collection<@Nullable Object> getElements() {
 		return asCollection();
 	}
 
@@ -733,11 +731,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	 * @since 1.3
 	 */
 	@Override
-	public @NonNull Map<? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
 		throw new UnsupportedOperationException();
 	}
 
-	public @NonNull Collection<? extends Object> getObject() {
+	public @NonNull Collection<@Nullable Object> getObject() {
 		return elements;
 	}
 
@@ -881,8 +879,8 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {
-		Set<TupleValue> result = new HashSet<TupleValue>();
+	public @NonNull Set<@NonNull TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {
+		Set<@NonNull TupleValue> result = new HashSet<>();
 		for (Object next1 : iterable()) {
 			for (Object next2 : c.iterable()) {
 				result.add(new TupleValueImpl(tupleTypeId, next1, next2));
