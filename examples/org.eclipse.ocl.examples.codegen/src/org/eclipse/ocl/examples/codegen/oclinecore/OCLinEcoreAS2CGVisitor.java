@@ -99,8 +99,8 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@SuppressWarnings("null")@NonNull Variable parameterVariable : asSynthesizedQuery.getOwnedParameters()) {
-					String diagnosticsName = localContext != null ? localContext.getDiagnosticsName() : null;
-					String contextName = localContext != null ? localContext.getContextName() : null;
+					String diagnosticsName = localContext.getDiagnosticsName();
+					String contextName = localContext.getContextName();
 					CGParameter cgParameter;
 					if ((diagnosticsName != null) && diagnosticsName.equals(parameterVariable.getName())) {
 						cgParameter = getParameter(parameterVariable, diagnosticsName);

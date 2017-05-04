@@ -85,15 +85,13 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		JavaLocalContext<@NonNull ?> localContext = globalContext.getLocalContext(cgOperation);
-		if (localContext != null) {
-			CGParameter executorParameter = localContext.createExecutorParameter();
-			if (executorParameter != null) {
-				cgParameters.add(executorParameter);
-			}
-			CGParameter typeIdParameter = localContext.createTypeIdParameter();
-			if (typeIdParameter != null) {
-				cgParameters.add(typeIdParameter);
-			}
+		CGParameter executorParameter = localContext.createExecutorParameter();
+		if (executorParameter != null) {
+			cgParameters.add(executorParameter);
+		}
+		CGParameter typeIdParameter = localContext.createTypeIdParameter();
+		if (typeIdParameter != null) {
+			cgParameters.add(typeIdParameter);
 		}
 		if (contextVariable != null) {
 			CGParameter cgContext = as2cgVisitor.getParameter(contextVariable, null);

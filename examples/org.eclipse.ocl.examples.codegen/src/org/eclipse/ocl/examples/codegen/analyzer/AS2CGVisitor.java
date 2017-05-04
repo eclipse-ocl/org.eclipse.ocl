@@ -169,8 +169,13 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableExcludingAllOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableExcludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingOperation;
 import org.eclipse.ocl.pivot.library.iterator.ExistsIteration;
 import org.eclipse.ocl.pivot.library.iterator.ForAllIteration;
@@ -684,9 +689,24 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		OCLExpression pSource = element.getOwnedSource();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		CGOperationCallExp cgOperationCallExp = null;
-		if (libraryOperation instanceof CollectionIncludingOperation) {
+		if (libraryOperation instanceof CollectionExcludingOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableExcludingOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionExcludingAllOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableExcludingAllOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionIncludingOperation) {
 			if (canBeMutable(cgSource, element)) {
 				libraryOperation = CollectionMutableIncludingOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionIncludingAllOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableIncludingAllOperation.INSTANCE;
 			}
 		}
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {

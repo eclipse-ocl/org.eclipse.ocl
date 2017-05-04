@@ -437,7 +437,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	}
 
 	/**
-	 * Add anElement to the collection updating elemnt occurrence counts. Returns true if this
+	 * Add anElement to the collection updating element occurrence counts. Returns true if this
 	 * results in a new distinct element value.
 	 */
 	private boolean addToCounts(E anElement) {
@@ -636,6 +636,36 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 	}
 
+	public @NonNull CollectionValue mutableExcluding(@NonNull CollectionValue leftCollectionValue, E rightValue) {
+		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
+			if (removeFromCounts(rightValue)) {
+				lazyListOfElements.remove(rightValue);
+			}
+		}
+		else {
+			lazyListOfElements.remove(rightValue);
+		}
+		return leftCollectionValue;
+	}
+
+	public @NonNull CollectionValue mutableExcludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<E> rightCollectionValue) {
+		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
+			while (rightCollectionValue.hasNext()) {
+				E rightValue = rightCollectionValue.next();
+				if (removeFromCounts(rightValue)) {
+					lazyListOfElements.remove(rightValue);
+				}
+			}
+		}
+		else {
+			while (rightCollectionValue.hasNext()) {
+				E rightValue = rightCollectionValue.next();
+				lazyListOfElements.remove(rightValue);
+			}
+		}
+		return leftCollectionValue;
+	}
+
 	public @NonNull CollectionValue mutableIncluding(@NonNull CollectionValue leftCollectionValue, E rightValue) {
 		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
 			if (addToCounts(rightValue)) {
@@ -646,6 +676,46 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 			lazyListOfElements.add(rightValue);
 		}
 		return leftCollectionValue;
+	}
+
+	public @NonNull CollectionValue mutableIncludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<E> rightCollectionValue) {
+		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
+			while (rightCollectionValue.hasNext()) {
+				E rightValue = rightCollectionValue.next();
+				if (addToCounts(rightValue)) {
+					lazyListOfElements.add(rightValue);
+				}
+			}
+		}
+		else {
+			while (rightCollectionValue.hasNext()) {
+				E rightValue = rightCollectionValue.next();
+				lazyListOfElements.add(rightValue);
+			}
+		}
+		return leftCollectionValue;
+	}
+
+	/**
+	 * Remmove anElement from the collection updating element occurrence counts. Returns true if this
+	 * results in removal of the last copy of the element value and so requires a removal from the list.
+	 */
+	private boolean removeFromCounts(E anElement) {
+		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
+		if (lazyMapOfElement2elementCount2 == null) {
+			return true;			// Never happens, but better trim the list anyway
+		}
+		ElementCount oldElementCount = lazyMapOfElement2elementCount2.get(anElement);
+		if (oldElementCount == null) {
+			return false;			// Total miss shouldn't really happen, nothing to remove from the list
+		}
+		if (--oldElementCount.value <= 0) {
+			lazyMapOfElement2elementCount2.remove(anElement);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**

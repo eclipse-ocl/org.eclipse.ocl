@@ -173,23 +173,23 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		 */
 		protected final @NonNull JavaLocalContext<@NonNull ?> localContext;
 
-		protected final @NonNull CGValuedElement cgTree;
+		protected final @NonNull CGElement cgTree;
 
 		private @Nullable Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references = null;
 
-		public StaticFrame(@NonNull CGValuedElement cgTree) {
-			JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgTree);
-			assert localContext2 != null;
-			this.localContext = localContext2;
+		public StaticFrame(@NonNull CGElement cgTree) {
+			this.localContext = globalContext.getLocalContext(cgTree);
 			this.cgTree = cgTree;
 		}
 
 		private @NonNull Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> computeReferences() {
 			Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references2 = new HashMap<>();
-			assert definition2references2 != null;
+			//
+			//	Compute all the references
+			//
 			for (EObject eObject : new TreeIterable(cgTree, true)) {
 				CGValuedElement cgValuedElement = (CGValuedElement)eObject;
-				CGValuedElement cgDefinition = getDefinition(cgValuedElement);
+				CGValuedElement cgDefinition = getTransitiveDefinition(cgValuedElement);
 				if (cgDefinition != cgValuedElement) {
 					List<@NonNull CGValuedElement> references = definition2references2.get(cgDefinition);
 					if (references == null) {
@@ -200,7 +200,47 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 					references.add(cgValuedElement);
 				}
 			}
+			//
+			//	Prine the intermefiate references, retaining only the leaf references.
+			//
+			for (@NonNull CGValuedElement cgDefinition : definition2references2.keySet()) {
+				List<@NonNull CGValuedElement> cgReferences = definition2references2.get(cgDefinition);
+				assert cgReferences != null;
+				for (int i = cgReferences.size(); --i >= 0; ) {
+					CGValuedElement cgReference = cgReferences.get(i);
+					CGValuedElement cgDefinition2 = getDefinition(cgReference);
+					if ((cgDefinition2 != cgReference) && (cgDefinition2 != cgDefinition)) {
+						cgReferences.remove(i);
+					}
+				}
+			}
 			return definition2references2;
+		}
+
+		protected @NonNull CGValuedElement getDefinition(@NonNull CGValuedElement cgValuedElement) {
+			if (cgValuedElement instanceof CGConstantExp) {
+				return CGUtil.getReferredConstant((CGConstantExp) cgValuedElement);
+			}
+			else if (cgValuedElement instanceof CGVariable) {
+				CGValuedElement cgInit = ((CGVariable)cgValuedElement).getInit();
+				if (cgInit != null) {
+					return cgInit;
+				}
+				else {
+					return cgValuedElement;
+				}
+			}
+			else if (cgValuedElement instanceof CGVariableExp) {
+				return CGUtil.getReferredVariable((CGVariableExp) cgValuedElement);
+			}
+			else {
+				return cgValuedElement;
+			}
+		}
+
+		protected @NonNull CGValuedElement getTransitiveDefinition(@NonNull CGValuedElement cgValuedElement) {
+			CGValuedElement cgDefinition = getDefinition(cgValuedElement);
+			return cgDefinition != cgValuedElement ? getTransitiveDefinition(cgDefinition) : cgValuedElement;
 		}
 
 		public @Nullable CGValuedElement getIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
@@ -224,7 +264,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			if (definition2references2 == null) {
 				definition2references = definition2references2 = computeReferences();
 			}
-			CGValuedElement cgDefinition = getDefinition(cgSource);
+			CGValuedElement cgDefinition = getTransitiveDefinition(cgSource);
 			List<@NonNull CGValuedElement> references = definition2references2.get(cgDefinition);
 			return (references != null) && references.size() > 1;
 		}
@@ -540,7 +580,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return new Id2JavaExpressionVisitor(javaStream);
 	}
 
-	protected @NonNull StaticFrame createStaticFrame(@NonNull CGValuedElement cgElement) {
+	protected @NonNull StaticFrame createStaticFrame(@NonNull CGElement cgElement) {
 		return new StaticFrame(cgElement);
 	}
 
@@ -748,27 +788,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	public @NonNull CG getCodeGenerator() {
 		return context;
-	}
-
-	private @NonNull CGValuedElement getDefinition(@NonNull CGValuedElement cgValuedElement) {
-		if (cgValuedElement instanceof CGConstantExp) {
-			return getDefinition(CGUtil.getReferredConstant((CGConstantExp) cgValuedElement));
-		}
-		else if (cgValuedElement instanceof CGVariable) {
-			CGValuedElement cgInit = ((CGVariable)cgValuedElement).getInit();
-			if (cgInit != null) {
-				return getDefinition(cgInit);
-			}
-			else {
-				return cgValuedElement;
-			}
-		}
-		else if (cgValuedElement instanceof CGVariableExp) {
-			return getDefinition(CGUtil.getReferredVariable((CGVariableExp) cgValuedElement));
-		}
-		else {
-			return cgValuedElement;
-		}
 	}
 
 	protected @Nullable EStructuralFeature getESObject(@NonNull Property asProperty) {
@@ -985,7 +1004,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return staticFrameStack.pop();
 	}
 
-	protected void pushStaticFrameStack(@NonNull CGValuedElement cgElement) {
+	protected void pushStaticFrameStack(@NonNull CGElement cgElement) {
 		staticFrameStack.push(createStaticFrame(cgElement));
 	}
 
@@ -1074,6 +1093,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		//
 		if (getStaticFrame().isMultiAccessed(cgSource)) {
+			getStaticFrame().isMultiAccessed(cgSource);			// FIXME debugging
 			js.appendAtomicReferenceTo(cgSource);
 			js.append(".iterable();\n");
 		}
@@ -1132,54 +1152,51 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGCachedOperation(@NonNull CGCachedOperation cgOperation) {
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
-		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
-		if (localContext2 != null) {
-			pushStaticFrameStack(cgOperation);
-			try {
-				boolean isVirtualDispatcher = isVirtualDispatcher(cgOperation);
-				String operationClassName = getNativeOperationClassName(cgOperation);
-				if (isVirtualDispatcher) {
-					js.append("protected class ");
-					js.append(operationClassName);
-					js.append(" extends ");
-					js.appendClassReference(AbstractDispatchOperation.class);
-					js.pushClassBody(operationClassName);
-					doCachedOperationDispatchInstaller(cgOperation);
-					js.append("\n");
-					doCachedOperationEvaluate(cgOperation);
-					js.popClassBody(false);
-					//
+		pushStaticFrameStack(cgOperation);
+		try {
+			boolean isVirtualDispatcher = isVirtualDispatcher(cgOperation);
+			String operationClassName = getNativeOperationClassName(cgOperation);
+			if (isVirtualDispatcher) {
+				js.append("protected class ");
+				js.append(operationClassName);
+				js.append(" extends ");
+				js.appendClassReference(AbstractDispatchOperation.class);
+				js.pushClassBody(operationClassName);
+				doCachedOperationDispatchInstaller(cgOperation);
+				js.append("\n");
+				doCachedOperationEvaluate(cgOperation);
+				js.popClassBody(false);
+				//
+				js.append("\n");
+				doCachedOperationClassInstance(cgOperation);
+			}
+			else {
+				LanguageExpression expressionInOCL = asOperation.getBodyExpression();
+				String title = PrettyPrinter.printName(asOperation);
+				js.appendCommentWithOCL(title+"\n", expressionInOCL);
+				//
+				js.append("public class ");
+				js.append(operationClassName);
+				js.append(" extends ");
+				js.appendClassReference(AbstractEvaluationOperation.class);
+				js.pushClassBody(operationClassName);
+				doCachedOperationBasicEvaluate(cgOperation);
+				js.append("\n");
+				doCachedOperationEvaluate(cgOperation);
+				js.popClassBody(false);
+				//
+				if (cgOperation.getVirtualOperations().size() <= 0) {
 					js.append("\n");
 					doCachedOperationClassInstance(cgOperation);
 				}
 				else {
-					LanguageExpression expressionInOCL = asOperation.getBodyExpression();
-					String title = PrettyPrinter.printName(asOperation);
-					js.appendCommentWithOCL(title+"\n", expressionInOCL);
-					//
-					js.append("public class ");
-					js.append(operationClassName);
-					js.append(" extends ");
-					js.appendClassReference(AbstractEvaluationOperation.class);
-					js.pushClassBody(operationClassName);
-					doCachedOperationBasicEvaluate(cgOperation);
 					js.append("\n");
-					doCachedOperationEvaluate(cgOperation);
-					js.popClassBody(false);
-					//
-					if (cgOperation.getVirtualOperations().size() <= 0) {
-						js.append("\n");
-						doCachedOperationClassInstance(cgOperation);
-					}
-					else {
-						js.append("\n");
-						doCachedOperationClassDirectInstance(cgOperation);
-					}
+					doCachedOperationClassDirectInstance(cgOperation);
 				}
 			}
-			finally {
-				popStaticFrameStack();
-			}
+		}
+		finally {
+			popStaticFrameStack();
 		}
 		return true;
 	}
@@ -2181,69 +2198,66 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGLibraryOperation(@NonNull CGLibraryOperation cgOperation) {
-		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
-		if (localContext2 != null) {
-			pushStaticFrameStack(cgOperation);
-			try {
-				List<CGParameter> cgParameters = cgOperation.getParameters();
-				String operationName = cgOperation.getName();
-				assert operationName != null;
-				js.append("public static class ");
-				js.append(operationName);
-				js.append(" extends ");
-				js.appendClassReference(genModelHelper.getAbstractOperationClass(cgParameters.size()-3)); // executor, typeId, self
-				js.pushClassBody(operationName);
-				js.append("public static final ");
-				js.appendIsRequired(true);
-				js.append(" ");
-				js.append(operationName);
-				js.append(" ");
-				js.append(globalContext.getInstanceName());
-				js.append(" = new ");
-				js.append(operationName);
-				js.append("();\n");
-				js.append("\n");
-				//				js.append("public static final ");
-				//				CGValuedElement evaluatorParameter = localContext2.getEvaluatorParameter(cgOperation);
-				//				CGParameter typeIdParameter = localContext2.getTypeIdParameter(cgOperation);
-				CGValuedElement body = getExpression(cgOperation.getBody());
-				//
-				Element ast = cgOperation.getAst();
+		pushStaticFrameStack(cgOperation);
+		try {
+			List<CGParameter> cgParameters = cgOperation.getParameters();
+			String operationName = cgOperation.getName();
+			assert operationName != null;
+			js.append("public static class ");
+			js.append(operationName);
+			js.append(" extends ");
+			js.appendClassReference(genModelHelper.getAbstractOperationClass(cgParameters.size()-3)); // executor, typeId, self
+			js.pushClassBody(operationName);
+			js.append("public static final ");
+			js.appendIsRequired(true);
+			js.append(" ");
+			js.append(operationName);
+			js.append(" ");
+			js.append(globalContext.getInstanceName());
+			js.append(" = new ");
+			js.append(operationName);
+			js.append("();\n");
+			js.append("\n");
+			//				js.append("public static final ");
+			//				CGValuedElement evaluatorParameter = localContext2.getEvaluatorParameter(cgOperation);
+			//				CGParameter typeIdParameter = localContext2.getTypeIdParameter(cgOperation);
+			CGValuedElement body = getExpression(cgOperation.getBody());
+			//
+			Element ast = cgOperation.getAst();
+			if (ast instanceof Operation) {
+				LanguageExpression expressionInOCL = ((Operation)ast).getBodyExpression();
 				if (ast instanceof Operation) {
-					LanguageExpression expressionInOCL = ((Operation)ast).getBodyExpression();
-					if (ast instanceof Operation) {
-						String title = PrettyPrinter.printName(ast);
-						js.appendCommentWithOCL(title+"\n", expressionInOCL);
-					}
+					String title = PrettyPrinter.printName(ast);
+					js.appendCommentWithOCL(title+"\n", expressionInOCL);
 				}
-				//
-				js.append("@Override\n");
-				js.append("public ");
-				boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
-				js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
-				js.append(" ");
-				js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
-				js.append(" ");
-				js.append(globalContext.getEvaluateName());
-				js.append("(");
-				boolean isFirst = true;
-				for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
-					if (!isFirst) {
-						js.append(", ");
-					}
-					js.appendDeclaration(cgParameter);
-					isFirst = false;
+			}
+			//
+			js.append("@Override\n");
+			js.append("public ");
+			boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
+			js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+			js.append(" ");
+			js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+			js.append(" ");
+			js.append(globalContext.getEvaluateName());
+			js.append("(");
+			boolean isFirst = true;
+			for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
+				if (!isFirst) {
+					js.append(", ");
 				}
-				js.append(") {\n");
-				js.pushIndentation(null);
-				appendReturn(body);
-				js.popIndentation();
-				js.append("}\n");
-				js.popClassBody(false);
+				js.appendDeclaration(cgParameter);
+				isFirst = false;
 			}
-			finally {
-				popStaticFrameStack();
-			}
+			js.append(") {\n");
+			js.pushIndentation(null);
+			appendReturn(body);
+			js.popIndentation();
+			js.append("}\n");
+			js.popClassBody(false);
+		}
+		finally {
+			popStaticFrameStack();
 		}
 		return true;
 	}
@@ -2401,31 +2415,28 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGNativeOperation(@NonNull CGNativeOperation cgOperation) {
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
-		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
-		if (localContext2 != null) {
-			pushStaticFrameStack(cgOperation);
-			try {
-				String operationClassName = getNativeOperationClassName(cgOperation);
-				LanguageExpression expressionInOCL = asOperation.getBodyExpression();
-				String title = PrettyPrinter.printName(asOperation);
-				js.appendCommentWithOCL(title+"\n", expressionInOCL);
-				//
-				js.append("protected class ");
-				js.append(operationClassName);
-				js.append(" extends ");
-				js.appendClassReference(AbstractEvaluationOperation.class);
-				js.pushClassBody(operationClassName);
-				doCachedOperationBasicEvaluate(cgOperation);
-				js.append("\n");
-				doCachedOperationEvaluate(cgOperation);
-				js.popClassBody(false);
-				//
-				js.append("\n");
-				doCachedOperationClassInstance(cgOperation);
-			}
-			finally {
-				popStaticFrameStack();
-			}
+		pushStaticFrameStack(cgOperation);
+		try {
+			String operationClassName = getNativeOperationClassName(cgOperation);
+			LanguageExpression expressionInOCL = asOperation.getBodyExpression();
+			String title = PrettyPrinter.printName(asOperation);
+			js.appendCommentWithOCL(title+"\n", expressionInOCL);
+			//
+			js.append("protected class ");
+			js.append(operationClassName);
+			js.append(" extends ");
+			js.appendClassReference(AbstractEvaluationOperation.class);
+			js.pushClassBody(operationClassName);
+			doCachedOperationBasicEvaluate(cgOperation);
+			js.append("\n");
+			doCachedOperationEvaluate(cgOperation);
+			js.popClassBody(false);
+			//
+			js.append("\n");
+			doCachedOperationClassInstance(cgOperation);
+		}
+		finally {
+			popStaticFrameStack();
 		}
 		return true;
 	}
@@ -2486,10 +2497,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGNativeProperty(@NonNull CGNativeProperty cgNativeProperty) {
-		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgNativeProperty);
-		assert localContext2 != null;
+		pushStaticFrameStack(cgNativeProperty);
 		try {
-			pushStaticFrameStack(cgNativeProperty);
 			js.append("protected ");
 			js.appendDeclaration(cgNativeProperty);
 			js.append(";\n");
@@ -2526,50 +2535,47 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
-		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
-		if (localContext2 != null) {
-			pushStaticFrameStack(cgOperation);
-			try {
-				//				CGValuedElement evaluatorParameter = localContext2.getEvaluatorParameter(cgOperation);
-				//				CGParameter typeIdParameter = localContext2.getTypeIdParameter(cgOperation);
-				List<CGParameter> cgParameters = cgOperation.getParameters();
-				CGValuedElement body = getExpression(cgOperation.getBody());
-				//
-				Element ast = cgOperation.getAst();
+		pushStaticFrameStack(cgOperation);
+		try {
+			//				CGValuedElement evaluatorParameter = localContext2.getEvaluatorParameter(cgOperation);
+			//				CGParameter typeIdParameter = localContext2.getTypeIdParameter(cgOperation);
+			List<CGParameter> cgParameters = cgOperation.getParameters();
+			CGValuedElement body = getExpression(cgOperation.getBody());
+			//
+			Element ast = cgOperation.getAst();
+			if (ast instanceof Operation) {
+				LanguageExpression expressionInOCL = ((Operation)ast).getBodyExpression();
 				if (ast instanceof Operation) {
-					LanguageExpression expressionInOCL = ((Operation)ast).getBodyExpression();
-					if (ast instanceof Operation) {
-						String title = PrettyPrinter.printName(ast);
-						js.appendCommentWithOCL(title+"\n", expressionInOCL);
-					}
+					String title = PrettyPrinter.printName(ast);
+					js.appendCommentWithOCL(title+"\n", expressionInOCL);
 				}
-				//
-				js.append("@Override\n");
-				js.append("public ");
-				boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
-				js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
-				js.append(" ");
-				js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
-				js.append(" ");
-				js.append(cgOperation.getName());
-				js.append("(");
-				boolean isFirst = true;
-				for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
-					if (!isFirst) {
-						js.append(", ");
-					}
-					js.appendDeclaration(cgParameter);
-					isFirst = false;
+			}
+			//
+			js.append("@Override\n");
+			js.append("public ");
+			boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
+			js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+			js.append(" ");
+			js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+			js.append(" ");
+			js.append(cgOperation.getName());
+			js.append("(");
+			boolean isFirst = true;
+			for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
+				if (!isFirst) {
+					js.append(", ");
 				}
-				js.append(") {\n");
-				js.pushIndentation(null);
-				appendReturn(body);
-				js.popIndentation();
-				js.append("}\n");
+				js.appendDeclaration(cgParameter);
+				isFirst = false;
 			}
-			finally {
-				popStaticFrameStack();
-			}
+			js.append(") {\n");
+			js.pushIndentation(null);
+			appendReturn(body);
+			js.popIndentation();
+			js.append("}\n");
+		}
+		finally {
+			popStaticFrameStack();
 		}
 		return true;
 	}
