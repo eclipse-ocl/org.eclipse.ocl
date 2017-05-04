@@ -175,23 +175,23 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 		protected final @NonNull CGElement cgTree;
 
-		private @Nullable Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references = null;
+		private @Nullable Map<@NonNull CGElement, @NonNull List<@NonNull CGElement>> definition2references = null;
 
 		public StaticFrame(@NonNull CGElement cgTree) {
 			this.localContext = globalContext.getLocalContext(cgTree);
 			this.cgTree = cgTree;
 		}
 
-		private @NonNull Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> computeReferences() {
-			Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references2 = new HashMap<>();
+		private @NonNull Map<@NonNull CGElement, @NonNull List<@NonNull CGElement>> computeReferences() {
+			Map<@NonNull CGElement, @NonNull List<@NonNull CGElement>> definition2references2 = new HashMap<>();
 			//
 			//	Compute all the references
 			//
 			for (EObject eObject : new TreeIterable(cgTree, true)) {
-				CGValuedElement cgValuedElement = (CGValuedElement)eObject;
-				CGValuedElement cgDefinition = getTransitiveDefinition(cgValuedElement);
+				CGElement cgValuedElement = (CGElement)eObject;
+				CGElement cgDefinition = getTransitiveDefinition(cgValuedElement);
 				if (cgDefinition != cgValuedElement) {
-					List<@NonNull CGValuedElement> references = definition2references2.get(cgDefinition);
+					List<@NonNull CGElement> references = definition2references2.get(cgDefinition);
 					if (references == null) {
 						references = new ArrayList<>();
 						definition2references2.put(cgDefinition, references);
@@ -201,14 +201,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				}
 			}
 			//
-			//	Prine the intermefiate references, retaining only the leaf references.
+			//	Prune the intermediate references, retaining only the leaf references.
 			//
-			for (@NonNull CGValuedElement cgDefinition : definition2references2.keySet()) {
-				List<@NonNull CGValuedElement> cgReferences = definition2references2.get(cgDefinition);
+			for (@NonNull CGElement cgDefinition : definition2references2.keySet()) {
+				List<@NonNull CGElement> cgReferences = definition2references2.get(cgDefinition);
 				assert cgReferences != null;
 				for (int i = cgReferences.size(); --i >= 0; ) {
-					CGValuedElement cgReference = cgReferences.get(i);
-					CGValuedElement cgDefinition2 = getDefinition(cgReference);
+					CGElement cgReference = cgReferences.get(i);
+					CGElement cgDefinition2 = getDefinition(cgReference);
 					if ((cgDefinition2 != cgReference) && (cgDefinition2 != cgDefinition)) {
 						cgReferences.remove(i);
 					}
@@ -217,7 +217,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			return definition2references2;
 		}
 
-		protected @NonNull CGValuedElement getDefinition(@NonNull CGValuedElement cgValuedElement) {
+		protected @NonNull CGElement getDefinition(@NonNull CGElement cgValuedElement) {
 			if (cgValuedElement instanceof CGConstantExp) {
 				return CGUtil.getReferredConstant((CGConstantExp) cgValuedElement);
 			}
@@ -238,8 +238,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 		}
 
-		protected @NonNull CGValuedElement getTransitiveDefinition(@NonNull CGValuedElement cgValuedElement) {
-			CGValuedElement cgDefinition = getDefinition(cgValuedElement);
+		protected @NonNull CGElement getTransitiveDefinition(@NonNull CGElement cgValuedElement) {
+			CGElement cgDefinition = getDefinition(cgValuedElement);
 			return cgDefinition != cgValuedElement ? getTransitiveDefinition(cgDefinition) : cgValuedElement;
 		}
 
@@ -260,12 +260,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 
 		private boolean isMultiAccessed(@NonNull CGValuedElement cgSource) {
-			Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references2 = definition2references;
+			Map<@NonNull CGElement, @NonNull List<@NonNull CGElement>> definition2references2 = definition2references;
 			if (definition2references2 == null) {
 				definition2references = definition2references2 = computeReferences();
 			}
-			CGValuedElement cgDefinition = getTransitiveDefinition(cgSource);
-			List<@NonNull CGValuedElement> references = definition2references2.get(cgDefinition);
+			CGElement cgDefinition = getTransitiveDefinition(cgSource);
+			List<@NonNull CGElement> references = definition2references2.get(cgDefinition);
 			return (references != null) && references.size() > 1;
 		}
 	}

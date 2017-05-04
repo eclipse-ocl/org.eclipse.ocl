@@ -552,8 +552,22 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		else if (collectionId == TypeId.SEQUENCE) {
 			return createSequenceOfAll(collectedId, unboxedValues);
 		}
-		else /*if (collectionId == TypeId.SET)*/ {
+		else if (collectionId == TypeId.SET) {
 			return createSetOfAll(collectedId, unboxedValues);
+		}
+		else /*if (collectionId == TypeId.COLLECTION)*/ {
+			if (unboxedValues instanceof LinkedHashSet<?>) {
+				return createOrderedSetOfAll(collectedId, unboxedValues);
+			}
+			else if (unboxedValues instanceof Set<?>) {
+				return createSetOfAll(collectedId, unboxedValues);
+			}
+			else if (unboxedValues instanceof Bag<?>) {
+				return createBagOfAll(collectedId, unboxedValues);
+			}
+			else /*if (unboxedValues instanceof List<?>)*/ {
+				return createSequenceOfAll(collectedId, unboxedValues);
+			}
 		}
 	}
 

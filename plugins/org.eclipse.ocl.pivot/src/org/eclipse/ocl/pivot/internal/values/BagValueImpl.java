@@ -30,7 +30,9 @@ import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
@@ -78,12 +80,22 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	}
 
 	@Override
+	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
+		return isUnique() ? asOrderedSetValue() : asSequenceValue();
+	}
+
+	@Override
 	public @NonNull Bag<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
 		Bag<@Nullable Object> unboxedValues = new BagImpl<>();
 		for (Object boxedValue : elements) {
 			unboxedValues.add(idResolver.unboxedValueOf(boxedValue));
 		}
 		return unboxedValues;
+	}
+
+	@Override
+	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
+		return isOrdered() ? asOrderedSetValue() : asSetValue();
 	}
 
 	@Override

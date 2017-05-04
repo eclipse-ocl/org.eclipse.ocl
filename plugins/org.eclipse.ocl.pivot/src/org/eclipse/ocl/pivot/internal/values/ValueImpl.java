@@ -191,6 +191,11 @@ public abstract class ValueImpl extends ValueUtil implements Value
 	}
 
 	@Override
+	public @NonNull String toString() {
+		return getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(this));
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {		// FIXME change to abstract once a major version permits the API change
 		s.append(getClass().getSimpleName());
 	}

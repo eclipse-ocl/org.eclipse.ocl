@@ -841,7 +841,7 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 100);
 		return s.toString();

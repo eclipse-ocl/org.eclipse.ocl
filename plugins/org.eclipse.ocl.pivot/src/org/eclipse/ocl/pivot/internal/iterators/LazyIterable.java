@@ -437,18 +437,18 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	}
 
 	/**
-	 * Add anElement to the collection updating element occurrence counts. Returns true if this
+	 * Add counts of anElement to the collection updating element occurrence counts. Returns true if this
 	 * results in a new distinct element value.
 	 */
-	private boolean addToCounts(E anElement) {
+	private boolean addToCounts(E anElement, int counts) {
 		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
 		assert lazyMapOfElement2elementCount2 != null;
 		ElementCount newElementCount = spareElementCount;
 		if (newElementCount == null) {
-			newElementCount = new ElementCount(1);
+			newElementCount = new ElementCount(counts);
 		}
 		else {
-			newElementCount.value = 1;
+			newElementCount.value = counts;
 		}
 		ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, newElementCount);
 		if (oldElementCount != null) {
@@ -511,7 +511,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		if (collectionFactory.isUnique()) {
 			while ((size <= javaIndex) && internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
-				if (addToCounts(anElement)) {
+				if (addToCounts(anElement, 1)) {
 					size++;
 					lazyListOfElements.add(anElement);
 				}
@@ -523,7 +523,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 				size++;
 				lazyListOfElements.add(anElement);
 				if (lazyMapOfElement2elementCount != null) {
-					addToCounts(anElement);
+					addToCounts(anElement, 1);
 				}
 			}
 		}
@@ -532,7 +532,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 			while ((indexes <= javaIndex) && internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
 				size++;
-				if (addToCounts(anElement)) {
+				if (addToCounts(anElement, 1)) {
 					indexes++;
 					lazyListOfElements.add(anElement);
 				}
@@ -548,7 +548,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		if (collectionFactory.isUnique()) {
 			while (internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
-				if (addToCounts(anElement)) {
+				if (addToCounts(anElement, 1)) {
 					size++;
 					lazyListOfElements.add(anElement);
 				}
@@ -560,7 +560,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 				size++;
 				lazyListOfElements.add(anElement);
 				if (lazyMapOfElement2elementCount != null) {
-					addToCounts(anElement);
+					addToCounts(anElement, 1);
 				}
 			}
 		}
@@ -568,7 +568,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 			while (internalIterator.hasNext()) {
 				E anElement = internalIterator.next();
 				size++;
-				if (addToCounts(anElement)) {
+				if (addToCounts(anElement, 1)) {
 					lazyListOfElements.add(anElement);
 				}
 			}
@@ -591,7 +591,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 			}
 			lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
 			for (E element : lazyListOfElements) {
-				addToCounts(element);
+				addToCounts(element, 1);
 			}
 		}
 		getListOfElements();
@@ -638,28 +638,44 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 
 	public @NonNull CollectionValue mutableExcluding(@NonNull CollectionValue leftCollectionValue, E rightValue) {
 		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
-			if (removeFromCounts(rightValue)) {
+			if (removeFromCounts(rightValue, 1)) {
+				size--;
 				lazyListOfElements.remove(rightValue);
 			}
 		}
 		else {
+			size--;
 			lazyListOfElements.remove(rightValue);
 		}
 		return leftCollectionValue;
 	}
 
-	public @NonNull CollectionValue mutableExcludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<E> rightCollectionValue) {
+	public @NonNull CollectionValue mutableExcludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<E> rightIterator) {
 		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
-			while (rightCollectionValue.hasNext()) {
-				E rightValue = rightCollectionValue.next();
-				if (removeFromCounts(rightValue)) {
-					lazyListOfElements.remove(rightValue);
+			if (rightIterator instanceof BaggableIterator<?>) {
+				BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
+				for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
+					E rightValue = rightIterator.next();
+					if (removeFromCounts(rightValue, nextCount)) {
+						size--;
+						lazyListOfElements.remove(rightValue);
+					}
+				}
+			}
+			else {
+				while (rightIterator.hasNext()) {
+					E rightValue = rightIterator.next();
+					if (removeFromCounts(rightValue, 1)) {
+						size--;
+						lazyListOfElements.remove(rightValue);
+					}
 				}
 			}
 		}
 		else {
-			while (rightCollectionValue.hasNext()) {
-				E rightValue = rightCollectionValue.next();
+			while (rightIterator.hasNext()) {
+				E rightValue = rightIterator.next();
+				size--;
 				lazyListOfElements.remove(rightValue);
 			}
 		}
@@ -668,28 +684,46 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 
 	public @NonNull CollectionValue mutableIncluding(@NonNull CollectionValue leftCollectionValue, E rightValue) {
 		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
-			if (addToCounts(rightValue)) {
+			if (addToCounts(rightValue, 1)) {
+				size++;
 				lazyListOfElements.add(rightValue);
 			}
 		}
 		else {
+			size++;
 			lazyListOfElements.add(rightValue);
 		}
 		return leftCollectionValue;
 	}
 
-	public @NonNull CollectionValue mutableIncludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<E> rightCollectionValue) {
+	public @NonNull CollectionValue mutableIncludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<E> rightIterator) {
 		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
-			while (rightCollectionValue.hasNext()) {
-				E rightValue = rightCollectionValue.next();
-				if (addToCounts(rightValue)) {
-					lazyListOfElements.add(rightValue);
+			if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
+				if (rightIterator instanceof BaggableIterator<?>) {
+					BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
+					for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
+						E rightValue = rightIterator.next();
+						if (addToCounts(rightValue, nextCount)) {
+							size++;
+							lazyListOfElements.add(rightValue);
+						}
+					}
+				}
+			}
+			else {
+				while (rightIterator.hasNext()) {
+					E rightValue = rightIterator.next();
+					if (addToCounts(rightValue, 1)) {
+						size++;
+						lazyListOfElements.add(rightValue);
+					}
 				}
 			}
 		}
 		else {
-			while (rightCollectionValue.hasNext()) {
-				E rightValue = rightCollectionValue.next();
+			while (rightIterator.hasNext()) {
+				E rightValue = rightIterator.next();
+				size++;
 				lazyListOfElements.add(rightValue);
 			}
 		}
@@ -697,10 +731,10 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	}
 
 	/**
-	 * Remmove anElement from the collection updating element occurrence counts. Returns true if this
+	 * Remmove counts of anElement from the collection updating element occurrence counts. Returns true if this
 	 * results in removal of the last copy of the element value and so requires a removal from the list.
 	 */
-	private boolean removeFromCounts(E anElement) {
+	private boolean removeFromCounts(E anElement, int counts) {
 		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
 		if (lazyMapOfElement2elementCount2 == null) {
 			return true;			// Never happens, but better trim the list anyway
@@ -709,7 +743,8 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		if (oldElementCount == null) {
 			return false;			// Total miss shouldn't really happen, nothing to remove from the list
 		}
-		if (--oldElementCount.value <= 0) {
+		oldElementCount.value -= counts;
+		if (oldElementCount.value <= 0) {
 			lazyMapOfElement2elementCount2.remove(anElement);
 			return true;
 		}
