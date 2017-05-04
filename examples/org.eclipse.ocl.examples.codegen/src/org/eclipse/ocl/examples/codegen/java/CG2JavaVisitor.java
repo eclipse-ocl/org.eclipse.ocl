@@ -13,8 +13,11 @@ package org.eclipse.ocl.examples.codegen.java;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -141,6 +144,7 @@ import org.eclipse.ocl.pivot.library.LibraryUntypedOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -172,6 +176,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	 * The local Java context for the current operation.
 	 */
 	protected JavaLocalContext<@NonNull ?> localContext;
+
+	protected @Nullable Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references = null;
 
 	public CG2JavaVisitor(@NonNull CG codeGenerator) {
 		super(codeGenerator);
@@ -463,6 +469,24 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 	}
 
+	private void computeReferences(@NonNull CGValuedElement cgTree) {
+		Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references2 = definition2references;
+		assert definition2references2 != null;
+		for (EObject eObject : new TreeIterable(cgTree, true)) {
+			CGValuedElement cgValuedElement = (CGValuedElement)eObject;
+			CGValuedElement cgDefinition = getDefinition(cgValuedElement);
+			if (cgDefinition != cgValuedElement) {
+				List<@NonNull CGValuedElement> references = definition2references2.get(cgDefinition);
+				if (references == null) {
+					references = new ArrayList<>();
+					definition2references2.put(cgDefinition, references);
+				}
+				assert !references.contains(cgValuedElement);
+				references.add(cgValuedElement);
+			}
+		}
+	}
+
 	protected @NonNull Id2JavaInterfaceVisitor createId2JavaClassVisitor() {
 		return new Id2JavaInterfaceVisitor();
 	}
@@ -677,6 +701,27 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return context;
 	}
 
+	private @NonNull CGValuedElement getDefinition(@NonNull CGValuedElement cgValuedElement) {
+		if (cgValuedElement instanceof CGConstantExp) {
+			return getDefinition(CGUtil.getReferredConstant((CGConstantExp) cgValuedElement));
+		}
+		else if (cgValuedElement instanceof CGVariable) {
+			CGValuedElement cgInit = ((CGVariable)cgValuedElement).getInit();
+			if (cgInit != null) {
+				return getDefinition(cgInit);
+			}
+			else {
+				return cgValuedElement;
+			}
+		}
+		else if (cgValuedElement instanceof CGVariableExp) {
+			return getDefinition(CGUtil.getReferredVariable((CGVariableExp) cgValuedElement));
+		}
+		else {
+			return cgValuedElement;
+		}
+	}
+
 	protected @Nullable EStructuralFeature getESObject(@NonNull Property asProperty) {
 		EObject esObject = asProperty.getESObject();
 		if (esObject instanceof EStructuralFeature) {
@@ -875,6 +920,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return type instanceof Enumeration;
 	}
 
+	private boolean isMultiAccessed(@NonNull CGValuedElement cgSource) {
+		Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references2 = definition2references;
+		assert definition2references2 != null;
+		CGValuedElement cgDefinition = getDefinition(cgSource);
+		List<@NonNull CGValuedElement> references = definition2references2.get(cgDefinition);
+		return (references != null) && references.size() > 1;
+	}
+
 	protected boolean isVirtualDispatcher(@NonNull CGOperation cgOperation) {
 		return (cgOperation instanceof CGCachedOperation) && (((CGCachedOperation)cgOperation).getFinalOperations().size() > 0);
 	}
@@ -965,6 +1018,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(";\n");
 		}
 		//
+		if (isMultiAccessed(cgSource)) {
+			js.appendAtomicReferenceTo(cgSource);
+			js.append(".iterable();\n");
+		}
 		js.appendIsRequired(cgIterator.isRequired());
 		js.append(" ");
 		js.appendClassReference(Iterator.class, false, Object.class); //, getJavaClass(cgIterator));
@@ -1018,10 +1075,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGCachedOperation(@NonNull CGCachedOperation cgOperation) {
+		assert definition2references == null;
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
+			definition2references = new HashMap<>();
 			localContext = localContext2;
 			boolean isVirtualDispatcher = isVirtualDispatcher(cgOperation);
 			try {
@@ -1067,6 +1126,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 			finally {
 				localContext = null;
+				definition2references = null;
 			}
 		}
 		return true;
@@ -1306,14 +1366,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGConstraint(@NonNull CGConstraint cgConstraint) {
+		assert definition2references == null;
 		localContext = globalContext.getLocalContext(cgConstraint);
 		try {
+			definition2references = new HashMap<>();
 			Boolean flowContinues = super.visitCGConstraint(cgConstraint);
 			assert flowContinues != null;
 			return flowContinues;
 		}
 		finally {
 			localContext = null;
+			definition2references = null;
 		}
 	}
 
@@ -2071,10 +2134,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGLibraryOperation(@NonNull CGLibraryOperation cgOperation) {
+		assert definition2references == null;
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
 			localContext = localContext2;
 			try {
+				definition2references = new HashMap<>();
 				List<CGParameter> cgParameters = cgOperation.getParameters();
 				String operationName = cgOperation.getName();
 				assert operationName != null;
@@ -2133,6 +2198,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 			finally {
 				localContext = null;
+				definition2references = null;
 			}
 		}
 		return true;
@@ -2289,12 +2355,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override		// FIXME revert to the pre-cached code
 	public @NonNull Boolean visitCGNativeOperation(@NonNull CGNativeOperation cgOperation) {
+		assert definition2references == null;
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
 			localContext = localContext2;
 			try {
+				definition2references = new HashMap<>();
 				String operationClassName = getNativeOperationClassName(cgOperation);
 				LanguageExpression expressionInOCL = asOperation.getBodyExpression();
 				String title = PrettyPrinter.printName(asOperation);
@@ -2315,6 +2383,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 			finally {
 				localContext = null;
+				definition2references = null;
 			}
 		}
 		return true;
@@ -2376,8 +2445,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGNativeProperty(@NonNull CGNativeProperty cgNativeProperty) {
+		assert definition2references == null;
 		localContext = globalContext.getLocalContext(cgNativeProperty);
 		try {
+			definition2references = new HashMap<>();
 			js.append("protected ");
 			js.appendDeclaration(cgNativeProperty);
 			js.append(";\n");
@@ -2385,6 +2456,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		finally {
 			localContext = null;
+			definition2references = null;
 		}
 	}
 
@@ -2414,6 +2486,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
+		assert definition2references == null;
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
 			localContext = localContext2;
@@ -2422,6 +2495,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				//				CGParameter typeIdParameter = localContext2.getTypeIdParameter(cgOperation);
 				List<CGParameter> cgParameters = cgOperation.getParameters();
 				CGValuedElement body = getExpression(cgOperation.getBody());
+				definition2references = new HashMap<>();
+				computeReferences(body);
 				//
 				Element ast = cgOperation.getAst();
 				if (ast instanceof Operation) {
@@ -2457,6 +2532,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 			finally {
 				localContext = null;
+				definition2references = null;
 			}
 		}
 		return true;
@@ -2480,14 +2556,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGProperty(@NonNull CGProperty cgProperty) {
+		assert definition2references == null;
 		localContext = globalContext.getLocalContext(cgProperty);
 		try {
+			definition2references = new HashMap<>();
 			Boolean flowContinues = super.visitCGProperty(cgProperty);
 			assert flowContinues != null;
 			return flowContinues;
 		}
 		finally {
 			localContext = null;
+			definition2references = null;
 		}
 	}
 

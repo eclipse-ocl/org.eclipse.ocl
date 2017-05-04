@@ -52,6 +52,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 			collectionName = ((CollectionTypeId)typeId).getGeneralizedId().getName();
 		}
 		js.appendReferenceTo(localContext.getIdResolverVariable(cgBoxExp));
+		//		assert !"Collection".equals(collectionName);
 		js.append(".create" + collectionName + "OfAll(");
 		js.appendIdReference(typeId);
 		js.append(", ");

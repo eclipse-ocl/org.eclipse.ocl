@@ -104,6 +104,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	}
 
 	protected @NonNull String generateBody(@NonNull CGValuedElement cgBody, @NonNull String returnClassName) {
+		definition2references = new HashMap<>();
 		js.resetStream();
 		js.appendCommentWithOCL(null, cgBody.getAst());
 		js.appendLocalStatements(cgBody);

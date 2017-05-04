@@ -35,58 +35,105 @@ public abstract class BoxedValueDescriptor extends AbstractValueDescriptor imple
 
 	protected abstract @NonNull EcoreDescriptor createEcoreDescriptor();
 
+	protected @Nullable UnboxedValueDescriptor createPrimitiveObjectEcoreDescriptor(@NonNull Class<?> instanceClass) {
+		if (BigDecimal.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, BigDecimal.class);
+		}
+		else if (BigInteger.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, BigInteger.class);
+		}
+		else if (Byte.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, Byte.class);
+		}
+		else if (Character.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, Character.class);
+		}
+		else if (Double.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, Double.class);
+		}
+		else if (Float.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, Float.class);
+		}
+		else if (Integer.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, Integer.class);
+		}
+		else if (Long.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, Long.class);
+		}
+		else if (Short.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, Short.class);
+		}
+		else {
+			return null;
+		}
+	}
+
+	protected @Nullable EcoreDescriptor createPrimitiveTypeEcoreDescriptor(@NonNull Class<?> instanceClass) {
+		if (byte.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, byte.class);
+		}
+		else if (char.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, char.class);
+		}
+		else if (double.class == instanceClass) {
+			return new DoublePrimitiveDescriptor(elementId);
+		}
+		else if (float.class == instanceClass) {
+			return new FloatPrimitiveDescriptor(elementId);
+		}
+		else if (int.class == instanceClass) {
+			return new IntPrimitiveDescriptor(elementId);
+		}
+		else if (long.class == instanceClass) {
+			return new LongPrimitiveDescriptor(elementId);
+		}
+		else if (short.class == instanceClass) {
+			return new ShortPrimitiveDescriptor(elementId);
+		}
+		else {
+			return null;
+		}
+	}
+
+	protected @Nullable UnboxedDescriptor createPrimitiveTypeUnboxedDescriptor(@NonNull Class<?> instanceClass) {
+		if (byte.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, byte.class);
+		}
+		else if (char.class == instanceClass) {
+			return new UnboxedValueDescriptor(elementId, char.class);
+		}
+		else if (double.class == instanceClass) {
+			return new DoublePrimitiveDescriptor(elementId);
+		}
+		else if (float.class == instanceClass) {
+			return new FloatPrimitiveDescriptor(elementId);
+		}
+		else if (int.class == instanceClass) {
+			return new IntPrimitiveDescriptor(elementId);
+		}
+		else if (long.class == instanceClass) {
+			return new LongPrimitiveDescriptor(elementId);
+		}
+		else if (short.class == instanceClass) {
+			return new ShortPrimitiveDescriptor(elementId);
+		}
+		else {
+			return null;
+		}
+	}
+
 	protected abstract @NonNull UnboxedDescriptor createUnboxedDescriptor();
 
 	@Override
 	public @NonNull EcoreDescriptor getEcoreDescriptor(@NonNull CodeGenerator codeGenerator, @Nullable Class<?> instanceClass) {
 		if (instanceClass != null) {
-			if (BigDecimal.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, BigDecimal.class);
+			EcoreDescriptor ecoreDescriptor = createPrimitiveObjectEcoreDescriptor(instanceClass);
+			if (ecoreDescriptor != null) {
+				return ecoreDescriptor;
 			}
-			else if (BigInteger.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, BigInteger.class);
-			}
-			else if (Byte.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, Byte.class);
-			}
-			else if (Character.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, Character.class);
-			}
-			else if (Double.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, Double.class);
-			}
-			else if (Float.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, Float.class);
-			}
-			else if (Integer.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, Integer.class);
-			}
-			else if (Long.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, Long.class);
-			}
-			else if (Short.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, Short.class);
-			}
-			else if (byte.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, byte.class);
-			}
-			else if (char.class == instanceClass) {
-				return new UnboxedValueDescriptor(elementId, char.class);
-			}
-			else if (double.class == instanceClass) {
-				return new DoublePrimitiveDescriptor(elementId);
-			}
-			else if (float.class == instanceClass) {
-				return new FloatPrimitiveDescriptor(elementId);
-			}
-			else if (int.class == instanceClass) {
-				return new IntPrimitiveDescriptor(elementId);
-			}
-			else if (long.class == instanceClass) {
-				return new LongPrimitiveDescriptor(elementId);
-			}
-			else if (short.class == instanceClass) {
-				return new ShortPrimitiveDescriptor(elementId);
+			ecoreDescriptor = createPrimitiveTypeEcoreDescriptor(instanceClass);
+			if (ecoreDescriptor != null) {
+				return ecoreDescriptor;
 			}
 			//			else {
 			//				return new SimpleDataTypeDescriptor(id, instanceClassName);

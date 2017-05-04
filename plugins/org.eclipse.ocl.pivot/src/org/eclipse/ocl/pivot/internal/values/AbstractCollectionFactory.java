@@ -42,7 +42,8 @@ public abstract class AbstractCollectionFactory implements CollectionFactory
 		//		}
 		else {
 			//			return null;
-			throw new UnsupportedOperationException();
+			//			throw new UnsupportedOperationException();
+			return SequenceFactory.INSTANCE;
 		}
 	}
 
@@ -51,7 +52,16 @@ public abstract class AbstractCollectionFactory implements CollectionFactory
 		public static final @NonNull CollectionFactory INSTANCE = new BagFactory();
 
 		private BagFactory() {
-			super(false, false);
+			super(TypeId.BAG_NAME, false, false);
+		}
+	}
+
+	private static class BaseCollectionFactory extends AbstractCollectionFactory
+	{
+		public static final @NonNull CollectionFactory INSTANCE = new BaseCollectionFactory();
+
+		private BaseCollectionFactory() {
+			super(TypeId.COLLECTION_NAME, false, false);
 		}
 	}
 
@@ -60,7 +70,7 @@ public abstract class AbstractCollectionFactory implements CollectionFactory
 		public static final @NonNull CollectionFactory INSTANCE = new OrderedSetFactory();
 
 		private OrderedSetFactory() {
-			super(true, true);
+			super(TypeId.ORDERED_SET_NAME, true, true);
 		}
 	}
 
@@ -69,7 +79,7 @@ public abstract class AbstractCollectionFactory implements CollectionFactory
 		public static final @NonNull CollectionFactory INSTANCE = new SequenceFactory();
 
 		private SequenceFactory() {
-			super(true, false);
+			super(TypeId.SEQUENCE_NAME, true, false);
 		}
 	}
 
@@ -78,22 +88,23 @@ public abstract class AbstractCollectionFactory implements CollectionFactory
 		public static final @NonNull CollectionFactory INSTANCE = new SetFactory();
 
 		private SetFactory() {
-			super(false, true);
+			super(TypeId.SET_NAME, false, true);
 		}
 	}
 
+	protected final @NonNull String kind;
 	protected final boolean isOrdered;
 	protected final boolean isUnique;
 
-	protected AbstractCollectionFactory(boolean isOrdered, boolean isUnique) {
+	protected AbstractCollectionFactory(@NonNull String kind, boolean isOrdered, boolean isUnique) {
+		this.kind = kind;
 		this.isOrdered = isOrdered;
 		this.isUnique = isUnique;
 	}
 
 	@Override
 	public @NonNull String getKind() {
-		if (isOrdered) return isUnique ? TypeId.ORDERED_SET_NAME : TypeId.SEQUENCE_NAME;
-		else return isUnique ? TypeId.SET_NAME : TypeId.BAG_NAME;
+		return kind;
 	}
 
 	@Override
