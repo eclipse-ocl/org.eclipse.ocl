@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenParameter;
@@ -165,6 +166,70 @@ import com.google.common.collect.Iterables;
  */
 public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> extends AbstractExtendingCGModelVisitor<@NonNull Boolean, CG>
 {
+	protected class StaticFrame
+	{
+		/**
+		 * The local Java context for the current tree.
+		 */
+		protected final @NonNull JavaLocalContext<@NonNull ?> localContext;
+
+		protected final @NonNull CGValuedElement cgTree;
+
+		private @Nullable Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references = null;
+
+		public StaticFrame(@NonNull CGValuedElement cgTree) {
+			JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgTree);
+			assert localContext2 != null;
+			this.localContext = localContext2;
+			this.cgTree = cgTree;
+		}
+
+		private @NonNull Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> computeReferences() {
+			Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references2 = new HashMap<>();
+			assert definition2references2 != null;
+			for (EObject eObject : new TreeIterable(cgTree, true)) {
+				CGValuedElement cgValuedElement = (CGValuedElement)eObject;
+				CGValuedElement cgDefinition = getDefinition(cgValuedElement);
+				if (cgDefinition != cgValuedElement) {
+					List<@NonNull CGValuedElement> references = definition2references2.get(cgDefinition);
+					if (references == null) {
+						references = new ArrayList<>();
+						definition2references2.put(cgDefinition, references);
+					}
+					assert !references.contains(cgValuedElement);
+					references.add(cgValuedElement);
+				}
+			}
+			return definition2references2;
+		}
+
+		public @Nullable CGValuedElement getIdResolverVariable(@NonNull CGValuedElement cgValuedElement) {
+			return localContext.getIdResolverVariable(cgValuedElement);
+		}
+
+		public @NonNull JavaLocalContext<@NonNull ?> getLocalContext() {
+			return localContext;
+		}
+
+		public @Nullable CGValuedElement getStandardLibraryVariable(@NonNull CGValuedElement cgValuedElement) {
+			return localContext.getStandardLibraryVariable(cgValuedElement);
+		}
+
+		public @NonNull String getSymbolName(@Nullable Object anObject, @Nullable String... nameHints) {
+			return localContext.getNameManagerContext().getSymbolName(anObject, nameHints);
+		}
+
+		private boolean isMultiAccessed(@NonNull CGValuedElement cgSource) {
+			Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references2 = definition2references;
+			if (definition2references2 == null) {
+				definition2references = definition2references2 = computeReferences();
+			}
+			CGValuedElement cgDefinition = getDefinition(cgSource);
+			List<@NonNull CGValuedElement> references = definition2references2.get(cgDefinition);
+			return (references != null) && references.size() > 1;
+		}
+	}
+
 	protected final @NonNull JavaGlobalContext<@NonNull ?> globalContext;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
@@ -175,9 +240,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	/**
 	 * The local Java context for the current operation.
 	 */
-	protected JavaLocalContext<@NonNull ?> localContext;
+	private Stack<@NonNull StaticFrame> staticFrameStack = new Stack<>();
 
-	protected @Nullable Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references = null;
 
 	public CG2JavaVisitor(@NonNull CG codeGenerator) {
 		super(codeGenerator);
@@ -307,7 +371,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" " + implementationName + " = (");
 		js.appendClassReference(null, LibraryIteration.LibraryIterationExtension.class);
 		js.append( ")" + staticTypeName + ".lookupImplementation(");
-		js.appendReferenceTo(localContext.getStandardLibraryVariable(cgIterationCallExp));
+		js.appendReferenceTo(getStaticFrame().getStandardLibraryVariable(cgIterationCallExp));
 		js.append(", ");
 		js.appendQualifiedLiteralName(ClassUtil.nonNullState(referredOperation));
 		js.append(");\n");
@@ -394,13 +458,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 		js.append(") {\n");
 		js.pushIndentation(null);
-		JavaLocalContext<@NonNull ?> savedLocalContext = localContext;
+		pushStaticFrameStack(cgIterationCallExp);
 		try {
-			localContext = globalContext.getLocalContext(cgIterationCallExp);
 			appendReturn(body);
 		}
 		finally {
-			localContext = savedLocalContext;
+			popStaticFrameStack();
 		}
 		js.popIndentation();
 		js.append("}\n");
@@ -469,30 +532,16 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		}
 	}
 
-	private void computeReferences(@NonNull CGValuedElement cgTree) {
-		Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references2 = definition2references;
-		assert definition2references2 != null;
-		for (EObject eObject : new TreeIterable(cgTree, true)) {
-			CGValuedElement cgValuedElement = (CGValuedElement)eObject;
-			CGValuedElement cgDefinition = getDefinition(cgValuedElement);
-			if (cgDefinition != cgValuedElement) {
-				List<@NonNull CGValuedElement> references = definition2references2.get(cgDefinition);
-				if (references == null) {
-					references = new ArrayList<>();
-					definition2references2.put(cgDefinition, references);
-				}
-				assert !references.contains(cgValuedElement);
-				references.add(cgValuedElement);
-			}
-		}
-	}
-
 	protected @NonNull Id2JavaInterfaceVisitor createId2JavaClassVisitor() {
 		return new Id2JavaInterfaceVisitor();
 	}
 
 	protected @NonNull Id2JavaExpressionVisitor createId2JavaExpressionVisitor(@NonNull JavaStream javaStream) {
 		return new Id2JavaExpressionVisitor(javaStream);
+	}
+
+	protected @NonNull StaticFrame createStaticFrame(@NonNull CGValuedElement cgElement) {
+		return new StaticFrame(cgElement);
 	}
 
 	protected boolean doClassFields(@NonNull CGClass cgClass, boolean needsBlankLine) {
@@ -853,8 +902,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
 	}
 
+	protected @NonNull StaticFrame getStaticFrame() {
+		return staticFrameStack.peek();
+	}
+
 	protected @NonNull String getSymbolName(@Nullable Object anObject, @Nullable String... nameHints) {
-		return localContext.getNameManagerContext().getSymbolName(anObject, nameHints);
+		return getStaticFrame().getSymbolName(anObject, nameHints);
 	}
 
 	protected @NonNull String getThisName(@NonNull CGElement cgElement) {
@@ -867,9 +920,13 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return "";
 	}
 
-	protected String getValueName(@NonNull CGValuedElement cgElement) {
-		String valueName = localContext != null ? localContext.getValueName(cgElement) : globalContext.getValueName(cgElement);
-		return valueName;
+	protected @NonNull String getValueName(@NonNull CGValuedElement cgElement) {
+		if (staticFrameStack.isEmpty()) {							// e.g for Package/Class structure
+			return globalContext.getValueName(cgElement);
+		}
+		else {
+			return getStaticFrame().getLocalContext().getValueName(cgElement);
+		}
 	}
 
 	protected boolean isBoxedElement(@NonNull CGValuedElement cgValue) {
@@ -920,16 +977,16 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return type instanceof Enumeration;
 	}
 
-	private boolean isMultiAccessed(@NonNull CGValuedElement cgSource) {
-		Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> definition2references2 = definition2references;
-		assert definition2references2 != null;
-		CGValuedElement cgDefinition = getDefinition(cgSource);
-		List<@NonNull CGValuedElement> references = definition2references2.get(cgDefinition);
-		return (references != null) && references.size() > 1;
-	}
-
 	protected boolean isVirtualDispatcher(@NonNull CGOperation cgOperation) {
 		return (cgOperation instanceof CGCachedOperation) && (((CGCachedOperation)cgOperation).getFinalOperations().size() > 0);
+	}
+
+	protected CG2JavaVisitor<@NonNull CG>.@NonNull StaticFrame popStaticFrameStack() {
+		return staticFrameStack.pop();
+	}
+
+	protected void pushStaticFrameStack(@NonNull CGValuedElement cgElement) {
+		staticFrameStack.push(createStaticFrame(cgElement));
 	}
 
 	@Override
@@ -981,13 +1038,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGBoxExp(@NonNull CGBoxExp cgBoxExp) {
 		CGValuedElement unboxedValue = getExpression(cgBoxExp.getSource());
 		TypeDescriptor unboxedTypeDescriptor = context.getTypeDescriptor(unboxedValue);
-		JavaLocalContext<@NonNull ?>localContext2 = localContext;
-		assert localContext2 != null;
 		//
 		if (!js.appendLocalStatements(unboxedValue)) {
 			return false;
 		}
-		return unboxedTypeDescriptor.appendBox(js, localContext2, cgBoxExp, unboxedValue);
+		return unboxedTypeDescriptor.appendBox(js, getStaticFrame().getLocalContext(), cgBoxExp, unboxedValue);
 	}
 
 	@Override
@@ -1018,7 +1073,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(";\n");
 		}
 		//
-		if (isMultiAccessed(cgSource)) {
+		if (getStaticFrame().isMultiAccessed(cgSource)) {
 			js.appendAtomicReferenceTo(cgSource);
 			js.append(".iterable();\n");
 		}
@@ -1075,15 +1130,13 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGCachedOperation(@NonNull CGCachedOperation cgOperation) {
-		assert definition2references == null;
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
-			definition2references = new HashMap<>();
-			localContext = localContext2;
-			boolean isVirtualDispatcher = isVirtualDispatcher(cgOperation);
+			pushStaticFrameStack(cgOperation);
 			try {
+				boolean isVirtualDispatcher = isVirtualDispatcher(cgOperation);
 				String operationClassName = getNativeOperationClassName(cgOperation);
 				if (isVirtualDispatcher) {
 					js.append("protected class ");
@@ -1125,8 +1178,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				}
 			}
 			finally {
-				localContext = null;
-				definition2references = null;
+				popStaticFrameStack();
 			}
 		}
 		return true;
@@ -1366,17 +1418,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-		assert definition2references == null;
-		localContext = globalContext.getLocalContext(cgConstraint);
+		pushStaticFrameStack(cgConstraint);
 		try {
-			definition2references = new HashMap<>();
 			Boolean flowContinues = super.visitCGConstraint(cgConstraint);
 			assert flowContinues != null;
 			return flowContinues;
 		}
 		finally {
-			localContext = null;
-			definition2references = null;
+			popStaticFrameStack();
 		}
 	}
 
@@ -1435,8 +1484,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGEcoreExp(@NonNull CGEcoreExp cgEcoreExp) {
 		CGValuedElement boxedValue = getExpression(cgEcoreExp.getSource());
 		TypeDescriptor boxedTypeDescriptor = context.getTypeDescriptor(boxedValue);
-		JavaLocalContext<@NonNull ?>localContext2 = localContext;
-		assert localContext2 != null;
 		//
 		if (!js.appendLocalStatements(boxedValue)) {
 			return false;
@@ -1490,7 +1537,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 		}
 		//		return boxedTypeDescriptor.getEcoreDescriptor(context, null).appendEcore(js, localContext2, cgEcoreExp, boxedValue);
-		return boxedTypeDescriptor.appendEcoreStatements(js, localContext2, cgEcoreExp, boxedValue);
+		return boxedTypeDescriptor.appendEcoreStatements(js, getStaticFrame().getLocalContext(), cgEcoreExp, boxedValue);
 	}
 
 	@Override
@@ -1593,7 +1640,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGExecutorShadowPart(@NonNull CGExecutorShadowPart cgExecutorShadowPart) {
 		js.appendDeclaration(cgExecutorShadowPart);
 		js.append(" = ");
-		js.appendValueName(localContext.getIdResolverVariable(cgExecutorShadowPart));
+		js.appendValueName(getStaticFrame().getIdResolverVariable(cgExecutorShadowPart));
 		js.append(".getProperty(");
 		js.appendIdReference(cgExecutorShadowPart.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");
@@ -1629,7 +1676,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendDeclaration(cgExecutorOperation);
 		js.append(" = ");
 		try {
-			js.appendValueName(localContext.getIdResolverVariable(cgExecutorOperation));
+			js.appendValueName(getStaticFrame().getIdResolverVariable(cgExecutorOperation));
 		}
 		catch (Exception e) {			// FIXME
 			js.appendString(String.valueOf(e));
@@ -1732,7 +1779,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGExecutorType(@NonNull CGExecutorType cgExecutorType) {
 		js.appendDeclaration(cgExecutorType);
 		js.append(" = ");
-		js.appendValueName(localContext.getIdResolverVariable(cgExecutorType));
+		js.appendValueName(getStaticFrame().getIdResolverVariable(cgExecutorType));
 		js.append(".getClass(");
 		js.appendIdReference(cgExecutorType.getUnderlyingTypeId().getElementId());
 		js.append(", null);\n");
@@ -2134,12 +2181,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGLibraryOperation(@NonNull CGLibraryOperation cgOperation) {
-		assert definition2references == null;
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
-			localContext = localContext2;
+			pushStaticFrameStack(cgOperation);
 			try {
-				definition2references = new HashMap<>();
 				List<CGParameter> cgParameters = cgOperation.getParameters();
 				String operationName = cgOperation.getName();
 				assert operationName != null;
@@ -2197,8 +2242,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.popClassBody(false);
 			}
 			finally {
-				localContext = null;
-				definition2references = null;
+				popStaticFrameStack();
 			}
 		}
 		return true;
@@ -2355,14 +2399,12 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override		// FIXME revert to the pre-cached code
 	public @NonNull Boolean visitCGNativeOperation(@NonNull CGNativeOperation cgOperation) {
-		assert definition2references == null;
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
-			localContext = localContext2;
+			pushStaticFrameStack(cgOperation);
 			try {
-				definition2references = new HashMap<>();
 				String operationClassName = getNativeOperationClassName(cgOperation);
 				LanguageExpression expressionInOCL = asOperation.getBodyExpression();
 				String title = PrettyPrinter.printName(asOperation);
@@ -2382,8 +2424,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				doCachedOperationClassInstance(cgOperation);
 			}
 			finally {
-				localContext = null;
-				definition2references = null;
+				popStaticFrameStack();
 			}
 		}
 		return true;
@@ -2445,18 +2486,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGNativeProperty(@NonNull CGNativeProperty cgNativeProperty) {
-		assert definition2references == null;
-		localContext = globalContext.getLocalContext(cgNativeProperty);
+		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgNativeProperty);
+		assert localContext2 != null;
 		try {
-			definition2references = new HashMap<>();
+			pushStaticFrameStack(cgNativeProperty);
 			js.append("protected ");
 			js.appendDeclaration(cgNativeProperty);
 			js.append(";\n");
 			return true;
 		}
 		finally {
-			localContext = null;
-			definition2references = null;
+			popStaticFrameStack();
 		}
 	}
 
@@ -2486,17 +2526,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
-		assert definition2references == null;
 		JavaLocalContext<@NonNull ?> localContext2 = globalContext.getLocalContext(cgOperation);
 		if (localContext2 != null) {
-			localContext = localContext2;
+			pushStaticFrameStack(cgOperation);
 			try {
 				//				CGValuedElement evaluatorParameter = localContext2.getEvaluatorParameter(cgOperation);
 				//				CGParameter typeIdParameter = localContext2.getTypeIdParameter(cgOperation);
 				List<CGParameter> cgParameters = cgOperation.getParameters();
 				CGValuedElement body = getExpression(cgOperation.getBody());
-				definition2references = new HashMap<>();
-				computeReferences(body);
 				//
 				Element ast = cgOperation.getAst();
 				if (ast instanceof Operation) {
@@ -2531,8 +2568,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append("}\n");
 			}
 			finally {
-				localContext = null;
-				definition2references = null;
+				popStaticFrameStack();
 			}
 		}
 		return true;
@@ -2556,17 +2592,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGProperty(@NonNull CGProperty cgProperty) {
-		assert definition2references == null;
-		localContext = globalContext.getLocalContext(cgProperty);
+		pushStaticFrameStack(cgProperty);
 		try {
-			definition2references = new HashMap<>();
 			Boolean flowContinues = super.visitCGProperty(cgProperty);
 			assert flowContinues != null;
 			return flowContinues;
 		}
 		finally {
-			localContext = null;
-			definition2references = null;
+			popStaticFrameStack();
 		}
 	}
 
@@ -2804,13 +2837,11 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGUnboxExp(@NonNull CGUnboxExp cgUnboxExp) {
 		CGValuedElement boxedValue = getExpression(cgUnboxExp.getSource());
 		TypeDescriptor boxedTypeDescriptor = context.getTypeDescriptor(boxedValue);
-		JavaLocalContext<@NonNull ?> localContext2 = localContext;
-		assert localContext2 != null;
 		//
 		if (!js.appendLocalStatements(boxedValue)) {
 			return false;
 		}
-		return boxedTypeDescriptor.appendUnboxStatements(js, localContext2, cgUnboxExp, boxedValue);
+		return boxedTypeDescriptor.appendUnboxStatements(js, getStaticFrame().getLocalContext(), cgUnboxExp, boxedValue);
 	}
 
 	@Override
