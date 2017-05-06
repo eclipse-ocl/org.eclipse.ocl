@@ -1209,6 +1209,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull Iterable<@NonNull TemplateParameter> getOwnedParameters(@NonNull TemplateSignature templateSignature) {
+		return ClassUtil.nullFree(templateSignature.getOwnedParameters());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull Iterable<@NonNull CollectionLiteralPart> getOwnedParts(@NonNull CollectionLiteralExp asCollectionLiteralExp) {
 		return ClassUtil.nullFree(asCollectionLiteralExp.getOwnedParts());
 	}

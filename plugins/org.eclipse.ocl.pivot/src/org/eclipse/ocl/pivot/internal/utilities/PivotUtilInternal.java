@@ -53,6 +53,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -484,6 +486,20 @@ public class PivotUtilInternal //extends PivotUtil
 	 */
 	public static @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getOwnedPackagesList(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		return ClassUtil.nullFree(asPackage.getOwnedPackages());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<@NonNull Parameter> getOwnedParametersList(@NonNull Operation operation) {
+		return ClassUtil.nullFree(operation.getOwnedParameters());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<@NonNull TemplateParameter> getOwnedParametersList(@NonNull TemplateSignature templateSignature) {
+		return ClassUtil.nullFree(templateSignature.getOwnedParameters());
 	}
 
 	/**

@@ -617,6 +617,19 @@ public class RoundTripTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testBug516274_oclinecore() throws IOException, InterruptedException {
+		String testFile =
+				"package bug516274 : my = 'http:/org/eclipse/ocl/examples/test/xtext/models/Bug516274.oclinecore'\n" +
+						"{\n" +
+						"  abstract class Generic(T extends Generic(T));\n" +
+						"  class Concrete extends Generic(Concrete);\n" +
+						"}\n";
+		createOCLinEcoreFile("Bug516274.oclinecore", testFile);
+		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
+		doRoundTripFromOCLinEcore(ocl, "Bug516274");
+		ocl.dispose();
+	}
+
 	public void testCompleteOCLRoundTrip_Bug496768() throws IOException, InterruptedException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		doRoundTripFromCompleteOCL(ocl, getProjectFileURI("Bug496768.ocl"));

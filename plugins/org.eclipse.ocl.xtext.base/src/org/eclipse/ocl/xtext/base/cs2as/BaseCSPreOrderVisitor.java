@@ -77,7 +77,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			if (csSuperTypes.isEmpty()) {
 				return null;
 			}
-			List<Dependency> dependencies = new ArrayList<Dependency>();
+			List<@NonNull Dependency> dependencies = new ArrayList<>();
 			for (TypedRefCS csSuperType : csSuperTypes) {
 				if (csSuperType != null) {
 					dependencies.add(new PivotDependency(csSuperType));
@@ -132,7 +132,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			Type resultType = PivotUtil.getPivot(Type.class, csElement.getOwnedResultType());
 			String name = csElement.getName();
 			if ((contextType != null) && (resultType != null) && (name != null)) {
-				List<@NonNull Type> parameterTypes = new ArrayList<@NonNull Type>();
+				List<@NonNull Type> parameterTypes = new ArrayList<>();
 				for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {
 					Type parameterType = PivotUtil.getPivot(Type.class, csParameterType);
 					if (parameterType != null) {
@@ -230,7 +230,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	protected static class SpecializedTypeRefContinuation2 extends TypedRefContinuation<TypedTypeRefCS>
 	{
 		private static Dependency[] computeDependencies(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
-			List<Dependency> dependencies = new ArrayList<Dependency>();
+			List<@NonNull Dependency> dependencies = new ArrayList<>();
 			TemplateBindingCS csTemplateBinding = csElement.getOwnedBinding();
 			if (csTemplateBinding != null) {
 				for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : csTemplateBinding.getOwnedSubstitutions()) {
@@ -328,7 +328,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			TemplateParameter pivotElement = PivotUtil.getPivot(TemplateParameter.class, csElement);
 			if (pivotElement != null) {
 				List<TypedRefCS> csExtends = csElement.getOwnedExtends();
-				List<org.eclipse.ocl.pivot.Class> asExtends = new ArrayList<org.eclipse.ocl.pivot.Class>();
+				List<org.eclipse.ocl.pivot.@NonNull Class> asExtends = new ArrayList<>();
 				for (TypedRefCS csExtend : csExtends) {
 					org.eclipse.ocl.pivot.Class asExtend = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csExtend);
 					if (asExtend != null) {
@@ -389,7 +389,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		public BasicContinuation<?> execute() {
 			String name = csElement.getName();
 			if (name != null) {
-				List<@NonNull TypedElement> parts = new ArrayList<@NonNull TypedElement>();
+				List<@NonNull TypedElement> parts = new ArrayList<>();
 				for (@SuppressWarnings("null")@NonNull TuplePartCS csTuplePart : csElement.getOwnedParts()) {
 					String partName = csTuplePart.getName();
 					if (partName != null) {

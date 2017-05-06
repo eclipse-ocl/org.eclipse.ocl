@@ -452,6 +452,31 @@ public class SerializeTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testSerialize_Bug516274() throws Exception {
+		OCL ocl = OCL.newInstance(getProjectMap());
+		String testFile =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"bug516274\" nsURI=\"http:/org/eclipse/ocl/examples/test/xtext/models/Bug516274.oclinecore\"\n" +
+						"    nsPrefix=\"my\">\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Generic\" abstract=\"true\">\n" +
+						"    <eTypeParameters name=\"T\">\n" +
+						"      <eBounds eClassifier=\"#//Generic\">\n" +
+						"        <eTypeArguments eTypeParameter=\"#//Generic/T\"/>\n" +
+						"      </eBounds>\n" +
+						"    </eTypeParameters>\n" +
+						"  </eClassifiers>\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"Concrete\">\n" +
+						"    <eGenericSuperTypes eClassifier=\"#//Generic\">\n" +
+						"      <eTypeArguments eClassifier=\"#//Concrete\"/>\n" +
+						"    </eGenericSuperTypes>\n" +
+						"  </eClassifiers>\n" +
+						"</ecore:EPackage>\n";
+		createOCLinEcoreFile("Bug516274.ecore", testFile);		// FIXME rename as createTextFile
+		doSerialize(ocl, "Bug516274");
+		ocl.dispose();
+	}
+
 	public void testSerialize_Company() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		//		Logger logger = Logger.getLogger(AbstractParseTreeConstructor.class);

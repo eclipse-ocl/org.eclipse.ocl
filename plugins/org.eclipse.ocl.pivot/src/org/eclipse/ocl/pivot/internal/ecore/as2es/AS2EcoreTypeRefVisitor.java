@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
@@ -81,6 +82,15 @@ extends AbstractExtendingVisitor<EObject, AS2Ecore>
 		else {
 			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 			eGenericType.setEClassifier((EClassifier) eType);
+			TemplateSignature templateSignature = type.getOwnedSignature();
+			if (templateSignature != null) {
+				for (@NonNull TemplateParameter templateParameter : PivotUtil.getOwnedParameters(templateSignature)) {
+					EObject eTypeParameter = safeVisit(templateParameter);
+					if (eTypeParameter instanceof EGenericType) {
+						eGenericType.getETypeArguments().add((EGenericType) eTypeParameter);
+					}
+				}
+			}
 			return eGenericType;
 		}
 	}
