@@ -15,13 +15,14 @@ package org.eclipse.ocl.pivot.internal.iterators;
  * ElementCount is used as the count of a Bag element. It avoids thrashing Integer objects as counts evolve.
  * @since 1.3
  */
-public abstract class ElementCount extends Number
+public class BagElementCount extends ElementCount
 {
-	private static final long serialVersionUID = -4914749801229613980L;
+	private static final long serialVersionUID = 4991759431989075544L;
 
-	@Override
-	public double doubleValue() {
-		return intValue();
+	private int value;
+
+	public BagElementCount(int value) {
+		this.value = value;
 	}
 
 	@Override
@@ -32,31 +33,16 @@ public abstract class ElementCount extends Number
 		if (!(thatElement instanceof Number)) {
 			return false;
 		}
-		return intValue() == ((Number)thatElement).intValue();
+		return value == ((Number)thatElement).intValue();
 	}
 
 	@Override
-	public float floatValue() {
-		return intValue();
+	public int intValue() {
+		return value;
 	}
 
 	@Override
-	public int hashCode() {
-		return intValue();
-	}
-
-	@Override
-	public abstract int intValue();
-
-	@Override
-	public long longValue() {
-		return intValue();
-	}
-
-	public abstract void setValue(int i);
-
-	@Override
-	public String toString() {
-		return Integer.toString(intValue());
+	public void setValue(int value) {
+		this.value = value;
 	}
 }

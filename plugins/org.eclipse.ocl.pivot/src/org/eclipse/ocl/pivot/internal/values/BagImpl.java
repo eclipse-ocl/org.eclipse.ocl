@@ -21,6 +21,7 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.iterators.BagElementCount;
 import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -41,12 +42,12 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	 */
 	private static class BagIterator<E> implements Iterator<E>
 	{
-		private final @NonNull Map<E, org.eclipse.ocl.pivot.internal.iterators.ElementCount> map;
+		private final @NonNull Map<E, BagElementCount> map;
 		private final @NonNull Iterator<E> objectIterator;
 		private E currentObject;
 		private int residualCount;
 
-		private BagIterator(@NonNull Map<E, org.eclipse.ocl.pivot.internal.iterators.ElementCount> map, @NonNull Iterator<E> objectIterator) {
+		private BagIterator(@NonNull Map<E, BagElementCount> map, @NonNull Iterator<E> objectIterator) {
 			this.map = map;
 			this.objectIterator = objectIterator;
 			assert objectIterator.hasNext();
@@ -94,7 +95,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 		return (Bag<E>) ValueUtil.EMPTY_BAG;
 	}
 
-	private final @NonNull Map<E, org.eclipse.ocl.pivot.internal.iterators.@NonNull ElementCount> map = new HashMap<>();
+	private final @NonNull Map<E, org.eclipse.ocl.pivot.internal.iterators.@NonNull BagElementCount> map = new HashMap<>();
 	private int size = 0;
 	private @Nullable Integer hashCode = null;
 
@@ -102,7 +103,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	 * The need for put-after-get is avoided by always putting. A previous value therefore goes stale and is
 	 * maintinaed for re-use s the spareCounter.
 	 */
-	private @Nullable ElementCount spareCounter = null;
+	private @Nullable BagElementCount spareCounter = null;
 
 	public BagImpl() {}
 
@@ -132,15 +133,15 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 
 	@Override
 	public synchronized boolean add(E anElement) {
-		ElementCount newCounter = spareCounter;
+		BagElementCount newCounter = spareCounter;
 		if (newCounter == null) {
-			newCounter = new ElementCount(1);
+			newCounter = new BagElementCount(1);
 		}
 		else {
 			spareCounter = null;
 			newCounter.setValue(1);
 		}
-		ElementCount oldCounter = map.put(anElement, newCounter);
+		BagElementCount oldCounter = map.put(anElement, newCounter);
 		if (oldCounter != null) {
 			newCounter.setValue(newCounter.intValue() + oldCounter.intValue());
 			spareCounter = oldCounter;;
@@ -231,7 +232,7 @@ public class BagImpl<E> extends AbstractCollection<E> implements Bag.Internal<E>
 	 */
 	public void put(E anElement, int count) {
 		assert count > 0;
-		ElementCount oldCount = map.put(anElement, new ElementCount(count));
+		BagElementCount oldCount = map.put(anElement, new BagElementCount(count));
 		assert oldCount == null;
 		size += count;
 		hashCode = null;

@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.AbstractCollectionFactory;
 import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
 import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
@@ -321,7 +320,7 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 
 	protected AbstractBaggableValueImpl(@NonNull CollectionTypeId typeId) {
 		this.typeId = typeId;
-		this.collectionFactory = AbstractCollectionFactory.getCollectionFactory(typeId);
+		this.collectionFactory = LazyIterable.getCollectionFactory(typeId);
 		Map<Class<?>, Integer> collectionClass2count2 = collectionClass2count;
 		if (collectionClass2count2 != null) {
 			Class<? extends @NonNull CollectionValue> collectionClass = getClass();

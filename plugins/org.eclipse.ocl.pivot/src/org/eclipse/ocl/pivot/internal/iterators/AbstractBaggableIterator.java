@@ -114,10 +114,9 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 			}
 			else {
 				BagImpl<@Nullable Object> bagImpl = new BagImpl<>();
-				for (BaggableIterator<@Nullable Object> it = this; it.hasNext(); ) {
-					int count = it.hasNextCount();
-					Object next = it.next();
-					bagImpl.put(next,  count);
+				for (int count; (count = hasNextCount()) > 0; ) {
+					Object next = next();
+					bagImpl.put(next, count);
 				}
 				return new BagValueImpl(getTypeId(), bagImpl);
 			}
@@ -277,7 +276,7 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 					if (isOrdered || isUnique) {
 						hashCode = computeCollectionHashCode(isOrdered, isUnique, iterable().getListOfElements());
 					}
-					else {
+					else {			// Bag
 						hashCode = computeCollectionHashCode(iterable().getMapOfElement2elementCount());
 					}
 				}

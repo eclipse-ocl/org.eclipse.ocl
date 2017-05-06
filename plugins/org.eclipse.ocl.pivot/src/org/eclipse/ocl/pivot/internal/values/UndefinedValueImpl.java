@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -383,7 +384,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	 */
 	@Override
 	public @NonNull CollectionFactory getCollectionFactory() {
-		return AbstractCollectionFactory.getCollectionFactory(TypeId.SET);
+		return LazyIterable.SET_FACTORY;
 	}
 
 	public Type getElement() {

@@ -173,10 +173,14 @@ import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableIntersectionOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableUnionOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation;
 import org.eclipse.ocl.pivot.library.iterator.ExistsIteration;
 import org.eclipse.ocl.pivot.library.iterator.ForAllIteration;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
@@ -707,6 +711,16 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		else if (libraryOperation instanceof CollectionIncludingAllOperation) {
 			if (canBeMutable(cgSource, element)) {
 				libraryOperation = CollectionMutableIncludingAllOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionIntersectionOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableIntersectionOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionUnionOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableUnionOperation.INSTANCE;
 			}
 		}
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {

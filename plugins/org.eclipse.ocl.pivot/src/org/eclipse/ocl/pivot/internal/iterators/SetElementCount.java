@@ -11,52 +11,29 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * ElementCount is used as the count of a Bag element. It avoids thrashing Integer objects as counts evolve.
  * @since 1.3
  */
-public abstract class ElementCount extends Number
+public class SetElementCount extends ElementCount
 {
-	private static final long serialVersionUID = -4914749801229613980L;
+	private static final long serialVersionUID = 6802208578709751333L;
+
+	public static final @NonNull SetElementCount ONE = new SetElementCount();
+
+	private SetElementCount() {}
 
 	@Override
-	public double doubleValue() {
-		return intValue();
+	public int intValue() {
+		return 1;
 	}
 
 	@Override
-	public boolean equals(Object thatElement) {
-		if (thatElement == this) {
-			return true;
-		}
-		if (!(thatElement instanceof Number)) {
-			return false;
-		}
-		return intValue() == ((Number)thatElement).intValue();
-	}
-
-	@Override
-	public float floatValue() {
-		return intValue();
-	}
-
-	@Override
-	public int hashCode() {
-		return intValue();
-	}
-
-	@Override
-	public abstract int intValue();
-
-	@Override
-	public long longValue() {
-		return intValue();
-	}
-
-	public abstract void setValue(int i);
-
-	@Override
-	public String toString() {
-		return Integer.toString(intValue());
+	public void setValue(int value) {
+		if (value != 1) {
+			throw new IllegalStateException("SetElementCount can not be chnaged from unity");
+		};
 	}
 }

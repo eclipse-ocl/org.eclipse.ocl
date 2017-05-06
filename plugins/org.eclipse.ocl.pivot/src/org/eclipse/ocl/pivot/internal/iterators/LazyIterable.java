@@ -20,6 +20,8 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
@@ -34,6 +36,228 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  */
 public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 {
+	protected static abstract class AbstractCollectionFactory implements CollectionFactory
+	{
+		protected final @NonNull String kind;
+		//		protected final boolean isOrdered;
+		//		protected final boolean isUnique;
+
+		protected AbstractCollectionFactory(@NonNull String kind) {
+			this.kind = kind;
+			//			this.isOrdered = isOrdered;
+			//			this.isUnique = isUnique;
+		}
+
+		@Override
+		public @NonNull String getKind() {
+			return kind;
+		}
+
+		@Override
+		public boolean isBag() {
+			return false; // !isUnique && !isOrdered;
+		}
+
+		@Override
+		public boolean isOrdered() {
+			return false; // isOrdered;
+		}
+
+		@Override
+		public boolean isOrderedSet() {
+			return false; // isUnique && isOrdered;
+		}
+
+		@Override
+		public boolean isSequence() {
+			return false; // !isUnique && isOrdered;
+		}
+
+		@Override
+		public boolean isSet() {
+			return false; // isUnique && !isOrdered;
+		}
+
+		@Override
+		public boolean isUnique() {
+			return false; // isUnique;
+		}
+
+		@Override
+		public String toString() {
+			return getClass().getSimpleName();
+		}
+	}
+
+	public static class BagFactory extends AbstractCollectionFactory
+	{
+		private BagFactory() {
+			super(TypeId.BAG_NAME);
+		}
+
+		@Override
+		public <@Nullable E1> void addTo(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+			if (count > 0) {
+				Map<@Nullable E1, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+				assert lazyMapOfElement2elementCount2 != null;
+				BagElementCount newElementCount = new BagElementCount(count);
+				ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, newElementCount);
+				if (oldElementCount != null) {
+					newElementCount.setValue(count + oldElementCount.intValue());
+				}
+				else {
+					lazyIterable.lazyListOfElements.add(anElement);
+				}
+				lazyIterable.size++;
+			}
+		}
+
+		@Override
+		public boolean isBag() {
+			return true;
+		}
+
+		@Override
+		public <@Nullable E1> void removeFrom(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+			if (count > 0) {
+				Map<@Nullable E1, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+				if (lazyMapOfElement2elementCount2 != null) {
+					ElementCount oldElementCount = lazyMapOfElement2elementCount2.get(anElement);
+					if (oldElementCount != null) {
+						int oldCount = oldElementCount.intValue();
+						if (oldCount <= count) {
+							lazyMapOfElement2elementCount2.remove(anElement);
+							lazyIterable.lazyListOfElements.remove(anElement);
+							lazyIterable.size -= oldCount;
+						}
+						else {
+							oldElementCount.setValue(oldCount - count);
+							lazyIterable.size -= count;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static class BaseCollectionFactory extends OrderedFactory
+	{
+		private BaseCollectionFactory() {
+			super(TypeId.COLLECTION_NAME);
+		}
+	}
+
+	public static abstract class OrderedFactory extends AbstractCollectionFactory
+	{
+		protected OrderedFactory(@NonNull String kind) {
+			super(kind);
+		}
+
+		@Override
+		public <@Nullable E1> void addTo(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+			for (int i = count; i > 0; i--) {
+				lazyIterable.lazyListOfElements.add(anElement);
+				lazyIterable.size++;
+			}
+			//			return false;
+		}
+
+		@Override
+		public boolean isOrdered() {
+			return true;
+		}
+
+		@Override
+		public <@Nullable E1> void removeFrom(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+			for (int i = count; i > 0; i--) {
+				if (!lazyIterable.lazyListOfElements.remove(anElement)) {
+					break;
+				}
+				lazyIterable.size--;
+			}
+		}
+	}
+
+	public static class OrderedSetFactory extends UniqueFactory
+	{
+		private OrderedSetFactory() {
+			super(TypeId.ORDERED_SET_NAME);
+		}
+
+		@Override
+		public boolean isOrdered() {
+			return true;
+		}
+
+		@Override
+		public boolean isOrderedSet() {
+			return true;
+		}
+	}
+
+	public static class SequenceFactory extends OrderedFactory
+	{
+		private SequenceFactory() {
+			super(TypeId.SEQUENCE_NAME);
+		}
+
+		@Override
+		public boolean isSequence() {
+			return true;
+		}
+	}
+
+	public static class SetFactory extends UniqueFactory
+	{
+		private SetFactory() {
+			super(TypeId.SET_NAME);
+		}
+
+		@Override
+		public boolean isSet() {
+			return true;
+		}
+	}
+
+	public static abstract class UniqueFactory extends AbstractCollectionFactory
+	{
+		protected UniqueFactory(@NonNull String kind) {
+			super(kind);
+		}
+
+		@Override
+		public <@Nullable E1> void addTo(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+			if (count > 0) {
+				Map<@Nullable E1, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+				assert lazyMapOfElement2elementCount2 != null;
+				ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, SetElementCount.ONE);
+				if (oldElementCount == null) {
+					lazyIterable.lazyListOfElements.add(anElement);
+					lazyIterable.size++;
+				}
+			}
+		}
+
+		@Override
+		public boolean isUnique() {
+			return true;
+		}
+
+		@Override
+		public <@Nullable E1> void removeFrom(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+			if (count > 0) {
+				Map<@Nullable E1, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+				if (lazyMapOfElement2elementCount2 != null) {
+					ElementCount oldElementCount = lazyMapOfElement2elementCount2.remove(anElement);
+					if (oldElementCount != null) {
+						lazyIterable.lazyListOfElements.remove(anElement);
+						lazyIterable.size--;
+					}
+				}
+			}
+		}
+	}
+
 	/**
 	 * An ImmutableBaggableIterator provides better performance than the standard List Iterator by
 	 * exploiting the immutability of a fully populated Iteration cache.
@@ -201,7 +425,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 			currentObject = objectIterator.next();
 			ElementCount count = map.get(currentObject);
 			assert count != null;
-			residualCount = count.value;
+			residualCount = count.intValue();
 		}
 
 		@Override
@@ -236,7 +460,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 				currentObject = objectIterator.next();
 				ElementCount count = map.get(currentObject);
 				assert count != null;
-				residualCount = count.value;
+				residualCount = count.intValue();
 				return savedObject;
 			}
 			else {
@@ -355,6 +579,12 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 
 	} */
 
+	public static final @NonNull CollectionFactory BAG_FACTORY = new BagFactory();
+	public static final @NonNull CollectionFactory COLLECTION_FACTORY = new BaseCollectionFactory();
+	public static final @NonNull CollectionFactory ORDERED_SET_FACTORY = new OrderedSetFactory();
+	public static final @NonNull CollectionFactory SEQUENCE_FACTORY = new SequenceFactory();
+	public static final @NonNull CollectionFactory SET_FACTORY = new SetFactory();
+
 	public static <E> void appendBagIterable(@NonNull StringBuilder s, @NonNull List<E> elements, @Nullable Map<E, @NonNull ? extends Number> element2elementCount) {
 		s.append("[");
 		boolean isFirst = true;
@@ -375,90 +605,89 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		s.append("]");
 	}
 
+	public static @NonNull CollectionFactory getCollectionFactory(@NonNull CollectionTypeId typeId) {
+		typeId = typeId.getGeneralizedId();
+		if (typeId == TypeId.BAG) {
+			return BAG_FACTORY;
+		}
+		//		else if (typeId == TypeId.COLLECTION) {
+		//			return "COLLECTION";
+		//		}
+		else if (typeId == TypeId.ORDERED_SET) {
+			return ORDERED_SET_FACTORY;
+		}
+		else if (typeId == TypeId.SEQUENCE) {
+			return SEQUENCE_FACTORY;
+		}
+		else if (typeId == TypeId.SET) {
+			return SET_FACTORY;
+		}
+		//		else if (typeId == TypeId.UNIQUE_COLLECTION) {
+		//			return "UNIQUE_COLLECTION";
+		//		}
+		else {
+			//			return null;
+			//			throw new UnsupportedOperationException();
+			return COLLECTION_FACTORY;
+		}
+	}
+
+
 	/**
 	 * The iterator that provides the elements to be cached.
 	 */
 	private final @NonNull Iterator<E> internalIterator;
 
-	private final @NonNull CollectionFactory collectionFactory;
+	private @NonNull CollectionFactory collectionFactory;
 
 	private final @NonNull EqualsStrategy equalsStrategy;
 
 	/**
 	 * The lazily cached elements obtained by iterating internalIterator.
 	 */
-	protected final @NonNull List<E> lazyListOfElements = new ArrayList<>();	// ArrayList reallocates arrays; could be better to do so ourselves with a smart estimatedSize()
+	private @NonNull List<E> lazyListOfElements = new ArrayList<>();	// ArrayList reallocates arrays; could be better to do so ourselves with a smart estimatedSize()
 
 	/**
 	 * The lazily cached elements obtained by iterating internalIterator.
 	 */
-	protected @Nullable Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount = null;
+	private @Nullable Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount = null;
 
 	/**
 	 * The number of elements in the collection. For a Sequence, this is lazyListOfElements.size().
 	 * For a Set/OrderedSet it is lazyMapOfElement2elementCount.keySet().size(). For a Bag it is
 	 * the sum of lazyMapOfElement2elementCount.values().
 	 */
-	protected int size = 0;
-
-	private @Nullable ElementCount spareElementCount = null;
+	private int size = 0;
+	/**
+	 * @since 1.3
+	 */
+	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList = null;
 
 	/**
 	 * @since 1.3
 	 */
-	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyList = null;
-
-	/**
-	 * @since 1.3
-	 */
-	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyMap = null;
+	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap = null;
 
 	public LazyIterable(@NonNull Iterator<E> internalIterator, @NonNull CollectionFactory collectionFactory, @NonNull EqualsStrategy equalsStrategy) {
 		this.internalIterator = internalIterator;
 		this.collectionFactory = collectionFactory;
 		this.equalsStrategy = equalsStrategy;
-		Map<Class<?>, Integer> collectionClass2lazyList2 = collectionClass2lazyList;
-		if (collectionClass2lazyList2 != null) {
+		Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList2 = debugCollectionClass2lazyList;
+		if (debugCollectionClass2lazyList2 != null) {
 			Class<?> collectionClass = internalIterator.getClass();
-			Integer count = collectionClass2lazyList2.get(collectionClass);
+			Integer count = debugCollectionClass2lazyList2.get(collectionClass);
 			count = count != null ? count+1 : 1;
-			collectionClass2lazyList2.put(collectionClass, count);
+			debugCollectionClass2lazyList2.put(collectionClass, count);
 		}
 		if (!collectionFactory.isSequence()) {
-			Map<Class<?>, Integer> collectionClass2lazyMap2 = collectionClass2lazyMap;
-			if (collectionClass2lazyMap2 != null) {
+			Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap2 = debugCollectionClass2lazyMap;
+			if (debugCollectionClass2lazyMap2 != null) {
 				Class<?> collectionClass = internalIterator.getClass();
-				Integer count = collectionClass2lazyMap2.get(collectionClass);
+				Integer count = debugCollectionClass2lazyMap2.get(collectionClass);
 				count = count != null ? count+1 : 1;
-				collectionClass2lazyMap2.put(collectionClass, count);
+				debugCollectionClass2lazyMap2.put(collectionClass, count);
 			}
 			lazyMapOfElement2elementCount = new HashMap<>();
-		}
-	}
-
-	/**
-	 * Add counts of anElement to the collection updating element occurrence counts. Returns true if this
-	 * results in a new distinct element value.
-	 */
-	private boolean addToCounts(E anElement, int counts) {
-		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
-		assert lazyMapOfElement2elementCount2 != null;
-		ElementCount newElementCount = spareElementCount;
-		if (newElementCount == null) {
-			newElementCount = new ElementCount(counts);
-		}
-		else {
-			newElementCount.value = counts;
-		}
-		ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, newElementCount);
-		if (oldElementCount != null) {
-			newElementCount.value += oldElementCount.value;
-			spareElementCount = oldElementCount;
-			return false;
-		}
-		else {
-			spareElementCount = null;
-			return true;
 		}
 	}
 
@@ -492,9 +721,9 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 			if (elementCount == null) {
 				return 0;
 			}
-			else if (collectionFactory.isUnique()) {
-				return 1;
-			}
+			//			else if (collectionFactory.isUnique()) {
+			//				return 1;
+			//			}
 			else {
 				return elementCount.intValue();
 			}
@@ -508,33 +737,16 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 
 	@Override
 	public synchronized E get(int javaIndex) {
-		if (collectionFactory.isUnique()) {
-			while ((size <= javaIndex) && internalIterator.hasNext()) {
-				E anElement = internalIterator.next();
-				if (addToCounts(anElement, 1)) {
-					size++;
-					lazyListOfElements.add(anElement);
+		if (lazyListOfElements.size() <= javaIndex) {
+			if (internalIterator instanceof BaggableIterator) {
+				BaggableIterator<@Nullable E> baggableIterator = (BaggableIterator<@Nullable E>)internalIterator;
+				for (int nextCount; ((nextCount = baggableIterator.hasNextCount()) > 0) && (lazyListOfElements.size() <= javaIndex); ) {
+					collectionFactory.addTo(this, internalIterator.next(), nextCount);
 				}
 			}
-		}
-		else if (collectionFactory.isOrdered()) {
-			while ((size <= javaIndex) && internalIterator.hasNext()) {
-				E anElement = internalIterator.next();
-				size++;
-				lazyListOfElements.add(anElement);
-				if (lazyMapOfElement2elementCount != null) {
-					addToCounts(anElement, 1);
-				}
-			}
-		}
-		else {
-			int indexes = 0;
-			while ((indexes <= javaIndex) && internalIterator.hasNext()) {
-				E anElement = internalIterator.next();
-				size++;
-				if (addToCounts(anElement, 1)) {
-					indexes++;
-					lazyListOfElements.add(anElement);
+			else {
+				while (internalIterator.hasNext() && (lazyListOfElements.size() <= javaIndex)) {
+					collectionFactory.addTo(this, internalIterator.next(), 1);
 				}
 			}
 		}
@@ -545,32 +757,15 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	 * Ensure that all lazy iterations have completed and then return a list of all elements.
 	 */
 	public synchronized @NonNull List<E> getListOfElements() {
-		if (collectionFactory.isUnique()) {
-			while (internalIterator.hasNext()) {
-				E anElement = internalIterator.next();
-				if (addToCounts(anElement, 1)) {
-					size++;
-					lazyListOfElements.add(anElement);
-				}
-			}
-		}
-		else if (collectionFactory.isOrdered()) {
-			while (internalIterator.hasNext()) {
-				E anElement = internalIterator.next();
-				size++;
-				lazyListOfElements.add(anElement);
-				if (lazyMapOfElement2elementCount != null) {
-					addToCounts(anElement, 1);
-				}
+		if (internalIterator instanceof BaggableIterator) {
+			BaggableIterator<@Nullable E> baggableIterator = (BaggableIterator<@Nullable E>)internalIterator;
+			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
+				collectionFactory.addTo(this, internalIterator.next(), nextCount);
 			}
 		}
 		else {
 			while (internalIterator.hasNext()) {
-				E anElement = internalIterator.next();
-				size++;
-				if (addToCounts(anElement, 1)) {
-					lazyListOfElements.add(anElement);
-				}
+				collectionFactory.addTo(this, internalIterator.next(), 1);
 			}
 		}
 		return lazyListOfElements;
@@ -580,21 +775,21 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	 * Ensure that all lazy iterations have completed and then return a bag of all elements.
 	 */
 	public synchronized @NonNull Map<E, @NonNull ElementCount> getMapOfElement2elementCount() {
+		getListOfElements();
 		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
-		if (lazyMapOfElement2elementCount2 == null) {
-			Map<Class<?>, Integer> collectionClass2lazyMap2 = collectionClass2lazyMap;
-			if (collectionClass2lazyMap2 != null) {
+		if (lazyMapOfElement2elementCount2 == null) {			// Lazy creation is only needed for Sequences
+			Map<Class<?>, Integer> debugCollectionClass2lazyMap2 = debugCollectionClass2lazyMap;
+			if (debugCollectionClass2lazyMap2 != null) {
 				Class<?> collectionClass = internalIterator.getClass();
-				Integer count = collectionClass2lazyMap2.get(collectionClass);
+				Integer count = debugCollectionClass2lazyMap2.get(collectionClass);
 				count = count != null ? count+1 : 1;
-				collectionClass2lazyMap2.put(collectionClass, count);
+				debugCollectionClass2lazyMap2.put(collectionClass, count);
 			}
 			lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
-			for (E element : lazyListOfElements) {
-				addToCounts(element, 1);
+			for (@Nullable E element : lazyListOfElements) {
+				collectionFactory.addTo(this, element, 1);
 			}
 		}
-		getListOfElements();
 		return lazyMapOfElement2elementCount2;
 	}
 
@@ -636,121 +831,128 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 	}
 
-	public @NonNull CollectionValue mutableExcluding(@NonNull CollectionValue leftCollectionValue, E rightValue) {
-		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
-			if (removeFromCounts(rightValue, 1)) {
-				size--;
-				lazyListOfElements.remove(rightValue);
+	public @NonNull CollectionValue mutableAsSet(@NonNull CollectionValue leftCollectionValue) {
+		if (collectionFactory.isBag()) {
+			Map<@Nullable E, @NonNull ElementCount> mapOfElement2elementCount = getMapOfElement2elementCount();
+			for (@NonNull ElementCount elementCount : mapOfElement2elementCount.values()) {
+				elementCount.setValue(1);
 			}
+			size = mapOfElement2elementCount.size();
 		}
-		else {
-			size--;
-			lazyListOfElements.remove(rightValue);
+		else if (collectionFactory.isSequence()) {
+			List<@Nullable E> savedListOfElements = lazyListOfElements;
+			Map<@Nullable E, @NonNull ElementCount> mapOfElement2elementCount = new HashMap<>();
+			lazyListOfElements = new ArrayList<>();
+			for (@Nullable E anElement : savedListOfElements) {
+				if (!mapOfElement2elementCount.containsKey(anElement)) {
+					lazyListOfElements.add(anElement);
+					mapOfElement2elementCount.put(anElement, SetElementCount.ONE);
+				}
+			}
+			size = mapOfElement2elementCount.size();
 		}
+		collectionFactory = SET_FACTORY;
+		return leftCollectionValue;
+	}
+
+	public @NonNull CollectionValue mutableExcluding(@NonNull CollectionValue leftCollectionValue, E rightValue) {
+		collectionFactory.removeFrom(this, rightValue, 1);
 		return leftCollectionValue;
 	}
 
 	public @NonNull CollectionValue mutableExcludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<E> rightIterator) {
-		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
-			if (rightIterator instanceof BaggableIterator<?>) {
-				BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
-				for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
-					E rightValue = rightIterator.next();
-					if (removeFromCounts(rightValue, nextCount)) {
-						size--;
-						lazyListOfElements.remove(rightValue);
-					}
-				}
-			}
-			else {
-				while (rightIterator.hasNext()) {
-					E rightValue = rightIterator.next();
-					if (removeFromCounts(rightValue, 1)) {
-						size--;
-						lazyListOfElements.remove(rightValue);
-					}
-				}
+		if ((rightIterator instanceof BaggableIterator<?>) && !collectionFactory.isSequence()) {
+			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
+			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
+				collectionFactory.removeFrom(this, rightIterator.next(), nextCount);
 			}
 		}
 		else {
 			while (rightIterator.hasNext()) {
-				E rightValue = rightIterator.next();
-				size--;
-				lazyListOfElements.remove(rightValue);
+				collectionFactory.removeFrom(this, rightIterator.next(), 1);
 			}
 		}
 		return leftCollectionValue;
 	}
 
 	public @NonNull CollectionValue mutableIncluding(@NonNull CollectionValue leftCollectionValue, E rightValue) {
-		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
-			if (addToCounts(rightValue, 1)) {
-				size++;
-				lazyListOfElements.add(rightValue);
-			}
-		}
-		else {
-			size++;
-			lazyListOfElements.add(rightValue);
-		}
+		collectionFactory.addTo(this, rightValue, 1);
 		return leftCollectionValue;
 	}
 
 	public @NonNull CollectionValue mutableIncludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<E> rightIterator) {
-		if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
-			if (leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered()) {
-				if (rightIterator instanceof BaggableIterator<?>) {
-					BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
-					for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
-						E rightValue = rightIterator.next();
-						if (addToCounts(rightValue, nextCount)) {
-							size++;
-							lazyListOfElements.add(rightValue);
-						}
-					}
-				}
-			}
-			else {
-				while (rightIterator.hasNext()) {
-					E rightValue = rightIterator.next();
-					if (addToCounts(rightValue, 1)) {
-						size++;
-						lazyListOfElements.add(rightValue);
-					}
-				}
+		if ((rightIterator instanceof BaggableIterator<?>) && !collectionFactory.isSequence()) {
+			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
+			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
+				collectionFactory.addTo(this, rightIterator.next(), nextCount);
 			}
 		}
 		else {
 			while (rightIterator.hasNext()) {
-				E rightValue = rightIterator.next();
-				size++;
-				lazyListOfElements.add(rightValue);
+				collectionFactory.addTo(this, rightIterator.next(), 1);
 			}
 		}
 		return leftCollectionValue;
 	}
 
 	/**
-	 * Remmove counts of anElement from the collection updating element occurrence counts. Returns true if this
-	 * results in removal of the last copy of the element value and so requires a removal from the list.
+	 * Return leftCollectionValue after modification to be the intersection of leftCollectionValue and rightIterator,
+	 * This the underlying content of leftCollectionValue. If isUnique, the resulting intersection has unit counts
+	 * rather than common minimum counts.
 	 */
-	private boolean removeFromCounts(E anElement, int counts) {
-		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
-		if (lazyMapOfElement2elementCount2 == null) {
-			return true;			// Never happens, but better trim the list anyway
-		}
-		ElementCount oldElementCount = lazyMapOfElement2elementCount2.get(anElement);
-		if (oldElementCount == null) {
-			return false;			// Total miss shouldn't really happen, nothing to remove from the list
-		}
-		oldElementCount.value -= counts;
-		if (oldElementCount.value <= 0) {
-			lazyMapOfElement2elementCount2.remove(anElement);
-			return true;
+	public @NonNull CollectionValue mutableIntersection(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable E> rightIterator, boolean isUnique) {
+		assert leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered();
+		Map<@Nullable E, @NonNull ElementCount> savedMapOfElement2elementCount = getMapOfElement2elementCount();
+		Map<@Nullable E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
+		lazyListOfElements = new ArrayList<>();
+		size = 0;
+		collectionFactory = isUnique ? SET_FACTORY : BAG_FACTORY;
+		if (rightIterator instanceof BaggableIterator<?>) {
+			BaggableIterator<@Nullable E> baggableIterator = (BaggableIterator<@Nullable E>)rightIterator;
+			for (int rightCount; (rightCount = baggableIterator.hasNextCount()) > 0; ) {
+				E rightValue = baggableIterator.next();
+				ElementCount leftElementCount = savedMapOfElement2elementCount.get(rightValue);
+				if (leftElementCount != null) {
+					collectionFactory.addTo(this, rightValue, Math.min(leftElementCount.intValue(), rightCount));
+				}
+			}
 		}
 		else {
-			return false;
+			while (rightIterator.hasNext()) {
+				E rightValue = rightIterator.next();
+				ElementCount leftElementCount = savedMapOfElement2elementCount.get(rightValue);
+				if (leftElementCount != null) {
+					ElementCount intersectionElementCount = lazyMapOfElement2elementCount2.get(rightValue);
+					if ((intersectionElementCount == null) || (intersectionElementCount.intValue() < leftElementCount.intValue())) {
+						collectionFactory.addTo(this, rightValue, 1);
+					}
+				}
+			}
 		}
+		// NB the determinstic order is that of the right value; ?? should we re-instate the left order
+		return leftCollectionValue;
+	}
+
+	/**
+	 * Return leftCollectionValue after modification to be the union of leftCollectionValue and rightIterator,
+	 * This the underlying content of leftCollectionValue. If isUnique, the resulting union has unit counts
+	 * rather than sum counts.
+	 */
+	public @NonNull CollectionValue mutableUnion(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable E> rightIterator, boolean isUnique) {
+		assert leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered();
+		collectionFactory = isUnique ? SET_FACTORY : BAG_FACTORY;
+		if (rightIterator instanceof BaggableIterator<?>) {
+			BaggableIterator<@Nullable E> baggableIterator = (BaggableIterator<@Nullable E>)rightIterator;
+			for (int rightCount; (rightCount = baggableIterator.hasNextCount()) > 0; ) {
+				collectionFactory.addTo(this, baggableIterator.next(), rightCount);
+			}
+		}
+		else {
+			while (rightIterator.hasNext()) {
+				collectionFactory.addTo(this, rightIterator.next(), 1);
+			}
+		}
+		return leftCollectionValue;
 	}
 
 	/**
@@ -764,13 +966,16 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 
 	@Override
 	public @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append(collectionFactory.getKind());
+		s.append("{");
 		if (internalIterator.hasNext()) {
-			return "«future»";
+			s.append("«future»");
 		}
 		else {
-			StringBuilder s = new StringBuilder();
 			appendBagIterable(s, lazyListOfElements, lazyMapOfElement2elementCount);
-			return s.toString();
 		}
+		s.append("}");
+		return s.toString();
 	}
 }

@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
+import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -340,7 +341,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> values) {
 		this.typeId = typeId;
-		this.collectionFactory = AbstractCollectionFactory.getCollectionFactory(typeId);
+		this.collectionFactory = LazyIterable.getCollectionFactory(typeId);
 		Map<Class<?>, Integer> collectionClass2count2 = ExtensionImpl.collectionClass2count;
 		if (collectionClass2count2 != null) {
 			Class<? extends @NonNull CollectionValue> collectionClass = getClass();
