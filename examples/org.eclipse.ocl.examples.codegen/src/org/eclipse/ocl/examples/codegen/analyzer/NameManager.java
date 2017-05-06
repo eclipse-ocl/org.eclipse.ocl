@@ -474,6 +474,7 @@ public class NameManager
 		private final @NonNull Map<Object, String> object2name;		// Unambiguous name for each object, null if not determined
 		private Map<String, Integer> name2counter;					// Auto-generation counter for each colliding name
 		//		private boolean frozen = false;								// Set true once pushed
+		private int ancestralNameCount = 0;							// name2object.size() in context ancestry
 
 		public Context() {
 			this.context = null;
@@ -534,6 +535,16 @@ public class NameManager
 				String knownName = object2name.get(anObject);
 				if (knownName != null) {
 					return knownName;
+				}
+			}
+			int newCount = 0;
+			for (Context parent = context; parent != null; parent = parent.context) {
+				newCount += parent.name2object.size();
+			}
+			if (newCount != ancestralNameCount) {
+				ancestralNameCount = newCount;
+				for (Context parent = context; parent != null; parent = parent.context) {
+					name2object.putAll(parent.name2object);
 				}
 			}
 			String lastResort = null;
