@@ -44,9 +44,9 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationMa
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
-import org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsSetOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
@@ -405,7 +405,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						//
 						accumulator.add(referredProperty);
 					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue partProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue partProperties = CollectionMutableAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Property, collect);
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
 					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class_0));
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Class, oclAsType);
@@ -454,7 +454,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							accumulator_0.add(value);
 						}
 					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue allProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect_0);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue allProperties = CollectionMutableAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Property, collect_0);
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_1 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_2 = allProperties.iterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject;
