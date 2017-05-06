@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  *
  * @since 1.3
  */
-public class CollectionLiteralIterator extends AbstractBaggableIterator
+public class CollectionLiteralIterator extends LazyCollectionValueImpl
 {
 	public static class Range
 	{

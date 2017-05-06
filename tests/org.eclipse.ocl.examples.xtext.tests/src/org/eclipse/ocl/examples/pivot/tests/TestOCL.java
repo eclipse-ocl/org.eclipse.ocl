@@ -47,7 +47,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.iterators.AbstractBaggableIterator;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -255,7 +255,7 @@ public class TestOCL extends OCLInternal
 			}
 			PivotTestSuite.failNotEquals(message + " badHash", expectedHash, actualHash);
 		}
-		Object actual2 = actual instanceof AbstractBaggableIterator ? ((AbstractBaggableIterator)actual).asEagerCollectionValue() : actual;
+		Object actual2 = actual instanceof LazyCollectionValueImpl ? ((LazyCollectionValueImpl)actual).asEagerCollectionValue() : actual;
 		PivotTestSuite.failNotEquals(message, expected, actual2);
 	}
 

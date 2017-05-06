@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.values.Value;
  *
  * @since 1.3
  */
-public class AsEcoreIterator extends AbstractBaggableIterator
+public class AsEcoreIterator extends LazyCollectionValueImpl
 {
 	private final @NonNull IdResolver idResolver;
 	private final @Nullable Class<?> instanceClass;

@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
  *
  * @since 1.3
  */
-public class AsOrderedSetIterator extends AbstractBaggableIterator implements OrderedSetValue
+public class AsOrderedSetIterator extends LazyCollectionValueImpl implements OrderedSetValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 

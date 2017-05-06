@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public abstract class SelectIterator extends AbstractBaggableIterator
+public abstract class SelectIterator extends LazyCollectionValueImpl
 {
 	private final @NonNull BaggableIterator<Object> sourceIterator;
 

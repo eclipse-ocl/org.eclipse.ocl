@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.iterators.AbstractBaggableIterator;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
@@ -184,8 +184,8 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 
 	@Override
 	public @Nullable Object updateAccumulator(Object newValue) {
-		if (newValue instanceof AbstractBaggableIterator) {
-			((AbstractBaggableIterator)newValue).iterable();
+		if (newValue instanceof LazyCollectionValueImpl) {
+			((LazyCollectionValueImpl)newValue).iterable();
 		}
 		this.accumulatorValue = newValue;
 		TypedElement accumulatorVariable2 = accumulatorVariable;

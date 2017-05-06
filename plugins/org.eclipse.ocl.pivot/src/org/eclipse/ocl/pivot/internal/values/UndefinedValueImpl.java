@@ -52,6 +52,8 @@ import org.eclipse.ocl.pivot.values.UnlimitedValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 /**
+ * UndefinedValueImpl provides the common functionality for bad values.
+ *
  * @generated NOT
  */
 public abstract class UndefinedValueImpl extends EvaluationException implements NullValue, CollectionValue

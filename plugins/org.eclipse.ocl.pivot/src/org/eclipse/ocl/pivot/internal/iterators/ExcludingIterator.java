@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class ExcludingIterator extends AbstractBaggableIterator
+public class ExcludingIterator extends LazyCollectionValueImpl
 {
 	public static @NonNull CollectionValue excluding(@NonNull CollectionValue sourceValue, @Nullable Object object) {
 		return new ExcludingIterator(sourceValue, object);

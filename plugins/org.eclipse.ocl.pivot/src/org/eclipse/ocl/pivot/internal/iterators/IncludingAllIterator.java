@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public abstract class IncludingAllIterator extends AbstractBaggableIterator
+public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 {
 	public static @NonNull CollectionValue includingAll(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
 		if (sourceValue.isUnique()) {

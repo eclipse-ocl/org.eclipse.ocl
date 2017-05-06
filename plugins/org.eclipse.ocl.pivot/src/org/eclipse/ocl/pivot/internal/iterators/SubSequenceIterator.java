@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  *
  * @since 1.3
  */
-public class SubSequenceIterator extends AbstractBaggableIterator
+public class SubSequenceIterator extends LazyCollectionValueImpl
 {
 	public static @NonNull CollectionValue subSequence(@NonNull CollectionValue sourceValue, int lower, int upper) {
 		return new SubSequenceIterator(sourceValue, lower, upper);

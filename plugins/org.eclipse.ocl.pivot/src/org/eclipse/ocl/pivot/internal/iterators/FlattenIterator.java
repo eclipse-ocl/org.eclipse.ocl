@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class FlattenIterator extends AbstractBaggableIterator
+public class FlattenIterator extends LazyCollectionValueImpl
 {
 	public static @NonNull CollectionValue flatten(@NonNull CollectionValue sourceValue) {
 		CollectionTypeId collectionTypeId = sourceValue.getTypeId();

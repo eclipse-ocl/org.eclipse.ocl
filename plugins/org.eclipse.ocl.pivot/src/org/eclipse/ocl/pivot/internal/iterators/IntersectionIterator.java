@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class IntersectionIterator extends AbstractBaggableIterator
+public class IntersectionIterator extends LazyCollectionValueImpl
 {
 	public static @NonNull IntersectionIterator intersection(@NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
 		TypeId elementTypeId = sourceValue.getTypeId().getElementTypeId();

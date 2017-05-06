@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  *
  * @since 1.3
  */
-public class SubOrderedSetIterator extends AbstractBaggableIterator
+public class SubOrderedSetIterator extends LazyCollectionValueImpl
 {
 	public static @NonNull CollectionValue subOrderedSet(@NonNull CollectionValue sourceValue, int lower, int upper) {
 		return new SubOrderedSetIterator(sourceValue, lower, upper);

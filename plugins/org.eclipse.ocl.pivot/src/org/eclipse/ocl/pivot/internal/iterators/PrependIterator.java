@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public abstract class PrependIterator extends AbstractBaggableIterator
+public abstract class PrependIterator extends LazyCollectionValueImpl
 {
 	public static @NonNull CollectionValue prepend(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		if (sourceValue.isUnique()) {

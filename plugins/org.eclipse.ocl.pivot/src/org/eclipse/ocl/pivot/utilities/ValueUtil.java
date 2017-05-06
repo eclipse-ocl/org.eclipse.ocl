@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.AbstractBaggableIterator;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
@@ -386,8 +386,8 @@ public abstract class ValueUtil
 	 * @since 1.3 // FIXME temporary till next major version change
 	 */
 	public static @NonNull BaggableIterator<@Nullable Object> baggableIterator(@NonNull CollectionValue collectionValue) {
-		if (collectionValue instanceof AbstractBaggableIterator) {
-			return ((AbstractBaggableIterator)collectionValue).baggableIterator();
+		if (collectionValue instanceof LazyCollectionValueImpl) {
+			return ((LazyCollectionValueImpl)collectionValue).baggableIterator();
 		}
 		else if (collectionValue instanceof CollectionValueImpl) {
 			return ((CollectionValueImpl)collectionValue).baggableIterator();
@@ -737,8 +737,8 @@ public abstract class ValueUtil
 		if (bagValue instanceof BagValueImpl) {
 			return ((BagValueImpl)bagValue).getMapOfElement2elementCount();
 		}
-		else if (bagValue instanceof AbstractBaggableIterator) {
-			return ((AbstractBaggableIterator)bagValue).getMapOfElement2elementCount();
+		else if (bagValue instanceof LazyCollectionValueImpl) {
+			return ((LazyCollectionValueImpl)bagValue).getMapOfElement2elementCount();
 		}
 		else if (bagValue instanceof UndefinedValueImpl) {
 			return Collections.<@Nullable Object, @NonNull Number>emptyMap();

@@ -60,6 +60,11 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 /**
+ * CollectionValueImpl provides the common functionality for derived eager collection values.
+ *
+ * LazyCollectionValueImpl is preferred during computations in order to save on intermediate collection memories
+ * and sometimes save on redundant computations.
+ *
  * @generated NOT
  */
 public abstract class CollectionValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>

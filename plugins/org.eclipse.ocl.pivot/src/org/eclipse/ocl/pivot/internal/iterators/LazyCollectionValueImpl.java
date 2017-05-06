@@ -20,7 +20,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -32,12 +31,18 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.values.BagImpl;
+import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
 import org.eclipse.ocl.pivot.internal.values.CollectionStrategy;
+import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
 import org.eclipse.ocl.pivot.internal.values.TupleValueImpl;
 import org.eclipse.ocl.pivot.internal.values.ValueImpl;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
@@ -49,164 +54,32 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
+import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.Value;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 /**
- * AbstractBaggableValueImpl provides the common functionality for eager and lazy CollectionValues.
- * @generated NOT
+ * LazyCollectionValueImpl provides the common functionality for lazy evaluation using the hasNextCount/next
+ * BaggableIterator protocol. Derived baggable iterators must implement getNextCount() to describe the next entry
+ * by a callback to setNext().
+ *
+ * The LazyCollectionValueImpl may only used as a simple iterator by invoking iterator() without invoking iterable().
+ * If a usage of iterator() is followed by a usage of iterable() an IllegalStateException is thrown.
+ *
+ * The LazyCollectionValueImpl may be used as an iterable by invoking iterable() before iterator(). Derived
+ * implementations that require memory of their output may invoke iterable() in their constructor. Multiple
+ * calls to iterator() while the underlying iteration is in progress return a synchronized multi-access lazy
+ * iterator. Call to iterator() after the underlying iteration has completed return a much more efficient
+ * iterator. Concurrent iteration should be avoided whenever possible.
+ *
+ * The iterable is currently provided by a LazyIterable in order to preserve API compatibility. LazyIterable will
+ * be folded in at the next major version change.
+ *
  * @since 1.3
  */
-public abstract class AbstractBaggableValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
+public abstract class LazyCollectionValueImpl extends ValueImpl implements CollectionValue, BaggableIterator<@Nullable Object>
 {
-	/**
-	 * Optimized iterator over an Array for use in OCL contents where the array is known to be stable
-	 * and any call to next() is guarded by hasNext().
-	 */
-	private static class ArrayIterator<T> implements BaggableIterator<T>
-	{
-		protected final T @NonNull [] elements;
-		protected final int size;
-		private int index;
-
-		/**
-		 * Returns new array iterator over the given object array
-		 */
-		public ArrayIterator(T @NonNull [] elements, int size) {
-			this.elements = elements;
-			index = 0;
-			this.size = size;
-		}
-
-		/**
-		 * Returns true if this iterator contains more elements.
-		 */
-		@Override
-		public boolean hasNext() {
-			return index < size;
-		}
-
-		/**
-		 * Returns 1 if this iterator contains more elements.
-		 */
-		@Override
-		public int hasNextCount() {
-			return index < size ? 1 : 0;
-		}
-
-		/**
-		 * Returns the next element of this iterator.
-		 */
-		@Override
-		public T next() {
-			return elements[index++];
-		}
-
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	/**
-	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
-	 * and any call to next() is guarded by hasNext().
-	 */
-	private static class ListIterator<T> implements BaggableIterator<T>
-	{
-		protected final @NonNull List<T> elements;
-		protected final int size;
-		private int index;
-
-		/**
-		 * Returns new array iterator over the given object array
-		 */
-		public ListIterator(@NonNull List<T> elements) {
-			this.elements = elements;
-			index = 0;
-			this.size = elements.size();
-		}
-
-		/**
-		 * Returns true if this iterator contains more elements.
-		 */
-		@Override
-		public boolean hasNext() {
-			return index < size;
-		}
-
-		/**
-		 * Returns 1 if this iterator contains more elements.
-		 */
-		@Override
-		public int hasNextCount() {
-			return index < size ? 1 : 0;
-		}
-
-		/**
-		 * Returns the next element of this iterator.
-		 */
-		@Override
-		public T next() {
-			return elements.get(index++);
-		}
-
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder s = new StringBuilder();
-			s.append("List");
-			appendIterable(s, elements, 50);
-			return s.toString();
-		}
-	}
-
-	/**
-	 * Optimized iterator over an empty Collection.
-	 */
-	private static class NullIterator implements BaggableIterator<@Nullable Object>
-	{
-		/**
-		 * Returns new array iterator over the given object array
-		 */
-		public NullIterator() {}
-
-		/**
-		 * Returns true if this iterator contains more elements.
-		 */
-		@Override
-		public boolean hasNext() {
-			return false;
-		}
-
-		/**
-		 * Returns 1 if this iterator contains more elements.
-		 */
-		@Override
-		public int hasNextCount() {
-			return 0;
-		}
-
-		/**
-		 * Returns the next element of this iterator.
-		 */
-		@Override
-		public Object next() {
-			throw new NoSuchElementException();
-		}
-
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-	}
-
 	@SuppressWarnings("serial")
 	private static final class UnmodifiableEcoreObjects extends EcoreEList.UnmodifiableEList<@Nullable Object>
 	{
@@ -229,17 +102,10 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 		}
 	}
 
-	public static @NonNull NullIterator EMPTY_ITERATOR = new NullIterator();
+	public static @NonNull BaggableNullIterator EMPTY_ITERATOR = new BaggableNullIterator();
 
+	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2count = null;
 
-	/**
-	 * @since 1.3
-	 */
-	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = null;
-
-	/**
-	 * @since 1.3
-	 */
 	public static void appendIterable(StringBuilder s, @NonNull Iterable<? extends Object> iterable, int lengthLimit) {
 		s.append("{");
 		boolean isFirst = true;
@@ -259,75 +125,54 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 		s.append("}");
 	}
 
-	/**
-	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
-	 * and any call to next() is guarded by hasNext().
-	 */
-	public static class WrappedBaggableIterator<T> implements BaggableIterator<T>
-	{
-		protected final @NonNull Iterator<? extends T> iterator;
-
-		/**
-		 * Returns new array iterator over the given object array
-		 */
-		public WrappedBaggableIterator(@NonNull Iterator<? extends T> iterator) {
-			assert !(iterator instanceof BaggableIterator);
-			this.iterator = iterator;
-		}
-
-		/**
-		 * Returns true if this iterator contains more elements.
-		 */
-		@Override
-		public boolean hasNext() {
-			return iterator.hasNext();
-		}
-
-		/**
-		 * Returns 1 if this iterator contains more elements.
-		 */
-		@Override
-		public int hasNextCount() {
-			return iterator.hasNext() ? 1 : 0;
-		}
-
-		/**
-		 * Returns the next element of this iterator.
-		 */
-		@Override
-		public T next() {
-			return iterator.next();
-		}
-
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public String toString() {
-			return iterator.toString();
-		}
-	}
-
-	/**
-	 * A simple public static method that may be used to force class initialization.
-	 */
-	public static void initStatics() {}
-
 	protected final @NonNull CollectionTypeId typeId;
 
-	protected final @NonNull CollectionStrategy initialCollectionStrategy;
+	private final @NonNull CollectionStrategy initialCollectionStrategy;
 
-	protected AbstractBaggableValueImpl(@NonNull CollectionTypeId typeId) {
+	/**
+	 * The hashCode of the boxed values in this collection.
+	 */
+	private int hashCode = 0;
+
+	/**
+	 * If a history of the iterator is required, a non-null LazyIterable is used to provide it by calling
+	 * back to this iterator after ensuring that withIterable is TRUE.
+	 */
+	private @Nullable LazyIterable<@Nullable Object> lazyIterable = null;
+
+	/**
+	 * Whether this AbstractBaggableIterator behaves as a multi-iterable iterable or as a single iterable iterator.
+	 * Initially null and indeterminate. Set true by invocation of iterable(). Set false by invocation of iterator().
+	 * Conflicting usage, that is attempting to use a single use iterable for multiple purposes throws an
+	 * IllegalStateException.
+	 */
+	private Boolean withIterable = null;
+
+	/**
+	 * The next value to be returned by this iterator, if hasNext is true.
+	 */
+	private Object next = null;
+
+	/**
+	 * The number of repeats of next that are available.
+	 */
+	private int hasNextCount = 0;
+
+	/**
+	 * The number of repeats to be advanced by an invocation of next(). Set to 1 by the traditional hasNext().
+	 * Set to hasNextCount by the BaggableIterator protocol of hasNextCount().
+	 */
+	private int useCount = 0;
+
+	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId) {
 		this.typeId = typeId;
 		this.initialCollectionStrategy = LazyIterable.getCollectionStrategy(typeId);
-		Map<Class<?>, Integer> collectionClass2count2 = collectionClass2count;
-		if (collectionClass2count2 != null) {
+		Map<Class<?>, Integer> debugCollectionClass2count2 = debugCollectionClass2count;
+		if (debugCollectionClass2count2 != null) {
 			Class<? extends @NonNull CollectionValue> collectionClass = getClass();
-			Integer count = collectionClass2count2.get(collectionClass);
+			Integer count = debugCollectionClass2count2.get(collectionClass);
 			count = count != null ? count+1 : 1;
-			collectionClass2count2.put(collectionClass, count);
+			debugCollectionClass2count2.put(collectionClass, count);
 		}
 	}
 
@@ -351,6 +196,49 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	public @NonNull CollectionValue asCollectionValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return this;
+	}
+
+	@Override
+	public @NonNull Collection<@Nullable Object> asCollection() {
+		return asEagerCollectionValue().asCollection();
+	}
+
+	public @NonNull CollectionValue asEagerCollectionValue() {
+		if (isOrdered()) {
+			if (isUnique()) {
+				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
+			}
+			else {
+				return new SparseSequenceValueImpl(getTypeId(), iterable().getListOfElements());
+			}
+		}
+		else {
+			if (isUnique()) {
+				return new SetValueImpl(getTypeId(), getElements());
+			}
+			else {
+				BagImpl<@Nullable Object> bagImpl = new BagImpl<>();
+				for (int count; (count = hasNextCount()) > 0; ) {
+					Object next = next();
+					bagImpl.put(next, count);
+				}
+				return new BagValueImpl(getTypeId(), bagImpl);
+			}
+		}
+	}
+
+	private @NonNull OrderedCollectionValue asEagerOrderedCollectionValue() {
+		if (isOrdered()) {
+			if (isUnique()) {
+				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
+			}
+			else {
+				return new SparseSequenceValueImpl(getTypeId(), iterable().getListOfElements());
+			}
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	@Override
@@ -379,6 +267,16 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	@Override
+	public @NonNull Object asObject() {
+		return asEagerCollectionValue().asCollection();
+	}
+
+	@Override
+	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
+		return isUnique() ? asOrderedSetValue() : asSequenceValue();
+	}
+
+	@Override
 	public @NonNull OrderedSetValue asOrderedSetValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return new AsOrderedSetIterator(this);
@@ -396,6 +294,48 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 		return new AsSetIterator(this);
 	}
 
+	@Override
+	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
+		return isOrdered() ? asOrderedSetValue() : asSetValue();
+	}
+
+	//	@Override
+	public @Nullable Object at(int oclIndex) {
+		if (!isOrdered()) {
+			throw new UnsupportedOperationException();
+		}
+		int javaIindex = oclIndex - 1;
+		int size = intSize();
+		if (javaIindex < 0 || size <= javaIindex) {
+			throw new InvalidValueException(PivotMessages.IndexOutOfRange, oclIndex, size);
+		}
+		return iterable().get(javaIindex);
+	}
+
+	//	@Override
+	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
+		if (withIterable == null) {
+			withIterable = Boolean.FALSE;
+		}
+		else if (withIterable == Boolean.FALSE) {
+			System.err.println(NameUtil.debugSimpleName(this) + " iterator() - withIterable: " + withIterable);
+			//			throw new IllegalStateException("Must invoke iterable() before first of multiple iterator() calls.");
+		}
+		LazyIterable<@Nullable Object> iterable = basicGetIterable();
+		if (iterable != null) {
+			return iterable.iterator();
+		}
+		else {
+			withIterable = Boolean.FALSE;
+			//			System.out.println(NameUtil.debugSimpleName(this) + " iterator() withIterable: " + withIterable);
+			return this;
+		}
+	}
+
+	protected @Nullable LazyIterable<@Nullable Object> basicGetIterable() {
+		return lazyIterable;
+	}
+
 	protected boolean checkElementsAreValues(@NonNull Iterable<? extends Object> elements) {
 		for (Object element : elements) {
 			assert ValueUtil.isBoxed(element);
@@ -407,33 +347,9 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 		return true;
 	}
 
-	/**
-	 * Implementation of the OCL
-	 * <tt>Collection::count(object : T) : Integer</tt>
-	 * operation.
-	 *
-	 * @param value an object
-	 * @return the number of occurrences of the object in the collection
-	 * @throws InvalidValueException
-	 */
 	@Override
 	public @NonNull IntegerValue count(@Nullable Object value) {
-		long count = 0;
-		if (value == null) {
-			for (Object next : iterable()) {
-				if (next == null) {
-					count++;
-				}
-			}
-		}
-		else {
-			for (Object next : iterable()) {
-				if (value.equals(next)) {
-					count++;
-				}
-			}
-		}
-		return ValueUtil.integerValueOf(count);
+		return ValueUtil.integerValueOf(iterable().count(value));
 	}
 
 	@Override
@@ -579,6 +495,10 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 		return ExcludingAllIterator.excludingAll(this, values);
 	}
 
+	public @Nullable Object first() {
+		return at(1);
+	}
+
 	/**
 	 * Returns true if any element flattened.
 	 * @throws InvalidValueException
@@ -610,7 +530,12 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 
 	//	@Override
 	public @NonNull CollectionStrategy getCollectionStrategy() {
-		return initialCollectionStrategy;
+		if (lazyIterable != null) {
+			return lazyIterable.getCollectionStrategy();
+		}
+		else {
+			return initialCollectionStrategy;
+		}
 	}
 
 	//	@Override
@@ -618,9 +543,19 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	//		return getTypeId().getElementTypeId();
 	//	}
 
+	//	@Override
+	//	public @NonNull Collection<@Nullable Object> getElements() {
+	//		return asCollection();
+	//	}
+
 	@Override
 	public @NonNull Collection<@Nullable Object> getElements() {
-		return asCollection();
+		if (!isBag()) {
+			return iterable().getListOfElements();
+		}
+		else {
+			return Lists.newArrayList(iterable());			// FIXME avoid this
+		}
 	}
 
 	@Override
@@ -629,9 +564,26 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	//	@Override
-	//	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
-	//		throw new UnsupportedOperationException();
-	//	}
+	protected @NonNull List<@Nullable Object> getListOfElements() {
+		return iterable().getListOfElements();
+	}
+
+	//	@Override
+	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+		return iterable().getMapOfElement2elementCount();
+	}
+
+	/**
+	 * Derived classes must implement to return the number of times the next element is repeated.
+	 * If the return is more than zero, the next element and count must be assigned prior to return
+	 * by invoking setNext().
+	 *
+	 * It is desirable, but not mandatory for derived classes to exploit the BaggableIterator protocol to avoid
+	 * redundant re-computation of repeated Bag elements. Repeated Bag elements may be returned one repeat at
+	 * a time, by returning 1 rather than the repeat. If this is to be done, the constructor must inhibit lazy
+	 * use of this iterable/iterator by invoking getMapOfElement2elementCount().
+	 */
+	protected abstract int getNextCount();
 
 	public @NonNull CollectionTypeId getOrderedSetTypeId() {
 		return TypeId.ORDERED_SET.getSpecializedId(getTypeId().getElementTypeId());
@@ -651,22 +603,59 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	@Override
-	public abstract int hashCode();
+	public final boolean hasNext() {
+		assert withIterable != null;
+		if ((hasNextCount > 0) || (hasNextCount() > 0)) {
+			useCount = 1;
+			return true;
+		}
+		else {
+			useCount = 0;
+			return false;
+		}
+	}
+
+	@Override
+	public final int hasNextCount() {
+		assert withIterable != null;
+		if (hasNextCount <= 0) {
+			//			if (withIterable == null) {
+			//				withIterable = Boolean.FALSE; System.out.println(NameUtil.debugSimpleName(this) + " hasNextCount() withIterable: " + withIterable);
+			//			}
+			int hasNextCount = getNextCount();
+			assert hasNextCount == this.hasNextCount;
+			if (hasNextCount <= 0) {
+				next = null;
+			}
+		}
+		useCount = hasNextCount;
+		return useCount;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == 0) {
+			synchronized (this) {
+				if (hashCode == 0) {
+					boolean isOrdered = isOrdered();
+					boolean isUnique = isUnique();
+					if (isOrdered || isUnique) {
+						hashCode = computeCollectionHashCode(isOrdered, isUnique, iterable().getListOfElements());
+					}
+					else {			// Bag
+						hashCode = computeCollectionHashCode(iterable().getMapOfElement2elementCount());
+					}
+				}
+			}
+		}
+		return hashCode;
+	}
 
 	@Override
 	public @NonNull Boolean includes(@Nullable Object value) {
-		return Iterables.contains(iterable(), value) != false;			// FIXME redundant test to suppress warning
+		return iterable().contains(value);
 	}
 
-	/**
-	 * Implementation of the OCL
-	 * <tt>Collection::includesAll(c : Collection(T)) : Boolean</tt>
-	 * operation.
-	 *
-	 * @param c another collection
-	 * @return whether the source collection includes all of the elements
-	 *     of the other
-	 */
 	@Override
 	public @NonNull Boolean includesAll(@NonNull CollectionValue c) {
 		for (Object e1 : c.iterable()) {
@@ -702,6 +691,19 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	@Override
 	public @NonNull CollectionValue includingAll(@NonNull CollectionValue values) {
 		return IncludingAllIterator.includingAll(getTypeId(), this, values);
+	}
+
+	public @NonNull IntegerValue indexOf(@Nullable Object object) {
+		return asEagerOrderedCollectionValue().indexOf(object);
+	}
+
+	public @NonNull OrderedCollectionValue insertAt(int index, @Nullable Object object) {
+		return asEagerOrderedCollectionValue().insertAt(index, object);
+	}
+
+	@Override
+	public int intSize() {
+		return iterable().size();
 	}
 
 	@Override
@@ -741,35 +743,45 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	@Override
+	public @NonNull LazyIterable<@Nullable Object> iterable() {
+		if (withIterable == null) {
+			withIterable = Boolean.TRUE;
+		}
+		else if (withIterable == Boolean.FALSE) {
+			System.err.println(NameUtil.debugSimpleName(this) + " iterable() - withIterable: " + withIterable);
+			//			throw new IllegalStateException("Cannot invoke iterable() after exploiting an iterator().");
+		}
+		//		withIterable = Boolean.TRUE;
+		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
+		if (lazyIterable2 == null) {
+			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
+			lazyIterable = lazyIterable2 = new LazyIterable<>(this, getCollectionStrategy(), equalsStrategy);
+		}
+		return lazyIterable2;
+	}
+
+	@Override
 	public @NonNull BaggableIterator<@Nullable Object> iterator() {
-		Iterable<@Nullable Object> elements = iterable();
-		if (this instanceof BaggableIterator) {
-			iterable();
-			@SuppressWarnings("unchecked")
-			BaggableIterator<@Nullable Object> castElements = (BaggableIterator<@Nullable Object>)this;
-			return castElements;
-		}
-		else if (elements instanceof BaggableIterator) {
-			@SuppressWarnings("unchecked")
-			BaggableIterator<@Nullable Object> castElements = (BaggableIterator<@Nullable Object>)elements;
-			return castElements;
-		}
-		else if (elements instanceof BasicEList) {
-			BasicEList<Object> castElements = (BasicEList<Object>)elements;
-			@SuppressWarnings("null")@Nullable Object[] data = castElements.data();
-			return data != null ? new ArrayIterator<>(data, castElements.size()) : EMPTY_ITERATOR;
-		}
-		else if (elements instanceof List<?>) {
-			List<@Nullable Object> castElements = (List<@Nullable Object>)elements;
-			return new ListIterator<>(castElements);
-		}
-		else {
-			return new WrappedBaggableIterator<>(elements.iterator());
-		}
+		return baggableIterator();
+	}
+
+	public @Nullable Object last() {
+		return at(intSize());
 	}
 
 	public @NonNull CollectionValue minus(@NonNull CollectionValue that) {
 		return ExcludingAllIterator.excludingAll(this, that);
+	}
+
+	@Override
+	public final Object next() {
+		assert withIterable != null;
+		if (hasNextCount <= 0) {
+			throw new NoSuchElementException();
+		}
+		hasNextCount -= useCount;
+		useCount = 0;
+		return next;
 	}
 
 	@Override
@@ -796,6 +808,17 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 			}
 		}
 		return result;
+	}
+
+	public @NonNull OrderedCollectionValue reverse() {
+		return asEagerOrderedCollectionValue().reverse();
+	}
+
+	protected int setNext(Object next, int nextCount) {
+		assert nextCount > 0;
+		this.next = next;
+		this.hasNextCount = nextCount;
+		return nextCount;
 	}
 
 	@Override

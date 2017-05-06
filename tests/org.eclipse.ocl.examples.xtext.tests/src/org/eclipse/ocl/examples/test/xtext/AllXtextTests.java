@@ -51,7 +51,7 @@ import org.eclipse.ocl.examples.test.label.PluginLabelTests;
 import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
-import org.eclipse.ocl.pivot.internal.iterators.AbstractBaggableIterator;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.internal.values.CollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -100,8 +100,8 @@ extends TestCase {
 				{
 					@Override
 					public int compare(@NonNull Class<?> o1, @NonNull Class<?> o2) {
-						boolean h1 = AbstractBaggableIterator.class.isAssignableFrom(o1);
-						boolean h2 = AbstractBaggableIterator.class.isAssignableFrom(o2);
+						boolean h1 = LazyCollectionValueImpl.class.isAssignableFrom(o1);
+						boolean h2 = LazyCollectionValueImpl.class.isAssignableFrom(o2);
 						if (h1 != h2) {
 							return h1 ? 1 : -1;
 						}
@@ -113,15 +113,15 @@ extends TestCase {
 					Integer lazyListCount = collectionClass2lazyList.get(collectionClass);
 					Integer lazyMapCount = collectionClass2lazyMap.get(collectionClass);
 					System.out.println(collectionClass.getName() + " : " + count + " : " + lazyListCount + " : " + lazyMapCount);
-					if (AbstractBaggableIterator.class.isAssignableFrom(collectionClass)) {
+					if (LazyCollectionValueImpl.class.isAssignableFrom(collectionClass)) {
 						iteratorCounts += count;
 					}
 					else {
 						nonIteratorCounts += count;
 					}
 				}
-				System.out.println(">= " + AbstractBaggableIterator.class.getName() + " : " + iteratorCounts);
-				System.out.println("!>= " + AbstractBaggableIterator.class.getName() + " : " + nonIteratorCounts);
+				System.out.println(">= " + LazyCollectionValueImpl.class.getName() + " : " + iteratorCounts);
+				System.out.println("!>= " + LazyCollectionValueImpl.class.getName() + " : " + nonIteratorCounts);
 				System.out.println("all " + CollectionValue.class.getName() + " : " + (iteratorCounts+nonIteratorCounts));
 			}
 

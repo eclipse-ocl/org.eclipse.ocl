@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class SymmetricDifferenceIterator extends AbstractBaggableIterator
+public class SymmetricDifferenceIterator extends LazyCollectionValueImpl
 {
 	public static @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
 		return new SymmetricDifferenceIterator(sourceValue, otherValue);

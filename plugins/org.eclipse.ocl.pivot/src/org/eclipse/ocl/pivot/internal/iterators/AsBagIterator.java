@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class AsBagIterator extends AbstractBaggableIterator implements BagValue
+public class AsBagIterator extends LazyCollectionValueImpl implements BagValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 

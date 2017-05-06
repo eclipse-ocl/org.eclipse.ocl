@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
  *
  * @since 1.3
  */
-public class AsSetIterator extends AbstractBaggableIterator implements SetValue
+public class AsSetIterator extends LazyCollectionValueImpl implements SetValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
