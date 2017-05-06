@@ -14,29 +14,29 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
- * CollectionMutableAsSetOperation realises the mutable variant of the Collection::asSet() library operation.
+ * CollectionMutableAsBagOperation realises the mutable variant of the Collection::asBag() library operation.
  *
  * @since 1.3
  */
-public class CollectionMutableAsSetOperation extends AbstractUnaryOperation
+public class CollectionMutableAsBagOperation extends AbstractUnaryOperation
 {
-	public static final @NonNull CollectionMutableAsSetOperation INSTANCE = new CollectionMutableAsSetOperation();
+	public static final @NonNull CollectionMutableAsBagOperation INSTANCE = new CollectionMutableAsBagOperation();
 
 	@Override
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		Iterable<@Nullable Object> iterable = leftCollectionValue.iterable();
 		if (iterable instanceof LazyIterable) {
-			return ((LazyIterable<@Nullable Object>)iterable).mutableAsSet(leftCollectionValue);
+			return ((LazyIterable<@Nullable Object>)iterable).mutableAsBag(leftCollectionValue);
 		}
 		else {
-			return new AsSetIterator((CollectionValue.Extension)leftCollectionValue);
+			return new AsBagIterator((CollectionValue.Extension)leftCollectionValue);
 		}
 	}
 }

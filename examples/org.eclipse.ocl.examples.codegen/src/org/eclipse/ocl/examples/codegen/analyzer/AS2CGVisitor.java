@@ -169,11 +169,19 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsBagOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsOrderedSetOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsSequenceOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsSetOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingAllOperation;
@@ -693,7 +701,27 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		OCLExpression pSource = element.getOwnedSource();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		CGOperationCallExp cgOperationCallExp = null;
-		if (libraryOperation instanceof CollectionExcludingOperation) {
+		if (libraryOperation instanceof CollectionAsBagOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAsBagOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionAsOrderedSetOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAsOrderedSetOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionAsSequenceOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAsSequenceOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionAsSetOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAsSetOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionExcludingOperation) {
 			if (canBeMutable(cgSource, element)) {
 				libraryOperation = CollectionMutableExcludingOperation.INSTANCE;
 			}

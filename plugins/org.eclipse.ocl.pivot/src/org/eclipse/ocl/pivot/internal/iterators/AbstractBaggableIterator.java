@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
+import org.eclipse.ocl.pivot.internal.values.CollectionStrategy;
 import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
@@ -199,6 +200,16 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 	}
 
 	@Override
+	public @NonNull CollectionStrategy getCollectionStrategy() {
+		if (lazyIterable != null) {
+			return lazyIterable.getCollectionStrategy();
+		}
+		else {
+			return super.getCollectionStrategy();
+		}
+	}
+
+	@Override
 	public @NonNull Collection<@Nullable Object> getElements() {
 		if (!isBag()) {
 			return iterable().getListOfElements();
@@ -299,11 +310,6 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 	}
 
 	@Override
-	public int intCount(@Nullable Object value) {
-		return iterable().count(value);
-	}
-
-	@Override
 	public int intSize() {
 		return iterable().size();
 	}
@@ -321,7 +327,7 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
 		if (lazyIterable2 == null) {
 			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
-			lazyIterable = lazyIterable2 = new LazyIterable<>(this, collectionFactory, equalsStrategy);
+			lazyIterable = lazyIterable2 = new LazyIterable<>(this, getCollectionStrategy(), equalsStrategy);
 		}
 		return lazyIterable2;
 	}

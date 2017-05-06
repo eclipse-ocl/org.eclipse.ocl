@@ -337,11 +337,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	private int hashCode = 0;
 	protected final @NonNull Collection<@Nullable Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
 	protected final @NonNull CollectionTypeId typeId;
-	private final @NonNull CollectionFactory collectionFactory;
+	private final @NonNull CollectionStrategy collectionFactory;
 
 	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> values) {
 		this.typeId = typeId;
-		this.collectionFactory = LazyIterable.getCollectionFactory(typeId);
+		this.collectionFactory = LazyIterable.getCollectionStrategy(typeId);
 		Map<Class<?>, Integer> collectionClass2count2 = ExtensionImpl.collectionClass2count;
 		if (collectionClass2count2 != null) {
 			Class<? extends @NonNull CollectionValue> collectionClass = getClass();
@@ -712,14 +712,6 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return TypeId.BAG.getSpecializedId(getElementTypeId());
 	}
 
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public @NonNull CollectionFactory getCollectionFactory() {
-		return collectionFactory;
-	}
-
 	@Override
 	public @NonNull TypeId getElementTypeId() {
 		return getTypeId().getElementTypeId();
@@ -821,14 +813,6 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public int intCount(@Nullable Object value) {
-		return count(value).intValue();
 	}
 
 	@Override

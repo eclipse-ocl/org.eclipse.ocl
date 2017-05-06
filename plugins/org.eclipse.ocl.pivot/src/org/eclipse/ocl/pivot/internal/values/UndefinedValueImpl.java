@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -379,14 +378,6 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		return toInvalidValue();
 	}
 
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public @NonNull CollectionFactory getCollectionFactory() {
-		return LazyIterable.SET_FACTORY;
-	}
-
 	public Type getElement() {
 		return null;
 	}
@@ -463,14 +454,6 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @NonNull SequenceValue insertAt(int index, @Nullable Object object) {
 		return toInvalidValue();
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public int intCount(@Nullable Object value) {
-		return 0;
 	}
 
 	@Override

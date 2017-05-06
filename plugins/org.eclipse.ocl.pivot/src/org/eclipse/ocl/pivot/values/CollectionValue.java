@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
 
 public interface CollectionValue extends Value, Iterable<@Nullable Object>
 {
@@ -40,10 +39,8 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 */
 	interface Extension extends CollectionValue {
 		@NonNull BaggableIterator<@Nullable Object> baggableIterator();
-		@NonNull CollectionFactory getCollectionFactory();
 		@NonNull TypeId getElementTypeId();
 		@NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount();
-		int intCount(@Nullable Object value);
 	}
 
 	/**

@@ -11,19 +11,13 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 
 /**
- * AbstractCollectionFactory provides the common functionality for CollectionValue creation.
+ * CollectionStrategy defines.
  * @since 1.3
  */
-public interface CollectionFactory
+public interface CollectionStrategy
 {
-	/**
-	 * Add count of anElement to the lazyIterable updating element occurrence counts.
-	 */
-	<@Nullable E> void addTo(@NonNull LazyIterable<E> lazyIterable, E anElement, int count);
 	@NonNull String getKind();
 	boolean isBag();
 	boolean isOrdered();
@@ -31,8 +25,4 @@ public interface CollectionFactory
 	boolean isSequence();
 	boolean isSet();
 	boolean isUnique();
-	/**
-	 * Remove count of anElement to the lazyIterable updating element occurrence counts.
-	 */
-	<@Nullable E> void removeFrom(@NonNull LazyIterable<E> lazyIterable, E anElement, int count);
 }

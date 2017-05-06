@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.CollectionFactory;
+import org.eclipse.ocl.pivot.internal.values.CollectionStrategy;
 import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
 import org.eclipse.ocl.pivot.internal.values.TupleValueImpl;
@@ -316,11 +316,12 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	public static void initStatics() {}
 
 	protected final @NonNull CollectionTypeId typeId;
-	protected final @NonNull CollectionFactory collectionFactory;
+
+	protected final @NonNull CollectionStrategy initialCollectionStrategy;
 
 	protected AbstractBaggableValueImpl(@NonNull CollectionTypeId typeId) {
 		this.typeId = typeId;
-		this.collectionFactory = LazyIterable.getCollectionFactory(typeId);
+		this.initialCollectionStrategy = LazyIterable.getCollectionStrategy(typeId);
 		Map<Class<?>, Integer> collectionClass2count2 = collectionClass2count;
 		if (collectionClass2count2 != null) {
 			Class<? extends @NonNull CollectionValue> collectionClass = getClass();
@@ -609,9 +610,9 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 		return TypeId.BAG.getSpecializedId(getElementTypeId());
 	}
 
-	@Override
-	public @NonNull CollectionFactory getCollectionFactory() {
-		return collectionFactory;
+	//	@Override
+	public @NonNull CollectionStrategy getCollectionStrategy() {
+		return initialCollectionStrategy;
 	}
 
 	@Override
@@ -626,13 +627,13 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 
 	@Override
 	public @NonNull String getKind() {
-		return collectionFactory.getKind();
+		return getCollectionStrategy().getKind();
 	}
 
-	@Override
-	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
-		throw new UnsupportedOperationException();
-	}
+	//	@Override
+	//	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+	//		throw new UnsupportedOperationException();
+	//	}
 
 	public @NonNull CollectionTypeId getOrderedSetTypeId() {
 		return TypeId.ORDERED_SET.getSpecializedId(getElementTypeId());
@@ -716,29 +717,29 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	public boolean isBag() {
-		return collectionFactory.isBag();
+		return getCollectionStrategy().isBag();
 	}
 
 	@Override
 	public boolean isOrdered() {
-		return collectionFactory.isOrdered();
+		return getCollectionStrategy().isOrdered();
 	}
 
 	public boolean isOrderedSet() {
-		return collectionFactory.isOrderedSet();
+		return getCollectionStrategy().isOrderedSet();
 	}
 
 	public boolean isSequence() {
-		return collectionFactory.isSequence();
+		return getCollectionStrategy().isSequence();
 	}
 
 	public boolean isSet() {
-		return collectionFactory.isSet();
+		return getCollectionStrategy().isSet();
 	}
 
 	@Override
 	public boolean isUnique() {
-		return collectionFactory.isUnique();
+		return getCollectionStrategy().isUnique();
 	}
 
 	@Override
