@@ -151,14 +151,6 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 		return obj instanceof InvalidValueException;
 	}
 
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public @NonNull TypeId getElementTypeId() {
-		return TypeId.OCL_INVALID;
-	}
-
 	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
 		return standardLibrary.getOclInvalidType();
 	}

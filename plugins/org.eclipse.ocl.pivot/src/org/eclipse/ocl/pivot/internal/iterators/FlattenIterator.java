@@ -33,7 +33,7 @@ public class FlattenIterator extends AbstractBaggableIterator
 		while ((typeId instanceof CollectionTypeId) && !(typeId instanceof OclVoidTypeId)) {
 			typeId = ((CollectionTypeId)typeId).getElementTypeId();
 		}
-		return new FlattenIterator(collectionTypeId.getGeneralizedId().getSpecializedId(typeId), (CollectionValue.@NonNull Extension)sourceValue);
+		return new FlattenIterator(collectionTypeId.getGeneralizedId().getSpecializedId(typeId), sourceValue);
 		/*		if (isOrdered()) {
 			if (isUnique()) {
 				OrderedSet<Object> flattened = new OrderedSetImpl<Object>();
@@ -79,9 +79,9 @@ public class FlattenIterator extends AbstractBaggableIterator
 	private @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private @Nullable Stack<@NonNull BaggableIterator<@Nullable Object>> iteratorStack = null;
 
-	public FlattenIterator(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue) {
+	public FlattenIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue) {
 		super(collectionTypeId);
-		this.sourceIterator = sourceValue.baggableIterator();
+		this.sourceIterator = baggableIterator(sourceValue);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class FlattenIterator extends AbstractBaggableIterator
 					iteratorStack2 = iteratorStack = new Stack<>();
 				}
 				iteratorStack2.push(sourceIterator);
-				sourceIterator = ((CollectionValue.Extension)next).baggableIterator();
+				sourceIterator = baggableIterator((CollectionValue)next);
 				return hasNextCount();
 			}
 			return setNext(next, nextCount);

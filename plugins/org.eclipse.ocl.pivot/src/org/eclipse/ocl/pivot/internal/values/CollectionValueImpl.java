@@ -62,7 +62,7 @@ import com.google.common.collect.Lists;
 /**
  * @generated NOT
  */
-public abstract class CollectionValueImpl extends ValueImpl implements CollectionValue.Extension, Iterable<@Nullable Object>
+public abstract class CollectionValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
 {
 	/**
 	 * Optimized iterator over an Array for use in OCL contents where the array is known to be stable
@@ -446,7 +446,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	/**
 	 * @since 1.3
 	 */
-	@Override
+	//	@Override
 	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
 		Iterable<@Nullable Object> elements = iterable();
 		if (this instanceof BaggableIterator) {
@@ -525,7 +525,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		if (!(obj instanceof CollectionValue)) {
 			return false;
 		}
-		CollectionValue.Extension that = (CollectionValue.Extension)obj;
+		CollectionValue that = (CollectionValue)obj;
 		boolean isOrdered = isOrdered();
 		if (isOrdered != that.isOrdered()) {
 			return false;
@@ -589,10 +589,8 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 				}
 			}
 			else {
-				Map<@Nullable Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount();
-				Map<@Nullable Object, @NonNull ? extends Number> thoseElements = that.getMapOfElement2elementCount();
-				//				Collection<? extends Object> theseElements = this.getElements();
-				//				Collection<? extends Object> thoseElements = that.getElements();
+				Map<? extends Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount(this);
+				Map<? extends Object, @NonNull ? extends Number> thoseElements = getMapOfElement2elementCount(that);
 				return theseElements.equals(thoseElements);
 			}
 		}
@@ -712,7 +710,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return TypeId.BAG.getSpecializedId(getElementTypeId());
 	}
 
-	@Override
+	//	@Override
 	public @NonNull TypeId getElementTypeId() {
 		return getTypeId().getElementTypeId();
 	}
@@ -728,14 +726,6 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	@Override
 	public @NonNull String getKind() {
 		return collectionFactory.getKind();
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
-		throw new UnsupportedOperationException();
 	}
 
 	public @NonNull Collection<@Nullable Object> getObject() {

@@ -166,7 +166,7 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 		return iterable().get(javaIindex);
 	}
 
-	@Override
+	//	@Override
 	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
 		if (withIterable == null) {
 			withIterable = Boolean.FALSE;
@@ -227,10 +227,7 @@ public abstract class AbstractBaggableIterator extends AbstractBaggableValueImpl
 		return iterable().getListOfElements();
 	}
 
-	/**
-	 * @since 1.3
-	 */
-	@Override
+	//	@Override
 	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
 		return iterable().getMapOfElement2elementCount();
 	}

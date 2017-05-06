@@ -29,8 +29,8 @@ public class AsSetIterator extends AbstractBaggableIterator implements SetValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsSetIterator(CollectionValue.@NonNull Extension sourceValue) {
-		this(TypeId.SET.getSpecializedId(sourceValue.getElementTypeId()), sourceValue.iterator(), sourceValue.isUnique());
+	public AsSetIterator(@NonNull CollectionValue sourceValue) {
+		this(TypeId.SET.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.iterator(), sourceValue.isUnique());
 	}
 
 	public AsSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsUnique) {

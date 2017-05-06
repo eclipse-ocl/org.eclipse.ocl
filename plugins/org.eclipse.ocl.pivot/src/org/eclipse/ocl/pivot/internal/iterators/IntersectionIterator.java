@@ -25,28 +25,28 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class IntersectionIterator extends AbstractBaggableIterator
 {
 	public static @NonNull IntersectionIterator intersection(@NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
-		TypeId elementTypeId = ((CollectionValue.@NonNull Extension)sourceValue).getElementTypeId();
+		TypeId elementTypeId = sourceValue.getTypeId().getElementTypeId();
 		if (sourceValue.isUnique()) {
 			CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(setTypeId, (CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)secondValue);
+			return new IntersectionIterator(setTypeId, sourceValue, secondValue);
 		}
 		else if (secondValue.isUnique()) {
 			CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(setTypeId, (CollectionValue.@NonNull Extension)secondValue, (CollectionValue.@NonNull Extension)sourceValue);
+			return new IntersectionIterator(setTypeId, secondValue, sourceValue);
 		}
 		else {
 			CollectionTypeId bagTypeId = TypeId.BAG.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(bagTypeId, (CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)secondValue);
+			return new IntersectionIterator(bagTypeId, sourceValue, secondValue);
 		}
 	}
 
-	private final CollectionValue.@NonNull Extension sourceValue;
+	private final @NonNull CollectionValue sourceValue;
 	private final @NonNull BaggableIterator<@Nullable Object> secondIterator;
 
-	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension secondValue) {
+	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
 		super(collectionTypeId);
 		this.sourceValue = sourceValue;
-		this.secondIterator = secondValue.baggableIterator();
+		this.secondIterator = baggableIterator(secondValue);
 	}
 
 	@Override

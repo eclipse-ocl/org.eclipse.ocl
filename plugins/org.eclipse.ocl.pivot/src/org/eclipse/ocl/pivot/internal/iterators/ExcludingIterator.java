@@ -24,16 +24,16 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class ExcludingIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue excluding(@NonNull CollectionValue sourceValue, @Nullable Object object) {
-		return new ExcludingIterator((CollectionValue.@NonNull Extension)sourceValue, object);
+		return new ExcludingIterator(sourceValue, object);
 	}
 
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private final @Nullable Object object;
 	private final @NonNull EqualsStrategy equalsStrategy;
 
-	public ExcludingIterator(CollectionValue.@NonNull Extension sourceValue, @Nullable Object object) {
+	public ExcludingIterator(@NonNull CollectionValue sourceValue, @Nullable Object object) {
 		super(sourceValue.getTypeId());
-		this.sourceIterator = sourceValue.baggableIterator();
+		this.sourceIterator = baggableIterator(sourceValue);
 		this.object = object;
 		this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), object == null);
 	}

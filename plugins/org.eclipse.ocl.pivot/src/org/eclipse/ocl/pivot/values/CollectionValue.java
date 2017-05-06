@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -22,7 +21,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 
 public interface CollectionValue extends Value, Iterable<@Nullable Object>
 {
@@ -32,15 +30,6 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 */
 	interface Accumulator extends CollectionValue {
 		boolean add(@Nullable Object value);
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	interface Extension extends CollectionValue {
-		@NonNull BaggableIterator<@Nullable Object> baggableIterator();
-		@NonNull TypeId getElementTypeId();
-		@NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount();
 	}
 
 	/**
@@ -103,6 +92,9 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	String getKind();
+
+	/** FIXME at next major version change */
+	//		@NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount();
 
 	/**
 	 * @generated NOT

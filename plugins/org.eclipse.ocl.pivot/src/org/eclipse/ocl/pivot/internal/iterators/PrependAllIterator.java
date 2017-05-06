@@ -28,23 +28,23 @@ public abstract class PrependAllIterator extends AbstractBaggableIterator
 				prependValue = prependValue.asUniqueCollectionValue();
 			}
 			prependValue.iterable();
-			return new ToUnique((CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)prependValue);
+			return new ToUnique(sourceValue, prependValue);
 		}
 		else if (sourceValue.isOrdered()) {
-			return new ToSequence((CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)prependValue);
+			return new ToSequence(sourceValue, prependValue);
 		}
 		else {
-			return new ToBag((CollectionValue.@NonNull Extension)sourceValue, (CollectionValue.@NonNull Extension)prependValue);
+			return new ToBag(sourceValue, prependValue);
 		}
 	}
 
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @NonNull BaggableIterator<@Nullable Object> prependIterator;
 
-	public PrependAllIterator(CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension prependValue) {
+	public PrependAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
 		super(sourceValue.getTypeId());
-		this.sourceIterator = sourceValue.baggableIterator();
-		this.prependIterator = prependValue.baggableIterator();
+		this.sourceIterator = baggableIterator(sourceValue);
+		this.prependIterator = baggableIterator(prependValue);
 	}
 
 	@Override
@@ -59,10 +59,10 @@ public abstract class PrependAllIterator extends AbstractBaggableIterator
 	// The prepended value goes at the beginning.
 	private static class ToBag extends PrependAllIterator
 	{
-		private final CollectionValue.@NonNull Extension sourceValue;		// FIXME Use MapOfElement2ElementCount
-		private final CollectionValue.@NonNull Extension prependValue;		// FIXME Use MapOfElement2ElementCount
+		private final @NonNull CollectionValue sourceValue;		// FIXME Use MapOfElement2ElementCount
+		private final @NonNull CollectionValue prependValue;		// FIXME Use MapOfElement2ElementCount
 
-		public ToBag(CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension prependValue) {
+		public ToBag(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
 			super(sourceValue, prependValue);
 			this.sourceValue = sourceValue;
 			this.prependValue = prependValue;
@@ -90,7 +90,7 @@ public abstract class PrependAllIterator extends AbstractBaggableIterator
 	// The prepended value goes at the beginning.
 	private static class ToSequence extends PrependAllIterator
 	{
-		public ToSequence(CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension prependValue) {
+		public ToSequence(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
 			super(sourceValue, prependValue);
 		}
 
@@ -111,9 +111,9 @@ public abstract class PrependAllIterator extends AbstractBaggableIterator
 	// The prepended value goes at the beginning.
 	private static class ToUnique extends PrependAllIterator
 	{
-		private final CollectionValue.@NonNull Extension prependValue;		// FIXME Use MapOfElement2ElementCount
+		private final @NonNull CollectionValue prependValue;		// FIXME Use MapOfElement2ElementCount
 
-		public ToUnique(CollectionValue.@NonNull Extension sourceValue, CollectionValue.@NonNull Extension prependValue) {
+		public ToUnique(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
 			super(sourceValue, prependValue);
 			this.prependValue = prependValue;
 		}

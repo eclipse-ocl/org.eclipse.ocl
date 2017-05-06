@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +43,7 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AbstractBaggableIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
@@ -65,6 +67,7 @@ import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
 import org.eclipse.ocl.pivot.internal.values.TupleValueImpl;
+import org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl;
 import org.eclipse.ocl.pivot.internal.values.UnlimitedValueImpl;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -73,6 +76,7 @@ import org.eclipse.ocl.pivot.types.AbstractInheritance;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -375,6 +379,26 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.OCL_ANY_NAME, getTypeName(value));
+		}
+	}
+
+	/**
+	 * @since 1.3 // FIXME temporary till next major version change
+	 */
+	public static @NonNull BaggableIterator<@Nullable Object> baggableIterator(@NonNull CollectionValue collectionValue) {
+		if (collectionValue instanceof AbstractBaggableIterator) {
+			return ((AbstractBaggableIterator)collectionValue).baggableIterator();
+		}
+		else if (collectionValue instanceof CollectionValueImpl) {
+			return ((CollectionValueImpl)collectionValue).baggableIterator();
+		}
+		else if (collectionValue instanceof UndefinedValueImpl) {
+			return ((UndefinedValueImpl)collectionValue).baggableIterator();
+		}
+		else {
+			Iterable<@Nullable Object> elements = collectionValue.iterable();
+			Iterator<@Nullable Object> iterator = elements.iterator();
+			return new CollectionValueImpl.WrappedBaggableIterator<>(iterator);
 		}
 	}
 
@@ -704,6 +728,24 @@ public abstract class ValueUtil
 			return (Executor)evaluator;
 		}
 		return ((EvaluationVisitor.EvaluationVisitorExtension)evaluator).getExecutor();
+	}
+
+	/**
+	 * @since 1.3 // FIXME temporary till next major version change
+	 */
+	public static @NonNull Map<@Nullable ? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount(@NonNull CollectionValue bagValue) {
+		if (bagValue instanceof BagValueImpl) {
+			return ((BagValueImpl)bagValue).getMapOfElement2elementCount();
+		}
+		else if (bagValue instanceof AbstractBaggableIterator) {
+			return ((AbstractBaggableIterator)bagValue).getMapOfElement2elementCount();
+		}
+		else if (bagValue instanceof UndefinedValueImpl) {
+			return Collections.<@Nullable Object, @NonNull Number>emptyMap();
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	public static String getTypeName(@Nullable Object value) {

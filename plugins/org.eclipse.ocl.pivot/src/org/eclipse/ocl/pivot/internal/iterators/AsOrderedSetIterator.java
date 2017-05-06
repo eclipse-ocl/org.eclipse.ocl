@@ -30,8 +30,8 @@ public class AsOrderedSetIterator extends AbstractBaggableIterator implements Or
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsOrderedSetIterator(CollectionValue.@NonNull Extension sourceValue) {
-		this(TypeId.ORDERED_SET.getSpecializedId(sourceValue.getElementTypeId()), sourceValue.iterator(), sourceValue.isUnique());
+	public AsOrderedSetIterator(@NonNull CollectionValue sourceValue) {
+		this(TypeId.ORDERED_SET.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.iterator(), sourceValue.isUnique());
 	}
 
 	public AsOrderedSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsUnique) {

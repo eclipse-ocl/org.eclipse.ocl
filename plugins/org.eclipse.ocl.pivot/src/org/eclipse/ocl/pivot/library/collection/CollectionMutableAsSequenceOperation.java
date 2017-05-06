@@ -36,7 +36,7 @@ public class CollectionMutableAsSequenceOperation extends AbstractUnaryOperation
 			return ((LazyIterable<@Nullable Object>)iterable).mutableAsSequence(leftCollectionValue);
 		}
 		else {
-			return new AsSequenceIterator((CollectionValue.Extension)leftCollectionValue);
+			return new AsSequenceIterator(leftCollectionValue);
 		}
 	}
 }

@@ -36,7 +36,7 @@ public class CollectionMutableAsOrderedSetOperation extends AbstractUnaryOperati
 			return ((LazyIterable<@Nullable Object>)iterable).mutableAsOrderedSet(leftCollectionValue);
 		}
 		else {
-			return new AsOrderedSetIterator((CollectionValue.Extension)leftCollectionValue);
+			return new AsOrderedSetIterator(leftCollectionValue);
 		}
 	}
 }

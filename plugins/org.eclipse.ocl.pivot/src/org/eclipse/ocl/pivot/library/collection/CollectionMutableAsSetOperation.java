@@ -36,7 +36,7 @@ public class CollectionMutableAsSetOperation extends AbstractUnaryOperation
 			return ((LazyIterable<@Nullable Object>)iterable).mutableAsSet(leftCollectionValue);
 		}
 		else {
-			return new AsSetIterator((CollectionValue.Extension)leftCollectionValue);
+			return new AsSetIterator(leftCollectionValue);
 		}
 	}
 }

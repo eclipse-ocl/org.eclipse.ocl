@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -55,7 +54,7 @@ import org.eclipse.ocl.pivot.values.Value;
 /**
  * @generated NOT
  */
-public abstract class UndefinedValueImpl extends EvaluationException implements NullValue,CollectionValue.Extension
+public abstract class UndefinedValueImpl extends EvaluationException implements NullValue, CollectionValue
 {
 	private static final long serialVersionUID = 1L;
 
@@ -234,7 +233,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	/**
 	 * @since 1.3
 	 */
-	@Override
+	//	@Override
 	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
 		return new BaggableIterator.Null<>();
 	}
@@ -394,14 +393,6 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public String getKind() {
 		return TypeId.COLLECTION_NAME;		// FIXME UOE ??
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
-		return Collections.<@Nullable Object, @NonNull Number>emptyMap();
 	}
 
 	@Override

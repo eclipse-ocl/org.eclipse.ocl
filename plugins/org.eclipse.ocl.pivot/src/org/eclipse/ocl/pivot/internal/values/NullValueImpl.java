@@ -73,14 +73,6 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 		return obj instanceof NullValueImpl;
 	}
 
-	/**
-	 * @since 1.3
-	 */
-	@Override
-	public @NonNull TypeId getElementTypeId() {
-		return TypeId.OCL_VOID;
-	}
-
 	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
 		return standardLibrary.getOclInvalidType();
 	}

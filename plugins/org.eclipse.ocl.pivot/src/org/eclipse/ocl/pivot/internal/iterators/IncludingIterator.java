@@ -26,13 +26,13 @@ public abstract class IncludingIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue including(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		if (sourceValue.isUnique()) {
-			return new ToUnique(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, object);
+			return new ToUnique(collectionTypeId, sourceValue, object);
 		}
 		else if (sourceValue.isOrdered()) {
-			return new ToSequence(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, object);
+			return new ToSequence(collectionTypeId, sourceValue, object);
 		}
 		else {
-			return new ToBag(collectionTypeId, (CollectionValue.@NonNull Extension)sourceValue, object);
+			return new ToBag(collectionTypeId, sourceValue, object);
 		}
 	}
 
@@ -40,9 +40,9 @@ public abstract class IncludingIterator extends AbstractBaggableIterator
 	protected final @Nullable Object object;
 	protected boolean doneInclude = false;
 
-	public IncludingIterator(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object object) {
+	public IncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		super(collectionTypeId);
-		this.sourceIterator = sourceValue.baggableIterator();
+		this.sourceIterator = baggableIterator(sourceValue);
 		this.object = object;
 	}
 
@@ -60,7 +60,7 @@ public abstract class IncludingIterator extends AbstractBaggableIterator
 	{
 		private final @NonNull EqualsStrategy equalsStrategy;
 
-		public ToBag(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object secondValue) {
+		public ToBag(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
 			super(collectionTypeId, sourceValue, secondValue);
 			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
 		}
@@ -88,7 +88,7 @@ public abstract class IncludingIterator extends AbstractBaggableIterator
 	// The included value goes at the end.
 	private static class ToSequence extends IncludingIterator
 	{
-		public ToSequence(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object secondValue) {
+		public ToSequence(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
 			super(collectionTypeId, sourceValue, secondValue);
 		}
 
@@ -111,7 +111,7 @@ public abstract class IncludingIterator extends AbstractBaggableIterator
 	{
 		private final @NonNull EqualsStrategy equalsStrategy;
 
-		public ToUnique(@NonNull CollectionTypeId collectionTypeId, CollectionValue.@NonNull Extension sourceValue, @Nullable Object secondValue) {
+		public ToUnique(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
 			super(collectionTypeId, sourceValue, secondValue);
 			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
 		}

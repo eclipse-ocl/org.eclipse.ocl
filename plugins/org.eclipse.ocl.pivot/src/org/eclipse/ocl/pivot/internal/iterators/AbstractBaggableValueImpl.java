@@ -59,7 +59,7 @@ import com.google.common.collect.Lists;
  * @generated NOT
  * @since 1.3
  */
-public abstract class AbstractBaggableValueImpl extends ValueImpl implements CollectionValue.Extension, Iterable<@Nullable Object>
+public abstract class AbstractBaggableValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
 {
 	/**
 	 * Optimized iterator over an Array for use in OCL contents where the array is known to be stable
@@ -441,7 +441,7 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 		if (!(obj instanceof CollectionValue)) {
 			return false;
 		}
-		CollectionValue.Extension that = (CollectionValue.Extension)obj;
+		CollectionValue that = (CollectionValue)obj;
 		boolean isOrdered = isOrdered();
 		if (isOrdered != that.isOrdered()) {
 			return false;
@@ -505,10 +505,8 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 				}
 			}
 			else {
-				Map<? extends Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount();
-				Map<? extends Object, @NonNull ? extends Number> thoseElements = that.getMapOfElement2elementCount();
-				//				Collection<? extends Object> theseElements = this.getElements();
-				//				Collection<? extends Object> thoseElements = that.getElements();
+				Map<? extends Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount(this);
+				Map<? extends Object, @NonNull ? extends Number> thoseElements = getMapOfElement2elementCount(that);
 				return theseElements.equals(thoseElements);
 			}
 		}
@@ -607,7 +605,7 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	}
 
 	public @NonNull CollectionTypeId getBagTypeId() {
-		return TypeId.BAG.getSpecializedId(getElementTypeId());
+		return TypeId.BAG.getSpecializedId(getTypeId().getElementTypeId());
 	}
 
 	//	@Override
@@ -615,10 +613,10 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 		return initialCollectionStrategy;
 	}
 
-	@Override
-	public @NonNull TypeId getElementTypeId() {
-		return getTypeId().getElementTypeId();
-	}
+	//	@Override
+	//	public @NonNull TypeId getElementTypeId() {
+	//		return getTypeId().getElementTypeId();
+	//	}
 
 	@Override
 	public @NonNull Collection<@Nullable Object> getElements() {
@@ -636,15 +634,15 @@ public abstract class AbstractBaggableValueImpl extends ValueImpl implements Col
 	//	}
 
 	public @NonNull CollectionTypeId getOrderedSetTypeId() {
-		return TypeId.ORDERED_SET.getSpecializedId(getElementTypeId());
+		return TypeId.ORDERED_SET.getSpecializedId(getTypeId().getElementTypeId());
 	}
 
 	public @NonNull CollectionTypeId getSequenceTypeId() {
-		return TypeId.SEQUENCE.getSpecializedId(getElementTypeId());
+		return TypeId.SEQUENCE.getSpecializedId(getTypeId().getElementTypeId());
 	}
 
 	public @NonNull CollectionTypeId getSetTypeId() {
-		return TypeId.SET.getSpecializedId(getElementTypeId());
+		return TypeId.SET.getSpecializedId(getTypeId().getElementTypeId());
 	}
 
 	@Override

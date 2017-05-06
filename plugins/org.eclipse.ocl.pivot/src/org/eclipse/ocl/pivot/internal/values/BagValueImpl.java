@@ -126,7 +126,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	/**
 	 * @since 1.3
 	 */
-	@Override
+	//	@Override
 	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
 		return ((BagImpl<@Nullable Object>) elements).getMap();
 	}

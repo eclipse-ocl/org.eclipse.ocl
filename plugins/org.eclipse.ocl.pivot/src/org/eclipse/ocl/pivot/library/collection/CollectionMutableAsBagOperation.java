@@ -36,7 +36,7 @@ public class CollectionMutableAsBagOperation extends AbstractUnaryOperation
 			return ((LazyIterable<@Nullable Object>)iterable).mutableAsBag(leftCollectionValue);
 		}
 		else {
-			return new AsBagIterator((CollectionValue.Extension)leftCollectionValue);
+			return new AsBagIterator(leftCollectionValue);
 		}
 	}
 }

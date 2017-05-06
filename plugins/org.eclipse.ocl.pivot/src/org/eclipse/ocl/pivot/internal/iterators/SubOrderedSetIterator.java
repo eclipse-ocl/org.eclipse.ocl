@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class SubOrderedSetIterator extends AbstractBaggableIterator
 {
 	public static @NonNull CollectionValue subOrderedSet(@NonNull CollectionValue sourceValue, int lower, int upper) {
-		return new SubOrderedSetIterator((CollectionValue.@NonNull Extension)sourceValue, lower, upper);
+		return new SubOrderedSetIterator(sourceValue, lower, upper);
 	}
 
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
@@ -33,9 +33,9 @@ public class SubOrderedSetIterator extends AbstractBaggableIterator
 	private final int upper;
 	private int size = 0;
 
-	public SubOrderedSetIterator(CollectionValue.@NonNull Extension sourceValue, int lower, int upper) {
+	public SubOrderedSetIterator(@NonNull CollectionValue sourceValue, int lower, int upper) {
 		super(sourceValue.getTypeId());
-		this.sourceIterator = sourceValue.baggableIterator();
+		this.sourceIterator = baggableIterator(sourceValue);
 		this.lower = lower;
 		this.upper = upper;
 		if (lower < 1) {
