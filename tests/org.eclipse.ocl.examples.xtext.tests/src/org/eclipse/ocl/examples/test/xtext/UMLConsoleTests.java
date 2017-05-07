@@ -160,7 +160,7 @@ public class UMLConsoleTests extends AbstractConsoleTests
 		Resource umlResource = resourceSet.getResource(testModelURI, true);
 		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
 		//
-		assertConsoleResult(consolePage, model, "allOwnedElements()->selectByKind(Property)", "true\n");
+		assertConsoleResult(consolePage, model, "allOwnedElements()->selectByKind(Property)", "RootElement::CustomerService::ServiceAgreement::serviceLevel\n");
 		//
 		consolePage.cancelValidation();
 	}
