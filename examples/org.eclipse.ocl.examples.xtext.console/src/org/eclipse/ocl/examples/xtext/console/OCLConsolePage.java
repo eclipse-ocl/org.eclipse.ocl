@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.console;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -693,7 +695,10 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 						append(cause.getMessage(), ColorManager.OUTPUT_ERROR, false);
 					}
 					else {
-						append(cause.toString(), ColorManager.OUTPUT_ERROR, false);
+						StringWriter s = new StringWriter();
+						PrintWriter pw = new PrintWriter(s);
+						cause.printStackTrace(pw);
+						append(s.toString(), ColorManager.OUTPUT_ERROR, false);
 					}
 				}
 			}
