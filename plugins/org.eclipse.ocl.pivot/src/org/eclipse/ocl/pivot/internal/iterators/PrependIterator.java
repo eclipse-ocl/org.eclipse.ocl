@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * PrependIterator provides a lazy evaluation of the Collection::prepend operation.
@@ -25,6 +26,9 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public abstract class PrependIterator extends LazyCollectionValueImpl
 {
 	public static @NonNull CollectionValue prepend(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
+		if (object instanceof InvalidValueException) {
+			throw (InvalidValueException)object;
+		}
 		if (sourceValue.isUnique()) {
 			return new ToUnique(collectionTypeId, sourceValue, object);
 		}

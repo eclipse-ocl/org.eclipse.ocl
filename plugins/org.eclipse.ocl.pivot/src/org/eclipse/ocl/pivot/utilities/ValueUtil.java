@@ -43,11 +43,11 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
@@ -469,6 +469,37 @@ public abstract class ValueUtil
 	}
 
 	/**
+	 * @since 1.3
+	 */
+	public static void checkValid(@Nullable Object value) {
+		if (value instanceof InvalidValueException) {
+			throw (InvalidValueException) value;
+		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static void checkValid(@Nullable Object @NonNull [] values) {
+		for (@Nullable Object value : values) {
+			if (value instanceof InvalidValueException) {
+				throw (InvalidValueException) value;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static void checkValid(@NonNull Iterable<@Nullable ? extends Object> values) {
+		for (@Nullable Object value : values) {
+			if (value instanceof InvalidValueException) {
+				throw (InvalidValueException) value;
+			}
+		}
+	}
+
+	/**
 	 * @since 1.1
 	 */
 	public static int computeCollectionHashCode(boolean isOrdered, boolean isUnique, @NonNull Iterable<?> elements) {
@@ -525,6 +556,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
+		checkValid(boxedValues);
 		return new AsBagIterator(typeId, Iterators.forArray(boxedValues), false);
 		//		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
 	}
@@ -542,7 +574,8 @@ public abstract class ValueUtil
 		return new BagValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull BagValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<? extends Object> boxedValues) {
+	public static @NonNull BagValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable ? extends Object> boxedValues) {
+		checkValid(boxedValues);
 		return new AsBagIterator(typeId, boxedValues.iterator(), false);		// FIXME reuse Bag
 		//		return new BagValueImpl(typeId, boxedValues);
 	}
@@ -597,6 +630,7 @@ public abstract class ValueUtil
 	//	}
 
 	public static @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
+		checkValid(boxedValues);
 		return new AsOrderedSetIterator(typeId, Iterators.forArray(boxedValues), false);
 		//		return new SparseOrderedSetValueImpl(typeId, SparseOrderedSetValueImpl.createOrderedSetOfEach(boxedValues));
 	}
@@ -614,7 +648,8 @@ public abstract class ValueUtil
 		return new SparseOrderedSetValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull OrderedSetValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
+	public static @NonNull OrderedSetValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+		checkValid(boxedValues);
 		return new AsOrderedSetIterator(typeId, boxedValues.iterator(), boxedValues instanceof Set);
 	}
 
@@ -627,6 +662,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
+		checkValid(boxedValues);
 		return new AsSequenceIterator(typeId, Iterators.forArray(boxedValues));
 		//		return new SparseSequenceValueImpl(typeId, SparseSequenceValueImpl.createSequenceOfEach(boxedValues));
 	}
@@ -648,7 +684,8 @@ public abstract class ValueUtil
 		return new SparseSequenceValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull SequenceValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<? extends Object> boxedValues) {
+	public static @NonNull SequenceValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable ? extends Object> boxedValues) {
+		checkValid(boxedValues);
 		return new AsSequenceIterator(typeId, boxedValues.iterator());
 		//		return new SparseSequenceValueImpl(typeId, boxedValues);
 	}
@@ -658,6 +695,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
+		checkValid(boxedValues);
 		return new AsSetIterator(typeId, Iterators.forArray(boxedValues), false);
 		//		return new SetValueImpl(typeId, SetValueImpl.createSetOfEach(boxedValues));
 	}
@@ -675,7 +713,8 @@ public abstract class ValueUtil
 		return new SetValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
+	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+		checkValid(boxedValues);
 		return new AsSetIterator(typeId, boxedValues.iterator(), boxedValues instanceof Set);
 		//		return new SetValueImpl(typeId, boxedValues);
 	}
@@ -986,6 +1025,30 @@ public abstract class ValueUtil
 			return null;
 		}
 	}
+
+	/**
+	 * @since 1.3
+	 *
+	public static @Nullable InvalidValue isInvalid(@Nullable Object @NonNull [] values) {
+		for (@Nullable Object value : values) {
+			if (value instanceof InvalidValue) {
+				return (InvalidValue) value;
+			}
+		}
+		return null;
+	} */
+
+	/**
+	 * @since 1.3
+	 *
+	public static @Nullable InvalidValue isInvalid(@NonNull Iterable<@Nullable ? extends Object> values) {
+		for (@Nullable Object value : values) {
+			if (value instanceof InvalidValue) {
+				return (InvalidValue) value;
+			}
+		}
+		return null;
+	} */
 
 	/**
 	 * Return true if aNumber is a known floating point representation that can be converted to a RealValue.

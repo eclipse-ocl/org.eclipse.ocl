@@ -178,6 +178,8 @@ import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAppendAllOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAppendOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsBagOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsOrderedSetOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsSequenceOperation;
@@ -189,6 +191,8 @@ import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingOperat
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableIntersectionOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableUnionOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation;
+import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation;
+import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation;
 import org.eclipse.ocl.pivot.library.iterator.ExistsIteration;
 import org.eclipse.ocl.pivot.library.iterator.ForAllIteration;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
@@ -701,7 +705,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		OCLExpression pSource = element.getOwnedSource();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		CGOperationCallExp cgOperationCallExp = null;
-		if (libraryOperation instanceof CollectionAsBagOperation) {
+		if (libraryOperation instanceof OrderedCollectionAppendOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAppendOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof OrderedCollectionAppendAllOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAppendAllOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionAsBagOperation) {
 			if (canBeMutable(cgSource, element)) {
 				libraryOperation = CollectionMutableAsBagOperation.INSTANCE;
 			}

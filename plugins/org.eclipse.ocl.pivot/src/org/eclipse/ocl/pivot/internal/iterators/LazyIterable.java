@@ -39,6 +39,9 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * Mutable activities may be used if the caller guarantees that there are no consumers of the unmutated collection.
  *
+ * Lazy evaluation is incompatible with invalid values, therefore the caller must guarantee that no future invalid
+ * value may occur thaat would invalidate the earlier lazy results.
+ *
  * @since 1.3
  */
 public class LazyIterable<@Nullable E> implements IndexableIterable<E>
@@ -69,6 +72,15 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 					lazyIterable.size++;
 				}
 			}
+		}
+
+		/**
+		 * Append count of anElement to the lazyIterable updating element occurrence counts.
+		 *
+		 * The default implementation re-uses addTo. OrderedSet overrides.
+		 */
+		protected <@Nullable E1> void appendTo(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+			addTo( lazyIterable, anElement, count);
 		}
 
 		/**
@@ -300,6 +312,27 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 
 		private OrderedSetStrategy() {
 			super(TypeId.ORDERED_SET_NAME);
+		}
+
+		/**
+		 * Append count of anElement to the lazyIterable updating element occurrence counts. If
+		 * already present the old value is displaced. The new value goes at the end.
+		 */
+		@Override
+		protected <@Nullable E1> void appendTo(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+			if (count > 0) {
+				Map<@Nullable E1, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+				assert lazyMapOfElement2elementCount2 != null;
+				ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, SetElementCount.ONE);
+				if (oldElementCount != null) {
+					lazyIterable.lazyListOfElements.remove(anElement);
+					lazyIterable.lazyListOfElements.add(anElement);
+				}
+				else {
+					lazyIterable.lazyListOfElements.add(anElement);
+					lazyIterable.size++;
+				}
+			}
 		}
 
 		@Override
@@ -910,6 +943,26 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 				return new ImmutableNonBaggableIterator<>(lazyListOfElements);
 			}
 		}
+	}
+
+	public @NonNull CollectionValue mutableAppend(@NonNull CollectionValue leftCollectionValue, @Nullable E rightValue) {
+		collectionStrategy.appendTo(this, rightValue, 1);
+		return leftCollectionValue;
+	}
+
+	public @NonNull CollectionValue mutableAppendAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable E> rightIterator) {
+		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
+			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
+			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
+				collectionStrategy.appendTo(this, rightIterator.next(), nextCount);
+			}
+		}
+		else {
+			while (rightIterator.hasNext()) {
+				collectionStrategy.appendTo(this, rightIterator.next(), 1);
+			}
+		}
+		return leftCollectionValue;
 	}
 
 	public @NonNull CollectionValue mutableAsBag(@NonNull CollectionValue collectionValue) {

@@ -76,6 +76,9 @@ import com.google.common.collect.Lists;
  * The iterable is currently provided by a LazyIterable in order to preserve API compatibility. LazyIterable will
  * be folded in at the next major version change.
  *
+ * Lazy evaluation is incompatible with invalid values, therefore the caller must guarantee that no future invalid
+ * value may occur thaat would invalidate the earlier lazy results.
+ *
  * @since 1.3
  */
 public abstract class LazyCollectionValueImpl extends ValueImpl implements CollectionValue, BaggableIterator<@Nullable Object>
@@ -354,6 +357,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public boolean equals(Object obj) {
+		checkValid(obj);
 		if (!(obj instanceof CollectionValue)) {
 			return false;
 		}

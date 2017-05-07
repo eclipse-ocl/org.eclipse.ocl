@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * ExcludingIterator provides a lazy evaluation of the Collection::excluding operation.
@@ -24,6 +25,9 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class ExcludingIterator extends LazyCollectionValueImpl
 {
 	public static @NonNull CollectionValue excluding(@NonNull CollectionValue sourceValue, @Nullable Object object) {
+		if (object instanceof InvalidValueException) {
+			throw (InvalidValueException)object;
+		}
 		return new ExcludingIterator(sourceValue, object);
 	}
 
