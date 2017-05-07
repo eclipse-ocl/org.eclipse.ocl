@@ -153,6 +153,18 @@ public class UMLConsoleTests extends AbstractConsoleTests
 		consolePage.cancelValidation();
 	}
 
+	public void testConsole_Bug516285() throws Exception {
+		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
+
+		URI testModelURI = getProjectFileURI("Bug516285.uml");
+		Resource umlResource = resourceSet.getResource(testModelURI, true);
+		org.eclipse.uml2.uml.Model model = (org.eclipse.uml2.uml.Model)umlResource.getContents().get(0);
+		//
+		assertConsoleResult(consolePage, model, "allOwnedElements()->selectByKind(Property)", "true\n");
+		//
+		consolePage.cancelValidation();
+	}
+
 	@SuppressWarnings({"unused"})
 	public void testConsole_UML() throws Exception {
 		doDelete(PLUGIN_ID);
