@@ -604,25 +604,25 @@
         </ownedSignature>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.exists..T" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
-          isRequired="false" isValidating="true" name="exists" type="#Boolean">
+          isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Boolean">
         <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one element in the source collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.exists..T" isRequired="false" name="i" type="#t.ocl..CollectionT"/>
         <ownedParameters xmi:id="p0i.ocl.Collection.exists..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.65"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.exists..T..T" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
-          isRequired="false" isValidating="true" name="exists" type="#Boolean">
+          isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Boolean">
         <ownedIterators xmi:id="i0i.ocl.Collection.exists..T..T" isRequired="false" name="i" type="#t.ocl..CollectionT"/>
         <ownedIterators xmi:id="i1i.ocl.Collection.exists..T..T" isRequired="false" name="j" type="#t.ocl..CollectionT"/>
         <ownedParameters xmi:id="p0i.ocl.Collection.exists..T..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.65"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.forAll..T" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
-          isRequired="false" isValidating="true" name="forAll" type="#Boolean">
+          isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#Boolean">
         <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each element in the source collection; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.forAll..T" isRequired="false" name="i" type="#t.ocl..CollectionT"/>
         <ownedParameters xmi:id="p0i.ocl.Collection.forAll..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.65"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.forAll..T..T" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
-          isRequired="false" isValidating="true" name="forAll" type="#Boolean">
+          isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#Boolean">
         <ownedIterators xmi:id="i0i.ocl.Collection.forAll..T..T" isRequired="false" name="i" type="#t.ocl..CollectionT"/>
         <ownedIterators xmi:id="i1i.ocl.Collection.forAll..T..T" isRequired="false" name="j" type="#t.ocl..CollectionT"/>
         <ownedParameters xmi:id="p0i.ocl.Collection.forAll..T..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.65"/>

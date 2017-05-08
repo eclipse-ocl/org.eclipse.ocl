@@ -377,13 +377,13 @@ abstract type Collection(T) : CollectionType conformsTo OclAny {
 	/**
 	Results in oclText[true] if body evaluates to oclText[true] for at least one element in the source collection.
 	**/
-	iteration exists(i : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
-	iteration exists(i : T[?], j : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
+	iteration exists(i : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
+	iteration exists(i : T[?], j : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ExistsIteration';
 	/**
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each element in the source collection; otherwise, result is oclText[false].
 	**/
-	iteration forAll(i : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
-	iteration forAll(i : T[?], j : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
+	iteration forAll(i : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
+	iteration forAll(i : T[?], j : T[?] | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
 	/**
 	Results in oclText[true] if body evaluates to a different value for each element in the source collection; otherwise, result is oclText[false].
 	**/
