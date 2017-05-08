@@ -19,7 +19,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -188,6 +190,37 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 	@Override
 	public <R> R accept(@NonNull CGModelVisitor<R> visitor) {
 		return visitor.visitCGLibraryIterateCallExp(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isNonInvalid() {
+		if (referredIteration == null) {
+			return false;
+		}
+		if (referredIteration.isIsInvalidating()) {
+			return false;
+		}
+		if (!referredIteration.isIsValidating()) {
+			if (!source.isNonNull() || !source.isNonInvalid()) {
+				return false;
+			}
+			for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
+				if (!iterator.isNonNull() || !iterator.isNonInvalid()) {
+					return false;
+				}
+			}
+			if ((result == null) || !result.isNonNull() || !result.isNonInvalid()) {
+				return false;
+			}
+			if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 } //CGLibraryIterateCallExpImpl

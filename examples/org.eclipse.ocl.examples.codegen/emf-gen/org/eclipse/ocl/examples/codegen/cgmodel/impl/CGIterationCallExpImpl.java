@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.InnerStackPlace;
 import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -313,6 +314,34 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
 		return (getClass() == thatValue.getClass()) ? EquivalenceUtil.isEquivalent(this, (CGIterationCallExp)thatValue) : null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isNonInvalid() {
+		if (referredIteration == null) {
+			return false;
+		}
+		if (referredIteration.isIsInvalidating()) {
+			return false;
+		}
+		if (!referredIteration.isIsValidating()) {
+			if (!source.isNonNull() || !source.isNonInvalid()) {
+				return false;
+			}
+			for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
+				if (!iterator.isNonNull() || !iterator.isNonInvalid()) {
+					return false;
+				}
+			}
+			if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
