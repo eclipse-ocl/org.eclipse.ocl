@@ -341,14 +341,10 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 				// normal use case - nonInvalid if all inputs nonInvalid
 			}
 		}
-		//			String s = toString();
-		//			if (s.contains("forAll")) {
-		//				toString();
-		//			}
 		if (!source.isNonNull() || !source.isNonInvalid()) {
 			return false;
 		}
-		for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
+			for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
 			if (!iterator.isNonNull() || !iterator.isNonInvalid()) {
 				return false;
 			}

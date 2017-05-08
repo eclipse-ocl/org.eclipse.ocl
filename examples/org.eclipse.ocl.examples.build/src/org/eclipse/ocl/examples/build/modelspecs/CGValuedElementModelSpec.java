@@ -1228,24 +1228,35 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "if (referredIteration == null) {\n" +
 						"			return false;\n" +
 						"		}\n" +
-						"		if (referredIteration.isIsInvalidating()) {\n" +
+						"		if (referredIteration.isIsValidating()) {\n" +
+						"			if (referredIteration.isIsInvalidating()) {\n" +
+						"				// e.g AND, forAll - nonInvalid if all inputs nonInvalid\n" +
+						"			}\n" +
+						"			else {\n" +
+						"				return true;				// e.g oclIsInvalid\n" +
+						"			}\n" +
+						"		}\n" +
+						"		else {\n" +
+						"			if (referredIteration.isIsInvalidating()) {\n" +
+						"				return false;				// e.g divide-by-zero\n" +
+						"			}\n" +
+						"			else {\n" +
+						"				// normal use case - nonInvalid if all inputs nonInvalid\n" +
+						"			}\n" +
+						"		}\n" +
+						"		if (!source.isNonNull() || !source.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
-						"		if (!referredIteration.isIsValidating()) {\n" +
-						"			if (!source.isNonNull() || !source.isNonInvalid()) {\n" +
+						"		for (@NonNull " + classRef(CGValuedElement.class) + " iterator : " + classRef(ClassUtil.class) + ".nullFree(getIterators())) {\n" +
+						"			if (!iterator.isNonNull() || !iterator.isNonInvalid()) {\n" +
 						"				return false;\n" +
 						"			}\n" +
-						"			for (@NonNull " + classRef(CGValuedElement.class) + " iterator : " + classRef(ClassUtil.class) + ".nullFree(getIterators())) {\n" +
-						"				if (!iterator.isNonNull() || !iterator.isNonInvalid()) {\n" +
-						"					return false;\n" +
-						"				}\n" +
-						"			}\n" +
-						"			if ((result == null) || !result.isNonNull() || !result.isNonInvalid()) {\n" +
-						"				return false;\n" +
-						"			}\n" +
-						"			if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {\n" +
-						"				return false;\n" +
-						"			}\n" +
+						"		}\n" +
+						"		if ((result == null) || !result.isNonNull() || !result.isNonInvalid()) {\n" +
+						"			return false;\n" +
+						"		}\n" +
+						"		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {\n" +
+						"			return false;\n" +
 						"		}\n" +
 						"		return true;";
 			}
@@ -1281,7 +1292,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"		if (!source.isNonNull() || !source.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
-						"			for (@NonNull " + classRef(CGValuedElement.class) + " iterator : " + classRef(ClassUtil.class) + ".nullFree(getIterators())) {\n" +
+						"		for (@NonNull " + classRef(CGValuedElement.class) + " iterator : " + classRef(ClassUtil.class) + ".nullFree(getIterators())) {\n" +
 						"			if (!iterator.isNonNull() || !iterator.isNonInvalid()) {\n" +
 						"				return false;\n" +
 						"			}\n" +
@@ -1289,7 +1300,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
-						"		return true;"
+						"		return true;";
 			}
 		};
 
@@ -1332,17 +1343,28 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "if (referredOperation == null) {\n" +
 						"			return false;\n" +
 						"		}\n" +
-						"		if (referredOperation.isIsInvalidating()) {\n" +
+						"		if (referredOperation.isIsValidating()) {\n" +
+						"			if (referredOperation.isIsInvalidating()) {\n" +
+						"				// e.g AND, forAll - nonInvalid if all inputs nonInvalid\n" +
+						"			}\n" +
+						"			else {\n" +
+						"				return true;				// e.g oclIsInvalid\n" +
+						"			}\n" +
+						"		}\n" +
+						"		else {\n" +
+						"			if (referredOperation.isIsInvalidating()) {\n" +
+						"				return false;				// e.g divide-by-zero\n" +
+						"			}\n" +
+						"			else {\n" +
+						"				// normal use case - nonInvalid if all inputs nonInvalid\n" +
+						"			}\n" +
+						"		}\n" +
+						"		if (!source.isNonNull() || !source.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
-						"		if (!referredOperation.isIsValidating()) {\n" +
-						"			if (!source.isNonNull() || !source.isNonInvalid()) {\n" +
+						"		for (@NonNull " + classRef(CGValuedElement.class) + " argument : " + classRef(ClassUtil.class) + ".nullFree(getArguments())) {\n" +
+						"			if (!argument.isNonNull() || !argument.isNonInvalid()) {\n" +
 						"				return false;\n" +
-						"			}\n" +
-						"			for (@NonNull " + classRef(CGValuedElement.class) + " argument : " + classRef(ClassUtil.class) + ".nullFree(getArguments())) {\n" +
-						"				if (!argument.isNonNull() || !argument.isNonInvalid()) {\n" +
-						"					return false;\n" +
-						"				}\n" +
 						"			}\n" +
 						"		}\n" +
 						"		return true;";

@@ -243,17 +243,28 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 		if (referredOperation == null) {
 			return false;
 		}
-		if (referredOperation.isIsInvalidating()) {
+		if (referredOperation.isIsValidating()) {
+			if (referredOperation.isIsInvalidating()) {
+				// e.g AND, forAll - nonInvalid if all inputs nonInvalid
+			}
+			else {
+				return true;				// e.g oclIsInvalid
+			}
+		}
+		else {
+			if (referredOperation.isIsInvalidating()) {
+				return false;				// e.g divide-by-zero
+			}
+			else {
+				// normal use case - nonInvalid if all inputs nonInvalid
+			}
+		}
+		if (!source.isNonNull() || !source.isNonInvalid()) {
 			return false;
 		}
-		if (!referredOperation.isIsValidating()) {
-			if (!source.isNonNull() || !source.isNonInvalid()) {
+		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {
+			if (!argument.isNonNull() || !argument.isNonInvalid()) {
 				return false;
-			}
-			for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {
-				if (!argument.isNonNull() || !argument.isNonInvalid()) {
-					return false;
-				}
 			}
 		}
 		return true;
