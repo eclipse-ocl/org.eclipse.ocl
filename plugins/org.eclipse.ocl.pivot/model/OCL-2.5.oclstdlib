@@ -599,7 +599,7 @@ type Integer : PrimitiveType conformsTo Real {
 	The value of oclText[self] divided by i.
 	Evaluates to oclText[invalid] if r is equal to zero.
 	**/
-	operation "/"(i : OclSelf) : Real[1] precedence=MULTIPLICATIVE => 'org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation';
+	operation "/"(i : OclSelf) : Real[1] invalidating precedence=MULTIPLICATIVE => 'org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation';
 	/**
 	The absolute value of oclText[self].
 	**/
@@ -1175,7 +1175,7 @@ abstract type OrderedCollection(T) : CollectionType conformsTo Collection(T) {
 	/**
 	The index of object obj in the ordered collection.
 	**/
-	operation indexOf(obj : OclAny[?]) : Integer[1] => 'org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation';
+	operation indexOf(obj : OclAny[?]) : Integer[1] invalidating => 'org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation';
 	/**
 	The last element in oclText[self].
 	**/
@@ -1313,7 +1313,7 @@ type Real : PrimitiveType conformsTo OclComparable, OclSummable {
 	/**
 	The value of oclText[self] divided by r. Evaluates to oclText[invalid] if r is equal to zero.
 	**/
-	operation "/"(r : OclSelf) : Real[1] precedence=MULTIPLICATIVE => 'org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation';
+	operation "/"(r : OclSelf) : Real[1] invalidating precedence=MULTIPLICATIVE => 'org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation';
 	/**
 	The absolute value of oclText[self].
 	**/

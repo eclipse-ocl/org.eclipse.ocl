@@ -1640,6 +1640,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("i", _OclSelf, false));
 			ownedOperations.add(operation = op_Integer__div_);
+			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("i", _OclSelf, false));
 			ownedOperations.add(operation = op_Integer_abs);
@@ -1670,6 +1671,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("r", _OclSelf, false));
 			ownedOperations.add(operation = op_Real__div_);
+			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("r", _OclSelf, false));
 			ownedOperations.add(operation = op_Real__lt__gt_);
@@ -2167,6 +2169,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsInvalidating(true);
 			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_OrderedCollection_indexOf);
+			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("obj", _OclAny, false));
 			ownedOperations.add(operation = op_OrderedCollection_last);
