@@ -71,8 +71,12 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					Constraint asConstraint = (Constraint) asElement;
 					pushStaticFrameStack(cgConstraint);
 					try {
+						String ruleName = getRuleName(asConstraint);
+						if ("ArgumentTypeIsConformant".equals(ruleName)) {
+							toString();
+						}
+						String fragmentURI = getFragmentURI(pivotClass) + "==" + ruleName;
 						String bodyText = generateValidatorBody(cgBody, asConstraint, (org.eclipse.ocl.pivot.Class)pivotClass);
-						String fragmentURI = getFragmentURI(pivotClass) + "==" + getRuleName(asConstraint);
 						bodies.put(fragmentURI, bodyText);
 					}
 					finally {

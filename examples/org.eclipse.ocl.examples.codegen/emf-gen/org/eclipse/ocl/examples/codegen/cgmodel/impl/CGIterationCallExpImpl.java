@@ -325,21 +325,36 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 		if (referredIteration == null) {
 			return false;
 		}
-		if (referredIteration.isIsInvalidating()) {
+		if (referredIteration.isIsValidating()) {
+			if (referredIteration.isIsInvalidating()) {
+				// e.g AND, forAll - nonInvalid if all inputs nonInvalid
+			}
+			else {
+				return true;				// e.g oclIsInvalid
+			}
+		}
+		else {
+			if (referredIteration.isIsInvalidating()) {
+				return false;				// e.g divide-by-zero
+			}
+			else {
+				// normal use case - nonInvalid if all inputs nonInvalid
+			}
+		}
+		//			String s = toString();
+		//			if (s.contains("forAll")) {
+		//				toString();
+		//			}
+		if (!source.isNonNull() || !source.isNonInvalid()) {
 			return false;
 		}
-		if (!referredIteration.isIsValidating()) {
-			if (!source.isNonNull() || !source.isNonInvalid()) {
+		for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
+			if (!iterator.isNonNull() || !iterator.isNonInvalid()) {
 				return false;
 			}
-			for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
-				if (!iterator.isNonNull() || !iterator.isNonInvalid()) {
-					return false;
-				}
-			}
-			if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {
-				return false;
-			}
+		}
+		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {
+			return false;
 		}
 		return true;
 	}
