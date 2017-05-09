@@ -74,12 +74,10 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
-import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -542,9 +540,6 @@ public class NameManager
 			if (nameHints != null) {
 				for (String nameHint : nameHints) {
 					if (nameHint != null)  {
-						if ("TYP_Boolean".equals(nameHint)) {
-							toString();
-						}
 						String validHint = getValidJavaIdentifier(nameHint, false, anObject);
 						while (reservedJavaNames.contains(validHint)) {
 							validHint = validHint + "_";
@@ -586,12 +581,6 @@ public class NameManager
 				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
 					install(attempt, anObject);
 					name2counter.put(lastResort, ++count);
-					if (count == 6) {
-						toString();
-					}
-					if ("TYP_CollectionType_16".equals(attempt)) {
-						toString();
-					}
 					return attempt;
 				}
 			}
@@ -620,7 +609,7 @@ public class NameManager
 			}
 		}
 
-		private boolean isNative(@NonNull CGValuedElement cgElement) {
+		/*		private boolean isNative(@NonNull CGValuedElement cgElement) {
 			TypeId asTypeId = cgElement.getASTypeId();
 			if (asTypeId instanceof NestedTypeId) {
 				PackageId packageId = ((NestedTypeId)asTypeId).getParent();
@@ -629,7 +618,7 @@ public class NameManager
 				}
 			}
 			return false;
-		}
+		} */
 
 		/**
 		 * Reserve name for use by anObject. If anObject is null, the reservation is for an unspecified object not for the null value.

@@ -432,9 +432,6 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	protected @NonNull ExpressionInOCL rewriteQuery(@NonNull ExpressionInOCL oldQuery, @NonNull String qualifiedConstraintName) {
-		if ("SetStatement::CompatibleTypeForTotalValue".equals(qualifiedConstraintName)) {
-			toString();
-		}
 		OCLExpression oldBody = oldQuery.getOwnedBody();
 		if ((oldBody instanceof BooleanLiteralExp) && ((BooleanLiteralExp)oldBody).isBooleanSymbol()) {
 			return oldQuery;		// Unconditionally true (typically obsolete) constraint needs no added complexity
