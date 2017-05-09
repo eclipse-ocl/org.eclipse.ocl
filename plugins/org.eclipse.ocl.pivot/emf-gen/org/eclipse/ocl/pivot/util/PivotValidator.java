@@ -17,7 +17,134 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.ocl.pivot.*;
+import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociationClass;
+import org.eclipse.ocl.pivot.AssociationClassCallExp;
+import org.eclipse.ocl.pivot.AssociativityKind;
+import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.Behavior;
+import org.eclipse.ocl.pivot.BooleanLiteralExp;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CallOperationAction;
+import org.eclipse.ocl.pivot.CollectionItem;
+import org.eclipse.ocl.pivot.CollectionKind;
+import org.eclipse.ocl.pivot.CollectionLiteralExp;
+import org.eclipse.ocl.pivot.CollectionLiteralPart;
+import org.eclipse.ocl.pivot.CollectionRange;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.ConnectionPointReference;
+import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Detail;
+import org.eclipse.ocl.pivot.DynamicBehavior;
+import org.eclipse.ocl.pivot.DynamicElement;
+import org.eclipse.ocl.pivot.DynamicProperty;
+import org.eclipse.ocl.pivot.DynamicType;
+import org.eclipse.ocl.pivot.DynamicValueSpecification;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.EnumLiteralExp;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.FeatureCallExp;
+import org.eclipse.ocl.pivot.FinalState;
+import org.eclipse.ocl.pivot.IfExp;
+import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.InstanceSpecification;
+import org.eclipse.ocl.pivot.IntegerLiteralExp;
+import org.eclipse.ocl.pivot.InvalidLiteralExp;
+import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterateExp;
+import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LetVariable;
+import org.eclipse.ocl.pivot.Library;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
+import org.eclipse.ocl.pivot.MapLiteralPart;
+import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.MessageExp;
+import org.eclipse.ocl.pivot.MessageType;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.NullLiteralExp;
+import org.eclipse.ocl.pivot.NumericLiteralExp;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.OppositePropertyCallExp;
+import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.OrphanCompletePackage;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
+import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Profile;
+import org.eclipse.ocl.pivot.ProfileApplication;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.PropertyCallExp;
+import org.eclipse.ocl.pivot.Pseudostate;
+import org.eclipse.ocl.pivot.PseudostateKind;
+import org.eclipse.ocl.pivot.RealLiteralExp;
+import org.eclipse.ocl.pivot.ReferringElement;
+import org.eclipse.ocl.pivot.Region;
+import org.eclipse.ocl.pivot.ResultVariable;
+import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.SendSignalAction;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.ShadowExp;
+import org.eclipse.ocl.pivot.ShadowPart;
+import org.eclipse.ocl.pivot.Signal;
+import org.eclipse.ocl.pivot.Slot;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.StateExp;
+import org.eclipse.ocl.pivot.StateMachine;
+import org.eclipse.ocl.pivot.Stereotype;
+import org.eclipse.ocl.pivot.StereotypeExtender;
+import org.eclipse.ocl.pivot.StringLiteralExp;
+import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.Transition;
+import org.eclipse.ocl.pivot.TransitionKind;
+import org.eclipse.ocl.pivot.Trigger;
+import org.eclipse.ocl.pivot.TupleLiteralExp;
+import org.eclipse.ocl.pivot.TupleLiteralPart;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeExp;
+import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
+import org.eclipse.ocl.pivot.UnspecifiedValueExp;
+import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.Vertex;
+import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
@@ -789,7 +916,7 @@ extends EObjectValidator {
 	 */
 	@Override
 	protected EPackage getEPackage() {
-		return PivotPackage.eINSTANCE;
+	  return PivotPackage.eINSTANCE;
 	}
 
 	/**
@@ -1540,7 +1667,7 @@ extends EObjectValidator {
 	 */
 	public boolean validatePivotable(Pivotable pivotable, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint(pivotable, diagnostics, context);
+		return validate_EveryDefaultConstraint((EObject)pivotable, diagnostics, context);
 	}
 
 	/**
@@ -3335,7 +3462,7 @@ extends EObjectValidator {
 	 */
 	public boolean validateMorePivotable(MorePivotable morePivotable, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		return validate_EveryDefaultConstraint(morePivotable, diagnostics, context);
+		return validate_EveryDefaultConstraint((EObject)morePivotable, diagnostics, context);
 	}
 
 	/**

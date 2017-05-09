@@ -189,6 +189,7 @@ implements Element {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public @NonNull List<Element> allOwnedElements()
 	{
@@ -212,10 +213,10 @@ implements Element {
 			 */
 			@Override
 			public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object oclAsSet, final /*@NonInvalid*/ java.lang.@Nullable Object _1) {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Element_0 = idResolver.getClass(PivotTables.CLSSid_Element, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Element = idResolver.getClass(PivotTables.CLSSid_Element, null);
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Element symbol_0 = (Element)_1;
 				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OclElement, symbol_0);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue selectByKind = CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element_0);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue selectByKind = CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element);
 				return selectByKind;
 			}
 		};

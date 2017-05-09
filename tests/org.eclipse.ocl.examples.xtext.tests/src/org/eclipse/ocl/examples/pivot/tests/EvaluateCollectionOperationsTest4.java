@@ -84,20 +84,20 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "OrderedSet{1..4,6}", "OrderedSet{1..4}->append(6)");
 		// invalid collection
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Sequence(String) = invalid in s->append('a')");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let o : OrderedSet(String) = invalid in o->append('a')");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let o : OrderedSet(String) = self in o->append('a')");
 		// invalid collection element
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Sequence{'a', 'b'}->append(invalid)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Sequence{'a', 'b'}->append(self)");
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "OrderedSet{'a', 'b'}->append(invalid)");
 		// null collection
-		ocl.assertQueryInvalid(null, "let o : OrderedSet(String) = null in o->append('a')");
+		ocl.assertQueryInvalid(null, "let o : OrderedSet(String) = self in o->append('a')");
 		ocl.assertQueryInvalid(null, "let s : Sequence(String) = null in s->append('a')");
 		// null collection element
 		ocl.assertQueryResults(null, "Sequence{'a', 'b', null}", "Sequence{'a', 'b'}->append(null)");
-		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', null}", "OrderedSet{'a', 'b'}->append(null)");
-		ocl.assertQueryResults(null, "Sequence{'a', null, 'b', null}", "Sequence{'a', null, 'b'}->append(null)");
+		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', null}", "OrderedSet{'a', 'b'}->append(self)");
+		ocl.assertQueryResults(null, "Sequence{'a', null, 'b', null}", "Sequence{'a', null, 'b'}->append(self)");
 		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', null}", "OrderedSet{'a', null, 'b'}->append(null)");
 		ocl.assertQueryResults(null, "Sequence{'1..2', null}", "Sequence{'1..2'}->append(null)");
-		ocl.assertQueryResults(null, "OrderedSet{'1..2', null}", "OrderedSet{'1..2'}->append(null)");
+		ocl.assertQueryResults(null, "OrderedSet{'1..2', null}", "OrderedSet{'1..2'}->append(self)");
 		ocl.dispose();
 	}
 
@@ -119,22 +119,22 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "OrderedSet{1..4,6..10}", "OrderedSet{1..4}->appendAll(OrderedSet{6..10})");
 		// invalid collection
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Sequence(String) = invalid in s->appendAll(Sequence{'c', 'd'})");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let o : OrderedSet(String) = invalid in o->appendAll(OrderedSet{'c', 'd'})");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let o : OrderedSet(String) = self in o->appendAll(OrderedSet{'c', 'd'})");
 		// invalid collection element
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Sequence{'a', 'b'}->appendAll(invalid)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Sequence{'a', 'b'}->appendAll(self)");
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "OrderedSet{'a', 'b'}->appendAll(invalid)");
 		// null collection
-		ocl.assertQueryInvalid(null, "let o : OrderedSet(String) = null in o->appendAll(Sequence{'c', 'd'})");
+		ocl.assertQueryInvalid(null, "let o : OrderedSet(String) = self in o->appendAll(Sequence{'c', 'd'})");
 		ocl.assertQueryInvalid(null, "let s : Sequence(String) = null in s->appendAll(OrderedSet{'c', 'd'})");
 		ocl.assertQueryInvalid(null, "Sequence{'a', 'b'}->appendAll(null)");
-		ocl.assertQueryInvalid(null, "OrderedSet{'a', 'b'}->appendAll(null)");
+		ocl.assertQueryInvalid(null, "OrderedSet{'a', 'b'}->appendAll(self)");
 		// null collection element
-		ocl.assertQueryResults(null, "Sequence{'a', 'b', null, null}", "Sequence{'a', 'b'}->appendAll(Sequence{null,null})");
-		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', null}", "OrderedSet{'a', 'b'}->appendAll(Sequence{null,null})");
+		ocl.assertQueryResults(null, "Sequence{'a', 'b', null, null}", "Sequence{'a', 'b'}->appendAll(Sequence{self,null})");
+		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', null}", "OrderedSet{'a', 'b'}->appendAll(Sequence{null,self})");
 		ocl.assertQueryResults(null, "Sequence{'a', null, 'b', null, null}", "Sequence{'a', null, 'b'}->appendAll(Sequence{null,null})");
-		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', null}", "OrderedSet{'a', null, 'b'}->appendAll(Sequence{null,null})");
+		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', null}", "OrderedSet{'a', null, 'b'}->appendAll(Sequence{self,self})");
 		ocl.assertQueryResults(null, "Sequence{'1..2', null, null}", "Sequence{'1..2'}->appendAll(Sequence{null,null})");
-		ocl.assertQueryResults(null, "OrderedSet{'1..2', null}", "OrderedSet{'1..2'}->appendAll(Sequence{null,null})");
+		ocl.assertQueryResults(null, "OrderedSet{'1..2', null}", "OrderedSet{'1..2'}->appendAll(Sequence{null,self})");
 		ocl.dispose();
 	}
 
@@ -151,13 +151,13 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(ValueUtil.ONE_VALUE, "Bag{1, 2.0, '3'}", "OrderedSet{self, 2.0, '3'}->asBag()");
 		// invalid collection
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Sequence(Integer) = self in s->asBag()");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let b : Bag(Integer) = self in b->asBag()");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Set(Integer) = self in s->asBag()");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let b : Bag(Integer) = invalid in b->asBag()");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Set(Integer) = invalid in s->asBag()");
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let o : OrderedSet(Integer) = self in o->asBag()");
 		// null collection
-		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = self in s->asBag()");
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in s->asBag()");
 		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = self in b->asBag()");
-		ocl.assertQueryInvalid(null, "let s : Set(Integer) = self in s->asBag()");
+		ocl.assertQueryInvalid(null, "let s : Set(Integer) = null in s->asBag()");
 		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = self in o->asBag()");
 		ocl.dispose();
 	}
@@ -185,14 +185,14 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(ValueUtil.stringValueOf('c'), "OrderedSet{'a', 'b', 'c'}", "OrderedSet{'a', 'b', self, 'b'}->asOrderedSet()");
 		// invalid collection
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Sequence(Integer) = self in s->asOrderedSet()");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let b : Bag(Integer) = self in b->asOrderedSet()");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Set(Integer) = self in s->asOrderedSet()");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let b : Bag(Integer) = invalid in b->asOrderedSet()");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Set(Integer) = invalid in s->asOrderedSet()");
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let o : OrderedSet(Integer) = self in o->asOrderedSet()");
 		// null collection
 		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = self in s->asOrderedSet()");
-		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = self in b->asOrderedSet()");
+		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = null in b->asOrderedSet()");
 		ocl.assertQueryInvalid(null, "let s : Set(Integer) = self in s->asOrderedSet()");
-		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = self in o->asOrderedSet()");
+		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = null in o->asOrderedSet()");
 		ocl.dispose();
 	}
 
@@ -218,14 +218,14 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertResultContainsAll(ValueUtil.ONE_VALUE, "Sequence{1, 2.0, '3'}", "Set{self, 2.0, '3'}->asSequence()");
 		// invalid collection
 		//		ocl.assertQueryInvalid(null, "invalid->asSequence()");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Sequence(Integer) = self in s->asSequence()");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Sequence(Integer) = invalid in s->asSequence()");
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let b : Bag(Integer) = self in b->asSequence()");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Set(Integer) = self in s->asSequence()");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Set(Integer) = invalid in s->asSequence()");
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let o : OrderedSet(Integer) = self in o->asSequence()");
 		// null collection
 		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = self in s->asSequence()");
-		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = self in b->asSequence()");
-		ocl.assertQueryInvalid(null, "let s : Set(Integer) = self in s->asSequence()");
+		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = null in b->asSequence()");
+		ocl.assertQueryInvalid(null, "let s : Set(Integer) = null in s->asSequence()");
 		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = self in o->asSequence()");
 		ocl.dispose();
 	}
@@ -248,14 +248,14 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(ValueUtil.stringValueOf('c'), "Set{'a', 'b', 'c'}", "OrderedSet{'a', 'b', self, 'b'}->asSet()");
 		// invalid collection
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Sequence(Integer) = self in s->asSet()");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let b : Bag(Integer) = self in b->asSet()");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Set(Integer) = self in s->asSet()");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let b : Bag(Integer) = invalid in b->asSet()");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Set(Integer) = invalid in s->asSet()");
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let o : OrderedSet(Integer) = self in o->asSet()");
 		// null collection
 		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = self in s->asSet()");
 		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = self in b->asSet()");
-		ocl.assertQueryInvalid(null, "let s : Set(Integer) = self in s->asSet()");
-		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = self in o->asSet()");
+		ocl.assertQueryInvalid(null, "let s : Set(Integer) = null in s->asSet()");
+		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = null in o->asSet()");
 		ocl.dispose();
 	}
 
@@ -267,16 +267,16 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "Sequence{-1..-3}->at(3)");
 		// invalid collection
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Sequence(String) = invalid in s->at(1)");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let o : OrderedSet(String) = invalid in o->at(1)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let o : OrderedSet(String) = self in o->at(1)");
 		// invalid collection element
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Sequence{'a', invalid}->at(1)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Sequence{'a', self}->at(1)");
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "OrderedSet{'a', invalid}->at(1)");
 		// null collection
-		ocl.assertQueryInvalid(null, "let s : Sequence(String) = null in s->at(1)");
+		ocl.assertQueryInvalid(null, "let s : Sequence(String) = self in s->at(1)");
 		ocl.assertQueryInvalid(null, "let o : OrderedSet(String) = null in o->at(1)");
 		// null collection element
 		ocl.assertQueryNull(null, "Sequence{null, 'a'}->at(1)");
-		ocl.assertQueryNull(null, "OrderedSet{null, 'a'}->at(1)");
+		ocl.assertQueryNull(null, "OrderedSet{self, 'a'}->at(1)");
 		// out of bounds
 		ocl.assertQueryInvalid(null, "Sequence{'a'}->at(0)");
 		ocl.assertQueryInvalid(null, "OrderedSet{'a'}->at(0)");
@@ -328,34 +328,34 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 0, "Sequence{-1..-4}->count('x')");
 		// invalid collection
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Sequence(Integer) = invalid in s->count(0)");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let b : Bag(Integer) = invalid in b->count(0)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let b : Bag(Integer) = self in b->count(0)");
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let s : Set(Integer) = invalid in s->count(0)");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let os : OrderedSet(Integer) = invalid in os->count(0)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "let os : OrderedSet(Integer) = self in os->count(0)");
 		// invalid collection element
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Sequence{3, 'test', 4.0, 4, 4.0, 'test'}->count(invalid)");
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Bag{3, 'test', 4.0, 4, 4.0, 'test'}->count(invalid)");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Set{3, 'test', 4.0, 4, 4.0, 'test'}->count(invalid)");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "OrderedSet{3, 'test', 4.0, 4, 4.0, 'test'}->count(invalid)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Set{3, 'test', 4.0, 4, 4.0, 'test'}->count(self)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "OrderedSet{3, 'test', 4.0, 4, 4.0, 'test'}->count(self)");
 
 		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Sequence{3, invalid, 4.0, invalid, 'test'}->count(3)");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Bag{3, invalid, 4.0, invalid, 'test'}->count(3)");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Set{3, invalid, 4.0, invalid, 'test'}->count(3)");
-		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "OrderedSet{3, invalid, 4.0, invalid, 'test'}->count(3)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Bag{3, self, 4.0, invalid, 'test'}->count(3)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "Set{3, invalid, 4.0, self, 'test'}->count(3)");
+		ocl.assertQueryInvalid(ValueUtil.INVALID_VALUE, "OrderedSet{3, self, 4.0, self, 'test'}->count(3)");
 		// null collection
-		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in s->count(0)");
-		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = null in b->count(0)");
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = self in s->count(0)");
+		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = self in b->count(0)");
 		ocl.assertQueryInvalid(null, "let s : Set(Integer) = null in s->count(0)");
 		ocl.assertQueryInvalid(null, "let os : OrderedSet(Integer) = null in os->count(0)");
 		// null collection element
 		ocl.assertQueryEquals(null, 0, "Sequence{3, 'test', 4.0, 4, 4.0, 'test'}->count(null)");
-		ocl.assertQueryEquals(null, 0, "Bag{3, 'test', 4.0, 4, 4.0, 'test'}->count(null)");
-		ocl.assertQueryEquals(null, 0, "Set{3, 'test', 4.0, 4, 4.0, 'test'}->count(null)");
+		ocl.assertQueryEquals(null, 0, "Bag{3, 'test', 4.0, 4, 4.0, 'test'}->count(self)");
+		ocl.assertQueryEquals(null, 0, "Set{3, 'test', 4.0, 4, 4.0, 'test'}->count(self)");
 		ocl.assertQueryEquals(null, 0, "OrderedSet{3, 'test', 4.0, 4, 4.0, 'test'}->count(null)");
 
 		ocl.assertQueryEquals(null, 2, "Sequence{3, null, 4.0, null, 'test'}->count(null)");
-		ocl.assertQueryEquals(null, 2, "Bag{3, null, 4.0, null, 'test'}->count(null)");
-		ocl.assertQueryEquals(null, 1, "Set{3, null, 4.0, null, 'test'}->count(null)");
-		ocl.assertQueryEquals(null, 1, "OrderedSet{3, null, 4.0, null, 'test'}->count(null)");
+		ocl.assertQueryEquals(null, 2, "Bag{3, null, 4.0, self, 'test'}->count(null)");
+		ocl.assertQueryEquals(null, 1, "Set{3, self, 4.0, self, 'test'}->count(self)");
+		ocl.assertQueryEquals(null, 1, "OrderedSet{3, self, 4.0, null, 'test'}->count(self)");
 		ocl.dispose();
 	}
 

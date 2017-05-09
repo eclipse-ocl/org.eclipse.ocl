@@ -387,7 +387,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//		}
 		if (cgSource instanceof CGCallExp) {
 			if (!cgSource.isNonInvalid()) {
-				cgSource.isNonInvalid();
 				return false;
 			}
 			return true;

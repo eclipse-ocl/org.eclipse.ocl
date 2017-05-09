@@ -206,8 +206,12 @@ public class CodeGenAnalyzer
 		CGTypeId cgTypeId = getTypeId(typeId);
 		cgType.setUnderlyingTypeId(cgTypeId);
 		cgType.setAst(asType);
-		cgType.setName(getNameManager().getGlobalSymbolName(asType));
-		//		cgType.setValueName(cgType.getName());
+		//		String nameHint = asType.getName();
+		//		cgType.setName(getNameManager().getGlobalSymbolName(cgType, nameHint));
+		//		cgType.setName(getNameManager().getGlobalSymbolName(cgType, getNameManager().getNameHint(asType)));
+		String globalSymbolName = getNameManager().getGlobalSymbolName(asType);
+		cgType.setName(globalSymbolName);
+		cgType.setValueName(globalSymbolName);
 		cgType.getDependsOn().add(cgTypeId);
 		return cgType;
 	}

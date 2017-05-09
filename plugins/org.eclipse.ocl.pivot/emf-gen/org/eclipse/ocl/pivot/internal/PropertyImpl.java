@@ -1001,8 +1001,8 @@ implements Property {
 		final /*@NonInvalid*/ java.lang.@Nullable Object container = ClassifierOclContainerOperation.INSTANCE.evaluate(executor, this);
 		/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 		try {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, TYP_Class_0).booleanValue();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class = idResolver.getClass(PivotTables.CLSSid_Class, null);
+			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, TYP_Class).booleanValue();
 			CAUGHT_oclIsKindOf = oclIsKindOf;
 		}
 		catch (Exception e) {
@@ -1010,8 +1010,8 @@ implements Property {
 		}
 		/*@Caught*/ @NonNull Object CAUGHT_includes;
 		try {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_1 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-			final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class_1));
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class = idResolver.getClass(PivotTables.CLSSid_Class, null);
+			final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, TYP_Class));
 			final /*@Thrown*/ java.util.@NonNull List<Property> ownedProperties = oclAsType.getOwnedProperties();
 			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Property, ownedProperties);
 			final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_ownedProperties, this).booleanValue();
@@ -1068,8 +1068,8 @@ implements Property {
 					final /*@NonInvalid*/ boolean ne = ownedExpression != null;
 					/*@Thrown*/ boolean and;
 					if (ne) {
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull ExpressionInOCL oclAsType = ClassUtil.nonNullState((ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, TYP_ExpressionInOCL_0));
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull ExpressionInOCL oclAsType = ClassUtil.nonNullState((ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, TYP_ExpressionInOCL));
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
 						final /*@Thrown*/ boolean ne_0 = ownedBody != null;
 						and = ne_0;

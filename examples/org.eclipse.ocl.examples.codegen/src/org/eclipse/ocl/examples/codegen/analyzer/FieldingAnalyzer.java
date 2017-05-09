@@ -22,7 +22,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstant;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
@@ -89,15 +88,6 @@ public class FieldingAnalyzer
 		@Override
 		public @Nullable Set<@NonNull CGVariable> visiting(@NonNull CGElement visitable) {
 			throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + visitable.getClass().getSimpleName());
-		}
-
-		@Override
-		public @Nullable Set<@NonNull CGVariable> visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-			if ("ArgumentTypeIsConformant".equals(cgConstraint.getName())) {
-				toString();
-			}
-			Set<@NonNull CGVariable> status = super.visitCGConstraint(cgConstraint);
-			return status;
 		}
 
 		/**
@@ -269,15 +259,6 @@ public class FieldingAnalyzer
 		@Override
 		public @NonNull Boolean visitCGConstantExp(@NonNull CGConstantExp cgElement) {
 			return safeVisit(cgElement.getReferredConstant());
-		}
-
-		@Override
-		public @NonNull Boolean visitCGConstraint(@NonNull CGConstraint cgConstraint) {
-			if ("ArgumentTypeIsConformant".equals(cgConstraint.getName())) {
-				toString();
-			}
-			Boolean status = super.visitCGConstraint(cgConstraint);
-			return status;
 		}
 
 		@Override

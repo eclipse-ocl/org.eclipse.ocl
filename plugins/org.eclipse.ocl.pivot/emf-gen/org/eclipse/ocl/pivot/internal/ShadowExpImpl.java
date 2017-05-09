@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationMa
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
+import org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsSetOperation;
@@ -377,9 +378,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType_0 = idResolver.getClass(PivotTables.CLSSid_DataType, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType = idResolver.getClass(PivotTables.CLSSid_DataType, null);
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-				final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType_0).booleanValue();
+				final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType).booleanValue();
 				/*@Thrown*/ java.lang.@NonNull Object result;
 				if (oclIsKindOf) {
 					result = ValueUtil.TRUE_VALUE;
@@ -389,7 +390,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSequenceAccumulatorValue(PivotTables.SEQ_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedParts.iterator();
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue collect;
+					/*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue collect;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
 							collect = accumulator;
@@ -405,9 +406,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						//
 						accumulator.add(referredProperty);
 					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue partProperties = CollectionMutableAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Property, collect);
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class_0));
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue partProperties = CollectionMutableAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Property, collect);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class = idResolver.getClass(PivotTables.CLSSid_Class, null);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class));
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Class, oclAsType);
 					final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure_0 = executor.getStaticTypeOf(oclAsSet);
 					final LibraryIteration.@org.eclipse.jdt.annotation.NonNull LibraryIterationExtension IMPL_closure_0 = (LibraryIteration.LibraryIterationExtension)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
@@ -454,7 +455,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							accumulator_0.add(value);
 						}
 					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue allProperties = CollectionMutableAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Property, collect_0);
+					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue allProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect_0);
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_1 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_2 = allProperties.iterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject;
@@ -582,9 +583,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						/**
 						 * type.oclIsKindOf(CollectionType)
 						 */
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_1 = _1_6.getType();
-						final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_1, TYP_CollectionType_0).booleanValue();
+						final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_1, TYP_CollectionType).booleanValue();
 						//
 						if (oclIsKindOf_0 == ValueUtil.FALSE_VALUE) {
 							accumulator_5.add(_1_6);
@@ -768,9 +769,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid = idResolver.getClass(TypeId.OCL_INVALID, null);
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
-			final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
+			final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid.getTypeId()) : true;
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_ShadowExp_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 			symbol_0 = logDiagnostic;
 		}
