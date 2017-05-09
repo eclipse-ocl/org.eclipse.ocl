@@ -1115,7 +1115,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for isInvalid()/isNonInvalid()/setNonInvalid()
+	 * The algorithm options for getInvaliValue(),isInvalid()/isNonInvalid()/setNonInvalid()
 	 */
 	public interface Inv {
 		@Nullable String generateGetInvalidValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
@@ -1217,6 +1217,93 @@ public class CGValuedElementModelSpec extends ModelSpec
 			}
 		};
 
+		public static final @NonNull Inv ITRTE = new Inv() {
+			@Override public @Nullable String generateGetInvalidValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return null;
+			}
+			@Override public @Nullable String generateIsInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return null;
+			}
+			@Override public @Nullable String generateIsNonInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "if (referredIteration == null) {\n" +
+						"			return false;\n" +
+						"		}\n" +
+						"		if (referredIteration.isIsValidating()) {\n" +
+						"			if (referredIteration.isIsInvalidating()) {\n" +
+						"				// e.g AND, forAll - nonInvalid if all inputs nonInvalid\n" +
+						"			}\n" +
+						"			else {\n" +
+						"				return true;				// e.g oclIsInvalid\n" +
+						"			}\n" +
+						"		}\n" +
+						"		else {\n" +
+						"			if (referredIteration.isIsInvalidating()) {\n" +
+						"				return false;				// e.g divide-by-zero\n" +
+						"			}\n" +
+						"			else {\n" +
+						"				// normal use case - nonInvalid if all inputs nonInvalid\n" +
+						"			}\n" +
+						"		}\n" +
+						"		if (!source.isNonNull() || !source.isNonInvalid()) {\n" +
+						"			return false;\n" +
+						"		}\n" +
+						"		for (@NonNull " + classRef(CGValuedElement.class) + " iterator : " + classRef(ClassUtil.class) + ".nullFree(getIterators())) {\n" +
+						"			if (!iterator.isNonNull() || !iterator.isNonInvalid()) {\n" +
+						"				return false;\n" +
+						"			}\n" +
+						"		}\n" +
+						"		if ((result == null) || !result.isNonNull() || !result.isNonInvalid()) {\n" +
+						"			return false;\n" +
+						"		}\n" +
+						"		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {\n" +
+						"			return false;\n" +
+						"		}\n" +
+						"		return true;";
+			}
+		};
+
+		public static final @NonNull Inv ITRTN = new Inv() {
+			@Override public @Nullable String generateGetInvalidValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return null;
+			}
+			@Override public @Nullable String generateIsInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return null;
+			}
+			@Override public @Nullable String generateIsNonInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "if (referredIteration == null) {\n" +
+						"			return false;\n" +
+						"		}\n" +
+						"		if (referredIteration.isIsValidating()) {\n" +
+						"			if (referredIteration.isIsInvalidating()) {\n" +
+						"				// e.g AND, forAll - nonInvalid if all inputs nonInvalid\n" +
+						"			}\n" +
+						"			else {\n" +
+						"				return true;				// e.g oclIsInvalid\n" +
+						"			}\n" +
+						"		}\n" +
+						"		else {\n" +
+						"			if (referredIteration.isIsInvalidating()) {\n" +
+						"				return false;				// e.g divide-by-zero\n" +
+						"			}\n" +
+						"			else {\n" +
+						"				// normal use case - nonInvalid if all inputs nonInvalid\n" +
+						"			}\n" +
+						"		}\n" +
+						"		if (!source.isNonNull() || !source.isNonInvalid()) {\n" +
+						"			return false;\n" +
+						"		}\n" +
+						"		for (@NonNull " + classRef(CGValuedElement.class) + " iterator : " + classRef(ClassUtil.class) + ".nullFree(getIterators())) {\n" +
+						"			if (!iterator.isNonNull() || !iterator.isNonInvalid()) {\n" +
+						"				return false;\n" +
+						"			}\n" +
+						"		}\n" +
+						"		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {\n" +
+						"			return false;\n" +
+						"		}\n" +
+						"		return true;";
+			}
+		};
+
 		public static final @NonNull Inv MPART = new Inv() {
 			@Override public @Nullable String generateGetInvalidValue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return classRef(CGInvalid.class) + " invalidValue = key.getInvalidValue();\n" +
@@ -1256,17 +1343,28 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "if (referredOperation == null) {\n" +
 						"			return false;\n" +
 						"		}\n" +
-						"		if (referredOperation.isIsInvalidating()) {\n" +
+						"		if (referredOperation.isIsValidating()) {\n" +
+						"			if (referredOperation.isIsInvalidating()) {\n" +
+						"				// e.g AND, forAll - nonInvalid if all inputs nonInvalid\n" +
+						"			}\n" +
+						"			else {\n" +
+						"				return true;				// e.g oclIsInvalid\n" +
+						"			}\n" +
+						"		}\n" +
+						"		else {\n" +
+						"			if (referredOperation.isIsInvalidating()) {\n" +
+						"				return false;				// e.g divide-by-zero\n" +
+						"			}\n" +
+						"			else {\n" +
+						"				// normal use case - nonInvalid if all inputs nonInvalid\n" +
+						"			}\n" +
+						"		}\n" +
+						"		if (!source.isNonNull() || !source.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
-						"		if (!referredOperation.isIsValidating()) {\n" +
-						"			if (!source.isNonNull() || !source.isNonInvalid()) {\n" +
+						"		for (@NonNull " + classRef(CGValuedElement.class) + " argument : " + classRef(ClassUtil.class) + ".nullFree(getArguments())) {\n" +
+						"			if (!argument.isNonNull() || !argument.isNonInvalid()) {\n" +
 						"				return false;\n" +
-						"			}\n" +
-						"			for (@NonNull " + classRef(CGValuedElement.class) + " argument : " + classRef(ClassUtil.class) + ".nullFree(getArguments())) {\n" +
-						"				if (!argument.isNonNull() || !argument.isNonInvalid()) {\n" +
-						"					return false;\n" +
-						"				}\n" +
 						"			}\n" +
 						"		}\n" +
 						"		return true;";
@@ -2173,9 +2271,9 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGThrowExp.class, "source",					Box.DELEG, null     , null     , null     , null     , null     , null     , null     , Ct.FALSE, null     , Val.DELNM, null     , null     , Ctl.THROW, null     , null     , null    );
 			new CGValuedElementModelSpec(CGUnboxExp.class, "source",					Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , Con.FALSE, Val.DELVL, null     , null     , null     , null     , null     , null    );
 
-			new CGValuedElementModelSpec(CGIterationCallExp.class, "referredIteration",	null     , null     , null     , Nul.DELEG, null     , null     , null     , null     , null    , null     , null     , null     , null     , Ctl.INNER, null     , null     , Eq.EQUIV);
+			new CGValuedElementModelSpec(CGIterationCallExp.class, "referredIteration",	null     , null     , null     , Nul.DELEG, Inv.ITRTN, null     , null     , null     , null    , null     , null     , null     , null     , Ctl.INNER, null     , null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGBuiltInIterationCallExp.class, null,			Box.BOX  , null     , null     , Nul.ITER , null     , null     , null     , Set.TRUE , Ct.FALSE, null     , null     , null     , null     , null     , null     , null     , null    );
-			new CGValuedElementModelSpec(CGLibraryIterateCallExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
+			new CGValuedElementModelSpec(CGLibraryIterateCallExp.class, null,			Box.BOX  , null     , null     , null     , Inv.ITRTE, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGLibraryIterationCallExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 
 			new CGValuedElementModelSpec(CGOperationCallExp.class, "referredOperation",	null     , null     , null     , Nul.OPRTN, Inv.OPRTN, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.EQUIV);
