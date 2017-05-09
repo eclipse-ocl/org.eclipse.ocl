@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.emf.validation.validity.impl;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -84,6 +85,7 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ValidatableNode getParent() {
 		if (eContainerFeatureID() != ValidityPackage.VALIDATABLE_NODE__PARENT) return null;
 		return (ValidatableNode)eInternalContainer();
@@ -104,6 +106,7 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setParent(ValidatableNode newParent) {
 		if (newParent != eInternalContainer() || (eContainerFeatureID() != ValidityPackage.VALIDATABLE_NODE__PARENT && newParent != null)) {
 			if (EcoreUtil.isAncestor(this, newParent))
@@ -123,6 +126,7 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	 * <!-- end-user-doc -->
 	 * @generated NOT // Bug 414352 workaround
 	 */
+	@Override
 	@SuppressWarnings("null")
 	public @NonNull EList<ValidatableNode> getChildren() {
 		if (children == null) {
@@ -136,6 +140,7 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getConstrainedObject() {
 		if (constrainedObject != null && constrainedObject.eIsProxy()) {
 			InternalEObject oldConstrainedObject = (InternalEObject)constrainedObject;
@@ -160,6 +165,7 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setConstrainedObject(EObject newConstrainedObject) {
 		constrainedObject = newConstrainedObject;
 	}
@@ -173,12 +179,12 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.VALIDATABLE_NODE__PARENT:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetParent((ValidatableNode)otherEnd, msgs);
-			case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
+		case ValidityPackage.VALIDATABLE_NODE__PARENT:
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			return basicSetParent((ValidatableNode)otherEnd, msgs);
+		case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
+			return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -191,10 +197,10 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValidityPackage.VALIDATABLE_NODE__PARENT:
-				return basicSetParent(null, msgs);
-			case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
-				return ((InternalEList<?>)getChildren()).basicRemove(otherEnd, msgs);
+		case ValidityPackage.VALIDATABLE_NODE__PARENT:
+			return basicSetParent(null, msgs);
+		case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
+			return ((InternalEList<?>)getChildren()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -207,8 +213,8 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case ValidityPackage.VALIDATABLE_NODE__PARENT:
-				return eInternalContainer().eInverseRemove(this, ValidityPackage.VALIDATABLE_NODE__CHILDREN, ValidatableNode.class, msgs);
+		case ValidityPackage.VALIDATABLE_NODE__PARENT:
+			return eInternalContainer().eInverseRemove(this, ValidityPackage.VALIDATABLE_NODE__CHILDREN, ValidatableNode.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -221,13 +227,13 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValidityPackage.VALIDATABLE_NODE__PARENT:
-				return getParent();
-			case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
-				return getChildren();
-			case ValidityPackage.VALIDATABLE_NODE__CONSTRAINED_OBJECT:
-				if (resolve) return getConstrainedObject();
-				return basicGetConstrainedObject();
+		case ValidityPackage.VALIDATABLE_NODE__PARENT:
+			return getParent();
+		case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
+			return getChildren();
+		case ValidityPackage.VALIDATABLE_NODE__CONSTRAINED_OBJECT:
+			if (resolve) return getConstrainedObject();
+			return basicGetConstrainedObject();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -241,16 +247,16 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValidityPackage.VALIDATABLE_NODE__PARENT:
-				setParent((ValidatableNode)newValue);
-				return;
-			case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
-				getChildren().clear();
-				getChildren().addAll((Collection<? extends ValidatableNode>)newValue);
-				return;
-			case ValidityPackage.VALIDATABLE_NODE__CONSTRAINED_OBJECT:
-				setConstrainedObject((EObject)newValue);
-				return;
+		case ValidityPackage.VALIDATABLE_NODE__PARENT:
+			setParent((ValidatableNode)newValue);
+			return;
+		case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
+			getChildren().clear();
+			getChildren().addAll((Collection<? extends ValidatableNode>)newValue);
+			return;
+		case ValidityPackage.VALIDATABLE_NODE__CONSTRAINED_OBJECT:
+			setConstrainedObject((EObject)newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -263,15 +269,15 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.VALIDATABLE_NODE__PARENT:
-				setParent((ValidatableNode)null);
-				return;
-			case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
-				getChildren().clear();
-				return;
-			case ValidityPackage.VALIDATABLE_NODE__CONSTRAINED_OBJECT:
-				setConstrainedObject((EObject)null);
-				return;
+		case ValidityPackage.VALIDATABLE_NODE__PARENT:
+			setParent((ValidatableNode)null);
+			return;
+		case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
+			getChildren().clear();
+			return;
+		case ValidityPackage.VALIDATABLE_NODE__CONSTRAINED_OBJECT:
+			setConstrainedObject((EObject)null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -284,12 +290,12 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValidityPackage.VALIDATABLE_NODE__PARENT:
-				return getParent() != null;
-			case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
-				return children != null && !children.isEmpty();
-			case ValidityPackage.VALIDATABLE_NODE__CONSTRAINED_OBJECT:
-				return constrainedObject != null;
+		case ValidityPackage.VALIDATABLE_NODE__PARENT:
+			return getParent() != null;
+		case ValidityPackage.VALIDATABLE_NODE__CHILDREN:
+			return children != null && !children.isEmpty();
+		case ValidityPackage.VALIDATABLE_NODE__CONSTRAINED_OBJECT:
+			return constrainedObject != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.completeoclcs.ClassifierContextDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSFactory;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
@@ -74,7 +75,7 @@ implements CompleteOCLCSFactory {
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
 			case CompleteOCLCSPackage.CLASSIFIER_CONTEXT_DECL_CS: return createClassifierContextDeclCS();
@@ -96,7 +97,7 @@ implements CompleteOCLCSFactory {
 	 * @generated
 	 */
 	@Override
-	public PackageDeclarationCS createPackageDeclarationCS() {
+	public @NonNull PackageDeclarationCS createPackageDeclarationCS() {
 		PackageDeclarationCSImpl packageDeclarationCS = new PackageDeclarationCSImpl();
 		return packageDeclarationCS;
 	}
@@ -107,7 +108,7 @@ implements CompleteOCLCSFactory {
 	 * @generated
 	 */
 	@Override
-	public PropertyContextDeclCS createPropertyContextDeclCS() {
+	public @NonNull PropertyContextDeclCS createPropertyContextDeclCS() {
 		PropertyContextDeclCSImpl propertyContextDeclCS = new PropertyContextDeclCSImpl();
 		return propertyContextDeclCS;
 	}
@@ -128,7 +129,7 @@ implements CompleteOCLCSFactory {
 	 * @generated
 	 */
 	@Override
-	public ClassifierContextDeclCS createClassifierContextDeclCS() {
+	public @NonNull ClassifierContextDeclCS createClassifierContextDeclCS() {
 		ClassifierContextDeclCSImpl classifierContextDeclCS = new ClassifierContextDeclCSImpl();
 		return classifierContextDeclCS;
 	}
@@ -139,7 +140,7 @@ implements CompleteOCLCSFactory {
 	 * @generated
 	 */
 	@Override
-	public CompleteOCLDocumentCS createCompleteOCLDocumentCS() {
+	public @NonNull CompleteOCLDocumentCS createCompleteOCLDocumentCS() {
 		CompleteOCLDocumentCSImpl completeOCLDocumentCS = new CompleteOCLDocumentCSImpl();
 		return completeOCLDocumentCS;
 	}
@@ -150,7 +151,7 @@ implements CompleteOCLCSFactory {
 	 * @generated
 	 */
 	@Override
-	public OCLMessageArgCS createOCLMessageArgCS() {
+	public @NonNull OCLMessageArgCS createOCLMessageArgCS() {
 		OCLMessageArgCSImpl oclMessageArgCS = new OCLMessageArgCSImpl();
 		return oclMessageArgCS;
 	}
@@ -161,7 +162,7 @@ implements CompleteOCLCSFactory {
 	 * @generated
 	 */
 	@Override
-	public DefOperationCS createDefOperationCS() {
+	public @NonNull DefOperationCS createDefOperationCS() {
 		DefOperationCSImpl defOperationCS = new DefOperationCSImpl();
 		return defOperationCS;
 	}
@@ -172,7 +173,7 @@ implements CompleteOCLCSFactory {
 	 * @generated
 	 */
 	@Override
-	public DefPropertyCS createDefPropertyCS() {
+	public @NonNull DefPropertyCS createDefPropertyCS() {
 		DefPropertyCSImpl defPropertyCS = new DefPropertyCSImpl();
 		return defPropertyCS;
 	}
@@ -183,7 +184,7 @@ implements CompleteOCLCSFactory {
 	 * @generated
 	 */
 	@Override
-	public OperationContextDeclCS createOperationContextDeclCS() {
+	public @NonNull OperationContextDeclCS createOperationContextDeclCS() {
 		OperationContextDeclCSImpl operationContextDeclCS = new OperationContextDeclCSImpl();
 		return operationContextDeclCS;
 	}

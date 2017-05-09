@@ -53,34 +53,34 @@ public class OCLinEcoreDocument extends BaseDocument
 
 	/**
 	 * Write the XMI representation of the Ecore to be saved.
-	 * @param exportDelegateURI 
+	 * @param exportDelegateURI
 	 */
 	public void saveAsEcore(final @NonNull Writer writer, final @NonNull URI ecoreURI, final @Nullable String exportDelegateURI) throws IOException, CoreException {
 		readOnly(new IUnitOfWork<Object, XtextResource>()
-			{
-				@Override
-				public Object exec(@Nullable XtextResource resource) throws Exception {
-					if (resource != null) {
-						XMLResource asResource = getASResource();
-						if (asResource != null) {
-							CS2AS cs2as = ((BaseCSResource)resource).findCS2AS();
-							if (cs2as != null) {
-								Resource csResource = cs2as.getCSResource();
-								checkForErrors(csResource);
-								Map<String,Object> options = new HashMap<String,Object>();
-								options.put(OCLConstants.OCL_DELEGATE_URI, exportDelegateURI);
-								XMLResource ecoreResource = AS2Ecore.createResource(cs2as.getEnvironmentFactory(), asResource, ecoreURI, options);
-			//					ResourceSetImpl resourceSet = new ResourceSetImpl();
-			//					XMLResource ecoreResource = (XMLResource) resourceSet.createResource(ecoreURI);
-			//					ecoreResource.getContents().addAll(ecoreContents);
-								ecoreResource.save(writer, null);
-								checkForErrors(ecoreResource);
-							}
+		{
+			@Override
+			public Object exec(@Nullable XtextResource resource) throws Exception {
+				if (resource != null) {
+					XMLResource asResource = getASResource();
+					if (asResource != null) {
+						CS2AS cs2as = ((BaseCSResource)resource).findCS2AS();
+						if (cs2as != null) {
+							Resource csResource = cs2as.getCSResource();
+							checkForErrors(csResource);
+							Map<@NonNull String, @Nullable Object> options = new HashMap<>();
+							options.put(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), exportDelegateURI);
+							XMLResource ecoreResource = AS2Ecore.createResource(cs2as.getEnvironmentFactory(), asResource, ecoreURI, options);
+							//					ResourceSetImpl resourceSet = new ResourceSetImpl();
+							//					XMLResource ecoreResource = (XMLResource) resourceSet.createResource(ecoreURI);
+							//					ecoreResource.getContents().addAll(ecoreContents);
+							ecoreResource.save(writer, null);
+							checkForErrors(ecoreResource);
 						}
 					}
-					return null;
 				}
-			});
+				return null;
+			}
+		});
 	}
 
 	/**
@@ -88,27 +88,27 @@ public class OCLinEcoreDocument extends BaseDocument
 	 */
 	public void saveAsUML(final @NonNull Writer writer, final @NonNull URI umlURI) throws IOException, CoreException {
 		readOnly(new IUnitOfWork<Object, XtextResource>()
-			{
-				@Override
-				public Object exec(@Nullable XtextResource resource) throws Exception {
-					if (resource != null) {
-						XMLResource asResource = getASResource();
-						if (asResource != null) {
-							CS2AS cs2as = ((BaseCSResource)resource).findCS2AS();
-							if (cs2as != null) {
-								List<@NonNull EObject> umlContents = ClassUtil.nullFree(AS2UML.createResource(cs2as.getEnvironmentFactory(), asResource));
-								ResourceSetImpl resourceSet = new ResourceSetImpl();
-				//				URI umlURI = URI.createURI("internal.uml");
-								UMLResource umlResource = (UMLResource) resourceSet.createResource(umlURI);
-								umlResource.getContents().addAll(umlContents);
-								checkForErrors(umlResource);
-								umlResource.save(writer, null);
-							}
+		{
+			@Override
+			public Object exec(@Nullable XtextResource resource) throws Exception {
+				if (resource != null) {
+					XMLResource asResource = getASResource();
+					if (asResource != null) {
+						CS2AS cs2as = ((BaseCSResource)resource).findCS2AS();
+						if (cs2as != null) {
+							List<@NonNull EObject> umlContents = ClassUtil.nullFree(AS2UML.createResource(cs2as.getEnvironmentFactory(), asResource));
+							ResourceSetImpl resourceSet = new ResourceSetImpl();
+							//				URI umlURI = URI.createURI("internal.uml");
+							UMLResource umlResource = (UMLResource) resourceSet.createResource(umlURI);
+							umlResource.getContents().addAll(umlContents);
+							checkForErrors(umlResource);
+							umlResource.save(writer, null);
 						}
 					}
-					return null;
 				}
-			});
+				return null;
+			}
+		});
 	}
 
 	/**
@@ -116,25 +116,25 @@ public class OCLinEcoreDocument extends BaseDocument
 	 */
 	public void saveInEcore(final @NonNull Writer writer, final @NonNull URI ecoreURI, final @Nullable String exportDelegateURI) throws IOException, CoreException {
 		readOnly(new IUnitOfWork<Object, XtextResource>()
-			{
-				@Override
-				public Object exec(@Nullable XtextResource resource) throws Exception {
-					if (resource != null) {
-						XMLResource asResource = getASResource();
-						if (asResource != null) {
-							CS2AS cs2as = ((BaseCSResource)resource).findCS2AS();
-							if (cs2as != null) {
-								Map<String,Object> options = new HashMap<String,Object>();
-								options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
-								options.put(OCLConstants.OCL_DELEGATE_URI, exportDelegateURI);
-								XMLResource ecoreResource = AS2Ecore.createResource(cs2as.getEnvironmentFactory(), asResource, ecoreURI, options);
-								ecoreResource.save(writer, null);
-								checkForErrors(ecoreResource);
-							}
+		{
+			@Override
+			public Object exec(@Nullable XtextResource resource) throws Exception {
+				if (resource != null) {
+					XMLResource asResource = getASResource();
+					if (asResource != null) {
+						CS2AS cs2as = ((BaseCSResource)resource).findCS2AS();
+						if (cs2as != null) {
+							Map<@NonNull String, @Nullable Object> options = new HashMap<>();
+							options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "primitives.ecore#//");
+							options.put(ClassUtil.nonNullState(OCLConstants.OCL_DELEGATE_URI), exportDelegateURI);
+							XMLResource ecoreResource = AS2Ecore.createResource(cs2as.getEnvironmentFactory(), asResource, ecoreURI, options);
+							ecoreResource.save(writer, null);
+							checkForErrors(ecoreResource);
 						}
 					}
-					return null;
 				}
-			});
+				return null;
+			}
+		});
 	}
 }

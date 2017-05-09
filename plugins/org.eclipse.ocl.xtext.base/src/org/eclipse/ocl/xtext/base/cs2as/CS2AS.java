@@ -630,7 +630,7 @@ public abstract class CS2AS extends AbstractConversion
 			PivotUtilInternal.resetContainer(pivotElement);		// Bypass child-stealing detector
 		}
 		if ((pivotElement == null) || (pivotEClass != pivotElement.eClass())) {
-			@SuppressWarnings("null") @NonNull Element pivotElement3 = (Element) pivotEClass.getEPackage().getEFactoryInstance().create(pivotEClass);
+			@NonNull Element pivotElement3 = (Element) pivotEClass.getEPackage().getEFactoryInstance().create(pivotEClass);
 			pivotElement2 = pivotElement3;
 		}
 		else {

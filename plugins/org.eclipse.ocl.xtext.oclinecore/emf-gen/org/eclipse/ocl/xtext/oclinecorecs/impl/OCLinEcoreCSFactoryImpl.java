@@ -15,7 +15,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.ocl.xtext.oclinecorecs.*;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSFactory;
+import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
+import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreConstraintCS;
+import org.eclipse.ocl.xtext.oclinecorecs.SysMLCS;
+import org.eclipse.ocl.xtext.oclinecorecs.TopLevelCS;
 
 /**
  * <!-- begin-user-doc -->
@@ -62,7 +67,7 @@ public class OCLinEcoreCSFactoryImpl extends EFactoryImpl implements OCLinEcoreC
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
 			case OCLinEcoreCSPackage.OC_LIN_ECORE_CONSTRAINT_CS: return createOCLinEcoreConstraintCS();
@@ -79,7 +84,7 @@ public class OCLinEcoreCSFactoryImpl extends EFactoryImpl implements OCLinEcoreC
 	 * @generated
 	 */
 	@Override
-	public OCLinEcoreConstraintCS createOCLinEcoreConstraintCS()
+	public @NonNull OCLinEcoreConstraintCS createOCLinEcoreConstraintCS()
 	{
 		OCLinEcoreConstraintCSImpl ocLinEcoreConstraintCS = new OCLinEcoreConstraintCSImpl();
 		return ocLinEcoreConstraintCS;
@@ -91,7 +96,7 @@ public class OCLinEcoreCSFactoryImpl extends EFactoryImpl implements OCLinEcoreC
 	 * @generated
 	 */
 	@Override
-	public SysMLCS createSysMLCS()
+	public @NonNull SysMLCS createSysMLCS()
 	{
 		SysMLCSImpl sysMLCS = new SysMLCSImpl();
 		return sysMLCS;
@@ -103,7 +108,7 @@ public class OCLinEcoreCSFactoryImpl extends EFactoryImpl implements OCLinEcoreC
 	 * @generated
 	 */
 	@Override
-	public TopLevelCS createTopLevelCS()
+	public @NonNull TopLevelCS createTopLevelCS()
 	{
 		TopLevelCSImpl topLevelCS = new TopLevelCSImpl();
 		return topLevelCS;

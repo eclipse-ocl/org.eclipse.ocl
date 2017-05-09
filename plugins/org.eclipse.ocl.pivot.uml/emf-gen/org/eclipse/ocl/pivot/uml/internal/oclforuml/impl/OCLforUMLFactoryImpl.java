@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.BoundedInteger;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.Collection;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.Collections;
@@ -36,8 +37,8 @@ import org.eclipse.ocl.pivot.uml.internal.oclforuml.Validations;
  * @generated
  */
 public class OCLforUMLFactoryImpl
-		extends EFactoryImpl
-		implements OCLforUMLFactory {
+extends EFactoryImpl
+implements OCLforUMLFactory {
 
 	/**
 	 * Creates the default factory implementation.
@@ -77,7 +78,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
 			case OCLforUMLPackage.BOUNDED_INTEGER: return createBoundedInteger();
@@ -136,7 +137,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public BoundedInteger createBoundedInteger() {
+	public @NonNull BoundedInteger createBoundedInteger() {
 		BoundedIntegerImpl boundedInteger = new BoundedIntegerImpl();
 		return boundedInteger;
 	}
@@ -147,7 +148,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public org.eclipse.ocl.pivot.uml.internal.oclforuml.Integer createInteger() {
+	public org.eclipse.ocl.pivot.uml.internal.oclforuml.@NonNull Integer createInteger() {
 		IntegerImpl integer = new IntegerImpl();
 		return integer;
 	}
@@ -158,7 +159,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Collection createCollection() {
+	public @NonNull Collection createCollection() {
 		CollectionImpl collection = new CollectionImpl();
 		return collection;
 	}
@@ -169,7 +170,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Collections createCollections() {
+	public @NonNull Collections createCollections() {
 		CollectionsImpl collections = new CollectionsImpl();
 		return collections;
 	}
@@ -180,7 +181,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public FixedPoint createFixedPoint() {
+	public @NonNull FixedPoint createFixedPoint() {
 		FixedPointImpl fixedPoint = new FixedPointImpl();
 		return fixedPoint;
 	}
@@ -191,7 +192,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Real createReal() {
+	public @NonNull Real createReal() {
 		RealImpl real = new RealImpl();
 		return real;
 	}
@@ -202,7 +203,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public FloatingPoint createFloatingPoint() {
+	public @NonNull FloatingPoint createFloatingPoint() {
 		FloatingPointImpl floatingPoint = new FloatingPointImpl();
 		return floatingPoint;
 	}
@@ -213,7 +214,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Validation createValidation() {
+	public @NonNull Validation createValidation() {
 		ValidationImpl validation = new ValidationImpl();
 		return validation;
 	}
@@ -224,7 +225,7 @@ public class OCLforUMLFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Validations createValidations() {
+	public @NonNull Validations createValidations() {
 		ValidationsImpl validations = new ValidationsImpl();
 		return validations;
 	}

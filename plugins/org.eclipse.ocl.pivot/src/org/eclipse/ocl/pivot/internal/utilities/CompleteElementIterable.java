@@ -129,7 +129,7 @@ public abstract class CompleteElementIterable<O,I> implements Iterable<I>
 				if (listEntry != null) {
 					Iterable<I> innerIterable = getInnerIterable(listEntry);
 					if (innerIterable != null) {
-						@SuppressWarnings("null") java.util.@NonNull Iterator<I> result = innerIterable.iterator();
+						java.util.@NonNull Iterator<I> result = innerIterable.iterator();
 						return result;
 					}
 				}

@@ -26,7 +26,7 @@ public class StringSubstituteAllOperation extends AbstractSimpleTernaryOperation
 		String sourceString = asString(sourceValue);
 		String oldSubstring = asString(firstArgumentValue);
 		String newSubstring = asString(secondArgumentValue);
-		@SuppressWarnings("null")@NonNull String result = sourceString.replace(oldSubstring, newSubstring);
+		@NonNull String result = sourceString.replace(oldSubstring, newSubstring);
 		return result;
 	}
 }

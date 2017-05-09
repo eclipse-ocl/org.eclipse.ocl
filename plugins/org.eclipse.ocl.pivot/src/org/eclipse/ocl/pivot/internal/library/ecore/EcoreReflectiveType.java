@@ -44,7 +44,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull TemplateParameters typeParameters;
 	private /*@LazyNonNull*/ DomainProperties allProperties;
-	
+
 	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		super(ClassUtil.nonNullEMF(eClassifier.getName()), flags);
 		this.evaluationPackage = evaluationPackage;
@@ -62,7 +62,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		if (eClassifier instanceof EClass) {
 			EClass eClass = (EClass)eClassifier;
 			EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
-//			TypeId typeId = IdManager.INSTANCE.getTypeId(eClass);
+			//			TypeId typeId = IdManager.INSTANCE.getTypeId(eClass);
 			return /*ValuesUtil.createObjectValue(typeId,*/ ClassUtil.nonNullEMF(element); //);
 		}
 		throw new UnsupportedOperationException();
@@ -77,7 +77,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		}
 		throw new UnsupportedOperationException();
 	}
-	
+
 	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		if (this == type) {
@@ -100,11 +100,11 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		return new Iterable<@NonNull CompleteInheritance>()
 		{
 			@Override
-			public Iterator<@NonNull CompleteInheritance> iterator() {
+			public @NonNull Iterator<@NonNull CompleteInheritance> iterator() {
 				return new Iterator<@NonNull CompleteInheritance>()
 				{
 					private boolean gotOne = false;
-					
+
 					@Override
 					public boolean hasNext() {
 						return !gotOne || iterator.hasNext();
@@ -129,12 +129,12 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 					@Override
 					public void remove() {
 						throw new UnsupportedOperationException();
-					}					
+					}
 				};
-			}			
+			}
 		};
 	}
-	
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getOwningPackage() {
 		return evaluationPackage;

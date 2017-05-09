@@ -99,7 +99,7 @@ public class BaseCSFactoryImpl extends EFactoryImpl implements BaseCSFactory {
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
 			case BaseCSPackage.ANNOTATION_CS: return createAnnotationCS();

@@ -53,7 +53,7 @@ public class UMLProfileConstraintProvider extends LoadableConstraintProvider
 	private static final Logger logger = Logger.getLogger(UMLProfileConstraintProvider.class);
 
 	@Override
-	protected boolean load(@NonNull EnvironmentFactory environmentFactory, @NonNull URI uri, @NonNull Set<Category> categories) {
+	protected boolean load(@NonNull EnvironmentFactory environmentFactory, @NonNull URI uri, @NonNull Set<@NonNull Category> categories) {
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		UMLResource umlResource = null;
 		try {
@@ -70,7 +70,7 @@ public class UMLProfileConstraintProvider extends LoadableConstraintProvider
 			logger.error("Failed to load '" + uri + message);
 			return false;
 		}
-		
+
 		Resource asResource;
 		try {
 			UML2AS uml2as = UML2AS.getAdapter(umlResource, (EnvironmentFactoryInternal)environmentFactory);

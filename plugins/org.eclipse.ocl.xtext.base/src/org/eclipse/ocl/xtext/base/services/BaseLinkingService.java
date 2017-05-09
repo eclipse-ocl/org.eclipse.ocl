@@ -41,12 +41,12 @@ import com.google.inject.Inject;
 public class BaseLinkingService extends DefaultLinkingService
 {
 	public static final @NonNull TracingOption DEBUG_RETRY = new TracingOption("org.eclipse.ocl.xtext.base", "debug/retry");
-	
+
 	private static int depth = -1;
-	
+
 	@Inject
 	private IValueConverterService valueConverterService;
-	
+
 	@Override
 	public List<EObject> getLinkedObjects(EObject context, EReference ref, INode node) throws IllegalNodeException {
 		try {
@@ -61,16 +61,16 @@ public class BaseLinkingService extends DefaultLinkingService
 			}
 			IScope scope = getScope(context, ref);
 			if (traceLookup) {
-//				EObject target = ((ScopeView)scope).getTarget();
-//				String inString = target instanceof ElementCS ? ((ElementCS)target).getSignature() : target.toString();
-//				BaseScopeProvider.LOOKUP.println("" + depth + " Lookup " + text + " in " + inString);
+				//				EObject target = ((ScopeView)scope).getTarget();
+				//				String inString = target instanceof ElementCS ? ((ElementCS)target).getSignature() : target.toString();
+				//				BaseScopeProvider.LOOKUP.println("" + depth + " Lookup " + text + " in " + inString);
 				BaseScopeProvider.LOOKUP.println("" + depth + " Lookup " + text);
 			}
 			if (scope == null) {
 				return Collections.emptyList();
 			}
 			QualifiedName qualifiedName = QualifiedName.create(text);
-			List<EObject> linkedObjects = lookUp(scope, qualifiedName);
+			List<@NonNull EObject> linkedObjects = lookUp(scope, qualifiedName);
 			if ((linkedObjects.size() <= 0) && text.startsWith("_")) {				// Deprecated compatibility
 				linkedObjects = lookUp(scope, QualifiedName.create(text.substring(1)));
 			}
@@ -110,12 +110,12 @@ public class BaseLinkingService extends DefaultLinkingService
 		IScopeProvider scopeProvider = getScopeProvider();
 		if (scopeProvider == null)
 			throw new IllegalStateException("scopeProvider must not be null.");
-//		try {
-//			registerImportedNamesAdapter(context);
-			return scopeProvider.getScope(context, reference);
-//		} finally {
-//			unRegisterImportedNamesAdapter();
-//		}
+		//		try {
+		//			registerImportedNamesAdapter(context);
+		return scopeProvider.getScope(context, reference);
+		//		} finally {
+		//			unRegisterImportedNamesAdapter();
+		//		}
 	}
 
 	public @Nullable String getText(@Nullable INode node) {
@@ -134,13 +134,15 @@ public class BaseLinkingService extends DefaultLinkingService
 		return (String) valueConverterService.toValue(leafNode.getText(), ruleName, leafNode);
 	}
 
-	protected List<EObject> lookUp(@NonNull IScope scope, QualifiedName qualifiedName) {
-		@NonNull List<EObject> linkedObjects = new ArrayList<EObject>();
+	protected @NonNull List<@NonNull EObject> lookUp(@NonNull IScope scope, QualifiedName qualifiedName) {
+		@NonNull List<@NonNull EObject> linkedObjects = new ArrayList<>();
 		for (IEObjectDescription eObjectDescription : scope.getElements(qualifiedName)) {
 			EObject eObjectOrProxy = eObjectDescription.getEObjectOrProxy();
-			linkedObjects.add(eObjectOrProxy);
+			if (eObjectOrProxy != null) {
+				linkedObjects.add(eObjectOrProxy);
+			}
 			if (BaseScopeProvider.LOOKUP.isActive()) {
-				BaseScopeProvider.LOOKUP.println("" + depth + " Lookup " + qualifiedName + " => " + eObjectOrProxy);									
+				BaseScopeProvider.LOOKUP.println("" + depth + " Lookup " + qualifiedName + " => " + eObjectOrProxy);
 			}
 		}
 		return linkedObjects;

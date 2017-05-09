@@ -129,7 +129,7 @@ public abstract class LoadableConstraintProvider extends XmlConstraintProvider
 		}
 	}
 
-	protected void installDescriptor(@NonNull XmlConstraintDescriptor descriptor, String namespaceIdentifier, @NonNull Set<Category> categories) {
+	protected void installDescriptor(@NonNull XmlConstraintDescriptor descriptor, String namespaceIdentifier, @NonNull Set<@NonNull Category> categories) {
 		String path = descriptor.getParameterValue("path");
 		URI uri = URI.createPlatformPluginURI("/" + namespaceIdentifier + "/" + path, true);
 		load(getOCL().getEnvironmentFactory(), uri, categories);
@@ -152,7 +152,7 @@ public abstract class LoadableConstraintProvider extends XmlConstraintProvider
 		return true;
 	}
 
-	protected abstract boolean load(@NonNull EnvironmentFactory environmentFactory, @NonNull URI uri, @NonNull Set<Category> categories);
+	protected abstract boolean load(@NonNull EnvironmentFactory environmentFactory, @NonNull URI uri, @NonNull Set<@NonNull Category> categories);
 
 	@Override
 	public void setInitializationData(IConfigurationElement config, String propertyName, Object data) throws CoreException {

@@ -210,7 +210,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 
 		@Override
-		public Iterator<NamedElement> iterator() {
+		public @NonNull Iterator<NamedElement> iterator() {
 			return new SingletonIterator<NamedElement>(invocation);
 		}
 	}
@@ -236,7 +236,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 
 		@Override
-		public Iterator<NamedElement> iterator() {
+		public @NonNull Iterator<NamedElement> iterator() {
 			return invocations.iterator();
 		}
 	}
@@ -430,7 +430,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 			Invocations invocations = getInvocations(asType, asType, name, iteratorCount, expressionCount);
 			if ((invocations == null) && name.startsWith("_")) {
-				@SuppressWarnings("null")@NonNull String unescapedName = name.substring(1);				// FIXME Compatibility
+				@NonNull String unescapedName = name.substring(1);				// FIXME Compatibility
 				invocations = getInvocations(asType, asType, unescapedName, iteratorCount, expressionCount);
 			}
 			return invocations;
@@ -445,7 +445,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 			Invocations invocations = getInvocations(asSourceType, asSourceTypeValue, name, iteratorCount, expressionCount);
 			if ((invocations == null) && name.startsWith("_")) {
-				@SuppressWarnings("null")@NonNull String unescapedName = name.substring(1);				// FIXME Compatibility
+				String unescapedName = name.substring(1);				// FIXME Compatibility
 				invocations = getInvocations(asSourceType, asSourceTypeValue, unescapedName, iteratorCount, expressionCount);
 			}
 			return invocations;
@@ -457,7 +457,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				invocations = getInvocations(asType, it.nextValue(), name, iteratorCount, expressionCount);
 			}
 			if ((invocations == null) && name.startsWith("_")) {
-				@SuppressWarnings("null")@NonNull String unescapedName = name.substring(1);				// FIXME Compatibility
+				String unescapedName = name.substring(1);				// FIXME Compatibility
 				for (ImplicitSourceTypeIterator it = createImplicitSourceTypeIterator(csNameExp); (invocations == null) && it.hasNext(); ) {
 					Type asType = it.next();
 					invocations = getInvocations(asType, null, unescapedName, iteratorCount, expressionCount);
@@ -1154,7 +1154,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if ((sourceType != null) && (name != null)) {
 				invocations = getInvocations(sourceType, null, name, 0, expression.getOwnedArguments().size());
 				if ((invocations == null) && name.startsWith("_")) {
-					@SuppressWarnings("null")@NonNull String unescapedName = name.substring(1);				// FIXME Compatibility
+					String unescapedName = name.substring(1);				// FIXME Compatibility
 					invocations = getInvocations(sourceType, null, unescapedName, 0, expression.getOwnedArguments().size());
 				}
 			}

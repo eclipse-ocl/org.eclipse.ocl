@@ -16,9 +16,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.ocl.xtext.oclstdlibcs.*;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.oclstdlibcs.JavaClassCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibClassCS;
+import org.eclipse.ocl.xtext.oclstdlibcs.LibCoercionCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibConstraintCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS;
 import org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS;
@@ -37,8 +38,8 @@ import org.eclipse.ocl.xtext.oclstdlibcs.PrecedenceCS;
  * @generated
  */
 public class OCLstdlibCSFactoryImpl
-		extends EFactoryImpl
-		implements OCLstdlibCSFactory {
+extends EFactoryImpl
+implements OCLstdlibCSFactory {
 
 	/**
 	 * Creates the default factory implementation.
@@ -78,7 +79,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
 			case OCLstdlibCSPackage.JAVA_CLASS_CS: return createJavaClassCS();
@@ -103,7 +104,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public JavaClassCS createJavaClassCS()
+	public @NonNull JavaClassCS createJavaClassCS()
 	{
 		JavaClassCSImpl javaClassCS = new JavaClassCSImpl();
 		return javaClassCS;
@@ -115,7 +116,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public LibClassCS createLibClassCS() {
+	public @NonNull LibClassCS createLibClassCS() {
 		LibClassCSImpl libClassCS = new LibClassCSImpl();
 		return libClassCS;
 	}
@@ -126,7 +127,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public LibCoercionCS createLibCoercionCS()
+	public @NonNull LibCoercionCS createLibCoercionCS()
 	{
 		LibCoercionCSImpl libCoercionCS = new LibCoercionCSImpl();
 		return libCoercionCS;
@@ -138,7 +139,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public LibConstraintCS createLibConstraintCS() {
+	public @NonNull LibConstraintCS createLibConstraintCS() {
 		LibConstraintCSImpl libConstraintCS = new LibConstraintCSImpl();
 		return libConstraintCS;
 	}
@@ -149,7 +150,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public LibIterationCS createLibIterationCS() {
+	public @NonNull LibIterationCS createLibIterationCS() {
 		LibIterationCSImpl libIterationCS = new LibIterationCSImpl();
 		return libIterationCS;
 	}
@@ -160,7 +161,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public LibOperationCS createLibOperationCS() {
+	public @NonNull LibOperationCS createLibOperationCS() {
 		LibOperationCSImpl libOperationCS = new LibOperationCSImpl();
 		return libOperationCS;
 	}
@@ -171,7 +172,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public LibPackageCS createLibPackageCS()
+	public @NonNull LibPackageCS createLibPackageCS()
 	{
 		LibPackageCSImpl libPackageCS = new LibPackageCSImpl();
 		return libPackageCS;
@@ -183,7 +184,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public LibPropertyCS createLibPropertyCS() {
+	public @NonNull LibPropertyCS createLibPropertyCS() {
 		LibPropertyCSImpl libPropertyCS = new LibPropertyCSImpl();
 		return libPropertyCS;
 	}
@@ -194,7 +195,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public LibRootPackageCS createLibRootPackageCS()
+	public @NonNull LibRootPackageCS createLibRootPackageCS()
 	{
 		LibRootPackageCSImpl libRootPackageCS = new LibRootPackageCSImpl();
 		return libRootPackageCS;
@@ -206,7 +207,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public MetaclassNameCS createMetaclassNameCS()
+	public @NonNull MetaclassNameCS createMetaclassNameCS()
 	{
 		MetaclassNameCSImpl metaclassNameCS = new MetaclassNameCSImpl();
 		return metaclassNameCS;
@@ -218,7 +219,7 @@ public class OCLstdlibCSFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public PrecedenceCS createPrecedenceCS() {
+	public @NonNull PrecedenceCS createPrecedenceCS() {
 		PrecedenceCSImpl precedenceCS = new PrecedenceCSImpl();
 		return precedenceCS;
 	}

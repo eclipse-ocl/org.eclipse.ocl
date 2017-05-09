@@ -44,7 +44,7 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 	protected @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
 		return new DomainReflectiveFragment(this, baseInheritance);
 	}
-	
+
 	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		if (this == type) {
@@ -63,12 +63,12 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 		return new Iterable<@NonNull CompleteInheritance>()
 		{
 			@Override
-			public Iterator<@NonNull CompleteInheritance> iterator() {
+			public @NonNull Iterator<@NonNull CompleteInheritance> iterator() {
 				return new Iterator<@NonNull CompleteInheritance>()
 				{
 					private @NonNull StandardLibrary standardLibrary = evaluationPackage.getStandardLibrary();
 					private boolean gotOne = false;
-					
+
 					@Override
 					public boolean hasNext() {
 						return !gotOne || iterator.hasNext();
@@ -92,9 +92,9 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 					@Override
 					public void remove() {
 						throw new UnsupportedOperationException();
-					}					
+					}
 				};
-			}			
+			}
 		};
 	}
 
@@ -141,7 +141,7 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 	public @NonNull List<Constraint> getOwnedConstraints() {
 		throw new UnsupportedOperationException();			// FIXME
 	}
-	
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getOwningPackage() {
 		return evaluationPackage;
@@ -171,7 +171,7 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 	public boolean isUnique() {
 		return domainClass.isUnique();
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.valueOf(evaluationPackage) + "::" + String.valueOf(name); //$NON-NLS-1$
