@@ -854,9 +854,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 			Set<Type> allPropertiedTypes = new HashSet<>(typeProperties.keySet()); */
 			//			allPropertiedTypes.addAll(stereotypeProperties.keySet());
 			for (org.eclipse.ocl.pivot.@NonNull Class pivotType : type2properties.keySet()) {
-				if ("Class1".equals(pivotType.getName())) {
-					toString();
-				}
 				List<@NonNull Property> asProperties = type2properties.get(pivotType);
 				Collections.sort(asProperties, NameUtil.NAMEABLE_COMPARATOR);
 				refreshList(PivotUtilInternal.getOwnedPropertiesList(pivotType), asProperties);
