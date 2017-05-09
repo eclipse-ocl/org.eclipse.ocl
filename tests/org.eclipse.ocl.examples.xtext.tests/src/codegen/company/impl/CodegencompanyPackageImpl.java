@@ -111,7 +111,8 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 		if (isInited) return (CodegencompanyPackage)EPackage.Registry.INSTANCE.getEPackage(CodegencompanyPackage.eNS_URI);
 
 		// Obtain or create and register package
-		CodegencompanyPackageImpl theCodegencompanyPackage = (CodegencompanyPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CodegencompanyPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new CodegencompanyPackageImpl());
+		Object object = EPackage.Registry.INSTANCE.get(eNS_URI);
+		CodegencompanyPackageImpl theCodegencompanyPackage = (CodegencompanyPackageImpl)(object instanceof CodegencompanyPackageImpl ? object : new CodegencompanyPackageImpl());
 
 		isInited = true;
 
@@ -515,7 +516,7 @@ public class CodegencompanyPackageImpl extends EPackageImpl implements Codegenco
 		  (employeeEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "mustHaveName mustHaveNonEmptyName" //$NON-NLS-1$ //$NON-NLS-2$
+			 "constraints", "mustHaveNonEmptyName" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 
