@@ -26,6 +26,7 @@ public class CollectionCountOperation extends AbstractSimpleBinaryOperation
 	@Override
 	public @NonNull IntegerValue evaluate(@Nullable Object left, @Nullable Object right) {
 		CollectionValue leftCollectionValue = asCollectionValue(left);
+		checkValid(right);
 		return leftCollectionValue.count(right);
 	}
 }

@@ -25,6 +25,7 @@ public class CollectionIncludesOperation extends AbstractSimpleBinaryOperation
 	@Override
 	public @NonNull Boolean evaluate(@Nullable Object left, @Nullable Object right) {
 		CollectionValue leftCollectionValue = asCollectionValue(left);
+		checkValid(right);
 		return leftCollectionValue.includes(right);
 	}
 }

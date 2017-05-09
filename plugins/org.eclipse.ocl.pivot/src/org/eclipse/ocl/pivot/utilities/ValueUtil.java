@@ -439,6 +439,37 @@ public abstract class ValueUtil
 	}
 
 	/**
+	 * @since 1.3
+	 */
+	public static void checkValid(@Nullable Object value) {
+		if (value instanceof InvalidValueException) {
+			throw (InvalidValueException) value;
+		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static void checkValid(@Nullable Object @NonNull [] values) {
+		for (@Nullable Object value : values) {
+			if (value instanceof InvalidValueException) {
+				throw (InvalidValueException) value;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static void checkValid(@NonNull Iterable<@Nullable ? extends Object> values) {
+		for (@Nullable Object value : values) {
+			if (value instanceof InvalidValueException) {
+				throw (InvalidValueException) value;
+			}
+		}
+	}
+
+	/**
 	 * @since 1.1
 	 */
 	public static int computeCollectionHashCode(boolean isOrdered, boolean isUnique, @NonNull Iterable<?> elements) {
