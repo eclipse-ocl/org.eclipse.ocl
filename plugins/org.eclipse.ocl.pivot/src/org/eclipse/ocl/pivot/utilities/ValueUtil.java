@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +43,11 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
@@ -61,6 +67,7 @@ import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
 import org.eclipse.ocl.pivot.internal.values.TupleValueImpl;
+import org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl;
 import org.eclipse.ocl.pivot.internal.values.UnlimitedValueImpl;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -69,6 +76,7 @@ import org.eclipse.ocl.pivot.types.AbstractInheritance;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -92,6 +100,8 @@ import org.eclipse.ocl.pivot.values.UnlimitedValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
+import com.google.common.collect.Iterators;
+
 /**
  * @since 1.1
  */
@@ -105,8 +115,8 @@ public abstract class ValueUtil
 	private static final int POSITIVE_INTEGERS = 1025;
 	private static final @Nullable IntegerValue @NonNull [] INTEGER_VALUES = new @Nullable IntegerValue[NEGATIVE_INTEGERS + POSITIVE_INTEGERS];
 
-	public static @NonNull Bag<@Nullable Object> EMPTY_BAG = new BagImpl<>();
-	public static final @NonNull Set<@Nullable Object> EMPTY_SET = Collections.emptySet();
+	public static @NonNull Bag<?> EMPTY_BAG = new BagImpl<>();
+	public static final @NonNull Set<Object> EMPTY_SET = Collections.emptySet();
 
 	@SuppressWarnings("null")
 	public static final @NonNull BigInteger INTEGER_MAX_VALUE = BigInteger.valueOf(Integer.MAX_VALUE);
@@ -372,6 +382,26 @@ public abstract class ValueUtil
 		}
 	}
 
+	/**
+	 * @since 1.3 // FIXME temporary till next major version change
+	 */
+	public static @NonNull BaggableIterator<@Nullable Object> baggableIterator(@NonNull CollectionValue collectionValue) {
+		if (collectionValue instanceof LazyCollectionValueImpl) {
+			return ((LazyCollectionValueImpl)collectionValue).baggableIterator();
+		}
+		else if (collectionValue instanceof CollectionValueImpl) {
+			return ((CollectionValueImpl)collectionValue).baggableIterator();
+		}
+		else if (collectionValue instanceof UndefinedValueImpl) {
+			return ((UndefinedValueImpl)collectionValue).baggableIterator();
+		}
+		else {
+			Iterable<@Nullable Object> elements = collectionValue.iterable();
+			Iterator<@Nullable Object> iterator = elements.iterator();
+			return new CollectionValueImpl.WrappedBaggableIterator<>(iterator);
+		}
+	}
+
 	@SuppressWarnings("null")
 	public static @NonNull BigDecimal bigDecimalValueOf(@NonNull Object anObject) {
 		if (anObject instanceof BigDecimal) {
@@ -499,12 +529,36 @@ public abstract class ValueUtil
 		return hashCode;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	public int computeCollectionHashCode(@NonNull Map<@Nullable Object, @NonNull ? extends Number> mapOfElement2elementCount) {
+		long hash = 0x7777777777777777L;
+		for (Object element : mapOfElement2elementCount.keySet()) {
+			if (element != null) {
+				Number count = mapOfElement2elementCount.get(element);
+				assert count != null;
+				hash += element.hashCode() * count.intValue();
+			}
+		}
+		int hashCode = (int) hash;
+		if (hashCode == 0) {
+			hashCode = (int) (hash >> 32);
+			if (hashCode == 0) {
+				hashCode = 0x98765432;
+			}
+		}
+		return hashCode;
+	}
+
 	public static BagValue.@NonNull Accumulator createBagAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new BagValueImpl.Accumulator(collectedId);
 	}
 
 	public static @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
+		checkValid(boxedValues);
+		return new AsBagIterator(typeId, Iterators.forArray(boxedValues), false);
+		//		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
 	}
 
 	public static @NonNull BagValue createBagRange(@NonNull CollectionTypeId typeId, @Nullable Object... values) {
@@ -520,8 +574,10 @@ public abstract class ValueUtil
 		return new BagValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull BagValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable Object> boxedValues) {
-		return new BagValueImpl(typeId, boxedValues);
+	public static @NonNull BagValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable ? extends Object> boxedValues) {
+		checkValid(boxedValues);
+		return new AsBagIterator(typeId, boxedValues.iterator(), false);		// FIXME reuse Bag
+		//		return new BagValueImpl(typeId, boxedValues);
 	}
 
 	public static CollectionValue.@NonNull Accumulator createCollectionAccumulatorValue(@NonNull CollectionTypeId collectedId) {
@@ -557,7 +613,7 @@ public abstract class ValueUtil
 		return new MapEntryImpl(key, value);
 	}
 
-	public static @NonNull MapValue createMapValue(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<Object, Object> boxedValues) {
+	public static @NonNull MapValue createMapValue(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<@Nullable Object, @Nullable Object> boxedValues) {
 		return new MapValueImpl(TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId), boxedValues);
 	}
 
@@ -574,7 +630,9 @@ public abstract class ValueUtil
 	//	}
 
 	public static @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return new SparseOrderedSetValueImpl(typeId, SparseOrderedSetValueImpl.createOrderedSetOfEach(boxedValues));
+		checkValid(boxedValues);
+		return new AsOrderedSetIterator(typeId, Iterators.forArray(boxedValues), false);
+		//		return new SparseOrderedSetValueImpl(typeId, SparseOrderedSetValueImpl.createOrderedSetOfEach(boxedValues));
 	}
 
 	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
@@ -590,8 +648,9 @@ public abstract class ValueUtil
 		return new SparseOrderedSetValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull OrderedSetValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> boxedValues) {
-		return new SparseOrderedSetValueImpl(typeId, boxedValues);
+	public static @NonNull OrderedSetValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+		checkValid(boxedValues);
+		return new AsOrderedSetIterator(typeId, boxedValues.iterator(), boxedValues instanceof Set);
 	}
 
 	public static @NonNull IntegerRange createRange(@NonNull IntegerValue firstInteger, @NonNull IntegerValue lastInteger) {
@@ -603,7 +662,9 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return new SparseSequenceValueImpl(typeId, SparseSequenceValueImpl.createSequenceOfEach(boxedValues));
+		checkValid(boxedValues);
+		return new AsSequenceIterator(typeId, Iterators.forArray(boxedValues));
+		//		return new SparseSequenceValueImpl(typeId, SparseSequenceValueImpl.createSequenceOfEach(boxedValues));
 	}
 
 	public static @NonNull SequenceValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
@@ -623,8 +684,10 @@ public abstract class ValueUtil
 		return new SparseSequenceValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull SequenceValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable Object> boxedValues) {
-		return new SparseSequenceValueImpl(typeId, boxedValues);
+	public static @NonNull SequenceValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable ? extends Object> boxedValues) {
+		checkValid(boxedValues);
+		return new AsSequenceIterator(typeId, boxedValues.iterator());
+		//		return new SparseSequenceValueImpl(typeId, boxedValues);
 	}
 
 	public static SetValue.@NonNull Accumulator createSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
@@ -632,7 +695,9 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return new SetValueImpl(typeId, SetValueImpl.createSetOfEach(boxedValues));
+		checkValid(boxedValues);
+		return new AsSetIterator(typeId, Iterators.forArray(boxedValues), false);
+		//		return new SetValueImpl(typeId, SetValueImpl.createSetOfEach(boxedValues));
 	}
 
 	public static @NonNull SetValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
@@ -648,8 +713,10 @@ public abstract class ValueUtil
 		return new SetValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> boxedValues) {
-		return new SetValueImpl(typeId, boxedValues);
+	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+		checkValid(boxedValues);
+		return new AsSetIterator(typeId, boxedValues.iterator(), boxedValues instanceof Set);
+		//		return new SetValueImpl(typeId, boxedValues);
 	}
 
 	public static @NonNull TupleValue createTupleValue(@NonNull TupleTypeId typeId, @NonNull Map<@NonNull ? extends TuplePartId, @Nullable Object> values) {
@@ -700,6 +767,24 @@ public abstract class ValueUtil
 			return (Executor)evaluator;
 		}
 		return ((EvaluationVisitor.EvaluationVisitorExtension)evaluator).getExecutor();
+	}
+
+	/**
+	 * @since 1.3 // FIXME temporary till next major version change
+	 */
+	public static @NonNull Map<@Nullable ? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount(@NonNull CollectionValue bagValue) {
+		if (bagValue instanceof BagValueImpl) {
+			return ((BagValueImpl)bagValue).getMapOfElement2elementCount();
+		}
+		else if (bagValue instanceof LazyCollectionValueImpl) {
+			return ((LazyCollectionValueImpl)bagValue).getMapOfElement2elementCount();
+		}
+		else if (bagValue instanceof UndefinedValueImpl) {
+			return Collections.<@Nullable Object, @NonNull Number>emptyMap();
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	public static String getTypeName(@Nullable Object value) {
@@ -940,6 +1025,30 @@ public abstract class ValueUtil
 			return null;
 		}
 	}
+
+	/**
+	 * @since 1.3
+	 *
+	public static @Nullable InvalidValue isInvalid(@Nullable Object @NonNull [] values) {
+		for (@Nullable Object value : values) {
+			if (value instanceof InvalidValue) {
+				return (InvalidValue) value;
+			}
+		}
+		return null;
+	} */
+
+	/**
+	 * @since 1.3
+	 *
+	public static @Nullable InvalidValue isInvalid(@NonNull Iterable<@Nullable ? extends Object> values) {
+		for (@Nullable Object value : values) {
+			if (value instanceof InvalidValue) {
+				return (InvalidValue) value;
+			}
+		}
+		return null;
+	} */
 
 	/**
 	 * Return true if aNumber is a known floating point representation that can be converted to a RealValue.

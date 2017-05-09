@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.ComparableValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -51,17 +52,24 @@ import org.eclipse.ocl.pivot.values.UnlimitedValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 /**
+ * UndefinedValueImpl provides the common functionality for bad values.
+ *
  * @generated NOT
  */
-public abstract class UndefinedValueImpl extends EvaluationException implements NullValue
+public abstract class UndefinedValueImpl extends EvaluationException implements NullValue, CollectionValue
 {
 	private static final long serialVersionUID = 1L;
 
-	private static class Iterator implements java.util.Iterator<@Nullable Object>
+	private static class Iterator implements BaggableIterator<@Nullable Object>
 	{
 		@Override
 		public boolean hasNext() {
 			return false;
+		}
+
+		@Override
+		public int hasNextCount() {
+			return 0;
 		}
 
 		@Override
@@ -222,6 +230,14 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @Nullable Value at(int index) {
 		return toInvalidValue();
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	//	@Override
+	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
+		return new BaggableIterator.Null<>();
 	}
 
 	@Override

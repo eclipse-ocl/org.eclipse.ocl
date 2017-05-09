@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *  E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -63,19 +63,19 @@ import org.eclipse.ocl.xtext.completeocl.validation.CompleteOCLEObjectValidator;
 public class PivotDocumentationExamples extends XtextTestCase
 {
 	public void debugPrintf(String format, Object... args) {
-//		System.out.printf(format,  args);
+		//		System.out.printf(format,  args);
 	}
-	
+
 	public InputStream getInputStream(String fileName) throws MalformedURLException, IOException {
 		URI uri = getTestModelURI(fileName);
 		URL url = new URL(uri.toString());
 		return url.openStream();
 	}
-	
+
 	public URI getInputURI(String fileName) throws MalformedURLException, IOException {
 		return getTestModelURI(fileName);
 	}
-	
+
 	private @NonNull List<Library> getLibraries(ResourceSet resourceSet) {
 		URI uri = getProjectFileURI("PivotDocumentationExamples.extlibrary");
 		resourceSet.getPackageRegistry().put(EXTLibraryPackage.eNS_URI, EXTLibraryPackage.eINSTANCE);
@@ -96,7 +96,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 		library.getBooks().add(bBook);
 		return library;
 	}
-	
+
 	/*
 	 * This 'test' provides the source text for the 'Parsing Constraints and Queries' example
 	 * in org.eclipse.ocl.doc/doc/6310-pivot-parsing-constraints.textile
@@ -104,12 +104,12 @@ public class PivotDocumentationExamples extends XtextTestCase
 	public void test_parsingConstraintsExample() throws IOException, ParserException {
 		{
 
-		// create an OCL instance exploiting an externally supplied ResourceSet
-		ResourceSet myResourceSet = new ResourceSetImpl();
-		/* ... */
-		OCL ocl = OCL.newInstance(myResourceSet);
+			// create an OCL instance exploiting an externally supplied ResourceSet
+			ResourceSet myResourceSet = new ResourceSetImpl();
+			/* ... */
+			OCL ocl = OCL.newInstance(myResourceSet);
 
-		assert (ocl != null) && (myResourceSet != null); /* Suppress the unused variable markers */
+			assert (ocl != null) && (myResourceSet != null); /* Suppress the unused variable markers */
 		}
 
 		// create an OCL instance exploiting registered models on the Java classpath
@@ -118,22 +118,22 @@ public class PivotDocumentationExamples extends XtextTestCase
 
 		EClass contextEClass = EXTLibraryPackage.Literals.LIBRARY;
 		ExpressionInOCL invariant = ocl.createInvariant(contextEClass,
-		    "books->forAll(b1, b2 | b1 <> b2 implies b1.title <> b2.title)");
+				"books->forAll(b1, b2 | b1 <> b2 implies b1.title <> b2.title)");
 		ExpressionInOCL query = ocl.createQuery(contextEClass,
-		    "books->collect(b : Book | b.category)->asSet()");
+				"books->collect(b : Book | b.category)->asSet()");
 
 		// define a post-condition specifying the value of EModelElement::getEAnnotation(EString).
 		// This operation environment includes variables representing the operation
 		// parameters (in this case, only "source : String") and the operation result
 		EOperation contextEOperation = NameUtil.getENamedElement(
 			EcorePackage.Literals.EMODEL_ELEMENT.getEOperations(), "getEAnnotation");
-		ExpressionInOCL body = ocl.createPostcondition(contextEOperation, 
-		    "result = self.eAnnotations->any(ann | ann.source = source)");
+		ExpressionInOCL body = ocl.createPostcondition(contextEOperation,
+				"result = self.eAnnotations->any(ann | ann.source = source)");
 
 		// define a derivation constraint for the EReference::eReferenceType property
 		EReference contextEReference = EcorePackage.Literals.EREFERENCE__EREFERENCE_TYPE;
 		ExpressionInOCL derive = ocl.createQuery(contextEReference,
-		    "self.eType->any(true).oclAsType(EClass)");
+				"self.eType->any(true).oclAsType(EClass)");
 
 		// syntax errors such as bad text or semantic errors such as bad names throw a ParserException
 		try {
@@ -142,14 +142,14 @@ public class PivotDocumentationExamples extends XtextTestCase
 		catch (ParserException e) {
 			/*e.printStackTrace();*/
 		}
-		
+
 		// ensure that resources are released
 		ocl.dispose();
 
 		if ((body == derive) && (invariant == query) && (resourceSet != null)) { /* Suppress the unused variable markers */ }
 	}
-	
-	
+
+
 	/*
 	 * This 'test' provides the source text for the 'Evaluating Constraints and Queries' example
 	 * in org.eclipse.ocl.doc/doc/6315-pivot-evaluating-constraints.textile
@@ -159,9 +159,9 @@ public class PivotDocumentationExamples extends XtextTestCase
 		ResourceSet resourceSet = ocl.getResourceSet();
 
 		ExpressionInOCL invariant = ocl.createInvariant(EXTLibraryPackage.Literals.LIBRARY,
-		    "books->forAll(b1, b2 | b1 <> b2 implies b1.title <> b2.title)");
+				"books->forAll(b1, b2 | b1 <> b2 implies b1.title <> b2.title)");
 		ExpressionInOCL query = ocl.createQuery(EXTLibraryPackage.Literals.LIBRARY,
-		    "books->collect(b : Book | b.category)->asSet()");
+				"books->collect(b : Book | b.category)->asSet()");
 
 		// create a Query to evaluate our query expression
 		Query queryEval = ocl.createQuery(query);
@@ -173,17 +173,17 @@ public class PivotDocumentationExamples extends XtextTestCase
 
 		// only print the set of book categories for valid libraries
 		for (Library next : libraries) {
-		    if (constraintEval.checkEcore(next)) {
-		        // the OCL result type of our query expression is Set(BookCategory)
-		        @SuppressWarnings("unchecked")
-		        Set<BookCategory> categories = (Set<BookCategory>) queryEval.evaluateUnboxed(next);
-		        
-		        debugPrintf("%s: %s%n\n", next.getName(), categories);
-		    }
+			if (constraintEval.checkEcore(next)) {
+				// the OCL result type of our query expression is Collection(BookCategory)
+				@SuppressWarnings("unchecked")
+				Collection<BookCategory> categories = (Collection<BookCategory>) queryEval.evaluateUnboxed(next);
+
+				debugPrintf("%s: %s%n\n", next.getName(), categories);
+			}
 		}
 
 		// Check one
-		
+
 		// check a single library
 		Library lib = getLibrary(resourceSet);  // hypothetical source of a library
 
@@ -194,10 +194,10 @@ public class PivotDocumentationExamples extends XtextTestCase
 
 		// only print the set of book categories for valid libraries
 		for (Library next : constraintEval.selectEcore(libraries)) {
-		    @SuppressWarnings("unchecked")
-		    Set<BookCategory> categories = (Set<BookCategory>) queryEval.evaluateUnboxed(next);
-		    
-		    debugPrintf("%s: %s%n\n", next.getName(), categories);
+			@SuppressWarnings("unchecked")
+			Collection<BookCategory> categories = (Collection<BookCategory>) queryEval.evaluateUnboxed(next);
+
+			debugPrintf("%s: %s%n\n", next.getName(), categories);
 		}
 
 		ocl.dispose();
@@ -215,7 +215,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 		// Create an EPackage.Registry for just the EXTLibraryPackage
 		EPackage.Registry registry = new EPackageRegistryImpl();
 		registry.put(EXTLibraryPackage.eNS_URI, EXTLibraryPackage.eINSTANCE);
-		
+
 		// Create an OCL that creates a ResourceSet using the minimal EPackage.Registry
 		OCL ocl = OCL.newInstance(registry);
 		ResourceSet resourceSet = ocl.getResourceSet();
@@ -225,26 +225,26 @@ public class PivotDocumentationExamples extends XtextTestCase
 
 		// parse the contents as an OCL document
 		Resource asResource = ocl.parse(uri);
-		
+
 		// accumulate the document constraints in constraintMap and print all constraints
 		Map<String, ExpressionInOCL> constraintMap = new HashMap<String, ExpressionInOCL>();
-	    for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
-	    	EObject next = tit.next();
-	    	if (next instanceof Constraint) {
-		        Constraint constraint = (Constraint)next;
-		        ExpressionInOCL expressionInOCL = ocl.getSpecification(constraint);
-		        if (expressionInOCL != null) {
+		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
+			EObject next = tit.next();
+			if (next instanceof Constraint) {
+				Constraint constraint = (Constraint)next;
+				ExpressionInOCL expressionInOCL = ocl.getSpecification(constraint);
+				if (expressionInOCL != null) {
 					String name = constraint.getName();
 					if (name != null) {
 						constraintMap.put(name, expressionInOCL);
 						debugPrintf("%s: %s%n\n", name,
-				        	expressionInOCL.getOwnedBody());
+							expressionInOCL.getOwnedBody());
 					}
 				}
-	    	}
-	    }
+			}
+		}
 
-	    //-------------------------------------------------------------------------
+		//-------------------------------------------------------------------------
 		//	Accessing the Constraints
 		//-------------------------------------------------------------------------
 		Library library = getLibrary(resourceSet);  // get library from a hypothetical source
@@ -253,16 +253,16 @@ public class PivotDocumentationExamples extends XtextTestCase
 
 		// use getBooks() from the document in another query to find a book
 		ExpressionInOCL expression = ocl.createQuery(EXTLibraryPackage.Literals.LIBRARY,
-		    "getBooks('Bleak House')->asSequence()->first()");
+				"getBooks('Bleak House')->asSequence()->first()");
 
 		Book book = (Book) ocl.evaluate(library, expression);
 		debugPrintf("Got book: %s%n\n", book);
 
 		// use the unique_title constraint to validate the book
 		boolean isValid = ocl.check(book, constraintMap.get("unique_title"));
-		debugPrintf("Validate book: %b%n\n", isValid);	
+		debugPrintf("Validate book: %b%n\n", isValid);
 
-	    //-------------------------------------------------------------------------
+		//-------------------------------------------------------------------------
 		//	Using all the Constraints to validate a model
 		//-------------------------------------------------------------------------
 
@@ -270,19 +270,19 @@ public class PivotDocumentationExamples extends XtextTestCase
 		ComposedEValidator newEValidator = ComposedEValidator.install(EXTLibraryPackage.eINSTANCE);
 		newEValidator.addChild(new CompleteOCLEObjectValidator(
 			EXTLibraryPackage.eINSTANCE, uri, ocl.getEnvironmentFactory()));
-		
+
 		// Validate the entire Resource containing the library
 		Resource resource = library.eResource();
 		MyDiagnostician diagnostician = new MyDiagnostician();
 		Diagnostic diagnostics = diagnostician.validate(resource);
-		
+
 		// Print the diagnostics
 		if (diagnostics.getSeverity() != Diagnostic.OK) {
 			String formattedDiagnostics = PivotUtil.formatDiagnostics(diagnostics, "\n");
 			debugPrintf("Validation: %s\n", formattedDiagnostics);
 		}
-		
-		assertEquals(Diagnostic.ERROR, diagnostics.getSeverity());		
+
+		assertEquals(Diagnostic.ERROR, diagnostics.getSeverity());
 		assertEquals(4, diagnostics.getChildren().size());		// 2 ObjectEValiador missing authors, 2 CompleteOCLEObjectValidator non-unique titles
 		ocl.dispose();
 	}
@@ -310,7 +310,7 @@ public class PivotDocumentationExamples extends XtextTestCase
 			for (EObject eObject : resource.getContents()) {
 				validate(eObject, diagnostics, context);
 			}
-		    return diagnostics;
+			return diagnostics;
 		}
 	}
 }

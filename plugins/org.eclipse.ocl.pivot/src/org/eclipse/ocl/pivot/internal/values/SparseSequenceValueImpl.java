@@ -20,21 +20,31 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 
+import com.google.common.collect.Lists;
+
 /**
  * @generated NOT
  */
 public class SparseSequenceValueImpl extends SequenceValueImpl
 {
-	public static @NonNull List<@Nullable Object> createSequenceOfEach(@Nullable Object @NonNull [] boxedValues) {
-		List<@Nullable Object> result = new ArrayList<>();
+	public static @NonNull List<Object> createSequenceOfEach(@Nullable Object @NonNull [] boxedValues) {
+		List<Object> result = new ArrayList<Object>();
 		for (Object boxedValue : boxedValues) {
 			result.add(boxedValue);
 		}
 		return result;
 	}
 
-	public static @NonNull List<@Nullable Object> createSequenceOfEach(@NonNull Collection<@Nullable Object> elements) {
-		List<@Nullable Object> list = elements instanceof List<?> ? (List<@Nullable Object>)elements : new ArrayList<>(elements);
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull List<@Nullable Object> createSequenceOfEach(@NonNull Iterable<@Nullable Object> elements) {
+		List<@Nullable Object> list = elements instanceof List<?> ? (List<@Nullable Object>)elements : Lists.newArrayList(elements);
+		return list;
+	}
+
+	public static @NonNull List<?> createSequenceOfEach(@NonNull Collection<? extends Object> elements) {
+		List<?> list = elements instanceof List<?> ? (List<?>)elements : new ArrayList<Object>(elements);
 		return list;
 	}
 

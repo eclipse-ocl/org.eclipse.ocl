@@ -93,6 +93,9 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 */
 	String getKind();
 
+	/** FIXME at next major version change */
+	//		@NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount();
+
 	/**
 	 * @generated NOT
 	 */

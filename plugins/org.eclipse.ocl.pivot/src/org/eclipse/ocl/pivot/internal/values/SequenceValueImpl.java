@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.values;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -22,14 +21,22 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AppendAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AppendIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.PrependAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.PrependIterator;
+import org.eclipse.ocl.pivot.internal.iterators.SubSequenceIterator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
@@ -53,21 +60,31 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
+	public @NonNull OrderedCollectionValue append(@Nullable Object value) {
+		return AppendIterator.append(getTypeId(), this, value).asOrderedCollectionValue();
+	}
+
+	@Override
+	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue values) {
+		return AppendAllIterator.appendAll(this, values).asOrderedCollectionValue();
+	}
+
+	/*	@Override
 	public @NonNull OrderedCollectionValue append(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "append");
 		}
-		List<@Nullable Object> result = new ArrayList<>(elements);
+		List<Object> result = new ArrayList<Object>(elements);
 		result.add(object);
 		return new SparseSequenceValueImpl(getTypeId(), result);
-	}
+	} */
 
-	@Override
+	/*	@Override
 	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects) {
-		List<@Nullable Object> result = new ArrayList<>(elements);
+		List<Object> result = new ArrayList<Object>(elements);
 		result.addAll(objects.getElements());
 		return new SparseSequenceValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull List<@Nullable Object> asList() {
@@ -103,78 +120,13 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof SequenceValue) || (obj instanceof OrderedSetValue)) {
-			return false;
-		}
-		Iterator<@Nullable ? extends Object> theseElements = iterator();
-		Iterator<@Nullable ? extends Object> thoseElements = ((SequenceValue)obj).iterator();
-		while (theseElements.hasNext() && thoseElements.hasNext()) {
-			Object thisValue = theseElements.next();
-			Object thatValue = thoseElements.next();
-			if (!ClassUtil.safeEquals(thisValue, thatValue)) {
-				return false;
-			}
-		}
-		return !theseElements.hasNext() && !thoseElements.hasNext();
-	}
-
-	@Override
 	public @NonNull SequenceValue excluding(@Nullable Object value) {
-		List<@Nullable Object> result = new ArrayList<>();
-		if (value == null) {
-			for (Object element : elements) {
-				if (element != null) {
-					result.add(element);
-				}
-			}
-		}
-		else {
-			for (Object element : elements) {
-				if (!value.equals(element)) {
-					result.add(element);
-				}
-			}
-		}
-		if (result.size() < elements.size()) {
-			return new SparseSequenceValueImpl(getTypeId(), result);
-		}
-		else {
-			return this;
-		}
+		return ExcludingIterator.excluding(this, value).asSequenceValue();
 	}
 
 	@Override
 	public @NonNull SequenceValue excludingAll(@NonNull CollectionValue values) {
-		List<@Nullable Object> result = new ArrayList<>();
-		for (Object element : elements) {
-			boolean reject = false;
-			if (element == null) {
-				for (Object value : values) {
-					if (value == null) {
-						reject = true;
-						break;
-					}
-				}
-			}
-			else {
-				for (Object value : values) {
-					if ((value != null) && value.equals(element)) {
-						reject = true;
-						break;
-					}
-				}
-			}
-			if (!reject) {
-				result.add(element);
-			}
-		}
-		if (result.size() < elements.size()) {
-			return new SparseSequenceValueImpl(getTypeId(), result);
-		}
-		else {
-			return this;
-		}
+		return ExcludingAllIterator.excludingAll(this, values).asSequenceValue();
 	}
 
 	@Override
@@ -187,19 +139,8 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 
 	@Override
 	public @NonNull SequenceValue flatten() {
-		List<@Nullable Object> flattened = new ArrayList<>();
-		if (flatten(flattened)) {
-			return new SparseSequenceValueImpl(getTypeId(), flattened);
-		}
-		else {
-			return this;
-		}
+		return FlattenIterator.flatten(this).asSequenceValue();
 	}
-
-	//    @Override
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.SEQUENCE;
-	//	}
 
 	@Override
 	public @NonNull List<@Nullable Object> getElements() {
@@ -213,21 +154,12 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 
 	@Override
 	public @NonNull SequenceValue including(@Nullable Object value) {
-		if (value instanceof InvalidValueException) {
-			throw new InvalidValueException(PivotMessages.InvalidSource, "including");
-		}
-		List<@Nullable Object> result = new ArrayList<>(elements);
-		result.add(value);
-		return new SparseSequenceValueImpl(getTypeId(), result);
+		return IncludingIterator.including(getTypeId(), this, value).asSequenceValue();
 	}
 
 	@Override
 	public @NonNull SequenceValue includingAll(@NonNull CollectionValue values) {
-		List<@Nullable Object> result = new ArrayList<>(elements);
-		for (Object value : values) {
-			result.add(value);
-		}
-		return new SparseSequenceValueImpl(getTypeId(), result);
+		return IncludingAllIterator.includingAll(getTypeId(), this, values).asSequenceValue();
 	}
 
 	@Override
@@ -273,22 +205,32 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
+	public @NonNull SequenceValue prepend(@Nullable Object value) {
+		return PrependIterator.prepend(getTypeId(), this, value).asSequenceValue();
+	}
+
+	@Override
+	public @NonNull SequenceValue prependAll(@NonNull OrderedCollectionValue values) {
+		return PrependAllIterator.prependAll(this, values).asSequenceValue();
+	}
+
+	/*	@Override
 	public @NonNull SequenceValue prepend(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "prepend");
 		}
-		List<@Nullable Object> result = new ArrayList<>();
+		List<Object> result = new ArrayList<Object>();
 		result.add(object);
 		result.addAll(elements);
 		return new SparseSequenceValueImpl(getTypeId(), result);
-	}
+	} */
 
-	@Override
+	/*	@Override
 	public @NonNull SequenceValue prependAll(@NonNull OrderedCollectionValue objects) {
-		List<@Nullable Object> result = new ArrayList<>(objects.getElements());
+		List<Object> result = new ArrayList<Object>(objects.getElements());
 		result.addAll(elements);
 		return new SparseSequenceValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull SequenceValue reverse() {
@@ -304,6 +246,11 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 		return new SparseSequenceValueImpl(getTypeId(), values);
 	}
 
+	@Override
+	public @NonNull SequenceValue subSequence(int lower, int upper) {
+		return SubSequenceIterator.subSequence(this, lower, upper).asSequenceValue();
+	}
+
 	/**
 	 * Implementation of the OCL
 	 * <tt>Sequence::subSequence(lower : Integer, upper : Integer) : Sequence(T)</tt>
@@ -315,7 +262,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	 *
 	 * @throws IndexOutOfBoundsException if an index is out of bounds
 	 * @throws IllegalArgumentException if the lower bound is greater than the upper
-	 */
+	 *
 	@Override
 	public @NonNull SequenceValue subSequence(int lower, int upper) {
 		lower = lower - 1;
@@ -333,7 +280,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 				+ (upper + 1)));
 		}
 
-		List<@Nullable Object> result = new ArrayList<>();
+		List<Object> result = new ArrayList<Object>();
 		int curr = 0;
 		for (Object object : iterable()) {
 			if (curr >= lower && curr <= upper) {
@@ -342,7 +289,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 			curr++;
 		}
 		return new SparseSequenceValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {

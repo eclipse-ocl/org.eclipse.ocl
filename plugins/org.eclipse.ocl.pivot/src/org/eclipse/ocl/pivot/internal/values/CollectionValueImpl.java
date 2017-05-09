@@ -12,9 +12,12 @@ package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -31,53 +34,46 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
+import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.OrderedSet;
+import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 /**
+ * CollectionValueImpl provides the common functionality for derived eager collection values.
+ *
+ * LazyCollectionValueImpl is preferred during computations in order to save on intermediate collection memories
+ * and sometimes save on redundant computations.
+ *
  * @generated NOT
  */
 public abstract class CollectionValueImpl extends ValueImpl implements CollectionValue, Iterable<@Nullable Object>
 {
-	@SuppressWarnings("serial")
-	private static final class UnmodifiableEcoreObjects extends EcoreEList.UnmodifiableEList<@Nullable Object>
-	{
-		private static final /*@NonNull*/ EStructuralFeature unhangeableStructuralFeature;
-		static {
-			unhangeableStructuralFeature = EcoreFactory.eINSTANCE.createEAttribute();
-			unhangeableStructuralFeature.setName("unchangeable");
-			unhangeableStructuralFeature.setEType(EcorePackage.Literals.EOBJECT);
-			unhangeableStructuralFeature.setLowerBound(0);
-			unhangeableStructuralFeature.setUpperBound(-1);
-			unhangeableStructuralFeature.setChangeable(false);
-		}
-		private UnmodifiableEcoreObjects(int size, @Nullable Object[] data) {
-			super(null, unhangeableStructuralFeature, size, data);
-		}
-
-		@Override
-		protected boolean useEquals() {
-			return false;
-		}
-	}
-
 	/**
 	 * Optimized iterator over an Array for use in OCL contents where the array is known to be stable
 	 * and any call to next() is guarded by hasNext().
 	 */
-	private static class ArrayIterator<T> implements Iterator<T>
+	private static class ArrayIterator<T> implements BaggableIterator<T>
 	{
 		protected final T @NonNull [] elements;
 		protected final int size;
@@ -101,6 +97,14 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		}
 
 		/**
+		 * Returns 1 if this iterator contains more elements.
+		 */
+		@Override
+		public int hasNextCount() {
+			return index < size ? 1 : 0;
+		}
+
+		/**
 		 * Returns the next element of this iterator.
 		 */
 		@Override
@@ -118,7 +122,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
 	 * and any call to next() is guarded by hasNext().
 	 */
-	private static class ListIterator<T> implements Iterator<T>
+	private static class ListIterator<T> implements BaggableIterator<T>
 	{
 		protected final @NonNull List<T> elements;
 		protected final int size;
@@ -142,6 +146,14 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		}
 
 		/**
+		 * Returns 1 if this iterator contains more elements.
+		 */
+		@Override
+		public int hasNextCount() {
+			return index < size ? 1 : 0;
+		}
+
+		/**
 		 * Returns the next element of this iterator.
 		 */
 		@Override
@@ -153,13 +165,20 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append("List");
+			appendIterable(s, elements, 50);
+			return s.toString();
+		}
 	}
 
 	/**
-	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
-	 * and any call to next() is guarded by hasNext().
+	 * Optimized iterator over an empty Collection.
 	 */
-	private static class NullIterator implements Iterator<@Nullable Object>
+	private static class NullIterator implements BaggableIterator<@Nullable Object>
 	{
 		/**
 		 * Returns new array iterator over the given object array
@@ -172,6 +191,14 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		@Override
 		public boolean hasNext() {
 			return false;
+		}
+
+		/**
+		 * Returns 1 if this iterator contains more elements.
+		 */
+		@Override
+		public int hasNextCount() {
+			return 0;
 		}
 
 		/**
@@ -188,12 +215,114 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		}
 	}
 
+	@SuppressWarnings("serial")
+	private static final class UnmodifiableEcoreObjects extends EcoreEList.UnmodifiableEList<@Nullable Object>
+	{
+		private static final /*@NonNull*/ EStructuralFeature unhangeableStructuralFeature;
+		static {
+			unhangeableStructuralFeature = EcoreFactory.eINSTANCE.createEAttribute();
+			unhangeableStructuralFeature.setName("unchangeable");
+			unhangeableStructuralFeature.setEType(EcorePackage.Literals.EOBJECT);
+			unhangeableStructuralFeature.setLowerBound(0);
+			unhangeableStructuralFeature.setUpperBound(-1);
+			unhangeableStructuralFeature.setChangeable(false);
+		}
+		private UnmodifiableEcoreObjects(int size, @Nullable Object[] data) {
+			super(null, unhangeableStructuralFeature, size, data);
+		}
+
+		@Override
+		protected boolean useEquals() {
+			return false;
+		}
+	}
+
+	/**
+	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
+	 * and any call to next() is guarded by hasNext().
+	 * @since 1.3
+	 */
+	public static class WrappedBaggableIterator<T> implements BaggableIterator<T>
+	{
+		protected final @NonNull Iterator<? extends T> iterator;
+
+		/**
+		 * Returns new array iterator over the given object array
+		 */
+		public WrappedBaggableIterator(@NonNull Iterator<? extends T> iterator) {
+			assert !(iterator instanceof BaggableIterator);
+			this.iterator = iterator;
+		}
+
+		/**
+		 * Returns true if this iterator contains more elements.
+		 */
+		@Override
+		public boolean hasNext() {
+			return iterator.hasNext();
+		}
+
+		/**
+		 * Returns 1 if this iterator contains more elements.
+		 */
+		@Override
+		public int hasNextCount() {
+			return iterator.hasNext() ? 1 : 0;
+		}
+
+		/**
+		 * Returns the next element of this iterator.
+		 */
+		@Override
+		public T next() {
+			return iterator.next();
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String toString() {
+			return iterator.toString();
+		}
+	}
+
 	public static @NonNull NullIterator EMPTY_ITERATOR = new NullIterator();
 
 	/**
-	 * A simple public static method that may be used to force class initialization.
+	 * @since 1.3
 	 */
-	public static void initStatics() {}
+	public static class ExtensionImpl
+	{
+		/**
+		 * @since 1.3
+		 */
+		public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = null;
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static void appendIterable(StringBuilder s, @NonNull Iterable<? extends Object> iterable, int lengthLimit) {
+		s.append("{");
+		boolean isFirst = true;
+		for (Object element : iterable) {
+			if (!isFirst) {
+				s.append(",");
+			}
+			if (s.length() < lengthLimit) {
+				ValueUtil.toString(element, s, lengthLimit-1);
+			}
+			else {
+				s.append("...");
+				break;
+			}
+			isFirst = false;
+		}
+		s.append("}");
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -205,12 +334,26 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return ValuesPackage.Literals.COLLECTION_VALUE;
 	}
 
+	/**
+	 * A simple public static method that may be used to force class initialization.
+	 */
+	public static void initStatics() {}
+
 	private int hashCode = 0;
 	protected final @NonNull Collection<@Nullable Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
 	protected final @NonNull CollectionTypeId typeId;
+	private final @NonNull CollectionStrategy collectionFactory;
 
 	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> values) {
 		this.typeId = typeId;
+		this.collectionFactory = LazyIterable.getCollectionStrategy(typeId);
+		Map<Class<?>, Integer> collectionClass2count2 = ExtensionImpl.collectionClass2count;
+		if (collectionClass2count2 != null) {
+			Class<? extends @NonNull CollectionValue> collectionClass = getClass();
+			Integer count = collectionClass2count2.get(collectionClass);
+			count = count != null ? count+1 : 1;
+			collectionClass2count2.put(collectionClass, count);
+		}
 		this.elements = values;
 		assert checkElementsAreValues(values);
 	}
@@ -226,10 +369,20 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	//		return values.add(value);
 	//	}
 
+	//	@Override
+	//	public @NonNull CollectionValue append(@Nullable Object object) {
+	//		return AppendIterator.append(getTypeId(), this, object);
+	//	}
+
+	//	@Override
+	//	public @NonNull CollectionValue appendAll(@NonNull CollectionValue values) {
+	//		return AppendAllIterator.appendAll(this, values);
+	//	}
+
 	@Override
 	public @NonNull BagValue asBagValue() {
-		Iterable<@Nullable Object> castElements = elements;
-		return new BagValueImpl(getBagTypeId(), new BagImpl<>(castElements));
+		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsBagIterator(this);
 	}
 
 	@Override
@@ -239,14 +392,17 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	public @NonNull CollectionValue asCollectionValue() {
+		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return this;
 	}
 
 	@Override
 	public @NonNull List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
-		@Nullable Object[] unboxedValues = new @Nullable Object[elements.size()];
+		//		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		//		return new AsEcoreIterator(this, idResolver, instanceClass).getListOfElements();
+		@Nullable Object[] unboxedValues = new @Nullable Object[intSize()];
 		int i= 0;
-		for (Object element : elements) {
+		for (Object element : iterable()) {
 			if (element instanceof Value)
 				unboxedValues[i++] = ((Value)element).asEcoreObject(idResolver, instanceClass);
 			else if (element instanceof EnumerationLiteralId) {
@@ -276,29 +432,53 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	public @NonNull OrderedSetValue asOrderedSetValue() {
-		OrderedSet<@Nullable Object> uniqueElements = new OrderedSetImpl<>();
-		for (Object element : elements) {
-			uniqueElements.add(element);
-		}
-		return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), uniqueElements);
+		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsOrderedSetIterator(this);
 	}
 
 	@Override
 	public @NonNull SequenceValue asSequenceValue() {
-		return new SparseSequenceValueImpl(getSequenceTypeId(), new ArrayList<>(elements));
+		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsSequenceIterator(this);
 	}
 
 	@Override
 	public @NonNull SetValue asSetValue() {
-		Set<@Nullable Object> uniqueElements = new HashSet<>();
-		for (Object element : elements) {
-			uniqueElements.add(element);
+		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsSetIterator(this);
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	//	@Override
+	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
+		Iterable<@Nullable Object> elements = iterable();
+		if (this instanceof BaggableIterator) {
+			iterable();
+			return baggableIterator();
 		}
-		return new SetValueImpl(getSetTypeId(), uniqueElements);
+		else if (elements instanceof BaggableIterator) {
+			@SuppressWarnings("unchecked")
+			BaggableIterator<@Nullable Object> castElements = (BaggableIterator<@Nullable Object>)elements;
+			return castElements;
+		}
+		else if (elements instanceof BasicEList) {
+			BasicEList<@Nullable Object> castElements = (BasicEList<@Nullable Object>)elements;
+			@SuppressWarnings("null")@Nullable Object[] data = castElements.data();
+			return data != null ? new ArrayIterator<>(data, castElements.size()) : EMPTY_ITERATOR;
+		}
+		else if (elements instanceof List<?>) {
+			List<@Nullable Object> castElements = (List<@Nullable Object>)elements;
+			return new ListIterator<>(castElements);
+		}
+		else {
+			return new WrappedBaggableIterator<>(elements.iterator());
+		}
 	}
 
 	protected boolean checkElementsAreUnique(@NonNull Iterable<@Nullable ? extends Object> elements) {
-		Set<Object> knownElements = new HashSet<Object>();
+		Set<@Nullable Object> knownElements = new HashSet<>();
 		for (Object element : elements) {
 			assert knownElements.add(element);
 		}
@@ -329,20 +509,96 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	public @NonNull IntegerValue count(@Nullable Object value) {
 		long count = 0;
 		if (value == null) {
-			for (Object next : elements) {
+			for (Object next : iterable()) {
 				if (next == null) {
 					count++;
 				}
 			}
 		}
 		else {
-			for (Object next : elements) {
+			for (Object next : iterable()) {
 				if (value.equals(next)) {
 					count++;
 				}
 			}
 		}
 		return ValueUtil.integerValueOf(count);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof CollectionValue)) {
+			return false;
+		}
+		CollectionValue that = (CollectionValue)obj;
+		boolean isOrdered = isOrdered();
+		if (isOrdered != that.isOrdered()) {
+			return false;
+		}
+		boolean isUnique = isUnique();
+		if (isUnique != that.isUnique()) {
+			return false;
+		}
+		if (isOrdered) {
+			if (isUnique) {
+				// This is probably a bug fix on LinkedHashSet that should consider ordering for equals
+				Collection<@Nullable Object> theseElements = this.getElements();
+				Collection<@Nullable Object> thoseElements = that.getElements();
+				Iterator<@Nullable Object> thisElement = theseElements.iterator();
+				Iterator<@Nullable Object> thatElement = thoseElements.iterator();
+				while (thisElement.hasNext() && thatElement.hasNext()) {
+					Object thisValue = thisElement.next();
+					Object thatValue = thatElement.next();
+					if (thisValue == null) {
+						if (thatValue != null) {
+							return false;
+						}
+					}
+					else {
+						if (!thisValue.equals(thatValue)) {
+							return false;
+						}
+					}
+				}
+				return !thisElement.hasNext() && !thatElement.hasNext();
+			}
+			else {
+				Collection<@Nullable Object> theseElements = this.getElements();
+				Collection<@Nullable Object> thoseElements = that.getElements();
+				Iterator<@Nullable Object> thisElement = theseElements.iterator();
+				Iterator<@Nullable Object> thatElement = thoseElements.iterator();
+				while (thisElement.hasNext() && thatElement.hasNext()) {
+					Object thisValue = thisElement.next();
+					Object thatValue = thatElement.next();
+					if (!ClassUtil.safeEquals(thisValue, thatValue)) {
+						return false;
+					}
+				}
+				return !thisElement.hasNext() && !thatElement.hasNext();
+			}
+		}
+		else {
+			if (isUnique) {
+				Collection<@Nullable Object> theseElements = this.getElements();
+				Collection<@Nullable Object> thoseElements = that.getElements();
+				int thisSize = theseElements.size();
+				int thatSize = thoseElements.size();
+				if (thisSize != thatSize) {
+					return false;
+				}
+				if (thoseElements instanceof Set<?>) {
+					return thoseElements.containsAll(theseElements);
+				}
+				else {
+					return theseElements.containsAll(thoseElements);
+				}
+			}
+			else {
+				Map<? extends Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount(this);
+				Map<? extends Object, @NonNull ? extends Number> thoseElements = getMapOfElement2elementCount(that);
+				return theseElements.equals(thoseElements);
+			}
+		}
 	}
 
 	/**
@@ -356,14 +612,14 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	@Override
 	public @NonNull Boolean excludes(@Nullable Object value) {
 		if (value == null) {
-			for (Object next : elements) {
+			for (Object next : this) {
 				if (next == null) {
 					return false;
 				}
 			}
 		}
 		else {
-			for (Object next : elements) {
+			for (Object next : this) {
 				if (value.equals(next)) {
 					return false;
 				}
@@ -383,7 +639,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	 */
 	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
-		for (Object e1 : elements) {
+		for (Object e1 : this) {
 			if (e1 == null) {
 				for (Object e2 : c.iterable()) {
 					if (e2 == null) {
@@ -406,10 +662,10 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	 * Returns true if any element flattened.
 	 * @throws InvalidValueException
 	 */
-	@Override
+	@Override @Deprecated
 	public boolean flatten(@NonNull Collection<Object> flattenedElements) {
 		boolean flattened = false;
-		for (Object element : elements) {
+		for (Object element : iterable()) {
 			CollectionValue collectionElement = ValueUtil.isCollectionValue(element);
 			if (collectionElement != null) {
 				flattened = true;
@@ -459,38 +715,22 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return TypeId.BAG.getSpecializedId(getElementTypeId());
 	}
 
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.COLLECTION.getCollectedTypeId(getElementType().getTypeId());
-	//	}
-
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		CollectionTypeId typeId2 = typeId;
-	//		if (typeId2 == null) {
-	//			typeId2 = getCollectionTypeId().getCollectedTypeId(getElementTypeId());
-	//		}
-	//		return typeId2;
-	//	}
-
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.COLLECTION;
-	//	}
-
+	//	@Override
 	public @NonNull TypeId getElementTypeId() {
-		//    	DomainType elementType = standardLibrary.getOclVoidType();
-		//    	for (Object value : values) {
-		//    		assert value != null;
-		//    		elementType = elementType.getCommonType(standardLibrary, standardLibrary.typeOf(value));
-		//    	}
-		//		for (Value element : iterable()) {
-		//
-		//		}
-
 		return getTypeId().getElementTypeId();
 	}
 
 	@Override
 	public @NonNull Collection<@Nullable Object> getElements() {
-		return elements;
+		return asCollection();
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull String getKind() {
+		return collectionFactory.getKind();
 	}
 
 	public @NonNull Collection<@Nullable Object> getObject() {
@@ -531,7 +771,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	public @NonNull Boolean includes(@Nullable Object value) {
-		return elements.contains(value) != false;			// FIXME redundant test to suppress warning
+		return Iterables.contains(iterable(), value) != false;			// FIXME redundant test to suppress warning
 	}
 
 	/**
@@ -548,7 +788,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		for (Object e1 : c.iterable()) {
 			boolean gotIt = false;
 			if (e1 == null) {
-				for (Object e2 : elements) {
+				for (Object e2 : this) {
 					if (e2 == null) {
 						gotIt = true;
 						break;
@@ -556,7 +796,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 				}
 			}
 			else {
-				for (Object e2 : elements) {
+				for (Object e2 : this) {
 					if (e1.equals(e2)) {
 						gotIt = true;
 						break;
@@ -577,48 +817,12 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	public @NonNull CollectionValue intersection(@NonNull CollectionValue that) {
-		assert !this.isUndefined() && !that.isUndefined();
-		Collection<? extends Object> theseElements = this.asCollection();
-		Collection<? extends Object> thoseElements = that.asCollection();
-		int thisSize = theseElements.size();
-		int thatSize = thoseElements.size();
-		if (this instanceof UniqueCollectionValue || that instanceof UniqueCollectionValue) {
-			@NonNull CollectionTypeId typeId = getSetTypeId();
-			if ((thisSize == 0) || (thatSize == 0)) {
-				return new SetValueImpl(typeId, ValueUtil.EMPTY_SET);
-			}
-			Set<@Nullable Object> results;
-			// loop over the smaller collection and add only elements
-			// that are in the larger collection
-			if (thisSize <= thatSize) {
-				results = new HashSet<>(theseElements);
-				results.retainAll(thoseElements);
-			}
-			else {
-				results = new HashSet<>(thoseElements);
-				results.retainAll(theseElements);
-			}
-			return new SetValueImpl(typeId, results.size() > 0 ? results : ValueUtil.EMPTY_SET);
-		}
-		else {
-			@NonNull CollectionTypeId typeId = getBagTypeId();
-			if ((thisSize == 0) || (thatSize == 0)) {
-				return new BagValueImpl(typeId, ValueUtil.EMPTY_BAG);
-			}
-			Bag<@Nullable Object> results = new BagImpl<>();
-			// loop over the smaller collection and add only elements
-			// that are in the larger collection
-			Set<Object> minElements = new HashSet<Object>(thisSize < thatSize ? theseElements : thoseElements);
-			for (Object e : minElements) {
-				IntegerValue leftCount = this.count(e);
-				IntegerValue rightCount = that.count(e);
-				for (int i = Math.min(leftCount.asInteger(), rightCount.asInteger()); i > 0; i--) {
-					results.add(e);
-				}
-			}
-			return new BagValueImpl(typeId, results.size() > 0 ? results : ValueUtil.EMPTY_BAG);
-		}
+		return IntersectionIterator.intersection(this, that);
 	}
+
+	//	public boolean isBag() {
+	//		return collectionFactory.isBag();
+	//	}
 
 	//	@Override
 	//	public @NonNull CollectionValue isCollectionValue() {
@@ -630,6 +834,34 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return intSize() == 0;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public boolean isOrdered() {
+		return collectionFactory.isOrdered();
+	}
+
+	//	public boolean isOrderedSet() {
+	//		return collectionFactory.isOrderedSet();
+	//	}
+
+	//	public boolean isSequence() {
+	//		return collectionFactory.isSequence();
+	//	}
+
+	//	public boolean isSet() {
+	//		return collectionFactory.isSet();
+	//	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public boolean isUnique() {
+		return collectionFactory.isUnique();
+	}
+
 	@Override
 	public @NonNull Iterable<@Nullable Object> iterable() {
 		return elements;
@@ -637,17 +869,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	public @NonNull Iterator<@Nullable Object> iterator() {
-		if (elements instanceof BasicEList) {
-			BasicEList<Object> castElements = (BasicEList<Object>)elements;
-			@SuppressWarnings("null")@Nullable Object[] data = castElements.data();
-			return data != null ? new ArrayIterator<@Nullable Object>(data, elements.size()) : EMPTY_ITERATOR;
-		}
-		if (elements instanceof List<?>) {
-			List<@Nullable Object> castElements = (List<@Nullable Object>)elements;
-			return new ListIterator<@Nullable Object>(castElements);
-		}
-		@NonNull Iterator<@Nullable Object> result = elements.iterator();
-		return result;
+		return baggableIterator();
 	}
 
 	@Override
@@ -671,64 +893,42 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return ValueUtil.integerValueOf(intSize());
 	}
 
+	/**
+	 * @since 1.3
+	 */
 	@Override
-	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
-		toString(s, 100);
-		return s.toString();
+	public @NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+		List<@Nullable Object> values = Lists.newArrayList(iterable());
+		Collections.sort(values, comparator);
+		if (isUnique()) {
+			return new SparseOrderedSetValueImpl(getTypeId(), values);
+		}
+		else {
+			return new SparseSequenceValueImpl(getTypeId(), values);
+		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	@Override
+	public @NonNull SequenceValue toSequenceValue() {
+		Iterable<@Nullable Object> elements = iterable();
+		if (isUnique()) {
+			return new SparseSequenceValueImpl(getSequenceTypeId(), SparseSequenceValueImpl.createSequenceOfEach(elements));
+		}
+		else {
+			return new SparseSequenceValueImpl(getSequenceTypeId(), Lists.newArrayList(elements));
+		}
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int lengthLimit) {
-		s.append("{");
-		boolean isFirst = true;
-		for (Object element : this.iterable()) {
-			if (!isFirst) {
-				s.append(",");
-			}
-			if (s.length() < lengthLimit) {
-				ValueUtil.toString(element, s, lengthLimit-1);
-			}
-			else {
-				s.append("...");
-				break;
-			}
-			isFirst = false;
-		}
-		s.append("}");
+		appendIterable(s, this.iterable(), lengthLimit);
 	}
 
 	@Override
 	public @NonNull CollectionValue union(@NonNull CollectionValue that) {
-		assert !this.isUndefined() && !that.isUndefined();
-		Collection<@Nullable Object> theseElements = this.asCollection();
-		Collection<@Nullable Object> thoseElements = that.asCollection();
-		if (this instanceof UniqueCollectionValue && that instanceof UniqueCollectionValue) {
-			if (theseElements.isEmpty()) {
-				return that.asSetValue();
-			}
-			else if (thoseElements.isEmpty()) {
-				return this.asSetValue();
-			}
-			else {
-				Set<@Nullable Object> result = new HashSet<>(theseElements);
-				result.addAll(thoseElements);
-				return new SetValueImpl(getSetTypeId(), result);
-			}
-		}
-		else {
-			if (theseElements.isEmpty()) {
-				return that.asBagValue();
-			}
-			else if (thoseElements.isEmpty()) {
-				return this.asBagValue();
-			}
-			else {
-				Iterable<@Nullable Object> castElements = theseElements;
-				Bag<@Nullable Object> result = new BagImpl<>(castElements);
-				result.addAll(thoseElements);
-				return new BagValueImpl(getBagTypeId(), result);
-			}
-		}
+		return IncludingAllIterator.union(this, that);
 	}
 }

@@ -52,26 +52,26 @@ public interface IdResolver extends IdVisitor<Element>
 		@Nullable Iterable<org.eclipse.ocl.pivot.@NonNull Class> getModelClassesOf(@NonNull Object value);
 		int oclHashCode(@Nullable Object anObject);
 	}
-	
+
 	void addRoot(@NonNull EObject eObject);
-	
+
 	@Nullable Object boxedValueOf(@Nullable Object unboxedValue);
-	
+
 	@Nullable Object boxedValueOf(@NonNull Object unboxedValue, @Nullable EClassifier eClassifier);
-	
+
 	@Nullable Object boxedValueOf(@NonNull Object unboxedValue, @NonNull ETypedElement eFeature, @Nullable TypeId typeId);
 
 	@NonNull BagValue createBagOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
 	@NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
-	
+
 	@NonNull CollectionValue createCollectionOfAll(boolean isOrdered, boolean isUnique, @NonNull TypeId elementTypeId, @NonNull Iterable<? extends Object> unboxedValues);
-	
-	@NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId collectedId, @NonNull Iterable<?> unboxedValues);
+
+	@NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId collectedId, @NonNull Iterable<@Nullable ?> unboxedValues);
 
 	@Nullable Object createInstance(@NonNull TypeId typeId, @NonNull String stringValue);
 
-	@NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<Object, Object> mapEntries);
+	@NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<@Nullable Object, @Nullable Object> mapEntries);
 
 	@NonNull OrderedSetValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
@@ -101,7 +101,7 @@ public interface IdResolver extends IdVisitor<Element>
 	/** @deprecated no longer used */
 	@Deprecated
 	@NonNull EList<Object> ecoreValuesOfAll(@Nullable Class<?> instanceClass, @NonNull Iterable<Object> values);
-	
+
 	/** @deprecated no longer used */
 	@Deprecated
 	@NonNull EList<Object> ecoreValuesOfEach(@Nullable Class<?> instanceClass, @NonNull Object... values);
@@ -123,13 +123,13 @@ public interface IdResolver extends IdVisitor<Element>
 	@NonNull CompleteEnvironment getEnvironment();
 
 	@NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier);
-	
+
 	org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Class<?> javaClass);
 
 	@NonNull Type getMapType(@NonNull MapTypeId typeId);
 
 	@NonNull Operation getOperation(@NonNull OperationId operationId);
-	
+
 	org.eclipse.ocl.pivot.@NonNull Package getPackage(@NonNull PackageId packageId);
 
 	@NonNull Property getProperty(@NonNull PropertyId propertyId);
@@ -153,10 +153,10 @@ public interface IdResolver extends IdVisitor<Element>
 	boolean oclEquals(@Nullable Object thisValue, @Nullable Object thatValue);
 
 	@Nullable Object unboxedValueOf(@Nullable Object boxedValue);
-	
+
 	@NonNull Enumerator unboxedValueOf(@NonNull EnumerationLiteralId enumerationLiteralId);
-	
+
 	@NonNull EList<Object> unboxedValuesOfAll(@NonNull Collection<? extends Object> boxedValues);
-	
+
 	@NonNull EList<Object> unboxedValuesOfEach(@Nullable Object... boxedValues);
 }

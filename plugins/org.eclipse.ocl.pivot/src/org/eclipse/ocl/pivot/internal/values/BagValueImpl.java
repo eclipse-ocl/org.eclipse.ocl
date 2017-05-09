@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,17 +22,23 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
  * @generated NOT
  */
-public class BagValueImpl extends CollectionValueImpl implements BagValue
+public class BagValueImpl extends CollectionValueImpl implements BagValue.Internal
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -73,6 +80,11 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 	}
 
 	@Override
+	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
+		return isUnique() ? asOrderedSetValue() : asSequenceValue();
+	}
+
+	@Override
 	public @NonNull Bag<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
 		Bag<@Nullable Object> unboxedValues = new BagImpl<>();
 		for (Object boxedValue : elements) {
@@ -82,107 +94,24 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 	}
 
 	@Override
-	public boolean equals(Object thatObject) {
-		if (this == thatObject) {
-			return true;
-		}
-		if (!(thatObject instanceof BagValue)) {
-			return false;
-		}
-		/*		@Override
-		public boolean equals(Object obj) {
-			if (!(obj instanceof SetValue)) {
-				return false;
-			}
-			int thisSize = elements.size();
-			Collection<? extends Object> thoseElements = ((SetValue)obj).getElements();
-			int thatSize = thoseElements.size();
-			if (thisSize != thatSize) {
-				return false;
-			}
-			if (thoseElements instanceof Set<?>) {
-				return thoseElements.containsAll(elements);
-			}
-			else {
-				return elements.containsAll(thoseElements);
-			}
-		} */
-		return elements.equals(((BagValue)thatObject).getElements());
+	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
+		return isOrdered() ? asOrderedSetValue() : asSetValue();
 	}
 
 	@Override
 	public @NonNull BagValue excluding(@Nullable Object value) {
-		Bag<@Nullable Object> result = new BagImpl<>();
-		if (value == null) {
-			for (Object element : elements) {
-				if (element != null) {
-					result.add(element);
-				}
-			}
-		}
-		else {
-			for (Object element : elements) {
-				if (!value.equals(element)) {
-					result.add(element);
-				}
-			}
-		}
-		if (result.size() < elements.size()) {
-			return new BagValueImpl(getTypeId(), result);
-		}
-		else {
-			return this;
-		}
+		return ExcludingIterator.excluding(this, value).asBagValue();
 	}
 
 	@Override
 	public @NonNull BagValue excludingAll(@NonNull CollectionValue values) {
-		Bag<@Nullable Object> result = new BagImpl<>();
-		for (Object element : elements) {
-			boolean reject = false;
-			if (element == null) {
-				for (Object value : values) {
-					if (value == null) {
-						reject = true;
-						break;
-					}
-				}
-			}
-			else {
-				for (Object value : values) {
-					if ((value != null) && value.equals(element)) {
-						reject = true;
-						break;
-					}
-				}
-			}
-			if (!reject) {
-				result.add(element);
-			}
-		}
-		if (result.size() < elements.size()) {
-			return new BagValueImpl(getTypeId(), result);
-		}
-		else {
-			return this;
-		}
+		return ExcludingAllIterator.excludingAll(this, values).asBagValue();
 	}
 
 	@Override
 	public @NonNull BagValue flatten() {
-		Bag<@Nullable Object> flattened = new BagImpl<>();
-		if (flatten(flattened)) {
-			return new BagValueImpl(getTypeId(), flattened);
-		}
-		else {
-			return this;
-		}
+		return FlattenIterator.flatten(this).asBagValue();
 	}
-
-	//    @Override
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.BAG;
-	//	}
 
 	@Override
 	public @NonNull Bag<@Nullable Object> getElements() {
@@ -194,23 +123,22 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 		return TypeId.BAG_NAME;
 	}
 
+	/**
+	 * @since 1.3
+	 */
+	//	@Override
+	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+		return ((BagImpl<@Nullable Object>) elements).getMap();
+	}
+
 	@Override
 	public @NonNull BagValue including(@Nullable Object value) {
-		assert !(value instanceof InvalidValueException);
-		Iterable<@Nullable Object> iterables = elements;
-		Bag<@Nullable Object> result = new BagImpl<>(iterables);
-		result.add(value);
-		return new BagValueImpl(getTypeId(), result);
+		return IncludingIterator.including(getTypeId(), this, value).asBagValue();
 	}
 
 	@Override
 	public @NonNull BagValue includingAll(@NonNull CollectionValue values) {
-		Iterable<@Nullable Object> iterables = elements;
-		Bag<@Nullable Object> result = new BagImpl<>(iterables);
-		for (Object value : values) {
-			result.add(value);
-		}
-		return new BagValueImpl(getTypeId(), result);
+		return IncludingAllIterator.includingAll(getTypeId(), this, values).asBagValue();
 	}
 
 	@Override
@@ -232,7 +160,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {
-		return new SparseSequenceValueImpl(getSequenceTypeId(), new ArrayList<>(elements));
+		return super.toSequenceValue();
 	}
 
 	@Override
