@@ -68,87 +68,87 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 
 	@Override
 	public @NonNull BagValue asBagValue() {
-		throw new InvalidValueException(this, "asBagValue");
+		throw this;
 	}
 
 	@Override
 	public @NonNull CollectionValue asCollectionValue() {
-		throw new InvalidValueException(this, "asCollectionValue");
+		throw this;
 	}
 
 	@Override
 	public @NonNull Double asDouble() {
-		throw new InvalidValueException(this, "asDouble");
+		throw this;
 	}
 
 	@Override
-	public @NonNull List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
-		throw new InvalidValueException(this, "asEcoreObject");
+	public @Nullable List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+		throw this;
 	}
 
 	@Override
 	public Element asElement() {
-		throw new InvalidValueException(this, "asElement");
+		throw this;
 	}
 
 	@Override
 	public @NonNull Integer asInteger() {
-		throw new InvalidValueException(this, "asInteger");
+		throw this;
 	}
 
 	@Override
 	public @NonNull IntegerValue asIntegerValue() {
-		throw new InvalidValueException(this, "asIntegerValue");
+		throw this;
 	}
 
 	@Override
 	public @NonNull EObject asNavigableObject() {
-		throw new InvalidValueException(this, "asNavigableObject");
+		throw this;
 	}
 
 	@Override
 	public @NonNull Number asNumber() {
-		throw new InvalidValueException(this, "asNumberValue");
+		throw this;
 	}
 
 	@Override
 	public @NonNull ObjectValue asObjectValue() {
-		throw new InvalidValueException(this, "asObjectValue");
+		throw this;
 	}
 
 	@Override
 	public @NonNull OrderedSetValue asOrderedSetValue() {
-		throw new InvalidValueException(this, "asOrderedSetValue");
+		throw this;
 	}
 
 	@Override
 	public @NonNull RealValue asRealValue() {
-		throw new InvalidValueException(this, "asRealValue");
+		throw this;
 	}
 
 	@Override
 	public @NonNull SequenceValue asSequenceValue() {
-		throw new InvalidValueException(this, "asSequenceValue");
+		throw this;
 	}
 
 	@Override
 	public @NonNull SetValue asSetValue() {
-		throw new InvalidValueException(this, "asSetValue");
+		throw this;
 	}
 
 	@Override
 	public @NonNull List<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
-		throw new InvalidValueException(this, "asUnboxedObject");
+		throw this;
 	}
 
 	@Override
 	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
-		throw new InvalidValueException(this, "asUniqueCollectionValue");
+		throw this;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof InvalidValueException;
+		throw this; //return obj instanceof InvalidValueException;
 	}
 
 	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
