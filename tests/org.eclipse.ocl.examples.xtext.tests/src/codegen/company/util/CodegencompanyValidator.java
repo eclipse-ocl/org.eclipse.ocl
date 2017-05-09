@@ -186,20 +186,10 @@ public class CodegencompanyValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(employee, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(employee, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(employee, diagnostics, context);
-		if (result || diagnostics != null) result &= validateEmployee_mustHaveName(employee, diagnostics, context);
 		if (result || diagnostics != null) result &= validateEmployee_mustHaveNonEmptyName(employee, diagnostics, context);
 		if (result || diagnostics != null) result &= validateEmployee_noManagerImpliesDirectReports(employee, diagnostics, context);
+		if (result || diagnostics != null) result &= validateEmployee_mustHaveName(employee, diagnostics, context);
 		return result;
-	}
-
-	/**
-	 * Validates the mustHaveName constraint of '<em>Employee</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateEmployee_mustHaveName(Employee employee, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return employee.mustHaveName(diagnostics, context);
 	}
 
 	/**
@@ -220,6 +210,16 @@ public class CodegencompanyValidator extends EObjectValidator {
 	 */
 	public boolean validateEmployee_noManagerImpliesDirectReports(Employee employee, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return employee.noManagerImpliesDirectReports(diagnostics, context);
+	}
+
+	/**
+	 * Validates the mustHaveName constraint of '<em>Employee</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateEmployee_mustHaveName(Employee employee, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return employee.mustHaveName(diagnostics, context);
 	}
 
 	/**
