@@ -540,9 +540,6 @@ public class NameManager
 			if (nameHints != null) {
 				for (String nameHint : nameHints) {
 					if (nameHint != null)  {
-						if ("TYP_Boolean".equals(nameHint)) {
-							toString();
-						}
 						String validHint = getValidJavaIdentifier(nameHint, false, anObject);
 						while (reservedJavaNames.contains(validHint)) {
 							validHint = validHint + "_";
@@ -584,12 +581,6 @@ public class NameManager
 				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
 					install(attempt, anObject);
 					name2counter.put(lastResort, ++count);
-					if (count == 6) {
-						toString();
-					}
-					if ("TYP_CollectionType_16".equals(attempt)) {
-						toString();
-					}
 					return attempt;
 				}
 			}
