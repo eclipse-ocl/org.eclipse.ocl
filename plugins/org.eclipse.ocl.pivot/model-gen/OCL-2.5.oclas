@@ -604,25 +604,25 @@
         </ownedSignature>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.exists..T" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
-          isRequired="false" isValidating="true" name="exists" type="#Boolean">
+          isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Boolean">
         <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one element in the source collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.exists..T" isRequired="false" name="i" type="#t.ocl..CollectionT"/>
         <ownedParameters xmi:id="p0i.ocl.Collection.exists..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.65"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.exists..T..T" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
-          isRequired="false" isValidating="true" name="exists" type="#Boolean">
+          isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Boolean">
         <ownedIterators xmi:id="i0i.ocl.Collection.exists..T..T" isRequired="false" name="i" type="#t.ocl..CollectionT"/>
         <ownedIterators xmi:id="i1i.ocl.Collection.exists..T..T" isRequired="false" name="j" type="#t.ocl..CollectionT"/>
         <ownedParameters xmi:id="p0i.ocl.Collection.exists..T..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.65"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.forAll..T" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
-          isRequired="false" isValidating="true" name="forAll" type="#Boolean">
+          isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#Boolean">
         <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each element in the source collection; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.forAll..T" isRequired="false" name="i" type="#t.ocl..CollectionT"/>
         <ownedParameters xmi:id="p0i.ocl.Collection.forAll..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.65"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.forAll..T..T" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
-          isRequired="false" isValidating="true" name="forAll" type="#Boolean">
+          isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#Boolean">
         <ownedIterators xmi:id="i0i.ocl.Collection.forAll..T..T" isRequired="false" name="i" type="#t.ocl..CollectionT"/>
         <ownedIterators xmi:id="i1i.ocl.Collection.forAll..T..T" isRequired="false" name="j" type="#t.ocl..CollectionT"/>
         <ownedParameters xmi:id="p0i.ocl.Collection.forAll..T..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.65"/>
@@ -882,7 +882,7 @@
         <ownedParameters xmi:id="p0o.ocl.Integer.%42%..ocl.OclSelf" isRequired="false" name="i" type="#OclSelf"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Integer.%47%..ocl.OclSelf" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation"
-          name="/" precedence="#Z.MULTIPLICATIVE" type="#Real">
+          isInvalidating="true" name="/" precedence="#Z.MULTIPLICATIVE" type="#Real">
         <ownedComments body="The value of oclText[self] divided by i.&#xA;Evaluates to oclText[invalid] if r is equal to zero.&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Integer.%47%..ocl.OclSelf" isRequired="false" name="i" type="#OclSelf"/>
       </ownedOperations>
@@ -1548,7 +1548,7 @@
         <ownedComments body="The first element in oclText[self].&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.OrderedCollection.indexOf..ocl.OclAny" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation"
-          name="indexOf" type="#Integer">
+          isInvalidating="true" name="indexOf" type="#Integer">
         <ownedComments body="The index of object obj in the ordered collection.&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.OrderedCollection.indexOf..ocl.OclAny" isRequired="false" name="obj" type="#T.ocl.OclAny"/>
       </ownedOperations>
@@ -1812,7 +1812,7 @@
         <ownedComments body="The negative value of oclText[self].&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Real.%47%..ocl.OclSelf" implementationClass="org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation"
-          name="/" precedence="#Z.MULTIPLICATIVE" type="#Real">
+          isInvalidating="true" name="/" precedence="#Z.MULTIPLICATIVE" type="#Real">
         <ownedComments body="The value of oclText[self] divided by r. Evaluates to oclText[invalid] if r is equal to zero.&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Real.%47%..ocl.OclSelf" isRequired="false" name="r" type="#OclSelf"/>
       </ownedOperations>

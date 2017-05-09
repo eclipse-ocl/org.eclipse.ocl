@@ -1640,6 +1640,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("i", _OclSelf, false));
 			ownedOperations.add(operation = op_Integer__div_);
+			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("i", _OclSelf, false));
 			ownedOperations.add(operation = op_Integer_abs);
@@ -1670,6 +1671,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("r", _OclSelf, false));
 			ownedOperations.add(operation = op_Real__div_);
+			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("r", _OclSelf, false));
 			ownedOperations.add(operation = op_Real__lt__gt_);
@@ -2167,6 +2169,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsInvalidating(true);
 			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_OrderedCollection_indexOf);
+			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("obj", _OclAny, false));
 			ownedOperations.add(operation = op_OrderedCollection_last);
@@ -2422,6 +2425,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T_2, false));
 			ownedIterations.add(iteration = it_Collection_exists);
+			iteration.setIsInvalidating(true);
 			iteration.setIsRequired(false);
 			iteration.setIsValidating(true);
 			ownedParameters = iteration.getOwnedIterators();
@@ -2430,6 +2434,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T, false));
 			ownedIterations.add(iteration = it_Collection_exists_1);
+			iteration.setIsInvalidating(true);
 			iteration.setIsRequired(false);
 			iteration.setIsValidating(true);
 			ownedParameters = iteration.getOwnedIterators();
@@ -2437,6 +2442,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T, false));
 			ownedIterations.add(iteration = it_Collection_forAll);
+			iteration.setIsInvalidating(true);
 			iteration.setIsRequired(false);
 			iteration.setIsValidating(true);
 			ownedParameters = iteration.getOwnedIterators();
@@ -2445,6 +2451,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T, false));
 			ownedIterations.add(iteration = it_Collection_forAll_1);
+			iteration.setIsInvalidating(true);
 			iteration.setIsRequired(false);
 			iteration.setIsValidating(true);
 			ownedParameters = iteration.getOwnedIterators();
