@@ -40,7 +40,7 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 			return new RangeSequenceValueImpl(getTypeId(), range);
 		}
 		else {
-			List<Object> elements = createElements();
+			List<@Nullable Object> elements = createElements();
 			elements.add(value);
 			return new SparseSequenceValueImpl(getTypeId(), elements);
 		}
@@ -57,8 +57,8 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 		return ZERO_VALUE;
 	}
 
-	protected @NonNull List<Object> createElements() {
-		List<Object> elements = new ArrayList<Object>(intSize());
+	protected @NonNull List<@Nullable Object> createElements() {
+		List<@Nullable Object> elements = new ArrayList<>(intSize());
 		for (Object value : iterable()) {
 			elements.add(value);
 		}
@@ -88,7 +88,7 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 
 	@Override
 	public @NonNull IntegerRange getElements() {
-		return (IntegerRange) elements;
+		return (IntegerRange)elements;
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 			return new RangeSequenceValueImpl(getTypeId(), range);
 		}
 		else {
-			List<Object> elements = createElements();
+			List<@Nullable Object> elements = createElements();
 			elements.add(0, value);
 			return new SparseSequenceValueImpl(getTypeId(), elements);
 		}

@@ -52,45 +52,44 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 		return ValuesPackage.Literals.SET_VALUE;
 	}
 
-	public static @NonNull Set<Object> createSetOfEach(@Nullable Object @NonNull [] boxedValues) {
-		Set<Object> result = new HashSet<Object>();
+	public static @NonNull Set<@Nullable Object> createSetOfEach(@Nullable Object @NonNull [] boxedValues) {
+		Set<@Nullable Object> result = new HashSet<>();
 		for (Object boxedValue : boxedValues) {
 			result.add(boxedValue);
 		}
 		return result;
 	}
-	
+
 	public static class Accumulator extends SetValueImpl implements SetValue.Accumulator
 	{
 		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new HashSet<Object>());
+			super(typeId, new HashSet<>());
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
 		public boolean add(@Nullable Object value) {
-			return ((Collection<Object>)elements).add(value);			
-		}		
+			return elements.add(value);
+		}
 	}
 
-	public SetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
+	public SetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> boxedValues) {
 		super(typeId, boxedValues);
 		assert checkElementsAreUnique(elements);
 	}
 
-    @Override
+	@Override
 	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
-        return this;
+		return this;
 	}
 
-    @Override
+	@Override
 	public @NonNull SetValue asSetValue() {
-        return this;
-    }
-		
+		return this;
+	}
+
 	@Override
 	public @NonNull Set<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
-		Set<Object> unboxedValues = new HashSet<Object>();
+		Set<@Nullable Object> unboxedValues = new HashSet<>();
 		for (Object boxedValue : elements) {
 			unboxedValues.add(idResolver.unboxedValueOf(boxedValue));
 		}
@@ -118,7 +117,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 
 	@Override
 	public @NonNull SetValue excluding(@Nullable Object value) {
-		Set<Object> result = new HashSet<Object>();
+		Set<@Nullable Object> result = new HashSet<>();
 		if (value == null) {
 			for (Object element : elements) {
 				if (element != null) {
@@ -143,7 +142,7 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 
 	@Override
 	public @NonNull SetValue excludingAll(@NonNull CollectionValue values) {
-		Set<Object> result = new HashSet<Object>();
+		Set<@Nullable Object> result = new HashSet<>();
 		for (Object element : elements) {
 			boolean reject = false;
 			if (element == null) {
@@ -174,43 +173,43 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 		}
 	}
 
-    @Override
+	@Override
 	public @NonNull SetValue flatten() {
-    	Set<Object> flattened = new HashSet<Object>();
-    	if (flatten(flattened)) {
-    		return new SetValueImpl(getTypeId(), flattened);
-    	}
-    	else {
-    		return this;
-    	}
-    }
+		Set<@Nullable Object> flattened = new HashSet<>();
+		if (flatten(flattened)) {
+			return new SetValueImpl(getTypeId(), flattened);
+		}
+		else {
+			return this;
+		}
+	}
 
-//    @Override
-//	public @NonNull CollectionTypeId getCollectionTypeId() {
-//		return TypeId.SET;
-//	}
-	
-//	@Override
-//	protected @NonNull Set<? extends Object> getElements() {
-//		return (Set<? extends Object>) elements;
-//	}
+	//    @Override
+	//	public @NonNull CollectionTypeId getCollectionTypeId() {
+	//		return TypeId.SET;
+	//	}
+
+	//	@Override
+	//	protected @NonNull Set<? extends Object> getElements() {
+	//		return (Set<? extends Object>) elements;
+	//	}
 
 	@Override
 	public @NonNull String getKind() {
-	    return TypeId.SET_NAME;
+		return TypeId.SET_NAME;
 	}
 
 	@Override
 	public @NonNull SetValue including(@Nullable Object value) {
 		assert !(value instanceof InvalidValueException);
-		Set<Object> result = new HashSet<Object>(elements);
+		Set<@Nullable Object> result = new HashSet<>(elements);
 		result.add(value);
 		return new SetValueImpl(getTypeId(), result);
 	}
 
 	@Override
 	public @NonNull SetValue includingAll(@NonNull CollectionValue values) {
-		Set<Object> result = new HashSet<Object>(elements);
+		Set<@Nullable Object> result = new HashSet<>(elements);
 		for (Object value : values) {
 			result.add(value);
 		}
@@ -227,35 +226,35 @@ public class SetValueImpl extends CollectionValueImpl implements SetValue
 		return true;
 	}
 
-    @Override
-	public @NonNull SetValue minus(@NonNull UniqueCollectionValue set) {
-    	Set<Object> result = new HashSet<Object>(elements);
-        result.removeAll(set.asCollection());
-        return new SetValueImpl(getTypeId(), result);
-    }
-    
-    @Override
-	public @NonNull OrderedSetValue sort(@NonNull Comparator<Object> comparator) {
-    	List<Object> values = new ArrayList<Object>(elements);
-    	Collections.sort(values, comparator);
-    	return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), values);
-    }
-
-    @Override
-	public @NonNull SetValue symmetricDifference(@NonNull UniqueCollectionValue set) {       
-    	Set<Object> result = new HashSet<Object>(elements);       
-        for (Object e : set.iterable()) {
-            if (result.contains(e)) {
-                result.remove(e);
-            } else {
-                result.add(e);
-            }
-        }        
-        return new SetValueImpl(getTypeId(), result);
-    }
-    
 	@Override
-	public SequenceValue toSequenceValue() {
+	public @NonNull SetValue minus(@NonNull UniqueCollectionValue set) {
+		Set<@Nullable Object> result = new HashSet<>(elements);
+		result.removeAll(set.asCollection());
+		return new SetValueImpl(getTypeId(), result);
+	}
+
+	@Override
+	public @NonNull OrderedSetValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+		List<@Nullable Object> values = new ArrayList<>(elements);
+		Collections.sort(values, comparator);
+		return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), values);
+	}
+
+	@Override
+	public @NonNull SetValue symmetricDifference(@NonNull UniqueCollectionValue set) {
+		Set<@Nullable Object> result = new HashSet<>(elements);
+		for (Object e : set.iterable()) {
+			if (result.contains(e)) {
+				result.remove(e);
+			} else {
+				result.add(e);
+			}
+		}
+		return new SetValueImpl(getTypeId(), result);
+	}
+
+	@Override
+	public @NonNull SequenceValue toSequenceValue() {
 		return new SparseSequenceValueImpl(getSequenceTypeId(), SparseSequenceValueImpl.createSequenceOfEach(elements));
 	}
 

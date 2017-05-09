@@ -41,7 +41,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 			return new RangeOrderedSetValueImpl(getTypeId(), range);
 		}
 		else {
-			List<Object> elements = createElements();
+			List<@Nullable Object> elements = createElements();
 			elements.remove(value);
 			elements.add(value);
 			return new SparseOrderedSetValueImpl(getTypeId(), elements);
@@ -59,8 +59,8 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 		return ZERO_VALUE;
 	}
 
-	protected List<Object> createElements() {
-		List<Object> elements = new ArrayList<Object>(intSize());
+	protected @NonNull List<@Nullable Object> createElements() {
+		List<@Nullable Object> elements = new ArrayList<>(intSize());
 		for (Object value : iterable()) {
 			elements.add(value);
 		}
@@ -90,20 +90,20 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 
 	@Override
 	public @NonNull IntegerRange getElements() {
-		return (IntegerRange) elements;
+		return (IntegerRange)elements;
 	}
 
-//    public Type getType(TypeManager typeManager, Type staticType) {
-//    	if (type == null) {
-//    		if ((elements.getFirst() >= 0) && (elements.getLast() >= 0)) {
-//    			type = typeManager.getCollectionType(true, false, typeManager.getUnlimitedNaturalType());
-//    		}
-//    		else{
-//    			type = typeManager.getCollectionType(true, false, typeManager.getIntegerType());
-//    		}
-//    	}
-//		return type;
-//	}
+	//    public Type getType(TypeManager typeManager, Type staticType) {
+	//    	if (type == null) {
+	//    		if ((elements.getFirst() >= 0) && (elements.getLast() >= 0)) {
+	//    			type = typeManager.getCollectionType(true, false, typeManager.getUnlimitedNaturalType());
+	//    		}
+	//    		else{
+	//    			type = typeManager.getCollectionType(true, false, typeManager.getIntegerType());
+	//    		}
+	//    	}
+	//		return type;
+	//	}
 
 	@Override
 	public @NonNull OrderedSetValue including(@Nullable Object value) {
@@ -124,7 +124,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 			return new RangeOrderedSetValueImpl(getTypeId(), range);
 		}
 		else {
-			List<Object> elements = createElements();
+			List<@Nullable Object> elements = createElements();
 			elements.remove(value);
 			elements.add(0, value);
 			return new SparseOrderedSetValueImpl(getTypeId(), elements);
@@ -132,7 +132,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
-	public SequenceValue toSequenceValue() {
+	public @NonNull SequenceValue toSequenceValue() {
 		return new RangeSequenceValueImpl(getSequenceTypeId(), getElements());
 	}
 

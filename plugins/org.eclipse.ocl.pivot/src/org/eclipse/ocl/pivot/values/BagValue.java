@@ -10,13 +10,22 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
-/**
- * @noimplement This interface is not intended to be implemented by clients.
- */
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 public interface BagValue extends CollectionValue
 {
 	/**
 	 * @generated NOT
 	 */
 	interface Accumulator extends CollectionValue.Accumulator, BagValue {}
+
+	/**
+	 * @since 1.3
+	 */
+	public interface Internal extends BagValue
+	{
+		@Override
+		@NonNull Bag<@Nullable Object> getElements();
+	}
 }

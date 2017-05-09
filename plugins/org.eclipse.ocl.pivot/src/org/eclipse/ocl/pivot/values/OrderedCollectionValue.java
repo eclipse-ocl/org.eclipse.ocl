@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public interface OrderedCollectionValue extends CollectionValue
 {
-	
+
 	/**
 	 * @generated NOT
 	 */
@@ -34,7 +34,7 @@ public interface OrderedCollectionValue extends CollectionValue
 	/**
 	 * @generated NOT
 	 */
-    @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects);
+	@NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects);
 
 	/**
 	 * @generated NOT
@@ -64,15 +64,15 @@ public interface OrderedCollectionValue extends CollectionValue
 	/**
 	 * @generated NOT
 	 */
-    @NonNull OrderedCollectionValue prepend(@Nullable Object object);
+	@NonNull OrderedCollectionValue prepend(@Nullable Object object);
 
 	/**
 	 * @generated NOT
 	 */
-    @NonNull OrderedCollectionValue prependAll(@NonNull OrderedCollectionValue objects);
+	@NonNull OrderedCollectionValue prependAll(@NonNull OrderedCollectionValue objects);
 
-    /**
+	/**
 	 * @generated NOT
 	 */
-    @NonNull OrderedCollectionValue reverse();
+	@NonNull OrderedCollectionValue reverse();
 } // OrderedCollectionValue

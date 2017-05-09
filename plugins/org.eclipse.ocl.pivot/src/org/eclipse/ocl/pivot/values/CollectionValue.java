@@ -26,21 +26,22 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 {
 	/**
 	 * @generated NOT
+	 * @noimplement This interface is not intended to be implemented by clients.
 	 */
 	interface Accumulator extends CollectionValue {
-		boolean add(@Nullable Object value);	
+		boolean add(@Nullable Object value);
 	}
 
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Collection<? extends Object> asCollection();	
+	@NonNull Collection<@Nullable Object> asCollection();
 
 	/**
 	 * @generated NOT
 	 */
 	@Override
-	@Nullable List<?> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass);
+	@Nullable List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass);
 
 	/**
 	 * @generated NOT
@@ -55,7 +56,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean excludes(@Nullable Object value);	
+	@NonNull Boolean excludes(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -85,7 +86,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Collection<? extends Object> getElements();
+	@NonNull Collection<@Nullable Object> getElements();
 
 	/**
 	 * @generated NOT
@@ -101,7 +102,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Boolean includes(@Nullable Object value);	
+	@NonNull Boolean includes(@Nullable Object value);
 
 	/**
 	 * @generated NOT
@@ -140,7 +141,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull Iterable<? extends Object> iterable();
+	@NonNull Iterable<@Nullable Object> iterable();
 
 	/**
 	 * @generated NOT
@@ -156,7 +157,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@Nullable Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId);   	
+	@Nullable Set<@NonNull TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId);
 
 	/**
 	 * @generated NOT
@@ -166,7 +167,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull OrderedCollectionValue sort(@NonNull Comparator<Object> comparator);
+	@NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator);
 
 	/**
 	 * @generated NOT

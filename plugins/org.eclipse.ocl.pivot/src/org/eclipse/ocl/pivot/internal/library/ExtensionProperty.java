@@ -36,11 +36,11 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class ExtensionProperty extends AbstractProperty
 {
 	protected final @NonNull Property property;
-	
+
 	public ExtensionProperty(@NonNull Property property) {
 		this.property = property;
 	}
-	
+
 	@Override
 	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		Type staticType = property.getType();
@@ -59,12 +59,12 @@ public class ExtensionProperty extends AbstractProperty
 			}
 		}
 		if (element != null) {
-			List<ElementExtension> selectedExtensions = null;
+			List<@Nullable Object> selectedExtensions = null;
 			for (ElementExtension elementExtension : element.getOwnedExtensions()) {
 				Stereotype dynamicStereotype = elementExtension.getStereotype();
 				if (dynamicStereotype.conformsTo(executor.getStandardLibrary(), staticType)) {
 					if (selectedExtensions == null) {
-						selectedExtensions = new ArrayList<ElementExtension>();
+						selectedExtensions = new ArrayList<>();
 					}
 					selectedExtensions.add(elementExtension);
 				}
@@ -83,6 +83,6 @@ public class ExtensionProperty extends AbstractProperty
 				return new InvalidValueException("Multiple applied stereotypes for " + property);
 			}
 		}
-		return staticType; 
+		return staticType;
 	}
 }

@@ -105,8 +105,8 @@ public abstract class ValueUtil
 	private static final int POSITIVE_INTEGERS = 1025;
 	private static final @Nullable IntegerValue @NonNull [] INTEGER_VALUES = new @Nullable IntegerValue[NEGATIVE_INTEGERS + POSITIVE_INTEGERS];
 
-	public static @NonNull Bag<?> EMPTY_BAG = new BagImpl<Object>();
-	public static final @NonNull Set<Object> EMPTY_SET = Collections.emptySet();
+	public static @NonNull Bag<@Nullable Object> EMPTY_BAG = new BagImpl<>();
+	public static final @NonNull Set<@Nullable Object> EMPTY_SET = Collections.emptySet();
 
 	@SuppressWarnings("null")
 	public static final @NonNull BigInteger INTEGER_MAX_VALUE = BigInteger.valueOf(Integer.MAX_VALUE);
@@ -477,7 +477,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull BagValue createBagRange(@NonNull CollectionTypeId typeId, @Nullable Object... values) {
-		Bag<Object> allValues = new BagImpl<Object>();
+		Bag<@Nullable Object> allValues = new BagImpl<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
 				allValues.addAll((IntegerRange)value);
@@ -489,7 +489,7 @@ public abstract class ValueUtil
 		return new BagValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull BagValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<? extends Object> boxedValues) {
+	public static @NonNull BagValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable Object> boxedValues) {
 		return new BagValueImpl(typeId, boxedValues);
 	}
 
@@ -547,7 +547,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		OrderedSet<Object> allValues = new OrderedSetImpl<Object>();
+		OrderedSet<@Nullable Object> allValues = new OrderedSetImpl<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
 				allValues.addAll((IntegerRange)value);
@@ -559,7 +559,7 @@ public abstract class ValueUtil
 		return new SparseOrderedSetValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull OrderedSetValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
+	public static @NonNull OrderedSetValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> boxedValues) {
 		return new SparseOrderedSetValueImpl(typeId, boxedValues);
 	}
 
@@ -580,7 +580,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SequenceValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		List<Object> allValues = new ArrayList<Object>();
+		List<@Nullable Object> allValues = new ArrayList<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
 				allValues.addAll((IntegerRange)value);
@@ -592,7 +592,7 @@ public abstract class ValueUtil
 		return new SparseSequenceValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull SequenceValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<? extends Object> boxedValues) {
+	public static @NonNull SequenceValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable Object> boxedValues) {
 		return new SparseSequenceValueImpl(typeId, boxedValues);
 	}
 
@@ -605,7 +605,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull SetValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		Set<Object> allValues = new HashSet<Object>();
+		Set<@Nullable Object> allValues = new HashSet<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
 				allValues.addAll((IntegerRange)value);
@@ -617,7 +617,7 @@ public abstract class ValueUtil
 		return new SetValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> boxedValues) {
+	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> boxedValues) {
 		return new SetValueImpl(typeId, boxedValues);
 	}
 
