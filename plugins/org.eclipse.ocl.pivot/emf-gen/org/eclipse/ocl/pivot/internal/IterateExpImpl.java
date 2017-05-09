@@ -616,7 +616,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				}
 				/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
 					final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedSource == null;
 					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
@@ -628,7 +628,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
 						safe_type_source = type;
 					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType));
+					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType_0));
 					final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
 					CAUGHT_isNullFree = isNullFree;
 				}

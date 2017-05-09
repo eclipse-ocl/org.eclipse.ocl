@@ -261,7 +261,7 @@ public abstract class LoopExpImpl
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_result;
 			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_14 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedSource = this.getOwnedSource();
 				final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedSource == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
@@ -273,7 +273,7 @@ public abstract class LoopExpImpl
 					final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
 					safe_type_source = type;
 				}
-				final /*@Thrown*/ boolean result = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType).booleanValue();
+				final /*@Thrown*/ boolean result = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType_14).booleanValue();
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {
