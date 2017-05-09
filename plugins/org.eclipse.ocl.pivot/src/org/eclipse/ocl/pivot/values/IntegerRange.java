@@ -24,4 +24,7 @@ public interface IntegerRange extends List<@Nullable Object>
 	@NonNull IntegerValue getFirst();
 	@NonNull IntegerValue getLast();
 	@NonNull IntegerValue getSize();
+	//	@NonNull ValueFactory getValueFactory();
+	//	@Override
+	//	@NonNull Iterator<@NonNull Object> iterator();
 }

@@ -33,8 +33,14 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.DataTypeId;
+import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy;
+import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy.JavaEqualsStrategy;
+import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy.SimpleEqualsStrategy;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.internal.values.MapTypeParametersImpl;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
@@ -160,6 +166,51 @@ public class TypeUtil
 		return new TemplateParametersImpl(parameters);
 	}
 
+	public static CollectionKind getCollectionKind(CollectionType collectionType) {
+		if (collectionType instanceof OrderedSetType) {
+			return CollectionKind.ORDERED_SET;
+		}
+		else if (collectionType instanceof SequenceType) {
+			return CollectionKind.SEQUENCE;
+		}
+		else if (collectionType instanceof SetType) {
+			return CollectionKind.SET;
+		}
+		else if (collectionType instanceof BagType) {
+			return CollectionKind.BAG;
+		}
+		else {
+			return CollectionKind.COLLECTION;
+		}
+	}
+
+	/**
+	 * Return a suitable object to assist in the comparison of boxed values of typeId.
+	 * If isNull, it is guaranteed that the second of two compared values will be null.
+	 *
+	 * @since 1.3
+	 */
+	public static @NonNull EqualsStrategy getEqualsStrategy(@NonNull TypeId typeId, boolean isNull) {
+		if (isNull) {
+			return SimpleEqualsStrategy.INSTANCE;
+		}
+		while ((typeId instanceof CollectionTypeId) && !(typeId instanceof OclVoidTypeId)) {
+			typeId = ((CollectionTypeId)typeId).getElementTypeId();
+		}
+		if (typeId instanceof PrimitiveTypeId) {
+			//			if ((typeId == TypeId.BOOLEAN) || (typeId == TypeId.STRING)) {
+			return JavaEqualsStrategy.INSTANCE;
+			//			}
+			//			else {
+			//				return OCLEqualsStrategy.INSTANCE;
+			//			}
+		}
+		else if (typeId instanceof DataTypeId) {
+			return JavaEqualsStrategy.INSTANCE;		// FIXME ??
+		}
+		return  SimpleEqualsStrategy.INSTANCE;		// FIXME ?? TypeTypeId
+	}
+
 	public static @NonNull Type @NonNull [] getLambdaParameterTypes(@NonNull LambdaType lambdaType) {
 		int iParameter = 0;
 		List<? extends Type> ownedParameters = lambdaType.getParameterTypes();
@@ -283,23 +334,5 @@ public class TypeUtil
 		TypeId firstParts = firstTupleType.getTypeId();
 		TypeId secondParts = secondTupleType.getTypeId();
 		return firstParts == secondParts;
-	}
-
-	public static CollectionKind getCollectionKind(CollectionType collectionType) {
-		if (collectionType instanceof OrderedSetType) {
-			return CollectionKind.ORDERED_SET;
-		}
-		else if (collectionType instanceof SequenceType) {
-			return CollectionKind.SEQUENCE;
-		}
-		else if (collectionType instanceof SetType) {
-			return CollectionKind.SET;
-		}
-		else if (collectionType instanceof BagType) {
-			return CollectionKind.BAG;
-		}
-		else {
-			return CollectionKind.COLLECTION;
-		}
 	}
 }

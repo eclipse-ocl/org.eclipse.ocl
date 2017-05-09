@@ -13,10 +13,8 @@ package org.eclipse.ocl.pivot.internal.evaluation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -25,7 +23,6 @@ import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
@@ -70,6 +67,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.internal.iterators.CollectionLiteralIterator;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager;
@@ -78,10 +76,10 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -198,10 +196,29 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 * Callback for a CollectionLiteralExp visit.
 	 */
 	@Override
-	public Object visitCollectionLiteralExp(@NonNull CollectionLiteralExp cl) {
+	public Object visitCollectionLiteralExp(@NonNull CollectionLiteralExp collectionLiteralExp) {
+		List<@Nullable Object> literalElements = new ArrayList<>();
+		for (@NonNull CollectionLiteralPart part : PivotUtil.getOwnedParts(collectionLiteralExp)) {
+			if (part instanceof CollectionRange) {
+				CollectionRange range = (CollectionRange)part;
+				OCLExpression ownedFirst = PivotUtil.getOwnedFirst(range);
+				OCLExpression ownedLast = PivotUtil.getOwnedLast(range);
+				Object first = ownedFirst.accept(undecoratedVisitor);
+				Object last = ownedLast.accept(undecoratedVisitor);
+				int firstValue = ValueUtil.asIntegerValue(first).intValue();
+				int lastValue = ValueUtil.asIntegerValue(last).intValue();
+				literalElements.add(new CollectionLiteralIterator.Range(firstValue, lastValue));
+			}
+			else {
+				OCLExpression ownedItem = PivotUtil.getOwnedItem((CollectionItem)part);
+				Object itemValue = ownedItem.accept(undecoratedVisitor);
+				literalElements.add(itemValue);
+			}
+		}
+		return new CollectionLiteralIterator((CollectionTypeId) collectionLiteralExp.getTypeId(), literalElements);
 		// construct the appropriate collection from the parts
 		// based on the collection kind.
-		List<CollectionLiteralPart> parts = cl.getOwnedParts();
+		/*		List<CollectionLiteralPart> parts = cl.getOwnedParts();
 		CollectionType type = (CollectionType) cl.getType();
 		boolean isOrdered = type.isOrdered();
 		if (isOrdered && isSimpleRange(cl)) {
@@ -267,7 +284,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 
 			} // end of parts iterator
 			return idResolver.createCollectionOfAll(type.isOrdered(), type.isUnique(), ClassUtil.nonNullModel(type.getElementType()).getTypeId(), orderedResults);
-		} // end of not-simple range case
+		} // end of not-simple range case */
 	} // end of Set, OrderedSet, Bag Literals
 
 	@Override
@@ -459,9 +476,17 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		} */
 		Object result = null;
 		try {
-			IterationManager iterationManager;
-			OCLExpression body = iteratorExp.getOwnedBody();
 			Type iterationType = PivotUtilInternal.getType(ClassUtil.nonNullModel(iteratorExp.getType()));
+			OCLExpression body = PivotUtil.getOwnedBody(iteratorExp);
+			if (implementation instanceof LibraryIteration.LazyIteration) {
+				List<Variable> iterators = iteratorExp.getOwnedIterators();
+				int iSize = iterators.size();
+				if (iSize == 1) {
+					VariableDeclaration firstIterator = ClassUtil.nonNullModel(iterators.get(0));
+					return ((LibraryIteration.LazyIteration)implementation).evaluate(context, (CollectionTypeId)iterationType.getTypeId(), sourceValue, firstIterator, body);
+				}
+			}
+			IterationManager iterationManager;
 			Type bodyType = PivotUtilInternal.getType(ClassUtil.nonNullModel(body.getType()));
 			Object accumulatorValue = implementation.createAccumulatorValue(context, iterationType.getTypeId(), bodyType.getTypeId());
 			List<Variable> iterators = iteratorExp.getOwnedIterators();
@@ -528,7 +553,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	public Object visitMapLiteralExp(@NonNull MapLiteralExp mapLiteralExp) {
 		List<MapLiteralPart> parts = mapLiteralExp.getOwnedParts();
 		MapType type = (MapType) mapLiteralExp.getType();
-		Map<Object, Object> mapEntries = new HashMap<Object, Object>();
+		Map<@Nullable Object, @Nullable Object> mapEntries = new HashMap<>();
 		for (MapLiteralPart part : parts) {
 			OCLExpression key = part.getOwnedKey();
 			OCLExpression value = part.getOwnedValue();

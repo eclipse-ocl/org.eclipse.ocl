@@ -12,12 +12,19 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.tests.DelegatesTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateBooleanOperationsTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateClassifierOperationsTest;
@@ -44,17 +51,21 @@ import org.eclipse.ocl.examples.test.label.PluginLabelTests;
 import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
+import org.eclipse.ocl.pivot.internal.values.CollectionValueImpl;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestResult;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 /**
  * Tests for the Xtext editor support.
  */
-@SuppressWarnings("nls")
 public class AllXtextTests
 extends TestCase {
 
@@ -74,7 +85,47 @@ extends TestCase {
 		if (testLogFile != null) {
 			PivotTestCase.createTestLog(new File(testLogFile));
 		}
-		TestSuite result = new TestSuite(testSuiteName);
+		TestSuite result = new TestSuite(testSuiteName) {
+
+			@Override
+			public void run(TestResult result) {
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = CollectionValueImpl.ExtensionImpl.collectionClass2count = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyList = LazyIterable.debugCollectionClass2lazyList = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyMap = LazyIterable.debugCollectionClass2lazyMap = new HashMap<>();
+				super.run(result);
+				int iteratorCounts = 0;
+				int nonIteratorCounts = 0;
+				List<@NonNull Class<?>> keySet = new ArrayList<>(collectionClass2count.keySet());
+				Collections.sort(keySet, new Comparator<@NonNull Class<?>>()
+				{
+					@Override
+					public int compare(@NonNull Class<?> o1, @NonNull Class<?> o2) {
+						boolean h1 = LazyCollectionValueImpl.class.isAssignableFrom(o1);
+						boolean h2 = LazyCollectionValueImpl.class.isAssignableFrom(o2);
+						if (h1 != h2) {
+							return h1 ? 1 : -1;
+						}
+						return o1.getName().compareTo(o2.getName());
+					}
+				});
+				for (@NonNull Class<?> collectionClass : keySet) {
+					Integer count = collectionClass2count.get(collectionClass);
+					Integer lazyListCount = collectionClass2lazyList.get(collectionClass);
+					Integer lazyMapCount = collectionClass2lazyMap.get(collectionClass);
+					System.out.println(collectionClass.getName() + " : " + count + " : " + lazyListCount + " : " + lazyMapCount);
+					if (LazyCollectionValueImpl.class.isAssignableFrom(collectionClass)) {
+						iteratorCounts += count;
+					}
+					else {
+						nonIteratorCounts += count;
+					}
+				}
+				System.out.println(">= " + LazyCollectionValueImpl.class.getName() + " : " + iteratorCounts);
+				System.out.println("!>= " + LazyCollectionValueImpl.class.getName() + " : " + nonIteratorCounts);
+				System.out.println("all " + CollectionValue.class.getName() + " : " + (iteratorCounts+nonIteratorCounts));
+			}
+
+		};
 		result.addTestSuite(MonikerTests.class);
 		result.addTestSuite(PivotTests.class);
 		result.addTestSuite(OCLstdlibTests.class);
@@ -141,7 +192,6 @@ extends TestCase {
 
 	public Object run(Object args)
 			throws Exception {
-
 		TestRunner.run(suite());
 		PivotTestCase.closeTestLog();
 		return Arrays

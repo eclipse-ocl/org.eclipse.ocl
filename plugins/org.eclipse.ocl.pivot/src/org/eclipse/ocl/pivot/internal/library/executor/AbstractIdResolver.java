@@ -81,6 +81,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -577,8 +578,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<Object, Object> unboxedValues) {
-		Map<Object, Object> boxedValues = new HashMap<Object, Object>();
+	public @NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<@Nullable Object, @Nullable Object> unboxedValues) {
+		Map<@Nullable Object, @Nullable Object> boxedValues = new HashMap<>();
 		for (Map.Entry<Object, Object> unboxedValue : unboxedValues.entrySet()) {
 			boxedValues.put(boxedValueOf(unboxedValue.getKey()), boxedValueOf(unboxedValue.getValue()));
 		}
@@ -709,7 +710,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 */
 	@Override
 	public @NonNull <T> EList<T> ecoreValueOfAll(@Nullable Class<T> instanceClass, @NonNull Iterable<? extends Object> values) {
-
+		if (values instanceof LazyCollectionValueImpl) {
+			((LazyCollectionValueImpl)values).iterable();
+		}
 		Object[] ecoreValues = new Object[Iterables.size(values)];
 		int i= 0;
 		for (Object value : values) {

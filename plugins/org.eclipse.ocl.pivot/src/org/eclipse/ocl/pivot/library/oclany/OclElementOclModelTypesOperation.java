@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * OclElementOclModelTypesOperation realises the OclElement::oclModelTypes() library operation.
- * 
+ *
  * @since 1.1
  */
 public class OclElementOclModelTypesOperation extends AbstractUnaryOperation
@@ -44,7 +44,8 @@ public class OclElementOclModelTypesOperation extends AbstractUnaryOperation
 		if (sourceVal == null) {
 			throw new InvalidValueException(PivotMessages.NullNavigation, "source value", "oclModelTypes");
 		}
-		Iterable<org.eclipse.ocl.pivot.@NonNull Class> modelClasses = idResolver.getModelClassesOf(sourceVal);
+		@SuppressWarnings("null")
+		Iterable<org.eclipse.ocl.pivot.@Nullable Class> modelClasses = (Iterable<org.eclipse.ocl.pivot.@Nullable Class>)idResolver.getModelClassesOf(sourceVal);
 		if (modelClasses == null) {
 			throw new InvalidValueException(PivotMessages.IncompatibleModelType, sourceType);
 		}

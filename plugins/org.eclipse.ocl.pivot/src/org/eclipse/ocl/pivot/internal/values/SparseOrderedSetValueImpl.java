@@ -16,6 +16,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AppendIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.PrependIterator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSet;
@@ -27,7 +31,7 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
  */
 public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 {
-	public static @NonNull OrderedSet<@Nullable Object> createOrderedSetOfEach(@Nullable Object @NonNull [] boxedValues) {
+	public static @NonNull OrderedSet<Object> createOrderedSetOfEach(@Nullable Object @NonNull [] boxedValues) {
 		OrderedSet<@Nullable Object> result = new OrderedSetImpl<>();
 		for (Object boxedValue : boxedValues) {
 			result.add(boxedValue);
@@ -52,15 +56,20 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
+	public @NonNull OrderedSetValue append(@Nullable Object value) {
+		return AppendIterator.append(getTypeId(), this, value).asOrderedSetValue();
+	}
+
+	/*	@Override
 	public @NonNull OrderedSetValue append(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "append");
 		}
-		OrderedSet<@Nullable Object> result = new OrderedSetImpl<>(elements);
+		OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
 		result.remove(object);  // appended object must be last
 		result.add(object);
 		return new SparseOrderedSetValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @Nullable Object first() {
@@ -72,28 +81,12 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 
 	@Override
 	public @NonNull OrderedSetValue flatten() {
-		OrderedSet<@Nullable Object> flattened = new OrderedSetImpl<>();
-		if (flatten(flattened)) {
-			return new SparseOrderedSetValueImpl(getTypeId(), flattened);
-		}
-		else {
-			return this;
-		}
+		return FlattenIterator.flatten(this).asOrderedSetValue();
 	}
-
-	//	@Override
-	//	protected @NonNull OrderedSet<? extends Object> getElements() {
-	//		return (OrderedSet<? extends Object>) elements;
-	//	}
 
 	@Override
 	public @NonNull OrderedSetValue including(@Nullable Object value) {
-		if (value instanceof InvalidValueException) {
-			throw new InvalidValueException(PivotMessages.InvalidSource, "including");
-		}
-		OrderedSet<@Nullable Object> result = new OrderedSetImpl<>(elements);
-		result.add(value);
-		return new SparseOrderedSetValueImpl(getTypeId(), result);
+		return IncludingIterator.including(getTypeId(), this, value).asOrderedSetValue();
 	}
 
 	@Override
@@ -109,19 +102,24 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
+	public @NonNull OrderedSetValue prepend(@Nullable Object value) {
+		return PrependIterator.prepend(getTypeId(), this, value).asOrderedSetValue();
+	}
+
+	/*	@Override
 	public @NonNull OrderedSetValue prepend(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "prepend");
 		}
-		OrderedSet<@Nullable Object> result = new OrderedSetImpl<>();
+		OrderedSet<Object> result = new OrderedSetImpl<Object>();
 		result.add(object);
 		result.addAll(elements);
 		return new SparseOrderedSetValueImpl(getTypeId(), result);
-	}
+	} */
 
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {
-		return new SparseSequenceValueImpl(getSequenceTypeId(), SparseSequenceValueImpl.createSequenceOfEach(elements));
+		return super.toSequenceValue();
 	}
 
 	@Override

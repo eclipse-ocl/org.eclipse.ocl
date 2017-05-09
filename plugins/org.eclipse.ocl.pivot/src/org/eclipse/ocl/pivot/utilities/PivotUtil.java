@@ -59,6 +59,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -80,6 +81,7 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateBinding;
@@ -1139,6 +1141,13 @@ public class PivotUtil
 	/**
 	 * @since 1.3
 	 */
+	public static @NonNull OCLExpression getOwnedInit(@NonNull TupleLiteralPart tupleLiteralPart) {
+		return ClassUtil.nonNullState(tupleLiteralPart.getOwnedInit());
+	}
+
+	/**
+	 * @since 1.3
+	 */
 	public static @NonNull OCLExpression getOwnedInit(@NonNull Variable variable) {
 		return ClassUtil.nonNullState(variable.getOwnedInit());
 	}
@@ -1218,6 +1227,20 @@ public class PivotUtil
 	 */
 	public static @NonNull Iterable<@NonNull CollectionLiteralPart> getOwnedParts(@NonNull CollectionLiteralExp asCollectionLiteralExp) {
 		return ClassUtil.nullFree(asCollectionLiteralExp.getOwnedParts());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@NonNull MapLiteralPart> getOwnedParts(@NonNull MapLiteralExp asMapLiteralExp) {
+		return ClassUtil.nullFree(asMapLiteralExp.getOwnedParts());
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@NonNull ShadowPart> getOwnedParts(@NonNull ShadowExp asShadowExp) {
+		return ClassUtil.nullFree(asShadowExp.getOwnedParts());
 	}
 
 	/**

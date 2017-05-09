@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -240,6 +241,12 @@ public class TestOCL extends OCLInternal
 	 */
 	public void assertOCLEquals(String message, Object expected, Object actual) {
 		IdResolver.IdResolverExtension idResolver = (IdResolver.IdResolverExtension)getIdResolver();
+		if (expected instanceof CollectionValue) {
+			((CollectionValue)expected).iterable();			// Need an Iterable to allow traversal by both equals and oclHashCode
+		}
+		if (actual instanceof CollectionValue) {
+			((CollectionValue)actual).iterable();			// Need an Iterable to allow traversal by both equals and oclHashCode
+		}
 		if (idResolver.oclEquals(expected, actual)) {
 			int expectedHash = idResolver.oclHashCode(expected);
 			int actualHash = idResolver.oclHashCode(actual);
@@ -248,7 +255,8 @@ public class TestOCL extends OCLInternal
 			}
 			PivotTestSuite.failNotEquals(message + " badHash", expectedHash, actualHash);
 		}
-		PivotTestSuite.failNotEquals(message, expected, actual);
+		Object actual2 = actual instanceof LazyCollectionValueImpl ? ((LazyCollectionValueImpl)actual).asEagerCollectionValue() : actual;
+		PivotTestSuite.failNotEquals(message, expected, actual2);
 	}
 
 	/**
@@ -300,8 +308,8 @@ public class TestOCL extends OCLInternal
 			Object expectedValue = expected instanceof Value ? expected : getIdResolver().boxedValueOf(expected);
 			//    		typeManager.addLockedElement(expectedValue.getType());
 			Object value = evaluate(null, context, expression);
-			//    		String expectedAsString = String.valueOf(expected);
-			//    		String valueAsString = String.valueOf(value);
+			//			String expectedAsString = String.valueOf(expected);
+			//			String valueAsString = String.valueOf(value);
 			assertOCLEquals(expression, expectedValue, value);
 			PivotTestSuite.appendLog(testName, context, expression, null, expectedValue != null ? expectedValue.toString() : null, null);
 			return value;
@@ -376,6 +384,9 @@ public class TestOCL extends OCLInternal
 	public Value assertQueryInvalid(Object context, @NonNull String expression) {
 		try {
 			Object value = evaluateWithoutValidation(null, context, expression);
+			if (value != null) {
+				value.hashCode();	// Force eager Collection evaluation
+			}
 			TestCase.fail(expression + " expected: invalid but was: " + value);
 		} catch (InvalidValueException e) {		// OCL invalid is always an InvalidValueException
 			PivotTestSuite.appendLog(testName, context, expression, null, "invalid", null);
@@ -389,6 +400,9 @@ public class TestOCL extends OCLInternal
 		try {
 			Object value = evaluateWithoutValidation(null, context, expression);
 			//    		if (!ValuesUtil.isInvalid(value)) {
+			if (value != null) {
+				value.hashCode();	// Force eager Collection evaluation
+			}
 			TestCase.fail(expression + " expected: invalid but was: " + value);
 			//    		}
 			//    		InvalidValue invalidValue = (InvalidValue)value;
@@ -585,7 +599,8 @@ public class TestOCL extends OCLInternal
 	public Object assertResultContainsAll(Object context, @NonNull CollectionValue expectedResult, @NonNull String expression) {
 		try {
 			Object result = evaluate(null, context, expression);
-			TestCase.assertTrue(expectedResult.getClass().isInstance(result));
+			TestCase.assertSame(expectedResult.isOrdered(), ((CollectionValue) result).isOrdered());
+			TestCase.assertSame(expectedResult.isUnique(), ((CollectionValue) result).isUnique());
 			TestCase.assertSame(expectedResult.intSize(), ((CollectionValue) result).intSize());
 			Object actualResult = ((CollectionValue) result).includesAll(expectedResult);
 			TestCase.assertTrue("Expected " + result + " to contain " + expectedResult, actualResult == ValueUtil.TRUE_VALUE);
@@ -749,7 +764,6 @@ public class TestOCL extends OCLInternal
 	}
 
 	public @Nullable Object evaluate(Object unusedHelper, @Nullable Object context, @NonNull String expression) throws Exception {
-		MetamodelManager metamodelManager = getMetamodelManager();
 		org.eclipse.ocl.pivot.Class classContext = getContextType(context);
 		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 		ExpressionInOCL query = parserContext.parse(classContext, expression);
@@ -757,6 +771,7 @@ public class TestOCL extends OCLInternal
 		try {
 			return evaluate(query, context);
 		} finally {
+			MetamodelManager metamodelManager = getMetamodelManager();
 			metamodelManager.getASResourceSet().getResources().remove(query.eResource());
 		}
 	}
