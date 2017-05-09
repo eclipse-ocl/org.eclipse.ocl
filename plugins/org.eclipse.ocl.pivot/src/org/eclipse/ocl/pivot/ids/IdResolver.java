@@ -67,7 +67,7 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull CollectionValue createCollectionOfAll(boolean isOrdered, boolean isUnique, @NonNull TypeId elementTypeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId collectedId, @NonNull Iterable<@Nullable ?> unboxedValues);
+	@NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId collectedId, @NonNull Iterable<? extends Object> unboxedValues);
 
 	@Nullable Object createInstance(@NonNull TypeId typeId, @NonNull String stringValue);
 

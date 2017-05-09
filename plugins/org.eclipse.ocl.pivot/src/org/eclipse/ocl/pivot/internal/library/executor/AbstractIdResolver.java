@@ -541,7 +541,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId collectedId, @NonNull Iterable<?> unboxedValues) {
+	public @NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId collectedId, @NonNull Iterable<? extends Object> unboxedValues) {
 		CollectionTypeId collectionId = collectedId.getGeneralizedId();
 		if (collectionId == TypeId.BAG) {
 			return createBagOfAll(collectedId, unboxedValues);
