@@ -383,17 +383,20 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				dynamicType = standardLibrary.getOclInvalidType();
 			}
 			TypeId elementTypeId = dynamicType.getTypeId();
-			CollectionTypeId collectedTypeId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
 			if ((unboxedValue instanceof LinkedHashSet) || (unboxedValue instanceof OrderedSet)) {
+				CollectionTypeId collectedTypeId = TypeId.ORDERED_SET.getSpecializedId(elementTypeId);
 				return createOrderedSetOfAll(collectedTypeId, unboxedValues);
 			}
 			else if (unboxedValue instanceof Bag) {
+				CollectionTypeId collectedTypeId = TypeId.BAG.getSpecializedId(elementTypeId);
 				return createBagOfAll(collectedTypeId, unboxedValues);
 			}
 			else if (unboxedValue instanceof Set) {
+				CollectionTypeId collectedTypeId = TypeId.SET.getSpecializedId(elementTypeId);
 				return createSetOfAll(collectedTypeId, unboxedValues);
 			}
 			else {
+				CollectionTypeId collectedTypeId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
 				return createSequenceOfAll(collectedTypeId, unboxedValues);
 			}
 		}
@@ -548,8 +551,22 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		else if (collectionId == TypeId.SEQUENCE) {
 			return createSequenceOfAll(collectedId, unboxedValues);
 		}
-		else /*if (collectionId == TypeId.SET)*/ {
+		else if (collectionId == TypeId.SET) {
 			return createSetOfAll(collectedId, unboxedValues);
+		}
+		else /*if (collectionId == TypeId.COLLECTION)*/ {
+			if (unboxedValues instanceof LinkedHashSet<?>) {
+				return createOrderedSetOfAll(collectedId, unboxedValues);
+			}
+			else if (unboxedValues instanceof Set<?>) {
+				return createSetOfAll(collectedId, unboxedValues);
+			}
+			else if (unboxedValues instanceof Bag<?>) {
+				return createBagOfAll(collectedId, unboxedValues);
+			}
+			else /*if (unboxedValues instanceof List<?>)*/ {
+				return createSequenceOfAll(collectedId, unboxedValues);
+			}
 		}
 	}
 
