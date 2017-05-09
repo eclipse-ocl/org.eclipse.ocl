@@ -25,6 +25,7 @@ public class OrderedCollectionAppendOperation extends AbstractSimpleBinaryOperat
 	@Override
 	public @NonNull OrderedCollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
 		OrderedCollectionValue leftOrderedCollectionValue = asOrderedCollectionValue(left);
+		checkValid(right);
 		return leftOrderedCollectionValue.append(right);
 	}
 }
