@@ -207,7 +207,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		js.appendClassReference(IdManager.class);
 		js.append(".getParametersId(");
 		boolean isFirst = true;
-		for (@SuppressWarnings("null")@NonNull TypeId parameterId : id.getParametersId()) {
+		for (@NonNull TypeId parameterId : id.getParametersId()) {
 			if (!isFirst) {
 				js.append(", ");
 			}

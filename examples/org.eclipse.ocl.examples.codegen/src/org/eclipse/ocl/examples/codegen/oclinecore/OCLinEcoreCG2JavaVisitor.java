@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * An OCLinEcoreCG2JavaVisitor supports generation of the OCL embedded in an Ecore model
@@ -70,10 +69,16 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				Element asElement = cgConstraint.getAst();
 				if ((cgBody != null) && (pivotClass instanceof org.eclipse.ocl.pivot.Class) && (asElement instanceof Constraint)) {
 					Constraint asConstraint = (Constraint) asElement;
-					localContext = globalContext.getLocalContext(cgConstraint);
-					String bodyText = generateValidatorBody(cgBody, asConstraint, (org.eclipse.ocl.pivot.Class)pivotClass);
-					String fragmentURI = getFragmentURI(pivotClass) + "==" + getRuleName(asConstraint);
-					bodies.put(fragmentURI, bodyText);
+					pushStaticFrameStack(cgConstraint);
+					try {
+						String ruleName = getRuleName(asConstraint);
+						String fragmentURI = getFragmentURI(pivotClass) + "==" + ruleName;
+						String bodyText = generateValidatorBody(cgBody, asConstraint, (org.eclipse.ocl.pivot.Class)pivotClass);
+						bodies.put(fragmentURI, bodyText);
+					}
+					finally {
+						popStaticFrameStack();
+					}
 				}
 			}
 			for (CGOperation cgOperation : cgClass.getOperations()) {
@@ -81,10 +86,15 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				Element asOperation = cgOperation.getAst();
 				if ((cgBody != null) && (asOperation instanceof Operation)) {
 					String returnClassName = genModelHelper.getOperationReturnType((Operation)asOperation);
-					localContext = globalContext.getLocalContext(cgOperation);
-					String bodyText = generateBody(cgBody, returnClassName);
-					String fragmentURI = getFragmentURI(asOperation);
-					bodies.put(fragmentURI, bodyText);
+					pushStaticFrameStack(cgOperation);
+					try {
+						String bodyText = generateBody(cgBody, returnClassName);
+						String fragmentURI = getFragmentURI(asOperation);
+						bodies.put(fragmentURI, bodyText);
+					}
+					finally {
+						popStaticFrameStack();
+					}
 				}
 			}
 			for (CGProperty cgProperty : cgClass.getProperties()) {
@@ -92,14 +102,18 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				Element asProperty = cgProperty.getAst();
 				if ((cgBody != null) && (asProperty instanceof Property)) {
 					String returnClassName = genModelHelper.getPropertyResultType((Property)asProperty);
-					localContext = globalContext.getLocalContext(cgProperty);
-					String bodyText = generateBody(cgBody, returnClassName);
-					String fragmentURI = getFragmentURI(asProperty);
-					bodies.put(fragmentURI, bodyText);
+					pushStaticFrameStack(cgProperty);
+					try {
+						String bodyText = generateBody(cgBody, returnClassName);
+						String fragmentURI = getFragmentURI(asProperty);
+						bodies.put(fragmentURI, bodyText);
+					}
+					finally {
+						popStaticFrameStack();
+					}
 				}
 			}
 		}
-		localContext = null;
 		return bodies;
 	}
 
@@ -162,9 +176,9 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return (OCLinEcoreGlobalContext) globalContext;
 	}
 
-	protected @NonNull OCLinEcoreLocalContext getLocalContext() {
-		return ClassUtil.nonNullState((OCLinEcoreLocalContext) localContext);
-	}
+	//	protected @NonNull OCLinEcoreLocalContext getLocalContext() {
+	//		return ClassUtil.nonNullState((OCLinEcoreLocalContext) localContext);
+	//	}
 
 	protected String getRuleName(@NonNull Constraint constraint) {
 		String name = constraint.getName();

@@ -206,8 +206,15 @@ public class CodeGenAnalyzer
 		CGTypeId cgTypeId = getTypeId(typeId);
 		cgType.setUnderlyingTypeId(cgTypeId);
 		cgType.setAst(asType);
-		cgType.setName(getNameManager().getGlobalSymbolName(asType));
-		//		cgType.setValueName(cgType.getName());
+		//	FIXME CGExecutorType are local names, so
+		//	we could reserve the name globally for asType and re-use for cgType,
+		//	but any imperfections in CSE give a duplicate name; - occurs for QVTd testExample2_V2_CG
+		//	for now numerous distinct names
+		//  eventually probably need a distinct StaticFrame for each visitor.
+		cgType.setName(getNameManager().getGlobalSymbolName(cgType, getNameManager().getNameHint(asType)));
+		//		String globalSymbolName = getNameManager().getGlobalSymbolName(asType);
+		//		cgType.setName(globalSymbolName);
+		//		cgType.setValueName(globalSymbolName);
 		cgType.getDependsOn().add(cgTypeId);
 		return cgType;
 	}

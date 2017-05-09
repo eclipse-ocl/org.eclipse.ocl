@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -30,6 +31,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
@@ -180,8 +183,20 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgTuplePart.getInit());
 	}
 
+	public static @NonNull CGValuedElement getInit(@NonNull CGVariable cgVariable) {
+		return ClassUtil.nonNullState(cgVariable.getInit());
+	}
+
 	public static Iterable<@NonNull CGTuplePart> getParts(@NonNull CGTupleExp cgTupleExp) {
 		return ClassUtil.nullFree(cgTupleExp.getParts());
+	}
+
+	public static @NonNull CGValuedElement getReferredConstant(@NonNull CGConstantExp cgConstantExp) {
+		return ClassUtil.nonNullState(cgConstantExp.getReferredConstant());
+	}
+
+	public static @NonNull CGValuedElement getReferredVariable(@NonNull CGVariableExp cgVariableExp) {
+		return ClassUtil.nonNullState(cgVariableExp.getReferredVariable());
 	}
 
 	public static boolean isInlinedId(@NonNull ElementId elementId) {

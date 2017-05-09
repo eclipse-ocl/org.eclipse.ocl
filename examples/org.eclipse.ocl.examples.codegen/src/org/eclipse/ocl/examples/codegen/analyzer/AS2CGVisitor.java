@@ -31,6 +31,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
@@ -150,6 +151,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectProperty;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
@@ -168,7 +170,30 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAppendAllOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAppendOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsBagOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsOrderedSetOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsSequenceOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableAsSetOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableExcludingAllOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableExcludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingAllOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableIncludingOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableIntersectionOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMutableUnionOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation;
+import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation;
+import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation;
 import org.eclipse.ocl.pivot.library.iterator.ExistsIteration;
 import org.eclipse.ocl.pivot.library.iterator.ForAllIteration;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
@@ -348,6 +373,26 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		return cgOperationCallExp;
+	}
+
+	private boolean canBeMutable(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp element) {
+		if (cgSource == null) {
+			return false;
+		}
+		if (cgSource instanceof CGCollectionExp) {
+			return false;
+		}
+		if (!cgSource.isNonInvalid()) {
+			return false;
+		}
+		if (cgSource instanceof CGCallExp) {
+			return true;
+		}
+		if (cgSource instanceof CGVariableExp) {
+			// ?? analyze single use
+			return false;
+		}
+		return false;
 	}
 
 	protected @NonNull CGValuedElement constrainedOperationCall(@NonNull OperationCallExp element,
@@ -664,6 +709,66 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		OCLExpression pSource = element.getOwnedSource();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		CGOperationCallExp cgOperationCallExp = null;
+		if (libraryOperation instanceof OrderedCollectionAppendOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAppendOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof OrderedCollectionAppendAllOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAppendAllOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionAsBagOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAsBagOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionAsOrderedSetOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAsOrderedSetOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionAsSequenceOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAsSequenceOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionAsSetOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableAsSetOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionExcludingOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableExcludingOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionExcludingAllOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableExcludingAllOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionIncludingOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableIncludingOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionIncludingAllOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableIncludingAllOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionIntersectionOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableIntersectionOperation.INSTANCE;
+			}
+		}
+		else if (libraryOperation instanceof CollectionUnionOperation) {
+			if (canBeMutable(cgSource, element)) {
+				libraryOperation = CollectionMutableUnionOperation.INSTANCE;
+			}
+		}
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {
 			CGIsInvalidExp cgIsInvalidExp = CGModelFactory.eINSTANCE.createCGIsInvalidExp();
 			cgIsInvalidExp.setSource(cgSource);
@@ -851,6 +956,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			//			}
 			CGLibraryOperationCallExp cgLibraryOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 			cgLibraryOperationCallExp.setLibraryOperation((LibraryOperation) libraryOperation);
+			cgLibraryOperationCallExp.setReferredOperation(asOperation);
 			cgOperationCallExp = cgLibraryOperationCallExp;
 		}
 		if (cgOperationCallExp == null) {
@@ -975,7 +1081,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGValuedElement generateSafeExclusion(@NonNull CallExp callExp, @NonNull CGValuedElement cgSource) {
 		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 		cgOperationCallExp.setLibraryOperation(CollectionExcludingOperation.INSTANCE);
-		//		cgOperationCallExp.setReferredOperation(asOperation);
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		CollectionType collectionType = standardLibrary.getCollectionType();
+		Operation asOperation = NameUtil.getNameable(collectionType.getOwnedOperations(), "excluding");		// FIXME Promote QVTd's StandardLibraryHelper
+		cgOperationCallExp.setReferredOperation(asOperation);
 		OCLExpression asSource = callExp.getOwnedSource();
 		setAst(cgOperationCallExp, asSource.getTypeId(), "safe_" + callExp.getName() + "_sources"/*nameManagerContext.getSymbolName(callExp, "safe")*/);
 		//		cgOperationCallExp.setAst(asSource);
