@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A bag is a collection that is non-unique and unordered.  It is, therefore,
@@ -31,7 +32,7 @@ public interface Bag<E> extends Collection<E>
 		/**
 		 * Return the internal map of distinct object to count of that object.
 		 */
-		@NonNull Map<E, ? extends Number> getMap();
+		@NonNull Map<@Nullable E, @NonNull ? extends Number> getMap();
 	}
 
 	/**

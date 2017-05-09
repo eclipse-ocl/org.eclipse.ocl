@@ -492,7 +492,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull BagValue createBagOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
-		Bag<Object> boxedValues = new BagImpl<Object>();
+		Bag<@Nullable Object> boxedValues = new BagImpl<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -501,7 +501,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
-		Bag<Object> boxedValues = new BagImpl<Object>();
+		Bag<@Nullable Object> boxedValues = new BagImpl<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -570,7 +570,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull OrderedSetValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
-		OrderedSet<Object> boxedValues = new OrderedSetImpl<Object>();
+		OrderedSet<@Nullable Object> boxedValues = new OrderedSetImpl<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -579,7 +579,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
-		OrderedSet<Object> boxedValues = new OrderedSetImpl<Object>();
+		OrderedSet<@Nullable Object> boxedValues = new OrderedSetImpl<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -588,7 +588,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull SequenceValue createSequenceOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
-		List<Object> boxedValues = new ArrayList<Object>();
+		List<@Nullable Object> boxedValues = new ArrayList<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -597,7 +597,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
-		List<Object> boxedValues = new ArrayList<Object>();
+		List<@Nullable Object> boxedValues = new ArrayList<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -606,7 +606,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull SetValue createSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
-		Set<Object> boxedValues = new HashSet<Object>();
+		Set<@Nullable Object> boxedValues = new HashSet<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}
@@ -615,7 +615,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
-		Set<Object> boxedValues = new HashSet<Object>();
+		Set<@Nullable Object> boxedValues = new HashSet<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
 		}

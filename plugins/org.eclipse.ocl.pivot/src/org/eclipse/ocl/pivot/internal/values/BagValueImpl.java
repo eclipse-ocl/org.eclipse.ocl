@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -44,8 +43,8 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 		return ValuesPackage.Literals.BAG_VALUE;
 	}
 
-	public static @NonNull Bag<Object> createBagOfEach(@Nullable Object @NonNull [] boxedValues) {
-		Bag<Object> result = new BagImpl<Object>();
+	public static @NonNull Bag<@Nullable Object> createBagOfEach(@Nullable Object @NonNull [] boxedValues) {
+		Bag<@Nullable Object> result = new BagImpl<>();
 		for (Object boxedValue : boxedValues) {
 			result.add(boxedValue);
 		}
@@ -55,17 +54,16 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 	public static class Accumulator extends BagValueImpl implements BagValue.Accumulator
 	{
 		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new BagImpl<Object>());
+			super(typeId, new BagImpl<>());
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
 		public boolean add(@Nullable Object value) {
-			return ((Collection<Object>)elements).add(value);
+			return elements.add(value);
 		}
 	}
 
-	public BagValueImpl(@NonNull CollectionTypeId typeId, @NonNull Bag<? extends Object> boxedValues) {
+	public BagValueImpl(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable Object> boxedValues) {
 		super(typeId, boxedValues);
 	}
 
@@ -76,7 +74,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 
 	@Override
 	public @NonNull Bag<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
-		Bag<Object> unboxedValues = new BagImpl<Object>();
+		Bag<@Nullable Object> unboxedValues = new BagImpl<>();
 		for (Object boxedValue : elements) {
 			unboxedValues.add(idResolver.unboxedValueOf(boxedValue));
 		}
@@ -114,7 +112,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 
 	@Override
 	public @NonNull BagValue excluding(@Nullable Object value) {
-		Bag<Object> result = new BagImpl<Object>();
+		Bag<@Nullable Object> result = new BagImpl<>();
 		if (value == null) {
 			for (Object element : elements) {
 				if (element != null) {
@@ -139,7 +137,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 
 	@Override
 	public @NonNull BagValue excludingAll(@NonNull CollectionValue values) {
-		Bag<Object> result = new BagImpl<Object>();
+		Bag<@Nullable Object> result = new BagImpl<>();
 		for (Object element : elements) {
 			boolean reject = false;
 			if (element == null) {
@@ -172,7 +170,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 
 	@Override
 	public @NonNull BagValue flatten() {
-		Bag<Object> flattened = new BagImpl<Object>();
+		Bag<@Nullable Object> flattened = new BagImpl<>();
 		if (flatten(flattened)) {
 			return new BagValueImpl(getTypeId(), flattened);
 		}
@@ -187,8 +185,8 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 	//	}
 
 	@Override
-	public @NonNull Bag<? extends Object> getElements() {
-		return (Bag<? extends Object>) elements;
+	public @NonNull Bag<@Nullable Object> getElements() {
+		return (Bag<@Nullable Object>) elements;
 	}
 
 	@Override
@@ -199,16 +197,16 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 	@Override
 	public @NonNull BagValue including(@Nullable Object value) {
 		assert !(value instanceof InvalidValueException);
-		Iterable<? extends Object> iterables = elements;
-		Bag<Object> result = new BagImpl<>(iterables);
+		Iterable<@Nullable Object> iterables = elements;
+		Bag<@Nullable Object> result = new BagImpl<>(iterables);
 		result.add(value);
 		return new BagValueImpl(getTypeId(), result);
 	}
 
 	@Override
 	public @NonNull BagValue includingAll(@NonNull CollectionValue values) {
-		Iterable<? extends Object> iterables = elements;
-		Bag<Object> result = new BagImpl<>(iterables);
+		Iterable<@Nullable Object> iterables = elements;
+		Bag<@Nullable Object> result = new BagImpl<>(iterables);
 		for (Object value : values) {
 			result.add(value);
 		}
@@ -226,15 +224,15 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue
 	}
 
 	@Override
-	public @NonNull SequenceValue sort(@NonNull Comparator<Object> comparator) {
-		List<Object> values = new ArrayList<Object>(elements);
+	public @NonNull SequenceValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+		List<@Nullable Object> values = new ArrayList<>(elements);
 		Collections.sort(values, comparator);
 		return new SparseSequenceValueImpl(getSequenceTypeId(), values);
 	}
 
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {
-		return new SparseSequenceValueImpl(getSequenceTypeId(), new ArrayList<Object>(elements));
+		return new SparseSequenceValueImpl(getSequenceTypeId(), new ArrayList<>(elements));
 	}
 
 	@Override

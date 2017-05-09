@@ -53,7 +53,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	}
 
 	public static @NonNull MapValue createMapValueOfEach(@NonNull MapTypeId typeId, MapEntry[] mapEntries) {
-		Map<Object, Object> boxedValues = new HashMap<Object, Object>();
+		Map<@Nullable Object, @Nullable Object> boxedValues = new HashMap<>();
 		if (mapEntries != null) {
 			for (MapEntry mapEntry : mapEntries) {
 				boxedValues.put(mapEntry.getKey(), mapEntry.getValue());		// FIXME boxed
@@ -73,17 +73,17 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	}
 
 	protected @NonNull MapTypeId typeId;
-	protected @NonNull Map<Object, Object> boxedValues;
+	protected @NonNull Map<@Nullable Object, @Nullable Object> boxedValues;
 	private int hashCode = 0;
 
-	public MapValueImpl(@NonNull MapTypeId typeId, @NonNull Map<Object, Object> boxedValues) {
+	public MapValueImpl(@NonNull MapTypeId typeId, @NonNull Map<@Nullable Object, @Nullable Object> boxedValues) {
 		this.typeId = typeId;
 		this.boxedValues = boxedValues;
 		assert checkElementsAreValues(boxedValues.entrySet());
 	}
 
 	@Override
-	public @Nullable List<?> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+	public @Nullable List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -95,7 +95,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	}
 
 	@Override
-	public @NonNull Map<? extends Object, ? extends Object> asMap() {
+	public @NonNull Map<@Nullable Object, @Nullable Object> asMap() {
 		return boxedValues;
 	}
 
@@ -122,7 +122,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	}
 
 	@Override
-	public @NonNull Set<Map.Entry<Object, Object>> entrySet() {
+	public @NonNull Set<Map.Entry<@Nullable Object, @Nullable Object>> entrySet() {
 		return boxedValues.entrySet();
 	}
 
@@ -250,7 +250,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		if (key instanceof InvalidValueException) {
 			throw (InvalidValueException)key;
 		}
-		Map<Object, Object> newBoxedValues = new HashMap<Object, Object>(boxedValues);
+		Map<@Nullable Object, @Nullable Object> newBoxedValues = new HashMap<>(boxedValues);
 		newBoxedValues.remove(key);
 		return new MapValueImpl(typeId, newBoxedValues);
 	}
@@ -263,7 +263,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		if (value instanceof InvalidValueException) {
 			throw (InvalidValueException)value;
 		}
-		Map<Object, Object> newBoxedValues = new HashMap<Object, Object>(boxedValues);
+		Map<@Nullable Object, @Nullable Object> newBoxedValues = new HashMap<>(boxedValues);
 		Object actualValue = newBoxedValues.get(key);
 		if (ClassUtil.safeEquals(actualValue, value)) {
 			newBoxedValues.remove(key);
@@ -273,7 +273,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 
 	@Override
 	public @NonNull MapValue excludingAll(@NonNull CollectionValue c) {
-		Map<Object, Object> newBoxedValues = new HashMap<Object, Object>(boxedValues);
+		Map<@Nullable Object, @Nullable Object> newBoxedValues = new HashMap<>(boxedValues);
 		for (Object key : c) {
 			newBoxedValues.remove(key);
 		}
@@ -282,8 +282,8 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 
 	@Override
 	public @NonNull MapValue excludingMap(@NonNull MapValue map) {
-		Map<Object, Object> newBoxedValues = new HashMap<Object, Object>(boxedValues);
-		for (Map.Entry<Object, Object> entry : map.entrySet()) {
+		Map<@Nullable Object, @Nullable Object> newBoxedValues = new HashMap<>(boxedValues);
+		for (Map.Entry<@Nullable Object, @Nullable Object> entry : map.entrySet()) {
 			Object key = entry.getKey();
 			Object actualValue = newBoxedValues.get(key);
 			if (ClassUtil.safeEquals(actualValue, entry.getValue())) {
@@ -312,7 +312,8 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull BagValue getValues() {
 		CollectionTypeId bagId = TypeId.BAG.getSpecializedId(typeId.getValueTypeId());
-		return ValueUtil.createBagValue(bagId, new BagImpl<Object>(boxedValues.values()));
+		Iterable<@Nullable Object> values = boxedValues.values();
+		return ValueUtil.createBagValue(bagId, new BagImpl<>(values));
 	}
 
 	@Override
@@ -457,14 +458,14 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 		if (value instanceof InvalidValueException) {
 			throw (InvalidValueException)value;
 		}
-		Map<Object, Object> newBoxedValues = new HashMap<Object, Object>(boxedValues);
+		Map<@Nullable Object, @Nullable Object> newBoxedValues = new HashMap<>(boxedValues);
 		newBoxedValues.put(key, value);
 		return new MapValueImpl(returnTypeId, newBoxedValues);
 	}
 
 	@Override
 	public @NonNull MapValue includingMap(@NonNull MapTypeId returnTypeId, @NonNull MapValue map) {
-		Map<Object, Object> newBoxedValues = new HashMap<Object, Object>(boxedValues);
+		Map<@Nullable Object, @Nullable Object> newBoxedValues = new HashMap<>(boxedValues);
 		for (Map.Entry<Object, Object> entry : map.entrySet()) {
 			newBoxedValues.put(entry.getKey(), entry.getValue());
 		}
@@ -482,7 +483,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	}
 
 	@Override
-	public @NonNull Set<Object> keySet() {
+	public @NonNull Set<@Nullable Object> keySet() {
 		return boxedValues.keySet();
 	}
 
@@ -498,7 +499,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 100);
 		return s.toString();

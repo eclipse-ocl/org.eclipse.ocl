@@ -29,7 +29,7 @@ public abstract class ObjectValueImpl extends ValueImpl implements ObjectValue
 	protected EClass eStaticClass() {
 		return ValuesPackage.Literals.OBJECT_VALUE;
 	}
-	
+
 	protected ObjectValueImpl() {}
 
 	@Override
@@ -59,7 +59,7 @@ public abstract class ObjectValueImpl extends ValueImpl implements ObjectValue
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		return String.valueOf(getObject());
 	}
 }

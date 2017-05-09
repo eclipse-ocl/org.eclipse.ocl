@@ -25,44 +25,43 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
  */
 public class SparseSequenceValueImpl extends SequenceValueImpl
 {
-	public static @NonNull List<Object> createSequenceOfEach(@Nullable Object @NonNull [] boxedValues) {
-		List<Object> result = new ArrayList<Object>();
+	public static @NonNull List<@Nullable Object> createSequenceOfEach(@Nullable Object @NonNull [] boxedValues) {
+		List<@Nullable Object> result = new ArrayList<>();
 		for (Object boxedValue : boxedValues) {
 			result.add(boxedValue);
 		}
 		return result;
 	}
 
-	public static @NonNull List<?> createSequenceOfEach(@NonNull Collection<? extends Object> elements) {
-		List<?> list = elements instanceof List<?> ? (List<?>)elements : new ArrayList<Object>(elements);
+	public static @NonNull List<@Nullable Object> createSequenceOfEach(@NonNull Collection<@Nullable Object> elements) {
+		List<@Nullable Object> list = elements instanceof List<?> ? (List<@Nullable Object>)elements : new ArrayList<>(elements);
 		return list;
 	}
-	
+
 	public static class Accumulator extends SparseSequenceValueImpl implements SequenceValue.Accumulator
 	{
 		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new ArrayList<Object>());
+			super(typeId, new ArrayList<>());
 		}
 
-		public Accumulator(@NonNull CollectionTypeId typeId, @NonNull List<? extends Object> values) {
+		public Accumulator(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable Object> values) {
 			super(typeId, values);
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
 		public boolean add(@Nullable Object value) {
-			return ((Collection<Object>)elements).add(value);			
-		}		
+			return elements.add(value);
+		}
 
-	    @Override
+		@Override
 		public @NonNull SequenceValue append(@Nullable Object value) {
 			assert !(value instanceof InvalidValueException);
 			add(value);
-	        return this;
-	    }
+			return this;
+		}
 	}
 
-	public SparseSequenceValueImpl(@NonNull CollectionTypeId typeId, @NonNull List<? extends Object> boxedValues) {
+	public SparseSequenceValueImpl(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable Object> boxedValues) {
 		super(typeId, boxedValues);
 	}
 

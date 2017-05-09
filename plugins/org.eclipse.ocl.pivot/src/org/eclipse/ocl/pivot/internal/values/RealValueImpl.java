@@ -62,7 +62,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 			throw new InvalidValueException(e, "divideBigDecimal");
 		}
 	}
-	
+
 	/**
 	 * A simple public static method that may be used to force class initialization.
 	 */
@@ -70,7 +70,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 
 	private final @NonNull BigDecimal value;
 	private Object integerValue = null;	// Lazily computed exact IntegerValue or Exception
-	
+
 	@SuppressWarnings("null")
 	public RealValueImpl(double value) {
 		this(BigDecimal.valueOf(value));
@@ -113,7 +113,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 	}
 
 	@Override
-	public Object asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+	public @Nullable Object asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		if (instanceClass == BigDecimal.class) {
 			return value;
 		}
@@ -122,7 +122,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 			return ecoreValue != null ? ecoreValue : doubleValue();
 		}
 	}
-	
+
 	@Override
 	public @NonNull Number asNumber() {
 		return value;
@@ -152,7 +152,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 	public @NonNull BigInteger bigIntegerValue() {
 		Object intValue = getIntegerValue();
 		if (intValue instanceof Exception) {
-			throw new InvalidValueException((Exception) intValue, "bigIntegerValue");			
+			throw new InvalidValueException((Exception) intValue, "bigIntegerValue");
 		}
 		else {
 			return ((IntegerValue) intValue).bigIntegerValue();
@@ -258,7 +258,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 				integerValue = ValueUtil.integerValueOf(intValue);
 			}
 			catch (ArithmeticException e) {
-				integerValue = e;			
+				integerValue = e;
 			}
 		}
 		return integerValue;
@@ -278,7 +278,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 		Object intValue = getIntegerValue();
 		if (intValue instanceof IntegerValue) {
 			return intValue.hashCode();
-		} 
+		}
 		else {
 			return value.hashCode();
 		}
@@ -288,7 +288,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 	public int intValue() {
 		return value.intValue();
 	}
-	
+
 	@Override
 	public @Nullable IntegerValue isIntegerValue() {
 		return null;
@@ -379,7 +379,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue
 		@SuppressWarnings("null") @NonNull BigDecimal result = value.negate();
 		return ValueUtil.realValueOf(result);
 	}
-	
+
 	@Override
 	public @NonNull IntegerValue round() {
 		BigDecimal rounded;
