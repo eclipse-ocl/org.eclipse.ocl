@@ -385,7 +385,7 @@ public abstract class ValueUtil
 	 */
 	public static @NonNull BaggableIterator<@Nullable Object> baggableIterator(@NonNull CollectionValue collectionValue) {
 		if (collectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)collectionValue).baggableIterator();
+			return ((LazyCollectionValue)collectionValue).lazyIterator();
 		}
 		else if (collectionValue instanceof CollectionValueImpl) {
 			return ((CollectionValueImpl)collectionValue).baggableIterator();
@@ -761,9 +761,6 @@ public abstract class ValueUtil
 		if (c instanceof LazyCollectionValue) {
 			((LazyCollectionValue)c).eagerIterable();
 		}
-		else {
-			System.err.println(NameUtil.debugSimpleName(c) + " no eagerIterable()");
-		}
 		return c;
 	}
 
@@ -779,8 +776,23 @@ public abstract class ValueUtil
 			return ((LazyCollectionValue)c).eagerIterable();
 		}
 		else {
-			System.err.println(NameUtil.debugSimpleName(c) + " no eagerIterable()");
 			return c.iterable();
+		}
+	}
+
+	/**
+	 * Return an iterator whose source has been eagerly populated. This inhibits opportunities for
+	 * redundant iterations to be skipped but may improve the speed of subsequent iterations.
+	 *
+	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
+	 * @since 1.3
+	 */
+	public static @NonNull Iterator<@Nullable Object> eagerIterator(@NonNull CollectionValue c) {
+		if (c instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)c).eagerIterable().iterator();
+		}
+		else {
+			return c.iterator();
 		}
 	}
 
@@ -1126,16 +1138,15 @@ public abstract class ValueUtil
 	/**
 	 * Return an iterable that is intended to be iterated at most once.
 	 * @since 1.3
-	 */
+	 *
 	public static @NonNull Iterable<@Nullable Object> lazyIterable(@NonNull CollectionValue c) {
 		if (c instanceof LazyCollectionValue) {
 			return ((LazyCollectionValue)c).lazyIterable();
 		}
 		else {
-			System.err.println(NameUtil.debugSimpleName(c) + " no lazyIterable()");
 			return c.iterable();
 		}
-	}
+	} */
 
 	/**
 	 * @since 1.3
@@ -1145,7 +1156,6 @@ public abstract class ValueUtil
 			return ((LazyCollectionValue)c).lazyIterator();
 		}
 		else {
-			//			System.err.println(NameUtil.debugSimpleName(c) + " no lazyIterator()");
 			return c.iterator();
 		}
 	}
@@ -1158,8 +1168,7 @@ public abstract class ValueUtil
 			return ((LazyCollectionValue)c).lazyIterator();
 		}
 		else {
-			System.err.println(NameUtil.debugSimpleName(c) + " no lazyIterator()");
-			return (Iterator<@Nullable Object>) c.iterator();
+			return (Iterator<@Nullable Object>)c.iterator();
 		}
 	}
 

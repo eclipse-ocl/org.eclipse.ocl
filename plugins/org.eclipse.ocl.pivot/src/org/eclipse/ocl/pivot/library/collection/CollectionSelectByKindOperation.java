@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.library.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -21,6 +22,7 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -48,7 +50,9 @@ public class CollectionSelectByKindOperation extends AbstractUntypedBinaryOperat
 		boolean changedContents = false;
 		Collection<@Nullable Object> newElements = new ArrayList<>();
 		IdResolver idResolver = executor.getIdResolver();
-		for (Object element : lazyIterable(collectionValue)) {
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(collectionValue);
+		while (iterator.hasNext()) {
+			Object element = iterator.next();
 			if (element == null) {
 				changedContents = true;
 			}

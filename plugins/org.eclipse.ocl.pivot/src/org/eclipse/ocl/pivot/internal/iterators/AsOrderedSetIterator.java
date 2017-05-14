@@ -19,7 +19,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
@@ -121,7 +120,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl imple
 		}
 
 		@Override
-		protected @NonNull LazyCollectionValue reIterator() {
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
 			return new FromArray(typeId, boxedValues);
 		}
 	}
@@ -136,7 +135,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl imple
 		}
 
 		@Override
-		protected @NonNull LazyCollectionValue reIterator() {
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
 			return new FromCollection(typeId, boxedValues);
 		}
 	}
@@ -151,7 +150,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl imple
 		}
 
 		@Override
-		protected @NonNull LazyCollectionValue reIterator() {
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
 			return new FromCollectionValue(sourceValue);
 		}
 	}

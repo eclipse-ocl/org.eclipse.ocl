@@ -10,21 +10,24 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 
+/**
+ * LazyCollectionValue extends the CollectionValue to support lazy iterations. Lazy access attempts to
+ * compute each output value from an input value without any cache for the entire contents. Cached access
+ * computes in a similar fashion, but caches the output to facilitate efficient repeated iterations.
+ * Eager access is similar to cached access, but eagerly populates every cache entry so that ant invalid#
+ * content is detect before any output iteration occurs.
+ */
 public interface LazyCollectionValue extends CollectionValue
 {
-	@NonNull BaggableIterator<@Nullable Object> baggableIterator();
-
 	/**
 	 * Return an iterable that is lazily populated and which my be re-iterated exploiting cached
 	 * values from a first iteration. This provides opportunities for redundant iterations to be skipped.
 	 */
-	@NonNull Iterable<@Nullable Object> cachedIterable();
+	@NonNull LazyIterable<@Nullable Object> cachedIterable();
 
 	/**
 	 * Return an iterable that has been eagerly populated. This inhibits opportunities for
@@ -35,12 +38,10 @@ public interface LazyCollectionValue extends CollectionValue
 	@NonNull LazyIterable<@Nullable Object> eagerIterable();
 
 	/**
-	 * Return an iterable that is intended to be iterated at most once.
+	 * Return an iterator that avoids creating and populating a cache of the contents.
+	 *
+	 * If a re-iteration is attempted, the cache is activated and lazily populated by the second iteration.
+	 * A third re-teration exploits the cache.
 	 */
-	@NonNull LazyIterable<@Nullable Object> lazyIterable();
-
-	/**
-	 * @generated NOT
-	 */
-	@NonNull Iterator<@Nullable Object> lazyIterator();
+	@NonNull BaggableIterator<@Nullable Object> lazyIterator();
 }

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -17,7 +19,6 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * PrependIterator provides a lazy evaluation of the Collection::prepend operation.
@@ -89,7 +90,7 @@ public abstract class PrependIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyCollectionValue reIterator() {
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
 			return new ToBag(typeId, sourceValue, object);
 		}
 	}
@@ -115,7 +116,7 @@ public abstract class PrependIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyCollectionValue reIterator() {
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
 			return new ToSequence(typeId, sourceValue, object);
 		}
 	}
@@ -147,7 +148,7 @@ public abstract class PrependIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyCollectionValue reIterator() {
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
 			return new ToUnique(typeId, sourceValue, object);
 		}
 	}

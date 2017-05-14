@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.iterator;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
@@ -54,7 +56,9 @@ public class CollectIteration extends AbstractIteration
 		else if (bodyVal instanceof CollectionValue) {
 			CollectionValue bodyColl = (CollectionValue) bodyVal;
 			//			try {
-			for (Object value : lazyIterable(bodyColl.flatten())) {
+			Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(bodyColl.flatten());
+			while (iterator.hasNext()) {
+				Object value = iterator.next();
 				if (value != null) {
 					accumulatorValue.add(value);
 				}

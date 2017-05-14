@@ -436,7 +436,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue closure = ClassUtil.nonNullState((CollectionValue)IMPL_closure_0.evaluateIteration(MGR_closure_0));
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue safe_collect_sources = CollectionExcludingOperation.INSTANCE.evaluate(closure, (Object)null);
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createBagAccumulatorValue(PivotTables.BAG_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_1 = ValueUtil.lazyIterator(safe_collect_sources);
+					@NonNull Iterator<Object> ITERATOR__1_1 = ValueUtil.eagerIterator(safe_collect_sources);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue collect_0;
 					while (true) {
 						if (!ITERATOR__1_1.hasNext()) {
@@ -457,7 +457,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					}
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue allProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect_0);
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_1 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_2 = ValueUtil.lazyIterator(allProperties);
+					@NonNull Iterator<Object> ITERATOR__1_2 = ValueUtil.eagerIterator(allProperties);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject;
 					while (true) {
 						if (!ITERATOR__1_2.hasNext()) {
@@ -500,7 +500,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_2 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_3 = ValueUtil.lazyIterator(reject);
+					@NonNull Iterator<Object> ITERATOR__1_3 = ValueUtil.eagerIterator(reject);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue classProperties;
 					while (true) {
 						if (!ITERATOR__1_3.hasNext()) {
@@ -520,7 +520,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_3 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_4 = ValueUtil.lazyIterator(classProperties);
+					@NonNull Iterator<Object> ITERATOR__1_4 = ValueUtil.eagerIterator(classProperties);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject_2;
 					while (true) {
 						if (!ITERATOR__1_4.hasNext()) {
@@ -540,7 +540,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_4 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_5 = ValueUtil.lazyIterator(reject_2);
+					@NonNull Iterator<Object> ITERATOR__1_5 = ValueUtil.eagerIterator(reject_2);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject_1;
 					while (true) {
 						if (!ITERATOR__1_5.hasNext()) {
@@ -571,7 +571,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_5 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_6 = ValueUtil.lazyIterator(reject_1);
+					@NonNull Iterator<Object> ITERATOR__1_6 = ValueUtil.eagerIterator(reject_1);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject_0;
 					while (true) {
 						if (!ITERATOR__1_6.hasNext()) {
@@ -592,7 +592,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_6 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_7 = ValueUtil.lazyIterator(reject_0);
+					@NonNull Iterator<Object> ITERATOR__1_7 = ValueUtil.eagerIterator(reject_0);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue requiredClassProperties;
 					while (true) {
 						if (!ITERATOR__1_7.hasNext()) {
@@ -651,7 +651,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						final @NonNull  ExecutorSingleIterationManager MGR_sortedBy_1 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy_1, extraProperties, ACC_sortedBy_1);
 						final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue sortedBy = ClassUtil.nonNullState((CollectionValue)IMPL_sortedBy_1.evaluateIteration(MGR_sortedBy_1));
 						/*@NonInvalid*/ java.lang.@NonNull String acc = PivotTables.STR_Unexpected_32_initializers_c;
-						@NonNull Iterator<Object> ITERATOR_p_0 = ValueUtil.lazyIterator(sortedBy);
+						@NonNull Iterator<Object> ITERATOR_p_0 = ValueUtil.eagerIterator(sortedBy);
 						/*@Thrown*/ java.lang.@Nullable String iterate;
 						while (true) {
 							if (!ITERATOR_p_0.hasNext()) {
@@ -700,7 +700,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							final @NonNull  ExecutorSingleIterationManager MGR_sortedBy_0_0 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy_0_0, missingProperties, ACC_sortedBy_0_0);
 							final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue sortedBy_0 = ClassUtil.nonNullState((CollectionValue)IMPL_sortedBy_0_0.evaluateIteration(MGR_sortedBy_0_0));
 							/*@NonInvalid*/ java.lang.@NonNull String acc_0 = PivotTables.STR_Missing_32_initializers_c;
-							@NonNull Iterator<Object> ITERATOR_p_1 = ValueUtil.lazyIterator(sortedBy_0);
+							@NonNull Iterator<Object> ITERATOR_p_1 = ValueUtil.eagerIterator(sortedBy_0);
 							/*@Thrown*/ java.lang.@Nullable String iterate_0;
 							while (true) {
 								if (!ITERATOR_p_1.hasNext()) {

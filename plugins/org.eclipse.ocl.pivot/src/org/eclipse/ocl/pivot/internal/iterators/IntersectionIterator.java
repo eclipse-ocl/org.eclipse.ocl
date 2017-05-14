@@ -10,13 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * IntersectionIterator provides a lazy evaluation of the Collection::intersection operation.
@@ -66,7 +67,7 @@ public class IntersectionIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyCollectionValue reIterator() {
+	protected @NonNull Iterator<@Nullable Object> reIterator() {
 		return new IntersectionIterator(typeId, sourceValue, secondValue);
 	}
 

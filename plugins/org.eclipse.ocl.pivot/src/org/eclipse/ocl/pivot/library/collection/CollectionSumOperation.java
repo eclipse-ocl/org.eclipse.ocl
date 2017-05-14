@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.collection;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -45,7 +47,9 @@ public class CollectionSumOperation extends AbstractUnaryOperation
 		else {
 			result = ValueUtil.realValueOf(0.0);
 		}
-		for (Object element : lazyIterable(collectionValue)) {
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(collectionValue);
+		while (iterator.hasNext()) {
+			Object element = iterator.next();
 			result = NumericPlusOperation.INSTANCE.evaluate(result, element);
 		}
 		return result;

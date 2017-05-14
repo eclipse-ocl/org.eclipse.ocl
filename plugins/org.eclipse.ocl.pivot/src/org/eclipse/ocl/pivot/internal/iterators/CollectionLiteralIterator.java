@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * CollectionLiteralIterator adapts a CollectionLiteralExp to comply with the BaggableIterator protocol.
@@ -77,7 +76,7 @@ public class CollectionLiteralIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyCollectionValue reIterator() {
+	protected @NonNull Iterator<@Nullable Object> reIterator() {
 		return new CollectionLiteralIterator(typeId, literalElements);
 	}
 

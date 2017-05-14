@@ -243,10 +243,10 @@ public class TestOCL extends OCLInternal
 	public void assertOCLEquals(String message, Object expected, Object actual) {
 		IdResolver.IdResolverExtension idResolver = (IdResolver.IdResolverExtension)getIdResolver();
 		if (expected instanceof LazyCollectionValue) {
-			((LazyCollectionValue)expected).eagerIterable();		// Need an Iterable to allow traversal by both equals and oclHashCode
+			((LazyCollectionValue)expected).eagerIterable();		// Might need an Iterable to allow traversal by both equals and oclHashCode
 		}
 		if (actual instanceof LazyCollectionValue) {
-			((LazyCollectionValue)actual).eagerIterable();			// Need an Iterable to allow traversal by both equals and oclHashCode
+			((LazyCollectionValue)actual).eagerIterable();			// Might need an Iterable to allow traversal by both equals and oclHashCode
 		}
 		if (idResolver.oclEquals(expected, actual)) {
 			int expectedHash = idResolver.oclHashCode(expected);

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.iterator;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -27,7 +29,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.CollectionValue.Accumulator;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 /**
@@ -56,7 +57,7 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 		}
 
 		@Override
-		protected @NonNull LazyCollectionValue reIterator() {
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
 			return new LazySelectIterator(typeId, sourceValue, executor, body, firstIterator);
 		}
 	}

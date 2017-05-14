@@ -753,10 +753,10 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionFlatten() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryEquals(null, ocl.getEmptySequenceValue(), "Sequence{}->flatten()");
-		ocl.assertQueryEquals(null, ocl.getEmptyBagValue(), "Bag{}->flatten()");
-		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{}->flatten()");
-		ocl.assertQueryEquals(null, ocl.getEmptyOrderedSetValue(), "OrderedSet{}->flatten()");
+		//		ocl.assertQueryEquals(null, ocl.getEmptySequenceValue(), "Sequence{}->flatten()");
+		//		ocl.assertQueryEquals(null, ocl.getEmptyBagValue(), "Bag{}->flatten()");
+		//		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{}->flatten()");
+		//		ocl.assertQueryEquals(null, ocl.getEmptyOrderedSetValue(), "OrderedSet{}->flatten()");
 
 		String expression = "Sequence{Set{1,2,3}, Sequence{2.0, 3.0}, Bag{'test'}}->flatten()";
 		String expectedResultExpression = "Sequence{1, 2, 3, 2.0, 3.0, 'test'}";

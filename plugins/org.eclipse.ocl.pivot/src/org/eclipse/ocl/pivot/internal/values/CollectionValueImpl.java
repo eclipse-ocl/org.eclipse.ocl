@@ -456,7 +456,9 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		Iterable<@Nullable Object> elements = iterable();
 		if (this instanceof BaggableIterator) {
 			iterable();
-			return baggableIterator();
+			@SuppressWarnings("unchecked")
+			BaggableIterator<@Nullable Object> castThis = (BaggableIterator<@Nullable Object>)this;
+			return castThis;
 		}
 		else if (elements instanceof BaggableIterator) {
 			@SuppressWarnings("unchecked")
