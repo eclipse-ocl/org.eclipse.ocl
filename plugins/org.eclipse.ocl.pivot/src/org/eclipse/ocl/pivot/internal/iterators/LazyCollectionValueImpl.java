@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
@@ -64,10 +65,11 @@ import com.google.common.collect.Lists;
  * BaggableIterator protocol. Derived baggable iterators must implement getNextCount() to describe the next entry
  * by a callback to setNext().
  *
- * The LazyCollectionValueImpl may only used as a simple iterator by invoking iterator() without invoking iterable().
- * If a usage of iterator() is followed by a usage of iterable() an IllegalStateException is thrown.
+ * The LazyCollectionValueImpl may be used as a simple iterator by invoking lazyIterator() without invoking iterable().
+ * If a usage of lazyIterator() is followed by another iteration a separate iteration repeats the original
+ * caching results to avoid a third repeat..
  *
- * The LazyCollectionValueImpl may be used as an iterable by invoking iterable() before iterator(). Derived
+ * The LazyCollectionValueImpl may be used as a cached iterable by invoking iterable(). Derived
  * implementations that require memory of their output may invoke iterable() in their constructor. Multiple
  * calls to iterator() while the underlying iteration is in progress return a synchronized multi-access lazy
  * iterator. Call to iterator() after the underlying iteration has completed return a much more efficient
@@ -81,7 +83,7 @@ import com.google.common.collect.Lists;
  *
  * @since 1.3
  */
-public abstract class LazyCollectionValueImpl extends ValueImpl implements CollectionValue, BaggableIterator<@Nullable Object>
+public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyCollectionValue, BaggableIterator<@Nullable Object>
 {
 	@SuppressWarnings("serial")
 	private static final class UnmodifiableEcoreObjects extends EcoreEList.UnmodifiableEList<@Nullable Object>
@@ -107,7 +109,9 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	public static @NonNull BaggableNullIterator EMPTY_ITERATOR = new BaggableNullIterator();
 
-	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2count = null;
+	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazy = null;
+	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2cached = null;
+	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2reiterated = null;
 
 	public static void appendIterable(StringBuilder s, @NonNull Iterable<? extends Object> iterable, int lengthLimit) {
 		s.append("{");
@@ -138,18 +142,17 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 	private int hashCode = 0;
 
 	/**
-	 * If a history of the iterator is required, a non-null LazyIterable is used to provide it by calling
-	 * back to this iterator after ensuring that withIterable is TRUE.
+	 * A non-null lazyIterable provides the lazily populated cache. It may remain null if the LazyCollectionValue
+	 * is used solely as a bypass lazyterator.
 	 */
 	private @Nullable LazyIterable<@Nullable Object> lazyIterable = null;
 
 	/**
-	 * Whether this AbstractBaggableIterator behaves as a multi-iterable iterable or as a single iterable iterator.
-	 * Initially null and indeterminate. Set true by invocation of iterable(). Set false by invocation of iterator().
-	 * Conflicting usage, that is attempting to use a single use iterable for multiple purposes throws an
-	 * IllegalStateException.
+	 * Set true if the first usage of this LazyCollectionValue is a bypass lazyIterator(). Once set any further
+	 * attempts at lazy iteration force a reIterator() to be created that then caches to inhibit further further
+	 * re-iterations.
 	 */
-	private Boolean withIterable = null;
+	private boolean lazyIterator = false;
 
 	/**
 	 * The next value to be returned by this iterator, if hasNext is true.
@@ -170,13 +173,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId) {
 		this.typeId = typeId;
 		this.initialCollectionStrategy = LazyIterable.getCollectionStrategy(typeId);
-		Map<Class<?>, Integer> debugCollectionClass2count2 = debugCollectionClass2count;
-		if (debugCollectionClass2count2 != null) {
-			Class<? extends @NonNull CollectionValue> collectionClass = getClass();
-			Integer count = debugCollectionClass2count2.get(collectionClass);
-			count = count != null ? count+1 : 1;
-			debugCollectionClass2count2.put(collectionClass, count);
-		}
 	}
 
 	//	@Override
@@ -191,13 +187,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public @NonNull BagValue asBagValue() {
-		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
-		return new AsBagIterator(this);
+		eagerIterable();					// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsBagIterator.FromCollectionValue(this);
 	}
 
 	@Override
 	public @NonNull CollectionValue asCollectionValue() {
-		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		eagerIterable();			// Force an InvalidValueEception to be thrown for any invalid element
 		return this;
 	}
 
@@ -212,7 +208,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
 			}
 			else {
-				return new SparseSequenceValueImpl(getTypeId(), iterable().getListOfElements());
+				return new SparseSequenceValueImpl(getTypeId(), eagerIterable().getListOfElements());
 			}
 		}
 		else {
@@ -236,7 +232,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
 			}
 			else {
-				return new SparseSequenceValueImpl(getTypeId(), iterable().getListOfElements());
+				return new SparseSequenceValueImpl(getTypeId(), eagerIterable().getListOfElements());
 			}
 		}
 		else {
@@ -246,11 +242,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public @NonNull List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
-		//		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
+		//		eagerIterable();			// Force an InvalidValueEception to be thrown for any invalid element
 		//		return new AsEcoreIterator(this, idResolver, instanceClass).getListOfElements();
 		@Nullable Object[] unboxedValues = new @Nullable Object[intSize()];
 		int i= 0;
-		for (Object element : iterable()) {
+		Iterator<@Nullable Object> iterator = lazyIterator();
+		while (iterator.hasNext()) {
+			Object element = iterator.next();
 			if (element instanceof Value)
 				unboxedValues[i++] = ((Value)element).asEcoreObject(idResolver, instanceClass);
 			else if (element instanceof EnumerationLiteralId) {
@@ -281,20 +279,20 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public @NonNull OrderedSetValue asOrderedSetValue() {
-		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
-		return new AsOrderedSetIterator(this);
+		eagerIterable();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsOrderedSetIterator.FromCollectionValue(this);
 	}
 
 	@Override
 	public @NonNull SequenceValue asSequenceValue() {
-		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
-		return new AsSequenceIterator(this);
+		eagerIterable();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsSequenceIterator.FromCollectionValue(this);
 	}
 
 	@Override
 	public @NonNull SetValue asSetValue() {
-		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
-		return new AsSetIterator(this);
+		eagerIterable();			// Force an InvalidValueEception to be thrown for any invalid element
+		return new AsSetIterator.FromCollectionValue(this);
 	}
 
 	@Override
@@ -312,31 +310,33 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 		if (javaIindex < 0 || size <= javaIindex) {
 			throw new InvalidValueException(PivotMessages.IndexOutOfRange, oclIndex, size);
 		}
-		return iterable().get(javaIindex);
-	}
-
-	//	@Override
-	public @NonNull BaggableIterator<@Nullable Object> baggableIterator() {
-		if (withIterable == null) {
-			withIterable = Boolean.FALSE;
-		}
-		else if (withIterable == Boolean.FALSE) {
-			System.err.println(NameUtil.debugSimpleName(this) + " iterator() - withIterable: " + withIterable);
-			//			throw new IllegalStateException("Must invoke iterable() before first of multiple iterator() calls.");
-		}
-		LazyIterable<@Nullable Object> iterable = basicGetIterable();
-		if (iterable != null) {
-			return iterable.iterator();
-		}
-		else {
-			withIterable = Boolean.FALSE;
-			//			System.out.println(NameUtil.debugSimpleName(this) + " iterator() withIterable: " + withIterable);
-			return this;
-		}
+		return cachedIterable().get(javaIindex);
 	}
 
 	protected @Nullable LazyIterable<@Nullable Object> basicGetIterable() {
 		return lazyIterable;
+	}
+
+	@Override
+	public synchronized @NonNull LazyIterable<@Nullable Object> cachedIterable() {
+		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
+		if (lazyIterable2 == null) {
+			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
+			Iterator<@Nullable Object> sourceIterator = this;
+			if (lazyIterator) {
+				System.err.println(NameUtil.debugSimpleName(this) + " re-iterating");
+				sourceIterator = reIterator();
+			}
+			lazyIterable = lazyIterable2 = new LazyIterable<>(sourceIterator, getCollectionStrategy(), equalsStrategy);
+			Map<Class<?>, Integer> debugCollectionClass2count2 = debugCollectionClass2cached;
+			if (debugCollectionClass2count2 != null) {
+				Class<? extends @NonNull CollectionValue> collectionClass = getClass();
+				Integer count = debugCollectionClass2count2.get(collectionClass);
+				count = count != null ? count+1 : 1;
+				debugCollectionClass2count2.put(collectionClass, count);
+			}
+		}
+		return lazyIterable2;
 	}
 
 	protected boolean checkElementsAreValues(@NonNull Iterable<? extends Object> elements) {
@@ -352,7 +352,32 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public @NonNull IntegerValue count(@Nullable Object value) {
-		return ValueUtil.integerValueOf(iterable().count(value));
+		int count = 0;
+		Iterator<@Nullable Object> iterator = lazyIterator();
+		if (value == null) {
+			while (iterator.hasNext()) {
+				Object next = iterator.next();
+				if (next == null) {
+					count++;
+				}
+			}
+		}
+		else {
+			while (iterator.hasNext()) {
+				Object next = iterator.next();
+				if (value.equals(next)) {
+					count++;
+				}
+			}
+		}
+		return ValueUtil.integerValueOf(count);
+	}
+
+	@Override
+	public @NonNull LazyIterable<@Nullable Object> eagerIterable() {
+		LazyIterable<@Nullable Object> lazyIterable2 = cachedIterable();
+		lazyIterable2.size();
+		return lazyIterable2;
 	}
 
 	@Override
@@ -442,15 +467,18 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 	 */
 	@Override
 	public @NonNull Boolean excludes(@Nullable Object value) {
+		Iterator<@Nullable Object> iterator = lazyIterator();
 		if (value == null) {
-			for (Object next : this) {
+			while (iterator.hasNext()) {
+				Object next = iterator.next();
 				if (next == null) {
 					return false;
 				}
 			}
 		}
 		else {
-			for (Object next : this) {
+			while (iterator.hasNext()) {
+				Object next = iterator.next();
 				if (value.equals(next)) {
 					return false;
 				}
@@ -470,16 +498,19 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 	 */
 	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
-		for (Object e1 : this) {
+		Iterable<@Nullable Object> cachedIterable = cachedIterable(c);
+		Iterator<@Nullable Object> iterator1 = lazyIterator();
+		while (iterator1.hasNext()) {
+			Object e1 = iterator1.next();
 			if (e1 == null) {
-				for (Object e2 : c.iterable()) {
+				for (Object e2 : cachedIterable) {
 					if (e2 == null) {
 						return false;
 					}
 				}
 			}
 			else {
-				for (Object e2 : c.iterable()) {
+				for (Object e2 : cachedIterable) {
 					if (e1.equals(e2)) {
 						return false;
 					}
@@ -510,7 +541,9 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 	@Override @Deprecated
 	public boolean flatten(@NonNull Collection<Object> flattenedElements) {
 		boolean flattened = false;
-		for (Object element : iterable()) {
+		Iterator<@Nullable Object> iterator = lazyIterator();
+		while (iterator.hasNext()) {
+			Object element = iterator.next();
 			CollectionValue collectionElement = ValueUtil.isCollectionValue(element);
 			if (collectionElement != null) {
 				flattened = true;
@@ -555,26 +588,16 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 	@Override
 	public @NonNull Collection<@Nullable Object> getElements() {
 		if (!isBag()) {
-			return iterable().getListOfElements();
+			return cachedIterable().getListOfElements();
 		}
 		else {
-			return Lists.newArrayList(iterable());			// FIXME avoid this
+			return Lists.newArrayList(lazyIterator());			// FIXME avoid this
 		}
 	}
 
 	@Override
 	public @NonNull String getKind() {
 		return getCollectionStrategy().getKind();
-	}
-
-	//	@Override
-	protected @NonNull List<@Nullable Object> getListOfElements() {
-		return iterable().getListOfElements();
-	}
-
-	//	@Override
-	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
-		return iterable().getMapOfElement2elementCount();
 	}
 
 	/**
@@ -608,7 +631,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public final boolean hasNext() {
-		assert withIterable != null;
 		if ((hasNextCount > 0) || (hasNextCount() > 0)) {
 			useCount = 1;
 			return true;
@@ -621,11 +643,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public final int hasNextCount() {
-		assert withIterable != null;
 		if (hasNextCount <= 0) {
-			//			if (withIterable == null) {
-			//				withIterable = Boolean.FALSE; System.out.println(NameUtil.debugSimpleName(this) + " hasNextCount() withIterable: " + withIterable);
-			//			}
 			int hasNextCount = getNextCount();
 			assert hasNextCount == this.hasNextCount;
 			if (hasNextCount <= 0) {
@@ -644,10 +662,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 					boolean isOrdered = isOrdered();
 					boolean isUnique = isUnique();
 					if (isOrdered || isUnique) {
-						hashCode = computeCollectionHashCode(isOrdered, isUnique, iterable().getListOfElements());
+						hashCode = computeCollectionHashCode(isOrdered, isUnique, cachedIterable().getListOfElements());
 					}
 					else {			// Bag
-						hashCode = computeCollectionHashCode(iterable().getMapOfElement2elementCount());
+						hashCode = computeCollectionHashCode(cachedIterable().getMapOfElement2elementCount());
 					}
 				}
 			}
@@ -657,15 +675,35 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public @NonNull Boolean includes(@Nullable Object value) {
-		return iterable().contains(value);
+		Iterator<@Nullable Object> iterator = lazyIterator();
+		if (value == null) {
+			while (iterator.hasNext()) {
+				Object next = iterator.next();
+				if (next == null) {
+					return true;
+				}
+			}
+		}
+		else {
+			while (iterator.hasNext()) {
+				Object next = iterator.next();
+				if (value.equals(next)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public @NonNull Boolean includesAll(@NonNull CollectionValue c) {
-		for (Object e1 : c.iterable()) {
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(c);
+		Iterable<@Nullable Object> iterable2 = cachedIterable();
+		while (iterator.hasNext()) {
+			Object e1 = iterator.next();
 			boolean gotIt = false;
 			if (e1 == null) {
-				for (Object e2 : this) {
+				for (Object e2 : iterable2) {
 					if (e2 == null) {
 						gotIt = true;
 						break;
@@ -673,7 +711,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 				}
 			}
 			else {
-				for (Object e2 : this) {
+				for (Object e2 : iterable2) {
 					if (e1.equals(e2)) {
 						gotIt = true;
 						break;
@@ -707,7 +745,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public int intSize() {
-		return iterable().size();
+		return eagerIterable().size();
 	}
 
 	@Override
@@ -748,29 +786,31 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public @NonNull LazyIterable<@Nullable Object> iterable() {
-		if (withIterable == null) {
-			withIterable = Boolean.TRUE;
-		}
-		else if (withIterable == Boolean.FALSE) {
-			System.err.println(NameUtil.debugSimpleName(this) + " iterable() - withIterable: " + withIterable);
-			//			throw new IllegalStateException("Cannot invoke iterable() after exploiting an iterator().");
-		}
-		//		withIterable = Boolean.TRUE;
-		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
-		if (lazyIterable2 == null) {
-			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
-			lazyIterable = lazyIterable2 = new LazyIterable<>(this, getCollectionStrategy(), equalsStrategy);
-		}
-		return lazyIterable2;
+		//		System.err.println(NameUtil.debugSimpleName(this) + " iterable() rather than cachedIterable()");
+		return eagerIterable();
 	}
 
 	@Override
 	public @NonNull BaggableIterator<@Nullable Object> iterator() {
-		return baggableIterator();
+		//		System.err.println(NameUtil.debugSimpleName(this) + " iterator() rather than cachedIterator()");
+		return eagerIterable().iterator();
 	}
 
 	public @Nullable Object last() {
 		return at(intSize());
+	}
+
+	@Override
+	public synchronized @NonNull BaggableIterator<@Nullable Object> lazyIterator() {
+		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
+		if (lazyIterable2 != null) {
+			return lazyIterable2.iterator();
+		}
+		if (!lazyIterator) {
+			lazyIterator = true;
+			return this;
+		}
+		return cachedIterable().iterator();
 	}
 
 	public @NonNull CollectionValue minus(@NonNull CollectionValue that) {
@@ -779,7 +819,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public final Object next() {
-		assert withIterable != null;
 		if (hasNextCount <= 0) {
 			throw new NoSuchElementException();
 		}
@@ -806,13 +845,30 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 	@Override
 	public @NonNull Set<@NonNull TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {
 		Set<@NonNull TupleValue> result = new HashSet<>();
-		for (Object next1 : iterable()) {
-			for (Object next2 : c.iterable()) {
+		Iterable<@Nullable Object> cachedIterable = cachedIterable(c);
+		Iterator<@Nullable Object> iterator1 = lazyIterator();
+		while (iterator1.hasNext()) {
+			Object next1 = iterator1.next();
+			for (Object next2 : cachedIterable) {
 				result.add(new TupleValueImpl(tupleTypeId, next1, next2));
 			}
 		}
 		return result;
 	}
+
+	/**
+	 * Create a reiterator that may be used to perform a further lazy iteration even though an earlier
+	 * lazyIteration has already been returned.
+	 *
+	 * This method provides a fall-back compatibility for legacy code that may not have invoked cached iterable()
+	 * to ensure that the results of the first iteration were cached.
+	 *
+	 * This method may be removed once the LazyCollectionValue API is promoted to CollectionValue.
+	 *
+	 * @deprecated ensure that cahedIterable() is invoked to avoid the need for re-iteration
+	 */
+	@Deprecated
+	protected abstract @NonNull Iterator<@Nullable Object> reIterator();
 
 	public @NonNull OrderedCollectionValue reverse() {
 		return asEagerOrderedCollectionValue().reverse();
@@ -832,7 +888,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public @NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
-		List<@Nullable Object> values = Lists.newArrayList(iterable());
+		List<@Nullable Object> values = Lists.newArrayList(lazyIterator());
 		Collections.sort(values, comparator);
 		if (isUnique()) {
 			return new SparseOrderedSetValueImpl(getTypeId(), values);
@@ -856,7 +912,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements Colle
 
 	@Override
 	public @NonNull SequenceValue toSequenceValue() {
-		Iterable<@Nullable Object> elements = iterable();
+		Iterable<@Nullable Object> elements = Lists.newArrayList(lazyIterator());
 		if (isUnique()) {
 			return new SparseSequenceValueImpl(getSequenceTypeId(), SparseSequenceValueImpl.createSequenceOfEach(elements));
 		}

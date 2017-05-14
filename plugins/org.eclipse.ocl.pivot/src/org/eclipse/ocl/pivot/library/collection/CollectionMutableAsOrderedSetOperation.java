@@ -15,9 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * CollectionMutableAsOrderedSetOperation realises the mutable variant of the Collection::asOrderedSet() library operation.
@@ -31,12 +31,11 @@ public class CollectionMutableAsOrderedSetOperation extends AbstractUnaryOperati
 	@Override
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
-		Iterable<@Nullable Object> iterable = leftCollectionValue.iterable();
-		if (iterable instanceof LazyIterable) {
-			return ((LazyIterable<@Nullable Object>)iterable).mutableAsOrderedSet(leftCollectionValue);
+		if (leftCollectionValue instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableAsOrderedSet(leftCollectionValue);
 		}
 		else {
-			return new AsOrderedSetIterator(leftCollectionValue);
+			return new AsOrderedSetIterator.FromCollectionValue(leftCollectionValue);
 		}
 	}
 }

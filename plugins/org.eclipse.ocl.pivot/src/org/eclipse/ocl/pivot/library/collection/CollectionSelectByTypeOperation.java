@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.library.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -21,6 +22,7 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -29,12 +31,12 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class CollectionSelectByTypeOperation extends AbstractUntypedBinaryOperation
 {
 	public static final @NonNull CollectionSelectByTypeOperation INSTANCE = new CollectionSelectByTypeOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable CollectionValue evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceVal, @Nullable Object argVal) {
-		return evaluate(getExecutor(evaluator), sourceVal, argVal); 
+		return evaluate(getExecutor(evaluator), sourceVal, argVal);
 	}
 
 	/**
@@ -44,24 +46,26 @@ public class CollectionSelectByTypeOperation extends AbstractUntypedBinaryOperat
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @Nullable Object sourceVal, @Nullable Object argVal) {
 		CollectionValue collectionValue = asCollectionValue(sourceVal);
 		Type requiredElementType = asType(argVal);
-    	StandardLibrary standardLibrary = executor.getStandardLibrary();
+		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		boolean changedContents = false;
 		Collection<Object> newElements = new ArrayList<Object>();
-        IdResolver idResolver = executor.getIdResolver();
-		for (Object element : collectionValue.iterable()) {
+		IdResolver idResolver = executor.getIdResolver();
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(collectionValue);
+		while (iterator.hasNext()) {
+			Object element = iterator.next();
 			Type elementType = idResolver.getDynamicTypeOf(element);
 			if (elementType.isEqualTo(standardLibrary, requiredElementType)) {
-        		newElements.add(element);
-        	}
-        	else {
-        		changedContents = true;
-        	}
-        }
-        if (changedContents) {
-        	return idResolver.createCollectionOfAll(collectionValue.isOrdered(), collectionValue.isUnique(), collectionValue.getTypeId(), newElements);
-        }
-        else {
-        	return collectionValue;
-        }
+				newElements.add(element);
+			}
+			else {
+				changedContents = true;
+			}
+		}
+		if (changedContents) {
+			return idResolver.createCollectionOfAll(collectionValue.isOrdered(), collectionValue.isUnique(), collectionValue.getTypeId(), newElements);
+		}
+		else {
+			return collectionValue;
+		}
 	}
 }

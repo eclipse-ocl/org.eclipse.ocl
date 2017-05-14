@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -41,11 +43,13 @@ public class IntersectionIterator extends LazyCollectionValueImpl
 	}
 
 	private final @NonNull CollectionValue sourceValue;
+	private final @NonNull CollectionValue secondValue;
 	private final @NonNull BaggableIterator<@Nullable Object> secondIterator;
 
 	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
 		super(collectionTypeId);
 		this.sourceValue = sourceValue;
+		this.secondValue = secondValue;
 		this.secondIterator = baggableIterator(secondValue);
 	}
 
@@ -60,6 +64,11 @@ public class IntersectionIterator extends LazyCollectionValueImpl
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	protected @NonNull Iterator<@Nullable Object> reIterator() {
+		return new IntersectionIterator(typeId, sourceValue, secondValue);
 	}
 
 	@Override

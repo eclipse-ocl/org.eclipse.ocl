@@ -96,7 +96,8 @@ public class NameUtil
 			return "null";
 		}
 		else {
-			return object.getClass().getSimpleName() + "@" + Integer.toHexString(System.identityHashCode(object));
+			String fullName = object.getClass().getName();
+			return fullName.substring(fullName.lastIndexOf('.')+1) + "@" + Integer.toHexString(System.identityHashCode(object));
 		}
 	}
 

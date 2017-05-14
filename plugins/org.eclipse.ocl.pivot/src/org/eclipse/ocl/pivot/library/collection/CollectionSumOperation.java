@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.collection;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -35,7 +37,7 @@ public class CollectionSumOperation extends AbstractUnaryOperation
 	public @NonNull Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
 		CollectionValue collectionValue = asCollectionValue(sourceVal);
 		// FIXME Bug 301351 Look for user-defined zero
-//			resultType.getZero();
+		//			resultType.getZero();
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type returnType = executor.getIdResolver().getType(returnTypeId, null);
 		Object result;
@@ -45,9 +47,11 @@ public class CollectionSumOperation extends AbstractUnaryOperation
 		else {
 			result = ValueUtil.realValueOf(0.0);
 		}
-        for (Object element : collectionValue.iterable()) {
-        	result = NumericPlusOperation.INSTANCE.evaluate(result, element);
-        }
-        return result;
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(collectionValue);
+		while (iterator.hasNext()) {
+			Object element = iterator.next();
+			result = NumericPlusOperation.INSTANCE.evaluate(result, element);
+		}
+		return result;
 	}
 }

@@ -17,8 +17,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
@@ -55,6 +57,7 @@ import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.internal.values.CollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
 import junit.framework.Test;
@@ -92,37 +95,64 @@ extends TestCase {
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = CollectionValueImpl.ExtensionImpl.collectionClass2count = new HashMap<>();
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyList = LazyIterable.debugCollectionClass2lazyList = new HashMap<>();
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyMap = LazyIterable.debugCollectionClass2lazyMap = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazy = LazyCollectionValueImpl.debugCollectionClass2lazy = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2cached = LazyCollectionValueImpl.debugCollectionClass2cached = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2reiterated = LazyCollectionValueImpl.debugCollectionClass2reiterated = new HashMap<>();
 				super.run(result);
 				int iteratorCounts = 0;
 				int nonIteratorCounts = 0;
-				List<@NonNull Class<?>> keySet = new ArrayList<>(collectionClass2count.keySet());
-				Collections.sort(keySet, new Comparator<@NonNull Class<?>>()
+				int lazyCounts = 0;
+				int cachedCounts = 0;
+				int reiteratedCounts = 0;
+				Set<@NonNull Class<?>> keySet = new HashSet<>();
+				keySet.addAll(collectionClass2count.keySet());
+				keySet.addAll(collectionClass2lazyList.keySet());
+				keySet.addAll(collectionClass2lazyMap.keySet());
+				keySet.addAll(collectionClass2lazy.keySet());
+				keySet.addAll(collectionClass2cached.keySet());
+				keySet.addAll(collectionClass2reiterated.keySet());
+				List<@NonNull Class<?>> keyList = new ArrayList<>(keySet);
+				Collections.sort(keyList, new Comparator<@NonNull Class<?>>()
 				{
 					@Override
 					public int compare(@NonNull Class<?> o1, @NonNull Class<?> o2) {
-						boolean h1 = LazyCollectionValueImpl.class.isAssignableFrom(o1);
-						boolean h2 = LazyCollectionValueImpl.class.isAssignableFrom(o2);
+						boolean h1 = LazyCollectionValue.class.isAssignableFrom(o1);
+						boolean h2 = LazyCollectionValue.class.isAssignableFrom(o2);
 						if (h1 != h2) {
 							return h1 ? 1 : -1;
 						}
 						return o1.getName().compareTo(o2.getName());
 					}
 				});
-				for (@NonNull Class<?> collectionClass : keySet) {
+				for (@NonNull Class<?> collectionClass : keyList) {
 					Integer count = collectionClass2count.get(collectionClass);
 					Integer lazyListCount = collectionClass2lazyList.get(collectionClass);
 					Integer lazyMapCount = collectionClass2lazyMap.get(collectionClass);
-					System.out.println(collectionClass.getName() + " : " + count + " : " + lazyListCount + " : " + lazyMapCount);
-					if (LazyCollectionValueImpl.class.isAssignableFrom(collectionClass)) {
-						iteratorCounts += count;
+					Integer lazyCount = collectionClass2lazy.get(collectionClass);
+					Integer cachedCount = collectionClass2cached.get(collectionClass);
+					Integer reiteratedCount = collectionClass2reiterated.get(collectionClass);
+					System.out.println(collectionClass.getName() + " : " + count + " : " + lazyListCount + " : " + lazyMapCount + "   " + lazyCount + " : " + cachedCount + " : " + reiteratedCount);
+					if (count != null) {
+						if (LazyCollectionValue.class.isAssignableFrom(collectionClass)) {
+							iteratorCounts += count;
+						}
+						else {
+							nonIteratorCounts += count;
+						}
 					}
-					else {
-						nonIteratorCounts += count;
+					if (lazyCount != null) {
+						lazyCounts += lazyCount;
+					}
+					if (cachedCount != null) {
+						cachedCounts += cachedCount;
+					}
+					if (reiteratedCount != null) {
+						reiteratedCounts += reiteratedCount;
 					}
 				}
-				System.out.println(">= " + LazyCollectionValueImpl.class.getName() + " : " + iteratorCounts);
-				System.out.println("!>= " + LazyCollectionValueImpl.class.getName() + " : " + nonIteratorCounts);
-				System.out.println("all " + CollectionValue.class.getName() + " : " + (iteratorCounts+nonIteratorCounts));
+				System.out.println(">= " + LazyCollectionValue.class.getName() + " : " + iteratorCounts);
+				System.out.println("!>= " + LazyCollectionValue.class.getName() + " : " + nonIteratorCounts);
+				System.out.println("all " + CollectionValue.class.getName() + " : " + (iteratorCounts+nonIteratorCounts) + "   " + lazyCounts + " : " + cachedCounts + " : " + reiteratedCounts);
 			}
 
 		};

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -40,12 +42,14 @@ public abstract class PrependIterator extends LazyCollectionValueImpl
 		}
 	}
 
+	protected final @NonNull CollectionValue sourceValue;
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @Nullable Object object;
 	protected int prependCount = 0;
 
 	public PrependIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		super(collectionTypeId);
+		this.sourceValue = sourceValue;
 		this.object = object;
 		this.sourceIterator = baggableIterator(sourceValue);
 	}
@@ -62,12 +66,10 @@ public abstract class PrependIterator extends LazyCollectionValueImpl
 	// The prepended value increments the coount of a pre-existing value else it goes at the end.
 	private static class ToBag extends PrependIterator
 	{
-		private final @NonNull CollectionValue sourceValue;
 		private final @NonNull EqualsStrategy equalsStrategy;
 
 		public ToBag(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
 			super(collectionTypeId, sourceValue, secondValue);
-			this.sourceValue = sourceValue;
 			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
 		}
 
@@ -85,6 +87,11 @@ public abstract class PrependIterator extends LazyCollectionValueImpl
 				}
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
+			return new ToBag(typeId, sourceValue, object);
 		}
 	}
 
@@ -106,6 +113,11 @@ public abstract class PrependIterator extends LazyCollectionValueImpl
 				return setNext(sourceIterator.next(), nextCount);
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
+			return new ToSequence(typeId, sourceValue, object);
 		}
 	}
 
@@ -133,6 +145,11 @@ public abstract class PrependIterator extends LazyCollectionValueImpl
 				}
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
+			return new ToUnique(typeId, sourceValue, object);
 		}
 	}
 }

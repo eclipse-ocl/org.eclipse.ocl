@@ -47,7 +47,7 @@ public class CollectionLiteralIterator extends LazyCollectionValueImpl
 		this.literalElements = literalElements;
 		this.literalIterator = literalElements.iterator();
 		if (!isSequence()) {
-			iterable();//.getMapOfElement2elementCount();				// Need history to enforce uniqueness, count repeats
+			eagerIterable();//.getMapOfElement2elementCount();				// Need history to enforce uniqueness, count repeats
 		}
 	}
 
@@ -73,6 +73,11 @@ public class CollectionLiteralIterator extends LazyCollectionValueImpl
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	protected @NonNull Iterator<@Nullable Object> reIterator() {
+		return new CollectionLiteralIterator(typeId, literalElements);
 	}
 
 	@Override

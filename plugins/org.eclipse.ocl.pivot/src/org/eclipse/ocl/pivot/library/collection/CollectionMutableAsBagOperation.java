@@ -15,9 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * CollectionMutableAsBagOperation realises the mutable variant of the Collection::asBag() library operation.
@@ -31,12 +31,11 @@ public class CollectionMutableAsBagOperation extends AbstractUnaryOperation
 	@Override
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
-		Iterable<@Nullable Object> iterable = leftCollectionValue.iterable();
-		if (iterable instanceof LazyIterable) {
-			return ((LazyIterable<@Nullable Object>)iterable).mutableAsBag(leftCollectionValue);
+		if (leftCollectionValue instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableAsBag(leftCollectionValue);
 		}
 		else {
-			return new AsBagIterator(leftCollectionValue);
+			return new AsBagIterator.FromCollectionValue(leftCollectionValue);
 		}
 	}
 }

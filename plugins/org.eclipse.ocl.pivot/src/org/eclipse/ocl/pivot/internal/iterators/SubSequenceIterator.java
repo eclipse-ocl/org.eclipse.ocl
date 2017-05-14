@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -28,6 +30,7 @@ public class SubSequenceIterator extends LazyCollectionValueImpl
 		return new SubSequenceIterator(sourceValue, lower, upper);
 	}
 
+	private final @NonNull CollectionValue sourceValue;
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private final int lower;
 	private final int upper;
@@ -35,6 +38,7 @@ public class SubSequenceIterator extends LazyCollectionValueImpl
 
 	public SubSequenceIterator(@NonNull CollectionValue sourceValue, int lower, int upper) {
 		super(sourceValue.getTypeId());
+		this.sourceValue = sourceValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 		this.lower = lower;
 		this.upper = upper;
@@ -69,6 +73,11 @@ public class SubSequenceIterator extends LazyCollectionValueImpl
 			throw new InvalidValueException(PivotMessages.IndexOutOfRange, upper, size);
 		}
 		return 0;
+	}
+
+	@Override
+	protected @NonNull Iterator<@Nullable Object> reIterator() {
+		return new SubSequenceIterator(sourceValue, lower, upper);
 	}
 
 	@Override

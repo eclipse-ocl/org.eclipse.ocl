@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
@@ -27,7 +29,6 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 			if (!appendedValue.isUnique()) {
 				appendedValue = appendedValue.asUniqueCollectionValue();
 			}
-			appendedValue.iterable();
 			return new ToUnique(sourceValue, appendedValue);
 		}
 		else if (sourceValue.isOrdered()) {
@@ -38,11 +39,15 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 		}
 	}
 
+	protected final @NonNull CollectionValue sourceValue;
+	protected final @NonNull CollectionValue appendedValue;
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @NonNull BaggableIterator<@Nullable Object> appendIterator;
 
 	protected AppendAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
 		super(sourceValue.getTypeId());
+		this.sourceValue = sourceValue;
+		this.appendedValue = appendedValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 		this.appendIterator = baggableIterator(appendedValue);
 	}
@@ -59,13 +64,10 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 	// The appended values go at the end accruing any counts from pre-existing values.
 	private static class ToBag extends AppendAllIterator
 	{
-		private final @NonNull CollectionValue sourceValue;		// FIXME Use MapOfElement2ElementCount
-		private final @NonNull CollectionValue appendedValue;		// FIXME Use MapOfElement2ElementCount
+		// FIXME Use MapOfElement2ElementCount
 
 		public ToBag(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
 			super(sourceValue, appendedValue);
-			this.sourceValue = sourceValue;
-			this.appendedValue = appendedValue;
 		}
 
 		@Override
@@ -83,6 +85,11 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 				return setNext(next, nextCount);
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
+			return new ToBag(sourceValue, appendedValue);
 		}
 	}
 
@@ -105,6 +112,11 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 			}
 			return 0;
 		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
+			return new ToSequence(sourceValue, appendedValue);
+		}
 	}
 
 	// The appended values go at the end displacing any previous values.
@@ -113,7 +125,7 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 		private final @NonNull CollectionValue appendedValue;		// FIXME Use MapOfElement2ElementCount
 
 		public ToUnique(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
-			super(sourceValue, appendedValue);
+			super(sourceValue, eagerCollectionValue(appendedValue));		// Multiple accesses occur
 			this.appendedValue = appendedValue;
 		}
 
@@ -130,6 +142,11 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 				return setNext(next, 1);
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
+			return new ToUnique(sourceValue, appendedValue);
 		}
 	}
 }

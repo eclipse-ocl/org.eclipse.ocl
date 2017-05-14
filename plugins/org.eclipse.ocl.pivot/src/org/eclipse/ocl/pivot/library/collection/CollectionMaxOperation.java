@@ -10,11 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.collection;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -30,17 +33,19 @@ public class CollectionMaxOperation extends AbstractSimpleUnaryOperation
 		CollectionValue collectionValue = asCollectionValue(sourceVal);
 		// FIXME Bug 301351 Look for user-defined max
 		Object result = null;
-        for (Object element : collectionValue.iterable()) {
-        	if (result == null) {
-        		result = element;
-        	}
-        	else if (element != null) {
-        		result = NumericMaxOperation.INSTANCE.evaluate(result, element);
-        	}
-        }
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(collectionValue);
+		while (iterator.hasNext()) {
+			Object element = iterator.next();
+			if (result == null) {
+				result = element;
+			}
+			else if (element != null) {
+				result = NumericMaxOperation.INSTANCE.evaluate(result, element);
+			}
+		}
 		if (result == null) {
-        	throw new InvalidValueException(PivotMessages.EmptyCollection, collectionValue.getKind(), "max"); //$NON-NLS-1$
+			throw new InvalidValueException(PivotMessages.EmptyCollection, collectionValue.getKind(), "max"); //$NON-NLS-1$
 		}
 		return result;
-    }
+	}
 }

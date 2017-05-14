@@ -23,10 +23,12 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  */
 public abstract class SelectIterator extends LazyCollectionValueImpl
 {
+	protected final @NonNull CollectionValue sourceValue;
 	private final @NonNull BaggableIterator<Object> sourceIterator;
 
 	protected SelectIterator(@NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue) {
 		super(typeId);
+		this.sourceValue = sourceValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 	}
 

@@ -184,7 +184,7 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue safe_null_sources = CollectionExcludingOperation.INSTANCE.evaluate(CodegencompanyTables.table, (Object)null);
-		@NonNull Iterator<Object> ITERATOR__1 = safe_null_sources.iterator();
+		@NonNull Iterator<Object> ITERATOR__1 = ValueUtil.eagerIterator(safe_null_sources);
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@Nullable TupleValue any;
 		while (true) {
 			if (!ITERATOR__1.hasNext()) {

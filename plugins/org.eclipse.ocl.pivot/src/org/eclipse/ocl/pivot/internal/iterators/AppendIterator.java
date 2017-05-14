@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -37,11 +39,13 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 	}
 
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
+	protected final @NonNull CollectionValue sourceValue;
 	protected final @Nullable Object object;
 	protected boolean doneAppend = false;
 
 	public AppendIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		super(collectionTypeId);
+		this.sourceValue = sourceValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 		this.object = object;
 	}
@@ -83,6 +87,11 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 			}
 			return 0;
 		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
+			return new ToBag(typeId, sourceValue, object);
+		}
 	}
 
 	// The appended value goes at the end.
@@ -103,6 +112,11 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 				return setNext(object, 1);
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
+			return new ToSequence(typeId, sourceValue, object);
 		}
 	}
 
@@ -129,6 +143,11 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 				return setNext(object, 1);
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
+			return new ToUnique(typeId, sourceValue, object);
 		}
 	}
 }

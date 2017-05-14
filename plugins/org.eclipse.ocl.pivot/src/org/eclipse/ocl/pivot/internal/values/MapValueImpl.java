@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -183,7 +184,9 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
 		Set<Object> keySet = boxedValues.keySet();
-		for (Object e1 : c.iterable()) {
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(c);
+		while (iterator.hasNext()) {
+			Object e1 = iterator.next();
 			if (e1 == null) {
 				for (Object e2 : keySet) {
 					if (e2 == null) {
@@ -205,7 +208,9 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean excludesMap(@NonNull MapValue m) {
 		Set<Object> keySet = boxedValues.keySet();
-		for (Object e1 : m.getKeys()) {
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(m.getKeys());
+		while (iterator.hasNext()) {
+			Object e1 = iterator.next();
 			if (e1 == null) {
 				for (Object e2 : keySet) {
 					if (e2 == null) {
@@ -274,7 +279,9 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull MapValue excludingAll(@NonNull CollectionValue c) {
 		Map<@Nullable Object, @Nullable Object> newBoxedValues = new HashMap<>(boxedValues);
-		for (Object key : c) {
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(c);
+		while (iterator.hasNext()) {
+			Object key = iterator.next();
 			newBoxedValues.remove(key);
 		}
 		return new MapValueImpl(typeId, newBoxedValues);
@@ -376,7 +383,9 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean includesAll(@NonNull CollectionValue c) {
 		Set<Object> keySet = boxedValues.keySet();
-		for (Object e1 : c.iterable()) {
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(c);
+		while (iterator.hasNext()) {
+			Object e1 = iterator.next();
 			boolean gotIt = false;
 			if (e1 == null) {
 				for (Object e2 : keySet) {
@@ -404,7 +413,9 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean includesMap(@NonNull MapValue m) {
 		Set<Object> keySet = boxedValues.keySet();
-		for (Object e1 : m.getKeys()) {
+		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(m.getKeys());
+		while (iterator.hasNext()) {
+			Object e1 = iterator.next();
 			boolean gotIt = false;
 			if (e1 == null) {
 				for (Object e2 : keySet) {

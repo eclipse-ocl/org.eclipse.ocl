@@ -382,7 +382,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	@Override
 	public @NonNull BagValue asBagValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
-		return new AsBagIterator(this);
+		return new AsBagIterator.FromCollectionValue(this);
 	}
 
 	@Override
@@ -433,19 +433,19 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	@Override
 	public @NonNull OrderedSetValue asOrderedSetValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
-		return new AsOrderedSetIterator(this);
+		return new AsOrderedSetIterator.FromCollectionValue(this);
 	}
 
 	@Override
 	public @NonNull SequenceValue asSequenceValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
-		return new AsSequenceIterator(this);
+		return new AsSequenceIterator.FromCollectionValue(this);
 	}
 
 	@Override
 	public @NonNull SetValue asSetValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
-		return new AsSetIterator(this);
+		return new AsSetIterator.FromCollectionValue(this);
 	}
 
 	/**
@@ -456,7 +456,9 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		Iterable<@Nullable Object> elements = iterable();
 		if (this instanceof BaggableIterator) {
 			iterable();
-			return baggableIterator();
+			@SuppressWarnings("unchecked")
+			BaggableIterator<@Nullable Object> castThis = (BaggableIterator<@Nullable Object>)this;
+			return castThis;
 		}
 		else if (elements instanceof BaggableIterator) {
 			@SuppressWarnings("unchecked")
