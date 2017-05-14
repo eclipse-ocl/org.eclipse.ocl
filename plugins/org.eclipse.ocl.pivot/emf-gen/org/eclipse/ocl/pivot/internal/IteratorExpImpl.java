@@ -1436,7 +1436,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 				/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+				@NonNull Iterator<Object> ITERATOR__1 = ValueUtil.lazyIterator(BOXED_ownedIterators);
 				/*@NonInvalid*/ boolean forAll;
 				while (true) {
 					if (!ITERATOR__1.hasNext()) {

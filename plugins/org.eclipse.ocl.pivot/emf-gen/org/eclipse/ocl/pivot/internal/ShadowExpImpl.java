@@ -500,7 +500,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_2 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_3 = reject.iterator();
+					@NonNull Iterator<Object> ITERATOR__1_3 = ValueUtil.lazyIterator(reject);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue classProperties;
 					while (true) {
 						if (!ITERATOR__1_3.hasNext()) {
@@ -520,7 +520,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_3 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_4 = classProperties.iterator();
+					@NonNull Iterator<Object> ITERATOR__1_4 = ValueUtil.lazyIterator(classProperties);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject_2;
 					while (true) {
 						if (!ITERATOR__1_4.hasNext()) {
@@ -540,7 +540,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_4 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_5 = reject_2.iterator();
+					@NonNull Iterator<Object> ITERATOR__1_5 = ValueUtil.lazyIterator(reject_2);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject_1;
 					while (true) {
 						if (!ITERATOR__1_5.hasNext()) {
@@ -571,7 +571,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_5 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_6 = reject_1.iterator();
+					@NonNull Iterator<Object> ITERATOR__1_6 = ValueUtil.lazyIterator(reject_1);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject_0;
 					while (true) {
 						if (!ITERATOR__1_6.hasNext()) {
@@ -592,7 +592,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_6 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_7 = reject_0.iterator();
+					@NonNull Iterator<Object> ITERATOR__1_7 = ValueUtil.lazyIterator(reject_0);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue requiredClassProperties;
 					while (true) {
 						if (!ITERATOR__1_7.hasNext()) {
