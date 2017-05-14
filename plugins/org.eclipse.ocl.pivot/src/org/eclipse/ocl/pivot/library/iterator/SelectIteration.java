@@ -36,6 +36,9 @@ import org.eclipse.ocl.pivot.values.Value;
  */
 public class SelectIteration extends AbstractIteration implements LibraryIteration.LazyIteration
 {
+	/**
+	 * @since 1.3
+	 */
 	protected static class LazySelectIterator extends SelectIterator
 	{
 		private final @NonNull Executor executor;

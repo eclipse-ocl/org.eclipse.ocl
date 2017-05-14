@@ -65,10 +65,11 @@ import com.google.common.collect.Lists;
  * BaggableIterator protocol. Derived baggable iterators must implement getNextCount() to describe the next entry
  * by a callback to setNext().
  *
- * The LazyCollectionValueImpl may only used as a simple iterator by invoking iterator() without invoking iterable().
- * If a usage of iterator() is followed by a usage of iterable() an IllegalStateException is thrown.
+ * The LazyCollectionValueImpl may be used as a simple iterator by invoking lazyIterator() without invoking iterable().
+ * If a usage of lazyIterator() is followed by another iteration a separate iteration repeats the original
+ * caching results to avoid a third repeat..
  *
- * The LazyCollectionValueImpl may be used as an iterable by invoking iterable() before iterator(). Derived
+ * The LazyCollectionValueImpl may be used as a cached iterable by invoking iterable(). Derived
  * implementations that require memory of their output may invoke iterable() in their constructor. Multiple
  * calls to iterator() while the underlying iteration is in progress return a synchronized multi-access lazy
  * iterator. Call to iterator() after the underlying iteration has completed return a much more efficient

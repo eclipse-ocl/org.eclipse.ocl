@@ -20,6 +20,8 @@ import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
  * computes in a similar fashion, but caches the output to facilitate efficient repeated iterations.
  * Eager access is similar to cached access, but eagerly populates every cache entry so that ant invalid#
  * content is detect before any output iteration occurs.
+ *
+ * @since 1.3
  */
 public interface LazyCollectionValue extends CollectionValue
 {
