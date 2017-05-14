@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * SubOrderedSetIterator provides a lazy evaluation of the Collection::subOrderedSet operation.
@@ -28,6 +29,7 @@ public class SubOrderedSetIterator extends LazyCollectionValueImpl
 		return new SubOrderedSetIterator(sourceValue, lower, upper);
 	}
 
+	private final @NonNull CollectionValue sourceValue;
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private final int lower;
 	private final int upper;
@@ -35,6 +37,7 @@ public class SubOrderedSetIterator extends LazyCollectionValueImpl
 
 	public SubOrderedSetIterator(@NonNull CollectionValue sourceValue, int lower, int upper) {
 		super(sourceValue.getTypeId());
+		this.sourceValue = sourceValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 		this.lower = lower;
 		this.upper = upper;
@@ -69,6 +72,11 @@ public class SubOrderedSetIterator extends LazyCollectionValueImpl
 			throw new InvalidValueException(PivotMessages.IndexOutOfRange, upper, size);
 		}
 		return 0;
+	}
+
+	@Override
+	protected @NonNull LazyCollectionValue reIterator() {
+		return new SubOrderedSetIterator(sourceValue, lower, upper);
 	}
 
 	@Override

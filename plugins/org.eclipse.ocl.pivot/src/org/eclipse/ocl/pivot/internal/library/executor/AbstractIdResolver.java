@@ -81,7 +81,6 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
-import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -92,6 +91,7 @@ import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.OCLValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
@@ -710,8 +710,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 */
 	@Override
 	public @NonNull <T> EList<T> ecoreValueOfAll(@Nullable Class<T> instanceClass, @NonNull Iterable<? extends Object> values) {
-		if (values instanceof LazyCollectionValueImpl) {
-			((LazyCollectionValueImpl)values).iterable();
+		if (values instanceof LazyCollectionValue) {
+			((LazyCollectionValue)values).cachedIterable();
 		}
 		Object[] ecoreValues = new Object[Iterables.size(values)];
 		int i= 0;
@@ -812,7 +812,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		if (value instanceof CollectionValue) {
 			CollectionValue collectionValue = (CollectionValue) value;
 			CollectionTypeId collectionTypeId = collectionValue.getTypeId();
-			Type elementType = getDynamicTypeOf(collectionValue.iterable());
+			Type elementType = getDynamicTypeOf(ValueUtil.cachedIterable(collectionValue));
 			if (elementType == null) {
 				elementType = getType(collectionTypeId.getElementTypeId(), null);
 			}
@@ -860,6 +860,37 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		return elementType;
 	}
+
+	/*	@Override
+	public @Nullable Type getDynamicTypeOf(@NonNull Iterator<?> values) {
+		Type elementType = null;
+		if (values instanceof BaggableIterator) {
+			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)values;
+			while (baggableIterator.hasNextCount() > 0) {
+				Object value = baggableIterator.next();
+				org.eclipse.ocl.pivot.Class valueType = getDynamicTypeOf(value);
+				if (elementType == null) {
+					elementType = valueType;
+				}
+				else {
+					elementType = elementType.getCommonType(this, valueType);
+				}
+			}
+		}
+		else {
+			while (values.hasNext()) {
+				Object value = values.next();
+				org.eclipse.ocl.pivot.Class valueType = getDynamicTypeOf(value);
+				if (elementType == null) {
+					elementType = valueType;
+				}
+				else {
+					elementType = elementType.getCommonType(this, valueType);
+				}
+			}
+		}
+		return elementType;
+	} */
 
 	@Override
 	public @NonNull CompleteEnvironment getEnvironment() {
@@ -1283,8 +1314,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			if (thisSize != thatSize) {
 				return false;
 			}
-			Iterator<?> thisIterator = ((Iterable<?>)thisObject).iterator();
-			Iterator<?> thatIterator = ((Iterable<?>)thatObject).iterator();
+			Iterator<?> thisIterator = ValueUtil.lazyIterator((Iterable<?>)thisObject);
+			Iterator<?> thatIterator = ValueUtil.lazyIterator((Iterable<?>)thatObject);
 			if (thisIsOrdered) {
 				while (thisIterator.hasNext() && thatIterator.hasNext()) {
 					Object thisElement = thisIterator.next();

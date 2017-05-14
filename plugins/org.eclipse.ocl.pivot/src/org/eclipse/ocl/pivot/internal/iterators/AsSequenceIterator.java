@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -17,23 +18,22 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
+
+import com.google.common.collect.Iterators;
 
 /**
  * AsSequenceIterator provides a lazy evaluation of the Collection::asSequence operation.
  *
  * @since 1.3
  */
-public class AsSequenceIterator extends LazyCollectionValueImpl implements SequenceValue
+public abstract class AsSequenceIterator extends LazyCollectionValueImpl implements SequenceValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsSequenceIterator(@NonNull CollectionValue sourceValue) {
-		this(TypeId.SEQUENCE.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.iterator());
-	}
-
-	public AsSequenceIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator) {
+	protected AsSequenceIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator) {
 		super(typeId);
 		this.sourceIterator = sourceIterator;
 		assert isOrdered();
@@ -92,5 +92,50 @@ public class AsSequenceIterator extends LazyCollectionValueImpl implements Seque
 			s.append("«future»");
 		}
 		s.append("}");
+	}
+
+	public static class FromArray extends AsSequenceIterator
+	{
+		private @Nullable Object @NonNull [] boxedValues;
+
+		public FromArray(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull [] boxedValues) {
+			super(typeId, Iterators.forArray(boxedValues));
+			this.boxedValues = boxedValues;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromArray(typeId, boxedValues);
+		}
+	}
+
+	public static class FromCollection extends AsSequenceIterator
+	{
+		private @NonNull Collection<@Nullable ? extends Object> boxedValues;
+
+		public FromCollection(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+			super(typeId, boxedValues.iterator());
+			this.boxedValues = boxedValues;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromCollection(typeId, boxedValues);
+		}
+	}
+
+	public static class FromCollectionValue extends AsSequenceIterator
+	{
+		private @NonNull CollectionValue sourceValue;
+
+		public FromCollectionValue(@NonNull CollectionValue sourceValue) {
+			super(TypeId.SEQUENCE.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), lazyIterator(sourceValue));
+			this.sourceValue = sourceValue;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromCollectionValue(sourceValue);
+		}
 	}
 }

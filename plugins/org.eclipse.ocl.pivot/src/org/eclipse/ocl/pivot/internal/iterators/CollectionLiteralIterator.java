@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * CollectionLiteralIterator adapts a CollectionLiteralExp to comply with the BaggableIterator protocol.
@@ -47,7 +48,7 @@ public class CollectionLiteralIterator extends LazyCollectionValueImpl
 		this.literalElements = literalElements;
 		this.literalIterator = literalElements.iterator();
 		if (!isSequence()) {
-			iterable();//.getMapOfElement2elementCount();				// Need history to enforce uniqueness, count repeats
+			eagerIterable();//.getMapOfElement2elementCount();				// Need history to enforce uniqueness, count repeats
 		}
 	}
 
@@ -73,6 +74,11 @@ public class CollectionLiteralIterator extends LazyCollectionValueImpl
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	protected @NonNull LazyCollectionValue reIterator() {
+		return new CollectionLiteralIterator(typeId, literalElements);
 	}
 
 	@Override

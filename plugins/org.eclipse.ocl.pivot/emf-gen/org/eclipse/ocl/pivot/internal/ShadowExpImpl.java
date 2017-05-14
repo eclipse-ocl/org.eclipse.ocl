@@ -389,7 +389,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					final /*@NonInvalid*/ java.util.@NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSequenceAccumulatorValue(PivotTables.SEQ_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedParts.iterator();
+					@NonNull Iterator<Object> ITERATOR__1 = ValueUtil.lazyIterator(BOXED_ownedParts);
 					/*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue collect;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
@@ -436,7 +436,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue closure = ClassUtil.nonNullState((CollectionValue)IMPL_closure_0.evaluateIteration(MGR_closure_0));
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue safe_collect_sources = CollectionExcludingOperation.INSTANCE.evaluate(closure, (Object)null);
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createBagAccumulatorValue(PivotTables.BAG_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_1 = safe_collect_sources.iterator();
+					@NonNull Iterator<Object> ITERATOR__1_1 = ValueUtil.lazyIterator(safe_collect_sources);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue collect_0;
 					while (true) {
 						if (!ITERATOR__1_1.hasNext()) {
@@ -457,7 +457,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					}
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue allProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect_0);
 					/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_1 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
-					@NonNull Iterator<Object> ITERATOR__1_2 = allProperties.iterator();
+					@NonNull Iterator<Object> ITERATOR__1_2 = ValueUtil.lazyIterator(allProperties);
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject;
 					while (true) {
 						if (!ITERATOR__1_2.hasNext()) {
@@ -651,7 +651,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						final @NonNull  ExecutorSingleIterationManager MGR_sortedBy_1 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy_1, extraProperties, ACC_sortedBy_1);
 						final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue sortedBy = ClassUtil.nonNullState((CollectionValue)IMPL_sortedBy_1.evaluateIteration(MGR_sortedBy_1));
 						/*@NonInvalid*/ java.lang.@NonNull String acc = PivotTables.STR_Unexpected_32_initializers_c;
-						@NonNull Iterator<Object> ITERATOR_p_0 = sortedBy.iterator();
+						@NonNull Iterator<Object> ITERATOR_p_0 = ValueUtil.lazyIterator(sortedBy);
 						/*@Thrown*/ java.lang.@Nullable String iterate;
 						while (true) {
 							if (!ITERATOR_p_0.hasNext()) {
@@ -700,7 +700,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							final @NonNull  ExecutorSingleIterationManager MGR_sortedBy_0_0 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY_sortedBy_0_0, missingProperties, ACC_sortedBy_0_0);
 							final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue sortedBy_0 = ClassUtil.nonNullState((CollectionValue)IMPL_sortedBy_0_0.evaluateIteration(MGR_sortedBy_0_0));
 							/*@NonInvalid*/ java.lang.@NonNull String acc_0 = PivotTables.STR_Missing_32_initializers_c;
-							@NonNull Iterator<Object> ITERATOR_p_1 = sortedBy_0.iterator();
+							@NonNull Iterator<Object> ITERATOR_p_1 = ValueUtil.lazyIterator(sortedBy_0);
 							/*@Thrown*/ java.lang.@Nullable String iterate_0;
 							while (true) {
 								if (!ITERATOR_p_1.hasNext()) {

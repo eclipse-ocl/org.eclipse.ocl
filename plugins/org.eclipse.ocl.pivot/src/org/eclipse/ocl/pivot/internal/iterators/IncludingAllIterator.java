@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * IncludingAllIterator provides a lazy evaluation of the Collection::includingAll operation.
@@ -29,7 +30,6 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 			if (!includeValue.isUnique()) {
 				includeValue = includeValue.asUniqueCollectionValue();
 			}
-			includeValue.iterable();
 			return new ToUnique(collectionTypeId, sourceValue, includeValue);
 		}
 		else if (sourceValue.isOrdered()) {
@@ -50,11 +50,15 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 		}
 	}
 
+	protected final @NonNull CollectionValue sourceValue;
+	protected final @NonNull CollectionValue includeValue;
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @NonNull BaggableIterator<@Nullable Object> includeIterator;
 
 	public IncludingAllIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
 		super(collectionTypeId);
+		this.sourceValue = sourceValue;
+		this.includeValue = includeValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 		this.includeIterator = baggableIterator(includeValue);
 	}
@@ -97,6 +101,11 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 			}
 			return 0;
 		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new ToBag(typeId, sourceValue, includeValue);
+		}
 	}
 
 	// The included values go at the end.
@@ -118,6 +127,11 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 			}
 			return 0;
 		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new ToSequence(typeId, sourceValue, includeValue);
+		}
 	}
 
 	// The included values goes at the end unless there are already previous values.
@@ -126,7 +140,7 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 		private final @NonNull CollectionValue sourceValue;		// FIXME Use MapOfElement2ElementCount
 
 		public ToUnique(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
-			super(collectionTypeId, sourceValue, includeValue);
+			super(collectionTypeId, sourceValue, eagerCollectionValue(includeValue));
 			this.sourceValue = sourceValue;
 
 		}
@@ -143,6 +157,11 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 				}
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new ToUnique(typeId, sourceValue, includeValue);
 		}
 	}
 }

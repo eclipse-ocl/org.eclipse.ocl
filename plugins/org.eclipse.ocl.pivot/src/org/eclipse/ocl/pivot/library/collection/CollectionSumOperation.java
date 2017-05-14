@@ -35,7 +35,7 @@ public class CollectionSumOperation extends AbstractUnaryOperation
 	public @NonNull Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
 		CollectionValue collectionValue = asCollectionValue(sourceVal);
 		// FIXME Bug 301351 Look for user-defined zero
-//			resultType.getZero();
+		//			resultType.getZero();
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		Type returnType = executor.getIdResolver().getType(returnTypeId, null);
 		Object result;
@@ -45,9 +45,9 @@ public class CollectionSumOperation extends AbstractUnaryOperation
 		else {
 			result = ValueUtil.realValueOf(0.0);
 		}
-        for (Object element : collectionValue.iterable()) {
-        	result = NumericPlusOperation.INSTANCE.evaluate(result, element);
-        }
-        return result;
+		for (Object element : lazyIterable(collectionValue)) {
+			result = NumericPlusOperation.INSTANCE.evaluate(result, element);
+		}
+		return result;
 	}
 }

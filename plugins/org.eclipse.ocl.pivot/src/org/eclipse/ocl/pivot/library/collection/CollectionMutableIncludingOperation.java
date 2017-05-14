@@ -16,9 +16,9 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * CollectionMutableIncludingOperation realises the mutable variant of the Collection::including() library operation.
@@ -32,9 +32,8 @@ public class CollectionMutableIncludingOperation extends AbstractBinaryOperation
 	@Override
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
-		Iterable<@Nullable Object> iterable = leftCollectionValue.iterable();
-		if (iterable instanceof LazyIterable) {
-			return ((LazyIterable<@Nullable Object>)iterable).mutableIncluding(leftCollectionValue, argumentValue);
+		if (leftCollectionValue instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableIncluding(leftCollectionValue, argumentValue);
 		}
 		else {
 			return IncludingIterator.including((CollectionTypeId)returnTypeId, leftCollectionValue, argumentValue);

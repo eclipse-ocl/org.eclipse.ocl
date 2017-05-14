@@ -183,7 +183,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
 		Set<Object> keySet = boxedValues.keySet();
-		for (Object e1 : c.iterable()) {
+		for (Object e1 : lazyIterable(c)) {
 			if (e1 == null) {
 				for (Object e2 : keySet) {
 					if (e2 == null) {
@@ -205,7 +205,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean excludesMap(@NonNull MapValue m) {
 		Set<Object> keySet = boxedValues.keySet();
-		for (Object e1 : m.getKeys()) {
+		for (Object e1 : lazyIterable(m.getKeys())) {
 			if (e1 == null) {
 				for (Object e2 : keySet) {
 					if (e2 == null) {
@@ -274,7 +274,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull MapValue excludingAll(@NonNull CollectionValue c) {
 		Map<@Nullable Object, @Nullable Object> newBoxedValues = new HashMap<>(boxedValues);
-		for (Object key : c) {
+		for (Object key : lazyIterable(c)) {
 			newBoxedValues.remove(key);
 		}
 		return new MapValueImpl(typeId, newBoxedValues);
@@ -376,7 +376,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean includesAll(@NonNull CollectionValue c) {
 		Set<Object> keySet = boxedValues.keySet();
-		for (Object e1 : c.iterable()) {
+		for (Object e1 : lazyIterable(c)) {
 			boolean gotIt = false;
 			if (e1 == null) {
 				for (Object e2 : keySet) {
@@ -404,7 +404,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean includesMap(@NonNull MapValue m) {
 		Set<Object> keySet = boxedValues.keySet();
-		for (Object e1 : m.getKeys()) {
+		for (Object e1 : lazyIterable(m.getKeys())) {
 			boolean gotIt = false;
 			if (e1 == null) {
 				for (Object e2 : keySet) {

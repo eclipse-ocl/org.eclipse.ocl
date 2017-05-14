@@ -54,7 +54,7 @@ public class CollectIteration extends AbstractIteration
 		else if (bodyVal instanceof CollectionValue) {
 			CollectionValue bodyColl = (CollectionValue) bodyVal;
 			//			try {
-			for (Object value : bodyColl.flatten()) {
+			for (Object value : lazyIterable(bodyColl.flatten())) {
 				if (value != null) {
 					accumulatorValue.add(value);
 				}

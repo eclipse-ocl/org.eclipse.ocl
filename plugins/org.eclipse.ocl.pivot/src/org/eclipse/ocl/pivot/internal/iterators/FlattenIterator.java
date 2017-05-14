@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * FlattenIterator provides a lazy evaluation of the Collection::flatten operation.
@@ -76,11 +77,13 @@ public class FlattenIterator extends LazyCollectionValueImpl
 		} */
 	}
 
+	private @NonNull CollectionValue sourceValue;
 	private @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private @Nullable Stack<@NonNull BaggableIterator<@Nullable Object>> iteratorStack = null;
 
 	public FlattenIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue) {
 		super(collectionTypeId);
+		this.sourceValue = sourceValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 	}
 
@@ -108,6 +111,11 @@ public class FlattenIterator extends LazyCollectionValueImpl
 		assert popped != null;
 		sourceIterator = popped;
 		return hasNextCount();
+	}
+
+	@Override
+	protected @NonNull LazyCollectionValue reIterator() {
+		return new FlattenIterator(typeId, sourceValue);
 	}
 
 	@Override

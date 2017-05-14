@@ -29,12 +29,12 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class CollectionSelectByTypeOperation extends AbstractUntypedBinaryOperation
 {
 	public static final @NonNull CollectionSelectByTypeOperation INSTANCE = new CollectionSelectByTypeOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable CollectionValue evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceVal, @Nullable Object argVal) {
-		return evaluate(getExecutor(evaluator), sourceVal, argVal); 
+		return evaluate(getExecutor(evaluator), sourceVal, argVal);
 	}
 
 	/**
@@ -44,24 +44,24 @@ public class CollectionSelectByTypeOperation extends AbstractUntypedBinaryOperat
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @Nullable Object sourceVal, @Nullable Object argVal) {
 		CollectionValue collectionValue = asCollectionValue(sourceVal);
 		Type requiredElementType = asType(argVal);
-    	StandardLibrary standardLibrary = executor.getStandardLibrary();
+		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		boolean changedContents = false;
 		Collection<Object> newElements = new ArrayList<Object>();
-        IdResolver idResolver = executor.getIdResolver();
-		for (Object element : collectionValue.iterable()) {
+		IdResolver idResolver = executor.getIdResolver();
+		for (Object element : lazyIterable(collectionValue)) {
 			Type elementType = idResolver.getDynamicTypeOf(element);
 			if (elementType.isEqualTo(standardLibrary, requiredElementType)) {
-        		newElements.add(element);
-        	}
-        	else {
-        		changedContents = true;
-        	}
-        }
-        if (changedContents) {
-        	return idResolver.createCollectionOfAll(collectionValue.isOrdered(), collectionValue.isUnique(), collectionValue.getTypeId(), newElements);
-        }
-        else {
-        	return collectionValue;
-        }
+				newElements.add(element);
+			}
+			else {
+				changedContents = true;
+			}
+		}
+		if (changedContents) {
+			return idResolver.createCollectionOfAll(collectionValue.isOrdered(), collectionValue.isUnique(), collectionValue.getTypeId(), newElements);
+		}
+		else {
+			return collectionValue;
+		}
 	}
 }

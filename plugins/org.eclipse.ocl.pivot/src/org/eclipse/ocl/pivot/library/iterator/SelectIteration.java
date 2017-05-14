@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.CollectionValue.Accumulator;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 /**
@@ -34,6 +35,32 @@ import org.eclipse.ocl.pivot.values.Value;
  */
 public class SelectIteration extends AbstractIteration implements LibraryIteration.LazyIteration
 {
+	protected static class LazySelectIterator extends SelectIterator
+	{
+		private final @NonNull Executor executor;
+		private final @NonNull OCLExpression body;
+		private final @NonNull VariableDeclaration firstIterator;
+
+		protected LazySelectIterator(@NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue,
+				@NonNull Executor executor, @NonNull OCLExpression body, @NonNull VariableDeclaration firstIterator) {
+			super(typeId, sourceValue);
+			this.executor = executor;
+			this.body = body;
+			this.firstIterator = firstIterator;
+		}
+
+		@Override
+		protected boolean body(Object next) {
+			executor.replace(firstIterator, next);
+			return ValueUtil.asBoolean(executor.evaluate(body)) == Boolean.TRUE;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new LazySelectIterator(typeId, sourceValue, executor, body, firstIterator);
+		}
+	}
+
 	public static final @NonNull SelectIteration INSTANCE = new SelectIteration();
 
 	/** @deprecated use Executor */
@@ -76,12 +103,6 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 	@Override
 	public @NonNull Value evaluate(@NonNull Executor executor, @NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue, @NonNull VariableDeclaration firstIterator,
 			@NonNull OCLExpression body) {
-		return new SelectIterator(typeId, sourceValue) {
-
-			@Override
-			protected boolean body(Object next) {
-				executor.replace(firstIterator, next);
-				return ValueUtil.asBoolean(executor.evaluate(body)) == Boolean.TRUE;
-			}};
+		return new LazySelectIterator(typeId, sourceValue, executor, body, firstIterator);
 	}
 }

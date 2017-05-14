@@ -48,7 +48,7 @@ public class CollectionSelectByKindOperation extends AbstractUntypedBinaryOperat
 		boolean changedContents = false;
 		Collection<@Nullable Object> newElements = new ArrayList<>();
 		IdResolver idResolver = executor.getIdResolver();
-		for (Object element : collectionValue) {
+		for (Object element : lazyIterable(collectionValue)) {
 			if (element == null) {
 				changedContents = true;
 			}

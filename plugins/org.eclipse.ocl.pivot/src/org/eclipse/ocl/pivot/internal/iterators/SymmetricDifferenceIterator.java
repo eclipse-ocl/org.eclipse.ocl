@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * SymmetricDifferenceIterator provides a lazy evaluation of the Collection::symmetricDifference operation.
@@ -33,8 +34,8 @@ public class SymmetricDifferenceIterator extends LazyCollectionValueImpl
 
 	public SymmetricDifferenceIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
 		super(sourceValue.getTypeId());
-		sourceValue.iterable();
-		otherValue.iterable();
+		eagerIterable(sourceValue);
+		eagerIterable(otherValue);
 		this.sourceValue = sourceValue;
 		this.otherValue = otherValue;
 		this.sourceIterator = baggableIterator(sourceValue);
@@ -56,6 +57,11 @@ public class SymmetricDifferenceIterator extends LazyCollectionValueImpl
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	protected @NonNull LazyCollectionValue reIterator() {
+		return new SymmetricDifferenceIterator(sourceValue, otherValue);
 	}
 
 	@Override

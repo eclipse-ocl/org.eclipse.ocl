@@ -30,16 +30,16 @@ public class CollectionMinOperation extends AbstractSimpleUnaryOperation
 		CollectionValue collectionValue = asCollectionValue(sourceVal);
 		// FIXME Bug 301351 Look for user-defined min
 		Object result = null;
-        for (Object element : collectionValue.iterable()) {
-        	if (result == null) {
-        		result = element;
-        	}
-        	else if (element != null) {
-        		result = NumericMinOperation.INSTANCE.evaluate(result, element);
-        	}
-        }
+		for (Object element : lazyIterable(collectionValue)) {
+			if (result == null) {
+				result = element;
+			}
+			else if (element != null) {
+				result = NumericMinOperation.INSTANCE.evaluate(result, element);
+			}
+		}
 		if (result == null) {
-        	throw new InvalidValueException(PivotMessages.EmptyCollection, collectionValue.getKind(), "min"); //$NON-NLS-1$
+			throw new InvalidValueException(PivotMessages.EmptyCollection, collectionValue.getKind(), "min"); //$NON-NLS-1$
 		}
 		return result;
 	}

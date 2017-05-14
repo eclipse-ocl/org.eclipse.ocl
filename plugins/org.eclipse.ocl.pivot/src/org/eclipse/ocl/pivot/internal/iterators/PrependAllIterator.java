@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * PrependAllIterator provides a lazy evaluation of the OrderedCollection::prependAll operation.
@@ -27,7 +28,6 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 			if (!prependValue.isUnique()) {
 				prependValue = prependValue.asUniqueCollectionValue();
 			}
-			prependValue.iterable();
 			return new ToUnique(sourceValue, prependValue);
 		}
 		else if (sourceValue.isOrdered()) {
@@ -38,11 +38,15 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		}
 	}
 
+	protected final @NonNull CollectionValue sourceValue;
+	protected final @NonNull CollectionValue prependValue;
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @NonNull BaggableIterator<@Nullable Object> prependIterator;
 
 	public PrependAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
 		super(sourceValue.getTypeId());
+		this.sourceValue = sourceValue;
+		this.prependValue = prependValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 		this.prependIterator = baggableIterator(prependValue);
 	}
@@ -85,6 +89,11 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 			}
 			return 0;
 		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new ToBag(sourceValue, prependValue);
+		}
 	}
 
 	// The prepended value goes at the beginning.
@@ -106,6 +115,11 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 			}
 			return 0;
 		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new ToSequence(sourceValue, prependValue);
+		}
 	}
 
 	// The prepended value goes at the beginning.
@@ -114,7 +128,7 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		private final @NonNull CollectionValue prependValue;		// FIXME Use MapOfElement2ElementCount
 
 		public ToUnique(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
-			super(sourceValue, prependValue);
+			super(sourceValue, eagerCollectionValue(prependValue));		// Multiple accesses occur
 			this.prependValue = prependValue;
 		}
 
@@ -132,6 +146,11 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 				}
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new ToUnique(sourceValue, prependValue);
 		}
 	}
 }

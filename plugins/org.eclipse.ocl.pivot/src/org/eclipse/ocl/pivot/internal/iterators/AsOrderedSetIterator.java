@@ -10,37 +10,38 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
+
+import com.google.common.collect.Iterators;
 
 /**
  * AsOrderedSetIterator provides a BaggableIterator that behaves as an OrderedSetValue for an arbitrary iterator.
  *
  * @since 1.3
  */
-public class AsOrderedSetIterator extends LazyCollectionValueImpl implements OrderedSetValue
+public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl implements OrderedSetValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsOrderedSetIterator(@NonNull CollectionValue sourceValue) {
-		this(TypeId.ORDERED_SET.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.iterator(), sourceValue.isUnique());
-	}
-
-	public AsOrderedSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsUnique) {
+	protected AsOrderedSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsUnique) {
 		super(typeId);
 		this.sourceIterator = sourceIterator;
 		assert isOrdered();
 		assert isUnique();
 		if (!sourceIteratorIsUnique) {
-			getMapOfElement2elementCount();
+			eagerIterable();
 		}
 	}
 
@@ -108,5 +109,50 @@ public class AsOrderedSetIterator extends LazyCollectionValueImpl implements Ord
 			s.append("«future»");
 		}
 		s.append("}");
+	}
+
+	public static class FromArray extends AsOrderedSetIterator
+	{
+		private @Nullable Object @NonNull [] boxedValues;
+
+		public FromArray(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull [] boxedValues) {
+			super(typeId, Iterators.forArray(boxedValues), false);
+			this.boxedValues = boxedValues;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromArray(typeId, boxedValues);
+		}
+	}
+
+	public static class FromCollection extends AsOrderedSetIterator
+	{
+		private @NonNull Collection<@Nullable ? extends Object> boxedValues;
+
+		public FromCollection(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+			super(typeId, boxedValues.iterator(), boxedValues instanceof Set);
+			this.boxedValues = boxedValues;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromCollection(typeId, boxedValues);
+		}
+	}
+
+	public static class FromCollectionValue extends AsOrderedSetIterator
+	{
+		private @NonNull CollectionValue sourceValue;
+
+		public FromCollectionValue(@NonNull CollectionValue sourceValue) {
+			super(TypeId.ORDERED_SET.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), lazyIterator(sourceValue), sourceValue.isUnique());
+			this.sourceValue = sourceValue;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromCollectionValue(sourceValue);
+		}
 	}
 }

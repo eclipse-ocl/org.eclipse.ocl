@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * ExcludingAllIterator provides a lazy evaluation of the Collection::excludingAll operation.
@@ -26,13 +27,15 @@ public class ExcludingAllIterator extends LazyCollectionValueImpl
 		return new ExcludingAllIterator(sourceValue, excludeValue);
 	}
 
+	private final @NonNull CollectionValue sourceValue;
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private final @NonNull CollectionValue excludeValue;
 
 	public ExcludingAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
 		super(sourceValue.getTypeId());
+		this.sourceValue = sourceValue;
 		this.sourceIterator = baggableIterator(sourceValue);
-		this.excludeValue = excludeValue;
+		this.excludeValue = eagerCollectionValue(excludeValue);
 	}
 
 	@Override
@@ -44,6 +47,11 @@ public class ExcludingAllIterator extends LazyCollectionValueImpl
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	protected @NonNull LazyCollectionValue reIterator() {
+		return new ExcludingAllIterator(sourceValue, excludeValue);
 	}
 
 	@Override

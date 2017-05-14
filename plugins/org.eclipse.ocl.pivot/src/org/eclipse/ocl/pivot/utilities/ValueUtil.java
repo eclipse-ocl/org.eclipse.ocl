@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
-import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
@@ -81,6 +80,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.MapEntry;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
@@ -99,8 +99,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
-
-import com.google.common.collect.Iterators;
 
 /**
  * @since 1.1
@@ -386,8 +384,8 @@ public abstract class ValueUtil
 	 * @since 1.3 // FIXME temporary till next major version change
 	 */
 	public static @NonNull BaggableIterator<@Nullable Object> baggableIterator(@NonNull CollectionValue collectionValue) {
-		if (collectionValue instanceof LazyCollectionValueImpl) {
-			return ((LazyCollectionValueImpl)collectionValue).baggableIterator();
+		if (collectionValue instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)collectionValue).baggableIterator();
 		}
 		else if (collectionValue instanceof CollectionValueImpl) {
 			return ((CollectionValueImpl)collectionValue).baggableIterator();
@@ -449,6 +447,20 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.InvalidInteger, anObject);
+		}
+	}
+
+	/**
+	 * Return an iterable that is lazily populated and which my be re-iterated exploiting cached
+	 * values from a first iteration. This provides opportunities for redundant iterations to be skipped.
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@Nullable Object> cachedIterable(@NonNull CollectionValue c) {
+		if (c instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)c).cachedIterable();
+		}
+		else {
+			return c.iterable();
 		}
 	}
 
@@ -557,7 +569,7 @@ public abstract class ValueUtil
 
 	public static @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
-		return new AsBagIterator(typeId, Iterators.forArray(boxedValues), false);
+		return new AsBagIterator.FromArray(typeId, boxedValues);
 		//		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
 	}
 
@@ -576,7 +588,7 @@ public abstract class ValueUtil
 
 	public static @NonNull BagValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
-		return new AsBagIterator(typeId, boxedValues.iterator(), false);		// FIXME reuse Bag
+		return new AsBagIterator.FromCollection(typeId, boxedValues);		// FIXME reuse Bag
 		//		return new BagValueImpl(typeId, boxedValues);
 	}
 
@@ -631,7 +643,7 @@ public abstract class ValueUtil
 
 	public static @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
-		return new AsOrderedSetIterator(typeId, Iterators.forArray(boxedValues), false);
+		return new AsOrderedSetIterator.FromArray(typeId, boxedValues);
 		//		return new SparseOrderedSetValueImpl(typeId, SparseOrderedSetValueImpl.createOrderedSetOfEach(boxedValues));
 	}
 
@@ -650,7 +662,7 @@ public abstract class ValueUtil
 
 	public static @NonNull OrderedSetValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
-		return new AsOrderedSetIterator(typeId, boxedValues.iterator(), boxedValues instanceof Set);
+		return new AsOrderedSetIterator.FromCollection(typeId, boxedValues);
 	}
 
 	public static @NonNull IntegerRange createRange(@NonNull IntegerValue firstInteger, @NonNull IntegerValue lastInteger) {
@@ -663,7 +675,7 @@ public abstract class ValueUtil
 
 	public static @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
-		return new AsSequenceIterator(typeId, Iterators.forArray(boxedValues));
+		return new AsSequenceIterator.FromArray(typeId, boxedValues);
 		//		return new SparseSequenceValueImpl(typeId, SparseSequenceValueImpl.createSequenceOfEach(boxedValues));
 	}
 
@@ -686,7 +698,7 @@ public abstract class ValueUtil
 
 	public static @NonNull SequenceValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
-		return new AsSequenceIterator(typeId, boxedValues.iterator());
+		return new AsSequenceIterator.FromCollection(typeId, boxedValues);
 		//		return new SparseSequenceValueImpl(typeId, boxedValues);
 	}
 
@@ -696,7 +708,7 @@ public abstract class ValueUtil
 
 	public static @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
-		return new AsSetIterator(typeId, Iterators.forArray(boxedValues), false);
+		return new AsSetIterator.FromArray(typeId, boxedValues);
 		//		return new SetValueImpl(typeId, SetValueImpl.createSetOfEach(boxedValues));
 	}
 
@@ -715,7 +727,7 @@ public abstract class ValueUtil
 
 	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
-		return new AsSetIterator(typeId, boxedValues.iterator(), boxedValues instanceof Set);
+		return new AsSetIterator.FromCollection(typeId, boxedValues); //.iterator(), boxedValues instanceof Set);
 		//		return new SetValueImpl(typeId, boxedValues);
 	}
 
@@ -736,6 +748,39 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.InvalidReal, anObject);
+		}
+	}
+
+	/**
+	 * Return the collection after ensuring that any lazy sources have been computed.
+	 *
+	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
+	 * @since 1.3
+	 */
+	public static @NonNull CollectionValue eagerCollectionValue(@NonNull CollectionValue c) {
+		if (c instanceof LazyCollectionValue) {
+			((LazyCollectionValue)c).eagerIterable();
+		}
+		else {
+			System.err.println(NameUtil.debugSimpleName(c) + " no eagerIterable()");
+		}
+		return c;
+	}
+
+	/**
+	 * Return an iterable that has been eagerly populated. This inhibits opportunities for
+	 * redundant iterations to be skipped but may improve the speed of subsequent iterations.
+	 *
+	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@Nullable Object> eagerIterable(@NonNull CollectionValue c) {
+		if (c instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)c).eagerIterable();
+		}
+		else {
+			System.err.println(NameUtil.debugSimpleName(c) + " no eagerIterable()");
+			return c.iterable();
 		}
 	}
 
@@ -776,8 +821,8 @@ public abstract class ValueUtil
 		if (bagValue instanceof BagValueImpl) {
 			return ((BagValueImpl)bagValue).getMapOfElement2elementCount();
 		}
-		else if (bagValue instanceof LazyCollectionValueImpl) {
-			return ((LazyCollectionValueImpl)bagValue).getMapOfElement2elementCount();
+		else if (bagValue instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)bagValue).eagerIterable().getMapOfElement2elementCount();
 		}
 		else if (bagValue instanceof UndefinedValueImpl) {
 			return Collections.<@Nullable Object, @NonNull Number>emptyMap();
@@ -1076,6 +1121,46 @@ public abstract class ValueUtil
 
 	public static boolean isUnlimited(@Nullable Object value) {
 		return (value instanceof UnlimitedValue) && !(value instanceof NullValue);
+	}
+
+	/**
+	 * Return an iterable that is intended to be iterated at most once.
+	 * @since 1.3
+	 */
+	public static @NonNull Iterable<@Nullable Object> lazyIterable(@NonNull CollectionValue c) {
+		if (c instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)c).lazyIterable();
+		}
+		else {
+			System.err.println(NameUtil.debugSimpleName(c) + " no lazyIterable()");
+			return c.iterable();
+		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterator<@Nullable Object> lazyIterator(@NonNull CollectionValue c) {
+		if (c instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)c).lazyIterator();
+		}
+		else {
+			//			System.err.println(NameUtil.debugSimpleName(c) + " no lazyIterator()");
+			return c.iterator();
+		}
+	}
+
+	/**
+	 * @since 1.3
+	 */
+	public static @NonNull Iterator<@Nullable Object> lazyIterator(@NonNull Iterable<?> c) {
+		if (c instanceof LazyCollectionValue) {
+			return ((LazyCollectionValue)c).lazyIterator();
+		}
+		else {
+			System.err.println(NameUtil.debugSimpleName(c) + " no lazyIterator()");
+			return (Iterator<@Nullable Object>) c.iterator();
+		}
 	}
 
 	/**

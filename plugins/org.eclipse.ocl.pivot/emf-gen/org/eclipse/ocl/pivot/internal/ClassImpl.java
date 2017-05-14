@@ -685,7 +685,7 @@ implements org.eclipse.ocl.pivot.Class {
 				final /*@NonInvalid*/ java.util.@NonNull List<Constraint> ownedInvariants = this.getOwnedInvariants();
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedInvariants = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants);
 				/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedInvariants.iterator();
+				@NonNull Iterator<Object> ITERATOR__1 = ValueUtil.lazyIterator(BOXED_ownedInvariants);
 				/*@Thrown*/ boolean result;
 				while (true) {
 					if (!ITERATOR__1.hasNext()) {

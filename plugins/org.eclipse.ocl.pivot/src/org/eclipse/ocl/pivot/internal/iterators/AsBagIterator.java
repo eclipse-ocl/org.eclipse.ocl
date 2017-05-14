@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -18,27 +19,26 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
+
+import com.google.common.collect.Iterators;
 
 /**
  * AsBagIterator provides a BaggableIterator that behaves as a BagValue for an arbitrary iterator.
  *
  * @since 1.3
  */
-public class AsBagIterator extends LazyCollectionValueImpl implements BagValue
+public abstract class AsBagIterator extends LazyCollectionValueImpl implements BagValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsBagIterator(@NonNull CollectionValue sourceValue) {
-		this(TypeId.BAG.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.iterator(), sourceValue.isUnique() || !sourceValue.isOrdered());
-	}
-
-	public AsBagIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsBagLike) {
+	protected AsBagIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsBagLike) {
 		super(typeId);
 		this.sourceIterator = sourceIterator;
 		assert !isOrdered();
 		assert !isUnique();
 		if (!sourceIteratorIsBagLike) {
-			getMapOfElement2elementCount();
+			cachedIterable().getMapOfElement2elementCount();
 		}
 	}
 
@@ -64,5 +64,50 @@ public class AsBagIterator extends LazyCollectionValueImpl implements BagValue
 			s.append("«future»");
 		}
 		s.append("}");
+	}
+
+	public static class FromArray extends AsBagIterator
+	{
+		private @Nullable Object @NonNull [] boxedValues;
+
+		public FromArray(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull [] boxedValues) {
+			super(typeId, Iterators.forArray(boxedValues), false);
+			this.boxedValues = boxedValues;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromArray(typeId, boxedValues);
+		}
+	}
+
+	public static class FromCollection extends AsBagIterator
+	{
+		private @NonNull Collection<@Nullable ? extends Object> boxedValues;
+
+		public FromCollection(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+			super(typeId, boxedValues.iterator(), false);
+			this.boxedValues = boxedValues;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromCollection(typeId, boxedValues);
+		}
+	}
+
+	public static class FromCollectionValue extends AsBagIterator
+	{
+		private @NonNull CollectionValue sourceValue;
+
+		public FromCollectionValue(@NonNull CollectionValue sourceValue) {
+			super(TypeId.BAG.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), lazyIterator(sourceValue), sourceValue.isUnique() || !sourceValue.isOrdered());
+			this.sourceValue = sourceValue;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromCollectionValue(sourceValue);
+		}
 	}
 }

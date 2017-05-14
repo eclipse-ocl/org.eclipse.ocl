@@ -10,36 +10,37 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
+
+import com.google.common.collect.Iterators;
 
 /**
  * AsSetIterator provides a BaggableIterator that behaves as a SetValue for an arbitrary iterator.
  *
  * @since 1.3
  */
-public class AsSetIterator extends LazyCollectionValueImpl implements SetValue
+public abstract class AsSetIterator extends LazyCollectionValueImpl implements SetValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	public AsSetIterator(@NonNull CollectionValue sourceValue) {
-		this(TypeId.SET.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.iterator(), sourceValue.isUnique());
-	}
-
-	public AsSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsUnique) {
+	protected AsSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsUnique) {
 		super(typeId);
 		this.sourceIterator = sourceIterator;
 		assert !isOrdered();
 		assert isUnique();
 		if (!sourceIteratorIsUnique) {
-			getMapOfElement2elementCount();
+			cachedIterable().getMapOfElement2elementCount();
 		}
 	}
 
@@ -77,5 +78,50 @@ public class AsSetIterator extends LazyCollectionValueImpl implements SetValue
 			s.append("«future»");
 		}
 		s.append("}");
+	}
+
+	public static class FromArray extends AsSetIterator
+	{
+		private @Nullable Object @NonNull [] boxedValues;
+
+		public FromArray(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull [] boxedValues) {
+			super(typeId, Iterators.forArray(boxedValues), false);
+			this.boxedValues = boxedValues;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromArray(typeId, boxedValues);
+		}
+	}
+
+	public static class FromCollection extends AsSetIterator
+	{
+		private @NonNull Collection<@Nullable ? extends Object> boxedValues;
+
+		public FromCollection(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+			super(typeId, boxedValues.iterator(), boxedValues instanceof Set);
+			this.boxedValues = boxedValues;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromCollection(typeId, boxedValues);
+		}
+	}
+
+	public static class FromCollectionValue extends AsSetIterator
+	{
+		private @NonNull CollectionValue sourceValue;
+
+		public FromCollectionValue(@NonNull CollectionValue sourceValue) {
+			super(TypeId.SET.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), lazyIterator(sourceValue), sourceValue.isUnique());
+			this.sourceValue = sourceValue;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new FromCollectionValue(sourceValue);
+		}
 	}
 }

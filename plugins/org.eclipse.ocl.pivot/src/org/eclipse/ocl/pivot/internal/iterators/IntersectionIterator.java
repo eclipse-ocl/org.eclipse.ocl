@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * IntersectionIterator provides a lazy evaluation of the Collection::intersection operation.
@@ -41,11 +42,13 @@ public class IntersectionIterator extends LazyCollectionValueImpl
 	}
 
 	private final @NonNull CollectionValue sourceValue;
+	private final @NonNull CollectionValue secondValue;
 	private final @NonNull BaggableIterator<@Nullable Object> secondIterator;
 
 	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
 		super(collectionTypeId);
 		this.sourceValue = sourceValue;
+		this.secondValue = secondValue;
 		this.secondIterator = baggableIterator(secondValue);
 	}
 
@@ -60,6 +63,11 @@ public class IntersectionIterator extends LazyCollectionValueImpl
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	protected @NonNull LazyCollectionValue reIterator() {
+		return new IntersectionIterator(typeId, sourceValue, secondValue);
 	}
 
 	@Override

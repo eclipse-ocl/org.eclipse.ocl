@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * IncludingIterator provides a lazy evaluation of the Collection::including operation.
@@ -40,12 +41,14 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 		}
 	}
 
+	protected final @NonNull CollectionValue sourceValue;
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @Nullable Object object;
 	protected boolean doneInclude = false;
 
 	public IncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		super(collectionTypeId);
+		this.sourceValue = sourceValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 		this.object = object;
 	}
@@ -87,6 +90,11 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 			}
 			return 0;
 		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new ToBag(typeId, sourceValue, object);
+		}
 	}
 
 	// The included value goes at the end.
@@ -107,6 +115,11 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 				return setNext(object, 1);
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new ToSequence(typeId, sourceValue, object);
 		}
 	}
 
@@ -135,6 +148,11 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 				return setNext(object, 1);
 			}
 			return 0;
+		}
+
+		@Override
+		protected @NonNull LazyCollectionValue reIterator() {
+			return new ToUnique(typeId, sourceValue, object);
 		}
 	}
 }
