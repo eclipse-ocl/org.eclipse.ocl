@@ -1,74 +1,59 @@
 /**
  * <copyright>
- * 
+ *
  * Copyright (c) 2015, 2017 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
- * 
+ *
  * </copyright>
  */
 package codegen.company.impl;
 
-import codegen.company.CodegencompanyPackage;
-import codegen.company.CodegencompanyTables;
-import codegen.company.Company;
-import codegen.company.Employee;
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
-
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation;
-
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanNotOperation;
-
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
-
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.library.string.StringSizeOperation;
-
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-
 import org.eclipse.ocl.pivot.values.CollectionValue;
+
+import codegen.company.CodegencompanyPackage;
+import codegen.company.CodegencompanyTables;
+import codegen.company.Company;
+import codegen.company.Employee;
 
 /**
  * <!-- begin-user-doc -->
@@ -154,6 +139,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -163,6 +149,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -175,6 +162,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Employee getManager() {
 		if (manager != null && manager.eIsProxy()) {
 			InternalEObject oldManager = (InternalEObject)manager;
@@ -201,6 +189,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setManager(Employee newManager) {
 		Employee oldManager = manager;
 		manager = newManager;
@@ -213,6 +202,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Company getCompany() {
 		if (eContainerFeatureID() != CodegencompanyPackage.EMPLOYEE__COMPANY) return null;
 		return (Company)eInternalContainer();
@@ -233,6 +223,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setCompany(Company newCompany) {
 		if (newCompany != eInternalContainer() || (eContainerFeatureID() != CodegencompanyPackage.EMPLOYEE__COMPANY && newCompany != null)) {
 			if (EcoreUtil.isAncestor(this, newCompany))
@@ -254,6 +245,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Employee> getDirectReports() {
 		/**
 		 * company.employees?->select(manager = self)
@@ -267,7 +259,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
 		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue safe_null_sources = CollectionExcludingOperation.INSTANCE.evaluate(BOXED_employees, (Object)null);
 		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createOrderedSetAccumulatorValue(CodegencompanyTables.ORD_CLSSid_Employee);
-		@NonNull Iterator<Object> ITERATOR__1 = ValueUtil.lazyIterator(ValueUtil.eagerIterable(safe_null_sources));
+		@NonNull Iterator<Object> ITERATOR__1 = ValueUtil.eagerIterator(safe_null_sources);
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue select;
 		while (true) {
 			if (!ITERATOR__1.hasNext()) {
@@ -295,6 +287,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Employee> getAllReports() {
 		/**
 		 * Employee.allInstances()->select(reportsTo(self))
@@ -331,6 +324,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Employee> getReportingChain() {
 		/**
 		 *
@@ -372,6 +366,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isHasNameAsAttribute() {
 		/**
 		 * name <> null
@@ -386,6 +381,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean reportsTo(final Employee manager) {
 		/**
 		 * self.reportingChain->includes(manager)
@@ -404,6 +400,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean hasNameAsOperation() {
 		/**
 		 * name <> null
@@ -418,6 +415,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean noManagerImpliesDirectReports(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
 		/**
 		 *
@@ -469,6 +467,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean mustHaveName(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
 		/**
 		 *
@@ -540,6 +539,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean mustHaveNonEmptyName(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
 		/**
 		 *

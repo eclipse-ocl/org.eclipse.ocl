@@ -589,7 +589,6 @@ public abstract class ValueUtil
 	public static @NonNull BagValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
 		return new AsBagIterator.FromCollection(typeId, boxedValues);		// FIXME reuse Bag
-		//		return new BagValueImpl(typeId, boxedValues);
 	}
 
 	public static CollectionValue.@NonNull Accumulator createCollectionAccumulatorValue(@NonNull CollectionTypeId collectedId) {
@@ -644,7 +643,6 @@ public abstract class ValueUtil
 	public static @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
 		return new AsOrderedSetIterator.FromArray(typeId, boxedValues);
-		//		return new SparseOrderedSetValueImpl(typeId, SparseOrderedSetValueImpl.createOrderedSetOfEach(boxedValues));
 	}
 
 	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
@@ -676,7 +674,6 @@ public abstract class ValueUtil
 	public static @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
 		return new AsSequenceIterator.FromArray(typeId, boxedValues);
-		//		return new SparseSequenceValueImpl(typeId, SparseSequenceValueImpl.createSequenceOfEach(boxedValues));
 	}
 
 	public static @NonNull SequenceValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
@@ -699,7 +696,6 @@ public abstract class ValueUtil
 	public static @NonNull SequenceValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
 		return new AsSequenceIterator.FromCollection(typeId, boxedValues);
-		//		return new SparseSequenceValueImpl(typeId, boxedValues);
 	}
 
 	public static SetValue.@NonNull Accumulator createSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
@@ -709,7 +705,6 @@ public abstract class ValueUtil
 	public static @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
 		return new AsSetIterator.FromArray(typeId, boxedValues);
-		//		return new SetValueImpl(typeId, SetValueImpl.createSetOfEach(boxedValues));
 	}
 
 	public static @NonNull SetValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
@@ -727,7 +722,7 @@ public abstract class ValueUtil
 
 	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
-		return new AsSetIterator.FromCollection(typeId, boxedValues); //.iterator(), boxedValues instanceof Set);
+		return new AsSetIterator.FromCollection(typeId, boxedValues);
 		//		return new SetValueImpl(typeId, boxedValues);
 	}
 
