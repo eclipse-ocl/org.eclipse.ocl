@@ -97,7 +97,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl imple
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("AsOrderedSet{");
-		LazyIterable<@Nullable Object> iterable = basicGetIterable();
+		LazyIterable iterable = basicGetIterable();
 		if (iterable != null) {
 			s.append(iterable);
 			if (hasNext()) {
