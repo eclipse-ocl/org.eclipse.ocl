@@ -34,7 +34,7 @@ public abstract class AsSetIterator extends LazyCollectionValueImpl implements S
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
 	protected AsSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsUnique) {
-		super(typeId);
+		super(typeId, lazyDepth(sourceIterator));
 		this.sourceIterator = sourceIterator;
 		assert !isOrdered();
 		assert isUnique();

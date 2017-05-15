@@ -33,7 +33,7 @@ public class AsEcoreIterator extends LazyCollectionValueImpl
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 
 	public AsEcoreIterator(@NonNull CollectionValue sourceValue, @NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
-		super(sourceValue.getTypeId());
+		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.idResolver = idResolver;
 		this.instanceClass = instanceClass;

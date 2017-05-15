@@ -43,7 +43,7 @@ public class CollectionLiteralIterator extends LazyCollectionValueImpl
 	private int lastInt = -1;
 
 	public CollectionLiteralIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull List<@Nullable Object> literalElements) {
-		super(collectionTypeId);
+		super(collectionTypeId, 0);
 		this.literalElements = literalElements;
 		this.literalIterator = literalElements.iterator();
 		if (!isSequence()) {

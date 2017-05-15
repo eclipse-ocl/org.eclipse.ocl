@@ -32,7 +32,7 @@ public abstract class AsBagIterator extends LazyCollectionValueImpl implements B
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
 	protected AsBagIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsBagLike) {
-		super(typeId);
+		super(typeId, lazyDepth(sourceIterator));
 		this.sourceIterator = sourceIterator;
 		assert !isOrdered();
 		assert !isUnique();

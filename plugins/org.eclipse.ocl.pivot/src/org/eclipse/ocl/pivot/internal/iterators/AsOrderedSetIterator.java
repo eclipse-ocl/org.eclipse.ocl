@@ -35,7 +35,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl imple
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
 	protected AsOrderedSetIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsUnique) {
-		super(typeId);
+		super(typeId, lazyDepth(sourceIterator));
 		this.sourceIterator = sourceIterator;
 		assert isOrdered();
 		assert isUnique();

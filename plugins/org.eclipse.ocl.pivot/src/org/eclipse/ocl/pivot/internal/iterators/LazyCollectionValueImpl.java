@@ -85,6 +85,13 @@ import com.google.common.collect.Lists;
  */
 public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyCollectionValue, LazyIterator
 {
+	/**
+	 * Arbitrary nesting of lazy iterators can run out of stack, so eager iterables are needed every so often.
+	 * Too often and memory is wasted. For one nested Sequence::including test, speed degraded increasingly below
+	 * a limit of 15 daisy chained lazy iterators.
+	 */
+	public static int LAZY_DEPTH_TRAP = 15;
+
 	@SuppressWarnings("serial")
 	private static final class UnmodifiableEcoreObjects extends EcoreEList.UnmodifiableEList<@Nullable Object>
 	{
@@ -132,9 +139,36 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		s.append("}");
 	}
 
+	/**
+	 * Return the number of cascaded lazy iterators terminating in sourceValue.
+	 */
+	protected static int lazyDepth(@NonNull Object sourceValue) {
+		if (!(sourceValue instanceof LazyCollectionValueImpl)) {
+			return 0;
+		}
+		LazyCollectionValueImpl lazySource = (LazyCollectionValueImpl)sourceValue;
+		if (lazySource.lazyIterable != null) {
+			return 0;
+		}
+		else {
+			return lazySource.lazyDepth+1;
+		}
+	}
+
+	/**
+	 * The type of the resulting collection.
+	 */
 	protected final @NonNull CollectionTypeId typeId;
 
+	/**
+	 * The Bag/Sequence/Unqiue strategy applicable prior to any mutation.
+	 */
 	private final @NonNull CollectionStrategy initialCollectionStrategy;
+
+	/**
+	 * THe number of preceding lazy iterators feeding this lazy collection.
+	 */
+	private final int lazyDepth;
 
 	/**
 	 * The hashCode of the boxed values in this collection.
@@ -170,9 +204,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 */
 	private int useCount = 0;
 
-	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId) {
+	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId, int lazyDepth) {
 		this.typeId = typeId;
 		this.initialCollectionStrategy = LazyIterable.getCollectionStrategy(typeId);
+		this.lazyDepth = lazyDepth;
 	}
 
 	//	@Override
@@ -187,13 +222,17 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull BagValue asBagValue() {
-		eagerIterable();					// Force an InvalidValueEception to be thrown for any invalid element
+		if (lazyDepth >= LAZY_DEPTH_TRAP) {
+			eagerIterable();
+		}
 		return new AsBagIterator.FromCollectionValue(this);
 	}
 
 	@Override
 	public @NonNull CollectionValue asCollectionValue() {
-		eagerIterable();			// Force an InvalidValueEception to be thrown for any invalid element
+		if (lazyDepth >= LAZY_DEPTH_TRAP) {
+			eagerIterable();
+		}
 		return this;
 	}
 
@@ -242,7 +281,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull List<@Nullable Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
-		//		eagerIterable();			// Force an InvalidValueEception to be thrown for any invalid element
+		//		eagerIterable();			// Force an InvalidValueException to be thrown for any invalid element
 		//		return new AsEcoreIterator(this, idResolver, instanceClass).getListOfElements();
 		@Nullable Object[] unboxedValues = new @Nullable Object[intSize()];
 		int i= 0;
@@ -279,19 +318,25 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull OrderedSetValue asOrderedSetValue() {
-		eagerIterable();			// Force an InvalidValueEception to be thrown for any invalid element
+		if (lazyDepth >= LAZY_DEPTH_TRAP) {
+			eagerIterable();
+		}
 		return new AsOrderedSetIterator.FromCollectionValue(this);
 	}
 
 	@Override
 	public @NonNull SequenceValue asSequenceValue() {
-		eagerIterable();			// Force an InvalidValueEception to be thrown for any invalid element
+		if (lazyDepth >= LAZY_DEPTH_TRAP) {
+			eagerIterable();
+		}
 		return new AsSequenceIterator.FromCollectionValue(this);
 	}
 
 	@Override
 	public @NonNull SetValue asSetValue() {
-		eagerIterable();			// Force an InvalidValueEception to be thrown for any invalid element
+		if (lazyDepth >= LAZY_DEPTH_TRAP) {
+			eagerIterable();
+		}
 		return new AsSetIterator.FromCollectionValue(this);
 	}
 
@@ -376,7 +421,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	@Override
 	public @NonNull LazyIterable eagerIterable() {
 		LazyIterable lazyIterable2 = cachedIterable();
-		lazyIterable2.size();
+		lazyIterable2.getListOfElements();
 		return lazyIterable2;
 	}
 

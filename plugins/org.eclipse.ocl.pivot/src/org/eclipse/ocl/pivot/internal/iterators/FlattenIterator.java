@@ -82,7 +82,7 @@ public class FlattenIterator extends LazyCollectionValueImpl
 	private @Nullable Stack<@NonNull BaggableIterator<@Nullable Object>> iteratorStack = null;
 
 	public FlattenIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue) {
-		super(collectionTypeId);
+		super(collectionTypeId, lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 	}

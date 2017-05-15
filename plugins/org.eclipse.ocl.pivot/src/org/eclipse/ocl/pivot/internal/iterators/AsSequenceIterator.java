@@ -33,7 +33,7 @@ public abstract class AsSequenceIterator extends LazyCollectionValueImpl impleme
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
 	protected AsSequenceIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator) {
-		super(typeId);
+		super(typeId, lazyDepth(sourceIterator));
 		this.sourceIterator = sourceIterator;
 		assert isOrdered();
 		assert !isUnique();

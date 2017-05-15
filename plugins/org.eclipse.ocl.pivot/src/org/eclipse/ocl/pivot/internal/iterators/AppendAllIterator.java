@@ -45,7 +45,7 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 	protected final @NonNull BaggableIterator<@Nullable Object> appendIterator;
 
 	protected AppendAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
-		super(sourceValue.getTypeId());
+		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.appendedValue = appendedValue;
 		this.sourceIterator = baggableIterator(sourceValue);
