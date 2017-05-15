@@ -118,6 +118,11 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public void add(@NonNull TypedElement referredVariable, @Nullable Object value) {
+		String s = referredVariable.toString();
+		System.out.println("Add-Val: " + s);
+		if (s.startsWith("title")) {
+			toString();
+		}
 		if (variableValues.containsKey(referredVariable)) {
 			Object oldValue = variableValues.get(referredVariable);
 			if ((oldValue != value) && ((oldValue == null) || !oldValue.equals(value))) {
@@ -217,6 +222,11 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Override
 	public @Nullable Object getValueOf(@NonNull TypedElement referredVariable) {
+		String s = referredVariable.toString();
+		System.out.println("Val: " + s);
+		if (s.startsWith("title")) {
+			toString();
+		}
 		Object object = variableValues.get(referredVariable);
 		if (object == null) {
 			if (!variableValues.containsKey(referredVariable)) {
@@ -229,6 +239,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 				}
 			}
 		}
+		System.out.println("Val: " + s + " => " + object);
 		return object;
 	}
 

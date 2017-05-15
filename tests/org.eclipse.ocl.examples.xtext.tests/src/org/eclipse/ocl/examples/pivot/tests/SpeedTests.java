@@ -244,7 +244,7 @@ public class SpeedTests extends PivotTestCase
 		Executor executor = new EcoreExecutorManager(EcorePackage.Literals.ETREE_ITERATOR, PivotTables.LIBRARY);
 		TypeId elementTypeId = TypeId.INTEGER;
 		CollectionTypeId collectionTypedId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
-		int[] tests = PrintAndLog.getTestSizes(50000, 30);
+		int[] tests = PrintAndLog.getTestSizes(10000, 24);
 		//		for (int t = tests.length; --t >= 0; ) {
 		//			int testSize = tests[t];
 		@NonNull Object @NonNull [] noValues = new @NonNull IntegerValue[] {};
@@ -293,7 +293,7 @@ public class SpeedTests extends PivotTestCase
 		Executor executor = new EcoreExecutorManager(EcorePackage.Literals.ETREE_ITERATOR, PivotTables.LIBRARY);
 		TypeId elementTypeId = TypeId.INTEGER;
 		CollectionTypeId collectionTypedId = TypeId.SET.getSpecializedId(elementTypeId);
-		int[] tests = PrintAndLog.getTestSizes(50000, 25);
+		int[] tests = PrintAndLog.getTestSizes(5000, 20);
 		//		for (int t = tests.length; --t >= 0; ) {
 		//			int testSize = tests[t];
 		@NonNull Object @NonNull [] noValues = new @NonNull IntegerValue[] {};

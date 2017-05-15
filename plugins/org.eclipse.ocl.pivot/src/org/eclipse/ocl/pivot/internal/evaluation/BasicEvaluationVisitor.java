@@ -591,6 +591,8 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitOperationCallExp(@NonNull OperationCallExp operationCallExp) {
+		String s = operationCallExp.toString();
+		System.out.println("Op: " + s);
 		if (isCanceled()) {
 			throw new EvaluationHaltedException("Canceled");
 		}
