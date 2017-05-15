@@ -39,7 +39,7 @@ public abstract class AsSetIterator extends LazyCollectionValueImpl implements S
 		assert !isOrdered();
 		assert isUnique();
 		if (!sourceIteratorIsUnique) {
-			cachedIterable().getMapOfElement2elementCount();
+			eagerIterable();
 		}
 	}
 

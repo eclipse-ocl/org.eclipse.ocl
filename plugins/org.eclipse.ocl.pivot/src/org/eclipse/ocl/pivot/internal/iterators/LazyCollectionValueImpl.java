@@ -142,18 +142,17 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	private int hashCode = 0;
 
 	/**
-	 * If a history of the iterator is required, a non-null LazyIterable is used to provide it by calling
-	 * back to this iterator after ensuring that withIterable is TRUE.
+	 * A non-null lazyIterable provides the lazily populated cache. It may remain null if the LazyCollectionValue
+	 * is used solely as a bypass lazyterator.
 	 */
 	private @Nullable LazyIterable<@Nullable Object> lazyIterable = null;
 
 	/**
-	 * Whether this AbstractBaggableIterator behaves as a multi-iterable iterable or as a single iterable iterator.
-	 * Initially null and indeterminate. Set true by invocation of iterable(). Set false by invocation of iterator().
-	 * Conflicting usage, that is attempting to use a single use iterable for multiple purposes throws an
-	 * IllegalStateException.
+	 * Set true if the first usage of this LazyCollectionValue is a bypass lazyIterator(). Once set any further
+	 * attempts at lazy iteration force a reIterator() to be created that then caches to inhibit further further
+	 * re-iterations.
 	 */
-	private Boolean withIterable = null;
+	private boolean lazyIterator = false;
 
 	/**
 	 * The next value to be returned by this iterator, if hasNext is true.
@@ -319,19 +318,16 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull LazyIterable<@Nullable Object> cachedIterable() {
-		if (withIterable == null) {
-			withIterable = Boolean.TRUE;
-		}
-		else if (withIterable == Boolean.FALSE) {
-			System.err.println(NameUtil.debugSimpleName(this) + " iterable() - withIterable: " + withIterable);
-			//			throw new IllegalStateException("Cannot invoke iterable() after exploiting an iterator().");
-			withIterable = Boolean.TRUE;
-		}
+	public synchronized @NonNull LazyIterable<@Nullable Object> cachedIterable() {
 		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
 		if (lazyIterable2 == null) {
 			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
-			lazyIterable = lazyIterable2 = new LazyIterable<>(this, getCollectionStrategy(), equalsStrategy);
+			Iterator<@Nullable Object> sourceIterator = this;
+			if (lazyIterator) {
+				System.err.println(NameUtil.debugSimpleName(this) + " re-iterating");
+				sourceIterator = reIterator();
+			}
+			lazyIterable = lazyIterable2 = new LazyIterable<>(sourceIterator, getCollectionStrategy(), equalsStrategy);
 			Map<Class<?>, Integer> debugCollectionClass2count2 = debugCollectionClass2cached;
 			if (debugCollectionClass2count2 != null) {
 				Class<? extends @NonNull CollectionValue> collectionClass = getClass();
@@ -635,7 +631,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public final boolean hasNext() {
-		assert withIterable != null;
 		if ((hasNextCount > 0) || (hasNextCount() > 0)) {
 			useCount = 1;
 			return true;
@@ -648,11 +643,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public final int hasNextCount() {
-		assert withIterable != null;
 		if (hasNextCount <= 0) {
-			//			if (withIterable == null) {
-			//				withIterable = Boolean.FALSE; System.out.println(NameUtil.debugSimpleName(this) + " hasNextCount() withIterable: " + withIterable);
-			//			}
 			int hasNextCount = getNextCount();
 			assert hasNextCount == this.hasNextCount;
 			if (hasNextCount <= 0) {
@@ -796,13 +787,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	@Override
 	public @NonNull LazyIterable<@Nullable Object> iterable() {
 		//		System.err.println(NameUtil.debugSimpleName(this) + " iterable() rather than cachedIterable()");
-		return cachedIterable();
+		return eagerIterable();
 	}
 
 	@Override
 	public @NonNull BaggableIterator<@Nullable Object> iterator() {
 		//		System.err.println(NameUtil.debugSimpleName(this) + " iterator() rather than cachedIterator()");
-		return cachedIterable().iterator();
+		return eagerIterable().iterator();
 	}
 
 	public @Nullable Object last() {
@@ -810,37 +801,16 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull BaggableIterator<@Nullable Object> lazyIterator() {
-		if (withIterable == null) {
-			withIterable = Boolean.FALSE;									// First time - no cache
-			Map<Class<?>, Integer> debugCollectionClass2count2 = debugCollectionClass2lazy;
-			if (debugCollectionClass2count2 != null) {
-				Class<? extends @NonNull CollectionValue> collectionClass = getClass();
-				Integer count = debugCollectionClass2count2.get(collectionClass);
-				count = count != null ? count+1 : 1;
-				debugCollectionClass2count2.put(collectionClass, count);
-			}
+	public synchronized @NonNull BaggableIterator<@Nullable Object> lazyIterator() {
+		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
+		if (lazyIterable2 != null) {
+			return lazyIterable2.iterator();
+		}
+		if (!lazyIterator) {
+			lazyIterator = true;
 			return this;
 		}
-		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
-		if (withIterable == Boolean.TRUE) {
-			assert lazyIterable2 != null;									// Cached - reuse it
-		}
-		else {
-			assert lazyIterable2 == null;									// Second time uncached - create cache
-			System.err.println(NameUtil.debugSimpleName(this) + " lazyIterator() - re-iterating");
-			withIterable = Boolean.TRUE;
-			Map<Class<?>, Integer> debugCollectionClass2count2 = debugCollectionClass2reiterated;
-			if (debugCollectionClass2count2 != null) {
-				Class<? extends @NonNull CollectionValue> collectionClass = getClass();
-				Integer count = debugCollectionClass2count2.get(collectionClass);
-				count = count != null ? count+1 : 1;
-				debugCollectionClass2count2.put(collectionClass, count);
-			}
-			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
-			lazyIterable2 = lazyIterable = new LazyIterable<>(reIterator(), getCollectionStrategy(), equalsStrategy);
-		}
-		return lazyIterable2.iterator();
+		return cachedIterable().iterator();
 	}
 
 	public @NonNull CollectionValue minus(@NonNull CollectionValue that) {
@@ -849,7 +819,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public final Object next() {
-		assert withIterable != null;
 		if (hasNextCount <= 0) {
 			throw new NoSuchElementException();
 		}
@@ -889,9 +858,9 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	/**
 	 * Create a reiterator that may be used to perform a further lazy iteration even though an earlier
-	 * lazy iteration has already computed.
+	 * lazyIteration has already been returned.
 	 *
-	 * This method provides a fall-back compatibility for legacy code that may not have invoked cachedIterable()
+	 * This method provides a fall-back compatibility for legacy code that may not have invoked cached iterable()
 	 * to ensure that the results of the first iteration were cached.
 	 *
 	 * This method may be removed once the LazyCollectionValue API is promoted to CollectionValue.

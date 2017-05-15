@@ -711,7 +711,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	@Override
 	public @NonNull <T> EList<T> ecoreValueOfAll(@Nullable Class<T> instanceClass, @NonNull Iterable<? extends Object> values) {
 		if (values instanceof LazyCollectionValue) {
-			((LazyCollectionValue)values).cachedIterable();
+			((LazyCollectionValue)values).iterable();
 		}
 		Object[] ecoreValues = new Object[Iterables.size(values)];
 		int i= 0;

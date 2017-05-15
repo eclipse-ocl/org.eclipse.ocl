@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+
 import com.google.common.collect.Iterators;
 
 /**
@@ -36,7 +37,7 @@ public abstract class AsBagIterator extends LazyCollectionValueImpl implements B
 		assert !isOrdered();
 		assert !isUnique();
 		if (!sourceIteratorIsBagLike) {
-			cachedIterable().getMapOfElement2elementCount();
+			eagerIterable();
 		}
 	}
 
