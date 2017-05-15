@@ -26,7 +26,7 @@ public abstract class SelectIterator extends LazyCollectionValueImpl
 	private final @NonNull BaggableIterator<Object> sourceIterator;
 
 	protected SelectIterator(@NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue) {
-		super(typeId);
+		super(typeId, lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 	}

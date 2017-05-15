@@ -44,7 +44,7 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 	protected boolean doneAppend = false;
 
 	public AppendIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
-		super(collectionTypeId);
+		super(collectionTypeId, lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.sourceIterator = baggableIterator(sourceValue);
 		this.object = object;

@@ -48,7 +48,7 @@ public abstract class PrependIterator extends LazyCollectionValueImpl
 	protected int prependCount = 0;
 
 	public PrependIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
-		super(collectionTypeId);
+		super(collectionTypeId, lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.object = object;
 		this.sourceIterator = baggableIterator(sourceValue);

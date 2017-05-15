@@ -45,7 +45,7 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 	protected final @NonNull BaggableIterator<@Nullable Object> prependIterator;
 
 	public PrependAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
-		super(sourceValue.getTypeId());
+		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.prependValue = prependValue;
 		this.sourceIterator = baggableIterator(sourceValue);
