@@ -225,7 +225,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				AS2Ecore.copyAnnotationComments(eAnnotation, pivotConstraint);
 			}
 			else {
-				AS2Ecore.copyComments(eAnnotation, pivotConstraint);
+				AS2Ecore.copyCommentsAndDocumentation(eAnnotation, pivotConstraint);
 			}
 		}
 		return eAnnotation;
@@ -242,14 +242,18 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		safeVisitAll(eAnnotations, pivotAnnotation.getOwnedAnnotations());
 		for (Detail pivotDetail : pivotAnnotation.getOwnedDetails()) {
 			String name = pivotDetail.getName();
-			String value = StringUtil.splice(pivotDetail.getValues(), "");
-			eAnnotation.getDetails().put(name, value);
+			if (!PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY.equals(name)		// Documentation and comments are merged by comment handling
+					|| !PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE.equals(pivotAnnotation.getName())) {
+				String value = StringUtil.splice(pivotDetail.getValues(), "");
+				eAnnotation.getDetails().put(name, value);
+			}
 		}
 	}
 
 	protected void copyModelElement(@NonNull EModelElement eModelElement, @NonNull Element pivotModelElement) {
 		context.putCreated(pivotModelElement, eModelElement);
-		AS2Ecore.copyComments(eModelElement, pivotModelElement);
+		safeVisitAll(ClassUtil.nonNullState(eModelElement.getEAnnotations()), pivotModelElement.getOwnedAnnotations());
+		AS2Ecore.copyCommentsAndDocumentation(eModelElement, pivotModelElement);
 	}
 
 	protected void copyNamedElement(@NonNull ENamedElement eNamedElement, @NonNull NamedElement pivotNamedElement) {
@@ -268,8 +272,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			}
 		}
 		eNamedElement.setName(name);
-		@SuppressWarnings("null")@NonNull List<EAnnotation> eAnnotations = eNamedElement.getEAnnotations();
-		safeVisitAll(eAnnotations, pivotNamedElement.getOwnedAnnotations());
 	}
 
 	protected void copyTemplateSignature(@NonNull List<ETypeParameter> eTypeParameters, TemplateableElement pivotElement) {

@@ -476,6 +476,42 @@ public class SerializeTests extends XtextTestCase
 		doSerialize(ocl, "Bug516274");
 		ocl.dispose();
 	}
+	public void testSerialize_Bug516301() throws Exception {
+		OCL ocl = OCL.newInstance(getProjectMap());
+		String testFile =
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"My\" nsURI=\"http://example.org/my\" nsPrefix=\"my\">\n" +
+						"  <eAnnotations source=\"http://www.eclipse.org/OCL/Import\">\n" +
+						"    <details key=\"ecore\" value=\"http://www.eclipse.org/emf/2002/Ecore\"/>\n" +
+						"  </eAnnotations>\n" +
+						"  <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" +
+						"    <details key=\"invocationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
+						"    <details key=\"settingDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
+						"    <details key=\"validationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
+						"  </eAnnotations>\n" +
+						"  <eClassifiers xsi:type=\"ecore:EClass\" name=\"DocTest\">\n" +
+						"    <eOperations name=\"testJava\" lowerBound=\"1\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt\">\n" +
+						"      <eAnnotations source=\"http://www.eclipse.org/emf/2002/GenModel\">\n" +
+						"        <details key=\"documentation\" value=\"Java Documentation\"/>\n" +
+						"        <details key=\"body\" value=\"return 1;\"/>\n" +
+						"      </eAnnotations>\n" +
+						"    </eOperations>\n" +
+						"    <eOperations name=\"testOCL\" lowerBound=\"1\" eType=\"ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt\">\n" +
+						"      <eAnnotations source=\"http://www.eclipse.org/emf/2002/GenModel\">\n" +
+						"        <details key=\"documentation\" value=\"OCL Documentation\"/>\n" +
+						"      </eAnnotations>\n" +
+						"      <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\">\n" +
+						"        <details key=\"body\" value=\"1\"/>\n" +
+						"      </eAnnotations>\n" +
+						"    </eOperations>\n" +
+						"  </eClassifiers>\n" +
+						"</ecore:EPackage>";
+		createOCLinEcoreFile("Bug516301.ecore", testFile);
+		doSerialize(ocl, "Bug516301", "Bug516301", null, false, true, null);
+		ocl.dispose();
+	}
+
 
 	public void testSerialize_Company() throws Exception {
 		OCL ocl = OCL.newInstance(getProjectMap());
