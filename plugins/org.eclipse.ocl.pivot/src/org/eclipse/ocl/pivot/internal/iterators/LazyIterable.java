@@ -44,7 +44,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class LazyIterable<@Nullable E> implements IndexableIterable<E>
+public class LazyIterable implements IndexableIterable<@Nullable Object>
 {
 	/**
 	 * AbstractCollectionStrategy provides the mandatory/internal implementation of CollectionStrategy.
@@ -62,9 +62,9 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		 *
 		 * The default implementation is that for a Set. Bag and Sequence override.
 		 */
-		protected <@Nullable E1> void addTo(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+		protected void addTo(@NonNull LazyIterable lazyIterable, @Nullable Object anElement, int count) {
 			if (count > 0) {
-				Map<@Nullable E1, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+				Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
 				assert lazyMapOfElement2elementCount2 != null;
 				ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, SetElementCount.ONE);
 				if (oldElementCount == null) {
@@ -79,7 +79,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		 *
 		 * The default implementation re-uses addTo. OrderedSet overrides.
 		 */
-		protected <@Nullable E1> void appendTo(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+		protected void appendTo(@NonNull LazyIterable lazyIterable, @Nullable Object anElement, int count) {
 			addTo( lazyIterable, anElement, count);
 		}
 
@@ -88,29 +88,29 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		 *
 		 * The default implementation does nothing. Sequence overrides.
 		 */
-		protected <@Nullable E1> void asBag(@NonNull LazyIterable<E1> lazyIterable) {}
+		protected void asBag(@NonNull LazyIterable lazyIterable) {}
 
 		/**
 		 * Convert lazyIterable to set-form; unique but still deterministic elements.
 		 *
 		 * The default implementation does nothing. Bag, Sequence override. Bag, Unique override.
 		 */
-		protected <@Nullable E1> void asSequence(@NonNull LazyIterable<E1> lazyIterable) {}
+		protected void asSequence(@NonNull LazyIterable lazyIterable) {}
 
 		/**
 		 * Convert lazyIterable to set-form; unique but still deterministic elements.
 		 *
 		 * The default implementation does nothing. Bag, Sequence override.
 		 */
-		protected <@Nullable E1> void asUnique(@NonNull LazyIterable<E1> lazyIterable) {}
+		protected void asUnique(@NonNull LazyIterable lazyIterable) {}
 
 		/**
 		 * Return true if lazyIterable contains anElement.
 		 *
 		 * The default implementation is that for a Set or Bag. Sequence overrides.
 		 */
-		protected <@Nullable E1> @NonNull Boolean contains(@NonNull LazyIterable<E1> lazyIterable, @Nullable Object anElement) {
-			Map<@Nullable E1, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.getMapOfElement2elementCount();
+		protected @NonNull Boolean contains(@NonNull LazyIterable lazyIterable, @Nullable Object anElement) {
+			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.getMapOfElement2elementCount();
 			ElementCount elementCount = mapOfElement2elementCount.get(anElement);
 			return elementCount != null ? Boolean.TRUE : Boolean.FALSE;
 		}
@@ -120,8 +120,8 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		 *
 		 * The default implementation is that for a Set or Bag. Sequence overrides.
 		 */
-		protected <@Nullable E1> int count(@NonNull LazyIterable<E1> lazyIterable, @Nullable Object anElement) {
-			Map<@Nullable E1, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.getMapOfElement2elementCount();
+		protected int count(@NonNull LazyIterable lazyIterable, @Nullable Object anElement) {
+			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.getMapOfElement2elementCount();
 			ElementCount elementCount = mapOfElement2elementCount.get(anElement);
 			return elementCount != null ? elementCount.intValue() : 0;
 		}
@@ -166,9 +166,9 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		 *
 		 * The default implementation is that for a Set. Bag and Sequence override.
 		 */
-		protected <@Nullable E1> void removeFrom(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+		protected void removeFrom(@NonNull LazyIterable lazyIterable, @Nullable Object anElement, int count) {
 			if (count > 0) {
-				Map<@Nullable E1, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+				Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
 				if (lazyMapOfElement2elementCount2 != null) {
 					ElementCount oldElementCount = lazyMapOfElement2elementCount2.remove(anElement);
 					if (oldElementCount != null) {
@@ -194,9 +194,9 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		protected <@Nullable E1> void addTo(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+		protected void addTo(@NonNull LazyIterable lazyIterable, @Nullable Object anElement, int count) {
 			if (count > 0) {
-				Map<@Nullable E1, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+				Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
 				assert lazyMapOfElement2elementCount2 != null;
 				BagElementCount newElementCount = new BagElementCount(count);
 				ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, newElementCount);
@@ -211,10 +211,10 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		protected <@Nullable E1> void asSequence(@NonNull LazyIterable<E1> lazyIterable) {
-			Map<@Nullable E1, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.createMapOfElement2elementCount();
-			List<@Nullable E1> listOfElements = lazyIterable.createListOfElements();
-			for (@Nullable E1 anElement : lazyIterable.lazyListOfElements) {
+		protected void asSequence(@NonNull LazyIterable lazyIterable) {
+			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.createMapOfElement2elementCount();
+			List<@Nullable Object> listOfElements = lazyIterable.createListOfElements();
+			for (@Nullable Object anElement : lazyIterable.lazyListOfElements) {
 				ElementCount elementCount = mapOfElement2elementCount.get(anElement);
 				assert elementCount != null;
 				for (int i = elementCount.intValue(); i > 0; --i) {
@@ -227,8 +227,8 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		protected <@Nullable E1> void asUnique(@NonNull LazyIterable<E1> lazyIterable) {
-			Map<@Nullable E1, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.getMapOfElement2elementCount();
+		protected void asUnique(@NonNull LazyIterable lazyIterable) {
+			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.getMapOfElement2elementCount();
 			for (@NonNull ElementCount elementCount : mapOfElement2elementCount.values()) {
 				elementCount.setValue(1);
 			}
@@ -241,9 +241,9 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		protected <@Nullable E1> void removeFrom(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+		protected void removeFrom(@NonNull LazyIterable lazyIterable, @Nullable Object anElement, int count) {
 			if (count > 0) {
-				Map<@Nullable E1, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+				Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
 				if (lazyMapOfElement2elementCount2 != null) {
 					ElementCount oldElementCount = lazyMapOfElement2elementCount2.get(anElement);
 					if (oldElementCount != null) {
@@ -283,7 +283,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		protected <@Nullable E1> void addTo(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+		protected void addTo(@NonNull LazyIterable lazyIterable, @Nullable Object anElement, int count) {
 			for (int i = count; i > 0; i--) {
 				lazyIterable.lazyListOfElements.add(anElement);
 				lazyIterable.size++;
@@ -296,7 +296,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		protected <@Nullable E1> void removeFrom(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+		protected void removeFrom(@NonNull LazyIterable lazyIterable, @Nullable Object anElement, int count) {
 			for (int i = count; i > 0; i--) {
 				if (!lazyIterable.lazyListOfElements.remove(anElement)) {
 					break;
@@ -319,9 +319,9 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		 * already present the old value is displaced. The new value goes at the end.
 		 */
 		@Override
-		protected <@Nullable E1> void appendTo(@NonNull LazyIterable<E1> lazyIterable, @Nullable E1 anElement, int count) {
+		protected void appendTo(@NonNull LazyIterable lazyIterable, @Nullable Object anElement, int count) {
 			if (count > 0) {
-				Map<@Nullable E1, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+				Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
 				assert lazyMapOfElement2elementCount2 != null;
 				ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, SetElementCount.ONE);
 				if (oldElementCount != null) {
@@ -355,19 +355,19 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		protected <@Nullable E1> void asBag(@NonNull LazyIterable<E1> lazyIterable) {
-			Map<@Nullable E1, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.createMapOfElement2elementCount();
-			for (@Nullable E1 element : lazyIterable.lazyListOfElements) {
+		protected void asBag(@NonNull LazyIterable lazyIterable) {
+			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.createMapOfElement2elementCount();
+			for (@Nullable Object element : lazyIterable.lazyListOfElements) {
 				mapOfElement2elementCount.put(element, SetElementCount.ONE);
 			}
 			lazyIterable.lazyMapOfElement2elementCount = mapOfElement2elementCount;
 		}
 
 		@Override
-		protected <@Nullable E1> void asUnique(@NonNull LazyIterable<E1> lazyIterable) {
-			Map<@Nullable E1, @NonNull ElementCount> mapOfElement2elementCount = new HashMap<>();
-			List<@Nullable E1> lazyListOfElements = lazyIterable.createListOfElements();
-			for (@Nullable E1 anElement : lazyIterable.lazyListOfElements) {
+		protected void asUnique(@NonNull LazyIterable lazyIterable) {
+			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = new HashMap<>();
+			List<@Nullable Object> lazyListOfElements = lazyIterable.createListOfElements();
+			for (@Nullable Object anElement : lazyIterable.lazyListOfElements) {
 				if (!mapOfElement2elementCount.containsKey(anElement)) {
 					lazyListOfElements.add(anElement);
 					mapOfElement2elementCount.put(anElement, SetElementCount.ONE);
@@ -378,8 +378,8 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		protected <@Nullable E1> @NonNull Boolean contains(@NonNull LazyIterable<E1> lazyIterable, @Nullable Object anElement) {
-			List<@Nullable E1> listOfElements = lazyIterable.getListOfElements();
+		protected @NonNull Boolean contains(@NonNull LazyIterable lazyIterable, @Nullable Object anElement) {
+			List<@Nullable Object> listOfElements = lazyIterable.getListOfElements();
 			EqualsStrategy equalsStrategy = lazyIterable.equalsStrategy;
 			for (Object element : listOfElements) {
 				if (equalsStrategy.isEqual(element, anElement)) {
@@ -390,8 +390,8 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		protected <@Nullable E1> int count(@NonNull LazyIterable<E1> lazyIterable, @Nullable Object anElement) {
-			List<@Nullable E1> listOfElements = lazyIterable.getListOfElements();
+		protected int count(@NonNull LazyIterable lazyIterable, @Nullable Object anElement) {
+			List<@Nullable Object> listOfElements = lazyIterable.getListOfElements();
 			EqualsStrategy equalsStrategy = lazyIterable.equalsStrategy;
 			int count = 0;
 			for (Object element : listOfElements) {
@@ -429,7 +429,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		protected <@Nullable E1> void asSequence(@NonNull LazyIterable<E1> lazyIterable) {
+		protected void asSequence(@NonNull LazyIterable lazyIterable) {
 			lazyIterable.lazyMapOfElement2elementCount = null;
 		}
 
@@ -443,17 +443,17 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	 * An ImmutableBaggableIterator provides better performance than the standard List Iterator by
 	 * exploiting the immutability of a fully populated Iteration cache.
 	 */
-	private static class ImmutableBaggableIterator<@Nullable E> implements BaggableIterator<E>
+	private static class ImmutableBaggableIterator implements LazyIterator
 	{
-		private final @NonNull List<E> elements;
-		private final @NonNull Map<E, @NonNull ? extends Number> element2elementCount;
+		private final @NonNull List<@Nullable Object> elements;
+		private final @NonNull Map<@Nullable Object, @NonNull ? extends Number> element2elementCount;
 		private final int size;
 		private int elementIndex = 0;
 		private int residualCount = 0;
-		private E currentElement;
+		private @Nullable Object currentElement;
 		private int nextCount = 0;
 
-		public ImmutableBaggableIterator(@NonNull List<E> elements, @NonNull Map<E, @NonNull ? extends Number> element2elementCount) {
+		public ImmutableBaggableIterator(@NonNull List<@Nullable Object> elements, @NonNull Map<@Nullable Object, @NonNull ? extends Number> element2elementCount) {
 			this.elements = elements;
 			this.element2elementCount = element2elementCount;
 			this.size = elements.size();
@@ -493,11 +493,11 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		public E next() {
+		public @Nullable Object next() {
 			if (residualCount <= 0) {
 				throw new NoSuchElementException();
 			}
-			E savedElement = currentElement;
+			@Nullable Object savedElement = currentElement;
 			residualCount -= nextCount;
 			if ((residualCount <= 0) && (elementIndex < size)) {
 				currentElement = elements.get(elementIndex++);
@@ -522,13 +522,13 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	 * An ImmutableNonBaggableIterator provides better performance than the standard List Iterator by
 	 * exploiting the immutability of a fully populated Iteration cache.
 	 */
-	private static class ImmutableNonBaggableIterator<@Nullable E> implements BaggableIterator<E>
+	private static class ImmutableNonBaggableIterator implements LazyIterator
 	{
-		private final @NonNull List<E> elements;
+		private final @NonNull List<@Nullable Object> elements;
 		private final int size;
 		private int elementIndex = 0;
 
-		public ImmutableNonBaggableIterator(@NonNull List<E> elements) {
+		public ImmutableNonBaggableIterator(@NonNull List<@Nullable Object> elements) {
 			this.elements = elements;
 			this.size = elements.size();
 		}
@@ -554,7 +554,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		public E next() {
+		public @Nullable Object next() {
 			//	if (index >= size) {
 			//		throw new NoSuchElementException();		-- get will throw an IOOBE if the impossible happens
 			//	}
@@ -581,11 +581,11 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	/**
 	 * LazyBaggableIterator iterates over the Bag content returning each multiple element multiple times.
 	 */
-	private static class LazyBaggableIterator<@Nullable E> implements BaggableIterator<E>
+	private static class LazyBaggableIterator implements LazyIterator
 	{
-		private final @NonNull Map<E, @NonNull ElementCount> map;
-		private final @NonNull Iterator<E> objectIterator;
-		private E currentObject;
+		private final @NonNull Map<@Nullable Object, @NonNull ElementCount> map;
+		private final @NonNull Iterator<@Nullable Object> objectIterator;
+		private @Nullable Object currentObject;
 
 		/**
 		 * The number of repeats of the currentObject still to be returned by next().
@@ -599,7 +599,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		 */
 		private int nextCount = 0;
 
-		private LazyBaggableIterator(@NonNull LazyIterable<E> iterable) {
+		private LazyBaggableIterator(@NonNull LazyIterable iterable) {
 			this.map = iterable.getMapOfElement2elementCount();
 			this.objectIterator = iterable.iterator();
 			assert objectIterator.hasNext();
@@ -628,7 +628,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		public E next() {
+		public @Nullable Object next() {
 			if (residualCount <= 0) {
 				throw new NoSuchElementException();
 			}
@@ -637,7 +637,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 				return currentObject;
 			}
 			if (objectIterator.hasNext()) {
-				E savedObject = currentObject;
+				@Nullable Object savedObject = currentObject;
 				currentObject = objectIterator.next();
 				ElementCount count = map.get(currentObject);
 				assert count != null;
@@ -660,7 +660,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	 * A LazyNonBaggableIterator support multiple access to the partially populated iteration cache provoking
 	 * additional population as required.
 	 */
-	private class LazyNonBaggableIterator implements BaggableIterator<E>
+	private class LazyNonBaggableIterator implements LazyIterator
 	{
 		private int index = 0;
 
@@ -695,11 +695,11 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 
 		@Override
-		public E next() {
+		public @Nullable Object next() {
 			if (index < size) {
 				return lazyListOfElements.get(index++);
 			}
-			E next = get(index);
+			@Nullable Object next = get(index);
 			index++;			// After IndexOutOfBoundsException has been thrown
 			return next;
 		}
@@ -766,25 +766,30 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 	}
 
+	/**
+	 * The iterator that provides the elements that have yet to be cached in lazyListOfElements.
+	 */
+	private final @NonNull Iterator<@Nullable Object> sourceIterator;
 
 	/**
-	 * The iterator that provides the elements to be cached.
+	 * The Java/Not/OCL/Simple Equals strategy that determines how elements are compared for uniqueness.
 	 */
-	private final @NonNull Iterator<E> sourceIterator;
-
-	private @NonNull AbstractCollectionStrategy collectionStrategy;
-
 	private final @NonNull EqualsStrategy equalsStrategy;
 
 	/**
-	 * The lazily cached elements obtained by iterating sourceIterator.
+	 * The Bag/Sequence/Unique strategy that determines how new/old elements are added/removed.
 	 */
-	private @NonNull List<E> lazyListOfElements;	// ArrayList reallocates arrays; could be better to do so ourselves with a smart estimatedSize()
+	private @NonNull AbstractCollectionStrategy collectionStrategy;
 
 	/**
-	 * The lazily cached elements obtained by iterating sourceIterator.
+	 * The lazily cached and deterministically ordered elements obtained by iterating sourceIterator.
 	 */
-	private @Nullable Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount = null;
+	private @NonNull List<@Nullable Object> lazyListOfElements;	// ArrayList reallocates arrays; could be better to do so ourselves with a smart estimatedSize()
+
+	/**
+	 * A lazily created map from element to its repeat count. Null for Sequences. SetCount.ONE for Set/OrderedSet.
+	 */
+	private @Nullable Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount = null;
 
 	/**
 	 * The number of elements in the collection. For a Sequence, this is lazyListOfElements.size().
@@ -793,7 +798,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	 */
 	private int size = 0;
 
-	public LazyIterable(@NonNull Iterator<E> sourceIterator, @NonNull CollectionStrategy collectionStrategy, @NonNull EqualsStrategy equalsStrategy) {
+	public LazyIterable(@NonNull Iterator<@Nullable Object> sourceIterator, @NonNull CollectionStrategy collectionStrategy, @NonNull EqualsStrategy equalsStrategy) {
 		this.sourceIterator = sourceIterator;
 		this.collectionStrategy = (AbstractCollectionStrategy) collectionStrategy;
 		this.equalsStrategy = equalsStrategy;
@@ -811,7 +816,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		return collectionStrategy.count(this, value);
 	}
 
-	protected @NonNull List<E> createListOfElements() {
+	protected @NonNull List<@Nullable Object> createListOfElements() {
 		Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList2 = debugCollectionClass2lazyList;
 		if (debugCollectionClass2lazyList2 != null) {
 			Class<?> collectionClass = sourceIterator.getClass();
@@ -822,7 +827,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		return new ArrayList<>();
 	}
 
-	protected @NonNull Map<@Nullable E, @NonNull ElementCount> createMapOfElement2elementCount() {
+	protected @NonNull Map<@Nullable Object, @NonNull ElementCount> createMapOfElement2elementCount() {
 		Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap2 = debugCollectionClass2lazyMap;
 		if (debugCollectionClass2lazyMap2 != null) {
 			Class<?> collectionClass = sourceIterator.getClass();
@@ -839,13 +844,13 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	}
 
 	@Override
-	public synchronized E get(int javaIndex) {
+	public synchronized @Nullable Object get(int javaIndex) {
 		//
 		//	Ensure that sufficient of source has been read to reach the required index.
 		//
 		if (lazyListOfElements.size() <= javaIndex) {
 			if (sourceIterator instanceof BaggableIterator) {
-				BaggableIterator<@Nullable E> baggableIterator = (BaggableIterator<@Nullable E>)sourceIterator;
+				BaggableIterator<@Nullable Object> baggableIterator = (BaggableIterator<@Nullable Object>)sourceIterator;
 				for (int nextCount; ((nextCount = baggableIterator.hasNextCount()) > 0) && (lazyListOfElements.size() <= javaIndex); ) {
 					collectionStrategy.addTo(this, sourceIterator.next(), nextCount);
 				}
@@ -869,9 +874,9 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	/**
 	 * Ensure that all lazy iterations have completed and then return a list of all elements.
 	 */
-	public synchronized @NonNull List<E> getListOfElements() {
+	public synchronized @NonNull List<@Nullable Object> getListOfElements() {
 		if (sourceIterator instanceof BaggableIterator) {
-			BaggableIterator<@Nullable E> baggableIterator = (BaggableIterator<@Nullable E>)sourceIterator;
+			BaggableIterator<@Nullable Object> baggableIterator = (BaggableIterator<@Nullable Object>)sourceIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
 				collectionStrategy.addTo(this, sourceIterator.next(), nextCount);
 			}
@@ -887,9 +892,9 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	/**
 	 * Ensure that all lazy iterations have completed and then return a bag of all elements.
 	 */
-	public synchronized @NonNull Map<E, @NonNull ElementCount> getMapOfElement2elementCount() {
+	public synchronized @NonNull Map<@Nullable Object, @NonNull ElementCount> getMapOfElement2elementCount() {
 		getListOfElements();
-		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
+		Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
 		if (lazyMapOfElement2elementCount2 == null) {			// Lazy creation is only needed for Sequences
 			assert collectionStrategy.isSequence();
 			Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap2 = debugCollectionClass2lazyMap;
@@ -900,7 +905,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 				debugCollectionClass2lazyMap2.put(collectionClass, count);
 			}
 			lazyMapOfElement2elementCount2 = new HashMap<>();
-			for (@Nullable E element : lazyListOfElements) {
+			for (@Nullable Object element : lazyListOfElements) {
 				lazyMapOfElement2elementCount2.put(element, SetElementCount.ONE);
 			}
 		}
@@ -910,8 +915,8 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	/**
 	 * Ensure that all lazy iterations have completed and then return a set of all elements.
 	 */
-	public @NonNull Set<E> getSetOfElements() {
-		Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
+	public @NonNull Set<@Nullable Object> getSetOfElements() {
+		Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
 		if (lazyMapOfElement2elementCount2 == null) {
 			lazyMapOfElement2elementCount2 = getMapOfElement2elementCount();
 		}
@@ -924,15 +929,15 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	}
 
 	@Override
-	public @NonNull BaggableIterator<E> iterator() {
+	public @NonNull LazyIterator iterator() {
 		if (collectionStrategy.isBag()) {
-			Map<E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
+			Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = getMapOfElement2elementCount();
 			assert lazyMapOfElement2elementCount2 != null;
 			if (sourceIterator.hasNext()) {
-				return new LazyBaggableIterator<>(this);
+				return new LazyBaggableIterator(this);
 			}
 			else {
-				return new ImmutableBaggableIterator<>(lazyListOfElements, lazyMapOfElement2elementCount2);
+				return new ImmutableBaggableIterator(lazyListOfElements, lazyMapOfElement2elementCount2);
 			}
 		}
 		else {
@@ -940,17 +945,17 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 				return new LazyNonBaggableIterator();
 			}
 			else {
-				return new ImmutableNonBaggableIterator<>(lazyListOfElements);
+				return new ImmutableNonBaggableIterator(lazyListOfElements);
 			}
 		}
 	}
 
-	public @NonNull CollectionValue mutableAppend(@NonNull CollectionValue leftCollectionValue, @Nullable E rightValue) {
+	public @NonNull CollectionValue mutableAppend(@NonNull CollectionValue leftCollectionValue, @Nullable Object rightValue) {
 		collectionStrategy.appendTo(this, rightValue, 1);
 		return leftCollectionValue;
 	}
 
-	public @NonNull CollectionValue mutableAppendAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable E> rightIterator) {
+	public @NonNull CollectionValue mutableAppendAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable Object> rightIterator) {
 		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
 			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
@@ -989,12 +994,12 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		return collectionValue;
 	}
 
-	public @NonNull CollectionValue mutableExcluding(@NonNull CollectionValue leftCollectionValue, E rightValue) {
+	public @NonNull CollectionValue mutableExcluding(@NonNull CollectionValue leftCollectionValue, @Nullable Object rightValue) {
 		collectionStrategy.removeFrom(this, rightValue, 1);
 		return leftCollectionValue;
 	}
 
-	public @NonNull CollectionValue mutableExcludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<E> rightIterator) {
+	public @NonNull CollectionValue mutableExcludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable Object> rightIterator) {
 		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
 			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
@@ -1009,12 +1014,12 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		return leftCollectionValue;
 	}
 
-	public @NonNull CollectionValue mutableIncluding(@NonNull CollectionValue leftCollectionValue, E rightValue) {
+	public @NonNull CollectionValue mutableIncluding(@NonNull CollectionValue leftCollectionValue, @Nullable Object rightValue) {
 		collectionStrategy.addTo(this, rightValue, 1);
 		return leftCollectionValue;
 	}
 
-	public @NonNull CollectionValue mutableIncludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<E> rightIterator) {
+	public @NonNull CollectionValue mutableIncludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable Object> rightIterator) {
 		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
 			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
@@ -1034,17 +1039,17 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	 * This the underlying content of leftCollectionValue. If isUnique, the resulting intersection has unit counts
 	 * rather than common minimum counts.
 	 */
-	public @NonNull CollectionValue mutableIntersection(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable E> rightIterator, boolean isUnique) {
+	public @NonNull CollectionValue mutableIntersection(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
 		assert leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered();
-		Map<@Nullable E, @NonNull ElementCount> savedMapOfElement2elementCount = getMapOfElement2elementCount();
-		Map<@Nullable E, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
+		Map<@Nullable Object, @NonNull ElementCount> savedMapOfElement2elementCount = getMapOfElement2elementCount();
+		Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
 		lazyListOfElements = new ArrayList<>();
 		size = 0;
 		collectionStrategy = isUnique ? SetStrategy.INSTANCE : BagStrategy.INSTANCE;
 		if (rightIterator instanceof BaggableIterator<?>) {
-			BaggableIterator<@Nullable E> baggableIterator = (BaggableIterator<@Nullable E>)rightIterator;
+			BaggableIterator<@Nullable Object> baggableIterator = (BaggableIterator<@Nullable Object>)rightIterator;
 			for (int rightCount; (rightCount = baggableIterator.hasNextCount()) > 0; ) {
-				E rightValue = baggableIterator.next();
+				@Nullable Object rightValue = baggableIterator.next();
 				ElementCount leftElementCount = savedMapOfElement2elementCount.get(rightValue);
 				if (leftElementCount != null) {
 					collectionStrategy.addTo(this, rightValue, Math.min(leftElementCount.intValue(), rightCount));
@@ -1053,7 +1058,7 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 		}
 		else {
 			while (rightIterator.hasNext()) {
-				E rightValue = rightIterator.next();
+				@Nullable Object rightValue = rightIterator.next();
 				ElementCount leftElementCount = savedMapOfElement2elementCount.get(rightValue);
 				if (leftElementCount != null) {
 					ElementCount intersectionElementCount = lazyMapOfElement2elementCount2.get(rightValue);
@@ -1072,11 +1077,11 @@ public class LazyIterable<@Nullable E> implements IndexableIterable<E>
 	 * This the underlying content of leftCollectionValue. If isUnique, the resulting union has unit counts
 	 * rather than sum counts.
 	 */
-	public @NonNull CollectionValue mutableUnion(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable E> rightIterator, boolean isUnique) {
+	public @NonNull CollectionValue mutableUnion(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
 		assert leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered();
 		collectionStrategy = isUnique ? SetStrategy.INSTANCE : BagStrategy.INSTANCE;
 		if (rightIterator instanceof BaggableIterator<?>) {
-			BaggableIterator<@Nullable E> baggableIterator = (BaggableIterator<@Nullable E>)rightIterator;
+			BaggableIterator<@Nullable Object> baggableIterator = (BaggableIterator<@Nullable Object>)rightIterator;
 			for (int rightCount; (rightCount = baggableIterator.hasNextCount()) > 0; ) {
 				collectionStrategy.addTo(this, baggableIterator.next(), rightCount);
 			}

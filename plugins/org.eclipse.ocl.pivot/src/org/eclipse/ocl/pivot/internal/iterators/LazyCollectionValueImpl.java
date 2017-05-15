@@ -83,7 +83,7 @@ import com.google.common.collect.Lists;
  *
  * @since 1.3
  */
-public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyCollectionValue, BaggableIterator<@Nullable Object>
+public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyCollectionValue, LazyIterator
 {
 	@SuppressWarnings("serial")
 	private static final class UnmodifiableEcoreObjects extends EcoreEList.UnmodifiableEList<@Nullable Object>
@@ -145,7 +145,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 * A non-null lazyIterable provides the lazily populated cache. It may remain null if the LazyCollectionValue
 	 * is used solely as a bypass lazyterator.
 	 */
-	private @Nullable LazyIterable<@Nullable Object> lazyIterable = null;
+	private @Nullable LazyIterable lazyIterable = null;
 
 	/**
 	 * Set true if the first usage of this LazyCollectionValue is a bypass lazyIterator(). Once set any further
@@ -313,13 +313,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return cachedIterable().get(javaIindex);
 	}
 
-	protected @Nullable LazyIterable<@Nullable Object> basicGetIterable() {
+	protected @Nullable LazyIterable basicGetIterable() {
 		return lazyIterable;
 	}
 
 	@Override
-	public synchronized @NonNull LazyIterable<@Nullable Object> cachedIterable() {
-		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
+	public synchronized @NonNull LazyIterable cachedIterable() {
+		LazyIterable lazyIterable2 = lazyIterable;
 		if (lazyIterable2 == null) {
 			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
 			Iterator<@Nullable Object> sourceIterator = this;
@@ -327,7 +327,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 				System.err.println(NameUtil.debugSimpleName(this) + " re-iterating");
 				sourceIterator = reIterator();
 			}
-			lazyIterable = lazyIterable2 = new LazyIterable<>(sourceIterator, getCollectionStrategy(), equalsStrategy);
+			lazyIterable = lazyIterable2 = new LazyIterable(sourceIterator, getCollectionStrategy(), equalsStrategy);
 			Map<Class<?>, Integer> debugCollectionClass2count2 = debugCollectionClass2cached;
 			if (debugCollectionClass2count2 != null) {
 				Class<? extends @NonNull CollectionValue> collectionClass = getClass();
@@ -374,8 +374,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull LazyIterable<@Nullable Object> eagerIterable() {
-		LazyIterable<@Nullable Object> lazyIterable2 = cachedIterable();
+	public @NonNull LazyIterable eagerIterable() {
+		LazyIterable lazyIterable2 = cachedIterable();
 		lazyIterable2.size();
 		return lazyIterable2;
 	}
@@ -785,7 +785,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull LazyIterable<@Nullable Object> iterable() {
+	public @NonNull LazyIterable iterable() {
 		//		System.err.println(NameUtil.debugSimpleName(this) + " iterable() rather than cachedIterable()");
 		return eagerIterable();
 	}
@@ -801,8 +801,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public synchronized @NonNull BaggableIterator<@Nullable Object> lazyIterator() {
-		LazyIterable<@Nullable Object> lazyIterable2 = lazyIterable;
+	public synchronized @NonNull LazyIterator lazyIterator() {
+		LazyIterable lazyIterable2 = lazyIterable;
 		if (lazyIterable2 != null) {
 			return lazyIterable2.iterator();
 		}

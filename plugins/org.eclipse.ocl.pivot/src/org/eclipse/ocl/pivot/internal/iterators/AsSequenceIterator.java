@@ -80,7 +80,7 @@ public abstract class AsSequenceIterator extends LazyCollectionValueImpl impleme
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("AsSequence{");
-		LazyIterable<@Nullable Object> iterable = basicGetIterable();
+		LazyIterable iterable = basicGetIterable();
 		if (iterable != null) {
 			s.append(iterable);
 			if (hasNext()) {
