@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TestProfile="http:://Bug515027Profile" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:://Bug515027Profile Bug515027.profile.uml#_L-9JIR3VEeeQmNJ8vRNa5w">
+  <uml:Package xmi:id="_qLUhcB3SEeeCPYMqmB7L7A" name="Bug515027" URI="http://Bug515027">
+    <packagedElement xmi:type="uml:Class" xmi:id="_td5FcB3SEeeCPYMqmB7L7A" name="TClass"/>
+    <profileApplication xmi:id="_lpFTEB3XEeexRe7aHWH7YQ">
+      <eAnnotations xmi:id="_lpI9cB3XEeexRe7aHWH7YQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="Bug515027.profile.uml#_L-9JIR3VEeeQmNJ8vRNa5w"/>
+      </eAnnotations>
+      <appliedProfile href="Bug515027.profile.uml#_zEmkYB3UEeeQmNJ8vRNa5w"/>
+    </profileApplication>
+  </uml:Package>
+  <TestProfile:Test xmi:id="_vaeUoB3XEeexRe7aHWH7YQ" base_Class="_td5FcB3SEeeCPYMqmB7L7A"/>
+  <TestProfile:Test xmi:id="_w8I7sB3XEeexRe7aHWH7YQ"/>
+</xmi:XMI>

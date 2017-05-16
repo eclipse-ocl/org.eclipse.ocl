@@ -32,6 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.common.internal.preferences.CommonPreferenceInitializer;
+import org.eclipse.ocl.pivot.internal.complete.PartialClasses;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -843,6 +844,31 @@ public class UMLValidateTest extends AbstractValidateTests
 		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource/*,
 			"\"Parsing error for RootElement::Class1::Attribute1::class2.Attribute1 + 1.0:\n" +
 				" Failed to load 'file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.xtext.tests/bin/org/eclipse/ocl/examples/pivot/tests/models/Bug514353.uml.oclas' : Unsupported Class::nestedClassifiers for \"Class1\" in UML2ASDeclarationSwitch\""*/);
+		ocl.dispose();
+	}
+
+	public void test_umlValidation_Bug515027() throws IOException {
+		PartialClasses.ADD_BASE_PROPERTY.setState(true);
+		PartialClasses.ADD_EXTENSION_PROPERTY.setState(true);
+		PartialClasses.INIT_MEMBER_PROPERTIES.setState(true);
+		resetRegistries();
+		BaseLinkingService.DEBUG_RETRY.setState(true);
+		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
+		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
+			new CommonPreferenceInitializer().initializeDefaultPreferences();
+		}
+		OCL ocl = createOCL();
+		ResourceSet resourceSet = ocl.getResourceSet();
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
+		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, "Bug515027");
+		assertNoResourceErrors("Loading", umlResource);
+		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
+		assertValidationDiagnostics("Loading", umlResource, validationContext);
+		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource/*,
+			"\"Parsing error for RootElement::Class1::Attribute1::class2.Attribute1 + 1.0:\n" +
+				" Failed to load 'file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.xtext.tests/bin/org/eclipse/ocl/examples/pivot/tests/models/Bug515027.uml.oclas' : Unsupported Class::nestedClassifiers for \"Class1\" in UML2ASDeclarationSwitch\""*/);
 		ocl.dispose();
 	}
 }

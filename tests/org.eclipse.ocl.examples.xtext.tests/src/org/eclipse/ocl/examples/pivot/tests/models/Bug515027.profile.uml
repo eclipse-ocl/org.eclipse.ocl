@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Profile xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_zEmkYB3UEeeQmNJ8vRNa5w" name="Bug515027Profile" URI="http:://Bug515027Profile" metamodelReference="_BGX2AB3VEeeQmNJ8vRNa5w">
+  <eAnnotations xmi:id="_L-9JIB3VEeeQmNJ8vRNa5w" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_L-9JIR3VEeeQmNJ8vRNa5w" name="TestProfile" nsURI="http:://Bug515027Profile" nsPrefix="TestProfile">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_L-9JIh3VEeeQmNJ8vRNa5w" name="Test">
+        <eAnnotations xmi:id="_L-9JIx3VEeeQmNJ8vRNa5w" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_2fuAYB3UEeeQmNJ8vRNa5w"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_L-9JJB3VEeeQmNJ8vRNa5w" name="base_Class" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_L-9JJh3VEeeQmNJ8vRNa5w" name="base_Interface" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+  </eAnnotations>
+  <packageImport xmi:id="_BGX2AB3VEeeQmNJ8vRNa5w">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_METAMODELS/UML.metamodel.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_2fuAYB3UEeeQmNJ8vRNa5w" name="Test">
+    <ownedRule xmi:id="_a5w_8B3zEeeLYfSaqJu1VA" name="NonNullInterfaceFull" constrainedElement="_2fuAYB3UEeeQmNJ8vRNa5w">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_a5w_8R3zEeeLYfSaqJu1VA">
+        <language>OCL</language>
+        <body>self.base_Interface.extension_Test.base_Class &lt;> null</body>
+      </specification>
+    </ownedRule>
+    <ownedAttribute xmi:id="_E5T8IR3VEeeQmNJ8vRNa5w" name="base_Class" association="_E5TVEB3VEeeQmNJ8vRNa5w">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qBJLkB3vEeeLYfSaqJu1VA"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_E5UjMh3VEeeQmNJ8vRNa5w" name="base_Interface" association="_E5UjMB3VEeeQmNJ8vRNa5w">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Interface"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qkV_QB3vEeeLYfSaqJu1VA"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_E5TVEB3VEeeQmNJ8vRNa5w" name="Class_Test" memberEnd="_E5T8IB3VEeeQmNJ8vRNa5w _E5T8IR3VEeeQmNJ8vRNa5w">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_E5T8IB3VEeeQmNJ8vRNa5w" name="extension_Test" type="_2fuAYB3UEeeQmNJ8vRNa5w" aggregation="composite" association="_E5TVEB3VEeeQmNJ8vRNa5w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_E5UjMB3VEeeQmNJ8vRNa5w" name="Interface_Test" memberEnd="_E5UjMR3VEeeQmNJ8vRNa5w _E5UjMh3VEeeQmNJ8vRNa5w">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_E5UjMR3VEeeQmNJ8vRNa5w" name="extension_Test" type="_2fuAYB3UEeeQmNJ8vRNa5w" aggregation="composite" association="_E5UjMB3VEeeQmNJ8vRNa5w"/>
+  </packagedElement>
+</uml:Profile>
