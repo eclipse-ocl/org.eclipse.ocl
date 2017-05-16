@@ -290,8 +290,17 @@ public class UMLOCLEValidator implements EValidator
 												allOk = false;
 											}
 										} catch (ParserException e) {
-											// TODO Auto-generated catch block
-											//											e.printStackTrace();
+											if (diagnostics != null) {
+												String message = StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, constraint.getContext().getName(), constraint.getName(), NameUtil.qualifiedNameFor(eObject)) + "\n - " + e.toString();
+												if (!mayUseNewLines) {
+													message = message.replace("\n", "");
+												}
+												diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR, UMLValidator.DIAGNOSTIC_SOURCE,
+													0, message,  new Object[] { eObject }));
+											}
+											else {
+												allOk = false;
+											}
 										}
 									}
 								}
