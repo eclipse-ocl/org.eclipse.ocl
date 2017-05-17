@@ -178,6 +178,28 @@ public class EnvironmentView
 			if (isRedefinitionOf(match2, match1)) {
 				return -1;				// match1 inferior
 			}
+			//
+			//	FIXME There should not be multiple properties, but as a consequence of Bug 510503 we need a fudge.
+			//
+			Property opposite1 = match1.getOpposite();
+			if ((opposite1 != null) && "base_Class".equals(opposite1.getName())) {
+				return -1;				// match1 inferior
+			}
+			Property opposite2 = match2.getOpposite();
+			if ((opposite2 != null) && "base_Class".equals(opposite2.getName())) {
+				return 1;				// match2 inferior
+			}
+			/*			org.eclipse.ocl.pivot.Class owningClass1 = match1.getOwningClass();
+			org.eclipse.ocl.pivot.Class owningClass2 = match2.getOwningClass();
+			if ((owningClass1 != null) && (owningClass2 != null) && (owningClass1 != owningClass2)) {
+				StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+				if (owningClass1.conformsTo(standardLibrary, owningClass2)) {
+					return 1;				// match2 inferior
+				}
+				if (owningClass2.conformsTo(standardLibrary, owningClass1)) {
+					return -1;				// match1 inferior
+				}
+			} */
 			return 0;
 		}
 

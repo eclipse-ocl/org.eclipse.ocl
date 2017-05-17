@@ -866,9 +866,8 @@ public class UMLValidateTest extends AbstractValidateTests
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
 		assertValidationDiagnostics("Loading", umlResource, validationContext);
-		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource/*,
-			"\"Parsing error for RootElement::Class1::Attribute1::class2.Attribute1 + 1.0:\n" +
-				" Failed to load 'file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.xtext.tests/bin/org/eclipse/ocl/examples/pivot/tests/models/Bug515027.uml.oclas' : Unsupported Class::nestedClassifiers for \"Class1\" in UML2ASDeclarationSwitch\""*/);
+		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource,
+				"The 'Test::NonNullInterfaceFull' constraint is violated for '«Test»Bug515027::TClass'");
 		ocl.dispose();
 	}
 }
