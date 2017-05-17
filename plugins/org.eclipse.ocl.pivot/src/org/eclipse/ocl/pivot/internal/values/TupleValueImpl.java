@@ -66,7 +66,7 @@ public class TupleValueImpl extends ValueImpl implements TupleValue
 	 * @param tupleTypeId my type
 	 * @param values my values which are aligned to the tupleTypeId.getParts()
 	 */
-	public TupleValueImpl(@NonNull TupleTypeId tupleTypeId, @NonNull Object... values) {
+	public TupleValueImpl(@NonNull TupleTypeId tupleTypeId, @Nullable Object... values) {
 		this.tupleTypeId = tupleTypeId;
 		TuplePartId[] partIds = tupleTypeId.getPartIds();
 		if (partIds.length != values.length) {
