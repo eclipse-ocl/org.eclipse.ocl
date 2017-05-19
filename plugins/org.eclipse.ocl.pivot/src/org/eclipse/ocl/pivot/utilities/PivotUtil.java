@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -1374,7 +1375,11 @@ public class PivotUtil
 			return ClassUtil.nonNullState(((PropertyCallExp)navigationCallExp).getReferredProperty());
 		}
 		else if (navigationCallExp instanceof OppositePropertyCallExp) {
-			return ClassUtil.nonNullState(((OppositePropertyCallExp)navigationCallExp).getReferredProperty().getOpposite());
+			Property referredProperty = ClassUtil.nonNullState(((OppositePropertyCallExp)navigationCallExp).getReferredProperty());
+			if (referredProperty.eIsProxy() ) {
+				throw new IllegalStateException("Unresolved referred property proxy '" + EcoreUtil.getURI(referredProperty) + "' at '" + EcoreUtil.getURI(navigationCallExp) + "'");
+			}
+			return ClassUtil.nonNullState(referredProperty.getOpposite());
 		}
 		else {
 			throw new IllegalStateException();

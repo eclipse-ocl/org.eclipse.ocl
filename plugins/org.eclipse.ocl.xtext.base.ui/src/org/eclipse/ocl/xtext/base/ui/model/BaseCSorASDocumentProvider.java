@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.CSResource.CSResourceExtension2;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.BaseUiPluginHelper;
 import org.eclipse.ui.IEditorInput;
@@ -67,6 +69,40 @@ import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSynt
  */
 public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 {
+	public class UnresolvedProxyDiagnostic implements Resource.Diagnostic
+	{
+		protected final @NonNull String message;
+
+		public UnresolvedProxyDiagnostic(@NonNull String message) {
+			this.message = message;
+		}
+
+		@Override
+		public int getColumn() {
+			return 0;
+		}
+
+		@Override
+		public int getLine() {
+			return 0;
+		}
+
+		@Override
+		public String getLocation() {
+			return null;
+		}
+
+		@Override
+		public String getMessage() {
+			return message;
+		}
+
+		@Override
+		public String toString() {
+			return message;
+		}
+	}
+
 	private static final Logger log = Logger.getLogger(BaseCSorASDocumentProvider.class);
 
 	public static final String PERSIST_AS_PIVOT = "pivot";
@@ -304,7 +340,22 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				}
 				//				xmiResource.load(new InputSource(new StringReader(sourceText)), null);
 				xmiResource.load(inputStream, null);
-				EcoreUtil.resolveAll(asResourceSet);
+				//
+				//	Check that all proxies are resolved. (This is EcoreUtil.resolveAll(asResourceSet) plus diagnostics.)
+				//
+				List<@NonNull Resource> asResources = ClassUtil.nullFree(asResourceSet.getResources());
+				for (int i = 0; i < asResources.size(); i++) {			// Proxy resolution grows domain.
+					Resource resource = asResources.get(i);
+					for (EObject eObject : new TreeIterable(resource)) {
+						for (Iterator<EObject> it =  eObject.eCrossReferences().iterator(); it.hasNext(); ) {
+							EObject eReferencedObject = it.next();
+							if (eReferencedObject.eIsProxy() ) {
+								resource.getErrors().add(new UnresolvedProxyDiagnostic("Unresolved proxy '" + EcoreUtil.getURI(eReferencedObject) + "' at '" + EcoreUtil.getURI(eObject) + "'"));
+							}
+						}
+					}
+				}
+
 				List<Resource.Diagnostic> allErrors = null;
 				for (Resource resource : asResourceSet.getResources()) {
 					List<Resource.Diagnostic> errors = resource.getErrors();
@@ -317,7 +368,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				}
 				if (allErrors != null) {
 					Throwable firstThrowable = null;
-					StringWriter s = new StringWriter();
+					StringBuilder s = new StringBuilder();
 					boolean isFirst = true;
 					for (Resource.Diagnostic diagnostic : allErrors) {
 						Object diag = diagnostic;
