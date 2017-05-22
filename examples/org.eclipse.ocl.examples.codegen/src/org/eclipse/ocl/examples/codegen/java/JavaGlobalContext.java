@@ -63,37 +63,8 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		imports.add(className);
 	}
 
-	protected @NonNull JavaLocalContext<@NonNull ? extends CG> createNestedContext(@NonNull CGElement cgScope) {
-		return new JavaLocalContext<CG>(this, cgScope);
-	}
-
-	public @Nullable EClass getEClass(@NonNull ElementId elementId) {
-		IdVisitor<EClass> id2EClassVisitor = codeGenerator.getId2EClassVisitor();
-		return elementId.accept(id2EClassVisitor);
-	}
-
-	public @NonNull String getEName() {
-		return eName;
-	}
-
-	public @NonNull String getEvaluateName() {
-		return evaluateName;
-	}
-
-	public @NonNull Collection<@NonNull CGValuedElement> getGlobals() {
-		return globals;
-	}
-
-	public @NonNull Set<String> getImports() {
-		return imports;
-	}
-
-	public @NonNull String getInstanceName() {
-		return instanceName;
-	}
-
 	@Override
-	public @Nullable JavaLocalContext<@NonNull ? extends CG> getLocalContext(@NonNull CGElement cgElement) {
+	public @Nullable JavaLocalContext<@NonNull ? extends CG> basicGetLocalContext(@NonNull CGElement cgElement) {
 		JavaLocalContext<@NonNull ? extends CG> localContext = localContexts.get(cgElement);
 		if (localContext == null) {
 			CGElement cgScope = cgElement;
@@ -128,6 +99,44 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return localContext;
 	}
 
+	protected @NonNull JavaLocalContext<@NonNull ? extends CG> createNestedContext(@NonNull CGElement cgScope) {
+		return new JavaLocalContext<CG>(this, cgScope);
+	}
+
+	public @Nullable EClass getEClass(@NonNull ElementId elementId) {
+		IdVisitor<EClass> id2EClassVisitor = codeGenerator.getId2EClassVisitor();
+		return elementId.accept(id2EClassVisitor);
+	}
+
+	public @NonNull String getEName() {
+		return eName;
+	}
+
+	public @NonNull String getEvaluateName() {
+		return evaluateName;
+	}
+
+	public @NonNull Collection<@NonNull CGValuedElement> getGlobals() {
+		return globals;
+	}
+
+	public @NonNull Set<String> getImports() {
+		return imports;
+	}
+
+	public @NonNull String getInstanceName() {
+		return instanceName;
+	}
+
+	@Override
+	public @NonNull JavaLocalContext<@NonNull ? extends CG> getLocalContext(@NonNull CGElement cgElement) {
+		JavaLocalContext<@NonNull ? extends CG> localContext = basicGetLocalContext(cgElement);
+		if (localContext == null) {
+			throw new IllegalStateException("No CG scope for " + cgElement);
+		}
+		return localContext;
+	}
+
 	public @NonNull NameManager getNameManager() {
 		return nameManager;
 	}
@@ -141,7 +150,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	}
 
 	public @NonNull String getValueName(@NonNull CGValuedElement cgValuedElement) {
-		JavaLocalContext<@NonNull ? extends CG> localContext = getLocalContext(cgValuedElement);
+		JavaLocalContext<@NonNull ? extends CG> localContext = basicGetLocalContext(cgValuedElement);
 		if ((localContext != null) && !cgValuedElement.isGlobal()) {
 			return localContext.getValueName(cgValuedElement);
 		}

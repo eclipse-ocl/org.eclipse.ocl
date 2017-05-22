@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -16,5 +16,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 
 public interface GlobalContext
 {
-	@Nullable LocalContext getLocalContext(@NonNull CGElement asElement);
+	@Nullable LocalContext basicGetLocalContext(@NonNull CGElement asElement);
+	@NonNull LocalContext getLocalContext(@NonNull CGElement asElement);
 }
