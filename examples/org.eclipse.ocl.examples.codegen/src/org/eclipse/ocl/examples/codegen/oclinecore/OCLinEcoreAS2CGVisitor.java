@@ -74,6 +74,34 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 		return cgParameter;
 	}
 
+	public @NonNull CGParameter getParameter(@NonNull OCLinEcoreLocalContext localContext, @NonNull Variable aParameter, @Nullable String explicitName) {
+		CGParameter cgParameter = getVariablesStack().getParameter(aParameter);
+		if (cgParameter == null) {
+			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+			if (explicitName == null) {
+				//				localContext.setNames(cgParameter, aParameter);
+				String name = localContext.getNameManagerContext().getUniqueName(cgParameter, aParameter.getName());
+				cgParameter.setName(name);
+				cgParameter.setValueName(name);
+			}
+			else {
+				cgParameter.setName(aParameter.getName());
+				cgParameter.setValueName(explicitName);
+			}
+			setAst(cgParameter, aParameter);
+			//			cgParameter.setTypeId(context.getTypeId(aParameter.getTypeId()));
+			addParameter(aParameter, cgParameter);
+			cgParameter.setRequired(aParameter.isIsRequired());
+			if (aParameter.isIsRequired()) {
+				cgParameter.setNonNull();
+			}
+		}
+		if (PivotConstants.SELF_NAME.equals(aParameter.getName())) {
+			cgParameter.setValueName("this");
+		}
+		return cgParameter;
+	}
+
 	@Override
 	public @Nullable CGConstraint visitConstraint(@NonNull Constraint element) {
 		CGConstraint cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
@@ -95,12 +123,12 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 				OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.getLocalContext(cgConstraint);
 				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
 				if (contextVariable != null) {
-					CGParameter cgParameter = getParameter(contextVariable, null);
+					CGParameter cgParameter = getParameter(localContext, contextVariable, null);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@SuppressWarnings("null")@NonNull Variable parameterVariable : asSynthesizedQuery.getOwnedParameters()) {
-					String diagnosticsName = localContext != null ? localContext.getDiagnosticsName() : null;
-					String contextName = localContext != null ? localContext.getContextName() : null;
+					String diagnosticsName = localContext.getDiagnosticsName();
+					String contextName = localContext.getContextName();
 					CGParameter cgParameter;
 					if ((diagnosticsName != null) && diagnosticsName.equals(parameterVariable.getName())) {
 						cgParameter = getParameter(parameterVariable, diagnosticsName);
