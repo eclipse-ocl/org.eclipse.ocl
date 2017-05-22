@@ -77,6 +77,7 @@ import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 /**
  * OCL2JavaClass supports generation of the content of a JavaClassFile to
@@ -532,6 +533,16 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		CGModelResource resource = getCGResourceFactory().createResource(URI.createURI("cg.xmi"));
 		resource.getContents().add(cgPackage);
 		getAnalyzer().analyze(cgPackage);
+		JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> globalContext = getGlobalContext();
+		for (@NonNull EObject eObject : new TreeIterable(cgPackage, true)) {
+			if (eObject instanceof CGValuedElement) {
+				CGValuedElement cgValuedElement = (CGValuedElement)eObject;
+				CGValuedElement value = cgValuedElement.getNamedValue();
+				if (value.isGlobal()) {
+					globalContext.getValueName(cgValuedElement);
+				}
+			}
+		}
 		CG2JavaPreVisitor cg2PreVisitor = createCG2JavaPreVisitor();
 		cgPackage.accept(cg2PreVisitor);
 		CommonSubexpressionEliminator cseEliminator = createCommonSubexpressionEliminator();

@@ -74,12 +74,10 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
-import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -105,27 +103,27 @@ import org.eclipse.ocl.pivot.values.RealValue;
  */
 public class NameManager
 {
-	public static final String BAG_NAME_HINT_PREFIX = "BAG";
-	public static final String COLLECTION_NAME_HINT_PREFIX = "COL";
-	public static final String DEFAULT_NAME_PREFIX = "symbol";
-	//	public static final String ID_NAME_HINT_PREFIX = "TID";
-	public static final String EXPRESSION_IN_OCL_NAME_HINT_PREFIX = PivotConstants.RESULT_NAME;
-	public static final String INTEGER_NAME_HINT_PREFIX = "INT_";
-	public static final String INVALID_NAME_HINT_PREFIX = "IVE_";
-	public static final String ITERATION_NAME_HINT_PREFIX = "";
-	public static final String OPERATION_NAME_HINT_PREFIX = "OP_";
-	public static final String OPERATION_CALL_EXP_NAME_HINT_PREFIX = ""; //"RES_";
-	public static final String ORDERED_SET_NAME_HINT_PREFIX = "ORD";
-	public static final String PROPERTY_NAME_HINT_PREFIX = "";
-	public static final String REAL_NAME_HINT_PREFIX = "REA_";
-	public static final String RANGE_NAME_HINT_PREFIX = "RNG";
-	public static final String SEQUENCE_NAME_HINT_PREFIX = "SEQ";
-	public static final String SET_NAME_HINT_PREFIX = "SET";
-	public static final String STRING_NAME_HINT_PREFIX = "STR_";
+	public static final @NonNull String BAG_NAME_HINT_PREFIX = "BAG";
+	public static final @NonNull String COLLECTION_NAME_HINT_PREFIX = "COL";
+	public static final @NonNull String DEFAULT_NAME_PREFIX = "symbol";
+	//	public static final @NonNull String ID_NAME_HINT_PREFIX = "TID";
+	public static final @NonNull String EXPRESSION_IN_OCL_NAME_HINT_PREFIX = PivotConstants.RESULT_NAME;
+	public static final @NonNull String INTEGER_NAME_HINT_PREFIX = "INT_";
+	public static final @NonNull String INVALID_NAME_HINT_PREFIX = "IVE_";
+	public static final @NonNull String ITERATION_NAME_HINT_PREFIX = "";
+	public static final @NonNull String OPERATION_NAME_HINT_PREFIX = "OP_";
+	public static final @NonNull String OPERATION_CALL_EXP_NAME_HINT_PREFIX = ""; //"RES_";
+	public static final @NonNull String ORDERED_SET_NAME_HINT_PREFIX = "ORD";
+	public static final @NonNull String PROPERTY_NAME_HINT_PREFIX = "";
+	public static final @NonNull String REAL_NAME_HINT_PREFIX = "REA_";
+	public static final @NonNull String RANGE_NAME_HINT_PREFIX = "RNG";
+	public static final @NonNull String SEQUENCE_NAME_HINT_PREFIX = "SEQ";
+	public static final @NonNull String SET_NAME_HINT_PREFIX = "SET";
+	public static final @NonNull String STRING_NAME_HINT_PREFIX = "STR_";
 	public static final int STRING_NAME_HINT_LIMIT = 64;
-	public static final String TUPLE_NAME_HINT_PREFIX = "TUP_";
-	public static final String TYPE_NAME_HINT_PREFIX = "TYP_";
-	public static final String VARIABLE_DECLARATION_NAME_HINT_PREFIX = "";
+	public static final @NonNull String TUPLE_NAME_HINT_PREFIX = "TUP_";
+	public static final @NonNull String TYPE_NAME_HINT_PREFIX = "TYP_";
+	public static final @NonNull String VARIABLE_DECLARATION_NAME_HINT_PREFIX = "";
 
 	/**
 	 * Names that will not be allocated to temporary variables.
@@ -470,23 +468,24 @@ public class NameManager
 
 	public class Context {
 		private final @Nullable Context context;					// Pushed context
-		private final @NonNull Map<String, Object> name2object;		// User of each name, null if name ambiguous
-		private final @NonNull Map<Object, String> object2name;		// Unambiguous name for each object, null if not determined
-		private Map<String, Integer> name2counter;					// Auto-generation counter for each colliding name
+		private final @NonNull Map<@NonNull String, @Nullable Object> name2object;		// User of each name, null if name ambiguous
+		private final @NonNull Map<@NonNull Object, @NonNull String> object2name;		// Unambiguous name for each object, null if not determined
+		private final @NonNull Map<@NonNull String, @NonNull Integer> name2counter;	// Auto-generation counter for each colliding name
 		//		private boolean frozen = false;								// Set true once pushed
+		private int ancestralObjectCount = 0;						// object2name.size() in context ancestry
 
 		public Context() {
 			this.context = null;
-			this.name2object = new HashMap<String, Object>();
-			this.object2name = new HashMap<Object, String>();
-			this.name2counter = null;
+			this.name2object = new HashMap<>();
+			this.object2name = new HashMap<>();
+			this.name2counter = new HashMap<>();
 		}
 
 		public Context(@NonNull Context context) {
 			this.context = context;
-			this.name2object = new HashMap<String, Object>(context.name2object);
-			this.object2name = new HashMap<Object, String>(context.object2name);
-			this.name2counter = context.name2counter != null ? new HashMap<String, Integer>(context.name2counter) : null;
+			this.name2object = new HashMap<>(context.name2object);
+			this.object2name = new HashMap<>(context.object2name);
+			this.name2counter = new HashMap<>(context.name2counter);
 			//			context.frozen = true;
 		}
 
@@ -527,6 +526,7 @@ public class NameManager
 		 * <p>
 		 */
 		public @NonNull String getUniqueName(@Nullable Object anObject, @Nullable String... nameHints) {
+			refresh();
 			if ((anObject instanceof RealValue) && !(anObject instanceof InvalidValue)) {
 				anObject = ((RealValue)anObject).asNumber();
 			}
@@ -541,38 +541,38 @@ public class NameManager
 				for (String nameHint : nameHints) {
 					if (nameHint != null)  {
 						String validHint = getValidJavaIdentifier(nameHint, false, anObject);
-						if (!reservedJavaNames.contains(validHint) || ((anObject instanceof CGValuedElement) && isNative((CGValuedElement)anObject))) {
-							if (anObject != null) {
-								Object oldElement = name2object.get(validHint);
-								if (oldElement == anObject) {
-									return validHint;
-								}
-								if ((oldElement == null) && !name2object.containsKey(validHint)) {
-									install(validHint, anObject);
-									return validHint;
-								}
-								else {
-									nameHint.toString();
-								}
+						while (reservedJavaNames.contains(validHint)) {
+							validHint = validHint + "_";
+						}
+						//						if (!reservedJavaNames.contains(validHint) || ((anObject instanceof CGValuedElement) && isNative((CGValuedElement)anObject))) {
+						if (anObject != null) {
+							Object oldElement = name2object.get(validHint);
+							if (oldElement == anObject) {
+								return validHint;
+							}
+							if ((oldElement == null) && !name2object.containsKey(validHint)) {
+								install(validHint, anObject);
+								return validHint;
 							}
 							else {
-								if (!name2object.containsKey(validHint)) {
-									install(validHint, anObject);
-									return validHint;
-								}
-							}
-							if (lastResort == null) {
-								lastResort = validHint;
+								nameHint.toString();
 							}
 						}
+						else {
+							if (!name2object.containsKey(validHint)) {
+								install(validHint, anObject);
+								return validHint;
+							}
+						}
+						if (lastResort == null) {
+							lastResort = validHint;
+						}
+						//						}
 					}
 				}
 			}
 			if (lastResort == null) {
 				lastResort = DEFAULT_NAME_PREFIX;
-			}
-			if (name2counter == null) {
-				name2counter = new HashMap<String, Integer>();
 			}
 			Integer counter = name2counter.get(lastResort);
 			int count = counter != null ? counter : 0;
@@ -584,7 +584,20 @@ public class NameManager
 					return attempt;
 				}
 			}
+		}
 
+		protected int refresh() {
+			Context context2 = context;
+			if (context2 != null) {
+				int newObjectCount = context2.refresh();
+				if (newObjectCount != ancestralObjectCount) {
+					ancestralObjectCount = newObjectCount;
+					//					name2counter.putAll(context2.name2counter);
+					name2object.putAll(context2.name2object);
+					object2name.putAll(context2.object2name);
+				}
+			}
+			return object2name.size();
 		}
 
 		private void install(@NonNull String name, @Nullable Object anObject) {
@@ -596,7 +609,7 @@ public class NameManager
 			}
 		}
 
-		private boolean isNative(@NonNull CGValuedElement cgElement) {
+		/*		private boolean isNative(@NonNull CGValuedElement cgElement) {
 			TypeId asTypeId = cgElement.getASTypeId();
 			if (asTypeId instanceof NestedTypeId) {
 				PackageId packageId = ((NestedTypeId)asTypeId).getParent();
@@ -605,7 +618,7 @@ public class NameManager
 				}
 			}
 			return false;
-		}
+		} */
 
 		/**
 		 * Reserve name for use by anObject. If anObject is null, the reservation is for an unspecified object not for the null value.
