@@ -150,6 +150,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectProperty;
 import org.eclipse.ocl.pivot.internal.library.CompositionProperty;
@@ -851,6 +852,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			//			}
 			CGLibraryOperationCallExp cgLibraryOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 			cgLibraryOperationCallExp.setLibraryOperation((LibraryOperation) libraryOperation);
+			cgLibraryOperationCallExp.setReferredOperation(asOperation);
 			cgOperationCallExp = cgLibraryOperationCallExp;
 		}
 		if (cgOperationCallExp == null) {
@@ -975,7 +977,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGValuedElement generateSafeExclusion(@NonNull CallExp callExp, @NonNull CGValuedElement cgSource) {
 		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 		cgOperationCallExp.setLibraryOperation(CollectionExcludingOperation.INSTANCE);
-		//		cgOperationCallExp.setReferredOperation(asOperation);
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		CollectionType collectionType = standardLibrary.getCollectionType();
+		Operation asOperation = NameUtil.getNameable(collectionType.getOwnedOperations(), "excluding");		// FIXME Promote QVTd's StandardLibraryHelper
+		cgOperationCallExp.setReferredOperation(asOperation);
 		OCLExpression asSource = callExp.getOwnedSource();
 		setAst(cgOperationCallExp, asSource.getTypeId(), "safe_" + callExp.getName() + "_sources"/*nameManagerContext.getSymbolName(callExp, "safe")*/);
 		//		cgOperationCallExp.setAst(asSource);
