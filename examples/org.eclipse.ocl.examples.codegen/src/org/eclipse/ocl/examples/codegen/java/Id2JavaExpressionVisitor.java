@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2016 CEA LIST and others.
+ * Copyright (c) 2012, 2017 CEA LIST and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -207,7 +207,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		js.appendClassReference(IdManager.class);
 		js.append(".getParametersId(");
 		boolean isFirst = true;
-		for (@SuppressWarnings("null")@NonNull TypeId parameterId : id.getParametersId()) {
+		for (@NonNull TypeId parameterId : id.getParametersId()) {
 			if (!isFirst) {
 				js.append(", ");
 			}
