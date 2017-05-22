@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.w3c.dom.Document;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
@@ -1828,7 +1827,7 @@ public class StandaloneProjectMap implements ProjectManager
 			}
 		}
 
-		public void scanContents(SAXParser saxParser) throws SAXParseException {
+		public void scanContents(SAXParser saxParser) {
 			for (@NonNull String genModel : genModelReaders.keySet()) {
 				GenModelReader genModelReader = genModelReaders.get(genModel);
 				URI locationURI = projectDescriptor.getLocationURI();
@@ -1847,7 +1846,8 @@ public class StandaloneProjectMap implements ProjectManager
 						saxParser.parse(inputStream, genModelReader);
 					}
 				} catch (Exception e) {
-					throw new SAXParseException("Failed to parse " + locationURI, null, e);
+					System.err.println("Failed to scanContents of '" + locationURI + "' in " + getClass().getName() + "\n  " + e);
+					//					throw new SAXParseException("Failed to parse " + locationURI, null, e);
 				} finally {
 					try {
 						if (inputStream != null) {
