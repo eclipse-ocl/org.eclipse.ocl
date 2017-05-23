@@ -25,7 +25,6 @@ public class UnboxedValueDescriptor extends AbstractValueDescriptor implements E
 {
 	public UnboxedValueDescriptor(@NonNull ElementId elementId, @NonNull Class<?> javaClass) {
 		super(elementId, javaClass);
-		assert javaClass != int.class;
 	}
 
 	@Override
