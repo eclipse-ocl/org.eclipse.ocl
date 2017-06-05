@@ -260,6 +260,30 @@
 <topic href="help/OCLinPapyrus.html#OCLinPapyrus-Transition-Guard" label="Statemachine Transition Guard"></topic>
 </topic>
 </topic>
+<topic href="help/OCLExamplesforUML.html" label="OCL Constraint Examples for UML (using Papyrus)">
+<topic href="help/OCLExamplesforUML.html#OCLM1Constraints" label="Model Constraints">
+<topic href="help/OCLExamplesforUML.html#SimpleMetamodel" label="Simple Metamodel"></topic>
+<topic href="help/OCLExamplesforUML.html#ScalarConstraints" label="Scalar Constraints">
+<topic href="help/OCLExamplesforUML.html#NameIsAlphabetic" label="NameIsAlphabetic"></topic>
+<topic href="help/OCLExamplesforUML.html#NoSelfPartnership" label="NoSelfPartnership"></topic>
+</topic>
+<topic href="help/OCLExamplesforUML.html#CollectionConstraints" label="Collection Constraints">
+<topic href="help/OCLExamplesforUML.html#EachChildHasTwoParents" label="EachChildHasTwoParents"></topic>
+<topic href="help/OCLExamplesforUML.html#AcyclicAncestry" label="AcyclicAncestry"></topic>
+<topic href="help/OCLExamplesforUML.html#EachChildsParentsArePartners" label="EachChildsParentsArePartners"></topic>
+</topic>
+</topic>
+<topic href="help/OCLExamplesforUML.html#OCLM2Constraints" label="Profile Constraints">
+<topic href="help/OCLExamplesforUML.html#ExampleProfile" label="Example Profile"></topic>
+<topic href="help/OCLExamplesforUML.html#ExampleProfiledModel" label="Example Profiled Model">
+<topic href="help/OCLExamplesforUML.html#MaleOrFemale" label="MaleOrFemale"></topic>
+<topic href="help/OCLExamplesforUML.html#GenderIsRequired" label="GenderIsRequired"></topic>
+<topic href="help/OCLExamplesforUML.html#CatholicPriestsAreMale" label="CatholicPriestsAreMale"></topic>
+<topic href="help/OCLExamplesforUML.html#AtMostOnePriesthood" label="AtMostOnePriesthood"></topic>
+<topic href="help/OCLExamplesforUML.html#notEmpty" label="-_gt_notEmpty()"></topic>
+</topic>
+</topic>
+</topic>
 <topic href="help/UserInterface.html" label="User Interface">
 <topic href="help/UserInterface.html#PropertyPages" label="Project Property Pages"></topic>
 <topic href="help/UserInterface.html#PreferencePages" label="Workspace Preference Pages"></topic>

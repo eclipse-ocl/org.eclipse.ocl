@@ -1,7 +1,7 @@
 
 h2(#PivotParsingDocuments). Parsing OCL Documents
 
-As we saw in the "Parsing Constraints and Queries":#PivotParsingConstraints topic, the  "@OCL@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/utilities/OCL.html
+As we saw in the "Parsing Constraints and Queries":#PivotParsingConstraints topic, the  "@OCL@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/OCL.html
 Facade provides an API for parsing OCL expressions embedded in models as constraints. 
 
 The OCL specification defines a Complete OCL text document with which a UML (or Ecore) metamodel

@@ -5,7 +5,7 @@ plus bindings for two popular Eclipse metamodels:  Ecore and UML.  Users of the 
 can likewise create bindings for their metamodels, to integrate OCL with their modeling
 languages.
 
-The "@Environment@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/Environment.html interface has a generic type signature with several parameters, representing the metamodeling
+The "@Environment@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Environment.html interface has a generic type signature with several parameters, representing the metamodeling
 constructs required by OCL, that it borrows from UML, EMOF, and the other metamodels that
 it targets.  The Javadoc for that interface defines the mappings, and the same type parameter
 names are used consistently throughout the OCL API.

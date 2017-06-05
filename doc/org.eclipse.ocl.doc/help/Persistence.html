@@ -57,7 +57,7 @@
 					via 
 					<code class="code">def:</code> expressions.  The
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/TypeResolver.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/TypeResolver.html" target="_new">
 						<code class="code">TypeResolver</code>
 					</a> API is responsible for the demand-creation of these types and for their persistence.
 				</p>
@@ -70,7 +70,7 @@
 				
 </p>
 <p>Every 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/Environment.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Environment.html" target="_new">
 						<code class="code">Environment</code>
 					</a> has a 
 					<code class="code">TypeResolver</code> that persists demand-created types and additional features.  For a client that doesn&rsquo;t require persistence, the 
@@ -81,13 +81,13 @@
 <p>A client that does require persistence of OCL expressions and these demand-created elements
 					should provide a specific resource in which to store them, either via the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/OCL.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html" target="_new">
 						<code class="code">OCL</code>
 					</a> class&rsquo;s
 
 					<code class="code">newInstance(EnvironmentFactory, Resource)</code> factory method or via
 					the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/EnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/EnvironmentFactory.html" target="_new">
 						<code class="code">EnvironmentFactory</code>
 					</a> interface&rsquo;s 
 					<code class="code">load(Resource)</code> method.
@@ -115,7 +115,7 @@ ocl&nbsp;=&nbsp;OCL.newInstance(EcoreEnvironmentFactory.INSTANCE,&nbsp;myResourc
 </div>
 <p></p>
 <p>The 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/AbstractTypeResolver.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/AbstractTypeResolver.html" target="_new">
 						<code class="code">AbstractTypeResolver</code>
 					</a> class creates packages in which to store the different elements that it creates: collection types, message types, tuple types, and additional operations and attributes.  These last are owned by classes that &ldquo;shadow&rdquo; the classifiers in which context they are defined, in
 					the manner by which the OCL specification&rsquo;s adaptation for EMOF indicates that operations

@@ -1,0 +1,854 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>OCL Constraint Examples for UML (using Papyrus)</title>
+<link href="book.css" rel="stylesheet" type="text/css">
+<meta content="DocBook XSL Stylesheets V1.75.1" name="generator">
+<link rel="home" href="index.html" title="OCL Documentation">
+<link rel="up" href="UsersGuide.html" title="Users Guide">
+<link rel="prev" href="OCLinPapyrus.html" title="OCL in UML (using Papyrus)">
+<link rel="next" href="UserInterface.html" title="User Interface">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<h1 xmlns:l="http://docbook.sourceforge.net/xmlns/l10n/1.0">OCL Constraint Examples for UML (using Papyrus)</h1>
+<div class="section" title="OCL Constraint Examples for UML (using Papyrus)">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both">
+<a name="OCLExamplesforUML"></a>OCL Constraint Examples for UML (using Papyrus)</h2>
+</div>
+</div>
+</div>
+<p>(This documentation applies to Papyrus 3.0.0 and Eclipse Oxygen.)</p>
+<p>The 
+				<a class="link" href="OCLinPapyrus.html" title="OCL in UML (using Papyrus)">OCL in UML (using Papyrus)</a> section shows how Papyrus may be used to create and maintain OCL expressions that enrich a UML model or profile.
+			</p>
+<p>In this section we show how some simple and not so simple OCL examples can solve useful specification problems.</p>
+<p>OCL Constraints may be specified at any meta-level. A class-level defines the types and properties that are used by the instance-level. The OCL constraints validate that the instances are compliant. The OCL therefore executes on instances of the instance-level using the types and properties of the class-level.</p>
+<p>A Constraint may be used just to document the design intent, but given an appropriate environment a constraint may be tested and/or used to verify the consistency of models. This may be</p>
+<div class="itemizedlist">
+<ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p>a test model defined by using UML InstanceSpecification to instantiate the UML model.</p>
+</li>
+<li class="listitem">
+<p>a live model created by instantiating the Ecore equivalent of the UML model</p>
+</li>
+<li class="listitem">
+<p>a UML model that conforms to a UML profile</p>
+</li>
+</ul>
+</div>
+<p>In all cases when a validation of the model is requested, the validator attempts to execute each possible constraint on each possible instance to which it applies. When executing the constraint, the validator binds the 
+				<code class="code">self</code> variable to the instance to be validated. The type of 
+				<code class="code">self</code> is determined by the context of the Constraint. In Papyrus this context is determined by the non-Constraint end of the 
+				<code class="code">&lt;&lt;context&gt;&gt;</code> link from Constraint. The result of evaluating a Constraint should 
+				<code class="code">true</code> or 
+				<code class="code">false</code>. If 
+				<code class="code">true</code>, the constraint is satisfied. If 
+				<code class="code">false</code> the constraint is violated and some diagnostic should be shown to the user.
+			</p>
+<p>In 
+				<a class="link" href="OCLExamplesforUML.html#OCLM1Constraints" title="Model Constraints">Model Constraints</a>, we provide examples that apply to the elements of UML model. The Constraints are evaluated on the instances of the model. How violations are diagnosed depends on the synthesis of model instances and the corresponding run-time environment.
+			</p>
+<p>In 
+				<a class="link" href="OCLExamplesforUML.html#OCLM2Constraints" title="Profile Constraints">Profile Constraints</a>, we provide examples that apply to the elements of a UML profile. The Constraints are evaluated to verify consistent usage of the elements in the model. Violations are diagnosed within the UML editor.
+			</p>
+<div class="section" title="Model Constraints">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="OCLM1Constraints"></a>Model Constraints</h3>
+</div>
+</div>
+</div>
+<div class="section" title="Simple Metamodel">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="SimpleMetamodel"></a>Simple Metamodel</h4>
+</div>
+</div>
+</div>
+<p>
+						
+</p>
+<div class="mediaobject">
+<img src="images/1720-persons-metamodel.png"></div>
+<p>
+					
+</p>
+<p>The figure shows a metamodel specified in UML as a Papyrus Class Diagram. The upper half shows a simple metamodel comprising just a 
+						<code class="code">Person</code> class. A 
+						<code class="code">Person</code> has a 
+						<code class="code">String</code>-valued 
+						<code class="code">name</code> and may have a 
+						<code class="code">partner</code>, 
+						<code class="code">parents</code> and/or 
+						<code class="code">children</code>.
+					</p>
+<p>Some constraints such as the 
+						<code class="code">parents[0..2]</code> limitation on the the number of parents to 2 may be specified directly using UML capabilities without any use of OCL. But many more challenging restrictions require OCL constraints, for which five examples are provided in the lower half of the figure.
+					</p>
+</div>
+<div class="section" title="Scalar Constraints">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="ScalarConstraints"></a>Scalar Constraints</h4>
+</div>
+</div>
+</div>
+<p>To help understand the way in which OCL evaluates, it is helpful to consider some instances that conform to the constrained model</p>
+<p>
+						
+</p>
+<div class="mediaobject">
+<img src="images/1720-persons-scalars.png"></div>
+<p>
+					
+</p>
+<p>The figure shows a model comprising three persons whose names are 
+						<code class="code">father</code>, 
+						<code class="code">mother</code> and 
+						<code class="code">baby</code>.
+					</p>
+<p>The notation in the figure is similar to a UML Object Diagram. 
+						<span class="emphasis"><em>This should be drawable in Papyrus, unfortunately a number of bugs prevent this in the Oxygen release of Papyrus</em></span>. The notation deviates slightly from UML by only underlining type name, and by using rounded rectangles to distinguish DataType values from Class instances.
+					</p>
+<p>The three instances of 
+						<code class="code">Person</code> are shown as three rectangles, with an instance name such as 
+						<code class="code">pa</code> and underlined type 
+						<code class="code">Person</code>. The three names are shown as rounded rectangles with values such as 
+						<code class="code">father</code> and type 
+						<code class="code">String</code>. The association between a 
+						<code class="code">Person</code> instance and their 
+						<code class="code">name</code> is shown by a directed link from the 
+						<code class="code">Person</code> instance to the value. The link is labelled with the relationship role which is 
+						<code class="code">name</code>.
+					</p>
+<p>The 
+						<code class="code">partner</code> relationship role is similarly shown by a directed link from 
+						<code class="code">pa</code> to 
+						<code class="code">ma</code> and vice-versa.
+					</p>
+<div class="section" title="NameIsAlphabetic">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="NameIsAlphabetic"></a>
+							<code class="code">NameIsAlphabetic</code>
+						
+</h5>
+</div>
+</div>
+</div>
+<p>The simplest example constraint uses a regular expression to specify that the 
+							<code class="code">name</code> must consist of just alphabetic characters.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">self.name.matches('[a-zA-Z]*')<br>
+
+</code>
+</p>
+</div>
+<p>The 
+							<code class="code">.</code> is the OCL Object navigation operator. It separates a cascade of navigation steps each of which returns a result value.
+						</p>
+<p>Evaluation starts at 
+							<code class="code">self</code>, which rather like 
+							<code class="code">this</code> in Java, is bound to an object whose type is the context of the Constraint. The result is therefore a 
+							<code class="code">Person</code> object such as 
+							<code class="code">pa</code>.
+						</p>
+<p>The property navigation step 
+							<code class="code">name</code>, traverses the relationship whose role is 
+							<code class="code">name</code>. The navigation steps from 
+							<code class="code">pa</code> to the 
+							<code class="code">father</code> value. The result is a String comprising 
+							<code class="code">father</code>.
+						</p>
+<p>The operation call step 
+							<code class="code">matches('[a-zA-Z]*')</code>, executes the regular expression matching function using the provided regex. The final result is 
+							<code class="code">true</code> or 
+							<code class="code">false</code>.
+						</p>
+</div>
+<div class="section" title="NoSelfPartnership">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="NoSelfPartnership"></a>
+							<code class="code">NoSelfPartnership</code>
+						
+</h5>
+</div>
+</div>
+</div>
+<p>Another very simple example constraint checks that the 
+							<code class="code">partner</code> relationship does not have the same 
+							<code class="code">Person</code> as both its source and target.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">self.partner&nbsp;&lt;&gt;&nbsp;self<br>
+
+</code>
+</p>
+</div>
+<p>The OCL comprises two navigation expressions separated by the infix 
+							<code class="code">&lt;&gt;</code> operator.
+						</p>
+<p>The first, 
+							<code class="code">self.partner</code>, navigates from 
+							<code class="code">self</code> to compute a result comprising the 
+							<code class="code">partner</code> of the 
+							<code class="code">self</code> context instance.
+						</p>
+<p>The second, 
+							<code class="code">self</code> just returns the context instance.
+						</p>
+<p>The not-equals 
+							<code class="code">&lt;&gt;</code> infix operator compares its preceding and following arguments and provides a 
+							<code class="code">true</code> result when the arguments are not-equal, 
+							<code class="code">false</code> when equal.
+						</p>
+</div>
+</div>
+<div class="section" title="Collection Constraints">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="CollectionConstraints"></a>Collection Constraints</h4>
+</div>
+</div>
+</div>
+<p>The one-to-one relationships between objects and values have a simple implementation typically involving a pointer. One-to-many and many-to-many relationships are more complex since a collection of values is involved.</p>
+<p>
+						
+</p>
+<div class="mediaobject">
+<img src="images/1720-persons-collections.png"></div>
+<p>
+					
+</p>
+<p>The figure above elaborates the earlier figure to show the to-many relationships. The figure also uses a simpler representation of the object to value relationships by embedding each 
+						<code class="code">name</code> value within its 
+						<code class="code">Person</code> instance. One-to-one object relationships such as 
+						<code class="code">partner</code> are unaffected. To-many relationships such as 
+						<code class="code">parents</code> are shown using a multi-object drawn as three overlaid rectangles. Each multi-object is typically a collection owned by the relationship source and shown by a solid arrow labelled with the relationship name. Each element of the collection is identified by a dashed arrow. 
+						<code class="code">child</code> therefore has two 
+						<code class="code">parents</code>; 
+						<code class="code">pa</code> and 
+						<code class="code">ma</code>. Many-to-many relationships are convently realized as independent one-to-many relationships in each direction. The 
+						<code class="code">children</code> opposite of 
+						<code class="code">parents</code> is therefore shown by a 
+						<code class="code">children</code> multi-object for each parent identifying the one child.
+					</p>
+<p>When Ecore is used to implement UML, the multi-object is realized in exactly this way by an 
+						<code class="code">EList</code>.
+					</p>
+<p>OCL provides an ability to use these multi-objects within expressions. The multi-object is a 
+						<code class="code">Collection</code>, or more specifically a 
+						<code class="code">Bag</code>, 
+						<code class="code">OrderedSet</code>, 
+						<code class="code">Sequence</code> or 
+						<code class="code">Set</code> depending on whether the to-many-relationship is specified to be 
+						<code class="code">ordered</code> and/or 
+						<code class="code">unique</code>.
+					</p>
+<p>In OCL, 
+						<code class="code">-&gt;</code> is the collection navigation operator that enables an evaluation to exploit all the target objects.
+					</p>
+<div class="section" title="EachChildHasTwoParents">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="EachChildHasTwoParents"></a>EachChildHasTwoParents</h5>
+</div>
+</div>
+</div>
+<p>Each child should have two parents, but in any finite model there must be some 
+							<code class="code">Person</code> instances for which the parents are omitted. Hence the model specifies a [0..2] multiplicity rather than precisely [2..2]. We may remedy this deficiency with an OCL constraint.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">self.children-&gt;forAll(child&nbsp;|&nbsp;child.parents-&gt;size()&nbsp;=&nbsp;2)<br>
+
+</code>
+</p>
+</div>
+<p>The 
+							<code class="code">self</code> and 
+							<code class="code">children</code> navigate from the context object to locate the collection of all children of the context instance as the navigation result.
+						</p>
+<p>The 
+							<code class="code">-&gt;</code> collection operator and the subsequent 
+							<code class="code">forAll(child | ...)</code> iteration cause an iteration to be performed over the children, assigning each child in turn to the 
+							<code class="code">child</code> iterator variable. The 
+							<code class="code">...</code> iterator body is evaluated for each child and accumulated so that the result of the 
+							<code class="code">forAll</code> is only 
+							<code class="code">true</code> if the body evaluation for each 
+							<code class="code">child</code> is also 
+							<code class="code">true</code>.
+						</p>
+<p>The iteration body navigates from each 
+							<code class="code">child</code> to select the collection of all of its 
+							<code class="code">parents</code>. Then the 
+							<code class="code">-&gt;</code> collection navigation operator invokes the collection operation 
+							<code class="code">size()</code> to compute the size of the collection. This size is compared using the 
+							<code class="code">=</code> (equals) operator to the constant 
+							<code class="code">2</code>. The iteration body therefore returns 
+							<code class="code">false</code> unless the number of parents is equal to 2.
+						</p>
+<p>This example can be written more compactly as</p>
+<div class="literallayout">
+<p>
+<code class="code">children-&gt;forAll(parents-&gt;size()&nbsp;=&nbsp;2)<br>
+
+</code>
+</p>
+</div>
+<p>since an implicit iterator is the default source for navigation within an iteration body, and 
+							<code class="code">self</code> is the default outside.
+						</p>
+</div>
+<div class="section" title="AcyclicAncestry">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="AcyclicAncestry"></a>AcyclicAncestry</h5>
+</div>
+</div>
+</div>
+<p>The instances of a user model often form an acyclic graph. It is therefore desirable to specify this as an OCL constraint so that any cycles are detected by an OCL model validator. This is fairly easy to specify with the help of the OCL transitive closure iteration.</p>
+<div class="literallayout">
+<p>
+<code class="code">self.parents-&gt;closure(parent&nbsp;|&nbsp;parent.parents)-&gt;excludes(self)<br>
+
+</code>
+</p>
+</div>
+<p>Once again the 
+							<code class="code">self.parents</code> navigation returns the collection of all parents of the context instance. This collection is used as a seed from which  the 
+							<code class="code">closure(parent | ... )</code> collection iteration grows the final result by repeatedly aggregating the result of the 
+							<code class="code">...</code> body evaluation. Each element of the interim result is bound to the 
+							<code class="code">parent</code> iterator until there are no values left in the result for which the iteration body has not been evaluated.
+						</p>
+<p>The 
+							<code class="code">parent.parents</code> iteration body just returns all parents of a given parent so that the closure progressively aggregates the grandparents then great-grandparents, then ...
+						</p>
+<p>Once the 
+							<code class="code">closure</code> completes, it returns a 
+							<code class="code">Set</code> (or 
+							<code class="code">OrderedSet</code>) of all ancestors which is passed to the the 
+							<code class="code">excludes</code> Collection operator to confirm that the 
+							<code class="code">self</code> instance is not an ancestor of itself.
+						</p>
+<p>This example can be written more compactly as</p>
+<div class="literallayout">
+<p>
+<code class="code">parents-&gt;closure(parents)-&gt;excludes(self)<br>
+
+</code>
+</p>
+</div>
+</div>
+<div class="section" title="EachChildsParentsArePartners">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="EachChildsParentsArePartners"></a>EachChildsParentsArePartners</h5>
+</div>
+</div>
+</div>
+<p>A user model may not always allow arbitrary relationships between its instances. An OCL constraint can impose discipline, and within a more complex OCL constraint one or more let-variables may provide structure that aids readability.</p>
+<p>In our example we may wish to impose a requirement that the two parents of a child are partners.</p>
+<div class="literallayout">
+<p>
+<code class="code">let&nbsp;selfAndPartner&nbsp;=&nbsp;self.oclAsSet()-&gt;including(self.partner)&nbsp;in<br>
+self.children-&gt;forAll(child&nbsp;|&nbsp;selfAndPartner-&gt;includesAll(child.parents))<br>
+
+</code>
+</p>
+</div>
+<p>The 
+							<code class="code">let selfAndPartner ... in ...</code> assigns the value of a first 
+							<code class="code">...</code> expression to the 
+							<code class="code">selfAndPartner</code> let-variable so that 
+							<code class="code">selfAndPartner</code> can then be used in the evaluation of the second 
+							<code class="code">...</code> expression that provides the final result. The let-variable allows a sub-computation to be re-used many times, or just to be assigned to a readable name.
+						</p>
+<p>The let-variable is computed by first using 
+							<code class="code">self.oclAsSet()</code> to compute a single element Set containing 
+							<code class="code">self</code> It then uses the collection operation 
+							<code class="code">including(self.partner)</code> to compute another set containing all (one) elements of the original set and also including another element. The result is therefore a set of the two elements, 
+							<code class="code">self</code> and 
+							<code class="code">self.partner</code>.
+						</p>
+<p>As before 
+							<code class="code">self.children-&gt;forAll(child | ...)</code> binds each child to the 
+							<code class="code">child</code> iterator and requires that the 
+							<code class="code">...</code> body evaluates to 
+							<code class="code">true</code> for all values of 
+							<code class="code">child</code>. The body verifies that the pair of persons cached in the 
+							<code class="code">selfAndPartner</code> includes each person identified by 
+							<code class="code">child.parents</code>.
+						</p>
+<p>This example can be written more compactly as</p>
+<div class="literallayout">
+<p>
+<code class="code">let&nbsp;selfAndPartner&nbsp;=&nbsp;self-&gt;including(partner)&nbsp;in<br>
+children-&gt;forAll(selfAndPartner&nbsp;=&nbsp;parents)<br>
+
+</code>
+</p>
+</div>
+<p>The more compact form exploits an implicit invocation of 
+							<code class="code">oclAsSet()</code> that occurs when a 
+							<code class="code">-&gt;</code> collection navigation operator has a non-collection as its source.
+						</p>
+<p>Eliminating the explicit 
+							<code class="code">child</code> iterator from the 
+							<code class="code">forAll</code> iteration is permissible but perhaps unwise since an occasional OCL user may struggle to understand whether the final 
+							<code class="code">parents</code> is 
+							<code class="code">self.parents</code> or 
+							<code class="code">child.parents</code>.
+						</p>
+</div>
+</div>
+</div>
+<div class="section" title="Profile Constraints">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="OCLM2Constraints"></a>Profile Constraints</h3>
+</div>
+</div>
+</div>
+<p>A UML Profile provides an ability to extend an existing metamodel by defining Stereotypes that may be added to elements of the metamodel. The 
+					<code class="code">Ecore.profile.uml</code> which annotates 
+					<code class="code">UML.uml</code> to define the Eclipse UML support is a good example of such usage. The contrived example here that extends a single class metamodel would be much better realized by a new metamodel.
+				</p>
+<div class="section" title="Example Profile">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="ExampleProfile"></a>Example Profile</h4>
+</div>
+</div>
+</div>
+<p>Our contrived example provides two forms of extension, 
+						<code class="code">Gender</code> and 
+						<code class="code">Role</code> intended for a 
+						<code class="code">Person</code> element, but since we are defining a profile we must define the extension for 
+						<code class="code">Person</code>'s metaclass which is 
+						<code class="code">Class</code>. We also define another extension, 
+						<code class="code">Vehicle</code>, that is sensible for a 
+						<code class="code">Class</code> but clearly stupid for a 
+						<code class="code">Person</code>.
+					</p>
+<p>
+						
+</p>
+<div class="mediaobject">
+<img src="images/1720-persons-profile.png"></div>
+<p>
+					
+</p>
+<p>A 
+						<code class="code">Person</code> may have a 
+						<code class="code">Gender</code> defined as an abstract stereotype from which the concrete 
+						<code class="code">Male</code> and 
+						<code class="code">Female</code> stereotypes derive.
+					</p>
+<p>A 
+						<code class="code">Person</code> may have one or more 
+						<code class="code">Role</code>'s defined as an abstract stereotype from which the concrete 
+						<code class="code">Astronaut</code> and 
+						<code class="code">Priest</code> stereotypes derive. A 
+						<code class="code">Priest</code> provides an additional 
+						<code class="code">priesthood</code> enumeration property that identifies the religious affiliation of the priest.
+					</p>
+<p>These definitions are drawn as an extension link from a base stereotype such as 
+						<code class="code">Gender</code>, to a metaclass, such as 
+						<code class="code">Class</code>. The link is a UML 
+						<code class="code">Extension</code> that is a form of 
+						<code class="code">Association</code> and so has two automatically synthesized 
+						<code class="code">Property</code> elements for its ends. The property role names are derived by applying 
+						<code class="code">base_</code> or 
+						<code class="code">extension_</code> prefixes to the target class/metaclass names. The 
+						<code class="code">base_Class</code> property therefore identifies the 
+						<code class="code">Class</code> metaclass end of the 
+						<code class="code">Extension</code>, and the 
+						<code class="code">extension_Gender</code> identifies the 
+						<code class="code">Gender</code> end.
+					</p>
+<p>The 
+						<code class="code">extension_</code> property has a multiplicity for which [0..1] specifies that at most one application of the 
+						<code class="code">Gender</code> stereotype is permissible. Alternatively a [0..*] multiplicity specifies that zero or more applications of the 
+						<code class="code">Role</code> stereotype are possible; a priest may also be an astronaut. Specification of non-zero lowerbounds is possible but not generally appropriate since the application is to the metaclass. Mandating that a 
+						<code class="code">Gender</code> is always applied leads to stupidities if a completely independent class such as an 
+						<code class="code">Road</code> are also modeled.
+					</p>
+<p>The extension multiplicity provides a very limited imposition of design rules on the use of the stereotypes. Generally much more complex rules requiring OCL constraints are required. Four examples are shown and explained later.</p>
+<p>
+						
+<span class="emphasis"><em>(The Oxygen release of Papyrus provides a misleading editing interface for stereotype multiplicities. Use only the advanced properties after selecting the extension in the Model Explorer View)</em></span>.
+					</p>
+</div>
+<div class="section" title="Example Profiled Model">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="ExampleProfiledModel"></a>Example Profiled Model</h4>
+</div>
+</div>
+</div>
+<p>The application of stereotypes is relatively straightforward and not the topic of this section. A profile is applied to the model, so that its stereotypes can be applied to the elements.</p>
+<p>
+						
+</p>
+<div class="mediaobject">
+<img src="images/1720-persons-profiled.png"></div>
+<p>
+					
+</p>
+<p>Applied stereotypes are shown within guilemets. The example above shows definition of a derived 
+						<code class="code">Person</code> class named 
+						<code class="code">Priestess</code> to which the 
+						<code class="code">Female</code> and 
+						<code class="code">Priest</code> stereotypes have been applied. Not shown in the diagram, is the definition of the 
+						<code class="code">Priest::priesthood</code> metaproperty with the 
+						<code class="code">RABBI</code> value.
+					</p>
+<p>The UML representation is deceptively simple and consequently rather confusing when writing OCL constraints. We need to look at the equivalent object model that the OCL evaluation uses.</p>
+<p>
+						
+</p>
+<div class="mediaobject">
+<img src="images/1720-persons-applied.png"></div>
+<p>
+					
+</p>
+<p>The figure shows just the 
+						<code class="code">Priestess</code> class. In the centre, an instance of the 
+						<code class="code">Class</code> metaclass is instantiated as a 
+						<code class="code">Class</code> named 
+						<code class="code">Priestess</code> with the inherited String-valued 
+						<code class="code">Property</code> named 
+						<code class="code">name</code>. Each 
+						<code class="code">Stereotype</code> metaclass is instantiated as an element without a type specification. The elements are named 
+						<code class="code">Priest</code> and 
+						<code class="code">Female</code>. 
+					</p>
+<p>
+						
+<span class="emphasis"><em>The type specification is missing because the UML specification has no primary need for the concept of a stereotype instance. This omission leads to a complexity in the XMI serialization for UML. The omitted type is indicated by the guilemets surrounding the names.</em></span>
+					
+</p>
+<p>The relationships between 
+						<code class="code">Priestess</code> and 
+						<code class="code">&laquo;Female&raquo;</code> show the synthesized 
+						<code class="code">base_Class</code> and 
+						<code class="code">extension_Gender</code> relationships. Note that it is 
+						<code class="code">extension_Gender</code> rather than 
+						<code class="code">extension_Female</code> since the profile defined 
+						<code class="code">Gender</code> as an extension of the 
+						<code class="code">Class</code> metaclass. 
+						<code class="code">Female</code> is a derivation of the defined extension.
+					</p>
+<p>The relationships between 
+						<code class="code">Priestess</code> and 
+						<code class="code">&laquo;Priest&raquo;</code> are more complex since more than one 
+						<code class="code">Role</code> may be applied. The 
+						<code class="code">extension_Role</code> therefore identifies a collection of zero or more 
+						<code class="code">Role</code>'s. The example shows that the collection contains just the one 
+						<code class="code">&laquo;Priest&raquo;</code> element.
+					</p>
+<p>We may now examine some example constraints to see how this model is used by constraint evaluation.</p>
+<div class="section" title="MaleOrFemale">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="MaleOrFemale"></a>
+							<code class="code">MaleOrFemale</code>
+						
+</h5>
+</div>
+</div>
+</div>
+<p>A simple example constraint on an abstract 
+							<code class="code">&laquo;Gender&raquo;</code> stereotype confirms that only one of the 
+							<code class="code">&laquo;Female&raquo;</code> or 
+							<code class="code">&laquo;Male&raquo;</code> stereotypes is applied.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">let&nbsp;gender&nbsp;=&nbsp;self.base_Class.extension_Gender&nbsp;in&nbsp;<br>
+gender.oclIsKindOf(Male)&nbsp;&lt;&gt;&nbsp;gender.oclIsKindOf(Female)<br>
+
+</code>
+</p>
+</div>
+<p>The navigation starts with 
+							<code class="code">self</code> bound to a 
+							<code class="code">&laquo;Gender&raquo;</code> instance since that is the 
+							<code class="code">&laquo;context&raquo;</code> of the Constraint definition. Navigation to 
+							<code class="code">base_Class</code> locates the instance of 
+							<code class="code">Class</code> to which the stereotype is provided. The further navigation to 
+							<code class="code">extension_Gender</code> locates a 
+							<code class="code">&laquo;Gender&raquo;</code> instance for any corresponding application of the stereotype. This instance is saved in the 
+							<code class="code">gender</code> let-variable.
+						</p>
+<p>The subsequent operation navigation from 
+							<code class="code">gender</code> using 
+							<code class="code">oclIsKindOf(Male)</code> returns 
+							<code class="code">true</code> if 
+							<code class="code">gender</code> is a 
+							<code class="code">Male</code> stereotype instance, 
+							<code class="code">false</code> otherwise. The similar test for 
+							<code class="code">oclIsKindOf(Female)</code> is compared so that the constraint is only 
+							<code class="code">true</code> when the applied stereotypes differ.
+						</p>
+<p>This Constraint is somewhat redundant since the at-most-one multiplicity on a 
+							<code class="code">&laquo;Gender&raquo;</code> stereotype inhibits any double application. The let-variable 
+							<code class="code">gender</code> is therefore always the same as 
+							<code class="code">self</code>. This constraint can therefore be written more compactly as:
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">true<br>
+
+</code>
+</p>
+</div>
+</div>
+<div class="section" title="GenderIsRequired">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="GenderIsRequired"></a>
+							<code class="code">GenderIsRequired</code>
+						
+</h5>
+</div>
+</div>
+</div>
+<p>A more useful constraint mandates that every non-abstract class to which a 
+							<code class="code">&laquo;Role&raquo;</code> is applied also has an application of the 
+							<code class="code">&laquo;Gender&raquo;</code> stereotype.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">not&nbsp;self.base_Class.isAbstract&nbsp;implies<br>
+self.base_Class.extension_Gender&nbsp;&lt;&gt;&nbsp;null<br>
+
+</code>
+</p>
+</div>
+<p>When this is evaluated for our single instance example model, evaluation starts with 
+							<code class="code">self</code> bound to the 
+							<code class="code">&laquo;Priest&raquo;</code> stereotype instance since the 
+							<code class="code">&laquo;context&raquo;</code> of the constraint definition is the 
+							<code class="code">Role</code> from which 
+							<code class="code">Priest</code> derives.
+						</p>
+<p>
+							
+<code class="code">self.base_Class</code> navigates from the 
+							<code class="code">&laquo;Priest&raquo;</code> stereotype instance to the 
+							<code class="code">Priestess</code> class instance, where the 
+							<code class="code">isAbstract</code> navigation is used to test the 
+							<code class="code">UML::Class::isAbstract</code> property to determine whether 
+							<code class="code">Priestess</code> is abstract or not.
+						</p>
+<p>The 
+							<code class="code">x implies y</code> infix operator is often more readable that 
+							<code class="code">(not x) or y</code>; it conveniently short-circuits evaluation of a garbage second expression when the first expression is 
+							<code class="code">false</code>. In this example the subsequent evaluation is bypassed for instances of abstract classes.
+						</p>
+<p>The 
+							<code class="code">self.base_Class.extension_Gender</code> navigates first to the 
+							<code class="code">Priestess</code> class instance and then on to a 
+							<code class="code">&laquo;Gender&raquo;</code> stereotype instance. This navigation returns a non-null object if there is such an instance, or 
+							<code class="code">null</code> if there is not. The 
+							<code class="code">&lt;&gt; null</code> comparison therefore returns 
+							<code class="code">true</code> when a 
+							<code class="code">Gender</code> stereotype has been applied; or 
+							<code class="code">false</code> when not-applied.
+						</p>
+<p>Note that the examples specify a relevant stereotype as the 
+							<code class="code">&laquo;context&raquo;</code>. It is possible to write an identical constraint when the 
+							<code class="code">Class</code> metaclass is specified as the 
+							<code class="code">&laquo;context&raquo;</code>.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">not&nbsp;isAbstract&nbsp;implies&nbsp;<br>
+extension_Role-&gt;notEmpty()&nbsp;implies<br>
+extension_Gender&nbsp;&lt;&gt;&nbsp;null<br>
+
+</code>
+</p>
+</div>
+<p>However this is inefficient since it must be executed for all possible classes where it performs a double test &lsquo;any Role&rsquo; then &lsquo;check Gender&rsquo;. By defining the constraint on the 
+							<code class="code">Role</code>, the first test is performed for free. Redundant evaluations for e.g. 
+							<code class="code">Road</code> elements are avoided. Of course a separate constraint that 
+							<code class="code">Role</code> should only be applied to 
+							<code class="code">Person</code> may be desirable.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">base_Class.oclIsKindOf(Person)<br>
+
+</code>
+</p>
+</div>
+</div>
+<div class="section" title="CatholicPriestsAreMale">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="CatholicPriestsAreMale"></a>
+							<code class="code">CatholicPriestsAreMale</code>
+						
+</h5>
+</div>
+</div>
+</div>
+<p>Stronger constraints may mandate a business rule such as requiring that 
+							<code class="code">CATHOLIC</code> priests are male.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">self.priesthood&nbsp;=&nbsp;Priesthood::CATHOLIC&nbsp;implies<br>
+self.base_Class.extension_Gender.oclIsKindOf(Male)<br>
+
+</code>
+</p>
+</div>
+<p>The left hand side of the 
+							<code class="code">implies</code> restricts the constraint to the case where the 
+							<code class="code">priesthood</code> meta-property has been assigned the 
+							<code class="code">CATHOLIC</code> enumeration value. In our single class example, a 
+							<code class="code">Priestess</code> is assigned the value 
+							<code class="code">RABBI</code> and so the test always fails. If a further 
+							<code class="code">CatholicPriest</code> class is defined, this constraint then becomes useful, since the right hand side of the 
+							<code class="code">implies</code> expression checks that the 
+							<code class="code">&laquo;Gender&raquo;</code> stereotype instance is present and is a 
+							<code class="code">&laquo;Male&raquo;</code> stereotype instance.
+						</p>
+</div>
+<div class="section" title="AtMostOnePriesthood">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="AtMostOnePriesthood"></a>
+							<code class="code">AtMostOnePriesthood</code>
+						
+</h5>
+</div>
+</div>
+</div>
+<p>Since multiple 
+							<code class="code">&laquo;Role&raquo;</code> stereotype instances are permitted, we may require a business rule to prohibit the application of two 
+							<code class="code">Priest</code> stereotypes.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">self.base_Class.extension_Role-&gt;selectByKind(Priest)-&gt;size()&nbsp;=&nbsp;1<br>
+
+</code>
+</p>
+</div>
+<p>As before 
+							<code class="code">self</code> is a 
+							<code class="code">&laquo;Role&raquo;</code> stereotype instance so that navigation to 
+							<code class="code">base_Class</code> identifies the 
+							<code class="code">Person</code> class that has been stereotyped. The 
+							<code class="code">extension_Role</code> identifies the collection of all applied 
+							<code class="code">Role</code> stereotypes since multiple applications are permitted.
+						</p>
+<p>The 
+							<code class="code">-&gt;</code> collection navigation operator and the collection operation 
+							<code class="code">selectByKind(Priest)</code> returns a filtered  collection that selects only those stereotype instances that are, or derive from, the 
+							<code class="code">Priest</code> stereotype. The further 
+							<code class="code">-&gt;</code> collection navigation operator and the 
+							<code class="code">size()</code> collection operation compute the size of this collection. The constraint result is 
+							<code class="code">true</code> if the size equals 1; 
+							<code class="code">false</code> otherwise.
+						</p>
+</div>
+<div class="section" title="->notEmpty()">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="notEmpty"></a>
+							<code class="code">-&gt;notEmpty()</code>
+						
+</h5>
+</div>
+</div>
+</div>
+<p>The 
+							<code class="code">-&gt;notEmpty()</code> collection navigation and operation is convenient to test whether one or more applications of a stereotype are present.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">self.base_Class.extension_Role-&gt;notEmpty()<br>
+
+</code>
+</p>
+</div>
+<p>It is not uncommon to see 
+							<code class="code">-&gt;notEmpty()</code> used when at most one application is possible.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">self.base_Class.extension_Gender-&gt;notEmpty()<br>
+
+</code>
+</p>
+</div>
+<p>This is not wrong, but is slightly inefficient since it provokes the following automatic non-collection to set conversion.</p>
+<div class="literallayout">
+<p>
+<code class="code">self.base_Class.extension_Gender.oclAsSet()-&gt;notEmpty()<br>
+
+</code>
+</p>
+</div>
+<p>It is more efficient to write</p>
+<div class="literallayout">
+<p>
+<code class="code">self.base_Class.extension_Gender&nbsp;&lt;&gt;&nbsp;null<br>
+
+</code>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

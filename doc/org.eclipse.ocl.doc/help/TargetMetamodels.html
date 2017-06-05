@@ -36,13 +36,13 @@
 </div>
 <p>
 				The OCL API implements support for different target metamodels via the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/EnvironmentFactory.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/EnvironmentFactory.html" target="_new">
 					<code class="code">EnvironmentFactory</code>
 				</a> interface. An implementation of this interface binds the metamodel&rsquo;s metaclasses to the generic type parameters of the 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/OCL.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html" target="_new">
 					<code class="code">OCL</code>
 				</a> class. The metamodel-specific 
-				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/Environment.html" target="_new">
+				<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Environment.html" target="_new">
 					<code class="code">Environment</code>
 				</a> implementation constructed by this factory implements the reflection capability required by OCL to discover the elements of the model being constrained and the relationships between them.
 			</p>
@@ -60,7 +60,7 @@
 				</p>
 <p>As is illustrated by most of the examples in this documentation, the Ecore binding is provided by the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/EcoreEnvironmentFactory.html" target="_new">
 						<code class="code">EcoreEnvironmentFactory</code>
 					</a> class.  By default, the Ecore environment uses the static 
 					<code class="code">EPackage</code> registry to look up package names.  It can also be supplied with an alternative package registry (for example, one local to a 
@@ -68,7 +68,7 @@
 					<code class="code">EcoreEnvironmentFactory.INSTANCE</code> is most practical.
 				</p>
 <p>The Ecore binding for OCL provides the following capabilities, reflecting the subset of Ecore&rsquo;s modeling constructs with respect to UML:</p>
-<table id="N1435E">
+<table id="N1484E">
 <tr>
 						
 <th>Capability</th>
@@ -276,7 +276,7 @@
 					<code class="code">InstanceSpecification</code> elements in the UML model.
 				</p>
 <p>The UML binding is provided by the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/uml/UMLEnvironmentFactory.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/uml/UMLEnvironmentFactory.html" target="_new">
 						<code class="code">UMLEnvironmentFactory</code>
 					</a> class.  By default, the UML environment factory and all of the environment contexts that it creates use a private 
 					<code class="code">ResourceSet</code> to look up the corresponding UML model(s) against which OCL constraints are parsed.
@@ -293,7 +293,7 @@
 					<code class="code">EPackage</code> names corresponding to UML models.  A custom package registry may be provided by the client if necessary.
 				</p>
 <p>The UML binding for OCL provides the following capabilities:</p>
-<table id="N14513">
+<table id="N14A03">
 <tr>
 						
 <th>Capability</th>

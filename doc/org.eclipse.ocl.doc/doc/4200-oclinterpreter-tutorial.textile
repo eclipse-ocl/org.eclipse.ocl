@@ -28,9 +28,9 @@ One of the purposes of parsing an expression is to validate it:  if it can be
 parsed, it is well-formed (the parser automatically validates the expression
 against the semantic well-formedness rules).
 
-The main entrypoint into the OCL API is the "OCL":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/OCL.html class. An @OCL@ provides an autonomous OCL parsing environment.  It tracks all constraints that are parsed in this environment, including the definitions of additional operations and attributes. The @OCL.newInstance()@ factory method is used to create a new OCL with an @EnvironmentFactory@ that provides the binding to a particular metamodel (Ecore or UML).  In this tutorial, we will use the Ecore binding.
+The main entrypoint into the OCL API is the "OCL":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html class. An @OCL@ provides an autonomous OCL parsing environment.  It tracks all constraints that are parsed in this environment, including the definitions of additional operations and attributes. The @OCL.newInstance()@ factory method is used to create a new OCL with an @EnvironmentFactory@ that provides the binding to a particular metamodel (Ecore or UML).  In this tutorial, we will use the Ecore binding.
 
-To parse a query expression, we will use the "@OCLHelper@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/helper/OCLHelper.html object, which provides convenient operations for parsing queries and constraints
+To parse a query expression, we will use the "@OCLHelper@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/OCLHelper.html object, which provides convenient operations for parsing queries and constraints
 (intended for processing constraints embedded in models).
 
 bc.. 
@@ -106,18 +106,18 @@ and @oclIsNew()@ may only be used in operation post-condition constraints.
 h3(evaluating). Evaluating OCL Expressions and Constraints
 
 More interesting than parsing an OCL expression or constraint is evaluating it
-on some object.  The "@Query@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/Query.html 
+on some object.  The "@Query@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Query.html 
 interface provides two methods for evaluating expressions. Queries are
 constructed by factory methods on the @OCL@ class.
 
-* "@Object evaluate(Object)@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/Query.html#evaluate(org.eclipse.emf.ecore.EObject) 
+* "@Object evaluate(Object)@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Query.html#evaluate(org.eclipse.emf.ecore.EObject) 
 		evaluates the expression on the specified object, returning the result.
 		The caller is expected to know the result type, which could be a
 		primitive, @EObject@, or a collection.  There
 		are variants of this method for evaluation of the query on multiple
 		objects and on no object at all (for queries that require no "self"
 		context).
-* "@boolean evaluate(Object)@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/Query.html#check(org.eclipse.emf.ecore.EObject) 
+* "@boolean evaluate(Object)@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Query.html#check(org.eclipse.emf.ecore.EObject) 
 		This method evaluates a special kind of OCL expression called a
 		_constraint_.  Constraints are distinguished from other OCL queries
 		by having a boolean value; thus, they can be used to implement invariant
@@ -128,13 +128,13 @@ constructed by factory methods on the @OCL@ class.
 In order to support the @allInstances()@ operation on OCL types,
 the @OCL@ API provides the
 
-"@setExtentMap(Map<CLS, ? extends Set<? extends E>> extentMap)@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/OCL.html#setExtentMap(java.util.Map) 
+"@setExtentMap(Map<CLS, ? extends Set<? extends E>> extentMap)@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html#setExtentMap(java.util.Map) 
 method.  This assigns a mapping of classes (in the Ecore binding,
 @EClass@ es) to the sets of their instances.  By default,
 the @OCL@ provides a dynamic map that computes the
 extents on demand from the contents of a @Resource@.
 An alternative extent map can be
-found in "@org.eclipse.ocl.ecore.opposites.ExtentMap@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/opposites/ExtentMap.html .
+found in "@org.eclipse.ocl.ecore.opposites.ExtentMap@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/opposites/ExtentMap.html .
 We will use a custom extent map in evaluating a query expression that finds
 books that have the same title as a designated book:
 
@@ -198,13 +198,13 @@ h3(contentassist). Implementing Content Assist
 
 The @OCLHelper@ interface provides an operation that
 computes content-assist proposals in an abstract form, as
-"@Choice@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/helper/Choice.html s.
+"@Choice@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/Choice.html s.
 An application's UI can then convert these to JFace's
 @ICompletionProposal@ type.
 
 Obtaining completion choices consists of supplying a partial OCL expression
 (up to the cursor location in the UI editor) to the
-"@OCLHelper::getSyntaxHelp(ConstraintKind, String)@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/helper/OCLHelper.html#getSyntaxHelp(org.eclipse.ocl.helper.ConstraintKind, java.lang.String) 
+"@OCLHelper::getSyntaxHelp(ConstraintKind, String)@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/OCLHelper.html#getSyntaxHelp(org.eclipse.ocl.helper.ConstraintKind, java.lang.String) 
 method.  This method requires a @ConstraintKind@
 enumeration indicating the type of constraint that is to be parsed (some OCL
 constructs are restricted in the kinds of constraints in which they may be used).
@@ -259,9 +259,9 @@ support persistence in or as an adjunct to Ecore and UML models.
 
 For processing the abstract syntax tree (AST) parsed from OCL text, the API
 supplies a 
-"@Visitor@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/utilities/Visitor.html 
+"@Visitor@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/Visitor.html 
 interface.  By implementing this interface (or extending the
-"@AbstractVisitor@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/utilities/AbstractVisitor.html 
+"@AbstractVisitor@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/AbstractVisitor.html 
 class, which is recommended), we can walk the AST of an OCL expression to
 transform it in some way.
 This is exactly what the interpreter, itself, does to evaluate an

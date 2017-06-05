@@ -37,9 +37,9 @@ Juno introduced an experimental ability to replace the delegated interpreted exe
 
 Optimisations for Luna included inlining the bodies directly into the EMF Impl classes. 
 
-Mars has useful fixes and benefits fronm safe naigation analyses.
+Mars has useful fixes and benefits from safe navigation analyses.
 
-Further optimisations are scheduled for Neon.
+Further optimisations are scheduled for Photon.
 
 !{width:70%}images/1810-code-generation-mode.png(Code Generation Mode)!
 

@@ -3,11 +3,11 @@ h2(#PivotParsingConstraints). Parsing Constraints and Queries
 
 This section may be contrasted with the corresponding "Parsing Constraints and Queries":#ParsingConstraints for the Ecore binding to see examples of the changes needed to migrate from the Ecore binding to the Pivot binding.
 
-The OCL parser provides two APIs for parsing constraint and query expressions using the "@OCL@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/pivot/utilities/OCL.html Facade.
+The OCL parser provides two APIs for parsing constraint and query expressions using the "@OCL@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/utilities/OCL.html Facade.
 
 h3. The OCL Facade
 
-The "@OCL@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/pivot/utilities/OCL.html class provides both a Facade and a Handle for the various objects that support different aspects of OCL parsing and evaluation.
+The "@OCL@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/utilities/OCL.html class provides both a Facade and a Handle for the various objects that support different aspects of OCL parsing and evaluation.
 
 !{width:60%}images/6310-environment.png(Core OCL Environment API)!
 
@@ -68,7 +68,7 @@ Parsing an OCL expression requires a classifier to define the type of @self@. Th
 @createInvariant()@, which enforces a Boolean result type, or to @createQuery()@, which allows any result type.
 
 The result of parsing a query expression or a constraint is an
-"@ExpressionInOCL@":http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/pivot/ExpressionInOCL.html,
+"@ExpressionInOCL@":http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/pivot/ExpressionInOCL.html,
 an instance of the "Abstract Syntax Model":#AbstractSyntax.
 
 !{width:70%}images/6310-context.png(The OCL Context)!

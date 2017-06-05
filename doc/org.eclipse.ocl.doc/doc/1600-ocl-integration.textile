@@ -82,7 +82,7 @@ bc..
 There are 3 loans for the 2 copies of 'b2'.
 p. 
 
-Unfortunately, in the Mars release, EMF does not support this customization. This must be activated explicitly using an EValidator that is aware of the ValidationDelegateExtension extended API. This is available by using the "OCLinEcoreEObjectValidator":#OCLinEcoreEObjectValidator.
+Unfortunately, in the Oxygen release, EMF does not support this customization. This must be activated explicitly using an EValidator that is aware of the ValidationDelegateExtension extended API. This is available by using the "OCLinEcoreEObjectValidator":#OCLinEcoreEObjectValidator.
 
 h3(#Integration-CompleteOCL). CompleteOCL Validation
 

@@ -82,7 +82,9 @@ In the Luna (3.4/5.0) release, further code generation improvements have been ma
 
 In the Mars (1.0/6.0) release, the transition is nominally complete and the main org.eclipse.ocl.examples.* plugins have been renamed to org.eclipse.ocl.*. All functionality should use the new Pivot metamodel by default. However the classic Ecore and UML support will remain for compatibility. Unfortunately time ran out and so review and revision hads to be truncated. Documentation is sadly deficient.
 
-Hopefully the Neon (2.0/7.0) release will track the actual OCL 2.5 submission. 
+The Neon (1.1/6.1), Neon++(1.2/6.2) and Oxygen (1.3/6.3) resolve a variety of extensibility issues highlted by Eclipse QVTd. (The double Neon release was necessiated by SSPI breakage in Xtext 2.9. The Neon release continuing with pre-Xtext 2.9 API, Neon++ migrating.)
+
+Hopefully the Photon (2.0/7.0) release will track the actual OCL 2.5 submission. 
 
 h3. Migration
 

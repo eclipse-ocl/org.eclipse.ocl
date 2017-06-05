@@ -23,7 +23,7 @@ The Empty example project creates an empty project with a Java class path set up
 
 This assistance is not really necessary now that the editors are based on Xtext and now that an XMI representation is not automatically saved in a *bin* directory.
 
-The OCL editors can bed used wherever Ecore editors can be used. 
+The OCL editors can be used wherever Ecore editors can be used. 
 
 It is not necessary for a project to have a Java nature.
 

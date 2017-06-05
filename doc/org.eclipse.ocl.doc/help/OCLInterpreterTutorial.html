@@ -80,13 +80,13 @@
 					parsed, it is well-formed (the parser automatically validates the expression
 					against the semantic well-formedness rules).</p>
 <p>The main entrypoint into the OCL API is the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/OCL.html" target="_new">OCL</a> class. An 
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html" target="_new">OCL</a> class. An 
 					<code class="code">OCL</code> provides an autonomous OCL parsing environment.  It tracks all constraints that are parsed in this environment, including the definitions of additional operations and attributes. The 
 					<code class="code">OCL.newInstance()</code> factory method is used to create a new OCL with an 
 					<code class="code">EnvironmentFactory</code> that provides the binding to a particular metamodel (Ecore or UML).  In this tutorial, we will use the Ecore binding.
 				</p>
 <p>To parse a query expression, we will use the 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/OCLHelper.html" target="_new">
 						<code class="code">OCLHelper</code>
 					</a> object, which provides convenient operations for parsing queries and constraints
 					(intended for processing constraints embedded in models).
@@ -207,7 +207,7 @@ try&nbsp;{<br>
 </div>
 <p>More interesting than parsing an OCL expression or constraint is evaluating it
 					on some object.  The 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/Query.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Query.html" target="_new">
 						<code class="code">Query</code>
 					</a> 
 					interface provides two methods for evaluating expressions. Queries are
@@ -219,7 +219,7 @@ try&nbsp;{<br>
 <li class="listitem">
 <p>
 							
-<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/Query.html#evaluate(org.eclipse.emf.ecore.EObject)" target="_new">
+<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Query.html#evaluate(org.eclipse.emf.ecore.EObject)" target="_new">
 								<code class="code">Object evaluate(Object)</code>
 							</a> 
 						
@@ -240,7 +240,7 @@ try&nbsp;{<br>
 <li class="listitem">
 <p>
 							
-<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/Query.html#check(org.eclipse.emf.ecore.EObject)" target="_new">
+<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/Query.html#check(org.eclipse.emf.ecore.EObject)" target="_new">
 								<code class="code">boolean evaluate(Object)</code>
 							</a> 
 						
@@ -263,7 +263,7 @@ try&nbsp;{<br>
 				</p>
 <p>
 					
-<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/OCL.html#setExtentMap(java.util.Map)" target="_new">
+<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/OCL.html#setExtentMap(java.util.Map)" target="_new">
 						<code class="code">setExtentMap(Map&lt;CLS, ? extends Set&lt;? extends E&gt;&gt; extentMap)</code>
 					</a> 
 					method.  This assigns a mapping of classes (in the Ecore binding,
@@ -275,7 +275,7 @@ try&nbsp;{<br>
 					<code class="code">Resource</code>.
 					An alternative extent map can be
 					found in 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/ecore/opposites/ExtentMap.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/ecore/opposites/ExtentMap.html" target="_new">
 						<code class="code">org.eclipse.ocl.ecore.opposites.ExtentMap</code>
 					</a> .
 					We will use a custom extent map in evaluating a query expression that finds
@@ -373,7 +373,7 @@ System.out.println(ok);<br>
 					<code class="code">OCLHelper</code> interface provides an operation that
 					computes content-assist proposals in an abstract form, as
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/helper/Choice.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/Choice.html" target="_new">
 						<code class="code">Choice</code>
 					</a> s.
 					An application&rsquo;s UI can then convert these to JFace&rsquo;s
@@ -383,7 +383,7 @@ System.out.println(ok);<br>
 <p>Obtaining completion choices consists of supplying a partial OCL expression
 					(up to the cursor location in the UI editor) to the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/helper/OCLHelper.html#getSyntaxHelp(org.eclipse.ocl.helper.ConstraintKind" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/helper/OCLHelper.html#getSyntaxHelp(org.eclipse.ocl.helper.ConstraintKind" target="_new">
 						<code class="code">OCLHelper::getSyntaxHelp(ConstraintKind, String)</code>
 					</a>, java.lang.String) 
 					method.  This method requires a 
@@ -457,12 +457,12 @@ oclAsType(typespec&nbsp;:&nbsp;OclType)&nbsp;:&nbsp;T<br>
 <p>For processing the abstract syntax tree (AST) parsed from OCL text, the API
 					supplies a 
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/utilities/Visitor.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/Visitor.html" target="_new">
 						<code class="code">Visitor</code>
 					</a> 
 					interface.  By implementing this interface (or extending the
 
-					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.1.0/org/eclipse/ocl/utilities/AbstractVisitor.html" target="_new">
+					<a class="ulink" href="http://download.eclipse.org/ocl/javadoc/6.3.0/org/eclipse/ocl/utilities/AbstractVisitor.html" target="_new">
 						<code class="code">AbstractVisitor</code>
 					</a> 
 					class, which is recommended), we can walk the AST of an OCL expression to
