@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:models="http:///schemas/models/_SyDLUEp8Eee_HbYulOb4wg/13" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/models/_SyDLUEp8Eee_HbYulOb4wg/13 /org.eclipse.ocl.doc/doc/models/1720-persons-profile.uml#_SyDLUUp8Eee_HbYulOb4wg">
+  <uml:Model xmi:id="_rOsagEk2EeegwLt7qqD5mQ" name="1720-persons-profiled">
+    <packageImport xmi:type="uml:PackageImport" xmi:id="_u3V8MEk2EeegwLt7qqD5mQ">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5v294Ek2EeegwLt7qqD5mQ" name="Person" isAbstract="true">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_lBgJYEk_EeeOROUkezUZ7Q" name="name">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_7m5YAEk2EeegwLt7qqD5mQ" name="Priestess">
+      <generalization xmi:type="uml:Generalization" xmi:id="_BExV8Ek3EeegwLt7qqD5mQ" general="_5v294Ek2EeegwLt7qqD5mQ"/>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_u3NZUEk2EeegwLt7qqD5mQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_jiXG0Ep8Eee_HbYulOb4wg" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jiXG0Up8Eee_HbYulOb4wg" key="Version" value="0.0.14"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jiXG0kp8Eee_HbYulOb4wg" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jiXG00p8Eee_HbYulOb4wg" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jiXG1Ep8Eee_HbYulOb4wg" key="Date" value="2017-06-06"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jiXG1Up8Eee_HbYulOb4wg" key="Author" value=""/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_u3OAYEk2EeegwLt7qqD5mQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="/org.eclipse.ocl.doc/doc/models/1720-persons-profile.uml#_SyDLUUp8Eee_HbYulOb4wg"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="/org.eclipse.ocl.doc/doc/models/1720-persons-profile.uml#_W-SIQEkpEeegwLt7qqD5mQ"/>
+    </profileApplication>
+  </uml:Model>
+  <models:Priest xmi:id="_7l0N4Ep-Eee_HbYulOb4wg" base_Class="_7m5YAEk2EeegwLt7qqD5mQ" priesthood="RABBI"/>
+  <models:Female xmi:id="_7nAgsEp-Eee_HbYulOb4wg" base_Class="_7m5YAEk2EeegwLt7qqD5mQ"/>
+</xmi:XMI>

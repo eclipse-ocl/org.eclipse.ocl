@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_PGum0EdgEeezPI4oqycm1g" name="1720-persons">
+  <ownedRule xmi:type="uml:Constraint" xmi:id="_FlsAsEeoEeezPI4oqycm1g" name="NameIsAlphabetic">
+    <specification xmi:type="uml:OpaqueExpression" xmi:id="_4MfVgEeoEeezPI4oqycm1g">
+      <language>OCL</language>
+      <body>self.name.matches('[a-zA-Z]*')</body>
+    </specification>
+  </ownedRule>
+  <packagedElement xmi:type="uml:Class" xmi:id="_xDIa4EdgEeezPI4oqycm1g" name="Person">
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_HeIwEEeoEeezPI4oqycm1g" name="NoSelfPartnership">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_JE4O8EepEeezPI4oqycm1g">
+        <language>OCL</language>
+        <body>self.partner &lt;> self</body>
+      </specification>
+    </ownedRule>
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_OD6xQEeoEeezPI4oqycm1g" name="AcyclicAncestry">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_OW5iMEepEeezPI4oqycm1g">
+        <language>OCL</language>
+        <body>self.parents->closure(parents)->excludes(self)</body>
+      </specification>
+    </ownedRule>
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_SeMkMEeoEeezPI4oqycm1g" name="EachChildHasTwoParents">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_UdUt4EepEeezPI4oqycm1g">
+        <language>OCL</language>
+        <body>self.children->forAll(child | child.parents->size() = 2)</body>
+      </specification>
+    </ownedRule>
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_VefscEeoEeezPI4oqycm1g" name="EachChildsParentsArePartners">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_onrHUEepEeezPI4oqycm1g">
+        <language>OCL</language>
+        <body>let selfAndPartner = self->including(self.partner) in&#xD;
+self.children->forAll(child | selfAndPartner->includesAll(child.parents))</body>
+      </specification>
+    </ownedRule>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_1QSX0EdgEeezPI4oqycm1g" name="name">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Rs6wgEdhEeezPI4oqycm1g" name="parents" type="_xDIa4EdgEeezPI4oqycm1g" association="_RszbwEdhEeezPI4oqycm1g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Rs7XkEdhEeezPI4oqycm1g"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Rs7XkUdhEeezPI4oqycm1g" value="2"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_TV4LAUdkEeezPI4oqycm1g" name="partner" type="_xDIa4EdgEeezPI4oqycm1g" association="_TV1uwEdkEeezPI4oqycm1g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TV4LAkdkEeezPI4oqycm1g"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TV4LA0dkEeezPI4oqycm1g" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Rs7-oEdhEeezPI4oqycm1g" name="children" type="_xDIa4EdgEeezPI4oqycm1g" association="_RszbwEdhEeezPI4oqycm1g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5M2MoEdjEeezPI4oqycm1g"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5NXxEEdjEeezPI4oqycm1g" value="*"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_RszbwEdhEeezPI4oqycm1g" memberEnd="_Rs6wgEdhEeezPI4oqycm1g _Rs7-oEdhEeezPI4oqycm1g">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Rs4UQEdhEeezPI4oqycm1g" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Rs47UEdhEeezPI4oqycm1g" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_TV1uwEdkEeezPI4oqycm1g" memberEnd="_TV4LAUdkEeezPI4oqycm1g _TV4yEEdkEeezPI4oqycm1g">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_TV3j8EdkEeezPI4oqycm1g" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_TV4LAEdkEeezPI4oqycm1g" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_TV4yEEdkEeezPI4oqycm1g" type="_xDIa4EdgEeezPI4oqycm1g" association="_TV1uwEdkEeezPI4oqycm1g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_pTTEkEdkEeezPI4oqycm1g"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_pUae4EdkEeezPI4oqycm1g" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Model>

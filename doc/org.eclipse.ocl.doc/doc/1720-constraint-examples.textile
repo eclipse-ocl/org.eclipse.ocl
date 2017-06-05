@@ -1,0 +1,287 @@
+
+h2(#OCLExamplesforUML). OCL Constraint Examples for UML (using Papyrus)
+
+(This documentation applies to Papyrus 3.0.0 and Eclipse Oxygen.)
+
+The "OCL in UML (using Papyrus)":#OCLinPapyrus section shows how Papyrus may be used to create and maintain OCL expressions that enrich a UML model or profile.
+
+In this section we show how some simple and not so simple OCL examples can solve useful specification problems.
+
+OCL Constraints may be specified at any meta-level. A class-level defines the types and properties that are used by the instance-level. The OCL constraints validate that the instances are compliant. The OCL therefore executes on instances of the instance-level using the types and properties of the class-level.
+
+A Constraint may be used just to document the design intent, but given an appropriate environment a constraint may be tested and/or used to verify the consistency of models. This may be
+* a test model defined by using UML InstanceSpecification to instantiate the UML model.
+* a live model created by instantiating the Ecore equivalent of the UML model
+* a UML model that conforms to a UML profile
+
+In all cases when a validation of the model is requested, the validator attempts to execute each possible constraint on each possible instance to which it applies. When executing the constraint, the validator binds the @self@ variable to the instance to be validated. The type of @self@ is determined by the context of the Constraint. In Papyrus this context is determined by the non-Constraint end of the @<<context>>@ link from Constraint. The result of evaluating a Constraint should @true@ or @false@. If @true@, the constraint is satisfied. If @false@ the constraint is violated and some diagnostic should be shown to the user.
+
+In "Model Constraints":#OCLM1Constraints, we provide examples that apply to the elements of UML model. The Constraints are evaluated on the instances of the model. How violations are diagnosed depends on the synthesis of model instances and the corresponding run-time environment.
+
+In "Profile Constraints":#OCLM2Constraints, we provide examples that apply to the elements of a UML profile. The Constraints are evaluated to verify consistent usage of the elements in the model. Violations are diagnosed within the UML editor.
+
+h3(#OCLM1Constraints). Model Constraints
+
+h4. Simple Metamodel
+
+!{width:85%}images/1720-persons-metamodel.png(Persons Metamodel and Constraints)!
+
+The figure shows a metamodel specified in UML as a Papyrus Class Diagram. The upper half shows a simple metamodel comprising just a @Person@ class. A @Person@ has a @String@-valued @name@ and may have a @partner@, @parents@ and/or @children@.
+
+Some constraints such as the @parents[0..2]@ limitation on the the number of parents to 2 may be specified directly using UML capabilities without any use of OCL. But many more challenging restrictions require OCL constraints, for which five examples are provided in the lower half of the figure.
+
+h4. Scalar Constraints
+
+To help understand the way in which OCL evaluates, it is helpful to consider some instances that conform to the constrained model
+
+!{width:50%}images/1720-persons-scalars.png(Persons Scalar Relationships)!
+
+The figure shows a model comprising three persons whose names are @father@, @mother@ and @baby@.
+
+The notation in the figure is similar to a UML Object Diagram. _This should be drawable in Papyrus, unfortunately a number of bugs prevent this in the Oxygen release of Papyrus_. The notation deviates slightly from UML by only underlining type name, and by using rounded rectangles to distinguish DataType values from Class instances.
+
+The three instances of @Person@ are shown as three rectangles, with an instance name such as @pa@ and underlined type @Person@. The three names are shown as rounded rectangles with values such as @father@ and type @String@. The association between a @Person@ instance and their @name@ is shown by a directed link from the @Person@ instance to the value. The link is labelled with the relationship role which is @name@.
+
+The @partner@ relationship role is similarly shown by a directed link from @pa@ to @ma@ and vice-versa.
+
+h5. @NameIsAlphabetic@
+
+The simplest example constraint uses a regular expression to specify that the @name@ must consist of just alphabetic characters.
+
+bc.  
+self.name.matches('[a-zA-Z]*')
+
+The @.@ is the OCL Object navigation operator. It separates a cascade of navigation steps each of which returns a result value.
+
+Evaluation starts at @self@, which rather like @this@ in Java, is bound to an object whose type is the context of the Constraint. The result is therefore a @Person@ object such as @pa@.
+
+The property navigation step @name@, traverses the relationship whose role is @name@. The navigation steps from @pa@ to the @father@ value. The result is a String comprising @father@.
+
+The operation call step @matches('[a-zA-Z]*')@, executes the regular expression matching function using the provided regex. The final result is @true@ or @false@.
+
+h5. @NoSelfPartnership@
+
+Another very simple example constraint checks that the @partner@ relationship does not have the same @Person@ as both its source and target.
+
+bc.  
+self.partner <> self
+
+The OCL comprises two navigation expressions separated by the infix @<>@ operator.
+
+The first, @self.partner@, navigates from @self@ to compute a result comprising the @partner@ of the @self@ context instance.
+
+The second, @self@ just returns the context instance.
+
+The not-equals @<>@ infix operator compares its preceding and following arguments and provides a @true@ result when the arguments are not-equal, @false@ when equal.
+
+h4. Collection Constraints
+
+The one-to-one relationships between objects and values have a simple implementation typically involving a pointer. One-to-many and many-to-many relationships are more complex since a collection of values is involved.
+
+!{width:50%}images/1720-persons-collections.png(Persons Collection Relationships)!
+
+The figure above elaborates the earlier figure to show the to-many relationships. The figure also uses a simpler representation of the object to value relationships by embedding each @name@ value within its @Person@ instance. One-to-one object relationships such as @partner@ are unaffected. To-many relationships such as @parents@ are shown using a multi-object drawn as three overlaid rectangles. Each multi-object is typically a collection owned by the relationship source and shown by a solid arrow labelled with the relationship name. Each element of the collection is identified by a dashed arrow. @child@ therefore has two @parents@; @pa@ and @ma@. Many-to-many relationships are convently realized as independent one-to-many relationships in each direction. The @children@ opposite of @parents@ is therefore shown by a @children@ multi-object for each parent identifying the one child.
+
+When Ecore is used to implement UML, the multi-object is realized in exactly this way by an @EList@.
+
+OCL provides an ability to use these multi-objects within expressions. The multi-object is a @Collection@, or more specifically a @Bag@, @OrderedSet@, @Sequence@ or @Set@ depending on whether the to-many-relationship is specified to be @ordered@ and/or @unique@.
+
+In OCL, @->@ is the collection navigation operator that enables an evaluation to exploit all the target objects.
+
+h5. EachChildHasTwoParents
+
+Each child should have two parents, but in any finite model there must be some @Person@ instances for which the parents are omitted. Hence the model specifies a [0..2] multiplicity rather than precisely [2..2]. We may remedy this deficiency with an OCL constraint.
+
+bc. 
+self.children->forAll(child | child.parents->size() = 2)
+
+The @self@ and @children@ navigate from the context object to locate the collection of all children of the context instance as the navigation result.
+
+The @->@ collection operator and the subsequent @forAll(child | ...)@ iteration cause an iteration to be performed over the children, assigning each child in turn to the @child@ iterator variable. The @...@ iterator body is evaluated for each child and accumulated so that the result of the @forAll@ is only @true@ if the body evaluation for each @child@ is also @true@.
+
+The iteration body navigates from each @child@ to select the collection of all of its @parents@. Then the @->@ collection navigation operator invokes the collection operation @size()@ to compute the size of the collection. This size is compared using the @=@ (equals) operator to the constant @2@. The iteration body therefore returns @false@ unless the number of parents is equal to 2.
+
+This example can be written more compactly as
+
+bc. 
+children->forAll(parents->size() = 2)
+
+since an implicit iterator is the default source for navigation within an iteration body, and @self@ is the default outside.
+
+h5. AcyclicAncestry
+
+The instances of a user model often form an acyclic graph. It is therefore desirable to specify this as an OCL constraint so that any cycles are detected by an OCL model validator. This is fairly easy to specify with the help of the OCL transitive closure iteration.
+
+bc. 
+self.parents->closure(parent | parent.parents)->excludes(self)
+
+Once again the @self.parents@ navigation returns the collection of all parents of the context instance. This collection is used as a seed from which  the @closure(parent | ... )@ collection iteration grows the final result by repeatedly aggregating the result of the @...@ body evaluation. Each element of the interim result is bound to the @parent@ iterator until there are no values left in the result for which the iteration body has not been evaluated.
+
+The @parent.parents@ iteration body just returns all parents of a given parent so that the closure progressively aggregates the grandparents then great-grandparents, then ...
+
+Once the @closure@ completes, it returns a @Set@ (or @OrderedSet@) of all ancestors which is passed to the the @excludes@ Collection operator to confirm that the @self@ instance is not an ancestor of itself.
+
+This example can be written more compactly as
+
+bc. 
+parents->closure(parents)->excludes(self)
+
+h5. EachChildsParentsArePartners
+
+A user model may not always allow arbitrary relationships between its instances. An OCL constraint can impose discipline, and within a more complex OCL constraint one or more let-variables may provide structure that aids readability.
+
+In our example we may wish to impose a requirement that the two parents of a child are partners.
+
+bc. 
+let selfAndPartner = self.oclAsSet()->including(self.partner) in
+self.children->forAll(child | selfAndPartner->includesAll(child.parents))
+
+The @let selfAndPartner ... in ...@ assigns the value of a first @...@ expression to the @selfAndPartner@ let-variable so that @selfAndPartner@ can then be used in the evaluation of the second @...@ expression that provides the final result. The let-variable allows a sub-computation to be re-used many times, or just to be assigned to a readable name.
+
+The let-variable is computed by first using @self.oclAsSet()@ to compute a single element Set containing @self@ It then uses the collection operation @including(self.partner)@ to compute another set containing all (one) elements of the original set and also including another element. The result is therefore a set of the two elements, @self@ and @self.partner@.
+
+As before @self.children->forAll(child | ...)@ binds each child to the @child@ iterator and requires that the @...@ body evaluates to @true@ for all values of @child@. The body verifies that the pair of persons cached in the @selfAndPartner@ includes each person identified by @child.parents@.
+
+This example can be written more compactly as
+
+bc. 
+let selfAndPartner = self->including(partner) in
+children->forAll(selfAndPartner = parents)
+
+The more compact form exploits an implicit invocation of @oclAsSet()@ that occurs when a @->@ collection navigation operator has a non-collection as its source.
+
+Eliminating the explicit @child@ iterator from the @forAll@ iteration is permissible but perhaps unwise since an occasional OCL user may struggle to understand whether the final @parents@ is @self.parents@ or @child.parents@.
+
+h3(#OCLM2Constraints). Profile Constraints
+
+A UML Profile provides an ability to extend an existing metamodel by defining Stereotypes that may be added to elements of the metamodel. The @Ecore.profile.uml@ which annotates @UML.uml@ to define the Eclipse UML support is a good example of such usage. The contrived example here that extends a single class metamodel would be much better realized by a new metamodel.
+
+h4. Example Profile
+
+Our contrived example provides two forms of extension, @Gender@ and @Role@ intended for a @Person@ element, but since we are defining a profile we must define the extension for @Person@'s metaclass which is @Class@. We also define another extension, @Vehicle@, that is sensible for a @Class@ but clearly stupid for a @Person@.
+
+!{width:75%}images/1720-persons-profile.png(Example Profile and Constraints)!
+
+A @Person@ may have a @Gender@ defined as an abstract stereotype from which the concrete @Male@ and @Female@ stereotypes derive.
+
+A @Person@ may have one or more @Role@'s defined as an abstract stereotype from which the concrete @Astronaut@ and @Priest@ stereotypes derive. A @Priest@ provides an additional @priesthood@ enumeration property that identifies the religious affiliation of the priest.
+
+These definitions are drawn as an extension link from a base stereotype such as @Gender@, to a metaclass, such as @Class@. The link is a UML @Extension@ that is a form of @Association@ and so has two automatically synthesized @Property@ elements for its ends. The property role names are derived by applying @base_@ or @extension_@ prefixes to the target class/metaclass names. The @base_Class@ property therefore identifies the @Class@ metaclass end of the @Extension@, and the @extension_Gender@ identifies the @Gender@ end.
+
+The @extension_@ property has a multiplicity for which [0..1] specifies that at most one application of the @Gender@ stereotype is permissible. Alternatively a [0..*] multiplicity specifies that zero or more applications of the @Role@ stereotype are possible; a priest may also be an astronaut. Specification of non-zero lowerbounds is possible but not generally appropriate since the application is to the metaclass. Mandating that a @Gender@ is always applied leads to stupidities if a completely independent class such as an @Road@ are also modeled.
+
+The extension multiplicity provides a very limited imposition of design rules on the use of the stereotypes. Generally much more complex rules requiring OCL constraints are required. Four examples are shown and explained later.
+
+_(The Oxygen release of Papyrus provides a misleading editing interface for stereotype multiplicities. Use only the advanced properties after selecting the extension in the Model Explorer View)_.
+
+h4. Example Profiled Model
+
+The application of stereotypes is relatively straightforward and not the topic of this section. A profile is applied to the model, so that its stereotypes can be applied to the elements.
+
+!{width:100%}images/1720-persons-profiled.png(Example Profiled Model)!
+
+Applied stereotypes are shown within guilemets. The example above shows definition of a derived @Person@ class named @Priestess@ to which the @Female@ and @Priest@ stereotypes have been applied. Not shown in the diagram, is the definition of the @Priest::priesthood@ metaproperty with the @RABBI@ value.
+
+The UML representation is deceptively simple and consequently rather confusing when writing OCL constraints. We need to look at the equivalent object model that the OCL evaluation uses.
+
+!{width:50%}images/1720-persons-applied.png(Example Applied Profile Model)!
+
+The figure shows just the @Priestess@ class. In the centre, an instance of the @Class@ metaclass is instantiated as a @Class@ named @Priestess@ with the inherited String-valued @Property@ named @name@. Each @Stereotype@ metaclass is instantiated as an element without a type specification. The elements are named @Priest@ and @Female@. 
+
+_The type specification is missing because the UML specification has no primary need for the concept of a stereotype instance. This omission leads to a complexity in the XMI serialization for UML. The omitted type is indicated by the guilemets surrounding the names._
+
+The relationships between @Priestess@ and @«Female»@ show the synthesized @base_Class@ and @extension_Gender@ relationships. Note that it is @extension_Gender@ rather than @extension_Female@ since the profile defined @Gender@ as an extension of the @Class@ metaclass. @Female@ is a derivation of the defined extension.
+
+The relationships between @Priestess@ and @«Priest»@ are more complex since more than one @Role@ may be applied. The @extension_Role@ therefore identifies a collection of zero or more @Role@'s. The example shows that the collection contains just the one @«Priest»@ element.
+
+We may now examine some example constraints to see how this model is used by constraint evaluation.
+
+h5. @MaleOrFemale@
+
+A simple example constraint on an abstract @«Gender»@ stereotype confirms that only one of the @«Female»@ or @«Male»@ stereotypes is applied.
+
+bc.  
+let gender = self.base_Class.extension_Gender in 
+gender.oclIsKindOf(Male) <> gender.oclIsKindOf(Female)
+
+The navigation starts with @self@ bound to a @«Gender»@ instance since that is the @«context»@ of the Constraint definition. Navigation to @base_Class@ locates the instance of @Class@ to which the stereotype is provided. The further navigation to @extension_Gender@ locates a @«Gender»@ instance for any corresponding application of the stereotype. This instance is saved in the @gender@ let-variable.
+
+The subsequent operation navigation from @gender@ using @oclIsKindOf(Male)@ returns @true@ if @gender@ is a @Male@ stereotype instance, @false@ otherwise. The similar test for @oclIsKindOf(Female)@ is compared so that the constraint is only @true@ when the applied stereotypes differ.
+
+This Constraint is somewhat redundant since the at-most-one multiplicity on a @«Gender»@ stereotype inhibits any double application. The let-variable @gender@ is therefore always the same as @self@. This constraint can therefore be written more compactly as:
+
+bc. 
+true
+
+h5. @GenderIsRequired@
+
+A more useful constraint mandates that every non-abstract class to which a @«Role»@ is applied also has an application of the @«Gender»@ stereotype.
+
+bc.  
+not self.base_Class.isAbstract implies
+self.base_Class.extension_Gender <> null
+
+When this is evaluated for our single instance example model, evaluation starts with @self@ bound to the @«Priest»@ stereotype instance since the @«context»@ of the constraint definition is the @Role@ from which @Priest@ derives.
+
+@self.base_Class@ navigates from the @«Priest»@ stereotype instance to the @Priestess@ class instance, where the @isAbstract@ navigation is used to test the @UML::Class::isAbstract@ property to determine whether @Priestess@ is abstract or not.
+
+The @x implies y@ infix operator is often more readable that @(not x) or y@; it conveniently short-circuits evaluation of a garbage second expression when the first expression is @false@. In this example the subsequent evaluation is bypassed for instances of abstract classes.
+
+The @self.base_Class.extension_Gender@ navigates first to the @Priestess@ class instance and then on to a @«Gender»@ stereotype instance. This navigation returns a non-null object if there is such an instance, or @null@ if there is not. The @<> null@ comparison therefore returns @true@ when a @Gender@ stereotype has been applied; or @false@ when not-applied.
+
+Note that the examples specify a relevant stereotype as the @«context»@. It is possible to write an identical constraint when the @Class@ metaclass is specified as the @«context»@.
+
+bc.  
+not isAbstract implies 
+extension_Role->notEmpty() implies
+extension_Gender <> null
+
+However this is inefficient since it must be executed for all possible classes where it performs a double test 'any Role' then 'check Gender'. By defining the constraint on the @Role@, the first test is performed for free. Redundant evaluations for e.g. @Road@ elements are avoided. Of course a separate constraint that @Role@ should only be applied to @Person@ may be desirable.
+
+bc.  
+base_Class.oclIsKindOf(Person)
+
+h5. @CatholicPriestsAreMale@
+
+Stronger constraints may mandate a business rule such as requiring that @CATHOLIC@ priests are male.
+
+bc.  
+self.priesthood = Priesthood::CATHOLIC implies
+self.base_Class.extension_Gender.oclIsKindOf(Male)
+
+The left hand side of the @implies@ restricts the constraint to the case where the @priesthood@ meta-property has been assigned the @CATHOLIC@ enumeration value. In our single class example, a @Priestess@ is assigned the value @RABBI@ and so the test always fails. If a further @CatholicPriest@ class is defined, this constraint then becomes useful, since the right hand side of the @implies@ expression checks that the @«Gender»@ stereotype instance is present and is a @«Male»@ stereotype instance.
+
+h5. @AtMostOnePriesthood@
+
+Since multiple @«Role»@ stereotype instances are permitted, we may require a business rule to prohibit the application of two @Priest@ stereotypes.
+
+bc.  
+self.base_Class.extension_Role->selectByKind(Priest)->size() = 1
+
+As before @self@ is a @«Role»@ stereotype instance so that navigation to @base_Class@ identifies the @Person@ class that has been stereotyped. The @extension_Role@ identifies the collection of all applied @Role@ stereotypes since multiple applications are permitted.
+
+The @->@ collection navigation operator and the collection operation @selectByKind(Priest)@ returns a filtered  collection that selects only those stereotype instances that are, or derive from, the @Priest@ stereotype. The further @->@ collection navigation operator and the @size()@ collection operation compute the size of this collection. The constraint result is @true@ if the size equals 1; @false@ otherwise.
+
+h5. @->notEmpty()@
+
+The @->notEmpty()@ collection navigation and operation is convenient to test whether one or more applications of a stereotype are present.
+
+bc. 
+self.base_Class.extension_Role->notEmpty()
+
+It is not uncommon to see @->notEmpty()@ used when at most one application is possible.
+
+bc. 
+self.base_Class.extension_Gender->notEmpty()
+
+This is not wrong, but is slightly inefficient since it provokes the following automatic non-collection to set conversion.
+
+bc. 
+self.base_Class.extension_Gender.oclAsSet()->notEmpty()
+
+It is more efficient to write
+
+bc. 
+self.base_Class.extension_Gender <> null
+
+

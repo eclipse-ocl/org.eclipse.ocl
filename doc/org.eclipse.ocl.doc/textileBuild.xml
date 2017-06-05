@@ -49,13 +49,14 @@
 		<echo>Find wikitext tasks</echo>
 		<!--echo>echoproperties to "${user.dir}${file.separator}install-wikitext.properties"</echo>
 		<echoproperties destfile="${user.dir}${file.separator}install-wikitext.properties"/-->
-		<taskdef resource="org/eclipse/mylyn/wikitext/core/ant/tasks.properties">
+		<taskdef resource="org/eclipse/mylyn/wikitext/ant/tasks.properties">
 			<classpath>
 				<fileset dir="${target.location}${file.separator}plugins">
 					<include name="com.google.guava*.jar"/>
-					<include name="org.eclipse.mylyn.wikitext.core*.jar"/>
-					<include name="org.eclipse.mylyn.wikitext.core.ant*.jar"/>
-					<include name="org.eclipse.mylyn.wikitext.textile.core*.jar"/>
+					<!--include name="org.eclipse.mylyn.wikitext.core*.jar"/-->
+					<include name="org.eclipse.mylyn.wikitext.ant*.jar"/>
+					<include name="org.eclipse.mylyn.wikitext.textile*.jar"/>
+					<include name="org.eclipse.mylyn.wikitext*.jar"/>
 				</fileset>
 			</classpath>
 		</taskdef>
@@ -76,7 +77,7 @@
 	</target>
 	
 	<target name="wikitext2docbook" depends="assemble" description="Generate DocBook from Textile">
-		<wikitext-to-docbook markupLanguage="org.eclipse.mylyn.wikitext.textile.core.TextileLanguage"
+		<wikitext-to-docbook markupLanguage="org.eclipse.mylyn.wikitext.textile.TextileLanguage"
 			booktitle="OCL Documentation"
 			validate="true">
 			<fileset dir="${build.dir}">

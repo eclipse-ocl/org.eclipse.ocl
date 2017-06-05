@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Profile xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_W-SIQEkpEeegwLt7qqD5mQ" name="models" metaclassReference="_LOd7EEk9EeeOROUkezUZ7Q">
+  <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_FvxYYEkqEeegwLt7qqD5mQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_Z0YIUUqtEee_HbYulOb4wg" name="models" nsURI="http:///schemas/models/_Z0YIUEqtEee_HbYulOb4wg/15" nsPrefix="models">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIUkqtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIU0qtEee_HbYulOb4wg" key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIrkqtEee_HbYulOb4wg" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIr0qtEee_HbYulOb4wg" key="Version" value="0.0.16"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIsEqtEee_HbYulOb4wg" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIsUqtEee_HbYulOb4wg" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIskqtEee_HbYulOb4wg" key="Date" value="2017-06-06"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIs0qtEee_HbYulOb4wg" key="Author" value=""/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Z0YIVEqtEee_HbYulOb4wg" name="Male" eSuperTypes="_Z0YIV0qtEee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIVUqtEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_rZ_-gEkpEeegwLt7qqD5mQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Z0YIV0qtEee_HbYulOb4wg" name="Gender" abstract="true">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIWEqtEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Zf7JIEkqEeegwLt7qqD5mQ"/>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_Z0YIWUqtEee_HbYulOb4wg" name="MaleOrFemale">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIWkqtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIW0qtEee_HbYulOb4wg" key="body" value="let gender = self.base_Class.extension_Gender in &#xD;&#xA;gender.oclIsKindOf(Male) &lt;> gender.oclIsKindOf(Female)"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Z0YIXUqtEee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIXkqtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIX0qtEee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Z0YIYUqtEee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIYkqtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIY0qtEee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_Z0YIZEqtEee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Z0YIZUqtEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Z0YIZkqtEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Z0YIZ0qtEee_HbYulOb4wg" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Z0YIaUqtEee_HbYulOb4wg" name="Female" eSuperTypes="_Z0YIV0qtEee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIakqtEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_sz5wsEkpEeegwLt7qqD5mQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Z0YIbEqtEee_HbYulOb4wg" name="Role" abstract="true">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIbUqtEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_6y7I8EksEeegwLt7qqD5mQ"/>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_Z0YIbkqtEee_HbYulOb4wg" name="GenderIsRequired">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIb0qtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIcEqtEee_HbYulOb4wg" key="body" value="not self.base_Class.isAbstract implies&#xD;&#xA;self.base_Class.extension_Gender &lt;> null"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Z0YIckqtEee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIc0qtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIdEqtEee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Z0YIdkqtEee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YId0qtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIeEqtEee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_Z0YIeUqtEee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Z0YIekqtEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Z0YIe0qtEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Z0YIfEqtEee_HbYulOb4wg" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Z0YIfkqtEee_HbYulOb4wg" name="Priest" eSuperTypes="_Z0YIbEqtEee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIf0qtEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_BjQNQEktEeegwLt7qqD5mQ"/>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_Z0YIgEqtEee_HbYulOb4wg" name="CatholicPriestsAreMale">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIgUqtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIgkqtEee_HbYulOb4wg" key="body" value="self.priesthood = Priesthood::CATHOLIC implies&#xD;&#xA;self.base_Class.extension_Gender.oclIsKindOf(Male)"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Z0YIhEqtEee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIhUqtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIhkqtEee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Z0YIiEqtEee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIiUqtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIikqtEee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_Z0YIi0qtEee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Z0YIjEqtEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Z0YIjUqtEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_Z0YIjkqtEee_HbYulOb4wg" name="AtMostOnePriesthood">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIj0qtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIkEqtEee_HbYulOb4wg" key="body" value="self.base_Class.extension_Role->selectByKind(Priest)->size() = 1"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Z0YIkkqtEee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIk0qtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YIlEqtEee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Z0YIlkqtEee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIl0qtEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Z0YImEqtEee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_Z0YImUqtEee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Z0YImkqtEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Z0YIm0qtEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_Z0YInEqtEee_HbYulOb4wg" name="priesthood" ordered="false" lowerBound="1" eType="_Z0YIn0qtEee_HbYulOb4wg"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_Z0YIn0qtEee_HbYulOb4wg" name="Priesthood">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIoEqtEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_RfAigEkxEeegwLt7qqD5mQ"/>
+        <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_Z0YIoUqtEee_HbYulOb4wg" name="CATHOLIC"/>
+        <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_Z0YIokqtEee_HbYulOb4wg" name="IMAM" value="1"/>
+        <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_Z0YIo0qtEee_HbYulOb4wg" name="RABBI" value="2"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Z0YIpEqtEee_HbYulOb4wg" name="Astronaut" eSuperTypes="_Z0YIbEqtEee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIpUqtEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_s6IlcEkyEeegwLt7qqD5mQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Z0YIp0qtEee_HbYulOb4wg" name="Vehicle">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Z0YIqEqtEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_e7N-EEkzEeegwLt7qqD5mQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Z0YIqUqtEee_HbYulOb4wg" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_Wwv0gUqHEee_HbYulOb4wg" name="models" nsURI="http:///schemas/models/_Wwv0gEqHEee_HbYulOb4wg/14" nsPrefix="models">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0gkqHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0g0qHEee_HbYulOb4wg" key="documentation" value="let gender = self.base_Class.extension_Gender in &#xD;&#xA;gender.oclIsKindOf(Male) &lt;> gender.oclIsKindOf(Female)"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0hEqHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0hUqHEee_HbYulOb4wg" key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv00kqHEee_HbYulOb4wg" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv000qHEee_HbYulOb4wg" key="Version" value="0.0.15"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv01EqHEee_HbYulOb4wg" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv01UqHEee_HbYulOb4wg" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv01kqHEee_HbYulOb4wg" key="Date" value="2017-06-06"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv010qHEee_HbYulOb4wg" key="Author" value=""/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Wwv0hkqHEee_HbYulOb4wg" name="Male" eSuperTypes="_Wwv0iUqHEee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0h0qHEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_rZ_-gEkpEeegwLt7qqD5mQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Wwv0iUqHEee_HbYulOb4wg" name="Gender" abstract="true">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0ikqHEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Zf7JIEkqEeegwLt7qqD5mQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Wwv0i0qHEee_HbYulOb4wg" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Wwv0jUqHEee_HbYulOb4wg" name="Female" eSuperTypes="_Wwv0iUqHEee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0jkqHEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_sz5wsEkpEeegwLt7qqD5mQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Wwv0kEqHEee_HbYulOb4wg" name="Role" abstract="true">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0kUqHEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_6y7I8EksEeegwLt7qqD5mQ"/>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_Wwv0kkqHEee_HbYulOb4wg" name="GenderIsRequired">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0k0qHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0lEqHEee_HbYulOb4wg" key="body" value="not self.base_Class.isAbstract implies&#xD;&#xA;self.base_Class.extension_Gender &lt;> null"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Wwv0lkqHEee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0l0qHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0mEqHEee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Wwv0mkqHEee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0m0qHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0nEqHEee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_Wwv0nUqHEee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Wwv0nkqHEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Wwv0n0qHEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Wwv0oEqHEee_HbYulOb4wg" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Wwv0okqHEee_HbYulOb4wg" name="Priest" eSuperTypes="_Wwv0kEqHEee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0o0qHEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_BjQNQEktEeegwLt7qqD5mQ"/>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_Wwv0pEqHEee_HbYulOb4wg" name="CatholicPriestsAreMale">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0pUqHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0pkqHEee_HbYulOb4wg" key="body" value="self.priesthood = Priesthood::CATHOLIC implies&#xD;&#xA;self.base_Class.extension_Gender.oclIsKindOf(Male)"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Wwv0qEqHEee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0qUqHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0qkqHEee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Wwv0rEqHEee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0rUqHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0rkqHEee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_Wwv0r0qHEee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Wwv0sEqHEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Wwv0sUqHEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_Wwv0skqHEee_HbYulOb4wg" name="AtMostOnePriesthood">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0s0qHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0tEqHEee_HbYulOb4wg" key="body" value="self.base_Class.extension_Role->selectByKind(Priest)->size() = 1"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Wwv0tkqHEee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0t0qHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0uEqHEee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_Wwv0ukqHEee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0u0qHEee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Wwv0vEqHEee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_Wwv0vUqHEee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Wwv0vkqHEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_Wwv0v0qHEee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_Wwv0wEqHEee_HbYulOb4wg" name="priesthood" ordered="false" lowerBound="1" eType="_Wwv0w0qHEee_HbYulOb4wg"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_Wwv0w0qHEee_HbYulOb4wg" name="Priesthood">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0xEqHEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_RfAigEkxEeegwLt7qqD5mQ"/>
+        <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_Wwv0xUqHEee_HbYulOb4wg" name="CATHOLIC"/>
+        <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_Wwv0xkqHEee_HbYulOb4wg" name="IMAM" value="1"/>
+        <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_Wwv0x0qHEee_HbYulOb4wg" name="RABBI" value="2"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Wwv0yEqHEee_HbYulOb4wg" name="Astronaut" eSuperTypes="_Wwv0kEqHEee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0yUqHEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_s6IlcEkyEeegwLt7qqD5mQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_Wwv0y0qHEee_HbYulOb4wg" name="Vehicle">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Wwv0zEqHEee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_e7N-EEkzEeegwLt7qqD5mQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_Wwv0zUqHEee_HbYulOb4wg" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+    <contents xmi:type="ecore:EPackage" xmi:id="_SyDLUUp8Eee_HbYulOb4wg" name="models" nsURI="http:///schemas/models/_SyDLUEp8Eee_HbYulOb4wg/13" nsPrefix="models">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLUkp8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLU0p8Eee_HbYulOb4wg" key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyM8U0p8Eee_HbYulOb4wg" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyM8VEp8Eee_HbYulOb4wg" key="Version" value="0.0.14"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyM8VUp8Eee_HbYulOb4wg" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyM8Vkp8Eee_HbYulOb4wg" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyM8V0p8Eee_HbYulOb4wg" key="Date" value="2017-06-06"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyM8WEp8Eee_HbYulOb4wg" key="Author" value=""/>
+      </eAnnotations>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_SyDLVEp8Eee_HbYulOb4wg" name="Male" eSuperTypes="_SyDLV0p8Eee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLVUp8Eee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_rZ_-gEkpEeegwLt7qqD5mQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_SyDLV0p8Eee_HbYulOb4wg" name="Gender" abstract="true">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLWEp8Eee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Zf7JIEkqEeegwLt7qqD5mQ"/>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_SyDLWUp8Eee_HbYulOb4wg" name="MaleOrFemale">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLWkp8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLW0p8Eee_HbYulOb4wg" key="body" value="let gender = self.base_Class.extension_Gender in &#xD;&#xA;gender.oclIsKindOf(Male) &lt;> gender.oclIsKindOf(Female)"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_SyDLXUp8Eee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLXkp8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLX0p8Eee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_SyDLYUp8Eee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLYkp8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLY0p8Eee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_SyDLZEp8Eee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_SyDLZUp8Eee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_SyDLZkp8Eee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SyDLZ0p8Eee_HbYulOb4wg" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_SyDLaUp8Eee_HbYulOb4wg" name="Female" eSuperTypes="_SyDLV0p8Eee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLakp8Eee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_sz5wsEkpEeegwLt7qqD5mQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_SyDLbEp8Eee_HbYulOb4wg" name="Role" abstract="true">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLbUp8Eee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_6y7I8EksEeegwLt7qqD5mQ"/>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_SyDLbkp8Eee_HbYulOb4wg" name="GenderIsRequired">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLb0p8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLcEp8Eee_HbYulOb4wg" key="body" value="not self.base_Class.isAbstract implies&#xD;&#xA;self.base_Class.extension_Gender &lt;> null"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_SyDLckp8Eee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLc0p8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLdEp8Eee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_SyDLdkp8Eee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLd0p8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLeEp8Eee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_SyDLeUp8Eee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_SyDLekp8Eee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_SyDLe0p8Eee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SyDLfEp8Eee_HbYulOb4wg" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_SyDLfkp8Eee_HbYulOb4wg" name="Priest" eSuperTypes="_SyDLbEp8Eee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLf0p8Eee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_BjQNQEktEeegwLt7qqD5mQ"/>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_SyDLgEp8Eee_HbYulOb4wg" name="AtMostOnePriesthood">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLgUp8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLgkp8Eee_HbYulOb4wg" key="body" value="self.base_Class.extension_Role->selectByKind(Priest)->size() = 1"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_SyDLhEp8Eee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLhUp8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLhkp8Eee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_SyDLiEp8Eee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLiUp8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLikp8Eee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_SyDLi0p8Eee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_SyDLjEp8Eee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_SyDLjUp8Eee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eOperations xmi:type="ecore:EOperation" xmi:id="_SyDLjkp8Eee_HbYulOb4wg" name="CatholicPriestsAreMale">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLj0p8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLkEp8Eee_HbYulOb4wg" key="body" value="self.priesthood = Priesthood::CATHOLIC implies&#xD;&#xA;self.base_Class.extension_Gender.oclIsKindOf(Male)"/>
+          </eAnnotations>
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_SyDLkkp8Eee_HbYulOb4wg" name="diagnostics">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLk0p8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLlEp8Eee_HbYulOb4wg" key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
+            </eAnnotations>
+            <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+          </eParameters>
+          <eParameters xmi:type="ecore:EParameter" xmi:id="_SyDLlkp8Eee_HbYulOb4wg" name="context">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLl0p8Eee_HbYulOb4wg" source="http://www.eclipse.org/emf/2002/GenModel">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_SyDLmEp8Eee_HbYulOb4wg" key="documentation" value="The cache of context-specific information."/>
+            </eAnnotations>
+            <eGenericType xmi:type="ecore:EGenericType" xmi:id="_SyDLmUp8Eee_HbYulOb4wg">
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_SyDLmkp8Eee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eTypeArguments xmi:type="ecore:EGenericType" xmi:id="_SyDLm0p8Eee_HbYulOb4wg">
+                <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+              </eTypeArguments>
+              <eClassifier xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+            </eGenericType>
+          </eParameters>
+        </eOperations>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_SyDLnEp8Eee_HbYulOb4wg" name="priesthood" ordered="false" lowerBound="1" eType="_SyDLn0p8Eee_HbYulOb4wg"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_SyDLn0p8Eee_HbYulOb4wg" name="Priesthood">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLoEp8Eee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_RfAigEkxEeegwLt7qqD5mQ"/>
+        <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_SyDLoUp8Eee_HbYulOb4wg" name="CATHOLIC"/>
+        <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_SyDLokp8Eee_HbYulOb4wg" name="IMAM" value="1"/>
+        <eLiterals xmi:type="ecore:EEnumLiteral" xmi:id="_SyDLo0p8Eee_HbYulOb4wg" name="RABBI" value="2"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_SyDLpEp8Eee_HbYulOb4wg" name="Astronaut" eSuperTypes="_SyDLbEp8Eee_HbYulOb4wg">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLpUp8Eee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_s6IlcEkyEeegwLt7qqD5mQ"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_SyDLp0p8Eee_HbYulOb4wg" name="Vehicle">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SyDLqEp8Eee_HbYulOb4wg" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_e7N-EEkzEeegwLt7qqD5mQ"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_SyDLqUp8Eee_HbYulOb4wg" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </contents>
+  </eAnnotations>
+  <elementImport xmi:type="uml:ElementImport" xmi:id="_LOd7EEk9EeeOROUkezUZ7Q" alias="Class">
+    <importedElement xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+  </elementImport>
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_XKIy8EkpEeegwLt7qqD5mQ">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_XKJaAEkpEeegwLt7qqD5mQ">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_METAMODELS/UML.metamodel.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_rZ_-gEkpEeegwLt7qqD5mQ" name="Male">
+    <generalization xmi:type="uml:Generalization" xmi:id="_b9gl4EkqEeegwLt7qqD5mQ" general="_Zf7JIEkqEeegwLt7qqD5mQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_sz5wsEkpEeegwLt7qqD5mQ" name="Female">
+    <generalization xmi:type="uml:Generalization" xmi:id="_cpapoEkqEeegwLt7qqD5mQ" general="_Zf7JIEkqEeegwLt7qqD5mQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_Zf7JIEkqEeegwLt7qqD5mQ" name="Gender" isAbstract="true">
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_ijVN4EkrEeegwLt7qqD5mQ" name="MaleOrFemale">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_SOTqwEksEeegwLt7qqD5mQ">
+        <language>OCL</language>
+        <body>let gender = self.base_Class.extension_Gender in &#xD;
+gender.oclIsKindOf(Male) &lt;> gender.oclIsKindOf(Female)</body>
+      </specification>
+    </ownedRule>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Z1RMYUk9EeeOROUkezUZ7Q" name="base_Class" association="_Z1QlUEk9EeeOROUkezUZ7Q">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_6y7I8EksEeegwLt7qqD5mQ" name="Role" isAbstract="true">
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_g61mEEkrEeegwLt7qqD5mQ" name="GenderIsRequired">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_17bD8EkrEeegwLt7qqD5mQ">
+        <language>OCL</language>
+        <body>not self.base_Class.isAbstract implies&#xD;
+self.base_Class.extension_Gender &lt;> null</body>
+      </specification>
+    </ownedRule>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_WTOpAEk9EeeOROUkezUZ7Q" name="base_Class" association="_WTGtMEk9EeeOROUkezUZ7Q">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_BjQNQEktEeegwLt7qqD5mQ" name="Priest">
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_XzDI4EkwEeegwLt7qqD5mQ" name="CatholicPriestsAreMale">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_XzDI4UkwEeegwLt7qqD5mQ">
+        <language>OCL</language>
+        <body>self.priesthood = Priesthood::CATHOLIC implies&#xD;
+self.base_Class.extension_Gender.oclIsKindOf(Male)</body>
+      </specification>
+    </ownedRule>
+    <ownedRule xmi:type="uml:Constraint" xmi:id="_FH8UoEkwEeegwLt7qqD5mQ" name="AtMostOnePriesthood">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_FH8UoUkwEeegwLt7qqD5mQ">
+        <language>OCL</language>
+        <body>self.base_Class.extension_Role->selectByKind(Priest)->size() = 1</body>
+      </specification>
+    </ownedRule>
+    <generalization xmi:type="uml:Generalization" xmi:id="_zR05kEktEeegwLt7qqD5mQ" general="_6y7I8EksEeegwLt7qqD5mQ"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_bAKIoEkxEeegwLt7qqD5mQ" name="priesthood" type="_RfAigEkxEeegwLt7qqD5mQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_RfAigEkxEeegwLt7qqD5mQ" name="Priesthood">
+    <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_UbKxoEkxEeegwLt7qqD5mQ" name="CATHOLIC"/>
+    <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_XGcsIEkxEeegwLt7qqD5mQ" name="IMAM"/>
+    <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_Y1NUAEkxEeegwLt7qqD5mQ" name="RABBI"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_s6IlcEkyEeegwLt7qqD5mQ" name="Astronaut">
+    <generalization xmi:type="uml:Generalization" xmi:id="_0GLVYEkyEeegwLt7qqD5mQ" general="_6y7I8EksEeegwLt7qqD5mQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_e7N-EEkzEeegwLt7qqD5mQ" name="Vehicle">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_a2jDMUk9EeeOROUkezUZ7Q" name="base_Class" association="_a2icIEk9EeeOROUkezUZ7Q">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_WTGtMEk9EeeOROUkezUZ7Q" name="E_Role_Class" memberEnd="_WTOB8Ek9EeeOROUkezUZ7Q _WTOpAEk9EeeOROUkezUZ7Q">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_WTOB8Ek9EeeOROUkezUZ7Q" name="extension_Role" type="_6y7I8EksEeegwLt7qqD5mQ" aggregation="composite" association="_WTGtMEk9EeeOROUkezUZ7Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_L8rPcEk-EeeOROUkezUZ7Q" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_Z1QlUEk9EeeOROUkezUZ7Q" name="E_Gender_Class" memberEnd="_Z1RMYEk9EeeOROUkezUZ7Q _Z1RMYUk9EeeOROUkezUZ7Q">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_Z1RMYEk9EeeOROUkezUZ7Q" name="extension_Gender" type="_Zf7JIEkqEeegwLt7qqD5mQ" aggregation="composite" association="_Z1QlUEk9EeeOROUkezUZ7Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_a2icIEk9EeeOROUkezUZ7Q" name="E_Vehicle_Class" memberEnd="_a2jDMEk9EeeOROUkezUZ7Q _a2jDMUk9EeeOROUkezUZ7Q">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_a2jDMEk9EeeOROUkezUZ7Q" name="extension_Vehicle" type="_e7N-EEkzEeegwLt7qqD5mQ" aggregation="composite" association="_a2icIEk9EeeOROUkezUZ7Q">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Nj_LgEk-EeeOROUkezUZ7Q" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Profile>
