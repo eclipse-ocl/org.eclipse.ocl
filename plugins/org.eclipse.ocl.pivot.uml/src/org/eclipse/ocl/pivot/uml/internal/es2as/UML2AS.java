@@ -579,7 +579,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 			if (pivotModel2 == null) {
 				URI pivotURI = createPivotURI();
 				ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.UML_CONTENT_TYPE);
-				List<@NonNull Diagnostic> errors2 = errors;
 				try {
 					pivotModel2 = installDeclarations(asResource);
 					//					Map<String, Type> resolvedSpecializations = new HashMap<>();
@@ -592,6 +591,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 					//							metamodelManager.addOrphanType((Type)pivotElement);
 					//						}
 					//					}
+					List<@NonNull Diagnostic> errors2 = errors;
 					if (errors2 != null) {
 						if ((errors2.size() == 1) && (errors2.get(0) instanceof Exception)) {
 							throw (Exception)errors2.get(0);
@@ -978,9 +978,19 @@ public abstract class UML2AS extends AbstractExternal2AS
 	public abstract void addCreated(@NonNull EObject umlElement, @NonNull Element pivotElement);
 
 	public void addImportedPackage(org.eclipse.uml2.uml.@NonNull Package importedPackage) {
-		EObject rootContainer = EcoreUtil.getRootContainer(importedPackage);
-		Resource importedResource = ClassUtil.nonNullEMF(rootContainer.eResource());
-		addImportedResource(importedResource);
+		if (importedPackage.eIsProxy()) {
+			error("Unresolved proxy '" + EcoreUtil.getURI(importedPackage) + "'");
+		}
+		else {
+			EObject rootContainer = EcoreUtil.getRootContainer(importedPackage);
+			Resource importedResource = rootContainer.eResource();
+			if (importedResource == null) {
+				error("Uncontained package '" + EcoreUtil.getURI(importedPackage) + "'");
+			}
+			else {
+				addImportedResource(importedResource);
+			}
+		}
 	}
 
 	public void addImportedPackages(@NonNull List<? extends org.eclipse.uml2.uml.Package> importedPackages) {
