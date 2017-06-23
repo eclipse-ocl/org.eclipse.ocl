@@ -26,7 +26,7 @@ public abstract class AbstractFragment implements InheritanceFragment
 		this.derivedInheritance = derivedInheritance;
 		this.baseInheritance = baseInheritance;
 	}
-	
+
 	/**
 	 * Return the actualOperation that has the same signature as apparentOperation.
 	 */
@@ -56,7 +56,7 @@ public abstract class AbstractFragment implements InheritanceFragment
 								bestInheritance = superInheritance;
 								bestOverload = overload;
 							}
-							else if (depth == bestDepth) {				// Sibling candidate 
+							else if (depth == bestDepth) {				// Sibling candidate
 								bestOverload = null;
 								depth = -1;
 								break;
@@ -80,12 +80,12 @@ public abstract class AbstractFragment implements InheritanceFragment
 				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, derivedInheritance);
 			}
 		}
-//		if (localOperation == null) {
-//			localOperation = INVALID;
-//		}
-//		if (localOperation == null) {
-//			localOperation = apparentOperation;
-//		}
+		//		if (localOperation == null) {
+		//			localOperation = INVALID;
+		//		}
+		//		if (localOperation == null) {
+		//			localOperation = apparentOperation;
+		//		}
 		return localOperation;
 	}
 
@@ -122,7 +122,7 @@ public abstract class AbstractFragment implements InheritanceFragment
 		return false;
 	} */
 
-/*	public DomainOperation lookupOperation(DomainStandardLibrary standardLibrary, DomainType staticType, String operationName, DomainType[] argumentTypes) {
+	/*	public DomainOperation lookupOperation(DomainStandardLibrary standardLibrary, DomainType staticType, String operationName, DomainType[] argumentTypes) {
 		for (DomainOperation operation : getOperations()) {		// FIXME binary search
 			if (operation.getName().equals(operationName)) {
 				boolean gotIt = true;
@@ -144,7 +144,7 @@ public abstract class AbstractFragment implements InheritanceFragment
 								gotIt = false;
 								break;
 							}
-							
+
 //						}
 //						else {
 //							// FIXME
@@ -160,7 +160,7 @@ public abstract class AbstractFragment implements InheritanceFragment
 	} */
 
 	@Override
-	public String toString() {
-		return derivedInheritance.getName() + "__" + baseInheritance.getName(); //$NON-NLS-1$
+	public @NonNull String toString() {
+		return derivedInheritance.toString() + "__" + baseInheritance.toString(); //$NON-NLS-1$
 	}
 }
