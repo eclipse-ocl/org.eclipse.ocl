@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL API Base Line" sequenceNumber="9">
+<?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL API Base Line" sequenceNumber="10">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.ocl.all.sdk.feature.group" version="5.2.0.v20160523-1914"/>
-<unit id="org.eclipse.ocl.examples.feature.group" version="6.1.0.v20160526-1513"/>
-<repository location="http://download.eclipse.org/releases/neon"/>
+<unit id="org.eclipse.ocl.all.sdk.feature.group" version="5.3.0.v20170607-1133"/>
+<unit id="org.eclipse.ocl.examples.feature.group" version="6.3.0.v20170613-1432"/>
+<repository location="http://download.eclipse.org/releases/oxygen"/>
 </location>
 </locations>
 </target>
