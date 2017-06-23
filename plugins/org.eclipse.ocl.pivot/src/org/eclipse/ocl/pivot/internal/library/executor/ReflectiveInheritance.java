@@ -77,7 +77,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	 * The Inheritances of sub-types that have been installed, and which must be
 	 * uninstalled in the event of an inheritance change for this Inheritance.
 	 */
-	private Set<ReflectiveInheritance> knownSubInheritances = null;
+	private Set<@NonNull ReflectiveInheritance> knownSubInheritances = null;
 
 	public ReflectiveInheritance(@NonNull String name, int flags, ExecutorTypeParameter... typeParameters) {
 		super(name, flags);
@@ -85,7 +85,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 
 	public void addSubInheritance(@NonNull ReflectiveInheritance subInheritance) {
 		if (knownSubInheritances == null) {
-			knownSubInheritances = new HashSet<ReflectiveInheritance>();
+			knownSubInheritances = new HashSet<>();
 		}
 		knownSubInheritances.add(subInheritance);
 	}
@@ -106,12 +106,12 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	 * Add this Inheritance and all un-installed super-Inheritances to inheritances, returning true if this
 	 * inheritance was already installed.
 	 */
-	public boolean gatherUninstalledInheritances(@NonNull List<ReflectiveInheritance> inheritances) {
+	public boolean gatherUninstalledInheritances(@NonNull List<@NonNull ReflectiveInheritance> inheritances) {
 		boolean gotOne = false;
 		if (!inheritances.contains(this)) {
 			inheritances.add(this);
 			if (fragments == null) {
-				for (CompleteInheritance superInheritance : getInitialSuperInheritances()) {
+				for (@NonNull CompleteInheritance superInheritance : getInitialSuperInheritances()) {
 					if (superInheritance instanceof ReflectiveInheritance) {
 						if (((ReflectiveInheritance)superInheritance).gatherUninstalledInheritances(inheritances)) {
 							gotOne = true;		// Transitively installed
@@ -217,7 +217,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	}
 
 	protected synchronized void initialize() {
-		List<ReflectiveInheritance> uninstalledInheritances = new ArrayList<ReflectiveInheritance>();
+		List<@NonNull ReflectiveInheritance> uninstalledInheritances = new ArrayList<>();
 		// Detect missing OclAny inheritance
 		// - any installed superclass must inherit from OclAny so ok.
 		// - an all-uninstalled superclass list must include OclAny to be ok.
@@ -230,17 +230,17 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 			//				}
 			//			}
 			//			if (!containsOclAny)  {	// FIXME may be an rather than the OclAny - need a way to find the partial types.
-			/*				List<ReflectiveType> uninstalledInheritances2 = new ArrayList<ReflectiveType>();
+			/*				List<ReflectiveType> uninstalledInheritances2 = new ArrayList<>();
 				gatherUninstalledInheritances(uninstalledInheritances2);
 				assert uninstalledInheritances.contains(oclAnyInheritance); */
 			//			}
 		}
 		//		int oldPendingCount = uninstalledInheritances.size();
-		@SuppressWarnings("unused") List<ReflectiveInheritance> debugOldUninstalledInheritances = new ArrayList<ReflectiveInheritance>(uninstalledInheritances);
+		@SuppressWarnings("unused") List<@NonNull ReflectiveInheritance> debugOldUninstalledInheritances = new ArrayList<>(uninstalledInheritances);
 		while (true) {
 			Boolean gotOne = false;
-			for (ListIterator<ReflectiveInheritance> it = uninstalledInheritances.listIterator(); it.hasNext(); ) {
-				ReflectiveInheritance uninstalledInheritance = it.next();
+			for (ListIterator<@NonNull ReflectiveInheritance> it = uninstalledInheritances.listIterator(); it.hasNext(); ) {
+				@NonNull ReflectiveInheritance uninstalledInheritance = it.next();
 				if (uninstalledInheritance.isInstallable()) {
 					uninstalledInheritance.install();
 					it.remove();
@@ -252,7 +252,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 			}
 			//			int newPendingCount = uninstalledInheritances.size();
 			if (!gotOne) {
-				List<ReflectiveInheritance> debugNewUninstalledInheritances = new ArrayList<ReflectiveInheritance>();
+				List<@NonNull ReflectiveInheritance> debugNewUninstalledInheritances = new ArrayList<>();
 				gatherUninstalledInheritances(debugNewUninstalledInheritances);
 				StringBuilder s = new StringBuilder();
 				s.append("Inheritance loop for "); //$NON-NLS-1$
@@ -284,14 +284,14 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 			installOclAny();
 		}
 		else {
-			List<List<CompleteInheritance>> all = new ArrayList<List<CompleteInheritance>>();
-			for (CompleteInheritance superInheritance : getInitialSuperInheritances()) {
+			List<@NonNull List<@NonNull CompleteInheritance>> all = new ArrayList<>();
+			for (@NonNull CompleteInheritance superInheritance : getInitialSuperInheritances()) {
 				//				installIn(superInheritance, this, all);
 				int j = 0;
 				for (int i = 0; i < superInheritance.getIndexes()-1; i++) {
-					List<CompleteInheritance> some = (i < all.size()) ? all.get(i) : null;
+					List<@NonNull CompleteInheritance> some = (i < all.size()) ? all.get(i) : null;
 					if (some == null) {
-						some = new ArrayList<CompleteInheritance>();
+						some = new ArrayList<>();
 						all.add(some);
 					}
 					int jMax = superInheritance.getIndex(i+1);
@@ -319,9 +319,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 			indexes2[0] = 0;
 			for (int i = 0; i < superDepths; i++) {
 				for (CompleteInheritance some : all.get(i)) {
-					if (some != null) {
-						fragments2[j++] = createFragment(some);
-					}
+					fragments2[j++] = createFragment(some);
 				}
 				indexes2[i+1] = j;
 			}
