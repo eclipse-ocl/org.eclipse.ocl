@@ -15,21 +15,24 @@ import org.eclipse.ocl.pivot.Feature;
 
 public interface FeatureFilter
 {
-	boolean accept(@NonNull Feature asFeature);
-	
-	public static final @NonNull FeatureFilter SELECT_NON_STATIC = new FeatureFilter()
+	public static final class NonStaticFeatureFilter implements FeatureFilter
 	{
 		@Override
 		public boolean accept(@NonNull Feature asFeature) {
 			return !asFeature.isIsStatic();
 		}
-	};
-	
-	public static final @NonNull FeatureFilter SELECT_STATIC = new FeatureFilter()
+	}
+
+	public static final class StaticFeatureFilter implements FeatureFilter
 	{
 		@Override
 		public boolean accept(@NonNull Feature asFeature) {
 			return asFeature.isIsStatic();
 		}
-	};
+	}
+
+	boolean accept(@NonNull Feature asFeature);
+
+	public static final @NonNull FeatureFilter SELECT_NON_STATIC = new NonStaticFeatureFilter();
+	public static final @NonNull FeatureFilter SELECT_STATIC = new StaticFeatureFilter();
 }
