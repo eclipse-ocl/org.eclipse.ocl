@@ -359,4 +359,15 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 
 		}
 	}
+
+	@Override
+	public @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append(name);
+		for (@NonNull ParametersId parametersId : map.keySet()) {
+			s.append("\n  ");
+			s.append(parametersId);
+		}
+		return s.toString();
+	}
 }
