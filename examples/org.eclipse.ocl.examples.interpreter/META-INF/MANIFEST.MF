@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Plugin.name
 Bundle-SymbolicName: org.eclipse.ocl.examples.interpreter;singleton:=true
-Bundle-Version: 4.1.200.qualifier
+Bundle-Version: 4.1.300.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.ocl.examples.interpreter.OCLExamplePlugin
 Bundle-Vendor: %Plugin.providerName

@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.ocl.releng.consumers.build"
       label="OCL Consumers Build"
-      version="1.0.200.qualifier">
+      version="1.0.300.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
