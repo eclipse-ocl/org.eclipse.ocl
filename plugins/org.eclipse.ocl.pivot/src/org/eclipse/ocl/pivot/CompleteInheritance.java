@@ -47,6 +47,9 @@ public interface CompleteInheritance extends Nameable
 	 */
 	int getDepth();
 
+	/**
+	 * Return the InheritanceFragment of this inheritance whose baseInheritance is thatInheritance. Return null if no InheritanceFragment corresponds.
+	 */
 	@Nullable InheritanceFragment getFragment(@NonNull CompleteInheritance thatInheritance);
 	@NonNull Iterable<@NonNull InheritanceFragment> getFragments();
 	/*@Nullable*/ InheritanceFragment getFragment(int fragmentNumber);
