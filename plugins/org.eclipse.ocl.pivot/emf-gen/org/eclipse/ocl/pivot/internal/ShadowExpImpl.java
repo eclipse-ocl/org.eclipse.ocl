@@ -392,7 +392,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
 					/*@Thrown*/ SequenceValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSequenceAccumulatorValue(PivotTables.SEQ_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedParts.iterator();
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue collect;
+					/*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SequenceValue collect;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
 							collect = accumulator;
@@ -408,7 +408,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						//
 						accumulator.add(referredProperty);
 					}
-					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue partProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull SetValue partProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect);
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
 					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class_0));
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Class, oclAsType);

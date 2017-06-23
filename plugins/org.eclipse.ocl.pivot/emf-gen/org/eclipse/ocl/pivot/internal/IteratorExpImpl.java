@@ -228,47 +228,40 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				try {
 					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
 					final /*@NonInvalid*/ java.lang.@Nullable Boolean not = BooleanNotOperation.INSTANCE.evaluate(isSafe);
-					/*@Caught*/ @NonNull Object CAUGHT_exists;
-					try {
-						final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-						/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.FALSE_VALUE;
-						@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-						/*@Thrown*/ boolean exists;
-						while (true) {
-							if (!ITERATOR__1.hasNext()) {
-								if (accumulator == ValueUtil.FALSE_VALUE) {
-									exists = ValueUtil.FALSE_VALUE;
-								}
-								else {
-									throw (InvalidValueException)accumulator;
-								}
-								break;
+					final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+					/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.FALSE_VALUE;
+					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+					/*@NonInvalid*/ boolean exists;
+					while (true) {
+						if (!ITERATOR__1.hasNext()) {
+							if (accumulator == ValueUtil.FALSE_VALUE) {
+								exists = ValueUtil.FALSE_VALUE;
 							}
-							@SuppressWarnings("null")
-							/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Variable _1 = (Variable)ITERATOR__1.next();
-							/**
-							 * isRequired
-							 */
-							final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
-							//
-							if (isRequired == ValueUtil.TRUE_VALUE) {					// Normal successful body evaluation result
-								exists = ValueUtil.TRUE_VALUE;
-								break;														// Stop immediately
+							else {
+								throw (InvalidValueException)accumulator;
 							}
-							else if (isRequired == ValueUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
-								;															// Carry on
-							}
-							else {															// Impossible badly typed result
-								accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "exists");
-							}
+							break;
 						}
-						CAUGHT_exists = exists;
+						@SuppressWarnings("null")
+						/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Variable _1 = (Variable)ITERATOR__1.next();
+						/**
+						 * isRequired
+						 */
+						final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
+						//
+						if (isRequired == ValueUtil.TRUE_VALUE) {					// Normal successful body evaluation result
+							exists = ValueUtil.TRUE_VALUE;
+							break;														// Stop immediately
+						}
+						else if (isRequired == ValueUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
+							;															// Carry on
+						}
+						else {															// Impossible badly typed result
+							accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "exists");
+						}
 					}
-					catch (Exception e) {
-						CAUGHT_exists = ValueUtil.createInvalidValue(e);
-					}
-					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(not, CAUGHT_exists);
+					final /*@Thrown*/ java.lang.@Nullable Boolean and = BooleanAndOperation.INSTANCE.evaluate(not, exists);
 					CAUGHT_and = and;
 				}
 				catch (Exception e) {
@@ -1433,55 +1426,48 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			symbol_0 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @NonNull Object CAUGHT_result;
-			try {
-				final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-				/*@Thrown*/ boolean result;
-				if (isSafe) {
-					final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-					/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-					/*@Thrown*/ boolean forAll;
-					while (true) {
-						if (!ITERATOR__1.hasNext()) {
-							if (accumulator == ValueUtil.TRUE_VALUE) {
-								forAll = ValueUtil.TRUE_VALUE;
-							}
-							else {
-								throw (InvalidValueException)accumulator;
-							}
-							break;
+			final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+			/*@NonInvalid*/ boolean result;
+			if (isSafe) {
+				final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+				/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
+				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+				/*@NonInvalid*/ boolean forAll;
+				while (true) {
+					if (!ITERATOR__1.hasNext()) {
+						if (accumulator == ValueUtil.TRUE_VALUE) {
+							forAll = ValueUtil.TRUE_VALUE;
 						}
-						@SuppressWarnings("null")
-						/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Variable _1 = (Variable)ITERATOR__1.next();
-						/**
-						 * isRequired
-						 */
-						final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
-						//
-						if (isRequired == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
-							forAll = ValueUtil.FALSE_VALUE;
-							break;														// Stop immediately
+						else {
+							throw (InvalidValueException)accumulator;
 						}
-						else if (isRequired == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
-							;															// Carry on
-						}
-						else {															// Impossible badly typed result
-							accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
-						}
+						break;
 					}
-					result = forAll;
+					@SuppressWarnings("null")
+					/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Variable _1 = (Variable)ITERATOR__1.next();
+					/**
+					 * isRequired
+					 */
+					final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
+					//
+					if (isRequired == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
+						forAll = ValueUtil.FALSE_VALUE;
+						break;														// Stop immediately
+					}
+					else if (isRequired == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
+						;															// Carry on
+					}
+					else {															// Impossible badly typed result
+						accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
+					}
 				}
-				else {
-					result = ValueUtil.TRUE_VALUE;
-				}
-				CAUGHT_result = result;
+				result = forAll;
 			}
-			catch (Exception e) {
-				CAUGHT_result = ValueUtil.createInvalidValue(e);
+			else {
+				result = ValueUtil.TRUE_VALUE;
 			}
-			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IteratorExp_c_c_SafeIteratorIsRequired, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_IteratorExp_c_c_SafeIteratorIsRequired, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 			symbol_0 = logDiagnostic;
 		}
 		return Boolean.TRUE == symbol_0;
