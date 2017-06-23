@@ -1344,6 +1344,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Iterable<@NonNull Operation> getRedefinedOperations(@NonNull Operation operation) {
+		return ClassUtil.nullFree(operation.getRedefinedOperations());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<@NonNull Property> getRedefinedProperties(@NonNull Property property) {

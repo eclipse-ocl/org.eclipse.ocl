@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.essentialoclcs.NavigatingArgCS;
 import org.eclipse.ocl.xtext.essentialoclcs.NavigationRole;
@@ -26,24 +27,25 @@ import org.eclipse.ocl.xtext.essentialoclcs.RoundBracketedClauseCS;
 
 public class OperationMatcher extends AbstractOperationMatcher
 {
-	protected final @NonNull List<OCLExpression> asArguments = new ArrayList<OCLExpression>();
+	protected final @NonNull List<@NonNull OCLExpression> asArguments = new ArrayList<>();
 
 	public OperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue, @NonNull RoundBracketedClauseCS csRoundBracketedClause) {
 		super(environmentFactory, sourceType, sourceTypeValue);
 		for (NavigatingArgCS csNavigatingArg : csRoundBracketedClause.getOwnedArguments()) {
 			if (csNavigatingArg.getRole() == NavigationRole.EXPRESSION) {
-				asArguments.add(PivotUtil.getPivot(OCLExpression.class, csNavigatingArg));
+				OCLExpression asArgument = PivotUtil.getPivot(OCLExpression.class, csNavigatingArg);
+				asArguments.add(ClassUtil.nonNullState(asArgument));
 			}
 		}
 	}
 
 	@Override
-	protected OCLExpression getArgument(int i) {
+	public @NonNull OCLExpression getArgument(int i) {
 		return asArguments.get(i);
 	}
 
 	@Override
-	protected int getArgumentCount() {
+	public int getArgumentCount() {
 		return asArguments.size();
 	}
 }
