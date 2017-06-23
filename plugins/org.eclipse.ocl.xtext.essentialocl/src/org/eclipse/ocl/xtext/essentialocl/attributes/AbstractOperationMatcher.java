@@ -29,21 +29,21 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.internal.manager.OperationArguments;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCSLeft2RightVisitor.Invocations;
 
-public abstract class AbstractOperationMatcher
+public abstract class AbstractOperationMatcher implements OperationArguments
 {
-	private static Comparator<Operation> operationComparator = new Comparator<Operation>()
+	private static Comparator<@NonNull Operation> operationComparator = new Comparator<@NonNull Operation>()
 	{
 		@Override
-		public int compare(Operation o1, Operation o2) {
+		public int compare(@NonNull Operation o1, @NonNull Operation o2) {
 			String n1 = o1.getName();
 			String n2 = o2.getName();
 			if (n1 == null) n1 = "";
@@ -136,31 +136,22 @@ public abstract class AbstractOperationMatcher
 		if (comparedSourceType != specializedCandidateType) {
 			candidateConversions++;
 		}
-		List<Parameter> candidateParameters = candidate.getOwnedParameters();
-		List<Parameter> referenceParameters = reference.getOwnedParameters();
+		List<@NonNull Parameter> candidateParameters = PivotUtilInternal.getOwnedParametersList(candidate);
+		List<@NonNull Parameter> referenceParameters = PivotUtilInternal.getOwnedParametersList(reference);
 		for (int i = 0; i < candidateParameters.size(); i++) {
 			OCLExpression pivotArgument = getArgument(i);
-			if (pivotArgument == null) {
-				return 0;
-			}
 			Type argumentType = pivotArgument.getType();
 			Parameter referenceParameter = referenceParameters.get(i);
 			Parameter candidateParameter = candidateParameters.get(i);
-			if ((referenceParameter == null) || (candidateParameter == null)) {					// Doesn't happen (just a supurious NPE guard)
-				referenceConversions = Integer.MIN_VALUE;
-				candidateConversions = Integer.MIN_VALUE;
+			referenceType = PivotUtilInternal.getType(PivotUtil.getType(referenceParameter));
+			candidateType = PivotUtilInternal.getType(PivotUtil.getType(candidateParameter));
+			specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
+			specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
+			if (argumentType != specializedReferenceType) {
+				referenceConversions++;
 			}
-			else {
-				referenceType = PivotUtilInternal.getType(ClassUtil.nonNullModel(referenceParameter.getType()));
-				candidateType = PivotUtilInternal.getType(ClassUtil.nonNullModel(candidateParameter.getType()));
-				specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
-				specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
-				if (argumentType != specializedReferenceType) {
-					referenceConversions++;
-				}
-				if (argumentType != specializedCandidateType) {
-					candidateConversions++;
-				}
+			if (argumentType != specializedCandidateType) {
+				candidateConversions++;
 			}
 		}
 		if (candidateConversions != referenceConversions) {
@@ -210,15 +201,11 @@ public abstract class AbstractOperationMatcher
 		return ambiguities;
 	}
 
-	protected abstract OCLExpression getArgument(int i);
-
-	protected abstract int getArgumentCount();
-
 	public @Nullable Operation getBestOperation(@NonNull Invocations invocations, boolean useCoercions) {
 		ambiguities = null;
 		Operation bestOperation = null;
 		TemplateParameterSubstitutions bestBindings = TemplateParameterSubstitutions.EMPTY;
-		List<Operation> ambiguities2 = ambiguities;
+		List<@NonNull Operation> ambiguities2 = ambiguities;
 		for (NamedElement namedElement : invocations) {
 			if (namedElement instanceof Operation) {
 				Operation candidateOperation = (Operation)namedElement;
@@ -237,7 +224,7 @@ public abstract class AbstractOperationMatcher
 						}
 						else if (comparison == 0) {
 							if (ambiguities2 == null) {
-								ambiguities = ambiguities2 = new ArrayList<Operation>();
+								ambiguities = ambiguities2 = new ArrayList<>();
 								ambiguities2.add(bestOperation);
 							}
 							ambiguities2.add(candidateOperation);
@@ -253,22 +240,20 @@ public abstract class AbstractOperationMatcher
 	}
 
 	protected boolean isRedefinitionOf(@NonNull Operation operation1, @NonNull Operation operation2) {
-		List<Operation> redefinedOperations = operation1.getRedefinedOperations();
-		for (Operation redefinedOperation : redefinedOperations) {
-			if (redefinedOperation != null) {
-				if (redefinedOperation == operation2) {
-					return true;
-				}
-				if (isRedefinitionOf(redefinedOperation, operation2)) {
-					return true;
-				}
+		Iterable<@NonNull Operation> redefinedOperations = PivotUtil.getRedefinedOperations(operation1);
+		for (@NonNull Operation redefinedOperation : redefinedOperations) {
+			if (redefinedOperation == operation2) {
+				return true;
+			}
+			if (isRedefinitionOf(redefinedOperation, operation2)) {
+				return true;
 			}
 		}
 		return false;
 	}
 
 	protected @Nullable TemplateParameterSubstitutions matches(@NonNull Operation candidateOperation, boolean useCoercions) {
-		List<Parameter> candidateParameters = candidateOperation.getOwnedParameters();
+		List<@NonNull Parameter> candidateParameters = PivotUtilInternal.getOwnedParametersList(candidateOperation);
 		int iSize = getArgumentCount();
 		if (iSize != candidateParameters.size()) {
 			return null;
@@ -276,41 +261,36 @@ public abstract class AbstractOperationMatcher
 		TemplateParameterSubstitutions bindings = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, sourceTypeValue, candidateOperation);
 		for (int i = 0; i < iSize; i++) {
 			Parameter candidateParameter = candidateParameters.get(i);
-			if (candidateParameter != null) {
-				OCLExpression expression = getArgument(i);
-				if (expression == null) {
-					return null;
-				}
-				Type candidateType = PivotUtilInternal.getBehavioralType(candidateParameter);
-				if (candidateType == null) {
-					return null;
-				}
-				Type expressionType = PivotUtilInternal.getBehavioralType(expression);
-				if (expressionType == null) {
-					return null;
-				}
-				if (!metamodelManager.conformsTo(expressionType, TemplateParameterSubstitutions.EMPTY, candidateType, bindings)) {
-					boolean coerceable = false;
-					if (useCoercions) {
-						CompleteClass completeClass = metamodelManager.getCompleteClass(expressionType);
-						for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
-							if (partialClass instanceof PrimitiveType) {
-								for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {
-									Type corcedSourceType = coercion.getType();
-									if ((corcedSourceType != null) && metamodelManager.conformsTo(corcedSourceType, TemplateParameterSubstitutions.EMPTY, candidateType, TemplateParameterSubstitutions.EMPTY)) {
-										coerceable = true;
-										break;
-									}
-								}
-								if (coerceable) {
+			OCLExpression expression = getArgument(i);
+			Type candidateType = PivotUtilInternal.getBehavioralType(candidateParameter);
+			if (candidateType == null) {
+				return null;
+			}
+			Type expressionType = PivotUtilInternal.getBehavioralType(expression);
+			if (expressionType == null) {
+				return null;
+			}
+			if (!metamodelManager.conformsTo(expressionType, TemplateParameterSubstitutions.EMPTY, candidateType, bindings)) {
+				boolean coerceable = false;
+				if (useCoercions) {
+					CompleteClass completeClass = metamodelManager.getCompleteClass(expressionType);
+					for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
+						if (partialClass instanceof PrimitiveType) {
+							for (Operation coercion : ((PrimitiveType)partialClass).getCoercions()) {
+								Type corcedSourceType = coercion.getType();
+								if ((corcedSourceType != null) && metamodelManager.conformsTo(corcedSourceType, TemplateParameterSubstitutions.EMPTY, candidateType, TemplateParameterSubstitutions.EMPTY)) {
+									coerceable = true;
 									break;
 								}
 							}
+							if (coerceable) {
+								break;
+							}
 						}
 					}
-					if (!coerceable) {
-						return null;
-					}
+				}
+				if (!coerceable) {
+					return null;
 				}
 			}
 		}

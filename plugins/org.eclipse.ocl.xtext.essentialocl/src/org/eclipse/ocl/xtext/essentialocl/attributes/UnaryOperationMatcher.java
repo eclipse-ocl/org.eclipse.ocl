@@ -24,12 +24,12 @@ public class UnaryOperationMatcher extends AbstractOperationMatcher
 	}
 
 	@Override
-	protected OCLExpression getArgument(int i) {
+	public @NonNull OCLExpression getArgument(int i) {
 		throw new IllegalStateException();
 	}
 
 	@Override
-	protected int getArgumentCount() {
+	public int getArgumentCount() {
 		return 0;
 	}
 }

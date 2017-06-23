@@ -16,20 +16,21 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.essentialoclcs.ExpCS;
 
 public class BinaryOperationMatcher extends AbstractOperationMatcher
 {
-	protected final OCLExpression asArgument;
-	
+	protected final @NonNull OCLExpression asArgument;
+
 	public BinaryOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue, @Nullable ExpCS csArgument) {
 		super(environmentFactory, sourceType, sourceTypeValue);
-		this.asArgument = PivotUtil.getPivot(OCLExpression.class, csArgument);
+		this.asArgument = ClassUtil.nonNullState(PivotUtil.getPivot(OCLExpression.class, csArgument));
 	}
 
 	@Override
-	protected OCLExpression getArgument(int i) {
+	public @NonNull OCLExpression getArgument(int i) {
 		if (i != 0) {
 			throw new IllegalStateException();
 		}
@@ -37,7 +38,7 @@ public class BinaryOperationMatcher extends AbstractOperationMatcher
 	}
 
 	@Override
-	protected int getArgumentCount() {
+	public int getArgumentCount() {
 		return 1;
 	}
 }
