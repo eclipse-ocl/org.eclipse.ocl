@@ -256,7 +256,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <T> T1 caseBag(Bag<T> object) {
+	public <T extends Object> T1 caseBag(Bag<T> object) {
 		return null;
 	}
 
@@ -271,7 +271,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <T> T1 caseCollection(Collection<T> object) {
+	public <T extends Object> T1 caseCollection(Collection<T> object) {
 		return null;
 	}
 
@@ -511,7 +511,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <T> T1 caseOrderedCollection(Collection<T> object) {
+	public <T extends Object> T1 caseOrderedCollection(Collection<T> object) {
 		return null;
 	}
 
@@ -526,7 +526,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <T> T1 caseOrderedSet(OrderedSet<T> object) {
+	public <T extends Object> T1 caseOrderedSet(OrderedSet<T> object) {
 		return null;
 	}
 
@@ -541,7 +541,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <T> T1 caseSequence(List<T> object) {
+	public <T extends Object> T1 caseSequence(List<T> object) {
 		return null;
 	}
 
@@ -556,7 +556,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <T> T1 caseSet(Set<T> object) {
+	public <T extends Object> T1 caseSet(Set<T> object) {
 		return null;
 	}
 
@@ -571,7 +571,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public <T> T1 caseUniqueCollection(Collection<T> object) {
+	public <T extends Object> T1 caseUniqueCollection(Collection<T> object) {
 		return null;
 	}
 

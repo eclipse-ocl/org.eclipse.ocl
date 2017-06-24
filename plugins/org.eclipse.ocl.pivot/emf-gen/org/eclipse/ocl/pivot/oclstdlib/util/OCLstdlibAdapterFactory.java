@@ -83,11 +83,11 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	protected OCLstdlibSwitch<@Nullable Adapter> modelSwitch =
 			new OCLstdlibSwitch<@Nullable Adapter>() {
 		@Override
-		public <T> Adapter caseBag(Bag<T> object) {
+		public <T extends Object> Adapter caseBag(Bag<T> object) {
 			return createBagAdapter();
 		}
 		@Override
-		public <T> Adapter caseCollection(Collection<T> object) {
+		public <T extends Object> Adapter caseCollection(Collection<T> object) {
 			return createCollectionAdapter();
 		}
 		@Override
@@ -151,23 +151,23 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 			return createOclVoidAdapter();
 		}
 		@Override
-		public <T> Adapter caseOrderedCollection(Collection<T> object) {
+		public <T extends Object> Adapter caseOrderedCollection(Collection<T> object) {
 			return createOrderedCollectionAdapter();
 		}
 		@Override
-		public <T> Adapter caseOrderedSet(OrderedSet<T> object) {
+		public <T extends Object> Adapter caseOrderedSet(OrderedSet<T> object) {
 			return createOrderedSetAdapter();
 		}
 		@Override
-		public <T> Adapter caseSequence(List<T> object) {
+		public <T extends Object> Adapter caseSequence(List<T> object) {
 			return createSequenceAdapter();
 		}
 		@Override
-		public <T> Adapter caseSet(Set<T> object) {
+		public <T extends Object> Adapter caseSet(Set<T> object) {
 			return createSetAdapter();
 		}
 		@Override
-		public <T> Adapter caseUniqueCollection(Collection<T> object) {
+		public <T extends Object> Adapter caseUniqueCollection(Collection<T> object) {
 			return createUniqueCollectionAdapter();
 		}
 		@Override

@@ -4,7 +4,9 @@
   <eAnnotations source="http://www.eclipse.org/OCL/ASLibrary"/>
   <eClassifiers xsi:type="ecore:EClass" name="Bag" instanceClassName="org.eclipse.ocl.pivot.values.Bag"
       abstract="true" interface="true">
-    <eTypeParameters name="T"/>
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//OclType"/>
+    </eTypeParameters>
     <eGenericSuperTypes eClassifier="#//Collection">
       <eTypeArguments eTypeParameter="#//Bag/T"/>
     </eGenericSuperTypes>
@@ -12,12 +14,14 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean"/>
   <eClassifiers xsi:type="ecore:EClass" name="Collection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
-    <eTypeParameters name="T"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elementType" lowerBound="1">
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//OclType"/>
+    </eTypeParameters>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elementType" lowerBound="1"
+        eType="#//OclType">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Evaluates to the type of the collection elements.&#xA;"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Collection/T"/>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lower" lowerBound="1" eType="#//Integer">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -94,14 +98,18 @@
       abstract="true" interface="true" eSuperTypes="#//OclAny"/>
   <eClassifiers xsi:type="ecore:EClass" name="OrderedCollection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
-    <eTypeParameters name="T"/>
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//OclType"/>
+    </eTypeParameters>
     <eGenericSuperTypes eClassifier="#//Collection">
       <eTypeArguments eTypeParameter="#//OrderedCollection/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrderedSet" instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet"
       abstract="true" interface="true">
-    <eTypeParameters name="T"/>
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//OclType"/>
+    </eTypeParameters>
     <eGenericSuperTypes eClassifier="#//OrderedCollection">
       <eTypeArguments eTypeParameter="#//OrderedSet/T"/>
     </eGenericSuperTypes>
@@ -112,14 +120,18 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Real" instanceClassName="org.eclipse.ocl.pivot.values.RealValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="Sequence" instanceClassName="java.util.List"
       abstract="true" interface="true">
-    <eTypeParameters name="T"/>
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//OclType"/>
+    </eTypeParameters>
     <eGenericSuperTypes eClassifier="#//OrderedCollection">
       <eTypeArguments eTypeParameter="#//Sequence/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Set" instanceClassName="java.util.Set"
       abstract="true" interface="true">
-    <eTypeParameters name="T"/>
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//OclType"/>
+    </eTypeParameters>
     <eGenericSuperTypes eClassifier="#//UniqueCollection">
       <eTypeArguments eTypeParameter="#//Set/T"/>
     </eGenericSuperTypes>
@@ -127,7 +139,9 @@
   <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String"/>
   <eClassifiers xsi:type="ecore:EClass" name="UniqueCollection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
-    <eTypeParameters name="T"/>
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//OclType"/>
+    </eTypeParameters>
     <eGenericSuperTypes eClassifier="#//Collection">
       <eTypeArguments eTypeParameter="#//UniqueCollection/T"/>
     </eGenericSuperTypes>

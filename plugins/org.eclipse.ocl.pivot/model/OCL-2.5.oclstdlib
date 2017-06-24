@@ -96,7 +96,7 @@ A bag is a collection with duplicates allowed. That is, one object can be an ele
 There is no ordering defined on the elements in a bag.
 Bag is itself an instance of the metatype BagType.
 **/
-type Bag(T) : BagType conformsTo Collection(T) {
+type Bag(T extends OclType) : BagType conformsTo Collection(T) {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
@@ -352,7 +352,7 @@ Well-formedness rules
 	context Collection
 	inv: self->forAll(not oclIsInvalid())
 */
-abstract type Collection(T) : CollectionType conformsTo OclAny {
+abstract type Collection(T extends OclType) : CollectionType conformsTo OclAny {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	Returns any element in the e[source] collection for which e[body] evaluates to oclText[true].
@@ -539,7 +539,7 @@ abstract type Collection(T) : CollectionType conformsTo OclAny {
 	/**
 	Evaluates to the type of the collection elements.
 	**/
-	static property elementType : T[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty';
+	static property elementType : OclType[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty';
 	/**
 	Evaluates to the lower bound on the number of collection elements.
 	**/
@@ -743,8 +743,8 @@ type Map(K,V) : MapType conformsTo OclAny {
 	static property valueType : V => 'org.eclipse.ocl.pivot.library.map.MapValueTypeProperty';
 }
 
-	/**
-	The number of elements in the collection oclText[self].essions.
+/**
+The number of elements in the collection oclText[self].essions.
 OclAny is itself an instance of the metatype AnyType.
 
 All classes in a UML model inherit all operations defined on OclAny.
@@ -867,23 +867,23 @@ abstract type OclComparable conformsTo OclAny {
 
 	The compareTo operation should be commutative.
 	*/
-	operation compareTo(that : OclSelf) : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation';	
+	operation compareTo(that : OclSelf[1]) : Integer[1] => 'org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation';	
 	/**
 	True if oclText[self] is greater than oclText[that].
 	**/
-	operation ">"(that : OclSelf) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation';
+	operation ">"(that : OclSelf[1]) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation';
 	/**
 	True if oclText[self] is less than oclText[that].
 	**/
-	operation "<"(that : OclSelf) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation';
+	operation "<"(that : OclSelf[1]) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation';
 	/**
 	True if oclText[self] is less than or equal to oclText[that].
 	**/
-	operation "<="(that : OclSelf) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation';
+	operation "<="(that : OclSelf[1]) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation';
 	/**
 	True if oclText[self] is greater than or equal to oclText[that].
 	**/
-	operation ">="(that : OclSelf) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation';
+	operation ">="(that : OclSelf[1]) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation';
 }
 
 /**
@@ -1162,7 +1162,7 @@ The OrderedCollection type provides the shared functionality of the OrderedSet a
 collections for which the elements are ordered.
 The common supertype of OrderedCollection is Collection.
 **/
-abstract type OrderedCollection(T) : CollectionType conformsTo Collection(T) {
+abstract type OrderedCollection(T extends OclType) : CollectionType conformsTo Collection(T) {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	The i-th element of ordered collection.
@@ -1188,7 +1188,7 @@ It contains no duplicates. OrderedSet is itself an instance of the metatype Orde
 An OrderedSet is not a subtype of Set, neither a subtype of Sequence.
 The common supertype of Sets and OrderedSets is Collection.
 **/
-type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollection(T) {
+type OrderedSet(T extends OclType) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollection(T) {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
@@ -1347,7 +1347,7 @@ Sequence is itself an instance of the metatype SequenceType.
 A Sentence is not a subtype of Bag.
 The common supertype of Sentence and Bags is Collection.
 **/
-type Sequence(T) : SequenceType conformsTo OrderedCollection(T) {
+type Sequence(T extends OclType) : SequenceType conformsTo OrderedCollection(T) {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
@@ -1430,7 +1430,7 @@ type Sequence(T) : SequenceType conformsTo OrderedCollection(T) {
 	operation subSequence(lower : Integer, upper : Integer) : Sequence(T) invalidating => 'org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation';
 }
 
-type Set(T) : SetType conformsTo UniqueCollection(T) {
+type Set(T extends OclType) : SetType conformsTo UniqueCollection(T) {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	The closure of applying body transitively to every distinct element of the source collection.
@@ -1517,7 +1517,7 @@ type String : PrimitiveType conformsTo OclComparable, OclSummable {
 	/**
 	The comparison of oclText[self] with oclText[that]. -ve if less than, 0 if equal, +ve if greater than.
 	**/ 
-	operation compareTo(that : OclSelf) : Integer[1]  => 'org.eclipse.ocl.pivot.library.string.StringCompareToOperation';	
+	operation compareTo(that : OclSelf[1]) : Integer[1]  => 'org.eclipse.ocl.pivot.library.string.StringCompareToOperation';	
 	/**
 	The concatenation of oclText[self] and s.
 	**/
@@ -1630,19 +1630,19 @@ type String : PrimitiveType conformsTo OclComparable, OclSummable {
 	/**
 	True if oclText[self] is greater than s, using the locale defined by looking up oclLocale in the current environment.
 	**/
-	operation ">"(s : OclSelf) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.string.StringGreaterThanOperation';
+	operation ">"(s : OclSelf[1]) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.string.StringGreaterThanOperation';
 	/**
 	True if oclText[self] is less than s, using the locale defined by looking up oclLocale in the current environment.
 	**/
-	operation "<"(s : OclSelf) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.string.StringLessThanOperation';
+	operation "<"(s : OclSelf[1]) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.string.StringLessThanOperation';
 	/**
 	True if oclText[self] is less than or equal to s, using the locale defined by looking up oclLocale in the current environment.
 	**/
-	operation "<="(s : OclSelf) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation';
+	operation "<="(s : OclSelf[1]) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation';
 	/**
 	True if oclText[self] is greater than or equal to s, using the locale defined by looking up oclLocale in the current environment.
 	**/
-	operation ">="(s : OclSelf) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation';
+	operation ">="(s : OclSelf[1]) : Boolean[1] precedence=RELATIONAL => 'org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation';
 }
 
 /**
@@ -1661,7 +1661,7 @@ The UniqueCollection type provides the shared functionality of the OrderedSet an
 collections for which the elements are unique.
 The common supertype of UniqueCollection is Collection.
 **/
-abstract type UniqueCollection(T) : CollectionType conformsTo Collection(T) {
+abstract type UniqueCollection(T extends OclType) : CollectionType conformsTo Collection(T) {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
 	/**
 	Results in the ordered set containing all elements of the source collection.

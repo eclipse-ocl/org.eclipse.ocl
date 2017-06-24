@@ -1097,6 +1097,8 @@ public class OCLstdlibTables
 		public static final @NonNull ExecutorProperty _OclElement__oclContents = new ExecutorPropertyWithImplementation("oclContents", Types._OclElement, 1, org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _OclElement__OclElement__oclContainer = new ExecutorPropertyWithImplementation("OclElement", Types._OclElement, 2, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER));
 		public static final @NonNull ExecutorProperty _OclElement__OclElement__oclContents = new ExecutorPropertyWithImplementation("OclElement", Types._OclElement, 3, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTENTS));
+
+		public static final @NonNull ExecutorProperty _OclType__Collection__elementType = new ExecutorPropertyWithImplementation("Collection", Types._OclType, 0, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.COLLECTION__ELEMENT_TYPE));
 		static {
 			Init.initEnd();
 		}
@@ -1583,11 +1585,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Integer__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Integer__OclComparable = {
-			OCLstdlibTables.Operations._OclComparable___lt_ /* _'<'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[?]) */
+			OCLstdlibTables.Operations._OclComparable___lt_ /* _'<'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Integer__OclSummable = {
 			OCLstdlibTables.Operations._OclSummable__sum /* sum(OclSelf[?]) */,
@@ -1672,11 +1674,11 @@ public class OCLstdlibTables
 		};
 
 		private static final @NonNull ExecutorOperation @NonNull [] _OclComparable__OclComparable = {
-			OCLstdlibTables.Operations._OclComparable___lt_ /* _'<'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[?]) */
+			OCLstdlibTables.Operations._OclComparable___lt_ /* _'<'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclComparable__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
@@ -2218,11 +2220,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Real__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Real__OclComparable = {
-			OCLstdlibTables.Operations._OclComparable___lt_ /* _'<'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[?]) */
+			OCLstdlibTables.Operations._OclComparable___lt_ /* _'<'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Real__OclSummable = {
 			OCLstdlibTables.Operations._OclSummable__sum /* sum(OclSelf[?]) */,
@@ -2407,15 +2409,15 @@ public class OCLstdlibTables
 
 		private static final @NonNull ExecutorOperation @NonNull [] _String__String = {
 			OCLstdlibTables.Operations._String___add_ /* _'+'(String[?]) */,
-			OCLstdlibTables.Operations._String___lt_ /* _'<'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._String___lt__eq_ /* _'<='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._String___lt_ /* _'<'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._String___lt__eq_ /* _'<='(OclSelf[1]) */,
 			OCLstdlibTables.Operations._String___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._String___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._String___gt_ /* _'>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._String___gt__eq_ /* _'>='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._String___gt_ /* _'>'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._String___gt__eq_ /* _'>='(OclSelf[1]) */,
 			OCLstdlibTables.Operations._String__at /* at(Integer[?]) */,
 			OCLstdlibTables.Operations._String__characters /* characters() */,
-			OCLstdlibTables.Operations._String__compareTo /* compareTo(OclSelf[?]) */,
+			OCLstdlibTables.Operations._String__compareTo /* compareTo(OclSelf[1]) */,
 			OCLstdlibTables.Operations._String__concat /* concat(String[?]) */,
 			OCLstdlibTables.Operations._String__endsWith /* endsWith(String[?]) */,
 			OCLstdlibTables.Operations._String__equalsIgnoreCase /* equalsIgnoreCase(String[?]) */,
@@ -2460,11 +2462,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._String__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _String__OclComparable = {
-			OCLstdlibTables.Operations._String___lt_ /* _'<'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._String___lt__eq_ /* _'<='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._String___gt_ /* _'>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._String___gt__eq_ /* _'>='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._String__compareTo /* compareTo(OclSelf[?]) */
+			OCLstdlibTables.Operations._String___lt_ /* _'<'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._String___lt__eq_ /* _'<='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._String___gt_ /* _'>'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._String___gt__eq_ /* _'>='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._String__compareTo /* compareTo(OclSelf[1]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _String__OclSummable = {
 			OCLstdlibTables.Operations._OclSummable__sum /* sum(OclSelf[?]) */,
@@ -2563,11 +2565,11 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _UnlimitedNatural__OclComparable = {
-			OCLstdlibTables.Operations._OclComparable___lt_ /* _'<'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[?]) */
+			OCLstdlibTables.Operations._OclComparable___lt_ /* _'<'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
 		};
 
 		/*

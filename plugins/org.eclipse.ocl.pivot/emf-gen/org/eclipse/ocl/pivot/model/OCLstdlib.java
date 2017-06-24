@@ -374,6 +374,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull BagType _Bag_Bag_selectByKind_TT_NullFree = createBagType(_Bag_Bag_T, tp_Bag_selectByKind_TT);
 		private final @NonNull BagType _Bag_Bag_selectByType_TT_NullFree = createBagType(_Bag_Bag_T, tp_Bag_selectByType_TT);
 		private final @NonNull BagType _Bag_Collection_T_NullFree = createBagType(_Bag_Bag_T, tp_Collection_T);
+		private final @NonNull BagType _Bag_Collection = createBagType(_Bag_Bag_T, _Collection_Collection_T);
 		private final @NonNull BagType _Bag_Enumeration = createBagType(_Bag_Bag_T, _Enumeration);
 		private final @NonNull BagType _Bag_Map_V_NullFree = createBagType(_Bag_Bag_T, tp_Map_V);
 		private final @NonNull BagType _Bag_OclElement = createBagType(_Bag_Bag_T, _OclElement);
@@ -399,6 +400,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_Collection_selectByKind_TT_NullFree = createCollectionType(_Collection_Collection_T, tp_Collection_selectByKind_TT);
 		private final @NonNull CollectionType _Collection_Collection_selectByType_TT_NullFree = createCollectionType(_Collection_Collection_T, tp_Collection_selectByType_TT);
 		private final @NonNull CollectionType _Collection_Collection_T_1 = createCollectionType(_Collection_Collection_T, tp_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection = createCollectionType(_Collection_Collection_T, _Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_EnumerationLiteral = createCollectionType(_Collection_Collection_T, _EnumerationLiteral);
 		private final @NonNull CollectionType _Collection_Enumeration = createCollectionType(_Collection_Collection_T, _Enumeration);
 		private final @NonNull CollectionType _Collection_Map_excludesAll_K2_NullFree = createCollectionType(_Collection_Collection_T, tp_Map_excludesAll_K2);
@@ -662,6 +664,9 @@ public class OCLstdlib extends ASResourceImpl
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Collection_T_1);
+			ownedClasses.add(type = _Bag_Collection);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_Collection);
 			ownedClasses.add(type = _Bag_Enumeration);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Enumeration);
@@ -747,6 +752,9 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_Collection_T_1);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type = _Collection_Collection);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_EnumerationLiteral);
@@ -1697,10 +1705,10 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("s", _String, false));
 			ownedOperations.add(operation = op_String__lt_);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("s", _OclSelf, false));
+			ownedParameters.add(parameter = createParameter("s", _OclSelf, true));
 			ownedOperations.add(operation = op_String__lt__eq_);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("s", _OclSelf, false));
+			ownedParameters.add(parameter = createParameter("s", _OclSelf, true));
 			ownedOperations.add(operation = op_String__lt__gt_);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -1709,10 +1717,10 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
 			ownedOperations.add(operation = op_String__gt_);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("s", _OclSelf, false));
+			ownedParameters.add(parameter = createParameter("s", _OclSelf, true));
 			ownedOperations.add(operation = op_String__gt__eq_);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("s", _OclSelf, false));
+			ownedParameters.add(parameter = createParameter("s", _OclSelf, true));
 			ownedOperations.add(operation = op_String_at);
 			operation.setIsInvalidating(true);
 			ownedParameters = operation.getOwnedParameters();
@@ -1720,7 +1728,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_String_characters);
 			ownedOperations.add(operation = op_String_compareTo);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("that", _OclSelf, false));
+			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
 			ownedOperations.add(operation = op_String_concat);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("s", _String, false));
@@ -2019,19 +2027,19 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations = _OclComparable.getOwnedOperations();
 			ownedOperations.add(operation = op_OclComparable__lt_);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("that", _OclSelf, false));
+			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
 			ownedOperations.add(operation = op_OclComparable__lt__eq_);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("that", _OclSelf, false));
+			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
 			ownedOperations.add(operation = op_OclComparable__gt_);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("that", _OclSelf, false));
+			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
 			ownedOperations.add(operation = op_OclComparable__gt__eq_);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("that", _OclSelf, false));
+			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
 			ownedOperations.add(operation = op_OclComparable_compareTo);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("that", _OclSelf, false));
+			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
 
 			ownedOperations = _OclElement.getOwnedOperations();
 			ownedOperations.add(operation = op_OclElement_allInstances);
@@ -2603,7 +2611,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedCoercions.add(coercion = op_Integer_toUnlimitedNatural);
 		}
 
-		private final @NonNull Property pr_Collection_elementType = createProperty("elementType", tp_Collection_T);
+		private final @NonNull Property pr_Collection_elementType = createProperty("elementType", _OclType);
 		private final @NonNull Property pr_Collection_lower = createProperty("lower", _Integer);
 		private final @NonNull Property pr_Collection_upper = createProperty("upper", _Integer);
 		private final @NonNull Property pr_Enumeration_allLiterals = createProperty("allLiterals", _OrderedSet_EnumerationLiteral_NullFree);
@@ -2616,6 +2624,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Property pr_OclElement_OclElement_oclContainer = createProperty("OclElement", _Bag_OclElement);
 		private final @NonNull Property pr_OclElement_OclElement_oclContents = createProperty("OclElement", _Bag_OclElement);
 		private final @NonNull Property pr_OclEnumeration_allLiterals = createProperty("allLiterals", _OrderedSet_EnumerationLiteral_NullFree);
+		private final @NonNull Property pr_OclType_Collection_elementType = createProperty("Collection", _Bag_Collection);
 
 		private void installProperties() {
 			List<Property> ownedProperties;
@@ -2625,6 +2634,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedProperties.add(property = pr_Collection_elementType);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
+			property.setOpposite(pr_OclType_Collection_elementType);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty.INSTANCE);
 			ownedProperties.add(property = pr_Collection_lower);
@@ -2698,6 +2708,12 @@ public class OCLstdlib extends ASResourceImpl
 			property.setOpposite(pr_EnumerationLiteral_OclEnumeration_allLiterals);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty.INSTANCE);
+
+			ownedProperties = _OclType.getOwnedProperties();
+			ownedProperties.add(property = pr_OclType_Collection_elementType);
+			property.setIsImplicit(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_Collection_elementType);
 		}
 
 		private void installTemplateBindings() {
@@ -2711,6 +2727,8 @@ public class OCLstdlib extends ASResourceImpl
 				createTemplateParameterSubstitution(tp_Bag_T, tp_Bag_selectByKind_TT)));
 			_Bag_Bag_selectByType_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Bag_T, tp_Bag_selectByType_TT)));
+			_Bag_Collection.getOwnedBindings().add(createTemplateBinding(
+				createTemplateParameterSubstitution(tp_Bag_T, _Collection_Collection_T)));
 			_Bag_Collection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Bag_T, tp_Collection_T)));
 			_Bag_Enumeration.getOwnedBindings().add(createTemplateBinding(
@@ -2739,6 +2757,8 @@ public class OCLstdlib extends ASResourceImpl
 				createTemplateParameterSubstitution(tp_Collection_T, tp_Bag_selectByKind_TT)));
 			_Collection_Bag_selectByType_TT.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Collection_T, tp_Bag_selectByType_TT)));
+			_Collection_Collection.getOwnedBindings().add(createTemplateBinding(
+				createTemplateParameterSubstitution(tp_Collection_T, _Collection_Collection_T)));
 			_Collection_Collection_T_1.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Collection_T, tp_Collection_T)));
 			_Collection_Collection_collectNested_V_NullFree.getOwnedBindings().add(createTemplateBinding(
