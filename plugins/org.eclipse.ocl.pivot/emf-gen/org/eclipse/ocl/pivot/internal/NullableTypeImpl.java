@@ -22,6 +22,8 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -31,6 +33,7 @@ import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -115,13 +118,18 @@ public class NullableTypeImpl extends ClassImpl implements NullableType
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setNonNullType(Type newNonNullType)
+	public void setNonNullTypeGen(Type newNonNullType)
 	{
 		Type oldNonNullType = nonNullType;
 		nonNullType = newNonNullType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.NULLABLE_TYPE__NON_NULL_TYPE, oldNonNullType, nonNullType));
+	}
+	@Override
+	public void setNonNullType(Type newNonNullType)
+	{
+		assert !(newNonNullType instanceof VoidType) && !(newNonNullType instanceof InvalidType) && !(newNonNullType instanceof NullableType) && !(newNonNullType instanceof InvalidableType);
+		setNonNullTypeGen(newNonNullType);
 	}
 
 	/**

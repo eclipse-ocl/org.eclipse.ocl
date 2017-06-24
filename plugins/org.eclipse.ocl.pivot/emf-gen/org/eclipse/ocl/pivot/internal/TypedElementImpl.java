@@ -201,13 +201,18 @@ implements TypedElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setIsRequired(boolean newIsRequired)
+	public void setIsRequiredGen(boolean newIsRequired)
 	{
 		boolean oldIsRequired = (eFlags & IS_REQUIRED_EFLAG) != 0;
 		if (newIsRequired) eFlags |= IS_REQUIRED_EFLAG; else eFlags &= ~IS_REQUIRED_EFLAG;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.TYPED_ELEMENT__IS_REQUIRED, oldIsRequired, newIsRequired));
+	}
+	@Override
+	public void setIsRequired(boolean newIsRequired)
+	{
+		//		assert !newIsRequired == ((type instanceof InvalidableType) || (type instanceof NullableType));
+		setIsRequiredGen(newIsRequired);
 	}
 
 	/**

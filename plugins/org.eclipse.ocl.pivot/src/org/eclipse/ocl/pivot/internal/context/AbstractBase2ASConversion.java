@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * AbstractBase2ASConversion provides the Xtext independent support for Concrete Syntax
@@ -214,6 +215,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		}
 	}
 	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {	// FIXME redirect to PivotHelper
+		type = TypeUtil.encodeNullableType(getEnvironmentFactory(), type, isRequired);
 		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
 		if (primaryType != pivotElement.getType()) {
 			pivotElement.setType(primaryType);

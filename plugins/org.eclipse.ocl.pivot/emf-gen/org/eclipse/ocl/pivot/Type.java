@@ -65,9 +65,19 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	@NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary);
 
 	/**
+	 * Return the maybe-invalid, maybe-null form of this type.
+	 */
+	@Nullable InvalidableType getInvalidableType();
+
+	/**
 	 * Return the unique executable form of this type within standardLibrary.
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary);
+
+	/**
+	 * Return the maybe-null form of this type.
+	 */
+	@Nullable NullableType getNullableType();
 
 	/**
 	 * Return a unique StandardLibrary-independent identifier for this type.
@@ -83,7 +93,10 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	/**
 	 * Return true if this is an invalid type (with an associated error message).
 	 */
-//	boolean isInvalid();
+	//	boolean isInvalid();
 
-//	@NonNull Type specializeIn(@NonNull CallExp expr, @Nullable Type selfType);
+	void setInvalidableType(InvalidableType invalidableType);
+	void setNullableType(NullableType nullableType);
+
+	//	@NonNull Type specializeIn(@NonNull CallExp expr, @Nullable Type selfType);
 } // Type

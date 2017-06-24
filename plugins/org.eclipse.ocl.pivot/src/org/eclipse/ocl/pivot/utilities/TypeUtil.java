@@ -18,9 +18,11 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionKind;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
@@ -35,6 +37,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.internal.values.MapTypeParametersImpl;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
@@ -158,6 +161,25 @@ public class TypeUtil
 
 	public static @NonNull TemplateParameters createTemplateParameters(@NonNull List<@NonNull ? extends Type> parameters) {
 		return new TemplateParametersImpl(parameters);
+	}
+
+	public static @Nullable Type decodeNullableType(@Nullable Type type) {
+		if (type instanceof InvalidableType) {
+			type = ((InvalidableType)type).getNonInvalidType();
+		}
+		if (type instanceof NullableType) {
+			type = ((NullableType)type).getNonNullType();
+		}
+		return type;
+	}
+
+	public static @Nullable Type encodeNullableType(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type type, boolean isRequired) {
+		if ((type != null) && !isRequired) {
+			if (!(type instanceof NullableType)) {
+				return environmentFactory.getCompleteModel().getNullableType(type);
+			}
+		}
+		return type;
 	}
 
 	public static @NonNull Type @NonNull [] getLambdaParameterTypes(@NonNull LambdaType lambdaType) {

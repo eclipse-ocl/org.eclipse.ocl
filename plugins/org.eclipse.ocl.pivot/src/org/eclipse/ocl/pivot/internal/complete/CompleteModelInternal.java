@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -17,9 +17,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -52,10 +54,12 @@ public interface CompleteModelInternal extends CompleteModel
 	@Nullable CompletePackageInternal getCompletePackageByURI(@NonNull String packageURI);
 	@NonNull CompleteURIs getCompleteURIs();
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+	@NonNull InvalidableType getInvalidableType(@NonNull Type type);
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
 	@NonNull MapType getMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 	@NonNull PivotMetamodelManager getMetamodelManager();
+	@NonNull NullableType getNullableType(@NonNull Type type);
 	@Override
 	@NonNull OrphanCompletePackageImpl getOrphanCompletePackage();
 	@Override
@@ -64,7 +68,7 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull PrimitiveCompletePackageImpl getPrimitiveCompletePackage();
 	@NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions);
 	@NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
-			@Nullable TemplateParameterSubstitutions bindings);	
+			@Nullable TemplateParameterSubstitutions bindings);
 
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 	void dispose();

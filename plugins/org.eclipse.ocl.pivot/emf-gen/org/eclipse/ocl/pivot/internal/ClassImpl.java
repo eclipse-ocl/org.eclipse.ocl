@@ -39,9 +39,7 @@ import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -1409,28 +1407,5 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public String toString() {
 		return super.toString();
-	}
-
-	private @Nullable InvalidableType invalidableType = null;
-	private @Nullable NullableType nullableType = null;
-
-	@Override
-	public @Nullable InvalidableType getInvalidableType() {
-		return invalidableType;
-	}
-
-	@Override
-	public @Nullable NullableType getNullableType() {
-		return nullableType;
-	}
-
-	@Override
-	public void setInvalidableType(InvalidableType invalidableType) {
-		this.invalidableType = invalidableType;
-	}
-
-	@Override
-	public void setNullableType(NullableType nullableType) {
-		this.nullableType = nullableType;
 	}
 } //ClassImpl

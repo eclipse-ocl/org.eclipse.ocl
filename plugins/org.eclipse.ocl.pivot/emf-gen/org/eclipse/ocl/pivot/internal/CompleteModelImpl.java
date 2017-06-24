@@ -561,7 +561,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return environmentFactory.getMetamodelManager();
 	}
 
-	public @NonNull InvalidableType getInvalidableType(org.eclipse.ocl.pivot.@NonNull Class type) {
+	@Override
+	public @NonNull InvalidableType getInvalidableType(@NonNull Type type) {
 		InvalidableType invalidableType = type.getInvalidableType();
 		if (invalidableType == null) {
 			invalidableType = PivotUtil.createInvalidableType(getNullableType(type));
@@ -571,7 +572,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return invalidableType;
 	}
 
-	public @NonNull NullableType getNullableType(org.eclipse.ocl.pivot.@NonNull Class type) {
+	@Override
+	public @NonNull NullableType getNullableType(@NonNull Type type) {
 		NullableType nullableType = type.getNullableType();
 		if (nullableType == null) {
 			nullableType = PivotUtil.createNullableType(type);

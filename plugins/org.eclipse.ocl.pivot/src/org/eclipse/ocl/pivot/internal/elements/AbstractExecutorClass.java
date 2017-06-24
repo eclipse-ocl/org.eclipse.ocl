@@ -21,8 +21,6 @@ import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.InvalidableType;
-import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -34,9 +32,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 
 public class AbstractExecutorClass extends AbstractExecutorType implements org.eclipse.ocl.pivot.Class
 {
-	private @Nullable InvalidableType invalidableType = null;
-	private @Nullable NullableType nullableType = null;
-
 	public AbstractExecutorClass(@NonNull String name, int flags) {
 		super(name, flags);
 	}
@@ -74,19 +69,9 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
-	public @Nullable InvalidableType getInvalidableType() {
-		return invalidableType;
-	}
-
-	@Override
 	public @NonNull String getMetaTypeName() {
 		return getTypeId().getMetaTypeName();
 		//		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @Nullable NullableType getNullableType() {
-		return nullableType;
 	}
 
 	@Override
@@ -195,11 +180,6 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
-	public void setInvalidableType(InvalidableType invalidableType) {
-		this.invalidableType = invalidableType;
-	}
-
-	@Override
 	public void setIsAbstract(boolean value) {
 		throw new UnsupportedOperationException();
 	}
@@ -217,11 +197,6 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	//	@Override
 	public void setIsSerializable(boolean value) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setNullableType(NullableType nullableType) {
-		this.nullableType = nullableType;
 	}
 
 	@Override

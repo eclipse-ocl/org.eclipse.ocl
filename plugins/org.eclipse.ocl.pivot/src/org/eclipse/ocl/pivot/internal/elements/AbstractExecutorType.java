@@ -16,6 +16,8 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
+import org.eclipse.ocl.pivot.InvalidableType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -30,6 +32,9 @@ import org.eclipse.ocl.pivot.values.OCLValue;
 
 public class AbstractExecutorType extends AbstractInheritance implements Type
 {
+	private @Nullable InvalidableType invalidableType = null;
+	private @Nullable NullableType nullableType = null;
+
 	public AbstractExecutorType(@NonNull String name, int flags) {
 		super(name, flags);
 	}
@@ -87,8 +92,13 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 
 	@Override
 	public @NonNull CompleteInheritance getInheritance( @NonNull StandardLibrary standardLibrary) {
-//		return standardLibrary.getInheritance(this);
+		//		return standardLibrary.getInheritance(this);
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @Nullable InvalidableType getInvalidableType() {
+		return invalidableType;
 	}
 
 	@Override
@@ -104,6 +114,11 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType( @NonNull StandardLibrary standardLibrary) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @Nullable NullableType getNullableType() {
+		return nullableType;
 	}
 
 	@Override
@@ -159,6 +174,16 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 	@Override
 	public int oclHashCode() {
 		return getTypeId().hashCode();
+	}
+
+	@Override
+	public void setInvalidableType(InvalidableType invalidableType) {
+		this.invalidableType = invalidableType;
+	}
+
+	@Override
+	public void setNullableType(NullableType nullableType) {
+		this.nullableType = nullableType;
 	}
 
 	@Override

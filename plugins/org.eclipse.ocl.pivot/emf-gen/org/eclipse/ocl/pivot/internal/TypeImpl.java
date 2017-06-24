@@ -20,6 +20,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteInheritance;
+import org.eclipse.ocl.pivot.InvalidableType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -38,8 +40,8 @@ import org.eclipse.ocl.pivot.values.OCLValue;
  * @generated
  */
 public abstract class TypeImpl
-		extends NamedElementImpl
-		implements Type {
+extends NamedElementImpl
+implements Type {
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -156,7 +158,7 @@ public abstract class TypeImpl
 		if (eTarget instanceof EClass) {
 			EClass eClass = (EClass) eTarget;
 			@SuppressWarnings("null")@NonNull EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
-//			TypeId typeId = IdManager.getTypeId(eClass);
+			//			TypeId typeId = IdManager.getTypeId(eClass);
 			return /*ValuesUtil.createObjectValue(typeId, */element;//);
 		}
 		throw new UnsupportedOperationException();		// FIXME do a lazy AS2Ecore
@@ -167,9 +169,9 @@ public abstract class TypeImpl
 		if (eTarget instanceof EDataType) {
 			EDataType eDataType = (EDataType) eTarget;
 			Object element = eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
-//			TypeId typeId = IdManager.getTypeId(eDataType);
+			//			TypeId typeId = IdManager.getTypeId(eDataType);
 			return /*ValuesUtil.createObjectValue(typeId, */element;//);
-//			return ValuesUtil.valueOf(element);
+			//			return ValuesUtil.valueOf(element);
 		}
 		throw new UnsupportedOperationException();		// FIXME do a lazy AS2Ecore
 	}
@@ -203,10 +205,10 @@ public abstract class TypeImpl
 		return false;
 	}
 
-//	@Override
-//	public boolean isInvalid() {
-//		return false;
-//	}
+	//	@Override
+	//	public boolean isInvalid() {
+	//		return false;
+	//	}
 
 	@Override
 	public boolean oclEquals(@NonNull OCLValue thatValue) {
@@ -223,11 +225,11 @@ public abstract class TypeImpl
 		return getTypeId().hashCode();
 	}
 
-//	@Override
-//	@NonNull
-//	public List<? extends Constraint> getOwnedRule() {
-//		throw new UnsupportedOperationException();		// FIXME
-//	}
+	//	@Override
+	//	@NonNull
+	//	public List<? extends Constraint> getOwnedRule() {
+	//		throw new UnsupportedOperationException();		// FIXME
+	//	}
 
 	public org.eclipse.ocl.pivot.Package getPackage() {
 		throw new UnsupportedOperationException();		// FIXME
@@ -235,5 +237,28 @@ public abstract class TypeImpl
 
 	public @NonNull TemplateParameters getTypeParameters() {
 		throw new UnsupportedOperationException();		// FIXME
+	}
+
+	private @Nullable InvalidableType invalidableType = null;
+	private @Nullable NullableType nullableType = null;
+
+	@Override
+	public @Nullable InvalidableType getInvalidableType() {
+		return invalidableType;
+	}
+
+	@Override
+	public @Nullable NullableType getNullableType() {
+		return nullableType;
+	}
+
+	@Override
+	public void setInvalidableType(InvalidableType invalidableType) {
+		this.invalidableType = invalidableType;
+	}
+
+	@Override
+	public void setNullableType(NullableType nullableType) {
+		this.nullableType = nullableType;
 	}
 } //TypeImpl
