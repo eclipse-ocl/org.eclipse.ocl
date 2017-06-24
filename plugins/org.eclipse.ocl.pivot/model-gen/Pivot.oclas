@@ -563,7 +563,7 @@
     </ownedClasses>
     <ownedClasses xmi:id="T.pivot.LetVariable" name="LetVariable" superClasses="#T.pivot.Variable">
       <ownedInvariants xmi:id="cipivot.LetVariable.CompatibleNullityForInitializer" isCallable="true" name="CompatibleNullityForInitializer">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit?.isRequired = isRequired&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="(ownedInit?.isRequired = isRequired) or (ownedInit?.type.conformsTo(OclVoid))&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="cipivot.LetVariable.CompatibleTypeForInitializer" isCallable="true" name="CompatibleTypeForInitializer">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit &lt;> null implies ownedInit.type?.conformsTo(type)&#xA;"/>

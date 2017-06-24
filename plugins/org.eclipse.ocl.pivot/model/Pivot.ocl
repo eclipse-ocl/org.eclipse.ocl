@@ -260,7 +260,7 @@ inv HasInitializer: ownedInit <> null
 /** The type of a Let variable initializer expression conforms to the type of the Let variable. */
 inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit.type?.conformsTo(type)
 /** The nullity of a Let variable initializer expression is the nullity of the Let variable. */
-inv CompatibleNullityForInitializer: ownedInit?.isRequired = isRequired
+inv CompatibleNullityForInitializer: (ownedInit?.isRequired = isRequired) or (ownedInit?.type.conformsTo(OclVoid))
 
 /** LiteralExp
 No additional well-formedness rules. */

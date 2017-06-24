@@ -88,8 +88,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		}
 	}
 
-	private @NonNull Map<org.eclipse.ocl.pivot.Class, WeakReference<OrphanCompleteClassImpl>> class2orphanCompleteClass
-	= new WeakHashMap<org.eclipse.ocl.pivot.Class, WeakReference<OrphanCompleteClassImpl>>();
+	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull WeakReference<@NonNull OrphanCompleteClassImpl>> class2orphanCompleteClass = new WeakHashMap<>();
 
 	protected OrphanCompletePackageImpl()
 	{
@@ -132,7 +131,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-		WeakReference<OrphanCompleteClassImpl> ref = class2orphanCompleteClass.get(type);
+		WeakReference<@NonNull OrphanCompleteClassImpl> ref = class2orphanCompleteClass.get(type);
 		if (ref != null) {
 			OrphanCompleteClassImpl orphanCompleteClass = ref.get();
 			if (orphanCompleteClass != null) {
@@ -143,7 +142,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		OrphanCompleteClassImpl completeClass = new OrphanCompleteClassImpl();
 		completeClass.setName(orphanClass.getName());
 		completeClass.getPartialClasses().add(orphanClass);
-		class2orphanCompleteClass.put(orphanClass, new WeakReference<OrphanCompleteClassImpl>(completeClass));
+		class2orphanCompleteClass.put(orphanClass, new WeakReference<>(completeClass));
 		return completeClass;
 	}
 

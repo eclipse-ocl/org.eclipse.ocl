@@ -746,7 +746,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		Property oclInvalidProperty = standardLibrary.getOclInvalidProperty();
 		PropertyCallExp expression = refreshPropertyCallExp(csNameExp, sourceExp, oclInvalidProperty);
-		context.setType(expression, standardLibrary.getOclInvalidType(), false, null);
+		context.setType(expression, standardLibrary.getOclInvalidType(), true, null);
 		ElementUtil.setLastPathElement(ownedPathName, oclInvalidProperty);
 		return expression;
 	}
@@ -839,7 +839,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			ElementUtil.setLastPathElement(csPathName, oclInvalidOperation);
 		}
 		context.installPivotUsage(csNameExp, operationCallExp);
-		context.setType(operationCallExp, standardLibrary.getOclInvalidType(), false, null);
+		context.setType(operationCallExp, standardLibrary.getOclInvalidType(), true, null);
 		return operationCallExp;
 	}
 
@@ -1214,7 +1214,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			Operation oclInvalidOperation = standardLibrary.getOclInvalidOperation();
 			context.setReferredOperation(expression, oclInvalidOperation);
 			//			ElementUtil.setLastPathElement(csPathName, oclInvalidOperation);
-			context.setType(expression, standardLibrary.getOclInvalidType(), false, null);
+			context.setType(expression, standardLibrary.getOclInvalidType(), true, null);
 		}
 	}
 
@@ -2000,7 +2000,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	public Element visitNullLiteralExpCS(@NonNull NullLiteralExpCS csNullLiteralExp) {
 		NullLiteralExp expression = PivotUtil.getPivot(NullLiteralExp.class, csNullLiteralExp);
 		if (expression != null) {
-			context.setType(expression, standardLibrary.getOclVoidType(), false, null);
+			context.setType(expression, standardLibrary.getOclVoidType(), true, null);
 		}
 		return expression;
 	}

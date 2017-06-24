@@ -76,17 +76,17 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 {
 	private static final long serialVersionUID = 1L;
 	public static final @NonNull TracingOption PARTIAL_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses");
-//	static { PARTIAL_CLASSES.setState(true); }
+	//	static { PARTIAL_CLASSES.setState(true); }
 
 	public static final @NonNull TracingOption ADD_BASE_PROPERTY = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses/addBaseProperty");
 	public static final @NonNull TracingOption ADD_EXTENSION_PROPERTY = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses/addExtensionProperty");
-	public static final @NonNull TracingOption INIT_MEMBER_OPERATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses/initMemberOperations");	
+	public static final @NonNull TracingOption INIT_MEMBER_OPERATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses/initMemberOperations");
 	public static final @NonNull TracingOption INIT_MEMBER_PROPERTIES = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses/initMemberProperties");
 
-/*	protected static class QualifiedName2DomainInheritance implements Function<String, DomainInheritance>
+	/*	protected static class QualifiedName2DomainInheritance implements Function<String, DomainInheritance>
 	{
 		protected final @NonNull Map<String, DomainInheritance> name2superclasses;
-		
+
 		protected QualifiedName2DomainInheritance(@NonNull Map<String, DomainInheritance> name2superclasses) {
 			this.name2superclasses = name2superclasses;
 		}
@@ -102,10 +102,10 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	private @Nullable Map<@NonNull String, @NonNull PartialOperations> name2partialOperations = null;
 
 	/**
-	 * Lazily created map from property name to the list of properties to be treated as merged. 
+	 * Lazily created map from property name to the list of properties to be treated as merged.
 	 */
 	private @Nullable Map<@NonNull String, @NonNull PartialProperties> name2partialProperties = null;
-	
+
 	private Set<@NonNull CompleteClassInternal> superCompleteClasses = null;
 
 	/**
@@ -114,16 +114,16 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	 * including this class share a name, all superclasses are mapped by qualified name, and the
 	 * name2qualifiedNames provides an additional mapping of the ambiguities.
 	 */
-//	private @Nullable Map<String, DomainInheritance> name2superclasses = null;		// FIXME duplicates superCompleteClasses
+	//	private @Nullable Map<String, DomainInheritance> name2superclasses = null;		// FIXME duplicates superCompleteClasses
 
 	/**
 	 * Lazily created map from class name to the list of qualified names for same-named super-classes.
 	 * This list is only non-null if a class has two same-named superclasses that need disambiguation..
 	 */
-//	private @Nullable Map<String, List<String>> name2qualifiedNames = null;
+	//	private @Nullable Map<String, List<String>> name2qualifiedNames = null;
 
 	/**
-	 * Lazily created map from state name to the known state. 
+	 * Lazily created map from state name to the known state.
 	 */
 	private @Nullable Map<@NonNull String, @NonNull State> name2states = null;
 
@@ -135,7 +135,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	 * The specializations are weakly referenced so that stale specializations are garbage collected.
 	 */
 	// FIXME tests fail if keys are weak since GC is too aggressive across tests
-	// The actual types are weak keys so that parameterizations using stale types are garbage collected. 
+	// The actual types are weak keys so that parameterizations using stale types are garbage collected.
 	//
 	private @Nullable /*WeakHash*/Map<TemplateParameters, WeakReference<org.eclipse.ocl.pivot.Class>> specializations = null;
 
@@ -220,7 +220,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
 		EClass eClass = unspecializedType.eClass();
 		EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-		org.eclipse.ocl.pivot.Class specializedType = (org.eclipse.ocl.pivot.Class) eFactoryInstance.create(eClass);		
+		org.eclipse.ocl.pivot.Class specializedType = (org.eclipse.ocl.pivot.Class) eFactoryInstance.create(eClass);
 		specializedType.setName(typeName);
 		TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
 		for (int i = 0; i < templateParameters.size(); i++) {
@@ -236,11 +236,11 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		}
 		specializedType.getOwnedBindings().add(templateBinding);
 		getCompleteModel().resolveSuperClasses(specializedType, unspecializedType);
-//		if (specializedType instanceof Metaclass) {
-//			Type instanceType = (Type) templateArguments.get(0);
-//			Metaclass specializedMetaclass = (Metaclass)specializedType;
-//			specializedMetaclass.setInstanceType(instanceType);
-//		}
+		//		if (specializedType instanceof Metaclass) {
+		//			Type instanceType = (Type) templateArguments.get(0);
+		//			Metaclass specializedMetaclass = (Metaclass)specializedType;
+		//			specializedMetaclass.setInstanceType(instanceType);
+		//		}
 		specializedType.setUnspecializedElement(unspecializedType);
 		PivotMetamodelManager metamodelManager = getCompleteModel().getMetamodelManager();
 		Orphanage orphanage = Orphanage.getOrphanage(metamodelManager.getASResourceSet());
@@ -256,12 +256,12 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (partialClass.getUnspecializedElement() == null) {
 			getCompleteModel().didAddClass(partialClass, getCompleteClass());
 		}
-//		if (name2partialProperties != null) {
-//			doRefreshPartialProperties(partialClass);
-//		}
-//		if (name2partialOperations != null) {
-//			doRefreshPartialOperations(partialClass);
-//		}
+		//		if (name2partialProperties != null) {
+		//			doRefreshPartialProperties(partialClass);
+		//		}
+		//		if (name2partialOperations != null) {
+		//			doRefreshPartialOperations(partialClass);
+		//		}
 		dispose();			// Force lazy recomputation
 	}
 
@@ -365,7 +365,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			name2partialProperties2.clear();
 			name2partialProperties = null;
 		}
-//		name2superclasses = null;
+		//		name2superclasses = null;
 		superCompleteClasses = null;
 	}
 
@@ -478,9 +478,9 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 					@Override
 					public void remove() {
 						throw new UnsupportedOperationException();
-					}					
+					}
 				};
-			}			
+			}
 		};
 	}
 
@@ -513,7 +513,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		}
 		return partialOperations.getOperation(pivotOperation.getParametersId(), pivotOperation.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC);
 	}
-	
+
 	public @NonNull Iterable<String> getOperationNames() {
 		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
@@ -547,7 +547,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		}
 		return partialOperations.getOperationOverloads(featureFilter);
 	}
-	
+
 	public @NonNull Iterable<@NonNull Operation> getOperations() {
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
@@ -572,12 +572,12 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		}
 		@NonNull Iterable<@NonNull Operation> subItOps = Iterables.filter(itOps,
 			new Predicate<@NonNull Operation>()
-			{
-				@Override
-				public boolean apply(@NonNull Operation domainOperation) {
-					return featureFilter.accept(domainOperation);
-				}
-			});
+		{
+			@Override
+			public boolean apply(@NonNull Operation domainOperation) {
+				return featureFilter.accept(domainOperation);
+			}
+		});
 		return subItOps;
 	}
 
@@ -610,19 +610,19 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if ((partials == null) || partials.isEmpty()) {
 			return PivotMetamodelManager.EMPTY_PROPERTY_LIST;
 		}
-//		@SuppressWarnings("null")
-//		@NonNull List<DomainProperty> singletonList = partials; //Collections.singletonList(partials.get(0));
+		//		@SuppressWarnings("null")
+		//		@NonNull List<DomainProperty> singletonList = partials; //Collections.singletonList(partials.get(0));
 		if (featureFilter == null) {
 			return partials;
 		}
 		@NonNull Iterable<@NonNull Property> subItOps = Iterables.filter(partials,
 			new Predicate<@NonNull Property>()
-			{
-				@Override
-				public boolean apply(@NonNull Property domainProperty) {
-					return featureFilter.accept(domainProperty);
-				}
-			});
+		{
+			@Override
+			public boolean apply(@NonNull Property domainProperty) {
+				return featureFilter.accept(domainProperty);
+			}
+		});
 		return subItOps;
 	}
 
@@ -688,7 +688,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			return specializedType;
 		}
 	}
-	
+
 	public @NonNull StandardLibraryInternal getStandardLibrary() {
 		return getCompleteModel().getStandardLibrary();
 	}
@@ -714,7 +714,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			return Collections.singletonList(state);
 		}
 	}
-	
+
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
 		CompleteInheritance inheritance = getCompleteClass().getCompleteInheritance();
 		return Iterables.transform(inheritance.getAllSuperFragments(), new Function<InheritanceFragment, @NonNull CompleteClass>()
@@ -742,7 +742,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	public void initMemberFeaturesFrom(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		if (name2partialOperations != null) {
 			initMemberOperationsFrom(pivotType);
-		}	
+		}
 		if (name2partialProperties != null) {
 			initMemberPropertiesFrom(pivotType);		// FIXME invalidate is safer
 		}
@@ -752,11 +752,11 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
 			name2partialOperations2 = name2partialOperations = new HashMap<@NonNull String, @NonNull PartialOperations>();
-//			Set<CompleteClass> allSuperCompleteClasses = new HashSet<CompleteClass>();
-//			allSuperCompleteClasses.add(completeClass);
-//			for (CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
-//				allSuperCompleteClasses.add(superCompleteClass);
-//			}
+			//			Set<CompleteClass> allSuperCompleteClasses = new HashSet<CompleteClass>();
+			//			allSuperCompleteClasses.add(completeClass);
+			//			for (CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+			//				allSuperCompleteClasses.add(superCompleteClass);
+			//			}
 			for (@NonNull CompleteClass superCompleteClass : getSuperCompleteClasses()) {
 				for (org.eclipse.ocl.pivot.@NonNull Class superType : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
 					org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
@@ -770,7 +770,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			for (PartialOperations partialOperations : name2partialOperations2.values()) {
 				partialOperations.initMemberOperationsPostProcess();
 			}
-		}	
+		}
 		return name2partialOperations2;
 	}
 
@@ -867,7 +867,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			for (@NonNull PartialProperties properties : name2partialProperties2.values()) {
 				initMemberPropertiesPostProcess(getCompleteClass().getName(), properties);
 			}
-		}	
+		}
 		return name2partialProperties2;
 	}
 
@@ -878,7 +878,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		}
 		for (ElementExtension extension : asPrimaryType.getOwnedExtensions()) {
 			assert extension != null;
-//			initStereotypePropertiesFrom((Type)asPrimaryType, extension);
+			//			initStereotypePropertiesFrom((Type)asPrimaryType, extension);
 		}
 		for (@SuppressWarnings("null")@NonNull Property pivotProperty : asPrimaryType.getOwnedProperties()) {
 			didAddProperty(pivotProperty);
@@ -886,7 +886,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	}
 
 	protected void initMemberPropertiesPostProcess(String name, @NonNull PartialProperties properties) {
-		// TODO Auto-generated method stub // FIXME Prune occlusions		
+		// TODO Auto-generated method stub // FIXME Prune occlusions
 	}
 
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
@@ -916,7 +916,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		}
 	}
 
-/*	protected @NonNull Map<String, DomainInheritance> initSuperClasses() {
+	/*	protected @NonNull Map<String, DomainInheritance> initSuperClasses() {
 //		System.out.println("initSuperClasses " + toString());
 		Map<String, DomainInheritance> name2superclasses2 = name2superclasses = new HashMap<String, DomainInheritance>();
 		name2qualifiedNames = null;
@@ -933,7 +933,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		return name2superclasses2;
 	} */
 
-/*	protected Map<String, List<String>> initSuperClassesWithAmbiguousNames(Map<String, DomainInheritance> name2superclasses2, Map<String, List<String>> name2qualifiedNames2) {
+	/*	protected Map<String, List<String>> initSuperClassesWithAmbiguousNames(Map<String, DomainInheritance> name2superclasses2, Map<String, List<String>> name2qualifiedNames2) {
 		int counter = 0;
 		for (DomainFragment fragment : getCompleteClass().getCompleteInheritance().getFragments()) {
 			DomainInheritance baseInheritance = fragment.getBaseInheritance();

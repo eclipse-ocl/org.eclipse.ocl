@@ -104,6 +104,9 @@ public class FlowAnalysis
 		 * infinite recursion of nested analyses.
 		 */
 		protected boolean isAlreadyNonNull(@NonNull OCLExpression asExpression) {
+			if (asExpression instanceof NullLiteralExp) {
+				return false;
+			}
 			if (asExpression.isIsRequired()) {
 				return true;
 			}

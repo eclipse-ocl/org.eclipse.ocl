@@ -32,9 +32,11 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -557,6 +559,26 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
 		return environmentFactory.getMetamodelManager();
+	}
+
+	public @NonNull InvalidableType getInvalidableType(org.eclipse.ocl.pivot.@NonNull Class type) {
+		InvalidableType invalidableType = type.getInvalidableType();
+		if (invalidableType == null) {
+			invalidableType = PivotUtil.createInvalidableType(getNullableType(type));
+			type.setInvalidableType(invalidableType);
+			invalidableType.setOwningPackage(getOrphanage());
+		}
+		return invalidableType;
+	}
+
+	public @NonNull NullableType getNullableType(org.eclipse.ocl.pivot.@NonNull Class type) {
+		NullableType nullableType = type.getNullableType();
+		if (nullableType == null) {
+			nullableType = PivotUtil.createNullableType(type);
+			type.setNullableType(nullableType);
+			nullableType.setOwningPackage(getOrphanage());
+		}
+		return nullableType;
 	}
 
 	@Override

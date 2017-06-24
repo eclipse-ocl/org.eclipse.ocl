@@ -307,9 +307,19 @@ extends Type, Namespace, TemplateableElement {
 	@Nullable Object createInstance( @NonNull String value);
 
 	/**
+	 * Return the maybe-invalid, maybe-null form of this type.
+	 */
+	@Nullable InvalidableType getInvalidableType();
+
+	/**
 	 * Return the name of the meta-type of this type.
 	 */
 	@NonNull String getMetaTypeName();
+
+	/**
+	 * Return the maybe-null form of this type.
+	 */
+	@Nullable NullableType getNullableType();
 
 	/**
 	 * Return the ordered list of type parameters of this type.
@@ -332,5 +342,8 @@ extends Type, Namespace, TemplateableElement {
 	 */
 	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
 	@NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
+
+	void setInvalidableType(InvalidableType invalidableType);
+	void setNullableType(NullableType nullableType);
 
 } // Class

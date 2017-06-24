@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
+import org.eclipse.ocl.pivot.library.logical.BooleanOrOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -81,43 +82,73 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 		 *     if severity <= 0
 		 *     then true
 		 *     else
-		 *       let result : Boolean[1] = ownedInit?.isRequired = isRequired
+		 *       let result : Boolean[?] = ownedInit?.isRequired = isRequired or
+		 *         ownedInit?.type.conformsTo(OclVoid)
 		 *       in
 		 *         'LetVariable::CompatibleNullityForInitializer'.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 		 *     endif
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.ids.@NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue severity_0 = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotTables.STR_LetVariable_c_c_CompatibleNullityForInitializer);
 		final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity_0, PivotTables.INT_0).booleanValue();
-		/*@NonInvalid*/ boolean symbol_1;
+		/*@NonInvalid*/ boolean symbol_2;
 		if (le) {
-			symbol_1 = ValueUtil.TRUE_VALUE;
+			symbol_2 = ValueUtil.TRUE_VALUE;
 		}
 		else {
-			/*@Caught*/ @NonNull Object CAUGHT_result;
+			/*@Caught*/ @Nullable Object CAUGHT_result;
 			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = this.getOwnedInit();
-				final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedInit == null;
-				/*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
-				if (symbol_0 == Boolean.TRUE) {
-					safe_isRequired_source = null;
+				/*@Caught*/ @NonNull Object CAUGHT_eq;
+				try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit = this.getOwnedInit();
+					final /*@NonInvalid*/ @NonNull Object symbol_0 = ownedInit == null;
+					/*@Thrown*/ java.lang.@Nullable Boolean safe_isRequired_source;
+					if (symbol_0 == Boolean.TRUE) {
+						safe_isRequired_source = null;
+					}
+					else {
+						assert ownedInit != null;
+						final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
+						safe_isRequired_source = isRequired;
+					}
+					final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
+					final /*@Thrown*/ boolean eq = (safe_isRequired_source == Boolean.TRUE) == isRequired_0;
+					CAUGHT_eq = eq;
 				}
-				else {
-					assert ownedInit != null;
-					final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
-					safe_isRequired_source = isRequired;
+				catch (Exception e) {
+					CAUGHT_eq = ValueUtil.createInvalidValue(e);
 				}
-				final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
-				final /*@Thrown*/ boolean result = (safe_isRequired_source == Boolean.TRUE) == isRequired_0;
+				/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
+				try {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclVoid = idResolver.getClass(TypeId.OCL_VOID, null);
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable OCLExpression ownedInit_0 = this.getOwnedInit();
+					final /*@NonInvalid*/ @NonNull Object symbol_1 = ownedInit_0 == null;
+					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type safe_type_source;
+					if (symbol_1 == Boolean.TRUE) {
+						safe_type_source = null;
+					}
+					else {
+						assert ownedInit_0 != null;
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedInit_0.getType();
+						safe_type_source = type;
+					}
+					final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_OclVoid).booleanValue();
+					CAUGHT_conformsTo = conformsTo;
+				}
+				catch (Exception e) {
+					CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
+				}
+				final /*@Thrown*/ java.lang.@Nullable Boolean result = BooleanOrOperation.INSTANCE.evaluate(CAUGHT_eq, CAUGHT_conformsTo);
 				CAUGHT_result = result;
 			}
 			catch (Exception e) {
 				CAUGHT_result = ValueUtil.createInvalidValue(e);
 			}
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_LetVariable_c_c_CompatibleNullityForInitializer, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
-			symbol_1 = logDiagnostic;
+			symbol_2 = logDiagnostic;
 		}
-		return Boolean.TRUE == symbol_1;
+		return Boolean.TRUE == symbol_2;
 	}
 
 	/**
