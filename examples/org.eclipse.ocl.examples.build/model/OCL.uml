@@ -658,8 +658,15 @@
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Types-AnyType" name="AnyType">
         <generalization xmi:id="_XpdiRX7VEeOu79LxSz8Ylw" general="OCL-OCL_UML-Class"/>
       </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_z-WPMFjBEee4UcOo08DBaw" name="Class"/>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Types-InvalidType" name="InvalidType">
         <generalization xmi:id="_XpdiSX7VEeOu79LxSz8Ylw" general="OCL-OCL_UML-Class"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_uL2FEFjBEee4UcOo08DBaw" name="InvalidableType">
+        <generalization xmi:id="_JCzgcFjCEee4UcOo08DBaw" general="_z-WPMFjBEee4UcOo08DBaw"/>
+        <ownedAttribute xmi:id="_DC7BoFjCEee4UcOo08DBaw" name="nonInvalidType" type="_zyRiEFjBEee4UcOo08DBaw">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_P0yqQFjFEee4UcOo08DBaw"/>
+        </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Types-LambdaType" name="LambdaType">
         <generalization xmi:id="_XpnTAH7VEeOu79LxSz8Ylw" general="OCL-OCL_UML-DataType"/>
@@ -670,6 +677,12 @@
         </ownedAttribute>
         <ownedAttribute xmi:id="OCL-OCL_Types-LambdaType-resultType" name="resultType" type="OCL-OCL_UML-Type"/>
       </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_zyRiEFjBEee4UcOo08DBaw" name="NullableType">
+        <generalization xmi:id="_L2OqUFjCEee4UcOo08DBaw" general="_z-WPMFjBEee4UcOo08DBaw"/>
+        <ownedAttribute xmi:id="_7SBRIFjBEee4UcOo08DBaw" name="nonNullType" type="_vLtKIFjCEee4UcOo08DBaw">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OrqfAFjFEee4UcOo08DBaw"/>
+        </ownedAttribute>
+      </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Types-SelfType" name="SelfType">
         <generalization xmi:id="_XpnTBX7VEeOu79LxSz8Ylw" general="OCL-OCL_UML-Class"/>
       </packagedElement>
@@ -679,6 +692,7 @@
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Types-VoidType" name="VoidType">
         <generalization xmi:id="_XpnTC37VEeOu79LxSz8Ylw" general="OCL-OCL_UML-Class"/>
       </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_vLtKIFjCEee4UcOo08DBaw" name="Type"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="OCL-OCL_Variables" name="OCL_Variables">
       <packagedElement xmi:type="uml:Class" xmi:id="_KzuLUKymEea6UMIIRq32ug" name="IteratorVariable">
