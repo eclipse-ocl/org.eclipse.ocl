@@ -209,6 +209,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _IntegerLiteralExp = createClass(PivotPackage.Literals.INTEGER_LITERAL_EXP);
 		private final @NonNull Class _InvalidLiteralExp = createClass(PivotPackage.Literals.INVALID_LITERAL_EXP);
 		private final @NonNull Class _InvalidType = createClass(PivotPackage.Literals.INVALID_TYPE);
+		private final @NonNull Class _InvalidableType = createClass(PivotPackage.Literals.INVALIDABLE_TYPE);
 		private final @NonNull Class _IterateExp = createClass(PivotPackage.Literals.ITERATE_EXP);
 		private final @NonNull Class _Iteration = createClass(PivotPackage.Literals.ITERATION);
 		private final @NonNull Class _IteratorExp = createClass(PivotPackage.Literals.ITERATOR_EXP);
@@ -233,6 +234,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _Namespace = createClass(PivotPackage.Literals.NAMESPACE);
 		private final @NonNull Class _NavigationCallExp = createClass(PivotPackage.Literals.NAVIGATION_CALL_EXP);
 		private final @NonNull Class _NullLiteralExp = createClass(PivotPackage.Literals.NULL_LITERAL_EXP);
+		private final @NonNull Class _NullableType = createClass(PivotPackage.Literals.NULLABLE_TYPE);
 		private final @NonNull Class _NumericLiteralExp = createClass(PivotPackage.Literals.NUMERIC_LITERAL_EXP);
 		private final @NonNull Class _OCLExpression = createClass(PivotPackage.Literals.OCL_EXPRESSION);
 		private final @NonNull DataType _Object = createDataType(PivotPackage.Literals.OBJECT);
@@ -340,11 +342,13 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull BagType _Bag_EnumLiteralExp = createBagType(_Bag, _EnumLiteralExp);
 		private final @NonNull BagType _Bag_Import = createBagType(_Bag, _Import);
 		private final @NonNull BagType _Bag_InstanceSpecification = createBagType(_Bag, _InstanceSpecification);
+		private final @NonNull BagType _Bag_InvalidableType = createBagType(_Bag, _InvalidableType);
 		private final @NonNull BagType _Bag_LambdaType = createBagType(_Bag, _LambdaType);
 		private final @NonNull BagType _Bag_LoopExp = createBagType(_Bag, _LoopExp);
 		private final @NonNull BagType _Bag_MapType = createBagType(_Bag, _MapType);
 		private final @NonNull BagType _Bag_MessageType = createBagType(_Bag, _MessageType);
 		private final @NonNull BagType _Bag_NavigationCallExp = createBagType(_Bag, _NavigationCallExp);
+		private final @NonNull BagType _Bag_NullableType = createBagType(_Bag, _NullableType);
 		private final @NonNull BagType _Bag_OCLExpression = createBagType(_Bag, _OCLExpression);
 		private final @NonNull BagType _Bag_Operation = createBagType(_Bag, _Operation);
 		private final @NonNull BagType _Bag_OperationCallExp = createBagType(_Bag, _OperationCallExp);
@@ -393,6 +397,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_EnumerationLiteral = createCollectionType(_Collection, _EnumerationLiteral);
 		private final @NonNull CollectionType _Collection_Import = createCollectionType(_Collection, _Import);
 		private final @NonNull CollectionType _Collection_InstanceSpecification = createCollectionType(_Collection, _InstanceSpecification);
+		private final @NonNull CollectionType _Collection_InvalidableType = createCollectionType(_Collection, _InvalidableType);
 		private final @NonNull CollectionType _Collection_LambdaType = createCollectionType(_Collection, _LambdaType);
 		private final @NonNull CollectionType _Collection_LoopExp = createCollectionType(_Collection, _LoopExp);
 		private final @NonNull CollectionType _Collection_MapLiteralPart = createCollectionType(_Collection, _MapLiteralPart);
@@ -400,6 +405,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_MessageType = createCollectionType(_Collection, _MessageType);
 		private final @NonNull CollectionType _Collection_Model = createCollectionType(_Collection, _Model);
 		private final @NonNull CollectionType _Collection_NavigationCallExp = createCollectionType(_Collection, _NavigationCallExp);
+		private final @NonNull CollectionType _Collection_NullableType = createCollectionType(_Collection, _NullableType);
 		private final @NonNull CollectionType _Collection_OCLExpression = createCollectionType(_Collection, _OCLExpression);
 		private final @NonNull CollectionType _Collection_Operation = createCollectionType(_Collection, _Operation);
 		private final @NonNull CollectionType _Collection_OperationCallExp = createCollectionType(_Collection, _OperationCallExp);
@@ -692,6 +698,9 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type = _InvalidType);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Class);
+			ownedClasses.add(type = _InvalidableType);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Class);
 			ownedClasses.add(type = _IterateExp);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_LoopExp);
@@ -775,6 +784,9 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type = _NullLiteralExp);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_PrimitiveLiteralExp);
+			ownedClasses.add(type = _NullableType);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Class);
 			ownedClasses.add(type = _NumericLiteralExp);
 			type.setIsAbstract(true);
 			superClasses = type.getSuperClasses();
@@ -1085,6 +1097,9 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type = _Bag_InstanceSpecification);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_InstanceSpecification);
+			ownedClasses.add(type = _Bag_InvalidableType);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_InvalidableType);
 			ownedClasses.add(type = _Bag_LambdaType);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_LambdaType);
@@ -1100,6 +1115,9 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type = _Bag_NavigationCallExp);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_NavigationCallExp);
+			ownedClasses.add(type = _Bag_NullableType);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_NullableType);
 			ownedClasses.add(type = _Bag_OCLExpression);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_OCLExpression);
@@ -1244,6 +1262,9 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type = _Collection_InstanceSpecification);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
+			ownedClasses.add(type = _Collection_InvalidableType);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclElement);
 			ownedClasses.add(type = _Collection_LambdaType);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
@@ -1263,6 +1284,9 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
 			ownedClasses.add(type = _Collection_NavigationCallExp);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclElement);
+			ownedClasses.add(type = _Collection_NullableType);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
 			ownedClasses.add(type = _Collection_OCLExpression);
@@ -1989,6 +2013,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_InstanceSpecification_ownedSpecification = createProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION, _LanguageExpression);
 		private final @NonNull Property pr_InstanceSpecification_owningPackage = createProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNING_PACKAGE, _Package);
 		private final @NonNull Property pr_IntegerLiteralExp_integerSymbol = createProperty(PivotPackage.Literals.INTEGER_LITERAL_EXP__INTEGER_SYMBOL, _Integer);
+		private final @NonNull Property pr_InvalidableType_nonInvalidType = createProperty(PivotPackage.Literals.INVALIDABLE_TYPE__NON_INVALID_TYPE, _NullableType);
 		private final @NonNull Property pr_IterateExp_ownedResult = createProperty(PivotPackage.Literals.ITERATE_EXP__OWNED_RESULT, _Variable);
 		private final @NonNull Property pr_Iteration_ownedAccumulators = createProperty(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATORS, _OrderedSet_Parameter_NullFree);
 		private final @NonNull Property pr_Iteration_ownedIterators = createProperty(PivotPackage.Literals.ITERATION__OWNED_ITERATORS, _OrderedSet_Parameter_NullFree);
@@ -2030,6 +2055,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Namespace_Import_importedNamespace = createProperty("Import", _Bag_Import);
 		private final @NonNull Property pr_NavigationCallExp_navigationSource = createProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE, _Property);
 		private final @NonNull Property pr_NavigationCallExp_qualifiers = createProperty(PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS, _OrderedSet_OCLExpression_NullFree);
+		private final @NonNull Property pr_NullableType_nonNullType = createProperty(PivotPackage.Literals.NULLABLE_TYPE__NON_NULL_TYPE, _Type);
+		private final @NonNull Property pr_NullableType_InvalidableType_nonInvalidType = createProperty("InvalidableType", _Bag_InvalidableType);
 		private final @NonNull Property pr_OCLExpression_typeValue = createProperty(PivotPackage.Literals.OCL_EXPRESSION__TYPE_VALUE, _Type);
 		private final @NonNull Property pr_OCLExpression_CallExp_ownedSource = createProperty("CallExp", _CallExp);
 		private final @NonNull Property pr_OCLExpression_CollectionItem_ownedItem = createProperty("CollectionItem", _CollectionItem);
@@ -2218,6 +2245,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Type_LambdaType_resultType = createProperty("LambdaType", _Bag_LambdaType);
 		private final @NonNull Property pr_Type_MapType_keyType = createProperty("MapType", _Bag_MapType);
 		private final @NonNull Property pr_Type_MapType_valueType = createProperty("MapType", _Bag_MapType);
+		private final @NonNull Property pr_Type_NullableType_nonNullType = createProperty("NullableType", _Bag_NullableType);
 		private final @NonNull Property pr_Type_OCLExpression_typeValue = createProperty("OCLExpression", _Bag_OCLExpression);
 		private final @NonNull Property pr_Type_Operation_raisedExceptions = createProperty("Operation", _Bag_Operation);
 		private final @NonNull Property pr_Type_TemplateParameterSubstitution_actual = createProperty("TemplateParameterSubstitution", _Bag_TemplateParameterSubstitution);
@@ -2777,6 +2805,12 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_IntegerLiteralExp_integerSymbol);
 			property.setIsResolveProxies(true);
 
+			ownedProperties = _InvalidableType.getOwnedProperties();
+			ownedProperties.add(property = pr_InvalidableType_nonInvalidType);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_NullableType_InvalidableType_nonInvalidType);
+
 			ownedProperties = _IterateExp.getOwnedProperties();
 			ownedProperties.add(property = pr_IterateExp_ownedResult);
 			property.setIsComposite(true);
@@ -2972,6 +3006,16 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_NavigationCallExp_qualifiers);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OCLExpression_NavigationCallExp_qualifiers);
+
+			ownedProperties = _NullableType.getOwnedProperties();
+			ownedProperties.add(property = pr_NullableType_nonNullType);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_Type_NullableType_nonNullType);
+			ownedProperties.add(property = pr_NullableType_InvalidableType_nonInvalidType);
+			property.setIsImplicit(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_InvalidableType_nonInvalidType);
 
 			ownedProperties = _OCLExpression.getOwnedProperties();
 			ownedProperties.add(property = pr_OCLExpression_typeValue);
@@ -3772,6 +3816,10 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_MapType_valueType);
+			ownedProperties.add(property = pr_Type_NullableType_nonNullType);
+			property.setIsImplicit(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_NullableType_nonNullType);
 			ownedProperties.add(property = pr_Type_OCLExpression_typeValue);
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
@@ -3962,6 +4010,8 @@ public class OCLmetamodel extends ASResourceImpl
 				createTemplateParameterSubstitution(_Bag_T, _Import)));
 			_Bag_InstanceSpecification.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(_Bag_T, _InstanceSpecification)));
+			_Bag_InvalidableType.getOwnedBindings().add(createTemplateBinding(
+				createTemplateParameterSubstitution(_Bag_T, _InvalidableType)));
 			_Bag_LambdaType.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(_Bag_T, _LambdaType)));
 			_Bag_LoopExp.getOwnedBindings().add(createTemplateBinding(
@@ -3972,6 +4022,8 @@ public class OCLmetamodel extends ASResourceImpl
 				createTemplateParameterSubstitution(_Bag_T, _MessageType)));
 			_Bag_NavigationCallExp.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(_Bag_T, _NavigationCallExp)));
+			_Bag_NullableType.getOwnedBindings().add(createTemplateBinding(
+				createTemplateParameterSubstitution(_Bag_T, _NullableType)));
 			_Bag_OCLExpression.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(_Bag_T, _OCLExpression)));
 			_Bag_Operation.getOwnedBindings().add(createTemplateBinding(
@@ -4068,6 +4120,8 @@ public class OCLmetamodel extends ASResourceImpl
 				createTemplateParameterSubstitution(_Collection_T, _Import)));
 			_Collection_InstanceSpecification.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(_Collection_T, _InstanceSpecification)));
+			_Collection_InvalidableType.getOwnedBindings().add(createTemplateBinding(
+				createTemplateParameterSubstitution(_Collection_T, _InvalidableType)));
 			_Collection_LambdaType.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(_Collection_T, _LambdaType)));
 			_Collection_LoopExp.getOwnedBindings().add(createTemplateBinding(
@@ -4082,6 +4136,8 @@ public class OCLmetamodel extends ASResourceImpl
 				createTemplateParameterSubstitution(_Collection_T, _Model)));
 			_Collection_NavigationCallExp.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(_Collection_T, _NavigationCallExp)));
+			_Collection_NullableType.getOwnedBindings().add(createTemplateBinding(
+				createTemplateParameterSubstitution(_Collection_T, _NullableType)));
 			_Collection_OCLExpression.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(_Collection_T, _OCLExpression)));
 			_Collection_Operation.getOwnedBindings().add(createTemplateBinding(

@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.InstanceSpecification;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -78,6 +79,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.NullLiteralExp;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.NumericLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -777,6 +779,21 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case PivotPackage.INVALIDABLE_TYPE:
+			{
+				InvalidableType invalidableType = (InvalidableType)theEObject;
+				T result = caseInvalidableType(invalidableType);
+				if (result == null) result = caseClass(invalidableType);
+				if (result == null) result = caseType(invalidableType);
+				if (result == null) result = caseNamespace(invalidableType);
+				if (result == null) result = caseTemplateableElement(invalidableType);
+				if (result == null) result = caseNamedElement(invalidableType);
+				if (result == null) result = caseElement(invalidableType);
+				if (result == null) result = caseNameable(invalidableType);
+				if (result == null) result = caseVisitable(invalidableType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case PivotPackage.ITERATE_EXP:
 			{
 				IterateExp iterateExp = (IterateExp)theEObject;
@@ -1076,6 +1093,21 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = caseElement(nullLiteralExp);
 				if (result == null) result = caseNameable(nullLiteralExp);
 				if (result == null) result = caseVisitable(nullLiteralExp);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case PivotPackage.NULLABLE_TYPE:
+			{
+				NullableType nullableType = (NullableType)theEObject;
+				T result = caseNullableType(nullableType);
+				if (result == null) result = caseClass(nullableType);
+				if (result == null) result = caseType(nullableType);
+				if (result == null) result = caseNamespace(nullableType);
+				if (result == null) result = caseTemplateableElement(nullableType);
+				if (result == null) result = caseNamedElement(nullableType);
+				if (result == null) result = caseElement(nullableType);
+				if (result == null) result = caseNameable(nullableType);
+				if (result == null) result = caseVisitable(nullableType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -2332,6 +2364,22 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Invalidable Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Invalidable Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInvalidableType(InvalidableType object)
+	{
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Iterate Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -2691,6 +2739,22 @@ public class PivotSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNullLiteralExp(NullLiteralExp object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Nullable Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Nullable Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNullableType(NullableType object)
+	{
 		return null;
 	}
 

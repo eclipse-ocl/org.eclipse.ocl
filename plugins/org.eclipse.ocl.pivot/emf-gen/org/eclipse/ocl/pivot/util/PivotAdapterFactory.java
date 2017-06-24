@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.InstanceSpecification;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -79,6 +80,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.NullLiteralExp;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.NumericLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -425,6 +427,11 @@ extends AdapterFactoryImpl {
 				return createInvalidTypeAdapter();
 			}
 			@Override
+			public Adapter caseInvalidableType(InvalidableType object)
+			{
+				return createInvalidableTypeAdapter();
+			}
+			@Override
 			public Adapter caseIterateExp(IterateExp object)
 			{
 				return createIterateExpAdapter();
@@ -538,6 +545,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseNullLiteralExp(NullLiteralExp object)
 			{
 				return createNullLiteralExpAdapter();
+			}
+			@Override
+			public Adapter caseNullableType(NullableType object)
+			{
+				return createNullableTypeAdapter();
 			}
 			@Override
 			public Adapter caseNumericLiteralExp(NumericLiteralExp object)
@@ -1296,6 +1308,21 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.InvalidableType <em>Invalidable Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.InvalidableType
+	 * @generated
+	 */
+	public Adapter createInvalidableTypeAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.IterateExp <em>Iterate Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1617,6 +1644,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNullLiteralExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.NullableType <em>Nullable Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.NullableType
+	 * @generated
+	 */
+	public Adapter createNullableTypeAdapter()
+	{
 		return null;
 	}
 

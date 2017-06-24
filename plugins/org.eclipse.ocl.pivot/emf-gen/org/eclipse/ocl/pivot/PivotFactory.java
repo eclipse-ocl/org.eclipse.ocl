@@ -49,7 +49,7 @@ extends EFactory {
 	 * @return a new object of class '<em>Class</em>'.
 	 * @generated
 	 */
-	Class createClass();
+	@NonNull Class createClass();
 
 	/**
 	 * Returns a new object of class '<em>Template Binding</em>'.
@@ -112,7 +112,7 @@ extends EFactory {
 	 * @return a new object of class '<em>Package</em>'.
 	 * @generated
 	 */
-	Package createPackage();
+	@NonNull Package createPackage();
 
 	/**
 	 * Returns a new object of class '<em>Precedence</em>'.
@@ -512,6 +512,15 @@ extends EFactory {
 	@NonNull InvalidType createInvalidType();
 
 	/**
+	 * Returns a new object of class '<em>Invalidable Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Invalidable Type</em>'.
+	 * @generated
+	 */
+	@NonNull InvalidableType createInvalidableType();
+
+	/**
 	 * Returns a new object of class '<em>Iterate Exp</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -683,6 +692,15 @@ extends EFactory {
 	 * @generated
 	 */
 	@NonNull NullLiteralExp createNullLiteralExp();
+
+	/**
+	 * Returns a new object of class '<em>Nullable Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Nullable Type</em>'.
+	 * @generated
+	 */
+	@NonNull NullableType createNullableType();
 
 	/**
 	 * Returns a new object of class '<em>Operation Call Exp</em>'.

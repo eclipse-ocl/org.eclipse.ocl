@@ -258,6 +258,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitInvalidableType(org.eclipse.ocl.pivot.@NonNull InvalidableType object) {
+		return visitClass(object);
+	}
+
+	@Override
 	public R visitIterateExp(org.eclipse.ocl.pivot.@NonNull IterateExp object) {
 		return visitLoopExp(object);
 	}
@@ -360,6 +365,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	@Override
 	public R visitNullLiteralExp(org.eclipse.ocl.pivot.@NonNull NullLiteralExp object) {
 		return visitPrimitiveLiteralExp(object);
+	}
+
+	@Override
+	public R visitNullableType(org.eclipse.ocl.pivot.@NonNull NullableType object) {
+		return visitClass(object);
 	}
 
 	@Override

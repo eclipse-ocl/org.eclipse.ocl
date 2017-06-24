@@ -563,6 +563,13 @@
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TInvalidType" name="InvalidType">
     <generalization xmi:id="Ppivot.TInvalidType.g0" general="Ppivot.TClass"/>
   </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TInvalidableType" name="InvalidableType">
+    <generalization xmi:id="Ppivot.TInvalidableType.g0" general="Ppivot.TClass"/>
+    <ownedAttribute xmi:id="Ppivot.TInvalidableType.PnonInvalidType" name="nonInvalidType" type="Ppivot.TNullableType" isOrdered="true"
+        association="Ppivot.A_nonInvalidType_InvalidableType">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TInvalidableType.PnonInvalidType.lV"/>
+    </ownedAttribute>
+  </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIterateExp" name="IterateExp">
     <generalization xmi:id="Ppivot.TIterateExp.g0" general="Ppivot.TLoopExp"/>
     <ownedAttribute xmi:id="Ppivot.TIterateExp.PownedResult" name="ownedResult" type="Ppivot.TVariable" isOrdered="true" aggregation="composite"
@@ -741,6 +748,12 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TNullLiteralExp" name="NullLiteralExp">
     <generalization xmi:id="Ppivot.TNullLiteralExp.g0" general="Ppivot.TPrimitiveLiteralExp"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TNullableType" name="NullableType">
+    <generalization xmi:id="Ppivot.TNullableType.g0" general="Ppivot.TClass"/>
+    <ownedAttribute xmi:id="Ppivot.TNullableType.PnonNullType" name="nonNullType" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_nonNullType_NullableType">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TNullableType.PnonNullType.lV"/>
+    </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TNumericLiteralExp" name="NumericLiteralExp" isAbstract="true">
     <generalization xmi:id="Ppivot.TNumericLiteralExp.g0" general="Ppivot.TPrimitiveLiteralExp"/>
@@ -1541,6 +1554,13 @@
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_navigationSource_NavigationCallExp" name="A_navigationSource_NavigationCallExp"
       memberEnd="Ppivot.TNavigationCallExp.PnavigationSource Ppivot.A_navigationSource_NavigationCallExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_navigationSource_NavigationCallExp.Pnull" type="Ppivot.TNavigationCallExp" association="Ppivot.A_navigationSource_NavigationCallExp"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_nonInvalidType_InvalidableType" name="A_nonInvalidType_InvalidableType"
+      memberEnd="Ppivot.TInvalidableType.PnonInvalidType Ppivot.A_nonInvalidType_InvalidableType.Pnull">
+    <ownedEnd xmi:id="Ppivot.A_nonInvalidType_InvalidableType.Pnull" type="Ppivot.TInvalidableType" association="Ppivot.A_nonInvalidType_InvalidableType"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_nonNullType_NullableType" name="A_nonNullType_NullableType" memberEnd="Ppivot.TNullableType.PnonNullType Ppivot.A_nonNullType_NullableType.Pnull">
+    <ownedEnd xmi:id="Ppivot.A_nonNullType_NullableType.Pnull" type="Ppivot.TNullableType" association="Ppivot.A_nonNullType_NullableType"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_operation_CallOperationAction" name="A_operation_CallOperationAction" memberEnd="Ppivot.TCallOperationAction.Poperation Ppivot.A_operation_CallOperationAction.Pnull">
     <ownedEnd xmi:id="Ppivot.A_operation_CallOperationAction.Pnull" type="Ppivot.TCallOperationAction" association="Ppivot.A_operation_CallOperationAction"/>

@@ -258,6 +258,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitInvalidableType(org.eclipse.ocl.pivot.@NonNull InvalidableType object) {
+		return null;
+	}
+
+	@Override
 	public R visitIterateExp(org.eclipse.ocl.pivot.@NonNull IterateExp object) {
 		return null;
 	}
@@ -359,6 +364,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 
 	@Override
 	public R visitNullLiteralExp(org.eclipse.ocl.pivot.@NonNull NullLiteralExp object) {
+		return null;
+	}
+
+	@Override
+	public R visitNullableType(org.eclipse.ocl.pivot.@NonNull NullableType object) {
 		return null;
 	}
 

@@ -333,6 +333,9 @@
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-InvalidLiteralExp"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-InvalidType"/>
+    <genClasses ecoreClass="Pivot.ecore#T-pivot-InvalidableType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-InvalidableType-nonInvalidType"/>
+    </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-IterateExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-IterateExp-ownedResult"/>
       <genOperations ecoreOperation="Pivot.ecore#//IterateExp/validateBodyTypeConformsToResultType">
@@ -548,6 +551,9 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-NavigationCallExp-qualifiers"/>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-NullLiteralExp"/>
+    <genClasses ecoreClass="Pivot.ecore#T-pivot-NullableType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-NullableType-nonNullType"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-NumericLiteralExp"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OCLExpression">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-OCLExpression-typeValue"/>

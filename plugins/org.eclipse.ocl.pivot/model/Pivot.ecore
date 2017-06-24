@@ -855,6 +855,11 @@
       eSuperTypes="#T-pivot-LiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-InvalidType" name="InvalidType"
       eSuperTypes="#T-pivot-Class"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-InvalidableType" name="InvalidableType"
+      eSuperTypes="#T-pivot-Class">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-InvalidableType-nonInvalidType"
+        name="nonInvalidType" eType="#T-pivot-NullableType"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-IterateExp" name="IterateExp"
       eSuperTypes="#T-pivot-LoopExp #T-pivot-ReferringElement">
     <eOperations name="validateBodyTypeConformsToResultType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -1529,6 +1534,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-NullLiteralExp" name="NullLiteralExp"
       eSuperTypes="#T-pivot-PrimitiveLiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-NullableType" name="NullableType"
+      eSuperTypes="#T-pivot-Class">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-NullableType-nonNullType"
+        name="nonNullType" eType="#T-pivot-Type"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-NumericLiteralExp" name="NumericLiteralExp"
       abstract="true" eSuperTypes="#T-pivot-PrimitiveLiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OCLExpression" name="OCLExpression"

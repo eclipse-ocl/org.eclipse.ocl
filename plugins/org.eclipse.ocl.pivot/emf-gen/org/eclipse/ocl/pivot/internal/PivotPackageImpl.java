@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.InstanceSpecification;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -86,6 +87,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.NullLiteralExp;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.NumericLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -381,6 +383,13 @@ implements PivotPackage  {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass invalidableTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass iterateExpEClass = null;
 
 	/**
@@ -529,6 +538,13 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	private EClass nullLiteralExpEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nullableTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2338,6 +2354,28 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EClass getInvalidableType()
+	{
+		return invalidableTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getInvalidableType_NonInvalidType()
+	{
+		return (EReference)invalidableTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getIterateExp()
 	{
 		return iterateExpEClass;
@@ -3322,6 +3360,28 @@ implements PivotPackage  {
 	@Override
 	public EClass getNullLiteralExp() {
 		return nullLiteralExpEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getNullableType()
+	{
+		return nullableTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getNullableType_NonNullType()
+	{
+		return (EReference)nullableTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -7058,6 +7118,9 @@ implements PivotPackage  {
 
 		invalidTypeEClass = createEClass(INVALID_TYPE);
 
+		invalidableTypeEClass = createEClass(INVALIDABLE_TYPE);
+		createEReference(invalidableTypeEClass, INVALIDABLE_TYPE__NON_INVALID_TYPE);
+
 		iterateExpEClass = createEClass(ITERATE_EXP);
 		createEReference(iterateExpEClass, ITERATE_EXP__OWNED_RESULT);
 		createEOperation(iterateExpEClass, ITERATE_EXP___VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE__DIAGNOSTICCHAIN_MAP);
@@ -7171,6 +7234,9 @@ implements PivotPackage  {
 		createEReference(navigationCallExpEClass, NAVIGATION_CALL_EXP__QUALIFIERS);
 
 		nullLiteralExpEClass = createEClass(NULL_LITERAL_EXP);
+
+		nullableTypeEClass = createEClass(NULLABLE_TYPE);
+		createEReference(nullableTypeEClass, NULLABLE_TYPE__NON_NULL_TYPE);
 
 		numericLiteralExpEClass = createEClass(NUMERIC_LITERAL_EXP);
 
@@ -7579,6 +7645,7 @@ implements PivotPackage  {
 		integerLiteralExpEClass.getESuperTypes().add(this.getNumericLiteralExp());
 		invalidLiteralExpEClass.getESuperTypes().add(this.getLiteralExp());
 		invalidTypeEClass.getESuperTypes().add(this.getClass_());
+		invalidableTypeEClass.getESuperTypes().add(this.getClass_());
 		iterateExpEClass.getESuperTypes().add(this.getLoopExp());
 		iterateExpEClass.getESuperTypes().add(this.getReferringElement());
 		iterationEClass.getESuperTypes().add(this.getOperation());
@@ -7603,6 +7670,7 @@ implements PivotPackage  {
 		namespaceEClass.getESuperTypes().add(this.getNamedElement());
 		navigationCallExpEClass.getESuperTypes().add(this.getFeatureCallExp());
 		nullLiteralExpEClass.getESuperTypes().add(this.getPrimitiveLiteralExp());
+		nullableTypeEClass.getESuperTypes().add(this.getClass_());
 		numericLiteralExpEClass.getESuperTypes().add(this.getPrimitiveLiteralExp());
 		oclExpressionEClass.getESuperTypes().add(this.getTypedElement());
 		operationEClass.getESuperTypes().add(this.getFeature());
@@ -8040,6 +8108,9 @@ implements PivotPackage  {
 
 		initEClass(invalidTypeEClass, InvalidType.class, "InvalidType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
+		initEClass(invalidableTypeEClass, InvalidableType.class, "InvalidableType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getInvalidableType_NonInvalidType(), this.getNullableType(), null, "nonInvalidType", null, 0, 1, InvalidableType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(iterateExpEClass, IterateExp.class, "IterateExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getIterateExp_OwnedResult(), this.getVariable(), null, "ownedResult", null, 0, 1, IterateExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -8433,6 +8504,9 @@ implements PivotPackage  {
 		initEReference(getNavigationCallExp_Qualifiers(), this.getOCLExpression(), null, "qualifiers", null, 0, -1, NavigationCallExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(nullLiteralExpEClass, NullLiteralExp.class, "NullLiteralExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(nullableTypeEClass, NullableType.class, "NullableType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getNullableType_NonNullType(), this.getType(), null, "nonNullType", null, 0, 1, NullableType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(numericLiteralExpEClass, NumericLiteralExp.class, "NumericLiteralExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

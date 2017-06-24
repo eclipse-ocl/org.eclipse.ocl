@@ -275,6 +275,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitInvalidableType(org.eclipse.ocl.pivot.@NonNull InvalidableType object) {
+		return delegate.visitInvalidableType(object);
+	}
+
+	@Override
 	public R visitIterateExp(org.eclipse.ocl.pivot.@NonNull IterateExp object) {
 		return delegate.visitIterateExp(object);
 	}
@@ -377,6 +382,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	@Override
 	public R visitNullLiteralExp(org.eclipse.ocl.pivot.@NonNull NullLiteralExp object) {
 		return delegate.visitNullLiteralExp(object);
+	}
+
+	@Override
+	public R visitNullableType(org.eclipse.ocl.pivot.@NonNull NullableType object) {
+		return delegate.visitNullableType(object);
 	}
 
 	@Override

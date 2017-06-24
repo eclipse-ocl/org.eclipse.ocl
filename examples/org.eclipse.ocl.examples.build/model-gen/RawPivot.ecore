@@ -408,6 +408,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InvalidLiteralExp" eSuperTypes="#//LiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="InvalidType" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InvalidableType" eSuperTypes="#//Class">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nonInvalidType" eType="#//NullableType"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IterateExp" eSuperTypes="#//LoopExp #//ReferringElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedResult" eType="#//Variable" containment="true"/>
   </eClassifiers>
@@ -499,6 +502,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" upperBound="-1" eType="#//OCLExpression"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NullLiteralExp" eSuperTypes="#//PrimitiveLiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NullableType" eSuperTypes="#//Class">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nonNullType" eType="#//Type"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NumericLiteralExp" abstract="true" eSuperTypes="#//PrimitiveLiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="OCLExpression" abstract="true" eSuperTypes="#//TypedElement">
     <eOperations name="isNonNull" lowerBound="1" eType="#//Boolean"/>
