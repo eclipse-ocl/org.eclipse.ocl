@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -35,6 +34,8 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -43,6 +44,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
@@ -57,6 +59,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
@@ -69,6 +72,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.xtext.util.Strings;
 
 @SuppressWarnings("all")
@@ -306,9 +310,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull Set<CollectionType> getAllCollectionTypes(@NonNull Model root) {
 		Set<CollectionType> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof CollectionType) {
 				allElements.add((CollectionType)eObject);
 			}
@@ -318,9 +320,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull Set<Enumeration> getAllEnumerations(@NonNull Model root) {
 		Set<Enumeration> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof Enumeration) {
 				allElements.add((Enumeration)eObject);
 			}
@@ -330,9 +330,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull Set<LambdaType> getAllLambdaTypes(@NonNull Model root) {
 		Set<LambdaType> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof LambdaType) {
 				allElements.add((LambdaType)eObject);
 			}
@@ -342,9 +340,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull Set<MapType> getAllMapTypes(@NonNull Model root) {
 		Set<MapType> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof MapType) {
 				allElements.add((MapType)eObject);
 			}
@@ -354,9 +350,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull List<org.eclipse.ocl.pivot.Package> getAllPackages(@NonNull Model root) {
 		Set<org.eclipse.ocl.pivot.Package> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
 				allElements.add((org.eclipse.ocl.pivot.Package)eObject);
 			}
@@ -368,9 +362,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull Set<Precedence> getAllPrecedences(@NonNull Model root) {
 		Set<Precedence> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof Precedence) {
 				allElements.add((Precedence)eObject);
 			}
@@ -380,9 +372,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull Set<PrimitiveType> getAllPrimitiveTypes(@NonNull Model root) {
 		Set<PrimitiveType> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof PrimitiveType) {
 				allElements.add((PrimitiveType)eObject);
 			}
@@ -392,9 +382,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull List<Property> getAllProperties(@NonNull Model root) {
 		List<Property> allElements = new ArrayList<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if ((eObject instanceof Property) && !(eObject.eContainer() instanceof TupleType) &&
 					(((Property)eObject).getOwningClass() != null)) {
 				allElements.add((Property)eObject);
@@ -405,9 +393,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull Set<TemplateBinding> getAllTemplateBindings(@NonNull Model root) {
 		Set<TemplateBinding> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof TemplateBinding) {
 				allElements.add((TemplateBinding)eObject);
 			}
@@ -417,9 +403,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull Set<TemplateSignature> getAllTemplateSignatures(@NonNull Model root) {
 		Set<TemplateSignature> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof TemplateSignature) {
 				allElements.add((TemplateSignature)eObject);
 			}
@@ -429,9 +413,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull Set<TupleType> getAllTupleTypes(@NonNull Model root) {
 		Set<TupleType> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof TupleType) {
 				allElements.add((TupleType)eObject);
 			}
@@ -441,9 +423,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull Set<org.eclipse.ocl.pivot.Class> getAllTypes(@NonNull Model root) {
 		Set<org.eclipse.ocl.pivot.Class> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof org.eclipse.ocl.pivot.Class) {
 				allElements.add((org.eclipse.ocl.pivot.Class)eObject);
 			}
@@ -540,9 +520,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 		}
 		Set<Element> allReferences = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof CollectionType) {
 				CollectionType collectionType = (CollectionType)eObject;
 				addExternalReference(collectionType, root);
@@ -699,9 +677,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull List<Operation> getSortedCoercions(@NonNull Model root) {
 		Set<Operation> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof PrimitiveType) {
 				allElements.addAll(((PrimitiveType)eObject).getCoercions());
 			}
@@ -793,9 +769,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 		Collection<org.eclipse.ocl.pivot.Class> oclTypes = allClassTypes;
 		Set<Element> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if ((eObject instanceof Element) && !(eObject instanceof Constraint) &&
 					!((eObject instanceof Property) && (((Property)eObject).getOwningClass() == null)) &&
 					!((eObject instanceof org.eclipse.ocl.pivot.Class) && !oclTypes.contains(eObject))) {
@@ -897,12 +871,36 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return import2alias;
 	}
 
+	protected @NonNull List<@NonNull Type> getSortedInvalidableTypes(@NonNull Model root) {
+		Set<@NonNull Type> allElements = new HashSet<>();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
+			if (eObject instanceof Operation) {
+				Operation asOperation = (Operation)eObject;
+				if (asOperation.isIsInvalidating()) {
+					allElements.add(asOperation.getType());
+				}
+				if (asOperation.isIsValidating()) {
+					for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+						allElements.add(asParameter.getType());
+					}
+				}
+			}
+			else if (eObject instanceof InvalidableType) {
+				InvalidableType asInvalidableType = (InvalidableType)eObject;
+				NullableType nonInvalidType = asInvalidableType.getNonInvalidType();
+				if (nonInvalidType != null) {
+					allElements.add(nonInvalidType.getNonNullType());
+				}
+			}
+		}
+		List<@NonNull Type> sortedElements = new ArrayList<>(allElements);
+		Collections.sort(sortedElements, monikerComparator);
+		return sortedElements;
+	}
 
 	/*	protected @NonNull List<Iteration> getSortedIterations(@NonNull Model root) {
 		Set<Iteration> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof Iteration) {
 				allElements.add((Iteration)eObject);
 			}
@@ -912,10 +910,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return sortedElements;
 	} */
 
-	protected @NonNull Map<org.eclipse.ocl.pivot.Package, List<Iteration>> getSortedIterations(@NonNull Model root) {
-		Map<org.eclipse.ocl.pivot.Package, List<Iteration>> pkge2iterations = new HashMap<>();
-		for (org.eclipse.ocl.pivot.Package pkge : root.getOwnedPackages()) {
-			List<Iteration> iterations = null;
+	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Iteration>> getSortedIterations(@NonNull Model root) {
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Iteration>> pkge2iterations = new HashMap<>();
+		for (org.eclipse.ocl.pivot.@NonNull Package pkge : root.getOwnedPackages()) {
+			List<@NonNull Iteration> iterations = null;
 			for (org.eclipse.ocl.pivot.Class type : pkge.getOwnedClasses()) {
 				for (Operation operation : type.getOwnedOperations()) {
 					if (operation instanceof Iteration) {
@@ -946,39 +944,33 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return sortedElements;
 	} */
 
-	protected @NonNull List<LambdaType> getSortedLambdaTypes(@NonNull Model root) {
-		Set<LambdaType> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+	protected @NonNull List<@NonNull LambdaType> getSortedLambdaTypes(@NonNull Model root) {
+		Set<@NonNull LambdaType> allElements = new HashSet<>();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof LambdaType) {
 				allElements.add((LambdaType)eObject);
 			}
 		}
-		List<LambdaType> sortedElements = new ArrayList<>(allElements);
+		List<@NonNull LambdaType> sortedElements = new ArrayList<>(allElements);
 		Collections.sort(sortedElements, monikerComparator);
 		return sortedElements;
 	}
 
-	protected @NonNull List<Library> getSortedLibraries(@NonNull Model root) {
-		Set<Library> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+	protected @NonNull List<@NonNull Library> getSortedLibraries(@NonNull Model root) {
+		Set<@NonNull Library> allElements = new HashSet<>();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof Library) {
 				allElements.add((Library)eObject);
 			}
 		}
-		List<Library> sortedElements = new ArrayList<>(allElements);
+		List<@NonNull Library> sortedElements = new ArrayList<>(allElements);
 		Collections.sort(sortedElements, monikerComparator);
 		return sortedElements;
 	}
 
 	protected @NonNull List<Library> getSortedLibrariesWithPrecedence(@NonNull Model root) {
 		Set<Library> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if ((eObject instanceof Library) && (((Library)eObject).getOwnedPrecedences().size() > 0)) {
 				allElements.add((Library)eObject);
 			}
@@ -1014,11 +1006,34 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return pkge2mapTypes;
 	}
 
+	protected @NonNull List<@NonNull Type> getSortedNullableTypes(@NonNull Model root) {
+		Set<@NonNull Type> allElements = new HashSet<>();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
+			if ((eObject instanceof TypedElement) && !((TypedElement)eObject).isIsRequired()) {
+				eObject = ((TypedElement)eObject).getType();
+			}
+			if (eObject instanceof InvalidableType) {
+				eObject = ((InvalidableType)eObject).getNonInvalidType();
+			}
+			if (eObject instanceof NullableType) {
+				NullableType asNullableType = (NullableType)eObject;
+				Type nonNullType = asNullableType.getNonNullType();
+				if (nonNullType != null) {
+					eObject = nonNullType;
+				}
+			}
+			if ((eObject instanceof Type) && !(eObject instanceof VoidType) && !(eObject instanceof InvalidType) && !(eObject instanceof NullableType) && !(eObject instanceof InvalidableType)) {
+				allElements.add((Type)eObject);
+			}
+		}
+		List<@NonNull Type> sortedElements = new ArrayList<>(allElements);
+		Collections.sort(sortedElements, monikerComparator);
+		return sortedElements;
+	}
+
 	/*	protected @NonNull List<Operation> getSortedOperations(@NonNull Model root) {
 		Set<Operation> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if ((eObject instanceof Operation) && !(eObject instanceof Iteration) &&
 				!isEcoreConstraint((Operation)eObject)) {
 				allElements.add((Operation)eObject);
@@ -1065,9 +1080,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull List<Operation> getSortedOperationsWithPrecedence(@NonNull Model root) {
 		Set<Operation> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if ((eObject instanceof Operation) && !(eObject instanceof Iteration) &&
 					!isEcoreConstraint((Operation)eObject)) {
 				Operation operation = (Operation)eObject;
@@ -1115,9 +1128,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull List<org.eclipse.ocl.pivot.Package> getSortedPackages(@NonNull Model root) {
 		//		Set<org.eclipse.ocl.pivot.Package> allElements = new HashSet<>();
-		//		TreeIterator<EObject> tit = root.eAllContents();
-		//		while (tit.hasNext()) {
-		//			EObject eObject = tit.next();
+		//		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 		//			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
 		//				allElements.add((org.eclipse.ocl.pivot.Package)eObject);
 		//			}
@@ -1135,9 +1146,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull List<org.eclipse.ocl.pivot.Class> getSortedParameterTypes(@NonNull Model root) {
 		Set<org.eclipse.ocl.pivot.Class> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class t = (org.eclipse.ocl.pivot.Class)eObject;
 				if (t.isTemplateParameter() != null) {			// FIXME can never happen
@@ -1225,9 +1234,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull List<TemplateParameter> getSortedTemplateParameters(@NonNull Model root) {
 		Set<TemplateParameter> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof TemplateParameter) {
 				allElements.add((TemplateParameter)eObject);
 			}
@@ -1239,9 +1246,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull List<TemplateSignature> getSortedTemplateSignatures(@NonNull Model root) {
 		Set<TemplateSignature> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof TemplateSignature) {
 				allElements.add((TemplateSignature)eObject);
 			}
@@ -1253,9 +1258,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected List<TemplateableElement> getSortedTemplateableElements(@NonNull Model root, @Nullable Comparator<EObject> nameComparator) {
 		Set<TemplateableElement> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof TemplateableElement) {
 				TemplateableElement asTemplateableElement = (TemplateableElement)eObject;
 				if (asTemplateableElement.getOwnedBindings().size() > 0) {
@@ -1276,9 +1279,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 	protected @NonNull List<TupleType> getSortedTupleTypes(@NonNull Model root) {
 		Set<TupleType> allElements = new HashSet<>();
-		TreeIterator<EObject> tit = root.eAllContents();
-		while (tit.hasNext()) {
-			EObject eObject = tit.next();
+		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof TupleType) {
 				allElements.add((TupleType)eObject);
 			}

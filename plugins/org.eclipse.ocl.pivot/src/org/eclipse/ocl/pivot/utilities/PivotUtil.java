@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -66,6 +67,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -359,6 +361,26 @@ public class PivotUtil
 		return pivotType;
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull InvalidableType createInvalidableType(/*@NonNull*/ EClass eClass) {
+		InvalidableType pivotType = PivotFactory.eINSTANCE.createInvalidableType();
+		pivotType.setName(eClass.getName());
+		((PivotObjectImpl)pivotType).setESObject(eClass);
+		return pivotType;
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull InvalidableType createInvalidableType(@NonNull NullableType nullableType) {
+		InvalidableType pivotType = PivotFactory.eINSTANCE.createInvalidableType();
+		pivotType.setName("Invalidable<" + nullableType.getName() + ">");
+		pivotType.setNonInvalidType(nullableType);
+		return pivotType;
+	}
+
 	public static @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation) {
 		Iteration pivotIteration = PivotFactory.eINSTANCE.createIteration();
 		pivotIteration.setName(name);
@@ -437,6 +459,26 @@ public class PivotUtil
 		asNavigationCallExp.setType(asProperty.getType());
 		asNavigationCallExp.setIsRequired(asProperty.isIsRequired());
 		return asNavigationCallExp;
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull NullableType createNullableType(/*@NonNull*/ EClass eClass) {
+		NullableType pivotType = PivotFactory.eINSTANCE.createNullableType();
+		pivotType.setName(eClass.getName());
+		((PivotObjectImpl)pivotType).setESObject(eClass);
+		return pivotType;
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull NullableType createNullableType(@NonNull Type nonNullType) {
+		NullableType pivotType = PivotFactory.eINSTANCE.createNullableType();
+		pivotType.setName("Nullable<" + nonNullType.getName() + ">");
+		pivotType.setNonNullType(nonNullType);
+		return pivotType;
 	}
 
 	public static @NonNull Operation createOperation(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
@@ -632,21 +674,21 @@ public class PivotUtil
 		return pivotTemplateParameterSubstitution;
 	}
 
-	public static @NonNull TemplateSignature createTemplateSignature(@NonNull TemplateableElement templateableElement, TemplateParameter... templateParameters) {
+	public static @NonNull TemplateSignature createTemplateSignature(@NonNull TemplateableElement templateableElement, @NonNull TemplateParameter... templateParameters) {
 		TemplateSignature pivotTemplateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
 		List<TemplateParameter> parameters = pivotTemplateSignature.getOwnedParameters();
-		for (TemplateParameter templateParameter : templateParameters) {
+		for (@NonNull TemplateParameter templateParameter : templateParameters) {
 			parameters.add(templateParameter);
 		}
 		pivotTemplateSignature.setOwningElement(templateableElement);
 		return pivotTemplateSignature;
 	}
 
-	public static @NonNull TupleType createTupleType(@NonNull String name, Property... properties) {
+	public static @NonNull TupleType createTupleType(@NonNull String name, @NonNull Property... properties) {
 		TupleType pivotType = PivotFactory.eINSTANCE.createTupleType();
 		pivotType.setName(name);
 		List<Property> ownedProperties = pivotType.getOwnedProperties();
-		for (Property property : properties) {
+		for (@NonNull Property property : properties) {
 			ownedProperties.add(property);
 		}
 		return pivotType;

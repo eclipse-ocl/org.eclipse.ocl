@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution
 import org.eclipse.ocl.pivot.TemplateSignature
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
+import java.util.List
 
 public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -197,6 +198,9 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						«IF !(type instanceof AnyType)»
 							«type.emitSuperClasses("type")»
 						«ENDIF»
+						«IF type.getOwnedSignature() != null»
+							«type.emitTemplateSignature("type")»
+						«ENDIF»
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -282,6 +286,26 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			private final @NonNull «element.eClass().getName()» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ENDIF»
 			«ENDFOR»
+		'''
+	}
+
+	protected def String defineInvalidableTypes(/*@NonNull*/ Model root) {
+		var allInvalidableTypes = root.getSortedInvalidableTypes();
+		if (allInvalidableTypes.isEmpty()) return "";
+		var orphanPackage = root.getOrphanPackage();
+		if (orphanPackage == null) return "";
+		'''
+
+			«FOR type : allInvalidableTypes»
+				private final @NonNull InvalidableType _Invalidable«type.getPrefixedSymbolName("_" + type.partialName())» = createInvalidableType(_Nullable«type.getPrefixedSymbolName("_" + type.partialName())»);
+			«ENDFOR»
+
+			private void installInvalidableTypes() {
+				final List<Class> orphanTypes = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
+				«FOR invalidableType : allInvalidableTypes»
+					orphanTypes.add(_Nullable«invalidableType.getSymbolName()»);
+				«ENDFOR»
+			}
 		'''
 	}
 
@@ -406,6 +430,26 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						ownedClasses.add(type = «type.getSymbolName()»);
 						«type.emitSuperClasses("type")»
 					«ENDFOR»
+				«ENDFOR»
+			}
+		'''
+	}
+
+	protected def String defineNullableTypes(/*@NonNull*/ Model root) {
+		var allNullableTypes = root.getSortedNullableTypes();
+		if (allNullableTypes.isEmpty()) return "";
+		var orphanPackage = root.getOrphanPackage();
+		if (orphanPackage == null) return "";
+		'''
+
+			«FOR type : allNullableTypes»
+				private final @NonNull NullableType _Nullable«type.getPrefixedSymbolName("_" + type.partialName())» = createNullableType(«type.getPrefixedSymbolName("_" + type.partialName())»);
+			«ENDFOR»
+
+			private void installNullableTypes() {
+				final List<Class> orphanTypes = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
+				«FOR nullableType : allNullableTypes»
+					orphanTypes.add(_Nullable«nullableType.getSymbolName()»);
 				«ENDFOR»
 			}
 		'''
@@ -714,6 +758,15 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
+	protected def String emitTemplateSignature(Class type, String typeName) {
+		var List<TemplateParameter> templateParameters = type.getOwnedSignature().getOwnedParameters();
+		'''
+			«IF templateParameters.size() > 0»
+				createTemplateSignature(«typeName»«FOR templateParameter : templateParameters», «templateParameter.getSymbolName()»«ENDFOR»);
+			«ENDIF»
+		'''
+	}
+
 	protected def String installCoercions(/*@NonNull*/ Model root) {
 		var allCoercions = root.getSortedCoercions();
 		if (allCoercions.isEmpty()) return "";
@@ -742,6 +795,12 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''installEnumerations();'''
 	}
 
+	protected def String installInvalidableTypes(/*@NonNull*/ Model root) {
+		var allNullableTypes = root.getSortedInvalidableTypes();
+		if (allNullableTypes.isEmpty()) return "";
+		'''installInvalidableTypes();'''
+	}
+
 	protected def String installIterations(/*@NonNull*/ Model root) {
 		var pkge2iterations = root.getSortedIterations();
 		if (pkge2iterations.isEmpty()) return "";
@@ -758,6 +817,12 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2mapTypes = root.getSortedMapTypes();
 		if (pkge2mapTypes.isEmpty()) return "";
 		'''installMapTypes();'''
+	}
+
+	protected def String installNullableTypes(/*@NonNull*/ Model root) {
+		var allNullableTypes = root.getSortedNullableTypes();
+		if (allNullableTypes.isEmpty()) return "";
+		'''installNullableTypes();'''
 	}
 
 	protected def String installOperations(/*@NonNull*/ Model root) {
