@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.oclstdlib.Invalidable;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.OrderedSet;
@@ -95,9 +96,21 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case OCLstdlibPackage.INVALIDABLE: {
+				Invalidable<?> invalidable = (Invalidable<?>)theEObject;
+				T1 result = caseInvalidable(invalidable);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case OCLstdlibPackage.MAP: {
 				Map<?, ?> map = (Map<?, ?>)theEObject;
 				T1 result = caseMap(map);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case OCLstdlibPackage.NULLABLE: {
+				org.eclipse.ocl.pivot.oclstdlib.Nullable<?> nullable = (org.eclipse.ocl.pivot.oclstdlib.Nullable<?>)theEObject;
+				T1 result = caseNullable(nullable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -276,6 +289,21 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Invalidable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Invalidable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <T extends Object> T1 caseInvalidable(Invalidable<T> object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Map</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -287,6 +315,21 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @generated
 	 */
 	public <K, V> T1 caseMap(Map<K, V> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Nullable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Nullable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <T extends Object> T1 caseNullable(org.eclipse.ocl.pivot.oclstdlib.Nullable<T> object) {
 		return null;
 	}
 

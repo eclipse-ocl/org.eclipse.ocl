@@ -22,6 +22,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.oclstdlib.Invalidable;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.OrderedSet;
@@ -91,8 +92,16 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 			return createCollectionAdapter();
 		}
 		@Override
+		public <T extends Object> Adapter caseInvalidable(Invalidable<T> object) {
+			return createInvalidableAdapter();
+		}
+		@Override
 		public <K, V> Adapter caseMap(Map<K, V> object) {
 			return createMapAdapter();
+		}
+		@Override
+		public <T extends Object> Adapter caseNullable(org.eclipse.ocl.pivot.oclstdlib.Nullable<T> object) {
+			return createNullableAdapter();
 		}
 		@Override
 		public Adapter caseOclAny(Object object) {
@@ -219,6 +228,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib.Invalidable <em>Invalidable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Invalidable
+	 * @generated
+	 */
+	public Adapter createInvalidableAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link java.util.Map <em>Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -229,6 +252,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.oclstdlib.Nullable <em>Nullable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Nullable
+	 * @generated
+	 */
+	public Adapter createNullableAdapter() {
 		return null;
 	}
 

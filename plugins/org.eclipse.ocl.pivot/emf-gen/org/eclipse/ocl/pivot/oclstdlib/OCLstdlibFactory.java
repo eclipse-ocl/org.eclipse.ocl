@@ -76,6 +76,8 @@ public class OCLstdlibFactory extends EFactoryImpl {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case OCLstdlibPackage.INVALIDABLE: return createInvalidable();
+			case OCLstdlibPackage.NULLABLE: return createNullable();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -125,6 +127,26 @@ public class OCLstdlibFactory extends EFactoryImpl {
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <T extends Object> Invalidable<T> createInvalidable() {
+		Invalidable<T> invalidable = new Invalidable<T>();
+		return invalidable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <T extends Object> Nullable<T> createNullable() {
+		Nullable<T> nullable = new Nullable<T>();
+		return nullable;
 	}
 
 	/**

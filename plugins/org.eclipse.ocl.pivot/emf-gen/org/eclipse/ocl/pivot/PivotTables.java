@@ -4887,6 +4887,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _AnyType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _AnyType__TemplateableElement = {};
@@ -4935,6 +4937,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _AssociationClass__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _AssociationClass__TemplateableElement = {};
@@ -5023,6 +5027,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _AssociativityKind__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 
@@ -5064,6 +5070,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _BagType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _BagType__TemplateableElement = {};
@@ -5112,6 +5120,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Behavior__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Behavior__TemplateableElement = {};
@@ -5280,6 +5290,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Class__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Class__TemplateableElement = {};
@@ -5362,6 +5374,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _CollectionKind__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 
@@ -5522,6 +5536,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _CollectionType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _CollectionType__TemplateableElement = {};
@@ -5816,6 +5832,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _DataType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _DataType__TemplateableElement = {};
@@ -5902,6 +5920,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _DynamicBehavior__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _DynamicBehavior__TemplateableElement = {};
@@ -6017,6 +6037,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _DynamicType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _DynamicType__TemplateableElement = {};
@@ -6143,6 +6165,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _ElementExtension__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _ElementExtension__TemplateableElement = {};
@@ -6237,6 +6261,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Enumeration__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Enumeration__TemplateableElement = {};
@@ -6688,6 +6714,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _InvalidType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _InvalidType__TemplateableElement = {};
@@ -6736,6 +6764,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _InvalidableType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _InvalidableType__TemplateableElement = {};
@@ -6961,6 +6991,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _LambdaType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _LambdaType__TemplateableElement = {};
@@ -7355,6 +7387,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _MapType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _MapType__TemplateableElement = {};
@@ -7445,6 +7479,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _MessageType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _MessageType__TemplateableElement = {};
@@ -7742,6 +7778,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _NullableType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _NullableType__TemplateableElement = {};
@@ -8029,6 +8067,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OrderedSetType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OrderedSetType__TemplateableElement = {};
@@ -8375,6 +8415,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _PrimitiveType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _PrimitiveType__TemplateableElement = {};
@@ -8616,6 +8658,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _PseudostateKind__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 
@@ -8808,6 +8852,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _SelfType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _SelfType__TemplateableElement = {};
@@ -8893,6 +8939,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _SequenceType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _SequenceType__TemplateableElement = {};
@@ -8943,6 +8991,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _SetType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _SetType__TemplateableElement = {};
@@ -9071,6 +9121,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Signal__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Signal__TemplateableElement = {};
@@ -9266,6 +9318,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _StateMachine__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _StateMachine__TemplateableElement = {};
@@ -9314,6 +9368,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Stereotype__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Stereotype__TemplateableElement = {};
@@ -9470,6 +9526,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _TemplateParameter__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _TemplateParameter__Type = {
@@ -9666,6 +9724,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _TransitionKind__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 
@@ -9823,6 +9883,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _TupleType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _TupleType__TemplateableElement = {};
@@ -9875,6 +9937,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Type__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _Type__Visitable = {};
@@ -10314,6 +10378,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _VoidType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _VoidType__TemplateableElement = {};
@@ -10362,6 +10428,8 @@ public class PivotTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _WildcardType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _WildcardType__TemplateableElement = {};

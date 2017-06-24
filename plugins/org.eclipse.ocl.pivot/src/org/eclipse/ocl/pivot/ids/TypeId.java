@@ -22,14 +22,14 @@ import org.eclipse.ocl.pivot.internal.ids.OclVoidTypeIdImpl;
  * definitions merging additional features in to the 'actual' type.
  * <p>
  * Logically merged types may have different package NsURIs but the same TypeId.
- * 
+ *
  * @see CollectionTypeId
  * @see LambdaTypeId
  * @see OclInvalidTypeId
  * @see OclVoidTypeId
  * @see PrimitiveTypeId
  * @see TupleTypeId
- * 
+ *
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface TypeId extends ElementId
@@ -44,11 +44,13 @@ public interface TypeId extends ElementId
 	public static final @NonNull String ENUMERATION_NAME = "Enumeration";
 	public static final @NonNull String INTEGER_NAME = "Integer";
 	public static final @NonNull String INTEGER_RANGE_NAME = "IntegerRange";
+	public static final @NonNull String INVALIDABLE_TYPE_NAME = "InvalidableType";
 	public static final @NonNull String LAMBDA_TYPE_NAME = "LambdaType";
 	public static final @NonNull String MAP_ENTRY_NAME = "MapEntry";
 	public static final @NonNull String MAP_NAME = "Map";
 	public static final @NonNull String MAP_TYPE_NAME = "MapType";
 	public static final @NonNull String METACLASS_NAME = "Metaclass";
+	public static final @NonNull String NULLABLE_TYPE_NAME = "NullableType";
 	public static final @NonNull String OCL_ANY_NAME = "OclAny";
 	public static final @NonNull String OCL_COMPARABLE_NAME = "OclComparable";
 	/**
@@ -79,10 +81,10 @@ public interface TypeId extends ElementId
 	public static final @NonNull String TUPLE_TYPE_NAME = "TupleType";
 	public static final @NonNull String UNIQUE_COLLECTION_NAME = "UniqueCollection";
 	public static final @NonNull String UNLIMITED_NATURAL_NAME = "UnlimitedNatural";
-	
+
 	public static final @NonNull PrimitiveTypeId BOOLEAN = IdManager.getPrimitiveTypeId(BOOLEAN_NAME);
 	public static final @NonNull PrimitiveTypeId INTEGER = IdManager.getPrimitiveTypeId(INTEGER_NAME);
-	
+
 	/**
 	 * For code generation we need some kind of type identifier for a range. Perhaps it could be a Collection. For now
 	 * a distinct primitive at least makes it different to everything else.
@@ -126,25 +128,25 @@ public interface TypeId extends ElementId
 	public static final @NonNull TemplateParameterId T_3 = IdManager.getTemplateParameterId(2);
 
 	public static final @NonNull String @NonNull [] NULL_STRING_ARRAY = new @NonNull String[0];
-	public static final @NonNull TuplePartId @NonNull [] NULL_TUPLE_PART_ID_ARRAY = new @NonNull TuplePartId[0];	
-	public static final @NonNull TypeId @NonNull [] NULL_TYPE_ID_ARRAY = new @NonNull TypeId[0];	
+	public static final @NonNull TuplePartId @NonNull [] NULL_TUPLE_PART_ID_ARRAY = new @NonNull TuplePartId[0];
+	public static final @NonNull TypeId @NonNull [] NULL_TYPE_ID_ARRAY = new @NonNull TypeId[0];
 
 	@Nullable String getLiteralName();
 
 	@NonNull String getMetaTypeName();
 
 	/**
-     * Return the OperationId for an Operation of this typeId.
+	 * Return the OperationId for an Operation of this typeId.
 	 * <p>
 	 * Throws UnsupportedException for typeIds such as Primitive Types that may not have operations.
-     */
+	 */
 	@NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId);
 
 	/**
-     * Return the PropertyId for a Property of this typeId.
+	 * Return the PropertyId for a Property of this typeId.
 	 * <p>
 	 * Throws UnsupportedException for typeIds such as Primitive Types that may not have properties.
-     */
+	 */
 	@NonNull PropertyId getPropertyId(@NonNull String name);
 
 	/**

@@ -632,6 +632,19 @@ type Integer : PrimitiveType conformsTo Real {
 	coercion toUnlimitedNatural() : UnlimitedNatural[1] => 'org.eclipse.ocl.pivot.library.numeric.IntegerToUnlimitedNaturalOperation';
 }
 
+/**
+The Invalidable wraps a maybe-null, non-invalid type to provide a maybe-null, maybe-invalid variant of the type. 
+*/
+type Invalidable(T extends OclType) : InvalidableType conformsTo OclType {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
+
+	/**
+	The non-invalid, maybe-null type wrapped by this Invalidable.
+	**/
+	static property nonInvalidType : OclType => 'org.eclipse.ocl.pivot.library.classifier.InvalidableNonInvalidTypeProperty';
+--	inv InvalidableWrapsNonNullable: nonInvalidType.oclIsKindOf(Nullable);
+}
+
 /*
  * A Map provides a Set of key values, each of which has an associated value.
  * Keys and values may be null, but neither may be invalid.
@@ -741,6 +754,20 @@ type Map(K,V) : MapType conformsTo OclAny {
 	The value type of the key-value pairs of oclText[self].
 	**/
 	static property valueType : V => 'org.eclipse.ocl.pivot.library.map.MapValueTypeProperty';
+}
+
+/**
+The Nullable wraps a non-null, non-invalid type to provide a may-be-null, non-invalid variant of the type. 
+*/
+type Nullable(T extends OclType) : NullableType conformsTo OclType {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
+
+	/**
+	The non-invalid, non-null type wrapped by this Nullable.
+	**/
+	static property nonNullType : OclType => 'org.eclipse.ocl.pivot.library.classifier.NullableNonNullTypeProperty';
+--	inv NullableWrapsNonInvalidable: not nonNullType.oclIsKindOf(Invalidable);
+--	inv NullableWrapsNonNullable: not nonNullType.oclIsKindOf(Nullable);
 }
 
 /**
@@ -1120,6 +1147,14 @@ abstract type OclType conformsTo OclElement {
 	Returns true if type2 conforms to self.
 	*/
 	operation conformsTo(type2 : OclType) : Boolean[1] => 'org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation';
+	/**
+	Return the non-invalid type underlying this type, which is self for unwrapped types.
+	*/
+	operation asNonInvalid() : OclType[1] => 'org.eclipse.ocl.pivot.library.classifier.OclTypeAsNonInvalidOperation';
+	/**
+	Return the non-null type underlying this type, which is self for unwrapped types.
+	*/
+	operation asNonNull() : OclType[1] => 'org.eclipse.ocl.pivot.library.classifier.OclTypeAsNonNullOperation';
 }
 
 /**

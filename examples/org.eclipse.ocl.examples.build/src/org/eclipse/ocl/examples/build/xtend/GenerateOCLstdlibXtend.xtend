@@ -323,6 +323,8 @@ public class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«root.installMapTypes()»
 						«root.installLambdaTypes()»
 						«root.installTupleTypes()»
+						«root.installNullableTypes()»
+						«root.installInvalidableTypes()»
 						«root.installOperations()»
 						«root.installIterations()»
 						«root.installCoercions()»
@@ -351,6 +353,8 @@ public class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					«root.defineMapTypes()»
 					«root.defineTupleTypes()»
 					«root.defineLambdaTypes()»
+					«root.defineNullableTypes()»
+					«root.defineInvalidableTypes()»
 					«root.defineOperations()»
 					«root.defineIterations()»
 					«root.defineCoercions()»

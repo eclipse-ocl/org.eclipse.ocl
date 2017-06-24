@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.internal.values.UnlimitedValueImpl;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
+import org.eclipse.ocl.pivot.oclstdlib.Invalidable;
 import org.eclipse.ocl.pivot.types.AbstractInheritance;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.values.Bag;
@@ -207,6 +208,15 @@ public abstract class ValueUtil
 		}
 	}
 
+	public static @NonNull Invalidable<?> asInvalidable(@Nullable Object value) {
+		if (value instanceof Invalidable) {
+			return (Invalidable<?>)value;
+		}
+		else {
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.INVALIDABLE_TYPE_NAME, getTypeName(value));
+		}
+	}
+
 	public static @NonNull MapType asMapType(@Nullable Object value) {
 		if (value instanceof MapType) {
 			return (MapType)value;
@@ -262,6 +272,15 @@ public abstract class ValueUtil
 			}
 		}
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, "NavigableObject", getTypeName(value));
+	}
+
+	public static org.eclipse.ocl.pivot.oclstdlib.@NonNull Nullable<?> asNullable(@Nullable Object value) {
+		if (value instanceof org.eclipse.ocl.pivot.oclstdlib.Nullable) {
+			return (org.eclipse.ocl.pivot.oclstdlib.Nullable<?>)value;
+		}
+		else {
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.NULLABLE_TYPE_NAME, getTypeName(value));
+		}
 	}
 
 	public static @Nullable Object asObject(@Nullable Object value) {

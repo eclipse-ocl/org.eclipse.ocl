@@ -91,6 +91,8 @@ public class OCLstdlibTables
 		public static final @NonNull ExecutorTypeParameter __Collection__selectByKind_TT = new ExecutorTypeParameter(TypeId.T_2, "TT");
 		public static final @NonNull ExecutorTypeParameter __Collection__selectByType_TT = new ExecutorTypeParameter(TypeId.T_2, "TT");
 
+		public static final @NonNull ExecutorTypeParameter _Invalidable_T = new ExecutorTypeParameter(TypeId.T_1, "T");
+
 		public static final @NonNull ExecutorTypeParameter _Map_K = new ExecutorTypeParameter(TypeId.T_1, "K");
 		public static final @NonNull ExecutorTypeParameter _Map_V = new ExecutorTypeParameter(TypeId.T_2, "V");
 		public static final @NonNull ExecutorTypeParameter __Map__excludesAll_K2 = new ExecutorTypeParameter(TypeId.T_3, "K2");
@@ -103,6 +105,8 @@ public class OCLstdlibTables
 		public static final @NonNull ExecutorTypeParameter __Map__includesMap_V2 = new ExecutorTypeParameter(IdManager.getTemplateParameterId(3), "V2");
 		public static final @NonNull ExecutorTypeParameter __Map__includingMap_K2 = new ExecutorTypeParameter(TypeId.T_3, "K2");
 		public static final @NonNull ExecutorTypeParameter __Map__includingMap_V2 = new ExecutorTypeParameter(IdManager.getTemplateParameterId(3), "V2");
+
+		public static final @NonNull ExecutorTypeParameter _Nullable_T = new ExecutorTypeParameter(TypeId.T_1, "T");
 		public static final @NonNull ExecutorTypeParameter __OclAny__oclAsType_TT = new ExecutorTypeParameter(TypeId.T_1, "TT");
 		public static final @NonNull ExecutorTypeParameter __OclElement__oclAsModelType_TT = new ExecutorTypeParameter(TypeId.T_1, "TT");
 		public static final @NonNull ExecutorTypeParameter __OclInvalid__oclAsType_TT = new ExecutorTypeParameter(TypeId.T_1, "TT");
@@ -156,7 +160,9 @@ public class OCLstdlibTables
 		public static final @NonNull EcoreExecutorType _Boolean = new EcoreExecutorType(TypeId.BOOLEAN, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _Collection = new EcoreExecutorType(TypeId.COLLECTION, PACKAGE, 0 | ExecutorType.ABSTRACT, TypeParameters._Collection_T);
 		public static final @NonNull EcoreExecutorType _Integer = new EcoreExecutorType(TypeId.INTEGER, PACKAGE, 0);
+		public static final @NonNull EcoreExecutorType _Invalidable = new EcoreExecutorType(OCLstdlibPackage.Literals.INVALIDABLE, PACKAGE, 0, TypeParameters._Invalidable_T);
 		public static final @NonNull EcoreExecutorType _Map = new EcoreExecutorType(OCLstdlibPackage.Literals.MAP, PACKAGE, 0, TypeParameters._Map_K, TypeParameters._Map_V);
+		public static final @NonNull EcoreExecutorType _Nullable = new EcoreExecutorType(OCLstdlibPackage.Literals.NULLABLE, PACKAGE, 0, TypeParameters._Nullable_T);
 		public static final @NonNull EcoreExecutorType _OclAny = new EcoreExecutorType(TypeId.OCL_ANY, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclComparable = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_COMPARABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OclElement = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_ELEMENT, PACKAGE, 0 | ExecutorType.ABSTRACT);
@@ -185,7 +191,9 @@ public class OCLstdlibTables
 			_Boolean,
 			_Collection,
 			_Integer,
+			_Invalidable,
 			_Map,
+			_Nullable,
 			_OclAny,
 			_OclComparable,
 			_OclElement,
@@ -249,8 +257,18 @@ public class OCLstdlibTables
 		private static final @NonNull ExecutorFragment _Integer__OclSummable = new ExecutorFragment(Types._Integer, OCLstdlibTables.Types._OclSummable);
 		private static final @NonNull ExecutorFragment _Integer__Real = new ExecutorFragment(Types._Integer, OCLstdlibTables.Types._Real);
 
+		private static final @NonNull ExecutorFragment _Invalidable__Invalidable = new ExecutorFragment(Types._Invalidable, OCLstdlibTables.Types._Invalidable);
+		private static final @NonNull ExecutorFragment _Invalidable__OclAny = new ExecutorFragment(Types._Invalidable, OCLstdlibTables.Types._OclAny);
+		private static final @NonNull ExecutorFragment _Invalidable__OclElement = new ExecutorFragment(Types._Invalidable, OCLstdlibTables.Types._OclElement);
+		private static final @NonNull ExecutorFragment _Invalidable__OclType = new ExecutorFragment(Types._Invalidable, OCLstdlibTables.Types._OclType);
+
 		private static final @NonNull ExecutorFragment _Map__Map = new ExecutorFragment(Types._Map, OCLstdlibTables.Types._Map);
 		private static final @NonNull ExecutorFragment _Map__OclAny = new ExecutorFragment(Types._Map, OCLstdlibTables.Types._OclAny);
+
+		private static final @NonNull ExecutorFragment _Nullable__Nullable = new ExecutorFragment(Types._Nullable, OCLstdlibTables.Types._Nullable);
+		private static final @NonNull ExecutorFragment _Nullable__OclAny = new ExecutorFragment(Types._Nullable, OCLstdlibTables.Types._OclAny);
+		private static final @NonNull ExecutorFragment _Nullable__OclElement = new ExecutorFragment(Types._Nullable, OCLstdlibTables.Types._OclElement);
+		private static final @NonNull ExecutorFragment _Nullable__OclType = new ExecutorFragment(Types._Nullable, OCLstdlibTables.Types._OclType);
 
 		private static final @NonNull ExecutorFragment _OclAny__OclAny = new ExecutorFragment(Types._OclAny, OCLstdlibTables.Types._OclAny);
 
@@ -790,8 +808,12 @@ public class OCLstdlibTables
 		public static final @NonNull ExecutorOperation _OclTuple___eq_ = new ExecutorOperation("=", Parameters._OclSelf, Types._OclTuple,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 
+		public static final @NonNull ExecutorOperation _OclType__asNonInvalid = new ExecutorOperation("asNonInvalid", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclType,
+			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeAsNonInvalidOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclType__asNonNull = new ExecutorOperation("asNonNull", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclType,
+			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeAsNonNullOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclType__conformsTo = new ExecutorOperation("conformsTo", Parameters._OclType, Types._OclType,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
+			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _OclVoid___lt__gt_ = new ExecutorOperation("<>", Parameters._OclSelf, Types._OclVoid,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
@@ -1090,8 +1112,12 @@ public class OCLstdlibTables
 		public static final @NonNull ExecutorProperty _Collection__lower = new ExecutorPropertyWithImplementation("lower", Types._Collection, 1, org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _Collection__upper = new ExecutorPropertyWithImplementation("upper", Types._Collection, 2, org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
 
+		public static final @NonNull ExecutorProperty _Invalidable__nonInvalidType = new ExecutorPropertyWithImplementation("nonInvalidType", Types._Invalidable, 0, org.eclipse.ocl.pivot.library.classifier.InvalidableNonInvalidTypeProperty.INSTANCE);
+
 		public static final @NonNull ExecutorProperty _Map__keyType = new ExecutorPropertyWithImplementation("keyType", Types._Map, 0, org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _Map__valueType = new ExecutorPropertyWithImplementation("valueType", Types._Map, 1, org.eclipse.ocl.pivot.library.map.MapValueTypeProperty.INSTANCE);
+
+		public static final @NonNull ExecutorProperty _Nullable__nonNullType = new ExecutorPropertyWithImplementation("nonNullType", Types._Nullable, 0, org.eclipse.ocl.pivot.library.classifier.NullableNonNullTypeProperty.INSTANCE);
 
 		public static final @NonNull ExecutorProperty _OclElement__oclContainer = new ExecutorPropertyWithImplementation("oclContainer", Types._OclElement, 0, org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _OclElement__oclContents = new ExecutorPropertyWithImplementation("oclContents", Types._OclElement, 1, org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
@@ -1099,6 +1125,8 @@ public class OCLstdlibTables
 		public static final @NonNull ExecutorProperty _OclElement__OclElement__oclContents = new ExecutorPropertyWithImplementation("OclElement", Types._OclElement, 3, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTENTS));
 
 		public static final @NonNull ExecutorProperty _OclType__Collection__elementType = new ExecutorPropertyWithImplementation("Collection", Types._OclType, 0, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.COLLECTION__ELEMENT_TYPE));
+		public static final @NonNull ExecutorProperty _OclType__Invalidable__nonInvalidType = new ExecutorPropertyWithImplementation("Invalidable", Types._OclType, 1, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.INVALIDABLE__NON_INVALID_TYPE));
+		public static final @NonNull ExecutorProperty _OclType__Nullable__nonNullType = new ExecutorPropertyWithImplementation("Nullable", Types._OclType, 2, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.NULLABLE__NON_NULL_TYPE));
 		static {
 			Init.initEnd();
 		}
@@ -1150,12 +1178,30 @@ public class OCLstdlibTables
 		};
 		private static final int @NonNull [] __Integer = { 1,2,1,1 };
 
+		private static final @NonNull ExecutorFragment @NonNull [] _Invalidable =
+		{
+			Fragments._Invalidable__OclAny /* 0 */,
+			Fragments._Invalidable__OclElement /* 1 */,
+			Fragments._Invalidable__OclType /* 2 */,
+			Fragments._Invalidable__Invalidable /* 3 */
+		};
+		private static final int @NonNull [] __Invalidable = { 1,1,1,1 };
+
 		private static final @NonNull ExecutorFragment @NonNull [] _Map =
 		{
 			Fragments._Map__OclAny /* 0 */,
 			Fragments._Map__Map /* 1 */
 		};
 		private static final int @NonNull [] __Map = { 1,1 };
+
+		private static final @NonNull ExecutorFragment @NonNull [] _Nullable =
+		{
+			Fragments._Nullable__OclAny /* 0 */,
+			Fragments._Nullable__OclElement /* 1 */,
+			Fragments._Nullable__OclType /* 2 */,
+			Fragments._Nullable__Nullable /* 3 */
+		};
+		private static final int @NonNull [] __Nullable = { 1,1,1,1 };
 
 		private static final @NonNull ExecutorFragment @NonNull [] _OclAny =
 		{
@@ -1338,7 +1384,9 @@ public class OCLstdlibTables
 			Types._Boolean.initFragments(_Boolean, __Boolean);
 			Types._Collection.initFragments(_Collection, __Collection);
 			Types._Integer.initFragments(_Integer, __Integer);
+			Types._Invalidable.initFragments(_Invalidable, __Invalidable);
 			Types._Map.initFragments(_Map, __Map);
+			Types._Nullable.initFragments(_Nullable, __Nullable);
 			Types._OclAny.initFragments(_OclAny, __OclAny);
 			Types._OclComparable.initFragments(_OclComparable, __OclComparable);
 			Types._OclElement.initFragments(_OclElement, __OclElement);
@@ -1611,6 +1659,39 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._Integer__toString /* toString() */
 		};
 
+		private static final @NonNull ExecutorOperation @NonNull [] _Invalidable__Invalidable = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _Invalidable__OclAny = {
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclAny__toString /* toString() */
+		};
+		private static final @NonNull ExecutorOperation @NonNull [] _Invalidable__OclElement = {
+			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[?]) */,
+			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
+			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[?]) */,
+			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
+			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
+		};
+		private static final @NonNull ExecutorOperation @NonNull [] _Invalidable__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
+			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
+		};
+
 		private static final @NonNull ExecutorOperation @NonNull [] _Map__Map = {
 			OCLstdlibTables.Operations._Map___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._Map___eq_ /* _'='(OclSelf[?]) */,
@@ -1653,6 +1734,39 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
+		};
+
+		private static final @NonNull ExecutorOperation @NonNull [] _Nullable__Nullable = {};
+		private static final @NonNull ExecutorOperation @NonNull [] _Nullable__OclAny = {
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclAny__toString /* toString() */
+		};
+		private static final @NonNull ExecutorOperation @NonNull [] _Nullable__OclElement = {
+			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances() */,
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[?]) */,
+			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
+			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[?]) */,
+			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
+			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
+		};
+		private static final @NonNull ExecutorOperation @NonNull [] _Nullable__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
+			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 
 		private static final @NonNull ExecutorOperation @NonNull [] _OclAny__OclAny = {
@@ -1755,6 +1869,8 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclEnumeration__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 
@@ -1915,6 +2031,8 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclStereotype__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 
@@ -1963,6 +2081,8 @@ public class OCLstdlibTables
 		};
 
 		private static final @NonNull ExecutorOperation @NonNull [] _OclType__OclType = {
+			OCLstdlibTables.Operations._OclType__asNonInvalid /* asNonInvalid() */,
+			OCLstdlibTables.Operations._OclType__asNonNull /* asNonNull() */,
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull ExecutorOperation @NonNull [] _OclType__OclAny = {
@@ -2592,8 +2712,18 @@ public class OCLstdlibTables
 			Fragments._Integer__OclSummable.initOperations(_Integer__OclSummable);
 			Fragments._Integer__Real.initOperations(_Integer__Real);
 
+			Fragments._Invalidable__Invalidable.initOperations(_Invalidable__Invalidable);
+			Fragments._Invalidable__OclAny.initOperations(_Invalidable__OclAny);
+			Fragments._Invalidable__OclElement.initOperations(_Invalidable__OclElement);
+			Fragments._Invalidable__OclType.initOperations(_Invalidable__OclType);
+
 			Fragments._Map__Map.initOperations(_Map__Map);
 			Fragments._Map__OclAny.initOperations(_Map__OclAny);
+
+			Fragments._Nullable__Nullable.initOperations(_Nullable__Nullable);
+			Fragments._Nullable__OclAny.initOperations(_Nullable__OclAny);
+			Fragments._Nullable__OclElement.initOperations(_Nullable__OclElement);
+			Fragments._Nullable__OclType.initOperations(_Nullable__OclType);
 
 			Fragments._OclAny__OclAny.initOperations(_OclAny__OclAny);
 
@@ -2714,9 +2844,21 @@ public class OCLstdlibTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Integer = {};
 
+		private static final @NonNull ExecutorProperty @NonNull [] _Invalidable = {
+			OCLstdlibTables.Properties._Invalidable__nonInvalidType,
+			OCLstdlibTables.Properties._OclElement__oclContainer,
+			OCLstdlibTables.Properties._OclElement__oclContents
+		};
+
 		private static final @NonNull ExecutorProperty @NonNull [] _Map = {
 			OCLstdlibTables.Properties._Map__keyType,
 			OCLstdlibTables.Properties._Map__valueType
+		};
+
+		private static final @NonNull ExecutorProperty @NonNull [] _Nullable = {
+			OCLstdlibTables.Properties._Nullable__nonNullType,
+			OCLstdlibTables.Properties._OclElement__oclContainer,
+			OCLstdlibTables.Properties._OclElement__oclContents
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclAny = {};
@@ -2803,7 +2945,9 @@ public class OCLstdlibTables
 			Fragments._Boolean__Boolean.initProperties(_Boolean);
 			Fragments._Collection__Collection.initProperties(_Collection);
 			Fragments._Integer__Integer.initProperties(_Integer);
+			Fragments._Invalidable__Invalidable.initProperties(_Invalidable);
 			Fragments._Map__Map.initProperties(_Map);
+			Fragments._Nullable__Nullable.initProperties(_Nullable);
 			Fragments._OclAny__OclAny.initProperties(_OclAny);
 			Fragments._OclComparable__OclComparable.initProperties(_OclComparable);
 			Fragments._OclElement__OclElement.initProperties(_OclElement);

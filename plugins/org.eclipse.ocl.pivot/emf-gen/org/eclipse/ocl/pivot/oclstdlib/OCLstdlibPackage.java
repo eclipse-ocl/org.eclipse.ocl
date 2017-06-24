@@ -89,7 +89,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclComparable()
 	 * @generated
 	 */
-	public static final int OCL_COMPARABLE = 4;
+	public static final int OCL_COMPARABLE = 6;
 
 	/**
 	 * The meta object id for the '{@link java.lang.Object <em>Ocl Element</em>}' class.
@@ -99,7 +99,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclElement()
 	 * @generated
 	 */
-	public static final int OCL_ELEMENT = 5;
+	public static final int OCL_ELEMENT = 7;
 
 	/**
 	 * The meta object id for the '{@link java.lang.Object <em>Ocl Any</em>}' class.
@@ -109,7 +109,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclAny()
 	 * @generated
 	 */
-	public static final int OCL_ANY = 3;
+	public static final int OCL_ANY = 5;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -130,7 +130,21 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass invalidableEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass mapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nullableEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -168,7 +182,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclInvalid()
 	 * @generated
 	 */
-	public static final int OCL_INVALID = 7;
+	public static final int OCL_INVALID = 9;
 
 	/**
 	 * The meta object id for the '{@link java.lang.Object <em>Ocl Lambda</em>}' class.
@@ -178,7 +192,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclLambda()
 	 * @generated
 	 */
-	public static final int OCL_LAMBDA = 8;
+	public static final int OCL_LAMBDA = 10;
 
 	/**
 	 * The meta object id for the '{@link java.lang.Object <em>Ocl Message</em>}' class.
@@ -188,7 +202,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclMessage()
 	 * @generated
 	 */
-	public static final int OCL_MESSAGE = 9;
+	public static final int OCL_MESSAGE = 11;
 
 	/**
 	 * The meta object id for the '{@link java.lang.Object <em>Ocl State</em>}' class.
@@ -198,7 +212,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclState()
 	 * @generated
 	 */
-	public static final int OCL_STATE = 11;
+	public static final int OCL_STATE = 13;
 
 	/**
 	 * The meta object id for the '{@link java.lang.Object <em>Ocl Summable</em>}' class.
@@ -208,7 +222,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclSummable()
 	 * @generated
 	 */
-	public static final int OCL_SUMMABLE = 13;
+	public static final int OCL_SUMMABLE = 15;
 
 	/**
 	 * The meta object id for the '{@link java.lang.Object <em>Ocl Tuple</em>}' class.
@@ -218,7 +232,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclTuple()
 	 * @generated
 	 */
-	public static final int OCL_TUPLE = 14;
+	public static final int OCL_TUPLE = 16;
 
 	/**
 	 * The meta object id for the '{@link java.lang.Object <em>Ocl Type</em>}' class.
@@ -228,7 +242,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclType()
 	 * @generated
 	 */
-	public static final int OCL_TYPE = 15;
+	public static final int OCL_TYPE = 17;
 
 	/**
 	 * The meta object id for the '{@link java.lang.Object <em>Ocl Void</em>}' class.
@@ -238,7 +252,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclVoid()
 	 * @generated
 	 */
-	public static final int OCL_VOID = 16;
+	public static final int OCL_VOID = 18;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -353,7 +367,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getBoolean()
 	 * @generated
 	 */
-	public static final int BOOLEAN = 22;
+	public static final int BOOLEAN = 24;
 
 	/**
 	 * The meta object id for the '<em>Integer</em>' data type.
@@ -363,7 +377,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getInteger()
 	 * @generated
 	 */
-	public static final int INTEGER = 23;
+	public static final int INTEGER = 25;
 
 	/**
 	 * The meta object id for the '{@link java.util.Map <em>Map</em>}' class.
@@ -373,7 +387,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getMap()
 	 * @generated
 	 */
-	public static final int MAP = 2;
+	public static final int MAP = 3;
 
 	/**
 	 * The meta object id for the '<em>Real</em>' data type.
@@ -383,7 +397,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getReal()
 	 * @generated
 	 */
-	public static final int REAL = 24;
+	public static final int REAL = 26;
 
 	/**
 	 * The meta object id for the '<em>String</em>' data type.
@@ -393,7 +407,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getString()
 	 * @generated
 	 */
-	public static final int STRING = 25;
+	public static final int STRING = 27;
 
 	/**
 	 * The meta object id for the '<em>Unlimited Natural</em>' data type.
@@ -403,7 +417,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getUnlimitedNatural()
 	 * @generated
 	 */
-	public static final int UNLIMITED_NATURAL = 26;
+	public static final int UNLIMITED_NATURAL = 28;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.values.Bag <em>Bag</em>}' class.
@@ -498,6 +512,34 @@ public class OCLstdlibPackage extends EPackageImpl {
 	public static final int BAG_FEATURE_COUNT = COLLECTION_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.pivot.oclstdlib.Invalidable <em>Invalidable</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Invalidable
+	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getInvalidable()
+	 * @generated
+	 */
+	public static final int INVALIDABLE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Non Invalid Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INVALIDABLE__NON_INVALID_TYPE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Invalidable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int INVALIDABLE_FEATURE_COUNT = 1;
+
+	/**
 	 * The feature id for the '<em><b>Key Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -523,6 +565,34 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @ordered
 	 */
 	public static final int MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.pivot.oclstdlib.Nullable <em>Nullable</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Nullable
+	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getNullable()
+	 * @generated
+	 */
+	public static final int NULLABLE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Non Null Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NULLABLE__NON_NULL_TYPE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Nullable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NULLABLE_FEATURE_COUNT = 1;
 
 	/**
 	 * The number of structural features of the '<em>Ocl Any</em>' class.
@@ -579,7 +649,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclEnumeration()
 	 * @generated
 	 */
-	public static final int OCL_ENUMERATION = 6;
+	public static final int OCL_ENUMERATION = 8;
 
 	/**
 	 * The number of structural features of the '<em>Ocl Enumeration</em>' class.
@@ -598,7 +668,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOrderedCollection()
 	 * @generated
 	 */
-	public static final int ORDERED_COLLECTION = 17;
+	public static final int ORDERED_COLLECTION = 19;
 
 	/**
 	 * The number of structural features of the '<em>Ocl Void</em>' class.
@@ -644,7 +714,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclSelf()
 	 * @generated
 	 */
-	public static final int OCL_SELF = 10;
+	public static final int OCL_SELF = 12;
 
 	/**
 	 * The number of structural features of the '<em>Ocl Self</em>' class.
@@ -672,7 +742,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOclStereotype()
 	 * @generated
 	 */
-	public static final int OCL_STEREOTYPE = 12;
+	public static final int OCL_STEREOTYPE = 14;
 
 	/**
 	 * The feature id for the '<em><b>Ocl Container</b></em>' reference.
@@ -792,7 +862,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getOrderedSet()
 	 * @generated
 	 */
-	public static final int ORDERED_SET = 18;
+	public static final int ORDERED_SET = 20;
 
 	/**
 	 * The feature id for the '<em><b>Element Type</b></em>' reference.
@@ -838,7 +908,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getSequence()
 	 * @generated
 	 */
-	public static final int SEQUENCE = 19;
+	public static final int SEQUENCE = 21;
 
 	/**
 	 * The feature id for the '<em><b>Element Type</b></em>' reference.
@@ -884,7 +954,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getSet()
 	 * @generated
 	 */
-	public static final int SET = 20;
+	public static final int SET = 22;
 
 	/**
 	 * The meta object id for the '{@link java.util.Collection <em>Unique Collection</em>}' class.
@@ -894,7 +964,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getUniqueCollection()
 	 * @generated
 	 */
-	public static final int UNIQUE_COLLECTION = 21;
+	public static final int UNIQUE_COLLECTION = 23;
 
 	/**
 	 * The feature id for the '<em><b>Element Type</b></em>' reference.
@@ -1357,6 +1427,33 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.oclstdlib.Nullable <em>Nullable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Nullable</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Nullable
+	 * @generated
+	 */
+	public EClass getNullable() {
+		return nullableEClass;
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.oclstdlib.Nullable#getNonNullType <em>Non Null Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Non Null Type</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Nullable#getNonNullType()
+	 * @see #getNullable()
+	 * @generated
+	 */
+	public EReference getNullable_NonNullType() {
+		return (EReference)nullableEClass.getEStructuralFeatures().get(0);
+	}
+
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.RealValue <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1459,6 +1556,33 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.oclstdlib.Invalidable <em>Invalidable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Invalidable</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Invalidable
+	 * @generated
+	 */
+	public EClass getInvalidable() {
+		return invalidableEClass;
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.oclstdlib.Invalidable#getNonInvalidType <em>Non Invalid Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Non Invalid Type</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.Invalidable#getNonInvalidType()
+	 * @see #getInvalidable()
+	 * @generated
+	 */
+	public EReference getInvalidable_NonInvalidType() {
+		return (EReference)invalidableEClass.getEStructuralFeatures().get(0);
+	}
+
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.OrderedSet <em>Ordered Set</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1543,9 +1667,15 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEAttribute(collectionEClass, COLLECTION__LOWER);
 		createEAttribute(collectionEClass, COLLECTION__UPPER);
 
+		invalidableEClass = createEClass(INVALIDABLE);
+		createEReference(invalidableEClass, INVALIDABLE__NON_INVALID_TYPE);
+
 		mapEClass = createEClass(MAP);
 		createEReference(mapEClass, MAP__KEY_TYPE);
 		createEReference(mapEClass, MAP__VALUE_TYPE);
+
+		nullableEClass = createEClass(NULLABLE);
+		createEReference(nullableEClass, NULLABLE__NON_NULL_TYPE);
 
 		oclAnyEClass = createEClass(OCL_ANY);
 
@@ -1621,8 +1751,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		// Create type parameters
 		ETypeParameter bagEClass_T = addETypeParameter(bagEClass, "T"); //$NON-NLS-1$
 		ETypeParameter collectionEClass_T = addETypeParameter(collectionEClass, "T"); //$NON-NLS-1$
+		ETypeParameter invalidableEClass_T = addETypeParameter(invalidableEClass, "T"); //$NON-NLS-1$
 		ETypeParameter mapEClass_K = addETypeParameter(mapEClass, "K"); //$NON-NLS-1$
 		ETypeParameter mapEClass_V = addETypeParameter(mapEClass, "V"); //$NON-NLS-1$
+		ETypeParameter nullableEClass_T = addETypeParameter(nullableEClass, "T"); //$NON-NLS-1$
 		ETypeParameter orderedCollectionEClass_T = addETypeParameter(orderedCollectionEClass, "T"); //$NON-NLS-1$
 		ETypeParameter orderedSetEClass_T = addETypeParameter(orderedSetEClass, "T"); //$NON-NLS-1$
 		ETypeParameter sequenceEClass_T = addETypeParameter(sequenceEClass, "T"); //$NON-NLS-1$
@@ -1634,6 +1766,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		bagEClass_T.getEBounds().add(g1);
 		g1 = createEGenericType(this.getOclType());
 		collectionEClass_T.getEBounds().add(g1);
+		g1 = createEGenericType(this.getOclType());
+		invalidableEClass_T.getEBounds().add(g1);
+		g1 = createEGenericType(this.getOclType());
+		nullableEClass_T.getEBounds().add(g1);
 		g1 = createEGenericType(this.getOclType());
 		orderedCollectionEClass_T.getEBounds().add(g1);
 		g1 = createEGenericType(this.getOclType());
@@ -1696,11 +1832,17 @@ public class OCLstdlibPackage extends EPackageImpl {
 		initEAttribute(getCollection_Lower(), this.getInteger(), "lower", null, 1, 1, Collection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(getCollection_Upper(), this.getInteger(), "upper", null, 1, 1, Collection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		initEClass(invalidableEClass, Invalidable.class, "Invalidable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getInvalidable_NonInvalidType(), this.getOclType(), null, "nonInvalidType", null, 0, 1, Invalidable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(mapEClass, Map.class, "Map", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		g1 = createEGenericType(mapEClass_K);
 		initEReference(getMap_KeyType(), g1, null, "keyType", null, 0, 1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(mapEClass_V);
 		initEReference(getMap_ValueType(), g1, null, "valueType", null, 0, 1, Map.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(nullableEClass, Nullable.class, "Nullable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getNullable_NonNullType(), this.getOclType(), null, "nonNullType", null, 0, 1, Nullable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(oclAnyEClass, Object.class, "OclAny", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -2001,6 +2143,24 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EReference MAP__VALUE_TYPE = eINSTANCE.getMap_ValueType();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib.Nullable <em>Nullable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib.Nullable
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getNullable()
+		 * @generated
+		 */
+		public static final EClass NULLABLE = eINSTANCE.getNullable();
+
+		/**
+		 * The meta object literal for the '<em><b>Non Null Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference NULLABLE__NON_NULL_TYPE = eINSTANCE.getNullable_NonNullType();
+
+		/**
 		 * The meta object literal for the '<em>Real</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2073,6 +2233,24 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EAttribute COLLECTION__UPPER = eINSTANCE.getCollection_Upper();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib.Invalidable <em>Invalidable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib.Invalidable
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getInvalidable()
+		 * @generated
+		 */
+		public static final EClass INVALIDABLE = eINSTANCE.getInvalidable();
+
+		/**
+		 * The meta object literal for the '<em><b>Non Invalid Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference INVALIDABLE__NON_INVALID_TYPE = eINSTANCE.getInvalidable_NonInvalidType();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.OrderedSet <em>Ordered Set</em>}' class.

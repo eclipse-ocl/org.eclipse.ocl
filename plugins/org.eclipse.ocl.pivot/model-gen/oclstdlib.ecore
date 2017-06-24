@@ -35,6 +35,16 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Invalidable">
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//OclType"/>
+    </eTypeParameters>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nonInvalidType" eType="#//OclType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The non-invalid, maybe-null type wrapped by this Invalidable.&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Map" instanceClassName="java.util.Map"
       abstract="true" interface="true">
     <eTypeParameters name="K"/>
@@ -50,6 +60,16 @@
         <details key="documentation" value="The value type of the key-value pairs of oclText[self].&#xA;"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Map/V"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Nullable">
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//OclType"/>
+    </eTypeParameters>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nonNullType" eType="#//OclType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The non-invalid, non-null type wrapped by this Nullable.&#xA;"/>
+      </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclAny" instanceClassName="java.lang.Object"
