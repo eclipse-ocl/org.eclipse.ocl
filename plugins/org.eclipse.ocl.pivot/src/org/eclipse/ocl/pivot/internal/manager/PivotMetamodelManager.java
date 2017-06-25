@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -66,6 +67,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NullLiteralExp;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -1008,6 +1010,18 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
+		if ((leftType instanceof InvalidableType) || (rightType instanceof InvalidableType)) {
+			Type leftType2 = ClassUtil.nonNullState(TypeUtil.decodeNullableType(leftType));
+			Type rightType2 = ClassUtil.nonNullState(TypeUtil.decodeNullableType(rightType));
+			Type commonType = getCommonType(leftType2, leftSubstitutions, rightType2, rightSubstitutions);
+			return getCompleteClass(commonType).getInvalidableType();
+		}
+		if ((leftType instanceof NullableType) || (rightType instanceof NullableType)) {
+			Type leftType2 = ClassUtil.nonNullState(TypeUtil.decodeNullableType(leftType));
+			Type rightType2 = ClassUtil.nonNullState(TypeUtil.decodeNullableType(rightType));
+			Type commonType = getCommonType(leftType2, leftSubstitutions, rightType2, rightSubstitutions);
+			return getCompleteClass(commonType).getNullableType();
+		}
 		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
 			TupleTypeManager tupleManager = completeModel.getTupleManager();
 			Type commonType = tupleManager.getCommonType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
@@ -1771,7 +1785,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (opposite != null) {
 			return;
 		}
-		Type thatType = thisProperty.getType();
+		Type thatType = thisProperty.getRawType();
 		if (thatType instanceof CollectionType) {
 			thatType = ((CollectionType)thatType).getElementType();
 		}

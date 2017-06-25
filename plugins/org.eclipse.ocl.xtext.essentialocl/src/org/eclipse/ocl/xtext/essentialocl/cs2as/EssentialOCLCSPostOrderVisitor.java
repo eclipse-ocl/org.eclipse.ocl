@@ -53,8 +53,8 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 		@Override
 		public BasicContinuation<?> execute() {
 			// NB Three cases for the Constraint content
-			// a) refreshing an OpaqueExpression that originated from Ecore2AS 
-			// b) refreshing an ExpressionInOCL for a simple statusExpression 
+			// a) refreshing an OpaqueExpression that originated from Ecore2AS
+			// b) refreshing an ExpressionInOCL for a simple statusExpression
 			// c) refreshing an ExpressionInOCL+PropertyCallExp of a TupleLiteralExp for statusExpression+messageExpression
 			Constraint asConstraint = PivotUtil.getPivot(Constraint.class, csElement);
 			ExpSpecificationCS csStatusSpecification = (ExpSpecificationCS)csElement.getOwnedSpecification();
@@ -69,7 +69,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 						OCLExpression asExpression = context.visitLeft2Right(OCLExpression.class, csStatusExpression);
 						asSpecification.setOwnedBody(asExpression);
 						boolean isRequired = (asExpression != null) && asExpression.isIsRequired();
-						context.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
+						context.setType(asSpecification, asExpression != null ? asExpression.getRawType() : null, isRequired);
 						PivotUtil.setBody(asSpecification, asExpression, statusText);
 					}
 					else {
@@ -84,12 +84,12 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 						context.setType(asSpecification, asTuplePartExp.getType(), true);
 						String messageText = csMessageExpression != null ? ElementUtil.getExpressionText(csMessageExpression) : "null";
 						String tupleText = PivotUtil.createTupleValuedConstraint(statusText, null, messageText);
-						PivotUtil.setBody(asSpecification, asTuplePartExp, tupleText);					
+						PivotUtil.setBody(asSpecification, asTuplePartExp, tupleText);
 					}
 				}
 				else {
 					@SuppressWarnings("null")@NonNull LanguageExpression asSpecification = asConstraint.getOwnedSpecification();
-					asSpecification.setBody(csStatusSpecification.getExprString());					
+					asSpecification.setBody(csStatusSpecification.getExprString());
 				}
 			}
 			return null;
@@ -125,14 +125,14 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 				String statusText = csExpression != null ? ElementUtil.getExpressionText(csExpression) : "null";
 				PivotUtil.setBody(asSpecification, asExpression, statusText);
 				boolean isRequired = (asExpression != null) && asExpression.isIsRequired();
-				context.setType(asSpecification, asExpression != null ? asExpression.getType() : null, isRequired);
+				context.setType(asSpecification, asExpression != null ? asExpression.getRawType() : null, isRequired);
 			}
 			return null;
 		}
 	}
 
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	
+
 	public EssentialOCLCSPostOrderVisitor(@NonNull CS2ASConversion context) {
 		super(context);
 		this.metamodelManager = context.getMetamodelManager();
@@ -141,7 +141,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 	@Override
 	public Continuation<?> visitCollectionTypeCS(@NonNull CollectionTypeCS csCollectionType) {
 		// FIXME untemplated collections need type deduction here
-/*		MetamodelManager metamodelManager = context.getMetamodelManager();
+		/*		MetamodelManager metamodelManager = context.getMetamodelManager();
 		TypedRefCS csElementType = csCollectionType.getOwnedType();
 		Type type;
 		if (csElementType != null) {
@@ -152,7 +152,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 			type = metamodelManager.getLibraryType(csCollectionType.getName());
 		}
 		context.reusePivotElement(csCollectionType, type);
-*/		return null;
+		 */		return null;
 	}
 
 	@Override
@@ -194,7 +194,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 	@Override
 	public Continuation<?> visitMapTypeCS(@NonNull MapTypeCS csMapType) {
 		// FIXME untemplated maps need type deduction here
-/*		MetamodelManager metamodelManager = context.getMetamodelManager();
+		/*		MetamodelManager metamodelManager = context.getMetamodelManager();
 		TypedRefCS csElementType = csCollectionType.getOwnedType();
 		Type type;
 		if (csElementType != null) {
@@ -205,7 +205,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 			type = metamodelManager.getLibraryType(csCollectionType.getName());
 		}
 		context.reusePivotElement(csCollectionType, type);
-*/		return null;
+		 */		return null;
 	}
 
 	@Override
@@ -221,5 +221,5 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 	@Override
 	public Continuation<?> visitVariableCS(@NonNull VariableCS csVariable) {
 		return null;
-	}	
+	}
 }

@@ -232,7 +232,7 @@ public class CollectionRangeImpl
 			case PivotPackage.COLLECTION_RANGE__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.COLLECTION_RANGE__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.COLLECTION_RANGE__OWNED_FIRST:
 				return getOwnedFirst();

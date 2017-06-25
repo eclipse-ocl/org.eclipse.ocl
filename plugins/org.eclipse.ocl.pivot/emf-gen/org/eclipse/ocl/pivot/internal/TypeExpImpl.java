@@ -143,7 +143,7 @@ implements TypeExp {
 			case PivotPackage.TYPE_EXP__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.TYPE_EXP__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.TYPE_EXP__TYPE_VALUE:
 				return getTypeValue();

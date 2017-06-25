@@ -222,7 +222,7 @@ public class CollectionItemImpl
 			case PivotPackage.COLLECTION_ITEM__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.COLLECTION_ITEM__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.COLLECTION_ITEM__OWNED_ITEM:
 				return getOwnedItem();

@@ -290,7 +290,7 @@ implements Variable {
 			case PivotPackage.VARIABLE__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.VARIABLE__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.VARIABLE__TYPE_VALUE:
 				return getTypeValue();

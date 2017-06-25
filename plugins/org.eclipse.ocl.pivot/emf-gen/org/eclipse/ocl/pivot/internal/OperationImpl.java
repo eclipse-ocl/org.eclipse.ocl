@@ -1076,7 +1076,7 @@ implements Operation {
 			case PivotPackage.OPERATION__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.OPERATION__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.OPERATION__IMPLEMENTATION:
 				return getImplementation();

@@ -39,7 +39,9 @@ import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -65,6 +67,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SetValue;
 
@@ -1127,6 +1130,15 @@ implements org.eclipse.ocl.pivot.Class {
 		if (this == type) {
 			return true;
 		}
+		if (!(this instanceof InvalidableType) && (type instanceof InvalidableType)) {
+			type = PivotUtil.getNonInvalidType((InvalidableType)type);
+		}
+		if (!(this instanceof NullableType) && (type instanceof NullableType)) {
+			type = PivotUtil.getNonNullType((NullableType)type);
+		}
+		if (this == type) {
+			return true;
+		}
 		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
 		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
 		return thisInheritance.isSubInheritanceOf(thatInheritance);
@@ -1395,6 +1407,12 @@ implements org.eclipse.ocl.pivot.Class {
 			}
 			List<TemplateBinding> templateBindings = getOwnedBindings();
 			if ((templateBindings != null) && !templateBindings.isEmpty()) {
+				Resource asResource = ClassUtil.nonNullState(callExpr.eResource());
+				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(asResource);
+				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+				return metamodelManager.specializeType(this, callExpr, selfType, null);
+			}
+			if ((this instanceof NullableType) ||(this instanceof InvalidableType)) {
 				Resource asResource = ClassUtil.nonNullState(callExpr.eResource());
 				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(asResource);
 				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();

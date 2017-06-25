@@ -82,6 +82,10 @@ public interface TypedElement extends NamedElement {
 	 */
 	Type getType();
 
+	Type getRawType();
+
+	Type getDecodedType();
+
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TypedElement#getType <em>Type</em>}' reference.
 	 * <!-- begin-user-doc -->

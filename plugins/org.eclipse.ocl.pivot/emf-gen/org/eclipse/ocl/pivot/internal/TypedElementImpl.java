@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
@@ -130,8 +131,7 @@ implements TypedElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public Type getType() {
+	public Type getTypeGen() {
 		if (type != null && type.eIsProxy())
 		{
 			InternalEObject oldType = (InternalEObject)type;
@@ -143,6 +143,26 @@ implements TypedElement {
 			}
 		}
 		return type;
+	}
+	@Override
+	public Type getType() {
+		Type type1 = getTypeGen();
+		Type type2 = TypeUtil.decodeNullableType(type1);
+		if (type1 != type2) {
+			getClass();
+		}
+		return type2;
+	}
+	@Override
+	public Type getRawType() {
+		Type type1 = getTypeGen();
+		return type1;
+	}
+	@Override
+	public Type getDecodedType() {
+		Type type1 = getTypeGen();
+		Type type2 = TypeUtil.decodeNullableType(type1);
+		return type2;
 	}
 
 	/**
@@ -179,14 +199,14 @@ implements TypedElement {
 		 * bodySpecification.type?.conformsTo(self.type)
 		 */
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtilInternal.getExecutor(this);
-		final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = bodySpecification.getType();
+		final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = bodySpecification.getRawType();
 		final /*@NonInvalid*/ @NonNull Object symbol_0 = type == null;
 		/*@Thrown*/ java.lang.@Nullable Boolean safe_conformsTo_source;
 		if (symbol_0 == Boolean.TRUE) {
 			safe_conformsTo_source = null;
 		}
 		else {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getType();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = this.getRawType();
 			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
 			safe_conformsTo_source = conformsTo;
 		}
@@ -239,7 +259,7 @@ implements TypedElement {
 			case PivotPackage.TYPED_ELEMENT__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.TYPED_ELEMENT__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -385,13 +405,13 @@ implements TypedElement {
 
 	@Override
 	public @NonNull TypeId getTypeId() {
-		Type type2 = getType();
+		Type type2 = getDecodedType();
 		return type2 != null ? type2.getTypeId() : TypeId.OCL_INVALID;
 	}
 
 	@Override
 	public boolean isIsMany() {
-		Type type = getType();
+		Type type = getDecodedType();
 		if (type instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)type;
 			UnlimitedNaturalValue upperValue = collectionType.getUpperValue();

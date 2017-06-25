@@ -1081,6 +1081,18 @@ public class PivotUtil
 		}
 	}
 
+	public static @NonNull NullableType getNonInvalidType(@NonNull InvalidableType type) {
+		return ClassUtil.nonNullState(type.getNonInvalidType());
+	}
+
+	public static @NonNull Type getNonNullType(@NonNull InvalidableType type) {
+		return getNonNullType(getNonInvalidType(type));
+	}
+
+	public static @NonNull Type getNonNullType(@NonNull NullableType type) {
+		return ClassUtil.nonNullState(type.getNonNullType());
+	}
+
 	/**
 	 * @since 1.3
 	 */

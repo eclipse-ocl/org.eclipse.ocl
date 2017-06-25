@@ -34,7 +34,9 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCSLeft2RightVisitor.Invocations;
 
@@ -106,8 +108,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		@NonNull Operation candidate = (Operation) match2;
 		org.eclipse.ocl.pivot.Class referenceClass = reference.getOwningClass();
 		org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
-		Type referenceType = referenceClass != null ? PivotUtilInternal.getType(referenceClass) : null;
-		Type candidateType = candidateClass != null ? PivotUtilInternal.getType(candidateClass) : null;
+		Type referenceType = referenceClass != null ? TypeUtil.decodeNullableType(PivotUtilInternal.getType(referenceClass)) : null;
+		Type candidateType = candidateClass != null ? TypeUtil.decodeNullableType(PivotUtilInternal.getType(candidateClass)) : null;
 		Type specializedReferenceType = referenceType != null ? completeModel.getSpecializedType(referenceType, referenceBindings) : null;
 		Type specializedCandidateType = candidateType != null ? completeModel.getSpecializedType(candidateType, candidateBindings) : null;
 		if ((reference instanceof Iteration) && (candidate instanceof Iteration) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
@@ -140,11 +142,11 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		List<@NonNull Parameter> referenceParameters = PivotUtilInternal.getOwnedParametersList(reference);
 		for (int i = 0; i < candidateParameters.size(); i++) {
 			OCLExpression pivotArgument = getArgument(i);
-			Type argumentType = pivotArgument.getType();
+			Type argumentType = pivotArgument.getDecodedType();
 			Parameter referenceParameter = referenceParameters.get(i);
 			Parameter candidateParameter = candidateParameters.get(i);
-			referenceType = PivotUtilInternal.getType(PivotUtil.getType(referenceParameter));
-			candidateType = PivotUtilInternal.getType(PivotUtil.getType(candidateParameter));
+			referenceType = PivotUtilInternal.getType(ClassUtil.nonNullState(referenceParameter.getDecodedType()));
+			candidateType = PivotUtilInternal.getType(ClassUtil.nonNullState(candidateParameter.getDecodedType()));
 			specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
 			specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
 			if (argumentType != specializedReferenceType) {
@@ -262,11 +264,11 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		for (int i = 0; i < iSize; i++) {
 			Parameter candidateParameter = candidateParameters.get(i);
 			OCLExpression expression = getArgument(i);
-			Type candidateType = PivotUtilInternal.getBehavioralType(candidateParameter);
+			Type candidateType = TypeUtil.decodeNullableType(candidateParameter);
 			if (candidateType == null) {
 				return null;
 			}
-			Type expressionType = PivotUtilInternal.getBehavioralType(expression);
+			Type expressionType = TypeUtil.decodeNullableType(expression);
 			if (expressionType == null) {
 				return null;
 			}

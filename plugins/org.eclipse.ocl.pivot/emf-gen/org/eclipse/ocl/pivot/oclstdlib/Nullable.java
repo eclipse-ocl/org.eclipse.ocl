@@ -78,7 +78,7 @@ public class Nullable<T extends Object> extends EObjectImpl implements EObject {
 	public Object getNonNullType() {
 		if (nonNullType != null && ((EObject)nonNullType).eIsProxy()) {
 			InternalEObject oldNonNullType = (InternalEObject)nonNullType;
-			nonNullType = eResolveProxy(oldNonNullType);
+			nonNullType = (Object)eResolveProxy(oldNonNullType);
 			if (nonNullType != oldNonNullType) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLstdlibPackage.NULLABLE__NON_NULL_TYPE, oldNonNullType, nonNullType));
@@ -135,7 +135,7 @@ public class Nullable<T extends Object> extends EObjectImpl implements EObject {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case OCLstdlibPackage.NULLABLE__NON_NULL_TYPE:
-				setNonNullType(newValue);
+				setNonNullType((Object)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

@@ -594,7 +594,7 @@ public class PivotUtilInternal //extends PivotUtil
 		if (typedElement == null) {
 			return null;
 		}
-		Type type = typedElement.getType();
+		Type type = typedElement.getRawType();
 		if (type == null) {
 			return null;
 		}

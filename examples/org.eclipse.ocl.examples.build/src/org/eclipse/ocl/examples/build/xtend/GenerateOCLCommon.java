@@ -886,11 +886,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				}
 			}
 			else if (eObject instanceof InvalidableType) {
-				InvalidableType asInvalidableType = (InvalidableType)eObject;
-				NullableType nonInvalidType = asInvalidableType.getNonInvalidType();
-				if (nonInvalidType != null) {
-					allElements.add(nonInvalidType.getNonNullType());
-				}
+				allElements.add(PivotUtil.getNonNullType((InvalidableType)eObject));
 			}
 		}
 		List<@NonNull Type> sortedElements = new ArrayList<>(allElements);
@@ -1013,14 +1009,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				eObject = ((TypedElement)eObject).getType();
 			}
 			if (eObject instanceof InvalidableType) {
-				eObject = ((InvalidableType)eObject).getNonInvalidType();
+				eObject = PivotUtil.getNonNullType((InvalidableType)eObject);
 			}
-			if (eObject instanceof NullableType) {
-				NullableType asNullableType = (NullableType)eObject;
-				Type nonNullType = asNullableType.getNonNullType();
-				if (nonNullType != null) {
-					eObject = nonNullType;
-				}
+			else if (eObject instanceof NullableType) {
+				eObject = PivotUtil.getNonNullType((NullableType)eObject);
 			}
 			if ((eObject instanceof Type) && !(eObject instanceof VoidType) && !(eObject instanceof InvalidType) && !(eObject instanceof NullableType) && !(eObject instanceof InvalidableType)) {
 				allElements.add((Type)eObject);

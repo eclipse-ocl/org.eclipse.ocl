@@ -829,7 +829,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			case PivotPackage.SHADOW_EXP__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.SHADOW_EXP__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.SHADOW_EXP__TYPE_VALUE:
 				return getTypeValue();

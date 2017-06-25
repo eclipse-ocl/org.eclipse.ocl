@@ -239,7 +239,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			append(NULL_PLACEHOLDER);
 		}
 		else {
-			Type type = typedElement.getType();
+			Type type = typedElement.getRawType();
 			safeVisit(type);
 			if (!typedElement.isIsRequired()) {
 				append("[?]");
@@ -1301,7 +1301,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitVariable(@NonNull Variable variable) {
 		appendName(variable);
-		Type type = variable.getType();
+		Type type = variable.getRawType();
 		if (type != null) {
 			append(" : ");
 			appendElementType(variable);

@@ -51,8 +51,8 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  * @generated
  */
 public class ExpressionInOCLImpl
-		extends LanguageExpressionImpl
-		implements ExpressionInOCL {
+extends LanguageExpressionImpl
+implements ExpressionInOCL {
 
 	/**
 	 * The cached value of the '{@link #getOwnedBody() <em>Owned Body</em>}' containment reference.
@@ -329,7 +329,7 @@ public class ExpressionInOCLImpl
 			case PivotPackage.EXPRESSION_IN_OCL__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.EXPRESSION_IN_OCL__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.EXPRESSION_IN_OCL__BODY:
 				return getBody();

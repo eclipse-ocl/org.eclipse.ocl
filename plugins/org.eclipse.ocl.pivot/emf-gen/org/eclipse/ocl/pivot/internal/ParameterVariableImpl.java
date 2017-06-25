@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -29,6 +30,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -138,6 +140,12 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitParameterVariable(this);
+	}
+
+	@Override
+	public void setType(Type newType) {
+		super.setType(newType);
+		assert !(TypeUtil.decodeNullableType(newType) instanceof SelfType);
 	}
 
 } //ParameterVariableImpl

@@ -44,8 +44,8 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * @generated
  */
 public class ParameterImpl
-		extends VariableDeclarationImpl
-		implements Parameter {
+extends VariableDeclarationImpl
+implements Parameter {
 
 	/**
 	 * The default value of the '{@link #isIsTypeof() <em>Is Typeof</em>}' attribute.
@@ -246,7 +246,7 @@ public class ParameterImpl
 			case PivotPackage.PARAMETER__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.PARAMETER__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.PARAMETER__TYPE_VALUE:
 				return getTypeValue();

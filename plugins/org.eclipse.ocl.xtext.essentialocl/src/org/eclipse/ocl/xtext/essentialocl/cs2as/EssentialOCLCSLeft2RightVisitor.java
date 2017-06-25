@@ -816,7 +816,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				}
 			}
 		}
-		Invocations invocations = getInvocations(sourceExp != null ? sourceExp.getType() : null,
+		Invocations invocations = getInvocations(sourceExp != null ? sourceExp.getDecodedType() : null,
 			sourceExp != null ? sourceExp.getTypeValue() : null, csRoundBracketedClause);
 		if (invocations != null) {
 			OCLExpression invocationExp = resolveBestInvocation(sourceExp, csRoundBracketedClause, invocations);
@@ -1123,7 +1123,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				if (arg != null) {
 					Type argType = arg.getType();
 					if (argType != null) {
-						Type parameterType = ownedParameters.get(argIndex).getType();
+						Type parameterType = ownedParameters.get(argIndex).getDecodedType();
 						if (parameterType instanceof SelfType) {
 							parameterType = operation.getOwningClass();
 						}
@@ -1244,7 +1244,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Type sourceTypeValue = null;
 		OCLExpression source = callExp.getOwnedSource();
 		if (source != null) {
-			sourceType = source.getType();
+			sourceType = source.getRawType();
 			sourceTypeValue = source.getTypeValue();
 		}
 		TemplateParameterSubstitutions templateSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, sourceTypeValue, operation);
@@ -1296,7 +1296,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		// FIXME following code is now in PivotHelper.createOperationCallExp too
 		Type returnType = null;
-		Type formalType = operation.getType();
+		Type formalType = operation.getRawType();
 		if ((formalType != null) && (sourceType != null)) {
 			if (operation.isIsTypeof()) {
 				returnType = metamodelManager.specializeType(formalType, callExp, sourceType, null);
@@ -1439,9 +1439,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected @NonNull VariableExp resolveVariableExp(@NonNull NameExpCS csNameExp, @NonNull VariableDeclaration variableDeclaration) {
+		String s = variableDeclaration.toString();
 		VariableExp expression = context.refreshModelElement(VariableExp.class, PivotPackage.Literals.VARIABLE_EXP, csNameExp);
 		expression.setReferredVariable(variableDeclaration);
-		context.setType(expression, variableDeclaration.getType(), variableDeclaration.isIsRequired(), variableDeclaration.getTypeValue());
+		context.setType(expression, variableDeclaration.getRawType(), variableDeclaration.isIsRequired(), variableDeclaration.getTypeValue());
 		return expression;
 	}
 
@@ -1646,8 +1647,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			OCLExpression thenExpression = context.visitLeft2Right(OCLExpression.class, csThen);
 			expression.setOwnedThen(thenExpression);
 			expression.setOwnedElse(elseExpression);
-			Type thenType = thenExpression != null ? thenExpression.getType() : null;
-			Type elseType = elseExpression != null ? elseExpression.getType() : null;
+			Type thenType = thenExpression != null ? thenExpression.getRawType() : null;
+			Type elseType = elseExpression != null ? elseExpression.getRawType() : null;
 			Type thenTypeValue = thenExpression != null ? thenExpression.getTypeValue() : null;
 			Type elseTypeValue = elseExpression != null ? elseExpression.getTypeValue() : null;
 			Type commonType = (thenType != null) && (elseType != null) ? metamodelManager.getCommonType(thenType, TemplateParameterSubstitutions.EMPTY, elseType, TemplateParameterSubstitutions.EMPTY) : null;
@@ -1688,7 +1689,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (csSource != null) {
 			OCLExpression sourceExp = context.visitLeft2Right(OCLExpression.class, csSource);
 			if (sourceExp != null) {
-				Type asType = sourceExp.getType();
+				Type asType = sourceExp.getDecodedType();
 				Type actualSourceType = asType != null ? PivotUtilInternal.getType(asType) : null;
 				if (actualSourceType != null) {
 					ExpCS argument = csOperator.getArgument();
@@ -1715,7 +1716,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 								collectedSourceExp = resolveImplicitAsSet(sourceExp, actualSourceType, csOperator);
 							}
 						}
-						Type sourceType = collectedSourceExp.getType();
+						Type sourceType = collectedSourceExp.getRawType();
 						csNameExp.setSourceType(sourceType);
 						csNameExp.setSourceTypeValue(collectedSourceExp.getTypeValue());
 						//

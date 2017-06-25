@@ -268,7 +268,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 			case PivotPackage.LANGUAGE_EXPRESSION__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.LANGUAGE_EXPRESSION__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.LANGUAGE_EXPRESSION__BODY:
 				return getBody();

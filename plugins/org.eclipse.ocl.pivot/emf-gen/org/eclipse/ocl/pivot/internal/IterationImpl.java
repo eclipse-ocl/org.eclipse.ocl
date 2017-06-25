@@ -193,7 +193,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case PivotPackage.ITERATION__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.ITERATION__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.ITERATION__IMPLEMENTATION:
 				return getImplementation();

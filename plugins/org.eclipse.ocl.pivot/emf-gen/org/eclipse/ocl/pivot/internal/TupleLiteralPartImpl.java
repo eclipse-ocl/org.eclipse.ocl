@@ -311,7 +311,7 @@ implements TupleLiteralPart {
 			case PivotPackage.TUPLE_LITERAL_PART__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.TUPLE_LITERAL_PART__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.TUPLE_LITERAL_PART__TYPE_VALUE:
 				return getTypeValue();

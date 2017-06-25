@@ -24,11 +24,13 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -302,6 +304,12 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		if (type instanceof SelfType) {
 			return ClassUtil.nonNullState(selfTypeValue != null ? selfTypeValue : selfType != null ? selfType : type);
 		}
+		else if (type instanceof NullableType) {
+			return metamodelManager.getCompleteModel().getCompleteClass(specializeType(PivotUtil.getNonNullType((NullableType)type))).getNullableType();
+		}
+		else if (type instanceof InvalidableType) {
+			return metamodelManager.getCompleteModel().getCompleteClass(specializeType(PivotUtil.getNonNullType((InvalidableType)type))).getInvalidableType();
+		}
 		else if (type instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)type;
 			Type elementType = ClassUtil.nonNullModel(collectionType.getElementType());
@@ -426,7 +434,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 			if (helper != null) {
 				actualType = helper.resolveBodyType(environmentFactory.getMetamodelManager(), object, actualType);
 			}
-			analyzeType(formalElements.get(0).getType(), actualType);
+			analyzeType(formalElements.get(0).getDecodedType(), actualType);
 		}
 		return null;
 	}
@@ -466,7 +474,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		analyzeTypedElement(referredOperation, object);
 		OCLExpression source = object.getOwnedSource();
 		if (source != null) {
-			analyzeType(referredOperation.getOwningClass(), source.getType());
+			analyzeType(referredOperation.getOwningClass(), source.getDecodedType());
 		}
 		analyzeTypedElements(referredOperation.getOwnedParameters(), object.getOwnedArguments());
 		//
@@ -547,7 +555,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	@Override
 	public @Nullable Object visitTypedElement(@NonNull TypedElement object) {
 		if (actual instanceof TypedElement) {
-			analyzeType(object.getType(), ((TypedElement)actual).getType());
+			analyzeType(object.getDecodedType(), ((TypedElement)actual).getDecodedType());
 		}
 		return null;
 	}

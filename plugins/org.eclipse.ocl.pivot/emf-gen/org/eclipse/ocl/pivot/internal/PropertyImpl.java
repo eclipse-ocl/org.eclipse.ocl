@@ -1200,7 +1200,7 @@ implements Property {
 			case PivotPackage.PROPERTY__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.PROPERTY__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.PROPERTY__IMPLEMENTATION:
 				return getImplementation();

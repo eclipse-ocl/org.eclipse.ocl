@@ -270,7 +270,7 @@ implements OperationCallExp {
 			case PivotPackage.OPERATION_CALL_EXP__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.OPERATION_CALL_EXP__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.OPERATION_CALL_EXP__TYPE_VALUE:
 				return getTypeValue();
@@ -661,7 +661,7 @@ implements OperationCallExp {
 						if (parameter == null) {
 							throw new InvalidValueException("Null source for \'TypedElement::type\'");
 						}
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type parameterType = parameter.getType();
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type parameterType = parameter.getRawType();
 						final /*@Thrown*/ boolean isTypeof = parameter.isIsTypeof();
 						/*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Type requiredType;
 						if (isTypeof) {
@@ -679,7 +679,7 @@ implements OperationCallExp {
 						if (argument == null) {
 							throw new InvalidValueException("Null source for \'TypedElement::type\'");
 						}
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = argument.getType();
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = argument.getRawType();
 						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType).booleanValue();
 						CAUGHT_conformsTo = conformsTo;
 					}

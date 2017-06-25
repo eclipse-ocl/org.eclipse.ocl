@@ -31,6 +31,16 @@ public class AbstractExecutorTypedElement extends AbstractExecutorNamedElement i
 	}
 
 	@Override
+	public Type getDecodedType() {
+		return type;
+	}
+
+	@Override
+	public Type getRawType() {
+		return type;
+	}
+
+	@Override
 	public Type getType() {
 		return type;
 	}

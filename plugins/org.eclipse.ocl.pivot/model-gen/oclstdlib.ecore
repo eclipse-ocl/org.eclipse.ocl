@@ -49,17 +49,15 @@
       abstract="true" interface="true">
     <eTypeParameters name="K"/>
     <eTypeParameters name="V"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="keyType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" eType="#//OclAny">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The key type of the key-value pairs of oclText[self].&#xA;"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Map/K"/>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valueType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueType" eType="#//OclAny">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The value type of the key-value pairs of oclText[self].&#xA;"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Map/V"/>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Nullable">

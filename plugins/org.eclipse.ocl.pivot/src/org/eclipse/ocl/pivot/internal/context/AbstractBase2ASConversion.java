@@ -217,7 +217,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 	public void setType(@NonNull TypedElement pivotElement, Type type, boolean isRequired) {	// FIXME redirect to PivotHelper
 		type = TypeUtil.encodeNullableType(getEnvironmentFactory(), type, isRequired);
 		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
-		if (primaryType != pivotElement.getType()) {
+		if (primaryType != pivotElement.getRawType()) {
 			pivotElement.setType(primaryType);
 		}
 		boolean wasRequired = pivotElement.isIsRequired();

@@ -78,7 +78,7 @@ public class Invalidable<T extends Object> extends EObjectImpl implements EObjec
 	public Object getNonInvalidType() {
 		if (nonInvalidType != null && ((EObject)nonInvalidType).eIsProxy()) {
 			InternalEObject oldNonInvalidType = (InternalEObject)nonInvalidType;
-			nonInvalidType = eResolveProxy(oldNonInvalidType);
+			nonInvalidType = (Object)eResolveProxy(oldNonInvalidType);
 			if (nonInvalidType != oldNonInvalidType) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OCLstdlibPackage.INVALIDABLE__NON_INVALID_TYPE, oldNonInvalidType, nonInvalidType));
@@ -135,7 +135,7 @@ public class Invalidable<T extends Object> extends EObjectImpl implements EObjec
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case OCLstdlibPackage.INVALIDABLE__NON_INVALID_TYPE:
-				setNonInvalidType(newValue);
+				setNonInvalidType((Object)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

@@ -25,7 +25,9 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -38,6 +40,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.internal.values.MapTypeParametersImpl;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
@@ -163,12 +166,34 @@ public class TypeUtil
 		return new TemplateParametersImpl(parameters);
 	}
 
+	public static @Nullable Type decodeNullableType(@Nullable TypedElement typedElement) {
+		Type type = PivotUtilInternal.getBehavioralType(typedElement);
+		if (type instanceof InvalidableType) {
+			type = PivotUtil.getNonNullType((InvalidableType)type);
+		}
+		else if (type instanceof NullableType) {
+			type = PivotUtil.getNonNullType((NullableType)type);
+		}
+		if (type instanceof SelfType) {
+			if (typedElement instanceof Parameter) {
+				Operation operation = ((Parameter)typedElement).getOwningOperation();
+				if (operation != null) {
+					org.eclipse.ocl.pivot.Class selfType = operation.getOwningClass();
+					if (selfType != null) {
+						type = selfType;
+					}
+				}
+			}
+		}
+		return type;
+	}
+
 	public static @Nullable Type decodeNullableType(@Nullable Type type) {
 		if (type instanceof InvalidableType) {
-			type = ((InvalidableType)type).getNonInvalidType();
+			type = PivotUtil.getNonNullType((InvalidableType)type);
 		}
-		if (type instanceof NullableType) {
-			type = ((NullableType)type).getNonNullType();
+		else if (type instanceof NullableType) {
+			type = PivotUtil.getNonNullType((NullableType)type);
 		}
 		return type;
 	}
@@ -204,17 +229,17 @@ public class TypeUtil
 			List<@NonNull ? extends TypedElement> ownedAccumulators = ClassUtil.nullFree(anIteration.getOwnedAccumulators());
 			parameterTypes = new @NonNull Type[ownedIterators.size() + ownedAccumulators.size() + ownedParameters.size()];
 			for (@NonNull TypedElement ownedIterator : ownedIterators) {
-				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedIterator.getType());
+				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedIterator.getDecodedType());
 			}
 			for (@NonNull TypedElement ownedAccumulator : ownedAccumulators) {
-				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedAccumulator.getType());
+				parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedAccumulator.getDecodedType());
 			}
 		}
 		else {
 			parameterTypes = new @NonNull Type[ownedParameters.size()];
 		}
 		for (@NonNull TypedElement ownedParameter : ownedParameters) {
-			parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedParameter.getType());
+			parameterTypes[iParameter++] = ClassUtil.nonNullState(ownedParameter.getDecodedType());
 		}
 		return parameterTypes;
 	}

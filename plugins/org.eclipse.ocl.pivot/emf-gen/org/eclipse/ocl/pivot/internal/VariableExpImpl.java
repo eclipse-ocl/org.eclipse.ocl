@@ -189,7 +189,7 @@ implements VariableExp {
 		}
 		else {
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_0 = idResolver.getClass(TypeId.OCL_INVALID, null);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getRawType();
 			final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_VariableExp_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 			symbol_0 = logDiagnostic;
@@ -235,7 +235,7 @@ implements VariableExp {
 			case PivotPackage.VARIABLE_EXP__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.VARIABLE_EXP__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.VARIABLE_EXP__TYPE_VALUE:
 				return getTypeValue();

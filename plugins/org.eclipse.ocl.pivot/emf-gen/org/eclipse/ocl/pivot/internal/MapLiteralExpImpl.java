@@ -139,7 +139,7 @@ public class MapLiteralExpImpl extends LiteralExpImpl implements MapLiteralExp
 			case PivotPackage.MAP_LITERAL_EXP__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.MAP_LITERAL_EXP__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.MAP_LITERAL_EXP__TYPE_VALUE:
 				return getTypeValue();

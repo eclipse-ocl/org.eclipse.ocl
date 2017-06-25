@@ -346,7 +346,7 @@ public class PivotHelper
 		Type sourceType = null;
 		Type sourceTypeValue = null;
 		if (asSourceExpression != null) {
-			sourceType = asSourceExpression.getType();
+			sourceType = asSourceExpression.getRawType();
 			sourceTypeValue = asSourceExpression.getTypeValue();
 		}
 		Type returnType = null;

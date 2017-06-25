@@ -377,7 +377,7 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			case PivotPackage.SHADOW_PART__IS_REQUIRED:
 				return isIsRequired();
 			case PivotPackage.SHADOW_PART__TYPE:
-				if (resolve) return getType();
+				if (resolve) return getRawType();
 				return basicGetType();
 			case PivotPackage.SHADOW_PART__OWNED_INIT:
 				return getOwnedInit();
