@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
@@ -48,6 +49,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
@@ -304,10 +306,22 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 			return ClassUtil.nonNullState(selfTypeValue != null ? selfTypeValue : selfType != null ? selfType : type);
 		}
 		else if (type instanceof NullableType) {
-			return environmentFactory.getCompleteModel().getNullableType(specializeType(PivotUtil.getNonNullType((NullableType)type)));
+			Type specializedType = specializeType(PivotUtil.getNonNullType((NullableType)type));
+			if (specializedType instanceof VoidType) {
+				return specializedType;
+			}
+			else {
+				return environmentFactory.getCompleteModel().getNullableType(specializedType);
+			}
 		}
 		else if (type instanceof InvalidableType) {
-			return environmentFactory.getCompleteModel().getInvalidableType(specializeType(PivotUtil.getNonNullType((InvalidableType)type)));
+			Type specializedType = specializeType(PivotUtil.getNonNullType((InvalidableType)type));
+			if (specializedType instanceof InvalidType) {
+				return specializedType;
+			}
+			else {
+				return environmentFactory.getCompleteModel().getInvalidableType(specializedType);
+			}
 		}
 		else if (type instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)type;
