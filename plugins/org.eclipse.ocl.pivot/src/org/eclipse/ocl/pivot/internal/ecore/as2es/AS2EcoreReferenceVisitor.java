@@ -96,7 +96,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	protected @Nullable OptionalType addPropertyRedefinitionEAnnotations(@NonNull EStructuralFeature eStructuralFeature, @NonNull Property pivotProperty) {
 		@Nullable OptionalType optionalType = null;
-		Type redefiningType = pivotProperty.getType();
+		Type redefiningType = pivotProperty.getDecodedType();
 		EAnnotation eRedefinesAnnotation = null;
 		String changedEType = null;
 		String changedLower = null;
@@ -511,7 +511,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 				}
 			}
 		}
-		Type pivotType = pivotProperty.getType();
+		Type pivotType = pivotProperty.getDecodedType();
 		boolean pivotIsRequired = pivotProperty.isIsRequired();
 		if (!addPropertyRenameEAnnotations(eStructuralFeature, pivotProperty)) {
 			OptionalType optionalType = addPropertyRedefinitionEAnnotations(eStructuralFeature, pivotProperty);
@@ -543,7 +543,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	public EObject visitTypedElement(@NonNull TypedElement pivotTypedElement) {
 		ETypedElement eTypedElement = getCreated(ETypedElement.class, pivotTypedElement);
 		if (eTypedElement != null) {
-			Type pivotType = pivotTypedElement.getType();
+			Type pivotType = pivotTypedElement.getDecodedType();
 			if (pivotType == null) {
 				return null;				// Occurs for Operation return type
 			}

@@ -1515,7 +1515,7 @@ implements Operation {
 		int iMax = ownedParameter.size();
 		@NonNull Type @NonNull [] types = new @NonNull Type[iMax];
 		for (int i = 0; i < iMax; i++) {
-			Type parameterType = ownedParameter.get(i).getType();
+			Type parameterType = ownedParameter.get(i).getRawType();
 			assert parameterType != null;
 			types[i] = parameterType;
 		}

@@ -781,7 +781,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			return null;
 		}
 		EStructuralFeature eStructuralFeature;
-		Type type = pivotProperty.getType();
+		Type type = pivotProperty.getDecodedType();
 		CollectionType ecoreCollectionType = context.isEcoreCollection(type);
 		if (ecoreCollectionType != null) {
 			type = ecoreCollectionType.getElementType();

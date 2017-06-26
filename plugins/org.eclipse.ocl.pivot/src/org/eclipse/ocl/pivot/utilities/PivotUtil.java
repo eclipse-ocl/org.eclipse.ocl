@@ -1089,6 +1089,10 @@ public class PivotUtil
 		return ClassUtil.nonNullState(type.getNonNullType());
 	}
 
+	public static @NonNull Type getNullableType(@NonNull Type type) {
+		return ClassUtil.nonNullState(type.getNullableType());
+	}
+
 	/**
 	 * @since 1.3
 	 */

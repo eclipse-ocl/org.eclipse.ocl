@@ -153,7 +153,7 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 		List<Parameter> parameters = object instanceof Iteration ? ((Iteration)object).getOwnedIterators() : object.getOwnedParameters();
 		for (Parameter parameter : parameters) {
 			s.append(OPERATION_PARAMETER_SEPARATOR);
-			appendType(parameter.getType());
+			appendType(parameter.getRawType());
 		}
 	}
 

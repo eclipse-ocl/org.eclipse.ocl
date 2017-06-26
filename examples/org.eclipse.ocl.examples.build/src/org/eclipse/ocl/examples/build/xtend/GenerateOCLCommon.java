@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -59,11 +58,11 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
@@ -887,27 +886,27 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return import2alias;
 	}
 
-	protected @NonNull List<@NonNull Type> getSortedInvalidableTypes(@NonNull Model root) {
-		Set<@NonNull Type> allElements = new HashSet<>();
+	protected @NonNull List<@NonNull InvalidableType> getSortedInvalidableTypes(@NonNull Model root) {
+		Set<@NonNull InvalidableType> allElements = new HashSet<>();
 		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if (eObject instanceof Operation) {
 				Operation asOperation = (Operation)eObject;
 				if (asOperation.isIsInvalidating()) {
-					allElements.add(asOperation.getType());
+					allElements.add(environmentFactory.getCompleteModel().getInvalidableType(asOperation.getDecodedType()));
 				}
 				if (asOperation.isIsValidating()) {
 					for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
-						allElements.add(asParameter.getType());
+						allElements.add(environmentFactory.getCompleteModel().getInvalidableType(asParameter.getDecodedType()));
 					}
 				}
 			}
 			else if (eObject instanceof InvalidableType) {
 				if (((InvalidableType)eObject).getOwnedSignature() == null) {
-					allElements.add(PivotUtil.getNonNullType((InvalidableType)eObject));
+					allElements.add((InvalidableType)eObject);
 				}
 			}
 		}
-		List<@NonNull Type> sortedElements = new ArrayList<>(allElements);
+		List<@NonNull InvalidableType> sortedElements = new ArrayList<>(allElements);
 		Collections.sort(sortedElements, monikerComparator);
 		return sortedElements;
 	}
@@ -1020,27 +1019,43 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return pkge2mapTypes;
 	}
 
-	protected @NonNull List<@NonNull Type> getSortedNullableTypes(@NonNull Model root) {
-		Set<@NonNull Type> allElements = new HashSet<>();
+	protected @NonNull List<@NonNull NullableType> getSortedNullableTypes(@NonNull Model root) {
+		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+		Set<@NonNull NullableType> allElements = new HashSet<>();
 		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
-			if ((eObject instanceof TypedElement) && !((TypedElement)eObject).isIsRequired()) {
-				eObject = ((TypedElement)eObject).getRawType();
+			if (eObject instanceof Operation) {
+				Operation asOperation = (Operation)eObject;
+				if (asOperation.isIsInvalidating()) {
+					allElements.add(completeModel.getNullableType(asOperation.getDecodedType()));
+				}
+				if (asOperation.isIsValidating()) {
+					for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+						allElements.add(completeModel.getNullableType(asParameter.getDecodedType()));
+					}
+				}
 			}
-			if (eObject instanceof InvalidableType) {
+			else if (eObject instanceof InvalidableType) {
 				if (((InvalidableType)eObject).getOwnedSignature() == null) {
-					eObject = PivotUtil.getNonNullType((InvalidableType)eObject);
+					allElements.add(completeModel.getNullableType(((InvalidableType)eObject).getNonNullType()));
 				}
 			}
-			else if (eObject instanceof NullableType) {
-				if (((NullableType)eObject).getOwnedSignature() == null) {
-					eObject = PivotUtil.getNonNullType((NullableType)eObject);
+			else {
+				if ((eObject instanceof TypedElement) && !((TypedElement)eObject).isIsRequired()) {
+					eObject = ((TypedElement)eObject).getRawType();
 				}
-			}
-			if ((eObject instanceof Type) && !(eObject instanceof VoidType) && !(eObject instanceof InvalidType) && !(eObject instanceof NullableType) && !(eObject instanceof InvalidableType)) {
-				allElements.add((Type)eObject);
+				if (eObject instanceof InvalidableType) {
+					if (((InvalidableType)eObject).getOwnedSignature() == null) {
+						allElements.add(completeModel.getNullableType(((InvalidableType)eObject).getNonNullType()));
+					}
+				}
+				else if (eObject instanceof NullableType) {
+					if (((NullableType)eObject).getOwnedSignature() == null) {
+						allElements.add((NullableType)eObject);
+					}
+				}
 			}
 		}
-		List<@NonNull Type> sortedElements = new ArrayList<>(allElements);
+		List<@NonNull NullableType> sortedElements = new ArrayList<>(allElements);
 		Collections.sort(sortedElements, monikerComparator);
 		return sortedElements;
 	}

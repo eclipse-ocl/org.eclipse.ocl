@@ -34,6 +34,10 @@ import org.eclipse.ocl.pivot.TemplateSignature
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.List
+import org.eclipse.ocl.pivot.NullableType
+import org.eclipse.ocl.pivot.InvalidableType
+import org.eclipse.ocl.pivot.utilities.PivotUtil
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal
 
 public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -137,7 +141,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR pkge : sortedPackages»
 
 				«FOR property : ClassUtil.nullFree(pkge2properties.get(pkge))»
-				private final @NonNull Property «property.getPrefixedSymbolName("pr_" + property.partialName())» = createProperty(«property.getNameLiteral()», «property.type.getSymbolName()»);
+				private final @NonNull Property «property.getPrefixedSymbolName("pr_" + property.partialName())» = createProperty(«property.getNameLiteral()», «property.getRawType().getSymbolName()»);
 				«ENDFOR»
 			«ENDFOR»
 		'''
@@ -151,7 +155,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR type : tupleTypes»
 				private final @NonNull TupleType «type.getPrefixedSymbolName("_" + type.partialName())» = createTupleType("«type.name»",
 				«FOR property : type.getSortedTupleParts() BEFORE ("\t") SEPARATOR (",\n\t")»
-				createProperty("«property.name»", «property.type.getSymbolName()»)«ENDFOR»);
+				createProperty("«property.name»", «property.getRawType().getSymbolName()»)«ENDFOR»);
 			«ENDFOR»
 		'''
 	}
@@ -169,7 +173,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«FOR coercion : (type as PrimitiveType).getSortedCoercions(allCoercions)»
 						ownedCoercions.add(coercion = «coercion.getSymbolName()»);
 						«IF coercion.bodyExpression != null»
-							operation.setBodyExpression(createExpressionInOCL(«coercion.type.getSymbolName()», "«coercion.bodyExpression.javaString()»"));
+							operation.setBodyExpression(createExpressionInOCL(«coercion.getRawType().getSymbolName()», "«coercion.bodyExpression.javaString()»"));
 						«ENDIF»
 					«ENDFOR»
 				«ENDFOR»
@@ -296,14 +300,14 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		if (orphanPackage == null) return "";
 		'''
 
-			«FOR type : allInvalidableTypes»
-				private final @NonNull InvalidableType _Invalidable«type.getPrefixedSymbolName("_" + type.partialName())» = createInvalidableType(_Nullable«type.getPrefixedSymbolName("_" + type.partialName())»);
+			«FOR invalidableType : allInvalidableTypes»
+				private final @NonNull InvalidableType «invalidableType.getPrefixedSymbolName("_" + invalidableType.partialName())» = createInvalidableType(«environmentFactory.getCompleteModel().getNullableType(invalidableType.nonNullType).getSymbolName()»);
 			«ENDFOR»
 
 			private void installInvalidableTypes() {
 				final List<Class> orphanTypes = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
 				«FOR invalidableType : allInvalidableTypes»
-					orphanTypes.add(_Nullable«invalidableType.getSymbolName()»);
+					orphanTypes.add(«invalidableType.getSymbolName()»);
 				«ENDFOR»
 			}
 		'''
@@ -319,7 +323,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR pkge : sortedPackages»
 				«FOR iteration : ClassUtil.nullFree(pkge2iterations.get(pkge))»
 				private final @NonNull Iteration «iteration.getPrefixedSymbolName("it_" + iteration.partialName())» = createIteration("«iteration.
-				name»", «iteration.type.getSymbolName()», «IF iteration.implementationClass != null»"«iteration.
+				name»", «iteration.getRawType().getSymbolName()», «IF iteration.implementationClass != null»"«iteration.
 				implementationClass»", «iteration.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF iteration.getOwnedSignature() != null»«FOR templateParameter : iteration.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
 				«ENDFOR»
 			«ENDFOR»
@@ -354,7 +358,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF iteration.ownedIterators.size() > 0»
 						ownedParameters = iteration.getOwnedIterators();
 						«FOR parameter : iteration.ownedIterators»
-							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»));
+							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.getRawType().getSymbolName()», «parameter.isRequired»));
 							«IF parameter.isTypeof»
 								parameter.setIsTypeof(true);
 							«ENDIF»
@@ -363,7 +367,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF iteration.ownedAccumulators.size() > 0»
 						ownedParameters = iteration.getOwnedAccumulators();
 						«FOR parameter : iteration.ownedAccumulators»
-							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»));
+							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.getRawType().getSymbolName()», «parameter.isRequired»));
 							«IF parameter.isTypeof»
 								parameter.setIsTypeof(true);
 							«ENDIF»
@@ -372,7 +376,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF iteration.ownedParameters.size() > 0»
 						ownedParameters = iteration.getOwnedParameters();
 						«FOR parameter : iteration.ownedParameters»
-							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»));
+							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.getRawType().getSymbolName()», «parameter.isRequired»));
 							«IF parameter.isTypeof»
 								parameter.setIsTypeof(true);
 							«ENDIF»
@@ -442,14 +446,14 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		if (orphanPackage == null) return "";
 		'''
 
-			«FOR type : allNullableTypes»
-				private final @NonNull NullableType _Nullable«type.getPrefixedSymbolName("_" + type.partialName())» = createNullableType(«type.getPrefixedSymbolName("_" + type.partialName())»);
+			«FOR nullableType : allNullableTypes»
+				private final @NonNull NullableType «nullableType.getPrefixedSymbolName("_" + nullableType.partialName())» = createNullableType(«nullableType.nonNullType.getSymbolName()»);
 			«ENDFOR»
 
 			private void installNullableTypes() {
 				final List<Class> orphanTypes = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
 				«FOR nullableType : allNullableTypes»
-					orphanTypes.add(_Nullable«nullableType.getSymbolName()»);
+					orphanTypes.add(«nullableType.getSymbolName()»);
 				«ENDFOR»
 			}
 		'''
@@ -465,7 +469,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR pkge : sortedPackages»
 				«FOR operation : ClassUtil.nullFree(pkge2operations.get(pkge))»
 				private final @NonNull Operation «operation.getPrefixedSymbolName("op_" + operation.partialName())» = createOperation("«operation.
-				name»", «operation.type.getSymbolName()», «IF operation.implementationClass != null»"«operation.
+				name»", «operation.getRawType().getSymbolName()», «IF operation.implementationClass != null»"«operation.
 				implementationClass»", «operation.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF operation.getOwnedSignature() != null»«FOR templateParameter : operation.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
 				«ENDFOR»
 			«ENDFOR»
@@ -498,12 +502,12 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						operation.setIsValidating(true);
 					«ENDIF»
 					«IF operation.bodyExpression != null»
-						operation.setBodyExpression(createExpressionInOCL(«operation.type.getSymbolName()», "«operation.bodyExpression.javaString()»"));
+						operation.setBodyExpression(createExpressionInOCL(«operation.getRawType().getSymbolName()», "«operation.bodyExpression.javaString()»"));
 					«ENDIF»
 					«IF operation.ownedParameters.size() > 0»
 						ownedParameters = operation.getOwnedParameters();
 						«FOR parameter : operation.ownedParameters»
-							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»));
+							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.getRawType().getSymbolName()», «parameter.isRequired»));
 							«IF parameter.isTypeof»
 								parameter.setIsTypeof(true);
 							«ENDIF»
@@ -715,7 +719,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String emitCreateProperty(Property property) {
-		return "createProperty(" + property.name + ", " + property.type.getSymbolName() + ")";
+		return "createProperty(" + property.name + ", " + property.getRawType().getSymbolName() + ")";
 	}
 
 	protected def String emitPackage(Package pkg) {
@@ -796,8 +800,8 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String installInvalidableTypes(/*@NonNull*/ Model root) {
-		var allNullableTypes = root.getSortedInvalidableTypes();
-		if (allNullableTypes.isEmpty()) return "";
+		var allInvalidableTypes = root.getSortedInvalidableTypes();
+		if (allInvalidableTypes.isEmpty()) return "";
 		'''installInvalidableTypes();'''
 	}
 
@@ -875,11 +879,15 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		switch element {
 			CollectionType case element.elementType == null: return element.javaName()
 			CollectionType: return element.javaName()
+			InvalidableType case element.nonNullType == null: return element.javaName()
+			InvalidableType: return "Invalidable_" + element.nonNullType.partialName()
 			LambdaType case element.contextType == null: return "null"
 			LambdaType: return element.javaName() + "_" + element.contextType.partialName()
 			MapType case element.keyType == null: return element.javaName()
 			MapType case element.valueType == null: return element.javaName()
 			MapType: return element.javaName()
+			NullableType case element.nonNullType == null: return element.javaName()
+			NullableType: return "Nullable_" + element.nonNullType.partialName()
 			Class case element.ownedBindings.size() > 0: return '''«element.javaName()»«FOR TemplateParameterSubstitution tps : element.getTemplateParameterSubstitutions()»_«tps.actual.simpleName()»«ENDFOR»'''
 			Class: return element.javaName()
 			Comment case element.body == null: return "null"

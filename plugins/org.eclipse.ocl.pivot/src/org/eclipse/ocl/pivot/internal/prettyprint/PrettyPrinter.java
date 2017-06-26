@@ -654,7 +654,7 @@ public class PrettyPrinter
 	 * @since 1.3
 	 */
 	public void appendTypeMultiplicity(TypedElement object) {
-		Type type = object.getType();
+		Type type = object.getDecodedType();
 		if (!object.isIsRequired()) {
 			append("[?]");
 		}
@@ -664,7 +664,7 @@ public class PrettyPrinter
 	}
 
 	public void appendTypedMultiplicity(TypedElement object) {
-		Type type = object.getType();
+		Type type = object.getDecodedType();
 		appendElement(type);
 		appendTypeMultiplicity(object);
 	}

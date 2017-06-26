@@ -42,10 +42,12 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ParameterTypes;
@@ -458,6 +460,11 @@ public class OCLinEcoreTablesUtils
 		}
 
 		@Override
+		public Object visitInvalidableType(@NonNull InvalidableType object) {
+			return object.getNonNullType().accept(this);
+		}
+
+		@Override
 		public @Nullable Object visitLambdaType(@NonNull LambdaType lambdaType) {
 			s.append("new ");
 			s.appendClassReference(ExecutorLambdaType.class);
@@ -485,6 +492,11 @@ public class OCLinEcoreTablesUtils
 			type.getValueType().accept(this);
 			s.append(")");
 			return null;
+		}
+
+		@Override
+		public Object visitNullableType(@NonNull NullableType object) {
+			return object.getNonNullType().accept(this);
 		}
 
 		@Override
@@ -1141,6 +1153,18 @@ public class OCLinEcoreTablesUtils
 		return name2;
 	}
 	private void getTemplateBindingsName(@NonNull StringBuilder s, @NonNull Type element) {
+		if (element instanceof NullableType) {
+			s.append("Nullable_gt_");
+			getTemplateBindingsName(s, ((NullableType)element).getNonNullType());
+			s.append("_lt");
+			return;
+		}
+		if (element instanceof InvalidableType) {
+			s.append("Invalidable_gt_");
+			getTemplateBindingsName(s, ((InvalidableType)element).getNonNullType());
+			s.append("_lt");
+			return;
+		}
 		TemplateParameter templateParameter = element.isTemplateParameter();
 		if (templateParameter != null) {
 			TemplateableElement template = templateParameter.getOwningSignature().getOwningElement();
