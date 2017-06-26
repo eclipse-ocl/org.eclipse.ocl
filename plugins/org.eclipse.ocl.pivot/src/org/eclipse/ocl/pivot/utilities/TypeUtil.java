@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -200,7 +201,7 @@ public class TypeUtil
 
 	public static @Nullable Type encodeNullableType(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type type, boolean isRequired) {
 		if ((type != null) && !isRequired) {
-			if (!(type instanceof NullableType)) {
+			if (!(type instanceof NullableType) && !(type instanceof VoidType)) {
 				return environmentFactory.getCompleteModel().getNullableType(type);
 			}
 		}
