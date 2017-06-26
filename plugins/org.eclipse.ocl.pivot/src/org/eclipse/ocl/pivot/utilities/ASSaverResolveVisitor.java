@@ -14,10 +14,12 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
@@ -64,6 +66,19 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 			}
 		}
 		return super.visitCollectionType(object);
+	}
+
+	@Override
+	public Object visitInvalidableType(@NonNull InvalidableType object) {
+		Type referredType = ClassUtil.nonNullModel(object.getNonNullType());
+		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
+		if (referredClass != null) {
+			Type resolvedType = context.resolveType(referredClass);
+			if (resolvedType != referredType) {
+				object.setNonNullType(resolvedType);
+			}
+		}
+		return super.visitInvalidableType(object);
 	}
 
 	@Override
@@ -130,6 +145,19 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 	}
 
 	@Override
+	public Object visitNullableType(@NonNull NullableType object) {
+		Type referredType = ClassUtil.nonNullModel(object.getNonNullType());
+		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
+		if (referredClass != null) {
+			Type resolvedType = context.resolveType(referredClass);
+			if (resolvedType != referredType) {
+				object.setNonNullType(resolvedType);
+			}
+		}
+		return super.visitNullableType(object);
+	}
+
+	@Override
 	public Object visitOperationCallExp(@NonNull OperationCallExp object) {	// FIXME Obsolete once referredOperation is not a specialization
 		Operation referredOperation = PivotUtil.getReferredOperation(object);
 		Operation resolvedOperation = context.resolveOperation(referredOperation);
@@ -177,6 +205,20 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitType(@NonNull Type object) {
+		NullableType referredNullableType = object.getNullableType();
+		if (referredNullableType != null) {
+			NullableType resolvedNullableType = context.resolveType(referredNullableType);
+			if (resolvedNullableType != referredNullableType) {
+				object.setNullableType(resolvedNullableType);
+			}
+		}
+		InvalidableType referredInvalidableType = object.getInvalidableType();
+		if (referredInvalidableType != null) {
+			InvalidableType resolvedInvalidableType = context.resolveType(referredInvalidableType);
+			if (resolvedInvalidableType != referredInvalidableType) {
+				object.setInvalidableType(resolvedInvalidableType);
+			}
+		}
 		return null;
 	}
 
@@ -196,7 +238,7 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 
 	@Override
 	public Object visitTypedElement(@NonNull TypedElement object) {
-		Type referredType = ClassUtil.nonNullEMF(object.getType());
+		Type referredType = ClassUtil.nonNullEMF(object.getRawType());
 		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
 		if (referredClass != null) {
 			Type resolvedType = context.resolveType(referredClass);

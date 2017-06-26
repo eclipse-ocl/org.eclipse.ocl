@@ -431,9 +431,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return allElements;
 	}
 
-	protected @Nullable List<org.eclipse.ocl.pivot.Class> getClassTypes(@NonNull Package pkge) {
-		List<org.eclipse.ocl.pivot.Class> classTypes = null;
-		for (org.eclipse.ocl.pivot.Class type : pkge.getOwnedClasses()) {
+	protected @Nullable List<org.eclipse.ocl.pivot.@NonNull Class> getClassTypes(@NonNull Package pkge) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> classTypes = null;
+		for (org.eclipse.ocl.pivot.@NonNull Class type : PivotUtil.getOwnedClasses(pkge)) {
 			boolean useIt = false;
 			if (type instanceof CollectionType) {
 				useIt = false;
@@ -441,11 +441,17 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			else if (type instanceof Enumeration) {
 				useIt = false;
 			}
+			else if (type instanceof InvalidableType) {
+				useIt = type.getOwnedSignature() != null;
+			}
 			else if (type instanceof LambdaType) {
 				useIt = false;
 			}
 			else if (type instanceof MapType) {
 				useIt = false;
+			}
+			else if (type instanceof NullableType) {
+				useIt = type.getOwnedSignature() != null;
 			}
 			else if (type instanceof PrimitiveType) {
 				useIt = false;
@@ -508,8 +514,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	protected void getExternals(@NonNull Model root) {
-		Set<org.eclipse.ocl.pivot.Class> internalTypes = new HashSet<>();
-		for (org.eclipse.ocl.pivot.Package pkge : root.getOwnedPackages()) {
+		Set<org.eclipse.ocl.pivot.@NonNull Class> internalTypes = new HashSet<>();
+		for (org.eclipse.ocl.pivot.@NonNull Package pkge : PivotUtil.getOwnedPackages(root)) {
 			List<org.eclipse.ocl.pivot.Class> classTypes = getClassTypes(pkge);
 			if (classTypes != null) {
 				for (org.eclipse.ocl.pivot.Class classType : classTypes) {
@@ -519,8 +525,18 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				}
 			}
 		}
-		Set<Element> allReferences = new HashSet<>();
+		Set<@NonNull Element> allReferences = new HashSet<>();
 		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
+			if (eObject instanceof NullableType) {
+				if (((NullableType)eObject).getOwnedSignature() == null) {
+					eObject = PivotUtil.getNonNullType((NullableType)eObject);
+				}
+			}
+			else if (eObject instanceof InvalidableType) {
+				if (((InvalidableType)eObject).getOwnedSignature() == null) {
+					eObject = PivotUtil.getNonNullType((InvalidableType)eObject);
+				}
+			}
 			if (eObject instanceof CollectionType) {
 				CollectionType collectionType = (CollectionType)eObject;
 				addExternalReference(collectionType, root);
@@ -551,7 +567,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 						if (PivotUtil.getContainingModel(opposite) == PivotUtil.getContainingModel(property)) {
 							addExternalReference(opposite, root);
 						}
-						Type oppositeType = opposite.getDecodedType();
+						Type oppositeType = opposite.getRawType();
 						if (!internalTypes.contains(oppositeType)) {
 							addExternalReference(oppositeType, root);
 						}

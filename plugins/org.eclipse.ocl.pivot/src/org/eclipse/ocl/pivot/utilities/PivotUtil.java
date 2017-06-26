@@ -377,7 +377,7 @@ public class PivotUtil
 	public static @NonNull InvalidableType createInvalidableType(@NonNull NullableType nullableType) {
 		InvalidableType pivotType = PivotFactory.eINSTANCE.createInvalidableType();
 		pivotType.setName("Invalidable<" + nullableType.getName() + ">");
-		pivotType.setNonInvalidType(nullableType);
+		pivotType.setNonNullType(nullableType.getNonNullType());
 		return pivotType;
 	}
 
@@ -1081,12 +1081,8 @@ public class PivotUtil
 		}
 	}
 
-	public static @NonNull NullableType getNonInvalidType(@NonNull InvalidableType type) {
-		return ClassUtil.nonNullState(type.getNonInvalidType());
-	}
-
 	public static @NonNull Type getNonNullType(@NonNull InvalidableType type) {
-		return getNonNullType(getNonInvalidType(type));
+		return ClassUtil.nonNullState(type.getNonNullType());
 	}
 
 	public static @NonNull Type getNonNullType(@NonNull NullableType type) {

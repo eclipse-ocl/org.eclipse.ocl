@@ -41,7 +41,7 @@ public interface InvalidableType extends org.eclipse.ocl.pivot.Class
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getInvalidableType_NonInvalidType()
 	 * @generated
 	 */
-	NullableType getNonInvalidType();
+	Type getNonNullType();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.InvalidableType#getNonInvalidType <em>Non Invalid Type</em>}' reference.
@@ -51,6 +51,6 @@ public interface InvalidableType extends org.eclipse.ocl.pivot.Class
 	 * @see #getNonInvalidType()
 	 * @generated
 	 */
-	void setNonInvalidType(NullableType value);
+	void setNonNullType(Type value);
 
 } // InvalidableType

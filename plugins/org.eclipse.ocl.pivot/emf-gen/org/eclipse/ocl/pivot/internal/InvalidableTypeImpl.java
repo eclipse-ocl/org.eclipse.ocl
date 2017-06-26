@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -56,7 +57,7 @@ public class InvalidableTypeImpl extends ClassImpl implements InvalidableType
 	 * @generated
 	 * @ordered
 	 */
-	protected NullableType nonInvalidType;
+	protected Type nonNullType;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -85,19 +86,19 @@ public class InvalidableTypeImpl extends ClassImpl implements InvalidableType
 	 * @generated
 	 */
 	@Override
-	public NullableType getNonInvalidType()
+	public Type getNonNullType()
 	{
-		if (nonInvalidType != null && nonInvalidType.eIsProxy())
+		if (nonNullType != null && nonNullType.eIsProxy())
 		{
-			InternalEObject oldNonInvalidType = (InternalEObject)nonInvalidType;
-			nonInvalidType = (NullableType)eResolveProxy(oldNonInvalidType);
-			if (nonInvalidType != oldNonInvalidType)
+			InternalEObject oldNonInvalidType = (InternalEObject)nonNullType;
+			nonNullType = (NullableType)eResolveProxy(oldNonInvalidType);
+			if (nonNullType != oldNonInvalidType)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.INVALIDABLE_TYPE__NON_INVALID_TYPE, oldNonInvalidType, nonInvalidType));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.INVALIDABLE_TYPE__NON_INVALID_TYPE, oldNonInvalidType, nonNullType));
 			}
 		}
-		return nonInvalidType;
+		return nonNullType;
 	}
 
 	/**
@@ -105,9 +106,9 @@ public class InvalidableTypeImpl extends ClassImpl implements InvalidableType
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NullableType basicGetNonInvalidType()
+	public Type basicGetNonNullType()
 	{
-		return nonInvalidType;
+		return nonNullType;
 	}
 
 	/**
@@ -116,12 +117,12 @@ public class InvalidableTypeImpl extends ClassImpl implements InvalidableType
 	 * @generated
 	 */
 	@Override
-	public void setNonInvalidType(NullableType newNonInvalidType)
+	public void setNonNullType(Type newNonNullType)
 	{
-		NullableType oldNonInvalidType = nonInvalidType;
-		nonInvalidType = newNonInvalidType;
+		Type oldNonNullType = nonNullType;
+		nonNullType = newNonNullType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.INVALIDABLE_TYPE__NON_INVALID_TYPE, oldNonInvalidType, nonInvalidType));
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.INVALIDABLE_TYPE__NON_INVALID_TYPE, oldNonNullType, nonNullType));
 	}
 
 	/**
@@ -175,8 +176,8 @@ public class InvalidableTypeImpl extends ClassImpl implements InvalidableType
 			case PivotPackage.INVALIDABLE_TYPE__SUPER_CLASSES:
 				return getSuperClasses();
 			case PivotPackage.INVALIDABLE_TYPE__NON_INVALID_TYPE:
-				if (resolve) return getNonInvalidType();
-				return basicGetNonInvalidType();
+				if (resolve) return getNonNullType();
+				return basicGetNonNullType();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -265,7 +266,7 @@ public class InvalidableTypeImpl extends ClassImpl implements InvalidableType
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
 			case PivotPackage.INVALIDABLE_TYPE__NON_INVALID_TYPE:
-				setNonInvalidType((NullableType)newValue);
+				setNonNullType((Type)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -342,7 +343,7 @@ public class InvalidableTypeImpl extends ClassImpl implements InvalidableType
 				getSuperClasses().clear();
 				return;
 			case PivotPackage.INVALIDABLE_TYPE__NON_INVALID_TYPE:
-				setNonInvalidType((NullableType)null);
+				setNonNullType((Type)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -399,7 +400,7 @@ public class InvalidableTypeImpl extends ClassImpl implements InvalidableType
 			case PivotPackage.INVALIDABLE_TYPE__SUPER_CLASSES:
 				return superClasses != null && !superClasses.isEmpty();
 			case PivotPackage.INVALIDABLE_TYPE__NON_INVALID_TYPE:
-				return nonInvalidType != null;
+				return nonNullType != null;
 		}
 		return eDynamicIsSet(featureID);
 	}

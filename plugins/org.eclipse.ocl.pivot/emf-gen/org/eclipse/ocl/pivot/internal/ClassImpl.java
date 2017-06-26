@@ -1131,9 +1131,11 @@ implements org.eclipse.ocl.pivot.Class {
 			return true;
 		}
 		if (type instanceof InvalidableType) {
-			type = PivotUtil.getNonInvalidType((InvalidableType)type);
+			Type nonNullType = PivotUtil.getNonNullType((InvalidableType)type);
+			type = ClassUtil.nonNullState(nonNullType.getNullableType());
 			if (this instanceof InvalidableType) {
-				return ClassUtil.nonNullState(((InvalidableType)this).getNonInvalidType()).conformsTo(standardLibrary, type);
+				Type nonNullThis = PivotUtil.getNonNullType((InvalidableType)this);
+				return ClassUtil.nonNullState(nonNullThis.getNullableType()).conformsTo(standardLibrary, type);
 			}
 		}
 		if (type instanceof NullableType) {
@@ -1390,6 +1392,17 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public void setName(String newName) {
+		if (newName != null) {
+			if (this instanceof NullableType) {
+
+			}
+			else if (this instanceof InvalidableType) {
+
+			}
+			else {
+				assert !newName.startsWith("Nullable<") && !newName.startsWith("Invalidable<");
+			}
+		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {

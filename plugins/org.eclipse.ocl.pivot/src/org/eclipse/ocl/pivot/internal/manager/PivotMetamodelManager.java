@@ -1166,7 +1166,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * class/package name hierarchy. THis is typically used to create a merge contribution
 	 * for thatClass in thisModel avoiding the need to modify thatClass.
 	 */
-	public org.eclipse.ocl.pivot.Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
+	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
 		Model thatModel = PivotUtil.getContainingModel(thatClass);
 		if (thisModel == thatModel) {
 			return thatClass;
@@ -1785,7 +1785,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (opposite != null) {
 			return;
 		}
-		Type thatType = thisProperty.getRawType();
+		Type thatType = thisProperty.getDecodedType();
 		if (thatType instanceof CollectionType) {
 			thatType = ((CollectionType)thatType).getElementType();
 		}
@@ -1799,6 +1799,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		org.eclipse.ocl.pivot.Class thisClass = thisProperty.getOwningClass();
 		if (thisClass == null) {								// e.g. an EAnnotation
 			return;
+		}
+		if ((thisClass instanceof InvalidableType) || (thisClass instanceof NullableType)) {
+			return;			// Avoid the confusing Bag<Nullable>, Bad<Invalidable>
 		}
 		String name = thisClass.getName();
 		if (name == null) {
@@ -1825,6 +1828,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		Model thisModel = PivotUtil.getContainingModel(thisClass);
 		assert thisModel != null;
 		org.eclipse.ocl.pivot.Class thisOppositeClass = getEquivalentClass(thisModel, thatClass);
+		//		Type thatRawType = thisProperty.getRawType();
+		//		if (thatRawType instanceof NullableType) {
+		//			thisOppositeClass = completeModel.getNullableType(thisOppositeClass);
+		//		}
+		//		else if (thatRawType instanceof InvalidableType) {
+		//			thisOppositeClass = completeModel.getInvalidableType(thisOppositeClass);
+		//		}
 		thisOppositeClass.getOwnedProperties().add(newOpposite);
 		newOpposite.setOpposite(thisProperty);
 		thisProperty.setOpposite(newOpposite);

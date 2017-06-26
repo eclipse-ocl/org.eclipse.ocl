@@ -13,10 +13,12 @@ package org.eclipse.ocl.pivot.utilities;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -60,6 +62,16 @@ public class ASSaverLocateVisitor extends AbstractExtendingVisitor<Object, ASSav
 			context.addSpecializingElement(object, referredClass);
 		}
 		return super.visitCollectionType(object);
+	}
+
+	@Override
+	public Object visitInvalidableType(@NonNull InvalidableType object) {
+		Type referredType = object.getNonNullType();
+		org.eclipse.ocl.pivot.Class referredClass = referredType != null ? referredType.isClass() : null;
+		if (referredClass != null) {
+			context.addSpecializingElement(object, referredClass);
+		}
+		return super.visitInvalidableType(object);
 	}
 
 	@Override
@@ -110,6 +122,16 @@ public class ASSaverLocateVisitor extends AbstractExtendingVisitor<Object, ASSav
 			context.addSpecializingElement(object, referredClass);
 		}
 		return super.visitMapType(object);
+	}
+
+	@Override
+	public Object visitNullableType(@NonNull NullableType object) {
+		Type referredType = object.getNonNullType();
+		org.eclipse.ocl.pivot.Class referredClass = referredType != null ? referredType.isClass() : null;
+		if (referredClass != null) {
+			context.addSpecializingElement(object, referredClass);
+		}
+		return super.visitNullableType(object);
 	}
 
 	@Override

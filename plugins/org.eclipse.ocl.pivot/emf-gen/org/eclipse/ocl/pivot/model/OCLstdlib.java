@@ -105,6 +105,17 @@ public class OCLstdlib extends ASResourceImpl
 	}
 
 	/**
+	 * Return the default http://www.eclipse.org/ocl/2015/Library standard Library package.
+	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib
+	 *  is used as the default when no overriding copy is registered.
+	 */
+	public static @NonNull Package getDefaultPackage() {
+		Package pkge = getDefaultModel().getOwnedPackages().get(0);
+		assert pkge != null;
+		return pkge;
+	}
+
+	/**
 	 * Install this library in the {@link StandardLibraryContribution#REGISTRY}.
 	 * This method may be invoked by standalone applications to replicate
 	 * the registration that should appear as a standard_library plugin
@@ -240,7 +251,7 @@ public class OCLstdlib extends ASResourceImpl
 		{
 			model = createModel(asURI);
 			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL);
-			orphanage = createPackage("$$", "", "http://www.eclipse.org/ocl/2015/Orphanage", null);
+			orphanage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null);
 			installPackages();
 			installClassTypes();
 			installPrimitiveTypes();
@@ -262,34 +273,6 @@ public class OCLstdlib extends ASResourceImpl
 		public @NonNull Model getModel() {
 			return model;
 		}
-
-		private final @NonNull Package _$$ = getPackage(Orphanage, "$$");
-		private final @NonNull LambdaType _Lambda = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_0 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_1 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_10 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_11 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_12 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_13 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_14 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_15 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_16 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_17 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_18 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_19 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_2 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_20 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_3 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_4 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_5 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_6 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_7 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_8 = getLambdaType(_$$, "Lambda");
-		private final @NonNull LambdaType _Lambda_9 = getLambdaType(_$$, "Lambda");
-		private final @NonNull MapType _Map = getMapType(_$$, "Map");
-		private final @NonNull MapType _Map_0 = getMapType(_$$, "Map");
-		private final @NonNull MapType _Map_1 = getMapType(_$$, "Map");
-		private final @NonNull MapType _Map_2 = getMapType(_$$, "Map");
 
 		private void installPackages() {
 			model.getOwnedPackages().add(ocl);
@@ -317,11 +300,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull VoidType _OclVoid = createVoidType(OCLstdlibPackage.Literals.OCL_VOID);
 		private final @NonNull Class _State = createClass("State");
 		private final @NonNull Class _Type = createClass("Type");
-
-		private final @NonNull Class _Nullable_lt_K_gt_ = createClass("Nullable<K>");
-		private final @NonNull Class _Nullable_lt_OclElement_gt_ = createClass("Nullable<OclElement>");
-		private final @NonNull Class _Nullable_lt_OclType_gt_ = createClass("Nullable<OclType>");
-		private final @NonNull Class _Nullable_lt_V_gt_ = createClass("Nullable<V>");
 
 		private final @NonNull PrimitiveType _Boolean = createPrimitiveType("Boolean");
 		private final @NonNull PrimitiveType _Integer = createPrimitiveType("Integer");
@@ -404,10 +382,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull BagType _Bag_Collection_T_NullFree = createBagType(_Bag_Bag_T, tp_Collection_T);
 		private final @NonNull BagType _Bag_Collection = createBagType(_Bag_Bag_T, _Collection_Collection_T);
 		private final @NonNull BagType _Bag_Enumeration = createBagType(_Bag_Bag_T, _Enumeration);
-		private final @NonNull BagType _Bag_Invalidable = createBagType(_Bag_Bag_T, _Invalidable);
 		private final @NonNull BagType _Bag_Map_V_NullFree = createBagType(_Bag_Bag_T, tp_Map_V);
-		private final @NonNull BagType _Bag_Map = createBagType(_Bag_Bag_T, symbol_);
-		private final @NonNull BagType _Bag_Nullable = createBagType(_Bag_Bag_T, _Nullable);
 		private final @NonNull BagType _Bag_OclElement = createBagType(_Bag_Bag_T, _OclElement);
 		private final @NonNull BagType _Bag_OclEnumeration = createBagType(_Bag_Bag_T, _OclEnumeration);
 		private final @NonNull BagType _Bag_Set_collectNested_V_NullFree = createBagType(_Bag_Bag_T, tp_Set_collectNested_V);
@@ -434,13 +409,10 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_Collection = createCollectionType(_Collection_Collection_T, _Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_EnumerationLiteral = createCollectionType(_Collection_Collection_T, _EnumerationLiteral);
 		private final @NonNull CollectionType _Collection_Enumeration = createCollectionType(_Collection_Collection_T, _Enumeration);
-		private final @NonNull CollectionType _Collection_Invalidable = createCollectionType(_Collection_Collection_T, _Invalidable);
 		private final @NonNull CollectionType _Collection_Map_excludesAll_K2_NullFree = createCollectionType(_Collection_Collection_T, tp_Map_excludesAll_K2);
 		private final @NonNull CollectionType _Collection_Map_includesAll_K2_NullFree = createCollectionType(_Collection_Collection_T, tp_Map_includesAll_K2);
 		private final @NonNull CollectionType _Collection_Map_K = createCollectionType(_Collection_Collection_T, tp_Map_K);
 		private final @NonNull CollectionType _Collection_Map_V = createCollectionType(_Collection_Collection_T, tp_Map_V);
-		private final @NonNull CollectionType _Collection_Map = createCollectionType(_Collection_Collection_T, symbol_);
-		private final @NonNull CollectionType _Collection_Nullable = createCollectionType(_Collection_Collection_T, _Nullable);
 		private final @NonNull CollectionType _Collection_OclAny_NullFree = createCollectionType(_Collection_Collection_T, _OclAny);
 		private final @NonNull CollectionType _Collection_OclAny = createCollectionType(_Collection_Collection_T, _OclAny);
 		private final @NonNull CollectionType _Collection_OclElement = createCollectionType(_Collection_Collection_T, _OclElement);
@@ -539,7 +511,11 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_Set_T = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_T);
 		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T_1 = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_UniqueCollection_T);
 
-		private final @NonNull MapType symbol_ = createMapType("Map"/*K V*/, tp_Map_K, tp_Map_V);
+		private final @NonNull MapType _Map_Map_K_Map_V = createMapType("Map"/*K V*/, tp_Map_K, tp_Map_V);
+		private final @NonNull MapType _Map_Map_excludesMap_K2_Map_excludesMap_V2 = createMapType(_Map_Map_K_Map_V, tp_Map_excludesMap_K2, tp_Map_excludesMap_V2);
+		private final @NonNull MapType _Map_Map_excludingMap_K2_Map_excludingMap_V2 = createMapType(_Map_Map_K_Map_V, tp_Map_excludingMap_K2, tp_Map_excludingMap_V2);
+		private final @NonNull MapType _Map_Map_includesMap_K2_Map_includesMap_V2 = createMapType(_Map_Map_K_Map_V, tp_Map_includesMap_K2, tp_Map_includesMap_V2);
+		private final @NonNull MapType _Map_Map_includingMap_K2_Map_includingMap_V2 = createMapType(_Map_Map_K_Map_V, tp_Map_includingMap_K2, tp_Map_includingMap_V2);
 
 		private void installClassTypes() {
 			List<Class> ownedClasses;
@@ -624,20 +600,6 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type = _Type);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclType);
-
-			ownedClasses = orphanage.getOwnedClasses();
-			ownedClasses.add(type = _Nullable_lt_K_gt_);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclElement);
-			ownedClasses.add(type = _Nullable_lt_OclElement_gt_);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclElement);
-			ownedClasses.add(type = _Nullable_lt_OclType_gt_);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclElement);
-			ownedClasses.add(type = _Nullable_lt_V_gt_);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclElement);
 		}
 
 		private void installPrimitiveTypes() {
@@ -722,19 +684,10 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type = _Bag_Enumeration);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Enumeration);
-			ownedClasses.add(type = _Bag_Invalidable);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_Invalidable);
 			ownedClasses.add(type = _Bag_Map_V_NullFree);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Map_V);
-			ownedClasses.add(type = _Bag_Map);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_Map);
-			ownedClasses.add(type = _Bag_Nullable);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_Nullable);
 			ownedClasses.add(type = _Bag_OclElement);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_OclElement);
@@ -824,9 +777,6 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type = _Collection_Enumeration);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
-			ownedClasses.add(type = _Collection_Invalidable);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_Map_excludesAll_K2_NullFree);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -839,12 +789,6 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_Map_V);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclAny);
-			ownedClasses.add(type = _Collection_Map);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclAny);
-			ownedClasses.add(type = _Collection_Nullable);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_OclAny_NullFree);
@@ -1193,7 +1137,21 @@ public class OCLstdlib extends ASResourceImpl
 			MapType type;
 
 			ownedClasses = ocl.getOwnedClasses();
-			ownedClasses.add(type = symbol_);
+			ownedClasses.add(type = _Map_Map_K_Map_V);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+
+			ownedClasses = orphanage.getOwnedClasses();
+			ownedClasses.add(type = _Map_Map_excludesMap_K2_Map_excludesMap_V2);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type = _Map_Map_excludingMap_K2_Map_excludingMap_V2);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type = _Map_Map_includesMap_K2_Map_includesMap_V2);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type = _Map_Map_includingMap_K2_Map_includingMap_V2);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 		}
@@ -1208,10 +1166,31 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private final @NonNull LambdaType _Lambda_Bag_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Bag_T_1 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Bag_T_2 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Bag_T_3 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Bag_T_4 = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_Collection_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Collection_T_1 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Collection_T_2 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Collection_T_3 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Collection_T_4 = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_OrderedSet_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_OrderedSet_T_1 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_OrderedSet_T_2 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_OrderedSet_T_3 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_OrderedSet_T_4 = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_Sequence_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Sequence_T_1 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Sequence_T_2 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Sequence_T_3 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Sequence_T_4 = createLambdaType("Lambda");
 		private final @NonNull LambdaType _Lambda_Set_T = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Set_T_1 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Set_T_2 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Set_T_3 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_Set_T_4 = createLambdaType("Lambda");
+		private final @NonNull LambdaType _Lambda_UniqueCollection_T = createLambdaType("Lambda");
 
 		private void installLambdaTypes() {
 			final List<Class> orphanTypes = orphanage.getOwnedClasses();
@@ -1222,9 +1201,49 @@ public class OCLstdlib extends ASResourceImpl
 			type.setResultType(_Boolean);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Bag_T_1);
+			type.setContextType(tp_Bag_T);
+			type.setResultType(tp_Bag_collectNested_V);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Bag_T_2);
+			type.setContextType(tp_Bag_T);
+			type.setResultType(tp_Bag_collect_V);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Bag_T_3);
+			type.setContextType(tp_Bag_T);
+			type.setResultType(_OclAny);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Bag_T_4);
+			type.setContextType(tp_Bag_T);
+			type.setResultType(_Set_Bag_T_NullFree);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_Collection_T);
 			type.setContextType(tp_Collection_T);
 			type.setResultType(_Boolean);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Collection_T_1);
+			type.setContextType(tp_Collection_T);
+			type.setResultType(tp_Collection_collectNested_V);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Collection_T_2);
+			type.setContextType(tp_Collection_T);
+			type.setResultType(tp_Collection_collect_V);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Collection_T_3);
+			type.setContextType(tp_Collection_T);
+			type.setResultType(tp_Collection_iterate_Tacc);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Collection_T_4);
+			type.setContextType(tp_Collection_T);
+			type.setResultType(_OclAny);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_OrderedSet_T);
@@ -1232,9 +1251,49 @@ public class OCLstdlib extends ASResourceImpl
 			type.setResultType(_Boolean);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_OrderedSet_T_1);
+			type.setContextType(tp_OrderedSet_T);
+			type.setResultType(_OclAny);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_OrderedSet_T_2);
+			type.setContextType(tp_OrderedSet_T);
+			type.setResultType(_OrderedSet_OrderedSet_T);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_OrderedSet_T_3);
+			type.setContextType(tp_OrderedSet_T);
+			type.setResultType(tp_OrderedSet_collectNested_V);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_OrderedSet_T_4);
+			type.setContextType(tp_OrderedSet_T);
+			type.setResultType(tp_OrderedSet_collect_V);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_Sequence_T);
 			type.setContextType(tp_Sequence_T);
 			type.setResultType(_Boolean);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Sequence_T_1);
+			type.setContextType(tp_Sequence_T);
+			type.setResultType(_OclAny);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Sequence_T_2);
+			type.setContextType(tp_Sequence_T);
+			type.setResultType(_OrderedSet_Sequence_T_NullFree);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Sequence_T_3);
+			type.setContextType(tp_Sequence_T);
+			type.setResultType(tp_Sequence_collectNested_V);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Sequence_T_4);
+			type.setContextType(tp_Sequence_T);
+			type.setResultType(tp_Sequence_collect_V);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_Set_T);
@@ -1242,37 +1301,61 @@ public class OCLstdlib extends ASResourceImpl
 			type.setResultType(_Boolean);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Set_T_1);
+			type.setContextType(tp_Set_T);
+			type.setResultType(_OclAny);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Set_T_2);
+			type.setContextType(tp_Set_T);
+			type.setResultType(_Set_Set_T);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Set_T_3);
+			type.setContextType(tp_Set_T);
+			type.setResultType(tp_Set_collectNested_V);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_Set_T_4);
+			type.setContextType(tp_Set_T);
+			type.setResultType(tp_Set_collect_V);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
+			orphanTypes.add(type = _Lambda_UniqueCollection_T);
+			type.setContextType(tp_UniqueCollection_T);
+			type.setResultType(_OclAny);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclLambda);
 		}
 
 		private final @NonNull NullableType _Nullable_Boolean = createNullableType(_Boolean);
 		private final @NonNull NullableType _Nullable_Integer = createNullableType(_Integer);
 		private final @NonNull NullableType _Nullable_Lambda_Bag_T = createNullableType(_Lambda_Bag_T);
-		private final @NonNull NullableType _Nullable_Lambda_1 = createNullableType(_Lambda_1);
-		private final @NonNull NullableType _Nullable_Lambda_0 = createNullableType(_Lambda_0);
-		private final @NonNull NullableType _Nullable_Lambda_2 = createNullableType(_Lambda_2);
-		private final @NonNull NullableType _Nullable_Lambda = createNullableType(_Lambda);
+		private final @NonNull NullableType _Nullable_Lambda_Bag_T_1 = createNullableType(_Lambda_Bag_T_1);
+		private final @NonNull NullableType _Nullable_Lambda_Bag_T_2 = createNullableType(_Lambda_Bag_T_2);
+		private final @NonNull NullableType _Nullable_Lambda_Bag_T_3 = createNullableType(_Lambda_Bag_T_3);
+		private final @NonNull NullableType _Nullable_Lambda_Bag_T_4 = createNullableType(_Lambda_Bag_T_4);
 		private final @NonNull NullableType _Nullable_Lambda_Collection_T = createNullableType(_Lambda_Collection_T);
-		private final @NonNull NullableType _Nullable_Lambda_5 = createNullableType(_Lambda_5);
-		private final @NonNull NullableType _Nullable_Lambda_4 = createNullableType(_Lambda_4);
-		private final @NonNull NullableType _Nullable_Lambda_3 = createNullableType(_Lambda_3);
-		private final @NonNull NullableType _Nullable_Lambda_7 = createNullableType(_Lambda_7);
-		private final @NonNull NullableType _Nullable_Lambda_6 = createNullableType(_Lambda_6);
+		private final @NonNull NullableType _Nullable_Lambda_Collection_T_1 = createNullableType(_Lambda_Collection_T_1);
+		private final @NonNull NullableType _Nullable_Lambda_Collection_T_2 = createNullableType(_Lambda_Collection_T_2);
+		private final @NonNull NullableType _Nullable_Lambda_Collection_T_3 = createNullableType(_Lambda_Collection_T_3);
+		private final @NonNull NullableType _Nullable_Lambda_Collection_T_4 = createNullableType(_Lambda_Collection_T_4);
 		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T = createNullableType(_Lambda_OrderedSet_T);
-		private final @NonNull NullableType _Nullable_Lambda_11 = createNullableType(_Lambda_11);
-		private final @NonNull NullableType _Nullable_Lambda_8 = createNullableType(_Lambda_8);
-		private final @NonNull NullableType _Nullable_Lambda_10 = createNullableType(_Lambda_10);
-		private final @NonNull NullableType _Nullable_Lambda_9 = createNullableType(_Lambda_9);
+		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T_1 = createNullableType(_Lambda_OrderedSet_T_1);
+		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T_2 = createNullableType(_Lambda_OrderedSet_T_2);
+		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T_3 = createNullableType(_Lambda_OrderedSet_T_3);
+		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T_4 = createNullableType(_Lambda_OrderedSet_T_4);
 		private final @NonNull NullableType _Nullable_Lambda_Sequence_T = createNullableType(_Lambda_Sequence_T);
-		private final @NonNull NullableType _Nullable_Lambda_15 = createNullableType(_Lambda_15);
-		private final @NonNull NullableType _Nullable_Lambda_12 = createNullableType(_Lambda_12);
-		private final @NonNull NullableType _Nullable_Lambda_14 = createNullableType(_Lambda_14);
-		private final @NonNull NullableType _Nullable_Lambda_13 = createNullableType(_Lambda_13);
+		private final @NonNull NullableType _Nullable_Lambda_Sequence_T_1 = createNullableType(_Lambda_Sequence_T_1);
+		private final @NonNull NullableType _Nullable_Lambda_Sequence_T_2 = createNullableType(_Lambda_Sequence_T_2);
+		private final @NonNull NullableType _Nullable_Lambda_Sequence_T_3 = createNullableType(_Lambda_Sequence_T_3);
+		private final @NonNull NullableType _Nullable_Lambda_Sequence_T_4 = createNullableType(_Lambda_Sequence_T_4);
 		private final @NonNull NullableType _Nullable_Lambda_Set_T = createNullableType(_Lambda_Set_T);
-		private final @NonNull NullableType _Nullable_Lambda_19 = createNullableType(_Lambda_19);
-		private final @NonNull NullableType _Nullable_Lambda_16 = createNullableType(_Lambda_16);
-		private final @NonNull NullableType _Nullable_Lambda_18 = createNullableType(_Lambda_18);
-		private final @NonNull NullableType _Nullable_Lambda_17 = createNullableType(_Lambda_17);
-		private final @NonNull NullableType _Nullable_Lambda_20 = createNullableType(_Lambda_20);
+		private final @NonNull NullableType _Nullable_Lambda_Set_T_1 = createNullableType(_Lambda_Set_T_1);
+		private final @NonNull NullableType _Nullable_Lambda_Set_T_2 = createNullableType(_Lambda_Set_T_2);
+		private final @NonNull NullableType _Nullable_Lambda_Set_T_3 = createNullableType(_Lambda_Set_T_3);
+		private final @NonNull NullableType _Nullable_Lambda_Set_T_4 = createNullableType(_Lambda_Set_T_4);
+		private final @NonNull NullableType _Nullable_Lambda_UniqueCollection_T = createNullableType(_Lambda_UniqueCollection_T);
 		private final @NonNull NullableType _Nullable_Real = createNullableType(_Real);
 		private final @NonNull NullableType _Nullable_String = createNullableType(_String);
 		private final @NonNull NullableType _Nullable_Tuple = createNullableType(_Tuple);
@@ -1286,10 +1369,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull NullableType _Nullable_Bag_Collection_T_NullFree = createNullableType(_Bag_Collection_T_NullFree);
 		private final @NonNull NullableType _Nullable_Bag_Collection = createNullableType(_Bag_Collection);
 		private final @NonNull NullableType _Nullable_Bag_Enumeration = createNullableType(_Bag_Enumeration);
-		private final @NonNull NullableType _Nullable_Bag_Invalidable = createNullableType(_Bag_Invalidable);
 		private final @NonNull NullableType _Nullable_Bag_Map_V_NullFree = createNullableType(_Bag_Map_V_NullFree);
-		private final @NonNull NullableType _Nullable_Bag_Map = createNullableType(_Bag_Map);
-		private final @NonNull NullableType _Nullable_Bag_Nullable = createNullableType(_Bag_Nullable);
 		private final @NonNull NullableType _Nullable_Bag_OclElement = createNullableType(_Bag_OclElement);
 		private final @NonNull NullableType _Nullable_Bag_OclEnumeration = createNullableType(_Bag_OclEnumeration);
 		private final @NonNull NullableType _Nullable_Bag_Set_collectNested_V_NullFree = createNullableType(_Bag_Set_collectNested_V_NullFree);
@@ -1324,15 +1404,12 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull NullableType _Nullable_Collection_Collection = createNullableType(_Collection_Collection);
 		private final @NonNull NullableType _Nullable_Collection_EnumerationLiteral = createNullableType(_Collection_EnumerationLiteral);
 		private final @NonNull NullableType _Nullable_Collection_Enumeration = createNullableType(_Collection_Enumeration);
-		private final @NonNull NullableType _Nullable_Collection_Invalidable = createNullableType(_Collection_Invalidable);
 		private final @NonNull NullableType _Nullable_Collection_Map_excludesAll_K2_NullFree = createNullableType(_Collection_Map_excludesAll_K2_NullFree);
 		private final @NonNull NullableType _Nullable_Collection_Map_includesAll_K2_NullFree = createNullableType(_Collection_Map_includesAll_K2_NullFree);
 		private final @NonNull NullableType _Nullable_Collection_Map_K = createNullableType(_Collection_Map_K);
 		private final @NonNull NullableType _Nullable_Collection_Map_V = createNullableType(_Collection_Map_V);
-		private final @NonNull NullableType _Nullable_Collection_Map = createNullableType(_Collection_Map);
-		private final @NonNull NullableType _Nullable_Collection_Nullable = createNullableType(_Collection_Nullable);
-		private final @NonNull NullableType _Nullable_Collection_OclAny = createNullableType(_Collection_OclAny);
 		private final @NonNull NullableType _Nullable_Collection_OclAny_NullFree = createNullableType(_Collection_OclAny_NullFree);
+		private final @NonNull NullableType _Nullable_Collection_OclAny = createNullableType(_Collection_OclAny);
 		private final @NonNull NullableType _Nullable_Collection_OclElement = createNullableType(_Collection_OclElement);
 		private final @NonNull NullableType _Nullable_Collection_OclEnumeration = createNullableType(_Collection_OclEnumeration);
 		private final @NonNull NullableType _Nullable_Collection_OclSelf = createNullableType(_Collection_OclSelf);
@@ -1356,8 +1433,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull NullableType _Nullable_Collection_Set_selectByType_TT = createNullableType(_Collection_Set_selectByType_TT);
 		private final @NonNull NullableType _Nullable_Collection_Set_T = createNullableType(_Collection_Set_T);
 		private final @NonNull NullableType _Nullable_Collection_Set_T_NullFree = createNullableType(_Collection_Set_T_NullFree);
-		private final @NonNull NullableType _Nullable_Collection_UniqueCollection_T_NullFree = createNullableType(_Collection_UniqueCollection_T_NullFree);
 		private final @NonNull NullableType _Nullable_Collection_UniqueCollection_T = createNullableType(_Collection_UniqueCollection_T);
+		private final @NonNull NullableType _Nullable_Collection_UniqueCollection_T_NullFree = createNullableType(_Collection_UniqueCollection_T_NullFree);
 		private final @NonNull NullableType _Nullable_Collection_Collection_T = createNullableType(_Collection_Collection_T);
 		private final @NonNull NullableType _Nullabletp_Collection_collectNested_V = createNullableType(tp_Collection_collectNested_V);
 		private final @NonNull NullableType _Nullabletp_Collection_collect_V = createNullableType(tp_Collection_collect_V);
@@ -1372,11 +1449,11 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull NullableType _Nullable_Enumeration = createNullableType(_Enumeration);
 		private final @NonNull NullableType _Nullable_EnumerationLiteral = createNullableType(_EnumerationLiteral);
 		private final @NonNull NullableType _Nullabletp_Invalidable_T = createNullableType(tp_Invalidable_T);
-		private final @NonNull NullableType _Nullable_Map = createNullableType(_Map);
-		private final @NonNull NullableType _Nullable_Map_0 = createNullableType(_Map_0);
-		private final @NonNull NullableType _Nullable_Map_1 = createNullableType(_Map_1);
-		private final @NonNull NullableType _Nullable_Map_2 = createNullableType(_Map_2);
-		private final @NonNull NullableType _Nullablesymbol_ = createNullableType(symbol_);
+		private final @NonNull NullableType _Nullable_Map_Map_excludesMap_K2_Map_excludesMap_V2 = createNullableType(_Map_Map_excludesMap_K2_Map_excludesMap_V2);
+		private final @NonNull NullableType _Nullable_Map_Map_excludingMap_K2_Map_excludingMap_V2 = createNullableType(_Map_Map_excludingMap_K2_Map_excludingMap_V2);
+		private final @NonNull NullableType _Nullable_Map_Map_includesMap_K2_Map_includesMap_V2 = createNullableType(_Map_Map_includesMap_K2_Map_includesMap_V2);
+		private final @NonNull NullableType _Nullable_Map_Map_includingMap_K2_Map_includingMap_V2 = createNullableType(_Map_Map_includingMap_K2_Map_includingMap_V2);
+		private final @NonNull NullableType _Nullable_Map_Map_K_Map_V = createNullableType(_Map_Map_K_Map_V);
 		private final @NonNull NullableType _Nullabletp_Map_excludesAll_K2 = createNullableType(tp_Map_excludesAll_K2);
 		private final @NonNull NullableType _Nullabletp_Map_excludesMap_K2 = createNullableType(tp_Map_excludesMap_K2);
 		private final @NonNull NullableType _Nullabletp_Map_excludesMap_V2 = createNullableType(tp_Map_excludesMap_V2);
@@ -1421,8 +1498,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull NullableType _Nullable_OrderedCollection_Sequence_flatten_T2 = createNullableType(_OrderedCollection_Sequence_flatten_T2);
 		private final @NonNull NullableType _Nullable_OrderedCollection_Sequence_selectByKind_TT = createNullableType(_OrderedCollection_Sequence_selectByKind_TT);
 		private final @NonNull NullableType _Nullable_OrderedCollection_Sequence_selectByType_TT = createNullableType(_OrderedCollection_Sequence_selectByType_TT);
-		private final @NonNull NullableType _Nullable_OrderedCollection_Sequence_T_NullFree = createNullableType(_OrderedCollection_Sequence_T_NullFree);
 		private final @NonNull NullableType _Nullable_OrderedCollection_Sequence_T = createNullableType(_OrderedCollection_Sequence_T);
+		private final @NonNull NullableType _Nullable_OrderedCollection_Sequence_T_NullFree = createNullableType(_OrderedCollection_Sequence_T_NullFree);
 		private final @NonNull NullableType _Nullable_OrderedCollection_Set_T = createNullableType(_OrderedCollection_Set_T);
 		private final @NonNull NullableType _Nullable_OrderedCollection_UniqueCollection_T = createNullableType(_OrderedCollection_UniqueCollection_T);
 		private final @NonNull NullableType _Nullable_OrderedCollection_OrderedCollection_T = createNullableType(_OrderedCollection_OrderedCollection_T);
@@ -1497,47 +1574,42 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull NullableType _Nullable_UniqueCollection_Set_flatten_T2 = createNullableType(_UniqueCollection_Set_flatten_T2);
 		private final @NonNull NullableType _Nullable_UniqueCollection_Set_selectByKind_TT = createNullableType(_UniqueCollection_Set_selectByKind_TT);
 		private final @NonNull NullableType _Nullable_UniqueCollection_Set_selectByType_TT = createNullableType(_UniqueCollection_Set_selectByType_TT);
-		private final @NonNull NullableType _Nullable_UniqueCollection_Set_T_NullFree = createNullableType(_UniqueCollection_Set_T_NullFree);
 		private final @NonNull NullableType _Nullable_UniqueCollection_Set_T = createNullableType(_UniqueCollection_Set_T);
+		private final @NonNull NullableType _Nullable_UniqueCollection_Set_T_NullFree = createNullableType(_UniqueCollection_Set_T_NullFree);
 		private final @NonNull NullableType _Nullable_UniqueCollection_UniqueCollection_T_1 = createNullableType(_UniqueCollection_UniqueCollection_T_1);
 		private final @NonNull NullableType _Nullable_UniqueCollection_UniqueCollection_T = createNullableType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull NullableType _Nullabletp_UniqueCollection_T = createNullableType(tp_UniqueCollection_T);
-		private final @NonNull NullableType _Nullable_Nullable_lt_K_gt_ = createNullableType(_Nullable_lt_K_gt_);
-		private final @NonNull NullableType _Nullable_Nullable_lt_OclElement_gt_ = createNullableType(_Nullable_lt_OclElement_gt_);
-		private final @NonNull NullableType _Nullable_Nullable_lt_OclType_gt_ = createNullableType(_Nullable_lt_OclType_gt_);
-		private final @NonNull NullableType _Nullable_Nullable_lt_V_gt_ = createNullableType(_Nullable_lt_V_gt_);
 
 		private void installNullableTypes() {
 			final List<Class> orphanTypes = orphanage.getOwnedClasses();
 			orphanTypes.add(_Nullable_Boolean);
 			orphanTypes.add(_Nullable_Integer);
 			orphanTypes.add(_Nullable_Lambda_Bag_T);
-			orphanTypes.add(_Nullable_Lambda_1);
-			orphanTypes.add(_Nullable_Lambda_0);
-			orphanTypes.add(_Nullable_Lambda_2);
-			orphanTypes.add(_Nullable_Lambda);
+			orphanTypes.add(_Nullable_Lambda_Bag_T_1);
+			orphanTypes.add(_Nullable_Lambda_Bag_T_2);
+			orphanTypes.add(_Nullable_Lambda_Bag_T_3);
+			orphanTypes.add(_Nullable_Lambda_Bag_T_4);
 			orphanTypes.add(_Nullable_Lambda_Collection_T);
-			orphanTypes.add(_Nullable_Lambda_5);
-			orphanTypes.add(_Nullable_Lambda_4);
-			orphanTypes.add(_Nullable_Lambda_3);
-			orphanTypes.add(_Nullable_Lambda_7);
-			orphanTypes.add(_Nullable_Lambda_6);
+			orphanTypes.add(_Nullable_Lambda_Collection_T_1);
+			orphanTypes.add(_Nullable_Lambda_Collection_T_2);
+			orphanTypes.add(_Nullable_Lambda_Collection_T_3);
+			orphanTypes.add(_Nullable_Lambda_Collection_T_4);
 			orphanTypes.add(_Nullable_Lambda_OrderedSet_T);
-			orphanTypes.add(_Nullable_Lambda_11);
-			orphanTypes.add(_Nullable_Lambda_8);
-			orphanTypes.add(_Nullable_Lambda_10);
-			orphanTypes.add(_Nullable_Lambda_9);
+			orphanTypes.add(_Nullable_Lambda_OrderedSet_T_1);
+			orphanTypes.add(_Nullable_Lambda_OrderedSet_T_2);
+			orphanTypes.add(_Nullable_Lambda_OrderedSet_T_3);
+			orphanTypes.add(_Nullable_Lambda_OrderedSet_T_4);
 			orphanTypes.add(_Nullable_Lambda_Sequence_T);
-			orphanTypes.add(_Nullable_Lambda_15);
-			orphanTypes.add(_Nullable_Lambda_12);
-			orphanTypes.add(_Nullable_Lambda_14);
-			orphanTypes.add(_Nullable_Lambda_13);
+			orphanTypes.add(_Nullable_Lambda_Sequence_T_1);
+			orphanTypes.add(_Nullable_Lambda_Sequence_T_2);
+			orphanTypes.add(_Nullable_Lambda_Sequence_T_3);
+			orphanTypes.add(_Nullable_Lambda_Sequence_T_4);
 			orphanTypes.add(_Nullable_Lambda_Set_T);
-			orphanTypes.add(_Nullable_Lambda_19);
-			orphanTypes.add(_Nullable_Lambda_16);
-			orphanTypes.add(_Nullable_Lambda_18);
-			orphanTypes.add(_Nullable_Lambda_17);
-			orphanTypes.add(_Nullable_Lambda_20);
+			orphanTypes.add(_Nullable_Lambda_Set_T_1);
+			orphanTypes.add(_Nullable_Lambda_Set_T_2);
+			orphanTypes.add(_Nullable_Lambda_Set_T_3);
+			orphanTypes.add(_Nullable_Lambda_Set_T_4);
+			orphanTypes.add(_Nullable_Lambda_UniqueCollection_T);
 			orphanTypes.add(_Nullable_Real);
 			orphanTypes.add(_Nullable_String);
 			orphanTypes.add(_Nullable_Tuple);
@@ -1551,10 +1623,7 @@ public class OCLstdlib extends ASResourceImpl
 			orphanTypes.add(_Nullable_Bag_Collection_T_NullFree);
 			orphanTypes.add(_Nullable_Bag_Collection);
 			orphanTypes.add(_Nullable_Bag_Enumeration);
-			orphanTypes.add(_Nullable_Bag_Invalidable);
 			orphanTypes.add(_Nullable_Bag_Map_V_NullFree);
-			orphanTypes.add(_Nullable_Bag_Map);
-			orphanTypes.add(_Nullable_Bag_Nullable);
 			orphanTypes.add(_Nullable_Bag_OclElement);
 			orphanTypes.add(_Nullable_Bag_OclEnumeration);
 			orphanTypes.add(_Nullable_Bag_Set_collectNested_V_NullFree);
@@ -1589,15 +1658,12 @@ public class OCLstdlib extends ASResourceImpl
 			orphanTypes.add(_Nullable_Collection_Collection);
 			orphanTypes.add(_Nullable_Collection_EnumerationLiteral);
 			orphanTypes.add(_Nullable_Collection_Enumeration);
-			orphanTypes.add(_Nullable_Collection_Invalidable);
 			orphanTypes.add(_Nullable_Collection_Map_excludesAll_K2_NullFree);
 			orphanTypes.add(_Nullable_Collection_Map_includesAll_K2_NullFree);
 			orphanTypes.add(_Nullable_Collection_Map_K);
 			orphanTypes.add(_Nullable_Collection_Map_V);
-			orphanTypes.add(_Nullable_Collection_Map);
-			orphanTypes.add(_Nullable_Collection_Nullable);
-			orphanTypes.add(_Nullable_Collection_OclAny);
 			orphanTypes.add(_Nullable_Collection_OclAny_NullFree);
+			orphanTypes.add(_Nullable_Collection_OclAny);
 			orphanTypes.add(_Nullable_Collection_OclElement);
 			orphanTypes.add(_Nullable_Collection_OclEnumeration);
 			orphanTypes.add(_Nullable_Collection_OclSelf);
@@ -1621,8 +1687,8 @@ public class OCLstdlib extends ASResourceImpl
 			orphanTypes.add(_Nullable_Collection_Set_selectByType_TT);
 			orphanTypes.add(_Nullable_Collection_Set_T);
 			orphanTypes.add(_Nullable_Collection_Set_T_NullFree);
-			orphanTypes.add(_Nullable_Collection_UniqueCollection_T_NullFree);
 			orphanTypes.add(_Nullable_Collection_UniqueCollection_T);
+			orphanTypes.add(_Nullable_Collection_UniqueCollection_T_NullFree);
 			orphanTypes.add(_Nullable_Collection_Collection_T);
 			orphanTypes.add(_Nullabletp_Collection_collectNested_V);
 			orphanTypes.add(_Nullabletp_Collection_collect_V);
@@ -1637,11 +1703,11 @@ public class OCLstdlib extends ASResourceImpl
 			orphanTypes.add(_Nullable_Enumeration);
 			orphanTypes.add(_Nullable_EnumerationLiteral);
 			orphanTypes.add(_Nullabletp_Invalidable_T);
-			orphanTypes.add(_Nullable_Map);
-			orphanTypes.add(_Nullable_Map_0);
-			orphanTypes.add(_Nullable_Map_1);
-			orphanTypes.add(_Nullable_Map_2);
-			orphanTypes.add(_Nullablesymbol_);
+			orphanTypes.add(_Nullable_Map_Map_excludesMap_K2_Map_excludesMap_V2);
+			orphanTypes.add(_Nullable_Map_Map_excludingMap_K2_Map_excludingMap_V2);
+			orphanTypes.add(_Nullable_Map_Map_includesMap_K2_Map_includesMap_V2);
+			orphanTypes.add(_Nullable_Map_Map_includingMap_K2_Map_includingMap_V2);
+			orphanTypes.add(_Nullable_Map_Map_K_Map_V);
 			orphanTypes.add(_Nullabletp_Map_excludesAll_K2);
 			orphanTypes.add(_Nullabletp_Map_excludesMap_K2);
 			orphanTypes.add(_Nullabletp_Map_excludesMap_V2);
@@ -1686,8 +1752,8 @@ public class OCLstdlib extends ASResourceImpl
 			orphanTypes.add(_Nullable_OrderedCollection_Sequence_flatten_T2);
 			orphanTypes.add(_Nullable_OrderedCollection_Sequence_selectByKind_TT);
 			orphanTypes.add(_Nullable_OrderedCollection_Sequence_selectByType_TT);
-			orphanTypes.add(_Nullable_OrderedCollection_Sequence_T_NullFree);
 			orphanTypes.add(_Nullable_OrderedCollection_Sequence_T);
+			orphanTypes.add(_Nullable_OrderedCollection_Sequence_T_NullFree);
 			orphanTypes.add(_Nullable_OrderedCollection_Set_T);
 			orphanTypes.add(_Nullable_OrderedCollection_UniqueCollection_T);
 			orphanTypes.add(_Nullable_OrderedCollection_OrderedCollection_T);
@@ -1762,20 +1828,16 @@ public class OCLstdlib extends ASResourceImpl
 			orphanTypes.add(_Nullable_UniqueCollection_Set_flatten_T2);
 			orphanTypes.add(_Nullable_UniqueCollection_Set_selectByKind_TT);
 			orphanTypes.add(_Nullable_UniqueCollection_Set_selectByType_TT);
-			orphanTypes.add(_Nullable_UniqueCollection_Set_T_NullFree);
 			orphanTypes.add(_Nullable_UniqueCollection_Set_T);
+			orphanTypes.add(_Nullable_UniqueCollection_Set_T_NullFree);
 			orphanTypes.add(_Nullable_UniqueCollection_UniqueCollection_T_1);
 			orphanTypes.add(_Nullable_UniqueCollection_UniqueCollection_T);
 			orphanTypes.add(_Nullabletp_UniqueCollection_T);
-			orphanTypes.add(_Nullable_Nullable_lt_K_gt_);
-			orphanTypes.add(_Nullable_Nullable_lt_OclElement_gt_);
-			orphanTypes.add(_Nullable_Nullable_lt_OclType_gt_);
-			orphanTypes.add(_Nullable_Nullable_lt_V_gt_);
 		}
 
 		private final @NonNull InvalidableType _Invalidable_Boolean = createInvalidableType(_Nullable_Boolean);
 		private final @NonNull InvalidableType _Invalidable_Integer = createInvalidableType(_Nullable_Integer);
-		private final @NonNull InvalidableType _Invalidable_Lambda_5 = createInvalidableType(_Nullable_Lambda_5);
+		private final @NonNull InvalidableType _Invalidable_Lambda_Collection_T = createInvalidableType(_Nullable_Lambda_Collection_T);
 		private final @NonNull InvalidableType _Invalidable_Real = createInvalidableType(_Nullable_Real);
 		private final @NonNull InvalidableType _Invalidable_String = createInvalidableType(_Nullable_String);
 		private final @NonNull InvalidableType _Invalidabletp_UnlimitedNatural_oclAsType_TT = createInvalidableType(_Nullabletp_UnlimitedNatural_oclAsType_TT);
@@ -1791,7 +1853,7 @@ public class OCLstdlib extends ASResourceImpl
 			final List<Class> orphanTypes = orphanage.getOwnedClasses();
 			orphanTypes.add(_Nullable_Boolean);
 			orphanTypes.add(_Nullable_Integer);
-			orphanTypes.add(_Nullable_Lambda_5);
+			orphanTypes.add(_Nullable_Lambda_Collection_T);
 			orphanTypes.add(_Nullable_Real);
 			orphanTypes.add(_Nullable_String);
 			orphanTypes.add(_Nullabletp_UnlimitedNatural_oclAsType_TT);
@@ -1928,17 +1990,17 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Map_excludesAll = createOperation("excludesAll", _Boolean, "org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation.INSTANCE, tp_Map_excludesAll_K2);
 		private final @NonNull Operation op_Map_excludesMap = createOperation("excludesMap", _Boolean, "org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation.INSTANCE, tp_Map_excludesMap_K2, tp_Map_excludesMap_V2);
 		private final @NonNull Operation op_Map_excludesValue = createOperation("excludesValue", _Boolean, "org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation", org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation.INSTANCE);
-		private final @NonNull Operation op_Map_excluding = createOperation("excluding", symbol_, "org.eclipse.ocl.pivot.library.map.MapExcludingOperation", org.eclipse.ocl.pivot.library.map.MapExcludingOperation.INSTANCE);
-		private final @NonNull Operation op_Map_excluding_1 = createOperation("excluding", symbol_, "org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation.INSTANCE);
-		private final @NonNull Operation op_Map_excludingAll = createOperation("excludingAll", symbol_, "org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
-		private final @NonNull Operation op_Map_excludingMap = createOperation("excludingMap", symbol_, "org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE, tp_Map_excludingMap_K2, tp_Map_excludingMap_V2);
+		private final @NonNull Operation op_Map_excluding = createOperation("excluding", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapExcludingOperation", org.eclipse.ocl.pivot.library.map.MapExcludingOperation.INSTANCE);
+		private final @NonNull Operation op_Map_excluding_1 = createOperation("excluding", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation.INSTANCE);
+		private final @NonNull Operation op_Map_excludingAll = createOperation("excludingAll", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_Map_excludingMap = createOperation("excludingMap", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE, tp_Map_excludingMap_K2, tp_Map_excludingMap_V2);
 		private final @NonNull Operation op_Map_includes = createOperation("includes", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIncludesOperation", org.eclipse.ocl.pivot.library.map.MapIncludesOperation.INSTANCE);
 		private final @NonNull Operation op_Map_includes_1 = createOperation("includes", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation.INSTANCE);
 		private final @NonNull Operation op_Map_includesAll = createOperation("includesAll", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation", org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation.INSTANCE, tp_Map_includesAll_K2);
 		private final @NonNull Operation op_Map_includesMap = createOperation("includesMap", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation.INSTANCE, tp_Map_includesMap_K2, tp_Map_includesMap_V2);
 		private final @NonNull Operation op_Map_includesValue = createOperation("includesValue", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation", org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation.INSTANCE);
-		private final @NonNull Operation op_Map_including = createOperation("including", symbol_, "org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
-		private final @NonNull Operation op_Map_includingMap = createOperation("includingMap", symbol_, "org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE, tp_Map_includingMap_K2, tp_Map_includingMap_V2);
+		private final @NonNull Operation op_Map_including = createOperation("including", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
+		private final @NonNull Operation op_Map_includingMap = createOperation("includingMap", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE, tp_Map_includingMap_K2, tp_Map_includingMap_V2);
 		private final @NonNull Operation op_Map_isEmpty = createOperation("isEmpty", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation", org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
 		private final @NonNull Operation op_Map_keys = createOperation("keys", _Set_Map_K_NullFree, "org.eclipse.ocl.pivot.library.map.MapKeysOperation", org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
 		private final @NonNull Operation op_Map_notEmpty = createOperation("notEmpty", _Boolean, "org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation", org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
@@ -2402,7 +2464,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Enumeration_allInstances);
 			operation.setIsStatic(true);
 
-			ownedOperations = symbol_.getOwnedOperations();
+			ownedOperations = _Map_Map_K_Map_V.getOwnedOperations();
 			ownedOperations.add(operation = op_Map__lt__gt_);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -2426,7 +2488,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("coll", _Collection_Map_excludesAll_K2_NullFree, true));
 			ownedOperations.add(operation = op_Map_excludesMap);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("map", _Map, false));
+			ownedParameters.add(parameter = createParameter("map", _Map_Map_excludesMap_K2_Map_excludesMap_V2, false));
 			ownedOperations.add(operation = op_Map_excludesValue);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
@@ -2446,7 +2508,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Map_excludingMap);
 			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("map", _Map_0, false));
+			ownedParameters.add(parameter = createParameter("map", _Map_Map_excludingMap_K2_Map_excludingMap_V2, false));
 			ownedOperations.add(operation = op_Map_includes);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("key", _OclAny, false));
@@ -2459,7 +2521,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("coll", _Collection_Map_includesAll_K2_NullFree, true));
 			ownedOperations.add(operation = op_Map_includesMap);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("map", _Map_1, false));
+			ownedParameters.add(parameter = createParameter("map", _Map_Map_includesMap_K2_Map_includesMap_V2, false));
 			ownedOperations.add(operation = op_Map_includesValue);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("value", _OclAny, false));
@@ -2471,7 +2533,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Map_includingMap);
 			operation.setIsRequired(false);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("map", _Map_2, false));
+			ownedParameters.add(parameter = createParameter("map", _Map_Map_includingMap_K2_Map_includingMap_V2, false));
 			ownedOperations.add(operation = op_Map_isEmpty);
 			ownedOperations.add(operation = op_Map_keys);
 			ownedOperations.add(operation = op_Map_notEmpty);
@@ -2881,17 +2943,17 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Bag_T, true));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Bag_T_4, false));
 			ownedIterations.add(iteration = it_Bag_collectNested);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Bag_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_1, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Bag_T_1, false));
 			ownedIterations.add(iteration = it_Bag_collect);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Bag_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_0, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Bag_T_2, false));
 			ownedIterations.add(iteration = it_Bag_reject);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Bag_T, false));
@@ -2906,7 +2968,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Bag_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_2, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Bag_T_3, false));
 
 			ownedIterations = _Collection_Collection_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_Collection_any);
@@ -2920,12 +2982,12 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Collection_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_4, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T_1, false));
 			ownedIterations.add(iteration = it_Collection_collect);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Collection_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_3, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T_2, false));
 			ownedIterations.add(iteration = it_Collection_exists);
 			iteration.setIsInvalidating(true);
 			iteration.setIsRequired(false);
@@ -2934,7 +2996,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("i", tp_Collection_T, false));
 			ownedParameters.add(parameter = createParameter("j", tp_Collection_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_5, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T, false));
 			ownedIterations.add(iteration = it_Collection_exists_1);
 			iteration.setIsInvalidating(true);
 			iteration.setIsRequired(false);
@@ -2942,7 +3004,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Collection_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_5, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T, false));
 			ownedIterations.add(iteration = it_Collection_forAll);
 			iteration.setIsInvalidating(true);
 			iteration.setIsRequired(false);
@@ -2951,7 +3013,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("i", tp_Collection_T, false));
 			ownedParameters.add(parameter = createParameter("j", tp_Collection_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_5, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T, false));
 			ownedIterations.add(iteration = it_Collection_forAll_1);
 			iteration.setIsInvalidating(true);
 			iteration.setIsRequired(false);
@@ -2959,12 +3021,12 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Collection_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_5, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T, false));
 			ownedIterations.add(iteration = it_Collection_isUnique);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Collection_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_6, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T_4, false));
 			ownedIterations.add(iteration = it_Collection_iterate);
 			iteration.setIsRequired(false);
 			ownedParameters = iteration.getOwnedIterators();
@@ -2972,7 +3034,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedAccumulators();
 			ownedParameters.add(parameter = createParameter("acc", tp_Collection_iterate_Tacc, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_7, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T_3, false));
 			ownedIterations.add(iteration = it_Collection_one);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Collection_T, false));
@@ -2992,24 +3054,24 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Collection_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_6, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Collection_T_4, false));
 
 			ownedIterations = _OrderedSet_OrderedSet_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_OrderedSet_closure);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_OrderedSet_T, true));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_8, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_OrderedSet_T_2, false));
 			ownedIterations.add(iteration = it_OrderedSet_collectNested);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_OrderedSet_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_10, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_OrderedSet_T_3, false));
 			ownedIterations.add(iteration = it_OrderedSet_collect);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_OrderedSet_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_9, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_OrderedSet_T_4, false));
 			ownedIterations.add(iteration = it_OrderedSet_reject);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_OrderedSet_T, false));
@@ -3024,24 +3086,24 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_OrderedSet_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_11, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_OrderedSet_T_1, false));
 
 			ownedIterations = _Sequence_Sequence_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_Sequence_closure);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Sequence_T, true));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_12, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Sequence_T_2, false));
 			ownedIterations.add(iteration = it_Sequence_collectNested);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Sequence_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_14, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Sequence_T_3, false));
 			ownedIterations.add(iteration = it_Sequence_collect);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Sequence_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_13, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Sequence_T_4, false));
 			ownedIterations.add(iteration = it_Sequence_reject);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Sequence_T, false));
@@ -3056,24 +3118,24 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Sequence_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_15, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Sequence_T_1, false));
 
 			ownedIterations = _Set_Set_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_Set_closure);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Set_T, true));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_16, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Set_T_2, false));
 			ownedIterations.add(iteration = it_Set_collectNested);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Set_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_18, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Set_T_3, false));
 			ownedIterations.add(iteration = it_Set_collect);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Set_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_17, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Set_T_4, false));
 			ownedIterations.add(iteration = it_Set_reject);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Set_T, false));
@@ -3088,14 +3150,14 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_Set_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_19, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_Set_T_1, false));
 
 			ownedIterations = _UniqueCollection_UniqueCollection_T.getOwnedOperations();
 			ownedIterations.add(iteration = it_UniqueCollection_sortedBy);
 			ownedParameters = iteration.getOwnedIterators();
 			ownedParameters.add(parameter = createParameter("i", tp_UniqueCollection_T, false));
 			ownedParameters = iteration.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("lambda", _Lambda_20, false));
+			ownedParameters.add(parameter = createParameter("lambda", _Lambda_UniqueCollection_T, false));
 		}
 
 		private void installCoercions() {
@@ -3117,15 +3179,10 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Property pr_Nullable_nonNullType = createProperty("nonNullType", _OclType);
 		private final @NonNull Property pr_OclElement_oclContainer = createProperty("oclContainer", _OclElement);
 		private final @NonNull Property pr_OclElement_oclContents = createProperty("oclContents", _Set_OclElement_NullFree);
+		private final @NonNull Property pr_OclElement_OclElement_oclContainer = createProperty("OclElement", _Bag_OclElement);
 		private final @NonNull Property pr_OclElement_OclElement_oclContents = createProperty("OclElement", _Bag_OclElement);
 		private final @NonNull Property pr_OclEnumeration_allLiterals = createProperty("allLiterals", _OrderedSet_EnumerationLiteral_NullFree);
 		private final @NonNull Property pr_OclType_Collection_elementType = createProperty("Collection", _Bag_Collection);
-
-		private final @NonNull Property pr_Nullable_lt_K_gt__Map_keyType = createProperty("Map", _Bag_Map);
-		private final @NonNull Property pr_Nullable_lt_OclElement_gt__OclElement_oclContainer = createProperty("OclElement", _Bag_OclElement);
-		private final @NonNull Property pr_Nullable_lt_OclType_gt__Invalidable_nonInvalidType = createProperty("Invalidable", _Bag_Invalidable);
-		private final @NonNull Property pr_Nullable_lt_OclType_gt__Nullable_nonNullType = createProperty("Nullable", _Bag_Nullable);
-		private final @NonNull Property pr_Nullable_lt_V_gt__Map_valueType = createProperty("Map", _Bag_Map);
 
 		private void installProperties() {
 			List<Property> ownedProperties;
@@ -3172,23 +3229,20 @@ public class OCLstdlib extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
-			property.setOpposite(pr_Nullable_lt_OclType_gt__Invalidable_nonInvalidType);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.classifier.InvalidableNonInvalidTypeProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.classifier.InvalidableNonInvalidTypeProperty.INSTANCE);
 
-			ownedProperties = symbol_.getOwnedProperties();
+			ownedProperties = _Map_Map_K_Map_V.getOwnedProperties();
 			ownedProperties.add(property = pr_Map_keyType);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
-			property.setOpposite(pr_Nullable_lt_K_gt__Map_keyType);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty.INSTANCE);
 			ownedProperties.add(property = pr_Map_valueType);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
-			property.setOpposite(pr_Nullable_lt_V_gt__Map_valueType);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.map.MapValueTypeProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.map.MapValueTypeProperty.INSTANCE);
 
@@ -3197,7 +3251,6 @@ public class OCLstdlib extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setIsStatic(true);
-			property.setOpposite(pr_Nullable_lt_OclType_gt__Nullable_nonNullType);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.classifier.NullableNonNullTypeProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.classifier.NullableNonNullTypeProperty.INSTANCE);
 
@@ -3205,7 +3258,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedProperties.add(property = pr_OclElement_oclContainer);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
-			property.setOpposite(pr_Nullable_lt_OclElement_gt__OclElement_oclContainer);
+			property.setOpposite(pr_OclElement_OclElement_oclContainer);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
 			ownedProperties.add(property = pr_OclElement_oclContents);
@@ -3213,6 +3266,10 @@ public class OCLstdlib extends ASResourceImpl
 			property.setOpposite(pr_OclElement_OclElement_oclContents);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
+			ownedProperties.add(property = pr_OclElement_OclElement_oclContainer);
+			property.setIsImplicit(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_OclElement_oclContainer);
 			ownedProperties.add(property = pr_OclElement_OclElement_oclContents);
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
@@ -3231,34 +3288,6 @@ public class OCLstdlib extends ASResourceImpl
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Collection_elementType);
-
-			ownedProperties = _Nullable_lt_K_gt_.getOwnedProperties();
-			ownedProperties.add(property = pr_Nullable_lt_K_gt__Map_keyType);
-			property.setIsImplicit(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_Map_keyType);
-
-			ownedProperties = _Nullable_lt_OclElement_gt_.getOwnedProperties();
-			ownedProperties.add(property = pr_Nullable_lt_OclElement_gt__OclElement_oclContainer);
-			property.setIsImplicit(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_OclElement_oclContainer);
-
-			ownedProperties = _Nullable_lt_OclType_gt_.getOwnedProperties();
-			ownedProperties.add(property = pr_Nullable_lt_OclType_gt__Invalidable_nonInvalidType);
-			property.setIsImplicit(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_Invalidable_nonInvalidType);
-			ownedProperties.add(property = pr_Nullable_lt_OclType_gt__Nullable_nonNullType);
-			property.setIsImplicit(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_Nullable_nonNullType);
-
-			ownedProperties = _Nullable_lt_V_gt_.getOwnedProperties();
-			ownedProperties.add(property = pr_Nullable_lt_V_gt__Map_valueType);
-			property.setIsImplicit(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_Map_valueType);
 		}
 
 		private void installTemplateBindings() {
@@ -3278,14 +3307,8 @@ public class OCLstdlib extends ASResourceImpl
 				createTemplateParameterSubstitution(tp_Bag_T, tp_Collection_T)));
 			_Bag_Enumeration.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Bag_T, _Enumeration)));
-			_Bag_Invalidable.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, _Invalidable)));
-			_Bag_Map.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, symbol_)));
 			_Bag_Map_V_NullFree.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Bag_T, tp_Map_V)));
-			_Bag_Nullable.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, _Nullable)));
 			_Bag_OclElement.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Bag_T, _OclElement)));
 			_Bag_OclEnumeration.getOwnedBindings().add(createTemplateBinding(
@@ -3334,10 +3357,6 @@ public class OCLstdlib extends ASResourceImpl
 				createTemplateParameterSubstitution(tp_Collection_T, _EnumerationLiteral)));
 			_Collection_Integer.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Collection_T, _Integer)));
-			_Collection_Invalidable.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _Invalidable)));
-			_Collection_Map.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, symbol_)));
 			_Collection_Map_K.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Collection_T, tp_Map_K)));
 			_Collection_Map_V.getOwnedBindings().add(createTemplateBinding(
@@ -3346,8 +3365,6 @@ public class OCLstdlib extends ASResourceImpl
 				createTemplateParameterSubstitution(tp_Collection_T, tp_Map_excludesAll_K2)));
 			_Collection_Map_includesAll_K2_NullFree.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Collection_T, tp_Map_includesAll_K2)));
-			_Collection_Nullable.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _Nullable)));
 			_Collection_OclAny.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Collection_T, _OclAny)));
 			_Collection_OclAny_NullFree.getOwnedBindings().add(createTemplateBinding(
@@ -3406,6 +3423,18 @@ public class OCLstdlib extends ASResourceImpl
 				createTemplateParameterSubstitution(tp_Collection_T, tp_UniqueCollection_T)));
 			_Collection_UniqueCollection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Collection_T, tp_UniqueCollection_T)));
+			_Map_Map_excludesMap_K2_Map_excludesMap_V2.getOwnedBindings().add(createTemplateBinding(
+				createTemplateParameterSubstitution(tp_Map_K, tp_Map_excludesMap_K2),
+						createTemplateParameterSubstitution(tp_Map_V, tp_Map_excludesMap_V2)));
+			_Map_Map_excludingMap_K2_Map_excludingMap_V2.getOwnedBindings().add(createTemplateBinding(
+				createTemplateParameterSubstitution(tp_Map_K, tp_Map_excludingMap_K2),
+						createTemplateParameterSubstitution(tp_Map_V, tp_Map_excludingMap_V2)));
+			_Map_Map_includesMap_K2_Map_includesMap_V2.getOwnedBindings().add(createTemplateBinding(
+				createTemplateParameterSubstitution(tp_Map_K, tp_Map_includesMap_K2),
+						createTemplateParameterSubstitution(tp_Map_V, tp_Map_includesMap_V2)));
+			_Map_Map_includingMap_K2_Map_includingMap_V2.getOwnedBindings().add(createTemplateBinding(
+				createTemplateParameterSubstitution(tp_Map_K, tp_Map_includingMap_K2),
+						createTemplateParameterSubstitution(tp_Map_V, tp_Map_includingMap_V2)));
 			_OrderedCollection_Bag_T.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Bag_T)));
 			_OrderedCollection_Collection_T.getOwnedBindings().add(createTemplateBinding(

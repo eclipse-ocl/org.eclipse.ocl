@@ -405,7 +405,6 @@ public class OCLstdlibTables
 		public static final @NonNull ParameterTypes _Lambda_Bag_T_OclAny = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclAny);
 		public static final @NonNull ParameterTypes _Lambda_Bag_T_Set__Bag_T__ = TypeUtil.createParameterTypes(new ExecutorSpecializedType("Set", OCLstdlibTables.TypeParameters._Bag_T));
 		public static final @NonNull ParameterTypes _Lambda_Collection_T_Boolean = TypeUtil.createParameterTypes(OCLstdlibTables.Types._Boolean);
-		public static final @NonNull ParameterTypes _Lambda_Collection_T_Boolean = TypeUtil.createParameterTypes(OCLstdlibTables.Types._Boolean);
 		public static final @NonNull ParameterTypes _Lambda_Collection_T_Collection_collectNested_V = TypeUtil.createParameterTypes(OCLstdlibTables.TypeParameters.__Collection__collectNested_V);
 		public static final @NonNull ParameterTypes _Lambda_Collection_T_Collection_collect_V = TypeUtil.createParameterTypes(OCLstdlibTables.TypeParameters.__Collection__collect_V);
 		public static final @NonNull ParameterTypes _Lambda_Collection_T_Collection_iterate_Tacc = TypeUtil.createParameterTypes(OCLstdlibTables.TypeParameters.__Collection__iterate_Tacc);
@@ -1122,7 +1121,8 @@ public class OCLstdlibTables
 
 		public static final @NonNull ExecutorProperty _OclElement__oclContainer = new ExecutorPropertyWithImplementation("oclContainer", Types._OclElement, 0, org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _OclElement__oclContents = new ExecutorPropertyWithImplementation("oclContents", Types._OclElement, 1, org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
-		public static final @NonNull ExecutorProperty _OclElement__OclElement__oclContents = new ExecutorPropertyWithImplementation("OclElement", Types._OclElement, 2, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTENTS));
+		public static final @NonNull ExecutorProperty _OclElement__OclElement__oclContainer = new ExecutorPropertyWithImplementation("OclElement", Types._OclElement, 2, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER));
+		public static final @NonNull ExecutorProperty _OclElement__OclElement__oclContents = new ExecutorPropertyWithImplementation("OclElement", Types._OclElement, 3, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTENTS));
 
 		public static final @NonNull ExecutorProperty _OclType__Collection__elementType = new ExecutorPropertyWithImplementation("Collection", Types._OclType, 0, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.COLLECTION__ELEMENT_TYPE));
 		static {

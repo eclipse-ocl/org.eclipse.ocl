@@ -377,6 +377,12 @@ public class ASSaver
 				}
 				orphanage.getOwnedClasses().add(resolvedType);
 			}
+			//			if ((resolvedType instanceof NullableType) && (resolvedType.getOwnedSignature() == null)) {
+			//				((NullableType)resolvedType).getNonNullType().setNullableType((NullableType) resolvedType);
+			//			}
+			//			else if ((resolvedType instanceof InvalidableType) && (resolvedType.getOwnedSignature() == null)) {
+			//				((InvalidableType)resolvedType).getNonNullType().setInvalidableType((InvalidableType) resolvedType);
+			//			}
 		}
 		locateSpecializations(Collections.singletonList(resolvedType));
 		@SuppressWarnings("unchecked")
