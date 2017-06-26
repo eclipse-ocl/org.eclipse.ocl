@@ -1351,7 +1351,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected @Nullable Type resolvePropertyReturnType(@NonNull NavigationCallExp callExp, @NonNull NameExpCS csNameExp, @NonNull Property property) {
-		Type formalType = property.getType();
+		Type formalType = property.getRawType();
 		if (formalType == null) {
 			return null;
 		}

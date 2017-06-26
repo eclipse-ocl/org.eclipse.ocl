@@ -1361,7 +1361,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull CollectionType oclAsType = ClassUtil.nonNullState((CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType_0));
 						@SuppressWarnings("null")
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Type elementType = oclAsType.getElementType();
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = p.getType();
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = p.getRawType();
 						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, elementType, type_0).booleanValue();
 						CAUGHT_conformsTo = conformsTo;
 					}
