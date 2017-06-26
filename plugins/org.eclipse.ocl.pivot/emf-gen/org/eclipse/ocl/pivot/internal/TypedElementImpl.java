@@ -151,7 +151,7 @@ implements TypedElement {
 		if (type1 != type2) {
 			getClass();
 		}
-		return type2;
+		return type1;
 	}
 	@Override
 	public Type getRawType() {

@@ -1357,7 +1357,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		OCLExpression source = callExp.getOwnedSource();
 		Type actualType;
-		Type sourceType = source != null ? source.getType() : null;
+		Type sourceType = source != null ? source.getRawType() : null;
 		if (sourceType != null) {
 			actualType = metamodelManager.specializeType(formalType, callExp, sourceType, source != null ? source.getTypeValue() : null);
 		}
@@ -1582,7 +1582,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				OCLExpression expression = context.visitLeft2Right(OCLExpression.class, csExpression);
 				if (expression != null) {
 					PivotUtil.setBody(pivotElement, expression, ElementUtil.getExpressionText(csExpression));
-					context.setType(pivotElement, expression.getType(), expression.isIsRequired());
+					context.setType(pivotElement, expression.getRawType(), expression.isIsRequired());
 				}
 			}
 			else {
@@ -1855,7 +1855,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				OCLExpression in = context.visitLeft2Right(OCLExpression.class, csIn);
 				lastLetExp.setOwnedIn(in);
 				if (in != null) {
-					Type type = in.getType();
+					Type type = in.getRawType();
 					for (OCLExpression letExp = firstLetExp; (letExp != in) && (letExp != null); letExp = ((LetExp)letExp).getOwnedIn()) {
 						context.setType(letExp, type, in.isIsRequired(), in.getTypeValue());
 					}

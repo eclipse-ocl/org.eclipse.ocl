@@ -521,7 +521,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		if (referredProperty != null) {
 			OCLExpression source = object.getOwnedSource();
 			if (source != null) {
-				Type sourceType = source.getType();
+				Type sourceType = source.getRawType();
 				analyzeType(referredProperty.getOwningClass(), sourceType);
 			}
 			analyzeTypedElement(referredProperty, object);

@@ -308,7 +308,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		//    association class navigation qualifier
 		OCLExpression source = pc.getOwnedSource();
 		safeVisit(source);
-		Type sourceType = source != null ? source.getType() : null;
+		Type sourceType = source != null ? source.getRawType() : null;
 		append(PivotUtil.getNavigationOperator(pc.isIsSafe(), PivotUtil.isAggregate(sourceType)));
 		appendName(property);
 		appendAtPre(pc);
