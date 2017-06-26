@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.attributes;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -26,7 +27,7 @@ public class ClassAttribution extends AbstractAttribution
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 		org.eclipse.ocl.pivot.Class targetClass = (org.eclipse.ocl.pivot.Class) target;
-		assert !(targetClass instanceof NullableType);
+		assert (targetClass.getOwnedSignature() != null) || (!(targetClass instanceof NullableType) && !(targetClass instanceof InvalidableType));
 		if (targetClass.getOwnedBindings().size() == 0) {
 			EObject scopeTarget = scopeView.getTarget();
 			if (scopeTarget instanceof Pivotable) {

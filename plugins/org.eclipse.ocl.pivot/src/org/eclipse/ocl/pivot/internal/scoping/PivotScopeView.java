@@ -15,6 +15,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.InvalidableType;
+import org.eclipse.ocl.pivot.NullableType;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
@@ -85,6 +88,7 @@ public class PivotScopeView implements ScopeView
 		this.target = target;
 		this.child = child;
 		this.isQualified = isQualified;
+		assert ((target instanceof TemplateableElement) && (((TemplateableElement)target).getOwnedSignature() != null)) || (!(target instanceof NullableType) && !(target instanceof InvalidableType));
 	}
 
 	/**
@@ -97,6 +101,7 @@ public class PivotScopeView implements ScopeView
 		this.target = target;
 		this.child = child;
 		this.isQualified = isQualified;
+		assert ((target instanceof TemplateableElement) && (((TemplateableElement)target).getOwnedSignature() != null)) || (!(target instanceof NullableType) && !(target instanceof InvalidableType));
 	}
 
 	public @Nullable ScopeView computeLookup(@NonNull EnvironmentView environmentView, @NonNull EObject aTarget) {
