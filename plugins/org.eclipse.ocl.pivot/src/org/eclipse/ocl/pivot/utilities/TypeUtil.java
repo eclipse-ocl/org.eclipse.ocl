@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionKind;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -201,7 +202,7 @@ public class TypeUtil
 
 	public static @Nullable Type encodeNullableType(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type type, boolean isRequired) {
 		if ((type != null) && !isRequired) {
-			if (!(type instanceof NullableType) && !(type instanceof VoidType)) {
+			if (!(type instanceof NullableType) && !(type instanceof VoidType) && !(type instanceof InvalidableType) && !(type instanceof InvalidType)) {
 				return environmentFactory.getCompleteModel().getNullableType(type);
 			}
 		}
