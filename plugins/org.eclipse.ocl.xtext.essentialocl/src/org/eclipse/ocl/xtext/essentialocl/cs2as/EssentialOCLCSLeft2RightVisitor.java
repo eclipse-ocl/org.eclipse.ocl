@@ -1821,7 +1821,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					Type initType = null;
 					Type initTypeValue = null;
 					if (initExpression != null) {
-						initType = initExpression.getType();
+						initType = initExpression.getRawType();
 						initTypeValue = initExpression.getTypeValue();
 						initIsRequired = initExpression.isIsRequired();
 						if ((initType != null) && (variableType != null)) {

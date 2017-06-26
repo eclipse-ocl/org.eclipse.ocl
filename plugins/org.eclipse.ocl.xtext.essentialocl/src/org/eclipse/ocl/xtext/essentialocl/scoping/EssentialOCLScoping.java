@@ -179,7 +179,7 @@ public class EssentialOCLScoping
 			if (source != null) {
 				typeText = PivotConstantsInternal.UNKNOWN_TYPE_TEXT;
 				if (sourceType == null) {
-					sourceType = source.getType();
+					sourceType = source.getRawType();
 				}
 				if (sourceType != null) {
 					sourceType = PivotUtilInternal.getType(sourceType);

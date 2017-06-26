@@ -33,9 +33,11 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -668,6 +670,12 @@ public class EnvironmentView
 
 	public void addElementsOfScope(@Nullable Element asElement, @NonNull ScopeView scopeView) {
 		if (asElement != null) {
+			if (asElement instanceof NullableType) {
+				asElement = PivotUtil.getNonNullType((NullableType)asElement);
+			}
+			else if (asElement instanceof InvalidableType) {
+				asElement = PivotUtil.getNonNullType((InvalidableType)asElement);
+			}
 			Attribution attribution = getAttribution(asElement);
 			attribution.computeLookup(asElement, this, scopeView);
 		}
@@ -794,6 +802,7 @@ public class EnvironmentView
 	 * @since 1.3
 	 */
 	public @NonNull Attribution getAttribution(@NonNull EObject eObject) {
+		assert !(eObject instanceof NullableType) && !(eObject instanceof InvalidableType);
 		if (parserContext != null) {
 			return parserContext.getAttribution(eObject);
 		}
