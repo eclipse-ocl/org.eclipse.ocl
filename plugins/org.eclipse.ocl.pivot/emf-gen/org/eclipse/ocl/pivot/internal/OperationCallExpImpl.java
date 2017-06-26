@@ -680,6 +680,9 @@ implements OperationCallExp {
 							throw new InvalidValueException("Null source for \'TypedElement::type\'");
 						}
 						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = argument.getRawType();
+						if (toString().contains("at")) {
+							getClass();
+						}
 						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType).booleanValue();
 						CAUGHT_conformsTo = conformsTo;
 					}

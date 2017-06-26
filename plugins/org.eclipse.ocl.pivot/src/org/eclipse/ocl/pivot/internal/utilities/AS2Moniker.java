@@ -50,7 +50,7 @@ public class AS2Moniker implements PivotConstantsInternal
 		assert string != null;
 		return string;
 	}
-	
+
 	private static final Logger logger = Logger.getLogger(AS2Moniker.class);
 
 	/**
@@ -62,11 +62,11 @@ public class AS2Moniker implements PivotConstantsInternal
 	 * The working buffer for the result.
 	 */
 	private final StringBuilder s = new StringBuilder();
-	
+
 	/**
 	 * A pivot 2 moniker conversion visitor, if needed.
 	 */
-//	private AS2MonikerVisitor pivotVisitor = null;
+	//	private AS2MonikerVisitor pivotVisitor = null;
 
 	/**
 	 * TemplateParameters that already appear in the result and do not need re-qualification.
@@ -80,37 +80,37 @@ public class AS2Moniker implements PivotConstantsInternal
 	public void append(char c) {
 		s.append(c);
 	}
-	
+
 	public void append(int i) {
 		s.append(i);
 	}
-	
+
 	public void append(String string) {
 		s.append(string != null ? string : "null"); //$NON-NLS-1$
 	}
-	
+
 	public void appendElement(Element element) {
 		if (toString().length() >= MONIKER_OVERFLOW_LIMIT) {
 			append(OVERFLOW_MARKER);
 		}
 		else if (element == null) {
-			append(NULL_MARKER);	
+			append(NULL_MARKER);
 		}
 		else if (element.eIsProxy()) {
-			append(UNRESOLVED_PROXY_MARKER);	
+			append(UNRESOLVED_PROXY_MARKER);
 		}
 		else {
 			AS2MonikerVisitor as2MonikerVisitor = createAS2MonikerVisitor(element);
 			element.accept(as2MonikerVisitor);
-		}		
+		}
 	}
-	
+
 	public void appendElement(Element element, Map<TemplateParameter, Type> templateBindings) {
 		if (toString().length() >= MONIKER_OVERFLOW_LIMIT) {
 			append(OVERFLOW_MARKER);
 		}
 		else if (element == null) {
-			append(NULL_MARKER);	
+			append(NULL_MARKER);
 		}
 		else if (templateBindings != null) {			// FIXME is this needed
 			AS2MonikerVisitor nestedAS2MonikerVisitor = new AS2MonikerVisitor(this, templateBindings);
@@ -155,7 +155,7 @@ public class AS2Moniker implements PivotConstantsInternal
 		}
 	}
 
-/*	protected void appendMultiplicity(MultiplicityElement multiplicityElement) {
+	/*	protected void appendMultiplicity(MultiplicityElement multiplicityElement) {
 		int lower = multiplicityElement.getLower().intValue();
 		int upper = multiplicityElement.getUpper().intValue();
 		if (upper != 1) {
@@ -180,7 +180,7 @@ public class AS2Moniker implements PivotConstantsInternal
 			append(((NamedElement) monikeredElement).getName());
 		}
 		else if (monikeredElement == null) {
-//			logger.warn("null for PivotMoniker.appendName()");
+			//			logger.warn("null for PivotMoniker.appendName()");
 			append("/null/");
 		}
 		else {
@@ -188,7 +188,7 @@ public class AS2Moniker implements PivotConstantsInternal
 			append("/anon/");
 		}
 	}
-	
+
 	public void appendParameters(Operation operation, Map<TemplateParameter, Type> templateBindings) {
 		s.append(PARAMETER_PREFIX);
 		String prefix = ""; //$NON-NLS-1$
@@ -196,16 +196,16 @@ public class AS2Moniker implements PivotConstantsInternal
 			Iteration iteration = (Iteration)operation;
 			for (Parameter parameter : iteration.getOwnedIterators()) {
 				s.append(prefix);
-				appendElement(parameter.getType(), templateBindings);
-//				appendMultiplicity(parameter);
+				appendElement(parameter.getRawType(), templateBindings);
+				//				appendMultiplicity(parameter);
 				prefix = PARAMETER_SEPARATOR;
 			}
 			if (iteration.getOwnedAccumulators().size() > 0) {
 				prefix = ITERATOR_SEPARATOR;
 				for (Parameter parameter : iteration.getOwnedAccumulators()) {
 					s.append(prefix);
-					appendElement(parameter.getType(), templateBindings);
-//					appendMultiplicity(parameter);
+					appendElement(parameter.getRawType(), templateBindings);
+					//					appendMultiplicity(parameter);
 					prefix = PARAMETER_SEPARATOR;
 				}
 			}
@@ -213,8 +213,8 @@ public class AS2Moniker implements PivotConstantsInternal
 		}
 		for (Parameter parameter : operation.getOwnedParameters()) {
 			s.append(prefix);
-			appendElement(parameter.getType(), templateBindings);
-//			appendMultiplicity(parameter);
+			appendElement(parameter.getRawType(), templateBindings);
+			//			appendMultiplicity(parameter);
 			prefix = PARAMETER_SEPARATOR;
 		}
 		s.append(PARAMETER_SUFFIX);
@@ -225,7 +225,7 @@ public class AS2Moniker implements PivotConstantsInternal
 			append(OVERFLOW_MARKER);
 		}
 		else if (element == null) {
-			append(NULL_MARKER);	
+			append(NULL_MARKER);
 		}
 		else {
 			EObject parent = element.eContainer();
@@ -236,15 +236,15 @@ public class AS2Moniker implements PivotConstantsInternal
 					if (ownedTemplateSignature != null) {
 						for (TemplateParameter templateParameter : ownedTemplateSignature.getOwnedParameters()) {
 							emittedTemplateParameter(templateParameter);
-					}
+						}
 					}
 				}
 			}
 			else if (element.eIsProxy()) {
-				append("<<unresolved-proxy>>");	
+				append("<<unresolved-proxy>>");
 			}
 			else {
-				assert element instanceof Model || element instanceof ExpressionInOCL : element.eClass().getName() + " has no parent";	
+				assert element instanceof Model || element instanceof ExpressionInOCL : element.eClass().getName() + " has no parent";
 			}
 		}
 		append(parentSeparator);
@@ -279,12 +279,12 @@ public class AS2Moniker implements PivotConstantsInternal
 			append(TEMPLATE_BINDING_SUFFIX);
 		}
 	}
-	
+
 	public void appendTemplateBindings(TemplateableElement templateableElement, Map<TemplateParameter, Type> bindings) {
 		List<TemplateBinding> templateBindings = templateableElement.getOwnedBindings();
 		if (!templateBindings.isEmpty()) {
 			boolean isSpecialized = isSpecialized(templateBindings, bindings);
-			if (!isSpecialized) {			
+			if (!isSpecialized) {
 				s.append(TEMPLATE_SIGNATURE_PREFIX);
 				String prefix = ""; //$NON-NLS-1$
 				for (TemplateBinding templateBinding : templateBindings) {
@@ -381,7 +381,7 @@ public class AS2Moniker implements PivotConstantsInternal
 		}
 		emittedParameters.add(templateParameter);
 	}
-	
+
 	public boolean hasEmitted(TemplateParameter templateParameter) {
 		return (emittedParameters != null) && emittedParameters.contains(templateParameter);
 	}

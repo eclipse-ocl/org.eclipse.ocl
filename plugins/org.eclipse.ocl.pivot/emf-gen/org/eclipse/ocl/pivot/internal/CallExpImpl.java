@@ -57,8 +57,8 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * @generated
  */
 public abstract class CallExpImpl
-		extends OCLExpressionImpl
-		implements CallExp {
+extends OCLExpressionImpl
+implements CallExp {
 
 	/**
 	 * The default value of the '{@link #isIsImplicit() <em>Is Implicit</em>}' attribute.
@@ -214,7 +214,7 @@ public abstract class CallExpImpl
 		}
 		else {
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid = idResolver.getClass(TypeId.OCL_INVALID, null);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getType();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type = this.getRawType();
 			final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid.getTypeId()) : true;
 			final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, PivotTables.STR_CallExp_c_c_TypeIsNotInvalid, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 			symbol_0 = logDiagnostic;

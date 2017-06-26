@@ -1014,13 +1014,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			Type leftType2 = ClassUtil.nonNullState(TypeUtil.decodeNullableType(leftType));
 			Type rightType2 = ClassUtil.nonNullState(TypeUtil.decodeNullableType(rightType));
 			Type commonType = getCommonType(leftType2, leftSubstitutions, rightType2, rightSubstitutions);
-			return getCompleteClass(commonType).getInvalidableType();
+			return completeModel.getInvalidableType(commonType);
 		}
 		if ((leftType instanceof NullableType) || (rightType instanceof NullableType)) {
 			Type leftType2 = ClassUtil.nonNullState(TypeUtil.decodeNullableType(leftType));
 			Type rightType2 = ClassUtil.nonNullState(TypeUtil.decodeNullableType(rightType));
 			Type commonType = getCommonType(leftType2, leftSubstitutions, rightType2, rightSubstitutions);
-			return getCompleteClass(commonType).getNullableType();
+			return completeModel.getNullableType(commonType);
 		}
 		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
 			TupleTypeManager tupleManager = completeModel.getTupleManager();

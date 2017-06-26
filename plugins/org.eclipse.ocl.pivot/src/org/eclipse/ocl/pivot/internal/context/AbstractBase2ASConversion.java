@@ -18,7 +18,9 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
@@ -77,7 +79,17 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 
 	public void setBehavioralType(@NonNull TypedElement targetElement, @NonNull TypedElement sourceElement) {
 		if (!sourceElement.eIsProxy()) {
-			Type type = PivotUtilInternal.getBehavioralType(sourceElement);
+			Type type = PivotUtilInternal.getType(sourceElement);
+			type = type != null ? PivotUtilInternal.getBehavioralType(type) : null;
+			if (type instanceof InvalidableType) {
+				Type rawType = ClassUtil.nonNullState(TypeUtil.decodeNullableType(type));
+				type = PivotUtilInternal.getNonSelfType(rawType, sourceElement).getInvalidableType();
+			}
+			else if (type instanceof NullableType) {
+				Type rawType = ClassUtil.nonNullState(TypeUtil.decodeNullableType(type));
+				type = PivotUtilInternal.getNonSelfType(rawType, sourceElement).getNullableType();
+			}
+			//			Type type = PivotUtilInternal.getBehavioralType(sourceElement);
 			if ((type != null) && type.eIsProxy()) {
 				type = null;
 			}

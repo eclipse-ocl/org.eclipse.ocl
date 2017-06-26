@@ -336,6 +336,21 @@ public class PivotUtilInternal //extends PivotUtil
 		return castElement;
 	}
 
+	public static @NonNull Type getNonSelfType(@NonNull Type type, @NonNull TypedElement typedElement) {
+		if (type instanceof SelfType) {
+			if (typedElement instanceof Parameter) {
+				Operation operation = ((Parameter)typedElement).getOwningOperation();
+				if (operation != null) {
+					org.eclipse.ocl.pivot.Class selfType = operation.getOwningClass();
+					if (selfType != null) {
+						type = selfType;
+					}
+				}
+			}
+		}
+		return type;
+	}
+
 	/**
 	 * Return a URI based on the nsURI of the immediate parent package.
 	 */
@@ -600,17 +615,7 @@ public class PivotUtilInternal //extends PivotUtil
 		}
 		//		type = getType(type);
 		type = getNonLambdaType(type);
-		if (type instanceof SelfType) {
-			if (typedElement instanceof Parameter) {
-				Operation operation = ((Parameter)typedElement).getOwningOperation();
-				if (operation != null) {
-					org.eclipse.ocl.pivot.Class selfType = operation.getOwningClass();
-					if (selfType != null) {
-						type = selfType;
-					}
-				}
-			}
-		}
+		type = getNonSelfType(type, typedElement);
 		return type;
 	}
 

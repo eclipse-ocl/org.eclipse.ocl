@@ -1130,11 +1130,17 @@ implements org.eclipse.ocl.pivot.Class {
 		if (this == type) {
 			return true;
 		}
-		if (!(this instanceof InvalidableType) && (type instanceof InvalidableType)) {
+		if (type instanceof InvalidableType) {
 			type = PivotUtil.getNonInvalidType((InvalidableType)type);
+			if (this instanceof InvalidableType) {
+				return ClassUtil.nonNullState(((InvalidableType)this).getNonInvalidType()).conformsTo(standardLibrary, type);
+			}
 		}
-		if (!(this instanceof NullableType) && (type instanceof NullableType)) {
+		if (type instanceof NullableType) {
 			type = PivotUtil.getNonNullType((NullableType)type);
+			if (this instanceof NullableType) {
+				return ClassUtil.nonNullState(((NullableType)this).getNonNullType()).conformsTo(standardLibrary, type);
+			}
 		}
 		if (this == type) {
 			return true;

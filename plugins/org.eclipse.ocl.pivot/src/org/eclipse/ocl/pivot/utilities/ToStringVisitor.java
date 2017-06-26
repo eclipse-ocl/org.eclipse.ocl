@@ -994,7 +994,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		safeVisit(source);
 		Operation oper = oc.getReferredOperation();
 		if (oper != null) {
-			Type sourceType = source != null ? source.getType() : null;
+			Type sourceType = source != null ? source.getRawType() : null;
 			append(PivotUtil.getNavigationOperator(oc.isIsSafe(), PivotUtil.isAggregate(sourceType)));
 			appendName(oper);
 		} else {

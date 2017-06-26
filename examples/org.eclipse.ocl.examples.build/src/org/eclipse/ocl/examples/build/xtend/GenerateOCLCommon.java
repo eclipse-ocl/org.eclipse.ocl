@@ -540,7 +540,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			else if (eObject instanceof TypedElement) {
 				TypedElement typedElement = (TypedElement)eObject;
-				Type type = typedElement.getType();
+				Type type = typedElement.getDecodedType();
 				if (!internalTypes.contains(type)) {
 					addExternalReference(type, root);
 				}
@@ -551,7 +551,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 						if (PivotUtil.getContainingModel(opposite) == PivotUtil.getContainingModel(property)) {
 							addExternalReference(opposite, root);
 						}
-						Type oppositeType = opposite.getType();
+						Type oppositeType = opposite.getDecodedType();
 						if (!internalTypes.contains(oppositeType)) {
 							addExternalReference(oppositeType, root);
 						}
@@ -886,7 +886,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				}
 			}
 			else if (eObject instanceof InvalidableType) {
-				allElements.add(PivotUtil.getNonNullType((InvalidableType)eObject));
+				if (((InvalidableType)eObject).getOwnedSignature() == null) {
+					allElements.add(PivotUtil.getNonNullType((InvalidableType)eObject));
+				}
 			}
 		}
 		List<@NonNull Type> sortedElements = new ArrayList<>(allElements);
@@ -1006,13 +1008,17 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		Set<@NonNull Type> allElements = new HashSet<>();
 		for (@NonNull EObject eObject : new TreeIterable(root, true)) {
 			if ((eObject instanceof TypedElement) && !((TypedElement)eObject).isIsRequired()) {
-				eObject = ((TypedElement)eObject).getType();
+				eObject = ((TypedElement)eObject).getRawType();
 			}
 			if (eObject instanceof InvalidableType) {
-				eObject = PivotUtil.getNonNullType((InvalidableType)eObject);
+				if (((InvalidableType)eObject).getOwnedSignature() == null) {
+					eObject = PivotUtil.getNonNullType((InvalidableType)eObject);
+				}
 			}
 			else if (eObject instanceof NullableType) {
-				eObject = PivotUtil.getNonNullType((NullableType)eObject);
+				if (((NullableType)eObject).getOwnedSignature() == null) {
+					eObject = PivotUtil.getNonNullType((NullableType)eObject);
+				}
 			}
 			if ((eObject instanceof Type) && !(eObject instanceof VoidType) && !(eObject instanceof InvalidType) && !(eObject instanceof NullableType) && !(eObject instanceof InvalidableType)) {
 				allElements.add((Type)eObject);
