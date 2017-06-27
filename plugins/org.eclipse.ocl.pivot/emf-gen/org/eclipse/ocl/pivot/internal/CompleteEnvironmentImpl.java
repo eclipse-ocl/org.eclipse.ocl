@@ -34,8 +34,10 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -397,6 +399,18 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
 			@NonNull Type secondType, @NonNull TemplateParameterSubstitutions secondSubstitutions) {
+		if (secondType instanceof InvalidableType) {
+			secondType = ClassUtil.nonNullState(PivotUtil.getNonNullType((InvalidableType)secondType).getNullableType());
+			if (firstType instanceof InvalidableType) {
+				firstType = ClassUtil.nonNullState(PivotUtil.getNonNullType((InvalidableType)firstType).getNullableType());
+			}
+		}
+		if (secondType instanceof NullableType) {
+			secondType = PivotUtil.getNonNullType((NullableType)secondType);
+			if (firstType instanceof NullableType) {
+				firstType = PivotUtil.getNonNullType((NullableType)firstType);
+			}
+		}
 		//
 		//	Resolve first template parameters to its substitution
 		//

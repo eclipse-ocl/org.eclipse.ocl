@@ -385,7 +385,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		//	Refine source type to common type of source and a first OclSelf argument.
 		//
 		List<Parameter> asParameters = apparentOperation.getOwnedParameters();
-		if ((asParameters.size() == 1) && (asParameters.get(0).getType() instanceof SelfType) && (actualSourceType != null)) {
+		if ((asParameters.size() == 1) && (asParameters.get(0).getDecodedType() instanceof SelfType) && (actualSourceType != null)) {
 			org.eclipse.ocl.pivot.Class actualArgType = idResolver.getStaticTypeOf(sourceAndArgumentValues[1]);
 			actualSourceType = (org.eclipse.ocl.pivot.Class)actualSourceType.getCommonType(idResolver, actualArgType);
 		}

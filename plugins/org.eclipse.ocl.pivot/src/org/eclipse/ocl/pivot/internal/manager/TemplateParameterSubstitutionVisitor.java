@@ -423,6 +423,17 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	@Override
+	public @Nullable Object visitInvalidableType(@NonNull InvalidableType object) {
+		Type formalElementType = object.getNonNullType().getNullableType();
+		Element actualElementType = actual;
+		if (actualElementType instanceof InvalidableType) {
+			actualElementType = ((InvalidableType)actualElementType).getNonNullType().getNullableType();
+		}
+		analyzeType(formalElementType, actualElementType);
+		return null;
+	}
+
+	@Override
 	public @Nullable Object visitIterateExp(@NonNull IterateExp object) {
 		Iteration referredIteration = object.getReferredIteration();
 		analyzeTypedElement(referredIteration, object);
@@ -481,6 +492,17 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	@Override
+	public @Nullable Object visitNullableType(@NonNull NullableType object) {
+		Type formalElementType = object.getNonNullType();
+		Element actualElementType = actual;
+		if (actualElementType instanceof NullableType) {
+			actualElementType = ((NullableType)actualElementType).getNonNullType();
+		}
+		analyzeType(formalElementType, actualElementType);
+		return null;
+	}
+
+	@Override
 	public @Nullable Object visitOperationCallExp(@NonNull OperationCallExp object) {
 		Operation referredOperation = object.getReferredOperation();
 		//		visit(referredOperation, object);
@@ -516,7 +538,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	@Override
 	public @Nullable Object visitParameter(@NonNull Parameter object) {
 		if ((object.isIsTypeof()) && actual instanceof OCLExpression) {
-			analyzeType(object.getType(), ((OCLExpression)actual).getTypeValue());
+			analyzeType(object.getRawType(), ((OCLExpression)actual).getTypeValue());
 		}
 		else {
 			super.visitParameter(object);
