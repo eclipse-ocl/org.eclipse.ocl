@@ -17,7 +17,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -41,6 +43,7 @@ import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SortedByIteration;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -60,9 +63,11 @@ public abstract class TemplateParameterSubstitutionHelper
 	}
 
 	/**
+	 * Return true/false according to whetyher the return type isRequired. Return null if the nullity was encoded in the resolveReturnType return.
+	 *
 	 * @since 1.3
 	 */
-	public boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
+	public @Nullable Boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
 		return returnIsRequired;
 	}
 
@@ -152,7 +157,7 @@ public abstract class TemplateParameterSubstitutionHelper
 	private static class CollectionSourceElementHelper extends TemplateParameterSubstitutionHelper
 	{
 		@Override
-		public boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
+		public @Nullable Boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
 			OCLExpression ownedSource = callExp.getOwnedSource();
 			if (ownedSource != null) {
 				Type sourceType = ownedSource.getType();
@@ -195,19 +200,44 @@ public abstract class TemplateParameterSubstitutionHelper
 	{
 		@Override
 		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
-			if (returnType instanceof CollectionType) {
+			Type decodedReturnType = TypeUtil.decodeNullableType(returnType);
+			if (decodedReturnType instanceof CollectionType) {
 				OCLExpression ownedSource = callExp.getOwnedSource();
 				if (ownedSource != null) {
-					Type sourceType = ownedSource.getType();
-					CollectionType collectionType = (CollectionType)returnType;
-					if ((sourceType instanceof CollectionType) && ((CollectionType)sourceType).isIsNullFree() && !collectionType.isIsNullFree()) {
+					Type decodedSourceType = ownedSource.getDecodedType();
+					Type sourceType = ownedSource.getRawType();
+					CollectionType collectionType = (CollectionType)decodedReturnType;
+					if ((decodedSourceType instanceof CollectionType) && ((CollectionType)decodedSourceType).isIsNullFree() && !collectionType.isIsNullFree()) {
 						@SuppressWarnings("null")@NonNull Type elementType = collectionType.getElementType();
 						returnType = metamodelManager.getCollectionType(collectionType.isOrdered(), collectionType.isUnique(),
 							elementType, true, collectionType.getLowerValue(), collectionType.getUpperValue());
+						if (sourceType instanceof InvalidableType) {
+							returnType = metamodelManager.getCompleteModel().getInvalidableType(returnType);
+						}
+						else if (sourceType instanceof NullableType) {
+							returnType = metamodelManager.getCompleteModel().getNullableType(returnType);
+						}
+					}
+				}
+			}
+			else {
+				OCLExpression ownedSource = callExp.getOwnedSource();
+				if (ownedSource != null) {
+					Type sourceType = ownedSource.getRawType();
+					if ((returnType instanceof InvalidableType) && !(sourceType instanceof InvalidableType)) {
+						returnType = PivotUtil.getNonNullType((InvalidableType)returnType).getNullableType();
+					}
+					if ((returnType instanceof NullableType) && !(sourceType instanceof NullableType)) {
+						returnType = PivotUtil.getNonNullType((NullableType)returnType);
 					}
 				}
 			}
 			return returnType;
+		}
+
+		@Override
+		public @Nullable Boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
+			return null;
 		}
 	}
 

@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.NullLiteralExp;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -366,7 +367,8 @@ public class PivotHelper
 				TemplateParameterSubstitutionHelper helper = TemplateParameterSubstitutionHelper.getHelper(className);
 				if (helper != null) {
 					returnType = helper.resolveReturnType(metamodelManager, asOperationCallExp, returnType);
-					returnIsRequired = helper.resolveReturnNullity(metamodelManager, asOperationCallExp, returnIsRequired);
+					Boolean returnIsRequired2 = helper.resolveReturnNullity(metamodelManager, asOperationCallExp, returnIsRequired);
+					returnIsRequired = returnIsRequired2 != null ? returnIsRequired2 : !(returnType instanceof NullableType);
 				}
 			}
 			if (asOperation.isIsTypeof()) {

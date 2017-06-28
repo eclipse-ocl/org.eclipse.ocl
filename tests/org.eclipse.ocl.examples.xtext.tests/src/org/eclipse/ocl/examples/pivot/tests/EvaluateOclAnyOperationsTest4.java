@@ -713,6 +713,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_Boolean() {
 		MyOCL ocl = createOCL();
+		ocl.assertQueryEquals(null, 1, "true.oclType().ownedOperations?->select(name = 'xor')->any(true)?.ownedParameters->size()");
+		//
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
 		org.eclipse.ocl.pivot.Class classType = standardLibrary.getClassType();
@@ -782,6 +784,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_Enumeration() {
 		MyOCL ocl = createOCL();
+		ocl.assertQueryEquals(null, "CollectionKind", "CollectionKind::Set.oclType().name");
+		//
 		MetamodelManager metamodelManager = ocl.getMetamodelManager();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
 		@SuppressWarnings("null") @NonNull Type collectionKindType = metamodelManager.getASClass("CollectionKind");

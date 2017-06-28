@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialisation;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
@@ -44,6 +45,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -467,11 +469,11 @@ implements PropertyCallExp {
 	@Override
 	public org.eclipse.ocl.pivot.Class getSpecializedReferredPropertyType()
 	{
+		Executor executor = PivotUtilInternal.getExecutor(this);
 		Property referredProperty = getReferredProperty();
-		Type referencedType = referredProperty.getType();
+		Type referencedType = TypeUtil.encodeNullableType((EnvironmentFactoryInternal) executor.getEnvironmentFactory(), referredProperty.getType(), referredProperty.isIsRequired());
 		Type specializedType = referencedType;
 		if ((referencedType != null) && TemplateSpecialisation.needsSpecialisation(referencedType)) {
-			Executor executor = PivotUtilInternal.getExecutor(this);
 			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getCompleteEnvironment());
 			Type resultType = getType();
 			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
@@ -481,7 +483,6 @@ implements PropertyCallExp {
 			return (org.eclipse.ocl.pivot.Class)specializedType;
 		}
 		else {
-			Executor executor = PivotUtilInternal.getExecutor(this);
 			return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
 		}
 	}
@@ -549,7 +550,7 @@ implements PropertyCallExp {
 					}
 					else {
 						assert ownedSource != null;
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getType();
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getRawType();
 						safe_type_source = type;
 					}
 					@SuppressWarnings("null")

@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.NullLiteralExp;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.NumericLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -990,7 +991,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		//
 		int iterationIteratorsSize = iteration.getOwnedIterators().size();
 		int iteratorIndex = 0;
-		CollectionType sourceCollectionType = (CollectionType)csNameExp.getSourceType();
+		CollectionType sourceCollectionType = (CollectionType) csNameExp.getSourceType();
 		if (sourceCollectionType.isIsNullFree()) {
 			isSafe = true;
 		}
@@ -1322,7 +1323,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			TemplateParameterSubstitutionHelper helper = TemplateParameterSubstitutionHelper.getHelper(className);
 			if (helper != null) {
 				returnType = helper.resolveReturnType(metamodelManager, callExp, returnType);
-				returnIsRequired = helper.resolveReturnNullity(metamodelManager, callExp, returnIsRequired);
+				Boolean returnIsRequired2 = helper.resolveReturnNullity(metamodelManager, callExp, returnIsRequired);
+				returnIsRequired = returnIsRequired2 != null ? returnIsRequired2 : !(returnType instanceof NullableType);
 			}
 		}
 		if (operation.isIsTypeof()) {
@@ -1723,7 +1725,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 								collectedSourceExp = resolveImplicitAsSet(sourceExp, actualSourceType, csOperator);
 							}
 						}
-						Type sourceType = collectedSourceExp.getRawType();
+						Type sourceType = collectedSourceExp.getDecodedType();
 						csNameExp.setSourceType(sourceType);
 						csNameExp.setSourceTypeValue(collectedSourceExp.getTypeValue());
 						//
