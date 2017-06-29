@@ -94,13 +94,12 @@ public abstract class TemplateParameterSubstitutionHelper
 		public @Nullable Type resolveBodyType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
 			LoopExp loopExp = (LoopExp)callExp;
 			OCLExpression body = loopExp.getOwnedBody();
-			Type asType = body != null ? body.getType() : null;
+			Type asType = body != null ? body.getRawType() : null;
 			Type bodyType = asType != null ? PivotUtilInternal.getNonLambdaType(asType) : null;
 			if (bodyType != null) {
 				@NonNull Type elementType = bodyType;
-				//				if (bodyType instanceof CollectionType) {
-				while (elementType instanceof CollectionType) {
-					Type elementType2 = ((CollectionType)elementType).getElementType();
+				for (Type decodedElementType; (decodedElementType = TypeUtil.decodeNullableType(elementType)) instanceof CollectionType; ) {
+					Type elementType2 = ((CollectionType)decodedElementType).getElementType();
 					if (elementType2 != null) {
 						elementType = elementType2;
 					}
@@ -115,13 +114,13 @@ public abstract class TemplateParameterSubstitutionHelper
 		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
 			LoopExp loopExp = (LoopExp)callExp;
 			OCLExpression body = loopExp.getOwnedBody();
-			Type asType = body != null ? body.getType() : null;
+			Type asType = body != null ? body.getRawType() : null;
 			Type bodyType = asType != null ? PivotUtilInternal.getNonLambdaType(asType) : null;
 			if (bodyType != null) {
 				@NonNull Type elementType = bodyType;
 				//				if (bodyType instanceof CollectionType) {
-				while (elementType instanceof CollectionType) {
-					Type elementType2 = ((CollectionType)elementType).getElementType();
+				for (Type decodedElementType; (decodedElementType = TypeUtil.decodeNullableType(elementType)) instanceof CollectionType; ) {
+					Type elementType2 = ((CollectionType)decodedElementType).getElementType();
 					if (elementType2 != null) {
 						elementType = elementType2;
 					}

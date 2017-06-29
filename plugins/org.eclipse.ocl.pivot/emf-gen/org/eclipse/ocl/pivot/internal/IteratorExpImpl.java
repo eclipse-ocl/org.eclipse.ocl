@@ -802,7 +802,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Type elementType = oclAsType.getElementType();
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull OCLExpression ownedBody = this.getOwnedBody();
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedBody.getType();
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Type type_0 = ownedBody.getRawType();
 					if (type_0 == null) {
 						throw new InvalidValueException("Null source for \'pivot::Type::flattenedType() : Type[?]\'");
 					}

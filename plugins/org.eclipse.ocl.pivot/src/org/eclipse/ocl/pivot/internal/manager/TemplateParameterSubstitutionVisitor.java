@@ -453,7 +453,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		List<Parameter> formalElements = referredIteration.getOwnedParameters();
 		if (formalElements.size() > 0) {
 			OCLExpression actualElement = object.getOwnedBody();
-			Type actualType = actualElement.getType();
+			Type actualType = actualElement.getRawType();
 			TemplateParameterSubstitutionHelper helper = getHelper(referredIteration);
 			if (helper != null) {
 				actualType = helper.resolveBodyType(environmentFactory.getMetamodelManager(), object, actualType);

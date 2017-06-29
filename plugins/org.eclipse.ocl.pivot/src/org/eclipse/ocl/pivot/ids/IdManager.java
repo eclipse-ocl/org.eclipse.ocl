@@ -29,7 +29,9 @@ import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameters;
@@ -220,7 +222,15 @@ public final class IdManager
 		if (parentPackage != null) {
 			TemplateParameters typeParameters = aType.getTypeParameters();
 			PackageId packageId = parentPackage.getPackageId();
-			return packageId.getClassId(name, typeParameters.parametersSize());
+			if (aType instanceof NullableType) {
+				return packageId.getClassId("Nullable", typeParameters.parametersSize());
+			}
+			else if (aType instanceof InvalidableType) {
+				return packageId.getClassId("Invalidable", typeParameters.parametersSize());
+			}
+			else {
+				return packageId.getClassId(name, typeParameters.parametersSize());
+			}
 		}
 		else {
 			return getUnspecifiedTypeId(aType);		// FIXME This occurs for underspecified/wildcard types

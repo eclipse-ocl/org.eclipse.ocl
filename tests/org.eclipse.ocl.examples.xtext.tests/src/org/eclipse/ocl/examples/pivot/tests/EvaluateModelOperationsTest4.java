@@ -319,8 +319,8 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		Value orderedSet_b1_b2 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(TypeId.OCL_ANY), b1_value, b2_value);
 		Value sequence_c1_c2 = idResolver.createSequenceOfEach(TypeId.SEQUENCE.getSpecializedId(TypeId.OCL_ANY), c1_value, c2_value);
 		//
-		ocl.assertQueryEquals(a, orderedSet_b1_b2, "bs");
-		ocl.assertQueryEquals(a, sequence_c1_c2, "bs?.c");
+		//		ocl.assertQueryEquals(a, orderedSet_b1_b2, "bs");
+		//		ocl.assertQueryEquals(a, sequence_c1_c2, "bs?.c");
 		ocl.assertQueryEquals(a, sequence_c1_c2, "bs?.c.oclAsSet()");
 		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?.c?.name");
 		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "self.bs?.c?.name");

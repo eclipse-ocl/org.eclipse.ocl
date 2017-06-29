@@ -42,7 +42,7 @@ import org.eclipse.ocl.pivot.util.DerivedConstants;
  * ImplementationManager encapsulates the knowledge about known feature implementations.
  */
 public class ImplementationManager
-{			
+{
 	private static final Logger logger = Logger.getLogger(ImplementationManager.class);
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
@@ -53,7 +53,7 @@ public class ImplementationManager
 	 * ClassLoaders that may be able to load a library implementation.
 	 */
 	private List<@NonNull ClassLoader> classLoaders = null;
-	
+
 	public ImplementationManager(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.technology = environmentFactory.getTechnology();
@@ -78,7 +78,7 @@ public class ImplementationManager
 		return classLoaders2;
 	}
 
-/*	protected @NonNull LibraryOperation getOperationImplementation(@NonNull Operation operation) {
+	/*	protected @NonNull LibraryOperation getOperationImplementation(@NonNull Operation operation) {
 		LibraryFeature implementation = metamodelManager.getImplementation(operation);
 		String implementationClassName = operation.getImplementationClass();
 		if (implementationClassName != null) {
@@ -117,13 +117,13 @@ public class ImplementationManager
 				return UnsupportedOperation.INSTANCE;
 			}
 		}
-		Type type = property.getType();
+		Type type = property.getDecodedType();
 		if ((type instanceof Stereotype) && property.getName().startsWith(DerivedConstants.STEREOTYPE_EXTENSION_PREFIX)) {
 			return technology.createExtensionPropertyImplementation(environmentFactory, property);
 		}
-//		if (property.getOwningType() instanceof Stereotype) {
-//			return new BaseProperty(property);
-//		}
+		//		if (property.getOwningType() instanceof Stereotype) {
+		//			return new BaseProperty(property);
+		//		}
 		ExpressionInOCL specification = metamodelManager.getDefaultExpression(property);
 		if (property.isIsDerived() && (specification != null)) {
 			return new ConstrainedProperty(property);
@@ -148,7 +148,7 @@ public class ImplementationManager
 						}
 					}
 				}
-/*				eTarget = type.getETarget();
+				/*				eTarget = type.getETarget();
 				if (eTarget != null) {
 					EClass eOwningClass = eTarget.eClass();
 					EClass eOwnedClass = property.getOwningType().getETarget().eClass();
@@ -176,24 +176,24 @@ public class ImplementationManager
 			return new StaticProperty(property);
 		}
 		if ((property.getOwningClass() instanceof ElementExtension)			// direct access to extension property
-			  || (property.getOwningClass() instanceof Stereotype)) {			// indirect access from a Stereotype operation
+				|| (property.getOwningClass() instanceof Stereotype)) {			// indirect access from a Stereotype operation
 			return technology.createStereotypePropertyImplementation(environmentFactory, property);
 		}
 		return technology.createExplicitNavigationPropertyImplementation(environmentFactory, asNavigationExp, sourceValue, property);
 	}
-	
+
 	public void dispose() {
 		classLoaders = null;
 	}
 
 	/**
 	 * Return the implementation of a feature.
-	 * 
+	 *
 	 * @param feature to be implemented.
 	 * @return the implementation, or null if the feature has no implementation
 	 * as is the case for a normal model feature
 	 * @throws ClassNotFoundException if the implementation class realising
-	 * the implementation is not loadable 
+	 * the implementation is not loadable
 	 * @throws NoSuchFieldException if the implementation class realising
 	 * the implementation does not provide a static INSTANCE field
 	 * @throws SecurityException if the implementation class is not accessible
@@ -220,7 +220,7 @@ public class ImplementationManager
 						if (e == null) {
 							e = e1;
 						}
-					}						
+					}
 				}
 				if (e != null) {
 					throw e;

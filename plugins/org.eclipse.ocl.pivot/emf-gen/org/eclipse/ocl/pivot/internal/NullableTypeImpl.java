@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -419,6 +420,18 @@ public class NullableTypeImpl extends ClassImpl implements NullableType
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitNullableType(this);
+	}
+
+	@Override
+	public @NonNull TypeId computeId() {
+		// TODO Auto-generated method stub
+		return super.computeId();
+	}
+
+	@Override
+	public @NonNull TypeId getTypeId() {
+		// TODO Auto-generated method stub
+		return super.getTypeId();
 	}
 
 } //NullableTypeImpl

@@ -471,7 +471,7 @@ implements PropertyCallExp {
 	{
 		Executor executor = PivotUtilInternal.getExecutor(this);
 		Property referredProperty = getReferredProperty();
-		Type referencedType = TypeUtil.encodeNullableType((EnvironmentFactoryInternal) executor.getEnvironmentFactory(), referredProperty.getType(), referredProperty.isIsRequired());
+		Type referencedType = TypeUtil.encodeNullableType((EnvironmentFactoryInternal) executor.getEnvironmentFactory(), referredProperty.getRawType(), referredProperty.isIsRequired());
 		Type specializedType = referencedType;
 		if ((referencedType != null) && TemplateSpecialisation.needsSpecialisation(referencedType)) {
 			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getCompleteEnvironment());
@@ -479,7 +479,7 @@ implements PropertyCallExp {
 			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
 			specializedType = templateSpecialization.getSpecialisation(referencedType);
 		}
-		if (specializedType instanceof org.eclipse.ocl.pivot.Class) {
+		if (TypeUtil.decodeNullableType(specializedType) instanceof org.eclipse.ocl.pivot.Class) {
 			return (org.eclipse.ocl.pivot.Class)specializedType;
 		}
 		else {

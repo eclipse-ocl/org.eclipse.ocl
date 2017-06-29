@@ -303,7 +303,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		VariableExp variableExp = context.refreshModelElement(VariableExp.class, PivotPackage.Literals.VARIABLE_EXP, null); // FIXME reuse
 		variableExp.setReferredVariable(variable);
 		variableExp.setIsImplicit(true);
-		context.setType(variableExp, variable.getType(), variable.isIsRequired(), variable.getTypeValue());
+		context.setType(variableExp, variable.getRawType(), variable.isIsRequired(), variable.getTypeValue());
 		return variableExp;
 	}
 

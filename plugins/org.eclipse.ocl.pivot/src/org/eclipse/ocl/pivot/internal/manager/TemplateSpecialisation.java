@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * A TemplateSpecialisation supports resolution of template parameter within an element referenced from an OCL expression.
@@ -45,6 +46,7 @@ public class TemplateSpecialisation
 	 */
 	public static boolean needsSpecialisation(@Nullable Type referencedType)
 	{
+		referencedType = TypeUtil.decodeNullableType(referencedType);
 		if (referencedType == null) {
 			return true;
 		}
@@ -93,14 +95,14 @@ public class TemplateSpecialisation
 	}
 
 	protected final @NonNull CompleteEnvironment environment;
-//	protected final @NonNull DomainStandardLibrary standardLibrary;
+	//	protected final @NonNull DomainStandardLibrary standardLibrary;
 	protected /*@LazyNonNull*/ Map<TemplateParameter, Type> bindings = null;
 
 	public TemplateSpecialisation(@NonNull CompleteEnvironment environment) {
 		this.environment = environment;
-//		this.standardLibrary = environment.getStandardLibrary();
+		//		this.standardLibrary = environment.getStandardLibrary();
 	}
-	
+
 	/**
 	 * Return the specialisation of referencedType if distinct from referencedType.
 	 * Returns null if specialisation not available or not distinct from referencedType.
@@ -122,11 +124,11 @@ public class TemplateSpecialisation
 			return environment.getCollectionType(containerType, elementType, false, collectionType.getLowerValue(), collectionType.getUpperValue());	// FIXME isNullFree
 		}
 		if (referencedType instanceof TupleType) {
-//			DomainTupleType tupleType = (DomainTupleType)referencedType;
+			//			DomainTupleType tupleType = (DomainTupleType)referencedType;
 			throw new UnsupportedOperationException();
 		}
 		if (referencedType instanceof LambdaType) {
-//			DomainLambdaType lambdaType = (DomainLambdaType)referencedType;
+			//			DomainLambdaType lambdaType = (DomainLambdaType)referencedType;
 			throw new UnsupportedOperationException();
 		}
 		return null;
@@ -136,7 +138,7 @@ public class TemplateSpecialisation
 		Type specialisation = getResolution(referredType);
 		return (org.eclipse.ocl.pivot.Class) (specialisation != null ? specialisation : referredType);	// FIXME cast
 	}
-	
+
 	public void installEquivalence(@Nullable Type resolvedType, @Nullable Type referencedType) {
 		if (resolvedType == null) {
 			return;

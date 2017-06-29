@@ -461,8 +461,8 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		try {
 			IterationManager iterationManager;
 			OCLExpression body = iteratorExp.getOwnedBody();
-			Type iterationType = PivotUtilInternal.getType(ClassUtil.nonNullModel(iteratorExp.getType()));
-			Type bodyType = PivotUtilInternal.getType(ClassUtil.nonNullModel(body.getType()));
+			Type iterationType = PivotUtilInternal.getType(ClassUtil.nonNullModel(iteratorExp.getRawType()));
+			Type bodyType = PivotUtilInternal.getType(ClassUtil.nonNullModel(body.getRawType()));
 			Object accumulatorValue = implementation.createAccumulatorValue(context, iterationType.getTypeId(), bodyType.getTypeId());
 			List<Variable> iterators = iteratorExp.getOwnedIterators();
 			int iSize = iterators.size();
