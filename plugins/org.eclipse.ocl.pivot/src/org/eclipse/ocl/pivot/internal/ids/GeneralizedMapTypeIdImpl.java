@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedMapTypeIdImpl extends GeneralizedTypeIdImpl<MapTypeId> implements MapTypeId
+public class GeneralizedMapTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull MapTypeId> implements MapTypeId
 {
 	public GeneralizedMapTypeIdImpl(@NonNull IdManager idManager, @NonNull String name) {
 		super(IdHash.createGlobalHash(MapTypeId.class, name), 2, name);
@@ -66,8 +66,8 @@ public class GeneralizedMapTypeIdImpl extends GeneralizedTypeIdImpl<MapTypeId> i
 		return TypeId.T_2;
 	}
 
-    @Override
+	@Override
 	public @NonNull MapTypeId specialize(@NonNull BindingsId templateBindings) {
-    	return getSpecializedId(templateBindings);
+		return getSpecializedId(templateBindings);
 	}
 }

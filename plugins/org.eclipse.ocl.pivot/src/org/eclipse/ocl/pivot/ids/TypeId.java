@@ -44,12 +44,14 @@ public interface TypeId extends ElementId
 	public static final @NonNull String ENUMERATION_NAME = "Enumeration";
 	public static final @NonNull String INTEGER_NAME = "Integer";
 	public static final @NonNull String INTEGER_RANGE_NAME = "IntegerRange";
+	public static final @NonNull String INVALIDABLE_NAME = "Invalidable";
 	public static final @NonNull String INVALIDABLE_TYPE_NAME = "InvalidableType";
 	public static final @NonNull String LAMBDA_TYPE_NAME = "LambdaType";
 	public static final @NonNull String MAP_ENTRY_NAME = "MapEntry";
 	public static final @NonNull String MAP_NAME = "Map";
 	public static final @NonNull String MAP_TYPE_NAME = "MapType";
 	public static final @NonNull String METACLASS_NAME = "Metaclass";
+	public static final @NonNull String NULLABLE_NAME = "Nullable";
 	public static final @NonNull String NULLABLE_TYPE_NAME = "NullableType";
 	public static final @NonNull String OCL_ANY_NAME = "OclAny";
 	public static final @NonNull String OCL_COMPARABLE_NAME = "OclComparable";
@@ -121,7 +123,10 @@ public interface TypeId extends ElementId
 	public static final @NonNull CollectionTypeId SET = IdManager.getCollectionTypeId(SET_NAME);
 	public static final @NonNull CollectionTypeId UNIQUE_COLLECTION = IdManager.getCollectionTypeId(UNIQUE_COLLECTION_NAME);
 
+	public static final @NonNull InvalidableTypeId INVALIDABLE = IdManager.getInvalidableTypeId(INVALIDABLE_NAME);
 	public static final @NonNull MapTypeId MAP = IdManager.getMapTypeId(MAP_NAME);
+	public static final @NonNull NullableTypeId NULLABLE = IdManager.getNullableTypeId(NULLABLE_NAME);
+
 
 	public static final @NonNull TemplateParameterId T_1 = IdManager.getTemplateParameterId(0);
 	public static final @NonNull TemplateParameterId T_2 = IdManager.getTemplateParameterId(1);

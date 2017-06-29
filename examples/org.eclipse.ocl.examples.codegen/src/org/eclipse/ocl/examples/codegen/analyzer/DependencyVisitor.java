@@ -50,10 +50,12 @@ import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.InvalidableTypeId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
+import org.eclipse.ocl.pivot.ids.NullableTypeId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -398,6 +400,18 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		}
 
 		@Override
+		public @Nullable Object visitInvalidableTypeId(@NonNull InvalidableTypeId id) {
+			if (id instanceof SpecializedId) {
+				BindingsId templateBindings = ((SpecializedId)id).getTemplateBindings();
+				for (int i = 0; i < templateBindings.size(); i++) {
+					ElementId elementId = ClassUtil.nonNullModel(templateBindings.get(i));
+					addElementIdDependency(id, elementId);
+				}
+			}
+			return null;
+		}
+
+		@Override
 		public @Nullable Object visitLambdaTypeId(@NonNull LambdaTypeId id) {
 			// TODO Auto-generated method stub
 			return visiting(id);
@@ -428,6 +442,18 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 		@Override
 		public @Nullable Object visitNullId(@NonNull OclVoidTypeId id) {
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitNullableTypeId(@NonNull NullableTypeId id) {
+			if (id instanceof SpecializedId) {
+				BindingsId templateBindings = ((SpecializedId)id).getTemplateBindings();
+				for (int i = 0; i < templateBindings.size(); i++) {
+					ElementId elementId = ClassUtil.nonNullModel(templateBindings.get(i));
+					addElementIdDependency(id, elementId);
+				}
+			}
 			return null;
 		}
 

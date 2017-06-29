@@ -738,6 +738,11 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return ClassUtil.nonNullState(environmentFactory);
 	}
 
+	@Override
+	public @NonNull InvalidableType getInvalidableType(@NonNull Type type) {
+		return environmentFactory.getCompleteModel().getInvalidableType(type);
+	}
+
 	public @NonNull LambdaTypeManager getLambdaManager() {
 		LambdaTypeManager lambdaManager2 = lambdaManager;
 		if (lambdaManager2 == null) {
@@ -802,6 +807,11 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
 		return completePackage.getMemberType(name);
+	}
+
+	@Override
+	public @NonNull NullableType getNullableType(@NonNull Type type) {
+		return environmentFactory.getCompleteModel().getNullableType(type);
 	}
 
 	@Override

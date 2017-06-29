@@ -17,11 +17,11 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<OperationId> implements OperationId, WeakHashMapOfListOfWeakReference4.MatchableId<Integer, String, ParametersId>
+public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNull OperationId> implements OperationId, WeakHashMapOfListOfWeakReference4.MatchableId<Integer, String, ParametersId>
 {
 	protected final @NonNull TypeId parentId;
 	protected final @NonNull ParametersId parametersId;
-	
+
 	public GeneralizedOperationIdImpl(@NonNull Integer hashCode, @NonNull TypeId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
 		super(hashCode, templateParameters, name);
 		this.parentId = parentId;
@@ -41,9 +41,9 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<Operat
 	@Override
 	public @NonNull String getDisplayName() {
 		StringBuilder s = new StringBuilder();
-//		if (templateParameters > 0) {
-//			s.append("<" + templateParameters + ">");
-//		}
+		//		if (templateParameters > 0) {
+		//			s.append("<" + templateParameters + ">");
+		//		}
 		s.append(parentId);
 		s.append("::");
 		s.append(name);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2016 Willink Transformations and others.
+ * Copyright (c) 2017 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,26 +13,26 @@ package org.eclipse.ocl.pivot.internal.ids;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.BindingsId;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.NullableTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class SpecializedCollectionTypeIdImpl extends AbstractSpecializedIdImpl<@NonNull CollectionTypeId> implements CollectionTypeId
+public class SpecializedNullableTypeIdImpl extends AbstractSpecializedIdImpl<@NonNull NullableTypeId> implements NullableTypeId
 {
 	private @Nullable TypeId elementTypeId;
 
-	public SpecializedCollectionTypeIdImpl(@NonNull CollectionTypeId generalizedId, @NonNull BindingsId templateBindings) {
+	public SpecializedNullableTypeIdImpl(@NonNull NullableTypeId generalizedId, @NonNull BindingsId templateBindings) {
 		super(generalizedId, templateBindings);
 	}
 
 	@Override
 	public <R> R accept(@NonNull IdVisitor<R> visitor) {
-		return visitor.visitCollectionTypeId(this);
+		return visitor.visitNullableTypeId(this);
 	}
 
 	@Override
-	protected @NonNull CollectionTypeId createSpecializedId(@NonNull BindingsId templateBindings) {
-		return new SpecializedCollectionTypeIdImpl(this, templateBindings);
+	protected @NonNull NullableTypeId createSpecializedId(@NonNull BindingsId templateBindings) {
+		return new SpecializedNullableTypeIdImpl(this, templateBindings);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class SpecializedCollectionTypeIdImpl extends AbstractSpecializedIdImpl<@
 	}
 
 	@Override
-	public @NonNull CollectionTypeId specialize(@NonNull BindingsId templateBindings) {
+	public @NonNull NullableTypeId specialize(@NonNull BindingsId templateBindings) {
 		return createSpecializedId(templateBindings);
 	}
 }

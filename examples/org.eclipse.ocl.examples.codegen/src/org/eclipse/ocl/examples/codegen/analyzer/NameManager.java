@@ -71,11 +71,13 @@ import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.InvalidableTypeId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
+import org.eclipse.ocl.pivot.ids.NullableTypeId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -260,6 +262,11 @@ public class NameManager
 		}
 
 		@Override
+		public @NonNull String visitInvalidableTypeId(@NonNull InvalidableTypeId id) {
+			return "INVALIDable" + id.getElementTypeId().accept(this);
+		}
+
+		@Override
 		public @NonNull String visitLambdaTypeId(@NonNull LambdaTypeId id) {
 			return "LAMBid_" + id.getName();
 		}
@@ -289,6 +296,11 @@ public class NameManager
 		@Override
 		public @NonNull String visitNullId(@NonNull OclVoidTypeId id) {
 			return "NULLid";
+		}
+
+		@Override
+		public @NonNull String visitNullableTypeId(@NonNull NullableTypeId id) {
+			return "NULLable" + id.getElementTypeId().accept(this);
 		}
 
 		@Override

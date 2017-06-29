@@ -15,7 +15,7 @@ import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 
-public class SpecializedTypeIdImpl extends AbstractSpecializedIdImpl<TemplateableTypeId> implements TemplateableTypeId
+public class SpecializedTypeIdImpl extends AbstractSpecializedIdImpl<@NonNull TemplateableTypeId> implements TemplateableTypeId
 {
 	public SpecializedTypeIdImpl(@NonNull TemplateableTypeId generalizedId, @NonNull BindingsId templateBindings) {
 		super(generalizedId, templateBindings);
@@ -31,12 +31,12 @@ public class SpecializedTypeIdImpl extends AbstractSpecializedIdImpl<Templateabl
 		return new SpecializedTypeIdImpl(this, templateBindings);
 	}
 
-//	public @NonNull String getDisplayName() {
-//		return parent + "::" + typeParameters;
-//	}
+	//	public @NonNull String getDisplayName() {
+	//		return parent + "::" + typeParameters;
+	//	}
 
-    @Override
+	@Override
 	public @NonNull TemplateableTypeId specialize(@NonNull BindingsId templateBindings) {
-    	return createSpecializedId(templateBindings);
+		return createSpecializedId(templateBindings);
 	}
 }

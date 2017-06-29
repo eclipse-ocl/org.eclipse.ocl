@@ -106,20 +106,25 @@ public interface CompleteEnvironment extends Element
 	 * Return the specialized collection type for the containerType for elementType.
 	 */
 	@NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+
 	/**
 	 * @deprecated add isNullFree argument
 	 */
 	@Deprecated
 	@NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
+	@NonNull InvalidableType getInvalidableType(@NonNull Type type);
+
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
-	@Nullable TemplateParameterSubstitutions bindings);
+			@Nullable TemplateParameterSubstitutions bindings);
 
 	@NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, @NonNull Type valueType);
 
 	org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 
 	Type getNestedType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
+
+	@NonNull NullableType getNullableType(@NonNull Type type);
 
 	/**
 	 * Return the instance of the OrderedSet metatype whose elements are of elementType.

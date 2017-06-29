@@ -27,8 +27,10 @@ import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StandardLibrary.StandardLibraryExtension;
@@ -50,6 +52,7 @@ import org.eclipse.ocl.pivot.options.EnumeratedOption;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
@@ -160,6 +163,21 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	}
 
 	@Override
+	public @NonNull InvalidableType getInvalidableType(@NonNull Type type) {
+		InvalidableType invalidableType = type.getInvalidableType();
+		if (invalidableType == null) {
+			synchronized(type) {
+				invalidableType = type.getInvalidableType();
+				if (invalidableType == null) {
+					invalidableType = PivotUtil.createInvalidableType(getNullableType(type));
+					type.setInvalidableType(invalidableType);
+				}
+			}
+		}
+		return invalidableType;
+	}
+
+	@Override
 	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType,
 			@NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType, @Nullable TemplateParameterSubstitutions bindings) {
 		throw new UnsupportedOperationException();
@@ -236,6 +254,21 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getNestedType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name) {
 		return NameUtil.getNameable(parentPackage.getOwnedClasses(), name);
+	}
+
+	@Override
+	public @NonNull NullableType getNullableType(@NonNull Type type) {
+		NullableType nullableType = type.getNullableType();
+		if (nullableType == null) {
+			synchronized(type) {
+				nullableType = type.getNullableType();
+				if (nullableType == null) {
+					nullableType = PivotUtil.createNullableType(type);
+					type.setNullableType(nullableType);
+				}
+			}
+		}
+		return nullableType;
 	}
 
 	@Override

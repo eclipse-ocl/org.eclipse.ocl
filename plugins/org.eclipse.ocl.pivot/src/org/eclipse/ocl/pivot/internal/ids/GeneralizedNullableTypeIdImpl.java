@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2016 Willink Transformations and others.
+ * Copyright (c) 2017 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,24 +17,25 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.NullableTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedCollectionTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull CollectionTypeId> implements CollectionTypeId
+public class GeneralizedNullableTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull NullableTypeId> implements NullableTypeId
 {
-	public GeneralizedCollectionTypeIdImpl(@NonNull IdManager idManager, @NonNull String name) {
+	public GeneralizedNullableTypeIdImpl(@NonNull IdManager idManager, @NonNull String name) {
 		super(IdHash.createGlobalHash(CollectionTypeId.class, name), 1, name);
 		assert !MAP_NAME.equals(name);
 	}
 
 	@Override
 	public <R> R accept(@NonNull IdVisitor<R> visitor) {
-		return visitor.visitCollectionTypeId(this);
+		return visitor.visitNullableTypeId(this);
 	}
 
 	@Override
-	protected @NonNull CollectionTypeId createSpecializedId(@NonNull BindingsId templateBindings) {
-		return new SpecializedCollectionTypeIdImpl(this, templateBindings);
+	protected @NonNull NullableTypeId createSpecializedId(@NonNull BindingsId templateBindings) {
+		return new SpecializedNullableTypeIdImpl(this, templateBindings);
 	}
 
 	@Override
@@ -51,42 +52,22 @@ public class GeneralizedCollectionTypeIdImpl extends GeneralizedTypeIdImpl<@NonN
 	}
 
 	@Override
-	public @NonNull CollectionTypeId getGeneralizedId() {
+	public @NonNull NullableTypeId getGeneralizedId() {
 		return this;
 	}
 
 	@Override
 	public @Nullable String getLiteralName() {
-		if (this == TypeId.BAG) {
-			return "BAG";
-		}
-		else if (this == TypeId.COLLECTION) {
-			return "COLLECTION";
-		}
-		else if (this == TypeId.ORDERED_SET) {
-			return "ORDERED_SET";
-		}
-		else if (this == TypeId.SEQUENCE) {
-			return "SEQUENCE";
-		}
-		else if (this == TypeId.SET) {
-			return "SET";
-		}
-		else if (this == TypeId.UNIQUE_COLLECTION) {
-			return "UNIQUE_COLLECTION";
-		}
-		else {
-			return null;
-		}
+		return "NULLABLE";
 	}
 
 	@Override
 	public @NonNull String getMetaTypeName() {
-		return name + "Type";
+		return TypeId.NULLABLE_TYPE_NAME;
 	}
 
 	@Override
-	public @NonNull CollectionTypeId specialize(@NonNull BindingsId templateBindings) {
+	public @NonNull NullableTypeId specialize(@NonNull BindingsId templateBindings) {
 		return getSpecializedId(templateBindings);
 	}
 }

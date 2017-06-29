@@ -22,10 +22,12 @@ import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.InvalidableTypeId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
+import org.eclipse.ocl.pivot.ids.NullableTypeId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -125,6 +127,30 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	}
 
 	@Override
+	public @Nullable Object visitInvalidableTypeId(@NonNull InvalidableTypeId id) {
+		js.appendClassReference(TypeId.class);
+		InvalidableTypeId generalizedId = id.getGeneralizedId();
+		String idName = generalizedId.getLiteralName();
+		if (idName == null) {
+			idName = "INVALIDABLE";
+		}
+		js.append("." + idName);
+		if (id instanceof SpecializedId) {
+			js.append(".getSpecializedId(");
+			BindingsId templateBindings = ((SpecializedId)id).getTemplateBindings();
+			for (int i = 0; i < templateBindings.size(); i++) {
+				if (i > 0) {
+					js.append(", ");
+				}
+				ElementId elementId = ClassUtil.nonNullModel(templateBindings.get(i));
+				js.appendIdReference(elementId);
+			}
+			js.append(")");
+		}
+		return null;
+	}
+
+	@Override
 	public @Nullable Object visitLambdaTypeId(@NonNull LambdaTypeId id) {
 		// TODO Auto-generated method stub
 		return visiting(id);
@@ -195,6 +221,30 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		js.appendClassReference(TypeId.class);
 		js.append(".");
 		js.append(id.getLiteralName());
+		return null;
+	}
+
+	@Override
+	public @Nullable Object visitNullableTypeId(@NonNull NullableTypeId id) {
+		js.appendClassReference(TypeId.class);
+		NullableTypeId generalizedId = id.getGeneralizedId();
+		String idName = generalizedId.getLiteralName();
+		if (idName == null) {
+			idName = "NULLABLE";
+		}
+		js.append("." + idName);
+		if (id instanceof SpecializedId) {
+			js.append(".getSpecializedId(");
+			BindingsId templateBindings = ((SpecializedId)id).getTemplateBindings();
+			for (int i = 0; i < templateBindings.size(); i++) {
+				if (i > 0) {
+					js.append(", ");
+				}
+				ElementId elementId = ClassUtil.nonNullModel(templateBindings.get(i));
+				js.appendIdReference(elementId);
+			}
+			js.append(")");
+		}
 		return null;
 	}
 

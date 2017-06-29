@@ -47,7 +47,9 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -62,10 +64,12 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.InvalidableTypeId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
+import org.eclipse.ocl.pivot.ids.NullableTypeId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -144,6 +148,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 
 		@Override
+		public @Nullable Object visitInvalidableTypeId(@NonNull InvalidableTypeId id) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public @Nullable Object visitLambdaTypeId(@NonNull LambdaTypeId id) {
 			throw new UnsupportedOperationException();
 		}
@@ -166,6 +175,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		@Override
 		public @Nullable Object visitNullId(@NonNull OclVoidTypeId id) {
 			return null;
+		}
+
+		@Override
+		public @Nullable Object visitNullableTypeId(@NonNull NullableTypeId id) {
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -1613,6 +1627,13 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
+	public @NonNull InvalidableType visitInvalidableTypeId(@NonNull InvalidableTypeId id) {
+		TypeId elementTypeId = id.getElementTypeId();
+		Type elementType = getType(elementTypeId, null);
+		return environment.getInvalidableType(elementType);
+	}
+
+	@Override
 	public @NonNull Type visitLambdaTypeId(@NonNull LambdaTypeId id) {
 		throw new UnsupportedOperationException();
 	}
@@ -1687,6 +1708,13 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	@Override
 	public @NonNull Type visitNullId(@NonNull OclVoidTypeId id) {
 		return standardLibrary.getOclVoidType();
+	}
+
+	@Override
+	public @NonNull NullableType visitNullableTypeId(@NonNull NullableTypeId id) {
+		TypeId elementTypeId = id.getElementTypeId();
+		Type elementType = getType(elementTypeId, null);
+		return environment.getNullableType(elementType);
 	}
 
 	@Override

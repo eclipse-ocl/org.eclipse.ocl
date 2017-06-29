@@ -39,8 +39,10 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedCollectionTypeIdImpl;
+import org.eclipse.ocl.pivot.internal.ids.GeneralizedInvalidableTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedMapTypeIdImpl;
+import org.eclipse.ocl.pivot.internal.ids.GeneralizedNullableTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedTupleTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.NsURIPackageIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.ParametersIdImpl;
@@ -92,7 +94,19 @@ public final class IdManager
 	};
 
 	/**
-	 * Map from a Map type name to the corresponding MapTypeId.
+	 * Map from a (the) Invalidable type name to the corresponding InvalidableTypeId.
+	 */
+	private static @NonNull WeakHashMapOfWeakReference<@NonNull String, @NonNull InvalidableTypeId> invalidableNames =
+			new WeakHashMapOfWeakReference<@NonNull String, @NonNull InvalidableTypeId>()
+	{
+		@Override
+		protected @NonNull InvalidableTypeId newId(@NonNull String name) {
+			return new GeneralizedInvalidableTypeIdImpl(PRIVATE_INSTANCE, name);
+		}
+	};
+
+	/**
+	 * Map from a (the) Map type name to the corresponding MapTypeId.
 	 */
 	private static @NonNull WeakHashMapOfWeakReference<@NonNull String, @NonNull MapTypeId> mapNames =
 			new WeakHashMapOfWeakReference<@NonNull String, @NonNull MapTypeId>()
@@ -112,6 +126,18 @@ public final class IdManager
 		@Override
 		protected @NonNull NsURIPackageId newId(@NonNull String nsURI) {
 			return new NsURIPackageIdImpl(PRIVATE_INSTANCE, nsURI, null, null);
+		}
+	};
+
+	/**
+	 * Map from a (the) Nullable type name to the corresponding NullableTypeId.
+	 */
+	private static @NonNull WeakHashMapOfWeakReference<@NonNull String, @NonNull NullableTypeId> nullableNames =
+			new WeakHashMapOfWeakReference<@NonNull String, @NonNull NullableTypeId>()
+	{
+		@Override
+		protected @NonNull NullableTypeId newId(@NonNull String name) {
+			return new GeneralizedNullableTypeIdImpl(PRIVATE_INSTANCE, name);
 		}
 	};
 
@@ -303,6 +329,13 @@ public final class IdManager
 	}
 
 	/**
+	 * Return the named invalidable typeId.
+	 */
+	public static @NonNull InvalidableTypeId getInvalidableTypeId(@NonNull String invalidableTypeName) {
+		return invalidableNames.getId(invalidableTypeName);
+	}
+
+	/**
 	 * Return the typeId for aLambdaType.
 	 */
 	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull LambdaType lambdaType) {
@@ -342,7 +375,7 @@ public final class IdManager
 	}
 
 	/**
-	 * Return the named collection typeId.
+	 * Return the named map typeId.
 	 */
 	public static @NonNull MapTypeId getMapTypeId(@NonNull String mapTypeName) {
 		return mapNames.getId(mapTypeName);
@@ -374,6 +407,13 @@ public final class IdManager
 			nsURIs.put(nsURI, new WeakReference<>(newTypeId));
 			return newTypeId;
 		}
+	}
+
+	/**
+	 * Return the named nullable typeId.
+	 */
+	public static @NonNull NullableTypeId getNullableTypeId(@NonNull String nullableTypeName) {
+		return nullableNames.getId(nullableTypeName);
 	}
 
 	/**

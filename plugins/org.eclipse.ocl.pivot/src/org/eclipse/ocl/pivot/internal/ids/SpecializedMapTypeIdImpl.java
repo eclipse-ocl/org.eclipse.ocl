@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class SpecializedMapTypeIdImpl extends AbstractSpecializedIdImpl<MapTypeId> implements MapTypeId
+public class SpecializedMapTypeIdImpl extends AbstractSpecializedIdImpl<@NonNull MapTypeId> implements MapTypeId
 {
 	private @Nullable TypeId keyTypeId;
 	private @Nullable TypeId valueTypeId;
@@ -54,8 +54,8 @@ public class SpecializedMapTypeIdImpl extends AbstractSpecializedIdImpl<MapTypeI
 		return valueTypeId2;
 	}
 
-    @Override
+	@Override
 	public @NonNull MapTypeId specialize(@NonNull BindingsId templateBindings) {
-    	return createSpecializedId(templateBindings);
+		return createSpecializedId(templateBindings);
 	}
 }
