@@ -16,13 +16,13 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class TuplePartIdImpl implements TuplePartId, WeakHashMapOfListOfWeakReference4.MatchableId<Integer, String, TypeId>
+public class TuplePartIdImpl implements TuplePartId, WeakHashMapOfListOfWeakReference4.MatchableId<@NonNull Integer, @NonNull String, @NonNull TypeId>
 {
-	protected final @NonNull Integer hashCode;							
-	protected final int index;							
+	protected final @NonNull Integer hashCode;
+	protected final int index;
 	protected final @NonNull String name;
 	protected final @NonNull TypeId typeId;
-	
+
 	public TuplePartIdImpl(@NonNull IdManager idManager, @NonNull Integer hashCode, int index, @NonNull String name, @NonNull TypeId typeId) {
 		this.hashCode = hashCode;
 		this.index = index;
@@ -69,7 +69,7 @@ public class TuplePartIdImpl implements TuplePartId, WeakHashMapOfListOfWeakRefe
 	public @NonNull TypeId getTypeId() {
 		return typeId;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return hashCode;

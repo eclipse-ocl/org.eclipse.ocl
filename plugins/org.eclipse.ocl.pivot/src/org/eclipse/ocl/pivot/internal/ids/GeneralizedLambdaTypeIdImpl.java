@@ -17,10 +17,10 @@ import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<LambdaTypeId> implements LambdaTypeId, WeakHashMapOfListOfWeakReference3.MatchableId<String, ParametersId>
+public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonNull LambdaTypeId> implements LambdaTypeId, WeakHashMapOfListOfWeakReference3.MatchableId<@NonNull String, @NonNull ParametersId>
 {
 	protected final @NonNull ParametersId parametersId;
-	
+
 	public GeneralizedLambdaTypeIdImpl(@NonNull Integer hashCode, @NonNull String name, @NonNull ParametersId parametersId) {
 		super(hashCode, 0, name);
 		this.parametersId = parametersId;
@@ -39,11 +39,11 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<Lambd
 	@Override
 	public @NonNull String getDisplayName() {
 		StringBuilder s = new StringBuilder();
-//		if (templateParameters > 0) {
-//			s.append("<");
-//			s.append(templateParameters);
-//			s.append(">");
-//		}
+		//		if (templateParameters > 0) {
+		//			s.append("<");
+		//			s.append(templateParameters);
+		//			s.append(">");
+		//		}
 		s.append(name);
 		for (int i = 0; i < parametersId.size(); i++) {
 			TypeId parameterId = parametersId.get(i);
@@ -98,8 +98,8 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<Lambd
 		return true;
 	}
 
-    @Override
+	@Override
 	public @NonNull LambdaTypeId specialize(@NonNull BindingsId templateBindings) {
-    	return createSpecializedId(templateBindings);
+		return createSpecializedId(templateBindings);
 	}
 }

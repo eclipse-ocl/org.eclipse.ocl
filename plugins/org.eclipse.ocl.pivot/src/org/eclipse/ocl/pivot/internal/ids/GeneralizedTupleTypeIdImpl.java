@@ -17,12 +17,12 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 
-public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleTypeId, WeakHashMapOfListOfWeakReference3.MatchableId<String, @NonNull TuplePartId @NonNull []>
+public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleTypeId, WeakHashMapOfListOfWeakReference3.MatchableId<@NonNull String, @NonNull TuplePartId @NonNull []>
 {
 	protected final @NonNull Integer hashCode;
 	protected final @NonNull String name;
 	protected final @NonNull TuplePartId @NonNull [] partIds;
-	
+
 	public GeneralizedTupleTypeIdImpl(@NonNull IdManager idManager, @NonNull Integer hashCode, @NonNull String name, @NonNull TuplePartId @NonNull [] orderedPartIds) {
 		this.hashCode = hashCode;
 		this.name = name;
@@ -55,7 +55,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	public @NonNull TupleTypeId getGeneralizedId() {
 		return this;
 	}
-	
+
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return TUPLE_TYPE_NAME;
@@ -75,7 +75,7 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 		}
 		return null;
 	}
-	
+
 	@Override
 	public @NonNull TuplePartId @NonNull [] getPartIds() {
 		return partIds;

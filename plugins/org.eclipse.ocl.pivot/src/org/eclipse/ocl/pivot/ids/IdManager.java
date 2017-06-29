@@ -77,13 +77,13 @@ public final class IdManager
 	/**
 	 * Map from the BindingsId hashCode to the elements with the same hash.
 	 */
-	private static @Nullable WeakHashMapOfListOfWeakReference2<Integer, @NonNull ElementId @NonNull [], BindingsIdImpl> bindingsIds;
+	private static @Nullable WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull ElementId @NonNull [], @NonNull BindingsIdImpl> bindingsIds;
 
 	/**
 	 * Map from a Collection type name to the corresponding CollectionTypeId.
 	 */
-	private static @NonNull WeakHashMapOfWeakReference<String, CollectionTypeId> collectionNames =
-			new WeakHashMapOfWeakReference<String, CollectionTypeId>()
+	private static @NonNull WeakHashMapOfWeakReference<@NonNull String, @NonNull CollectionTypeId> collectionNames =
+			new WeakHashMapOfWeakReference<@NonNull String, @NonNull CollectionTypeId>()
 	{
 		@Override
 		protected @NonNull CollectionTypeId newId(@NonNull String name) {
@@ -94,8 +94,8 @@ public final class IdManager
 	/**
 	 * Map from a Map type name to the corresponding MapTypeId.
 	 */
-	private static @NonNull WeakHashMapOfWeakReference<String, MapTypeId> mapNames =
-			new WeakHashMapOfWeakReference<String, MapTypeId>()
+	private static @NonNull WeakHashMapOfWeakReference<@NonNull String, @NonNull MapTypeId> mapNames =
+			new WeakHashMapOfWeakReference<@NonNull String, @NonNull MapTypeId>()
 	{
 		@Override
 		protected @NonNull MapTypeId newId(@NonNull String name) {
@@ -106,8 +106,8 @@ public final class IdManager
 	/**
 	 * Map from an nsURI to the corresponding NsURITypeId.
 	 */
-	private static @NonNull WeakHashMapOfWeakReference<String, NsURIPackageId> nsURIs =
-			new WeakHashMapOfWeakReference<String, NsURIPackageId>()
+	private static @NonNull WeakHashMapOfWeakReference<@NonNull String, @NonNull NsURIPackageId> nsURIs =
+			new WeakHashMapOfWeakReference<@NonNull String, @NonNull NsURIPackageId>()
 	{
 		@Override
 		protected @NonNull NsURIPackageId newId(@NonNull String nsURI) {
@@ -118,18 +118,18 @@ public final class IdManager
 	/**
 	 * Map from the Lambda hashCode to the lambda typeIds with the same hash.
 	 */
-	private static @Nullable WeakHashMapOfListOfWeakReference3<Integer, String, ParametersId, GeneralizedLambdaTypeIdImpl> lambdaTypes = null;
+	private static @Nullable WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull ParametersId, @NonNull GeneralizedLambdaTypeIdImpl> lambdaTypes = null;
 
 	/**
 	 * Map from the TuplePart hashCode to the tuplePartIds with the same hash.
 	 */
-	private static @Nullable WeakHashMapOfListOfWeakReference4<Integer, Integer, String, TypeId, TuplePartIdImpl> tupleParts = null;
+	private static @Nullable WeakHashMapOfListOfWeakReference4<@NonNull Integer, @NonNull Integer, @NonNull String, @NonNull TypeId, @NonNull TuplePartIdImpl> tupleParts = null;
 
 	/**
 	 * Map from a name to the corresponding URI-less unnested RootPackageTypeId.
 	 */
-	private static @NonNull WeakHashMapOfWeakReference<String, RootPackageId> roots =
-			new WeakHashMapOfWeakReference<String, RootPackageId>()
+	private static @NonNull WeakHashMapOfWeakReference<@NonNull String, @NonNull RootPackageId> roots =
+			new WeakHashMapOfWeakReference<@NonNull String, @NonNull RootPackageId>()
 	{
 		@Override
 		protected @NonNull RootPackageId newId(@NonNull String name) {
@@ -140,23 +140,23 @@ public final class IdManager
 	/**
 	 * List of template parameters; 0 index at least index ... up to most nested
 	 */
-	private static @NonNull List<TemplateParameterId> templateParameters = new ArrayList<TemplateParameterId>(10);
+	private static @NonNull List<@NonNull TemplateParameterId> templateParameters = new ArrayList<>(10);
 
 	/**
 	 * Map from the Tuple hashCode to the tuple typeIds with the same hash.
 	 */
-	private static @Nullable WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull TuplePartId @NonNull [], GeneralizedTupleTypeIdImpl> tupleTypes = null;
+	private static @Nullable WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull TuplePartId @NonNull [], @NonNull GeneralizedTupleTypeIdImpl> tupleTypes = null;
 
 	/**
 	 * Map from the ParametersId hashCode to the parametersId with the same hash.
 	 */
-	private static @Nullable WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull TypeId @NonNull [], ParametersIdImpl> parametersIds;
+	private static @Nullable WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull TypeId @NonNull [], @NonNull ParametersIdImpl> parametersIds;
 
 	/**
 	 * Map from a Primitive type name to the corresponding PrimitiveTypeId.
 	 */
-	private static @NonNull WeakHashMapOfWeakReference<String, PrimitiveTypeId> primitiveTypes =
-			new WeakHashMapOfWeakReference<String, PrimitiveTypeId>()
+	private static @NonNull WeakHashMapOfWeakReference<@NonNull String, @NonNull PrimitiveTypeId> primitiveTypes =
+			new WeakHashMapOfWeakReference<@NonNull String, @NonNull PrimitiveTypeId>()
 	{
 		@Override
 		protected @NonNull PrimitiveTypeId newId(@NonNull String name) {
@@ -164,16 +164,16 @@ public final class IdManager
 		}
 	};
 
-	private static @Nullable Map<String, String> metamodelURI2name = null;
+	private static @Nullable Map<@NonNull String, @NonNull String> metamodelURI2name = null;
 
 	/**
 	 * Define a metamodelNsURI as a contributor to the metamodelName. THis facility is used to enable
 	 * UML2's duplicate Eclipse/OMG models to be treated as merged rather than conflicting.
 	 */
 	public static void addMetamodelEPackage(@NonNull String metamodelNsURI, @NonNull String metamodelName) {
-		Map<String, String> metamodelURI2name2 = metamodelURI2name;
+		Map<@NonNull String, @NonNull String> metamodelURI2name2 = metamodelURI2name;
 		if (metamodelURI2name2 == null) {
-			metamodelURI2name = metamodelURI2name2 = new HashMap<String, String>();
+			metamodelURI2name = metamodelURI2name2 = new HashMap<>();
 		}
 		metamodelURI2name2.put(metamodelNsURI, metamodelName);
 	}
@@ -190,12 +190,12 @@ public final class IdManager
 	 * Return the bindingsId for a given type list.
 	 */
 	public static @NonNull BindingsId getBindingsId(@NonNull ElementId @NonNull ... elementIds) {
-		WeakHashMapOfListOfWeakReference2<Integer, @NonNull ElementId @NonNull [], BindingsIdImpl> bindingsIds2 = bindingsIds;
+		WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull ElementId @NonNull [], @NonNull BindingsIdImpl> bindingsIds2 = bindingsIds;
 		if (bindingsIds2 == null) {
 			synchronized (IdManager.class) {
 				bindingsIds2 = bindingsIds;
 				if (bindingsIds2 == null) {
-					bindingsIds = bindingsIds2 = new WeakHashMapOfListOfWeakReference2<Integer, @NonNull ElementId @NonNull [], BindingsIdImpl>()
+					bindingsIds = bindingsIds2 = new WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull ElementId @NonNull [], @NonNull BindingsIdImpl>()
 					{
 						@Override
 						protected @NonNull BindingsIdImpl newId(@NonNull Integer hashCode, @NonNull ElementId @NonNull [] elementIds) {
@@ -321,12 +321,12 @@ public final class IdManager
 	 * Return the named lambda typeId with the defined type parameters.
 	 */
 	public static @NonNull LambdaTypeId getLambdaTypeId(@NonNull String name, @NonNull ParametersId parametersId) {
-		WeakHashMapOfListOfWeakReference3<Integer, String, ParametersId, GeneralizedLambdaTypeIdImpl> lambdaTypes2 = lambdaTypes;
+		WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull ParametersId, @NonNull GeneralizedLambdaTypeIdImpl> lambdaTypes2 = lambdaTypes;
 		if (lambdaTypes2 == null) {
 			synchronized (IdManager.class) {
 				lambdaTypes2 = lambdaTypes;
 				if (lambdaTypes2 == null) {
-					lambdaTypes = lambdaTypes2 = new WeakHashMapOfListOfWeakReference3<Integer, String, ParametersId, GeneralizedLambdaTypeIdImpl>()
+					lambdaTypes = lambdaTypes2 = new WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull ParametersId, @NonNull GeneralizedLambdaTypeIdImpl>()
 					{
 						@Override
 						protected @NonNull GeneralizedLambdaTypeIdImpl newId(@NonNull Integer hashCode, @NonNull String name, @NonNull ParametersId parametersId) {
@@ -371,7 +371,7 @@ public final class IdManager
 				}
 			}
 			NsURIPackageId newTypeId = new NsURIPackageIdImpl(PRIVATE_INSTANCE, nsURI, nsPrefix, ePackage);
-			nsURIs.put(nsURI, new WeakReference<NsURIPackageId>(newTypeId));
+			nsURIs.put(nsURI, new WeakReference<>(newTypeId));
 			return newTypeId;
 		}
 	}
@@ -393,12 +393,12 @@ public final class IdManager
 	 * Return the named tuple typeId with the defined parts (which are alphabetically ordered by part name).
 	 */
 	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull [] parts) {
-		WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull TuplePartId @NonNull [], GeneralizedTupleTypeIdImpl> tupleTypes2 = tupleTypes;
+		WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull TuplePartId @NonNull [], @NonNull GeneralizedTupleTypeIdImpl> tupleTypes2 = tupleTypes;
 		if (tupleTypes2 == null) {
 			synchronized (IdManager.class) {
 				tupleTypes2 = tupleTypes;
 				if (tupleTypes2 == null) {
-					tupleTypes = tupleTypes2 = new WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull TuplePartId @NonNull [], GeneralizedTupleTypeIdImpl>()
+					tupleTypes = tupleTypes2 = new WeakHashMapOfListOfWeakReference3<@NonNull Integer, @NonNull String, @NonNull TuplePartId @NonNull [], @NonNull GeneralizedTupleTypeIdImpl>()
 					{
 						@Override
 						protected @NonNull GeneralizedTupleTypeIdImpl newId(@NonNull Integer hashCode, @NonNull String name, @NonNull TuplePartId @NonNull [] parts) {
@@ -478,12 +478,12 @@ public final class IdManager
 	 * Return the parametersId for a given type list.
 	 */
 	public static @NonNull ParametersId getParametersId(@NonNull TypeId @NonNull ... typeIds) {
-		WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull TypeId @NonNull [], ParametersIdImpl> parametersIds2 = parametersIds;
+		WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull TypeId @NonNull [], @NonNull ParametersIdImpl> parametersIds2 = parametersIds;
 		if (parametersIds2 == null) {
 			synchronized (IdManager.class) {
 				parametersIds2 = parametersIds;
 				if (parametersIds2 == null) {
-					parametersIds = parametersIds2 = new WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull TypeId @NonNull [], ParametersIdImpl>()
+					parametersIds = parametersIds2 = new WeakHashMapOfListOfWeakReference2<@NonNull Integer, @NonNull TypeId @NonNull [], @NonNull ParametersIdImpl>()
 					{
 						@Override
 						protected @NonNull ParametersIdImpl newId(@NonNull Integer hashCode, @NonNull TypeId @NonNull [] typeIds) {
@@ -539,7 +539,7 @@ public final class IdManager
 				}
 			}
 			RootPackageId newTypeId = new RootPackageIdImpl(PRIVATE_INSTANCE, name);
-			roots.put(name, new WeakReference<RootPackageId>(newTypeId));
+			roots.put(name, new WeakReference<>(newTypeId));
 			return newTypeId;
 		}
 	}
@@ -572,12 +572,12 @@ public final class IdManager
 	 * Return the named tuplePartId with the defined name and type.
 	 */
 	public static @NonNull TuplePartId getTuplePartId(int index, @NonNull String name, @NonNull TypeId typeId) {
-		WeakHashMapOfListOfWeakReference4<Integer, Integer, String, TypeId, TuplePartIdImpl> tupleParts2 = tupleParts;
+		WeakHashMapOfListOfWeakReference4<@NonNull Integer, @NonNull Integer, @NonNull String, @NonNull TypeId, @NonNull TuplePartIdImpl> tupleParts2 = tupleParts;
 		if (tupleParts2 == null) {
 			synchronized (IdManager.class) {
 				tupleParts2 = tupleParts;
 				if (tupleParts2 == null) {
-					tupleParts = tupleParts2 = new WeakHashMapOfListOfWeakReference4<Integer, Integer, String, TypeId, TuplePartIdImpl>()
+					tupleParts = tupleParts2 = new WeakHashMapOfListOfWeakReference4<@NonNull Integer, @NonNull Integer, @NonNull String, @NonNull TypeId, @NonNull TuplePartIdImpl>()
 					{
 						@Override
 						protected @NonNull TuplePartIdImpl newId(@NonNull Integer hashCode, @NonNull Integer index, @NonNull String name, @NonNull TypeId typeId) {
