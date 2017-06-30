@@ -11586,7 +11586,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int INVALIDABLE_TYPE__NON_INVALID_TYPE = CLASS_FEATURE_COUNT + 0;
+	int INVALIDABLE_TYPE__NON_NULL_TYPE = CLASS_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Invalidable Type</em>' class.

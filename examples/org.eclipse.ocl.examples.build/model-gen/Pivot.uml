@@ -565,9 +565,8 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TInvalidableType" name="InvalidableType">
     <generalization xmi:id="Ppivot.TInvalidableType.g0" general="Ppivot.TClass"/>
-    <ownedAttribute xmi:id="Ppivot.TInvalidableType.PnonInvalidType" name="nonInvalidType" type="Ppivot.TNullableType" isOrdered="true"
-        association="Ppivot.A_nonInvalidType_InvalidableType">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TInvalidableType.PnonInvalidType.lV"/>
+    <ownedAttribute xmi:id="Ppivot.TInvalidableType.PnonNullType" name="nonNullType" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_nonNullType_InvalidableType">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TInvalidableType.PnonNullType.lV"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TIterateExp" name="IterateExp">
@@ -1555,9 +1554,8 @@
       memberEnd="Ppivot.TNavigationCallExp.PnavigationSource Ppivot.A_navigationSource_NavigationCallExp.Pnull">
     <ownedEnd xmi:id="Ppivot.A_navigationSource_NavigationCallExp.Pnull" type="Ppivot.TNavigationCallExp" association="Ppivot.A_navigationSource_NavigationCallExp"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_nonInvalidType_InvalidableType" name="A_nonInvalidType_InvalidableType"
-      memberEnd="Ppivot.TInvalidableType.PnonInvalidType Ppivot.A_nonInvalidType_InvalidableType.Pnull">
-    <ownedEnd xmi:id="Ppivot.A_nonInvalidType_InvalidableType.Pnull" type="Ppivot.TInvalidableType" association="Ppivot.A_nonInvalidType_InvalidableType"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_nonNullType_InvalidableType" name="A_nonNullType_InvalidableType" memberEnd="Ppivot.TInvalidableType.PnonNullType Ppivot.A_nonNullType_InvalidableType.Pnull">
+    <ownedEnd xmi:id="Ppivot.A_nonNullType_InvalidableType.Pnull" type="Ppivot.TInvalidableType" association="Ppivot.A_nonNullType_InvalidableType"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="Ppivot.A_nonNullType_NullableType" name="A_nonNullType_NullableType" memberEnd="Ppivot.TNullableType.PnonNullType Ppivot.A_nonNullType_NullableType.Pnull">
     <ownedEnd xmi:id="Ppivot.A_nonNullType_NullableType.Pnull" type="Ppivot.TNullableType" association="Ppivot.A_nonNullType_NullableType"/>

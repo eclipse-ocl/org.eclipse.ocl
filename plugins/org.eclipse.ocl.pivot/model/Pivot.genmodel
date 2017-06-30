@@ -334,7 +334,7 @@
     <genClasses ecoreClass="Pivot.ecore#T-pivot-InvalidLiteralExp"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-InvalidType"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-InvalidableType">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-InvalidableType-nonInvalidType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-InvalidableType-nonNullType"/>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-IterateExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-IterateExp-ownedResult"/>

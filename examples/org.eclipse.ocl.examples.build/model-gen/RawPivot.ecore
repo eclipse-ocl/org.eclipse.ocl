@@ -409,7 +409,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="InvalidLiteralExp" eSuperTypes="#//LiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="InvalidType" eSuperTypes="#//Class"/>
   <eClassifiers xsi:type="ecore:EClass" name="InvalidableType" eSuperTypes="#//Class">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="nonInvalidType" eType="#//NullableType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nonNullType" eType="#//Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IterateExp" eSuperTypes="#//LoopExp #//ReferringElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedResult" eType="#//Variable" containment="true"/>

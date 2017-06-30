@@ -20,7 +20,7 @@ package org.eclipse.ocl.pivot;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.InvalidableType#getNonInvalidType <em>Non Invalid Type</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.InvalidableType#getNonNullType <em>Non Null Type</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getInvalidableType()
@@ -29,26 +29,26 @@ package org.eclipse.ocl.pivot;
 public interface InvalidableType extends org.eclipse.ocl.pivot.Class
 {
 	/**
-	 * Returns the value of the '<em><b>Non Invalid Type</b></em>' reference.
+	 * Returns the value of the '<em><b>Non Null Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Non Invalid Type</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Non Invalid Type</em>' reference.
-	 * @see #setNonInvalidType(NullableType)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getInvalidableType_NonInvalidType()
+	 * @return the value of the '<em>Non Null Type</em>' reference.
+	 * @see #setNonNullType(Type)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getInvalidableType_NonNullType()
 	 * @generated
 	 */
 	Type getNonNullType();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.InvalidableType#getNonInvalidType <em>Non Invalid Type</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.InvalidableType#getNonNullType <em>Non Null Type</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Non Invalid Type</em>' reference.
-	 * @see #getNonInvalidType()
+	 * @param value the new value of the '<em>Non Null Type</em>' reference.
+	 * @see #getNonNullType()
 	 * @generated
 	 */
 	void setNonNullType(Type value);

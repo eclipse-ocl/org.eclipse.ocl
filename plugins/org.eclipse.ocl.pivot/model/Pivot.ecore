@@ -857,8 +857,8 @@
       eSuperTypes="#T-pivot-Class"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-InvalidableType" name="InvalidableType"
       eSuperTypes="#T-pivot-Class">
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-InvalidableType-nonInvalidType"
-        name="nonInvalidType" eType="#T-pivot-NullableType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-InvalidableType-nonNullType"
+        name="nonNullType" eType="#T-pivot-Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-IterateExp" name="IterateExp"
       eSuperTypes="#T-pivot-LoopExp #T-pivot-ReferringElement">

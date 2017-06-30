@@ -664,7 +664,7 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_uL2FEFjBEee4UcOo08DBaw" name="InvalidableType">
         <generalization xmi:id="_JCzgcFjCEee4UcOo08DBaw" general="_z-WPMFjBEee4UcOo08DBaw"/>
-        <ownedAttribute xmi:id="_DC7BoFjCEee4UcOo08DBaw" name="nonInvalidType" type="_zyRiEFjBEee4UcOo08DBaw">
+        <ownedAttribute xmi:id="_DC7BoFjCEee4UcOo08DBaw" name="nonNullType" type="_vLtKIFjCEee4UcOo08DBaw">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_P0yqQFjFEee4UcOo08DBaw"/>
         </ownedAttribute>
       </packagedElement>
