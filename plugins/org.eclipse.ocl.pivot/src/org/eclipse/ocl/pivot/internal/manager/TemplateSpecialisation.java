@@ -46,10 +46,10 @@ public class TemplateSpecialisation
 	 */
 	public static boolean needsSpecialisation(@Nullable Type referencedType)
 	{
-		referencedType = TypeUtil.decodeNullableType(referencedType);
 		if (referencedType == null) {
-			return true;
+			return false;
 		}
+		referencedType = TypeUtil.decodeNullableType(referencedType);
 		TemplateParameter templateParameter = referencedType.isTemplateParameter();
 		if (templateParameter != null) {
 			return true;

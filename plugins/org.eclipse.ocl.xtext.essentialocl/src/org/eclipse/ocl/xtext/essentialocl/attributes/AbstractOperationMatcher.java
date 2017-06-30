@@ -265,13 +265,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 			Parameter candidateParameter = candidateParameters.get(i);
 			OCLExpression expression = getArgument(i);
 			Type candidateType = TypeUtil.decodeNullableType(candidateParameter);
-			if (candidateType == null) {
-				return null;
-			}
 			Type expressionType = TypeUtil.decodeNullableType(expression);
-			if (expressionType == null) {
-				return null;
-			}
 			if (!metamodelManager.conformsTo(expressionType, TemplateParameterSubstitutions.EMPTY, candidateType, bindings)) {
 				boolean coerceable = false;
 				if (useCoercions) {

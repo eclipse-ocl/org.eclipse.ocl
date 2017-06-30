@@ -33,7 +33,7 @@ public class ImplicitSourceTypeIterator extends AbstractImplicitSourceNamedEleme
 
 	@Override
 	protected void setNext(@NonNull Variable asVariable) {
-		next = asVariable.getType();
+		next = asVariable.getRawType();
 		nextValue = asVariable.getTypeValue();
 	}
 }

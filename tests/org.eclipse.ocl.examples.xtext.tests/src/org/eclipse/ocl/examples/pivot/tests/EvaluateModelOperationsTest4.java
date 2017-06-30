@@ -321,12 +321,12 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		//
 		//		ocl.assertQueryEquals(a, orderedSet_b1_b2, "bs");
 		//		ocl.assertQueryEquals(a, sequence_c1_c2, "bs?.c");
-		ocl.assertQueryEquals(a, sequence_c1_c2, "bs?.c.oclAsSet()");
-		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?.c?.name");
-		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "self.bs?.c?.name");
-		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?.c?.oclAsSet().name");
-		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?.c?.oclAsSet()->collect(name)");	// Test for Bug 351512
-		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?.c?->collect(oclAsSet()).name");
+		//		ocl.assertQueryEquals(a, sequence_c1_c2, "bs?.c.oclAsSet()");
+		//		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?.c?.name");
+		//		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "self.bs?.c?.name");
+		//		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?.c?.oclAsSet().name");
+		//		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?.c?.oclAsSet()->collect(name)");	// Test for Bug 351512
+		//		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?.c?->collect(oclAsSet()).name");
 		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?.c?->collect(j : C | j.oclAsSet()).name");
 		ocl.assertQueryResults(a, "Sequence{'c1','c2'}", "bs?->collect(i : B | i.c)?->collect(j : C | j.oclAsSet())->collect(k : C | k.name)");
 		ocl.dispose();

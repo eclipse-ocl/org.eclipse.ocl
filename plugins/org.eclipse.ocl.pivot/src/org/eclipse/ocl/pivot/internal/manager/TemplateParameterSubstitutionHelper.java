@@ -17,11 +17,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.LoopExp;
-import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation;
@@ -32,6 +31,7 @@ import org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation;
+import org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionMinOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation;
@@ -97,39 +97,54 @@ public abstract class TemplateParameterSubstitutionHelper
 			Type asType = body != null ? body.getRawType() : null;
 			Type bodyType = asType != null ? PivotUtilInternal.getNonLambdaType(asType) : null;
 			if (bodyType != null) {
-				@NonNull Type elementType = bodyType;
-				for (Type decodedElementType; (decodedElementType = TypeUtil.decodeNullableType(elementType)) instanceof CollectionType; ) {
+				@NonNull Type decodedElementType = TypeUtil.decodeNullableType(bodyType);
+				int nullity = TypeUtil.decodeNullity(bodyType);
+				while (decodedElementType instanceof CollectionType) {
 					Type elementType2 = ((CollectionType)decodedElementType).getElementType();
 					if (elementType2 != null) {
-						elementType = elementType2;
+						decodedElementType = TypeUtil.decodeNullableType(elementType2);
+						nullity = Math.max(nullity, TypeUtil.decodeNullity(elementType2));
+					}
+					else {
+						break;
 					}
 				}
-				//				}
-				return elementType;
+				return TypeUtil.encodeNullity(metamodelManager.getEnvironmentFactory(), decodedElementType, nullity);
 			}
 			return returnType;
 		}
 
 		@Override
+		public @Nullable Boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
+			return null;
+		}
+
+		@Override
 		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
-			LoopExp loopExp = (LoopExp)callExp;
-			OCLExpression body = loopExp.getOwnedBody();
-			Type asType = body != null ? body.getRawType() : null;
-			Type bodyType = asType != null ? PivotUtilInternal.getNonLambdaType(asType) : null;
-			if (bodyType != null) {
-				@NonNull Type elementType = bodyType;
-				//				if (bodyType instanceof CollectionType) {
-				for (Type decodedElementType; (decodedElementType = TypeUtil.decodeNullableType(elementType)) instanceof CollectionType; ) {
-					Type elementType2 = ((CollectionType)decodedElementType).getElementType();
-					if (elementType2 != null) {
-						elementType = elementType2;
+			if (returnType != null) {
+				OCLExpression ownedBody = ((LoopExp)callExp).getOwnedBody();
+				if (ownedBody != null) {
+					Type decodedReturnCollectionType = TypeUtil.decodeNullableType(returnType);
+					Type decodedBodyType = TypeUtil.decodeNullableType(ownedBody);
+					int bodyNullity = TypeUtil.decodeNullity(ownedBody);
+					while (decodedBodyType instanceof CollectionType) {
+						decodedBodyType = ((CollectionType)decodedBodyType).getElementType();
+						if (decodedBodyType != null) {
+							bodyNullity = Math.max(bodyNullity, TypeUtil.decodeNullity(decodedBodyType));
+						}
+					}
+					assert decodedReturnCollectionType instanceof CollectionType;
+					CollectionType collectionType = (CollectionType)decodedReturnCollectionType;
+					Type returnElementType = collectionType.getElementType();
+					if (returnElementType != null) {
+						Type decodedReturnElementType = TypeUtil.decodeNullableType(returnElementType);
+						int elementNullity = Math.min(TypeUtil.decodeNullity(returnElementType), bodyNullity);
+						Type elementType = TypeUtil.encodeNullity(metamodelManager.getEnvironmentFactory(), decodedReturnElementType, elementNullity);
+						returnType = metamodelManager.getCollectionType(collectionType.isOrdered(), collectionType.isUnique(),
+							elementType, true, collectionType.getLowerValue(), collectionType.getUpperValue());
+						returnType = TypeUtil.encodeNullity(metamodelManager.getEnvironmentFactory(), returnType, TypeUtil.decodeNullity(returnType));
 					}
 				}
-				//				}
-				boolean isOrdered = (returnType instanceof CollectionType) && ((CollectionType)returnType).isOrdered();
-				boolean isNullFree = asType instanceof CollectionType && ((CollectionType)asType).isIsNullFree();
-				boolean isRequired = !(asType instanceof CollectionType) && (body != null) && body.isIsRequired();
-				returnType = metamodelManager.getCollectionType(isOrdered, false, elementType, isNullFree || isRequired, null, null);	// FIXME null, null
 			}
 			return returnType;
 		}
@@ -151,11 +166,31 @@ public abstract class TemplateParameterSubstitutionHelper
 	}
 
 	//
-	//	Special case processing for return types based on the source collection element typess.
+	//	Special case processing to unify the nullity of return types and source collection element types.
+	//
+	//	e.g. for any(), at(), first(), last(), max(), min()
 	//
 	private static class CollectionSourceElementHelper extends TemplateParameterSubstitutionHelper
 	{
 		@Override
+		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
+			if (returnType != null) {
+				OCLExpression ownedSource = callExp.getOwnedSource();
+				if (ownedSource != null) {
+					Type decodedReturnType = TypeUtil.decodeNullableType(returnType);
+					int returnNullity = Math.min(TypeUtil.decodeNullity(returnType), TypeUtil.decodeNullity(ownedSource));
+					returnType = TypeUtil.encodeNullity(metamodelManager.getEnvironmentFactory(), decodedReturnType, returnNullity);
+				}
+			}
+			return returnType;
+		}
+
+		@Override
+		public @Nullable Boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
+			return null;
+		}
+
+		/*		@Override
 		public @Nullable Boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
 			OCLExpression ownedSource = callExp.getOwnedSource();
 			if (ownedSource != null) {
@@ -165,7 +200,7 @@ public abstract class TemplateParameterSubstitutionHelper
 				}
 			}
 			return returnIsRequired;
-		}
+		} */
 	}
 
 	//
@@ -193,41 +228,32 @@ public abstract class TemplateParameterSubstitutionHelper
 	}
 
 	//
-	//	Special case processing for return collection types based on the source collection types.
+	//	Special case processing to unify the nullity of return collection types and source collection types.
+	//
+	//	e.g. excluding, excludingAll, intersection, reject, select, sortedBy
 	//
 	private static class CollectionSourceHelper extends TemplateParameterSubstitutionHelper
 	{
 		@Override
 		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
-			Type decodedReturnType = TypeUtil.decodeNullableType(returnType);
-			if (decodedReturnType instanceof CollectionType) {
+			if (returnType != null) {
 				OCLExpression ownedSource = callExp.getOwnedSource();
 				if (ownedSource != null) {
-					Type decodedSourceType = ownedSource.getDecodedType();
-					Type sourceType = ownedSource.getRawType();
-					CollectionType collectionType = (CollectionType)decodedReturnType;
-					if ((decodedSourceType instanceof CollectionType) && ((CollectionType)decodedSourceType).isIsNullFree() && !collectionType.isIsNullFree()) {
-						@SuppressWarnings("null")@NonNull Type elementType = collectionType.getElementType();
+					Type decodedReturnCollectionType = TypeUtil.decodeNullableType(returnType);
+					Type decodedSourceCollectionType = TypeUtil.decodeNullableType(ownedSource);
+					assert decodedReturnCollectionType instanceof CollectionType;
+					assert decodedSourceCollectionType instanceof CollectionType;
+					CollectionType collectionType = (CollectionType)decodedReturnCollectionType;
+					Type returnElementType = collectionType.getElementType();
+					Type sourceElementType = ((CollectionType)decodedSourceCollectionType).getElementType();
+					if ((returnElementType != null) && (sourceElementType !=null)) {
+						Type decodedReturnElementType = TypeUtil.decodeNullableType(returnElementType);
+						//						Type decodedSourceElementType = TypeUtil.decodeNullableType(sourceElementType);
+						int elementNullity = Math.min(TypeUtil.decodeNullity(returnElementType), TypeUtil.decodeNullity(sourceElementType));
+						Type elementType = TypeUtil.encodeNullity(metamodelManager.getEnvironmentFactory(), decodedReturnElementType, elementNullity);
 						returnType = metamodelManager.getCollectionType(collectionType.isOrdered(), collectionType.isUnique(),
 							elementType, true, collectionType.getLowerValue(), collectionType.getUpperValue());
-						if (sourceType instanceof InvalidableType) {
-							returnType = metamodelManager.getCompleteModel().getInvalidableType(returnType);
-						}
-						else if (sourceType instanceof NullableType) {
-							returnType = metamodelManager.getCompleteModel().getNullableType(returnType);
-						}
-					}
-				}
-			}
-			else {
-				OCLExpression ownedSource = callExp.getOwnedSource();
-				if (ownedSource != null) {
-					Type sourceType = ownedSource.getRawType();
-					if ((returnType instanceof InvalidableType) && !(sourceType instanceof InvalidableType)) {
-						returnType = PivotUtil.getNonNullType((InvalidableType)returnType).getNullableType();
-					}
-					if ((returnType instanceof NullableType) && !(sourceType instanceof NullableType)) {
-						returnType = PivotUtil.getNonNullType((NullableType)returnType);
+						returnType = TypeUtil.encodeNullity(metamodelManager.getEnvironmentFactory(), returnType, TypeUtil.decodeNullity(returnType));
 					}
 				}
 			}
@@ -240,29 +266,45 @@ public abstract class TemplateParameterSubstitutionHelper
 		}
 	}
 
+	//
+	//	Special case processing to unify the nullity of return collection element type and source element type with appropriate bounds.
+	//
 	private static class OclAnyOclAsSetHelper extends TemplateParameterSubstitutionHelper  // Working around Bug 512758
 	{
 		@Override
 		public @Nullable Type resolveReturnType(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, @Nullable Type returnType) {
-			if (returnType instanceof CollectionType) {
-				OCLExpression ownedSource = callExp.getOwnedSource();
-				if (ownedSource != null) {
-					CollectionType collectionType = (CollectionType)returnType;
-					int collectionBound = ownedSource.isIsRequired() ? 1 : 0;
-					IntegerValue lowerBound = ValueUtil.integerValueOf(collectionBound);
-					UnlimitedNaturalValue upperBound = ValueUtil.unlimitedNaturalValueOf(collectionBound);
-					Type elementType = PivotUtil.getElementType(collectionType);
-					returnType = metamodelManager.getCollectionType(collectionType.isOrdered(), collectionType.isUnique(),
-						elementType, true, lowerBound, upperBound);
+			assert (returnType instanceof CollectionType);
+			OCLExpression ownedSource = callExp.getOwnedSource();
+			if (ownedSource != null) {
+				int sourceNullity = TypeUtil.decodeNullity(ownedSource);
+				Type decodedSourceType = TypeUtil.decodeNullableType(ownedSource);
+				IntegerValue lowerBound;
+				UnlimitedNaturalValue upperBound;
+				if (decodedSourceType instanceof VoidType) {
+					lowerBound = ValueUtil.ZERO_VALUE;
+					upperBound = ValueUtil.unlimitedNaturalValueOf(0);
+				}
+				else {
+					lowerBound = sourceNullity > 0 ? ValueUtil.ZERO_VALUE : ValueUtil.ONE_VALUE;
+					upperBound = ValueUtil.unlimitedNaturalValueOf(1);
+				}
+				returnType = metamodelManager.getCollectionType(false, true, decodedSourceType, true, lowerBound, upperBound);
+				if (sourceNullity >= 2) {
+					returnType = metamodelManager.getCompleteModel().getInvalidableType(returnType);
 				}
 			}
 			return returnType;
+		}
+
+		@Override
+		public @Nullable Boolean resolveReturnNullity(@NonNull PivotMetamodelManager metamodelManager, @NonNull CallExp callExp, boolean returnIsRequired) {
+			return null;
 		}
 	}
 
 	static
 	{
-		addHelper(AnyIteration.class, new CollectionSourceHelper());
+		addHelper(AnyIteration.class, new CollectionSourceElementHelper());
 		addHelper(CollectIteration.class, new CollectionCollectHelper());
 		addHelper(CollectionAsBagOperation.class, new CollectionAsCollectionHelper());
 		addHelper(CollectionAsOrderedSetOperation.class, new CollectionAsCollectionHelper());
@@ -273,7 +315,8 @@ public abstract class TemplateParameterSubstitutionHelper
 		//		addHelper(CollectionIncludingOperation.class, new CollectionSourceAndArgumentHelper());
 		//		addHelper(CollectionIncludingAllOperation.class, new CollectionSourceAndArgumentHelper());
 		addHelper(CollectionIntersectionOperation.class, new CollectionSourceHelper()/*OrArgument*/);
-		addHelper(CollectionMinOperation.class, new CollectionSourceHelper());
+		addHelper(CollectionMaxOperation.class, new CollectionSourceElementHelper());
+		addHelper(CollectionMinOperation.class, new CollectionSourceElementHelper());
 		addHelper(OrderedCollectionAtOperation.class, new CollectionSourceElementHelper());
 		addHelper(OrderedCollectionFirstOperation.class, new CollectionSourceElementHelper());
 		addHelper(OrderedCollectionLastOperation.class, new CollectionSourceElementHelper());

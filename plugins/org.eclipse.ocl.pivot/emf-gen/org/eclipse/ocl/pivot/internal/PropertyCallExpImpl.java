@@ -550,7 +550,7 @@ implements PropertyCallExp {
 					}
 					else {
 						assert ownedSource != null;
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getRawType();
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Type type = ownedSource.getDecodedType();
 						safe_type_source = type;
 					}
 					@SuppressWarnings("null")

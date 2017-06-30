@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -412,6 +413,11 @@ public class InvalidableTypeImpl extends ClassImpl implements InvalidableType
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitInvalidableType(this);
+	}
+
+	@Override
+	public @NonNull TypeId computeId() {
+		return TypeId.INVALIDABLE.getSpecializedId(nonNullType.getTypeId());
 	}
 
 } //InvalidableTypeImpl

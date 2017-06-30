@@ -424,14 +424,6 @@ public class NullableTypeImpl extends ClassImpl implements NullableType
 
 	@Override
 	public @NonNull TypeId computeId() {
-		// TODO Auto-generated method stub
-		return super.computeId();
+		return TypeId.NULLABLE.getSpecializedId(nonNullType.getTypeId());
 	}
-
-	@Override
-	public @NonNull TypeId getTypeId() {
-		// TODO Auto-generated method stub
-		return super.getTypeId();
-	}
-
 } //NullableTypeImpl

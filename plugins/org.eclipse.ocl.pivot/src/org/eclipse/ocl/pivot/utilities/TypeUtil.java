@@ -168,7 +168,7 @@ public class TypeUtil
 		return new TemplateParametersImpl(parameters);
 	}
 
-	public static @Nullable Type decodeNullableType(@Nullable TypedElement typedElement) {
+	public static @NonNull Type decodeNullableType(@NonNull TypedElement typedElement) {
 		Type type = PivotUtilInternal.getBehavioralType(typedElement);
 		if (type instanceof InvalidableType) {
 			type = PivotUtil.getNonNullType((InvalidableType)type);
@@ -187,17 +187,59 @@ public class TypeUtil
 				}
 			}
 		}
-		return type;
+		return ClassUtil.nonNullState(type);
 	}
 
-	public static @Nullable Type decodeNullableType(@Nullable Type type) {
+	public static @NonNull Type decodeNullableType(@NonNull Type type) {
 		if (type instanceof InvalidableType) {
-			type = PivotUtil.getNonNullType((InvalidableType)type);
+			return PivotUtil.getNonNullType((InvalidableType)type);
 		}
 		else if (type instanceof NullableType) {
-			type = PivotUtil.getNonNullType((NullableType)type);
+			return PivotUtil.getNonNullType((NullableType)type);
 		}
-		return type;
+		else {
+			return type;
+		}
+	}
+
+	/**
+	 * Return the number of extra null/invalid values that type supports.
+	 */
+	public static int decodeNullity(@NonNull Type type) {
+		if (type instanceof InvalidableType) {
+			return 2;
+		}
+		else if (type instanceof NullableType) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+
+	/**
+	 * Return the number of extra null/invalid values that typedElement's type supports.
+	 */
+	public static int decodeNullity(@NonNull TypedElement typedElement) {
+		Type type = PivotUtilInternal.getBehavioralType(typedElement);
+		if (type instanceof InvalidableType) {
+			return 2;
+		}
+		else if (type instanceof NullableType) {
+			return 1;
+		}
+		if (type instanceof SelfType) {
+			if (typedElement instanceof Parameter) {
+				Operation operation = ((Parameter)typedElement).getOwningOperation();
+				if (operation != null) {
+					org.eclipse.ocl.pivot.Class selfType = operation.getOwningClass();
+					if (selfType != null) {
+						type = selfType;
+					}
+				}
+			}
+		}
+		return decodeNullity(ClassUtil.nonNullState(type));
 	}
 
 	public static @Nullable Type encodeNullableType(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type type, boolean isRequired) {
@@ -207,6 +249,18 @@ public class TypeUtil
 			}
 		}
 		return type;
+	}
+
+	public static @NonNull Type encodeNullity(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Type type, int nullity) {
+		if (nullity == 2) {
+			return environmentFactory.getCompleteModel().getInvalidableType(type);
+		}
+		else if (nullity == 1) {
+			return environmentFactory.getCompleteModel().getNullableType(type);
+		}
+		else{
+			return type;
+		}
 	}
 
 	public static @NonNull Type @NonNull [] getLambdaParameterTypes(@NonNull LambdaType lambdaType) {
