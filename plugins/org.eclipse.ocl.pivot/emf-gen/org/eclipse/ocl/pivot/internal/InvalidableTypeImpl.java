@@ -417,7 +417,12 @@ public class InvalidableTypeImpl extends ClassImpl implements InvalidableType
 
 	@Override
 	public @NonNull TypeId computeId() {
-		return TypeId.INVALIDABLE.getSpecializedId(nonNullType.getTypeId());
+		if (getUnspecializedElement() == null) {
+			return TypeId.INVALIDABLE;
+		}
+		else {
+			return TypeId.INVALIDABLE.getSpecializedId(nonNullType.getTypeId());
+		}
 	}
 
 } //InvalidableTypeImpl

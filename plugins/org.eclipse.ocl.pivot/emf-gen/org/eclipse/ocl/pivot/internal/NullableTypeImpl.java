@@ -424,6 +424,11 @@ public class NullableTypeImpl extends ClassImpl implements NullableType
 
 	@Override
 	public @NonNull TypeId computeId() {
-		return TypeId.NULLABLE.getSpecializedId(nonNullType.getTypeId());
+		if (getUnspecializedElement() == null) {
+			return TypeId.NULLABLE;
+		}
+		else {
+			return TypeId.NULLABLE.getSpecializedId(nonNullType.getTypeId());
+		}
 	}
 } //NullableTypeImpl
