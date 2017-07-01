@@ -103,6 +103,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
+import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
@@ -368,6 +369,8 @@ public class PivotUtil
 		InvalidableType pivotType = PivotFactory.eINSTANCE.createInvalidableType();
 		pivotType.setName(eClass.getName());
 		((PivotObjectImpl)pivotType).setESObject(eClass);
+		TemplateParameter templateParameter = createTemplateParameter("T");
+		createTemplateSignature(pivotType, templateParameter);
 		return pivotType;
 	}
 
@@ -379,6 +382,17 @@ public class PivotUtil
 		specializedType.setName("Invalidable<" + nullableType.getName() + ">");
 		specializedType.setNonNullType(nullableType.getNonNullType());
 		specializedType.setUnspecializedElement(unspecializedType);
+		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
+		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+		assert templateParameters.size() == 1;
+		TemplateParameter formalParameter = templateParameters.get(0);
+		assert formalParameter != null;
+		Type actualType = nullableType.getNonNullType();
+		assert actualType != null;
+		TemplateParameterSubstitution templateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(formalParameter, actualType);
+		TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
+		templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
+		specializedType.getOwnedBindings().add(templateBinding);
 		return specializedType;
 	}
 
@@ -469,6 +483,8 @@ public class PivotUtil
 		NullableType pivotType = PivotFactory.eINSTANCE.createNullableType();
 		pivotType.setName(eClass.getName());
 		((PivotObjectImpl)pivotType).setESObject(eClass);
+		TemplateParameter templateParameter = createTemplateParameter("T");
+		createTemplateSignature(pivotType, templateParameter);
 		return pivotType;
 	}
 
@@ -480,6 +496,16 @@ public class PivotUtil
 		specializedType.setName("Nullable<" + nonNullType.getName() + ">");
 		specializedType.setNonNullType(nonNullType);
 		specializedType.setUnspecializedElement(unspecializedType);
+		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
+		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+		assert templateParameters.size() == 1;
+		TemplateParameter formalParameter = templateParameters.get(0);
+		assert formalParameter != null;
+		Type actualType = nonNullType;
+		TemplateParameterSubstitution templateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(formalParameter, actualType);
+		TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
+		templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
+		specializedType.getOwnedBindings().add(templateBinding);
 		return specializedType;
 	}
 

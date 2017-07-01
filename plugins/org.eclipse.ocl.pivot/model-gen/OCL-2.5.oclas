@@ -25,12 +25,12 @@
           name="closure" type="#//@ownedPackages.1/@ownedClasses.139">
         <ownedComments body="The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Bag.closure..T" name="i" type="#t.ocl..BagT"/>
-        <ownedParameters xmi:id="p0i.ocl.Bag.closure..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.172"/>
+        <ownedParameters xmi:id="p0i.ocl.Bag.closure..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.181"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Bag.collect..$$.Nullable%60%T%62%" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
           name="collect" type="#//@ownedPackages.1/@ownedClasses.8">
         <ownedIterators xmi:id="i0i.ocl.Bag.collect..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.207"/>
-        <ownedParameters xmi:id="p0i.ocl.Bag.collect..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.173"/>
+        <ownedParameters xmi:id="p0i.ocl.Bag.collect..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.184"/>
         <ownedSignature xmi:id="s.i.ocl.Bag.collect..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.Bag..collectV" name="V"/>
         </ownedSignature>
@@ -39,7 +39,7 @@
           name="collectNested" type="#//@ownedPackages.1/@ownedClasses.9">
         <ownedComments body="The Bag of elements which results from applying body to every member of the source nonordered collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Bag.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.207"/>
-        <ownedParameters xmi:id="p0i.ocl.Bag.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.174"/>
+        <ownedParameters xmi:id="p0i.ocl.Bag.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.185"/>
         <ownedSignature xmi:id="s.i.ocl.Bag.collectNested..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.Bag..collectNestedV" name="V"/>
         </ownedSignature>
@@ -60,7 +60,7 @@
           name="sortedBy" type="#//@ownedPackages.1/@ownedClasses.126">
         <ownedComments body="Results in the Sequence containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Bag.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.207"/>
-        <ownedParameters xmi:id="p0i.ocl.Bag.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.175"/>
+        <ownedParameters xmi:id="p0i.ocl.Bag.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.173"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Bag.%61%..$$.Nullable%60%OclSelf%62%" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"
           name="=" precedence="#Z.EQUALITY" type="#Boolean">
@@ -613,7 +613,7 @@
           name="collect" type="#//@ownedPackages.1/@ownedClasses.55">
         <ownedComments body="The Collection of elements that results from applying body to every member of the source set.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.collect..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.208"/>
-        <ownedParameters xmi:id="p0i.ocl.Collection.collect..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.176"/>
+        <ownedParameters xmi:id="p0i.ocl.Collection.collect..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.186"/>
         <ownedSignature xmi:id="s.i.ocl.Collection.collect..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.Collection..collectV" name="V"/>
         </ownedSignature>
@@ -622,7 +622,7 @@
           name="collectNested" type="#//@ownedPackages.1/@ownedClasses.56">
         <ownedComments body="The Collection of elements which results from applying body to every member of the source collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.208"/>
-        <ownedParameters xmi:id="p0i.ocl.Collection.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.177"/>
+        <ownedParameters xmi:id="p0i.ocl.Collection.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.187"/>
         <ownedSignature xmi:id="s.i.ocl.Collection.collectNested..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.Collection..collectNestedV" name="V"/>
         </ownedSignature>
@@ -631,39 +631,39 @@
           isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#//@ownedPackages.1/@ownedClasses.169">
         <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one element in the source collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.exists..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.208"/>
-        <ownedParameters xmi:id="p0i.ocl.Collection.exists..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.178"/>
+        <ownedParameters xmi:id="p0i.ocl.Collection.exists..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.172"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.exists..$$.Nullable%60%T%62%..$$.Nullable%60%T%62%" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#//@ownedPackages.1/@ownedClasses.169">
         <ownedIterators xmi:id="i0i.ocl.Collection.exists..$$.Nullable%60%T%62%..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.208"/>
         <ownedIterators xmi:id="i1i.ocl.Collection.exists..$$.Nullable%60%T%62%..$$.Nullable%60%T%62%" isRequired="false" name="j" type="#//@ownedPackages.1/@ownedClasses.208"/>
         <ownedParameters xmi:id="p0i.ocl.Collection.exists..$$.Nullable%60%T%62%..$$.Nullable%60%T%62%" isRequired="false" name="lambda"
-            type="#//@ownedPackages.1/@ownedClasses.178"/>
+            type="#//@ownedPackages.1/@ownedClasses.172"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.forAll..$$.Nullable%60%T%62%" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#//@ownedPackages.1/@ownedClasses.169">
         <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each element in the source collection; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.forAll..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.208"/>
-        <ownedParameters xmi:id="p0i.ocl.Collection.forAll..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.178"/>
+        <ownedParameters xmi:id="p0i.ocl.Collection.forAll..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.172"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.forAll..$$.Nullable%60%T%62%..$$.Nullable%60%T%62%" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#//@ownedPackages.1/@ownedClasses.169">
         <ownedIterators xmi:id="i0i.ocl.Collection.forAll..$$.Nullable%60%T%62%..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.208"/>
         <ownedIterators xmi:id="i1i.ocl.Collection.forAll..$$.Nullable%60%T%62%..$$.Nullable%60%T%62%" isRequired="false" name="j" type="#//@ownedPackages.1/@ownedClasses.208"/>
         <ownedParameters xmi:id="p0i.ocl.Collection.forAll..$$.Nullable%60%T%62%..$$.Nullable%60%T%62%" isRequired="false" name="lambda"
-            type="#//@ownedPackages.1/@ownedClasses.178"/>
+            type="#//@ownedPackages.1/@ownedClasses.172"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.isUnique..$$.Nullable%60%T%62%" implementationClass="org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration"
           name="isUnique" type="#Boolean">
         <ownedComments body="Results in oclText[true] if body evaluates to a different value for each element in the source collection; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.isUnique..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.208"/>
-        <ownedParameters xmi:id="p0i.ocl.Collection.isUnique..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.179"/>
+        <ownedParameters xmi:id="p0i.ocl.Collection.isUnique..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.174"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Collection.iterate..$$.Nullable%60%T%62%" implementationClass="org.eclipse.ocl.pivot.library.iterator.IterateIteration"
           isRequired="false" name="iterate" type="#//@ownedPackages.1/@ownedClasses.228">
         <ownedAccumulators xmi:id="a0i.ocl.Collection.iterate..$$.Nullable%60%T%62%" isRequired="false" name="acc" type="#//@ownedPackages.1/@ownedClasses.228"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.iterate..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.208"/>
-        <ownedParameters xmi:id="p0i.ocl.Collection.iterate..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.180"/>
+        <ownedParameters xmi:id="p0i.ocl.Collection.iterate..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.183"/>
         <ownedSignature xmi:id="s.i.ocl.Collection.iterate..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.Collection..iterateTacc" name="Tacc"/>
         </ownedSignature>
@@ -690,7 +690,7 @@
           name="sortedBy" type="#//@ownedPackages.1/@ownedClasses.127">
         <ownedComments body="Results in the Collection containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Collection.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.208"/>
-        <ownedParameters xmi:id="p0i.ocl.Collection.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.179"/>
+        <ownedParameters xmi:id="p0i.ocl.Collection.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.174"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Collection.%61%..$$.Nullable%60%OclSelf%62%" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"
           name="=" precedence="#Z.EQUALITY" type="#Boolean">
@@ -1007,7 +1007,7 @@
       <ownedOperations xmi:id="o.ocl.Map.excludesMap..$$.Nullable%60%Map%62%" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation"
           name="excludesMap" type="#Boolean">
         <ownedComments body="True if none of the key-value pairs of oclText[map] are also key-value pairs of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="p0o.ocl.Map.excludesMap..$$.Nullable%60%Map%62%" isRequired="false" name="map" type="#//@ownedPackages.1/@ownedClasses.194"/>
+        <ownedParameters xmi:id="p0o.ocl.Map.excludesMap..$$.Nullable%60%Map%62%" isRequired="false" name="map" type="#//@ownedPackages.1/@ownedClasses.195"/>
         <ownedSignature xmi:id="s.o.ocl.Map.excludesMap..$$.Nullable%60%Map%62%">
           <ownedParameters xmi:id="t.ocl.Map..excludesMapK2" name="K2"/>
           <ownedParameters xmi:id="t.ocl.Map..excludesMapV2" name="V2"/>
@@ -1019,12 +1019,12 @@
         <ownedParameters xmi:id="p0o.ocl.Map.excludesValue..$$.Nullable%60%OclAny%62%" isRequired="false" name="value" type="#//@ownedPackages.1/@ownedClasses.199"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Map.excluding..$$.Nullable%60%OclAny%62%" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingOperation"
-          isRequired="false" name="excluding" type="#//@ownedPackages.1/@ownedClasses.195">
+          isRequired="false" name="excluding" type="#//@ownedPackages.1/@ownedClasses.194">
         <ownedComments body="The map containing all key-value pairs of oclText[self] except any whose key is oclText[key].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Map.excluding..$$.Nullable%60%OclAny%62%" isRequired="false" name="key" type="#//@ownedPackages.1/@ownedClasses.199"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Map.excluding..$$.Nullable%60%OclAny%62%..$$.Nullable%60%OclAny%62%" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation"
-          isRequired="false" name="excluding" type="#//@ownedPackages.1/@ownedClasses.195">
+          isRequired="false" name="excluding" type="#//@ownedPackages.1/@ownedClasses.194">
         <ownedComments body="The map containing all key-value pairs of oclText[self] except any whose key is oclText[key] and whose value is oclText[key].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Map.excluding..$$.Nullable%60%OclAny%62%..$$.Nullable%60%OclAny%62%" isRequired="false" name="key"
             type="#//@ownedPackages.1/@ownedClasses.199"/>
@@ -1032,12 +1032,12 @@
             type="#//@ownedPackages.1/@ownedClasses.199"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Map.excludingAll..$$.Collection" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation"
-          isRequired="false" name="excludingAll" type="#//@ownedPackages.1/@ownedClasses.195">
+          isRequired="false" name="excludingAll" type="#//@ownedPackages.1/@ownedClasses.194">
         <ownedComments body="The map containing all key-value pairs of oclText[self] except any whose key is included in oclText[keys].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Map.excludingAll..$$.Collection" name="keys" type="#//@ownedPackages.1/@ownedClasses.20"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Map.excludingMap..$$.Nullable%60%Map%62%" implementationClass="org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation"
-          isRequired="false" name="excludingMap" type="#//@ownedPackages.1/@ownedClasses.195">
+          isRequired="false" name="excludingMap" type="#//@ownedPackages.1/@ownedClasses.194">
         <ownedComments body="The map containing all key-value pairs of oclText[self] except any which is also included in oclText[map].&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Map.excludingMap..$$.Nullable%60%Map%62%" isRequired="false" name="map" type="#//@ownedPackages.1/@ownedClasses.196"/>
         <ownedSignature xmi:id="s.o.ocl.Map.excludingMap..$$.Nullable%60%Map%62%">
@@ -1081,13 +1081,13 @@
         <ownedParameters xmi:id="p0o.ocl.Map.includesValue..$$.Nullable%60%OclAny%62%" isRequired="false" name="value" type="#//@ownedPackages.1/@ownedClasses.199"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Map.including..$$.Nullable%60%K%62%..$$.Nullable%60%V%62%" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation"
-          isRequired="false" name="including" type="#//@ownedPackages.1/@ownedClasses.195">
+          isRequired="false" name="including" type="#//@ownedPackages.1/@ownedClasses.194">
         <ownedComments body="The map containing all of the key-value pairs of oclText[self] and an additional key-value pair for oclText[key] and oclText[value].&#xA;If oclText[key] is already a key of oclText[self], the old value pair is replaced by oclText[value]."/>
         <ownedParameters xmi:id="p0o.ocl.Map.including..$$.Nullable%60%K%62%..$$.Nullable%60%V%62%" isRequired="false" name="key" type="#//@ownedPackages.1/@ownedClasses.171"/>
         <ownedParameters xmi:id="p1o.ocl.Map.including..$$.Nullable%60%K%62%..$$.Nullable%60%V%62%" isRequired="false" name="value" type="#//@ownedPackages.1/@ownedClasses.230"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Map.includingMap..$$.Nullable%60%Map%62%" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation"
-          isRequired="false" name="includingMap" type="#//@ownedPackages.1/@ownedClasses.195">
+          isRequired="false" name="includingMap" type="#//@ownedPackages.1/@ownedClasses.194">
         <ownedComments body="The map containing all of the key-value pairs of oclText[self] and oclText[map].&#xA;The values associated with key-value pairs in oclText[map] replace those in oclText[self] where the same key is used by both maps.&#xA;"/>
         <ownedParameters xmi:id="p0o.ocl.Map.includingMap..$$.Nullable%60%Map%62%" isRequired="false" name="map" type="#//@ownedPackages.1/@ownedClasses.198"/>
         <ownedSignature xmi:id="s.o.ocl.Map.includingMap..$$.Nullable%60%Map%62%">
@@ -1650,12 +1650,12 @@
           name="closure" type="#OrderedSet">
         <ownedComments body="The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.OrderedSet.closure..T" name="i" type="#t.ocl..OrderedSetT"/>
-        <ownedParameters xmi:id="p0i.ocl.OrderedSet.closure..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.181"/>
+        <ownedParameters xmi:id="p0i.ocl.OrderedSet.closure..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.179"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.OrderedSet.collect..$$.Nullable%60%T%62%" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
           name="collect" type="#//@ownedPackages.1/@ownedClasses.131">
         <ownedIterators xmi:id="i0i.ocl.OrderedSet.collect..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.210"/>
-        <ownedParameters xmi:id="p0i.ocl.OrderedSet.collect..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.182"/>
+        <ownedParameters xmi:id="p0i.ocl.OrderedSet.collect..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.188"/>
         <ownedSignature xmi:id="s.i.ocl.OrderedSet.collect..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.OrderedSet..collectV" name="V"/>
         </ownedSignature>
@@ -1664,7 +1664,7 @@
           name="collectNested" type="#//@ownedPackages.1/@ownedClasses.132">
         <ownedComments body="The sequence of elements that results from applying body to every member of the source ordered collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.OrderedSet.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.210"/>
-        <ownedParameters xmi:id="p0i.ocl.OrderedSet.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.183"/>
+        <ownedParameters xmi:id="p0i.ocl.OrderedSet.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.189"/>
         <ownedSignature xmi:id="s.i.ocl.OrderedSet.collectNested..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.OrderedSet..collectNestedV" name="V"/>
         </ownedSignature>
@@ -1685,7 +1685,7 @@
           name="sortedBy" type="#OrderedSet">
         <ownedComments body="Results in the ordered set containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c, then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.OrderedSet.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.210"/>
-        <ownedParameters xmi:id="p0i.ocl.OrderedSet.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.184"/>
+        <ownedParameters xmi:id="p0i.ocl.OrderedSet.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.175"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.OrderedSet.%61%..$$.Nullable%60%OclSelf%62%" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"
           name="=" precedence="#Z.EQUALITY" type="#Boolean">
@@ -1944,12 +1944,12 @@
           name="closure" type="#//@ownedPackages.1/@ownedClasses.118">
         <ownedComments body="The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Sequence.closure..T" name="i" type="#t.ocl..SequenceT"/>
-        <ownedParameters xmi:id="p0i.ocl.Sequence.closure..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.185"/>
+        <ownedParameters xmi:id="p0i.ocl.Sequence.closure..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.180"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Sequence.collect..$$.Nullable%60%T%62%" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
           name="collect" type="#//@ownedPackages.1/@ownedClasses.133">
         <ownedIterators xmi:id="i0i.ocl.Sequence.collect..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.211"/>
-        <ownedParameters xmi:id="p0i.ocl.Sequence.collect..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.186"/>
+        <ownedParameters xmi:id="p0i.ocl.Sequence.collect..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.190"/>
         <ownedSignature xmi:id="s.i.ocl.Sequence.collect..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.Sequence..collectV" name="V"/>
         </ownedSignature>
@@ -1958,7 +1958,7 @@
           name="collectNested" type="#//@ownedPackages.1/@ownedClasses.134">
         <ownedComments body="The sequence of elements that results from applying body to every member of the source ordered collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Sequence.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.211"/>
-        <ownedParameters xmi:id="p0i.ocl.Sequence.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.187"/>
+        <ownedParameters xmi:id="p0i.ocl.Sequence.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.191"/>
         <ownedSignature xmi:id="s.i.ocl.Sequence.collectNested..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.Sequence..collectNestedV" name="V"/>
         </ownedSignature>
@@ -1979,7 +1979,7 @@
           name="sortedBy" type="#Sequence">
         <ownedComments body="Results in the Sequence containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Sequence.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.211"/>
-        <ownedParameters xmi:id="p0i.ocl.Sequence.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.188"/>
+        <ownedParameters xmi:id="p0i.ocl.Sequence.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.176"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Sequence.%61%..$$.Nullable%60%OclSelf%62%" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"
           name="=" precedence="#Z.EQUALITY" type="#Boolean">
@@ -2082,12 +2082,12 @@
           name="closure" type="#Set">
         <ownedComments body="The closure of applying body transitively to every distinct element of the source collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Set.closure..T" name="i" type="#t.ocl..SetT"/>
-        <ownedParameters xmi:id="p0i.ocl.Set.closure..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.189"/>
+        <ownedParameters xmi:id="p0i.ocl.Set.closure..T" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.182"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="i.ocl.Set.collect..$$.Nullable%60%T%62%" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
           name="collect" type="#//@ownedPackages.1/@ownedClasses.11">
         <ownedIterators xmi:id="i0i.ocl.Set.collect..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.212"/>
-        <ownedParameters xmi:id="p0i.ocl.Set.collect..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.190"/>
+        <ownedParameters xmi:id="p0i.ocl.Set.collect..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.192"/>
         <ownedSignature xmi:id="s.i.ocl.Set.collect..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.Set..collectV" name="V"/>
         </ownedSignature>
@@ -2096,7 +2096,7 @@
           name="collectNested" type="#//@ownedPackages.1/@ownedClasses.12">
         <ownedComments body="The Bag of elements which results from applying body to every member of the source nonordered collection.&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Set.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.212"/>
-        <ownedParameters xmi:id="p0i.ocl.Set.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.191"/>
+        <ownedParameters xmi:id="p0i.ocl.Set.collectNested..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.193"/>
         <ownedSignature xmi:id="s.i.ocl.Set.collectNested..$$.Nullable%60%T%62%">
           <ownedParameters xmi:id="t.ocl.Set..collectNestedV" name="V"/>
         </ownedSignature>
@@ -2117,7 +2117,7 @@
           name="sortedBy" type="#//@ownedPackages.1/@ownedClasses.119">
         <ownedComments body="Results in the ordered set containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c, then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.Set.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.212"/>
-        <ownedParameters xmi:id="p0i.ocl.Set.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.192"/>
+        <ownedParameters xmi:id="p0i.ocl.Set.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.177"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.Set.%61%..$$.Nullable%60%OclSelf%62%" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"
           name="=" precedence="#Z.EQUALITY" type="#Boolean">
@@ -2397,7 +2397,7 @@
           name="sortedBy" type="#//@ownedPackages.1/@ownedClasses.120">
         <ownedComments body="Results in the ordered set containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c, then a &lt; c).&#xA;"/>
         <ownedIterators xmi:id="i0i.ocl.UniqueCollection.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="i" type="#//@ownedPackages.1/@ownedClasses.213"/>
-        <ownedParameters xmi:id="p0i.ocl.UniqueCollection.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.193"/>
+        <ownedParameters xmi:id="p0i.ocl.UniqueCollection.sortedBy..$$.Nullable%60%T%62%" isRequired="false" name="lambda" type="#//@ownedPackages.1/@ownedClasses.178"/>
       </ownedOperations>
       <ownedOperations xmi:id="o.ocl.UniqueCollection.%45%..$$.UniqueCollection" implementationClass="org.eclipse.ocl.pivot.library.collection.SetMinusOperation"
           name="-" precedence="#Z.ADDITIVE" type="#UniqueCollection">
@@ -3214,69 +3214,325 @@
         <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.146" formal="#t.ocl..UniqueCollectionT"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:InvalidableType" name="Invalidable&lt;Nullable&lt;OrderedSet>>" nonInvalidType="#OrderedSet"/>
-    <ownedClasses xsi:type="pivot:InvalidableType" name="Invalidable&lt;Nullable&lt;Sequence>>" nonInvalidType="#Sequence"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Boolean>" nonNullType="#Boolean"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Integer>" nonNullType="#Integer"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;K>" nonNullType="#t.ocl..MapK"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.79"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.82"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.83"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.71"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.84"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.85"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.67"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.72"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.81"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.77"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.86"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.87"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.73"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.78"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.88"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.89"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.74"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.80"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.90"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.91"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.75"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.76"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Map>" nonNullType="#//@ownedPackages.1/@ownedClasses.92"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Map>" nonNullType="#Map"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Map>" nonNullType="#//@ownedPackages.1/@ownedClasses.93"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Map>" nonNullType="#//@ownedPackages.1/@ownedClasses.94"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Map>" nonNullType="#//@ownedPackages.1/@ownedClasses.95"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OclAny>" nonNullType="#T.ocl.OclAny"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OclElement>" nonNullType="#T.ocl.OclElement"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OclSelf>" nonNullType="#OclSelf"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OclState>" nonNullType="#T.ocl.OclState"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OclType>" nonNullType="#T.ocl.OclType"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OrderedSet>" nonNullType="#OrderedSet"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Sequence>" nonNullType="#Sequence"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;String>" nonNullType="#String"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..BagT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..CollectionT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..OrderedCollectionT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..OrderedSetT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..SequenceT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..SetT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..UniqueCollectionT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Bag..selectByKindTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Bag..selectByTypeTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Collection..selectByKindTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Collection..selectByTypeTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.OclAny..oclAsTypeTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.OclElement..oclAsModelTypeTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.OclInvalid..oclAsTypeTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.OrderedSet..selectByKindTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.OrderedSet..selectByTypeTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Sequence..selectByKindTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Sequence..selectByTypeTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Set..selectByKindTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Set..selectByTypeTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.UnlimitedNatural..oclAsTypeTT"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Tacc>" nonNullType="#t.ocl.Collection..iterateTacc"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Type>" nonNullType="#T.ocl.Type"/>
-    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;V>" nonNullType="#t.ocl..MapV"/>
+    <ownedClasses xsi:type="pivot:InvalidableType" name="Invalidable&lt;Nullable&lt;OrderedSet>>" nonInvalidType="#OrderedSet">
+      <ownedBindings>
+        <ownedSubstitutions actual="#OrderedSet" formal="#t.ocl..InvalidableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:InvalidableType" name="Invalidable&lt;Nullable&lt;Sequence>>" nonInvalidType="#Sequence">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Sequence" formal="#t.ocl..InvalidableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Boolean>" nonNullType="#Boolean">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Boolean" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Integer>" nonNullType="#Integer">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Integer" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;K>" nonNullType="#t.ocl..MapK">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl..MapK" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.67">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.67" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.71">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.71" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.72">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.72" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.73">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.73" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.74">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.74" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.75">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.75" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.76">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.76" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.77">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.77" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.78">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.78" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.79">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.79" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.80">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.80" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.81">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.81" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.82">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.82" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.83">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.83" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.84">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.84" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.85">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.85" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.86">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.86" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.87">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.87" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.88">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.88" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.89">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.89" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.90">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.90" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Lambda>" nonNullType="#//@ownedPackages.1/@ownedClasses.91">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.91" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Map>" nonNullType="#Map">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Map" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Map>" nonNullType="#//@ownedPackages.1/@ownedClasses.92">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.92" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Map>" nonNullType="#//@ownedPackages.1/@ownedClasses.93">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.93" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Map>" nonNullType="#//@ownedPackages.1/@ownedClasses.94">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.94" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Map>" nonNullType="#//@ownedPackages.1/@ownedClasses.95">
+      <ownedBindings>
+        <ownedSubstitutions actual="#//@ownedPackages.1/@ownedClasses.95" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OclAny>" nonNullType="#T.ocl.OclAny">
+      <ownedBindings>
+        <ownedSubstitutions actual="#T.ocl.OclAny" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OclElement>" nonNullType="#T.ocl.OclElement">
+      <ownedBindings>
+        <ownedSubstitutions actual="#T.ocl.OclElement" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OclSelf>" nonNullType="#OclSelf">
+      <ownedBindings>
+        <ownedSubstitutions actual="#OclSelf" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OclState>" nonNullType="#T.ocl.OclState">
+      <ownedBindings>
+        <ownedSubstitutions actual="#T.ocl.OclState" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OclType>" nonNullType="#T.ocl.OclType">
+      <ownedBindings>
+        <ownedSubstitutions actual="#T.ocl.OclType" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;OrderedSet>" nonNullType="#OrderedSet">
+      <ownedBindings>
+        <ownedSubstitutions actual="#OrderedSet" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Sequence>" nonNullType="#Sequence">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Sequence" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;String>" nonNullType="#String">
+      <ownedBindings>
+        <ownedSubstitutions actual="#String" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..BagT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl..BagT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..CollectionT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl..CollectionT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..OrderedCollectionT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl..OrderedCollectionT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..OrderedSetT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl..OrderedSetT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..SequenceT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl..SequenceT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..SetT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl..SetT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;T>" nonNullType="#t.ocl..UniqueCollectionT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl..UniqueCollectionT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Bag..selectByKindTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.Bag..selectByKindTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Bag..selectByTypeTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.Bag..selectByTypeTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Collection..selectByKindTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.Collection..selectByKindTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Collection..selectByTypeTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.Collection..selectByTypeTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.OclAny..oclAsTypeTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.OclAny..oclAsTypeTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.OclElement..oclAsModelTypeTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.OclElement..oclAsModelTypeTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.OclInvalid..oclAsTypeTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.OclInvalid..oclAsTypeTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.OrderedSet..selectByKindTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.OrderedSet..selectByKindTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.OrderedSet..selectByTypeTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.OrderedSet..selectByTypeTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Sequence..selectByKindTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.Sequence..selectByKindTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Sequence..selectByTypeTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.Sequence..selectByTypeTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Set..selectByKindTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.Set..selectByKindTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.Set..selectByTypeTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.Set..selectByTypeTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;TT>" nonNullType="#t.ocl.UnlimitedNatural..oclAsTypeTT">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.UnlimitedNatural..oclAsTypeTT" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Tacc>" nonNullType="#t.ocl.Collection..iterateTacc">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl.Collection..iterateTacc" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;Type>" nonNullType="#T.ocl.Type">
+      <ownedBindings>
+        <ownedSubstitutions actual="#T.ocl.Type" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:NullableType" name="Nullable&lt;V>" nonNullType="#t.ocl..MapV">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t.ocl..MapV" formal="#t.ocl..NullableT"/>
+      </ownedBindings>
+    </ownedClasses>
   </ownedPackages>
 </pivot:Model>

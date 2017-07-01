@@ -301,7 +301,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			«FOR invalidableType : allInvalidableTypes»
-				private final @NonNull InvalidableType «invalidableType.getPrefixedSymbolName("_" + invalidableType.partialName())» = createInvalidableType(«environmentFactory.getCompleteModel().getNullableType(invalidableType.nonNullType).getSymbolName()»);
+				private final @NonNull InvalidableType «invalidableType.getPrefixedSymbolName("_" + invalidableType.partialName())» = createInvalidableType(_Invalidable, «environmentFactory.getCompleteModel().getNullableType(invalidableType.nonNullType).getSymbolName()»);
 			«ENDFOR»
 
 			private void installInvalidableTypes() {
@@ -447,7 +447,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			«FOR nullableType : allNullableTypes»
-				private final @NonNull NullableType «nullableType.getPrefixedSymbolName("_" + nullableType.partialName())» = createNullableType(«nullableType.nonNullType.getSymbolName()»);
+				private final @NonNull NullableType «nullableType.getPrefixedSymbolName("_" + nullableType.partialName())» = createNullableType(_Nullable, «nullableType.nonNullType.getSymbolName()»);
 			«ENDFOR»
 
 			private void installNullableTypes() {
@@ -673,7 +673,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«FOR templateableElement : allTemplateableElements»
 					«FOR templateBinding : templateableElement.ownedBindings»
 						«templateableElement.getSymbolName()».getOwnedBindings().add(createTemplateBinding(
-							«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions SEPARATOR (",\n")»
+						«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions BEFORE("\t") SEPARATOR(",\n")»
 							createTemplateParameterSubstitution(«templateParameterSubstitution.formal.getSymbolName()», «templateParameterSubstitution.actual.getSymbolName()»)«ENDFOR»));
 					«ENDFOR»
 				«ENDFOR»
