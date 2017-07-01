@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.options.EnumeratedOption;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
@@ -162,6 +161,11 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		return OCLstdlibTables.Types._Integer;
 	}
 
+	//	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getInvalidableType() {
+		return OCLstdlibTables.Types._Invalidable;
+	}
+
 	@Override
 	public @NonNull InvalidableType getInvalidableType(@NonNull Type type) {
 		InvalidableType invalidableType = type.getInvalidableType();
@@ -169,8 +173,9 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			synchronized(type) {
 				invalidableType = type.getInvalidableType();
 				if (invalidableType == null) {
-					invalidableType = PivotUtil.createInvalidableType(getNullableType(type));
-					type.setInvalidableType(invalidableType);
+					//					invalidableType = PivotUtil.createInvalidableType(getInvalidableType(), getNullableType(type));
+					//					type.setInvalidableType(invalidableType);
+					throw new UnsupportedOperationException("Need ExecutorInvalidatableType");
 				}
 			}
 		}
@@ -256,6 +261,11 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		return NameUtil.getNameable(parentPackage.getOwnedClasses(), name);
 	}
 
+	//	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getNullableType() {
+		return OCLstdlibTables.Types._Nullable;
+	}
+
 	@Override
 	public @NonNull NullableType getNullableType(@NonNull Type type) {
 		NullableType nullableType = type.getNullableType();
@@ -263,8 +273,9 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			synchronized(type) {
 				nullableType = type.getNullableType();
 				if (nullableType == null) {
-					nullableType = PivotUtil.createNullableType(type);
-					type.setNullableType(nullableType);
+					//					nullableType = PivotUtil.createNullableType(getNullableType(), type);
+					//					type.setNullableType(nullableType);
+					throw new UnsupportedOperationException("Need ExecutorNullableType");
 				}
 			}
 		}

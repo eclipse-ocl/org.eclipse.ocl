@@ -1124,7 +1124,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				}
 				OCLExpression arg = PivotUtil.getPivot(OCLExpression.class, csArgument);
 				if (arg != null) {
-					Type argType = arg.getType();
+					Type argType = arg.getRawType();
 					if (argType != null) {
 						Parameter parameter = ownedParameters.get(argIndex);
 						Type parameterType = TypeUtil.decodeNullableType(parameter);

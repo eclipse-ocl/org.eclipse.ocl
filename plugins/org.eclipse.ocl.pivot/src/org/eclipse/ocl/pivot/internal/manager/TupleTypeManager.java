@@ -201,11 +201,11 @@ public class TupleTypeManager
 		return tupleType;
 	}
 
-	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Collection<@NonNull? extends TypedElement> parts,
+	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
 			@Nullable TemplateParameterSubstitutions usageBindings) {
 		Map<@NonNull String, @NonNull Type> partMap = new HashMap<>();
 		for (@NonNull TypedElement part : parts) {
-			Type type1 = part.getType();
+			Type type1 = part.getRawType();
 			if (type1 != null) {
 				Type type2 = metamodelManager.getPrimaryType(type1);
 				Type type3 = completeEnvironment.getSpecializedType(type2, usageBindings);

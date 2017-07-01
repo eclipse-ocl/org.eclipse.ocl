@@ -18,40 +18,52 @@
 package	org.eclipse.ocl.pivot.model;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.*;
+import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociativityKind;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
+import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.Library;
+import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NullableType;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -1328,79 +1340,79 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclLambda);
 		}
 
-		private final @NonNull NullableType _Nullable_Boolean = createNullableType(_Boolean);
-		private final @NonNull NullableType _Nullable_Boolean_1 = createNullableType(_Boolean);
-		private final @NonNull NullableType _Nullable_Integer = createNullableType(_Integer);
-		private final @NonNull NullableType _Nullable_Integer_1 = createNullableType(_Integer);
-		private final @NonNull NullableType _Nullable_Map_K = createNullableType(tp_Map_K);
-		private final @NonNull NullableType _Nullable_Lambda_Bag_T = createNullableType(_Lambda_Bag_T_3);
-		private final @NonNull NullableType _Nullable_Lambda_Sequence_T = createNullableType(_Lambda_Sequence_T_4);
-		private final @NonNull NullableType _Nullable_Lambda_Collection_T = createNullableType(_Lambda_Collection_T_2);
-		private final @NonNull NullableType _Nullable_Lambda_Sequence_T_1 = createNullableType(_Lambda_Sequence_T_1);
-		private final @NonNull NullableType _Nullable_Lambda_Collection_T_1 = createNullableType(_Lambda_Collection_T);
-		private final @NonNull NullableType _Nullable_Lambda_Collection_T_2 = createNullableType(_Lambda_Collection_T);
-		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T = createNullableType(_Lambda_OrderedSet_T_4);
-		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T_1 = createNullableType(_Lambda_OrderedSet_T_1);
-		private final @NonNull NullableType _Nullable_Lambda_Bag_T_1 = createNullableType(_Lambda_Bag_T_2);
-		private final @NonNull NullableType _Nullable_Lambda_Bag_T_2 = createNullableType(_Lambda_Bag_T_4);
-		private final @NonNull NullableType _Nullable_Lambda_Set_T = createNullableType(_Lambda_Set_T_1);
-		private final @NonNull NullableType _Nullable_Lambda_Collection_T_3 = createNullableType(_Lambda_Collection_T_3);
-		private final @NonNull NullableType _Nullable_Lambda_Sequence_T_2 = createNullableType(_Lambda_Sequence_T_2);
-		private final @NonNull NullableType _Nullable_Lambda_Sequence_T_3 = createNullableType(_Lambda_Sequence_T_3);
-		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T_2 = createNullableType(_Lambda_OrderedSet_T_3);
-		private final @NonNull NullableType _Nullable_Lambda_Set_T_1 = createNullableType(_Lambda_Set_T_3);
-		private final @NonNull NullableType _Nullable_Lambda_Collection_T_4 = createNullableType(_Lambda_Collection_T_1);
-		private final @NonNull NullableType _Nullable_Lambda_Set_T_2 = createNullableType(_Lambda_Set_T_4);
-		private final @NonNull NullableType _Nullable_Lambda_Collection_T_5 = createNullableType(_Lambda_Collection_T_4);
-		private final @NonNull NullableType _Nullable_Lambda_Bag_T_3 = createNullableType(_Lambda_Bag_T_1);
-		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T_3 = createNullableType(_Lambda_OrderedSet_T_2);
-		private final @NonNull NullableType _Nullable_Lambda_UniqueCollection_T = createNullableType(_Lambda_UniqueCollection_T);
-		private final @NonNull NullableType _Nullable_Lambda_Set_T_3 = createNullableType(_Lambda_Set_T_2);
-		private final @NonNull NullableType _Nullable_Map = createNullableType(_Map_Map_includesMap_K2_Map_includesMap_V2);
-		private final @NonNull NullableType _Nullable_Map_1 = createNullableType(_Map_Map_excludesMap_K2_Map_excludesMap_V2);
-		private final @NonNull NullableType _Nullable_Map_2 = createNullableType(_Map_Map_includingMap_K2_Map_includingMap_V2);
-		private final @NonNull NullableType _Nullable_Map_3 = createNullableType(_Map_Map_excludingMap_K2_Map_excludingMap_V2);
-		private final @NonNull NullableType _Nullable_Map_4 = createNullableType(_Map_Map_K_Map_V);
-		private final @NonNull NullableType _Nullable_OclAny = createNullableType(_OclAny);
-		private final @NonNull NullableType _Nullable_OclElement = createNullableType(_OclElement);
-		private final @NonNull NullableType _Nullable_OclSelf = createNullableType(_OclSelf);
-		private final @NonNull NullableType _Nullable_OclState = createNullableType(_OclState);
-		private final @NonNull NullableType _Nullable_OclType = createNullableType(_OclType);
-		private final @NonNull NullableType _Nullable_OrderedSet = createNullableType(_OrderedSet_OrderedSet_T);
-		private final @NonNull NullableType _Nullable_Real = createNullableType(_Real);
-		private final @NonNull NullableType _Nullable_Sequence = createNullableType(_Sequence_Sequence_T);
-		private final @NonNull NullableType _Nullable_String = createNullableType(_String);
-		private final @NonNull NullableType _Nullable_String_1 = createNullableType(_String);
-		private final @NonNull NullableType _Nullable_OrderedCollection_T = createNullableType(tp_OrderedCollection_T);
-		private final @NonNull NullableType _Nullable_OrderedSet_T = createNullableType(tp_OrderedSet_T);
-		private final @NonNull NullableType _Nullable_Collection_T = createNullableType(tp_Collection_T);
-		private final @NonNull NullableType _Nullable_Sequence_T = createNullableType(tp_Sequence_T);
-		private final @NonNull NullableType _Nullable_Collection_T_1 = createNullableType(tp_Collection_T);
-		private final @NonNull NullableType _Nullable_OrderedCollection_T_1 = createNullableType(tp_OrderedCollection_T);
-		private final @NonNull NullableType _Nullable_Set_T = createNullableType(tp_Set_T);
-		private final @NonNull NullableType _Nullable_Bag_T = createNullableType(tp_Bag_T);
-		private final @NonNull NullableType _Nullable_UniqueCollection_T = createNullableType(tp_UniqueCollection_T);
-		private final @NonNull NullableType _Nullable_Collection_selectByKind_TT = createNullableType(tp_Collection_selectByKind_TT);
-		private final @NonNull NullableType _Nullable_OclInvalid_oclAsType_TT = createNullableType(tp_OclInvalid_oclAsType_TT);
-		private final @NonNull NullableType _Nullable_Sequence_selectByType_TT = createNullableType(tp_Sequence_selectByType_TT);
-		private final @NonNull NullableType _Nullable_Set_selectByType_TT = createNullableType(tp_Set_selectByType_TT);
-		private final @NonNull NullableType _Nullable_UnlimitedNatural_oclAsType_TT = createNullableType(tp_UnlimitedNatural_oclAsType_TT);
-		private final @NonNull NullableType _Nullable_UnlimitedNatural_oclAsType_TT_1 = createNullableType(tp_UnlimitedNatural_oclAsType_TT);
-		private final @NonNull NullableType _Nullable_Bag_selectByType_TT = createNullableType(tp_Bag_selectByType_TT);
-		private final @NonNull NullableType _Nullable_Collection_selectByType_TT = createNullableType(tp_Collection_selectByType_TT);
-		private final @NonNull NullableType _Nullable_Sequence_selectByKind_TT = createNullableType(tp_Sequence_selectByKind_TT);
-		private final @NonNull NullableType _Nullable_Set_selectByKind_TT = createNullableType(tp_Set_selectByKind_TT);
-		private final @NonNull NullableType _Nullable_OrderedSet_selectByType_TT = createNullableType(tp_OrderedSet_selectByType_TT);
-		private final @NonNull NullableType _Nullable_OclAny_oclAsType_TT = createNullableType(tp_OclAny_oclAsType_TT);
-		private final @NonNull NullableType _Nullable_Bag_selectByKind_TT = createNullableType(tp_Bag_selectByKind_TT);
-		private final @NonNull NullableType _Nullable_OclAny_oclAsType_TT_1 = createNullableType(tp_OclAny_oclAsType_TT);
-		private final @NonNull NullableType _Nullable_OclElement_oclAsModelType_TT = createNullableType(tp_OclElement_oclAsModelType_TT);
-		private final @NonNull NullableType _Nullable_OrderedSet_selectByKind_TT = createNullableType(tp_OrderedSet_selectByKind_TT);
-		private final @NonNull NullableType _Nullable_OclElement_oclAsModelType_TT_1 = createNullableType(tp_OclElement_oclAsModelType_TT);
-		private final @NonNull NullableType _Nullable_Collection_iterate_Tacc = createNullableType(tp_Collection_iterate_Tacc);
-		private final @NonNull NullableType _Nullable_Type = createNullableType(_Type);
-		private final @NonNull NullableType _Nullable_Map_V = createNullableType(tp_Map_V);
-		private final @NonNull NullableType _Nullable_Map_V_1 = createNullableType(tp_Map_V);
+		private final @NonNull NullableType _Nullable_Boolean = createNullableType(_Nullable, _Boolean);
+		private final @NonNull NullableType _Nullable_Boolean_1 = createNullableType(_Nullable, _Boolean);
+		private final @NonNull NullableType _Nullable_Integer = createNullableType(_Nullable, _Integer);
+		private final @NonNull NullableType _Nullable_Integer_1 = createNullableType(_Nullable, _Integer);
+		private final @NonNull NullableType _Nullable_Map_K = createNullableType(_Nullable, tp_Map_K);
+		private final @NonNull NullableType _Nullable_Lambda_Bag_T = createNullableType(_Nullable, _Lambda_Bag_T_3);
+		private final @NonNull NullableType _Nullable_Lambda_Sequence_T = createNullableType(_Nullable, _Lambda_Sequence_T_4);
+		private final @NonNull NullableType _Nullable_Lambda_Collection_T = createNullableType(_Nullable, _Lambda_Collection_T_2);
+		private final @NonNull NullableType _Nullable_Lambda_Sequence_T_1 = createNullableType(_Nullable, _Lambda_Sequence_T_1);
+		private final @NonNull NullableType _Nullable_Lambda_Collection_T_1 = createNullableType(_Nullable, _Lambda_Collection_T);
+		private final @NonNull NullableType _Nullable_Lambda_Collection_T_2 = createNullableType(_Nullable, _Lambda_Collection_T);
+		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T = createNullableType(_Nullable, _Lambda_OrderedSet_T_4);
+		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T_1 = createNullableType(_Nullable, _Lambda_OrderedSet_T_1);
+		private final @NonNull NullableType _Nullable_Lambda_Bag_T_1 = createNullableType(_Nullable, _Lambda_Bag_T_2);
+		private final @NonNull NullableType _Nullable_Lambda_Bag_T_2 = createNullableType(_Nullable, _Lambda_Bag_T_4);
+		private final @NonNull NullableType _Nullable_Lambda_Set_T = createNullableType(_Nullable, _Lambda_Set_T_1);
+		private final @NonNull NullableType _Nullable_Lambda_Collection_T_3 = createNullableType(_Nullable, _Lambda_Collection_T_3);
+		private final @NonNull NullableType _Nullable_Lambda_Sequence_T_2 = createNullableType(_Nullable, _Lambda_Sequence_T_2);
+		private final @NonNull NullableType _Nullable_Lambda_Sequence_T_3 = createNullableType(_Nullable, _Lambda_Sequence_T_3);
+		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T_2 = createNullableType(_Nullable, _Lambda_OrderedSet_T_3);
+		private final @NonNull NullableType _Nullable_Lambda_Set_T_1 = createNullableType(_Nullable, _Lambda_Set_T_3);
+		private final @NonNull NullableType _Nullable_Lambda_Collection_T_4 = createNullableType(_Nullable, _Lambda_Collection_T_1);
+		private final @NonNull NullableType _Nullable_Lambda_Set_T_2 = createNullableType(_Nullable, _Lambda_Set_T_4);
+		private final @NonNull NullableType _Nullable_Lambda_Collection_T_5 = createNullableType(_Nullable, _Lambda_Collection_T_4);
+		private final @NonNull NullableType _Nullable_Lambda_Bag_T_3 = createNullableType(_Nullable, _Lambda_Bag_T_1);
+		private final @NonNull NullableType _Nullable_Lambda_OrderedSet_T_3 = createNullableType(_Nullable, _Lambda_OrderedSet_T_2);
+		private final @NonNull NullableType _Nullable_Lambda_UniqueCollection_T = createNullableType(_Nullable, _Lambda_UniqueCollection_T);
+		private final @NonNull NullableType _Nullable_Lambda_Set_T_3 = createNullableType(_Nullable, _Lambda_Set_T_2);
+		private final @NonNull NullableType _Nullable_Map = createNullableType(_Nullable, _Map_Map_includesMap_K2_Map_includesMap_V2);
+		private final @NonNull NullableType _Nullable_Map_1 = createNullableType(_Nullable, _Map_Map_excludesMap_K2_Map_excludesMap_V2);
+		private final @NonNull NullableType _Nullable_Map_2 = createNullableType(_Nullable, _Map_Map_includingMap_K2_Map_includingMap_V2);
+		private final @NonNull NullableType _Nullable_Map_3 = createNullableType(_Nullable, _Map_Map_excludingMap_K2_Map_excludingMap_V2);
+		private final @NonNull NullableType _Nullable_Map_4 = createNullableType(_Nullable, _Map_Map_K_Map_V);
+		private final @NonNull NullableType _Nullable_OclAny = createNullableType(_Nullable, _OclAny);
+		private final @NonNull NullableType _Nullable_OclElement = createNullableType(_Nullable, _OclElement);
+		private final @NonNull NullableType _Nullable_OclSelf = createNullableType(_Nullable, _OclSelf);
+		private final @NonNull NullableType _Nullable_OclState = createNullableType(_Nullable, _OclState);
+		private final @NonNull NullableType _Nullable_OclType = createNullableType(_Nullable, _OclType);
+		private final @NonNull NullableType _Nullable_OrderedSet = createNullableType(_Nullable, _OrderedSet_OrderedSet_T);
+		private final @NonNull NullableType _Nullable_Real = createNullableType(_Nullable, _Real);
+		private final @NonNull NullableType _Nullable_Sequence = createNullableType(_Nullable, _Sequence_Sequence_T);
+		private final @NonNull NullableType _Nullable_String = createNullableType(_Nullable, _String);
+		private final @NonNull NullableType _Nullable_String_1 = createNullableType(_Nullable, _String);
+		private final @NonNull NullableType _Nullable_OrderedCollection_T = createNullableType(_Nullable, tp_OrderedCollection_T);
+		private final @NonNull NullableType _Nullable_OrderedSet_T = createNullableType(_Nullable, tp_OrderedSet_T);
+		private final @NonNull NullableType _Nullable_Collection_T = createNullableType(_Nullable, tp_Collection_T);
+		private final @NonNull NullableType _Nullable_Sequence_T = createNullableType(_Nullable, tp_Sequence_T);
+		private final @NonNull NullableType _Nullable_Collection_T_1 = createNullableType(_Nullable, tp_Collection_T);
+		private final @NonNull NullableType _Nullable_OrderedCollection_T_1 = createNullableType(_Nullable, tp_OrderedCollection_T);
+		private final @NonNull NullableType _Nullable_Set_T = createNullableType(_Nullable, tp_Set_T);
+		private final @NonNull NullableType _Nullable_Bag_T = createNullableType(_Nullable, tp_Bag_T);
+		private final @NonNull NullableType _Nullable_UniqueCollection_T = createNullableType(_Nullable, tp_UniqueCollection_T);
+		private final @NonNull NullableType _Nullable_Collection_selectByKind_TT = createNullableType(_Nullable, tp_Collection_selectByKind_TT);
+		private final @NonNull NullableType _Nullable_OclInvalid_oclAsType_TT = createNullableType(_Nullable, tp_OclInvalid_oclAsType_TT);
+		private final @NonNull NullableType _Nullable_Sequence_selectByType_TT = createNullableType(_Nullable, tp_Sequence_selectByType_TT);
+		private final @NonNull NullableType _Nullable_Set_selectByType_TT = createNullableType(_Nullable, tp_Set_selectByType_TT);
+		private final @NonNull NullableType _Nullable_UnlimitedNatural_oclAsType_TT = createNullableType(_Nullable, tp_UnlimitedNatural_oclAsType_TT);
+		private final @NonNull NullableType _Nullable_UnlimitedNatural_oclAsType_TT_1 = createNullableType(_Nullable, tp_UnlimitedNatural_oclAsType_TT);
+		private final @NonNull NullableType _Nullable_Bag_selectByType_TT = createNullableType(_Nullable, tp_Bag_selectByType_TT);
+		private final @NonNull NullableType _Nullable_Collection_selectByType_TT = createNullableType(_Nullable, tp_Collection_selectByType_TT);
+		private final @NonNull NullableType _Nullable_Sequence_selectByKind_TT = createNullableType(_Nullable, tp_Sequence_selectByKind_TT);
+		private final @NonNull NullableType _Nullable_Set_selectByKind_TT = createNullableType(_Nullable, tp_Set_selectByKind_TT);
+		private final @NonNull NullableType _Nullable_OrderedSet_selectByType_TT = createNullableType(_Nullable, tp_OrderedSet_selectByType_TT);
+		private final @NonNull NullableType _Nullable_OclAny_oclAsType_TT = createNullableType(_Nullable, tp_OclAny_oclAsType_TT);
+		private final @NonNull NullableType _Nullable_Bag_selectByKind_TT = createNullableType(_Nullable, tp_Bag_selectByKind_TT);
+		private final @NonNull NullableType _Nullable_OclAny_oclAsType_TT_1 = createNullableType(_Nullable, tp_OclAny_oclAsType_TT);
+		private final @NonNull NullableType _Nullable_OclElement_oclAsModelType_TT = createNullableType(_Nullable, tp_OclElement_oclAsModelType_TT);
+		private final @NonNull NullableType _Nullable_OrderedSet_selectByKind_TT = createNullableType(_Nullable, tp_OrderedSet_selectByKind_TT);
+		private final @NonNull NullableType _Nullable_OclElement_oclAsModelType_TT_1 = createNullableType(_Nullable, tp_OclElement_oclAsModelType_TT);
+		private final @NonNull NullableType _Nullable_Collection_iterate_Tacc = createNullableType(_Nullable, tp_Collection_iterate_Tacc);
+		private final @NonNull NullableType _Nullable_Type = createNullableType(_Nullable, _Type);
+		private final @NonNull NullableType _Nullable_Map_V = createNullableType(_Nullable, tp_Map_V);
+		private final @NonNull NullableType _Nullable_Map_V_1 = createNullableType(_Nullable, tp_Map_V);
 
 		private void installNullableTypes() {
 			final List<Class> orphanTypes = orphanage.getOwnedClasses();
@@ -1479,19 +1491,19 @@ public class OCLstdlib extends ASResourceImpl
 			orphanTypes.add(_Nullable_Map_V_1);
 		}
 
-		private final @NonNull InvalidableType _Invalidable_Boolean = createInvalidableType(_Nullable_Boolean_1);
-		private final @NonNull InvalidableType _Invalidable_Integer = createInvalidableType(_Nullable_Integer_1);
-		private final @NonNull InvalidableType _Invalidable_Lambda_Collection_T = createInvalidableType(_Nullable_Lambda_Collection_T_1);
-		private final @NonNull InvalidableType _Invalidable_OrderedSet = createInvalidableType(_Nullable_OrderedSet);
-		private final @NonNull InvalidableType _Invalidable_Real = createInvalidableType(_Nullable_Real);
-		private final @NonNull InvalidableType _Invalidable_Sequence = createInvalidableType(_Nullable_Sequence);
-		private final @NonNull InvalidableType _Invalidable_String = createInvalidableType(_Nullable_String);
-		private final @NonNull InvalidableType _Invalidable_OrderedCollection_T = createInvalidableType(_Nullable_OrderedCollection_T_1);
-		private final @NonNull InvalidableType _Invalidable_Collection_T = createInvalidableType(_Nullable_Collection_T);
-		private final @NonNull InvalidableType _Invalidable_OclAny_oclAsType_TT = createInvalidableType(_Nullable_OclAny_oclAsType_TT_1);
-		private final @NonNull InvalidableType _Invalidable_UnlimitedNatural_oclAsType_TT = createInvalidableType(_Nullable_UnlimitedNatural_oclAsType_TT);
-		private final @NonNull InvalidableType _Invalidable_OclElement_oclAsModelType_TT = createInvalidableType(_Nullable_OclElement_oclAsModelType_TT);
-		private final @NonNull InvalidableType _Invalidable_Map_V = createInvalidableType(_Nullable_Map_V_1);
+		private final @NonNull InvalidableType _Invalidable_Boolean = createInvalidableType(_Invalidable, _Nullable_Boolean_1);
+		private final @NonNull InvalidableType _Invalidable_Integer = createInvalidableType(_Invalidable, _Nullable_Integer_1);
+		private final @NonNull InvalidableType _Invalidable_Lambda_Collection_T = createInvalidableType(_Invalidable, _Nullable_Lambda_Collection_T_1);
+		private final @NonNull InvalidableType _Invalidable_OrderedSet = createInvalidableType(_Invalidable, _Nullable_OrderedSet);
+		private final @NonNull InvalidableType _Invalidable_Real = createInvalidableType(_Invalidable, _Nullable_Real);
+		private final @NonNull InvalidableType _Invalidable_Sequence = createInvalidableType(_Invalidable, _Nullable_Sequence);
+		private final @NonNull InvalidableType _Invalidable_String = createInvalidableType(_Invalidable, _Nullable_String);
+		private final @NonNull InvalidableType _Invalidable_OrderedCollection_T = createInvalidableType(_Invalidable, _Nullable_OrderedCollection_T_1);
+		private final @NonNull InvalidableType _Invalidable_Collection_T = createInvalidableType(_Invalidable, _Nullable_Collection_T);
+		private final @NonNull InvalidableType _Invalidable_OclAny_oclAsType_TT = createInvalidableType(_Invalidable, _Nullable_OclAny_oclAsType_TT_1);
+		private final @NonNull InvalidableType _Invalidable_UnlimitedNatural_oclAsType_TT = createInvalidableType(_Invalidable, _Nullable_UnlimitedNatural_oclAsType_TT);
+		private final @NonNull InvalidableType _Invalidable_OclElement_oclAsModelType_TT = createInvalidableType(_Invalidable, _Nullable_OclElement_oclAsModelType_TT);
+		private final @NonNull InvalidableType _Invalidable_Map_V = createInvalidableType(_Invalidable, _Nullable_Map_V_1);
 
 		private void installInvalidableTypes() {
 			final List<Class> orphanTypes = orphanage.getOwnedClasses();
@@ -3069,16 +3081,16 @@ public class OCLstdlib extends ASResourceImpl
 				createTemplateParameterSubstitution(tp_Collection_T, tp_UniqueCollection_T)));
 			_Map_Map_excludesMap_K2_Map_excludesMap_V2.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Map_K, tp_Map_excludesMap_K2),
-						createTemplateParameterSubstitution(tp_Map_V, tp_Map_excludesMap_V2)));
+				createTemplateParameterSubstitution(tp_Map_V, tp_Map_excludesMap_V2)));
 			_Map_Map_excludingMap_K2_Map_excludingMap_V2.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Map_K, tp_Map_excludingMap_K2),
-						createTemplateParameterSubstitution(tp_Map_V, tp_Map_excludingMap_V2)));
+				createTemplateParameterSubstitution(tp_Map_V, tp_Map_excludingMap_V2)));
 			_Map_Map_includesMap_K2_Map_includesMap_V2.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Map_K, tp_Map_includesMap_K2),
-						createTemplateParameterSubstitution(tp_Map_V, tp_Map_includesMap_V2)));
+				createTemplateParameterSubstitution(tp_Map_V, tp_Map_includesMap_V2)));
 			_Map_Map_includingMap_K2_Map_includingMap_V2.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_Map_K, tp_Map_includingMap_K2),
-						createTemplateParameterSubstitution(tp_Map_V, tp_Map_includingMap_V2)));
+				createTemplateParameterSubstitution(tp_Map_V, tp_Map_includingMap_V2)));
 			_OrderedCollection_Bag_T.getOwnedBindings().add(createTemplateBinding(
 				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Bag_T)));
 			_OrderedCollection_Collection_T.getOwnedBindings().add(createTemplateBinding(

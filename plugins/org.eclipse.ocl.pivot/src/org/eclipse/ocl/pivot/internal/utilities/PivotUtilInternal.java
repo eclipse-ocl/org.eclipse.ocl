@@ -37,14 +37,12 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -728,13 +726,7 @@ public class PivotUtilInternal //extends PivotUtil
 	 * @since 1.3
 	 */
 	public static boolean isOrphanType(@NonNull Type type) {	// FIXME org.eclipse.ocl.pivot.Class
-		if (type instanceof InvalidableType) {
-			return true;
-		}
-		else if (type instanceof LambdaType) {
-			return true;
-		}
-		else if (type instanceof NullableType) {
+		if (type instanceof LambdaType) {
 			return true;
 		}
 		else if (type instanceof TupleType) {

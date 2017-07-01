@@ -21,11 +21,13 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -149,6 +151,10 @@ public abstract class AbstractContents extends PivotUtil
 		return (InvalidType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
+	protected @NonNull InvalidableType getInvalidableType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
+		return (InvalidableType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
+	}
+
 	protected @NonNull Library getLibrary(@NonNull Model asModel, @NonNull String name) {
 		return (Library) ClassUtil.nonNullState(NameUtil.getNameable(asModel.getOwnedPackages(), name));
 	}
@@ -157,6 +163,10 @@ public abstract class AbstractContents extends PivotUtil
 		StandardLibraryContribution standardLibraryContribution = ClassUtil.nonNullState(StandardLibraryContribution.REGISTRY.get(modelURI));
 		Resource resource = standardLibraryContribution.getResource();
 		return ClassUtil.nonNullState((Model) resource.getContents().get(0));
+	}
+
+	protected @NonNull NullableType getNullableType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
+		return (NullableType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
 	protected @NonNull OrderedSetType getOrderedSetType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {

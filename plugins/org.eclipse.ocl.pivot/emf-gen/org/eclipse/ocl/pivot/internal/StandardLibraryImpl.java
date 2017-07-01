@@ -38,7 +38,9 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
@@ -364,8 +366,10 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	private @Nullable CollectionType collectionType = null;
 	private org.eclipse.ocl.pivot.@Nullable Class enumerationType = null;
 	private @Nullable PrimitiveType integerType = null;
+	private @Nullable InvalidableType invalidableType = null;
 	private org.eclipse.ocl.pivot.@Nullable Package libraryPackage = null;
 	private @Nullable MapType mapType = null;
+	private @Nullable NullableType nullableType = null;
 	private @Nullable AnyType oclAnyType = null;
 	private org.eclipse.ocl.pivot.@Nullable Class oclComparableType = null;
 	private org.eclipse.ocl.pivot.@Nullable Class oclElementType = null;
@@ -389,7 +393,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	private @Nullable CollectionType uniqueCollectionType = null;
 	private @Nullable PrimitiveType unlimitedNaturalType = null;
 
-	private @Nullable Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap = null;
+	private @Nullable Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap = null;
 
 	protected /*final*/ /*@NonNull*/ CompleteModelInternal completeModel;
 	protected /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
@@ -411,11 +415,11 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 
 	@Override
 	public void defineLibraryType(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
-		Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
+		Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 		if (nameToLibraryTypeMap2 == null) {
-			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<String, org.eclipse.ocl.pivot.Class>();
+			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
 		}
-		String name = pivotType.getName();
+		String name = PivotUtil.getName(pivotType);
 		org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
 		if ((oldType != null) && (oldType != pivotType)) {
 			logger.warn("Conflicting pivot type '" + name + "'");
@@ -585,10 +589,19 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	}
 
 	@Override
+	public @NonNull InvalidableType getInvalidableType() {
+		InvalidableType invalidableType2 = invalidableType;
+		if (invalidableType2 == null) {
+			invalidableType = invalidableType2 = resolveRequiredTemplateableType(InvalidableType.class, TypeId.INVALIDABLE_NAME, 1);
+		}
+		return invalidableType2;
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName) {
-		Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
+		Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 		if (nameToLibraryTypeMap2 == null) {
-			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<String, org.eclipse.ocl.pivot.Class>();
+			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
 			loadDefaultLibrary(defaultStandardLibraryURI);
 		}
 		return nameToLibraryTypeMap2.get(typeName);
@@ -627,6 +640,15 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI) {
 		CompletePackage completePackage = completeModel.getCompletePackageByURI(nsURI);
 		return completePackage != null ? completePackage.getPrimaryPackage() : null;
+	}
+
+	@Override
+	public @NonNull NullableType getNullableType() {
+		NullableType nullableType2 = nullableType;
+		if (nullableType2 == null) {
+			nullableType = nullableType2 = resolveRequiredTemplateableType(NullableType.class, TypeId.NULLABLE_NAME, 1);
+		}
+		return nullableType2;
 	}
 
 	@Override
@@ -959,8 +981,10 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		collectionType = null;
 		enumerationType = null;
 		integerType = null;
+		invalidableType = null;
 		libraryPackage = null;
 		mapType = null;
+		nullableType = null;
 		oclAnyType = null;
 		oclComparableType = null;
 		oclElementType = null;

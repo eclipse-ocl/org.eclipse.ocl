@@ -17,6 +17,8 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.InvalidableType;
+import org.eclipse.ocl.pivot.NullableType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -47,7 +49,9 @@ public interface StandardLibraryInternal extends StandardLibrary.StandardLibrary
 	@NonNull String getDefaultStandardLibraryURI();
 	@Override
 	@NonNull PrimitiveType getIntegerType();
+	@NonNull InvalidableType getInvalidableType();
 	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
+	@NonNull NullableType getNullableType();
 	@Override
 	@NonNull AnyType getOclAnyType();
 	@NonNull Property getOclInvalidProperty();

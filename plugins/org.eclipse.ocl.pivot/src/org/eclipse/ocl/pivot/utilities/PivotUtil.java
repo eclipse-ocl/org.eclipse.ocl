@@ -374,11 +374,12 @@ public class PivotUtil
 	/**
 	 * @since 1.4
 	 */
-	public static @NonNull InvalidableType createInvalidableType(@NonNull NullableType nullableType) {
-		InvalidableType pivotType = PivotFactory.eINSTANCE.createInvalidableType();
-		pivotType.setName("Invalidable<" + nullableType.getName() + ">");
-		pivotType.setNonNullType(nullableType.getNonNullType());
-		return pivotType;
+	public static @NonNull InvalidableType createInvalidableType(@NonNull InvalidableType unspecializedType, @NonNull NullableType nullableType) {
+		InvalidableType specializedType = PivotFactory.eINSTANCE.createInvalidableType();
+		specializedType.setName("Invalidable<" + nullableType.getName() + ">");
+		specializedType.setNonNullType(nullableType.getNonNullType());
+		specializedType.setUnspecializedElement(unspecializedType);
+		return specializedType;
 	}
 
 	public static @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation) {
@@ -474,11 +475,12 @@ public class PivotUtil
 	/**
 	 * @since 1.4
 	 */
-	public static @NonNull NullableType createNullableType(@NonNull Type nonNullType) {
-		NullableType pivotType = PivotFactory.eINSTANCE.createNullableType();
-		pivotType.setName("Nullable<" + nonNullType.getName() + ">");
-		pivotType.setNonNullType(nonNullType);
-		return pivotType;
+	public static @NonNull NullableType createNullableType(@NonNull NullableType unspecializedType, @NonNull Type nonNullType) {
+		NullableType specializedType = PivotFactory.eINSTANCE.createNullableType();
+		specializedType.setName("Nullable<" + nonNullType.getName() + ">");
+		specializedType.setNonNullType(nonNullType);
+		specializedType.setUnspecializedElement(unspecializedType);
+		return specializedType;
 	}
 
 	public static @NonNull Operation createOperation(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {

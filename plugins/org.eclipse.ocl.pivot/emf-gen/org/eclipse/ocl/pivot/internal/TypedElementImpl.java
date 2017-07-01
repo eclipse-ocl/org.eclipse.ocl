@@ -147,7 +147,7 @@ implements TypedElement {
 	@Override
 	public Type getType() {
 		Type type1 = getTypeGen();
-		Type type2 = TypeUtil.decodeNullableType(type1);
+		Type type2 = type1 != null ? TypeUtil.decodeNullableType(type1) : null;
 		if (type1 != type2) {
 			getClass();
 		}
@@ -161,7 +161,7 @@ implements TypedElement {
 	@Override
 	public Type getDecodedType() {
 		Type type1 = getTypeGen();
-		Type type2 = TypeUtil.decodeNullableType(type1);
+		Type type2 = type1 != null ? TypeUtil.decodeNullableType(type1) : null;
 		return type2;
 	}
 

@@ -565,7 +565,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull InvalidableType getInvalidableType(@NonNull Type type) {
 		InvalidableType invalidableType = type.getInvalidableType();
 		if (invalidableType == null) {
-			invalidableType = PivotUtil.createInvalidableType(getNullableType(type));
+			invalidableType = PivotUtil.createInvalidableType(getStandardLibrary().getInvalidableType(), getNullableType(type));
 			type.setInvalidableType(invalidableType);
 			invalidableType.setOwningPackage(getOrphanage());
 		}
@@ -576,7 +576,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull NullableType getNullableType(@NonNull Type type) {
 		NullableType nullableType = type.getNullableType();
 		if (nullableType == null) {
-			nullableType = PivotUtil.createNullableType(type);
+			nullableType = PivotUtil.createNullableType(getStandardLibrary().getNullableType(), type);
 			type.setNullableType(nullableType);
 			nullableType.setOwningPackage(getOrphanage());
 		}
