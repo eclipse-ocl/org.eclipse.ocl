@@ -56,7 +56,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SemanticException;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.Value;
@@ -852,7 +851,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		// in the case of a null value, null is allowed in a collection, so
 		// it does not result in invalid
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.OCL_ANY);
-		BagValue expected = idResolver.createBagOfEach(typeId, null, null, null);
+		CollectionValue expected = idResolver.createBagOfEach(typeId, null, null, null);
 		ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
 				"let b:Boolean = null in Bag{1, 2, 3}->collect(null)");
 		ocl.dispose();
@@ -874,7 +873,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		Object e2 = null;
 		Set<BigInteger> e3 = Collections.singleton(BigInteger.valueOf(3));
 		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.INTEGER);
-		BagValue expected = idResolver.createBagOfEach(typeId, e1, e2, e3);
+		CollectionValue expected = idResolver.createBagOfEach(typeId, e1, e2, e3);
 		ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
 				"let b:Boolean = null in Bag{1, 2, 3}->collectNested(e | if e = 2 then null else Set{e} endif)");
 		ocl.dispose();

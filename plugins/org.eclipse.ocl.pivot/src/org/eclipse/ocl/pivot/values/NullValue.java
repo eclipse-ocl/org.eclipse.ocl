@@ -15,7 +15,7 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 
 public interface NullValue
 extends ObjectValue, IntegerValue, UnlimitedValue,
-BagValue, TupleValue
+CollectionValue, TupleValue
 {
 	@Override
 	@NonNull OclVoidTypeId getTypeId();

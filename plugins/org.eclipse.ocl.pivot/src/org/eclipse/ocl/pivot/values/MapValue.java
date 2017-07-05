@@ -112,7 +112,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull BagValue getValues();
+	@NonNull CollectionValue getValues();
 
 	/**
 	 * @generated NOT

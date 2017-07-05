@@ -17,7 +17,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValue;
@@ -85,10 +84,6 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected ValuesSwitch<@Nullable Adapter> modelSwitch =
 			new ValuesSwitch<@Nullable Adapter>() {
-		@Override
-		public Adapter caseBagValue(BagValue object) {
-			return createBagValueAdapter();
-		}
 		@Override
 		public Adapter caseCollectionValue(CollectionValue object) {
 			return createCollectionValueAdapter();

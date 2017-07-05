@@ -74,7 +74,6 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.types.AbstractInheritance;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.values.Bag;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
@@ -133,7 +132,7 @@ public abstract class ValueUtil
 
 	private static boolean allStaticsInitialized = false;
 
-	public static @NonNull BagValue asBagValue(@Nullable Object value) {
+	public static @NonNull CollectionValue asBagValue(@Nullable Object value) {
 		if (value instanceof Value) {
 			return ((Value)value).asBagValue();
 		}
@@ -558,17 +557,17 @@ public abstract class ValueUtil
 		return hashCode;
 	}
 
-	public static BagValue.@NonNull Accumulator createBagAccumulatorValue(@NonNull CollectionTypeId collectedId) {
+	public static CollectionValue.@NonNull Accumulator createBagAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new BagValueImpl.Accumulator(collectedId);
 	}
 
-	public static @NonNull BagValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
+	public static @NonNull CollectionValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
 		return new AsBagIterator.FromArray(typeId, boxedValues);
 		//		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
 	}
 
-	public static @NonNull BagValue createBagRange(@NonNull CollectionTypeId typeId, @Nullable Object... values) {
+	public static @NonNull CollectionValue createBagRange(@NonNull CollectionTypeId typeId, @Nullable Object... values) {
 		Bag<@Nullable Object> allValues = new BagImpl<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
@@ -581,7 +580,7 @@ public abstract class ValueUtil
 		return new BagValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull BagValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable ? extends Object> boxedValues) {
+	public static @NonNull CollectionValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
 		return new AsBagIterator.FromCollection(typeId, boxedValues);		// FIXME reuse Bag
 	}

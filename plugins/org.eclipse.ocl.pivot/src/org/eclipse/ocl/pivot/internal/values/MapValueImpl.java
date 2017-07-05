@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -316,7 +315,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	}
 
 	@Override
-	public @NonNull BagValue getValues() {
+	public @NonNull CollectionValue getValues() {
 		CollectionTypeId bagId = TypeId.BAG.getSpecializedId(typeId.getValueTypeId());
 		Iterable<@Nullable Object> values = boxedValues.values();
 		return ValueUtil.createBagValue(bagId, new BagImpl<>(values));

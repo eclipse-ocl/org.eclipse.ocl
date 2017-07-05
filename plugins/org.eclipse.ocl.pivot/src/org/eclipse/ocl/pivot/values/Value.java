@@ -51,7 +51,7 @@ public interface Value
 	/**
 	 * @generated NOT
 	 */
-	@NonNull BagValue asBagValue();
+	@NonNull CollectionValue asBagValue();
 
 	/**
 	 * @generated NOT

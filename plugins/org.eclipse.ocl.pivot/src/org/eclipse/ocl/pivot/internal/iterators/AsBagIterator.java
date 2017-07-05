@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 import com.google.common.collect.Iterators;
@@ -27,7 +26,7 @@ import com.google.common.collect.Iterators;
  *
  * @since 1.3
  */
-public abstract class AsBagIterator extends LazyCollectionValueImpl implements BagValue
+public abstract class AsBagIterator extends LazyCollectionValueImpl
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 

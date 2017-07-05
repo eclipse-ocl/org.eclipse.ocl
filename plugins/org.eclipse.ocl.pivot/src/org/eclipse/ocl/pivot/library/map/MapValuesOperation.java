@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.library.map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
-import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 
 /**
@@ -24,7 +24,7 @@ public class MapValuesOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull MapValuesOperation INSTANCE = new MapValuesOperation();
 
 	@Override
-	public @NonNull BagValue evaluate(@Nullable Object source) {
+	public @NonNull CollectionValue evaluate(@Nullable Object source) {
 		MapValue mapValue = asMapValue(source);
 		return mapValue.getValues();
 	}

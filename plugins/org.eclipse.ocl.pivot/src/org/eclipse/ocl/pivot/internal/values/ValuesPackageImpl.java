@@ -15,7 +15,6 @@ package org.eclipse.ocl.pivot.internal.values;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValue;
@@ -36,13 +35,6 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
  * @generated
  */
 public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass bagValueEClass = null;
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -181,16 +173,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getBagValue() {
-		return bagValueEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getCollectionValue() {
 		return collectionValueEClass;
 	}
@@ -314,8 +296,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		bagValueEClass = createEClass(BAG_VALUE);
-
 		collectionValueEClass = createEClass(COLLECTION_VALUE);
 
 		integerValueEClass = createEClass(INTEGER_VALUE);
@@ -365,13 +345,12 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		bagValueEClass.getESuperTypes().add(this.getCollectionValue());
 		collectionValueEClass.getESuperTypes().add(this.getValue());
 		integerValueEClass.getESuperTypes().add(this.getRealValue());
 		invalidValueEClass.getESuperTypes().add(this.getNullValue());
 		mapValueEClass.getESuperTypes().add(this.getValue());
 		nullValueEClass.getESuperTypes().add(this.getObjectValue());
-		nullValueEClass.getESuperTypes().add(this.getBagValue());
+		nullValueEClass.getESuperTypes().add(this.getCollectionValue());
 		nullValueEClass.getESuperTypes().add(this.getMapValue());
 		nullValueEClass.getESuperTypes().add(this.getTupleValue());
 		nullValueEClass.getESuperTypes().add(this.getUnlimitedValue());
@@ -381,8 +360,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		unlimitedValueEClass.getESuperTypes().add(this.getIntegerValue());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(bagValueEClass, BagValue.class, "BagValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
 		initEClass(collectionValueEClass, CollectionValue.class, "CollectionValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(integerValueEClass, IntegerValue.class, "IntegerValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

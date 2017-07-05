@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -385,7 +384,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	//	}
 
 	@Override
-	public @NonNull BagValue asBagValue() {
+	public @NonNull CollectionValue asBagValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return new AsBagIterator.FromCollectionValue(this);
 	}

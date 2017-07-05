@@ -16,7 +16,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -28,25 +27,13 @@ import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.values.Bag;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
  * @generated NOT
  */
-public class BagValueImpl extends CollectionValueImpl implements BagValue.Internal
+public class BagValueImpl extends CollectionValueImpl
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return ValuesPackage.Literals.BAG_VALUE;
-	}
-
 	public static @NonNull Bag<@Nullable Object> createBagOfEach(@Nullable Object @NonNull [] boxedValues) {
 		Bag<@Nullable Object> result = new BagImpl<>();
 		for (Object boxedValue : boxedValues) {
@@ -55,7 +42,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 		return result;
 	}
 
-	public static class Accumulator extends BagValueImpl implements BagValue.Accumulator
+	public static class Accumulator extends BagValueImpl implements CollectionValue.Accumulator
 	{
 		public Accumulator(@NonNull CollectionTypeId typeId) {
 			super(typeId, new BagImpl<>());
@@ -72,7 +59,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	}
 
 	@Override
-	public @NonNull BagValue asBagValue() {
+	public @NonNull CollectionValue asBagValue() {
 		return this;
 	}
 
@@ -96,17 +83,17 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	}
 
 	@Override
-	public @NonNull BagValue excluding(@Nullable Object value) {
+	public @NonNull CollectionValue excluding(@Nullable Object value) {
 		return ExcludingIterator.excluding(this, value).asBagValue();
 	}
 
 	@Override
-	public @NonNull BagValue excludingAll(@NonNull CollectionValue values) {
+	public @NonNull CollectionValue excludingAll(@NonNull CollectionValue values) {
 		return ExcludingAllIterator.excludingAll(this, values).asBagValue();
 	}
 
 	@Override
-	public @NonNull BagValue flatten() {
+	public @NonNull CollectionValue flatten() {
 		return FlattenIterator.flatten(this).asBagValue();
 	}
 
@@ -129,12 +116,12 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	}
 
 	@Override
-	public @NonNull BagValue including(@Nullable Object value) {
+	public @NonNull CollectionValue including(@Nullable Object value) {
 		return IncludingIterator.including(getTypeId(), this, value).asBagValue();
 	}
 
 	@Override
-	public @NonNull BagValue includingAll(@NonNull CollectionValue values) {
+	public @NonNull CollectionValue includingAll(@NonNull CollectionValue values) {
 		return IncludingAllIterator.includingAll(getTypeId(), this, values).asBagValue();
 	}
 

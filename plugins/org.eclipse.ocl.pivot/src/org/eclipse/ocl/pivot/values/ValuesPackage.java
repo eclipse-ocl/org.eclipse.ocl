@@ -101,16 +101,6 @@ public interface ValuesPackage extends EPackage {
 	int COLLECTION_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.pivot.values.impl.BagValueImpl <em>Bag Value</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.pivot.values.impl.BagValueImpl
-	 * @see org.eclipse.ocl.pivot.values.impl.ValuesPackageImpl#getBagValue()
-	 * @generated
-	 */
-	int BAG_VALUE = 0;
-
-	/**
 	 * The number of structural features of the '<em>Bag Value</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -326,17 +316,6 @@ public interface ValuesPackage extends EPackage {
 	 */
 	int UNLIMITED_VALUE_FEATURE_COUNT = INTEGER_VALUE_FEATURE_COUNT + 0;
 
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.BagValue <em>Bag Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Bag Value</em>'.
-	 * @see org.eclipse.ocl.pivot.values.BagValue
-	 * @generated
-	 */
-	EClass getBagValue();
-
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.CollectionValue <em>Collection Value</em>}'.
 	 * <!-- begin-user-doc -->
@@ -459,16 +438,6 @@ public interface ValuesPackage extends EPackage {
 	 * @generated
 	 */
 	interface Literals {
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.impl.BagValueImpl <em>Bag Value</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.values.impl.BagValueImpl
-		 * @see org.eclipse.ocl.pivot.values.impl.ValuesPackageImpl#getBagValue()
-		 * @generated
-		 */
-		EClass BAG_VALUE = eINSTANCE.getBagValue();
-
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.impl.CollectionValueImpl <em>Collection Value</em>}' class.
 		 * <!-- begin-user-doc -->

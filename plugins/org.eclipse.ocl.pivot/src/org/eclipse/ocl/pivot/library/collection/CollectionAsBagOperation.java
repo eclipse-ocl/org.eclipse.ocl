@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
-import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * CollectionAsBagOperation realises the Collection::asBag() library operation.
@@ -23,7 +23,7 @@ public class CollectionAsBagOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull CollectionAsBagOperation INSTANCE = new CollectionAsBagOperation();
 
 	@Override
-	public @NonNull BagValue evaluate(@Nullable Object argument) {
+	public @NonNull CollectionValue evaluate(@Nullable Object argument) {
 		return asBagValue(argument);
 	}
 }

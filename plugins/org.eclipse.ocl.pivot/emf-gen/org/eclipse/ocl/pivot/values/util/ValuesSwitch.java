@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValue;
@@ -85,14 +84,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case ValuesPackage.BAG_VALUE: {
-				BagValue bagValue = (BagValue)theEObject;
-				T result = caseBagValue(bagValue);
-				if (result == null) result = caseCollectionValue(bagValue);
-				if (result == null) result = caseValue(bagValue);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ValuesPackage.COLLECTION_VALUE: {
 				CollectionValue collectionValue = (CollectionValue)theEObject;
 				T result = caseCollectionValue(collectionValue);
@@ -113,7 +104,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				T result = caseInvalidValue(invalidValue);
 				if (result == null) result = caseNullValue(invalidValue);
 				if (result == null) result = caseObjectValue(invalidValue);
-				if (result == null) result = caseBagValue(invalidValue);
 				if (result == null) result = caseTupleValue(invalidValue);
 				if (result == null) result = caseUnlimitedValue(invalidValue);
 				if (result == null) result = caseIntegerValue(invalidValue);
@@ -127,7 +117,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				NullValue nullValue = (NullValue)theEObject;
 				T result = caseNullValue(nullValue);
 				if (result == null) result = caseObjectValue(nullValue);
-				if (result == null) result = caseBagValue(nullValue);
 				if (result == null) result = caseTupleValue(nullValue);
 				if (result == null) result = caseUnlimitedValue(nullValue);
 				if (result == null) result = caseIntegerValue(nullValue);
@@ -175,21 +164,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 			}
 			default: return defaultCase(theEObject);
 		}
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Bag Value</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Bag Value</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseBagValue(BagValue object) {
-		return null;
 	}
 
 	/**
