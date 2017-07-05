@@ -17,10 +17,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 /**
@@ -132,7 +132,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
-	public @NonNull SequenceValue toSequenceValue() {
+	public @NonNull CollectionValue toSequenceValue() {
 		return new RangeSequenceValueImpl(getSequenceTypeId(), getElements());
 	}
 

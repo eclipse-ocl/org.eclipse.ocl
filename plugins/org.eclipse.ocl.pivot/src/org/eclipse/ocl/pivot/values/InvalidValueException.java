@@ -127,7 +127,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	@Override
-	public @NonNull SequenceValue asSequenceValue() {
+	public @NonNull CollectionValue asSequenceValue() {
 		throw this;
 	}
 

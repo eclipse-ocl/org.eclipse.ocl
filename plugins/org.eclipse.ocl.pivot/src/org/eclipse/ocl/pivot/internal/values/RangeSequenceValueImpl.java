@@ -17,9 +17,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 /**
@@ -32,7 +32,7 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 	}
 
 	@Override
-	public @NonNull SequenceValue append(@Nullable Object value) {
+	public @NonNull CollectionValue append(@Nullable Object value) {
 		IntegerRange theElements = getElements();
 		IntegerValue nextValue = theElements.getLast().addInteger(ONE_VALUE);
 		if (nextValue.equals(value)) {
@@ -82,7 +82,7 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 	}
 
 	@Override
-	public @NonNull SequenceValue flatten() {
+	public @NonNull CollectionValue flatten() {
 		return this;
 	}
 
@@ -92,7 +92,7 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 	}
 
 	@Override
-	public @NonNull SequenceValue including(@Nullable Object value) {
+	public @NonNull CollectionValue including(@Nullable Object value) {
 		return append(value);
 	}
 
@@ -102,7 +102,7 @@ public class RangeSequenceValueImpl extends SequenceValueImpl
 	}
 
 	@Override
-	public @NonNull SequenceValue prepend(@Nullable Object value) {
+	public @NonNull CollectionValue prepend(@Nullable Object value) {
 		IntegerRange theElements = getElements();
 		IntegerValue previousValue = theElements.getFirst().subtractInteger(ONE_VALUE);
 		if (previousValue.equals(value)) {

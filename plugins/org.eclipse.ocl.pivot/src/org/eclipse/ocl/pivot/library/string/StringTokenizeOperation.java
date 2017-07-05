@@ -26,8 +26,8 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractPolyOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 
 /**
  * StringTokenizeOperation realises the String::tokenize() library operations.
@@ -64,7 +64,7 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
-	public @Nullable SequenceValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
+	public @Nullable CollectionValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
@@ -72,14 +72,14 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 	 * @since 1.1
 	 */
 	@Override
-	public @NonNull SequenceValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
+	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		return evaluate(executor, (CollectionTypeId)returnTypeId, sourceValue, DELIMS, false);
 	}
 
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
-	public @Nullable SequenceValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
+	public @Nullable CollectionValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, argumentValue);
 	}
 
@@ -87,7 +87,7 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 	 * @since 1.1
 	 */
 	@Override
-	public @NonNull SequenceValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
+	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		String delims = asString(argumentValue);
 		return evaluate(executor, (CollectionTypeId)returnTypeId, sourceValue, delims, false);
 	}
@@ -96,7 +96,7 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 	 * @since 1.1*/
 	@Deprecated
 	@Override
-	public @Nullable SequenceValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
+	public @Nullable CollectionValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
 		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, firstArgumentValue, secondArgumentValue);
 	}
 
@@ -104,13 +104,13 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 	 * @since 1.1
 	 */
 	@Override
-	public @NonNull SequenceValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
+	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
 		String delims = asString(firstArgumentValue);
 		boolean returnDelims = asBoolean(secondArgumentValue);
 		return evaluate(executor, (CollectionTypeId)returnTypeId, sourceValue, delims, returnDelims);
 	}
 
-	/*	public @NonNull SequenceValue evaluate(@NonNull Executor executor, @NonNull DomainCallExp callExp, @Nullable Object sourceValue, @NonNull Object... argumentValues) {
+	/*	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull DomainCallExp callExp, @Nullable Object sourceValue, @NonNull Object... argumentValues) {
 		String delims = DELIMS;
 		boolean returnDelims = false;
 		if (argumentValues.length > 0) {
@@ -129,7 +129,7 @@ public class StringTokenizeOperation extends AbstractPolyOperation
 		return evaluate(executor, (CollectionTypeId)ClassUtil.nonNullPivot(callExp.getType()).getTypeId(), sourceValue, delims, returnDelims);
 	} */
 
-	private @NonNull SequenceValue evaluate(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId, @Nullable Object sourceValue, @NonNull String delims, boolean returnDelims) {
+	private @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId, @Nullable Object sourceValue, @NonNull String delims, boolean returnDelims) {
 		String sourceString = asString(sourceValue);
 		StringTokenizer tokenizer = new StringTokenizer(sourceString, delims, returnDelims);
 		List<Object> results = new ArrayList<Object>();

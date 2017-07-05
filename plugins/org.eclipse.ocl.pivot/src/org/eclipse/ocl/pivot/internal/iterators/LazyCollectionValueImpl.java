@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.Value;
 
@@ -324,7 +323,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull SequenceValue asSequenceValue() {
+	public @NonNull CollectionValue asSequenceValue() {
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
@@ -955,6 +954,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return SubOrderedSetIterator.subOrderedSet(this, lower, upper);
 	}
 
+	@Override
 	public @NonNull CollectionValue subSequence(int lower, int upper) {
 		return SubSequenceIterator.subSequence(this, lower, upper);
 	}
@@ -965,7 +965,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull SequenceValue toSequenceValue() {
+	public @NonNull CollectionValue toSequenceValue() {
 		Iterable<@Nullable Object> elements = Lists.newArrayList(lazyIterator());
 		if (isUnique()) {
 			return new SparseSequenceValueImpl(getSequenceTypeId(), SparseSequenceValueImpl.createSequenceOfEach(elements));

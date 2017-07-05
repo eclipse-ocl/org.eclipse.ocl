@@ -230,12 +230,17 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
+	@NonNull CollectionValue subSequence(int lower, int upper);
+
+	/**
+	 * @generated NOT
+	 */
 	@NonNull CollectionValue symmetricDifference(@NonNull CollectionValue set);
 
 	/**
 	 * @generated NOT
 	 */
-	@Nullable SequenceValue toSequenceValue();
+	@NonNull CollectionValue toSequenceValue();
 
 	/**
 	 * @generated NOT

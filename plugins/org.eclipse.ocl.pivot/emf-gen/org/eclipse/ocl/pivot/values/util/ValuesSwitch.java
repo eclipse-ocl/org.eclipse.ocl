@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -117,7 +116,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = caseObjectValue(invalidValue);
 				if (result == null) result = caseBagValue(invalidValue);
 				if (result == null) result = caseOrderedSetValue(invalidValue);
-				if (result == null) result = caseSequenceValue(invalidValue);
 				if (result == null) result = caseTupleValue(invalidValue);
 				if (result == null) result = caseUnlimitedValue(invalidValue);
 				if (result == null) result = caseIntegerValue(invalidValue);
@@ -133,7 +131,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = caseObjectValue(nullValue);
 				if (result == null) result = caseBagValue(nullValue);
 				if (result == null) result = caseOrderedSetValue(nullValue);
-				if (result == null) result = caseSequenceValue(nullValue);
 				if (result == null) result = caseTupleValue(nullValue);
 				if (result == null) result = caseUnlimitedValue(nullValue);
 				if (result == null) result = caseIntegerValue(nullValue);
@@ -162,14 +159,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				RealValue realValue = (RealValue)theEObject;
 				T result = caseRealValue(realValue);
 				if (result == null) result = caseValue(realValue);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ValuesPackage.SEQUENCE_VALUE: {
-				SequenceValue sequenceValue = (SequenceValue)theEObject;
-				T result = caseSequenceValue(sequenceValue);
-				if (result == null) result = caseCollectionValue(sequenceValue);
-				if (result == null) result = caseValue(sequenceValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -316,21 +305,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseRealValue(RealValue object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Sequence Value</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Sequence Value</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseSequenceValue(SequenceValue object) {
 		return null;
 	}
 

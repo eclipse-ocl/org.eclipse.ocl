@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 
 import com.google.common.collect.Iterators;
 
@@ -27,7 +26,7 @@ import com.google.common.collect.Iterators;
  *
  * @since 1.3
  */
-public abstract class AsSequenceIterator extends LazyCollectionValueImpl implements SequenceValue
+public abstract class AsSequenceIterator extends LazyCollectionValueImpl
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
@@ -72,7 +71,7 @@ public abstract class AsSequenceIterator extends LazyCollectionValueImpl impleme
 
 	@Override
 	@Deprecated
-	public @NonNull SequenceValue subSequence(int lower, int upper) {
+	public @NonNull CollectionValue subSequence(int lower, int upper) {
 		return super.subSequence(lower, upper).asSequenceValue();
 	}
 

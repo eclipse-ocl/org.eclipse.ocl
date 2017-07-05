@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
-import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * StringCharactersOperation realises the String::characters() library operation.
@@ -29,7 +29,7 @@ public class StringCharactersOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull CollectionTypeId SEQ_STRING = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
 
 	@Override
-	public @NonNull SequenceValue evaluate(@Nullable Object sourceVal) {
+	public @NonNull CollectionValue evaluate(@Nullable Object sourceVal) {
 		String sourceString = asString(sourceVal);
 		List<Object> results = new ArrayList<Object>(sourceString.length());
 		for (int i = 0; i < sourceString.length(); i++) {

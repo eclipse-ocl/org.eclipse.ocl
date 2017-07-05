@@ -89,7 +89,6 @@ import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -305,7 +304,7 @@ public abstract class ValueUtil
 		}
 	}
 
-	public static @NonNull SequenceValue asSequenceValue(@Nullable Object value) {
+	public static @NonNull CollectionValue asSequenceValue(@Nullable Object value) {
 		if (value instanceof Value) {
 			return ((Value)value).asSequenceValue();
 		}
@@ -664,20 +663,20 @@ public abstract class ValueUtil
 		return new IntegerRangeImpl(firstInteger, lastInteger);
 	}
 
-	public static SequenceValue.@NonNull Accumulator createSequenceAccumulatorValue(@NonNull CollectionTypeId collectedId) {
+	public static CollectionValue.@NonNull Accumulator createSequenceAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new SparseSequenceValueImpl.Accumulator(collectedId);
 	}
 
-	public static @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
+	public static @NonNull CollectionValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
 		return new AsSequenceIterator.FromArray(typeId, boxedValues);
 	}
 
-	public static @NonNull SequenceValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
+	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
 		return new RangeSequenceValueImpl(typeId, range);
 	}
 
-	public static @NonNull SequenceValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
+	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
 		List<@Nullable Object> allValues = new ArrayList<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
@@ -690,7 +689,7 @@ public abstract class ValueUtil
 		return new SparseSequenceValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull SequenceValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable ? extends Object> boxedValues) {
+	public static @NonNull CollectionValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
 		return new AsSequenceIterator.FromCollection(typeId, boxedValues);
 	}

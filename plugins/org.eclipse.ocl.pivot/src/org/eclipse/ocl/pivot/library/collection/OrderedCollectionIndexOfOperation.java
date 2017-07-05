@@ -13,8 +13,8 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 
 /**
  * OrderedCollectionIndexOfOperation realises the OrderedCollection::indexOf() library operation.
@@ -25,7 +25,7 @@ public class OrderedCollectionIndexOfOperation extends AbstractSimpleBinaryOpera
 
 	@Override
 	public @NonNull IntegerValue evaluate(@Nullable Object left, @Nullable Object right) {
-		SequenceValue leftOrderedCollectionValue = asSequenceValue(left);
+		CollectionValue leftOrderedCollectionValue = asSequenceValue(left);
 		return leftOrderedCollectionValue.indexOf(right);
 	}
 }

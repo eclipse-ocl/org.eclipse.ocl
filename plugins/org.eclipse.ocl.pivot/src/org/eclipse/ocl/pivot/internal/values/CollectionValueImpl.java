@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
@@ -449,7 +448,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull SequenceValue asSequenceValue() {
+	public @NonNull CollectionValue asSequenceValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return new AsSequenceIterator.FromCollectionValue(this);
 	}
@@ -968,6 +967,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
+	public @NonNull CollectionValue subSequence(int lower, int upper) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue set) {
 		throw new UnsupportedOperationException();
 	}
@@ -976,7 +980,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	 * @since 1.3
 	 */
 	@Override
-	public @NonNull SequenceValue toSequenceValue() {
+	public @NonNull CollectionValue toSequenceValue() {
 		Iterable<@Nullable Object> elements = iterable();
 		if (isUnique()) {
 			return new SparseSequenceValueImpl(getSequenceTypeId(), SparseSequenceValueImpl.createSequenceOfEach(elements));

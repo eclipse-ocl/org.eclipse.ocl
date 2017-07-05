@@ -132,7 +132,7 @@ public interface Value
 	/**
 	 * @generated NOT
 	 */
-	@NonNull SequenceValue asSequenceValue();
+	@NonNull CollectionValue asSequenceValue();
 
 	/**
 	 * @generated NOT

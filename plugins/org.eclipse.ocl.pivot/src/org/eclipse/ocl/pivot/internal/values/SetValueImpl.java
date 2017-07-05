@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.internal.iterators.SymmetricDifferenceIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 
 //
 //	Note that it is not necessary to adjust set uniqueness for OCL value equivalence
@@ -165,7 +164,7 @@ public class SetValueImpl extends CollectionValueImpl
 	} */
 
 	@Override
-	public @NonNull SequenceValue toSequenceValue() {
+	public @NonNull CollectionValue toSequenceValue() {
 		return super.toSequenceValue();
 	}
 

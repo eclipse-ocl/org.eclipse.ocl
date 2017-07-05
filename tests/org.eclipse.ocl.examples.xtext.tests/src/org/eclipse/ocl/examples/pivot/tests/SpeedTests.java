@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
 import junit.framework.TestCase;
@@ -165,7 +164,7 @@ public class SpeedTests extends PivotTestCase
 			long endTime0 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime0 - startTime0) / 1.0e9);
 			long startTime1 = System.nanoTime();
-			SequenceValue seqValue = ValueUtil.createSequenceOfEach(collectionTypedId, values);
+			CollectionValue seqValue = ValueUtil.createSequenceOfEach(collectionTypedId, values);
 			long endTime1 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
 			long startTime2 = System.nanoTime();
@@ -215,7 +214,7 @@ public class SpeedTests extends PivotTestCase
 			long endTime0 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime0 - startTime0) / 1.0e9);
 			long startTime1 = System.nanoTime();
-			SequenceValue seqValue = ValueUtil.createSequenceOfEach(collectionTypedId, values);
+			CollectionValue seqValue = ValueUtil.createSequenceOfEach(collectionTypedId, values);
 			long endTime1 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
 			long startTime2 = System.nanoTime();

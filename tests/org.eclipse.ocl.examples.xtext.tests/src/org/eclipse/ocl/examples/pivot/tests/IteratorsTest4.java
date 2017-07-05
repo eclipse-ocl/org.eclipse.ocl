@@ -60,7 +60,6 @@ import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.junit.After;
@@ -432,7 +431,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		IdResolver idResolver = ocl.getIdResolver();
 		String self = "foo";
 		CollectionTypeId typeId = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
-		SequenceValue expected = idResolver.createSequenceOfEach(typeId, "THIS AND", "THAT", "THE OTHER");
+		CollectionValue expected = idResolver.createSequenceOfEach(typeId, "THIS AND", "THAT", "THE OTHER");
 
 		ocl.assertQueryEquals(self, expected, "Sequence{Sequence{'this and', 'that'}, Sequence{'the other'}}->collect(s : Sequence(String) | s.toUpperCase())");
 		ocl.dispose();
@@ -506,7 +505,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.pkg1, expectedSet, "ownedPackages?->sortedBy(name)");
 
 		CollectionTypeId stringsTypeId = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
-		SequenceValue expected = idResolver.createSequenceOfEach(stringsTypeId, "a", "b", "c", "d", "e");
+		CollectionValue expected = idResolver.createSequenceOfEach(stringsTypeId, "a", "b", "c", "d", "e");
 		ocl.assertQueryEquals(ocl.pkg1, expected, "Bag{'d', 'b', 'e', 'a', 'c'}->sortedBy(e | e)");
 		ocl.assertQueryResults(null, "Sequence{'x', 'aa', 'zzz', 'zzz', 'zzz', 'yyyy', 'yyyy'}", "Bag{'x', 'yyyy', 'zzz', 'aa', 'zzz', 'yyyy', 'zzz'}->sortedBy(size())");
 		ocl.dispose();

@@ -96,7 +96,6 @@ import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.OCLValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -604,7 +603,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull SequenceValue createSequenceOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
+	public @NonNull CollectionValue createSequenceOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
 		List<@Nullable Object> boxedValues = new ArrayList<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
@@ -613,7 +612,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
+	public @NonNull CollectionValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
 		List<@Nullable Object> boxedValues = new ArrayList<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));

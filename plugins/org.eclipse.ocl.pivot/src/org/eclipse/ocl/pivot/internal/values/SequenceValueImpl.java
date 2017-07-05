@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -36,24 +35,12 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
  * @generated NOT
  */
-public abstract class SequenceValueImpl extends CollectionValueImpl implements SequenceValue
+public abstract class SequenceValueImpl extends CollectionValueImpl
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return ValuesPackage.Literals.SEQUENCE_VALUE;
-	}
-
 	public SequenceValueImpl(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable Object> values) {
 		super(typeId, values);
 	}
@@ -96,7 +83,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull SequenceValue asSequenceValue() {
+	public @NonNull CollectionValue asSequenceValue() {
 		return this;
 	}
 
@@ -119,12 +106,12 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull SequenceValue excluding(@Nullable Object value) {
+	public @NonNull CollectionValue excluding(@Nullable Object value) {
 		return ExcludingIterator.excluding(this, value).asSequenceValue();
 	}
 
 	@Override
-	public @NonNull SequenceValue excludingAll(@NonNull CollectionValue values) {
+	public @NonNull CollectionValue excludingAll(@NonNull CollectionValue values) {
 		return ExcludingAllIterator.excludingAll(this, values).asSequenceValue();
 	}
 
@@ -137,7 +124,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull SequenceValue flatten() {
+	public @NonNull CollectionValue flatten() {
 		return FlattenIterator.flatten(this).asSequenceValue();
 	}
 
@@ -152,12 +139,12 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull SequenceValue including(@Nullable Object value) {
+	public @NonNull CollectionValue including(@Nullable Object value) {
 		return IncludingIterator.including(getTypeId(), this, value).asSequenceValue();
 	}
 
 	@Override
-	public @NonNull SequenceValue includingAll(@NonNull CollectionValue values) {
+	public @NonNull CollectionValue includingAll(@NonNull CollectionValue values) {
 		return IncludingAllIterator.includingAll(getTypeId(), this, values).asSequenceValue();
 	}
 
@@ -171,7 +158,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull SequenceValue insertAt(int index, @Nullable Object object) {
+	public @NonNull CollectionValue insertAt(int index, @Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "insertAt");
 		}
@@ -204,17 +191,17 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull SequenceValue prepend(@Nullable Object value) {
+	public @NonNull CollectionValue prepend(@Nullable Object value) {
 		return PrependIterator.prepend(getTypeId(), this, value).asSequenceValue();
 	}
 
 	@Override
-	public @NonNull SequenceValue prependAll(@NonNull CollectionValue values) {
+	public @NonNull CollectionValue prependAll(@NonNull CollectionValue values) {
 		return PrependAllIterator.prependAll(this, values).asSequenceValue();
 	}
 
 	/*	@Override
-	public @NonNull SequenceValue prepend(@Nullable Object object) {
+	public @NonNull CollectionValue prepend(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "prepend");
 		}
@@ -225,28 +212,28 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	} */
 
 	/*	@Override
-	public @NonNull SequenceValue prependAll(@NonNull CollectionValue objects) {
+	public @NonNull CollectionValue prependAll(@NonNull CollectionValue objects) {
 		List<Object> result = new ArrayList<Object>(objects.getElements());
 		result.addAll(elements);
 		return new SparseSequenceValueImpl(getTypeId(), result);
 	} */
 
 	@Override
-	public @NonNull SequenceValue reverse() {
+	public @NonNull CollectionValue reverse() {
 		List<@Nullable Object> elements = new ArrayList<>(this.elements);
 		Collections.reverse(elements);
 		return new SparseSequenceValueImpl(getTypeId(), elements);
 	}
 
 	@Override
-	public @NonNull SequenceValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+	public @NonNull CollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
 		List<@Nullable Object> values = new ArrayList<>(elements);
 		Collections.sort(values, comparator);
 		return new SparseSequenceValueImpl(getTypeId(), values);
 	}
 
 	@Override
-	public @NonNull SequenceValue subSequence(int lower, int upper) {
+	public @NonNull CollectionValue subSequence(int lower, int upper) {
 		return SubSequenceIterator.subSequence(this, lower, upper).asSequenceValue();
 	}
 
@@ -263,7 +250,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	 * @throws IllegalArgumentException if the lower bound is greater than the upper
 	 *
 	@Override
-	public @NonNull SequenceValue subSequence(int lower, int upper) {
+	public @NonNull CollectionValue subSequence(int lower, int upper) {
 		lower = lower - 1;
 		upper = upper - 1;
 
@@ -291,7 +278,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	} */
 
 	@Override
-	public @NonNull SequenceValue toSequenceValue() {
+	public @NonNull CollectionValue toSequenceValue() {
 		return this;
 	}
 

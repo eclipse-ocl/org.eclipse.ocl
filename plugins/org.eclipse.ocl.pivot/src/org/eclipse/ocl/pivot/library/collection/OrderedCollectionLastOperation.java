@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
-import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * OrderedCollectionLastOperation realises the OrderedCollection::last() library operation.
@@ -24,7 +24,7 @@ public class OrderedCollectionLastOperation extends AbstractSimpleUnaryOperation
 
 	@Override
 	public @Nullable Object evaluate(@Nullable Object argument) {
-		SequenceValue orderedCollectionValue = asSequenceValue(argument);
+		CollectionValue orderedCollectionValue = asSequenceValue(argument);
 		return orderedCollectionValue.last();
 	}
 }

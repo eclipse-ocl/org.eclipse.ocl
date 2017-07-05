@@ -21,10 +21,10 @@ import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.internal.iterators.PrependIterator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 
 /**
  * @generated NOT
@@ -118,7 +118,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	} */
 
 	@Override
-	public @NonNull SequenceValue toSequenceValue() {
+	public @NonNull CollectionValue toSequenceValue() {
 		return super.toSequenceValue();
 	}
 

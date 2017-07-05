@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -140,7 +139,7 @@ public abstract class ValueImpl extends ValueUtil implements Value
 	}
 
 	@Override
-	public @NonNull SequenceValue asSequenceValue() {
+	public @NonNull CollectionValue asSequenceValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.SEQUENCE_NAME, getTypeName());
 	}
 

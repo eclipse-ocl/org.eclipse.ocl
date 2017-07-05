@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleTernaryOperation;
-import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * SequenceSubSequenceOperation realises the OrderedSet::subSequence() library operation.
@@ -23,8 +23,8 @@ public class SequenceSubSequenceOperation extends AbstractSimpleTernaryOperation
 	public static final @NonNull SequenceSubSequenceOperation INSTANCE = new SequenceSubSequenceOperation();
 
 	@Override
-	public @NonNull SequenceValue evaluate(@Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
-		SequenceValue selfValue = asSequenceValue(sourceValue);
+	public @NonNull CollectionValue evaluate(@Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
+		CollectionValue selfValue = asSequenceValue(sourceValue);
 		Integer fromValue = asInteger(firstArgumentValue);
 		Integer toValue = asInteger(secondArgumentValue);
 		return selfValue.subSequence(fromValue, toValue);

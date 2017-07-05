@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -100,13 +99,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	private EClass realValueEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass sequenceValueEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -287,16 +279,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getSequenceValue() {
-		return sequenceValueEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getTupleValue() {
 		return tupleValueEClass;
 	}
@@ -368,8 +350,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 
 		realValueEClass = createEClass(REAL_VALUE);
 
-		sequenceValueEClass = createEClass(SEQUENCE_VALUE);
-
 		tupleValueEClass = createEClass(TUPLE_VALUE);
 
 		unlimitedValueEClass = createEClass(UNLIMITED_VALUE);
@@ -414,7 +394,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		nullValueEClass.getESuperTypes().add(this.getBagValue());
 		nullValueEClass.getESuperTypes().add(this.getMapValue());
 		nullValueEClass.getESuperTypes().add(this.getOrderedSetValue());
-		nullValueEClass.getESuperTypes().add(this.getSequenceValue());
 		nullValueEClass.getESuperTypes().add(this.getTupleValue());
 		nullValueEClass.getESuperTypes().add(this.getUnlimitedValue());
 		objectValueEClass.getESuperTypes().add(this.getValue());
@@ -425,7 +404,7 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		// Initialize classes and features; add operations and parameters
 		initEClass(bagValueEClass, BagValue.class, "BagValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(collectionValueEClass, CollectionValue.class, "CollectionValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(collectionValueEClass, CollectionValue.class, "CollectionValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(integerValueEClass, IntegerValue.class, "IntegerValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -440,8 +419,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		initEClass(orderedSetValueEClass, OrderedSetValue.class, "OrderedSetValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(realValueEClass, RealValue.class, "RealValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(sequenceValueEClass, SequenceValue.class, "SequenceValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(tupleValueEClass, TupleValue.class, "TupleValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
