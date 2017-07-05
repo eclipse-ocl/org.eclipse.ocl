@@ -150,16 +150,6 @@ public interface ValuesPackage extends EPackage {
 	int NULL_VALUE = 5;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.pivot.values.impl.OrderedSetValueImpl <em>Ordered Set Value</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.pivot.values.impl.OrderedSetValueImpl
-	 * @see org.eclipse.ocl.pivot.values.impl.ValuesPackageImpl#getOrderedSetValue()
-	 * @generated
-	 */
-	int ORDERED_SET_VALUE = 8;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.values.impl.RealValueImpl <em>Real Value</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -408,16 +398,6 @@ public interface ValuesPackage extends EPackage {
 	EClass getObjectValue();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.OrderedSetValue <em>Ordered Set Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Ordered Set Value</em>'.
-	 * @see org.eclipse.ocl.pivot.values.OrderedSetValue
-	 * @generated
-	 */
-	EClass getOrderedSetValue();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.RealValue <em>Real Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -548,16 +528,6 @@ public interface ValuesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass OBJECT_VALUE = eINSTANCE.getObjectValue();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.impl.OrderedSetValueImpl <em>Ordered Set Value</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.values.impl.OrderedSetValueImpl
-		 * @see org.eclipse.ocl.pivot.values.impl.ValuesPackageImpl#getOrderedSetValue()
-		 * @generated
-		 */
-		EClass ORDERED_SET_VALUE = eINSTANCE.getOrderedSetValue();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.impl.RealValueImpl <em>Real Value</em>}' class.

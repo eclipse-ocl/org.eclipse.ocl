@@ -230,6 +230,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
+	@NonNull CollectionValue subOrderedSet(int lower, int upper);
+
+	/**
+	 * @generated NOT
+	 */
 	@NonNull CollectionValue subSequence(int lower, int upper);
 
 	/**

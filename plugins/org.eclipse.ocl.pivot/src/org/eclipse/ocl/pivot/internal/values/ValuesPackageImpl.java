@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
@@ -85,13 +84,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	private EClass objectValueEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass orderedSetValueEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -259,16 +251,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getOrderedSetValue() {
-		return orderedSetValueEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getRealValue() {
 		return realValueEClass;
 	}
@@ -346,8 +328,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 
 		objectValueEClass = createEClass(OBJECT_VALUE);
 
-		orderedSetValueEClass = createEClass(ORDERED_SET_VALUE);
-
 		realValueEClass = createEClass(REAL_VALUE);
 
 		tupleValueEClass = createEClass(TUPLE_VALUE);
@@ -393,7 +373,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		nullValueEClass.getESuperTypes().add(this.getObjectValue());
 		nullValueEClass.getESuperTypes().add(this.getBagValue());
 		nullValueEClass.getESuperTypes().add(this.getMapValue());
-		nullValueEClass.getESuperTypes().add(this.getOrderedSetValue());
 		nullValueEClass.getESuperTypes().add(this.getTupleValue());
 		nullValueEClass.getESuperTypes().add(this.getUnlimitedValue());
 		objectValueEClass.getESuperTypes().add(this.getValue());
@@ -415,8 +394,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		initEClass(nullValueEClass, NullValue.class, "NullValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(objectValueEClass, ObjectValue.class, "ObjectValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(orderedSetValueEClass, OrderedSetValue.class, "OrderedSetValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(realValueEClass, RealValue.class, "RealValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

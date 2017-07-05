@@ -59,7 +59,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.junit.After;
@@ -493,7 +492,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		IdResolver idResolver = ocl.getIdResolver();
 		@SuppressWarnings("null") @NonNull Type packageType = metamodelManager.getASClass("Package");
 		CollectionTypeId typeId = TypeId.ORDERED_SET.getSpecializedId(packageType.getTypeId());
-		OrderedSetValue expectedSet = idResolver.createOrderedSetOfEach(typeId, ocl.bob, ocl.pkg2, ocl.pkg3);
+		CollectionValue expectedSet = idResolver.createOrderedSetOfEach(typeId, ocl.bob, ocl.pkg2, ocl.pkg3);
 
 		// complete form
 		ocl.assertQueryEquals(ocl.pkg1, expectedSet, "ownedPackages?->sortedBy(p : ocl::Package | p.name)");

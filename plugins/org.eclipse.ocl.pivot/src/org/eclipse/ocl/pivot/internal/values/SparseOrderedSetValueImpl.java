@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSet;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 
 /**
  * @generated NOT
@@ -39,7 +38,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 		return result;
 	}
 
-	public static class Accumulator extends SparseOrderedSetValueImpl implements OrderedSetValue.Accumulator
+	public static class Accumulator extends SparseOrderedSetValueImpl implements CollectionValue.Accumulator
 	{
 		public Accumulator(@NonNull CollectionTypeId typeId) {
 			super(typeId, new OrderedSetImpl<>());
@@ -56,7 +55,7 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
-	public @NonNull OrderedSetValue append(@Nullable Object value) {
+	public @NonNull CollectionValue append(@Nullable Object value) {
 		return AppendIterator.append(getTypeId(), this, value).asOrderedSetValue();
 	}
 
@@ -80,12 +79,12 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
-	public @NonNull OrderedSetValue flatten() {
+	public @NonNull CollectionValue flatten() {
 		return FlattenIterator.flatten(this).asOrderedSetValue();
 	}
 
 	@Override
-	public @NonNull OrderedSetValue including(@Nullable Object value) {
+	public @NonNull CollectionValue including(@Nullable Object value) {
 		return IncludingIterator.including(getTypeId(), this, value).asOrderedSetValue();
 	}
 
@@ -102,12 +101,12 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
-	public @NonNull OrderedSetValue prepend(@Nullable Object value) {
+	public @NonNull CollectionValue prepend(@Nullable Object value) {
 		return PrependIterator.prepend(getTypeId(), this, value).asOrderedSetValue();
 	}
 
 	/*	@Override
-	public @NonNull OrderedSetValue prepend(@Nullable Object object) {
+	public @NonNull CollectionValue prepend(@Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw new InvalidValueException(PivotMessages.InvalidSource, "prepend");
 		}

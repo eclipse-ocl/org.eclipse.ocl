@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleTernaryOperation;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * OrderedSetSubOrderedSetOperation realises the OrderedSet::subOrderedSet() library operation.
@@ -23,8 +23,8 @@ public class OrderedSetSubOrderedSetOperation extends AbstractSimpleTernaryOpera
 	public static final @NonNull OrderedSetSubOrderedSetOperation INSTANCE = new OrderedSetSubOrderedSetOperation();
 
 	@Override
-	public @NonNull OrderedSetValue evaluate(@Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
-		OrderedSetValue selfValue = asOrderedSetValue(sourceValue);
+	public @NonNull CollectionValue evaluate(@Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
+		CollectionValue selfValue = asOrderedSetValue(sourceValue);
 		Integer fromValue = asInteger(firstArgumentValue);
 		Integer toValue = asInteger(secondArgumentValue);
 		return selfValue.subOrderedSet(fromValue, toValue);

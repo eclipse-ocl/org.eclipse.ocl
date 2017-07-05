@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.internal.iterators.SymmetricDifferenceIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 
 //
 //	Note that it is not necessary to adjust set uniqueness for OCL value equivalence
@@ -139,7 +138,7 @@ public class SetValueImpl extends CollectionValueImpl
 	} */
 
 	@Override
-	public @NonNull OrderedSetValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+	public @NonNull CollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
 		List<@Nullable Object> values = new ArrayList<>(elements);
 		Collections.sort(values, comparator);
 		return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), values);

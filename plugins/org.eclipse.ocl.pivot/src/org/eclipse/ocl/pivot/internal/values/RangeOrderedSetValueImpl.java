@@ -20,7 +20,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 /**
@@ -33,7 +32,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
-	public @NonNull OrderedSetValue append(@Nullable Object value) {
+	public @NonNull CollectionValue append(@Nullable Object value) {
 		IntegerRange theElements = getElements();
 		IntegerValue nextValue = theElements.getLast().addInteger(ONE_VALUE);
 		if (nextValue.equals(value)) {
@@ -84,7 +83,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
-	public @NonNull OrderedSetValue flatten() {
+	public @NonNull CollectionValue flatten() {
 		return this;
 	}
 
@@ -106,7 +105,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 	//	}
 
 	@Override
-	public @NonNull OrderedSetValue including(@Nullable Object value) {
+	public @NonNull CollectionValue including(@Nullable Object value) {
 		return append(value);
 	}
 
@@ -116,7 +115,7 @@ public class RangeOrderedSetValueImpl extends OrderedSetValueImpl
 	}
 
 	@Override
-	public @NonNull OrderedSetValue prepend(@Nullable Object value) {
+	public @NonNull CollectionValue prepend(@Nullable Object value) {
 		IntegerRange theElements = getElements();
 		IntegerValue previousValue = theElements.getFirst().subtractInteger(ONE_VALUE);
 		if (previousValue.equals(value)) {

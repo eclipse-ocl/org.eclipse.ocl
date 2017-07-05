@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.LazyCollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.Value;
 
@@ -315,7 +314,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull OrderedSetValue asOrderedSetValue() {
+	public @NonNull CollectionValue asOrderedSetValue() {
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
@@ -950,6 +949,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 	}
 
+	@Override
 	public @NonNull CollectionValue subOrderedSet(int lower, int upper) {
 		return SubOrderedSetIterator.subOrderedSet(this, lower, upper);
 	}

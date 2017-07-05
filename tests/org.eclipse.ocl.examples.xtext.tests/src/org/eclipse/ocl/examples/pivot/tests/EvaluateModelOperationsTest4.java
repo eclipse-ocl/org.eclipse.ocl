@@ -42,7 +42,7 @@ import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.junit.After;
 import org.junit.Before;
@@ -387,8 +387,8 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class children1Type = idResolver.getType(children1Class);
 		org.eclipse.ocl.pivot.Class children2Type = idResolver.getType(children2Class);
 		//
-		OrderedSetValue kids1 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(children1Type.getTypeId()), children1);
-		OrderedSetValue kids2 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(children2Type.getTypeId()), children2);
+		CollectionValue kids1 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(children1Type.getTypeId()), children1);
+		CollectionValue kids2 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(children2Type.getTypeId()), children2);
 		//
 		ocl.assertSemanticErrorQuery(parentType, "parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, "", "parent");
 		ocl.assertSemanticErrorQuery(parentType, "self.parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, parentType, "parent");

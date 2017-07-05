@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * CollectionAsOrderedSetOperation realises the Collection::asOrderedSet() library operation.
@@ -23,7 +23,7 @@ public class CollectionAsOrderedSetOperation extends AbstractSimpleUnaryOperatio
 	public static final @NonNull CollectionAsOrderedSetOperation INSTANCE = new CollectionAsOrderedSetOperation();
 
 	@Override
-	public @NonNull OrderedSetValue evaluate(@Nullable Object argument) {
+	public @NonNull CollectionValue evaluate(@Nullable Object argument) {
 		return asOrderedSetValue(argument);
 	}
 }

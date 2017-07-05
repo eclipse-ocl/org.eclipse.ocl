@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -129,7 +128,7 @@ public abstract class ValueImpl extends ValueUtil implements Value
 	}
 
 	@Override
-	public @NonNull OrderedSetValue asOrderedSetValue() {
+	public @NonNull CollectionValue asOrderedSetValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.ORDERED_SET_NAME, getTypeName());
 	}
 

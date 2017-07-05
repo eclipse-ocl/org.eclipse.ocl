@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
@@ -442,7 +441,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull OrderedSetValue asOrderedSetValue() {
+	public @NonNull CollectionValue asOrderedSetValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return new AsOrderedSetIterator.FromCollectionValue(this);
 	}
@@ -964,6 +963,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		else {
 			return new SparseSequenceValueImpl(getTypeId(), values);
 		}
+	}
+
+	@Override
+	public @NonNull CollectionValue subOrderedSet(int lower, int upper) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

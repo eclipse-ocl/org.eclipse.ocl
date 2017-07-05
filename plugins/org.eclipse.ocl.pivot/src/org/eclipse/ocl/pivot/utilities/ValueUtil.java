@@ -87,7 +87,6 @@ import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -286,7 +285,7 @@ public abstract class ValueUtil
 		}
 	}
 
-	public static @NonNull OrderedSetValue asOrderedSetValue(@Nullable Object value) {
+	public static @NonNull CollectionValue asOrderedSetValue(@Nullable Object value) {
 		if (value instanceof Value) {
 			return ((Value)value).asOrderedSetValue();
 		}
@@ -628,20 +627,20 @@ public abstract class ValueUtil
 		return new JavaObjectValueImpl(typeId, object);
 	}
 
-	public static OrderedSetValue.@NonNull Accumulator createOrderedSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
+	public static CollectionValue.@NonNull Accumulator createOrderedSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new SparseOrderedSetValueImpl.Accumulator(collectedId);
 	}
 
-	//	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
+	//	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
 	//		return new RangeOrderedSetValueImpl(typeId, range);
 	//	}
 
-	public static @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
+	public static @NonNull CollectionValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
 		return new AsOrderedSetIterator.FromArray(typeId, boxedValues);
 	}
 
-	public static @NonNull OrderedSetValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
+	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
 		OrderedSet<@Nullable Object> allValues = new OrderedSetImpl<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
@@ -654,7 +653,7 @@ public abstract class ValueUtil
 		return new SparseOrderedSetValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull OrderedSetValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+	public static @NonNull CollectionValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
 		return new AsOrderedSetIterator.FromCollection(typeId, boxedValues);
 	}

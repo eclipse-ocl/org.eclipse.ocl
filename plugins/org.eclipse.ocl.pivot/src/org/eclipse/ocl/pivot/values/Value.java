@@ -122,7 +122,7 @@ public interface Value
 	/**
 	 * @generated NOT
 	 */
-	@NonNull OrderedSetValue asOrderedSetValue();
+	@NonNull CollectionValue asOrderedSetValue();
 
 	/**
 	 * @generated NOT

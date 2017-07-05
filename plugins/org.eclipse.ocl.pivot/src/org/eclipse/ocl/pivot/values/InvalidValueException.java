@@ -117,7 +117,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	@Override
-	public @NonNull OrderedSetValue asOrderedSetValue() {
+	public @NonNull CollectionValue asOrderedSetValue() {
 		throw this;
 	}
 

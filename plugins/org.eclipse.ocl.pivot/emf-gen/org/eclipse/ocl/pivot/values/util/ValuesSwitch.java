@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
@@ -115,7 +114,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = caseNullValue(invalidValue);
 				if (result == null) result = caseObjectValue(invalidValue);
 				if (result == null) result = caseBagValue(invalidValue);
-				if (result == null) result = caseOrderedSetValue(invalidValue);
 				if (result == null) result = caseTupleValue(invalidValue);
 				if (result == null) result = caseUnlimitedValue(invalidValue);
 				if (result == null) result = caseIntegerValue(invalidValue);
@@ -130,7 +128,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				T result = caseNullValue(nullValue);
 				if (result == null) result = caseObjectValue(nullValue);
 				if (result == null) result = caseBagValue(nullValue);
-				if (result == null) result = caseOrderedSetValue(nullValue);
 				if (result == null) result = caseTupleValue(nullValue);
 				if (result == null) result = caseUnlimitedValue(nullValue);
 				if (result == null) result = caseIntegerValue(nullValue);
@@ -144,14 +141,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				ObjectValue objectValue = (ObjectValue)theEObject;
 				T result = caseObjectValue(objectValue);
 				if (result == null) result = caseValue(objectValue);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ValuesPackage.ORDERED_SET_VALUE: {
-				OrderedSetValue orderedSetValue = (OrderedSetValue)theEObject;
-				T result = caseOrderedSetValue(orderedSetValue);
-				if (result == null) result = caseCollectionValue(orderedSetValue);
-				if (result == null) result = caseValue(orderedSetValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -275,21 +264,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseObjectValue(ObjectValue object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Ordered Set Value</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Ordered Set Value</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseOrderedSetValue(OrderedSetValue object) {
 		return null;
 	}
 

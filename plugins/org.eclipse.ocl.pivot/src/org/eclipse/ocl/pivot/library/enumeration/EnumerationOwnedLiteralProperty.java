@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * EnumerationOwnedLiteralProperty realizes the Enumeration::ownedLiteral() library property.
@@ -32,19 +32,19 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 public class EnumerationOwnedLiteralProperty extends AbstractProperty
 {
 	public static final @NonNull EnumerationOwnedLiteralProperty INSTANCE = new EnumerationOwnedLiteralProperty();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
-	public @Nullable OrderedSetValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue); 
+	public @Nullable CollectionValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
 	/**
 	 * @since 1.1
 	 */
 	@Override
-	public @NonNull OrderedSetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
+	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		IdResolver idResolver = executor.getIdResolver();
 		Type sourceType = asType(sourceValue);
 		Set<Object> results = new OrderedSetImpl<Object>();

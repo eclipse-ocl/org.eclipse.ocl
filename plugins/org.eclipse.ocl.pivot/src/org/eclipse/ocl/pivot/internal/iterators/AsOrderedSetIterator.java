@@ -19,7 +19,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 
 import com.google.common.collect.Iterators;
 
@@ -28,7 +27,7 @@ import com.google.common.collect.Iterators;
  *
  * @since 1.3
  */
-public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl implements OrderedSetValue
+public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
@@ -82,7 +81,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl imple
 
 	@Override
 	@Deprecated
-	public @NonNull OrderedSetValue subOrderedSet(int lower, int upper) {
+	public @NonNull CollectionValue subOrderedSet(int lower, int upper) {
 		return super.subOrderedSet(lower, upper).asOrderedSetValue();
 	}
 

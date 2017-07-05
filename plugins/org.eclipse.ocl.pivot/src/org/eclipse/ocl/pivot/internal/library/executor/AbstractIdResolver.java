@@ -95,7 +95,6 @@ import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.OCLValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.Value;
@@ -585,7 +584,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull OrderedSetValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
+	public @NonNull CollectionValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues) {
 		OrderedSet<@Nullable Object> boxedValues = new OrderedSetImpl<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));
@@ -594,7 +593,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
+	public @NonNull CollectionValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues) {
 		OrderedSet<@Nullable Object> boxedValues = new OrderedSetImpl<>();
 		for (Object unboxedValue : unboxedValues) {
 			boxedValues.add(boxedValueOf(unboxedValue));

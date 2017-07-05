@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.MapValue;
-import org.eclipse.ocl.pivot.values.OrderedSetValue;
 
 /**
  * IdResolver supports discovery/creation of rich Pivot-based objects from limited
@@ -71,9 +70,9 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<@Nullable Object, @Nullable Object> mapEntries);
 
-	@NonNull OrderedSetValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
+	@NonNull CollectionValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull OrderedSetValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
+	@NonNull CollectionValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
 
 	@NonNull CollectionValue createSequenceOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
