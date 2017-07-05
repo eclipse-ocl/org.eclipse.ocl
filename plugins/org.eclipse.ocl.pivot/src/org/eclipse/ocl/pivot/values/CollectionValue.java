@@ -21,6 +21,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
+import org.eclipse.ocl.pivot.internal.iterators.LazyIterator;
 
 public interface CollectionValue extends Value, Iterable<@Nullable Object>
 {
@@ -64,9 +66,23 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	@Nullable Object at(int index);
 
 	/**
+	 * Return an iterable that is lazily populated and which my be re-iterated exploiting cached
+	 * values from a first iteration. This provides opportunities for redundant iterations to be skipped.
+	 */
+	@NonNull LazyIterable cachedIterable();
+
+	/**
 	 * @generated NOT
 	 */
 	@NonNull IntegerValue count(@Nullable Object value);
+
+	/**
+	 * Return an iterable that has been eagerly populated. This inhibits opportunities for
+	 * redundant iterations to be skipped but may improve the speed of subsequent iterations.
+	 *
+	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
+	 */
+	@NonNull LazyIterable eagerIterable();
 
 	/**
 	 * @generated NOT
@@ -186,6 +202,14 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@Nullable Object last();
+
+	/**
+	 * Return an iterator that avoids creating and populating a cache of the contents.
+	 *
+	 * If a re-iteration is attempted, the cache is activated and lazily populated by the second iteration.
+	 * A third re-iteration exploits the cache.
+	 */
+	@NonNull LazyIterator lazyIterator();
 
 	/**
 	 * @generated NOT

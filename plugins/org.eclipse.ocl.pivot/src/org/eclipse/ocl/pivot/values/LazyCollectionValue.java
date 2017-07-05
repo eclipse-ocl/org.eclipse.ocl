@@ -10,10 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterator;
-
 /**
  * LazyCollectionValue extends the inherently eager CollectionValue to support lazy and lazily cached iterations.
  *
@@ -33,25 +29,4 @@ import org.eclipse.ocl.pivot.internal.iterators.LazyIterator;
  */
 public interface LazyCollectionValue extends CollectionValue
 {
-	/**
-	 * Return an iterable that is lazily populated and which my be re-iterated exploiting cached
-	 * values from a first iteration. This provides opportunities for redundant iterations to be skipped.
-	 */
-	@NonNull LazyIterable cachedIterable();
-
-	/**
-	 * Return an iterable that has been eagerly populated. This inhibits opportunities for
-	 * redundant iterations to be skipped but may improve the speed of subsequent iterations.
-	 *
-	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
-	 */
-	@NonNull LazyIterable eagerIterable();
-
-	/**
-	 * Return an iterator that avoids creating and populating a cache of the contents.
-	 *
-	 * If a re-iteration is attempted, the cache is activated and lazily populated by the second iteration.
-	 * A third re-iteration exploits the cache.
-	 */
-	@NonNull LazyIterator lazyIterator();
 }

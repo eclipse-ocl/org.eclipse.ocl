@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.values;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +27,9 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy;
+import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
+import org.eclipse.ocl.pivot.internal.iterators.LazyIterator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
@@ -54,7 +56,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 {
 	private static final long serialVersionUID = 1L;
 
-	private static class Iterator implements BaggableIterator<@Nullable Object>
+	private static class Iterator implements LazyIterator
 	{
 		@Override
 		public boolean hasNext() {
@@ -75,6 +77,8 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		public void remove() {
 		}
 	}
+
+	private static @NonNull LazyIterable EMPTY_ITERABLE = new LazyIterable(new Iterator(), LazyIterable.COLLECTION_STRATEGY, EqualsStrategy.SimpleEqualsStrategy.INSTANCE);
 
 	public UndefinedValueImpl(String message) {
 		super(message);
@@ -245,6 +249,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public @NonNull LazyIterable cachedIterable() {
+		return iterable();
+	}
+
+	@Override
 	public @NonNull RealValue commutatedAdd(@NonNull RealValue left) {
 		return toInvalidValue();
 	}
@@ -330,6 +339,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public double doubleValue() {
 		throw new UnsupportedOperationException("InvalidValue.compareTo");
+	}
+
+	@Override
+	public @NonNull LazyIterable eagerIterable() {
+		return iterable();
 	}
 
 	@Override
@@ -502,8 +516,8 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull Iterable<@Nullable Object> iterable() {
-		return Collections.<@Nullable Object>emptyList();
+	public @NonNull LazyIterable iterable() {
+		return EMPTY_ITERABLE;
 	}
 
 	@Override
@@ -514,6 +528,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @Nullable Value last() {
 		return toInvalidValue();
+	}
+
+	@Override
+	public @NonNull Iterator lazyIterator() {
+		return iterator();
 	}
 
 	@Override
