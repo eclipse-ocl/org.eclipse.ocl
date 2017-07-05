@@ -254,16 +254,6 @@ public interface ValuesPackage extends EPackage {
 	int MAP_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.pivot.values.OrderedCollectionValue <em>Ordered Collection Value</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.pivot.values.OrderedCollectionValue
-	 * @see org.eclipse.ocl.pivot.values.impl.ValuesPackageImpl#getOrderedCollectionValue()
-	 * @generated
-	 */
-	int ORDERED_COLLECTION_VALUE = 7;
-
-	/**
 	 * The number of structural features of the '<em>Ordered Collection Value</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -428,16 +418,6 @@ public interface ValuesPackage extends EPackage {
 	EClass getObjectValue();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.OrderedCollectionValue <em>Ordered Collection Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Ordered Collection Value</em>'.
-	 * @see org.eclipse.ocl.pivot.values.OrderedCollectionValue
-	 * @generated
-	 */
-	EClass getOrderedCollectionValue();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.OrderedSetValue <em>Ordered Set Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -588,16 +568,6 @@ public interface ValuesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass OBJECT_VALUE = eINSTANCE.getObjectValue();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.OrderedCollectionValue <em>Ordered Collection Value</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.values.OrderedCollectionValue
-		 * @see org.eclipse.ocl.pivot.values.impl.ValuesPackageImpl#getOrderedCollectionValue()
-		 * @generated
-		 */
-		EClass ORDERED_COLLECTION_VALUE = eINSTANCE.getOrderedCollectionValue();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.impl.OrderedSetValueImpl <em>Ordered Set Value</em>}' class.

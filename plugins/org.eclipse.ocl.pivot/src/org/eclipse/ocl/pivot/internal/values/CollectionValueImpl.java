@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
@@ -357,6 +356,16 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		assert checkElementsAreValues(values);
 	}
 
+	@Override
+	public @NonNull CollectionValue append(@Nullable Object object) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull CollectionValue appendAll(@NonNull CollectionValue objects) {
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Add a value to a working collection, returning true if the working
 	 * collection is changed by the addition.
@@ -370,7 +379,6 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	//	@Override
 	//	public @NonNull CollectionValue append(@Nullable Object object) {
-	//		return AppendIterator.append(getTypeId(), this, object);
 	//	}
 
 	//	@Override
@@ -430,6 +438,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
+	public @NonNull CollectionValue asOrderedCollectionValue() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull OrderedSetValue asOrderedSetValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return new AsOrderedSetIterator.FromCollectionValue(this);
@@ -445,6 +458,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	public @NonNull CollectionValue asSetValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return new AsSetIterator.FromCollectionValue(this);
+	}
+
+	@Override
+	public @Nullable Object at(int index) {
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -659,6 +677,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return true;
 	}
 
+	@Override
+	public @Nullable Object first() {
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Returns true if any element flattened.
 	 * @throws InvalidValueException
@@ -812,6 +835,16 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
+	public @NonNull CollectionValue insertAt(int index, @Nullable Object object) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull IntegerValue indexOf(@Nullable Object object) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public int intSize() {
 		return elements.size();
 	}
@@ -874,6 +907,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
+	public @Nullable Object last() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull CollectionValue minus(@NonNull CollectionValue set) {
 		throw new UnsupportedOperationException();
 	}
@@ -881,6 +919,16 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	@Override
 	public @NonNull Boolean notEmpty() {
 		return intSize() != 0;
+	}
+
+	@Override
+	public @NonNull CollectionValue prepend(@Nullable Object object) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull CollectionValue prependAll(@NonNull CollectionValue objects) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -895,6 +943,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
+	public @NonNull CollectionValue reverse() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull IntegerValue size() {
 		return ValueUtil.integerValueOf(intSize());
 	}
@@ -903,7 +956,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	 * @since 1.3
 	 */
 	@Override
-	public @NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+	public @NonNull CollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
 		List<@Nullable Object> values = Lists.newArrayList(iterable());
 		Collections.sort(values, comparator);
 		if (isUnique()) {

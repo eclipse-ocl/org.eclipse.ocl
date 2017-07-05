@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.OCLValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
@@ -157,7 +156,7 @@ public abstract class NumberValueImpl extends Number implements NumberValue
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
+	public @NonNull CollectionValue asOrderedCollectionValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.ORDERED_COLLECTION_NAME, getTypeName());
 	}
 

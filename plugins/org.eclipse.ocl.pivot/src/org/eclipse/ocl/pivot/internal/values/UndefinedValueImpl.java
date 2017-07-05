@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
@@ -112,12 +111,12 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue append(@Nullable Object object) {
+	public @NonNull CollectionValue append(@Nullable Object object) {
 		return toInvalidValue();
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue objects) {
+	public @NonNull CollectionValue appendAll(@NonNull CollectionValue objects) {
 		return toInvalidValue();
 	}
 
@@ -186,7 +185,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
+	public @NonNull CollectionValue asOrderedCollectionValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.ORDERED_COLLECTION_NAME, getTypeName());
 	}
 
@@ -606,12 +605,12 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue prepend(@Nullable Object object) {
+	public @NonNull CollectionValue prepend(@Nullable Object object) {
 		return toInvalidValue();
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue prependAll(@NonNull OrderedCollectionValue objects) {
+	public @NonNull CollectionValue prependAll(@NonNull CollectionValue objects) {
 		return toInvalidValue();
 	}
 
@@ -621,7 +620,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue reverse() {
+	public @NonNull CollectionValue reverse() {
 		return toInvalidValue();
 	}
 

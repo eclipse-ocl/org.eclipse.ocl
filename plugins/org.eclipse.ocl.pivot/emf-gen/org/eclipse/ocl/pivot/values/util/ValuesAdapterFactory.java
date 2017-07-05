@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
@@ -111,10 +110,6 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseObjectValue(ObjectValue object) {
 			return createObjectValueAdapter();
-		}
-		@Override
-		public Adapter caseOrderedCollectionValue(OrderedCollectionValue object) {
-			return createOrderedCollectionValueAdapter();
 		}
 		@Override
 		public Adapter caseOrderedSetValue(OrderedSetValue object) {

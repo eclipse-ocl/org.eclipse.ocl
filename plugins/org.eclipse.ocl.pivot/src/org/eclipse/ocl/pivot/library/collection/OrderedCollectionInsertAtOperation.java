@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleTernaryOperation;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * OrderedCollectionInsertAtOperation realises the OrderedCollection::insertAt() library operation.
@@ -23,8 +23,8 @@ public class OrderedCollectionInsertAtOperation extends AbstractSimpleTernaryOpe
 	public static final @NonNull OrderedCollectionInsertAtOperation INSTANCE = new OrderedCollectionInsertAtOperation();
 
 	@Override
-	public @NonNull OrderedCollectionValue evaluate(@Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
-		OrderedCollectionValue selfValue = asOrderedCollectionValue(sourceValue);
+	public @NonNull CollectionValue evaluate(@Nullable Object sourceValue, @Nullable Object firstArgumentValue, @Nullable Object secondArgumentValue) {
+		CollectionValue selfValue = asOrderedCollectionValue(sourceValue);
 		Integer indexValue = asInteger(firstArgumentValue);
 		return selfValue.insertAt(indexValue, secondArgumentValue);
 	}

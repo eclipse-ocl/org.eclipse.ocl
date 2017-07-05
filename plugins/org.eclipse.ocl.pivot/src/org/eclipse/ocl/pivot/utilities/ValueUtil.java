@@ -86,7 +86,6 @@ import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
@@ -279,7 +278,7 @@ public abstract class ValueUtil
 		}
 	}
 
-	public static @NonNull OrderedCollectionValue asOrderedCollectionValue(@Nullable Object value) {
+	public static @NonNull CollectionValue asOrderedCollectionValue(@Nullable Object value) {
 		if (value instanceof Value) {
 			return ((Value)value).asOrderedCollectionValue();
 		}

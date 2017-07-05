@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
@@ -87,13 +86,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	private EClass objectValueEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass orderedCollectionValueEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -275,16 +267,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getOrderedCollectionValue() {
-		return orderedCollectionValueEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getOrderedSetValue() {
 		return orderedSetValueEClass;
 	}
@@ -382,8 +364,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 
 		objectValueEClass = createEClass(OBJECT_VALUE);
 
-		orderedCollectionValueEClass = createEClass(ORDERED_COLLECTION_VALUE);
-
 		orderedSetValueEClass = createEClass(ORDERED_SET_VALUE);
 
 		realValueEClass = createEClass(REAL_VALUE);
@@ -438,10 +418,7 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		nullValueEClass.getESuperTypes().add(this.getTupleValue());
 		nullValueEClass.getESuperTypes().add(this.getUnlimitedValue());
 		objectValueEClass.getESuperTypes().add(this.getValue());
-		orderedCollectionValueEClass.getESuperTypes().add(this.getCollectionValue());
-		orderedSetValueEClass.getESuperTypes().add(this.getOrderedCollectionValue());
 		realValueEClass.getESuperTypes().add(this.getValue());
-		sequenceValueEClass.getESuperTypes().add(this.getOrderedCollectionValue());
 		tupleValueEClass.getESuperTypes().add(this.getValue());
 		unlimitedValueEClass.getESuperTypes().add(this.getIntegerValue());
 
@@ -459,8 +436,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		initEClass(nullValueEClass, NullValue.class, "NullValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(objectValueEClass, ObjectValue.class, "ObjectValue", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(orderedCollectionValueEClass, OrderedCollectionValue.class, "OrderedCollectionValue", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(orderedSetValueEClass, OrderedSetValue.class, "OrderedSetValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

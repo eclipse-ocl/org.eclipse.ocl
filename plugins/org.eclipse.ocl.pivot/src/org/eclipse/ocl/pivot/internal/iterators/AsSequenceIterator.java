@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 
 import com.google.common.collect.Iterators;
@@ -41,13 +40,13 @@ public abstract class AsSequenceIterator extends LazyCollectionValueImpl impleme
 
 	@Override
 	@Deprecated
-	public @NonNull OrderedCollectionValue append(@Nullable Object object) {
+	public @NonNull CollectionValue append(@Nullable Object object) {
 		return super.append(object).asOrderedCollectionValue();
 	}
 
 	@Override
 	@Deprecated
-	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue that) {
+	public @NonNull CollectionValue appendAll(@NonNull CollectionValue that) {
 		return super.appendAll(that).asOrderedCollectionValue();
 	}
 
@@ -61,13 +60,13 @@ public abstract class AsSequenceIterator extends LazyCollectionValueImpl impleme
 
 	@Override
 	@Deprecated
-	public @NonNull OrderedCollectionValue prepend(@Nullable Object object) {
+	public @NonNull CollectionValue prepend(@Nullable Object object) {
 		return super.prepend(object).asOrderedCollectionValue();
 	}
 
 	@Override
 	@Deprecated
-	public @NonNull OrderedCollectionValue prependAll(@NonNull OrderedCollectionValue that) {
+	public @NonNull CollectionValue prependAll(@NonNull CollectionValue that) {
 		return super.prependAll(that).asOrderedCollectionValue();
 	}
 

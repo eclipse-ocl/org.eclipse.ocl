@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
@@ -61,12 +60,12 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	}
 
 	@Override
-	public @NonNull OrderedSetValue appendAll(@NonNull OrderedCollectionValue values) {
+	public @NonNull OrderedSetValue appendAll(@NonNull CollectionValue values) {
 		return AppendAllIterator.appendAll(this, values).asOrderedSetValue();
 	}
 
 	/*	@Override
-	public @NonNull OrderedSetValue appendAll(@NonNull OrderedCollectionValue objects) {
+	public @NonNull OrderedSetValue appendAll(@NonNull CollectionValue objects) {
 		OrderedSet<Object> result = new OrderedSetImpl<Object>(elements);
 		Collection<? extends Object> thoseElements = objects.getElements();
 		result.removeAll(thoseElements);  // appended objects must be last
@@ -75,7 +74,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	} */
 
 	@Override
-	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
+	public @NonNull CollectionValue asOrderedCollectionValue() {
 		return this;
 	}
 
@@ -220,12 +219,12 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	}
 
 	@Override
-	public @NonNull OrderedSetValue prependAll(@NonNull OrderedCollectionValue values) {
+	public @NonNull OrderedSetValue prependAll(@NonNull CollectionValue values) {
 		return PrependAllIterator.prependAll(this, values).asOrderedSetValue();
 	}
 
 	/*	@Override
-	public @NonNull OrderedSetValue prependAll(@NonNull OrderedCollectionValue objects) {
+	public @NonNull OrderedSetValue prependAll(@NonNull CollectionValue objects) {
 		OrderedSet<Object> result = new OrderedSetImpl<Object>(objects.getElements());
 		result.addAll(elements);
 		return new SparseOrderedSetValueImpl(getTypeId(), result);

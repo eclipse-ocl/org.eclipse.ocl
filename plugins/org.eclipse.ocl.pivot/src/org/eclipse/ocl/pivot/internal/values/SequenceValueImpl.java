@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
@@ -60,12 +59,12 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue append(@Nullable Object value) {
+	public @NonNull CollectionValue append(@Nullable Object value) {
 		return AppendIterator.append(getTypeId(), this, value).asOrderedCollectionValue();
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue appendAll(@NonNull OrderedCollectionValue values) {
+	public @NonNull CollectionValue appendAll(@NonNull CollectionValue values) {
 		return AppendAllIterator.appendAll(this, values).asOrderedCollectionValue();
 	}
 
@@ -92,7 +91,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
+	public @NonNull CollectionValue asOrderedCollectionValue() {
 		return this;
 	}
 
@@ -210,7 +209,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	}
 
 	@Override
-	public @NonNull SequenceValue prependAll(@NonNull OrderedCollectionValue values) {
+	public @NonNull SequenceValue prependAll(@NonNull CollectionValue values) {
 		return PrependAllIterator.prependAll(this, values).asSequenceValue();
 	}
 
@@ -226,7 +225,7 @@ public abstract class SequenceValueImpl extends CollectionValueImpl implements S
 	} */
 
 	/*	@Override
-	public @NonNull SequenceValue prependAll(@NonNull OrderedCollectionValue objects) {
+	public @NonNull SequenceValue prependAll(@NonNull CollectionValue objects) {
 		List<Object> result = new ArrayList<Object>(objects.getElements());
 		result.addAll(elements);
 		return new SparseSequenceValueImpl(getTypeId(), result);

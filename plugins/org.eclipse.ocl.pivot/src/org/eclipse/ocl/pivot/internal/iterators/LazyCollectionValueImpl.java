@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.LazyCollectionValue;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
@@ -209,11 +208,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	//	@Override
+	@Override
 	public @NonNull CollectionValue append(@Nullable Object object) {
 		return AppendIterator.append(getTypeId(), this, object);
 	}
 
 	//	@Override
+	@Override
 	public @NonNull CollectionValue appendAll(@NonNull CollectionValue values) {
 		return AppendAllIterator.appendAll(this, values);
 	}
@@ -263,7 +264,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 	}
 
-	private @NonNull OrderedCollectionValue asEagerOrderedCollectionValue() {
+	private @NonNull CollectionValue asEagerOrderedCollectionValue() {
 		if (isOrdered()) {
 			if (isUnique()) {
 				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
@@ -310,7 +311,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue asOrderedCollectionValue() {
+	public @NonNull CollectionValue asOrderedCollectionValue() {
 		return isUnique() ? asOrderedSetValue() : asSequenceValue();
 	}
 
@@ -344,6 +345,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	//	@Override
+	@Override
 	public @Nullable Object at(int oclIndex) {
 		if (!isOrdered()) {
 			throw new UnsupportedOperationException();
@@ -573,6 +575,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return ExcludingAllIterator.excludingAll(this, values);
 	}
 
+	@Override
 	public @Nullable Object first() {
 		return at(1);
 	}
@@ -778,11 +781,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return IncludingAllIterator.includingAll(getTypeId(), this, values);
 	}
 
+	@Override
 	public @NonNull IntegerValue indexOf(@Nullable Object object) {
 		return asEagerOrderedCollectionValue().indexOf(object);
 	}
 
-	public @NonNull OrderedCollectionValue insertAt(int index, @Nullable Object object) {
+	@Override
+	public @NonNull CollectionValue insertAt(int index, @Nullable Object object) {
 		return asEagerOrderedCollectionValue().insertAt(index, object);
 	}
 
@@ -839,6 +844,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return eagerIterable().iterator();
 	}
 
+	@Override
 	public @Nullable Object last() {
 		return at(intSize());
 	}
@@ -877,11 +883,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	//	@Override
+	@Override
 	public @NonNull CollectionValue prepend(@Nullable Object value) {
 		return PrependIterator.prepend(getTypeId(), this, value);
 	}
 
 	//	@Override
+	@Override
 	public @NonNull CollectionValue prependAll(@NonNull CollectionValue values) {
 		return PrependAllIterator.prependAll(this, values);
 	}
@@ -914,7 +922,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	@Deprecated
 	protected abstract @NonNull Iterator<@Nullable Object> reIterator();
 
-	public @NonNull OrderedCollectionValue reverse() {
+	@Override
+	public @NonNull CollectionValue reverse() {
 		return asEagerOrderedCollectionValue().reverse();
 	}
 
@@ -931,7 +940,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
+	public @NonNull CollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
 		List<@Nullable Object> values = Lists.newArrayList(lazyIterator());
 		Collections.sort(values, comparator);
 		if (isUnique()) {

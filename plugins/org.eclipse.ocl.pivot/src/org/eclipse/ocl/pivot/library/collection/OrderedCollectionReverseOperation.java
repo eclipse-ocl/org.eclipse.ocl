@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
-import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * OrderedCollectionReverseOperation realises the OrderedCollection::reverse() library operation.
@@ -23,8 +23,8 @@ public class OrderedCollectionReverseOperation extends AbstractSimpleUnaryOperat
 	public static final @NonNull OrderedCollectionReverseOperation INSTANCE = new OrderedCollectionReverseOperation();
 
 	@Override
-	public @NonNull OrderedCollectionValue evaluate(@Nullable Object argument) {
-		OrderedCollectionValue orderedCollectionValue = asOrderedCollectionValue(argument);
+	public @NonNull CollectionValue evaluate(@Nullable Object argument) {
+		CollectionValue orderedCollectionValue = asOrderedCollectionValue(argument);
 		return orderedCollectionValue.reverse();
 	}
 }

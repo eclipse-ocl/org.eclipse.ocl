@@ -35,6 +35,16 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
+	@NonNull CollectionValue append(@Nullable Object object);
+
+	/**
+	 * @generated NOT
+	 */
+	@NonNull CollectionValue appendAll(@NonNull CollectionValue objects);
+
+	/**
+	 * @generated NOT
+	 */
 	@NonNull Collection<@Nullable Object> asCollection();
 
 	/**
@@ -47,6 +57,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@Nullable <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass);
+
+	/**
+	 * @generated NOT
+	 */
+	@Nullable Object at(int index);
 
 	/**
 	 * @generated NOT
@@ -72,6 +87,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@NonNull CollectionValue excludingAll(@NonNull CollectionValue c);
+
+	/**
+	 * @generated NOT
+	 */
+	@Nullable Object first();
 
 	/**
 	 * @generated NOT
@@ -125,6 +145,16 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
+	@NonNull IntegerValue indexOf(@Nullable Object object);
+
+	/**
+	 * @generated NOT
+	 */
+	@NonNull CollectionValue insertAt(int index, @Nullable Object object);
+
+	/**
+	 * @generated NOT
+	 */
 	int intSize();
 
 	/**
@@ -155,6 +185,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
+	@Nullable Object last();
+
+	/**
+	 * @generated NOT
+	 */
 	@NonNull CollectionValue minus(@NonNull CollectionValue set);
 
 	/**
@@ -165,7 +200,22 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
+	@NonNull CollectionValue prepend(@Nullable Object object);
+
+	/**
+	 * @generated NOT
+	 */
+	@NonNull CollectionValue prependAll(@NonNull CollectionValue objects);
+
+	/**
+	 * @generated NOT
+	 */
 	@Nullable Set<@NonNull TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId);
+
+	/**
+	 * @generated NOT
+	 */
+	@NonNull CollectionValue reverse();
 
 	/**
 	 * @generated NOT
@@ -175,7 +225,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator);
+	@NonNull CollectionValue sort(@NonNull Comparator<@Nullable Object> comparator);
 
 	/**
 	 * @generated NOT
