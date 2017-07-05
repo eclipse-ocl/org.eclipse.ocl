@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
@@ -95,7 +94,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	}
 
 	@Override
-	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
+	public @NonNull CollectionValue asUniqueCollectionValue() {
 		return this;
 	}
 

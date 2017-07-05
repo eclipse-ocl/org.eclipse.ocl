@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-public interface OrderedSetValue extends OrderedCollectionValue, UniqueCollectionValue
+public interface OrderedSetValue extends OrderedCollectionValue
 {
 	/**
 	 * @generated NOT
@@ -22,5 +22,5 @@ public interface OrderedSetValue extends OrderedCollectionValue, UniqueCollectio
 	/**
 	 * @generated NOT
 	 */
-    @NonNull OrderedSetValue subOrderedSet(int lower, int upper);
+	@NonNull OrderedSetValue subOrderedSet(int lower, int upper);
 }

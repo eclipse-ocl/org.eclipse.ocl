@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
@@ -188,7 +187,7 @@ public abstract class NumberValueImpl extends Number implements NumberValue
 	}
 
 	@Override
-	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
+	public @NonNull CollectionValue asUniqueCollectionValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, "Unique Collection", getTypeName());
 	}
 

@@ -311,16 +311,6 @@ public interface ValuesPackage extends EPackage {
 	int TUPLE_VALUE = 12;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.pivot.values.UniqueCollectionValue <em>Unique Collection Value</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.pivot.values.UniqueCollectionValue
-	 * @see org.eclipse.ocl.pivot.values.impl.ValuesPackageImpl#getUniqueCollectionValue()
-	 * @generated
-	 */
-	int UNIQUE_COLLECTION_VALUE = 13;
-
-	/**
 	 * The number of structural features of the '<em>Unique Collection Value</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -488,16 +478,6 @@ public interface ValuesPackage extends EPackage {
 	EClass getTupleValue();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.UniqueCollectionValue <em>Unique Collection Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Unique Collection Value</em>'.
-	 * @see org.eclipse.ocl.pivot.values.UniqueCollectionValue
-	 * @generated
-	 */
-	EClass getUniqueCollectionValue();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.UnlimitedValue <em>Unlimited Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -658,16 +638,6 @@ public interface ValuesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TUPLE_VALUE = eINSTANCE.getTupleValue();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.UniqueCollectionValue <em>Unique Collection Value</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.values.UniqueCollectionValue
-		 * @see org.eclipse.ocl.pivot.values.impl.ValuesPackageImpl#getUniqueCollectionValue()
-		 * @generated
-		 */
-		EClass UNIQUE_COLLECTION_VALUE = eINSTANCE.getUniqueCollectionValue();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.impl.UnlimitedValueImpl <em>Unlimited Value</em>}' class.

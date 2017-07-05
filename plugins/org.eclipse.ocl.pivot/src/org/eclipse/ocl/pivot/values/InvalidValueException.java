@@ -142,7 +142,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	@Override
-	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
+	public @NonNull CollectionValue asUniqueCollectionValue() {
 		throw this;
 	}
 

@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
@@ -132,10 +131,6 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseTupleValue(TupleValue object) {
 			return createTupleValueAdapter();
-		}
-		@Override
-		public Adapter caseUniqueCollectionValue(UniqueCollectionValue object) {
-			return createUniqueCollectionValueAdapter();
 		}
 		@Override
 		public Adapter caseUnlimitedValue(UnlimitedValue object) {
