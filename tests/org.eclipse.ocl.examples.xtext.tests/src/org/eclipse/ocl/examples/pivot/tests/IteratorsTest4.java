@@ -61,7 +61,6 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.junit.After;
@@ -153,7 +152,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(TypeId.STRING);
-		SetValue expected = idResolver.createSetOfEach(typeId, "pkg2", "bob", "pkg3");
+		CollectionValue expected = idResolver.createSetOfEach(typeId, "pkg2", "bob", "pkg3");
 
 		// complete form
 		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->iterate(p; s : Set(String) = Set{} | s->including(p.name))");
@@ -539,7 +538,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		// FIXME not a valid test for UML's unordered nested packages
 		//        ocl.assertQueryEquals(ocl.pkg1, expected2a, "self->asSequence()->closure(ownedPackages)");
 		ocl.assertQueryEquals(ocl.pkg1, expected2, "self.oclAsType(Package)->closure(ownedPackages->asSequence())");
-		SetValue expected3 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
+		CollectionValue expected3 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg2, ocl.jim, ocl.bob, ocl.pkg3, ocl.pkg4, ocl.pkg5, ocl.george);
 		ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->asBag()->closure(ownedPackages)");
 		ocl.assertQueryEquals(ocl.pkg1, expected3, "self.oclAsType(Package)->closure(ownedPackages->asBag())");
 
@@ -566,7 +565,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
 		Property ownedPackages = getAttribute(packageMetaclass, "ownedPackages", packageMetaclass);
 		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
-		SetValue expected = idResolver.createSetOfEach(typeId, ownedPackages, owningPackage); // cyclic closure *does* include self
+		CollectionValue expected = idResolver.createSetOfEach(typeId, ownedPackages, owningPackage); // cyclic closure *does* include self
 		ocl.assertQueryEquals(owningPackage, expected, "self->closure(opposite)");
 		ocl.assertQueryEquals(ownedPackages, expected, "self->closure(opposite)");
 		ocl.dispose();
@@ -654,7 +653,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		@SuppressWarnings("null") org.eclipse.ocl.pivot.@NonNull Class propertyMetaclass = metamodelManager.getASClass("Property");
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
 		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
-		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
+		CollectionValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
 		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
 		ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(oclContainer())", PivotMessagesInternal.IncompatibleBodyType_WARNING_, "OclElement", "Property");
 		ocl.dispose();

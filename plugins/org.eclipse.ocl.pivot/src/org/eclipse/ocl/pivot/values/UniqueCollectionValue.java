@@ -10,17 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 public interface UniqueCollectionValue extends CollectionValue
 {
-	/**
-	 * @generated NOT
-	 */
-	@NonNull UniqueCollectionValue minus(@NonNull UniqueCollectionValue set);
-
-	/**
-	 * @generated NOT
-	 */
-	@NonNull UniqueCollectionValue symmetricDifference(@NonNull UniqueCollectionValue set);       
 }

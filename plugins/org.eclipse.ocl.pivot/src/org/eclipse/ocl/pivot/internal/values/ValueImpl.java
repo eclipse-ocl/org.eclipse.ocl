@@ -32,9 +32,7 @@ import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
@@ -148,7 +146,7 @@ public abstract class ValueImpl extends ValueUtil implements Value
 	}
 
 	@Override
-	public @NonNull SetValue asSetValue() {
+	public @NonNull CollectionValue asSetValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.SET_NAME, getTypeName());
 	}
 
@@ -158,7 +156,7 @@ public abstract class ValueImpl extends ValueUtil implements Value
 	}
 
 	@Override
-	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
+	public @NonNull CollectionValue asUniqueCollectionValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, "Unique Collection", getTypeName());
 	}
 

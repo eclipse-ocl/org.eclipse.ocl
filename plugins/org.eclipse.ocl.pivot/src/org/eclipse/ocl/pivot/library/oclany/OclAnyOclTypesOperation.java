@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
-import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * OclAnyOclTypesOperation realises the OclAny::oclTypes() library operation.
@@ -31,7 +31,7 @@ public class OclAnyOclTypesOperation extends AbstractUnaryOperation
 	 * @since 1.1
 	 */
 	@Override
-	public @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
+	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
 		Type dynamicTypeOf = executor.getIdResolver().getDynamicTypeOf(sourceVal);
 		return executor.getIdResolver().createSetOfEach((CollectionTypeId)returnTypeId, dynamicTypeOf);
 	}

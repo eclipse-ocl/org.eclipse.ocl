@@ -14,8 +14,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 
 public interface NullValue
-	extends ObjectValue, IntegerValue, UnlimitedValue,
-		BagValue, OrderedSetValue, SequenceValue, SetValue, TupleValue
+extends ObjectValue, IntegerValue, UnlimitedValue,
+BagValue, OrderedSetValue, SequenceValue, TupleValue
 {
 	@Override
 	@NonNull OclVoidTypeId getTypeId();
@@ -23,5 +23,5 @@ public interface NullValue
 	 * @generated NOT
 	 */
 	@Override
-	@NonNull NullValue negate();	
+	@NonNull NullValue negate();
 }

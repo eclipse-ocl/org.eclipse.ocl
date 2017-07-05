@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapEntry;
 import org.eclipse.ocl.pivot.values.MapValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
@@ -306,7 +305,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	}
 
 	@Override
-	public @NonNull SetValue getKeys() {
+	public @NonNull CollectionValue getKeys() {
 		CollectionTypeId setId = TypeId.SET.getSpecializedId(typeId.getValueTypeId());
 		return ValueUtil.createSetValue(setId, keySet());
 	}

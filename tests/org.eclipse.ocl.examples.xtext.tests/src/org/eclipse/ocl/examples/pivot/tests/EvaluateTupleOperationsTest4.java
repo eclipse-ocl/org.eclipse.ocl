@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.junit.After;
 import org.junit.Before;
@@ -93,7 +93,7 @@ public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 		bValues.put(bTuplePartId, ValueUtil.integerValueOf(4));
 		TupleValue bValue = ValueUtil.createTupleValue(bTupleTypeId, bValues);
 		CollectionTypeId collectionTypeId = TypeId.SET.getSpecializedId(TypeId.OCL_ANY);
-		SetValue setValue = ValueUtil.createSetOfEach(collectionTypeId,  aValue, bValue);
+		CollectionValue setValue = ValueUtil.createSetOfEach(collectionTypeId,  aValue, bValue);
 		ocl.assertQueryEquals(null, setValue, "Set{Tuple{a = 3}, Tuple{b = 4}, Tuple{a = 3}}");						// BUG 4404404
 		ocl.assertValidationErrorQuery(null, "let s : Set(Tuple(a:Integer)) = Set{Tuple{a = 3}, Tuple{b = 4}} in s",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_LetVariable_c_c_CompatibleTypeForInitializer,

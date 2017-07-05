@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
-import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * ClassifierAllInstancesOperation realises the Classifier::allInstances() library operation.
@@ -29,23 +29,23 @@ import org.eclipse.ocl.pivot.values.SetValue;
 public class ClassifierAllInstancesOperation extends AbstractUnaryOperation
 {
 	public static final @NonNull ClassifierAllInstancesOperation INSTANCE = new ClassifierAllInstancesOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
-	public @NonNull SetValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceVal); 
+	public @NonNull CollectionValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceVal);
 	}
 
 	/**
 	 * @since 1.1
 	 */
 	@Override
-	public @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
+	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
 		org.eclipse.ocl.pivot.Class type = asClass(sourceVal);
-//		if (type instanceof DomainMetaclass) {
-//			type = ((DomainMetaclass)type).getInstanceType();
-//		}
+		//		if (type instanceof DomainMetaclass) {
+		//			type = ((DomainMetaclass)type).getInstanceType();
+		//		}
 		ModelManager modelManager = executor.getModelManager();
 		Set<Object> results = new HashSet<Object>();
 		Set<?> instances = modelManager.get(type);

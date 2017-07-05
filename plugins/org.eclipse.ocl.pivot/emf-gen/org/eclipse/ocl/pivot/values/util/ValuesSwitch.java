@@ -16,7 +16,21 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.values.*;
+import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
+import org.eclipse.ocl.pivot.values.NullValue;
+import org.eclipse.ocl.pivot.values.ObjectValue;
+import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
+import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.TupleValue;
+import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
+import org.eclipse.ocl.pivot.values.UnlimitedValue;
+import org.eclipse.ocl.pivot.values.Value;
+import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -106,7 +120,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = caseBagValue(invalidValue);
 				if (result == null) result = caseOrderedSetValue(invalidValue);
 				if (result == null) result = caseSequenceValue(invalidValue);
-				if (result == null) result = caseSetValue(invalidValue);
 				if (result == null) result = caseTupleValue(invalidValue);
 				if (result == null) result = caseUnlimitedValue(invalidValue);
 				if (result == null) result = caseOrderedCollectionValue(invalidValue);
@@ -125,7 +138,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = caseBagValue(nullValue);
 				if (result == null) result = caseOrderedSetValue(nullValue);
 				if (result == null) result = caseSequenceValue(nullValue);
-				if (result == null) result = caseSetValue(nullValue);
 				if (result == null) result = caseTupleValue(nullValue);
 				if (result == null) result = caseUnlimitedValue(nullValue);
 				if (result == null) result = caseOrderedCollectionValue(nullValue);
@@ -178,15 +190,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ValuesPackage.SET_VALUE: {
-				SetValue setValue = (SetValue)theEObject;
-				T result = caseSetValue(setValue);
-				if (result == null) result = caseUniqueCollectionValue(setValue);
-				if (result == null) result = caseCollectionValue(setValue);
-				if (result == null) result = caseValue(setValue);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ValuesPackage.TUPLE_VALUE: {
 				TupleValue tupleValue = (TupleValue)theEObject;
 				T result = caseTupleValue(tupleValue);
@@ -205,8 +208,8 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 			case ValuesPackage.UNLIMITED_VALUE: {
 				UnlimitedValue unlimitedValue = (UnlimitedValue)theEObject;
 				T result = caseUnlimitedValue(unlimitedValue);
-//				if (result == null) result = caseIntegerValue(unlimitedValue);
-//				if (result == null) result = caseRealValue(unlimitedValue);
+				//				if (result == null) result = caseIntegerValue(unlimitedValue);
+				//				if (result == null) result = caseRealValue(unlimitedValue);
 				if (result == null) result = caseValue(unlimitedValue);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -368,21 +371,6 @@ public class ValuesSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseSequenceValue(SequenceValue object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Set Value</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Set Value</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseSetValue(SetValue object) {
 		return null;
 	}
 

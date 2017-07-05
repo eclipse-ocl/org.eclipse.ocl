@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * SetSymmetricDifferenceOperation realises the Set::symmetricDifference() library operation.
@@ -23,9 +23,9 @@ public class SetSymmetricDifferenceOperation extends AbstractSimpleBinaryOperati
 	public static final @NonNull SetSymmetricDifferenceOperation INSTANCE = new SetSymmetricDifferenceOperation();
 
 	@Override
-	public @NonNull UniqueCollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
-		UniqueCollectionValue leftValue = asUniqueCollectionValue(left);
-		UniqueCollectionValue rightValue = asUniqueCollectionValue(right);
+	public @NonNull CollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
+		CollectionValue leftValue = asUniqueCollectionValue(left);
+		CollectionValue rightValue = asUniqueCollectionValue(right);
 		return leftValue.symmetricDifference(rightValue);
 	}
 }

@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
-import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * ClassifierOclContentsOperation realises the Classifier::oclContents() library operation.
@@ -33,14 +33,14 @@ public class ClassifierOclContentsOperation extends AbstractUnaryOperation
 	 * @since 1.1
 	 */
 	@Override
-	public @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
+	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		EObject object = asNavigableObject(sourceValue, "oclContents()", executor); //$NON-NLS-1$
-    	Set<Object> collection = new HashSet<Object>();
+		Set<Object> collection = new HashSet<Object>();
 		for (Object eContent : object.eContents()) {
 			if (eContent != null) {
 				collection.add(executor.getIdResolver().boxedValueOf(eContent));
 			}
-    	}
-    	return createSetValue((CollectionTypeId)returnTypeId, collection);
+		}
+		return createSetValue((CollectionTypeId)returnTypeId, collection);
 	}
 }

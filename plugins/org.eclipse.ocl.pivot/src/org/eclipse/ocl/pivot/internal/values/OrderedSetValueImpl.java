@@ -214,7 +214,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	}
 
 	@Override
-	public @NonNull OrderedSetValue minus(@NonNull UniqueCollectionValue set) {
+	public @NonNull OrderedSetValue minus(@NonNull CollectionValue set) {
 		OrderedSet<@Nullable Object> result = new OrderedSetImpl<>(elements);
 		result.removeAll(set.asCollection());
 		return new SparseOrderedSetValueImpl(getTypeId(), result);
@@ -285,7 +285,7 @@ public abstract class OrderedSetValueImpl extends CollectionValueImpl implements
 	//	}
 
 	@Override
-	public @NonNull OrderedSetValue symmetricDifference(@NonNull UniqueCollectionValue set) {
+	public @NonNull OrderedSetValue symmetricDifference(@NonNull CollectionValue set) {
 		OrderedSet<@Nullable Object> result = new OrderedSetImpl<>(elements);
 		for (Object e : set.iterable()) {
 			if (result.contains(e)) {

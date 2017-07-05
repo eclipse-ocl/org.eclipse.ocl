@@ -17,7 +17,21 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.values.*;
+import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValue;
+import org.eclipse.ocl.pivot.values.NullValue;
+import org.eclipse.ocl.pivot.values.ObjectValue;
+import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
+import org.eclipse.ocl.pivot.values.OrderedSetValue;
+import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.SequenceValue;
+import org.eclipse.ocl.pivot.values.TupleValue;
+import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
+import org.eclipse.ocl.pivot.values.UnlimitedValue;
+import org.eclipse.ocl.pivot.values.Value;
+import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -74,72 +88,68 @@ public class ValuesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	protected ValuesSwitch<@Nullable Adapter> modelSwitch =
-		new ValuesSwitch<@Nullable Adapter>() {
-			@Override
-			public Adapter caseBagValue(BagValue object) {
-				return createBagValueAdapter();
-			}
-			@Override
-			public Adapter caseCollectionValue(CollectionValue object) {
-				return createCollectionValueAdapter();
-			}
-			@Override
-			public Adapter caseIntegerValue(IntegerValue object) {
-				return createIntegerValueAdapter();
-			}
-			@Override
-			public Adapter caseInvalidValue(InvalidValue object) {
-				return createInvalidValueAdapter();
-			}
-			@Override
-			public Adapter caseNullValue(NullValue object) {
-				return createNullValueAdapter();
-			}
-			@Override
-			public Adapter caseObjectValue(ObjectValue object) {
-				return createObjectValueAdapter();
-			}
-			@Override
-			public Adapter caseOrderedCollectionValue(OrderedCollectionValue object) {
-				return createOrderedCollectionValueAdapter();
-			}
-			@Override
-			public Adapter caseOrderedSetValue(OrderedSetValue object) {
-				return createOrderedSetValueAdapter();
-			}
-			@Override
-			public Adapter caseRealValue(RealValue object) {
-				return createRealValueAdapter();
-			}
-			@Override
-			public Adapter caseSequenceValue(SequenceValue object) {
-				return createSequenceValueAdapter();
-			}
-			@Override
-			public Adapter caseSetValue(SetValue object) {
-				return createSetValueAdapter();
-			}
-			@Override
-			public Adapter caseTupleValue(TupleValue object) {
-				return createTupleValueAdapter();
-			}
-			@Override
-			public Adapter caseUniqueCollectionValue(UniqueCollectionValue object) {
-				return createUniqueCollectionValueAdapter();
-			}
-			@Override
-			public Adapter caseUnlimitedValue(UnlimitedValue object) {
-				return createUnlimitedValueAdapter();
-			}
-			@Override
-			public Adapter caseValue(Value object) {
-				return createValueAdapter();
-			}
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+			new ValuesSwitch<@Nullable Adapter>() {
+		@Override
+		public Adapter caseBagValue(BagValue object) {
+			return createBagValueAdapter();
+		}
+		@Override
+		public Adapter caseCollectionValue(CollectionValue object) {
+			return createCollectionValueAdapter();
+		}
+		@Override
+		public Adapter caseIntegerValue(IntegerValue object) {
+			return createIntegerValueAdapter();
+		}
+		@Override
+		public Adapter caseInvalidValue(InvalidValue object) {
+			return createInvalidValueAdapter();
+		}
+		@Override
+		public Adapter caseNullValue(NullValue object) {
+			return createNullValueAdapter();
+		}
+		@Override
+		public Adapter caseObjectValue(ObjectValue object) {
+			return createObjectValueAdapter();
+		}
+		@Override
+		public Adapter caseOrderedCollectionValue(OrderedCollectionValue object) {
+			return createOrderedCollectionValueAdapter();
+		}
+		@Override
+		public Adapter caseOrderedSetValue(OrderedSetValue object) {
+			return createOrderedSetValueAdapter();
+		}
+		@Override
+		public Adapter caseRealValue(RealValue object) {
+			return createRealValueAdapter();
+		}
+		@Override
+		public Adapter caseSequenceValue(SequenceValue object) {
+			return createSequenceValueAdapter();
+		}
+		@Override
+		public Adapter caseTupleValue(TupleValue object) {
+			return createTupleValueAdapter();
+		}
+		@Override
+		public Adapter caseUniqueCollectionValue(UniqueCollectionValue object) {
+			return createUniqueCollectionValueAdapter();
+		}
+		@Override
+		public Adapter caseUnlimitedValue(UnlimitedValue object) {
+			return createUnlimitedValueAdapter();
+		}
+		@Override
+		public Adapter caseValue(Value object) {
+			return createValueAdapter();
+		}
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * IdResolver supports discovery/creation of rich Pivot-based objects from limited
@@ -81,9 +80,9 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull SequenceValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
 
-	@NonNull SetValue createSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
+	@NonNull CollectionValue createSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 
-	@NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
+	@NonNull CollectionValue createSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
 
 	void dispose();
 

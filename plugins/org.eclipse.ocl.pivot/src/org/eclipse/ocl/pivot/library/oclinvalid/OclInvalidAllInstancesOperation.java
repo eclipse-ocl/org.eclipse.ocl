@@ -14,8 +14,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * OclInvalidAllInstancesOperation realises the OclInvalid::allInstances() library operation.
@@ -25,7 +25,7 @@ public class OclInvalidAllInstancesOperation extends AbstractSimpleUnaryOperatio
 	public static final @NonNull OclInvalidAllInstancesOperation INSTANCE = new OclInvalidAllInstancesOperation();
 
 	@Override
-	public @NonNull SetValue evaluate(@Nullable Object sourceVal) {
+	public @NonNull CollectionValue evaluate(@Nullable Object sourceVal) {
 		// OclInvalid has a single instance: invalid that cannot be returned in a collection
 		throw new InvalidValueException(PivotMessages.InvalidLiteral);
 	}

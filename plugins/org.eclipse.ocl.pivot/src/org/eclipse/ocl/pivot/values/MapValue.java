@@ -107,7 +107,7 @@ public interface MapValue extends Value//, Iterable<Object>
 	/**
 	 * @generated NOT
 	 */
-	@NonNull SetValue getKeys();
+	@NonNull CollectionValue getKeys();
 
 	/**
 	 * @generated NOT

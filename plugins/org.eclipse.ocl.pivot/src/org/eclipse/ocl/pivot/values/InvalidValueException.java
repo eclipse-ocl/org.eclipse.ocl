@@ -132,7 +132,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	@Override
-	public @NonNull SetValue asSetValue() {
+	public @NonNull CollectionValue asSetValue() {
 		throw this;
 	}
 

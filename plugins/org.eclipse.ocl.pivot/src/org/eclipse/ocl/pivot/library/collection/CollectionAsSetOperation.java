@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
-import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * CollectionAsSetOperation realises the Collection::asSet() library operation.
@@ -23,7 +23,7 @@ public class CollectionAsSetOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull CollectionAsSetOperation INSTANCE = new CollectionAsSetOperation();
 
 	@Override
-	public @NonNull SetValue evaluate(@Nullable Object argument) {
+	public @NonNull CollectionValue evaluate(@Nullable Object argument) {
 		return asSetValue(argument);
 	}
 }

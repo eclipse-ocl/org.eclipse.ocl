@@ -155,6 +155,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
+	@NonNull CollectionValue minus(@NonNull CollectionValue set);
+
+	/**
+	 * @generated NOT
+	 */
 	@NonNull Boolean notEmpty();
 
 	/**
@@ -171,6 +176,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@NonNull OrderedCollectionValue sort(@NonNull Comparator<@Nullable Object> comparator);
+
+	/**
+	 * @generated NOT
+	 */
+	@NonNull CollectionValue symmetricDifference(@NonNull CollectionValue set);
 
 	/**
 	 * @generated NOT

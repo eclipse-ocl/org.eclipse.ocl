@@ -137,7 +137,7 @@ public interface Value
 	/**
 	 * @generated NOT
 	 */
-	@NonNull SetValue asSetValue();
+	@NonNull CollectionValue asSetValue();
 
 	/**
 	 * @generated NOT
@@ -160,7 +160,7 @@ public interface Value
 	/**
 	 * @generated NOT
 	 */
-	@NonNull UniqueCollectionValue asUniqueCollectionValue();
+	@NonNull CollectionValue asUniqueCollectionValue();
 
 	/**
 	 * @generated NOT

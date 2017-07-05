@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
@@ -443,7 +442,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull SetValue asSetValue() {
+	public @NonNull CollectionValue asSetValue() {
 		intSize();			// Force an InvalidValueEception to be thrown for any invalid element
 		return new AsSetIterator.FromCollectionValue(this);
 	}
@@ -875,6 +874,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
+	public @NonNull CollectionValue minus(@NonNull CollectionValue set) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull Boolean notEmpty() {
 		return intSize() != 0;
 	}
@@ -908,6 +912,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		else {
 			return new SparseSequenceValueImpl(getTypeId(), values);
 		}
+	}
+
+	@Override
+	public @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue set) {
+		throw new UnsupportedOperationException();
 	}
 
 	/**

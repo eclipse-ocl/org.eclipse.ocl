@@ -13,8 +13,8 @@ package org.eclipse.ocl.pivot.library.map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.MapValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * MapKeysOperation realises the Map::keys() library operation.
@@ -24,7 +24,7 @@ public class MapKeysOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull MapKeysOperation INSTANCE = new MapKeysOperation();
 
 	@Override
-	public @NonNull SetValue evaluate(@Nullable Object source) {
+	public @NonNull CollectionValue evaluate(@Nullable Object source) {
 		MapValue mapValue = asMapValue(source);
 		return mapValue.getKeys();
 	}

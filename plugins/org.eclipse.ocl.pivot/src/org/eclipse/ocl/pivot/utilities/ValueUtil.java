@@ -91,9 +91,7 @@ import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
@@ -317,7 +315,7 @@ public abstract class ValueUtil
 		}
 	}
 
-	public static @NonNull SetValue asSetValue(@Nullable Object value) {
+	public static @NonNull CollectionValue asSetValue(@Nullable Object value) {
 		if (value instanceof Value) {
 			return ((Value)value).asSetValue();
 		}
@@ -353,7 +351,7 @@ public abstract class ValueUtil
 		}
 	}
 
-	public static @NonNull UniqueCollectionValue asUniqueCollectionValue(@Nullable Object value) {
+	public static @NonNull CollectionValue asUniqueCollectionValue(@Nullable Object value) {
 		if (value instanceof Value) {
 			return ((Value)value).asUniqueCollectionValue();
 		}
@@ -698,16 +696,16 @@ public abstract class ValueUtil
 		return new AsSequenceIterator.FromCollection(typeId, boxedValues);
 	}
 
-	public static SetValue.@NonNull Accumulator createSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
+	public static CollectionValue.@NonNull Accumulator createSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		return new SetValueImpl.Accumulator(collectedId);
 	}
 
-	public static @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
+	public static @NonNull CollectionValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
 		return new AsSetIterator.FromArray(typeId, boxedValues);
 	}
 
-	public static @NonNull SetValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
+	public static @NonNull CollectionValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
 		Set<@Nullable Object> allValues = new HashSet<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
@@ -720,7 +718,7 @@ public abstract class ValueUtil
 		return new SetValueImpl(typeId, allValues);
 	}
 
-	public static @NonNull SetValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+	public static @NonNull CollectionValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
 		return new AsSetIterator.FromCollection(typeId, boxedValues);
 		//		return new SetValueImpl(typeId, boxedValues);

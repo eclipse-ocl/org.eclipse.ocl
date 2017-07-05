@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.ValuesPackage;
 
 /**
@@ -94,7 +93,7 @@ public class BagValueImpl extends CollectionValueImpl implements BagValue.Intern
 	}
 
 	@Override
-	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
+	public @NonNull CollectionValue asUniqueCollectionValue() {
 		return isOrdered() ? asOrderedSetValue() : asSetValue();
 	}
 

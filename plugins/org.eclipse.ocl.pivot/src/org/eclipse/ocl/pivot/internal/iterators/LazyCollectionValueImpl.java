@@ -53,9 +53,7 @@ import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.Value;
 
 import com.google.common.collect.Lists;
@@ -333,7 +331,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull SetValue asSetValue() {
+	public @NonNull CollectionValue asSetValue() {
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
@@ -341,7 +339,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull UniqueCollectionValue asUniqueCollectionValue() {
+	public @NonNull CollectionValue asUniqueCollectionValue() {
 		return isOrdered() ? asOrderedSetValue() : asSetValue();
 	}
 
@@ -858,6 +856,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return cachedIterable().iterator();
 	}
 
+	@Override
 	public @NonNull CollectionValue minus(@NonNull CollectionValue that) {
 		return ExcludingAllIterator.excludingAll(this, that);
 	}
@@ -951,6 +950,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return SubSequenceIterator.subSequence(this, lower, upper);
 	}
 
+	@Override
 	public @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue that) {
 		return SymmetricDifferenceIterator.symmetricDifference(this, that);
 	}

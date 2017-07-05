@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
-import org.eclipse.ocl.pivot.values.SetValue;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * OclVoidAllInstancesOperation realises the OclVoid::allInstances() library operation.
@@ -26,7 +26,7 @@ public class OclVoidAllInstancesOperation extends AbstractSimpleUnaryOperation
 	public static final @NonNull CollectionTypeId SET_OCL_VOID = TypeId.SET.getSpecializedId(TypeId.OCL_VOID);
 
 	@Override
-	public @NonNull SetValue evaluate(@Nullable Object sourceVal) {
+	public @NonNull CollectionValue evaluate(@Nullable Object sourceVal) {
 		// OclVoid has a single instance: null
 		return createSetOfEach(SET_OCL_VOID, (Object)null);
 	}

@@ -19,8 +19,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.SetValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 
 import com.google.common.collect.Iterators;
 
@@ -29,7 +27,7 @@ import com.google.common.collect.Iterators;
  *
  * @since 1.3
  */
-public abstract class AsSetIterator extends LazyCollectionValueImpl implements SetValue
+public abstract class AsSetIterator extends LazyCollectionValueImpl implements CollectionValue
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
@@ -53,13 +51,13 @@ public abstract class AsSetIterator extends LazyCollectionValueImpl implements S
 
 	@Override
 	@Deprecated
-	public @NonNull UniqueCollectionValue minus(@NonNull UniqueCollectionValue that) {
+	public @NonNull CollectionValue minus(@NonNull CollectionValue that) {
 		return super.minus(that).asUniqueCollectionValue();
 	}
 
 	@Override
 	@Deprecated
-	public @NonNull UniqueCollectionValue symmetricDifference(@NonNull UniqueCollectionValue that) {
+	public @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue that) {
 		return super.symmetricDifference(that).asUniqueCollectionValue();
 	}
 

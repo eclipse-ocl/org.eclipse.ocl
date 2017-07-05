@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 
 /**
  * SetMinusOperation realises the Set::-() library operation.
@@ -25,8 +24,8 @@ public class SetMinusOperation extends AbstractSimpleBinaryOperation
 
 	@Override
 	public @NonNull CollectionValue evaluate(@Nullable Object left, @Nullable Object right) {
-		UniqueCollectionValue leftValue = asUniqueCollectionValue(left);
-		UniqueCollectionValue rightValue = asUniqueCollectionValue(right);
+		CollectionValue leftValue = asUniqueCollectionValue(left);
+		CollectionValue rightValue = asUniqueCollectionValue(right);
 		return leftValue.minus(rightValue);
 	}
 }

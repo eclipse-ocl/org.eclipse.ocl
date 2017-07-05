@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * IsUniqueIteration realizes the Collection::isUnique() library iteration.
@@ -36,25 +35,25 @@ public class IsUniqueIteration extends AbstractIteration
 	public SetValueImpl.@NonNull Accumulator createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return (SetValueImpl.@NonNull Accumulator) createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
 	@Override
-	public SetValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
+	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedId(accumulatorTypeId));
 	}
-	
+
 	@Override
 	protected @NonNull Object resolveTerminalValue(@NonNull IterationManager iterationManager) {
 		return true;
 	}
-	
+
 	@Override
-    protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
+	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
 		CollectionValue.Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
 		assert accumulatorValue != null;
-		Object bodyVal = iterationManager.evaluateBody();		
+		Object bodyVal = iterationManager.evaluateBody();
 		assert !(bodyVal instanceof InvalidValueException);
 		if (accumulatorValue.includes(bodyVal) == TRUE_VALUE) {
 			return false;						// Abort after second find

@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
-import org.eclipse.ocl.pivot.values.SetValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
@@ -123,13 +122,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass setValueEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass tupleValueEClass = null;
 
 	/**
@@ -181,7 +173,7 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link ValuesPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -209,7 +201,7 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		// Mark meta-data to indicate it can't be changed
 		theValuesPackage.freeze();
 
-  
+
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(ValuesPackage.eNS_URI, theValuesPackage);
 		return theValuesPackage;
@@ -331,16 +323,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getSetValue() {
-		return setValueEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getTupleValue() {
 		return tupleValueEClass;
 	}
@@ -426,8 +408,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 
 		sequenceValueEClass = createEClass(SEQUENCE_VALUE);
 
-		setValueEClass = createEClass(SET_VALUE);
-
 		tupleValueEClass = createEClass(TUPLE_VALUE);
 
 		uniqueCollectionValueEClass = createEClass(UNIQUE_COLLECTION_VALUE);
@@ -475,7 +455,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		nullValueEClass.getESuperTypes().add(this.getMapValue());
 		nullValueEClass.getESuperTypes().add(this.getOrderedSetValue());
 		nullValueEClass.getESuperTypes().add(this.getSequenceValue());
-		nullValueEClass.getESuperTypes().add(this.getSetValue());
 		nullValueEClass.getESuperTypes().add(this.getTupleValue());
 		nullValueEClass.getESuperTypes().add(this.getUnlimitedValue());
 		objectValueEClass.getESuperTypes().add(this.getValue());
@@ -484,7 +463,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		orderedSetValueEClass.getESuperTypes().add(this.getUniqueCollectionValue());
 		realValueEClass.getESuperTypes().add(this.getValue());
 		sequenceValueEClass.getESuperTypes().add(this.getOrderedCollectionValue());
-		setValueEClass.getESuperTypes().add(this.getUniqueCollectionValue());
 		tupleValueEClass.getESuperTypes().add(this.getValue());
 		uniqueCollectionValueEClass.getESuperTypes().add(this.getCollectionValue());
 		unlimitedValueEClass.getESuperTypes().add(this.getIntegerValue());
@@ -511,8 +489,6 @@ public class ValuesPackageImpl extends EPackageImpl implements ValuesPackage {
 		initEClass(realValueEClass, RealValue.class, "RealValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(sequenceValueEClass, SequenceValue.class, "SequenceValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(setValueEClass, SetValue.class, "SetValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(tupleValueEClass, TupleValue.class, "TupleValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

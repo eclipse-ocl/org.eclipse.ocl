@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.UniqueCollectionValue;
 
 import com.google.common.collect.Iterators;
 
@@ -66,7 +65,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl imple
 
 	@Override
 	@Deprecated
-	public @NonNull UniqueCollectionValue minus(@NonNull UniqueCollectionValue that) {
+	public @NonNull CollectionValue minus(@NonNull CollectionValue that) {
 		return super.minus(that).asUniqueCollectionValue();
 	}
 
@@ -90,7 +89,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl imple
 
 	@Override
 	@Deprecated
-	public @NonNull UniqueCollectionValue symmetricDifference(@NonNull UniqueCollectionValue that) {
+	public @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue that) {
 		return super.symmetricDifference(that).asUniqueCollectionValue();
 	}
 

@@ -478,16 +478,6 @@ public interface ValuesPackage extends EPackage {
 	EClass getSequenceValue();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.SetValue <em>Set Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Set Value</em>'.
-	 * @see org.eclipse.ocl.pivot.values.SetValue
-	 * @generated
-	 */
-	EClass getSetValue();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.TupleValue <em>Tuple Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -658,16 +648,6 @@ public interface ValuesPackage extends EPackage {
 		 * @generated
 		 */
 		EClass SEQUENCE_VALUE = eINSTANCE.getSequenceValue();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.impl.SetValueImpl <em>Set Value</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.values.impl.SetValueImpl
-		 * @see org.eclipse.ocl.pivot.values.impl.ValuesPackageImpl#getSetValue()
-		 * @generated
-		 */
-		EClass SET_VALUE = eINSTANCE.getSetValue();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.impl.TupleValueImpl <em>Tuple Value</em>}' class.
