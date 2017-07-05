@@ -499,6 +499,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public boolean canBeLazy() {
+		return false;
+	}
+
 	protected boolean checkElementsAreUnique(@NonNull Iterable<@Nullable ? extends Object> elements) {
 		Set<@Nullable Object> knownElements = new HashSet<>();
 		for (Object element : elements) {

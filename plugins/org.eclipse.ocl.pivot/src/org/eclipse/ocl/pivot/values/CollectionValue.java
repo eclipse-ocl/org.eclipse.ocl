@@ -24,6 +24,23 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterator;
 
+/**
+ * LazyCollectionValue extends the inherently eager CollectionValue to support lazy and lazily cached iterations.
+ *
+ * A lazy iteration avoids any cache overheads by computing each output value from an input value on the fly.
+ * A collection that is invalid becuase of an invalid content may not be detected until the offending input is
+ * traverse.
+ *
+ * A lazily cached iteration similarly computes output from input on the fly, but caches the results so that a
+ * subsequent iteration can re-use the computations.
+ * A collection that is invalid becuase of an invalid content may not be detected until the offending input is
+ * traverse.
+ *
+ * An eagerly cached iteration computes every cache entry so that ant invalid content is detected before any output
+ * iteration occurs.
+ *
+ * @since 1.3
+ */
 public interface CollectionValue extends Value, Iterable<@Nullable Object>
 {
 	/**
@@ -70,6 +87,8 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * values from a first iteration. This provides opportunities for redundant iterations to be skipped.
 	 */
 	@NonNull LazyIterable cachedIterable();
+
+	boolean canBeLazy();
 
 	/**
 	 * @generated NOT

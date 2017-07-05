@@ -381,6 +381,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return lazyIterable2;
 	}
 
+	@Override
+	public boolean canBeLazy() {
+		return true;
+	}
+
 	protected boolean checkElementsAreValues(@NonNull Iterable<? extends Object> elements) {
 		for (Object element : elements) {
 			assert ValueUtil.isBoxed(element);

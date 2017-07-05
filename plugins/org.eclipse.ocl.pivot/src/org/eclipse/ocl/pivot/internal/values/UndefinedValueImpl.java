@@ -254,6 +254,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public boolean canBeLazy() {
+		return false;
+	}
+
+	@Override
 	public @NonNull RealValue commutatedAdd(@NonNull RealValue left) {
 		return toInvalidValue();
 	}
