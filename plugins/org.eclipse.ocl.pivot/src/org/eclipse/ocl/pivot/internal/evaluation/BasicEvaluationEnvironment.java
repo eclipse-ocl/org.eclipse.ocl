@@ -56,7 +56,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	 */
 	@Deprecated
 	protected final @Nullable OCLExpression callingObject;
-	private final @NonNull Map<TypedElement, Object> variableValues = new HashMap<TypedElement, Object>();
+	private final @NonNull Map<@NonNull TypedElement, @Nullable Object> variableValues = new HashMap<>();
 	/** @deprecated use an executor */
 	@Deprecated
 	protected final @NonNull ModelManager modelManager;
@@ -244,7 +244,7 @@ public class BasicEvaluationEnvironment extends AbstractCustomizable implements 
 	}
 
 	@Override
-	public @NonNull Set<TypedElement> getVariables() {
+	public @NonNull Set<@NonNull TypedElement> getVariables() {
 		return variableValues.keySet();
 	}
 

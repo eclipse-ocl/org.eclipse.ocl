@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * An instance of ConstrainedOperation supports evaluation of
@@ -58,10 +57,7 @@ public class ConstrainedOperation extends AbstractOperation
 		try {
 			OCLExpression bodyExpression = expressionInOCL.getOwnedBody();
 			assert bodyExpression != null;
-			Object result = executor.evaluate(bodyExpression);
-			if (result instanceof LazyCollectionValue) {
-				((LazyCollectionValue)result).eagerIterable();
-			}
+			Object result = executor.evaluate(bodyExpression, expressionInOCL, caller);
 			return result;
 		}
 		finally {

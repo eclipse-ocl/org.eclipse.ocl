@@ -35,7 +35,7 @@ public class ConstrainedProperty extends AbstractProperty
 {
 	protected final @NonNull Property property;
 	protected /*@LazyNonNull*/ ExpressionInOCL expression = null;
-	
+
 	public ConstrainedProperty(@NonNull Property property) {
 		this.property = property;
 	}
@@ -64,7 +64,8 @@ public class ConstrainedProperty extends AbstractProperty
 		try {
 			OCLExpression bodyExpression = expression2.getOwnedBody();
 			assert bodyExpression != null;
-			return executor.evaluate(bodyExpression);
+			Object result = executor.evaluate(bodyExpression, expression2, null);
+			return result;
 		}
 		finally {
 			executor.popEvaluationEnvironment();

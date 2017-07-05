@@ -108,7 +108,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 		}
 
 		@Override
-		public @NonNull Set<TypedElement> getVariables() {
+		public @NonNull Set<@NonNull TypedElement> getVariables() {
 			return Collections.emptySet();
 		}
 
@@ -212,6 +212,11 @@ public abstract class ExecutorManager implements ExecutorExtension
 		//		} catch (InvalidValueException e) {
 		//			return throwInvalidEvaluation(e);
 		//		}
+	}
+
+	@Override
+	public @Nullable Object evaluate(@NonNull OCLExpression expression, @NonNull NamedElement executableObject, TypedElement caller) {
+		throw new UnsupportedOperationException();
 	}
 
 	public Value evaluateIteration(Type returnType, CollectionValue sourceVal, TypedElement accumulator,

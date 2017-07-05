@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.evaluation.IndentingLogger;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.IdResolver.IdResolverExtension;
+import org.eclipse.ocl.pivot.internal.iterators.ContextIterator;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -50,6 +51,7 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.NullValue;
 
 /**
@@ -193,6 +195,15 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
 		return evaluationVisitor.evaluate(body);
+	}
+
+	@Override
+	public @Nullable Object evaluate(@NonNull OCLExpression expression, @NonNull NamedElement executableObject, /*@NonNull*/ TypedElement caller) {
+		Object result = evaluate(expression);
+		if (result instanceof LazyCollectionValue) {
+			result = new ContextIterator(this, executableObject, caller, (LazyCollectionValue)result);
+		}
+		return result;
 	}
 
 	/**

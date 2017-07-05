@@ -64,10 +64,12 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationHaltedException;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
+import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.internal.iterators.CollectionLiteralIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ContextIterator;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.EvaluatorMultipleIterationManager;
@@ -82,6 +84,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -538,7 +541,11 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		EvaluationEnvironment nestedEvaluationEnvironment = context.pushEvaluationEnvironment(expression, (TypedElement)letExp);
 		nestedEvaluationEnvironment.add(variable, value);
 		try {
-			return expression.accept(undecoratedVisitor);
+//			Object result = expression.accept(undecoratedVisitor);
+//			if (result instanceof LazyCollectionValue) {
+//				result = new ContextIterator((ExecutorExtension) getExecutor(), expression, letExp, (LazyCollectionValue)result);
+//			}
+			return getExecutor().evaluate(expression, expression, letExp);
 		}
 		finally {
 			context.popEvaluationEnvironment();

@@ -75,7 +75,7 @@ public class EObjectOperation extends AbstractOperation
 			nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(parameterVariables.get(i)), argumentValues[i]);
 		}
 		try {
-			return executor.evaluate(ClassUtil.nonNullPivot(query.getOwnedBody()));
+			return executor.evaluate(ClassUtil.nonNullPivot(query.getOwnedBody()), callExp, null);
 		}
 		finally {
 			executor.popEvaluationEnvironment();
@@ -104,7 +104,7 @@ public class EObjectOperation extends AbstractOperation
 			nestedEvaluationEnvironment.add(ClassUtil.nonNullModel(parameterVariables.get(i)), boxedSourceAndArgumentValues[i+1]);
 		}
 		try {
-			return executor.evaluate(ClassUtil.nonNullPivot(query.getOwnedBody()));
+			return executor.evaluate(ClassUtil.nonNullPivot(query.getOwnedBody()), caller, null);
 		}
 		finally {
 			executor.popEvaluationEnvironment();
