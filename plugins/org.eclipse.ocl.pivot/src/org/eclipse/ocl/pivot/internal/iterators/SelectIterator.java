@@ -48,8 +48,7 @@ public abstract class SelectIterator extends LazyCollectionValueImpl
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("Select{");
-		LazyIterable iterable = basicGetIterable();
-		if (iterable != null) {
+		if (hasCache()) {
 			appendIterable(s);
 			if (hasNext()) {
 				s.append(";«future»");

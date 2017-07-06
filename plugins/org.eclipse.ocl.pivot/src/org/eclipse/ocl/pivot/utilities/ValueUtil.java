@@ -66,7 +66,6 @@ import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
 import org.eclipse.ocl.pivot.internal.values.TupleValueImpl;
-import org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl;
 import org.eclipse.ocl.pivot.internal.values.UnlimitedValueImpl;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -107,7 +106,7 @@ public abstract class ValueUtil
 	private static final @Nullable IntegerValue @NonNull [] INTEGER_VALUES = new @Nullable IntegerValue[NEGATIVE_INTEGERS + POSITIVE_INTEGERS];
 
 	public static @NonNull Bag<?> EMPTY_BAG = new BagImpl<>();
-	public static final @NonNull Set<Object> EMPTY_SET = Collections.emptySet();
+	public static final @NonNull Set<@Nullable Object> EMPTY_SET = Collections.<@Nullable Object>emptySet();
 
 	@SuppressWarnings("null")
 	public static final @NonNull BigInteger INTEGER_MAX_VALUE = BigInteger.valueOf(Integer.MAX_VALUE);
@@ -780,6 +779,7 @@ public abstract class ValueUtil
 		String name = elementId.toString();
 		if (name.startsWith(METAMODEL_NAME_PREFIX)) {
 			name = name.substring(METAMODEL_NAME_PREFIX.length());
+			assert name != null;
 		}
 		return name;
 	}
@@ -792,24 +792,6 @@ public abstract class ValueUtil
 			return (Executor)evaluator;
 		}
 		return ((EvaluationVisitor.EvaluationVisitorExtension)evaluator).getExecutor();
-	}
-
-	/**
-	 * @since 1.3 // FIXME temporary till next major version change
-	 */
-	public static @NonNull Map<@Nullable ? extends Object, @NonNull ? extends Number> getMapOfElement2elementCount(@NonNull CollectionValue bagValue) {
-		if (bagValue instanceof BagValueImpl) {
-			return ((BagValueImpl)bagValue).getMapOfElement2elementCount();
-		}
-		else if (bagValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)bagValue).eagerIterable().getMapOfElement2elementCount();
-		}
-		else if (bagValue instanceof UndefinedValueImpl) {
-			return Collections.<@Nullable Object, @NonNull Number>emptyMap();
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
 	}
 
 	public static String getTypeName(@Nullable Object value) {
@@ -1136,7 +1118,9 @@ public abstract class ValueUtil
 			return ((LazyCollectionValue)c).lazyIterator();
 		}
 		else {
-			return (Iterator<@Nullable Object>)c.iterator();
+			@SuppressWarnings("unchecked")
+			Iterator<@Nullable Object> castIterator = (Iterator<@Nullable Object>)c.iterator();
+			return castIterator;
 		}
 	}
 

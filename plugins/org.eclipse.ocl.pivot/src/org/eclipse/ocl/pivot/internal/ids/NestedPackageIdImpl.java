@@ -46,14 +46,14 @@ public class NestedPackageIdImpl extends AbstractPackageIdImpl implements Nested
 	public @NonNull String getName() {
 		return name;
 	}
-	
+
 	@Override
 	public @NonNull PackageId getParent() {
 		return parent;
 	}
-	
+
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		return parent + "::" + name;
 	}
 

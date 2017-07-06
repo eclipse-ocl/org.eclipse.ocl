@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
 import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
@@ -627,8 +628,8 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 				}
 			}
 			else {
-				Map<? extends Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount(this);
-				Map<? extends Object, @NonNull ? extends Number> thoseElements = getMapOfElement2elementCount(that);
+				Map<? extends Object, @NonNull ? extends Number> theseElements = this.getMapOfElement2elementCount();
+				Map<? extends Object, @NonNull ? extends Number> thoseElements = that.getMapOfElement2elementCount();
 				return theseElements.equals(thoseElements);
 			}
 		}
@@ -769,6 +770,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	@Override
 	public @NonNull String getKind() {
 		return collectionFactory.getKind();
+	}
+
+	@Override
+	public @NonNull Map<@Nullable Object, @NonNull ? extends ElementCount> getMapOfElement2elementCount() {
+		throw new UnsupportedOperationException();
 	}
 
 	public @NonNull Collection<@Nullable Object> getObject() {

@@ -30,7 +30,7 @@ public class TemplateParameterIdImpl /*extends AbstractTypeId*/ implements Templ
 	private final int hashCode;
 
 	public TemplateParameterIdImpl(@NonNull IdManager idManager, int index) {
-//		System.out.println("create " + ClassUtil.debugFullName(this));
+		//		System.out.println("create " + ClassUtil.debugFullName(this));
 		this.index = index;
 		this.name = "$" + Integer.toString(index);
 		this.hashCode = IdHash.createGlobalHash(TemplateParameterId.class, name);
@@ -87,7 +87,7 @@ public class TemplateParameterIdImpl /*extends AbstractTypeId*/ implements Templ
 
 	@Override
 	public @NonNull String getMetaTypeName() {
-    	throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -95,40 +95,40 @@ public class TemplateParameterIdImpl /*extends AbstractTypeId*/ implements Templ
 		return name;
 	}
 
-    @Override
+	@Override
 	public @NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-    	throw new UnsupportedOperationException();
-    }
+		throw new UnsupportedOperationException();
+	}
 
-    @Override
+	@Override
 	public @NonNull PropertyId getPropertyId(@NonNull String name) {
-    	throw new UnsupportedOperationException();
-    }
-	
-    @Override
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId(int index) {
-    	throw new UnsupportedOperationException();
-    }
-	
-    @Override
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public int getTemplateParameters() {
-    	throw new UnsupportedOperationException();
-    }
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public final int hashCode() {
 		return hashCode;
 	}
 
-    @Override
+	@Override
 	public @NonNull ElementId specialize(@NonNull BindingsId templateBindings) {
-    	ElementId elementId = templateBindings.get(index);
+		ElementId elementId = templateBindings.get(index);
 		assert elementId != null;
 		return elementId;
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		return getDisplayName();
 	}
 }

@@ -480,9 +480,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 		@Override
 		protected @NonNull Boolean contains(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement) {
-			List<@Nullable Object> listOfElements = lazyIterable.getListOfElements();
 			EqualsStrategy equalsStrategy2 = lazyIterable.equalsStrategy;
-			for (Object element : listOfElements) {
+			for (Object element : lazyIterable.getListOfElements()) {
 				if (equalsStrategy2.isEqual(element, anElement)) {
 					return Boolean.TRUE;
 				}
@@ -813,11 +812,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 	}
 
-	public static final @NonNull CollectionStrategy BAG_STRATEGY = BagStrategy.INSTANCE;
-	public static final @NonNull CollectionStrategy COLLECTION_STRATEGY = BaseCollectionStrategy.INSTANCE;
-	public static final @NonNull CollectionStrategy ORDERED_SET_STRATEGY = OrderedSetStrategy.INSTANCE;
-	public static final @NonNull CollectionStrategy SEQUENCE_STRATEGY = SequenceStrategy.INSTANCE;
-	public static final @NonNull CollectionStrategy SET_STRATEGY = SetStrategy.INSTANCE;
+	public static final @NonNull AbstractCollectionStrategy BAG_STRATEGY = BagStrategy.INSTANCE;
+	public static final @NonNull AbstractCollectionStrategy COLLECTION_STRATEGY = BaseCollectionStrategy.INSTANCE;
+	public static final @NonNull AbstractCollectionStrategy ORDERED_SET_STRATEGY = OrderedSetStrategy.INSTANCE;
+	public static final @NonNull AbstractCollectionStrategy SEQUENCE_STRATEGY = SequenceStrategy.INSTANCE;
+	public static final @NonNull AbstractCollectionStrategy SET_STRATEGY = SetStrategy.INSTANCE;
 
 	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList = null;
 	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap = null;
@@ -842,7 +841,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		s.append("]");
 	}
 
-	public static @NonNull CollectionStrategy getCollectionStrategy(@NonNull CollectionTypeId typeId) {
+	public static @NonNull AbstractCollectionStrategy getCollectionStrategy(@NonNull CollectionTypeId typeId) {
 		typeId = typeId.getGeneralizedId();
 		if (typeId == TypeId.BAG) {
 			return BAG_STRATEGY;
@@ -902,7 +901,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 			return 0;
 		}
 		LazyCollectionValueImpl lazySource = (LazyCollectionValueImpl)sourceValue;
-		if (lazySource.lazyIterable != null) {
+		if (lazySource.lazyListOfElements != null) {
 			return 0;
 		}
 		else {
@@ -910,15 +909,21 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 	}
 
+
+	/**
+	 * The type of the resulting collection.
+	 */
+	protected final @NonNull CollectionTypeId typeId;
+
+	/**
+	 * THe number of preceding lazy iterators feeding this lazy collection.
+	 */
+	private final int lazyDepth;
+
 	/**
 	 * The iterator that provides the elements that have yet to be cached in lazyListOfElements.
 	 */
 	private @NonNull Iterator<@Nullable Object> sourceIterator;
-
-	/**
-	 * The Java/Not/OCL/Simple Equals strategy that determines how elements are compared for uniqueness.
-	 */
-	private @NonNull EqualsStrategy equalsStrategy;
 
 	/**
 	 * The Bag/Sequence/Unique strategy that determines how new/old elements are added/removed.
@@ -926,12 +931,19 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	private @NonNull AbstractCollectionStrategy collectionStrategy;
 
 	/**
-	 * The lazily cached and deterministically ordered elements obtained by iterating sourceIterator.
+	 * The Java/Not/OCL/Simple Equals strategy that determines how elements are compared for uniqueness.
 	 */
-	private @Nullable List<@Nullable Object> lazyListOfElements;	// ArrayList reallocates arrays; could be better to do so ourselves with a smart estimatedSize()
+	private @NonNull EqualsStrategy equalsStrategy;
 
 	/**
-	 * A lazily created map from element to its repeat count. Null for Sequences. SetCount.ONE for Set/OrderedSet.
+	 * The lazily cached and deterministically ordered elements obtained by iterating sourceIterator.
+	 * Initially null. Non-null once a a cache is needed.
+	 */
+	private @Nullable List<@Nullable Object> lazyListOfElements = null;	// ArrayList reallocates arrays; could be better to do so ourselves with a smart estimatedSize()
+
+	/**
+	 * A lazily created map from element to its repeat count. SetCount.ONE for Set/OrderedSet.
+	 * Initially null. Non-null once a non-Sequence is cached.
 	 */
 	private @Nullable Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount = null;
 
@@ -943,30 +955,9 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	private int size = 0;
 
 	/**
-	 * The type of the resulting collection.
-	 */
-	protected final @NonNull CollectionTypeId typeId;
-
-	/**
-	 * The Bag/Sequence/Unqiue strategy applicable prior to any mutation.
-	 */
-	private final @NonNull CollectionStrategy initialCollectionStrategy;
-
-	/**
-	 * THe number of preceding lazy iterators feeding this lazy collection.
-	 */
-	private final int lazyDepth;
-
-	/**
 	 * The hashCode of the boxed values in this collection.
 	 */
 	private int hashCode = 0;
-
-	/**
-	 * A non-null lazyIterable provides the lazily populated cache. It may remain null if the LazyCollectionValue
-	 * is used solely as a bypass lazyterator.
-	 */
-	private @Nullable MutableIterable lazyIterable = null;
 
 	/**
 	 * Set true if the first usage of this LazyCollectionValue is a bypass lazyIterator(). Once set any further
@@ -976,7 +967,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	private boolean lazyIterator = false;
 
 	/**
-	 * The next value to be returned by this iterator, if hasNext is true.
+	 * The next value to be returned by this iterator, if hasNextCount > 0.
 	 */
 	private Object next = null;
 
@@ -992,21 +983,18 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	private int useCount = 0;
 
 	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId, int lazyDepth) {
-		this.sourceIterator = ClassUtil.emptyIterator();
-		this.collectionStrategy = (AbstractCollectionStrategy)COLLECTION_STRATEGY;
-		this.equalsStrategy = SimpleEqualsStrategy.INSTANCE;
 		this.typeId = typeId;
-		this.initialCollectionStrategy = getCollectionStrategy(typeId);
 		this.lazyDepth = lazyDepth;
+		this.sourceIterator = ClassUtil.emptyIterator();
+		this.collectionStrategy = getCollectionStrategy(typeId);
+		this.equalsStrategy = SimpleEqualsStrategy.INSTANCE;
 	}
 
-	//	@Override
 	@Override
 	public @NonNull CollectionValue append(@Nullable Object object) {
-		return AppendIterator.append(getTypeId(), this, object);
+		return AppendIterator.append(typeId, this, object);
 	}
 
-	//	@Override
 	@Override
 	public @NonNull CollectionValue appendAll(@NonNull CollectionValue values) {
 		return AppendAllIterator.appendAll(this, values);
@@ -1050,15 +1038,15 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	public @NonNull CollectionValue asEagerCollectionValue() {
 		if (isOrdered()) {
 			if (isUnique()) {
-				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
+				return new SparseOrderedSetValueImpl(typeId, getElements());
 			}
 			else {
-				return new SparseSequenceValueImpl(getTypeId(), eagerIterable().getListOfElements());
+				return new SparseSequenceValueImpl(typeId, getListOfElements());
 			}
 		}
 		else {
 			if (isUnique()) {
-				return new SetValueImpl(getTypeId(), getElements());
+				return new SetValueImpl(typeId, getElements());
 			}
 			else {
 				BagImpl<@Nullable Object> bagImpl = new BagImpl<>();
@@ -1066,7 +1054,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 					Object next = next();
 					bagImpl.put(next, count);
 				}
-				return new BagValueImpl(getTypeId(), bagImpl);
+				return new BagValueImpl(typeId, bagImpl);
 			}
 		}
 	}
@@ -1074,10 +1062,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	private @NonNull CollectionValue asEagerOrderedCollectionValue() {
 		if (isOrdered()) {
 			if (isUnique()) {
-				return new SparseOrderedSetValueImpl(getTypeId(), getElements());
+				return new SparseOrderedSetValueImpl(typeId, getElements());
 			}
 			else {
-				return new SparseSequenceValueImpl(getTypeId(), eagerIterable().getListOfElements());
+				return new SparseSequenceValueImpl(typeId, getListOfElements());
 			}
 		}
 		else {
@@ -1151,7 +1139,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return isOrdered() ? asOrderedSetValue() : asSetValue();
 	}
 
-	//	@Override
 	@Override
 	public @Nullable Object at(int oclIndex) {
 		if (!isOrdered()) {
@@ -1162,26 +1149,27 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (javaIindex < 0 || size <= javaIindex) {
 			throw new InvalidValueException(PivotMessages.IndexOutOfRange, oclIndex, size);
 		}
-		return cachedIterable().get(javaIindex);
-	}
-
-	protected @Nullable LazyIterable basicGetIterable() {
-		return lazyIterable;
+		cachedIterable();
+		return get(javaIindex);
 	}
 
 	@Override
 	public synchronized @NonNull MutableIterable cachedIterable() {
-		MutableIterable lazyIterable2 = lazyIterable;
-		if (lazyIterable2 == null) {
-			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
-			Iterator<@Nullable Object> sourceIterator = this;
+		List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
+		if (lazyListOfElements2 == null) {
 			if (lazyIterator) {
 				System.err.println(NameUtil.debugSimpleName(this) + " re-iterating");
-				sourceIterator = reIterator();
+				this.sourceIterator = reIterator();
 			}
-			init(sourceIterator, getCollectionStrategy(), equalsStrategy);
-			lazyIterable = lazyIterable2 = this;
-			Map<Class<?>, Integer> debugCollectionClass2count2 = debugCollectionClass2cached;
+			else {
+				this.sourceIterator = this;
+			}
+			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
+			this.lazyListOfElements = createListOfElements();
+			if (!collectionStrategy.isSequence()) {
+				this.lazyMapOfElement2elementCount = createMapOfElement2elementCount();
+			}
+			Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2count2 = debugCollectionClass2cached;
 			if (debugCollectionClass2count2 != null) {
 				Class<? extends @NonNull CollectionValue> collectionClass = getClass();
 				Integer count = debugCollectionClass2count2.get(collectionClass);
@@ -1189,7 +1177,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 				debugCollectionClass2count2.put(collectionClass, count);
 			}
 		}
-		return lazyIterable2;
+		return this;
 	}
 
 	@Override
@@ -1235,6 +1223,31 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return ValueUtil.integerValueOf(count);
 	}
 
+	protected @NonNull LazyIterator createLazyIterator() {
+		if (collectionStrategy.isBag()) {
+			Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = getMapOfElement2elementCount();
+			assert lazyMapOfElement2elementCount2 != null;
+			if (sourceIterator.hasNext()) {
+				return new LazyBaggableIterator(this);
+			}
+			else {
+				List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
+				assert lazyListOfElements2 != null;
+				return new ImmutableBaggableIterator(lazyListOfElements2, lazyMapOfElement2elementCount2);
+			}
+		}
+		else {
+			if (sourceIterator.hasNext()) {
+				return new LazyNonBaggableIterator();
+			}
+			else {
+				List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
+				assert lazyListOfElements2 != null;
+				return new ImmutableNonBaggableIterator(lazyListOfElements2);
+			}
+		}
+	}
+
 	protected @NonNull List<@Nullable Object> createListOfElements() {
 		Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList2 = debugCollectionClass2lazyList;
 		if (debugCollectionClass2lazyList2 != null) {
@@ -1259,9 +1272,9 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull LazyIterable eagerIterable() {
-		LazyIterable lazyIterable2 = cachedIterable();
-		lazyIterable2.getListOfElements();
-		return lazyIterable2;
+		cachedIterable();
+		getListOfElements();
+		return this;
 	}
 
 	@Override
@@ -1334,21 +1347,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 				}
 			}
 			else {
-				Map<? extends Object, @NonNull ? extends Number> theseElements = getMapOfElement2elementCount(this);
-				Map<? extends Object, @NonNull ? extends Number> thoseElements = getMapOfElement2elementCount(that);
+				Map<? extends Object, @NonNull ? extends Number> theseElements = this.getMapOfElement2elementCount();
+				Map<? extends Object, @NonNull ? extends Number> thoseElements = that.getMapOfElement2elementCount();
 				return theseElements.equals(thoseElements);
 			}
 		}
 	}
 
-	/**
-	 * Implementation of the OCL
-	 * <tt>Collection::excludes(object : T) : Boolean</tt>
-	 * operation.
-	 *
-	 * @param value an object
-	 * @return whether the collection does not include the object
-	 */
 	@Override
 	public @NonNull Boolean excludes(@Nullable Object value) {
 		Iterator<@Nullable Object> iterator = lazyIterator();
@@ -1371,15 +1376,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return true;
 	}
 
-	/**
-	 * Implementation of the OCL
-	 * <tt>Collection::excludesAll(c : Collection(T)) : Boolean</tt>
-	 * operation.
-	 *
-	 * @param c another collection
-	 * @return whether the source collection does not contain any of the
-	 *     elements of the other
-	 */
 	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
 		Iterable<@Nullable Object> cachedIterable = cachedIterable(c);
@@ -1446,8 +1442,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return FlattenIterator.flatten(this);
 	}
 
-	@Override
-	public synchronized @Nullable Object get(int javaIndex) {
+	private synchronized @Nullable Object get(int javaIndex) {
 		//
 		//	Ensure that sufficient of source has been read to reach the required index.
 		//
@@ -1473,33 +1468,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	public @NonNull CollectionTypeId getBagTypeId() {
-		return TypeId.BAG.getSpecializedId(getTypeId().getElementTypeId());
+		return TypeId.BAG.getSpecializedId(typeId.getElementTypeId());
 	}
-
-	@Override
-	public @NonNull CollectionStrategy getCollectionStrategy() {
-		if (lazyIterable != null) {
-			return collectionStrategy;
-		}
-		else {
-			return initialCollectionStrategy;
-		}
-	}
-
-	//	@Override
-	//	public @NonNull TypeId getElementTypeId() {
-	//		return getTypeId().getElementTypeId();
-	//	}
-
-	//	@Override
-	//	public @NonNull Collection<@Nullable Object> getElements() {
-	//		return asCollection();
-	//	}
 
 	@Override
 	public @NonNull Collection<@Nullable Object> getElements() {
 		if (!isBag()) {
-			return cachedIterable().getListOfElements();
+			return getListOfElements();
 		}
 		else {
 			return Lists.newArrayList(lazyIterator());			// FIXME avoid this
@@ -1508,14 +1483,14 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull String getKind() {
-		return getCollectionStrategy().getKind();
+		return collectionStrategy.getKind();
 	}
 
 	/**
 	 * Ensure that all lazy iterations have completed and then return a list of all elements.
 	 */
-	@Override
-	public synchronized @NonNull List<@Nullable Object> getListOfElements() {
+	private synchronized @NonNull List<@Nullable Object> getListOfElements() {
+		cachedIterable();
 		if (sourceIterator instanceof BaggableIterator) {
 			BaggableIterator<@Nullable Object> baggableIterator = (BaggableIterator<@Nullable Object>)sourceIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
@@ -1571,11 +1546,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	protected abstract int getNextCount();
 
 	public @NonNull CollectionTypeId getOrderedSetTypeId() {
-		return TypeId.ORDERED_SET.getSpecializedId(getTypeId().getElementTypeId());
+		return TypeId.ORDERED_SET.getSpecializedId(typeId.getElementTypeId());
 	}
 
 	public @NonNull CollectionTypeId getSequenceTypeId() {
-		return TypeId.SEQUENCE.getSpecializedId(getTypeId().getElementTypeId());
+		return TypeId.SEQUENCE.getSpecializedId(typeId.getElementTypeId());
 	}
 
 	/**
@@ -1590,12 +1565,16 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	public @NonNull CollectionTypeId getSetTypeId() {
-		return TypeId.SET.getSpecializedId(getTypeId().getElementTypeId());
+		return TypeId.SET.getSpecializedId(typeId.getElementTypeId());
 	}
 
 	@Override
 	public @NonNull CollectionTypeId getTypeId() {
 		return typeId;
+	}
+
+	protected boolean hasCache() {
+		return lazyListOfElements != null;
 	}
 
 	@Override
@@ -1631,10 +1610,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 					boolean isOrdered = isOrdered();
 					boolean isUnique = isUnique();
 					if (isOrdered || isUnique) {
-						hashCode = computeCollectionHashCode(isOrdered, isUnique, cachedIterable().getListOfElements());
+						hashCode = computeCollectionHashCode(isOrdered, isUnique, getListOfElements());
 					}
 					else {			// Bag
-						hashCode = computeCollectionHashCode(cachedIterable().getMapOfElement2elementCount());
+						hashCode = computeCollectionHashCode(getMapOfElement2elementCount());
 					}
 				}
 			}
@@ -1696,27 +1675,17 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue including(@Nullable Object value) {
-		return IncludingIterator.including(getTypeId(), this, value);
+		return IncludingIterator.including(typeId, this, value);
 	}
 
 	@Override
 	public @NonNull CollectionValue includingAll(@NonNull CollectionValue values) {
-		return IncludingAllIterator.includingAll(getTypeId(), this, values);
+		return IncludingAllIterator.includingAll(typeId, this, values);
 	}
 
 	@Override
 	public @NonNull IntegerValue indexOf(@Nullable Object object) {
 		return asEagerOrderedCollectionValue().indexOf(object);
-	}
-
-	private void init(@NonNull Iterator<@Nullable Object> sourceIterator, @NonNull CollectionStrategy collectionStrategy, @NonNull EqualsStrategy equalsStrategy) {
-		this.sourceIterator = sourceIterator;
-		this.collectionStrategy = (AbstractCollectionStrategy) collectionStrategy;
-		this.equalsStrategy = equalsStrategy;
-		lazyListOfElements = createListOfElements();
-		if (!collectionStrategy.isSequence()) {
-			lazyMapOfElement2elementCount = createMapOfElement2elementCount();
-		}
 	}
 
 	@Override
@@ -1730,7 +1699,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public int intSize() {
-		return eagerIterable().lazySize();
+		eagerIterable();
+		return size;
 	}
 
 	@Override
@@ -1744,29 +1714,29 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	public boolean isBag() {
-		return getCollectionStrategy().isBag();
+		return collectionStrategy.isBag();
 	}
 
 	@Override
 	public boolean isOrdered() {
-		return getCollectionStrategy().isOrdered();
+		return collectionStrategy.isOrdered();
 	}
 
 	public boolean isOrderedSet() {
-		return getCollectionStrategy().isOrderedSet();
+		return collectionStrategy.isOrderedSet();
 	}
 
 	public boolean isSequence() {
-		return getCollectionStrategy().isSequence();
+		return collectionStrategy.isSequence();
 	}
 
 	public boolean isSet() {
-		return getCollectionStrategy().isSet();
+		return collectionStrategy.isSet();
 	}
 
 	@Override
 	public boolean isUnique() {
-		return getCollectionStrategy().isUnique();
+		return collectionStrategy.isUnique();
 	}
 
 	@Override
@@ -1778,7 +1748,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	@Override
 	public @NonNull LazyIterator iterator() {
 		//		System.err.println(NameUtil.debugSimpleName(this) + " iterator() rather than cachedIterator()");
-		return eagerIterable().lazyIterator2();
+		eagerIterable();
+		return createLazyIterator();
 	}
 
 	@Override
@@ -1788,50 +1759,14 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public synchronized @NonNull LazyIterator lazyIterator() {
-		LazyIterable lazyIterable2 = lazyIterable;
-		if (lazyIterable2 != null) {
-			return lazyIterable2.lazyIterator2();
-		}
-		if (!lazyIterator) {
-			lazyIterator = true;
-			return this;
-		}
-		return cachedIterable().lazyIterator2();
-	}
-
-	@Override
-	public @NonNull LazyIterator lazyIterator2() {
-		if (collectionStrategy.isBag()) {
-			Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = getMapOfElement2elementCount();
-			assert lazyMapOfElement2elementCount2 != null;
-			if (sourceIterator.hasNext()) {
-				return new LazyBaggableIterator(this);
+		if (lazyListOfElements == null) {
+			if (!lazyIterator) {
+				lazyIterator = true;
+				return this;
 			}
-			else {
-				List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
-				assert lazyListOfElements2 != null;
-				return new ImmutableBaggableIterator(lazyListOfElements2, lazyMapOfElement2elementCount2);
-			}
+			cachedIterable();
 		}
-		else {
-			if (sourceIterator.hasNext()) {
-				return new LazyNonBaggableIterator();
-			}
-			else {
-				List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
-				assert lazyListOfElements2 != null;
-				return new ImmutableNonBaggableIterator(lazyListOfElements2);
-			}
-		}
-	}
-
-	/**
-	 * Ensure that all lazy iterations have completed and then return the number of elements.
-	 */
-	@Override
-	public int lazySize() {
-		getListOfElements();
-		return size;
+		return createLazyIterator();
 	}
 
 	@Override
@@ -1963,9 +1898,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull MutableIterable mutableIterable() {
-		MutableIterable lazyIterable2 = cachedIterable();
-		lazyIterable2.getListOfElements();
-		return lazyIterable2;
+		getListOfElements();
+		return this;
 	}
 
 	/**
@@ -2005,13 +1939,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return intSize() != 0;
 	}
 
-	//	@Override
 	@Override
 	public @NonNull CollectionValue prepend(@Nullable Object value) {
-		return PrependIterator.prepend(getTypeId(), this, value);
+		return PrependIterator.prepend(typeId, this, value);
 	}
 
-	//	@Override
 	@Override
 	public @NonNull CollectionValue prependAll(@NonNull CollectionValue values) {
 		return PrependAllIterator.prependAll(this, values);
@@ -2067,10 +1999,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		List<@Nullable Object> values = Lists.newArrayList(lazyIterator());
 		Collections.sort(values, comparator);
 		if (isUnique()) {
-			return new SparseOrderedSetValueImpl(getTypeId(), values);
+			return new SparseOrderedSetValueImpl(typeId, values);
 		}
 		else {
-			return new SparseSequenceValueImpl(getTypeId(), values);
+			return new SparseSequenceValueImpl(typeId, values);
 		}
 	}
 

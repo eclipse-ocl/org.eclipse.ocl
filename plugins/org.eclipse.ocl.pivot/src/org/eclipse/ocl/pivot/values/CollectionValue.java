@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,6 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.internal.iterators.MutableIterable;
 
@@ -148,8 +150,10 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 */
 	String getKind();
 
-	/** FIXME at next major version change */
-	//		@NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount();
+	/**
+	 * @generated NOT
+	 */
+	@NonNull Map<@Nullable Object, @NonNull ? extends ElementCount> getMapOfElement2elementCount();
 
 	/**
 	 * @generated NOT
@@ -242,8 +246,6 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * Return an iterable that has been eagerly populated and may then be modified. This inhibits opportunities for
 	 * redundant iterations to be skipped but may improve the speed of subsequent iterations.
-	 *
-	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
 	 *
 	 * Returns null if this CollectionValue is not mutable.
 	 */

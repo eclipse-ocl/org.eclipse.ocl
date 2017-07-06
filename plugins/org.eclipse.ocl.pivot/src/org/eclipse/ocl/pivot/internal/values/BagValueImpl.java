@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
 import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
 import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
@@ -111,7 +112,8 @@ public class BagValueImpl extends CollectionValueImpl
 	 * @since 1.3
 	 */
 	//	@Override
-	public @NonNull Map<@Nullable Object, @NonNull ? extends Number> getMapOfElement2elementCount() {
+	@Override
+	public @NonNull Map<@Nullable Object, @NonNull ? extends ElementCount> getMapOfElement2elementCount() {
 		return ((BagImpl<@Nullable Object>) elements).getMap();
 	}
 

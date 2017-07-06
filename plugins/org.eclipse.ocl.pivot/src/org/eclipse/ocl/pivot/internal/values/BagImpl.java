@@ -200,7 +200,7 @@ public class BagImpl<@Nullable E> extends AbstractCollection<E> implements Bag.I
 	 * @since 1.3
 	 */
 	@Override
-	public @NonNull Map<E, @NonNull ? extends Number> getMap() {
+	public @NonNull Map<E, @NonNull ? extends ElementCount> getMap() {
 		return map;
 	}
 

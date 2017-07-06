@@ -64,8 +64,7 @@ public abstract class AsSetIterator extends LazyCollectionValueImpl implements C
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("AsSet{");
-		LazyIterable iterable = basicGetIterable();
-		if (iterable != null) {
+		if (hasCache()) {
 			appendIterable(s);
 			if (hasNext()) {
 				s.append(";«future»");

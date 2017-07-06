@@ -46,19 +46,19 @@ public abstract class GeneralizedNestedTypeIdImpl extends GeneralizedTypeIdImpl<
 	public @NonNull TemplateableTypeId getGeneralizedId() {
 		return this;
 	}
-	
+
 	@Override
 	public @NonNull PackageId getParent() {
 		return parent;
 	}
 
-    @Override
-	public @NonNull TemplateableTypeId specialize(@NonNull BindingsId templateBindings) {
-    	return createSpecializedId(templateBindings);
-	}
-	
 	@Override
-	public String toString() {
+	public @NonNull TemplateableTypeId specialize(@NonNull BindingsId templateBindings) {
+		return createSpecializedId(templateBindings);
+	}
+
+	@Override
+	public @NonNull String toString() {
 		return parent + "::" + name;
 	}
 

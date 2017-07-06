@@ -10,12 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.values.CollectionStrategy;
 
 /**
  * A LazyIterable provides a polymorphic lazy mutable Collection implementation.
@@ -36,21 +31,13 @@ import org.eclipse.ocl.pivot.internal.values.CollectionStrategy;
  */
 public interface LazyIterable extends Iterable<@Nullable Object>
 {
-	@Nullable Object get(int index);
-
-	@NonNull CollectionStrategy getCollectionStrategy();
-
 	/**
 	 * Ensure that all lazy iterations have completed and then return a list of all elements.
 	 */
-	@NonNull List<@Nullable Object> getListOfElements();
+	//	@NonNull List<@Nullable Object> getListOfElements();
 
 	/**
 	 * Ensure that all lazy iterations have completed and then return a bag of all elements.
 	 */
-	@NonNull Map<@Nullable Object, @NonNull ElementCount> getMapOfElement2elementCount();
-
-	int lazySize();
-
-	@NonNull LazyIterator lazyIterator2();
+	//	@NonNull Map<@Nullable Object, @NonNull ElementCount> getMapOfElement2elementCount();
 }

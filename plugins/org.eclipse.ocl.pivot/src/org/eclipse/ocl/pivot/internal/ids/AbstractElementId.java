@@ -23,14 +23,14 @@ public abstract class AbstractElementId implements ElementId
 	protected static final class OperationIdsMap extends WeakHashMapOfListOfWeakReference4<Integer, Integer, String, ParametersId, GeneralizedOperationIdImpl>
 	{
 		protected final @NonNull TypeId parentId;
-		
+
 		public OperationIdsMap(@NonNull TypeId parentId) {
 			this.parentId = parentId;
 		}
-		
+
 		@Override
 		protected @NonNull GeneralizedOperationIdImpl newId(@NonNull Integer hashCode, @NonNull Integer templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-//			System.out.println("new OperationId " + name + " " + ClassUtil.debugFullName(parametersId) + " with " + ClassUtil.debugFullName(templateParameters));		
+			//			System.out.println("new OperationId " + name + " " + ClassUtil.debugFullName(parametersId) + " with " + ClassUtil.debugFullName(templateParameters));
 			return new GeneralizedOperationIdImpl(hashCode, parentId, templateParameters, name, parametersId);
 		}
 
@@ -39,11 +39,11 @@ public abstract class AbstractElementId implements ElementId
 			return getId(hashCode, templateParameters, name, parametersId);
 		}
 	}
-	
+
 	protected static final class PropertyIdsMap extends WeakHashMapOfWeakReference<String, PropertyIdImpl>
 	{
 		protected final @NonNull TypeId parentId;
-		
+
 		public PropertyIdsMap(@NonNull TypeId parentId) {
 			this.parentId = parentId;
 		}
@@ -65,9 +65,9 @@ public abstract class AbstractElementId implements ElementId
 
 	@Override
 	public abstract int hashCode();
-	
+
 	@Override
-	public String toString() {
+	public@NonNull String toString() {
 		return getDisplayName();
 	}
 }

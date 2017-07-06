@@ -27,7 +27,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * A unique identifier provides a convenient mechanism for locating alternative representations, or pre-existing copies of
  * the same representation. The identifiers of for instance Collections and Tuples observe scope-independent semantics so
  * that equivalent collection and tuple types share the same element identifier.
- * 
+ *
  * @see EnumerationLiteralId
  * @see OperationId
  * @see PackageId
@@ -38,7 +38,7 @@ public interface ElementId
 	public static final class ElementIdComparator implements Comparator<ElementId>
 	{
 		public static final @NonNull ElementIdComparator INSTANCE = new ElementIdComparator();
-		
+
 		@Override
 		public int compare(ElementId o1, ElementId o2) {
 			String d1 = o1.getDisplayName();
@@ -48,9 +48,12 @@ public interface ElementId
 	}
 
 	@Nullable <R> R accept(@NonNull IdVisitor<R> visitor);
-	
+
 	/**
 	 * Return a simple name for diagnostics.
 	 */
 	@NonNull String getDisplayName();
+
+	@Override
+	@NonNull String toString();
 }

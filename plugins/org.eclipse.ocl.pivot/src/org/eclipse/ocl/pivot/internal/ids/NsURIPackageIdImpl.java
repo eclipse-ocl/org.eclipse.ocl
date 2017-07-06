@@ -61,7 +61,7 @@ public class NsURIPackageIdImpl extends AbstractPackageIdImpl implements NsURIPa
 	}
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		return "'" + nsURI + "'";
 	}
 }

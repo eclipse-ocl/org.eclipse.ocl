@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.values;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -81,107 +82,6 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	public static @NonNull LazyIterator EMPTY_ITERATOR = new EmptyIterator();
-
-	private static class EmptyIterable implements LazyIterable
-	{
-
-		@Override
-		public @Nullable Object get(int index) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public int lazySize() {
-			return 0;
-		}
-
-		@Override
-		public @NonNull CollectionStrategy getCollectionStrategy() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public @NonNull List<@Nullable Object> getListOfElements() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public @NonNull Map<@Nullable Object, @NonNull ElementCount> getMapOfElement2elementCount() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public @NonNull LazyIterator iterator() {
-			return EMPTY_ITERATOR;
-		}
-
-		@Override
-		public @NonNull LazyIterator lazyIterator2() {
-			return EMPTY_ITERATOR;
-		}
-
-		/*		@Override
-		public void mutableAppend(@Nullable Object rightValue) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableAppendAll(@NonNull Iterator<@Nullable Object> rightIterator) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableAsBag() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableAsOrderedSet() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableAsSequence() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableAsSet() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableExcluding(@Nullable Object rightValue) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableExcludingAll(@NonNull Iterator<@Nullable Object> rightIterator) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableIncluding(@Nullable Object rightValue) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableIncludingAll(@NonNull Iterator<@Nullable Object> rightIterator) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableIntersection(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void mutableUnion(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
-			throw new UnsupportedOperationException();
-		} */
-	}
-
-	private static @NonNull LazyIterable EMPTY_ITERABLE = new EmptyIterable();
 
 	public UndefinedValueImpl(String message) {
 		super(message);
@@ -353,7 +253,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 
 	@Override
 	public @NonNull LazyIterable cachedIterable() {
-		return iterable();
+		throw new InvalidValueException("undefined value has no cachedIterable value");
 	}
 
 	@Override
@@ -514,6 +414,13 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public @NonNull Map<@Nullable Object, @NonNull ? extends ElementCount> getMapOfElement2elementCount() {
+		Map<@Nullable Object, @NonNull ElementCount> emptyMap = Collections.<@Nullable Object, @NonNull ElementCount>emptyMap();
+		assert emptyMap != null;
+		return emptyMap;
+	}
+
+	@Override
 	public Object getObject() {
 		return null;
 	}
@@ -624,8 +531,10 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull LazyIterable iterable() {
-		return EMPTY_ITERABLE;
+	public @NonNull Iterable<@Nullable Object> iterable() {
+		List<@Nullable Object> emptyList = Collections.<@Nullable Object>emptyList();
+		assert emptyList != null;
+		return emptyList;
 	}
 
 	@Override

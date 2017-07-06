@@ -51,8 +51,7 @@ public abstract class AsBagIterator extends LazyCollectionValueImpl
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("AsBag{");
-		LazyIterable iterable = basicGetIterable();
-		if (iterable != null) {
+		if (hasCache()) {
 			appendIterable(s);
 			if (hasNext()) {
 				s.append(";«future»");

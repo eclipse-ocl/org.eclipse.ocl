@@ -26,7 +26,7 @@ public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 	protected final int hashCode;
 
 	/**
-	 * Map from a nested type name to the corresponding EnumerationLiteralId. 
+	 * Map from a nested type name to the corresponding EnumerationLiteralId.
 	 */
 	private @Nullable WeakHashMapOfWeakReference<String, EnumerationLiteralId> memberEnumerationLiterals = null;
 
@@ -53,21 +53,21 @@ public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 
 	@Override
 	public @NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull String name) {
-    	WeakHashMapOfWeakReference<String, EnumerationLiteralId> memberEnumerationLiterals2 = memberEnumerationLiterals;
+		WeakHashMapOfWeakReference<String, EnumerationLiteralId> memberEnumerationLiterals2 = memberEnumerationLiterals;
 		if (memberEnumerationLiterals2 == null) {
-    		synchronized (this) {
-    			memberEnumerationLiterals2 = memberEnumerationLiterals;
-    	    	if (memberEnumerationLiterals2 == null) {
-    	    		memberEnumerationLiterals = memberEnumerationLiterals2 = new WeakHashMapOfWeakReference<String, EnumerationLiteralId>()
-    				{
+			synchronized (this) {
+				memberEnumerationLiterals2 = memberEnumerationLiterals;
+				if (memberEnumerationLiterals2 == null) {
+					memberEnumerationLiterals = memberEnumerationLiterals2 = new WeakHashMapOfWeakReference<String, EnumerationLiteralId>()
+					{
 						@Override
 						protected @NonNull EnumerationLiteralId newId(@NonNull String name) {
 							return new EnumerationLiteralIdImpl(EnumerationIdImpl.this, name);
 						}
 					};
-	    	   }
-    		}
-    	}
+				}
+			}
+		}
 		return memberEnumerationLiterals2.getId(name);
 	}
 
@@ -80,7 +80,7 @@ public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 	public @NonNull String getName() {
 		return name;
 	}
-	
+
 	@Override
 	public @NonNull PackageId getParent() {
 		return parent;
@@ -90,9 +90,9 @@ public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 	public final int hashCode() {
 		return hashCode;
 	}
-	
+
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		return parent + "::" + name;
 	}
 
