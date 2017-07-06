@@ -200,7 +200,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId, int lazyDepth) {
 		this.typeId = typeId;
-		this.initialCollectionStrategy = LazyIterable.getCollectionStrategy(typeId);
+		this.initialCollectionStrategy = LazyIterableImpl.getCollectionStrategy(typeId);
 		this.lazyDepth = lazyDepth;
 	}
 
@@ -369,7 +369,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 				System.err.println(NameUtil.debugSimpleName(this) + " re-iterating");
 				sourceIterator = reIterator();
 			}
-			lazyIterable = lazyIterable2 = new LazyIterable(sourceIterator, getCollectionStrategy(), equalsStrategy);
+			lazyIterable = lazyIterable2 = new LazyIterableImpl(this, sourceIterator, getCollectionStrategy(), equalsStrategy);
 			Map<Class<?>, Integer> debugCollectionClass2count2 = debugCollectionClass2cached;
 			if (debugCollectionClass2count2 != null) {
 				Class<? extends @NonNull CollectionValue> collectionClass = getClass();

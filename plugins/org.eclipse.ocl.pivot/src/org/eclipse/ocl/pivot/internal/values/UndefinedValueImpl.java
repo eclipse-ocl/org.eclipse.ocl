@@ -14,7 +14,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -27,7 +29,7 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy;
+import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -56,7 +58,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 {
 	private static final long serialVersionUID = 1L;
 
-	private static class Iterator implements LazyIterator
+	private static class EmptyIterator implements LazyIterator
 	{
 		@Override
 		public boolean hasNext() {
@@ -78,7 +80,125 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		}
 	}
 
-	private static @NonNull LazyIterable EMPTY_ITERABLE = new LazyIterable(new Iterator(), LazyIterable.COLLECTION_STRATEGY, EqualsStrategy.SimpleEqualsStrategy.INSTANCE);
+	public static @NonNull LazyIterator EMPTY_ITERATOR = new EmptyIterator();
+
+	private static class EmptyIterable implements LazyIterable
+	{
+
+		@Override
+		public @Nullable Object get(int index) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int size() {
+			return 0;
+		}
+
+		@Override
+		public @NonNull CollectionStrategy getCollectionStrategy() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull List<@Nullable Object> getListOfElements() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull Map<@Nullable Object, @NonNull ElementCount> getMapOfElement2elementCount() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull LazyIterator iterator() {
+			return EMPTY_ITERATOR;
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableAppend(
+				@NonNull CollectionValue leftCollectionValue,
+				@Nullable Object rightValue) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableAppendAll(
+				@NonNull CollectionValue leftCollectionValue,
+				@NonNull Iterator<@Nullable Object> rightIterator) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableAsBag(
+				@NonNull CollectionValue collectionValue) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableAsOrderedSet(
+				@NonNull CollectionValue collectionValue) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableAsSequence(
+				@NonNull CollectionValue collectionValue) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableAsSet(
+				@NonNull CollectionValue collectionValue) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableExcluding(
+				@NonNull CollectionValue leftCollectionValue,
+				@Nullable Object rightValue) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableExcludingAll(
+				@NonNull CollectionValue leftCollectionValue,
+				@NonNull Iterator<@Nullable Object> rightIterator) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableIncluding(
+				@NonNull CollectionValue leftCollectionValue,
+				@Nullable Object rightValue) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableIncludingAll(
+				@NonNull CollectionValue leftCollectionValue,
+				@NonNull Iterator<@Nullable Object> rightIterator) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableIntersection(
+				@NonNull CollectionValue leftCollectionValue,
+				@NonNull Iterator<@Nullable Object> rightIterator,
+				boolean isUnique) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull CollectionValue mutableUnion(
+				@NonNull CollectionValue leftCollectionValue,
+				@NonNull Iterator<@Nullable Object> rightIterator,
+				boolean isUnique) {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	private static @NonNull LazyIterable EMPTY_ITERABLE = new EmptyIterable();
 
 	public UndefinedValueImpl(String message) {
 		super(message);
@@ -526,8 +646,8 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull Iterator iterator() {
-		return new Iterator();
+	public @NonNull LazyIterator iterator() {
+		return new EmptyIterator();
 	}
 
 	@Override
@@ -536,7 +656,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull Iterator lazyIterator() {
+	public @NonNull LazyIterator lazyIterator() {
 		return iterator();
 	}
 
