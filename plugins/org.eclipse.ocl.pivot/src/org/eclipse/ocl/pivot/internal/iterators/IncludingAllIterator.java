@@ -60,8 +60,8 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 		super(collectionTypeId, lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.includeValue = includeValue;
-		this.sourceIterator = baggableIterator(sourceValue);
-		this.includeIterator = baggableIterator(includeValue);
+		this.sourceIterator = sourceValue.lazyIterator();
+		this.includeIterator = includeValue.lazyIterator();
 	}
 
 	@Override

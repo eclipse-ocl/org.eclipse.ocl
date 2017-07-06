@@ -50,7 +50,7 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 	public IncludingIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
 		super(collectionTypeId, lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
-		this.sourceIterator = baggableIterator(sourceValue);
+		this.sourceIterator = sourceValue.lazyIterator();
 		this.object = object;
 	}
 

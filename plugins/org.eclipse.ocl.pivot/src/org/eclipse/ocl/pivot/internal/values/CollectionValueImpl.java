@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
@@ -915,7 +914,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull Iterator<@Nullable Object> iterator() {
+	public @NonNull BaggableIterator<@Nullable Object> iterator() {
 		return baggableIterator();
 	}
 
@@ -925,8 +924,8 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull LazyIterator lazyIterator() {
-		throw new UnsupportedOperationException();
+	public @NonNull BaggableIterator<@Nullable Object> lazyIterator() {
+		return iterator();
 	}
 
 	@Override

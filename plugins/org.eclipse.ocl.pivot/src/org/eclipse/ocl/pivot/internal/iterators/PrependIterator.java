@@ -51,7 +51,7 @@ public abstract class PrependIterator extends LazyCollectionValueImpl
 		super(collectionTypeId, lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.object = object;
-		this.sourceIterator = baggableIterator(sourceValue);
+		this.sourceIterator = sourceValue.lazyIterator();
 	}
 
 	@Override

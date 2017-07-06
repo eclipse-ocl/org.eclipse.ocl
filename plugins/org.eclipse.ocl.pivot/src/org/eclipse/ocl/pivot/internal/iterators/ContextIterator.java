@@ -34,7 +34,7 @@ public class ContextIterator extends LazyCollectionValueImpl
 	protected final @NonNull NamedElement executableObject;
 	protected final /*@NonNull*/ TypedElement caller;
 	protected final @NonNull LazyCollectionValue lazyValue;
-	protected final @NonNull BaggableIterator<?> sourceIterator;
+	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @NonNull Map<@NonNull TypedElement, @Nullable Object> variable2value = new HashMap<>();
 
 	public ContextIterator(@NonNull ExecutorExtension executor, @NonNull NamedElement executableObject, /*@NonNull*/ TypedElement caller, @NonNull LazyCollectionValue lazyValue) {
@@ -43,7 +43,7 @@ public class ContextIterator extends LazyCollectionValueImpl
 		this.executableObject = executableObject;
 		this.caller = caller;
 		this.lazyValue = lazyValue;
-		this.sourceIterator = baggableIterator(lazyValue);
+		this.sourceIterator = lazyValue.lazyIterator();
 		EvaluationEnvironment evaluationEnvironment = executor.getEvaluationEnvironment();
 		for (@NonNull TypedElement variable : evaluationEnvironment.getVariables()) {
 			variable2value.put(variable, evaluationEnvironment.getValueOf(variable));

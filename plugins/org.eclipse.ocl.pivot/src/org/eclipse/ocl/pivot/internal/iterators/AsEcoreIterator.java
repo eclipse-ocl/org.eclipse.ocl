@@ -37,7 +37,7 @@ public class AsEcoreIterator extends LazyCollectionValueImpl
 		this.sourceValue = sourceValue;
 		this.idResolver = idResolver;
 		this.instanceClass = instanceClass;
-		this.sourceIterator = baggableIterator(sourceValue);
+		this.sourceIterator = sourceValue.lazyIterator();
 	}
 
 	@Override

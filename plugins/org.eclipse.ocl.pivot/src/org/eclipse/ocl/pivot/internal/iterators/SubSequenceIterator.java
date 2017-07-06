@@ -39,7 +39,7 @@ public class SubSequenceIterator extends LazyCollectionValueImpl
 	public SubSequenceIterator(@NonNull CollectionValue sourceValue, int lower, int upper) {
 		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
-		this.sourceIterator = baggableIterator(sourceValue);
+		this.sourceIterator = sourceValue.lazyIterator();
 		this.lower = lower;
 		this.upper = upper;
 		if (lower < 1) {

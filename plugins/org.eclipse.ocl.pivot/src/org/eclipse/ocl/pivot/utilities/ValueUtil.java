@@ -74,7 +74,6 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.types.AbstractInheritance;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.values.Bag;
-import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -371,26 +370,6 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.OCL_ANY_NAME, getTypeName(value));
-		}
-	}
-
-	/**
-	 * @since 1.3 // FIXME temporary till next major version change
-	 */
-	public static @NonNull BaggableIterator<@Nullable Object> baggableIterator(@NonNull CollectionValue collectionValue) {
-		if (collectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)collectionValue).lazyIterator();
-		}
-		else if (collectionValue instanceof CollectionValueImpl) {
-			return ((CollectionValueImpl)collectionValue).baggableIterator();
-		}
-		else if (collectionValue instanceof UndefinedValueImpl) {
-			return ((UndefinedValueImpl)collectionValue).baggableIterator();
-		}
-		else {
-			Iterable<@Nullable Object> elements = collectionValue.iterable();
-			Iterator<@Nullable Object> iterator = elements.iterator();
-			return new CollectionValueImpl.WrappedBaggableIterator<>(iterator);
 		}
 	}
 

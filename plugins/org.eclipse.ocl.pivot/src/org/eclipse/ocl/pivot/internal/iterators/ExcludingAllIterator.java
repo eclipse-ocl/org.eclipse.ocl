@@ -35,7 +35,7 @@ public class ExcludingAllIterator extends LazyCollectionValueImpl
 	public ExcludingAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
 		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
-		this.sourceIterator = baggableIterator(sourceValue);
+		this.sourceIterator = sourceValue.lazyIterator();
 		this.excludeValue = eagerCollectionValue(excludeValue);
 	}
 

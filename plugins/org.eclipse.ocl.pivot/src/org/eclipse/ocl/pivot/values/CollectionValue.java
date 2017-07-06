@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterator;
 
 /**
  * LazyCollectionValue extends the inherently eager CollectionValue to support lazy and lazily cached iterations.
@@ -223,12 +222,16 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	@Nullable Object last();
 
 	/**
-	 * Return an iterator that avoids creating and populating a cache of the contents.
+	 * Return an iterator that may avoid creating and populating a cache of the contents.
 	 *
-	 * If a re-iteration is attempted, the cache is activated and lazily populated by the second iteration.
-	 * A third re-iteration exploits the cache.
+	 * If the collection is inherently cached then an ordinary iterator is returned.
+	 *
+	 * If the collection supports lazy iteration then a lazy iterator is returned for the first consumer. If
+	 * a further (second) iterator is requested, a re-iteration is performed and a cache populated so that a
+	 * further further (third...) iterators re-uses the cache. Re-iteration is undesirable so consumers
+	 * should invoke iterator() or eagerIterable() if multiple access are likely to occur.
 	 */
-	@NonNull LazyIterator lazyIterator();
+	@NonNull BaggableIterator<@Nullable Object> lazyIterator();
 
 	/**
 	 * @generated NOT
