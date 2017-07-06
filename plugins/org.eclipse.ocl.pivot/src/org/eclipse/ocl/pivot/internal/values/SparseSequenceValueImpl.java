@@ -17,8 +17,6 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 import com.google.common.collect.Lists;
 
@@ -46,29 +44,6 @@ public class SparseSequenceValueImpl extends SequenceValueImpl
 	public static @NonNull List<?> createSequenceOfEach(@NonNull Collection<? extends Object> elements) {
 		List<?> list = elements instanceof List<?> ? (List<?>)elements : new ArrayList<Object>(elements);
 		return list;
-	}
-
-	public static class Accumulator extends SparseSequenceValueImpl implements CollectionValue.Accumulator
-	{
-		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new ArrayList<>());
-		}
-
-		public Accumulator(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable Object> values) {
-			super(typeId, values);
-		}
-
-		@Override
-		public boolean add(@Nullable Object value) {
-			return elements.add(value);
-		}
-
-		@Override
-		public @NonNull CollectionValue append(@Nullable Object value) {
-			assert !(value instanceof InvalidValueException);
-			add(value);
-			return this;
-		}
 	}
 
 	public SparseSequenceValueImpl(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable Object> boxedValues) {

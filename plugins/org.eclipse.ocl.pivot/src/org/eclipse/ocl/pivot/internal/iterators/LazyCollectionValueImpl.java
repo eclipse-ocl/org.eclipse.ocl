@@ -916,7 +916,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	protected final @NonNull CollectionTypeId typeId;
 
 	/**
-	 * THe number of preceding lazy iterators feeding this lazy collection.
+	 * The number of preceding lazy iterators feeding this lazy collection.
 	 */
 	private final int lazyDepth;
 
@@ -988,6 +988,14 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		this.sourceIterator = ClassUtil.emptyIterator();
 		this.collectionStrategy = getCollectionStrategy(typeId);
 		this.equalsStrategy = SimpleEqualsStrategy.INSTANCE;
+	}
+
+	@Override
+	public boolean add(@Nullable Object value) {
+		eagerIterable();
+		int oldSize = size;
+		mutableIncluding(value);
+		return size > oldSize;
 	}
 
 	@Override

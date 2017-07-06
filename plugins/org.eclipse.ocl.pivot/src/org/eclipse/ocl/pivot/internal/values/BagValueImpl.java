@@ -43,18 +43,6 @@ public class BagValueImpl extends CollectionValueImpl
 		return result;
 	}
 
-	public static class Accumulator extends BagValueImpl implements CollectionValue.Accumulator
-	{
-		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new BagImpl<>());
-		}
-
-		@Override
-		public boolean add(@Nullable Object value) {
-			return elements.add(value);
-		}
-	}
-
 	public BagValueImpl(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable Object> boxedValues) {
 		super(typeId, boxedValues);
 	}

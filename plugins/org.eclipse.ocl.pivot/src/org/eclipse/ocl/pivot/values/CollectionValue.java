@@ -38,7 +38,7 @@ import org.eclipse.ocl.pivot.internal.iterators.MutableIterable;
  * A collection that is invalid becuase of an invalid content may not be detected until the offending input is
  * traverse.
  *
- * An eagerly cached iteration computes every cache entry so that ant invalid content is detected before any output
+ * An eagerly cached iteration computes every cache entry so that any invalid content is detected before any output
  * iteration occurs.
  *
  * @since 1.3
@@ -49,7 +49,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 * @noimplement This interface is not intended to be implemented by clients.
 	 */
-	interface Accumulator extends CollectionValue {
+	interface Accumulator extends CollectionValue {		// FIXME fold into MutableIterable
 		boolean add(@Nullable Object value);
 	}
 

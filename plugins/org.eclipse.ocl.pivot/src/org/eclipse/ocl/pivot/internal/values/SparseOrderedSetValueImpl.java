@@ -38,18 +38,6 @@ public class SparseOrderedSetValueImpl extends OrderedSetValueImpl
 		return result;
 	}
 
-	public static class Accumulator extends SparseOrderedSetValueImpl implements CollectionValue.Accumulator
-	{
-		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new OrderedSetImpl<>());
-		}
-
-		@Override
-		public boolean add(@Nullable Object value) {
-			return elements.add(value);
-		}
-	}
-
 	public SparseOrderedSetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> boxedValues) {
 		super(typeId, boxedValues);
 	}

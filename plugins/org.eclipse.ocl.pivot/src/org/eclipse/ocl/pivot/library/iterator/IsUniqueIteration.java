@@ -40,8 +40,9 @@ public class IsUniqueIteration extends AbstractIteration
 	 * @since 1.1
 	 */
 	@Override
-	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
-		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedId(accumulatorTypeId));
+	public @NonNull CollectionValue createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
+		//		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedId(accumulatorTypeId));
+		return new LazyCollectionValueAccumulator(TypeId.SET.getSpecializedId(accumulatorTypeId));
 	}
 
 	@Override

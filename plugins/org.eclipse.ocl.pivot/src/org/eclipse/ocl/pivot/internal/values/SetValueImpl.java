@@ -49,18 +49,6 @@ public class SetValueImpl extends CollectionValueImpl
 		return result;
 	}
 
-	public static class Accumulator extends SetValueImpl implements CollectionValue.Accumulator
-	{
-		public Accumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, new HashSet<>());
-		}
-
-		@Override
-		public boolean add(@Nullable Object value) {
-			return elements.add(value);
-		}
-	}
-
 	public SetValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable Object> boxedValues) {
 		super(typeId, boxedValues);
 		assert checkElementsAreUnique(elements);

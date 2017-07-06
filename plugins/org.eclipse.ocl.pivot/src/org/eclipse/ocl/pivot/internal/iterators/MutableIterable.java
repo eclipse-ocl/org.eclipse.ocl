@@ -33,7 +33,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public interface MutableIterable extends CollectionValue, LazyIterable
+public interface MutableIterable extends CollectionValue.Accumulator, LazyIterable
 {
 	void mutableAppend(@Nullable Object rightValue);
 

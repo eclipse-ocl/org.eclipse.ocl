@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
@@ -536,7 +537,7 @@ public abstract class ValueUtil
 	}
 
 	public static CollectionValue.@NonNull Accumulator createBagAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new BagValueImpl.Accumulator(collectedId);
+		return new LazyCollectionValueAccumulator(collectedId);
 	}
 
 	public static @NonNull CollectionValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
@@ -566,16 +567,16 @@ public abstract class ValueUtil
 	public static CollectionValue.@NonNull Accumulator createCollectionAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		CollectionTypeId collectionId = collectedId.getGeneralizedId();
 		if (collectionId == TypeId.BAG) {
-			return new BagValueImpl.Accumulator(collectedId);
+			return new LazyCollectionValueAccumulator(collectedId);
 		}
 		else if (collectionId == TypeId.ORDERED_SET) {
-			return new SparseOrderedSetValueImpl.Accumulator(collectedId);
+			return new LazyCollectionValueAccumulator(collectedId);
 		}
 		else if (collectionId == TypeId.SEQUENCE) {
-			return new SparseSequenceValueImpl.Accumulator(collectedId);
+			return new LazyCollectionValueAccumulator(collectedId);
 		}
 		else /*if (collectionId == TypeId.SET)*/ {
-			return new SetValueImpl.Accumulator(collectedId);
+			return new LazyCollectionValueAccumulator(collectedId);
 		}
 	}
 
@@ -605,7 +606,7 @@ public abstract class ValueUtil
 	}
 
 	public static CollectionValue.@NonNull Accumulator createOrderedSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new SparseOrderedSetValueImpl.Accumulator(collectedId);
+		return new LazyCollectionValueAccumulator(collectedId);
 	}
 
 	//	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
@@ -640,7 +641,7 @@ public abstract class ValueUtil
 	}
 
 	public static CollectionValue.@NonNull Accumulator createSequenceAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new SparseSequenceValueImpl.Accumulator(collectedId);
+		return new LazyCollectionValueAccumulator(collectedId);
 	}
 
 	public static @NonNull CollectionValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
@@ -671,7 +672,7 @@ public abstract class ValueUtil
 	}
 
 	public static CollectionValue.@NonNull Accumulator createSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new SetValueImpl.Accumulator(collectedId);
+		return new LazyCollectionValueAccumulator(collectedId);
 	}
 
 	public static @NonNull CollectionValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
@@ -1370,4 +1371,24 @@ public abstract class ValueUtil
 			throw new InvalidValueException(e, PivotMessages.InvalidInteger, aValue);
 		}
 	}
+
+	public static final class LazyCollectionValueAccumulator extends LazyCollectionValueImpl
+	{
+		public LazyCollectionValueAccumulator(@NonNull CollectionTypeId typeId) {
+			super(typeId, 0);
+			mutableIterable();
+		}
+
+		@Override
+		protected @NonNull Iterator<@Nullable Object> reIterator() {
+			return new LazyCollectionValueAccumulator(typeId);
+		}
+
+		@Override
+		protected int getNextCount() {
+			//	assert size == 0;
+			return 0;  // Occurs before add mutable additions
+		}
+	}
+
 }
