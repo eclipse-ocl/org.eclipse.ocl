@@ -936,8 +936,8 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	@Override
-	public @NonNull MutableIterable mutableIterable() {
-		throw new UnsupportedOperationException();
+	public @Nullable MutableIterable mutableIterable() {
+		return null;
 	}
 
 	@Override

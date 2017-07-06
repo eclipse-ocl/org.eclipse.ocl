@@ -714,7 +714,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull MutableIterable mutableIterable() {
+	public @Nullable MutableIterable mutableIterable() {
 		throw new UnsupportedOperationException("InvalidValue.mutableIterable");
 	}
 

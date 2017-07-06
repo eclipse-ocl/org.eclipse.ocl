@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * A LazyIterable provides a polymorphic lazy mutable Collection implementation.
@@ -34,6 +35,8 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public interface MutableIterable extends LazyIterable
 {
+	@NonNull CollectionValue getCollectionValue();
+
 	void mutableAppend(@Nullable Object rightValue);
 
 	void mutableAppendAll(@NonNull Iterator<@Nullable Object> rightIterator);

@@ -15,9 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
+import org.eclipse.ocl.pivot.internal.iterators.MutableIterable;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * CollectionMutableIntersectionOperation realises the mutable variant of the Collection::intersection() library operation.
@@ -32,8 +32,9 @@ public class CollectionMutableIntersectionOperation extends AbstractBinaryOperat
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		CollectionValue rightCollectionValue = asCollectionValue(argumentValue);
-		if (leftCollectionValue instanceof LazyCollectionValue) {
-			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableIntersection(rightCollectionValue.iterator(), leftCollectionValue.isUnique() || rightCollectionValue.isUnique());
+		MutableIterable mutableIterable = leftCollectionValue.mutableIterable();
+		if (mutableIterable != null) {
+			mutableIterable.mutableIntersection(rightCollectionValue.iterator(), leftCollectionValue.isUnique() || rightCollectionValue.isUnique());
 			return leftCollectionValue;
 		}
 		else {

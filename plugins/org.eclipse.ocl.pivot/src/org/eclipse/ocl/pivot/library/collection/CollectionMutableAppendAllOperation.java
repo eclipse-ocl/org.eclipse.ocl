@@ -15,9 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.AppendAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.MutableIterable;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 
 /**
  * CollectionMutableAppendAllOperation realises the mutable variant of the Collection::appendAll() library operation.
@@ -32,8 +32,9 @@ public class CollectionMutableAppendAllOperation extends AbstractBinaryOperation
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		CollectionValue rightCollectionValue = asCollectionValue(argumentValue);
-		if (leftCollectionValue instanceof LazyCollectionValue) {
-			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableAppendAll(rightCollectionValue.iterator());
+		MutableIterable mutableIterable = leftCollectionValue.mutableIterable();
+		if (mutableIterable != null) {
+			mutableIterable.mutableAppendAll(rightCollectionValue.iterator());
 			return leftCollectionValue;
 		}
 		else {

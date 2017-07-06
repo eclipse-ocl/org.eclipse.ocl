@@ -244,8 +244,10 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * redundant iterations to be skipped but may improve the speed of subsequent iterations.
 	 *
 	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
+	 *
+	 * Returns null if this CollectionValue is not mutable.
 	 */
-	@NonNull MutableIterable mutableIterable();
+	@Nullable MutableIterable mutableIterable();
 
 	/**
 	 * @generated NOT

@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionStrategy;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * A LazyIterable provides a polymorphic lazy mutable Collection implementation.
@@ -871,6 +872,11 @@ public class LazyIterableImpl implements MutableIterable
 	@Override
 	public @NonNull CollectionStrategy getCollectionStrategy() {
 		return collectionStrategy;
+	}
+
+	@Override
+	public @NonNull CollectionValue getCollectionValue() {
+		return initialCollectionValue;
 	}
 
 	/**
