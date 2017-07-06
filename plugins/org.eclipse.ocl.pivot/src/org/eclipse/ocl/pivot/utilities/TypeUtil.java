@@ -208,7 +208,7 @@ public class TypeUtil
 		else if (typeId instanceof DataTypeId) {
 			return JavaEqualsStrategy.INSTANCE;		// FIXME ??
 		}
-		return  SimpleEqualsStrategy.INSTANCE;		// FIXME ?? TypeTypeId
+		return SimpleEqualsStrategy.INSTANCE;		// FIXME ?? TypeTypeId
 	}
 
 	public static @NonNull Type @NonNull [] getLambdaParameterTypes(@NonNull LambdaType lambdaType) {

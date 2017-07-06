@@ -53,7 +53,7 @@ public abstract class AsBagIterator extends LazyCollectionValueImpl
 		s.append("AsBag{");
 		LazyIterable iterable = basicGetIterable();
 		if (iterable != null) {
-			s.append(iterable);
+			appendIterable(s);
 			if (hasNext()) {
 				s.append(";«future»");
 			}

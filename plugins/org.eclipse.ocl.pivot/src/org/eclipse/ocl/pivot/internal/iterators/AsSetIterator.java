@@ -66,7 +66,7 @@ public abstract class AsSetIterator extends LazyCollectionValueImpl implements C
 		s.append("AsSet{");
 		LazyIterable iterable = basicGetIterable();
 		if (iterable != null) {
-			s.append(iterable);
+			appendIterable(s);
 			if (hasNext()) {
 				s.append(";«future»");
 			}

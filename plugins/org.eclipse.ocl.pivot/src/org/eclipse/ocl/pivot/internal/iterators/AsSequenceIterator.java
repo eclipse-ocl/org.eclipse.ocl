@@ -80,7 +80,7 @@ public abstract class AsSequenceIterator extends LazyCollectionValueImpl
 		s.append("AsSequence{");
 		LazyIterable iterable = basicGetIterable();
 		if (iterable != null) {
-			s.append(iterable);
+			appendIterable(s);
 			if (hasNext()) {
 				s.append(";«future»");
 			}

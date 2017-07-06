@@ -54,7 +54,6 @@ import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
 import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterableImpl;
 import org.eclipse.ocl.pivot.internal.values.CollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyCollectionValue;
@@ -93,8 +92,8 @@ extends TestCase {
 			@Override
 			public void run(TestResult result) {
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = CollectionValueImpl.ExtensionImpl.collectionClass2count = new HashMap<>();
-				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyList = LazyIterableImpl.debugCollectionClass2lazyList = new HashMap<>();
-				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyMap = LazyIterableImpl.debugCollectionClass2lazyMap = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyList = LazyCollectionValueImpl.debugCollectionClass2lazyList = new HashMap<>();
+				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyMap = LazyCollectionValueImpl.debugCollectionClass2lazyMap = new HashMap<>();
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazy = LazyCollectionValueImpl.debugCollectionClass2lazy = new HashMap<>();
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2cached = LazyCollectionValueImpl.debugCollectionClass2cached = new HashMap<>();
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2reiterated = LazyCollectionValueImpl.debugCollectionClass2reiterated = new HashMap<>();

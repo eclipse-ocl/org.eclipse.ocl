@@ -91,7 +91,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		}
 
 		@Override
-		public int intSize() {
+		public int lazySize() {
 			return 0;
 		}
 
@@ -112,6 +112,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 
 		@Override
 		public @NonNull LazyIterator iterator() {
+			return EMPTY_ITERATOR;
+		}
+
+		@Override
+		public @NonNull LazyIterator lazyIterator2() {
 			return EMPTY_ITERATOR;
 		}
 

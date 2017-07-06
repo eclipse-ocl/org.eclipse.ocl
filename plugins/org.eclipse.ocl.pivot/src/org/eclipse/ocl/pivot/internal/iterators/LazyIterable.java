@@ -50,8 +50,7 @@ public interface LazyIterable extends Iterable<@Nullable Object>
 	 */
 	@NonNull Map<@Nullable Object, @NonNull ElementCount> getMapOfElement2elementCount();
 
-	int intSize();
+	int lazySize();
 
-	@Override
-	@NonNull LazyIterator iterator();
+	@NonNull LazyIterator lazyIterator2();
 }

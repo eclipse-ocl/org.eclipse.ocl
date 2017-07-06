@@ -96,7 +96,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl
 		s.append("AsOrderedSet{");
 		LazyIterable iterable = basicGetIterable();
 		if (iterable != null) {
-			s.append(iterable);
+			appendIterable(s);
 			if (hasNext()) {
 				s.append(";«future»");
 			}

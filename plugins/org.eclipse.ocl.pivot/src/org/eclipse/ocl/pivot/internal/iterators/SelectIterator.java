@@ -50,7 +50,7 @@ public abstract class SelectIterator extends LazyCollectionValueImpl
 		s.append("Select{");
 		LazyIterable iterable = basicGetIterable();
 		if (iterable != null) {
-			s.append(iterable);
+			appendIterable(s);
 			if (hasNext()) {
 				s.append(";«future»");
 			}
