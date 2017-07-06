@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +31,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterator;
+import org.eclipse.ocl.pivot.internal.iterators.MutableIterable;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
@@ -91,7 +91,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 		}
 
 		@Override
-		public int size() {
+		public int intSize() {
 			return 0;
 		}
 
@@ -115,87 +115,65 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 			return EMPTY_ITERATOR;
 		}
 
-		@Override
-		public @NonNull CollectionValue mutableAppend(
-				@NonNull CollectionValue leftCollectionValue,
-				@Nullable Object rightValue) {
+		/*		@Override
+		public void mutableAppend(@Nullable Object rightValue) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableAppendAll(
-				@NonNull CollectionValue leftCollectionValue,
-				@NonNull Iterator<@Nullable Object> rightIterator) {
+		public void mutableAppendAll(@NonNull Iterator<@Nullable Object> rightIterator) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableAsBag(
-				@NonNull CollectionValue collectionValue) {
+		public void mutableAsBag() {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableAsOrderedSet(
-				@NonNull CollectionValue collectionValue) {
+		public void mutableAsOrderedSet() {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableAsSequence(
-				@NonNull CollectionValue collectionValue) {
+		public void mutableAsSequence() {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableAsSet(
-				@NonNull CollectionValue collectionValue) {
+		public void mutableAsSet() {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableExcluding(
-				@NonNull CollectionValue leftCollectionValue,
-				@Nullable Object rightValue) {
+		public void mutableExcluding(@Nullable Object rightValue) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableExcludingAll(
-				@NonNull CollectionValue leftCollectionValue,
-				@NonNull Iterator<@Nullable Object> rightIterator) {
+		public void mutableExcludingAll(@NonNull Iterator<@Nullable Object> rightIterator) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableIncluding(
-				@NonNull CollectionValue leftCollectionValue,
-				@Nullable Object rightValue) {
+		public void mutableIncluding(@Nullable Object rightValue) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableIncludingAll(
-				@NonNull CollectionValue leftCollectionValue,
-				@NonNull Iterator<@Nullable Object> rightIterator) {
+		public void mutableIncludingAll(@NonNull Iterator<@Nullable Object> rightIterator) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableIntersection(
-				@NonNull CollectionValue leftCollectionValue,
-				@NonNull Iterator<@Nullable Object> rightIterator,
-				boolean isUnique) {
+		public void mutableIntersection(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public @NonNull CollectionValue mutableUnion(
-				@NonNull CollectionValue leftCollectionValue,
-				@NonNull Iterator<@Nullable Object> rightIterator,
-				boolean isUnique) {
+		public void mutableUnion(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
 			throw new UnsupportedOperationException();
-		}
+		} */
 	}
 
 	private static @NonNull LazyIterable EMPTY_ITERABLE = new EmptyIterable();
@@ -468,7 +446,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 
 	@Override
 	public @NonNull LazyIterable eagerIterable() {
-		return iterable();
+		throw new UnsupportedOperationException("InvalidValue.eagerIterable");
 	}
 
 	@Override
@@ -584,7 +562,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 
 	@Override
 	public int intSize() {
-		return 0;
+		throw new UnsupportedOperationException("InvalidValue.intSize");
 	}
 
 	@Override
@@ -733,6 +711,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @NonNull NullValue multiplyReal(@NonNull RealValue right) {
 		return toInvalidValue();
+	}
+
+	@Override
+	public @NonNull MutableIterable mutableIterable() {
+		throw new UnsupportedOperationException("InvalidValue.mutableIterable");
 	}
 
 	@Override

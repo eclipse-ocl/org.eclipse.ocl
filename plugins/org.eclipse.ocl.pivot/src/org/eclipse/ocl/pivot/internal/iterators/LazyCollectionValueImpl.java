@@ -173,7 +173,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 * A non-null lazyIterable provides the lazily populated cache. It may remain null if the LazyCollectionValue
 	 * is used solely as a bypass lazyterator.
 	 */
-	private @Nullable LazyIterable lazyIterable = null;
+	private @Nullable MutableIterable lazyIterable = null;
 
 	/**
 	 * Set true if the first usage of this LazyCollectionValue is a bypass lazyIterator(). Once set any further
@@ -360,8 +360,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public synchronized @NonNull LazyIterable cachedIterable() {
-		LazyIterable lazyIterable2 = lazyIterable;
+	public synchronized @NonNull MutableIterable cachedIterable() {
+		MutableIterable lazyIterable2 = lazyIterable;
 		if (lazyIterable2 == null) {
 			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
 			Iterator<@Nullable Object> sourceIterator = this;
@@ -795,7 +795,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public int intSize() {
-		return eagerIterable().size();
+		return eagerIterable().intSize();
 	}
 
 	@Override
@@ -867,6 +867,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	@Override
 	public @NonNull CollectionValue minus(@NonNull CollectionValue that) {
 		return ExcludingAllIterator.excludingAll(this, that);
+	}
+
+	@Override
+	public @NonNull MutableIterable mutableIterable() {
+		MutableIterable lazyIterable2 = cachedIterable();
+		lazyIterable2.getListOfElements();
+		return lazyIterable2;
 	}
 
 	@Override

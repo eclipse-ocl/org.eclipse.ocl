@@ -33,7 +33,8 @@ public class CollectionMutableAppendAllOperation extends AbstractBinaryOperation
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		CollectionValue rightCollectionValue = asCollectionValue(argumentValue);
 		if (leftCollectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableAppendAll(leftCollectionValue, rightCollectionValue.iterator());
+			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableAppendAll(rightCollectionValue.iterator());
+			return leftCollectionValue;
 		}
 		else {
 			return AppendAllIterator.appendAll(leftCollectionValue, rightCollectionValue);

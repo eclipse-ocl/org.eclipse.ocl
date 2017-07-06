@@ -32,7 +32,8 @@ public class CollectionMutableAsSequenceOperation extends AbstractUnaryOperation
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		if (leftCollectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableAsSequence(leftCollectionValue);
+			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableAsSequence();
+			return leftCollectionValue;
 		}
 		else {
 			return new AsSequenceIterator.FromCollectionValue(leftCollectionValue);

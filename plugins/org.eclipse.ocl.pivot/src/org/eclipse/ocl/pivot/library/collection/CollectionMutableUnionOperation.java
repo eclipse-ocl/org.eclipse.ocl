@@ -32,7 +32,8 @@ public class CollectionMutableUnionOperation extends AbstractBinaryOperation
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		CollectionValue rightCollectionValue = asCollectionValue(argumentValue);
 		if (leftCollectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableUnion(leftCollectionValue, rightCollectionValue.iterator(), leftCollectionValue.isUnique() || rightCollectionValue.isUnique());
+			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableUnion(rightCollectionValue.iterator(), leftCollectionValue.isUnique() || rightCollectionValue.isUnique());
+			return leftCollectionValue;
 		}
 		else {
 			return leftCollectionValue.union(rightCollectionValue);

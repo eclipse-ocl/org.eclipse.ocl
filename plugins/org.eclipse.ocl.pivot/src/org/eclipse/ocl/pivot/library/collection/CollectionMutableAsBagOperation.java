@@ -32,7 +32,8 @@ public class CollectionMutableAsBagOperation extends AbstractUnaryOperation
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		if (leftCollectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableAsBag(leftCollectionValue);
+			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableAsBag();
+			return leftCollectionValue;
 		}
 		else {
 			return new AsBagIterator.FromCollectionValue(leftCollectionValue);

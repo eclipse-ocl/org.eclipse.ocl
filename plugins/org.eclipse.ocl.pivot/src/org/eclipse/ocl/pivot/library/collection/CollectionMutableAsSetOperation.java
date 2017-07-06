@@ -32,7 +32,8 @@ public class CollectionMutableAsSetOperation extends AbstractUnaryOperation
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		if (leftCollectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableAsSet(leftCollectionValue);
+			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableAsSet();
+			return leftCollectionValue;
 		}
 		else {
 			return new AsSetIterator.FromCollectionValue(leftCollectionValue);

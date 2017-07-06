@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
+import org.eclipse.ocl.pivot.internal.iterators.MutableIterable;
 
 /**
  * LazyCollectionValue extends the inherently eager CollectionValue to support lazy and lazily cached iterations.
@@ -237,6 +238,14 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@NonNull CollectionValue minus(@NonNull CollectionValue set);
+
+	/**
+	 * Return an iterable that has been eagerly populated and may then be modified. This inhibits opportunities for
+	 * redundant iterations to be skipped but may improve the speed of subsequent iterations.
+	 *
+	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
+	 */
+	@NonNull MutableIterable mutableIterable();
 
 	/**
 	 * @generated NOT

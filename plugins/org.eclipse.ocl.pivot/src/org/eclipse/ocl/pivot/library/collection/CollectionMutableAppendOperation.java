@@ -33,7 +33,8 @@ public class CollectionMutableAppendOperation extends AbstractBinaryOperation
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		if (leftCollectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableAppend(leftCollectionValue, argumentValue);
+			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableAppend(argumentValue);
+			return leftCollectionValue;
 		}
 		else {
 			return AppendIterator.append((CollectionTypeId)returnTypeId, leftCollectionValue, argumentValue);

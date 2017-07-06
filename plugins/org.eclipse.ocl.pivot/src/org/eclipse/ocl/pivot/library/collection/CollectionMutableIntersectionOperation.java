@@ -33,7 +33,8 @@ public class CollectionMutableIntersectionOperation extends AbstractBinaryOperat
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		CollectionValue rightCollectionValue = asCollectionValue(argumentValue);
 		if (leftCollectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableIntersection(leftCollectionValue, rightCollectionValue.iterator(), leftCollectionValue.isUnique() || rightCollectionValue.isUnique());
+			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableIntersection(rightCollectionValue.iterator(), leftCollectionValue.isUnique() || rightCollectionValue.isUnique());
+			return leftCollectionValue;
 		}
 		else {
 			return IntersectionIterator.intersection(leftCollectionValue, rightCollectionValue);

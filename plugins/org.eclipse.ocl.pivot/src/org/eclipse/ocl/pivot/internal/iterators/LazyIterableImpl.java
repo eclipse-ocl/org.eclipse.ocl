@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionStrategy;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * A LazyIterable provides a polymorphic lazy mutable Collection implementation.
@@ -43,7 +42,7 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public class LazyIterableImpl implements LazyIterable
+public class LazyIterableImpl implements MutableIterable
 {
 	/**
 	 * AbstractCollectionStrategy provides the mandatory/internal implementation of CollectionStrategy.
@@ -933,6 +932,15 @@ public class LazyIterableImpl implements LazyIterable
 		throw new IllegalStateException();	// This support class is not intended for more general use.
 	}
 
+	/**
+	 * Ensure that all lazy iterations have completed and then return the number of elements.
+	 */
+	@Override
+	public int intSize() {
+		getListOfElements();
+		return size;
+	}
+
 	@Override
 	public @NonNull LazyIterator iterator() {
 		if (collectionStrategy.isBag()) {
@@ -956,15 +964,12 @@ public class LazyIterableImpl implements LazyIterable
 	}
 
 	@Override
-	public @NonNull CollectionValue mutableAppend(@NonNull CollectionValue leftCollectionValue, @Nullable Object rightValue) {
-		assert leftCollectionValue == initialCollectionValue;
+	public void mutableAppend(@Nullable Object rightValue) {
 		collectionStrategy.appendTo(this, rightValue, 1);
-		return leftCollectionValue;
 	}
 
 	@Override
-	public @NonNull CollectionValue mutableAppendAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable Object> rightIterator) {
-		assert leftCollectionValue == initialCollectionValue;
+	public void mutableAppendAll(@NonNull Iterator<@Nullable Object> rightIterator) {
 		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
 			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
@@ -976,51 +981,39 @@ public class LazyIterableImpl implements LazyIterable
 				collectionStrategy.appendTo(this, rightIterator.next(), 1);
 			}
 		}
-		return leftCollectionValue;
 	}
 
 	@Override
-	public @NonNull CollectionValue mutableAsBag(@NonNull CollectionValue collectionValue) {
-		assert collectionValue == initialCollectionValue;
+	public void mutableAsBag() {
 		collectionStrategy.asBag(this);
 		collectionStrategy = BagStrategy.INSTANCE;
-		return collectionValue;
 	}
 
 	@Override
-	public @NonNull CollectionValue mutableAsOrderedSet(@NonNull CollectionValue collectionValue) {
-		assert collectionValue == initialCollectionValue;
+	public void mutableAsOrderedSet() {
 		collectionStrategy.asUnique(this);
 		collectionStrategy = OrderedSetStrategy.INSTANCE;
-		return collectionValue;
 	}
 
 	@Override
-	public @NonNull CollectionValue mutableAsSequence(@NonNull CollectionValue collectionValue) {
-		assert collectionValue == initialCollectionValue;
+	public void mutableAsSequence() {
 		collectionStrategy.asSequence(this);
 		collectionStrategy = SequenceStrategy.INSTANCE;
-		return collectionValue;
 	}
 
 	@Override
-	public @NonNull CollectionValue mutableAsSet(@NonNull CollectionValue collectionValue) {
-		assert collectionValue == initialCollectionValue;
+	public void mutableAsSet() {
 		collectionStrategy.asUnique(this);
 		collectionStrategy = SetStrategy.INSTANCE;
-		return collectionValue;
 	}
 
 	@Override
-	public @NonNull CollectionValue mutableExcluding(@NonNull CollectionValue leftCollectionValue, @Nullable Object rightValue) {
-		assert leftCollectionValue == initialCollectionValue;
+	public void mutableExcluding(@Nullable Object rightValue) {
 		collectionStrategy.removeFrom(this, rightValue, 1);
-		return leftCollectionValue;
 	}
 
 	@Override
-	public @NonNull CollectionValue mutableExcludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable Object> rightIterator) {
-		assert leftCollectionValue == initialCollectionValue;
+	public void mutableExcludingAll(@NonNull Iterator<@Nullable Object> rightIterator) {
 		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
 			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
@@ -1032,19 +1025,15 @@ public class LazyIterableImpl implements LazyIterable
 				collectionStrategy.removeFrom(this, rightIterator.next(), 1);
 			}
 		}
-		return leftCollectionValue;
 	}
 
 	@Override
-	public @NonNull CollectionValue mutableIncluding(@NonNull CollectionValue leftCollectionValue, @Nullable Object rightValue) {
-		assert leftCollectionValue == initialCollectionValue;
+	public void mutableIncluding(@Nullable Object rightValue) {
 		collectionStrategy.addTo(this, rightValue, 1);
-		return leftCollectionValue;
 	}
 
 	@Override
-	public @NonNull CollectionValue mutableIncludingAll(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable Object> rightIterator) {
-		assert leftCollectionValue == initialCollectionValue;
+	public void mutableIncludingAll(@NonNull Iterator<@Nullable Object> rightIterator) {
 		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
 			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
@@ -1056,7 +1045,6 @@ public class LazyIterableImpl implements LazyIterable
 				collectionStrategy.addTo(this, rightIterator.next(), 1);
 			}
 		}
-		return leftCollectionValue;
 	}
 
 	/**
@@ -1065,9 +1053,8 @@ public class LazyIterableImpl implements LazyIterable
 	 * rather than common minimum counts.
 	 */
 	@Override
-	public @NonNull CollectionValue mutableIntersection(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
-		assert leftCollectionValue == initialCollectionValue;
-		assert leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered();
+	public void mutableIntersection(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
+		assert initialCollectionValue.isUnique() || !initialCollectionValue.isOrdered();
 		Map<@Nullable Object, @NonNull ElementCount> savedMapOfElement2elementCount = getMapOfElement2elementCount();
 		Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
 		lazyListOfElements = new ArrayList<>();
@@ -1096,7 +1083,6 @@ public class LazyIterableImpl implements LazyIterable
 			}
 		}
 		// NB the determinstic order is that of the right value; ?? should we re-instate the left order
-		return leftCollectionValue;
 	}
 
 	/**
@@ -1105,9 +1091,8 @@ public class LazyIterableImpl implements LazyIterable
 	 * rather than sum counts.
 	 */
 	@Override
-	public @NonNull CollectionValue mutableUnion(@NonNull CollectionValue leftCollectionValue, @NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
-		assert leftCollectionValue == initialCollectionValue;
-		assert leftCollectionValue.isUnique() || !leftCollectionValue.isOrdered();
+	public void mutableUnion(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
+		assert initialCollectionValue.isUnique() || !initialCollectionValue.isOrdered();
 		collectionStrategy = isUnique ? SetStrategy.INSTANCE : BagStrategy.INSTANCE;
 		if (rightIterator instanceof BaggableIterator<?>) {
 			BaggableIterator<@Nullable Object> baggableIterator = (BaggableIterator<@Nullable Object>)rightIterator;
@@ -1120,16 +1105,6 @@ public class LazyIterableImpl implements LazyIterable
 				collectionStrategy.addTo(this, rightIterator.next(), 1);
 			}
 		}
-		return leftCollectionValue;
-	}
-
-	/**
-	 * Ensure that all lazy iterations have completed and then return the number of elements.
-	 */
-	@Override
-	public int size() {
-		getListOfElements();
-		return size;
 	}
 
 	@Override

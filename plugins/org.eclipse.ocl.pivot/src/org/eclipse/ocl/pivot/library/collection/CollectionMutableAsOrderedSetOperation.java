@@ -32,7 +32,8 @@ public class CollectionMutableAsOrderedSetOperation extends AbstractUnaryOperati
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		if (leftCollectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableAsOrderedSet(leftCollectionValue);
+			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableAsOrderedSet();
+			return leftCollectionValue;
 		}
 		else {
 			return new AsOrderedSetIterator.FromCollectionValue(leftCollectionValue);

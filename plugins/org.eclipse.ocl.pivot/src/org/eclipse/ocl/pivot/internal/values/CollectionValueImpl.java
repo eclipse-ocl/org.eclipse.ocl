@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
 import org.eclipse.ocl.pivot.internal.iterators.LazyIterableImpl;
+import org.eclipse.ocl.pivot.internal.iterators.MutableIterable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
@@ -931,6 +932,11 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	public @NonNull CollectionValue minus(@NonNull CollectionValue set) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull MutableIterable mutableIterable() {
 		throw new UnsupportedOperationException();
 	}
 

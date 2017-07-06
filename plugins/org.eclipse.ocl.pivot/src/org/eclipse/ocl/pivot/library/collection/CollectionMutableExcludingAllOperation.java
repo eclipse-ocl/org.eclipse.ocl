@@ -33,7 +33,8 @@ public class CollectionMutableExcludingAllOperation extends AbstractBinaryOperat
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		CollectionValue rightCollectionValue = asCollectionValue(argumentValue);
 		if (leftCollectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableExcludingAll(leftCollectionValue, rightCollectionValue.iterator());
+			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableExcludingAll(rightCollectionValue.iterator());
+			return leftCollectionValue;
 		}
 		else {
 			return ExcludingAllIterator.excludingAll(leftCollectionValue, rightCollectionValue);

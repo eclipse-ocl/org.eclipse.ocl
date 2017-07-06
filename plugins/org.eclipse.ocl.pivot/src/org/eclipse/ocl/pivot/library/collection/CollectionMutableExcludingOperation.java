@@ -32,7 +32,8 @@ public class CollectionMutableExcludingOperation extends AbstractBinaryOperation
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		CollectionValue leftCollectionValue = asCollectionValue(sourceValue);
 		if (leftCollectionValue instanceof LazyCollectionValue) {
-			return ((LazyCollectionValue)leftCollectionValue).eagerIterable().mutableExcluding(leftCollectionValue, argumentValue);
+			((LazyCollectionValue)leftCollectionValue).mutableIterable().mutableExcluding(argumentValue);
+			return leftCollectionValue;
 		}
 		else {
 			return ExcludingIterator.excluding(leftCollectionValue, argumentValue);
