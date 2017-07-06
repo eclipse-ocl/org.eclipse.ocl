@@ -16,11 +16,13 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.MutableIterable;
 
 /**
  * IsUniqueIteration realizes the Collection::isUnique() library iteration.
@@ -42,7 +44,7 @@ public class IsUniqueIteration extends AbstractIteration
 	@Override
 	public @NonNull CollectionValue createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		//		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedId(accumulatorTypeId));
-		return new LazyCollectionValueAccumulator(TypeId.SET.getSpecializedId(accumulatorTypeId));
+		return new LazyCollectionValueImpl.LazyCollectionValueAccumulator(TypeId.SET.getSpecializedId(accumulatorTypeId));
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class IsUniqueIteration extends AbstractIteration
 
 	@Override
 	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
-		CollectionValue.Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
+		MutableIterable accumulatorValue = (MutableIterable)iterationManager.getAccumulatorValue();
 		assert accumulatorValue != null;
 		Object bodyVal = iterationManager.evaluateBody();
 		assert !(bodyVal instanceof InvalidValueException);
@@ -60,7 +62,7 @@ public class IsUniqueIteration extends AbstractIteration
 			return false;						// Abort after second find
 		}
 		else {
-			accumulatorValue.add(bodyVal);
+			accumulatorValue.mutableIncluding(bodyVal);
 			return CARRY_ON;					// Carry on after first find
 		}
 	}

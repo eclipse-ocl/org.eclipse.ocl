@@ -23,8 +23,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
-import org.eclipse.ocl.pivot.internal.iterators.MutableIterable;
 
 /**
  * LazyCollectionValue extends the inherently eager CollectionValue to support lazy and lazily cached iterations.
@@ -50,6 +48,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @noimplement This interface is not intended to be implemented by clients.
 	 */
 	interface Accumulator extends CollectionValue {		// FIXME fold into MutableIterable
+		@Deprecated /* @deprecated use mutableIncluding */
 		boolean add(@Nullable Object value);
 	}
 

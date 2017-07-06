@@ -165,6 +165,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		org.eclipse.ocl.pivot.values.IntegerRange.class,
 		org.eclipse.ocl.pivot.values.IntegerValue.class,
 		org.eclipse.ocl.pivot.values.InvalidValue.class,
+		org.eclipse.ocl.pivot.values.MutableIterable.class,
 		org.eclipse.ocl.pivot.values.RealValue.class,
 		org.eclipse.ocl.pivot.values.TupleValue.class,
 		org.eclipse.ocl.pivot.values.UnlimitedValue.class,

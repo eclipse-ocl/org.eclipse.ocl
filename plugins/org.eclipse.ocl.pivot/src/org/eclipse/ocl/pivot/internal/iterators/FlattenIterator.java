@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Iterator;
 import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -20,6 +19,7 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
  * FlattenIterator provides a lazy evaluation of the Collection::flatten operation.
@@ -114,7 +114,7 @@ public class FlattenIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull Iterator<@Nullable Object> reIterator() {
+	protected @NonNull LazyIterator reIterator() {
 		return new FlattenIterator(typeId, sourceValue);
 	}
 

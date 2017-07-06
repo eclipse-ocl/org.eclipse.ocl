@@ -37,7 +37,7 @@ public interface Executor extends Evaluator
 		void resetCaches();
 	}
 	void add(@NonNull TypedElement referredVariable, @Nullable Object value);
-	/* @deprevted provide executableObject, caller arguments */
+	/* @deprecated provide executableObject, caller arguments */
 	@Deprecated
 	@Override
 	@Nullable Object evaluate(@NonNull OCLExpression expression);

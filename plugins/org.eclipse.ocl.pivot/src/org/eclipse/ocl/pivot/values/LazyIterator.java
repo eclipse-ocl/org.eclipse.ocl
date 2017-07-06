@@ -8,10 +8,9 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.iterators;
+package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.values.BaggableIterator;
 
 /**
  * A LazyIterator supports lazy iterations that may use the bag-aware iterator protocol.

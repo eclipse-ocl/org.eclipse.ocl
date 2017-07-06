@@ -30,9 +30,6 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterable;
-import org.eclipse.ocl.pivot.internal.iterators.LazyIterator;
-import org.eclipse.ocl.pivot.internal.iterators.MutableIterable;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
@@ -40,7 +37,10 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.ComparableValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyIterable;
+import org.eclipse.ocl.pivot.values.LazyIterator;
 import org.eclipse.ocl.pivot.values.MapValue;
+import org.eclipse.ocl.pivot.values.MutableIterable;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
@@ -58,30 +58,6 @@ import org.eclipse.ocl.pivot.values.Value;
 public abstract class UndefinedValueImpl extends EvaluationException implements NullValue, CollectionValue
 {
 	private static final long serialVersionUID = 1L;
-
-	private static class EmptyIterator implements LazyIterator
-	{
-		@Override
-		public boolean hasNext() {
-			return false;
-		}
-
-		@Override
-		public int hasNextCount() {
-			return 0;
-		}
-
-		@Override
-		public Object next() {
-			return null;
-		}
-
-		@Override
-		public void remove() {
-		}
-	}
-
-	public static @NonNull LazyIterator EMPTY_ITERATOR = new EmptyIterator();
 
 	public UndefinedValueImpl(String message) {
 		super(message);
@@ -539,7 +515,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 
 	@Override
 	public @NonNull LazyIterator iterator() {
-		return new EmptyIterator();
+		return ValueUtil.EMPTY_ITERATOR;
 	}
 
 	@Override

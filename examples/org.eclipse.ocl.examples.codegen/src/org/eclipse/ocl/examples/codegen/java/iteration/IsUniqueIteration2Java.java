@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -13,15 +13,16 @@ package org.eclipse.ocl.examples.codegen.java.iteration;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.MutableIterable;
 
 public class IsUniqueIteration2Java extends AbstractAccumulation2Java
 {
@@ -36,12 +37,12 @@ public class IsUniqueIteration2Java extends AbstractAccumulation2Java
 		js.appendIdReference(elementId != null ? elementId : TypeId.OCL_VOID);
 		js.append(")");
 	}
-	
+
 	@Override
 	public boolean appendFinalValue(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		return js.appendAssignment(cgIterationCallExp, js.getCodeGenerator().getAnalyzer().getBoolean(true));
 	}
-	
+
 	@Override
 	public boolean appendUpdate(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGValuedElement cgBody = getBody(cgIterationCallExp);
@@ -67,7 +68,7 @@ public class IsUniqueIteration2Java extends AbstractAccumulation2Java
 		{
 			js.pushIndentation(null);
 			js.appendValueName(cgAccumulator);
-			js.append(".add(");
+			js.append(".mutableIncluding(");
 			js.appendValueName(cgBody);
 			js.append(");\n");
 			js.popIndentation();
@@ -78,7 +79,7 @@ public class IsUniqueIteration2Java extends AbstractAccumulation2Java
 
 	@Override
 	public @Nullable CGTypeId getAccumulatorTypeId(@NonNull CodeGenAnalyzer analyzer, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		Class<?> accumulatorClass = getAccumulatorClass(analyzer, TypeId.SET);
+		Class<?> accumulatorClass = MutableIterable.class; //getAccumulatorClass(analyzer, TypeId.SET);
 		return analyzer.getTypeId(JavaConstants.getJavaTypeId(accumulatorClass));
 	}
 }

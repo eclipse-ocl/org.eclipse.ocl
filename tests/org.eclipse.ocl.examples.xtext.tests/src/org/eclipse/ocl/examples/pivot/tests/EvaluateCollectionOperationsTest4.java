@@ -1059,7 +1059,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionInsertAt() {
 		TestOCL ocl = createOCL();
-		// For now resolve Issue 14980 semantics by by first removing an existing content
+		// For now resolve Issue 14980 semantics by preserving existing content
 		ocl.assertQueryResults(null, "Sequence{'c', 'a', 'b'}", "Sequence{'a', 'b'}->insertAt(1, 'c')");
 		ocl.assertQueryResults(null, "OrderedSet{'a', 'c', 'b'}", "OrderedSet{'a', 'b'}->insertAt(2, 'c')");
 
@@ -1087,14 +1087,18 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryInvalid(null, "OrderedSet{'a'}->insertAt(0, 'b')");
 		ocl.assertQueryInvalid(null, "Sequence{'a'}->insertAt(3, 'b')");
 		ocl.assertQueryInvalid(null, "OrderedSet{'a'}->insertAt(3, 'b')");
-		ocl.assertQueryInvalid(null, "OrderedSet{'a'}->insertAt(2, 'a')");
+		ocl.assertQueryInvalid(null, "OrderedSet{'a'}->insertAt(3, 'a')");
+		ocl.assertQueryResults(null, "OrderedSet{'a'}", "OrderedSet{'a'}->insertAt(2, 'a')");
 		// duplicates
 		ocl.assertQueryResults(null, "Sequence{'b', 'a', 'b', 'c'}", "Sequence{'a', 'b', 'c'}->insertAt(1, 'b')");
 		ocl.assertQueryResults(null, "Sequence{'a', 'b', 'c', 'b'}", "Sequence{'a', 'b', 'c'}->insertAt(4, 'b')");
-		ocl.assertQueryResults(null, "OrderedSet{'b', 'a', 'c'}", "OrderedSet{'a', 'b', 'c'}->insertAt(1, 'b')");
+		//		ocl.assertQueryResults(null, "OrderedSet{'b', 'a', 'c'}", "OrderedSet{'a', 'b', 'c'}->insertAt(1, 'b')");
+		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', 'c'}", "OrderedSet{'a', 'b', 'c'}->insertAt(1, 'b')");
 		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', 'c'}", "OrderedSet{'a', 'b', 'c'}->insertAt(2, 'b')");
-		ocl.assertQueryResults(null, "OrderedSet{'a', 'c', 'b'}", "OrderedSet{'a', 'b', 'c'}->insertAt(3, 'b')");
-		ocl.assertQueryInvalid(null, "OrderedSet{'a', 'b', 'c'}->insertAt(4, 'b')");
+		//		ocl.assertQueryResults(null, "OrderedSet{'a', 'c', 'b'}", "OrderedSet{'a', 'b', 'c'}->insertAt(3, 'b')");
+		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', 'c'}", "OrderedSet{'a', 'b', 'c'}->insertAt(3, 'b')");
+		ocl.assertQueryResults(null, "OrderedSet{'a', 'b', 'c'}", "OrderedSet{'a', 'b', 'c'}->insertAt(4, 'b')");
+		ocl.assertQueryInvalid(null, "OrderedSet{'a', 'b', 'c'}->insertAt(5, 'b')");
 		ocl.dispose();
 	}
 

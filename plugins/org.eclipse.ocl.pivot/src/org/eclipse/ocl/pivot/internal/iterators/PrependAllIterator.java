@@ -10,12 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
  * PrependAllIterator provides a lazy evaluation of the OrderedCollection::prependAll operation.
@@ -92,7 +91,7 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull Iterator<@Nullable Object> reIterator() {
+		protected @NonNull LazyIterator reIterator() {
 			return new ToBag(sourceValue, prependValue);
 		}
 	}
@@ -118,7 +117,7 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull Iterator<@Nullable Object> reIterator() {
+		protected @NonNull LazyIterator reIterator() {
 			return new ToSequence(sourceValue, prependValue);
 		}
 	}
@@ -150,7 +149,7 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull Iterator<@Nullable Object> reIterator() {
+		protected @NonNull LazyIterator reIterator() {
 			return new ToUnique(sourceValue, prependValue);
 		}
 	}

@@ -66,7 +66,6 @@ import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -684,7 +683,7 @@ implements org.eclipse.ocl.pivot.Class {
 			try {
 				final /*@NonInvalid*/ java.util.@NonNull List<Constraint> ownedInvariants = this.getOwnedInvariants();
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedInvariants = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants);
-				/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
+				/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
 				@NonNull Iterator<Object> ITERATOR__1 = ValueUtil.lazyIterator(BOXED_ownedInvariants);
 				/*@Thrown*/ boolean result;
 				while (true) {
@@ -704,7 +703,7 @@ implements org.eclipse.ocl.pivot.Class {
 						break;
 					}
 					else {
-						accumulator.add(name);
+						accumulator.mutableIncluding(name);
 					}
 				}
 				CAUGHT_result = result;

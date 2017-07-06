@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.iterator;
 
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -27,8 +25,9 @@ import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.CollectionValue.Accumulator;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyIterator;
+import org.eclipse.ocl.pivot.values.MutableIterable;
 import org.eclipse.ocl.pivot.values.Value;
 
 /**
@@ -60,7 +59,7 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 		}
 
 		@Override
-		protected @NonNull Iterator<@Nullable Object> reIterator() {
+		protected @NonNull LazyIterator reIterator() {
 			return new LazySelectIterator(typeId, sourceValue, executor, body, firstIterator);
 		}
 	}
@@ -91,9 +90,9 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 		}
 		else if (bodyVal == TRUE_VALUE) {
 			Object value = iterationManager.get();
-			Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
+			MutableIterable accumulatorValue = (MutableIterable)iterationManager.getAccumulatorValue();
 			assert accumulatorValue != null;												// createAccumulatorValue is @NonNull
-			accumulatorValue.add(value);
+			accumulatorValue.mutableIncluding(value);
 		}
 		else if (bodyVal != Boolean.FALSE) {
 			throw new InvalidValueException(PivotMessages.NonBooleanBody, "select"); 	// Non boolean body is invalid //$NON-NLS-1$

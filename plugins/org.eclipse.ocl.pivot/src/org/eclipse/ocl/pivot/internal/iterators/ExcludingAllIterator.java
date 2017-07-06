@@ -10,12 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
  * ExcludingAllIterator provides a lazy evaluation of the Collection::excludingAll operation.
@@ -51,7 +50,7 @@ public class ExcludingAllIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull Iterator<@Nullable Object> reIterator() {
+	protected @NonNull LazyIterator reIterator() {
 		return new ExcludingAllIterator(sourceValue, excludeValue);
 	}
 

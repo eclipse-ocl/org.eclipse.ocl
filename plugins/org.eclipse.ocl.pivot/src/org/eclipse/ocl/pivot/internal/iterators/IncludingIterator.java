@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -19,6 +17,7 @@ import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
  * IncludingIterator provides a lazy evaluation of the Collection::including operation.
@@ -93,7 +92,7 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull Iterator<@Nullable Object> reIterator() {
+		protected @NonNull LazyIterator reIterator() {
 			return new ToBag(typeId, sourceValue, object);
 		}
 	}
@@ -119,7 +118,7 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull Iterator<@Nullable Object> reIterator() {
+		protected @NonNull LazyIterator reIterator() {
 			return new ToSequence(typeId, sourceValue, object);
 		}
 	}
@@ -152,7 +151,7 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull Iterator<@Nullable Object> reIterator() {
+		protected @NonNull LazyIterator reIterator() {
 			return new ToUnique(typeId, sourceValue, object);
 		}
 	}

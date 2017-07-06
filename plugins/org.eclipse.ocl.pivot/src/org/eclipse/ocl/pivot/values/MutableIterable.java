@@ -8,8 +8,11 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.iterators;
+package org.eclipse.ocl.pivot.values;
 
+import java.util.Iterator;
+
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -29,15 +32,39 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  * @since 1.3
  */
-public interface LazyIterable extends Iterable<@Nullable Object>
+public interface MutableIterable extends CollectionValue.Accumulator, LazyIterable
 {
-	/**
-	 * Ensure that all lazy iterations have completed and then return a list of all elements.
-	 */
-	//	@NonNull List<@Nullable Object> getListOfElements();
+	void mutableAppend(@Nullable Object rightValue);
+
+	void mutableAppendAll(@NonNull Iterator<@Nullable Object> rightIterator);
+
+	void mutableAsBag();
+
+	void mutableAsOrderedSet();
+
+	void mutableAsSequence();
+
+	void mutableAsSet();
+
+	void mutableExcluding(@Nullable Object rightValue);
+
+	void mutableExcludingAll(@NonNull Iterator<@Nullable Object> rightIterator);
+
+	void mutableIncluding(@Nullable Object rightValue);
+
+	void mutableIncludingAll(@NonNull Iterator<@Nullable Object> rightIterator);
 
 	/**
-	 * Ensure that all lazy iterations have completed and then return a bag of all elements.
+	 * Modify this to be the intersection of this and rightIterator,
+	 * This the underlying content of initialthe CollectionValue. If isUnique, the resulting intersection has unit counts
+	 * rather than common minimum counts.
 	 */
-	//	@NonNull Map<@Nullable Object, @NonNull ElementCount> getMapOfElement2elementCount();
+	void mutableIntersection(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique);
+
+	/**
+	 * Modify this to be the union of this and rightIterator,
+	 * This the underlying content of the CollectionValue. If isUnique, the resulting union has unit counts
+	 * rather than sum counts.
+	 */
+	void mutableUnion(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique);
 }

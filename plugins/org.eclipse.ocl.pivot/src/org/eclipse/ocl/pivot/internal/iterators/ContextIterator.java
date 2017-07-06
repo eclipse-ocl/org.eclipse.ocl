@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.iterators;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -22,6 +21,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.LazyCollectionValue;
+import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
  * ContextIterator wraps a lazy collection evaluation with the prevailing context so that the evaluation uses the correct valyes of variables.
@@ -71,7 +71,7 @@ public class ContextIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull Iterator<@Nullable Object> reIterator() {
+	protected @NonNull LazyIterator reIterator() {
 		return new ContextIterator(executor, executableObject, caller, lazyValue);
 	}
 
