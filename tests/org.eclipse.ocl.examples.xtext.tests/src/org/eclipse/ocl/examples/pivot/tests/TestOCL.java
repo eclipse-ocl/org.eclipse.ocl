@@ -70,7 +70,6 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -241,11 +240,11 @@ public class TestOCL extends OCLInternal
 	 */
 	public void assertOCLEquals(String message, Object expected, Object actual) {
 		IdResolver.IdResolverExtension idResolver = (IdResolver.IdResolverExtension)getIdResolver();
-		if (expected instanceof LazyCollectionValue) {
-			((LazyCollectionValue)expected).eagerIterable();		// Might need an Iterable to allow traversal by both equals and oclHashCode
+		if (expected instanceof CollectionValue) {
+			((CollectionValue)expected).eagerIterable();		// Might need an Iterable to allow traversal by both equals and oclHashCode
 		}
-		if (actual instanceof LazyCollectionValue) {
-			((LazyCollectionValue)actual).eagerIterable();			// Might need an Iterable to allow traversal by both equals and oclHashCode
+		if (actual instanceof CollectionValue) {
+			((CollectionValue)actual).eagerIterable();			// Might need an Iterable to allow traversal by both equals and oclHashCode
 		}
 		if (idResolver.oclEquals(expected, actual)) {
 			int expectedHash = idResolver.oclHashCode(expected);

@@ -834,8 +834,12 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	public static final @NonNull AbstractCollectionStrategy SEQUENCE_STRATEGY = SequenceStrategy.INSTANCE;
 	public static final @NonNull AbstractCollectionStrategy SET_STRATEGY = SetStrategy.INSTANCE;
 
-	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList = null;
-	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap = null;
+	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList = null;
+	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap = null;
+
+	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazy = null;
+	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2cached = null;
+	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2reiterated = null;
 
 	public static <E> void appendBagIterable(@NonNull StringBuilder s, @NonNull List<E> elements, @Nullable Map<E, @NonNull ? extends Number> element2elementCount) {
 		s.append("[");
@@ -855,6 +859,25 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 			isFirst = false;
 		}
 		s.append("]");
+	}
+
+	public static void appendIterable(StringBuilder s, @NonNull Iterable<? extends Object> iterable, int lengthLimit) {
+		s.append("{");
+		boolean isFirst = true;
+		for (Object element : iterable) {
+			if (!isFirst) {
+				s.append(",");
+			}
+			if (s.length() < lengthLimit) {
+				ValueUtil.toString(element, s, lengthLimit-1);
+			}
+			else {
+				s.append("...");
+				break;
+			}
+			isFirst = false;
+		}
+		s.append("}");
 	}
 
 	public static @NonNull AbstractCollectionStrategy getCollectionStrategy(@NonNull CollectionTypeId typeId) {
@@ -884,28 +907,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 	}
 
-	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazy = null;
-	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2cached = null;
-	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2reiterated = null;
-
-	public static void appendIterable(StringBuilder s, @NonNull Iterable<? extends Object> iterable, int lengthLimit) {
-		s.append("{");
-		boolean isFirst = true;
-		for (Object element : iterable) {
-			if (!isFirst) {
-				s.append(",");
-			}
-			if (s.length() < lengthLimit) {
-				ValueUtil.toString(element, s, lengthLimit-1);
-			}
-			else {
-				s.append("...");
-				break;
-			}
-			isFirst = false;
-		}
-		s.append("}");
-	}
+	/**
+	 * A simple public static method that may be used to force class initialization.
+	 */
+	public static void initStatics() {}
 
 	/**
 	 * Return the number of cascaded lazy iterators terminating in sourceValue.
@@ -1163,13 +1168,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 			if (!collectionStrategy.isSequence()) {
 				this.lazyMapOfElement2elementCount = createMapOfElement2elementCount();
 			}
-			Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2count2 = debugCollectionClass2cached;
-			if (debugCollectionClass2count2 != null) {
-				Class<? extends @NonNull CollectionValue> collectionClass = getClass();
-				Integer count = debugCollectionClass2count2.get(collectionClass);
-				count = count != null ? count+1 : 1;
-				debugCollectionClass2count2.put(collectionClass, count);
-			}
+			//			Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2count2 = debugCollectionClass2cached;
+			//			if (debugCollectionClass2count2 != null) {
+			//				Class<? extends @NonNull CollectionValue> collectionClass = getClass();
+			//				Integer count = debugCollectionClass2count2.get(collectionClass);
+			//				count = count != null ? count+1 : 1;
+			//				debugCollectionClass2count2.put(collectionClass, count);
+			//			}
 		}
 		return this;
 	}
@@ -1243,24 +1248,24 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	protected @NonNull List<@Nullable Object> createListOfElements() {
-		Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList2 = debugCollectionClass2lazyList;
-		if (debugCollectionClass2lazyList2 != null) {
-			Class<?> collectionClass = inputIterator.getClass();
-			Integer count = debugCollectionClass2lazyList2.get(collectionClass);
-			count = count != null ? count+1 : 1;
-			debugCollectionClass2lazyList2.put(collectionClass, count);
-		}
+		//		Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList2 = debugCollectionClass2lazyList;
+		//		if (debugCollectionClass2lazyList2 != null) {
+		//			Class<?> collectionClass = inputIterator.getClass();
+		//			Integer count = debugCollectionClass2lazyList2.get(collectionClass);
+		//			count = count != null ? count+1 : 1;
+		//			debugCollectionClass2lazyList2.put(collectionClass, count);
+		//		}
 		return new ArrayList<>();
 	}
 
 	protected @NonNull Map<@Nullable Object, @NonNull ElementCount> createMapOfElement2elementCount() {
-		Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap2 = debugCollectionClass2lazyMap;
-		if (debugCollectionClass2lazyMap2 != null) {
-			Class<?> collectionClass = inputIterator.getClass();
-			Integer count = debugCollectionClass2lazyMap2.get(collectionClass);
-			count = count != null ? count+1 : 1;
-			debugCollectionClass2lazyMap2.put(collectionClass, count);
-		}
+		//		Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap2 = debugCollectionClass2lazyMap;
+		//		if (debugCollectionClass2lazyMap2 != null) {
+		//			Class<?> collectionClass = inputIterator.getClass();
+		//			Integer count = debugCollectionClass2lazyMap2.get(collectionClass);
+		//			count = count != null ? count+1 : 1;
+		//			debugCollectionClass2lazyMap2.put(collectionClass, count);
+		//		}
 		return new HashMap<>();
 	}
 
@@ -1494,13 +1499,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount;
 		if (lazyMapOfElement2elementCount2 == null) {			// Lazy creation is only needed for Sequences
 			assert collectionStrategy.isSequence();
-			Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap2 = debugCollectionClass2lazyMap;
-			if (debugCollectionClass2lazyMap2 != null) {
-				Class<?> collectionClass = inputIterator.getClass();
-				Integer count = debugCollectionClass2lazyMap2.get(collectionClass);
-				count = count != null ? count+1 : 1;
-				debugCollectionClass2lazyMap2.put(collectionClass, count);
-			}
+			//			Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap2 = debugCollectionClass2lazyMap;
+			//			if (debugCollectionClass2lazyMap2 != null) {
+			//				Class<?> collectionClass = inputIterator.getClass();
+			//				Integer count = debugCollectionClass2lazyMap2.get(collectionClass);
+			//				count = count != null ? count+1 : 1;
+			//				debugCollectionClass2lazyMap2.put(collectionClass, count);
+			//			}
 			lazyMapOfElement2elementCount2 = new HashMap<>();
 			List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
 			assert lazyListOfElements2 != null;

@@ -12,21 +12,12 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.pivot.tests.DelegatesTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateBooleanOperationsTest;
 import org.eclipse.ocl.examples.pivot.tests.EvaluateClassifierOperationsTest;
@@ -53,15 +44,10 @@ import org.eclipse.ocl.examples.test.label.PluginLabelTests;
 import org.eclipse.ocl.examples.test.label.StandaloneLabelTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneExecutionTests;
 import org.eclipse.ocl.examples.test.standalone.StandaloneParserTests;
-import org.eclipse.ocl.pivot.internal.values.CollectionValueImpl;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
-import org.eclipse.ocl.pivot.values.CollectionValue;
-import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestResult;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
@@ -89,7 +75,7 @@ extends TestCase {
 		}
 		TestSuite result = new TestSuite(testSuiteName) {
 
-			@Override
+			/*			@Override
 			public void run(TestResult result) {
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2count = CollectionValueImpl.ExtensionImpl.collectionClass2count = new HashMap<>();
 				Map<@NonNull Class<?>, @NonNull Integer> collectionClass2lazyList = LazyCollectionValueImpl.debugCollectionClass2lazyList = new HashMap<>();
@@ -152,7 +138,7 @@ extends TestCase {
 				System.out.println(">= " + LazyCollectionValue.class.getName() + " : " + iteratorCounts);
 				System.out.println("!>= " + LazyCollectionValue.class.getName() + " : " + nonIteratorCounts);
 				System.out.println("all " + CollectionValue.class.getName() + " : " + (iteratorCounts+nonIteratorCounts) + "   " + lazyCounts + " : " + cachedCounts + " : " + reiteratedCounts);
-			}
+			} */
 
 		};
 		result.addTestSuite(MonikerTests.class);

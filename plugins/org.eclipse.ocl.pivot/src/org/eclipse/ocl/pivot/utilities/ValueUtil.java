@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.utilities;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -49,20 +48,16 @@ import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BigIntegerValueImpl;
-import org.eclipse.ocl.pivot.internal.values.CollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.IntIntegerValueImpl;
 import org.eclipse.ocl.pivot.internal.values.IntegerRangeImpl;
 import org.eclipse.ocl.pivot.internal.values.JavaObjectValueImpl;
+import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.LongIntegerValueImpl;
 import org.eclipse.ocl.pivot.internal.values.MapEntryImpl;
 import org.eclipse.ocl.pivot.internal.values.MapValueImpl;
 import org.eclipse.ocl.pivot.internal.values.MutableCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.NullValueImpl;
-import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
-import org.eclipse.ocl.pivot.internal.values.RangeSequenceValueImpl;
 import org.eclipse.ocl.pivot.internal.values.RealValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SparseOrderedSetValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SparseSequenceValueImpl;
 import org.eclipse.ocl.pivot.internal.values.TupleValueImpl;
 import org.eclipse.ocl.pivot.internal.values.UnlimitedValueImpl;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
@@ -83,7 +78,6 @@ import org.eclipse.ocl.pivot.values.MutableIterable;
 import org.eclipse.ocl.pivot.values.NullValue;
 import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.ObjectValue;
-import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.TupleValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -642,16 +636,16 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		OrderedSet<@Nullable Object> allValues = new OrderedSetImpl<>();
+		MutableIterable mutableIterable = new MutableCollectionValueImpl(typeId);
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
-				allValues.addAll((IntegerRange)value);
+				mutableIterable.mutableIncludingAll(((IntegerRange)value).iterator());
 			}
 			else {
-				allValues.add(value);
+				mutableIterable.mutableIncluding(value);
 			}
 		}
-		return new SparseOrderedSetValueImpl(typeId, allValues);
+		return mutableIterable;
 	}
 
 	public static @NonNull CollectionValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
@@ -673,20 +667,20 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
-		return new RangeSequenceValueImpl(typeId, range);
+		return new MutableCollectionValueImpl(typeId, range.iterator());
 	}
 
 	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		List<@Nullable Object> allValues = new ArrayList<>();
+		MutableIterable mutableIterable = new MutableCollectionValueImpl(typeId);
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
-				allValues.addAll((IntegerRange)value);
+				mutableIterable.mutableIncludingAll(((IntegerRange)value).iterator());
 			}
 			else {
-				allValues.add(value);
+				mutableIterable.mutableIncluding(value);
 			}
 		}
-		return new SparseSequenceValueImpl(typeId, allValues);
+		return mutableIterable;
 	}
 
 	public static @NonNull CollectionValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable ? extends Object> boxedValues) {
@@ -874,7 +868,7 @@ public abstract class ValueUtil
 					// org.eclipse.ocl.domain.values
 					ValuesPackage.eINSTANCE.getClass();
 					// org.eclipse.ocl.domain.values.impl
-					CollectionValueImpl.initStatics();
+					LazyCollectionValueImpl.initStatics();
 					RealValueImpl.initStatics();
 					// org.eclipse.ocl.domain.values.util
 					//					new ValuesAdapterFactory();
