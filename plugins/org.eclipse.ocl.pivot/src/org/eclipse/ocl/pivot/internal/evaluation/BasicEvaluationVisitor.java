@@ -538,10 +538,10 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		EvaluationEnvironment nestedEvaluationEnvironment = context.pushEvaluationEnvironment(expression, (TypedElement)letExp);
 		nestedEvaluationEnvironment.add(variable, value);
 		try {
-//			Object result = expression.accept(undecoratedVisitor);
-//			if (result instanceof LazyCollectionValue) {
-//				result = new ContextIterator((ExecutorExtension) getExecutor(), expression, letExp, (LazyCollectionValue)result);
-//			}
+			//			Object result = expression.accept(undecoratedVisitor);
+			//			if (result instanceof LazyCollectionValue) {
+			//				result = new ContextIterator((ExecutorExtension) getExecutor(), expression, letExp, (LazyCollectionValue)result);
+			//			}
 			return getExecutor().evaluate(expression, expression, letExp);
 		}
 		finally {
@@ -595,8 +595,6 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitOperationCallExp(@NonNull OperationCallExp operationCallExp) {
-		String s = operationCallExp.toString();
-		System.out.println("Op: " + s);
 		if (isCanceled()) {
 			throw new EvaluationHaltedException("Canceled");
 		}
