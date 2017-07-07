@@ -182,7 +182,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
 		Set<Object> keySet = boxedValues.keySet();
-		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(c);
+		Iterator<@Nullable Object> iterator = c.lazyIterator();
 		while (iterator.hasNext()) {
 			Object e1 = iterator.next();
 			if (e1 == null) {
@@ -206,7 +206,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean excludesMap(@NonNull MapValue m) {
 		Set<Object> keySet = boxedValues.keySet();
-		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(m.getKeys());
+		Iterator<@Nullable Object> iterator = m.getKeys().lazyIterator();
 		while (iterator.hasNext()) {
 			Object e1 = iterator.next();
 			if (e1 == null) {
@@ -277,7 +277,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull MapValue excludingAll(@NonNull CollectionValue c) {
 		Map<@Nullable Object, @Nullable Object> newBoxedValues = new HashMap<>(boxedValues);
-		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(c);
+		Iterator<@Nullable Object> iterator = c.lazyIterator();
 		while (iterator.hasNext()) {
 			Object key = iterator.next();
 			newBoxedValues.remove(key);
@@ -381,7 +381,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean includesAll(@NonNull CollectionValue c) {
 		Set<Object> keySet = boxedValues.keySet();
-		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(c);
+		Iterator<@Nullable Object> iterator = c.lazyIterator();
 		while (iterator.hasNext()) {
 			Object e1 = iterator.next();
 			boolean gotIt = false;
@@ -411,7 +411,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull Boolean includesMap(@NonNull MapValue m) {
 		Set<Object> keySet = boxedValues.keySet();
-		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(m.getKeys());
+		Iterator<@Nullable Object> iterator = m.getKeys().lazyIterator();
 		while (iterator.hasNext()) {
 			Object e1 = iterator.next();
 			boolean gotIt = false;

@@ -444,7 +444,9 @@ public abstract class ValueUtil
 	 * Return an iterable that is lazily populated and which my be re-iterated exploiting cached
 	 * values from a first iteration. This provides opportunities for redundant iterations to be skipped.
 	 * @since 1.3
+	 * @deprecated argument is now always a CollectionValue so use CollectionValue.cachedIterable()
 	 */
+	@Deprecated
 	public static @NonNull Iterable<@Nullable Object> cachedIterable(@NonNull CollectionValue c) {
 		if (c instanceof LazyCollectionValue) {
 			return ((LazyCollectionValue)c).cachedIterable();
@@ -757,7 +759,9 @@ public abstract class ValueUtil
 	 *
 	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
 	 * @since 1.3
+	 * @deprecated argument is now always a CollectionValue so use CollectionValue.eagerIterable()
 	 */
+	@Deprecated
 	public static @NonNull Iterable<@Nullable Object> eagerIterable(@NonNull CollectionValue c) {
 		if (c instanceof LazyCollectionValue) {
 			return ((LazyCollectionValue)c).eagerIterable();
@@ -773,7 +777,9 @@ public abstract class ValueUtil
 	 *
 	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
 	 * @since 1.3
+	 * @deprecated argument is now always a CollectionValue so use CollectionValue.eagerIterable()
 	 */
+	@Deprecated
 	public static @NonNull Iterator<@Nullable Object> eagerIterator(@NonNull CollectionValue c) {
 		if (c instanceof LazyCollectionValue) {
 			return ((LazyCollectionValue)c).eagerIterable().iterator();
@@ -1120,7 +1126,7 @@ public abstract class ValueUtil
 
 	/**
 	 * @since 1.3
-	 */
+	 *
 	public static @NonNull Iterator<@Nullable Object> lazyIterator(@NonNull CollectionValue c) {
 		if (c instanceof LazyCollectionValue) {
 			return ((LazyCollectionValue)c).lazyIterator();
@@ -1128,11 +1134,13 @@ public abstract class ValueUtil
 		else {
 			return c.iterator();
 		}
-	}
+	} */
 
 	/**
 	 * @since 1.3
+	 * @deprecated argument is now always a CollectionValue so use CollectionValue.lazyIterator()
 	 */
+	@Deprecated
 	public static @NonNull Iterator<@Nullable Object> lazyIterator(@NonNull Iterable<?> c) {
 		if (c instanceof LazyCollectionValue) {
 			return ((LazyCollectionValue)c).lazyIterator();

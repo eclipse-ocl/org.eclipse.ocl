@@ -607,6 +607,7 @@ implements OperationCallExp {
 					assert operation != null;
 					final /*@Thrown*/ java.util.@NonNull List<Parameter> ownedParameters = operation.getOwnedParameters();
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
+					BOXED_ownedParameters.cachedIterable();
 					safe_ownedParameters_source = BOXED_ownedParameters;
 				}
 				final /*@NonInvalid*/ @NonNull Object symbol_1 = operation == null;
@@ -625,7 +626,7 @@ implements OperationCallExp {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerRange RNG = ValueUtil.createRange(PivotTables.INT_1, size);
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue Sequence = ValueUtil.createSequenceRange(PivotTables.SEQ_PRIMid_Integer, RNG);
 				/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-				@NonNull Iterator<Object> ITERATOR_i = ValueUtil.lazyIterator(Sequence);
+				@NonNull Iterator<Object> ITERATOR_i = Sequence.lazyIterator();
 				/*@Thrown*/ java.lang.@Nullable Boolean forAll;
 				while (true) {
 					if (!ITERATOR_i.hasNext()) {

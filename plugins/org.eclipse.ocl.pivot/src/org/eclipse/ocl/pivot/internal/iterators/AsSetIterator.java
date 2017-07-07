@@ -113,7 +113,7 @@ public abstract class AsSetIterator extends LazyCollectionValueImpl implements C
 		private @NonNull CollectionValue sourceValue;
 
 		public FromCollectionValue(@NonNull CollectionValue sourceValue) {
-			super(TypeId.SET.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), lazyIterator(sourceValue), sourceValue.isUnique());
+			super(TypeId.SET.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.lazyIterator(), sourceValue.isUnique());
 			this.sourceValue = sourceValue;
 		}
 

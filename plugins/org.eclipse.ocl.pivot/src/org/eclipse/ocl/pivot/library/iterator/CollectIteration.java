@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.MutableIterable;
 
 /**
  * CollectIteration realizes the Collection::collect() library iteration.
@@ -48,19 +49,19 @@ public class CollectIteration extends AbstractIteration
 	@Override
 	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
 		Object bodyVal = iterationManager.evaluateBody();
-		CollectionValue.Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
+		MutableIterable accumulatorValue = (MutableIterable)iterationManager.getAccumulatorValue();
 		assert accumulatorValue != null;
 		if (bodyVal == null) {
-			accumulatorValue.add(bodyVal);
+			accumulatorValue.mutableIncluding(bodyVal);
 		}
 		else if (bodyVal instanceof CollectionValue) {
 			CollectionValue bodyColl = (CollectionValue) bodyVal;
 			//			try {
-			Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(bodyColl.flatten());
+			Iterator<@Nullable Object> iterator = bodyColl.flatten().lazyIterator();
 			while (iterator.hasNext()) {
 				Object value = iterator.next();
 				if (value != null) {
-					accumulatorValue.add(value);
+					accumulatorValue.mutableIncluding(value);
 				}
 			}
 			//			} catch (InvalidValueException e) {
@@ -68,7 +69,7 @@ public class CollectIteration extends AbstractIteration
 			//			}
 		}
 		else
-			accumulatorValue.add(bodyVal);
+			accumulatorValue.mutableIncluding(bodyVal);
 		return CARRY_ON;								// Carry on
 	}
 }

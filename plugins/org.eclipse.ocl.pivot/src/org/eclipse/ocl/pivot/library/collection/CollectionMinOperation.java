@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.library.numeric.NumericMinOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -33,7 +32,7 @@ public class CollectionMinOperation extends AbstractSimpleUnaryOperation
 		CollectionValue collectionValue = asCollectionValue(sourceVal);
 		// FIXME Bug 301351 Look for user-defined min
 		Object result = null;
-		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(collectionValue);
+		Iterator<@Nullable Object> iterator = collectionValue.lazyIterator();
 		while (iterator.hasNext()) {
 			Object element = iterator.next();
 			if (result == null) {

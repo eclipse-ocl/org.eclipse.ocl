@@ -47,7 +47,7 @@ public class CollectionSumOperation extends AbstractUnaryOperation
 		else {
 			result = ValueUtil.realValueOf(0.0);
 		}
-		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(collectionValue);
+		Iterator<@Nullable Object> iterator = collectionValue.lazyIterator();
 		while (iterator.hasNext()) {
 			Object element = iterator.next();
 			result = NumericPlusOperation.INSTANCE.evaluate(result, element);

@@ -80,7 +80,7 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 		private final @NonNull CollectionValue includeValue;		// FIXME Use MapOfElement2ElementCount
 
 		public ToBag(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
-			super(collectionTypeId, sourceValue, includeValue);
+			super(collectionTypeId, eagerCollectionValue(sourceValue), eagerCollectionValue(includeValue));
 			this.sourceValue = sourceValue;
 			this.includeValue = includeValue;
 		}

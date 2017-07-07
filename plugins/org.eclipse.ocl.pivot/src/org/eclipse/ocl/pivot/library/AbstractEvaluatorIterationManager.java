@@ -71,8 +71,8 @@ public abstract class AbstractEvaluatorIterationManager extends AbstractIteratio
 		}
 
 		public Object reset() {
-			ValueUtil.cachedIterable(collectionValue);
-			javaIter = ValueUtil.lazyIterator(collectionValue);
+			collectionValue.cachedIterable();
+			javaIter = collectionValue.lazyIterator();
 			return next();
 		}
 

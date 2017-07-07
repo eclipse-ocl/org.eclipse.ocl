@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -50,7 +49,7 @@ public class CollectionSelectByTypeOperation extends AbstractUntypedBinaryOperat
 		boolean changedContents = false;
 		Collection<Object> newElements = new ArrayList<Object>();
 		IdResolver idResolver = executor.getIdResolver();
-		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(collectionValue);
+		Iterator<@Nullable Object> iterator = collectionValue.lazyIterator();
 		while (iterator.hasNext()) {
 			Object element = iterator.next();
 			Type elementType = idResolver.getDynamicTypeOf(element);
@@ -65,7 +64,7 @@ public class CollectionSelectByTypeOperation extends AbstractUntypedBinaryOperat
 			return idResolver.createCollectionOfAll(collectionValue.isOrdered(), collectionValue.isUnique(), collectionValue.getTypeId(), newElements);
 		}
 		else {
-			return collectionValue;
+			return collectionValue.reValue();
 		}
 	}
 }

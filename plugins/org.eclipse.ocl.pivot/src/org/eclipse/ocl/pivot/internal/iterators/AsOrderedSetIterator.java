@@ -143,7 +143,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl
 		private @NonNull CollectionValue sourceValue;
 
 		public FromCollectionValue(@NonNull CollectionValue sourceValue) {
-			super(TypeId.ORDERED_SET.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), lazyIterator(sourceValue), sourceValue.isUnique());
+			super(TypeId.ORDERED_SET.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.lazyIterator(), sourceValue.isUnique());
 			this.sourceValue = sourceValue;
 		}
 

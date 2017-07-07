@@ -35,8 +35,8 @@ public class SymmetricDifferenceIterator extends LazyCollectionValueImpl
 
 	public SymmetricDifferenceIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
 		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
-		eagerIterable(sourceValue);
-		eagerIterable(otherValue);
+		sourceValue.eagerIterable();
+		otherValue.eagerIterable();
 		this.sourceValue = sourceValue;
 		this.otherValue = otherValue;
 		this.sourceIterator = sourceValue.lazyIterator();

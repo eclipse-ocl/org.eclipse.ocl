@@ -127,7 +127,7 @@ public abstract class AsSequenceIterator extends LazyCollectionValueImpl
 		private @NonNull CollectionValue sourceValue;
 
 		public FromCollectionValue(@NonNull CollectionValue sourceValue) {
-			super(TypeId.SEQUENCE.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), lazyIterator(sourceValue));
+			super(TypeId.SEQUENCE.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.lazyIterator());
 			this.sourceValue = sourceValue;
 		}
 

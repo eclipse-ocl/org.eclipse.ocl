@@ -1101,14 +1101,13 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(" ");
 		js.appendClassReference(Iterator.class, false, Object.class); //, getJavaClass(cgIterator));
 		js.append(" " + iteratorName + " = ");
-		js.appendClassReference(ValueUtil.class);
+		js.appendValueName(cgSource);
 		if (!cgSource.isNonInvalid()) {
 			js.append(".eagerIterator(");
 		}
 		else {
 			js.append(".lazyIterator(");
 		}
-		js.appendValueName(cgSource);
 		js.append(");\n");
 		//
 		js.appendDeclaration(cgIterationCallExp);

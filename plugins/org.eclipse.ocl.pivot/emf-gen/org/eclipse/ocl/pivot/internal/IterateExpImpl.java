@@ -578,7 +578,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 					/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.FALSE_VALUE;
-					@NonNull Iterator<Object> ITERATOR__1 = ValueUtil.lazyIterator(BOXED_ownedIterators);
+					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.lazyIterator();
 					/*@NonInvalid*/ boolean exists;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
@@ -800,7 +800,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				final /*@NonInvalid*/ java.util.@NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 				/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-				@NonNull Iterator<Object> ITERATOR__1 = ValueUtil.lazyIterator(BOXED_ownedIterators);
+				@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.lazyIterator();
 				/*@NonInvalid*/ boolean forAll;
 				while (true) {
 					if (!ITERATOR__1.hasNext()) {

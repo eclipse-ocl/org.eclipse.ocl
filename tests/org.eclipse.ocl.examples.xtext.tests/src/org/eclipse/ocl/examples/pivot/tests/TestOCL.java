@@ -244,7 +244,7 @@ public class TestOCL extends OCLInternal
 			((CollectionValue)expected).eagerIterable();		// Might need an Iterable to allow traversal by both equals and oclHashCode
 		}
 		if (actual instanceof CollectionValue) {
-			((CollectionValue)actual).eagerIterable();			// Might need an Iterable to allow traversal by both equals and oclHashCode
+			((CollectionValue)actual).eagerIterable();		// Might need an Iterable to allow traversal by both equals and oclHashCode
 		}
 		if (idResolver.oclEquals(expected, actual)) {
 			int expectedHash = idResolver.oclHashCode(expected);

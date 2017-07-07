@@ -76,7 +76,7 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 		this.returnTypeId = returnTypeId;
 		this.body = body;
 		updateAccumulator(accumulatorValue);
-		this.iteratorValue = ValueUtil.lazyIterator(this.collectionValue);
+		this.iteratorValue = this.collectionValue.lazyIterator();
 		advanceIterators();
 	}
 
@@ -86,7 +86,7 @@ public class ExecutorSingleIterationManager extends AbstractIterationManager
 		this.returnTypeId = iterationManager.returnTypeId;
 		this.body = iterationManager.body;
 		this.accumulatorValue = iterationManager.accumulatorValue;
-		this.iteratorValue = ValueUtil.lazyIterator(collectionValue);
+		this.iteratorValue = collectionValue.lazyIterator();
 		advanceIterators();
 	}
 

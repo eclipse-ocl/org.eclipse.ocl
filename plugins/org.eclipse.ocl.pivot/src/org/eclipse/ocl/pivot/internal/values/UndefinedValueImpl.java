@@ -15,6 +15,7 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -233,6 +234,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public boolean canBeCached() {
+		return false;
+	}
+
+	@Override
 	public boolean canBeLazy() {
 		return false;
 	}
@@ -328,6 +334,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @NonNull LazyIterable eagerIterable() {
 		throw new UnsupportedOperationException("InvalidValue.eagerIterable");
+	}
+
+	@Override
+	public @NonNull Iterator<@Nullable Object> eagerIterator() {
+		return iterator();
 	}
 
 	@Override
@@ -631,6 +642,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @Nullable Set<@NonNull TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {
 		return null;
+	}
+
+	@Override
+	public @NonNull CollectionValue reValue() {
+		return this;
 	}
 
 	@Override

@@ -89,6 +89,12 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 */
 	@NonNull LazyIterable cachedIterable();
 
+	/**
+	 * Return true if the elements if this CollectionValue is or can be cached.
+	 * Returns false if this CollectionValue was first accessed as a lazy iterator and no reIterator has been created.
+	 */
+	boolean canBeCached();
+
 	boolean canBeLazy();
 
 	/**
@@ -103,6 +109,14 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
 	 */
 	@NonNull LazyIterable eagerIterable();
+
+	/**
+	 * Return an iterator whose source has been eagerly populated. This inhibits opportunities for
+	 * redundant iterations to be skipped but may improve the speed of subsequent iterations.
+	 *
+	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
+	 */
+	public @NonNull Iterator<@Nullable Object> eagerIterator();
 
 	/**
 	 * @generated NOT
@@ -269,6 +283,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@Nullable Set<@NonNull TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId);
+
+	/**
+	 * Return a value that allows a further lazy iteration.
+	 */
+	@NonNull CollectionValue reValue();
 
 	/**
 	 * @generated NOT

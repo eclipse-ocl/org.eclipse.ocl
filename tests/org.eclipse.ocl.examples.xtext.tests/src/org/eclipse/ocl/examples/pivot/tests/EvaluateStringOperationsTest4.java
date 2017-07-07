@@ -309,6 +309,8 @@ public class EvaluateStringOperationsTest4 extends PivotTestSuite
 
 	@Test public void testStringMatches() {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryEquals(null, 50, "let seq = Sequence{1..20}, rseq = seq->reverse(), seqs = Sequence{seq,rseq,seq,rseq,seq}->flatten() in seqs->iterate(i; acc : Integer = 0 | if '123456789'.matches('.*' + i.toString() + '.*') then acc + 1 else acc endif)");
+		//
 		ocl.assertQueryTrue(null, "'characters and spaces'.matches('[\\\\w\\\\s]+')");		// *2 for Java, *2 for OCL
 		ocl.assertQueryFalse(null, "'characters and 3 digits'.matches('[\\\\p{Alpha}\\\\s]+')");
 		//

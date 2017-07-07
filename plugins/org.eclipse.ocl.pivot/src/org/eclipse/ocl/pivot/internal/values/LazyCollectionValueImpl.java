@@ -1158,7 +1158,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyListOfElements2 == null) {
 			if (lazyIterator) {
 				System.err.println(NameUtil.debugSimpleName(this) + " re-iterating");
-				this.inputIterator = reIterator();
+				throw new UnsupportedOperationException();
+				//				this.inputIterator = reIterator();
 			}
 			else {
 				this.inputIterator = this;
@@ -1177,6 +1178,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 			//			}
 		}
 		return this;
+	}
+
+	@Override
+	public boolean canBeCached() {
+		return !lazyIterator || (lazyListOfElements != null);
 	}
 
 	@Override
@@ -1274,6 +1280,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		cachedIterable();
 		getListOfElements();
 		return this;
+	}
+
+	@Override
+	public @NonNull Iterator<@Nullable Object> eagerIterator() {
+		return eagerIterable().iterator();
 	}
 
 	@Override
@@ -1377,7 +1388,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
-		Iterable<@Nullable Object> cachedIterable = cachedIterable(c);
+		Iterable<@Nullable Object> cachedIterable = c.cachedIterable();
 		Iterator<@Nullable Object> iterator1 = lazyIterator();
 		while (iterator1.hasNext()) {
 			Object e1 = iterator1.next();
@@ -1628,7 +1639,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull Boolean includesAll(@NonNull CollectionValue c) {
-		Iterator<@Nullable Object> iterator = ValueUtil.lazyIterator(c);
+		Iterator<@Nullable Object> iterator = c.lazyIterator();
 		Iterable<@Nullable Object> iterable2 = cachedIterable();
 		while (iterator.hasNext()) {
 			Object e1 = iterator.next();
@@ -1969,7 +1980,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	@Override
 	public @NonNull Set<@NonNull TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {
 		Set<@NonNull TupleValue> result = new HashSet<>();
-		Iterable<@Nullable Object> cachedIterable = cachedIterable(c);
+		Iterable<@Nullable Object> cachedIterable = c.cachedIterable();
 		Iterator<@Nullable Object> iterator1 = lazyIterator();
 		while (iterator1.hasNext()) {
 			Object next1 = iterator1.next();
@@ -1993,6 +2004,22 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 */
 	@Deprecated
 	protected abstract @NonNull LazyIterator reIterator();
+
+	@Override
+	public @NonNull CollectionValue reValue() {
+		return (CollectionValue) reIterator();
+	}
+
+	public @NonNull CollectionValue resetIterator() {
+		if (lazyIterator) {
+			assert lazyListOfElements == null;
+			lazyIterator = false;
+			next = null;
+			hasNextCount = 0;
+			useCount = 0;
+		}
+		return this;
+	}
 
 	@Override
 	public @NonNull CollectionValue reverse() {

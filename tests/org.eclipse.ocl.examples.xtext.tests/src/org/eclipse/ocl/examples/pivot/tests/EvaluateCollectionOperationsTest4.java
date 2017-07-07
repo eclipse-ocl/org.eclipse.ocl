@@ -1104,7 +1104,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionIntersection() {
 		TestOCL ocl = createOCL();
-		ocl.assertQueryResults(null, "Bag{'a', 'b'}", "Bag{'a', 'b'}->intersection(Bag{'a', 'b', 'a'})");
+		ocl.assertQueryEquals(null, ocl.getEmptyBagValue(), "Sequence{'a', 'b'}->intersection(Sequence{'c', 'd'})");
 		// No duplicates
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{'a', 'b'}->intersection(Set{'c', 'd'})");
 		ocl.assertQueryEquals(null, ocl.getEmptySetValue(), "Set{'a', 'b'}->intersection(Sequence{'c', 'd'})");
@@ -1694,6 +1694,8 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionSelectByType() {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryResults(null, "Sequence{null}", "Sequence{null}->selectByType(OclVoid)");
+
 		ocl.assertQueryResults(null, "Bag{4,4}", "Bag{4, 4, 5.0, 'test', null}->selectByType(Integer)");
 		ocl.assertQueryResults(null, "OrderedSet{4}", "OrderedSet{4, 4, 5.0, 'test', null}->selectByType(Integer)");
 		ocl.assertQueryResults(null, "Sequence{4,4}", "Sequence{4, 4, 5.0, 'test', null}->selectByType(Integer)");

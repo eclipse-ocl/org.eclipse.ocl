@@ -48,7 +48,7 @@ public class IntersectionIterator extends LazyCollectionValueImpl
 
 	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
 		super(collectionTypeId, lazyDepth(sourceValue));
-		this.sourceValue = sourceValue;
+		this.sourceValue = eagerCollectionValue(sourceValue);
 		this.secondValue = secondValue;
 		this.secondIterator = secondValue.lazyIterator();
 	}

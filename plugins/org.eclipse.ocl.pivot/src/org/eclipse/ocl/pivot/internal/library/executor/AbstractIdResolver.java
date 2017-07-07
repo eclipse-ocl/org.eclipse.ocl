@@ -808,7 +808,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		if (value instanceof CollectionValue) {
 			CollectionValue collectionValue = (CollectionValue) value;
 			CollectionTypeId collectionTypeId = collectionValue.getTypeId();
-			Type elementType = getDynamicTypeOf(ValueUtil.cachedIterable(collectionValue));
+			Type elementType = getDynamicTypeOf(collectionValue.cachedIterable());
 			if (elementType == null) {
 				elementType = getType(collectionTypeId.getElementTypeId(), null);
 			}

@@ -100,7 +100,7 @@ public abstract class AsBagIterator extends LazyCollectionValueImpl
 		private @NonNull CollectionValue sourceValue;
 
 		public FromCollectionValue(@NonNull CollectionValue sourceValue) {
-			super(TypeId.BAG.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), lazyIterator(sourceValue), sourceValue.isUnique() || !sourceValue.isOrdered());
+			super(TypeId.BAG.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.lazyIterator(), sourceValue.isUnique() || !sourceValue.isOrdered());
 			this.sourceValue = sourceValue;
 		}
 
