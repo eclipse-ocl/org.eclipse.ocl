@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -15,25 +15,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-
 import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.ControlPlace;
 
@@ -315,7 +309,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isBoxed() {
 		CGValuedElement referredValue = getReferredValue();
-//		CGValuedElement value = getNamedValue();
+		//		CGValuedElement value = getNamedValue();
 		assert referredValue != this : "isBoxed must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
 		return referredValue.isBoxed();
 	}
@@ -364,7 +358,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isEcore() {
 		CGValuedElement referredValue = getReferredValue();
-//		CGValuedElement value = getNamedValue();
+		//		CGValuedElement value = getNamedValue();
 		assert referredValue != this : "isEcore must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
 		return referredValue.isEcore();
 	}
@@ -478,7 +472,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isUnboxed() {
 		CGValuedElement referredValue = getReferredValue();
-//		CGValuedElement value = getNamedValue();
+		//		CGValuedElement value = getNamedValue();
 		assert referredValue != this : "isUnboxed must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
 		return referredValue.isUnboxed();
 	}

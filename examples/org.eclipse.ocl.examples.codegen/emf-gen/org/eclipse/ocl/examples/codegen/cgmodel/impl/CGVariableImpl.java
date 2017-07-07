@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -32,6 +32,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGVariableImpl#getInit <em>Init</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGVariableImpl#isCacheNeeded <em>Cache Needed</em>}</li>
  * </ul>
  *
  * @generated
@@ -46,6 +47,25 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	 * @ordered
 	 */
 	protected CGValuedElement init;
+
+	/**
+	 * The default value of the '{@link #isCacheNeeded() <em>Cache Needed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isCacheNeeded()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean CACHE_NEEDED_EDEFAULT = false;
+	/**
+	 * The cached value of the '{@link #isCacheNeeded() <em>Cache Needed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isCacheNeeded()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean cacheNeeded = CACHE_NEEDED_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -117,6 +137,39 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	 * @generated
 	 */
 	@Override
+	public boolean isCacheNeeded() {
+		return cacheNeeded;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCacheNeeded(boolean newCacheNeeded) {
+		boolean oldCacheNeeded = cacheNeeded;
+		cacheNeeded = newCacheNeeded;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CGModelPackage.CG_VARIABLE__CACHE_NEEDED, oldCacheNeeded, cacheNeeded));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case CGModelPackage.CG_VARIABLE__INIT:
@@ -135,6 +188,8 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 		switch (featureID) {
 			case CGModelPackage.CG_VARIABLE__INIT:
 				return getInit();
+			case CGModelPackage.CG_VARIABLE__CACHE_NEEDED:
+				return isCacheNeeded();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -149,6 +204,9 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 		switch (featureID) {
 			case CGModelPackage.CG_VARIABLE__INIT:
 				setInit((CGValuedElement)newValue);
+				return;
+			case CGModelPackage.CG_VARIABLE__CACHE_NEEDED:
+				setCacheNeeded((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -165,6 +223,9 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 			case CGModelPackage.CG_VARIABLE__INIT:
 				setInit((CGValuedElement)null);
 				return;
+			case CGModelPackage.CG_VARIABLE__CACHE_NEEDED:
+				setCacheNeeded(CACHE_NEEDED_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -179,6 +240,8 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 		switch (featureID) {
 			case CGModelPackage.CG_VARIABLE__INIT:
 				return init != null;
+			case CGModelPackage.CG_VARIABLE__CACHE_NEEDED:
+				return cacheNeeded != CACHE_NEEDED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}

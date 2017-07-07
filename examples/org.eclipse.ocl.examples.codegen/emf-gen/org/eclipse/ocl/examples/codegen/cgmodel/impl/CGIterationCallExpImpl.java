@@ -344,7 +344,7 @@ public abstract class CGIterationCallExpImpl extends CGCallExpImpl implements CG
 		if (!source.isNonNull() || !source.isNonInvalid()) {
 			return false;
 		}
-			for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
+		for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
 			if (!iterator.isNonNull() || !iterator.isNonInvalid()) {
 				return false;
 			}

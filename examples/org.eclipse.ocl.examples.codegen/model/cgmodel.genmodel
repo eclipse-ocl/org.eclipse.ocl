@@ -289,6 +289,7 @@
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGVariable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGVariable/init"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGVariable/cacheNeeded"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGVariableExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGVariableExp/referredVariable"/>

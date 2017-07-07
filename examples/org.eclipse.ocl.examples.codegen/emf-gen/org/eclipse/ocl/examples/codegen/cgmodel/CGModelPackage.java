@@ -900,13 +900,22 @@ public interface CGModelPackage extends EPackage {
 	int CG_VARIABLE__INIT = CG_VALUED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_VARIABLE__CACHE_NEEDED = CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>CG Variable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CG_VARIABLE_FEATURE_COUNT = CG_VALUED_ELEMENT_FEATURE_COUNT + 1;
+	int CG_VARIABLE_FEATURE_COUNT = CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Ast</b></em>' attribute.
@@ -970,6 +979,15 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_PARAMETER__INIT = CG_VARIABLE__INIT;
+
+	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_PARAMETER__CACHE_NEEDED = CG_VARIABLE__CACHE_NEEDED;
 
 	/**
 	 * The feature id for the '<em><b>Callable</b></em>' container reference.
@@ -1051,6 +1069,15 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_ITERATOR__INIT = CG_PARAMETER__INIT;
+
+	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_ITERATOR__CACHE_NEEDED = CG_PARAMETER__CACHE_NEEDED;
 
 	/**
 	 * The feature id for the '<em><b>Callable</b></em>' container reference.
@@ -1142,6 +1169,15 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_ACCUMULATOR__INIT = CG_ITERATOR__INIT;
+
+	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_ACCUMULATOR__CACHE_NEEDED = CG_ITERATOR__CACHE_NEEDED;
 
 	/**
 	 * The feature id for the '<em><b>Callable</b></em>' container reference.
@@ -5190,6 +5226,15 @@ public interface CGModelPackage extends EPackage {
 	int CG_FINAL_VARIABLE__INIT = CG_VARIABLE__INIT;
 
 	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_FINAL_VARIABLE__CACHE_NEEDED = CG_VARIABLE__CACHE_NEEDED;
+
+	/**
 	 * The number of structural features of the '<em>CG Final Variable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6896,6 +6941,15 @@ public interface CGModelPackage extends EPackage {
 	int CG_LOCAL_VARIABLE__INIT = CG_VARIABLE__INIT;
 
 	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_LOCAL_VARIABLE__CACHE_NEEDED = CG_VARIABLE__CACHE_NEEDED;
+
+	/**
 	 * The number of structural features of the '<em>CG Local Variable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7926,6 +7980,15 @@ public interface CGModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int CG_SETTABLE_VARIABLE__INIT = CG_VARIABLE__INIT;
+
+	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CG_SETTABLE_VARIABLE__CACHE_NEEDED = CG_VARIABLE__CACHE_NEEDED;
 
 	/**
 	 * The number of structural features of the '<em>CG Settable Variable</em>' class.
@@ -11121,6 +11184,17 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGVariable_Init();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGVariable#isCacheNeeded <em>Cache Needed</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Cache Needed</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGVariable#isCacheNeeded()
+	 * @see #getCGVariable()
+	 * @generated
+	 */
+	EAttribute getCGVariable_CacheNeeded();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp <em>CG Variable Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13041,6 +13115,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_VARIABLE__INIT = eINSTANCE.getCGVariable_Init();
+
+		/**
+		 * The meta object literal for the '<em><b>Cache Needed</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_VARIABLE__CACHE_NEEDED = eINSTANCE.getCGVariable_CacheNeeded();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGVariableExpImpl <em>CG Variable Exp</em>}' class.

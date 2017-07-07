@@ -658,6 +658,8 @@
         <details key="documentation" value="The shared value."/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cacheNeeded" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGVariableExp" eSuperTypes="#//CGValuedElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

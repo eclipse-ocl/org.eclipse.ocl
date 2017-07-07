@@ -917,7 +917,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link CGModelPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -945,7 +945,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		// Mark meta-data to indicate it can't be changed
 		theCGModelPackage.freeze();
 
-  
+
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(CGModelPackage.eNS_URI, theCGModelPackage);
 		return theCGModelPackage;
@@ -2867,6 +2867,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getCGVariable_CacheNeeded() {
+		return (EAttribute)cgVariableEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getCGVariableExp() {
 		return cgVariableExpEClass;
 	}
@@ -3360,6 +3370,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		cgVariableEClass = createEClass(CG_VARIABLE);
 		createEReference(cgVariableEClass, CG_VARIABLE__INIT);
+		createEAttribute(cgVariableEClass, CG_VARIABLE__CACHE_NEEDED);
 
 		cgVariableExpEClass = createEClass(CG_VARIABLE_EXP);
 		createEReference(cgVariableExpEClass, CG_VARIABLE_EXP__REFERRED_VARIABLE);
@@ -3786,6 +3797,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		initEClass(cgVariableEClass, CGVariable.class, "CGVariable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCGVariable_Init(), this.getCGValuedElement(), null, "init", null, 0, 1, CGVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGVariable_CacheNeeded(), ecorePackage.getEBoolean(), "cacheNeeded", "false", 1, 1, CGVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgVariableExpEClass, CGVariableExp.class, "CGVariableExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCGVariableExp_ReferredVariable(), this.getCGVariable(), null, "referredVariable", null, 1, 1, CGVariableExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3825,13 +3837,13 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	protected void createImportAnnotations() {
-		String source = "http://www.eclipse.org/OCL/Import";	
+		String source = "http://www.eclipse.org/OCL/Import";
 		addAnnotation
-		  (this, 
-		   source, 
-		   new String[] {
-			 "ecore", "http://www.eclipse.org/emf/2002/Ecore#/"
-		   });
+		(this,
+			source,
+			new String[] {
+				"ecore", "http://www.eclipse.org/emf/2002/Ecore#/"
+		});
 	}
 
 } //CGModelPackageImpl

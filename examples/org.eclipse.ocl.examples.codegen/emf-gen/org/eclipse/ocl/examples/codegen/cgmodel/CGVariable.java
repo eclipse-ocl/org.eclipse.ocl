@@ -4,12 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel;
-
 
 /**
  * <!-- begin-user-doc -->
@@ -25,6 +24,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGVariable#getInit <em>Init</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGVariable#isCacheNeeded <em>Cache Needed</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGVariable()
@@ -58,6 +58,32 @@ public interface CGVariable extends CGValuedElement {
 	 * @generated
 	 */
 	void setInit(CGValuedElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Cache Needed</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Cache Needed</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Cache Needed</em>' attribute.
+	 * @see #setCacheNeeded(boolean)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGVariable_CacheNeeded()
+	 * @generated
+	 */
+	boolean isCacheNeeded();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGVariable#isCacheNeeded <em>Cache Needed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Cache Needed</em>' attribute.
+	 * @see #isCacheNeeded()
+	 * @generated
+	 */
+	void setCacheNeeded(boolean value);
 
 	/**
 	 * Set the non-invalid status.
