@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.iterators;
+package org.eclipse.ocl.pivot.internal.values;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,11 +33,28 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AppendAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AppendIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.BagElementCount;
+import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
+import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy;
 import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy.SimpleEqualsStrategy;
-import org.eclipse.ocl.pivot.internal.values.BagImpl;
-import org.eclipse.ocl.pivot.internal.values.CollectionStrategy;
-import org.eclipse.ocl.pivot.internal.values.TupleValueImpl;
-import org.eclipse.ocl.pivot.internal.values.ValueImpl;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
+import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
+import org.eclipse.ocl.pivot.internal.iterators.PrependAllIterator;
+import org.eclipse.ocl.pivot.internal.iterators.PrependIterator;
+import org.eclipse.ocl.pivot.internal.iterators.SetElementCount;
+import org.eclipse.ocl.pivot.internal.iterators.SubOrderedSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.SubSequenceIterator;
+import org.eclipse.ocl.pivot.internal.iterators.SymmetricDifferenceIterator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -811,31 +828,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 	}
 
-	public static final class LazyCollectionValueAccumulator extends LazyCollectionValueImpl
-	{
-		public LazyCollectionValueAccumulator(@NonNull CollectionTypeId typeId) {
-			super(typeId, 0);
-			mutableIterable();
-		}
-
-		public LazyCollectionValueAccumulator(@NonNull CollectionTypeId typeId, @NonNull Iterator<@Nullable Object> elements) {
-			this(typeId);
-			mutableIncludingAll(elements);
-		}
-
-		@Override
-		protected @NonNull LazyIterator reIterator() {
-			return new LazyCollectionValueAccumulator(typeId);
-		}
-
-		@Override
-		protected int getNextCount() {
-			//	assert size == 0;
-			return 0;  // Occurs before add mutable additions
-		}
-	}
-
-
 	public static final @NonNull AbstractCollectionStrategy BAG_STRATEGY = BagStrategy.INSTANCE;
 	public static final @NonNull AbstractCollectionStrategy COLLECTION_STRATEGY = BaseCollectionStrategy.INSTANCE;
 	public static final @NonNull AbstractCollectionStrategy ORDERED_SET_STRATEGY = OrderedSetStrategy.INSTANCE;
@@ -891,8 +883,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 			return COLLECTION_STRATEGY;
 		}
 	}
-
-	public static @NonNull BaggableNullIterator EMPTY_ITERATOR = new BaggableNullIterator();
 
 	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazy = null;
 	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2cached = null;
@@ -1712,7 +1702,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 		List<@Nullable Object> result = new ArrayList<>(listOfElements);
 		result.add(javaIindex, object);
-		return new LazyCollectionValueAccumulator(typeId, result.iterator());
+		return new MutableCollectionValueImpl(typeId, result.iterator());
 	}
 
 	public int intCount(Object value) {
@@ -2003,7 +1993,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	public @NonNull CollectionValue reverse() {
 		List<@Nullable Object> result = new ArrayList<>(getListOfElements());
 		Collections.reverse(result);
-		return new LazyCollectionValueAccumulator(typeId, result.iterator());
+		return new MutableCollectionValueImpl(typeId, result.iterator());
 	}
 
 	protected int setNext(Object next, int nextCount) {
@@ -2022,7 +2012,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	public @NonNull CollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
 		List<@Nullable Object> values = Lists.newArrayList(lazyIterator());
 		Collections.sort(values, comparator);
-		return new LazyCollectionValueAccumulator(typeId, values.iterator());
+		return new MutableCollectionValueImpl(typeId, values.iterator());
 	}
 
 	@Override
@@ -2042,7 +2032,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue toSequenceValue() {
-		return new LazyCollectionValueAccumulator(getSequenceTypeId(), this);
+		return new MutableCollectionValueImpl(getSequenceTypeId(), this);
 	}
 
 	@Override

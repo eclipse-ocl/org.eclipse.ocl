@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 
 /**

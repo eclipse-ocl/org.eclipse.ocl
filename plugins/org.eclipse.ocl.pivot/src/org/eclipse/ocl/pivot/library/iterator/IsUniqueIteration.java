@@ -16,8 +16,7 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SetValueImpl;
+import org.eclipse.ocl.pivot.internal.values.MutableCollectionValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -34,8 +33,8 @@ public class IsUniqueIteration extends AbstractIteration
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
-	public SetValueImpl.@NonNull Accumulator createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
-		return (SetValueImpl.@NonNull Accumulator) createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
+	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
+		return (CollectionValue.@NonNull Accumulator) createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
 
 	/**
@@ -44,7 +43,7 @@ public class IsUniqueIteration extends AbstractIteration
 	@Override
 	public @NonNull CollectionValue createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		//		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedId(accumulatorTypeId));
-		return new LazyCollectionValueImpl.LazyCollectionValueAccumulator(TypeId.SET.getSpecializedId(accumulatorTypeId));
+		return new MutableCollectionValueImpl(TypeId.SET.getSpecializedId(accumulatorTypeId));
 	}
 
 	@Override

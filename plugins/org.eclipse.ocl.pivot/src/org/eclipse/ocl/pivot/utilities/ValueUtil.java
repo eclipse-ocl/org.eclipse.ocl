@@ -46,10 +46,8 @@ import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
-import org.eclipse.ocl.pivot.internal.iterators.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
-import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
 import org.eclipse.ocl.pivot.internal.values.BigIntegerValueImpl;
 import org.eclipse.ocl.pivot.internal.values.CollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.IntIntegerValueImpl;
@@ -58,6 +56,7 @@ import org.eclipse.ocl.pivot.internal.values.JavaObjectValueImpl;
 import org.eclipse.ocl.pivot.internal.values.LongIntegerValueImpl;
 import org.eclipse.ocl.pivot.internal.values.MapEntryImpl;
 import org.eclipse.ocl.pivot.internal.values.MapValueImpl;
+import org.eclipse.ocl.pivot.internal.values.MutableCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.NullValueImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
 import org.eclipse.ocl.pivot.internal.values.RangeSequenceValueImpl;
@@ -561,7 +560,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull MutableIterable createBagAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new LazyCollectionValueImpl.LazyCollectionValueAccumulator(collectedId);
+		return new MutableCollectionValueImpl(collectedId);
 	}
 
 	public static @NonNull CollectionValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
@@ -580,7 +579,7 @@ public abstract class ValueUtil
 				allValues.add(value);
 			}
 		}
-		return new BagValueImpl(typeId, allValues);
+		return new MutableCollectionValueImpl(typeId, allValues.iterator());
 	}
 
 	public static @NonNull CollectionValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable ? extends Object> boxedValues) {
@@ -591,16 +590,16 @@ public abstract class ValueUtil
 	public static @NonNull MutableIterable createCollectionAccumulatorValue(@NonNull CollectionTypeId collectedId) {
 		CollectionTypeId collectionId = collectedId.getGeneralizedId();
 		if (collectionId == TypeId.BAG) {
-			return new LazyCollectionValueImpl.LazyCollectionValueAccumulator(collectedId);
+			return new MutableCollectionValueImpl(collectedId);
 		}
 		else if (collectionId == TypeId.ORDERED_SET) {
-			return new LazyCollectionValueImpl.LazyCollectionValueAccumulator(collectedId);
+			return new MutableCollectionValueImpl(collectedId);
 		}
 		else if (collectionId == TypeId.SEQUENCE) {
-			return new LazyCollectionValueImpl.LazyCollectionValueAccumulator(collectedId);
+			return new MutableCollectionValueImpl(collectedId);
 		}
 		else /*if (collectionId == TypeId.SET)*/ {
-			return new LazyCollectionValueImpl.LazyCollectionValueAccumulator(collectedId);
+			return new MutableCollectionValueImpl(collectedId);
 		}
 	}
 
@@ -630,7 +629,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull MutableIterable createOrderedSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new LazyCollectionValueImpl.LazyCollectionValueAccumulator(collectedId);
+		return new MutableCollectionValueImpl(collectedId);
 	}
 
 	//	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
@@ -665,7 +664,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull MutableIterable createSequenceAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new LazyCollectionValueImpl.LazyCollectionValueAccumulator(collectedId);
+		return new MutableCollectionValueImpl(collectedId);
 	}
 
 	public static @NonNull CollectionValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
@@ -696,7 +695,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull MutableIterable createSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new LazyCollectionValueImpl.LazyCollectionValueAccumulator(collectedId);
+		return new MutableCollectionValueImpl(collectedId);
 	}
 
 	public static @NonNull CollectionValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
@@ -705,7 +704,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull CollectionValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		MutableIterable allValues = new LazyCollectionValueImpl.LazyCollectionValueAccumulator(typeId);
+		MutableIterable allValues = new MutableCollectionValueImpl(typeId);
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
 				for (@Nullable Object aValue : (IntegerRange)value) {
