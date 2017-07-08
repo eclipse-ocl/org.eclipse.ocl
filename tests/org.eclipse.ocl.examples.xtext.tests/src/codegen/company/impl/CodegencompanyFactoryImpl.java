@@ -1,29 +1,32 @@
 /**
  * <copyright>
- * 
+ *
  * Copyright (c) 2015, 2017 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
- * 
+ *
  * </copyright>
  */
 package codegen.company.impl;
-
-import codegen.company.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import codegen.company.Bug418716;
+import codegen.company.CodegencompanyFactory;
+import codegen.company.CodegencompanyPackage;
+import codegen.company.Company;
+import codegen.company.CompanySizeKind;
+import codegen.company.Employee;
 
 /**
  * <!-- begin-user-doc -->
@@ -112,6 +115,7 @@ public class CodegencompanyFactoryImpl extends EFactoryImpl implements Codegenco
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Company createCompany() {
 		CompanyImpl company = new CompanyImpl();
 		return company;
@@ -122,6 +126,7 @@ public class CodegencompanyFactoryImpl extends EFactoryImpl implements Codegenco
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Employee createEmployee() {
 		EmployeeImpl employee = new EmployeeImpl();
 		return employee;
@@ -132,6 +137,7 @@ public class CodegencompanyFactoryImpl extends EFactoryImpl implements Codegenco
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Bug418716 createBug418716() {
 		Bug418716Impl bug418716 = new Bug418716Impl();
 		return bug418716;
@@ -162,6 +168,7 @@ public class CodegencompanyFactoryImpl extends EFactoryImpl implements Codegenco
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public CodegencompanyPackage getCodegencompanyPackage() {
 		return (CodegencompanyPackage)getEPackage();
 	}
