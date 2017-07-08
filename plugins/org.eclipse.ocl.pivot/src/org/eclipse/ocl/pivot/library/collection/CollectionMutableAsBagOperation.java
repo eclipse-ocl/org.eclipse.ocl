@@ -37,7 +37,7 @@ public class CollectionMutableAsBagOperation extends AbstractUnaryOperation
 			return leftCollectionValue;
 		}
 		else {
-			return new AsBagIterator.FromCollectionValue(leftCollectionValue);
+			return AsBagIterator.FromCollectionValue.create(leftCollectionValue);
 		}
 	}
 }

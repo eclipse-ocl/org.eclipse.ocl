@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AbstractLazyIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AppendAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AppendIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
@@ -942,7 +943,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	/**
 	 * The iterator that provides the elements that have yet to be cached in lazyListOfElements.
 	 */
-	private final @NonNull LazyIterator inputIterator;
+	protected final @NonNull LazyIterator inputIterator;
 
 	/**
 	 * The Bag/Sequence/Unique strategy that determines how new/old elements are added/removed.
@@ -1051,7 +1052,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		return new AsBagIterator.FromCollectionValue(this);
+		return AsBagIterator.FromCollectionValue.create(this);
 	}
 
 	@Override
@@ -1542,7 +1543,14 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 * a time, by returning 1 rather than the repeat. If this is to be done, the constructor must inhibit lazy
 	 * use of this iterable/iterator by invoking getMapOfElement2elementCount().
 	 */
-	protected abstract int getNextCount();
+	protected int getNextCount() {
+		if (inputIterator != this) {
+			return ((AbstractLazyIterator)inputIterator).getNextCount();
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	}
 
 	public @NonNull CollectionTypeId getOrderedSetTypeId() {
 		return TypeId.ORDERED_SET.getSpecializedId(typeId.getElementTypeId());
@@ -1795,7 +1803,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyListOfElements == null) {
 			if (!lazyIterator) {
 				lazyIterator = true;
-				return this;
+				return inputIterator;
 			}
 			cachedIterable();
 		}

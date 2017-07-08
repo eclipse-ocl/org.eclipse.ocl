@@ -17,17 +17,27 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
- * CollectionLiteralIterator adapts a CollectionLiteralExp to comply with the BaggableIterator protocol.
- * Multiple entries are pruned from Sets and OrderedSets, counted in Bags,
+ * CollectionLiteralIterator provides a BaggableIterator for the elements of a CollectionLiteralExp.
+ * When used as the source of a SmartCollectionValueImpl, multiple entries are pruned from Sets and OrderedSets, counted in Bags,
  *
  * @since 1.3
  */
-public class CollectionLiteralIterator extends LazyCollectionValueImpl
+public class CollectionLiteralIterator extends AbstractLazyIterator
 {
+	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull List<@Nullable Object> literalElements) {
+		LazyCollectionValueImpl value = new SmartCollectionValueImpl(collectionTypeId, new CollectionLiteralIterator(literalElements));
+		if (!value.isSequence()) {
+			value.eagerIterable();//.getMapOfElement2elementCount();				// Need history to enforce uniqueness, count repeats
+		}
+		return value;
+	}
+
 	public static class Range
 	{
 		private int first;
@@ -40,17 +50,13 @@ public class CollectionLiteralIterator extends LazyCollectionValueImpl
 	}
 
 	protected final @NonNull List<@Nullable Object> literalElements;
-	protected final @NonNull Iterator<@Nullable Object> literalIterator;
+	private final @NonNull Iterator<@Nullable Object> literalIterator;
 	private int nextInt = 0;
 	private int lastInt = -1;
 
-	public CollectionLiteralIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull List<@Nullable Object> literalElements) {
-		super(collectionTypeId, 0);
+	public CollectionLiteralIterator(@NonNull List<@Nullable Object> literalElements) {
 		this.literalElements = literalElements;
 		this.literalIterator = literalElements.iterator();
-		if (!isSequence()) {
-			eagerIterable();//.getMapOfElement2elementCount();				// Need history to enforce uniqueness, count repeats
-		}
 	}
 
 	@Override
@@ -78,13 +84,13 @@ public class CollectionLiteralIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
-		return new CollectionLiteralIterator(typeId, literalElements);
+	public @NonNull LazyIterator reIterator() {
+		return new CollectionLiteralIterator(literalElements);
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append(getTypeId().getName());
+		//			s.append(getTypeId().getName());
 		s.append("{");
 		boolean isFirst = true;
 		for (Object literalElement : literalElements) {

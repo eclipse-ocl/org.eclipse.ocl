@@ -67,10 +67,14 @@ public abstract class AsBagIterator extends LazyCollectionValueImpl
 
 	public static class FromArray extends AsBagIterator
 	{
+		public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @Nullable Object @NonNull [] boxedValues) {
+			return new FromArray(collectionTypeId, boxedValues);
+		}
+
 		private @Nullable Object @NonNull [] boxedValues;
 
-		public FromArray(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull [] boxedValues) {
-			super(typeId, Iterators.forArray(boxedValues), false);
+		protected FromArray(@NonNull CollectionTypeId collectionTypeId, @Nullable Object @NonNull [] boxedValues) {
+			super(collectionTypeId, Iterators.forArray(boxedValues), false);
 			this.boxedValues = boxedValues;
 		}
 
@@ -82,9 +86,13 @@ public abstract class AsBagIterator extends LazyCollectionValueImpl
 
 	public static class FromCollection extends AsBagIterator
 	{
+		public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+			return new FromCollection(collectionTypeId, boxedValues);
+		}
+
 		private @NonNull Collection<@Nullable ? extends Object> boxedValues;
 
-		public FromCollection(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+		protected FromCollection(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
 			super(typeId, boxedValues.iterator(), false);
 			this.boxedValues = boxedValues;
 		}
@@ -97,16 +105,21 @@ public abstract class AsBagIterator extends LazyCollectionValueImpl
 
 	public static class FromCollectionValue extends AsBagIterator
 	{
+		public static @NonNull CollectionValue create(@NonNull CollectionValue sourceValue) {
+			CollectionTypeId collectionTypeId = TypeId.BAG.getSpecializedId(sourceValue.getTypeId().getElementTypeId());
+			return new FromCollectionValue(collectionTypeId, sourceValue);
+		}
+
 		private @NonNull CollectionValue sourceValue;
 
-		public FromCollectionValue(@NonNull CollectionValue sourceValue) {
-			super(TypeId.BAG.getSpecializedId(sourceValue.getTypeId().getElementTypeId()), sourceValue.lazyIterator(), sourceValue.isUnique() || !sourceValue.isOrdered());
+		protected FromCollectionValue(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue) {
+			super(collectionTypeId, sourceValue.lazyIterator(), sourceValue.isUnique() || !sourceValue.isOrdered());
 			this.sourceValue = sourceValue;
 		}
 
 		@Override
 		protected @NonNull LazyIterator reIterator() {
-			return new FromCollectionValue(sourceValue);
+			return new FromCollectionValue(typeId, sourceValue);
 		}
 	}
 }

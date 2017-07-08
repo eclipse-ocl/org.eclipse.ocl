@@ -561,7 +561,7 @@ public abstract class ValueUtil
 
 	public static @NonNull CollectionValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
-		return new AsBagIterator.FromArray(typeId, boxedValues);
+		return AsBagIterator.FromArray.create(typeId, boxedValues);
 		//		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
 	}
 
@@ -580,7 +580,7 @@ public abstract class ValueUtil
 
 	public static @NonNull CollectionValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable ? extends Object> boxedValues) {
 		checkValid(boxedValues);
-		return new AsBagIterator.FromCollection(typeId, boxedValues);		// FIXME reuse Bag
+		return AsBagIterator.FromCollection.create(typeId, boxedValues);		// FIXME reuse Bag
 	}
 
 	public static @NonNull MutableIterable createCollectionAccumulatorValue(@NonNull CollectionTypeId collectedId) {

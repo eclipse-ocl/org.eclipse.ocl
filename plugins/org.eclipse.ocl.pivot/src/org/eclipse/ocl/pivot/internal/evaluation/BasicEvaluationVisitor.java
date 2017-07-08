@@ -215,7 +215,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 				literalElements.add(itemValue);
 			}
 		}
-		return new CollectionLiteralIterator((CollectionTypeId) collectionLiteralExp.getTypeId(), literalElements);
+		return CollectionLiteralIterator.create((CollectionTypeId) collectionLiteralExp.getTypeId(), literalElements);
 		// construct the appropriate collection from the parts
 		// based on the collection kind.
 		/*		List<CollectionLiteralPart> parts = cl.getOwnedParts();
