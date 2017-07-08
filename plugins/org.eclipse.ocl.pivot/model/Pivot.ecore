@@ -2898,6 +2898,8 @@
         </eGenericType>
       </eParameters>
     </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-VariableDeclaration-cacheNeeded"
+        name="cacheNeeded" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-VariableDeclaration-typeValue"
         name="typeValue" eType="#T-pivot-Type" transient="true" resolveProxies="false"/>
   </eClassifiers>

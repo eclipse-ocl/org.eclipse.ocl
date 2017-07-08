@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.VariableDeclaration#isCacheNeeded <em>Cache Needed</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.VariableDeclaration#getTypeValue <em>Type Value</em>}</li>
  * </ul>
  *
@@ -33,6 +34,32 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  */
 public interface VariableDeclaration
 extends TypedElement {
+
+	/**
+	 * Returns the value of the '<em><b>Cache Needed</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Cache Needed</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Cache Needed</em>' attribute.
+	 * @see #setCacheNeeded(boolean)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getVariableDeclaration_CacheNeeded()
+	 * @generated
+	 */
+	boolean isCacheNeeded();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.VariableDeclaration#isCacheNeeded <em>Cache Needed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Cache Needed</em>' attribute.
+	 * @see #isCacheNeeded()
+	 * @generated
+	 */
+	void setCacheNeeded(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Type Value</b></em>' reference.

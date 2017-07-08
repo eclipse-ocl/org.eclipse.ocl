@@ -1164,6 +1164,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="representedParameter" eType="#//Parameter"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableDeclaration" abstract="true" eSuperTypes="#//TypedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cacheNeeded" eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="typeValue" eType="#//Type" transient="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableExp" eSuperTypes="#//OCLExpression #//ReferringElement">

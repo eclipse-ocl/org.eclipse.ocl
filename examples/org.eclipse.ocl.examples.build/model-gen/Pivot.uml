@@ -1417,6 +1417,10 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TVariableDeclaration" name="VariableDeclaration" isAbstract="true">
     <generalization xmi:id="Ppivot.TVariableDeclaration.g0" general="Ppivot.TTypedElement"/>
+    <ownedAttribute xmi:id="Ppivot.TVariableDeclaration.PcacheNeeded" name="cacheNeeded" visibility="public" type="Ppivot.TBoolean" isOrdered="true">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TVariableDeclaration.PcacheNeeded.lV"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TVariableDeclaration.PcacheNeeded.dlV" value="false"/>
+    </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TVariableDeclaration.PtypeValue" name="typeValue" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_typeValue_VariableDeclaration">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TVariableDeclaration.PtypeValue.lV"/>
     </ownedAttribute>

@@ -1491,6 +1491,7 @@
       <ownedInvariants xmi:id="cipivot.VariableDeclaration.TypeIsNotNull" isCallable="true" name="TypeIsNotNull">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type &lt;> null&#xA;&#xA;"/>
       </ownedInvariants>
+      <ownedProperties xmi:id="p.pivot.VariableDeclaration.cacheNeeded" defaultValueString="false" name="cacheNeeded" type="#Boolean"/>
       <ownedProperties xmi:id="p.pivot.VariableDeclaration.typeValue" isRequired="false" isResolveProxies="false" isTransient="true" name="typeValue"
           opposite="#p.pivot.Type.VariableDeclaration" type="#T.pivot.Type"/>
       <ownedProperties xmi:id="p.pivot.VariableDeclaration.VariableExp" isImplicit="true" name="VariableExp" opposite="#p.pivot.VariableExp.referredVariable"

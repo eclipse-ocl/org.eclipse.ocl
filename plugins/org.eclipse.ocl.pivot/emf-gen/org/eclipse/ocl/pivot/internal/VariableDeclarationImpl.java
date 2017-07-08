@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.VariableDeclarationImpl#isCacheNeeded <em>Cache Needed</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.VariableDeclarationImpl#getTypeValue <em>Type Value</em>}</li>
  * </ul>
  *
@@ -54,6 +55,24 @@ public abstract class VariableDeclarationImpl
 extends TypedElementImpl
 implements VariableDeclaration {
 
+	/**
+	 * The default value of the '{@link #isCacheNeeded() <em>Cache Needed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isCacheNeeded()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean CACHE_NEEDED_EDEFAULT = false;
+	/**
+	 * The flag representing the value of the '{@link #isCacheNeeded() <em>Cache Needed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isCacheNeeded()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int CACHE_NEEDED_EFLAG = 1 << 9;
 	/**
 	 * The cached value of the '{@link #getTypeValue() <em>Type Value</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -81,6 +100,31 @@ implements VariableDeclaration {
 	@Override
 	protected EClass eStaticClass() {
 		return PivotPackage.Literals.VARIABLE_DECLARATION;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isCacheNeeded()
+	{
+		return (eFlags & CACHE_NEEDED_EFLAG) != 0;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCacheNeeded(boolean newCacheNeeded)
+	{
+		boolean oldCacheNeeded = (eFlags & CACHE_NEEDED_EFLAG) != 0;
+		if (newCacheNeeded) eFlags |= CACHE_NEEDED_EFLAG; else eFlags &= ~CACHE_NEEDED_EFLAG;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.VARIABLE_DECLARATION__CACHE_NEEDED, oldCacheNeeded, newCacheNeeded));
 	}
 
 	/**
@@ -253,6 +297,8 @@ implements VariableDeclaration {
 			case PivotPackage.VARIABLE_DECLARATION__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
+			case PivotPackage.VARIABLE_DECLARATION__CACHE_NEEDED:
+				return isCacheNeeded();
 			case PivotPackage.VARIABLE_DECLARATION__TYPE_VALUE:
 				return getTypeValue();
 		}
@@ -295,6 +341,9 @@ implements VariableDeclaration {
 			case PivotPackage.VARIABLE_DECLARATION__TYPE:
 				setType((Type)newValue);
 				return;
+			case PivotPackage.VARIABLE_DECLARATION__CACHE_NEEDED:
+				setCacheNeeded((Boolean)newValue);
+				return;
 			case PivotPackage.VARIABLE_DECLARATION__TYPE_VALUE:
 				setTypeValue((Type)newValue);
 				return;
@@ -333,6 +382,9 @@ implements VariableDeclaration {
 			case PivotPackage.VARIABLE_DECLARATION__TYPE:
 				setType((Type)null);
 				return;
+			case PivotPackage.VARIABLE_DECLARATION__CACHE_NEEDED:
+				setCacheNeeded(CACHE_NEEDED_EDEFAULT);
+				return;
 			case PivotPackage.VARIABLE_DECLARATION__TYPE_VALUE:
 				setTypeValue((Type)null);
 				return;
@@ -366,6 +418,8 @@ implements VariableDeclaration {
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
 			case PivotPackage.VARIABLE_DECLARATION__TYPE:
 				return type != null;
+			case PivotPackage.VARIABLE_DECLARATION__CACHE_NEEDED:
+				return ((eFlags & CACHE_NEEDED_EFLAG) != 0) != CACHE_NEEDED_EDEFAULT;
 			case PivotPackage.VARIABLE_DECLARATION__TYPE_VALUE:
 				return typeValue != null;
 		}
@@ -397,6 +451,23 @@ implements VariableDeclaration {
 				return validateTypeIsNotNull((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 		}
 		return eDynamicInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (cacheNeeded: "); //$NON-NLS-1$
+		result.append((eFlags & CACHE_NEEDED_EFLAG) != 0);
+		result.append(')');
+		return result.toString();
 	}
 
 	@Override

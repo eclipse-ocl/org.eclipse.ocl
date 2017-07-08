@@ -64,7 +64,7 @@ public class ParameterImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int IS_TYPEOF_EFLAG = 1 << 9;
+	protected static final int IS_TYPEOF_EFLAG = 1 << 10;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -248,6 +248,8 @@ public class ParameterImpl
 			case PivotPackage.PARAMETER__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
+			case PivotPackage.PARAMETER__CACHE_NEEDED:
+				return isCacheNeeded();
 			case PivotPackage.PARAMETER__TYPE_VALUE:
 				return getTypeValue();
 			case PivotPackage.PARAMETER__IS_TYPEOF:
@@ -293,6 +295,9 @@ public class ParameterImpl
 			case PivotPackage.PARAMETER__TYPE:
 				setType((Type)newValue);
 				return;
+			case PivotPackage.PARAMETER__CACHE_NEEDED:
+				setCacheNeeded((Boolean)newValue);
+				return;
 			case PivotPackage.PARAMETER__TYPE_VALUE:
 				setTypeValue((Type)newValue);
 				return;
@@ -336,6 +341,9 @@ public class ParameterImpl
 			case PivotPackage.PARAMETER__TYPE:
 				setType((Type)null);
 				return;
+			case PivotPackage.PARAMETER__CACHE_NEEDED:
+				setCacheNeeded(CACHE_NEEDED_EDEFAULT);
+				return;
 			case PivotPackage.PARAMETER__TYPE_VALUE:
 				setTypeValue((Type)null);
 				return;
@@ -374,6 +382,8 @@ public class ParameterImpl
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
 			case PivotPackage.PARAMETER__TYPE:
 				return type != null;
+			case PivotPackage.PARAMETER__CACHE_NEEDED:
+				return ((eFlags & CACHE_NEEDED_EFLAG) != 0) != CACHE_NEEDED_EDEFAULT;
 			case PivotPackage.PARAMETER__TYPE_VALUE:
 				return typeValue != null;
 			case PivotPackage.PARAMETER__IS_TYPEOF:

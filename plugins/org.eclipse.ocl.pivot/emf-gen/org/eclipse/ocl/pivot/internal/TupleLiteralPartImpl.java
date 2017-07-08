@@ -313,6 +313,8 @@ implements TupleLiteralPart {
 			case PivotPackage.TUPLE_LITERAL_PART__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
+			case PivotPackage.TUPLE_LITERAL_PART__CACHE_NEEDED:
+				return isCacheNeeded();
 			case PivotPackage.TUPLE_LITERAL_PART__TYPE_VALUE:
 				return getTypeValue();
 			case PivotPackage.TUPLE_LITERAL_PART__OWNED_INIT:
@@ -356,6 +358,9 @@ implements TupleLiteralPart {
 			case PivotPackage.TUPLE_LITERAL_PART__TYPE:
 				setType((Type)newValue);
 				return;
+			case PivotPackage.TUPLE_LITERAL_PART__CACHE_NEEDED:
+				setCacheNeeded((Boolean)newValue);
+				return;
 			case PivotPackage.TUPLE_LITERAL_PART__TYPE_VALUE:
 				setTypeValue((Type)newValue);
 				return;
@@ -396,6 +401,9 @@ implements TupleLiteralPart {
 			case PivotPackage.TUPLE_LITERAL_PART__TYPE:
 				setType((Type)null);
 				return;
+			case PivotPackage.TUPLE_LITERAL_PART__CACHE_NEEDED:
+				setCacheNeeded(CACHE_NEEDED_EDEFAULT);
+				return;
 			case PivotPackage.TUPLE_LITERAL_PART__TYPE_VALUE:
 				setTypeValue((Type)null);
 				return;
@@ -431,6 +439,8 @@ implements TupleLiteralPart {
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
 			case PivotPackage.TUPLE_LITERAL_PART__TYPE:
 				return type != null;
+			case PivotPackage.TUPLE_LITERAL_PART__CACHE_NEEDED:
+				return ((eFlags & CACHE_NEEDED_EFLAG) != 0) != CACHE_NEEDED_EDEFAULT;
 			case PivotPackage.TUPLE_LITERAL_PART__TYPE_VALUE:
 				return typeValue != null;
 			case PivotPackage.TUPLE_LITERAL_PART__OWNED_INIT:

@@ -2661,8 +2661,9 @@ public class PivotTables
 		public static final @NonNull ExecutorProperty _Variable__LetExp__ownedVariable = new ExecutorPropertyWithImplementation("LetExp", Types._Variable, 7, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LET_EXP__OWNED_VARIABLE));
 		public static final @NonNull ExecutorProperty _Variable__LoopExp__ownedIterators = new ExecutorPropertyWithImplementation("LoopExp", Types._Variable, 8, new EcoreLibraryOppositeProperty(PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS));
 
-		public static final @NonNull ExecutorProperty _VariableDeclaration__typeValue = new EcoreExecutorProperty(PivotPackage.Literals.VARIABLE_DECLARATION__TYPE_VALUE, Types._VariableDeclaration, 0);
-		public static final @NonNull ExecutorProperty _VariableDeclaration__VariableExp__referredVariable = new ExecutorPropertyWithImplementation("VariableExp", Types._VariableDeclaration, 1, new EcoreLibraryOppositeProperty(PivotPackage.Literals.VARIABLE_EXP__REFERRED_VARIABLE));
+		public static final @NonNull ExecutorProperty _VariableDeclaration__cacheNeeded = new EcoreExecutorProperty(PivotPackage.Literals.VARIABLE_DECLARATION__CACHE_NEEDED, Types._VariableDeclaration, 0);
+		public static final @NonNull ExecutorProperty _VariableDeclaration__typeValue = new EcoreExecutorProperty(PivotPackage.Literals.VARIABLE_DECLARATION__TYPE_VALUE, Types._VariableDeclaration, 1);
+		public static final @NonNull ExecutorProperty _VariableDeclaration__VariableExp__referredVariable = new ExecutorPropertyWithImplementation("VariableExp", Types._VariableDeclaration, 2, new EcoreLibraryOppositeProperty(PivotPackage.Literals.VARIABLE_EXP__REFERRED_VARIABLE));
 
 		public static final @NonNull ExecutorProperty _VariableExp__isImplicit = new EcoreExecutorProperty(PivotPackage.Literals.VARIABLE_EXP__IS_IMPLICIT, Types._VariableExp, 0);
 		public static final @NonNull ExecutorProperty _VariableExp__referredVariable = new EcoreExecutorProperty(PivotPackage.Literals.VARIABLE_EXP__REFERRED_VARIABLE, Types._VariableExp, 1);
@@ -12361,6 +12362,7 @@ public class PivotTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _IteratorVariable = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._VariableDeclaration__cacheNeeded,
 			PivotTables.Properties._Variable__isImplicit,
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
@@ -12433,6 +12435,7 @@ public class PivotTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _LetVariable = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._VariableDeclaration__cacheNeeded,
 			PivotTables.Properties._Variable__isImplicit,
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
@@ -12806,6 +12809,7 @@ public class PivotTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Parameter = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._VariableDeclaration__cacheNeeded,
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
 			PivotTables.Properties._Parameter__isTypeof,
@@ -12820,6 +12824,7 @@ public class PivotTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _ParameterVariable = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._VariableDeclaration__cacheNeeded,
 			PivotTables.Properties._Variable__isImplicit,
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
@@ -13024,6 +13029,7 @@ public class PivotTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _ResultVariable = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._VariableDeclaration__cacheNeeded,
 			PivotTables.Properties._Variable__isImplicit,
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
@@ -13406,6 +13412,7 @@ public class PivotTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _TupleLiteralPart = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._VariableDeclaration__cacheNeeded,
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
 			PivotTables.Properties._NamedElement__name,
@@ -13513,6 +13520,7 @@ public class PivotTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _Variable = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._VariableDeclaration__cacheNeeded,
 			PivotTables.Properties._Variable__isImplicit,
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
@@ -13528,6 +13536,7 @@ public class PivotTables
 
 		private static final @NonNull ExecutorProperty @NonNull [] _VariableDeclaration = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._VariableDeclaration__cacheNeeded,
 			PivotTables.Properties._TypedElement__isMany,
 			PivotTables.Properties._TypedElement__isRequired,
 			PivotTables.Properties._NamedElement__name,

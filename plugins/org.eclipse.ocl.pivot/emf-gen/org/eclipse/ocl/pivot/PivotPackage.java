@@ -13191,13 +13191,22 @@ extends EPackage
 	int VARIABLE_DECLARATION__TYPE = TYPED_ELEMENT__TYPE;
 
 	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE_DECLARATION__CACHE_NEEDED = TYPED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Type Value</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION__TYPE_VALUE = TYPED_ELEMENT_FEATURE_COUNT + 0;
+	int VARIABLE_DECLARATION__TYPE_VALUE = TYPED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Variable Declaration</em>' class.
@@ -13206,7 +13215,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_DECLARATION_FEATURE_COUNT = TYPED_ELEMENT_FEATURE_COUNT + 1;
+	int VARIABLE_DECLARATION_FEATURE_COUNT = TYPED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -13403,6 +13412,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int VARIABLE__TYPE = VARIABLE_DECLARATION__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VARIABLE__CACHE_NEEDED = VARIABLE_DECLARATION__CACHE_NEEDED;
 
 	/**
 	 * The feature id for the '<em><b>Type Value</b></em>' reference.
@@ -13611,6 +13629,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int ITERATOR_VARIABLE__TYPE = VARIABLE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_VARIABLE__CACHE_NEEDED = VARIABLE__CACHE_NEEDED;
 
 	/**
 	 * The feature id for the '<em><b>Type Value</b></em>' reference.
@@ -14350,6 +14377,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int LET_VARIABLE__TYPE = VARIABLE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LET_VARIABLE__CACHE_NEEDED = VARIABLE__CACHE_NEEDED;
 
 	/**
 	 * The feature id for the '<em><b>Type Value</b></em>' reference.
@@ -17235,6 +17271,15 @@ extends EPackage
 	int PARAMETER__TYPE = VARIABLE_DECLARATION__TYPE;
 
 	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER__CACHE_NEEDED = VARIABLE_DECLARATION__CACHE_NEEDED;
+
+	/**
 	 * The feature id for the '<em><b>Type Value</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17423,6 +17468,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int PARAMETER_VARIABLE__TYPE = VARIABLE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAMETER_VARIABLE__CACHE_NEEDED = VARIABLE__CACHE_NEEDED;
 
 	/**
 	 * The feature id for the '<em><b>Type Value</b></em>' reference.
@@ -19575,6 +19629,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int RESULT_VARIABLE__TYPE = VARIABLE__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESULT_VARIABLE__CACHE_NEEDED = VARIABLE__CACHE_NEEDED;
 
 	/**
 	 * The feature id for the '<em><b>Type Value</b></em>' reference.
@@ -23636,6 +23699,15 @@ extends EPackage
 	 * @ordered
 	 */
 	int TUPLE_LITERAL_PART__TYPE = VARIABLE_DECLARATION__TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Cache Needed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TUPLE_LITERAL_PART__CACHE_NEEDED = VARIABLE_DECLARATION__CACHE_NEEDED;
 
 	/**
 	 * The feature id for the '<em><b>Type Value</b></em>' reference.
@@ -29917,6 +29989,17 @@ extends EPackage
 	EClass getVariableDeclaration();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.VariableDeclaration#isCacheNeeded <em>Cache Needed</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Cache Needed</em>'.
+	 * @see org.eclipse.ocl.pivot.VariableDeclaration#isCacheNeeded()
+	 * @see #getVariableDeclaration()
+	 * @generated
+	 */
+	EAttribute getVariableDeclaration_CacheNeeded();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.VariableDeclaration#getTypeValue <em>Type Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -34534,6 +34617,14 @@ extends EPackage
 		 * @generated
 		 */
 		EClass VARIABLE_DECLARATION = eINSTANCE.getVariableDeclaration();
+
+		/**
+		 * The meta object literal for the '<em><b>Cache Needed</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VARIABLE_DECLARATION__CACHE_NEEDED = eINSTANCE.getVariableDeclaration_CacheNeeded();
 
 		/**
 		 * The meta object literal for the '<em><b>Type Value</b></em>' reference feature.

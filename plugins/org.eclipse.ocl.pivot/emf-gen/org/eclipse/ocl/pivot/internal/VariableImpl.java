@@ -72,7 +72,7 @@ implements Variable {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int IS_IMPLICIT_EFLAG = 1 << 9;
+	protected static final int IS_IMPLICIT_EFLAG = 1 << 10;
 
 	/**
 	 * The cached value of the '{@link #getOwnedInit() <em>Owned Init</em>}' containment reference.
@@ -292,6 +292,8 @@ implements Variable {
 			case PivotPackage.VARIABLE__TYPE:
 				if (resolve) return getType();
 				return basicGetType();
+			case PivotPackage.VARIABLE__CACHE_NEEDED:
+				return isCacheNeeded();
 			case PivotPackage.VARIABLE__TYPE_VALUE:
 				return getTypeValue();
 			case PivotPackage.VARIABLE__IS_IMPLICIT:
@@ -340,6 +342,9 @@ implements Variable {
 			case PivotPackage.VARIABLE__TYPE:
 				setType((Type)newValue);
 				return;
+			case PivotPackage.VARIABLE__CACHE_NEEDED:
+				setCacheNeeded((Boolean)newValue);
+				return;
 			case PivotPackage.VARIABLE__TYPE_VALUE:
 				setTypeValue((Type)newValue);
 				return;
@@ -386,6 +391,9 @@ implements Variable {
 			case PivotPackage.VARIABLE__TYPE:
 				setType((Type)null);
 				return;
+			case PivotPackage.VARIABLE__CACHE_NEEDED:
+				setCacheNeeded(CACHE_NEEDED_EDEFAULT);
+				return;
 			case PivotPackage.VARIABLE__TYPE_VALUE:
 				setTypeValue((Type)null);
 				return;
@@ -427,6 +435,8 @@ implements Variable {
 				return ((eFlags & IS_REQUIRED_EFLAG) != 0) != IS_REQUIRED_EDEFAULT;
 			case PivotPackage.VARIABLE__TYPE:
 				return type != null;
+			case PivotPackage.VARIABLE__CACHE_NEEDED:
+				return ((eFlags & CACHE_NEEDED_EFLAG) != 0) != CACHE_NEEDED_EDEFAULT;
 			case PivotPackage.VARIABLE__TYPE_VALUE:
 				return typeValue != null;
 			case PivotPackage.VARIABLE__IS_IMPLICIT:

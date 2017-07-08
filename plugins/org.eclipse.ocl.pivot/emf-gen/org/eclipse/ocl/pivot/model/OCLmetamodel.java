@@ -2241,6 +2241,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Variable_IterateExp_ownedResult = createProperty("IterateExp", _IterateExp);
 		private final @NonNull Property pr_Variable_LetExp_ownedVariable = createProperty("LetExp", _LetExp);
 		private final @NonNull Property pr_Variable_LoopExp_ownedIterators = createProperty("LoopExp", _LoopExp);
+		private final @NonNull Property pr_VariableDeclaration_cacheNeeded = createProperty(PivotPackage.Literals.VARIABLE_DECLARATION__CACHE_NEEDED, _Boolean);
 		private final @NonNull Property pr_VariableDeclaration_typeValue = createProperty(PivotPackage.Literals.VARIABLE_DECLARATION__TYPE_VALUE, _Type);
 		private final @NonNull Property pr_VariableDeclaration_VariableExp_referredVariable = createProperty("VariableExp", _Bag_VariableExp);
 		private final @NonNull Property pr_VariableExp_isImplicit = createProperty(PivotPackage.Literals.VARIABLE_EXP__IS_IMPLICIT, _Boolean);
@@ -3880,6 +3881,8 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setOpposite(pr_LoopExp_ownedIterators);
 
 			ownedProperties = _VariableDeclaration.getOwnedProperties();
+			ownedProperties.add(property = pr_VariableDeclaration_cacheNeeded);
+			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_VariableDeclaration_typeValue);
 			property.setIsRequired(false);
 			property.setIsTransient(true);
