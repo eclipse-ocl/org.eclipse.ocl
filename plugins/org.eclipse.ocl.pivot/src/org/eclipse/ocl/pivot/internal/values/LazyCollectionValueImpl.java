@@ -942,7 +942,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	/**
 	 * The iterator that provides the elements that have yet to be cached in lazyListOfElements.
 	 */
-	private @NonNull LazyIterator inputIterator;
+	private final @NonNull LazyIterator inputIterator;
 
 	/**
 	 * The Bag/Sequence/Unique strategy that determines how new/old elements are added/removed.
@@ -1001,10 +1001,15 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 */
 	private int useCount = 0;
 
+	@Deprecated /* @deprecated supply inputIterator argument */
 	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId, int lazyDepth) {
+		this(typeId, null, lazyDepth);
+	}
+
+	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId, @Nullable LazyIterator inputIterator, int lazyDepth) {
 		this.typeId = typeId;
 		this.lazyDepth = lazyDepth;
-		this.inputIterator = ValueUtil.EMPTY_ITERATOR;
+		this.inputIterator = inputIterator != null ? inputIterator : this;
 		this.collectionStrategy = getCollectionStrategy(typeId);
 		this.equalsStrategy = SimpleEqualsStrategy.INSTANCE;
 	}
@@ -1162,7 +1167,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 				//				this.inputIterator = reIterator();
 			}
 			else {
-				this.inputIterator = this;
+				//				this.inputIterator = this;
 			}
 			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
 			this.lazyListOfElements = lazyListOfElements2 = createListOfElements();
@@ -2007,18 +2012,15 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue reValue() {
-		return (CollectionValue) reIterator();
-	}
-
-	public @NonNull CollectionValue resetIterator() {
-		if (lazyIterator) {
-			assert lazyListOfElements == null;
-			lazyIterator = false;
-			next = null;
-			hasNextCount = 0;
-			useCount = 0;
+		if (lazyListOfElements != null) {			// If we already have a cache
+			return this;							//  another lazy iterator can use the cache
 		}
-		return this;
+		else if (!lazyIterator) {					// If we haven't even started to iterate
+			return this;							//  a lazy iterator can still be created
+		}
+		else {										// If we started to iterate without caching
+			return (CollectionValue) reIterator();	// only a reIterator guarantees to retraverse
+		}
 	}
 
 	@Override

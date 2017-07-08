@@ -27,16 +27,22 @@ public class MutableCollectionValueImpl extends LazyCollectionValueImpl
 	protected final @Nullable Iterator<@Nullable Object> elements;
 
 	public MutableCollectionValueImpl(@NonNull CollectionTypeId typeId) {
-		super(typeId, 0);
+		super(typeId, null, 0);
 		this.elements = null;
 		mutableIterable();
 	}
 
 	public MutableCollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Iterator<@Nullable Object> elements) {
-		super(typeId, 0);
+		super(typeId, null, 0);
 		this.elements = elements;
 		mutableIterable();
 		mutableIncludingAll(elements);
+	}
+
+	@Override
+	protected int getNextCount() {
+		//	assert size == 0;
+		return 0;  // Occurs before add mutable additions
 	}
 
 	@Override
@@ -48,11 +54,5 @@ public class MutableCollectionValueImpl extends LazyCollectionValueImpl
 		else {
 			return new MutableCollectionValueImpl(typeId, elements2);
 		}
-	}
-
-	@Override
-	protected int getNextCount() {
-		//	assert size == 0;
-		return 0;  // Occurs before add mutable additions
 	}
 }
