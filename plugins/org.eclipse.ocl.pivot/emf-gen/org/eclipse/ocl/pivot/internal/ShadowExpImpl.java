@@ -407,6 +407,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						accumulator.mutableIncluding(referredProperty);
 					}
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue partProperties = CollectionMutableAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Property, collect);
+					partProperties.cachedIterable();
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_3 = idResolver.getClass(PivotTables.CLSSid_Class, null);
 					final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, TYP_Class_3));
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Class, oclAsType);
@@ -519,6 +520,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							accumulator_2.mutableIncluding(_1_3);
 						}
 					}
+					classProperties.cachedIterable();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_3 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_4 = classProperties.eagerIterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject_2;
@@ -623,7 +625,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue extraProperties = CollectionExcludingAllOperation.INSTANCE.evaluate(partProperties, classProperties);
+					extraProperties.cachedIterable();
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue missingProperties = CollectionExcludingAllOperation.INSTANCE.evaluate(requiredClassProperties, partProperties);
+					missingProperties.cachedIterable();
 					final /*@Thrown*/ boolean notEmpty = CollectionNotEmptyOperation.INSTANCE.evaluate(extraProperties).booleanValue();
 					/*@Thrown*/ java.lang.@NonNull Object symbol_6;
 					if (notEmpty) {

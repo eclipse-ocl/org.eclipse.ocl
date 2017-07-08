@@ -607,8 +607,10 @@ implements OperationCallExp {
 					assert operation != null;
 					final /*@Thrown*/ java.util.@NonNull List<Parameter> ownedParameters = operation.getOwnedParameters();
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
-					BOXED_ownedParameters.cachedIterable();
 					safe_ownedParameters_source = BOXED_ownedParameters;
+				}
+				if (safe_ownedParameters_source != null) {
+					safe_ownedParameters_source.cachedIterable();
 				}
 				final /*@NonInvalid*/ @NonNull Object symbol_1 = operation == null;
 				/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class safe_owningClass_source;
@@ -622,6 +624,7 @@ implements OperationCallExp {
 				}
 				final /*@NonInvalid*/ java.util.@NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
+				BOXED_ownedArguments.cachedIterable();
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerRange RNG = ValueUtil.createRange(PivotTables.INT_1, size);
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue Sequence = ValueUtil.createSequenceRange(PivotTables.SEQ_PRIMid_Integer, RNG);
