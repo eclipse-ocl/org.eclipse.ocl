@@ -28,57 +28,73 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
-public class SingleUseVisitor //extends AbstractExtendingCGModelVisitor<@Nullable Object, @Nullable Object>
+/**
+ * The CGCachingAnalysis sets CGVariable.cacheNeeded for colletion variables that are accessed more than once.
+ */
+public class CGCachingAnalysis
 {
 	protected final @NonNull CGPackage cgPackage;
 
-	public SingleUseVisitor(@NonNull CGPackage cgPackage) {
+	public CGCachingAnalysis(@NonNull CGPackage cgPackage) {
 		//		super(null);
 		this.cgPackage = cgPackage;
+	}
+
+	protected void addUser(@NonNull Map<@NonNull CGVariable, @NonNull Set<@NonNull CGVariableExp>> cgVariable2users, @NonNull CGVariable cgVariable, @NonNull CGVariableExp cgVariableExp) {
+		Set<@NonNull CGVariableExp> users = cgVariable2users.get(cgVariable);
+		if (users == null) {
+			users = new HashSet<>();
+			cgVariable2users.put(cgVariable, users);
+		}
+		users.add(cgVariableExp);
 	}
 
 	public void analyze() {
 		for (@NonNull Object object : new TreeIterable(cgPackage, true)) {
 			if (object instanceof CGConstraint) {
-				analyzeElement((CGConstraint)object);
+				analyzeConstraint((CGConstraint)object);
 			}
 		}
 	}
 
-	protected void analyzeElement(@NonNull CGConstraint cgConstraint) {
+	protected void analyzeConstraint(@NonNull CGConstraint cgConstraint) {
 		Map<@NonNull CGVariable, @NonNull Set<@NonNull CGVariableExp>> cgVariable2users = new HashMap<>();
 		Map<@NonNull CGElement, @Nullable Boolean> cgElement2multiple = new HashMap<>();
 		for (@NonNull Object object : new TreeIterable(cgConstraint, true)) {
-			if (object instanceof CGVariableExp) {
-				CGVariableExp cgVariableExp = (CGVariableExp)object;
-				CGVariable cgVariable = CGUtil.getReferredVariable(cgVariableExp);
-				Set<@NonNull CGVariableExp> users = cgVariable2users.get(cgVariable);
-				if (users == null) {
-					users = new HashSet<>();
-					cgVariable2users.put(cgVariable, users);
-				}
-				users.add(cgVariableExp);
-			}
+			analyzeUsage(cgVariable2users, object);
 		}
 		for (@NonNull CGVariable cgVariable : cgVariable2users.keySet()) {
-			if (cgVariable.getASTypeId() instanceof CollectionTypeId) {
-				boolean isMultiple = false;
-				Set<@NonNull CGVariableExp> users = cgVariable2users.get(cgVariable);
-				assert users != null;
-				if (users.size() > 1) {
-					isMultiple = true;
-				}
-				else {
-					for (@NonNull CGVariableExp cgUsingElement : users) {
-						if (isMultiple(cgElement2multiple, cgUsingElement)) {
-							isMultiple = true;
-							break;
-						}
+			assignCaching(cgVariable2users, cgElement2multiple, cgVariable);
+		}
+	}
+
+	protected void analyzeUsage(@NonNull Map<@NonNull CGVariable, @NonNull Set<@NonNull CGVariableExp>> cgVariable2users, @NonNull Object object) {
+		if (object instanceof CGVariableExp) {
+			CGVariableExp cgVariableExp = (CGVariableExp)object;
+			CGVariable cgVariable = CGUtil.getReferredVariable(cgVariableExp);
+			addUser(cgVariable2users, cgVariable, cgVariableExp);
+		}
+	}
+
+	protected void assignCaching(@NonNull Map<@NonNull CGVariable, @NonNull Set<@NonNull CGVariableExp>> cgVariable2users,
+			@NonNull Map<@NonNull CGElement, @Nullable Boolean> cgElement2multiple, @NonNull CGVariable cgVariable) {
+		if (cgVariable.getASTypeId() instanceof CollectionTypeId) {
+			boolean isMultiple = false;
+			Set<@NonNull CGVariableExp> users = cgVariable2users.get(cgVariable);
+			assert users != null;
+			if (users.size() > 1) {
+				isMultiple = true;
+			}
+			else {
+				for (@NonNull CGVariableExp cgUsingElement : users) {
+					if (isMultiple(cgElement2multiple, cgUsingElement)) {
+						isMultiple = true;
+						break;
 					}
 				}
-				if (isMultiple) {
-					cgVariable.setCacheNeeded(true);
-				}
+			}
+			if (isMultiple) {
+				cgVariable.setCacheNeeded(true);
 			}
 		}
 	}
@@ -100,32 +116,4 @@ public class SingleUseVisitor //extends AbstractExtendingCGModelVisitor<@Nullabl
 		}
 		return isMultiple;
 	}
-
-	/*	@Override
-	public @Nullable Object visiting(@NonNull CGElement visitable) {
-		throw new UnsupportedOperationException("Unsupported " + getClass().getName() + " visit");
-	}
-
-	@Override
-	public @Nullable Object visitCGElement(@NonNull CGElement cgElement) {
-		return null;
-	}
-
-	@Override
-	public @Nullable Object visitCGValuedElement(@NonNull CGValuedElement cgElement) {
-		Object eContainer = cgElement.eContainer();
-		if ((eContainer instanceof CGLetExp) && (cgElement == ((CGLetExp)eContainer).getInit())) {
-			;
-		}
-		else if (eContainer instanceof CGVariable) {
-			addUser(cgElement, (CGElement) eContainer);
-		}
-		return null;
-	}
-
-	@Override
-	public @Nullable Object visitCGVariableExp(@NonNull CGVariableExp cgElement) {
-		addUser(CGUtil.getReferredVariable(cgElement), cgElement);
-		return super.visitCGVariableExp(cgElement);
-	} */
 }

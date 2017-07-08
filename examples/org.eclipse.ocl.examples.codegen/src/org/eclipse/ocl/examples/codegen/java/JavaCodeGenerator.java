@@ -25,11 +25,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.CGCachingAnalysis;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
-import org.eclipse.ocl.examples.codegen.analyzer.SingleUseVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -208,6 +208,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new CG2JavaPreVisitor(getGlobalContext());
 	}
 
+	protected @NonNull CGCachingAnalysis createCGCachingAnalysis(@NonNull CGPackage cgPackage) {
+		return new CGCachingAnalysis(cgPackage);
+	}
+
 	protected void createConstrainedOperations(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGClass cgClass) {
 		Iterable<@NonNull Operation> constrainedOperations = getConstrainedOperations();
 		if (constrainedOperations != null) {
@@ -251,10 +255,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	@NonNull
 	public ReferencesVisitor createReferencesVisitor() {
 		return ReferencesVisitor.INSTANCE;
-	}
-
-	protected @NonNull SingleUseVisitor createSingleUseVisitor(@NonNull CGPackage cgPackage) {
-		return new SingleUseVisitor(cgPackage);
 	}
 
 	@Override
@@ -549,8 +549,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		cgPackage.accept(cg2PreVisitor);
 		CommonSubexpressionEliminator cseEliminator = createCommonSubexpressionEliminator();
 		cseEliminator.optimize(cgPackage);
-		SingleUseVisitor singleUseVisitor = createSingleUseVisitor(cgPackage);
-		singleUseVisitor.analyze();
+		CGCachingAnalysis cgCachingAnalysis = createCGCachingAnalysis(cgPackage);
+		cgCachingAnalysis.analyze();
 	}
 
 	/**
