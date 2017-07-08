@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
@@ -28,22 +28,16 @@ import com.google.common.collect.Iterators;
  *
  * @since 1.3
  */
-public abstract class AsBagIterator extends LazyCollectionValueImpl
+public abstract class AsBagIterator extends AbstractLazyIterator
 {
 	private final @NonNull Iterator<? extends Object> sourceIterator;
 
-	protected AsBagIterator(@NonNull CollectionTypeId typeId, @NonNull Iterator<? extends Object> sourceIterator, boolean sourceIteratorIsBagLike) {
-		super(typeId, lazyDepth(sourceIterator));
+	protected AsBagIterator(@NonNull Iterator<? extends Object> sourceIterator) {
 		this.sourceIterator = sourceIterator;
-		assert !isOrdered();
-		assert !isUnique();
-		if (!sourceIteratorIsBagLike) {
-			eagerIterable();
-		}
 	}
 
 	@Override
-	protected int getNextCount() {
+	public int getNextCount() {
 		if (sourceIterator.hasNext()) {
 			return setNext(sourceIterator.next(), 1);
 		}
@@ -53,53 +47,53 @@ public abstract class AsBagIterator extends LazyCollectionValueImpl
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("AsBag{");
-		if (hasCache()) {
-			appendIterable(s);
-			if (hasNext()) {
-				s.append(";«future»");
-			}
-		}
-		else {
-			s.append("«future»");
-		}
+		//		if (hasCache()) {
+		//			appendIterable(s);
+		//			if (hasNext()) {
+		//				s.append(";«future»");
+		//			}
+		//		}
+		//		else {
+		s.append("«future»");
+		//		}
 		s.append("}");
 	}
 
 	public static class FromArray extends AsBagIterator
 	{
 		public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @Nullable Object @NonNull [] boxedValues) {
-			return new FromArray(collectionTypeId, boxedValues);
+			return new SmartCollectionValueImpl(collectionTypeId, new FromArray(boxedValues));
 		}
 
 		private @Nullable Object @NonNull [] boxedValues;
 
-		protected FromArray(@NonNull CollectionTypeId collectionTypeId, @Nullable Object @NonNull [] boxedValues) {
-			super(collectionTypeId, Iterators.forArray(boxedValues), false);
+		protected FromArray(@Nullable Object @NonNull [] boxedValues) {
+			super(Iterators.forArray(boxedValues));
 			this.boxedValues = boxedValues;
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
-			return new FromArray(typeId, boxedValues);
+		public @NonNull LazyIterator reIterator() {
+			return new FromArray(boxedValues);
 		}
 	}
 
 	public static class FromCollection extends AsBagIterator
 	{
 		public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
-			return new FromCollection(collectionTypeId, boxedValues);
+			return new SmartCollectionValueImpl(collectionTypeId, new FromCollection(boxedValues));
 		}
 
 		private @NonNull Collection<@Nullable ? extends Object> boxedValues;
 
-		protected FromCollection(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
-			super(typeId, boxedValues.iterator(), false);
+		protected FromCollection(@NonNull Collection<@Nullable ? extends Object> boxedValues) {
+			super(boxedValues.iterator());
 			this.boxedValues = boxedValues;
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
-			return new FromCollection(typeId, boxedValues);
+		public @NonNull LazyIterator reIterator() {
+			return new FromCollection(boxedValues);
 		}
 	}
 
@@ -107,19 +101,23 @@ public abstract class AsBagIterator extends LazyCollectionValueImpl
 	{
 		public static @NonNull CollectionValue create(@NonNull CollectionValue sourceValue) {
 			CollectionTypeId collectionTypeId = TypeId.BAG.getSpecializedId(sourceValue.getTypeId().getElementTypeId());
-			return new FromCollectionValue(collectionTypeId, sourceValue);
+			SmartCollectionValueImpl collectionValue = new SmartCollectionValueImpl(collectionTypeId, new FromCollectionValue(sourceValue));
+			if (!collectionValue.isSequence()) {
+				collectionValue.eagerIterable();
+			}
+			return collectionValue;
 		}
 
 		private @NonNull CollectionValue sourceValue;
 
-		protected FromCollectionValue(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue) {
-			super(collectionTypeId, sourceValue.lazyIterator(), sourceValue.isUnique() || !sourceValue.isOrdered());
+		protected FromCollectionValue(@NonNull CollectionValue sourceValue) {
+			super(sourceValue.lazyIterator());
 			this.sourceValue = sourceValue;
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
-			return new FromCollectionValue(typeId, sourceValue);
+		public @NonNull LazyIterator reIterator() {
+			return new FromCollectionValue(sourceValue);
 		}
 	}
 }
