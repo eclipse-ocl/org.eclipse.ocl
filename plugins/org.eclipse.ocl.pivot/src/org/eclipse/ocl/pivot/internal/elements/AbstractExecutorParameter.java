@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.Type;
 
 public final class AbstractExecutorParameter extends AbstractExecutorTypedElement implements Parameter
 {
+	private boolean cacheNeeded = false;
 	protected final boolean typeof;
 
 	public AbstractExecutorParameter(@NonNull String name, @NonNull Type type, boolean typeof) {
@@ -28,8 +29,8 @@ public final class AbstractExecutorParameter extends AbstractExecutorTypedElemen
 	}
 
 	@Override
-	public boolean isIsTypeof() {
-		return typeof;
+	public Operation getOwningOperation() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -38,8 +39,18 @@ public final class AbstractExecutorParameter extends AbstractExecutorTypedElemen
 	}
 
 	@Override
-	public void setTypeValue(Type value) {
-		throw new UnsupportedOperationException();
+	public boolean isCacheNeeded() {
+		return cacheNeeded;
+	}
+
+	@Override
+	public boolean isIsTypeof() {
+		return typeof;
+	}
+
+	@Override
+	public void setCacheNeeded(boolean cacheNeeded) {
+		this.cacheNeeded = cacheNeeded;
 	}
 
 	@Override
@@ -48,12 +59,12 @@ public final class AbstractExecutorParameter extends AbstractExecutorTypedElemen
 	}
 
 	@Override
-	public Operation getOwningOperation() {
+	public void setOwningOperation(Operation value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setOwningOperation(Operation value) {
+	public void setTypeValue(Type value) {
 		throw new UnsupportedOperationException();
 	}
 

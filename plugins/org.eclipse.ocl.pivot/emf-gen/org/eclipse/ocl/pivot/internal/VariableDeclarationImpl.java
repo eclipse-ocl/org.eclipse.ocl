@@ -456,18 +456,11 @@ implements VariableDeclaration {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
-	public String toString()
-	{
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (cacheNeeded: "); //$NON-NLS-1$
-		result.append((eFlags & CACHE_NEEDED_EFLAG) != 0);
-		result.append(')');
-		return result.toString();
+	public String toString() {
+		return super.toString();
 	}
 
 	@Override
