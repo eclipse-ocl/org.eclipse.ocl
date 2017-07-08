@@ -2870,6 +2870,21 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			if (!js.appendLocalStatements(init)) {
 				return false;
 			}
+			if (cgVariable.isCacheNeeded()) {
+				if (!cgVariable.isNonNull()) {
+					js.append("if (");
+					js.appendValueName(cgVariable);
+					js.append(" != null) {\n");
+					js.pushIndentation(null);
+				}
+				js.appendValueName(cgVariable);
+				js.append(".cachedIterable();\n");
+				if (!cgVariable.isNonNull()) {
+					js.popIndentation();
+					js.append("}\n");
+				}
+			}
+
 		}
 		//		js.appendDeclaration(cgVariable);
 		//		if (init != null) {

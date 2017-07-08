@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.SingleUseVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -250,6 +251,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	@NonNull
 	public ReferencesVisitor createReferencesVisitor() {
 		return ReferencesVisitor.INSTANCE;
+	}
+
+	protected @NonNull SingleUseVisitor createSingleUseVisitor(@NonNull CGPackage cgPackage) {
+		return new SingleUseVisitor(cgPackage);
 	}
 
 	@Override
@@ -544,6 +549,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		cgPackage.accept(cg2PreVisitor);
 		CommonSubexpressionEliminator cseEliminator = createCommonSubexpressionEliminator();
 		cseEliminator.optimize(cgPackage);
+		SingleUseVisitor singleUseVisitor = createSingleUseVisitor(cgPackage);
+		singleUseVisitor.analyze();
 	}
 
 	/**

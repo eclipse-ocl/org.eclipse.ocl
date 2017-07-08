@@ -195,7 +195,7 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgConstantExp.getReferredConstant());
 	}
 
-	public static @NonNull CGValuedElement getReferredVariable(@NonNull CGVariableExp cgVariableExp) {
+	public static @NonNull CGVariable getReferredVariable(@NonNull CGVariableExp cgVariableExp) {
 		return ClassUtil.nonNullState(cgVariableExp.getReferredVariable());
 	}
 
