@@ -137,6 +137,7 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="MDTOCL-MDT_OCL_Evaluation" name="MDT_OCL_Evaluation">
+      <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_IL-uAGO2Eeexnp-CV4pZgA" name="Boolean"/>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Evaluation-CallExp" name="CallExp" isAbstract="true"/>
       <packagedElement xmi:type="uml:Class" xmi:id="MDTOCL-MDT_OCL_Evaluation-Feature" name="Feature" isAbstract="true">
         <ownedAttribute xmi:id="MDTOCL-MDT_OCL_Evaluation-Feature-implementationClass" name="implementationClass" type="MDTOCL-MDT_OCL_Evaluation-String">
@@ -150,6 +151,12 @@
       <packagedElement xmi:type="uml:PrimitiveType" xmi:id="MDTOCL-MDT_OCL_Evaluation-Object" name="Object"/>
       <packagedElement xmi:type="uml:PrimitiveType" xmi:id="MDTOCL-MDT_OCL_Evaluation-String" name="String"/>
       <packagedElement xmi:type="uml:PrimitiveType" xmi:id="MDTOCL-MDT_OCL_Evaluation-Throwable" name="Throwable"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_6fqH8GO1Eeexnp-CV4pZgA" name="VariableDeclaration" isAbstract="true">
+        <ownedAttribute xmi:id="_-F4nwGO1Eeexnp-CV4pZgA" name="cacheNeeded" type="_IL-uAGO2Eeexnp-CV4pZgA">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-F4nwWO1Eeexnp-CV4pZgA"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_DUsO8GO2Eeexnp-CV4pZgA" value="false"/>
+        </ownedAttribute>
+      </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="MDTOCL-MDT_OCL_Framework" name="MDT_OCL_Framework">
       <packagedElement xmi:type="uml:Class" xmi:id="_mHOFsBsNEeSM9LreJtBwBg" name="Behavior" isAbstract="true"/>
