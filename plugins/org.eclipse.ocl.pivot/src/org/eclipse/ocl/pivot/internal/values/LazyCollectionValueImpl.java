@@ -1136,7 +1136,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		return new AsSetIterator.FromCollectionValue(this);
+		return AsSetIterator.FromCollectionValue.create(this);
 	}
 
 	@Override
@@ -1164,8 +1164,9 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyListOfElements2 == null) {
 			if (lazyIterator) {
 				System.err.println(NameUtil.debugSimpleName(this) + " re-iterating");
-				throw new UnsupportedOperationException();
+				//				throw new UnsupportedOperationException();
 				//				this.inputIterator = reIterator();
+				return new SmartCollectionValueImpl(typeId, ((AbstractLazyIterator)inputIterator).reIterator());
 			}
 			else {
 				//				this.inputIterator = this;

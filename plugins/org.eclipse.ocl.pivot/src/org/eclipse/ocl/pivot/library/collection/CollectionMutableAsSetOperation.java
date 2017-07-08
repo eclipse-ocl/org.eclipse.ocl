@@ -37,7 +37,7 @@ public class CollectionMutableAsSetOperation extends AbstractUnaryOperation
 			return leftCollectionValue;
 		}
 		else {
-			return new AsSetIterator.FromCollectionValue(leftCollectionValue);
+			return AsSetIterator.FromCollectionValue.create(leftCollectionValue);
 		}
 	}
 }
