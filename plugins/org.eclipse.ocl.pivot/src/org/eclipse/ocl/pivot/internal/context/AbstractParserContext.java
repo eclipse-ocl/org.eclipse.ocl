@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.evaluation.CachingAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
@@ -210,6 +211,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 			String parentName = eContainer instanceof Nameable ? ((Nameable)eContainer).getName() : "<unknown>";
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ValidationConstraintIsInvalid_ERROR_, parentName, childName, expression.trim()), resource);
 			ExpressionInOCL expressionInOCL = getExpression(resource);
+			CachingAnalysis.analyze(expressionInOCL);
 			expressionInOCL.setBody(expression);
 			return expressionInOCL;
 		} catch (IOException e) {

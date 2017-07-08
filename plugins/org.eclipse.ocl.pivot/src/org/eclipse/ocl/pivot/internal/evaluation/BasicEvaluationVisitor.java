@@ -520,9 +520,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitLetExp(@NonNull LetExp letExp) {
-		OCLExpression expression = letExp.getOwnedIn();		// Never null when valid
-		Variable variable = letExp.getOwnedVariable();		// Never null when valid
-		assert variable != null;
+		Variable variable = PivotUtil.getOwnedVariable(letExp);		// Never null when valid
 		Object value;
 		try {
 			value = variable.accept(undecoratedVisitor);
@@ -534,7 +532,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			value = e;
 		}
 		//		value = ValuesUtil.asValue(value);
-		assert expression != null;
+		OCLExpression expression = PivotUtil.getOwnedIn(letExp);		// Never null when valid
 		EvaluationEnvironment nestedEvaluationEnvironment = context.pushEvaluationEnvironment(expression, (TypedElement)letExp);
 		nestedEvaluationEnvironment.add(variable, value);
 		try {
@@ -818,7 +816,11 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			throw new InvalidValueException("Uninitialized variable", variable);
 		}
 		else {
-			return initExp.accept(undecoratedVisitor);
+			Object initValue = initExp.accept(undecoratedVisitor);
+			if (variable.isCacheNeeded() && (initValue instanceof CollectionValue)) {
+				((CollectionValue)initValue).eagerIterable();
+			}
+			return initValue;
 		}
 	}
 
