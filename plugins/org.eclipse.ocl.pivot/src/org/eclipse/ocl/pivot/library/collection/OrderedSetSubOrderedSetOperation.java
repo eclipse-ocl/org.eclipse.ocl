@@ -27,6 +27,6 @@ public class OrderedSetSubOrderedSetOperation extends AbstractSimpleTernaryOpera
 		CollectionValue selfValue = asOrderedSetValue(sourceValue);
 		Integer fromValue = asInteger(firstArgumentValue);
 		Integer toValue = asInteger(secondArgumentValue);
-		return selfValue.subOrderedSet(fromValue, toValue);
+		return selfValue.subCollection(fromValue, toValue);
 	}
 }

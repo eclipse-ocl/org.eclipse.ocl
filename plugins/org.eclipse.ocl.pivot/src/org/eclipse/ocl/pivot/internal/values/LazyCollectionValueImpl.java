@@ -50,8 +50,7 @@ import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
 import org.eclipse.ocl.pivot.internal.iterators.PrependAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.PrependIterator;
 import org.eclipse.ocl.pivot.internal.iterators.SetElementCount;
-import org.eclipse.ocl.pivot.internal.iterators.SubOrderedSetIterator;
-import org.eclipse.ocl.pivot.internal.iterators.SubSequenceIterator;
+import org.eclipse.ocl.pivot.internal.iterators.SubCollectionIterator;
 import org.eclipse.ocl.pivot.internal.iterators.SymmetricDifferenceIterator;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -2131,13 +2130,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public @NonNull CollectionValue subOrderedSet(int lower, int upper) {
-		return SubOrderedSetIterator.subOrderedSet(this, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionValue subSequence(int lower, int upper) {
-		return SubSequenceIterator.subSequence(this, lower, upper);
+	public @NonNull CollectionValue subCollection(int lower, int upper) {
+		return SubCollectionIterator.create(this, lower, upper);
 	}
 
 	@Override

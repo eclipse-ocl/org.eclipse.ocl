@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -20,26 +20,24 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
- * SubSequenceIterator provides a lazy evaluation of the Collection::subSequence operation.
+ * SubOrderedSetIterator provides a lazy evaluation of the Collection::subOrderedSet/subSequence operation.
  *
  * @since 1.3
  */
-public class SubSequenceIterator extends LazyCollectionValueImpl
+public class SubCollectionIterator extends AbstractLazyIterator
 {
-	public static @NonNull CollectionValue subSequence(@NonNull CollectionValue sourceValue, int lower, int upper) {
-		return new SubSequenceIterator(sourceValue, lower, upper);
+	public static @NonNull CollectionValue create(@NonNull CollectionValue sourceValue, int lower, int upper) {
+		return new SmartCollectionValueImpl(sourceValue.getTypeId(), new SubCollectionIterator(sourceValue, lower, upper));
 	}
 
 	private final @NonNull CollectionValue sourceValue;
-	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private final int lower;
 	private final int upper;
+	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private int size = 0;
 
-	public SubSequenceIterator(@NonNull CollectionValue sourceValue, int lower, int upper) {
-		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
+	public SubCollectionIterator(@NonNull CollectionValue sourceValue, int lower, int upper) {
 		this.sourceValue = sourceValue;
-		this.sourceIterator = sourceValue.lazyIterator();
 		this.lower = lower;
 		this.upper = upper;
 		if (lower < 1) {
@@ -48,6 +46,7 @@ public class SubSequenceIterator extends LazyCollectionValueImpl
 		if (upper < lower) {
 			throw new InvalidValueException(PivotMessages.IndexOutOfRange, upper, "?");
 		}
+		this.sourceIterator = sourceValue.lazyIterator();
 	}
 
 	@Override
@@ -77,12 +76,12 @@ public class SubSequenceIterator extends LazyCollectionValueImpl
 
 	@Override
 	public @NonNull LazyIterator reIterator() {
-		return new SubSequenceIterator(sourceValue, lower, upper);
+		return new SubCollectionIterator(sourceValue, lower, upper);
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append("SubSeq{");
+		s.append("SubColl{");
 		s.append(sourceIterator);
 		s.append(",");
 		s.append(lower);

@@ -27,6 +27,6 @@ public class SequenceSubSequenceOperation extends AbstractSimpleTernaryOperation
 		CollectionValue selfValue = asSequenceValue(sourceValue);
 		Integer fromValue = asInteger(firstArgumentValue);
 		Integer toValue = asInteger(secondArgumentValue);
-		return selfValue.subSequence(fromValue, toValue);
+		return selfValue.subCollection(fromValue, toValue);
 	}
 }

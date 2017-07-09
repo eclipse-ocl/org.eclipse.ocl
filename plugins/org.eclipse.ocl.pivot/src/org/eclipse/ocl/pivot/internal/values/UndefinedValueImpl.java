@@ -699,12 +699,7 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
-	public @NonNull NullValue subOrderedSet(int lower, int upper) {
-		return toInvalidValue();
-	}
-
-	@Override
-	public @NonNull NullValue subSequence(int lower, int upper) {
+	public @NonNull NullValue subCollection(int lower, int upper) {
 		return toInvalidValue();
 	}
 
