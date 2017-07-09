@@ -214,12 +214,20 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 */
 	@NonNull CollectionValue intersection(@NonNull CollectionValue c);
 
+	boolean isBag();
+
 	/**
 	 * @generated NOT
 	 */
 	@NonNull Boolean isEmpty();
 
 	boolean isOrdered();
+
+	boolean isOrderedSet();
+
+	boolean isSequence();
+
+	boolean isSet();
 
 	boolean isUnique();
 
@@ -249,7 +257,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * further further (third...) iterators re-uses the cache. Re-iteration is undesirable so consumers
 	 * should invoke iterator() or eagerIterable() if multiple access are likely to occur.
 	 */
-	@NonNull BaggableIterator<@Nullable Object> lazyIterator();
+	@NonNull LazyIterator lazyIterator();
 
 	/**
 	 * @generated NOT

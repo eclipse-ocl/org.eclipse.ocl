@@ -470,6 +470,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public boolean isBag() {
+		return false;
+	}
+
+	@Override
 	public @NonNull Boolean isEmpty() {
 		throw new InvalidValueException(PivotMessages.ConvertibleValueRequired, "Invalid");
 	}
@@ -485,6 +490,21 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 
 	@Override
 	public boolean isOrdered() {
+		return false;
+	}
+
+	@Override
+	public boolean isOrderedSet() {
+		return false;
+	}
+
+	@Override
+	public boolean isSequence() {
+		return false;
+	}
+
+	@Override
+	public boolean isSet() {
 		return false;
 	}
 

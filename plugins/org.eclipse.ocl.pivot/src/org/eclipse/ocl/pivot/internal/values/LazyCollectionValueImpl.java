@@ -1111,8 +1111,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		CollectionTypeId collectionTypeId = TypeId.BAG.getSpecializedId(typeId.getElementTypeId());
-		return FromCollectionValueIterator.create(collectionTypeId, this);
+		return FromCollectionValueIterator.create(getBagTypeId(), this);
 	}
 
 	@Override
@@ -1180,8 +1179,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		CollectionTypeId collectionTypeId = TypeId.ORDERED_SET.getSpecializedId(typeId.getElementTypeId());
-		return FromCollectionValueIterator.create(collectionTypeId, this);
+		return FromCollectionValueIterator.create(getOrderedSetTypeId(), this);
 	}
 
 	@Override
@@ -1189,8 +1187,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		CollectionTypeId collectionTypeId = TypeId.SEQUENCE.getSpecializedId(typeId.getElementTypeId());
-		return FromCollectionValueIterator.create(collectionTypeId, this);
+		return FromCollectionValueIterator.create(getSequenceTypeId(), this);
 	}
 
 	@Override
@@ -1198,8 +1195,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		CollectionTypeId collectionTypeId = TypeId.SET.getSpecializedId(typeId.getElementTypeId());
-		return FromCollectionValueIterator.create(collectionTypeId, this);
+		return FromCollectionValueIterator.create(getSetTypeId(), this);
 	}
 
 	@Override
@@ -1823,6 +1819,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return intSize() == 0;
 	}
 
+	@Override
 	public boolean isBag() {
 		return collectionStrategy.isBag();
 	}
@@ -1832,14 +1829,17 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return collectionStrategy.isOrdered();
 	}
 
+	@Override
 	public boolean isOrderedSet() {
 		return collectionStrategy.isOrderedSet();
 	}
 
+	@Override
 	public boolean isSequence() {
 		return collectionStrategy.isSequence();
 	}
 
+	@Override
 	public boolean isSet() {
 		return collectionStrategy.isSet();
 	}

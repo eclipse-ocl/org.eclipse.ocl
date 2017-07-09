@@ -10,10 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
@@ -21,35 +18,37 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
- * FromCollectionValueIterator provides the loader for a CollectionValue from a CollectionValue, typically to convert between collection strategies.
+ * FromCollectionValueIterator provides the loader for a CollectionValue from a CollectionValue.
+ * This is typically to convert between collection strategies.
  */
 public class FromCollectionValueIterator extends AbstractLazyIterator
 {
-	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue elements) {
-		SmartCollectionValueImpl collectionValue = new SmartCollectionValueImpl(collectionTypeId, new FromCollectionValueIterator(elements));
-		if (!collectionValue.isSequence()) {
-			collectionValue.eagerIterable();	// uniqueness/counts must be eager
+	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue oldCollectionValue) {
+		SmartCollectionValueImpl newCollectionValue = new SmartCollectionValueImpl(collectionTypeId, new FromCollectionValueIterator(oldCollectionValue));
+		if (oldCollectionValue.isSequence() && !newCollectionValue.isSequence()) {
+			newCollectionValue.eagerIterable();	// uniqueness/counts must be eager
 		}
-		return collectionValue;
+		return newCollectionValue;
 	}
 
 	private @NonNull CollectionValue elements;
-	private @NonNull Iterator<@Nullable ? extends Object> iterator;
+	private @NonNull LazyIterator iterator;
 
 	protected FromCollectionValueIterator(@NonNull CollectionValue elements) {
 		this.elements = elements;
-		this.iterator = elements.iterator();
+		this.iterator = elements.lazyIterator();
 	}
 
 	@Override
 	public boolean isCached() {
-		return true;
+		return iterator.isCached();
 	}
 
 	@Override
 	public int getNextCount() {
-		if (iterator.hasNext()) {
-			return setNext(iterator.next(), 1);
+		int hasNextCount = iterator.hasNextCount();
+		if (hasNextCount > 0) {
+			return setNext(iterator.next(), hasNextCount);
 		}
 		return 0;
 	}
