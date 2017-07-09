@@ -22,8 +22,13 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  */
 public class SmartCollectionValueImpl extends LazyCollectionValueImpl
 {
+	@Deprecated /* @deprecated supply depth argument */
 	public SmartCollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull LazyIterator inputIterator) {
 		super(typeId, inputIterator, 0);
+	}
+
+	public SmartCollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull LazyIterator inputIterator, int lazyDepth) {
+		super(typeId, inputIterator, lazyDepth);
 	}
 
 	@Override

@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -22,10 +22,10 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  *
  * @since 1.3
  */
-public class SymmetricDifferenceIterator extends LazyCollectionValueImpl
+public class SymmetricDifferenceIterator extends AbstractLazyIterator
 {
-	public static @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
-		return new SymmetricDifferenceIterator(sourceValue, otherValue);
+	public static @NonNull CollectionValue create(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
+		return new SmartCollectionValueImpl(sourceValue.getTypeId(), new SymmetricDifferenceIterator(sourceValue, otherValue));
 	}
 
 	private final @NonNull CollectionValue sourceValue;
@@ -34,7 +34,6 @@ public class SymmetricDifferenceIterator extends LazyCollectionValueImpl
 	private final @NonNull BaggableIterator<@Nullable Object> otherIterator;
 
 	public SymmetricDifferenceIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
-		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		sourceValue.eagerIterable();
 		otherValue.eagerIterable();
 		this.sourceValue = sourceValue;

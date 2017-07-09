@@ -75,6 +75,11 @@ public class SubCollectionIterator extends AbstractLazyIterator
 	}
 
 	@Override
+	public boolean isCached() {
+		return true;
+	}
+
+	@Override
 	public @NonNull LazyIterator reIterator() {
 		return new SubCollectionIterator(sourceValue, lower, upper);
 	}

@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
+import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy;
 
 /**
  * LazyCollectionValue extends the inherently eager CollectionValue to support lazy and lazily cached iterations.
@@ -157,6 +158,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 * @generated NOT
 	 */
 	@NonNull Collection<@Nullable Object> getElements();
+
+	/**
+	 * @generated NOT
+	 */
+	@NonNull EqualsStrategy getEqualsStrategy();
 
 	/**
 	 * @generated NOT

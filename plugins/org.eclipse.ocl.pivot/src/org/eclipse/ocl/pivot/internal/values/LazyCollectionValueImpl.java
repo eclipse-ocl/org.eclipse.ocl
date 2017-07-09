@@ -974,7 +974,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	/**
 	 * Return the number of cascaded lazy iterators terminating in sourceValue.
 	 */
-	protected static int lazyDepth(@NonNull Object sourceValue) {
+	public static int lazyDepth(@NonNull Object sourceValue) {
 		if (!(sourceValue instanceof LazyCollectionValueImpl)) {
 			return 0;
 		}
@@ -1549,6 +1549,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
+	public @NonNull EqualsStrategy getEqualsStrategy() {
+		return equalsStrategy;
+	}
+
+	@Override
 	public @NonNull String getKind() {
 		return collectionStrategy.getKind();
 	}
@@ -2053,7 +2058,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue prepend(@Nullable Object value) {
-		return PrependIterator.prepend(typeId, this, value);
+		return PrependIterator.create(typeId, this, value);
 	}
 
 	@Override
@@ -2136,7 +2141,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue that) {
-		return SymmetricDifferenceIterator.symmetricDifference(this, that);
+		return SymmetricDifferenceIterator.create(this, that);
 	}
 
 	@Override
