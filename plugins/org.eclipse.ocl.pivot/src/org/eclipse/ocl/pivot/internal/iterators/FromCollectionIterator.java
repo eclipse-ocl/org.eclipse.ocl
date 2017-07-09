@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -19,24 +22,24 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
- * FromArrayIterator provides the loader for a CollectionValue from an array.
+ * FromArrayIterator provides the loader for a CollectionValue from a Collection.
  */
-public class FromArrayIterator extends AbstractLazyIterator
+public class FromCollectionIterator extends AbstractLazyIterator
 {
-	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, boolean uniqueElements, @Nullable Object @NonNull [] elements) {
-		SmartCollectionValueImpl collectionValue = new SmartCollectionValueImpl(collectionTypeId, new FromArrayIterator(elements));
+	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, boolean uniqueElements, @NonNull Collection<@Nullable ? extends Object> elements) {
+		SmartCollectionValueImpl collectionValue = new SmartCollectionValueImpl(collectionTypeId, new FromCollectionIterator(elements));
 		if (!uniqueElements && !collectionValue.isSequence()) {
 			collectionValue.eagerIterable();	// uniqueness/counts must be eager
 		}
 		return collectionValue;
 	}
 
-	private @Nullable Object @NonNull [] elements;
-	private int nextIndex;
+	private @NonNull Collection<@Nullable ? extends Object> elements;
+	private @NonNull Iterator<@Nullable ? extends Object> iterator;
 
-	protected FromArrayIterator(@Nullable Object @NonNull [] elements) {
+	protected FromCollectionIterator(@NonNull Collection<@Nullable ? extends Object> elements) {
 		this.elements = elements;
-		this.nextIndex = 0;
+		this.iterator = elements.iterator();
 	}
 
 	@Override
@@ -46,19 +49,19 @@ public class FromArrayIterator extends AbstractLazyIterator
 
 	@Override
 	public int getNextCount() {
-		if (nextIndex < elements.length) {
-			return setNext(elements[nextIndex++], 1);
+		if (iterator.hasNext()) {
+			return setNext(iterator.next(), 1);
 		}
 		return 0;
 	}
 
 	@Override
 	public @NonNull LazyIterator reIterator() {
-		return new FromArrayIterator(elements);
+		return new FromCollectionIterator(elements);
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		LazyCollectionValueImpl.appendArray(s, elements, 50);
+		LazyCollectionValueImpl.appendIterable(s, elements, 50);
 	}
 }

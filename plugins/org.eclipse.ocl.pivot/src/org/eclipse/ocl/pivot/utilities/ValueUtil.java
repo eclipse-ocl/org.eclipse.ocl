@@ -41,11 +41,8 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.FromArrayIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FromCollectionIterator;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BigIntegerValueImpl;
@@ -572,7 +569,7 @@ public abstract class ValueUtil
 
 	@Deprecated /* @deprecated Use createCollectionOfEach */
 	public static @NonNull CollectionValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return createCollectionOfEach(typeId, boxedValues);
+		return createCollectionOfEach(typeId, false, boxedValues);
 	}
 
 	public static @NonNull CollectionValue createBagRange(@NonNull CollectionTypeId typeId, @Nullable Object... values) {
@@ -588,9 +585,9 @@ public abstract class ValueUtil
 		return new MutableCollectionValueImpl(typeId, allValues.iterator());
 	}
 
+	@Deprecated /* @deprecated Use createCollectionValue */
 	public static @NonNull CollectionValue createBagValue(@NonNull CollectionTypeId typeId, @NonNull Bag<@Nullable ? extends Object> boxedValues) {
-		checkValid(boxedValues);
-		return AsBagIterator.FromCollection.create(typeId, boxedValues);		// FIXME reuse Bag
+		return createCollectionValue(typeId, false, boxedValues);
 	}
 
 	public static @NonNull MutableIterable createCollectionAccumulatorValue(@NonNull CollectionTypeId collectedId) {
@@ -609,10 +606,9 @@ public abstract class ValueUtil
 		}
 	}
 
-	public static @NonNull CollectionValue createCollectionOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
+	public static @NonNull CollectionValue createCollectionOfEach(@NonNull CollectionTypeId typeId, boolean uniqueElements, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
-		return FromArrayIterator.create(typeId, boxedValues);
-		//		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
+		return FromArrayIterator.create(typeId, uniqueElements, boxedValues);
 	}
 
 	public static @NonNull InvalidValueException createInvalidValue(@NonNull Exception e) {
@@ -622,6 +618,11 @@ public abstract class ValueUtil
 		else {
 			return new InvalidValueException(e);
 		}
+	}
+
+	public static @NonNull CollectionValue createCollectionValue(@NonNull CollectionTypeId typeId, boolean uniqueElements, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+		checkValid(boxedValues);
+		return FromCollectionIterator.create(typeId, uniqueElements, boxedValues);
 	}
 
 	public static @NonNull MapValue createMapOfEach(@NonNull MapTypeId typeId, @NonNull MapEntry @NonNull ... mapEntries) {
@@ -650,7 +651,7 @@ public abstract class ValueUtil
 
 	@Deprecated /* @deprecated Use createCollectionOfEach */
 	public static @NonNull CollectionValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return createCollectionOfEach(typeId, boxedValues);
+		return createCollectionOfEach(typeId, false, boxedValues);
 	}
 
 	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
@@ -666,9 +667,9 @@ public abstract class ValueUtil
 		return mutableIterable;
 	}
 
+	@Deprecated /* @deprecated Use createCollectionValue */
 	public static @NonNull CollectionValue createOrderedSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
-		checkValid(boxedValues);
-		return new AsOrderedSetIterator.FromCollection(typeId, boxedValues);
+		return createCollectionValue(typeId, false, boxedValues);
 	}
 
 	public static @NonNull IntegerRange createRange(@NonNull IntegerValue firstInteger, @NonNull IntegerValue lastInteger) {
@@ -681,7 +682,7 @@ public abstract class ValueUtil
 
 	@Deprecated /* @deprecated Use createCollectionOfEach */
 	public static @NonNull CollectionValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return createCollectionOfEach(typeId, boxedValues);
+		return createCollectionOfEach(typeId, false, boxedValues);
 	}
 
 	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
@@ -701,9 +702,9 @@ public abstract class ValueUtil
 		return mutableIterable;
 	}
 
+	@Deprecated /* @deprecated Use createCollectionValue */
 	public static @NonNull CollectionValue createSequenceValue(@NonNull CollectionTypeId typeId, @NonNull List<@Nullable ? extends Object> boxedValues) {
-		checkValid(boxedValues);
-		return new AsSequenceIterator.FromCollection(typeId, boxedValues);
+		return createCollectionValue(typeId, false, boxedValues);
 	}
 
 	public static @NonNull MutableIterable createSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
@@ -712,7 +713,7 @@ public abstract class ValueUtil
 
 	@Deprecated /* @deprecated Use createCollectionOfEach */
 	public static @NonNull CollectionValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		return createCollectionOfEach(typeId, boxedValues);
+		return createCollectionOfEach(typeId, false, boxedValues);
 	}
 
 	public static @NonNull CollectionValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
@@ -730,10 +731,9 @@ public abstract class ValueUtil
 		return allValues;
 	}
 
+	@Deprecated /* @deprecated Use createCollectionValue */
 	public static @NonNull CollectionValue createSetValue(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
-		checkValid(boxedValues);
-		return AsSetIterator.FromCollection.create(typeId, boxedValues);
-		//		return new SetValueImpl(typeId, boxedValues);
+		return createCollectionValue(typeId, false, boxedValues);
 	}
 
 	public static @NonNull TupleValue createTupleValue(@NonNull TupleTypeId typeId, @NonNull Map<@NonNull ? extends TuplePartId, @Nullable Object> values) {

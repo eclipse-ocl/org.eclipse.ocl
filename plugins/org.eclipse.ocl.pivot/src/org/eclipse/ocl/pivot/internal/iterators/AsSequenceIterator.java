@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -88,21 +87,6 @@ public abstract class AsSequenceIterator extends LazyCollectionValueImpl
 			s.append("«future»");
 		}
 		s.append("}");
-	}
-
-	public static class FromCollection extends AsSequenceIterator
-	{
-		private @NonNull Collection<@Nullable ? extends Object> boxedValues;
-
-		public FromCollection(@NonNull CollectionTypeId typeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
-			super(typeId, boxedValues.iterator());
-			this.boxedValues = boxedValues;
-		}
-
-		@Override
-		public @NonNull LazyIterator reIterator() {
-			return new FromCollection(typeId, boxedValues);
-		}
 	}
 
 	public static class FromCollectionValue extends AsSequenceIterator

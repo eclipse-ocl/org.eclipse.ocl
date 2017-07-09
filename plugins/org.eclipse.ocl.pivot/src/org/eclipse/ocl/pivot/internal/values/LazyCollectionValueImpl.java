@@ -1226,9 +1226,9 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyListOfElements2 == null) {
 			if (lazyIterator) {
 				System.err.println(NameUtil.debugSimpleName(this) + " re-iterating");
-				//				throw new UnsupportedOperationException();
+				throw new UnsupportedOperationException();
 				//				this.inputIterator = reIterator();
-				return new SmartCollectionValueImpl(typeId, ((AbstractLazyIterator)inputIterator).reIterator());
+				//				return new SmartCollectionValueImpl(typeId, ((AbstractLazyIterator)inputIterator).reIterator());
 			}
 			else {
 				//				this.inputIterator = this;
@@ -1869,14 +1869,14 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	@Override
 	public synchronized @NonNull LazyIterator lazyIterator() {
 		if (lazyListOfElements == null) {
-			if (!lazyIterator) {
-				if (inputIterator.isCached()) {
-					return inputIterator.reIterator();
-				}
+			if (!lazyIterator) {						// First time
 				lazyIterator = true;
-				return inputIterator;
+				return inputIterator;					// use the input iterator
 			}
-			cachedIterable();
+			if (inputIterator.isCached()) {				// If the input iterator is cached
+				return inputIterator.reIterator();		// use a reIterator
+			}
+			cachedIterable();							// activate the cache
 		}
 		return createLazyIterator();
 	}

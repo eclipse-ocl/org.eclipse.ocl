@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
@@ -55,25 +53,6 @@ public abstract class AsBagIterator extends AbstractLazyIterator
 		s.append("«future»");
 		//		}
 		s.append("}");
-	}
-
-	public static class FromCollection extends AsBagIterator
-	{
-		public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
-			return new SmartCollectionValueImpl(collectionTypeId, new FromCollection(boxedValues));
-		}
-
-		private @NonNull Collection<@Nullable ? extends Object> boxedValues;
-
-		protected FromCollection(@NonNull Collection<@Nullable ? extends Object> boxedValues) {
-			super(boxedValues.iterator());
-			this.boxedValues = boxedValues;
-		}
-
-		@Override
-		public @NonNull LazyIterator reIterator() {
-			return new FromCollection(boxedValues);
-		}
 	}
 
 	public static class FromCollectionValue extends AsBagIterator

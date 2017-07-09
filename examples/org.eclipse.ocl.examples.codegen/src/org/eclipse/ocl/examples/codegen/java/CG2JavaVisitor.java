@@ -1382,6 +1382,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(".createCollectionOfEach(");
 			//		CGTypeVariable typeVariable = localContext.getTypeVariable(cgCollectionExp.getTypeId());
 			js.appendIdReference(cgCollectionExp.getTypeId().getElementId());
+			js.append(", false");				// FIXME compute uniqueness of constants
 			for (CGCollectionPart cgPart : cgCollectionExp.getParts()) {
 				js.append(", ");
 				if (cgPart.isNull() && (cgCollectionExp.getParts().size() == 1)) {

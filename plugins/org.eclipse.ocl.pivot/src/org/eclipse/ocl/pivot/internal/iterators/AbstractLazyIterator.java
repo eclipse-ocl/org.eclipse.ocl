@@ -95,5 +95,12 @@ public abstract class AbstractLazyIterator implements LazyIterator
 		return nextCount;
 	}
 
+	@Override
+	public @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 50);
+		return s.toString();
+	}
+
 	public abstract void toString(@NonNull StringBuilder s, int sizeLimit);
 }

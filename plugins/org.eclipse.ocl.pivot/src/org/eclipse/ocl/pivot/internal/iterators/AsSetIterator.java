@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
@@ -67,33 +65,6 @@ public abstract class AsSetIterator extends AbstractLazyIterator
 		s.append("«future»");
 		//		}
 		s.append("}");
-	}
-
-	public static class FromCollection extends AsSetIterator
-	{
-		public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
-			assert !(boxedValues instanceof CollectionValue);
-			SmartCollectionValueImpl collectionValue = new SmartCollectionValueImpl(collectionTypeId, new FromCollection(boxedValues));
-			if (collectionValue.isSequence()) {
-				collectionValue.cachedIterable();
-			}
-			else {
-				collectionValue.eagerIterable();
-			}
-			return collectionValue;
-		}
-
-		private @NonNull Collection<@Nullable ? extends Object> boxedValues;
-
-		protected FromCollection(@NonNull Collection<@Nullable ? extends Object> boxedValues) {
-			super(boxedValues.iterator());
-			this.boxedValues = boxedValues;
-		}
-
-		@Override
-		public @NonNull LazyIterator reIterator() {
-			return new FromCollection(boxedValues);
-		}
 	}
 
 	public static class FromCollectionValue extends AsSetIterator
