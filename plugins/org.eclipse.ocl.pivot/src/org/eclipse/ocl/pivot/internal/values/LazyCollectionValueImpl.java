@@ -56,7 +56,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -1812,11 +1811,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public void mutableAppendAll(@NonNull Iterator<@Nullable Object> rightIterator) {
+	public void mutableAppendAll(@NonNull LazyIterator rightIterator) {
 		assert hashCode == 0;
-		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
-			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
-			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
+		if (!collectionStrategy.isSequence()) {
+			for (int nextCount; (nextCount = rightIterator.hasNextCount()) > 0; ) {
 				collectionStrategy.appendTo(this, rightIterator.next(), nextCount);
 			}
 		}
@@ -1862,11 +1860,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public void mutableExcludingAll(@NonNull Iterator<@Nullable Object> rightIterator) {
+	public void mutableExcludingAll(@NonNull LazyIterator rightIterator) {
 		assert hashCode == 0;
-		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
-			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
-			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
+		if (!collectionStrategy.isSequence()) {
+			for (int nextCount; (nextCount = rightIterator.hasNextCount()) > 0; ) {
 				collectionStrategy.removeFrom(this, rightIterator.next(), nextCount);
 			}
 		}
@@ -1884,11 +1881,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public void mutableIncludingAll(@NonNull Iterator<@Nullable Object> rightIterator) {
+	public void mutableIncludingAll(@NonNull LazyIterator rightIterator) {
 		assert hashCode == 0;
-		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
-			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
-			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
+		if (!collectionStrategy.isSequence()) {
+			for (int nextCount; (nextCount = rightIterator.hasNextCount()) > 0; ) {
 				collectionStrategy.addTo(this, rightIterator.next(), nextCount);
 			}
 		}
@@ -1905,34 +1901,18 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 * rather than common minimum counts.
 	 */
 	@Override
-	public void mutableIntersection(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
+	public void mutableIntersection(@NonNull LazyIterator rightIterator, boolean isUnique) {
 		assert hashCode == 0;
 		assert ((CollectionValue)this).isUnique() || !((CollectionValue)this).isOrdered();
 		Map<@Nullable Object, @NonNull ElementCount> savedMapOfElement2elementCount = getMapOfElement2elementCount();
-		Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
 		lazyListOfElements = new ArrayList<>();
 		size = 0;
 		collectionStrategy = isUnique ? SetStrategy.INSTANCE : BagStrategy.INSTANCE;
-		if (rightIterator instanceof BaggableIterator<?>) {
-			BaggableIterator<@Nullable Object> baggableIterator = (BaggableIterator<@Nullable Object>)rightIterator;
-			for (int rightCount; (rightCount = baggableIterator.hasNextCount()) > 0; ) {
-				@Nullable Object rightValue = baggableIterator.next();
-				ElementCount leftElementCount = savedMapOfElement2elementCount.get(rightValue);
-				if (leftElementCount != null) {
-					collectionStrategy.addTo(this, rightValue, Math.min(leftElementCount.intValue(), rightCount));
-				}
-			}
-		}
-		else {
-			while (rightIterator.hasNext()) {
-				@Nullable Object rightValue = rightIterator.next();
-				ElementCount leftElementCount = savedMapOfElement2elementCount.get(rightValue);
-				if (leftElementCount != null) {
-					ElementCount intersectionElementCount = lazyMapOfElement2elementCount2.get(rightValue);
-					if ((intersectionElementCount == null) || (intersectionElementCount.intValue() < leftElementCount.intValue())) {
-						collectionStrategy.addTo(this, rightValue, 1);
-					}
-				}
+		for (int rightCount; (rightCount = rightIterator.hasNextCount()) > 0; ) {
+			@Nullable Object rightValue = rightIterator.next();
+			ElementCount leftElementCount = savedMapOfElement2elementCount.get(rightValue);
+			if (leftElementCount != null) {
+				collectionStrategy.addTo(this, rightValue, Math.min(leftElementCount.intValue(), rightCount));
 			}
 		}
 		// NB the determinstic order is that of the right value; ?? should we re-instate the left order
@@ -1950,20 +1930,12 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 * rather than sum counts.
 	 */
 	@Override
-	public void mutableUnion(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
+	public void mutableUnion(@NonNull LazyIterator rightIterator, boolean isUnique) {
 		assert hashCode == 0;
 		assert ((CollectionValue)this).isUnique() || !((CollectionValue)this).isOrdered();
 		collectionStrategy = isUnique ? SetStrategy.INSTANCE : BagStrategy.INSTANCE;
-		if (rightIterator instanceof BaggableIterator<?>) {
-			BaggableIterator<@Nullable Object> baggableIterator = (BaggableIterator<@Nullable Object>)rightIterator;
-			for (int rightCount; (rightCount = baggableIterator.hasNextCount()) > 0; ) {
-				collectionStrategy.addTo(this, baggableIterator.next(), rightCount);
-			}
-		}
-		else {
-			while (rightIterator.hasNext()) {
-				collectionStrategy.addTo(this, rightIterator.next(), 1);
-			}
+		for (int rightCount; (rightCount = rightIterator.hasNextCount()) > 0; ) {
+			collectionStrategy.addTo(this, rightIterator.next(), rightCount);
 		}
 	}
 

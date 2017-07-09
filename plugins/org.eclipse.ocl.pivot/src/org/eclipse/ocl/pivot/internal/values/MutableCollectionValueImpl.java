@@ -37,7 +37,10 @@ public class MutableCollectionValueImpl extends LazyCollectionValueImpl
 		super(typeId, EMPTY_ITERATOR, 0);
 		this.elements = elements;
 		mutableIterable();
-		mutableIncludingAll(elements);
+		//		mutableIncludingAll(elements);
+		while (elements.hasNext()) {
+			mutableIncluding(elements.next());
+		}
 	}
 
 	@Override

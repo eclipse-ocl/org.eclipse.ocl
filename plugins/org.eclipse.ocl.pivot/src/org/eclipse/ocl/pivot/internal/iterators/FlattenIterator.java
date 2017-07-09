@@ -18,7 +18,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
-import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
@@ -80,8 +79,8 @@ public class FlattenIterator extends AbstractLazyIterator
 	}
 
 	private @NonNull CollectionValue sourceValue;
-	private @NonNull BaggableIterator<@Nullable Object> sourceIterator;
-	private @Nullable Stack<@NonNull BaggableIterator<@Nullable Object>> iteratorStack = null;
+	private @NonNull LazyIterator sourceIterator;
+	private @Nullable Stack<@NonNull LazyIterator> iteratorStack = null;
 
 	public FlattenIterator(@NonNull CollectionValue sourceValue) {
 		this.sourceValue = sourceValue;
@@ -94,7 +93,7 @@ public class FlattenIterator extends AbstractLazyIterator
 		if (nextCount > 0) {
 			Object next = sourceIterator.next();
 			if (next instanceof CollectionValue) {
-				Stack<BaggableIterator<@Nullable Object>> iteratorStack2 = iteratorStack;
+				Stack<LazyIterator> iteratorStack2 = iteratorStack;
 				if (iteratorStack2 == null) {
 					iteratorStack2 = iteratorStack = new Stack<>();
 				}
@@ -104,11 +103,11 @@ public class FlattenIterator extends AbstractLazyIterator
 			}
 			return setNext(next, nextCount);
 		}
-		Stack<BaggableIterator<@Nullable Object>> iteratorStack2 = iteratorStack;
+		Stack<@NonNull LazyIterator> iteratorStack2 = iteratorStack;
 		if ((iteratorStack2 == null) || iteratorStack2.isEmpty()) {
 			return 0;
 		}
-		BaggableIterator<@Nullable Object> popped = iteratorStack2.pop();
+		LazyIterator popped = iteratorStack2.pop();
 		assert popped != null;
 		sourceIterator = popped;
 		return hasNextCount();

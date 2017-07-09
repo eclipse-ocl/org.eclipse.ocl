@@ -11,10 +11,8 @@
 package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
@@ -44,8 +42,8 @@ public abstract class PrependAllIterator extends AbstractLazyIterator
 
 	protected final @NonNull CollectionValue sourceValue;
 	protected final @NonNull CollectionValue prependValue;
-	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
-	protected final @NonNull BaggableIterator<@Nullable Object> prependIterator;
+	protected final @NonNull LazyIterator sourceIterator;
+	protected final @NonNull LazyIterator prependIterator;
 
 	public PrependAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
 		this.sourceValue = sourceValue;

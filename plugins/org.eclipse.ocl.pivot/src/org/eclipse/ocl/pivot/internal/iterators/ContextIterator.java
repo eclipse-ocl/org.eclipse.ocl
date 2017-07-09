@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
-import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.LazyCollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
@@ -34,7 +33,7 @@ public class ContextIterator extends AbstractLazyIterator
 	protected final @NonNull NamedElement executableObject;
 	protected final /*@NonNull*/ TypedElement caller;
 	protected final @NonNull LazyCollectionValue lazyValue;
-	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
+	protected final @NonNull LazyIterator sourceIterator;
 	protected final @NonNull Map<@NonNull TypedElement, @Nullable Object> variable2value = new HashMap<>();
 
 	public ContextIterator(@NonNull ExecutorExtension executor, @NonNull NamedElement executableObject, /*@NonNull*/ TypedElement caller, @NonNull LazyCollectionValue lazyValue) {

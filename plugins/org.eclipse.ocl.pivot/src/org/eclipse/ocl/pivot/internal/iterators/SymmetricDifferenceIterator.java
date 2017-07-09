@@ -11,9 +11,7 @@
 package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
-import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
@@ -31,8 +29,8 @@ public class SymmetricDifferenceIterator extends AbstractLazyIterator
 
 	private final @NonNull CollectionValue sourceValue;
 	private final @NonNull CollectionValue otherValue;
-	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
-	private final @NonNull BaggableIterator<@Nullable Object> otherIterator;
+	private final @NonNull LazyIterator sourceIterator;
+	private final @NonNull LazyIterator otherIterator;
 
 	public SymmetricDifferenceIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
 		sourceValue.eagerIterable();

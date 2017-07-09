@@ -11,8 +11,8 @@
 package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
+import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
  * SelectIterator provides the framework for lazy evaluation of a Collection::select iteration.
@@ -27,7 +27,7 @@ public abstract class SelectIterator extends AbstractLazyIterator
 	//	}
 
 	protected final @NonNull CollectionValue sourceValue;
-	private final @NonNull BaggableIterator<Object> sourceIterator;
+	private final @NonNull LazyIterator sourceIterator;
 
 	protected SelectIterator(@NonNull CollectionValue sourceValue) {
 		this.sourceValue = sourceValue;

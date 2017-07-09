@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -35,7 +34,7 @@ public class ExcludingIterator extends AbstractLazyIterator
 	}
 
 	private final @NonNull CollectionValue sourceValue;
-	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
+	private final @NonNull LazyIterator sourceIterator;
 	private final @Nullable Object object;
 	private final @NonNull EqualsStrategy equalsStrategy;
 

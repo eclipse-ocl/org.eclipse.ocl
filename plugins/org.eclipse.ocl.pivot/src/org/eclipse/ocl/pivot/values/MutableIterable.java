@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -36,7 +34,7 @@ public interface MutableIterable extends CollectionValue.Accumulator, LazyIterab
 {
 	void mutableAppend(@Nullable Object rightValue);
 
-	void mutableAppendAll(@NonNull Iterator<@Nullable Object> rightIterator);
+	void mutableAppendAll(@NonNull LazyIterator rightIterator);
 
 	void mutableAsBag();
 
@@ -48,23 +46,23 @@ public interface MutableIterable extends CollectionValue.Accumulator, LazyIterab
 
 	void mutableExcluding(@Nullable Object rightValue);
 
-	void mutableExcludingAll(@NonNull Iterator<@Nullable Object> rightIterator);
+	void mutableExcludingAll(@NonNull LazyIterator rightIterator);
 
 	void mutableIncluding(@Nullable Object rightValue);
 
-	void mutableIncludingAll(@NonNull Iterator<@Nullable Object> rightIterator);
+	void mutableIncludingAll(@NonNull LazyIterator rightIterator);
 
 	/**
 	 * Modify this to be the intersection of this and rightIterator,
 	 * This the underlying content of initialthe CollectionValue. If isUnique, the resulting intersection has unit counts
 	 * rather than common minimum counts.
 	 */
-	void mutableIntersection(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique);
+	void mutableIntersection(@NonNull LazyIterator rightIterator, boolean isUnique);
 
 	/**
 	 * Modify this to be the union of this and rightIterator,
 	 * This the underlying content of the CollectionValue. If isUnique, the resulting union has unit counts
 	 * rather than sum counts.
 	 */
-	void mutableUnion(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique);
+	void mutableUnion(@NonNull LazyIterator rightIterator, boolean isUnique);
 }
