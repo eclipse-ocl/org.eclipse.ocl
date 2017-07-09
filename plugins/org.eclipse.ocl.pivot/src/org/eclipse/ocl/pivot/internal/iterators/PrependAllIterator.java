@@ -12,7 +12,8 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -22,21 +23,23 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  *
  * @since 1.3
  */
-public abstract class PrependAllIterator extends LazyCollectionValueImpl
+public abstract class PrependAllIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue prependAll(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
+		LazyIterator inputIterator;
 		if (sourceValue.isUnique()) {
 			if (!prependValue.isUnique()) {
 				prependValue = prependValue.asUniqueCollectionValue();
 			}
-			return new ToUnique(sourceValue, prependValue);
+			inputIterator = new ToUnique(sourceValue, prependValue);
 		}
 		else if (sourceValue.isOrdered()) {
-			return new ToSequence(sourceValue, prependValue);
+			inputIterator = new ToSequence(sourceValue, prependValue);
 		}
 		else {
-			return new ToBag(sourceValue, prependValue);
+			inputIterator = new ToBag(sourceValue, prependValue);
 		}
+		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
 	}
 
 	protected final @NonNull CollectionValue sourceValue;
@@ -45,7 +48,6 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 	protected final @NonNull BaggableIterator<@Nullable Object> prependIterator;
 
 	public PrependAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
-		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.prependValue = prependValue;
 		this.sourceIterator = sourceValue.lazyIterator();
@@ -74,7 +76,7 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			int prependCount = prependIterator.hasNextCount();
 			if (prependCount > 0) {
 				Object next = prependIterator.next();
@@ -105,7 +107,7 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			int nextCount = prependIterator.hasNextCount();
 			if (nextCount > 0) {
 				return setNext(prependIterator.next(), nextCount);
@@ -129,12 +131,12 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		private final @NonNull CollectionValue prependValue;		// FIXME Use MapOfElement2ElementCount
 
 		public ToUnique(@NonNull CollectionValue sourceValue, @NonNull CollectionValue prependValue) {
-			super(sourceValue, eagerCollectionValue(prependValue));		// Multiple accesses occur
+			super(sourceValue, ValueUtil.eagerCollectionValue(prependValue));		// Multiple accesses occur
 			this.prependValue = prependValue;
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			int nextCount = prependIterator.hasNextCount();
 			if (nextCount > 0) {
 				return setNext(prependIterator.next(), nextCount);

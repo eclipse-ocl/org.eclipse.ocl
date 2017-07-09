@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.iterators.ContextIterator;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -201,7 +202,8 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 	public @Nullable Object evaluate(@NonNull OCLExpression expression, @NonNull NamedElement executableObject, /*@NonNull*/ TypedElement caller) {
 		Object result = evaluate(expression);
 		if (result instanceof LazyCollectionValue) {
-			result = new ContextIterator(this, executableObject, caller, (LazyCollectionValue)result);
+			LazyCollectionValue collectionValue = (LazyCollectionValue)result;
+			result = new SmartCollectionValueImpl(collectionValue.getTypeId(), new ContextIterator(this, executableObject, caller, collectionValue), collectionValue);
 		}
 		return result;
 	}

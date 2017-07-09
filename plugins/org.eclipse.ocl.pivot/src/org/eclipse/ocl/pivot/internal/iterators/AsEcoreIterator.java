@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -25,7 +24,7 @@ import org.eclipse.ocl.pivot.values.Value;
  *
  * @since 1.3
  */
-public class AsEcoreIterator extends LazyCollectionValueImpl
+public class AsEcoreIterator extends AbstractLazyIterator
 {
 	private final @NonNull CollectionValue sourceValue;
 	private final @NonNull IdResolver idResolver;
@@ -33,7 +32,6 @@ public class AsEcoreIterator extends LazyCollectionValueImpl
 	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 
 	public AsEcoreIterator(@NonNull CollectionValue sourceValue, @NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
-		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.idResolver = idResolver;
 		this.instanceClass = instanceClass;

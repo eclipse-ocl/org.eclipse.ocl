@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -24,13 +24,14 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  *
  * @since 1.3
  */
-public class ExcludingIterator extends LazyCollectionValueImpl
+public class ExcludingIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue excluding(@NonNull CollectionValue sourceValue, @Nullable Object object) {
 		if (object instanceof InvalidValueException) {
 			throw (InvalidValueException)object;
 		}
-		return new ExcludingIterator(sourceValue, object);
+		ExcludingIterator inputIterator = new ExcludingIterator(sourceValue, object);
+		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
 	}
 
 	private final @NonNull CollectionValue sourceValue;
@@ -39,15 +40,14 @@ public class ExcludingIterator extends LazyCollectionValueImpl
 	private final @NonNull EqualsStrategy equalsStrategy;
 
 	public ExcludingIterator(@NonNull CollectionValue sourceValue, @Nullable Object object) {
-		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.sourceIterator = sourceValue.lazyIterator();
 		this.object = object;
-		this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), object == null);
+		this.equalsStrategy = TypeUtil.getEqualsStrategy(sourceValue.getTypeId().getElementTypeId(), object == null);
 	}
 
 	@Override
-	protected int getNextCount() {
+	public int getNextCount() {
 		for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 			Object next = sourceIterator.next();
 			if (!equalsStrategy.isEqual(next, object)) {

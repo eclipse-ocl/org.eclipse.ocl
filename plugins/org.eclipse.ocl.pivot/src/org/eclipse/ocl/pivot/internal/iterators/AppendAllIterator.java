@@ -12,7 +12,8 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -22,21 +23,23 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  *
  * @since 1.3
  */
-public abstract class AppendAllIterator extends LazyCollectionValueImpl
+public abstract class AppendAllIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue appendAll(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
+		LazyIterator inputIterator;
 		if (sourceValue.isUnique()) {
-			if (!appendedValue.isUnique()) {
-				appendedValue = appendedValue.asUniqueCollectionValue();
-			}
-			return new ToUnique(sourceValue, appendedValue);
+			//			if (!appendedValue.isUnique()) {
+			//				appendedValue = appendedValue.asUniqueCollectionValue();
+			//			}
+			inputIterator = new ToUnique(sourceValue, appendedValue);
 		}
 		else if (sourceValue.isOrdered()) {
-			return new ToSequence(sourceValue, appendedValue);
+			inputIterator = new ToSequence(sourceValue, appendedValue);
 		}
 		else {
-			return new ToBag(sourceValue, appendedValue);
+			inputIterator = new ToBag(sourceValue, appendedValue);
 		}
+		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
 	}
 
 	protected final @NonNull CollectionValue sourceValue;
@@ -45,7 +48,6 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 	protected final @NonNull BaggableIterator<@Nullable Object> appendIterator;
 
 	protected AppendAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
-		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
 		this.appendedValue = appendedValue;
 		this.sourceIterator = sourceValue.lazyIterator();
@@ -71,7 +73,7 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 				Object next = sourceIterator.next();
 				if (!appendedValue.includes(next)) {
@@ -101,7 +103,7 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			boolean hasNext = sourceIterator.hasNext();
 			if (hasNext) {
 				return setNext(sourceIterator.next(), 1);
@@ -125,12 +127,12 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 		private final @NonNull CollectionValue appendedValue;		// FIXME Use MapOfElement2ElementCount
 
 		public ToUnique(@NonNull CollectionValue sourceValue, @NonNull CollectionValue appendedValue) {
-			super(sourceValue, eagerCollectionValue(appendedValue));		// Multiple accesses occur
+			super(sourceValue, ValueUtil.eagerCollectionValue(appendedValue));		// Multiple accesses occur
 			this.appendedValue = appendedValue;
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			while (sourceIterator.hasNextCount() > 0) {
 				Object next = sourceIterator.next();
 				if (!appendedValue.includes(next)) {

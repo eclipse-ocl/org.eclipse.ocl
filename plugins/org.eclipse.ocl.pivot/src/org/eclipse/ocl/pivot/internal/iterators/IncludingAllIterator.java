@@ -13,8 +13,9 @@ package org.eclipse.ocl.pivot.internal.iterators;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -24,31 +25,37 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  *
  * @since 1.3
  */
-public abstract class IncludingAllIterator extends LazyCollectionValueImpl
+public abstract class IncludingAllIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue includingAll(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
+		LazyIterator inputIterator;
 		if (sourceValue.isUnique()) {
 			if (!includeValue.isUnique()) {
 				includeValue = includeValue.asUniqueCollectionValue();
 			}
-			return new ToUnique(collectionTypeId, sourceValue, includeValue);
+			inputIterator = new ToUnique(sourceValue, includeValue);
 		}
 		else if (sourceValue.isOrdered()) {
-			return new ToSequence(collectionTypeId, sourceValue, includeValue);
+			inputIterator = new ToSequence(sourceValue, includeValue);
 		}
 		else {
-			return new ToBag(collectionTypeId, sourceValue, includeValue);
+			inputIterator = new ToBag(sourceValue, includeValue);
 		}
+		return new SmartCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
 	}
 
 	public static @NonNull CollectionValue union(@NonNull CollectionValue sourceValue, @NonNull CollectionValue unionValue) {
-		TypeId elementTypeId = sourceValue.getTypeId().getElementTypeId();
+		LazyIterator inputIterator;
+		CollectionTypeId collectionTypeId;
 		if (sourceValue.isUnique() && unionValue.isUnique()) {
-			return new ToUnique(TypeId.SET.getSpecializedId(elementTypeId), sourceValue, unionValue);
+			inputIterator = new ToUnique(sourceValue, unionValue);
+			collectionTypeId = TypeUtil.getSetTypeId(sourceValue.getTypeId());
 		}
 		else {
-			return new ToBag(TypeId.BAG.getSpecializedId(elementTypeId), sourceValue, unionValue);
+			inputIterator = new ToBag(sourceValue, unionValue);
+			collectionTypeId = TypeUtil.getBagTypeId(sourceValue.getTypeId());
 		}
+		return new SmartCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
 	}
 
 	protected final @NonNull CollectionValue sourceValue;
@@ -56,8 +63,7 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	protected final @NonNull BaggableIterator<@Nullable Object> includeIterator;
 
-	public IncludingAllIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
-		super(collectionTypeId, lazyDepth(sourceValue));
+	public IncludingAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
 		this.sourceValue = sourceValue;
 		this.includeValue = includeValue;
 		this.sourceIterator = sourceValue.lazyIterator();
@@ -79,14 +85,14 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 		private final @NonNull CollectionValue sourceValue;		// FIXME Use MapOfElement2ElementCount
 		private final @NonNull CollectionValue includeValue;		// FIXME Use MapOfElement2ElementCount
 
-		public ToBag(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
-			super(collectionTypeId, eagerCollectionValue(sourceValue), eagerCollectionValue(includeValue));
+		public ToBag(@NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
+			super(ValueUtil.eagerCollectionValue(sourceValue), ValueUtil.eagerCollectionValue(includeValue));
 			this.sourceValue = sourceValue;
 			this.includeValue = includeValue;
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			int sourceCount = sourceIterator.hasNextCount();
 			if (sourceCount > 0) {
 				Object next = sourceIterator.next();
@@ -105,19 +111,19 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new ToBag(typeId, sourceValue, includeValue);
+			return new ToBag(sourceValue, includeValue);
 		}
 	}
 
 	// The included values go at the end.
 	private static class ToSequence extends IncludingAllIterator
 	{
-		public ToSequence(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
-			super(collectionTypeId, sourceValue, includeValue);
+		public ToSequence(@NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
+			super(sourceValue, includeValue);
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			boolean hasNext = sourceIterator.hasNext();
 			if (hasNext) {
 				return setNext(sourceIterator.next(), 1);
@@ -131,7 +137,7 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new ToSequence(typeId, sourceValue, includeValue);
+			return new ToSequence(sourceValue, includeValue);
 		}
 	}
 
@@ -140,14 +146,14 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 	{
 		private final @NonNull CollectionValue sourceValue;		// FIXME Use MapOfElement2ElementCount
 
-		public ToUnique(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
-			super(collectionTypeId, sourceValue, eagerCollectionValue(includeValue));
+		public ToUnique(@NonNull CollectionValue sourceValue, @NonNull CollectionValue includeValue) {
+			super(sourceValue, ValueUtil.eagerCollectionValue(includeValue));
 			this.sourceValue = sourceValue;
 
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			while (sourceIterator.hasNextCount() > 0) {
 				return setNext(sourceIterator.next(), 1);
 			}
@@ -162,7 +168,7 @@ public abstract class IncludingAllIterator extends LazyCollectionValueImpl
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new ToUnique(typeId, sourceValue, includeValue);
+			return new ToUnique(sourceValue, includeValue);
 		}
 	}
 }

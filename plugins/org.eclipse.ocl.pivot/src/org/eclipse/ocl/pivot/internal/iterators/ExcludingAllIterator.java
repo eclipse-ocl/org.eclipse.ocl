@@ -12,7 +12,8 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -22,21 +23,21 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  *
  * @since 1.3
  */
-public class ExcludingAllIterator extends LazyCollectionValueImpl
+public class ExcludingAllIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue excludingAll(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
-		return new ExcludingAllIterator(sourceValue, excludeValue);
+		ExcludingAllIterator inputIterator = new ExcludingAllIterator(sourceValue, excludeValue);
+		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
 	}
 
 	private final @NonNull CollectionValue sourceValue;
-	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 	private final @NonNull CollectionValue excludeValue;
+	private final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
 
 	public ExcludingAllIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue excludeValue) {
-		super(sourceValue.getTypeId(), lazyDepth(sourceValue));
 		this.sourceValue = sourceValue;
+		this.excludeValue = ValueUtil.eagerCollectionValue(excludeValue);
 		this.sourceIterator = sourceValue.lazyIterator();
-		this.excludeValue = eagerCollectionValue(excludeValue);
 	}
 
 	@Override

@@ -11,8 +11,10 @@
 package org.eclipse.ocl.pivot.internal.values;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.iterators.AbstractLazyIterator;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
@@ -24,11 +26,11 @@ public class SmartCollectionValueImpl extends LazyCollectionValueImpl
 {
 	@Deprecated /* @deprecated supply depth argument */
 	public SmartCollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull LazyIterator inputIterator) {
-		super(typeId, inputIterator, 0);
+		this(typeId, inputIterator, null);
 	}
 
-	public SmartCollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull LazyIterator inputIterator, int lazyDepth) {
-		super(typeId, inputIterator, lazyDepth);
+	public SmartCollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull LazyIterator inputIterator, @Nullable CollectionValue precedingCollectionValue) {
+		super(typeId, inputIterator, precedingCollectionValue != null ? lazyDepth(precedingCollectionValue) : 0);
 	}
 
 	@Override

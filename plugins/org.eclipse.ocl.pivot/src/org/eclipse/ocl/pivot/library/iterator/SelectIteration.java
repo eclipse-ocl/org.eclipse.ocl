@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.SelectIterator;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -44,9 +45,9 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 		private final @NonNull OCLExpression body;
 		private final @NonNull VariableDeclaration firstIterator;
 
-		protected LazySelectIterator(@NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue,
+		protected LazySelectIterator(@NonNull CollectionValue sourceValue,
 				@NonNull Executor executor, @NonNull OCLExpression body, @NonNull VariableDeclaration firstIterator) {
-			super(typeId, sourceValue);
+			super(sourceValue);
 			this.executor = executor;
 			this.body = body;
 			this.firstIterator = firstIterator;
@@ -60,7 +61,7 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new LazySelectIterator(typeId, sourceValue, executor, body, firstIterator);
+			return new LazySelectIterator(sourceValue, executor, body, firstIterator);
 		}
 	}
 
@@ -106,6 +107,7 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 	@Override
 	public @NonNull Value evaluate(@NonNull Executor executor, @NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue, @NonNull VariableDeclaration firstIterator,
 			@NonNull OCLExpression body) {
-		return new LazySelectIterator(typeId, sourceValue, executor, body, firstIterator);
+		LazyIterator selectedIterator = new LazySelectIterator(sourceValue, executor, body, firstIterator);
+		return new SmartCollectionValueImpl(sourceValue.getTypeId(), selectedIterator, sourceValue);
 	}
 }

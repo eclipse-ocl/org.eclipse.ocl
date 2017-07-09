@@ -24,8 +24,9 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  */
 public class SymmetricDifferenceIterator extends AbstractLazyIterator
 {
-	public static @NonNull CollectionValue create(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
-		return new SmartCollectionValueImpl(sourceValue.getTypeId(), new SymmetricDifferenceIterator(sourceValue, otherValue));
+	public static @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue sourceValue, @NonNull CollectionValue otherValue) {
+		SymmetricDifferenceIterator inputIterator = new SymmetricDifferenceIterator(sourceValue, otherValue);
+		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
 	}
 
 	private final @NonNull CollectionValue sourceValue;

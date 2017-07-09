@@ -11,8 +11,6 @@
 package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
@@ -21,13 +19,17 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
  *
  * @since 1.3
  */
-public abstract class SelectIterator extends LazyCollectionValueImpl
+public abstract class SelectIterator extends AbstractLazyIterator
 {
+	//	public static @NonNull CollectionValue select(@NonNull CollectionValue sourceValue) {
+	//		LazyIterator inputIterator = new SelectIterator(sourceValue);
+	//		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
+	//	}
+
 	protected final @NonNull CollectionValue sourceValue;
 	private final @NonNull BaggableIterator<Object> sourceIterator;
 
-	protected SelectIterator(@NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue) {
-		super(typeId, lazyDepth(sourceValue));
+	protected SelectIterator(@NonNull CollectionValue sourceValue) {
 		this.sourceValue = sourceValue;
 		this.sourceIterator = sourceValue.lazyIterator();
 	}
@@ -49,15 +51,15 @@ public abstract class SelectIterator extends LazyCollectionValueImpl
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("Select{");
-		if (hasCache()) {
-			appendIterable(s);
-			if (hasNext()) {
-				s.append(";«future»");
-			}
-		}
-		else {
-			s.append("«future»");
-		}
+		//		if (hasCache()) {
+		//			appendIterable(s);
+		//			if (hasNext()) {
+		//				s.append(";«future»");
+		//			}
+		//		}
+		//		else {
+		//			s.append("«future»");
+		//		}
 		s.append("}");
 	}
 }

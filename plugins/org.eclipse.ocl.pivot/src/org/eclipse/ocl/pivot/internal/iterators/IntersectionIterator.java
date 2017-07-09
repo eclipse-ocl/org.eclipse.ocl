@@ -13,8 +13,9 @@ package org.eclipse.ocl.pivot.internal.iterators;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -24,37 +25,38 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  *
  * @since 1.3
  */
-public class IntersectionIterator extends LazyCollectionValueImpl
+public class IntersectionIterator extends AbstractLazyIterator
 {
-	public static @NonNull IntersectionIterator intersection(@NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
-		TypeId elementTypeId = sourceValue.getTypeId().getElementTypeId();
+	public static @NonNull CollectionValue intersection(@NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
+		CollectionTypeId collectionTypeId;
+		LazyIterator inputIterator;
 		if (sourceValue.isUnique()) {
-			CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(setTypeId, sourceValue, secondValue);
+			collectionTypeId = TypeUtil.getSetTypeId(sourceValue.getTypeId());
+			inputIterator = new IntersectionIterator(sourceValue, secondValue);
 		}
 		else if (secondValue.isUnique()) {
-			CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(setTypeId, secondValue, sourceValue);
+			collectionTypeId = TypeUtil.getSetTypeId(sourceValue.getTypeId());
+			inputIterator = new IntersectionIterator(secondValue, sourceValue);
 		}
 		else {
-			CollectionTypeId bagTypeId = TypeId.BAG.getSpecializedId(elementTypeId);
-			return new IntersectionIterator(bagTypeId, sourceValue, secondValue);
+			collectionTypeId = TypeUtil.getBagTypeId(sourceValue.getTypeId());
+			inputIterator = new IntersectionIterator(sourceValue, secondValue);
 		}
+		return new SmartCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
 	}
 
 	private final @NonNull CollectionValue sourceValue;
 	private final @NonNull CollectionValue secondValue;
 	private final @NonNull BaggableIterator<@Nullable Object> secondIterator;
 
-	public IntersectionIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
-		super(collectionTypeId, lazyDepth(sourceValue));
-		this.sourceValue = eagerCollectionValue(sourceValue);
+	public IntersectionIterator(@NonNull CollectionValue sourceValue, @NonNull CollectionValue secondValue) {
+		this.sourceValue = ValueUtil.eagerCollectionValue(sourceValue);
 		this.secondValue = secondValue;
 		this.secondIterator = secondValue.lazyIterator();
 	}
 
 	@Override
-	protected int getNextCount() {
+	public int getNextCount() {
 		int nextCount = 0;
 		while ((nextCount = secondIterator.hasNextCount()) > 0) {
 			Object next = secondIterator.next();
@@ -68,7 +70,7 @@ public class IntersectionIterator extends LazyCollectionValueImpl
 
 	@Override
 	public @NonNull LazyIterator reIterator() {
-		return new IntersectionIterator(typeId, sourceValue, secondValue);
+		return new IntersectionIterator(sourceValue, secondValue);
 	}
 
 	@Override

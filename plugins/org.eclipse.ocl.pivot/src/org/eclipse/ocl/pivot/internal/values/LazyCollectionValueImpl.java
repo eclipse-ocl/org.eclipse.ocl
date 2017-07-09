@@ -1110,7 +1110,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		return FromCollectionValueIterator.create(getBagTypeId(), this);
+		return FromCollectionValueIterator.create(TypeUtil.getBagTypeId(typeId), this);
 	}
 
 	@Override
@@ -1178,7 +1178,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		return FromCollectionValueIterator.create(getOrderedSetTypeId(), this);
+		return FromCollectionValueIterator.create(TypeUtil.getOrderedSetTypeId(typeId), this);
 	}
 
 	@Override
@@ -1186,7 +1186,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		return FromCollectionValueIterator.create(getSequenceTypeId(), this);
+		return FromCollectionValueIterator.create(TypeUtil.getSequenceTypeId(typeId), this);
 	}
 
 	@Override
@@ -1194,7 +1194,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		return FromCollectionValueIterator.create(getSetTypeId(), this);
+		return FromCollectionValueIterator.create(TypeUtil.getSetTypeId(typeId), this);
 	}
 
 	@Override
@@ -1534,10 +1534,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return lazyListOfElements2.get(javaIndex);
 	}
 
-	public @NonNull CollectionTypeId getBagTypeId() {
-		return TypeId.BAG.getSpecializedId(typeId.getElementTypeId());
-	}
-
 	@Override
 	public @NonNull Collection<@Nullable Object> getElements() {
 		if (!isBag()) {
@@ -1616,14 +1612,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 	}
 
-	public @NonNull CollectionTypeId getOrderedSetTypeId() {
-		return TypeId.ORDERED_SET.getSpecializedId(typeId.getElementTypeId());
-	}
-
-	public @NonNull CollectionTypeId getSequenceTypeId() {
-		return TypeId.SEQUENCE.getSpecializedId(typeId.getElementTypeId());
-	}
-
 	/**
 	 * Ensure that all lazy iterations have completed and then return a set of all elements.
 	 */
@@ -1633,10 +1621,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 			lazyMapOfElement2elementCount2 = getMapOfElement2elementCount();
 		}
 		return lazyMapOfElement2elementCount2.keySet();
-	}
-
-	public @NonNull CollectionTypeId getSetTypeId() {
-		return TypeId.SET.getSpecializedId(typeId.getElementTypeId());
 	}
 
 	@Override
@@ -2058,7 +2042,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue prepend(@Nullable Object value) {
-		return PrependIterator.create(typeId, this, value);
+		return PrependIterator.prepend(typeId, this, value);
 	}
 
 	@Override
@@ -2136,17 +2120,17 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue subCollection(int lower, int upper) {
-		return SubCollectionIterator.create(this, lower, upper);
+		return SubCollectionIterator.subCollection(this, lower, upper);
 	}
 
 	@Override
 	public @NonNull CollectionValue symmetricDifference(@NonNull CollectionValue that) {
-		return SymmetricDifferenceIterator.create(this, that);
+		return SymmetricDifferenceIterator.symmetricDifference(this, that);
 	}
 
 	@Override
 	public @NonNull CollectionValue toSequenceValue() {
-		return new MutableCollectionValueImpl(getSequenceTypeId(), this);
+		return new MutableCollectionValueImpl(TypeUtil.getSequenceTypeId(typeId), this);
 	}
 
 	@Override

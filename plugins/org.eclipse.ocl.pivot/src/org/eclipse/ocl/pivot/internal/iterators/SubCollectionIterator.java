@@ -26,8 +26,9 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  */
 public class SubCollectionIterator extends AbstractLazyIterator
 {
-	public static @NonNull CollectionValue create(@NonNull CollectionValue sourceValue, int lower, int upper) {
-		return new SmartCollectionValueImpl(sourceValue.getTypeId(), new SubCollectionIterator(sourceValue, lower, upper));
+	public static @NonNull CollectionValue subCollection(@NonNull CollectionValue sourceValue, int lower, int upper) {
+		SubCollectionIterator inputIterator = new SubCollectionIterator(sourceValue, lower, upper);
+		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
 	}
 
 	private final @NonNull CollectionValue sourceValue;

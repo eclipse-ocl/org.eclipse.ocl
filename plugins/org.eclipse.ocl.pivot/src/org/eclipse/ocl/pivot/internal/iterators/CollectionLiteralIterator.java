@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
 public class CollectionLiteralIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull List<@Nullable Object> literalElements) {
-		LazyCollectionValueImpl value = new SmartCollectionValueImpl(collectionTypeId, new CollectionLiteralIterator(literalElements));
+		LazyCollectionValueImpl value = new SmartCollectionValueImpl(collectionTypeId, new CollectionLiteralIterator(literalElements), null);
 		if (!value.isSequence()) {
 			value.eagerIterable();//.getMapOfElement2elementCount();				// Need history to enforce uniqueness, count repeats
 		}

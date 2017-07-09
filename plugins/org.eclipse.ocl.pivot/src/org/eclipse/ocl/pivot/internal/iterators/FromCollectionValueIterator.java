@@ -24,7 +24,8 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
 public class FromCollectionValueIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue oldCollectionValue) {
-		SmartCollectionValueImpl newCollectionValue = new SmartCollectionValueImpl(collectionTypeId, new FromCollectionValueIterator(oldCollectionValue));
+		FromCollectionValueIterator inputIterator = new FromCollectionValueIterator(oldCollectionValue);
+		SmartCollectionValueImpl newCollectionValue = new SmartCollectionValueImpl(collectionTypeId, inputIterator, oldCollectionValue);
 		if (oldCollectionValue.isSequence() && !newCollectionValue.isSequence()) {
 			newCollectionValue.eagerIterable();	// uniqueness/counts must be eager
 		}

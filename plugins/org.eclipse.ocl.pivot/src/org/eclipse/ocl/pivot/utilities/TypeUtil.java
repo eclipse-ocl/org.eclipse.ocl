@@ -282,6 +282,22 @@ public class TypeUtil
 		throw new UnsupportedOperationException();
 	}
 
+	public static @NonNull CollectionTypeId getBagTypeId(@NonNull CollectionTypeId typeId) {
+		return TypeId.BAG.getSpecializedId(typeId.getElementTypeId());
+	}
+
+	public static @NonNull CollectionTypeId getOrderedSetTypeId(@NonNull CollectionTypeId typeId) {
+		return TypeId.ORDERED_SET.getSpecializedId(typeId.getElementTypeId());
+	}
+
+	public static @NonNull CollectionTypeId getSequenceTypeId(@NonNull CollectionTypeId typeId) {
+		return TypeId.SEQUENCE.getSpecializedId(typeId.getElementTypeId());
+	}
+
+	public static @NonNull CollectionTypeId getSetTypeId(@NonNull CollectionTypeId typeId) {
+		return TypeId.SET.getSpecializedId(typeId.getElementTypeId());
+	}
+
 	public static boolean isEqualToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
 		Type firstContainerType = firstCollectionType.getContainerType();
 		Type secondContainerType = secondCollectionType.getContainerType();

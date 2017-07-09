@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -24,18 +24,22 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  *
  * @since 1.3
  */
-public abstract class AppendIterator extends LazyCollectionValueImpl
+public abstract class AppendIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue append(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
+		LazyIterator inputIterator;
 		if (sourceValue.isUnique()) {
-			return new ToUnique(collectionTypeId, sourceValue, object);
+			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(collectionTypeId.getElementTypeId(), false);
+			inputIterator = new ToUnique(equalsStrategy, sourceValue, object);
 		}
 		else if (sourceValue.isOrdered()) {
-			return new ToSequence(collectionTypeId, sourceValue, object);
+			inputIterator = new ToSequence(sourceValue, object);
 		}
 		else {
-			return new ToBag(collectionTypeId, sourceValue, object);
+			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(collectionTypeId.getElementTypeId(), false);
+			inputIterator = new ToBag(equalsStrategy, sourceValue, object);
 		}
+		return new SmartCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
 	}
 
 	protected final @NonNull BaggableIterator<@Nullable Object> sourceIterator;
@@ -43,8 +47,7 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 	protected final @Nullable Object object;
 	protected boolean doneAppend = false;
 
-	public AppendIterator(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object object) {
-		super(collectionTypeId, lazyDepth(sourceValue));
+	public AppendIterator(@NonNull CollectionValue sourceValue, @Nullable Object object) {
 		this.sourceValue = sourceValue;
 		this.sourceIterator = sourceValue.lazyIterator();
 		this.object = object;
@@ -65,13 +68,13 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 		private final @NonNull EqualsStrategy equalsStrategy;
 		protected int appendCount = 0;
 
-		public ToBag(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
-			super(collectionTypeId, sourceValue, secondValue);
-			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
+		public ToBag(@NonNull EqualsStrategy equalsStrategy, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+			super(sourceValue, secondValue);
+			this.equalsStrategy = equalsStrategy;
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 				Object next = sourceIterator.next();
 				if ((appendCount == 0) && equalsStrategy.isEqual(next, object)) {
@@ -90,19 +93,19 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new ToBag(typeId, sourceValue, object);
+			return new ToBag(equalsStrategy, sourceValue, object);
 		}
 	}
 
 	// The appended value goes at the end.
 	private static class ToSequence extends AppendIterator
 	{
-		public ToSequence(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
-			super(collectionTypeId, sourceValue, secondValue);
+		public ToSequence(@NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+			super(sourceValue, secondValue);
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			int nextCount = sourceIterator.hasNextCount();
 			if (nextCount > 0) {
 				return setNext(sourceIterator.next(), nextCount);
@@ -116,7 +119,7 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new ToSequence(typeId, sourceValue, object);
+			return new ToSequence(sourceValue, object);
 		}
 	}
 
@@ -125,13 +128,13 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 	{
 		private final @NonNull EqualsStrategy equalsStrategy;
 
-		public ToUnique(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
-			super(collectionTypeId, sourceValue, secondValue);
-			this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
+		public ToUnique(@NonNull EqualsStrategy equalsStrategy, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+			super(sourceValue, secondValue);
+			this.equalsStrategy = equalsStrategy;
 		}
 
 		@Override
-		protected int getNextCount() {
+		public int getNextCount() {
 			for (int nextCount; (nextCount = sourceIterator.hasNextCount()) > 0; ) {
 				Object next = sourceIterator.next();
 				if (!equalsStrategy.isEqual(next, object)) {
@@ -147,7 +150,7 @@ public abstract class AppendIterator extends LazyCollectionValueImpl
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new ToUnique(typeId, sourceValue, object);
+			return new ToUnique(equalsStrategy, sourceValue, object);
 		}
 	}
 }
