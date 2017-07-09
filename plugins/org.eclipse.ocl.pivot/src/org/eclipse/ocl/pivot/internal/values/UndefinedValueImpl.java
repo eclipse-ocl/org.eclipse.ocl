@@ -408,6 +408,11 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	}
 
 	@Override
+	public @NonNull List<@Nullable Object> getListOfElements() {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public @NonNull Map<@Nullable Object, @NonNull ? extends ElementCount> getMapOfElement2elementCount() {
 		Map<@Nullable Object, @NonNull ElementCount> emptyMap = Collections.<@Nullable Object, @NonNull ElementCount>emptyMap();
 		assert emptyMap != null;

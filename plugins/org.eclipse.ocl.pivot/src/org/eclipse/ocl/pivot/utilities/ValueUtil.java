@@ -585,7 +585,7 @@ public abstract class ValueUtil
 			}
 		}
 		return new MutableCollectionValueImpl(typeId, allValues.iterator()); */
-		return FromIntegerRangesIterator.createMutable(typeId, false, new @NonNull Object[]{values});
+		return FromIntegerRangesIterator.create(typeId, false, new @NonNull Object[]{values});
 	}
 
 	@Deprecated /* @deprecated Use createCollectionValue */
@@ -676,7 +676,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
-		return FromIntegerRangesIterator.createMutable(typeId, false, new @NonNull Object[]{range});
+		return FromIntegerRangesIterator.create(typeId, false, new @NonNull Object[]{range});
 	}
 
 	@Deprecated /* @deprecated Use createCollectionRange */

@@ -172,6 +172,11 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	/**
 	 * @generated NOT
 	 */
+	@NonNull List<@Nullable Object> getListOfElements();
+
+	/**
+	 * @generated NOT
+	 */
 	@NonNull Map<@Nullable Object, @NonNull ? extends ElementCount> getMapOfElement2elementCount();
 
 	/**

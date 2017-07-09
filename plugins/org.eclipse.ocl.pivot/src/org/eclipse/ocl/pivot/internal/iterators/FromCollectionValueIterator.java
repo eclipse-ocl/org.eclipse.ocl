@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
  * FromCollectionValueIterator provides the loader for a CollectionValue from a CollectionValue.
- * This is typically to convert between collection strategies.
+ * This is may be to convert between collection strategies, or to clone prior to a mutation.
  */
 public class FromCollectionValueIterator extends AbstractLazyIterator
 {

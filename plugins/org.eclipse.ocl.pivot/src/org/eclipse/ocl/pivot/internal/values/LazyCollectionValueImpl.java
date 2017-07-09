@@ -1535,7 +1535,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	/**
 	 * Ensure that all lazy iterations have completed and then return a list of all elements.
 	 */
-	private synchronized @NonNull List<@Nullable Object> getListOfElements() {
+	@Override
+	public synchronized @NonNull List<@Nullable Object> getListOfElements() {
 		cachedIterable();
 		for (int nextCount; (nextCount = inputIterator.hasNextCount()) > 0; ) {
 			collectionStrategy.addTo(this, inputIterator.next(), nextCount);
@@ -1711,9 +1712,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (collectionStrategy.isUnique() && contains(object)) {
 			return this;
 		}
-		List<@Nullable Object> result = new ArrayList<>(listOfElements);
-		result.add(javaIindex, object);
-		return new MutableCollectionValueImpl(typeId, result.iterator());
+		MutableIterable mutableValue = FromCollectionValueIterator.create(typeId, this).mutableIterable();
+		assert mutableValue != null;
+		List<@Nullable Object> values = mutableValue.getListOfElements();
+		values.add(javaIindex, object);
+		return mutableValue;
 	}
 
 	public int intCount(Object value) {
@@ -1985,9 +1988,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue reverse() {
-		List<@Nullable Object> result = new ArrayList<>(getListOfElements());
-		Collections.reverse(result);
-		return new MutableCollectionValueImpl(typeId, result.iterator());
+		MutableIterable mutableValue = FromCollectionValueIterator.create(typeId, this).mutableIterable();
+		assert mutableValue != null;
+		List<@Nullable Object> values = mutableValue.getListOfElements();
+		Collections.reverse(values);
+		return mutableValue;
 	}
 
 	@Override
@@ -1997,9 +2002,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue sort(@NonNull Comparator<@Nullable Object> comparator) {
-		List<@Nullable Object> values = Lists.newArrayList(lazyIterator());
+		MutableIterable mutableValue = FromCollectionValueIterator.create(typeId, this).mutableIterable();
+		assert mutableValue != null;
+		List<@Nullable Object> values = mutableValue.getListOfElements();
 		Collections.sort(values, comparator);
-		return new MutableCollectionValueImpl(typeId, values.iterator());
+		return mutableValue;
 	}
 
 	@Override
