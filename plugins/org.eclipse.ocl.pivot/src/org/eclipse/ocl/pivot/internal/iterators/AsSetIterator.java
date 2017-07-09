@@ -69,55 +69,6 @@ public abstract class AsSetIterator extends AbstractLazyIterator
 		s.append("}");
 	}
 
-	public static class FromArray extends AbstractLazyIterator
-	{
-		public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @Nullable Object @NonNull [] boxedValues) {
-			SmartCollectionValueImpl collectionValue = new SmartCollectionValueImpl(collectionTypeId, new FromArray(boxedValues));
-			if (collectionValue.isSequence()) {
-				collectionValue.cachedIterable();
-			}
-			else {
-				collectionValue.eagerIterable();
-			}
-			return collectionValue;
-		}
-
-		private @Nullable Object @NonNull [] boxedValues;
-		private int nextIndex = 0;;
-
-		protected FromArray(@Nullable Object @NonNull [] boxedValues) {
-			this.boxedValues = boxedValues;
-		}
-
-		@Override
-		public @NonNull LazyIterator reIterator() {
-			return new FromArray(boxedValues);
-		}
-
-		@Override
-		public int getNextCount() {
-			if (nextIndex < boxedValues.length) {
-				return setNext(boxedValues[nextIndex++], 1);
-			}
-			return 0;
-		}
-
-		@Override
-		public void toString(@NonNull StringBuilder s, int sizeLimit) {
-			s.append("AsSet{");
-			//		if (hasCache()) {
-			//			appendIterable(s);
-			//			if (hasNext()) {
-			//				s.append(";«future»");
-			//			}
-			//		}
-			//		else {
-			s.append("«future»");
-			//		}
-			s.append("}");
-		}
-	}
-
 	public static class FromCollection extends AsSetIterator
 	{
 		public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull Collection<@Nullable ? extends Object> boxedValues) {

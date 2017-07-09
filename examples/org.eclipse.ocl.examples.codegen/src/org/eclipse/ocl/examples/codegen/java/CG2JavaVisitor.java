@@ -1368,8 +1368,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.appendDeclaration(cgCollectionExp);
 		js.append(" = ");
 		js.appendClassReference(ValueUtil.class);
-		String kind = ((CollectionLiteralExp)cgCollectionExp.getAst()).getKind().getName();
 		if (ranges > 0) {
+			String kind = ((CollectionLiteralExp)cgCollectionExp.getAst()).getKind().getName();
 			js.append(".create" + kind + "Range(");
 			//			CGTypeVariable typeVariable = localContext.getTypeVariable(cgCollectionExp.getTypeId());
 			js.appendIdReference(cgCollectionExp.getTypeId().getElementId());
@@ -1379,7 +1379,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			}
 		}
 		else {
-			js.append(".create" + kind + "OfEach(");
+			js.append(".createCollectionOfEach(");
 			//		CGTypeVariable typeVariable = localContext.getTypeVariable(cgCollectionExp.getTypeId());
 			js.appendIdReference(cgCollectionExp.getTypeId().getElementId());
 			for (CGCollectionPart cgPart : cgCollectionExp.getParts()) {

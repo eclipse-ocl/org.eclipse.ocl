@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FromArrayIterator;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BigIntegerValueImpl;
@@ -559,10 +560,9 @@ public abstract class ValueUtil
 		return new MutableCollectionValueImpl(collectedId);
 	}
 
+	@Deprecated /* @deprecated Use createCollectionOfEach */
 	public static @NonNull CollectionValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		checkValid(boxedValues);
-		return AsBagIterator.FromArray.create(typeId, boxedValues);
-		//		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
+		return createCollectionOfEach(typeId, boxedValues);
 	}
 
 	public static @NonNull CollectionValue createBagRange(@NonNull CollectionTypeId typeId, @Nullable Object... values) {
@@ -599,6 +599,12 @@ public abstract class ValueUtil
 		}
 	}
 
+	public static @NonNull CollectionValue createCollectionOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
+		checkValid(boxedValues);
+		return FromArrayIterator.create(typeId, boxedValues);
+		//		return new BagValueImpl(typeId, BagValueImpl.createBagOfEach(boxedValues));
+	}
+
 	public static @NonNull InvalidValueException createInvalidValue(@NonNull Exception e) {
 		if (e instanceof InvalidValueException) {
 			return (InvalidValueException)e;
@@ -632,9 +638,9 @@ public abstract class ValueUtil
 	//		return new RangeOrderedSetValueImpl(typeId, range);
 	//	}
 
+	@Deprecated /* @deprecated Use createCollectionOfEach */
 	public static @NonNull CollectionValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		checkValid(boxedValues);
-		return new AsOrderedSetIterator.FromArray(typeId, boxedValues);
+		return createCollectionOfEach(typeId, boxedValues);
 	}
 
 	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
@@ -663,9 +669,9 @@ public abstract class ValueUtil
 		return new MutableCollectionValueImpl(collectedId);
 	}
 
+	@Deprecated /* @deprecated Use createCollectionOfEach */
 	public static @NonNull CollectionValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		checkValid(boxedValues);
-		return new AsSequenceIterator.FromArray(typeId, boxedValues);
+		return createCollectionOfEach(typeId, boxedValues);
 	}
 
 	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
@@ -694,9 +700,9 @@ public abstract class ValueUtil
 		return new MutableCollectionValueImpl(collectedId);
 	}
 
+	@Deprecated /* @deprecated Use createCollectionOfEach */
 	public static @NonNull CollectionValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
-		checkValid(boxedValues);
-		return AsSetIterator.FromArray.create(typeId, boxedValues);
+		return createCollectionOfEach(typeId, boxedValues);
 	}
 
 	public static @NonNull CollectionValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {

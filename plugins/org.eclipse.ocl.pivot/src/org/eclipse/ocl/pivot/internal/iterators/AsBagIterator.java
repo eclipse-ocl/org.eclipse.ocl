@@ -21,8 +21,6 @@ import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
-import com.google.common.collect.Iterators;
-
 /**
  * AsBagIterator provides a BaggableIterator that behaves as a BagValue for an arbitrary iterator.
  *
@@ -57,25 +55,6 @@ public abstract class AsBagIterator extends AbstractLazyIterator
 		s.append("«future»");
 		//		}
 		s.append("}");
-	}
-
-	public static class FromArray extends AsBagIterator
-	{
-		public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @Nullable Object @NonNull [] boxedValues) {
-			return new SmartCollectionValueImpl(collectionTypeId, new FromArray(boxedValues));
-		}
-
-		private @Nullable Object @NonNull [] boxedValues;
-
-		protected FromArray(@Nullable Object @NonNull [] boxedValues) {
-			super(Iterators.forArray(boxedValues));
-			this.boxedValues = boxedValues;
-		}
-
-		@Override
-		public @NonNull LazyIterator reIterator() {
-			return new FromArray(boxedValues);
-		}
 	}
 
 	public static class FromCollection extends AsBagIterator

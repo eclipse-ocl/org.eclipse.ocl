@@ -22,8 +22,6 @@ import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
-import com.google.common.collect.Iterators;
-
 /**
  * AsOrderedSetIterator provides a BaggableIterator that behaves as an OrderedSetValue for an arbitrary iterator.
  *
@@ -106,21 +104,6 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl
 			s.append("«future»");
 		}
 		s.append("}");
-	}
-
-	public static class FromArray extends AsOrderedSetIterator
-	{
-		private @Nullable Object @NonNull [] boxedValues;
-
-		public FromArray(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull [] boxedValues) {
-			super(typeId, Iterators.forArray(boxedValues), false);
-			this.boxedValues = boxedValues;
-		}
-
-		@Override
-		protected @NonNull LazyIterator reIterator() {
-			return new FromArray(typeId, boxedValues);
-		}
 	}
 
 	public static class FromCollection extends AsOrderedSetIterator

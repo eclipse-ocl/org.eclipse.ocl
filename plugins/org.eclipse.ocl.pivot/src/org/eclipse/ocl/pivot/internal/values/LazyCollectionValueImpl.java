@@ -842,6 +842,26 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2cached = null;
 	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2reiterated = null;
 
+	public static void appendArray(StringBuilder s, @Nullable Object @NonNull [] elements, int lengthLimit) {
+		s.append("{");
+		boolean isFirst = true;
+		for (Object element : elements) {
+			if (!isFirst) {
+				s.append(",");
+			}
+			if (s.length() < lengthLimit) {
+				ValueUtil.toString(element, s, lengthLimit-1);
+			}
+			else {
+				s.append("...");
+				break;
+			}
+			isFirst = false;
+		}
+		s.append("}");
+	}
+
+
 	public static <E> void appendBagIterable(@NonNull StringBuilder s, @NonNull List<E> elements, @Nullable Map<E, @NonNull ? extends Number> element2elementCount) {
 		s.append("[");
 		boolean isFirst = true;
