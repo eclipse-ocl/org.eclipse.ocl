@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -32,13 +33,15 @@ public abstract class PrependIterator extends AbstractLazyIterator
 		}
 		LazyIterator inputIterator;
 		if (sourceValue.isUnique()) {
-			inputIterator = new ToUnique(sourceValue, object);
+			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(collectionTypeId.getElementTypeId(), false);
+			inputIterator = new ToUnique(equalsStrategy, sourceValue, object);
 		}
 		else if (sourceValue.isOrdered()) {
 			inputIterator = new ToSequence(sourceValue, object);
 		}
 		else {
-			inputIterator = new ToBag(sourceValue, object);
+			EqualsStrategy equalsStrategy = TypeUtil.getEqualsStrategy(collectionTypeId.getElementTypeId(), false);
+			inputIterator = new ToBag(equalsStrategy, sourceValue, object);
 		}
 		return new SmartCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
 	}
@@ -68,9 +71,9 @@ public abstract class PrependIterator extends AbstractLazyIterator
 	{
 		private final @NonNull EqualsStrategy equalsStrategy;
 
-		public ToBag(@NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+		public ToBag(@NonNull EqualsStrategy equalsStrategy, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
 			super(sourceValue, secondValue);
-			this.equalsStrategy = sourceValue.getEqualsStrategy();
+			this.equalsStrategy = equalsStrategy;
 		}
 
 		@Override
@@ -91,7 +94,7 @@ public abstract class PrependIterator extends AbstractLazyIterator
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new ToBag(sourceValue, object);
+			return new ToBag(equalsStrategy, sourceValue, object);
 		}
 	}
 
@@ -126,9 +129,9 @@ public abstract class PrependIterator extends AbstractLazyIterator
 	{
 		private final @NonNull EqualsStrategy equalsStrategy;
 
-		public ToUnique(@NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
+		public ToUnique(@NonNull EqualsStrategy equalsStrategy, @NonNull CollectionValue sourceValue, @Nullable Object secondValue) {
 			super(sourceValue, secondValue);
-			this.equalsStrategy = sourceValue.getEqualsStrategy();
+			this.equalsStrategy = equalsStrategy;
 		}
 
 		@Override
@@ -149,7 +152,7 @@ public abstract class PrependIterator extends AbstractLazyIterator
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new ToUnique(sourceValue, object);
+			return new ToUnique(equalsStrategy, sourceValue, object);
 		}
 	}
 }

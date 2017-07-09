@@ -31,9 +31,8 @@ public abstract class AbstractAccumulation2Java extends AbstractIteration2Java
 	public void appendAccumulatorInit(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGTypeId cgAccumulatorId = cgIterationCallExp.getTypeId();
 		CollectionTypeId elementId = (CollectionTypeId)cgAccumulatorId.getElementId();
-		String name = elementId.getGeneralizedId().getName();
 		js.appendClassReference(ValueUtil.class);
-		js.append(".create" + name + "AccumulatorValue(");
+		js.append(".createCollectionAccumulatorValue(");
 		js.appendIdReference(elementId);
 		js.append(")");
 	}

@@ -880,7 +880,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2cached = null;
 	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2reiterated = null;
 
-	public static void appendArray(StringBuilder s, @Nullable Object @NonNull [] elements, int lengthLimit) {
+	public static void appendArray(StringBuilder s, Object @NonNull [] elements, int lengthLimit) {
 		s.append("{");
 		boolean isFirst = true;
 		for (Object element : elements) {

@@ -15,6 +15,11 @@ import java.util.NoSuchElementException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
+/**
+ * AbstractLazyIterator provides basic support for baggable iteraton, with a next lelement cache and associated
+ * repeat count. Derived classes should implement getNextCount() and invoke setNext() to report the next balue
+ * and its repeat count.
+ */
 public abstract class AbstractLazyIterator implements LazyIterator
 {
 	/**

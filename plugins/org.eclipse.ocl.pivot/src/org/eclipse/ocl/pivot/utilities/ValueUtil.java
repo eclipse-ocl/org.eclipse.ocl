@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.FromArrayIterator;
 import org.eclipse.ocl.pivot.internal.iterators.FromCollectionIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FromIntegerRangesIterator;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BigIntegerValueImpl;
@@ -563,8 +564,9 @@ public abstract class ValueUtil
 		return hashCode;
 	}
 
+	@Deprecated /* @deprecated Use createCollectionAccumulatorValue */
 	public static @NonNull MutableIterable createBagAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new MutableCollectionValueImpl(collectedId);
+		return createCollectionAccumulatorValue(collectedId);
 	}
 
 	@Deprecated /* @deprecated Use createCollectionOfEach */
@@ -591,24 +593,17 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull MutableIterable createCollectionAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		CollectionTypeId collectionId = collectedId.getGeneralizedId();
-		if (collectionId == TypeId.BAG) {
-			return new MutableCollectionValueImpl(collectedId);
-		}
-		else if (collectionId == TypeId.ORDERED_SET) {
-			return new MutableCollectionValueImpl(collectedId);
-		}
-		else if (collectionId == TypeId.SEQUENCE) {
-			return new MutableCollectionValueImpl(collectedId);
-		}
-		else /*if (collectionId == TypeId.SET)*/ {
-			return new MutableCollectionValueImpl(collectedId);
-		}
+		return new MutableCollectionValueImpl(collectedId);
 	}
 
 	public static @NonNull CollectionValue createCollectionOfEach(@NonNull CollectionTypeId typeId, boolean uniqueElements, @Nullable Object @NonNull ... boxedValues) {
 		checkValid(boxedValues);
 		return FromArrayIterator.create(typeId, uniqueElements, boxedValues);
+	}
+
+	public static @NonNull CollectionValue createCollectionRange(@NonNull CollectionTypeId typeId, boolean uniqueElements, @NonNull Object @NonNull ... boxedValues) {
+		//		checkValid(boxedValues);
+		return FromIntegerRangesIterator.create(typeId, uniqueElements, boxedValues);
 	}
 
 	public static @NonNull InvalidValueException createInvalidValue(@NonNull Exception e) {
@@ -641,8 +636,9 @@ public abstract class ValueUtil
 		return new JavaObjectValueImpl(typeId, object);
 	}
 
+	@Deprecated /* @deprecated Use createCollectionAccumulatorValue */
 	public static @NonNull MutableIterable createOrderedSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new MutableCollectionValueImpl(collectedId);
+		return createCollectionAccumulatorValue(collectedId);
 	}
 
 	//	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
@@ -654,17 +650,8 @@ public abstract class ValueUtil
 		return createCollectionOfEach(typeId, false, boxedValues);
 	}
 
-	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		MutableIterable mutableIterable = new MutableCollectionValueImpl(typeId);
-		for (Object value : values) {
-			if (value instanceof IntegerRange) {
-				mutableIterable.mutableIncludingAll(((IntegerRange)value).iterator());
-			}
-			else {
-				mutableIterable.mutableIncluding(value);
-			}
-		}
-		return mutableIterable;
+	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object @NonNull ... values) {
+		return createCollectionRange(typeId, false, values);
 	}
 
 	@Deprecated /* @deprecated Use createCollectionValue */
@@ -676,8 +663,9 @@ public abstract class ValueUtil
 		return new IntegerRangeImpl(firstInteger, lastInteger);
 	}
 
+	@Deprecated /* @deprecated Use createCollectionAccumulatorValue */
 	public static @NonNull MutableIterable createSequenceAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new MutableCollectionValueImpl(collectedId);
+		return createCollectionAccumulatorValue(collectedId);
 	}
 
 	@Deprecated /* @deprecated Use createCollectionOfEach */
@@ -689,17 +677,8 @@ public abstract class ValueUtil
 		return new MutableCollectionValueImpl(typeId, range.iterator());
 	}
 
-	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		MutableIterable mutableIterable = new MutableCollectionValueImpl(typeId);
-		for (Object value : values) {
-			if (value instanceof IntegerRange) {
-				mutableIterable.mutableIncludingAll(((IntegerRange)value).iterator());
-			}
-			else {
-				mutableIterable.mutableIncluding(value);
-			}
-		}
-		return mutableIterable;
+	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull Object @NonNull ... values) {
+		return createCollectionRange(typeId, false, values);
 	}
 
 	@Deprecated /* @deprecated Use createCollectionValue */
@@ -707,8 +686,9 @@ public abstract class ValueUtil
 		return createCollectionValue(typeId, false, boxedValues);
 	}
 
+	@Deprecated /* @deprecated Use createCollectionAccumulatorValue */
 	public static @NonNull MutableIterable createSetAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new MutableCollectionValueImpl(collectedId);
+		return createCollectionAccumulatorValue(collectedId);
 	}
 
 	@Deprecated /* @deprecated Use createCollectionOfEach */
@@ -716,19 +696,8 @@ public abstract class ValueUtil
 		return createCollectionOfEach(typeId, false, boxedValues);
 	}
 
-	public static @NonNull CollectionValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object... values) {
-		MutableIterable allValues = new MutableCollectionValueImpl(typeId);
-		for (Object value : values) {
-			if (value instanceof IntegerRange) {
-				for (@Nullable Object aValue : (IntegerRange)value) {
-					allValues.mutableIncluding(aValue);
-				}
-			}
-			else {
-				allValues.mutableIncluding(value);
-			}
-		}
-		return allValues;
+	public static @NonNull CollectionValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object @NonNull ... values) {
+		return createCollectionRange(typeId, false, values);
 	}
 
 	@Deprecated /* @deprecated Use createCollectionValue */
