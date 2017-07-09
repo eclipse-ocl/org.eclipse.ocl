@@ -1968,21 +1968,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		return result;
 	}
 
-	/**
-	 * Create a reiterator that may be used to perform a further lazy iteration even though an earlier
-	 * lazyIteration has already been returned.
-	 *
-	 * This method provides a fall-back compatibility for legacy code that may not have invoked cached iterable()
-	 * to ensure that the results of the first iteration were cached.
-	 *
-	 * This method may be removed once the LazyCollectionValue API is promoted to CollectionValue.
-	 *
-	 * @deprecated ensure that cahedIterable() is invoked to avoid the need for re-iteration
-	 */
-	//	@Override
-	@Deprecated
-	public abstract @NonNull LazyIterator reIterator();
-
 	@Override
 	public @NonNull CollectionValue reValue() {
 		if (lazyListOfElements != null) {			// If we already have a cache
@@ -1992,11 +1977,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 			return this;							//  a lazy iterator can still be created
 		}
 		else {										// If we started to iterate without caching
-			return reValue2();	// only a reIterator guarantees to retraverse
+			return reValue2(typeId, inputIterator, lazyDepth);	// only a reIterator guarantees to retraverse
 		}
 	}
 
-	protected abstract @NonNull CollectionValue reValue2();
+	protected abstract @NonNull CollectionValue reValue2(@NonNull CollectionTypeId typeId, @NonNull LazyIterator inputIterator, int lazyDepth);
 
 	@Override
 	public @NonNull CollectionValue reverse() {

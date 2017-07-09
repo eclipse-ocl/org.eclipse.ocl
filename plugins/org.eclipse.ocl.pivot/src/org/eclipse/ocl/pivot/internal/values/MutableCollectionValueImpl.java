@@ -44,24 +44,12 @@ public class MutableCollectionValueImpl extends LazyCollectionValueImpl
 	}
 
 	@Override
-	public @NonNull LazyIterator reIterator() {
-		/*		Iterator<@Nullable Object> elements2 = elements;
-		if (elements2 == null) {
-			return new MutableCollectionValueImpl(typeId);
-		}
-		else {
-			return new MutableCollectionValueImpl(typeId, elements2);
-		} */
-		return lazyIterator();
-	}
-
-	@Override
 	public @NonNull CollectionValue reValue() {
 		return this;
 	}
 
 	@Override
-	protected @NonNull CollectionValue reValue2() {
+	protected @NonNull CollectionValue reValue2(@NonNull CollectionTypeId typeId, @NonNull LazyIterator inputIterator, int lazyDepth) {
 		return this;
 	}
 }

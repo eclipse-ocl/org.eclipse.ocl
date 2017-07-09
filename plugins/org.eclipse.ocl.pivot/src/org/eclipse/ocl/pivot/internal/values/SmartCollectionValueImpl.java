@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.values;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.internal.iterators.AbstractLazyIterator;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
@@ -33,12 +32,7 @@ public class SmartCollectionValueImpl extends LazyCollectionValueImpl
 	}
 
 	@Override
-	public @NonNull LazyIterator reIterator() {
-		return ((AbstractLazyIterator)inputIterator).reIterator();
-	}
-
-	@Override
-	protected @NonNull CollectionValue reValue2() {
+	protected @NonNull CollectionValue reValue2(@NonNull CollectionTypeId typeId, @NonNull LazyIterator inputIterator, int lazyDepth) {
 		return new SmartCollectionValueImpl(typeId, inputIterator.reIterator(), lazyDepth);
 	}
 }
