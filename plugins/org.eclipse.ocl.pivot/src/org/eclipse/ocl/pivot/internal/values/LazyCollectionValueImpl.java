@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.AbstractLazyIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AppendAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AppendIterator;
 import org.eclipse.ocl.pivot.internal.iterators.BagElementCount;
@@ -110,7 +109,7 @@ import com.google.common.collect.Lists;
  *
  * @since 1.3
  */
-public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyCollectionValue, LazyIterator, MutableIterable
+public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyCollectionValue, MutableIterable
 {
 	/**
 	 * Arbitrary nesting of lazy iterators can run out of stack, so eager iterables are needed every so often.
@@ -987,7 +986,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 	}
 
-
 	/**
 	 * The type of the resulting collection.
 	 */
@@ -996,7 +994,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	/**
 	 * The number of preceding lazy iterators feeding this lazy collection.
 	 */
-	private final int lazyDepth;
+	protected final int lazyDepth;
 
 	/**
 	 * The iterator that provides the elements that have yet to be cached in lazyListOfElements.
@@ -1033,7 +1031,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	private int size = 0;
 
 	/**
-	 * The hashCode of the boxed values in this collection.
+	 * The hashCode of the boxed values in this collection. A non-zero value is computed lazily.
+	 * It is illegal toi perform a mutable operation after the hashCode has been computed.
 	 */
 	private int hashCode = 0;
 
@@ -1044,31 +1043,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 */
 	private boolean lazyIterator = false;
 
-	/**
-	 * The next value to be returned by this iterator, if hasNextCount > 0.
-	 */
-	private Object next = null;
-
-	/**
-	 * The number of repeats of next that are available.
-	 */
-	private int hasNextCount = 0;
-
-	/**
-	 * The number of repeats to be advanced by an invocation of next(). Set to 1 by the traditional hasNext().
-	 * Set to hasNextCount by the BaggableIterator protocol of hasNextCount().
-	 */
-	private int useCount = 0;
-
-	@Deprecated /* @deprecated supply inputIterator argument */
-	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId, int lazyDepth) {
-		this(typeId, null, lazyDepth);
-	}
-
-	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId, @Nullable LazyIterator inputIterator, int lazyDepth) {
+	protected LazyCollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull LazyIterator inputIterator, int lazyDepth) {
 		this.typeId = typeId;
 		this.lazyDepth = lazyDepth;
-		this.inputIterator = inputIterator != null ? inputIterator : this;
+		this.inputIterator = inputIterator;
 		this.collectionStrategy = getCollectionStrategy(typeId);
 		this.equalsStrategy = SimpleEqualsStrategy.INSTANCE;
 	}
@@ -1124,9 +1102,10 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	@Override
 	public @NonNull Collection<@Nullable Object> asCollection() {
 		if (collectionStrategy.isBag()) {
+			LazyIterator iterator = lazyIterator();
 			BagImpl<@Nullable Object> bagImpl = new BagImpl<>();
-			for (int count; (count = hasNextCount()) > 0; ) {
-				Object next = next();
+			for (int count; (count = iterator.hasNextCount()) > 0; ) {
+				Object next = iterator.next();
 				bagImpl.put(next, count);
 			}
 			return bagImpl;
@@ -1594,25 +1573,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	/**
-	 * Derived classes must implement to return the number of times the next element is repeated.
-	 * If the return is more than zero, the next element and count must be assigned prior to return
-	 * by invoking setNext().
-	 *
-	 * It is desirable, but not mandatory for derived classes to exploit the BaggableIterator protocol to avoid
-	 * redundant re-computation of repeated Bag elements. Repeated Bag elements may be returned one repeat at
-	 * a time, by returning 1 rather than the repeat. If this is to be done, the constructor must inhibit lazy
-	 * use of this iterable/iterator by invoking getMapOfElement2elementCount().
-	 */
-	protected int getNextCount() {
-		if (inputIterator != this) {
-			return ((AbstractLazyIterator)inputIterator).getNextCount();
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	/**
 	 * Ensure that all lazy iterations have completed and then return a set of all elements.
 	 */
 	public @NonNull Set<@Nullable Object> getSetOfElements() {
@@ -1630,31 +1590,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	protected boolean hasCache() {
 		return lazyListOfElements != null;
-	}
-
-	@Override
-	public final boolean hasNext() {
-		if ((hasNextCount > 0) || (hasNextCount() > 0)) {
-			useCount = 1;
-			return true;
-		}
-		else {
-			useCount = 0;
-			return false;
-		}
-	}
-
-	@Override
-	public final int hasNextCount() {
-		if (hasNextCount <= 0) {
-			int hasNextCount = getNextCount();
-			assert hasNextCount == this.hasNextCount;
-			if (hasNextCount <= 0) {
-				next = null;
-			}
-		}
-		useCount = hasNextCount;
-		return useCount;
 	}
 
 	@Override
@@ -1798,11 +1733,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
-	public boolean isCached() {
-		return lazyListOfElements != null;
-	}
-
-	@Override
 	public @NonNull Boolean isEmpty() {
 		return intSize() == 0;
 	}
@@ -1877,11 +1807,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public void mutableAppend(@Nullable Object rightValue) {
+		assert hashCode == 0;
 		collectionStrategy.appendTo(this, rightValue, 1);
 	}
 
 	@Override
 	public void mutableAppendAll(@NonNull Iterator<@Nullable Object> rightIterator) {
+		assert hashCode == 0;
 		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
 			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
@@ -1897,35 +1829,41 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public void mutableAsBag() {
+		assert hashCode == 0;
 		collectionStrategy.asBag(this);
 		collectionStrategy = BagStrategy.INSTANCE;
 	}
 
 	@Override
 	public void mutableAsOrderedSet() {
+		assert hashCode == 0;
 		collectionStrategy.asUnique(this);
 		collectionStrategy = OrderedSetStrategy.INSTANCE;
 	}
 
 	@Override
 	public void mutableAsSequence() {
+		assert hashCode == 0;
 		collectionStrategy.asSequence(this);
 		collectionStrategy = SequenceStrategy.INSTANCE;
 	}
 
 	@Override
 	public void mutableAsSet() {
+		assert hashCode == 0;
 		collectionStrategy.asUnique(this);
 		collectionStrategy = SetStrategy.INSTANCE;
 	}
 
 	@Override
 	public void mutableExcluding(@Nullable Object rightValue) {
+		assert hashCode == 0;
 		collectionStrategy.removeFrom(this, rightValue, 1);
 	}
 
 	@Override
 	public void mutableExcludingAll(@NonNull Iterator<@Nullable Object> rightIterator) {
+		assert hashCode == 0;
 		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
 			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
@@ -1941,11 +1879,13 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public void mutableIncluding(@Nullable Object rightValue) {
+		assert hashCode == 0;
 		collectionStrategy.addTo(this, rightValue, 1);
 	}
 
 	@Override
 	public void mutableIncludingAll(@NonNull Iterator<@Nullable Object> rightIterator) {
+		assert hashCode == 0;
 		if ((rightIterator instanceof BaggableIterator<?>) && !collectionStrategy.isSequence()) {
 			BaggableIterator<?> baggableIterator = (BaggableIterator<?>)rightIterator;
 			for (int nextCount; (nextCount = baggableIterator.hasNextCount()) > 0; ) {
@@ -1966,6 +1906,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 */
 	@Override
 	public void mutableIntersection(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
+		assert hashCode == 0;
 		assert ((CollectionValue)this).isUnique() || !((CollectionValue)this).isOrdered();
 		Map<@Nullable Object, @NonNull ElementCount> savedMapOfElement2elementCount = getMapOfElement2elementCount();
 		Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyMapOfElement2elementCount = new HashMap<>();
@@ -2010,6 +1951,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 */
 	@Override
 	public void mutableUnion(@NonNull Iterator<@Nullable Object> rightIterator, boolean isUnique) {
+		assert hashCode == 0;
 		assert ((CollectionValue)this).isUnique() || !((CollectionValue)this).isOrdered();
 		collectionStrategy = isUnique ? SetStrategy.INSTANCE : BagStrategy.INSTANCE;
 		if (rightIterator instanceof BaggableIterator<?>) {
@@ -2023,16 +1965,6 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 				collectionStrategy.addTo(this, rightIterator.next(), 1);
 			}
 		}
-	}
-
-	@Override
-	public final Object next() {
-		if (hasNextCount <= 0) {
-			throw new NoSuchElementException();
-		}
-		hasNextCount -= useCount;
-		useCount = 0;
-		return next;
 	}
 
 	@Override
@@ -2075,7 +2007,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 *
 	 * @deprecated ensure that cahedIterable() is invoked to avoid the need for re-iteration
 	 */
-	@Override
+	//	@Override
 	@Deprecated
 	public abstract @NonNull LazyIterator reIterator();
 
@@ -2088,22 +2020,17 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 			return this;							//  a lazy iterator can still be created
 		}
 		else {										// If we started to iterate without caching
-			return (CollectionValue) reIterator();	// only a reIterator guarantees to retraverse
+			return reValue2();	// only a reIterator guarantees to retraverse
 		}
 	}
+
+	protected abstract @NonNull CollectionValue reValue2();
 
 	@Override
 	public @NonNull CollectionValue reverse() {
 		List<@Nullable Object> result = new ArrayList<>(getListOfElements());
 		Collections.reverse(result);
 		return new MutableCollectionValueImpl(typeId, result.iterator());
-	}
-
-	protected int setNext(Object next, int nextCount) {
-		assert nextCount > 0;
-		this.next = next;
-		this.hasNextCount = nextCount;
-		return nextCount;
 	}
 
 	@Override
@@ -2130,7 +2057,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue toSequenceValue() {
-		return new MutableCollectionValueImpl(TypeUtil.getSequenceTypeId(typeId), this);
+		return new MutableCollectionValueImpl(TypeUtil.getSequenceTypeId(typeId), lazyIterator());		// FIXME
 	}
 
 	@Override

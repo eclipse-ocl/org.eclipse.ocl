@@ -15,6 +15,7 @@ import java.util.Iterator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
@@ -27,32 +28,37 @@ public class MutableCollectionValueImpl extends LazyCollectionValueImpl
 	protected final @Nullable Iterator<@Nullable Object> elements;
 
 	public MutableCollectionValueImpl(@NonNull CollectionTypeId typeId) {
-		super(typeId, null, 0);
+		super(typeId, EMPTY_ITERATOR, 0);
 		this.elements = null;
 		mutableIterable();
 	}
 
 	public MutableCollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Iterator<@Nullable Object> elements) {
-		super(typeId, null, 0);
+		super(typeId, EMPTY_ITERATOR, 0);
 		this.elements = elements;
 		mutableIterable();
 		mutableIncludingAll(elements);
 	}
 
 	@Override
-	protected int getNextCount() {
-		//	assert size == 0;
-		return 0;  // Occurs before add mutable additions
-	}
-
-	@Override
 	public @NonNull LazyIterator reIterator() {
-		Iterator<@Nullable Object> elements2 = elements;
+		/*		Iterator<@Nullable Object> elements2 = elements;
 		if (elements2 == null) {
 			return new MutableCollectionValueImpl(typeId);
 		}
 		else {
 			return new MutableCollectionValueImpl(typeId, elements2);
-		}
+		} */
+		return lazyIterator();
+	}
+
+	@Override
+	public @NonNull CollectionValue reValue() {
+		return this;
+	}
+
+	@Override
+	protected @NonNull CollectionValue reValue2() {
+		return this;
 	}
 }
