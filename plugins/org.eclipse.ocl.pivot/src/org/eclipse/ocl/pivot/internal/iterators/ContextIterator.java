@@ -72,7 +72,7 @@ public class ContextIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
+	public @NonNull LazyIterator reIterator() {
 		return new ContextIterator(executor, executableObject, caller, lazyValue);
 	}
 

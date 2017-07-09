@@ -115,7 +115,7 @@ public class FlattenIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
+	public @NonNull LazyIterator reIterator() {
 		return new FlattenIterator(typeId, sourceValue);
 	}
 

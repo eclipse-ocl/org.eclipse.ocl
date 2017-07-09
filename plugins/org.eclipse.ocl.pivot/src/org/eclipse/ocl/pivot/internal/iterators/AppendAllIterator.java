@@ -88,7 +88,7 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new ToBag(sourceValue, appendedValue);
 		}
 	}
@@ -114,7 +114,7 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new ToSequence(sourceValue, appendedValue);
 		}
 	}
@@ -145,7 +145,7 @@ public abstract class AppendAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new ToUnique(sourceValue, appendedValue);
 		}
 	}

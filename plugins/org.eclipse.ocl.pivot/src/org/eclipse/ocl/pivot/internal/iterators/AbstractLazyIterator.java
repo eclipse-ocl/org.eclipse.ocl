@@ -71,6 +71,11 @@ public abstract class AbstractLazyIterator implements LazyIterator
 	}
 
 	@Override
+	public boolean isCached() {
+		return false;
+	}
+
+	@Override
 	public final Object next() {
 		if (hasNextCount <= 0) {
 			throw new NoSuchElementException();
@@ -80,6 +85,7 @@ public abstract class AbstractLazyIterator implements LazyIterator
 		return next;
 	}
 
+	@Override
 	public abstract @NonNull LazyIterator reIterator();
 
 	protected int setNext(Object next, int nextCount) {

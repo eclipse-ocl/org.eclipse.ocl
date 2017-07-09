@@ -76,7 +76,7 @@ public class SubOrderedSetIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
+	public @NonNull LazyIterator reIterator() {
 		return new SubOrderedSetIterator(sourceValue, lower, upper);
 	}
 

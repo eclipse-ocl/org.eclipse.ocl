@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.values;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -20,4 +21,15 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public interface LazyIterator extends BaggableIterator<@Nullable Object>
 {
+	/**
+	 * Return true if the source of this iterator is cached making reIteration simple.
+	 */
+	boolean isCached();
+
+	/**
+	 * Return another iterator for the source of this iterator. This is only intended to
+	 * be used when isCached() returns true. It may however be-used for an uncached source
+	 * in which case reundant repeated compuations are likely.
+	 */
+	@NonNull LazyIterator reIterator();
 }

@@ -105,8 +105,18 @@ public abstract class ValueUtil
 		}
 
 		@Override
+		public boolean isCached() {
+			return false;
+		}
+
+		@Override
 		public Object next() {
 			return null;
+		}
+
+		@Override
+		public @NonNull LazyIterator reIterator() {
+			return this;
 		}
 
 		@Override

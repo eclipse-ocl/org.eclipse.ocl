@@ -58,7 +58,7 @@ public class ExcludingIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
+	public @NonNull LazyIterator reIterator() {
 		return new ExcludingIterator(sourceValue, object);
 	}
 

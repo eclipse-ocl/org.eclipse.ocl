@@ -61,7 +61,7 @@ public class SymmetricDifferenceIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
+	public @NonNull LazyIterator reIterator() {
 		return new SymmetricDifferenceIterator(sourceValue, otherValue);
 	}
 

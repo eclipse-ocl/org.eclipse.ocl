@@ -76,7 +76,7 @@ public class SubSequenceIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
+	public @NonNull LazyIterator reIterator() {
 		return new SubSequenceIterator(sourceValue, lower, upper);
 	}
 

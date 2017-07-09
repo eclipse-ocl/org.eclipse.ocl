@@ -92,7 +92,7 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new ToBag(sourceValue, prependValue);
 		}
 	}
@@ -118,7 +118,7 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new ToSequence(sourceValue, prependValue);
 		}
 	}
@@ -150,7 +150,7 @@ public abstract class PrependAllIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new ToUnique(sourceValue, prependValue);
 		}
 	}

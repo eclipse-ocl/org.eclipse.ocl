@@ -27,7 +27,7 @@ public class SmartCollectionValueImpl extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
+	public @NonNull LazyIterator reIterator() {
 		return new SmartCollectionValueImpl(typeId, ((AbstractLazyIterator)inputIterator).reIterator());
 	}
 }

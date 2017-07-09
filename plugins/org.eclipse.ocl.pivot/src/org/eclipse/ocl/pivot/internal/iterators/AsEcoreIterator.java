@@ -58,7 +58,7 @@ public class AsEcoreIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
+	public @NonNull LazyIterator reIterator() {
 		return new AsEcoreIterator(sourceValue, idResolver, instanceClass);
 	}
 

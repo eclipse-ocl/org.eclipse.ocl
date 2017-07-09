@@ -100,7 +100,7 @@ public abstract class AsSequenceIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new FromCollection(typeId, boxedValues);
 		}
 	}
@@ -115,7 +115,7 @@ public abstract class AsSequenceIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new FromCollectionValue(sourceValue);
 		}
 	}

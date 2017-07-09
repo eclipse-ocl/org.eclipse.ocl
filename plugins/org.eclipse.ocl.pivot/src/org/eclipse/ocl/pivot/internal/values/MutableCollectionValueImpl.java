@@ -46,7 +46,7 @@ public class MutableCollectionValueImpl extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
+	public @NonNull LazyIterator reIterator() {
 		Iterator<@Nullable Object> elements2 = elements;
 		if (elements2 == null) {
 			return new MutableCollectionValueImpl(typeId);

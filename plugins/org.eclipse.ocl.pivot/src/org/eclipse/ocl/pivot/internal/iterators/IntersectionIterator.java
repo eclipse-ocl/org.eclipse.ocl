@@ -67,7 +67,7 @@ public class IntersectionIterator extends LazyCollectionValueImpl
 	}
 
 	@Override
-	protected @NonNull LazyIterator reIterator() {
+	public @NonNull LazyIterator reIterator() {
 		return new IntersectionIterator(typeId, sourceValue, secondValue);
 	}
 

@@ -116,7 +116,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new FromCollection(typeId, boxedValues);
 		}
 	}
@@ -131,7 +131,7 @@ public abstract class AsOrderedSetIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new FromCollectionValue(sourceValue);
 		}
 	}

@@ -610,6 +610,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 
 		@Override
+		public boolean isCached() {
+			return true;						// FIXME
+		}
+
+		@Override
 		public @Nullable Object next() {
 			if (residualCount <= 0) {
 				throw new NoSuchElementException();
@@ -625,6 +630,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 			}
 			nextCount = 1;
 			return savedElement;
+		}
+
+		@Override
+		public @NonNull LazyIterator reIterator() {
+			return new ImmutableBaggableIterator(elements, element2elementCount);
 		}
 
 		@Override
@@ -671,11 +681,21 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 
 		@Override
+		public boolean isCached() {
+			return true;						// FIXME
+		}
+
+		@Override
 		public @Nullable Object next() {
 			//	if (index >= size) {
 			//		throw new NoSuchElementException();		-- get will throw an IOOBE if the impossible happens
 			//	}
 			return elements.get(elementIndex++);
+		}
+
+		@Override
+		public @NonNull LazyIterator reIterator() {
+			return new ImmutableNonBaggableIterator(elements);
 		}
 
 		@Override
@@ -700,6 +720,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 */
 	private static class LazyBaggableIterator implements LazyIterator
 	{
+		private final @NonNull LazyCollectionValueImpl iterable;
 		private final @NonNull Map<@Nullable Object, @NonNull ElementCount> map;
 		private final @NonNull Iterator<@Nullable Object> objectIterator;
 		private @Nullable Object currentObject;
@@ -717,6 +738,7 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		private int nextCount = 0;
 
 		private LazyBaggableIterator(@NonNull LazyCollectionValueImpl iterable) {
+			this.iterable = iterable;
 			this.map = iterable.getMapOfElement2elementCount();
 			this.objectIterator = iterable.iterator();
 			assert objectIterator.hasNext();
@@ -745,6 +767,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 
 		@Override
+		public boolean isCached() {
+			return true;						// FIXME
+		}
+
+		@Override
 		public @Nullable Object next() {
 			if (residualCount <= 0) {
 				throw new NoSuchElementException();
@@ -765,6 +792,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 				residualCount = 0;
 				return currentObject;
 			}
+		}
+
+		@Override
+		public @NonNull LazyIterator reIterator() {
+			return new LazyBaggableIterator(iterable);
 		}
 
 		@Override
@@ -812,6 +844,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		}
 
 		@Override
+		public boolean isCached() {
+			return false;						// FIXME
+		}
+
+		@Override
 		public @Nullable Object next() {
 			if (index < size) {
 				List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
@@ -821,6 +858,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 			@Nullable Object next = get(index);
 			index++;			// After IndexOutOfBoundsException has been thrown
 			return next;
+		}
+
+		@Override
+		public @NonNull LazyIterator reIterator() {
+			return new LazyNonBaggableIterator();
 		}
 
 		@Override
@@ -1771,6 +1813,11 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	}
 
 	@Override
+	public boolean isCached() {
+		return lazyListOfElements != null;
+	}
+
+	@Override
 	public @NonNull Boolean isEmpty() {
 		return intSize() == 0;
 	}
@@ -1823,6 +1870,9 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	public synchronized @NonNull LazyIterator lazyIterator() {
 		if (lazyListOfElements == null) {
 			if (!lazyIterator) {
+				if (inputIterator.isCached()) {
+					return inputIterator.reIterator();
+				}
 				lazyIterator = true;
 				return inputIterator;
 			}
@@ -2036,8 +2086,9 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 	 *
 	 * @deprecated ensure that cahedIterable() is invoked to avoid the need for re-iteration
 	 */
+	@Override
 	@Deprecated
-	protected abstract @NonNull LazyIterator reIterator();
+	public abstract @NonNull LazyIterator reIterator();
 
 	@Override
 	public @NonNull CollectionValue reValue() {

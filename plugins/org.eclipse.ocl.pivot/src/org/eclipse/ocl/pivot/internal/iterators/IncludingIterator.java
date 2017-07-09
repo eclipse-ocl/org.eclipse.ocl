@@ -93,7 +93,7 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new ToBag(typeId, sourceValue, object);
 		}
 	}
@@ -119,7 +119,7 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new ToSequence(typeId, sourceValue, object);
 		}
 	}
@@ -152,7 +152,7 @@ public abstract class IncludingIterator extends LazyCollectionValueImpl
 		}
 
 		@Override
-		protected @NonNull LazyIterator reIterator() {
+		public @NonNull LazyIterator reIterator() {
 			return new ToUnique(typeId, sourceValue, object);
 		}
 	}

@@ -43,6 +43,11 @@ public class FromArrayIterator extends AbstractLazyIterator
 	}
 
 	@Override
+	public boolean isCached() {
+		return true;
+	}
+
+	@Override
 	public @NonNull LazyIterator reIterator() {
 		return new FromArrayIterator(elements);
 	}
