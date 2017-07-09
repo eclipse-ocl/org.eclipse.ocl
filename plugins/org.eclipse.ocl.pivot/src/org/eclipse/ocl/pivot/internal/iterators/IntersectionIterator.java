@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -40,7 +40,7 @@ public class IntersectionIterator extends AbstractLazyIterator
 			collectionTypeId = TypeUtil.getBagTypeId(sourceValue.getTypeId());
 			inputIterator = new IntersectionIterator(sourceValue, secondValue);
 		}
-		return new SmartCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
+		return new LazyCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
 	}
 
 	private final @NonNull CollectionValue sourceValue;

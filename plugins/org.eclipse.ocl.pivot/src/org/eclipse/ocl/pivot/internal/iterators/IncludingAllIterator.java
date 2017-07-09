@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -39,7 +39,7 @@ public abstract class IncludingAllIterator extends AbstractLazyIterator
 		else {
 			inputIterator = new ToBag(sourceValue, includeValue);
 		}
-		return new SmartCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
+		return new LazyCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
 	}
 
 	public static @NonNull CollectionValue union(@NonNull CollectionValue sourceValue, @NonNull CollectionValue unionValue) {
@@ -53,7 +53,7 @@ public abstract class IncludingAllIterator extends AbstractLazyIterator
 			inputIterator = new ToBag(sourceValue, unionValue);
 			collectionTypeId = TypeUtil.getBagTypeId(sourceValue.getTypeId());
 		}
-		return new SmartCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
+		return new LazyCollectionValueImpl(collectionTypeId, inputIterator, sourceValue);
 	}
 
 	protected final @NonNull CollectionValue sourceValue;

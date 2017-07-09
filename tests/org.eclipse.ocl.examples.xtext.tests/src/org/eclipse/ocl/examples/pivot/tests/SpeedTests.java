@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.MutableIterable;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
 import junit.framework.TestCase;
@@ -466,23 +467,23 @@ public class SpeedTests extends PivotTestCase
 			//			CollectionValue setValue = ValueUtil.createSetOfEach(collectionTypedId, noValues);
 			long endTime1 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
-			/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
+			/*@Thrown*/ @NonNull MutableIterable accumulator_0 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
 			long startTime2 = System.nanoTime();
 			for (int i = 0; i < testSize; i++) {
 				Object i_0 = values[i];
 				/**
 				 * t->select(x = i)
 				 */
-				/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_1 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
+				/*@Thrown*/ @NonNull MutableIterable accumulator_1 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
 				for (TupleValue aTupleValue : tupleValues) {
 					Object x = aTupleValue.getValue(0);
 					if (x.equals(i_0)) {
-						accumulator_1.add(aTupleValue);
+						accumulator_1.mutableIncluding(aTupleValue);
 					}
 				}
 				//
 				for (Object value : accumulator_1.flatten().getElements()) {
-					accumulator_0.add(value);
+					accumulator_0.mutableIncluding(value);
 				}
 			}
 			long endTime2 = System.nanoTime();
@@ -551,14 +552,14 @@ public class SpeedTests extends PivotTestCase
 			//			}
 			long endTime1 = System.nanoTime();
 			logger.printf("%9.6f, ", (endTime1 - startTime1) / 1.0e9);
-			/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
+			/*@Thrown*/ @NonNull MutableIterable accumulator_0 = ValueUtil.createSequenceAccumulatorValue(SEQ_TUPLid_);
 			long startTime2 = System.nanoTime();
 			for (int i = 0; i < testSize; i++) {
 				Object i_0 = values[i];
 				List<TupleValue> list = content2address.get(i_0);
 				//
 				for (Object value : list) {
-					accumulator_0.add(value);
+					accumulator_0.mutableIncluding(value);
 				}
 			}
 			long endTime2 = System.nanoTime();

@@ -31,8 +31,6 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
-import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy;
-import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy.SimpleEqualsStrategy;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.BaggableIterator;
@@ -391,11 +389,6 @@ public abstract class UndefinedValueImpl extends EvaluationException implements 
 	@Override
 	public @NonNull List<@Nullable Object> getElements() {
 		throw new InvalidValueException("bad getElements()");
-	}
-
-	@Override
-	public @NonNull EqualsStrategy getEqualsStrategy() {
-		return SimpleEqualsStrategy.INSTANCE;
 	}
 
 	public @NonNull Type getInstanceType() {

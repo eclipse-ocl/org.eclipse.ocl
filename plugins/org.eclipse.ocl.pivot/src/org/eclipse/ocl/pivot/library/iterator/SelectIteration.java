@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.SelectIterator;
-import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -70,7 +70,7 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
-	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
+	public @NonNull MutableIterable createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
 
@@ -78,7 +78,7 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 	 * @since 1.1
 	 */
 	@Override
-	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
+	public @NonNull MutableIterable createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createCollectionAccumulatorValue((CollectionTypeId)accumulatorTypeId);
 	}
 
@@ -108,6 +108,6 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 	public @NonNull Value evaluate(@NonNull Executor executor, @NonNull CollectionTypeId typeId, @NonNull CollectionValue sourceValue, @NonNull VariableDeclaration firstIterator,
 			@NonNull OCLExpression body) {
 		LazyIterator selectedIterator = new LazySelectIterator(sourceValue, executor, body, firstIterator);
-		return new SmartCollectionValueImpl(sourceValue.getTypeId(), selectedIterator, sourceValue);
+		return new LazyCollectionValueImpl(sourceValue.getTypeId(), selectedIterator, sourceValue);
 	}
 }

@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.LongIntegerValueImpl;
 import org.eclipse.ocl.pivot.internal.values.MapEntryImpl;
 import org.eclipse.ocl.pivot.internal.values.MapValueImpl;
-import org.eclipse.ocl.pivot.internal.values.MutableCollectionValueImpl;
 import org.eclipse.ocl.pivot.internal.values.NullValueImpl;
 import org.eclipse.ocl.pivot.internal.values.RealValueImpl;
 import org.eclipse.ocl.pivot.internal.values.TupleValueImpl;
@@ -594,7 +593,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull MutableIterable createCollectionAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new MutableCollectionValueImpl(collectedId);
+		return new LazyCollectionValueImpl(collectedId, EMPTY_ITERATOR, null).mutableIterable();
 	}
 
 	public static @NonNull CollectionValue createCollectionOfEach(@NonNull CollectionTypeId typeId, boolean uniqueElements, @Nullable Object @NonNull ... boxedValues) {

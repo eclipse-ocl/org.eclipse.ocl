@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.MutableIterable;
 
 /**
  * ClosureIteration realizes the Collection::closure() library iteration.
@@ -33,31 +34,33 @@ public class ClosureIteration extends AbstractIteration
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
-	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
+	public @NonNull MutableIterable createAccumulatorValue(@NonNull Evaluator evaluator, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createAccumulatorValue(ValueUtil.getExecutor(evaluator), accumulatorTypeId, bodyTypeId);
 	}
-	
+
 	/**
 	 * @since 1.1
 	 */
 	@Override
-	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
+	public @NonNull MutableIterable createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createCollectionAccumulatorValue((CollectionTypeId) accumulatorTypeId);
 	}
 
 	/**
 	 * Recursively evaluates the iterator body expression.
 	 */
-    @Override
+	@Override
 	protected @Nullable Object updateAccumulator(@NonNull IterationManager iterationManager) {
 		// The parent is the iterator
 		Object value = iterationManager.get();
-		CollectionValue.Accumulator accumulatorValue = (CollectionValue.Accumulator)iterationManager.getAccumulatorValue();
+		MutableIterable accumulatorValue = (MutableIterable)iterationManager.getAccumulatorValue();
 		assert accumulatorValue != null;
-		if (!accumulatorValue.add(value)) {
+		int oldSize = accumulatorValue.intSize();
+		accumulatorValue.mutableIncluding(value);
+		if (oldSize == accumulatorValue.intSize()) {
 			return CARRY_ON;
 		}
-		Object bodyVal = iterationManager.evaluateBody();		
+		Object bodyVal = iterationManager.evaluateBody();
 		if (bodyVal instanceof InvalidValueException) {
 			throw (InvalidValueException)bodyVal;				// FIXME Analyze away
 		}

@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -25,7 +24,7 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
 public class FromIntegerRangesIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, boolean uniqueElements, @NonNull Object @NonNull [] elements) {
-		SmartCollectionValueImpl collectionValue = new SmartCollectionValueImpl(collectionTypeId, new FromIntegerRangesIterator(elements), null);
+		LazyCollectionValueImpl collectionValue = new LazyCollectionValueImpl(collectionTypeId, new FromIntegerRangesIterator(elements), null);
 		if (!uniqueElements && !collectionValue.isSequence()) {
 			collectionValue.eagerIterable();	// uniqueness/counts must be eager
 		}

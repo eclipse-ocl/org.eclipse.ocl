@@ -11,7 +11,7 @@
 package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -37,7 +37,7 @@ public abstract class AppendAllIterator extends AbstractLazyIterator
 		else {
 			inputIterator = new ToBag(sourceValue, appendedValue);
 		}
-		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
+		return new LazyCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
 	}
 
 	protected final @NonNull CollectionValue sourceValue;

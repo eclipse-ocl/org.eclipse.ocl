@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.iterators;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
@@ -25,7 +24,7 @@ public class FromCollectionValueIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull CollectionValue oldCollectionValue) {
 		FromCollectionValueIterator inputIterator = new FromCollectionValueIterator(oldCollectionValue);
-		SmartCollectionValueImpl newCollectionValue = new SmartCollectionValueImpl(collectionTypeId, inputIterator, oldCollectionValue);
+		LazyCollectionValueImpl newCollectionValue = new LazyCollectionValueImpl(collectionTypeId, inputIterator, oldCollectionValue);
 		if (oldCollectionValue.isSequence() && !newCollectionValue.isSequence()) {
 			newCollectionValue.eagerIterable();	// uniqueness/counts must be eager
 		}

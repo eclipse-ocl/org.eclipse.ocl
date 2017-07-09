@@ -11,7 +11,7 @@
 package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -26,7 +26,7 @@ public class SubCollectionIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue subCollection(@NonNull CollectionValue sourceValue, int lower, int upper) {
 		SubCollectionIterator inputIterator = new SubCollectionIterator(sourceValue, lower, upper);
-		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
+		return new LazyCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
 	}
 
 	private final @NonNull CollectionValue sourceValue;

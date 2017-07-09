@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
+import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -30,7 +30,7 @@ public class ExcludingIterator extends AbstractLazyIterator
 			throw (InvalidValueException)object;
 		}
 		ExcludingIterator inputIterator = new ExcludingIterator(sourceValue, object);
-		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
+		return new LazyCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
 	}
 
 	private final @NonNull CollectionValue sourceValue;

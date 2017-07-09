@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
-import org.eclipse.ocl.pivot.internal.values.SmartCollectionValueImpl;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
@@ -31,7 +30,7 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
 public class CollectionLiteralIterator extends AbstractLazyIterator
 {
 	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, @NonNull List<@Nullable Object> literalElements) {
-		LazyCollectionValueImpl value = new SmartCollectionValueImpl(collectionTypeId, new CollectionLiteralIterator(literalElements), null);
+		LazyCollectionValueImpl value = new LazyCollectionValueImpl(collectionTypeId, new CollectionLiteralIterator(literalElements), null);
 		if (!value.isSequence()) {
 			value.eagerIterable();//.getMapOfElement2elementCount();				// Need history to enforce uniqueness, count repeats
 		}
