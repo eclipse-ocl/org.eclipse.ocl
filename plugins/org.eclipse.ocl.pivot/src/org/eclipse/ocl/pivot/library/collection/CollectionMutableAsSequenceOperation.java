@@ -13,8 +13,9 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FromCollectionValueIterator;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.MutableIterable;
@@ -37,7 +38,7 @@ public class CollectionMutableAsSequenceOperation extends AbstractUnaryOperation
 			return leftCollectionValue;
 		}
 		else {
-			return new AsSequenceIterator.FromCollectionValue(leftCollectionValue);
+			return FromCollectionValueIterator.create((CollectionTypeId)returnTypeId, leftCollectionValue);
 		}
 	}
 }

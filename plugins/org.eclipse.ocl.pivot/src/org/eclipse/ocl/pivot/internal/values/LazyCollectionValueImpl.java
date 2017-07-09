@@ -36,10 +36,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.iterators.AbstractLazyIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AppendAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AppendIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsBagIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsOrderedSetIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsSequenceIterator;
-import org.eclipse.ocl.pivot.internal.iterators.AsSetIterator;
 import org.eclipse.ocl.pivot.internal.iterators.BagElementCount;
 import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
 import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy;
@@ -47,6 +43,7 @@ import org.eclipse.ocl.pivot.internal.iterators.EqualsStrategy.SimpleEqualsStrat
 import org.eclipse.ocl.pivot.internal.iterators.ExcludingAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.ExcludingIterator;
 import org.eclipse.ocl.pivot.internal.iterators.FlattenIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FromCollectionValueIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IncludingIterator;
 import org.eclipse.ocl.pivot.internal.iterators.IntersectionIterator;
@@ -1114,7 +1111,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		return AsBagIterator.FromCollectionValue.create(this);
+		CollectionTypeId collectionTypeId = TypeId.BAG.getSpecializedId(typeId.getElementTypeId());
+		return FromCollectionValueIterator.create(collectionTypeId, this);
 	}
 
 	@Override
@@ -1182,7 +1180,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		return new AsOrderedSetIterator.FromCollectionValue(this);
+		CollectionTypeId collectionTypeId = TypeId.ORDERED_SET.getSpecializedId(typeId.getElementTypeId());
+		return FromCollectionValueIterator.create(collectionTypeId, this);
 	}
 
 	@Override
@@ -1190,7 +1189,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		return new AsSequenceIterator.FromCollectionValue(this);
+		CollectionTypeId collectionTypeId = TypeId.SEQUENCE.getSpecializedId(typeId.getElementTypeId());
+		return FromCollectionValueIterator.create(collectionTypeId, this);
 	}
 
 	@Override
@@ -1198,7 +1198,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 		if (lazyDepth >= LAZY_DEPTH_TRAP) {
 			eagerIterable();
 		}
-		return AsSetIterator.FromCollectionValue.create(this);
+		CollectionTypeId collectionTypeId = TypeId.SET.getSpecializedId(typeId.getElementTypeId());
+		return FromCollectionValueIterator.create(collectionTypeId, this);
 	}
 
 	@Override
