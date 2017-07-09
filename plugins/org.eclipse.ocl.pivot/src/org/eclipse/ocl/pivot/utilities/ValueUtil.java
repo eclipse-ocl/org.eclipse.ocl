@@ -574,8 +574,8 @@ public abstract class ValueUtil
 		return createCollectionOfEach(typeId, false, boxedValues);
 	}
 
-	public static @NonNull CollectionValue createBagRange(@NonNull CollectionTypeId typeId, @Nullable Object... values) {
-		Bag<@Nullable Object> allValues = new BagImpl<>();
+	public static @NonNull CollectionValue createBagRange(@NonNull CollectionTypeId typeId, @NonNull Object @NonNull ... values) {
+		/*		Bag<@Nullable Object> allValues = new BagImpl<>();
 		for (Object value : values) {
 			if (value instanceof IntegerRange) {
 				allValues.addAll((IntegerRange)value);
@@ -584,7 +584,8 @@ public abstract class ValueUtil
 				allValues.add(value);
 			}
 		}
-		return new MutableCollectionValueImpl(typeId, allValues.iterator());
+		return new MutableCollectionValueImpl(typeId, allValues.iterator()); */
+		return FromIntegerRangesIterator.createMutable(typeId, false, new @NonNull Object[]{values});
 	}
 
 	@Deprecated /* @deprecated Use createCollectionValue */
@@ -650,6 +651,7 @@ public abstract class ValueUtil
 		return createCollectionOfEach(typeId, false, boxedValues);
 	}
 
+	@Deprecated /* @deprecated Use createCollectionRange */
 	public static @NonNull CollectionValue createOrderedSetRange(@NonNull CollectionTypeId typeId, @NonNull Object @NonNull ... values) {
 		return createCollectionRange(typeId, false, values);
 	}
@@ -674,9 +676,10 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull IntegerRange range) {
-		return new MutableCollectionValueImpl(typeId, range.iterator());
+		return FromIntegerRangesIterator.createMutable(typeId, false, new @NonNull Object[]{range});
 	}
 
+	@Deprecated /* @deprecated Use createCollectionRange */
 	public static @NonNull CollectionValue createSequenceRange(@NonNull CollectionTypeId typeId, @NonNull Object @NonNull ... values) {
 		return createCollectionRange(typeId, false, values);
 	}
@@ -696,6 +699,7 @@ public abstract class ValueUtil
 		return createCollectionOfEach(typeId, false, boxedValues);
 	}
 
+	@Deprecated /* @deprecated Use createCollectionRange */
 	public static @NonNull CollectionValue createSetRange(@NonNull CollectionTypeId typeId, @NonNull Object @NonNull ... values) {
 		return createCollectionRange(typeId, false, values);
 	}

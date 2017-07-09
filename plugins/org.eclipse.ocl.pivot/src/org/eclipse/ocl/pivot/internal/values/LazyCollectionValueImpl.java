@@ -2014,7 +2014,8 @@ public abstract class LazyCollectionValueImpl extends ValueImpl implements LazyC
 
 	@Override
 	public @NonNull CollectionValue toSequenceValue() {
-		return new MutableCollectionValueImpl(TypeUtil.getSequenceTypeId(typeId), lazyIterator());		// FIXME
+		//		return new MutableCollectionValueImpl(TypeUtil.getSequenceTypeId(typeId), lazyIterator());		// FIXME
+		return asSequenceValue();
 	}
 
 	@Override
