@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -22,6 +23,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -179,12 +182,28 @@ public class CGUtil
 		return null;
 	} */
 
+	public static @NonNull CGValuedElement getFirst(@NonNull CGCollectionPart cgCollectionPart) {
+		return ClassUtil.nonNullState(cgCollectionPart.getFirst());
+	}
+
 	public static @NonNull CGValuedElement getInit(@NonNull CGTuplePart cgTuplePart) {
 		return ClassUtil.nonNullState(cgTuplePart.getInit());
 	}
 
 	public static @NonNull CGValuedElement getInit(@NonNull CGVariable cgVariable) {
 		return ClassUtil.nonNullState(cgVariable.getInit());
+	}
+
+	public static @NonNull CGValuedElement getLast(@NonNull CGCollectionPart cgCollectionPart) {
+		return ClassUtil.nonNullState(cgCollectionPart.getLast());
+	}
+
+	public static @NonNull Iterable<@NonNull CGCollectionPart> getParts(@NonNull CGCollectionExp cgCollectionExp) {
+		return ClassUtil.nullFree(cgCollectionExp.getParts());
+	}
+
+	public static @NonNull List<@NonNull CGCollectionPart> getPartsList(@NonNull CGCollectionExp cgCollectionExp) {
+		return ClassUtil.nullFree(cgCollectionExp.getParts());
 	}
 
 	public static Iterable<@NonNull CGTuplePart> getParts(@NonNull CGTupleExp cgTupleExp) {

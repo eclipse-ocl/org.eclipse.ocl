@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.values;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,7 +40,7 @@ import org.eclipse.ocl.pivot.internal.iterators.ElementCount;
  *
  * @since 1.3
  */
-public interface CollectionValue extends Value, Iterable<@Nullable Object>
+public interface CollectionValue extends Value, LazyIterable
 {
 	/**
 	 * @generated NOT
@@ -108,7 +107,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 *
 	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
 	 */
-	@NonNull LazyIterable eagerIterable();
+	@NonNull CollectionValue eagerIterable();
 
 	/**
 	 * Return an iterator whose source has been eagerly populated. This inhibits opportunities for
@@ -116,7 +115,7 @@ public interface CollectionValue extends Value, Iterable<@Nullable Object>
 	 *
 	 * An eager evaluation is needed to ensure that any invalid content is discovered before any element is used.
 	 */
-	public @NonNull Iterator<@Nullable Object> eagerIterator();
+	@NonNull LazyIterator eagerIterator();
 
 	/**
 	 * @generated NOT

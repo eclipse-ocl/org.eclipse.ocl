@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
@@ -52,15 +53,18 @@ public class CGCachingAnalysis
 	public void analyze() {
 		for (@NonNull Object object : new TreeIterable(cgPackage, true)) {
 			if (object instanceof CGConstraint) {
-				analyzeConstraint((CGConstraint)object);
+				analyzeElement((CGConstraint)object);
+			}
+			else if (object instanceof CGOperation) {
+				analyzeElement((CGOperation)object);
 			}
 		}
 	}
 
-	protected void analyzeConstraint(@NonNull CGConstraint cgConstraint) {
+	protected void analyzeElement(@NonNull CGElement cgElement) {
 		Map<@NonNull CGVariable, @NonNull Set<@NonNull CGVariableExp>> cgVariable2users = new HashMap<>();
 		Map<@NonNull CGElement, @Nullable Boolean> cgElement2multiple = new HashMap<>();
-		for (@NonNull Object object : new TreeIterable(cgConstraint, true)) {
+		for (@NonNull Object object : new TreeIterable(cgElement, true)) {
 			analyzeUsage(cgVariable2users, object);
 		}
 		for (@NonNull CGVariable cgVariable : cgVariable2users.keySet()) {

@@ -771,6 +771,94 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		return needsBlankLine;
 	}
 
+	/* FIXME wip BUG 519441
+	protected boolean elementsAreStaticallyUnique(@NonNull List<@NonNull CGCollectionPart> cgParts) {
+		if (cgParts.size() <= 1) {
+			return true;
+		}
+		Set<@NonNull CGValuedElement> constantValues = new HashSet<>();
+		Set<@NonNull CGValuedElement> partValues = new HashSet<>();
+		List<@NonNull CGCollectionPart> integerRanges = new ArrayList<>();
+		for (@NonNull CGCollectionPart cgPart : cgParts) {
+			for (@NonNull EObject eObject : new TreeIterable(cgPart, true)) {
+				if (eObject instanceof CGVariableExp) {		// FIXME if variables are deep and constant they might be used indifferent ways, e.g. 2*x, 4*x - need to resolve constants
+					return false;
+				}
+			}
+			if (elementsMaybeRepeated(cgPart, constantValues, partValues, integerRanges)) {
+				return false;
+			}
+		}
+		if (integerRanges.size() > 1) {
+			Collections.sort(integerRanges, new Comparator<@NonNull CGCollectionPart>() {
+				@Override
+				public int compare(@NonNull CGCollectionPart o1, @NonNull CGCollectionPart o2) {
+					@NonNull CGInteger f1 = (CGInteger) CGUtil.getReferredConstant((CGConstantExp)CGUtil.getFirst(o1));
+					@NonNull CGInteger f2 = (CGInteger) CGUtil.getReferredConstant((CGConstantExp)CGUtil.getFirst(o2));
+					return f2.getNumericValue().intValue() - f1.getNumericValue().intValue();
+				}
+			});
+			for (int i = 1; i < integerRanges.size(); i++) {
+				@NonNull CGCollectionPart o1 = integerRanges.get(i - 1);;
+				@NonNull CGCollectionPart o2 = integerRanges.get(i);
+				@NonNull CGInteger last1 = (CGInteger) CGUtil.getReferredConstant((CGConstantExp)CGUtil.getLast(o1));
+				@NonNull CGInteger first2 = (CGInteger) CGUtil.getReferredConstant((CGConstantExp)CGUtil.getFirst(o2));
+				if (last1.getNumericValue().intValue() >= first2.getNumericValue().intValue()) {
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+
+	protected boolean elementsMaybeRepeated(@NonNull CGCollectionPart cgPart, @NonNull Set<@NonNull CGValuedElement> constantValues,
+			@NonNull Set<@NonNull CGValuedElement> partValues, @NonNull List<@NonNull CGCollectionPart> integerRanges) {
+		CGValuedElement cgFirst = CGUtil.getFirst(cgPart);
+		CGValuedElement cgLast = cgPart.getLast();
+		if ((cgLast instanceof CGConstantExp) && (CGUtil.getReferredConstant((CGConstantExp)cgLast) instanceof CGInteger)
+				&& (cgFirst instanceof CGConstantExp) && (CGUtil.getReferredConstant((CGConstantExp)cgFirst) instanceof CGInteger)) {
+			integerRanges.add(cgPart);
+		}
+		else if (cgFirst instanceof CGConstantExp) {
+			CGValuedElement cgConstant = CGUtil.getReferredConstant((CGConstantExp)cgFirst);
+			if (cgConstant instanceof CGCollectionExp) {
+				for (@NonNull CGCollectionPart cgNestedPart : CGUtil.getParts((CGCollectionExp)cgConstant)) {
+					if (elementsMaybeRepeated(cgNestedPart, constantValues, partValues, integerRanges)) {
+						return true;
+					}
+				}
+			}
+			else if (!constantValues.add(cgConstant)) {
+				return true;
+			}
+		}
+		else if (cgFirst instanceof CGVariableExp) {
+			return true;
+		}
+		else if (cgFirst.isConstant()) {
+			if (!constantValues.add(cgFirst)) {
+				return true;
+			}
+		}
+		else {
+			if (!partValues.add(cgFirst)) {
+				return true;
+			}
+		}
+		/ *		Set<CGCollectionPart> tanges = new ArrayList<>();
+		int size = cgParts.size();
+		for (int i = 0; i < size; i++) {
+			CGCollectionPart iPart = cgParts.get(i);
+			for (int j = i+1; j < size; j++) {
+				CGCollectionPart jPart = cgParts.get(j);
+				if (iPart.isEquivalentTo(jPart) != Boolean.FALSE) {
+					return false;
+				}
+			}
+		} * /
+		return false;
+	} */
+
 	public void generateGlobals(@NonNull Iterable<@NonNull ? extends CGValuedElement> sortedElements) {
 		for (@NonNull CGValuedElement cgElement : sortedElements) {
 			cgElement.accept(this);
@@ -1356,7 +1444,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGCollectionExp(@NonNull CGCollectionExp cgCollectionExp) {
 		int ranges = 0;
-		for (CGCollectionPart cgPart : cgCollectionExp.getParts()) {
+		List<@NonNull CGCollectionPart> cgParts = CGUtil.getPartsList(cgCollectionExp);
+		for (CGCollectionPart cgPart : cgParts) {
 			if (cgPart.isRange()) {
 				ranges++;
 			}
@@ -1371,7 +1460,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(".createCollectionRange(");
 			//			CGTypeVariable typeVariable = localContext.getTypeVariable(cgCollectionExp.getTypeId());
 			js.appendIdReference(cgCollectionExp.getTypeId().getElementId());
-			for (CGCollectionPart cgPart : cgCollectionExp.getParts()) {
+			js.append(", ");
+			js.appendBooleanString(false/*cgCollectionExp.isUnique() && elementsAreStaticallyUnique(cgParts)*/);	// FIXME BUG 519441
+			for (CGCollectionPart cgPart : cgParts) {
 				js.append(", ");
 				js.appendValueName(cgPart);
 			}
@@ -1380,16 +1471,21 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			js.append(".createCollectionOfEach(");
 			//		CGTypeVariable typeVariable = localContext.getTypeVariable(cgCollectionExp.getTypeId());
 			js.appendIdReference(cgCollectionExp.getTypeId().getElementId());
-			js.append(", false");				// FIXME compute uniqueness of constants
-			for (CGCollectionPart cgPart : cgCollectionExp.getParts()) {
+			js.append(", ");
+			js.appendBooleanString(false/*cgCollectionExp.isUnique() && elementsAreStaticallyUnique(cgParts)*/);	// FIXME BUG 519441
+			for (CGCollectionPart cgPart : cgParts) {
 				js.append(", ");
-				if (cgPart.isNull() && (cgCollectionExp.getParts().size() == 1)) {
+				if (cgPart.isNull() && (cgParts.size() == 1)) {
 					js.append("(Object)");
 				}
 				js.appendValueName(cgPart);
 			}
 		}
-		js.append(");\n");
+		js.append(")");
+		if (cgCollectionExp.isGlobal()) {
+			js.append(".mutableIterable()");
+		}
+		js.append(";\n");
 		return true;
 	}
 
@@ -2883,14 +2979,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 					js.append("}\n");
 				}
 			}
-
 		}
-		//		js.appendDeclaration(cgVariable);
-		//		if (init != null) {
-		//			js.append(" = ");
-		//			js.appendValueName(init);
-		//		}
-		//		js.append(";\n");
 		return true;
 	}
 

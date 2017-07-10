@@ -1304,15 +1304,15 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	}
 
 	@Override
-	public @NonNull LazyIterable eagerIterable() {
+	public @NonNull CollectionValue eagerIterable() {
 		cachedIterable();
 		getListOfElements();
 		return this;
 	}
 
 	@Override
-	public @NonNull Iterator<@Nullable Object> eagerIterator() {
-		return eagerIterable().iterator();
+	public @NonNull LazyIterator eagerIterator() {
+		return eagerIterable().lazyIterator();
 	}
 
 	@Override

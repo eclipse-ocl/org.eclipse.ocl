@@ -41,7 +41,7 @@ public class JavaGenModelCodeGenHelper implements CodeGenHelper
 	private @NonNull Map<EPackage, GenPackage> ePackageMap = new HashMap<EPackage, GenPackage>();
 	private @NonNull Map<String, GenPackage> uriMap = new HashMap<String, GenPackage>();
 	private @NonNull Map<EClassifier, GenClassifier> eClassifierMap = new HashMap<EClassifier, GenClassifier>();
-	
+
 	public JavaGenModelCodeGenHelper(@NonNull GenModel genModel, @NonNull EnvironmentFactoryInternal environmentFactory) throws IOException {
 		this.environmentFactory = environmentFactory;
 		for (GenPackage genPackage : genModel.getGenPackages()) {
@@ -78,7 +78,7 @@ public class JavaGenModelCodeGenHelper implements CodeGenHelper
 	public @NonNull String getCopyright(@NonNull String indentation) {
 		return "";
 	}
-	
+
 	public @Nullable GenClass getGenClass(@NonNull GenPackage genPackage, @NonNull Type type) {
 		String name = type.getName();
 		for (GenClass genClass : genPackage.getGenClasses()) {
@@ -111,7 +111,7 @@ public class JavaGenModelCodeGenHelper implements CodeGenHelper
 				return genPackage;
 			}
 		}
-/*		ResourceSet externalResourceSet = metamodelManager.getExternalResourceSet();
+		/*		ResourceSet externalResourceSet = metamodelManager.getExternalResourceSet();
 		projectMap = ProjectMap.getAdapter(externalResourceSet);
 		if (projectMap == null) {
 			projectMap = new ProjectMap();
@@ -150,7 +150,10 @@ public class JavaGenModelCodeGenHelper implements CodeGenHelper
 			writer.close();
 		}
 		OCLstdlibTables.LIBRARY.getClass();		// Ensure coherent initialization
-		OCL2JavaFileObject.saveClass("bin", qualifiedClassName, javaCodeSource);
+		String problems = OCL2JavaFileObject.saveClass("bin", qualifiedClassName, javaCodeSource);
+		if (problems != null) {
+			throw new IOException("Compilation failure for '" + qualifiedClassName + "'\n" + problems);
+		}
 		Class<?> testClass = OCL2JavaFileObject.loadExplicitClass(new File(targetFolder.getParentFile(), "bin"), qualifiedClassName);
 		return (LibraryOperation) testClass.newInstance();
 	}

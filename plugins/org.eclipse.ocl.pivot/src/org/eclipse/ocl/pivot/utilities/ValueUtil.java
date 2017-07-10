@@ -492,7 +492,7 @@ public abstract class ValueUtil
 	/**
 	 * @since 1.3
 	 */
-	public static void checkValid(@Nullable Object @NonNull [] values) {
+	public static void checkValid(Object @NonNull [] values) {
 		for (@Nullable Object value : values) {
 			if (value instanceof InvalidValueException) {
 				throw (InvalidValueException) value;
@@ -602,8 +602,13 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull CollectionValue createCollectionRange(@NonNull CollectionTypeId typeId, boolean uniqueElements, @NonNull Object @NonNull ... boxedValues) {
-		//		checkValid(boxedValues);
+		checkValid(boxedValues);
 		return FromIntegerRangesIterator.create(typeId, uniqueElements, boxedValues);
+	}
+
+	public static @NonNull CollectionValue createCollectionValue(@NonNull CollectionTypeId typeId, boolean uniqueElements, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
+		checkValid(boxedValues);
+		return FromCollectionIterator.create(typeId, uniqueElements, boxedValues);
 	}
 
 	public static @NonNull InvalidValueException createInvalidValue(@NonNull Exception e) {
@@ -613,11 +618,6 @@ public abstract class ValueUtil
 		else {
 			return new InvalidValueException(e);
 		}
-	}
-
-	public static @NonNull CollectionValue createCollectionValue(@NonNull CollectionTypeId typeId, boolean uniqueElements, @NonNull Collection<@Nullable ? extends Object> boxedValues) {
-		checkValid(boxedValues);
-		return FromCollectionIterator.create(typeId, uniqueElements, boxedValues);
 	}
 
 	public static @NonNull MapValue createMapOfEach(@NonNull MapTypeId typeId, @NonNull MapEntry @NonNull ... mapEntries) {

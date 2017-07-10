@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * The MutableIterable provides additional functionality for a LazyCollectionValue that is only exposed once
  * mutableIterable() has been invoked to permit mutation..
  */
-public interface MutableIterable extends CollectionValue.Accumulator, LazyIterable
+public interface MutableIterable extends CollectionValue.Accumulator
 {
 	void mutableAppend(@Nullable Object rightValue);
 
