@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
+import org.eclipse.ocl.pivot.values.MutableIterable;
 
 public class PivotUnqualifiedLookupVisitor
 extends AbstractPivotCommonLookupVisitor
@@ -173,7 +174,7 @@ extends AbstractPivotCommonLookupVisitor
 		};
 		final @NonNull  ExecutorSingleIterationManager MGR_superClasses_1 = new ExecutorSingleIterationManager(executor, SET_CLSSid_Class, BODY_superClasses_1, oclAsSet, ACC_superClasses_1);
 		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue superClasses = ClassUtil.nonNullState((CollectionValue)IMPL_superClasses_1.evaluateIteration(MGR_superClasses_1));
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Property);
+		/*@Thrown*/ @NonNull MutableIterable accumulator = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Property);
 		@Nullable Iterator<?> ITERATOR__1_0 = superClasses.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue collect;
 		while (true) {
@@ -192,10 +193,10 @@ extends AbstractPivotCommonLookupVisitor
 			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(ORD_CLSSid_Property, ownedProperties);
 			//
 			for (Object value : BOXED_ownedProperties.flatten().getElements()) {
-				accumulator.add(value);
+				accumulator.mutableIncluding(value);
 			}
 		}
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Property);
+		/*@Thrown*/ @NonNull MutableIterable accumulator_0 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Property);
 		@Nullable Iterator<?> ITERATOR__1_1 = collect.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue select;
 		while (true) {
@@ -217,13 +218,13 @@ extends AbstractPivotCommonLookupVisitor
 			}
 			//
 			if (not == ValueUtil.TRUE_VALUE) {
-				accumulator_0.add(_1_1);
+				accumulator_0.mutableIncluding(_1_1);
 			}
 		}
 		final /*@Thrown*/ java.util.@org.eclipse.jdt.annotation.NonNull List<Property> ECORE_select = ((IdResolver.IdResolverExtension)idResolver).ecoreValueOfAll(Property.class, select);
 		@SuppressWarnings("null")
 		final /*@Thrown*/ org.eclipse.ocl.pivot.internal.lookup.@org.eclipse.jdt.annotation.NonNull LookupEnvironment addElements = context.addElements(ECORE_select);
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_1 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Operation);
+		/*@Thrown*/ @NonNull MutableIterable accumulator_1 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Operation);
 		@Nullable Iterator<?> ITERATOR__1_2 = superClasses.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue collect_0;
 		while (true) {
@@ -242,10 +243,10 @@ extends AbstractPivotCommonLookupVisitor
 			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue BOXED_ownedOperations = idResolver.createOrderedSetOfAll(ORD_CLSSid_Operation, ownedOperations);
 			//
 			for (Object value : BOXED_ownedOperations.flatten().getElements()) {
-				accumulator_1.add(value);
+				accumulator_1.mutableIncluding(value);
 			}
 		}
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_2 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Operation);
+		/*@Thrown*/ @NonNull MutableIterable accumulator_2 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Operation);
 		@Nullable Iterator<?> ITERATOR__1_3 = collect_0.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue select_0;
 		while (true) {
@@ -267,13 +268,13 @@ extends AbstractPivotCommonLookupVisitor
 			}
 			//
 			if (not_0 == ValueUtil.TRUE_VALUE) {
-				accumulator_2.add(_1_3);
+				accumulator_2.mutableIncluding(_1_3);
 			}
 		}
 		final /*@Thrown*/ java.util.@org.eclipse.jdt.annotation.NonNull List<Operation> ECORE_select_0 = ((IdResolver.IdResolverExtension)idResolver).ecoreValueOfAll(Operation.class, select_0);
 		@SuppressWarnings("null")
 		final /*@Thrown*/ org.eclipse.ocl.pivot.internal.lookup.@org.eclipse.jdt.annotation.NonNull LookupEnvironment addElements_0 = addElements.addElements(ECORE_select_0);
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_3 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Behavior);
+		/*@Thrown*/ @NonNull MutableIterable accumulator_3 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Behavior);
 		@Nullable Iterator<?> ITERATOR__1_4 = superClasses.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue collect_1;
 		while (true) {
@@ -292,7 +293,7 @@ extends AbstractPivotCommonLookupVisitor
 			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue BOXED_ownedBehaviors = idResolver.createSetOfAll(SET_CLSSid_Behavior, ownedBehaviors);
 			//
 			for (Object value : BOXED_ownedBehaviors.flatten().getElements()) {
-				accumulator_3.add(value);
+				accumulator_3.mutableIncluding(value);
 			}
 		}
 		final /*@Thrown*/ java.util.@org.eclipse.jdt.annotation.NonNull List<Behavior> ECORE_collect_1 = ((IdResolver.IdResolverExtension)idResolver).ecoreValueOfAll(Behavior.class, collect_1);
@@ -344,7 +345,7 @@ extends AbstractPivotCommonLookupVisitor
 		};
 		final @NonNull  ExecutorSingleIterationManager MGR_superClasses_1 = new ExecutorSingleIterationManager(executor, SET_CLSSid_Class, BODY_superClasses_1, oclAsSet, ACC_superClasses_1);
 		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue superClasses = ClassUtil.nonNullState((CollectionValue)IMPL_superClasses_1.evaluateIteration(MGR_superClasses_1));
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Property);
+		/*@Thrown*/ @NonNull MutableIterable accumulator = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Property);
 		@Nullable Iterator<?> ITERATOR__1 = superClasses.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue collect;
 		while (true) {
@@ -363,10 +364,10 @@ extends AbstractPivotCommonLookupVisitor
 			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(ORD_CLSSid_Property, ownedProperties);
 			//
 			for (Object value : BOXED_ownedProperties.flatten().getElements()) {
-				accumulator.add(value);
+				accumulator.mutableIncluding(value);
 			}
 		}
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Property);
+		/*@Thrown*/ @NonNull MutableIterable accumulator_0 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Property);
 		@Nullable Iterator<?> ITERATOR__1_0 = collect.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue select;
 		while (true) {
@@ -388,13 +389,13 @@ extends AbstractPivotCommonLookupVisitor
 			}
 			//
 			if (not == ValueUtil.TRUE_VALUE) {
-				accumulator_0.add(_1_0);
+				accumulator_0.mutableIncluding(_1_0);
 			}
 		}
 		final /*@Thrown*/ java.util.@org.eclipse.jdt.annotation.NonNull List<Property> ECORE_select = ((IdResolver.IdResolverExtension)idResolver).ecoreValueOfAll(Property.class, select);
 		@SuppressWarnings("null")
 		final /*@Thrown*/ org.eclipse.ocl.pivot.internal.lookup.@org.eclipse.jdt.annotation.NonNull LookupEnvironment addElements = context.addElements(ECORE_select);
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_1 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Operation);
+		/*@Thrown*/ @NonNull MutableIterable accumulator_1 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Operation);
 		@Nullable Iterator<?> ITERATOR__1_1 = superClasses.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue collect_0;
 		while (true) {
@@ -413,10 +414,10 @@ extends AbstractPivotCommonLookupVisitor
 			final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue BOXED_ownedOperations = idResolver.createOrderedSetOfAll(ORD_CLSSid_Operation, ownedOperations);
 			//
 			for (Object value : BOXED_ownedOperations.flatten().getElements()) {
-				accumulator_1.add(value);
+				accumulator_1.mutableIncluding(value);
 			}
 		}
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_2 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Operation);
+		/*@Thrown*/ @NonNull MutableIterable accumulator_2 = ValueUtil.createBagAccumulatorValue(BAG_CLSSid_Operation);
 		@Nullable Iterator<?> ITERATOR__1_2 = collect_0.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue select_0;
 		while (true) {
@@ -438,7 +439,7 @@ extends AbstractPivotCommonLookupVisitor
 			}
 			//
 			if (not_0 == ValueUtil.TRUE_VALUE) {
-				accumulator_2.add(_1_2);
+				accumulator_2.mutableIncluding(_1_2);
 			}
 		}
 		final /*@Thrown*/ java.util.@org.eclipse.jdt.annotation.NonNull List<Operation> ECORE_select_0 = ((IdResolver.IdResolverExtension)idResolver).ecoreValueOfAll(Operation.class, select_0);
@@ -479,7 +480,7 @@ extends AbstractPivotCommonLookupVisitor
 		final /*@Thrown*/ org.eclipse.ocl.pivot.internal.lookup.@org.eclipse.jdt.annotation.NonNull LookupEnvironment addElements = context.addElements(ownedLiterals);
 		final /*@Thrown*/ java.util.@org.eclipse.jdt.annotation.NonNull List<Property> ownedProperties = element_2.getOwnedProperties();
 		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(ORD_CLSSid_Property, ownedProperties);
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator = ValueUtil.createOrderedSetAccumulatorValue(ORD_CLSSid_Property);
+		/*@Thrown*/ @NonNull MutableIterable accumulator = ValueUtil.createOrderedSetAccumulatorValue(ORD_CLSSid_Property);
 		@Nullable Iterator<?> ITERATOR__1 = BOXED_ownedProperties.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue select;
 		while (true) {
@@ -501,7 +502,7 @@ extends AbstractPivotCommonLookupVisitor
 			}
 			//
 			if (not == ValueUtil.TRUE_VALUE) {
-				accumulator.add(_1);
+				accumulator.mutableIncluding(_1);
 			}
 		}
 		final /*@Thrown*/ java.util.@org.eclipse.jdt.annotation.NonNull List<Property> ECORE_select = ((IdResolver.IdResolverExtension)idResolver).ecoreValueOfAll(Property.class, select);
@@ -509,7 +510,7 @@ extends AbstractPivotCommonLookupVisitor
 		final /*@Thrown*/ org.eclipse.ocl.pivot.internal.lookup.@org.eclipse.jdt.annotation.NonNull LookupEnvironment addElements_0 = addElements.addElements(ECORE_select);
 		final /*@Thrown*/ java.util.@org.eclipse.jdt.annotation.NonNull List<Operation> ownedOperations = element_2.getOwnedOperations();
 		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue BOXED_ownedOperations = idResolver.createOrderedSetOfAll(ORD_CLSSid_Operation, ownedOperations);
-		/*@Thrown*/ CollectionValue.@org.eclipse.jdt.annotation.NonNull Accumulator accumulator_0 = ValueUtil.createOrderedSetAccumulatorValue(ORD_CLSSid_Operation);
+		/*@Thrown*/ @NonNull MutableIterable accumulator_0 = ValueUtil.createOrderedSetAccumulatorValue(ORD_CLSSid_Operation);
 		@Nullable Iterator<?> ITERATOR__1_0 = BOXED_ownedOperations.iterator();
 		/*@Thrown*/ org.eclipse.ocl.pivot.values.@org.eclipse.jdt.annotation.NonNull CollectionValue select_0;
 		while (true) {
@@ -531,7 +532,7 @@ extends AbstractPivotCommonLookupVisitor
 			}
 			//
 			if (not_0 == ValueUtil.TRUE_VALUE) {
-				accumulator_0.add(_1_0);
+				accumulator_0.mutableIncluding(_1_0);
 			}
 		}
 		final /*@Thrown*/ java.util.@org.eclipse.jdt.annotation.NonNull List<Operation> ECORE_select_0 = ((IdResolver.IdResolverExtension)idResolver).ecoreValueOfAll(Operation.class, select_0);

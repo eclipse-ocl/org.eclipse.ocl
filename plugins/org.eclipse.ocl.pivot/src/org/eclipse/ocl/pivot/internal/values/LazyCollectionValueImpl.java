@@ -142,21 +142,24 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		}
 
 		/**
-		 * Add count of anElement to the lazyIterable updating element occurrence counts.
+		 * Add count of anElement to the lazyIterable updating element occurrence counts, returning true if anElement actually added.
 		 *
 		 * The default implementation is that for a Set. Bag and Sequence override.
 		 */
-		protected void addTo(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement, int count) {
-			if (count > 0) {
-				Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
-				assert lazyMapOfElement2elementCount2 != null;
-				ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, SetElementCount.ONE);
-				if (oldElementCount == null) {
-					List<@Nullable Object> lazyListOfElements2 = lazyIterable.lazyListOfElements;
-					assert lazyListOfElements2 != null;
-					lazyListOfElements2.add(anElement);
-					lazyIterable.size++;
-				}
+		protected boolean addTo(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement, int count) {
+			assert count > 0;
+			Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+			assert lazyMapOfElement2elementCount2 != null;
+			ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, SetElementCount.ONE);
+			if (oldElementCount == null) {
+				List<@Nullable Object> lazyListOfElements2 = lazyIterable.lazyListOfElements;
+				assert lazyListOfElements2 != null;
+				lazyListOfElements2.add(anElement);
+				lazyIterable.size++;
+				return true;
+			}
+			else {
+				return false;
 			}
 		}
 
@@ -282,22 +285,22 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		}
 
 		@Override
-		protected void addTo(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement, int count) {
-			if (count > 0) {
-				Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
-				assert lazyMapOfElement2elementCount2 != null;
-				BagElementCount newElementCount = new BagElementCount(count);
-				ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, newElementCount);
-				if (oldElementCount != null) {
-					newElementCount.setValue(count + oldElementCount.intValue());
-				}
-				else {
-					List<@Nullable Object> lazyListOfElements2 = lazyIterable.lazyListOfElements;
-					assert lazyListOfElements2 != null;
-					lazyListOfElements2.add(anElement);
-				}
-				lazyIterable.size++;
+		protected boolean addTo(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement, int count) {
+			assert count > 0;
+			Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
+			assert lazyMapOfElement2elementCount2 != null;
+			BagElementCount newElementCount = new BagElementCount(count);
+			ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, newElementCount);
+			if (oldElementCount != null) {
+				newElementCount.setValue(count + oldElementCount.intValue());
 			}
+			else {
+				List<@Nullable Object> lazyListOfElements2 = lazyIterable.lazyListOfElements;
+				assert lazyListOfElements2 != null;
+				lazyListOfElements2.add(anElement);
+			}
+			lazyIterable.size++;
+			return true;
 		}
 
 		@Override
@@ -377,13 +380,15 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		}
 
 		@Override
-		protected void addTo(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement, int count) {
+		protected boolean addTo(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement, int count) {
+			assert count > 0;
 			List<@Nullable Object> lazyListOfElements2 = lazyIterable.lazyListOfElements;
 			assert lazyListOfElements2 != null;
 			for (int i = count; i > 0; i--) {
 				lazyListOfElements2.add(anElement);
 				lazyIterable.size++;
 			}
+			return true;
 		}
 
 		@Override
@@ -1036,14 +1041,6 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		this.inputIterator = inputIterator;
 		this.collectionStrategy = getCollectionStrategy(typeId);
 		this.equalsStrategy = TypeUtil.getEqualsStrategy(typeId.getElementTypeId(), false);
-	}
-
-	@Override
-	public boolean add(@Nullable Object value) {
-		eagerIterable();
-		int oldSize = size;
-		mutableIncluding(value);
-		return size > oldSize;
 	}
 
 	@Override
@@ -1863,9 +1860,9 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	}
 
 	@Override
-	public void mutableIncluding(@Nullable Object rightValue) {
+	public boolean mutableIncluding(@Nullable Object rightValue) {
 		assert hashCode == 0;
-		collectionStrategy.addTo(this, rightValue, 1);
+		return collectionStrategy.addTo(this, rightValue, 1);
 	}
 
 	@Override

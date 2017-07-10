@@ -44,15 +44,6 @@ public interface CollectionValue extends Value, LazyIterable
 {
 	/**
 	 * @generated NOT
-	 * @noimplement This interface is not intended to be implemented by clients.
-	 */
-	interface Accumulator extends CollectionValue {		// FIXME fold into MutableIterable
-		@Deprecated /* @deprecated use mutableIncluding */
-		boolean add(@Nullable Object value);
-	}
-
-	/**
-	 * @generated NOT
 	 */
 	@NonNull CollectionValue append(@Nullable Object object);
 

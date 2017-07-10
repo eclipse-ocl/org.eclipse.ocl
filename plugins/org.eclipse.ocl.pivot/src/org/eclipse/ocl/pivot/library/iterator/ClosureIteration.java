@@ -55,9 +55,7 @@ public class ClosureIteration extends AbstractIteration
 		Object value = iterationManager.get();
 		MutableIterable accumulatorValue = (MutableIterable)iterationManager.getAccumulatorValue();
 		assert accumulatorValue != null;
-		int oldSize = accumulatorValue.intSize();
-		accumulatorValue.mutableIncluding(value);
-		if (oldSize == accumulatorValue.intSize()) {
+		if (!accumulatorValue.mutableIncluding(value)) {
 			return CARRY_ON;
 		}
 		Object bodyVal = iterationManager.evaluateBody();
