@@ -2966,17 +2966,34 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				return false;
 			}
 			if (cgVariable.isCacheNeeded()) {
-				if (!cgVariable.isNonNull()) {
+				if (cgVariable.isCaught()) {
+					js.append("if (");
+					js.appendValueName(cgVariable);
+					js.append(" instanceof ");
+					js.appendClassReference(CollectionValue.class);
+					js.append(") {\n");
+					js.pushIndentation(null);
+					js.append("((");
+					js.appendClassReference(CollectionValue.class);
+					js.append(")");
+					js.appendValueName(cgVariable);
+					js.append(").cachedIterable();\n");
+					js.popIndentation();
+					js.append("}\n");
+				}
+				else if (!cgVariable.isNonNull()) {
 					js.append("if (");
 					js.appendValueName(cgVariable);
 					js.append(" != null) {\n");
 					js.pushIndentation(null);
-				}
-				js.appendValueName(cgVariable);
-				js.append(".cachedIterable();\n");
-				if (!cgVariable.isNonNull()) {
+					js.appendValueName(cgVariable);
+					js.append(".cachedIterable();\n");
 					js.popIndentation();
 					js.append("}\n");
+				}
+				else if (!cgVariable.isEcore()) {
+					js.appendValueName(cgVariable);
+					js.append(".cachedIterable();\n");
 				}
 			}
 		}
