@@ -61,7 +61,7 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new LazySelectIterator(sourceValue, executor, body, firstIterator);
+			return new LazySelectIterator(sourceValue.reValue(), executor, body, firstIterator);
 		}
 	}
 

@@ -388,7 +388,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				else {
 					final /*@NonInvalid*/ java.util.@NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator = ValueUtil.createSequenceAccumulatorValue(PivotTables.SEQ_CLSSid_Property);
+					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator = ValueUtil.createCollectionAccumulatorValue(PivotTables.SEQ_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedParts.lazyIterator();
 					/*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue collect;
 					while (true) {
@@ -436,7 +436,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 					final @NonNull  ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY_closure_0, oclAsSet, ACC_closure_0);
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue closure = ClassUtil.nonNullState((CollectionValue)IMPL_closure_0.evaluateIteration(MGR_closure_0));
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue safe_collect_sources = CollectionExcludingOperation.INSTANCE.evaluate(closure, (Object)null);
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_0 = ValueUtil.createBagAccumulatorValue(PivotTables.BAG_CLSSid_Property);
+					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_0 = ValueUtil.createCollectionAccumulatorValue(PivotTables.BAG_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_1 = safe_collect_sources.eagerIterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue collect_0;
 					while (true) {
@@ -457,7 +457,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue allProperties = CollectionAsSetOperation.INSTANCE.evaluate(collect_0);
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_1 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_1 = ValueUtil.createCollectionAccumulatorValue(PivotTables.SET_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_2 = allProperties.eagerIterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject;
 					while (true) {
@@ -500,7 +500,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							accumulator_1.mutableIncluding(_1_2);
 						}
 					}
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_2 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_2 = ValueUtil.createCollectionAccumulatorValue(PivotTables.SET_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_3 = reject.eagerIterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue classProperties;
 					while (true) {
@@ -521,7 +521,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						}
 					}
 					classProperties.cachedIterable();
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_3 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_3 = ValueUtil.createCollectionAccumulatorValue(PivotTables.SET_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_4 = classProperties.eagerIterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject_2;
 					while (true) {
@@ -541,7 +541,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							accumulator_3.mutableIncluding(_1_4);
 						}
 					}
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_4 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_4 = ValueUtil.createCollectionAccumulatorValue(PivotTables.SET_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_5 = reject_2.eagerIterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject_1;
 					while (true) {
@@ -572,7 +572,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							accumulator_4.mutableIncluding(_1_5);
 						}
 					}
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_5 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_5 = ValueUtil.createCollectionAccumulatorValue(PivotTables.SET_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_6 = reject_1.eagerIterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue reject_0;
 					while (true) {
@@ -593,7 +593,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							accumulator_5.mutableIncluding(_1_6);
 						}
 					}
-					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_6 = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Property);
+					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull MutableIterable accumulator_6 = ValueUtil.createCollectionAccumulatorValue(PivotTables.SET_CLSSid_Property);
 					@NonNull Iterator<Object> ITERATOR__1_7 = reject_0.eagerIterator();
 					/*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue requiredClassProperties;
 					while (true) {

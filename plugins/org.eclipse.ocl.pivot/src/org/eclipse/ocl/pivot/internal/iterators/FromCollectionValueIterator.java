@@ -60,6 +60,6 @@ public class FromCollectionValueIterator extends AbstractLazyIterator
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		LazyCollectionValueImpl.appendIterable(s, elements, 50);
+		elements.lazyIterator().toString(s, sizeLimit);
 	}
 }

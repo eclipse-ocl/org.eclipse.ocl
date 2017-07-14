@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public interface LazyIterator extends BaggableIterator<@Nullable Object>
 {
 	/**
-	 * Return true if the source of this iterator is cached making reIteration simple.
+	 * Return true if the source of this iterator is a cache making reIteration simple.
 	 */
 	boolean isCached();
 
@@ -32,4 +32,11 @@ public interface LazyIterator extends BaggableIterator<@Nullable Object>
 	 * in which case reundant repeated compuations are likely.
 	 */
 	@NonNull LazyIterator reIterator();
+
+	/**
+	 * Contribute a serialization of the iteration domain to s subjected to an overall sizeLimit.
+	 * The caller should ensure that a reIterator is used if the traversal of the iteration domain
+	 * is not to be cached by this iterator.
+	 */
+	void toString(@NonNull StringBuilder s, int sizeLimit);
 }

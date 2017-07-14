@@ -58,6 +58,6 @@ public class FromArrayIterator extends AbstractLazyIterator
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		LazyCollectionValueImpl.appendArray(s, elements, 50);
+		AbstractLazyIterator.appendArray(s, elements, 50);
 	}
 }

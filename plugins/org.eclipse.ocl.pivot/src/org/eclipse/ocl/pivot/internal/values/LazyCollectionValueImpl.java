@@ -19,7 +19,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -33,6 +32,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AbstractLazyIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AppendAllIterator;
 import org.eclipse.ocl.pivot.internal.iterators.AppendIterator;
 import org.eclipse.ocl.pivot.internal.iterators.BagElementCount;
@@ -250,6 +250,10 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 			return false; // isUnique;
 		}
 
+		protected abstract void loadCache(@NonNull LazyCollectionValueImpl lazyIterable,
+				@Nullable List<@Nullable Object> oldListOfElements,
+				@Nullable Map<@Nullable Object, @NonNull ElementCount> oldMapOfElement2elementCount);
+
 		/**
 		 * Remove count of anElement from the lazyIterable updating element occurrence counts.
 		 *
@@ -292,7 +296,7 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 			BagElementCount newElementCount = new BagElementCount(count);
 			ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, newElementCount);
 			if (oldElementCount != null) {
-				newElementCount.setValue(count + oldElementCount.intValue());
+				newElementCount.setValue(count + oldElementCount.intValue());	// setValue only to newly created element
 			}
 			else {
 				List<@Nullable Object> lazyListOfElements2 = lazyIterable.lazyListOfElements;
@@ -305,34 +309,55 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 
 		@Override
 		protected void asSequence(@NonNull LazyCollectionValueImpl lazyIterable) {
-			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.createMapOfElement2elementCount();
-			List<@Nullable Object> listOfElements = lazyIterable.createListOfElements();
-			List<@Nullable Object> lazyListOfElements2 = lazyIterable.lazyListOfElements;
-			assert lazyListOfElements2 != null;
-			for (@Nullable Object anElement : lazyListOfElements2) {
-				ElementCount elementCount = mapOfElement2elementCount.get(anElement);
-				assert elementCount != null;
-				for (int i = elementCount.intValue(); i > 0; --i) {
-					listOfElements.add(anElement);
-				}
-			}
-			lazyIterable.lazyListOfElements = listOfElements;
-			lazyIterable.lazyMapOfElement2elementCount = null;
-			lazyIterable.size = listOfElements.size();
+			SequenceStrategy.INSTANCE.loadCache(lazyIterable, lazyIterable.lazyListOfElements, lazyIterable.lazyMapOfElement2elementCount);
 		}
 
 		@Override
 		protected void asUnique(@NonNull LazyCollectionValueImpl lazyIterable) {
 			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.getMapOfElement2elementCount();
+			assert mapOfElement2elementCount != null;
 			for (@NonNull ElementCount elementCount : mapOfElement2elementCount.values()) {
 				elementCount.setValue(1);
 			}
+			//lazyIterable.lazyListOfElements = oldListOfElements; -- no chnage
 			lazyIterable.size = mapOfElement2elementCount.size();
 		}
 
 		@Override
 		public boolean isBag() {
 			return true;
+		}
+
+		@Override
+		protected void loadCache(@NonNull LazyCollectionValueImpl lazyIterable,
+				@Nullable List<@Nullable Object> oldListOfElements,
+				@Nullable Map<@Nullable Object, @NonNull ElementCount> oldMapOfElement2elementCount) {
+			Map<@Nullable Object, @NonNull ElementCount> newMapOfElement2elementCount = new HashMap<>();
+			List<@Nullable Object> newLazyListOfElements = new ArrayList<>();
+			if (oldMapOfElement2elementCount != null) {
+				assert oldListOfElements != null;
+				for (@Nullable Object anElement : oldListOfElements) {
+					newLazyListOfElements.add(anElement);
+					ElementCount elementCount = oldMapOfElement2elementCount.get(anElement);
+					assert elementCount != null;
+					newMapOfElement2elementCount.put(anElement, elementCount);
+				}
+			}
+			else if (oldListOfElements != null) {
+				for (@Nullable Object anElement : oldListOfElements) {
+					BagElementCount newElementCount = new BagElementCount(1);
+					ElementCount oldElementCount = newMapOfElement2elementCount.put(anElement, newElementCount);
+					if (oldElementCount != null) {
+						newElementCount.setValue(1 + oldElementCount.intValue());
+					}
+					else {
+						newLazyListOfElements.add(anElement);
+					}
+				}
+			}
+			lazyIterable.lazyListOfElements = newLazyListOfElements;
+			lazyIterable.lazyMapOfElement2elementCount = newMapOfElement2elementCount;
+			lazyIterable.size = oldListOfElements != null ? oldListOfElements.size() : 0;
 		}
 
 		@Override
@@ -382,10 +407,10 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		@Override
 		protected boolean addTo(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement, int count) {
 			assert count > 0;
-			List<@Nullable Object> lazyListOfElements2 = lazyIterable.lazyListOfElements;
-			assert lazyListOfElements2 != null;
+			List<@Nullable Object> lazyOfElements = lazyIterable.lazyListOfElements;
+			assert lazyOfElements != null;
 			for (int i = count; i > 0; i--) {
-				lazyListOfElements2.add(anElement);
+				lazyOfElements.add(anElement);
 				lazyIterable.size++;
 			}
 			return true;
@@ -394,6 +419,31 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		@Override
 		public boolean isOrdered() {
 			return true;
+		}
+
+		@Override
+		protected void loadCache(@NonNull LazyCollectionValueImpl lazyIterable,
+				@Nullable List<@Nullable Object> oldListOfElements,
+				@Nullable Map<@Nullable Object, @NonNull ElementCount> oldMapOfElement2elementCount) {
+			List<@Nullable Object> newListOfElements = new ArrayList<>();
+			if (oldMapOfElement2elementCount != null) {
+				assert oldListOfElements != null;
+				for (@Nullable Object anElement : oldListOfElements) {
+					ElementCount elementCount = oldMapOfElement2elementCount.get(anElement);
+					assert elementCount != null;
+					for (int i = elementCount.intValue(); i > 0; --i) {
+						newListOfElements.add(anElement);
+					}
+				}
+			}
+			else if (oldListOfElements != null) {
+				for (@Nullable Object anElement : oldListOfElements) {
+					newListOfElements.add(anElement);
+				}
+			}
+			lazyIterable.lazyListOfElements = newListOfElements;
+			lazyIterable.lazyMapOfElement2elementCount = null;
+			lazyIterable.size = newListOfElements.size();
 		}
 
 		@Override
@@ -461,29 +511,12 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 
 		@Override
 		protected void asBag(@NonNull LazyCollectionValueImpl lazyIterable) {
-			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.createMapOfElement2elementCount();
-			List<@Nullable Object> lazyListOfElements2 = lazyIterable.lazyListOfElements;
-			assert lazyListOfElements2 != null;
-			for (@Nullable Object element : lazyListOfElements2) {
-				mapOfElement2elementCount.put(element, SetElementCount.ONE);
-			}
-			lazyIterable.lazyMapOfElement2elementCount = mapOfElement2elementCount;
+			BagStrategy.INSTANCE.loadCache(lazyIterable, lazyIterable.lazyListOfElements, null);
 		}
 
 		@Override
 		protected void asUnique(@NonNull LazyCollectionValueImpl lazyIterable) {
-			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = new HashMap<>();
-			List<@Nullable Object> newLazyListOfElements = lazyIterable.createListOfElements();
-			List<@Nullable Object> oldLazyListOfElements = lazyIterable.lazyListOfElements;
-			assert oldLazyListOfElements != null;
-			for (@Nullable Object anElement : oldLazyListOfElements) {
-				if (!mapOfElement2elementCount.containsKey(anElement)) {
-					newLazyListOfElements.add(anElement);
-					mapOfElement2elementCount.put(anElement, SetElementCount.ONE);
-				}
-			}
-			lazyIterable.lazyListOfElements = newLazyListOfElements;
-			lazyIterable.size = mapOfElement2elementCount.size();
+			SetStrategy.INSTANCE.loadCache(lazyIterable, lazyIterable.lazyListOfElements, null);
 		}
 
 		@Override
@@ -545,320 +578,160 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		public boolean isUnique() {
 			return true;
 		}
+
+		@Override
+		protected void loadCache(@NonNull LazyCollectionValueImpl lazyIterable,
+				@Nullable List<@Nullable Object> oldListOfElements,
+				@Nullable Map<@Nullable Object, @NonNull ElementCount> oldMapOfElement2elementCount) {
+			Map<@Nullable Object, @NonNull ElementCount> newMapOfElement2elementCount = new HashMap<>();
+			List<@Nullable Object> newListOfElements = new ArrayList<>();
+			if (oldListOfElements != null) {
+				for (@Nullable Object anElement : oldListOfElements) {
+					if (!newMapOfElement2elementCount.containsKey(anElement)) {
+						newMapOfElement2elementCount.put(anElement, SetElementCount.ONE);
+						newListOfElements.add(anElement);
+					}
+				}
+			}
+			lazyIterable.lazyListOfElements = newListOfElements;
+			lazyIterable.lazyMapOfElement2elementCount = newMapOfElement2elementCount;
+			lazyIterable.size = newListOfElements.size();
+		}
 	}
 
 	/**
 	 * An CachedBagIterator provides better performance than the standard List Iterator by
-	 * exploiting the immutability of a fully populated Iteration cache.
+	 * exploiting the immutability of the fully populated Iteration cache.
 	 */
-	private static class CachedBagIterator implements LazyIterator
+	private static class CachedBagIterator extends AbstractLazyIterator
 	{
-		private final @NonNull List<@Nullable Object> elements;
+		private final @NonNull List<@Nullable Object> listOfElements;
 		private final @NonNull Map<@Nullable Object, @NonNull ? extends Number> element2elementCount;
-		private final int size;
-		private int elementIndex = 0;
-		private int residualCount = 0;
-		private @Nullable Object currentElement;
-		private int nextCount = 0;
+		private final int listSize;
+		private int nextListIndex = 0;
 
-		public CachedBagIterator(@NonNull List<@Nullable Object> elements, @NonNull Map<@Nullable Object, @NonNull ? extends Number> element2elementCount) {
-			this.elements = elements;
+		public CachedBagIterator(@NonNull List<@Nullable Object> listOfElements, @NonNull Map<@Nullable Object, @NonNull ? extends Number> element2elementCount) {
+			this.listOfElements = listOfElements;
 			this.element2elementCount = element2elementCount;
-			this.size = elements.size();
-			if (elementIndex < size) {
-				currentElement = elements.get(elementIndex++);
-				Number number = element2elementCount.get(currentElement);
-				assert number != null;
-				residualCount = number.intValue();
-				assert residualCount > 0;
-			}
-			else {
-				currentElement = null;
-			}
-			nextCount = 1;
+			this.listSize = listOfElements.size();
 		}
 
 		@Override
-		public boolean equals(Object obj) {
-			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
-		}
-
-		@Override
-		public boolean hasNext() {
-			nextCount = 1;
-			return (elementIndex < size) || (residualCount > 0);
-		}
-
-		@Override
-		public int hasNextCount() {
-			nextCount = residualCount;
-			return residualCount;
-		}
-
-		@Override
-		public final int hashCode() {
-			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
-		}
-
-		@Override
-		public boolean isCached() {
-			return true;						// FIXME
-		}
-
-		@Override
-		public @Nullable Object next() {
-			if (residualCount <= 0) {
-				throw new NoSuchElementException();
-			}
-			@Nullable Object savedElement = currentElement;
-			residualCount -= nextCount;
-			if ((residualCount <= 0) && (elementIndex < size)) {
-				currentElement = elements.get(elementIndex++);
-				Number number = element2elementCount.get(currentElement);
-				assert number != null;
-				residualCount = number.intValue();
-				assert residualCount > 0;
-			}
-			nextCount = 1;
-			return savedElement;
-		}
-
-		@Override
-		public @NonNull LazyIterator reIterator() {
-			return new CachedBagIterator(elements, element2elementCount);
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder s = new StringBuilder();
-			appendBagIterable(s, elements, element2elementCount);
-			return s.toString();
-		}
-	}
-
-	/**
-	 * An CachedNonBagIterator provides better performance than the standard List Iterator by
-	 * exploiting the immutability of a fully populated Iteration cache.
-	 */
-	private static class CachedNonBagIterator implements LazyIterator
-	{
-		private final @NonNull List<@Nullable Object> elements;
-		private final int size;
-		private int elementIndex = 0;
-
-		public CachedNonBagIterator(@NonNull List<@Nullable Object> elements) {
-			this.elements = elements;
-			this.size = elements.size();
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
-		}
-
-		@Override
-		public boolean hasNext() {
-			return elementIndex < size;
-		}
-
-		@Override
-		public int hasNextCount() {
-			return elementIndex < size ? 1 : 0;
-		}
-
-		@Override
-		public final int hashCode() {
-			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
-		}
-
-		@Override
-		public boolean isCached() {
-			return true;						// FIXME
-		}
-
-		@Override
-		public @Nullable Object next() {
-			//	if (index >= size) {
-			//		throw new NoSuchElementException();		-- get will throw an IOOBE if the impossible happens
-			//	}
-			return elements.get(elementIndex++);
-		}
-
-		@Override
-		public @NonNull LazyIterator reIterator() {
-			return new CachedNonBagIterator(elements);
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder s = new StringBuilder();
-			s.append("[");
-			boolean isFirst = true;
-			for (Object element : elements) {
-				if (!isFirst) {
-					s.append(", ");
+		public int getNextCount() {
+			while (nextListIndex < listSize) {
+				@Nullable Object currentElement = listOfElements.get(nextListIndex);
+				nextListIndex++;			// After IndexOutOfBoundsException has been thrown
+				Number elementCount = element2elementCount.get(currentElement);
+				assert elementCount != null;
+				int hasNextCount = elementCount.intValue();
+				if (hasNextCount > 0) {
+					return setNext(currentElement, hasNextCount);
 				}
-				s.append(element instanceof String ? "'" + element + "'" : element);
-				isFirst = false;
 			}
-			s.append("]");
-			return s.toString();
-		}
-	}
-
-	/**
-	 * LazyBagIterator iterates over the partially cached Bag content returning each multiple element multiple times.
-	 */
-	private static class LazyBagIterator implements LazyIterator
-	{
-		private final @NonNull LazyCollectionValueImpl iterable;
-		private final @NonNull Map<@Nullable Object, @NonNull ElementCount> map;
-		private final @NonNull Iterator<@Nullable Object> objectIterator;
-		private @Nullable Object currentObject;
-
-		/**
-		 * The number of repeats of the currentObject still to be returned by next().
-		 */
-		private int residualCount;
-
-		/**
-		 * The number of repeats of the currentObject to be returned by next().
-		 * This is 1 if a conventional hasNext() guard has been used.
-		 * This is residualCount if the more efficuent hasNextCount() has been used.
-		 */
-		private int nextCount = 0;
-
-		private LazyBagIterator(@NonNull LazyCollectionValueImpl iterable) {
-			this.iterable = iterable;
-			this.map = iterable.getMapOfElement2elementCount();
-			this.objectIterator = iterable.iterator();
-			assert objectIterator.hasNext();
-			currentObject = objectIterator.next();
-			ElementCount count = map.get(currentObject);
-			assert count != null;
-			residualCount = count.intValue();
-		}
-
-		@Override
-		public boolean hasNext() {
-			if (residualCount > 0) {
-				nextCount = 1;
-				return true;
-			}
-			else {
-				nextCount = 0;
-				return false;
-			}
-		}
-
-		@Override
-		public int hasNextCount() {
-			nextCount = residualCount;
-			return residualCount;
+			return 0;
 		}
 
 		@Override
 		public boolean isCached() {
-			return true;						// FIXME
-		}
-
-		@Override
-		public @Nullable Object next() {
-			if (residualCount <= 0) {
-				throw new NoSuchElementException();
-			}
-			residualCount -= nextCount;
-			if (residualCount > 0) {		// If iterating a bag element by element
-				return currentObject;
-			}
-			if (objectIterator.hasNext()) {
-				@Nullable Object savedObject = currentObject;
-				currentObject = objectIterator.next();
-				ElementCount count = map.get(currentObject);
-				assert count != null;
-				residualCount = count.intValue();
-				return savedObject;
-			}
-			else {
-				residualCount = 0;
-				return currentObject;
-			}
+			return true;
 		}
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new LazyBagIterator(iterable);
+			return new CachedBagIterator(listOfElements, element2elementCount);
 		}
 
 		@Override
-		public void remove() {
-			throw new UnsupportedOperationException("Remove not supported by OCL collections");	// Unimplemented optional operation
+		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+			appendIterable(s, listOfElements, element2elementCount, sizeLimit);
 		}
 	}
 
 	/**
-	 * A LazyNonBagIterator support multiple access to the partially populated iteration cache provoking
-	 * additional population as required.
+	 * A CachedListIterator provides an iterator over the fully cached listOfElements.
 	 */
-	private class LazyNonBagIterator implements LazyIterator
+	private static class CachedListIterator extends AbstractLazyIterator
 	{
-		private int index = 0;
+		private final @NonNull List<@Nullable Object> listOfElements;
+		private final int listSize;
+		private int nextListIndex = 0;
 
-		@Override
-		public boolean equals(Object obj) {
-			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
+		public CachedListIterator(@NonNull List<@Nullable Object> listOfElements) {
+			this.listOfElements = listOfElements;
+			this.listSize = listOfElements.size();
 		}
 
 		@Override
-		public boolean hasNext() {
-			if (index < size) {
-				return true;
+		public int getNextCount() {
+			if (nextListIndex < listSize) {
+				@Nullable Object currentElement = listOfElements.get(nextListIndex);
+				nextListIndex++;			// After IndexOutOfBoundsException has been thrown
+				return setNext(currentElement, 1);
 			}
-			synchronized (LazyCollectionValueImpl.this) {
-				return (index < size) || inputIterator.hasNext();
-			}
-		}
-
-		@Override
-		public int hasNextCount() {
-			if (index < size) {
-				return 1;
-			}
-			synchronized (LazyCollectionValueImpl.this) {
-				return (index < size) || inputIterator.hasNext() ? 1 : 0;
-			}
-		}
-
-		@Override
-		public final int hashCode() {
-			throw new UnsupportedOperationException();	// This support class is not intended for more general use.
+			return 0;
 		}
 
 		@Override
 		public boolean isCached() {
-			return false;						// FIXME
-		}
-
-		@Override
-		public @Nullable Object next() {
-			if (index < size) {
-				List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
-				assert lazyListOfElements2 != null;
-				return lazyListOfElements2.get(index++);
-			}
-			@Nullable Object next = get(index);
-			index++;			// After IndexOutOfBoundsException has been thrown
-			return next;
+			return true;
 		}
 
 		@Override
 		public @NonNull LazyIterator reIterator() {
-			return new LazyNonBagIterator();
+			return new CachedListIterator(listOfElements);
 		}
 
 		@Override
-		public String toString() {
-			return inputIterator.toString();
+		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+			appendIterable(s, listOfElements, null, sizeLimit);
+		}
+	}
+
+	/**
+	 * A CachingListIterator provides an iterator over the lazily cached listOfElements.
+	 * Maintenance of the lazy cache is synchronized to allow multiple CachingListIterator
+	 * to co-exist.
+	 */
+	private class CachingListIterator extends AbstractLazyIterator
+	{
+		private int nextListIndex = 0;
+
+		@Override
+		public int getNextCount() {
+			List<@Nullable Object> listOfElements = lazyListOfElements;
+			assert listOfElements != null;
+			if (nextListIndex < size) {
+				@Nullable Object currentElement = listOfElements.get(nextListIndex);
+				nextListIndex++;			// After IndexOutOfBoundsException has been thrown
+				return setNext(currentElement, 1);
+			}
+			LazyCollectionValueImpl lazyCollectionValue = LazyCollectionValueImpl.this;
+			synchronized (lazyCollectionValue) {
+				while (inputIterator.hasNext()) {
+					if (collectionStrategy.addTo(lazyCollectionValue, inputIterator.next(), 1)) {
+						assert nextListIndex < size;
+						@Nullable Object currentElement = listOfElements.get(nextListIndex);
+						nextListIndex++;			// After IndexOutOfBoundsException has been thrown
+						return setNext(currentElement, 1);
+					}
+				}
+			}
+			return 0;
+		}
+
+		@Override
+		public boolean isCached() {
+			return false;
+		}
+
+		@Override
+		public @NonNull LazyIterator reIterator() {
+			return new CachingListIterator();
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+			inputIterator.reIterator().toString(s, sizeLimit);
 		}
 	}
 
@@ -867,72 +740,6 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	public static final @NonNull AbstractCollectionStrategy ORDERED_SET_STRATEGY = OrderedSetStrategy.INSTANCE;
 	public static final @NonNull AbstractCollectionStrategy SEQUENCE_STRATEGY = SequenceStrategy.INSTANCE;
 	public static final @NonNull AbstractCollectionStrategy SET_STRATEGY = SetStrategy.INSTANCE;
-
-	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList = null;
-	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap = null;
-
-	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazy = null;
-	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2cached = null;
-	//	public static @Nullable Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2reiterated = null;
-
-	public static void appendArray(StringBuilder s, Object @NonNull [] elements, int lengthLimit) {
-		s.append("{");
-		boolean isFirst = true;
-		for (Object element : elements) {
-			if (!isFirst) {
-				s.append(",");
-			}
-			if (s.length() < lengthLimit) {
-				ValueUtil.toString(element, s, lengthLimit-1);
-			}
-			else {
-				s.append("...");
-				break;
-			}
-			isFirst = false;
-		}
-		s.append("}");
-	}
-
-
-	public static <E> void appendBagIterable(@NonNull StringBuilder s, @NonNull List<E> elements, @Nullable Map<E, @NonNull ? extends Number> element2elementCount) {
-		s.append("[");
-		boolean isFirst = true;
-		for (E element : elements) {
-			if (!isFirst) {
-				s.append(", ");
-			}
-			if (element2elementCount != null) {
-				Number count = element2elementCount.get(element);
-				if ((count == null) || (count.intValue() != 1)) {
-					s.append(count);
-					s.append("*");
-				}
-			}
-			s.append(element instanceof String ? "'" + element + "'" : element);
-			isFirst = false;
-		}
-		s.append("]");
-	}
-
-	public static void appendIterable(StringBuilder s, @NonNull Iterable<? extends Object> iterable, int lengthLimit) {
-		s.append("{");
-		boolean isFirst = true;
-		for (Object element : iterable) {
-			if (!isFirst) {
-				s.append(",");
-			}
-			if (s.length() < lengthLimit) {
-				ValueUtil.toString(element, s, lengthLimit-1);
-			}
-			else {
-				s.append("...");
-				break;
-			}
-			isFirst = false;
-		}
-		s.append("}");
-	}
 
 	public static @NonNull AbstractCollectionStrategy getCollectionStrategy(@NonNull CollectionTypeId typeId) {
 		typeId = typeId.getGeneralizedId();
@@ -987,7 +794,7 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	/**
 	 * The iterator that provides the elements that have yet to be cached in lazyListOfElements.
 	 */
-	protected final @NonNull LazyIterator inputIterator;
+	private final @NonNull LazyIterator inputIterator;
 
 	/**
 	 * The Bag/Sequence/Unique strategy that determines how new/old elements are added/removed.
@@ -1051,20 +858,6 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	@Override
 	public @NonNull CollectionValue appendAll(@NonNull CollectionValue values) {
 		return AppendAllIterator.appendAll(this, values);
-	}
-
-	protected void appendIterable(@NonNull StringBuilder s) {
-		s.append(collectionStrategy.getKind());
-		s.append("{");
-		if (inputIterator.hasNext()) {
-			s.append("«future»");
-		}
-		else {
-			List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
-			assert lazyListOfElements2 != null;
-			appendBagIterable(s, lazyListOfElements2, lazyMapOfElement2elementCount);
-		}
-		s.append("}");
 	}
 
 	@Override
@@ -1185,27 +978,14 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		if (lazyListOfElements2 == null) {
 			if (lazyIterator) {
 				System.err.println(NameUtil.debugSimpleName(this) + " re-iterating");
-				throw new UnsupportedOperationException();
-				//				this.inputIterator = reIterator();
-				//				return new SmartCollectionValueImpl(typeId, ((AbstractLazyIterator)inputIterator).reIterator());
+				//				throw new UnsupportedOperationException();
+				return new LazyCollectionValueImpl(typeId, inputIterator.reIterator(), lazyDepth);
 			}
-			else {
-				//				this.inputIterator = this;
-			}
-			this.lazyListOfElements = lazyListOfElements2 = createListOfElements();
-			if (!collectionStrategy.isSequence()) {
-				this.lazyMapOfElement2elementCount = createMapOfElement2elementCount();
-			}
-			//			Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2count2 = debugCollectionClass2cached;
-			//			if (debugCollectionClass2count2 != null) {
-			//				Class<? extends @NonNull CollectionValue> collectionClass = getClass();
-			//				Integer count = debugCollectionClass2count2.get(collectionClass);
-			//				count = count != null ? count+1 : 1;
-			//				debugCollectionClass2count2.put(collectionClass, count);
-			//			}
+			collectionStrategy.loadCache(this, null, null);
 		}
 		return this;
 	}
+
 
 	@Override
 	public boolean canBeCached() {
@@ -1255,49 +1035,29 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		return ValueUtil.integerValueOf(count);
 	}
 
-	protected @NonNull LazyIterator createIterator() {
-		List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
-		assert lazyListOfElements2 != null;
+	/*	protected void createCache(@Nullable AbstractCollectionStrategy oldCollectionStrategy) {
+		assert lazyListOfElements == null;
+		assert lazyMapOfElement2elementCount == null;
+		this.lazyListOfElements = new ArrayList<>();
+		if (!collectionStrategy.isSequence()) {
+			this.lazyMapOfElement2elementCount = new HashMap<>();
+		}
+	} */
+
+	protected @NonNull LazyIterator createCachedIterator() {
+		List<@Nullable Object> listOfElements = lazyListOfElements;
+		assert listOfElements != null;
 		if (collectionStrategy.isBag()) {
-			Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = getMapOfElement2elementCount();
-			assert lazyMapOfElement2elementCount2 != null;
-			if (inputIterator.hasNext()) {
-				return new LazyBagIterator(this);
-			}
-			else {
-				return new CachedBagIterator(lazyListOfElements2, lazyMapOfElement2elementCount2);
-			}
+			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = getMapOfElement2elementCount();
+			assert mapOfElement2elementCount != null;
+			return new CachedBagIterator(listOfElements, mapOfElement2elementCount);
+		}
+		else if (inputIterator.hasNext()) {
+			return new CachingListIterator();
 		}
 		else {
-			if (inputIterator.hasNext()) {
-				return new LazyNonBagIterator();
-			}
-			else {
-				return new CachedNonBagIterator(lazyListOfElements2);
-			}
+			return new CachedListIterator(listOfElements);
 		}
-	}
-
-	protected @NonNull List<@Nullable Object> createListOfElements() {
-		//		Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyList2 = debugCollectionClass2lazyList;
-		//		if (debugCollectionClass2lazyList2 != null) {
-		//			Class<?> collectionClass = inputIterator.getClass();
-		//			Integer count = debugCollectionClass2lazyList2.get(collectionClass);
-		//			count = count != null ? count+1 : 1;
-		//			debugCollectionClass2lazyList2.put(collectionClass, count);
-		//		}
-		return new ArrayList<>();
-	}
-
-	protected @NonNull Map<@Nullable Object, @NonNull ElementCount> createMapOfElement2elementCount() {
-		//		Map<@NonNull Class<?>, @NonNull Integer> debugCollectionClass2lazyMap2 = debugCollectionClass2lazyMap;
-		//		if (debugCollectionClass2lazyMap2 != null) {
-		//			Class<?> collectionClass = inputIterator.getClass();
-		//			Integer count = debugCollectionClass2lazyMap2.get(collectionClass);
-		//			count = count != null ? count+1 : 1;
-		//			debugCollectionClass2lazyMap2.put(collectionClass, count);
-		//		}
-		return new HashMap<>();
 	}
 
 	@Override
@@ -1761,7 +1521,7 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	public @NonNull LazyIterator iterator() {
 		//		System.err.println(NameUtil.debugSimpleName(this) + " iterator() rather than cachedIterator()");
 		eagerIterable();
-		return createIterator();
+		return createCachedIterator();
 	}
 
 	@Override
@@ -1776,12 +1536,16 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 				lazyIterator = true;
 				return inputIterator;					// use the input iterator
 			}
+			LazyIterator reIterator = inputIterator.reIterator();
 			if (inputIterator.isCached()) {				// If the input iterator is cached
-				return inputIterator.reIterator();		// use a reIterator
+				return reIterator;						// use a reIterator
 			}
-			cachedIterable();							// activate the cache
+			collectionStrategy.loadCache(this, null, null);							// activate the cache
+			for (int nextCount; (nextCount = reIterator.hasNextCount()) > 0; ) {	// Populate cache from the reIterator
+				collectionStrategy.addTo(this, reIterator.next(), nextCount);
+			}
 		}
-		return createIterator();
+		return createCachedIterator();
 	}
 
 	@Override
@@ -2012,22 +1776,18 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		return s.toString();
 	}
 
-	/*	@Override
-	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append(collectionStrategy.getKind());
-		s.append("{");
-		if (sourceIterator.hasNext()) {
-			s.append("«future»");
+	@Override
+	public void toString(@NonNull StringBuilder s, int sizeLimit) {
+		if (lazyListOfElements == null) {
+			s.append("Lazy");
+			s.append(getKind());
+			inputIterator.reIterator().toString(s, sizeLimit);
 		}
 		else {
-			List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
-			assert lazyListOfElements2 != null;
-			appendBagIterable(s, lazyListOfElements2, lazyMapOfElement2elementCount);
+			s.append(getKind());
+			lazyIterator().toString(s, sizeLimit);
 		}
-		s.append("}");
-		return s.toString();
-	} */
+	}
 
 	@Override
 	public @NonNull CollectionValue union(@NonNull CollectionValue that) {

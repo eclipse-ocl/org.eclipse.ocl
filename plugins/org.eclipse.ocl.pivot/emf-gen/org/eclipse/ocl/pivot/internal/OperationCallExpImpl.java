@@ -627,7 +627,7 @@ implements OperationCallExp {
 				BOXED_ownedArguments.cachedIterable();
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull IntegerRange RNG = ValueUtil.createRange(PivotTables.INT_1, size);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue Sequence = ValueUtil.createSequenceRange(PivotTables.SEQ_PRIMid_Integer, RNG);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue Sequence = ValueUtil.createCollectionRange(PivotTables.SEQ_PRIMid_Integer, false, RNG);
 				/*@Thrown*/ java.lang.@Nullable Object accumulator = ValueUtil.TRUE_VALUE;
 				@NonNull Iterator<Object> ITERATOR_i = Sequence.lazyIterator();
 				/*@Thrown*/ java.lang.@Nullable Boolean forAll;

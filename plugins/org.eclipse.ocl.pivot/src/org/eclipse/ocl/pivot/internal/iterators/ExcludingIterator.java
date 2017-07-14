@@ -58,7 +58,7 @@ public class ExcludingIterator extends AbstractLazyIterator
 
 	@Override
 	public @NonNull LazyIterator reIterator() {
-		return new ExcludingIterator(sourceValue, object);
+		return new ExcludingIterator(sourceValue.reValue(), object);
 	}
 
 	@Override

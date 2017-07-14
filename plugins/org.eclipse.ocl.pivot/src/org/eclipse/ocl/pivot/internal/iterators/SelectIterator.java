@@ -30,7 +30,9 @@ public abstract class SelectIterator extends AbstractLazyIterator
 	private final @NonNull LazyIterator sourceIterator;
 
 	protected SelectIterator(@NonNull CollectionValue sourceValue) {
-		this.sourceValue = sourceValue;
+		this.sourceValue = sourceValue.eagerIterable();
+		assert sourceValue.canBeCached();
+		//		sourceValue.toString();
 		this.sourceIterator = sourceValue.lazyIterator();
 	}
 

@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AbstractLazyIterator;
 import org.eclipse.ocl.pivot.internal.iterators.FromArrayIterator;
 import org.eclipse.ocl.pivot.internal.iterators.FromCollectionIterator;
 import org.eclipse.ocl.pivot.internal.iterators.FromIntegerRangesIterator;
@@ -69,7 +70,6 @@ import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.LazyCollectionValue;
-import org.eclipse.ocl.pivot.values.LazyIterator;
 import org.eclipse.ocl.pivot.values.MapEntry;
 import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.MutableIterable;
@@ -89,40 +89,6 @@ import org.eclipse.ocl.pivot.values.ValuesPackage;
  */
 public abstract class ValueUtil
 {
-	private static class EmptyLazyIterator implements LazyIterator
-	{
-		@Override
-		public boolean hasNext() {
-			return false;
-		}
-
-		@Override
-		public int hasNextCount() {
-			return 0;
-		}
-
-		@Override
-		public boolean isCached() {
-			return false;
-		}
-
-		@Override
-		public Object next() {
-			return null;
-		}
-
-		@Override
-		public @NonNull LazyIterator reIterator() {
-			return this;
-		}
-
-		@Override
-		public void remove() {
-		}
-	}
-
-	public static @NonNull LazyIterator EMPTY_ITERATOR = new EmptyLazyIterator();
-
 	private static final @NonNull String METAMODEL_NAME_PREFIX = PivotConstants.METAMODEL_NAME + "::";
 
 	public static final @NonNull String NULL_STRING = "null";
@@ -593,7 +559,7 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull MutableIterable createCollectionAccumulatorValue(@NonNull CollectionTypeId collectedId) {
-		return new LazyCollectionValueImpl(collectedId, EMPTY_ITERATOR, null).mutableIterable();
+		return new LazyCollectionValueImpl(collectedId, AbstractLazyIterator.EMPTY_ITERATOR, null).mutableIterable();
 	}
 
 	public static @NonNull CollectionValue createCollectionOfEach(@NonNull CollectionTypeId typeId, boolean uniqueElements, @Nullable Object @NonNull ... boxedValues) {
@@ -1310,7 +1276,7 @@ public abstract class ValueUtil
 
 	private static void toStringWithLimit(@NonNull StringBuilder s, String string, int sizeLimit) {
 		int length = string.length();
-		int available = sizeLimit - (length + 1);
+		int available = sizeLimit - (s.length() + 1);
 		if (length <= available) {
 			s.append(string);
 		}
