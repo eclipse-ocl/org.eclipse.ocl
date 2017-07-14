@@ -74,9 +74,9 @@ public class IntersectionIterator extends AbstractLazyIterator
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("Intersection{");
-		s.append(sourceValue);
+		sourceValue.toString(s, sizeLimit-20);
 		s.append(", ");
-		s.append(secondIterator);
+		secondIterator.reIterator().toString(s, sizeLimit-1);
 		s.append("}");
 	}
 }

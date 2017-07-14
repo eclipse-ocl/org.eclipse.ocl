@@ -86,7 +86,7 @@ public class SubCollectionIterator extends AbstractLazyIterator
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("SubColl{");
-		s.append(sourceIterator);
+		sourceIterator.reIterator().toString(s, sizeLimit-5);
 		s.append(",");
 		s.append(lower);
 		s.append(",");

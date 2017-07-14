@@ -66,6 +66,7 @@ public class SymmetricDifferenceIterator extends AbstractLazyIterator
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("SymDiff{");
+		sourceIterator.reIterator().toString(s, sizeLimit-6);
 		s.append(sourceValue);
 		s.append(",");
 		s.append(otherValue);

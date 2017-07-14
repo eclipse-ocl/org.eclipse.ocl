@@ -75,8 +75,7 @@ public class ContextIterator extends AbstractLazyIterator
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append("Context{");
-		s.append(sourceIterator);
-		s.append("}");
+		s.append("Context");
+		sourceIterator.reIterator().toString(s, sizeLimit);
 	}
 }

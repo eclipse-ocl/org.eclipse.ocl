@@ -59,7 +59,7 @@ public abstract class PrependIterator extends AbstractLazyIterator
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("Prepend{");
-		s.append(sourceIterator);
+		sourceIterator.reIterator().toString(s, sizeLimit-6);
 		s.append(",");
 		s.append(object instanceof String ? "'" + object + "'" : object);
 		s.append("}");

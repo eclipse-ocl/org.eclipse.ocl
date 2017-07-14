@@ -51,15 +51,15 @@ public abstract class AbstractLazyIterator implements LazyIterator
 
 	public static @NonNull LazyIterator EMPTY_ITERATOR = new EmptyLazyIterator();
 
-	public static <E> void appendArray(@NonNull StringBuilder s, E @NonNull [] elements, int lengthLimit) {
+	public static <E> void appendArray(@NonNull StringBuilder s, E @NonNull [] elements, int sizeLimit) {
 		s.append("{");
 		boolean isFirst = true;
 		for (E element : elements) {
 			if (!isFirst) {
 				s.append(",");
 			}
-			if (s.length() < lengthLimit) {
-				ValueUtil.toString(element, s, lengthLimit-1);
+			if (s.length() < sizeLimit) {
+				ValueUtil.toString(element, s, sizeLimit-1);
 			}
 			else {
 				s.append("...");
@@ -72,7 +72,7 @@ public abstract class AbstractLazyIterator implements LazyIterator
 
 	public static <E> void appendIterable(@NonNull StringBuilder s, @NonNull Collection<E> elements,
 			@Nullable Map<E, @NonNull ? extends Number> element2elementCount, int sizeLimit) {
-		s.append("[");
+		s.append("{");
 		boolean isFirst = true;
 		for (E element : elements) {
 			if (!isFirst) {
@@ -94,7 +94,7 @@ public abstract class AbstractLazyIterator implements LazyIterator
 				break;
 			}
 		}
-		s.append("]");
+		s.append("}");
 	}
 
 	/**

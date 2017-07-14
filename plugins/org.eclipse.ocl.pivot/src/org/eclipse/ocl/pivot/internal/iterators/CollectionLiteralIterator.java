@@ -96,12 +96,18 @@ public class CollectionLiteralIterator extends AbstractLazyIterator
 			if (!isFirst) {
 				s.append(",");
 			}
-			if (literalElement instanceof Range) {
-				Range range = (Range)literalElement;
-				s.append(range.first + ".." + range.last);
+			if (s.length() < sizeLimit-5) {
+				if (literalElement instanceof Range) {
+					Range range = (Range)literalElement;
+					s.append(range.first + ".." + range.last);
+				}
+				else {
+					s.append(literalElement);
+				}
 			}
 			else {
-				s.append(literalElement);
+				s.append("...");
+				break;
 			}
 			isFirst = false;
 		}

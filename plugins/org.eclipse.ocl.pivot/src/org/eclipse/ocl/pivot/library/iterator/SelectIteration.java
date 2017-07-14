@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.iterators.SelectIterator;
+import org.eclipse.ocl.pivot.internal.iterators.AbstractSelectIterator;
 import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
@@ -39,7 +39,7 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 	/**
 	 * @since 1.3
 	 */
-	protected static class LazySelectIterator extends SelectIterator
+	protected static class LazySelectIterator extends AbstractSelectIterator
 	{
 		private final @NonNull Executor executor;
 		private final @NonNull OCLExpression body;
@@ -62,6 +62,15 @@ public class SelectIteration extends AbstractIteration implements LibraryIterati
 		@Override
 		public @NonNull LazyIterator reIterator() {
 			return new LazySelectIterator(sourceValue.reValue(), executor, body, firstIterator);
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int sizeLimit) {
+			s.append("Select{");
+			sourceValue.toString(s, sizeLimit-20);
+			s.append(",");
+			s.append(body);
+			s.append("}");
 		}
 	}
 

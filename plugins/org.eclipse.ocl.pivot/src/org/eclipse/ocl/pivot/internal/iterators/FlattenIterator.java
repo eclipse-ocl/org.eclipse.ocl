@@ -120,8 +120,7 @@ public class FlattenIterator extends AbstractLazyIterator
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append("Flatten{");
-		s.append(sourceIterator);
-		s.append("}");
+		s.append("Flatten");
+		sourceIterator.reIterator().toString(s, sizeLimit);
 	}
 }

@@ -61,8 +61,7 @@ public class AsEcoreIterator extends AbstractLazyIterator
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append("AsEcore{");
-		s.append(sourceIterator);
-		s.append("}");
+		s.append("AsEcore");
+		sourceIterator.reIterator().toString(s, sizeLimit);
 	}
 }

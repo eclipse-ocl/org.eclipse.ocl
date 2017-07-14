@@ -15,21 +15,16 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
- * SelectIterator provides the framework for lazy evaluation of a Collection::select iteration.
+ * AbstractSelectIterator provides the framework for lazy evaluation of a Collection::select iteration.
  *
  * @since 1.3
  */
-public abstract class SelectIterator extends AbstractLazyIterator
+public abstract class AbstractSelectIterator extends AbstractLazyIterator
 {
-	//	public static @NonNull CollectionValue select(@NonNull CollectionValue sourceValue) {
-	//		LazyIterator inputIterator = new SelectIterator(sourceValue);
-	//		return new SmartCollectionValueImpl(sourceValue.getTypeId(), inputIterator, sourceValue);
-	//	}
-
 	protected final @NonNull CollectionValue sourceValue;
 	private final @NonNull LazyIterator sourceIterator;
 
-	protected SelectIterator(@NonNull CollectionValue sourceValue) {
+	protected AbstractSelectIterator(@NonNull CollectionValue sourceValue) {
 		this.sourceValue = sourceValue.eagerIterable();
 		assert sourceValue.canBeCached();
 		//		sourceValue.toString();
@@ -48,20 +43,5 @@ public abstract class SelectIterator extends AbstractLazyIterator
 			}
 		}
 		return 0;
-	}
-
-	@Override
-	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append("Select{");
-		//		if (hasCache()) {
-		//			appendIterable(s);
-		//			if (hasNext()) {
-		//				s.append(";«future»");
-		//			}
-		//		}
-		//		else {
-		//			s.append("«future»");
-		//		}
-		s.append("}");
 	}
 }

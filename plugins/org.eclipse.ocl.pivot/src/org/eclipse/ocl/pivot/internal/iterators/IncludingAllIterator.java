@@ -71,9 +71,9 @@ public abstract class IncludingAllIterator extends AbstractLazyIterator
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
 		s.append("IncludingAll{");
-		s.append(sourceIterator);
+		sourceIterator.reIterator().toString(s, sizeLimit-20);
 		s.append(", ");
-		s.append(includeIterator);
+		includeIterator.reIterator().toString(s, sizeLimit-1);
 		s.append("}");
 	}
 
