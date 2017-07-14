@@ -34,8 +34,23 @@ public abstract class AbstractLazyIterator implements LazyIterator
 		}
 
 		@Override
+		public boolean hasNext() {
+			return false;
+		}
+
+		@Override
+		public int hasNextCount() {
+			return 0;
+		}
+
+		@Override
 		public boolean isCached() {
 			return true;
+		}
+
+		@Override
+		public @Nullable Object next() {
+			throw new NoSuchElementException();
 		}
 
 		@Override
@@ -131,7 +146,7 @@ public abstract class AbstractLazyIterator implements LazyIterator
 	public abstract int getNextCount();
 
 	@Override
-	public final boolean hasNext() {
+	public boolean hasNext() {
 		if ((hasNextCount > 0) || (hasNextCount() > 0)) {
 			useCount = 1;
 			return true;
@@ -143,7 +158,7 @@ public abstract class AbstractLazyIterator implements LazyIterator
 	}
 
 	@Override
-	public final int hasNextCount() {
+	public int hasNextCount() {
 		if (hasNextCount <= 0) {
 			int hasNextCount = getNextCount();
 			assert hasNextCount == this.hasNextCount;
@@ -166,7 +181,7 @@ public abstract class AbstractLazyIterator implements LazyIterator
 	}
 
 	@Override
-	public final Object next() {
+	public @Nullable Object next() {
 		if (hasNextCount <= 0) {
 			throw new NoSuchElementException();
 		}

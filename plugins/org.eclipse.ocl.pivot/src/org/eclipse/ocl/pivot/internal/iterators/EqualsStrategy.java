@@ -15,11 +15,25 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
 /**
+ * EqualsStrategy defines the strategy by which two LazyCollectionValue elements are considered equal.
+ *
+ * Wherever possible, e.g. for data types, the SimpleEqualsStrategy should be used since it just compares 'addresses'.
+ * However sometimes. e.g. for Strings, the JavaEqualsStrategy is needed to invoke Object.equals.
+ * And for numbers and types, the OCLEqualsStrategy is needed to compare semantic values.
+ *
  * @since 1.3
  */
 public interface EqualsStrategy
 {
-	public static class JavaEqualsStrategy implements EqualsStrategy
+	public static abstract class AbstractEqualsStrategy implements EqualsStrategy
+	{
+		@Override
+		public String toString() {
+			return getClass().getSimpleName();
+		}
+	}
+
+	public static class JavaEqualsStrategy extends AbstractEqualsStrategy
 	{
 		public static final @NonNull JavaEqualsStrategy INSTANCE = new JavaEqualsStrategy();
 
@@ -34,7 +48,7 @@ public interface EqualsStrategy
 		}
 	}
 
-	public static class NotEqualsStrategy implements EqualsStrategy
+	public static class NotEqualsStrategy extends AbstractEqualsStrategy
 	{
 		public static final @NonNull NotEqualsStrategy INSTANCE = new NotEqualsStrategy();
 
@@ -44,7 +58,7 @@ public interface EqualsStrategy
 		}
 	}
 
-	public static class OCLEqualsStrategy implements EqualsStrategy
+	public static class OCLEqualsStrategy extends AbstractEqualsStrategy
 	{
 		public static final @NonNull OCLEqualsStrategy INSTANCE = new OCLEqualsStrategy();
 
@@ -62,7 +76,7 @@ public interface EqualsStrategy
 		}
 	}
 
-	public static class SimpleEqualsStrategy implements EqualsStrategy
+	public static class SimpleEqualsStrategy extends AbstractEqualsStrategy
 	{
 		public static final @NonNull SimpleEqualsStrategy INSTANCE = new SimpleEqualsStrategy();
 

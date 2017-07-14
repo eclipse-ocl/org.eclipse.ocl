@@ -68,6 +68,9 @@ public class ClosureIteration extends AbstractIteration
 		CollectionValue collectionValue;
 		if (bodyVal instanceof CollectionValue) {
 			collectionValue = (CollectionValue) bodyVal;
+			if (collectionValue.intSize() <= 0) {
+				return CARRY_ON;
+			}
 		}
 		else {
 			Executor executor = ((IterationManager.IterationManagerExtension)iterationManager).getExecutor();

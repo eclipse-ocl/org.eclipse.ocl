@@ -135,12 +135,6 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	 */
 	protected static abstract class AbstractCollectionStrategy implements CollectionStrategy
 	{
-		protected final @NonNull String kind;
-
-		protected AbstractCollectionStrategy(@NonNull String kind) {
-			this.kind = kind;
-		}
-
 		/**
 		 * Add count of anElement to the lazyIterable updating element occurrence counts, returning true if anElement actually added.
 		 *
@@ -148,13 +142,13 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		 */
 		protected boolean addTo(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement, int count) {
 			assert count > 0;
-			Map<@Nullable Object, @NonNull ElementCount> lazyMapOfElement2elementCount2 = lazyIterable.lazyMapOfElement2elementCount;
-			assert lazyMapOfElement2elementCount2 != null;
-			ElementCount oldElementCount = lazyMapOfElement2elementCount2.put(anElement, SetElementCount.ONE);
+			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.lazyMapOfElement2elementCount;
+			assert mapOfElement2elementCount != null;
+			ElementCount oldElementCount = mapOfElement2elementCount.put(anElement, SetElementCount.ONE);
 			if (oldElementCount == null) {
-				List<@Nullable Object> lazyListOfElements2 = lazyIterable.lazyListOfElements;
-				assert lazyListOfElements2 != null;
-				lazyListOfElements2.add(anElement);
+				List<@Nullable Object> listOfElements = lazyIterable.lazyListOfElements;
+				assert listOfElements != null;
+				listOfElements.add(anElement);
 				lazyIterable.size++;
 				return true;
 			}
@@ -202,11 +196,6 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 			Map<@Nullable Object, @NonNull ElementCount> mapOfElement2elementCount = lazyIterable.getMapOfElement2elementCount();
 			ElementCount elementCount = mapOfElement2elementCount.get(anElement);
 			return elementCount != null ? Boolean.TRUE : Boolean.FALSE;
-		}
-
-		@Override
-		public @NonNull String getKind() {
-			return kind;
 		}
 
 		/**
@@ -284,10 +273,6 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	{
 		public static final @NonNull BagStrategy INSTANCE = new BagStrategy();
 
-		private BagStrategy() {
-			super(TypeId.BAG_NAME);
-		}
-
 		@Override
 		protected boolean addTo(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement, int count) {
 			assert count > 0;
@@ -321,6 +306,11 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 			}
 			//lazyIterable.lazyListOfElements = oldListOfElements; -- no chnage
 			lazyIterable.size = mapOfElement2elementCount.size();
+		}
+
+		@Override
+		public @NonNull String getKind() {
+			return TypeId.BAG_NAME;
 		}
 
 		@Override
@@ -393,17 +383,14 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	{
 		public static final @NonNull BaseCollectionStrategy INSTANCE = new BaseCollectionStrategy();
 
-		private BaseCollectionStrategy() {
-			super(TypeId.COLLECTION_NAME);
+		@Override
+		public @NonNull String getKind() {
+			return TypeId.COLLECTION_NAME;
 		}
 	}
 
 	public static abstract class OrderedStrategy extends AbstractCollectionStrategy
 	{
-		protected OrderedStrategy(@NonNull String kind) {
-			super(kind);
-		}
-
 		@Override
 		protected boolean addTo(@NonNull LazyCollectionValueImpl lazyIterable, @Nullable Object anElement, int count) {
 			assert count > 0;
@@ -463,10 +450,6 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	{
 		public static final @NonNull OrderedSetStrategy INSTANCE = new OrderedSetStrategy();
 
-		private OrderedSetStrategy() {
-			super(TypeId.ORDERED_SET_NAME);
-		}
-
 		/**
 		 * Append count of anElement to the lazyIterable updating element occurrence counts. If
 		 * already present the old value is displaced. The new value goes at the end.
@@ -491,6 +474,11 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		}
 
 		@Override
+		public @NonNull String getKind() {
+			return TypeId.ORDERED_SET_NAME;
+		}
+
+		@Override
 		public boolean isOrdered() {
 			return true;
 		}
@@ -504,10 +492,6 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	public static class SequenceStrategy extends OrderedStrategy
 	{
 		public static final @NonNull SequenceStrategy INSTANCE = new SequenceStrategy();
-
-		private SequenceStrategy() {
-			super(TypeId.SEQUENCE_NAME);
-		}
 
 		@Override
 		protected void asBag(@NonNull LazyCollectionValueImpl lazyIterable) {
@@ -528,6 +512,11 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 				}
 			}
 			return Boolean.FALSE;
+		}
+
+		@Override
+		public @NonNull String getKind() {
+			return TypeId.SEQUENCE_NAME;
 		}
 
 		@Override
@@ -553,8 +542,9 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 	{
 		public static final @NonNull SetStrategy INSTANCE = new SetStrategy();
 
-		private SetStrategy() {
-			super(TypeId.SET_NAME);
+		@Override
+		public @NonNull String getKind() {
+			return TypeId.SET_NAME;
 		}
 
 		@Override
@@ -565,10 +555,6 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 
 	public static abstract class UniqueStrategy extends AbstractCollectionStrategy
 	{
-		protected UniqueStrategy(@NonNull String kind) {
-			super(kind);
-		}
-
 		@Override
 		protected void asSequence(@NonNull LazyCollectionValueImpl lazyIterable) {
 			lazyIterable.lazyMapOfElement2elementCount = null;
@@ -1062,7 +1048,7 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 
 	@Override
 	public @NonNull CollectionValue eagerIterable() {
-		cachedIterable();
+		//		cachedIterable();
 		getListOfElements();
 		return this;
 	}
@@ -1283,9 +1269,9 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 		for (int nextCount; (nextCount = inputIterator.hasNextCount()) > 0; ) {
 			collectionStrategy.addTo(this, inputIterator.next(), nextCount);
 		}
-		List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
-		assert lazyListOfElements2 != null;
-		return lazyListOfElements2;
+		List<@Nullable Object> listOfElements = lazyListOfElements;
+		assert listOfElements != null;
+		return listOfElements;
 	}
 
 	/**
