@@ -817,8 +817,8 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 		}
 		else {
 			Object initValue = initExp.accept(undecoratedVisitor);
-			if (variable.isCacheNeeded() && (initValue instanceof CollectionValue)) {
-				((CollectionValue)initValue).eagerIterable();
+			if (variable.isCacheNeeded()) {
+				CachingAnalysis.initCaching(variable, initValue);
 			}
 			return initValue;
 		}

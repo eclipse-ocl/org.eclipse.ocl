@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.values.LazyIterator;
  */
 public class FromArrayIterator extends AbstractLazyIterator
 {
-	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, boolean uniqueElements, @Nullable Object @NonNull [] elements) {
+	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, boolean uniqueElements, @Nullable Object @NonNull ... elements) {
 		LazyCollectionValueImpl collectionValue = new LazyCollectionValueImpl(collectionTypeId, new FromArrayIterator(elements), null);
 		if (!uniqueElements && !collectionValue.isSequence()) {
 			collectionValue.eagerIterable();	// uniqueness/counts must be eager

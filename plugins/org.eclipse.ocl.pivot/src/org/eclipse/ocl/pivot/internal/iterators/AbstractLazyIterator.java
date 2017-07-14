@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -85,7 +84,7 @@ public abstract class AbstractLazyIterator implements LazyIterator
 		s.append("}");
 	}
 
-	public static <E> void appendIterable(@NonNull StringBuilder s, @NonNull Collection<E> elements,
+	public static <E> void appendIterable(@NonNull StringBuilder s, @NonNull Iterable<E> elements,
 			@Nullable Map<E, @NonNull ? extends Number> element2elementCount, int sizeLimit) {
 		s.append("{");
 		boolean isFirst = true;

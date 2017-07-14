@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -309,7 +310,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 
 
 
-	protected @NonNull VariableExp createThisVariableExp(@NonNull Variable thisVariable) {
+	protected @NonNull VariableExp createThisVariableExp(@NonNull VariableDeclaration thisVariable) {
 		return PivotUtil.createVariableExp(thisVariable);
 	}
 

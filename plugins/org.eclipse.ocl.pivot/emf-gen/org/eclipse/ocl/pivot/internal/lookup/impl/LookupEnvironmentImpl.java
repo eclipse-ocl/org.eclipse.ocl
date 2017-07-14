@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.internal.lookup.LookupTables;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -184,7 +183,7 @@ public class LookupEnvironmentImpl extends MinimalEObjectImpl.Container implemen
 		@SuppressWarnings("null")
 		final /*@Thrown*/ java.util.@NonNull List<NamedElement> namedElements = this.getNamedElements();
 		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue BOXED_namedElements = idResolver.createOrderedSetOfAll(LookupTables.ORD_CLSSid_NamedElement, namedElements);
-		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue including = (CollectionValue)CollectionIncludingOperation.INSTANCE.evaluate(BOXED_namedElements, element);
+		final /*@Thrown*/ org.eclipse.ocl.pivot.values.@NonNull CollectionValue including = CollectionIncludingOperation.INSTANCE.evaluate(BOXED_namedElements, element);
 		final List<NamedElement> UNBOXED_including = including.asEcoreObjects(idResolver, NamedElement.class);
 		assert UNBOXED_including != null;
 		CTORid_namedElements.initValue(symbol_0, UNBOXED_including);

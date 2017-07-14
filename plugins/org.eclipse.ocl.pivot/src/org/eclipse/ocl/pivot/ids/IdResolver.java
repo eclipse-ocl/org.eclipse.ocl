@@ -57,29 +57,45 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@Nullable Object boxedValueOf(@NonNull Object unboxedValue, @NonNull ETypedElement eFeature, @Nullable TypeId typeId);
 
-	@NonNull CollectionValue createBagOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
+	@Deprecated /* @deprecated Use createCollectionOfAll */
+	@NonNull CollectionValue createBagOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<@Nullable ? extends Object> unboxedValues);
 
-	@NonNull CollectionValue createBagOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
+	@Deprecated /* @deprecated Use createCollectionOfEach */
+	@NonNull CollectionValue createBagOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues);
 
-	@NonNull CollectionValue createCollectionOfAll(boolean isOrdered, boolean isUnique, @NonNull TypeId elementTypeId, @NonNull Iterable<? extends Object> unboxedValues);
+	@NonNull CollectionValue createCollectionOfAll(boolean isOrdered, boolean uniqueElements, @NonNull TypeId elementTypeId, @NonNull Iterable<@Nullable ? extends Object> unboxedValues);
 
-	@NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId collectedId, @NonNull Iterable<? extends Object> unboxedValues);
+	@Deprecated /* @deprecated Use createCollectionOfAll with uniqueElements argument */
+	@NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<@Nullable ? extends Object> unboxedValues);
+
+	@NonNull CollectionValue createCollectionOfAll(@NonNull CollectionTypeId typeId, boolean uniqueElements, @NonNull Iterable<@Nullable ? extends Object> unboxedValues);
+
+	//	@Deprecated /* @deprecated Use createCollectionOfAll with uniqueElements argument */
+	//	@NonNull CollectionValue createCollectionOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues);
+
+	@NonNull CollectionValue createCollectionOfEach(@NonNull CollectionTypeId typeId, boolean uniqueElements, @Nullable Object @NonNull ... unboxedValues);
 
 	@Nullable Object createInstance(@NonNull TypeId typeId, @NonNull String stringValue);
 
 	@NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<@Nullable Object, @Nullable Object> mapEntries);
 
-	@NonNull CollectionValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
+	@Deprecated /* @deprecated Use createCollectionOfAll */
+	@NonNull CollectionValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<@Nullable ? extends Object> unboxedValues);
 
-	@NonNull CollectionValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
+	@Deprecated /* @deprecated Use createCollectionOfEach */
+	@NonNull CollectionValue createOrderedSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues);
 
-	@NonNull CollectionValue createSequenceOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
+	@Deprecated /* @deprecated Use createCollectionOfAll */
+	@NonNull CollectionValue createSequenceOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<@Nullable ? extends Object> unboxedValues);
 
-	@NonNull CollectionValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
+	@Deprecated /* @deprecated Use createCollectionOfEach */
+	@NonNull CollectionValue createSequenceOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues);
 
-	@NonNull CollectionValue createSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
+	@Deprecated /* @deprecated Use createCollectionOfAll */
+	@NonNull CollectionValue createSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<@Nullable ? extends Object> unboxedValues);
 
-	@NonNull CollectionValue createSetOfEach(@NonNull CollectionTypeId typeId, @NonNull Object... unboxedValues);
+	@Deprecated /* @deprecated Use createCollectionOfEach */
+	@NonNull CollectionValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... unboxedValues);
 
 	void dispose();
 
@@ -100,7 +116,7 @@ public interface IdResolver extends IdVisitor<Element>
 
 	/** @deprecated no longer used */
 	@Deprecated
-	@NonNull EList<Object> ecoreValuesOfEach(@Nullable Class<?> instanceClass, @NonNull Object... values);
+	@NonNull EList<Object> ecoreValuesOfEach(@Nullable Class<?> instanceClass, @Nullable Object @NonNull ... values);
 
 	org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypeId typeId, @Nullable Object context);
 
@@ -112,7 +128,7 @@ public interface IdResolver extends IdVisitor<Element>
 	 */
 	@NonNull Type getDynamicTypeOf(@Nullable Object value);
 
-	@Nullable Type getDynamicTypeOf(@NonNull Object @NonNull ... values);
+	@Nullable Type getDynamicTypeOf(@Nullable Object @NonNull ... values);
 
 	@Nullable Type getDynamicTypeOf(@NonNull Iterable<?> values);
 
@@ -134,7 +150,7 @@ public interface IdResolver extends IdVisitor<Element>
 
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value);
 
-	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, Object... values);
+	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, Object @NonNull ... values);
 
 	org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOf(@Nullable Object value, @NonNull Iterable<?> values);
 
@@ -152,7 +168,7 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull Enumerator unboxedValueOf(@NonNull EnumerationLiteralId enumerationLiteralId);
 
-	@NonNull EList<Object> unboxedValuesOfAll(@NonNull Collection<? extends Object> boxedValues);
+	@NonNull EList<Object> unboxedValuesOfAll(@NonNull Collection<@Nullable ? extends Object> boxedValues);
 
-	@NonNull EList<Object> unboxedValuesOfEach(@Nullable Object... boxedValues);
+	@NonNull EList<Object> unboxedValuesOfEach(@Nullable Object @NonNull ... boxedValues);
 }

@@ -960,8 +960,8 @@ public class LazyCollectionValueImpl extends ValueImpl implements LazyCollection
 
 	@Override
 	public synchronized @NonNull MutableIterable cachedIterable() {
-		List<@Nullable Object> lazyListOfElements2 = lazyListOfElements;
-		if (lazyListOfElements2 == null) {
+		List<@Nullable Object> listOfElements = lazyListOfElements;
+		if (listOfElements == null) {
 			if (lazyIterator) {
 				System.err.println(NameUtil.debugSimpleName(this) + " re-iterating");
 				//				throw new UnsupportedOperationException();

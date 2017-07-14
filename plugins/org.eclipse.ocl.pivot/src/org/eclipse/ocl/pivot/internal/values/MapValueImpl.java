@@ -306,7 +306,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull CollectionValue getKeys() {
 		CollectionTypeId setId = TypeId.SET.getSpecializedId(typeId.getValueTypeId());
-		return ValueUtil.createCollectionValue(setId, true, keySet());
+		return ValueUtil.createCollectionOfAll(setId, true, keySet());
 	}
 
 	@Override
@@ -317,7 +317,7 @@ public class MapValueImpl extends ValueImpl implements MapValue //, Iterable<Obj
 	@Override
 	public @NonNull CollectionValue getValues() {
 		CollectionTypeId bagId = TypeId.BAG.getSpecializedId(typeId.getValueTypeId());
-		return ValueUtil.createCollectionValue(bagId, true, boxedValues.values());
+		return ValueUtil.createCollectionOfAll(bagId, true, boxedValues.values());
 	}
 
 	@Override

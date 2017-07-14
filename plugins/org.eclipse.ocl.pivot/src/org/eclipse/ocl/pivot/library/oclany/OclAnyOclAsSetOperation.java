@@ -16,6 +16,9 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.AbstractLazyIterator;
+import org.eclipse.ocl.pivot.internal.iterators.FromArrayIterator;
+import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -43,10 +46,10 @@ public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 			throw (InvalidValueException)sourceVal;
 		}
 		else if (sourceVal == null) {
-			return executor.getIdResolver().createSetOfEach((CollectionTypeId)returnTypeId);
+			return new LazyCollectionValueImpl((CollectionTypeId)returnTypeId, AbstractLazyIterator.EMPTY_ITERATOR, null);
 		}
 		else {
-			return executor.getIdResolver().createSetOfEach((CollectionTypeId)returnTypeId, sourceVal);
+			return FromArrayIterator.create((CollectionTypeId)returnTypeId, true, sourceVal);
 		}
 	}
 }

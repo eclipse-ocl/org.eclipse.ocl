@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.iterators;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,22 +20,22 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
 
 /**
- * FromCollectionIterator provides the loader for a CollectionValue from a Collection.
+ * FromIterableIterator provides the loader for a CollectionValue from a Collection.
  */
-public class FromCollectionIterator extends AbstractLazyIterator
+public class FromIterableIterator extends AbstractLazyIterator
 {
-	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, boolean uniqueElements, @NonNull Collection<@Nullable ? extends Object> elements) {
-		LazyCollectionValueImpl collectionValue = new LazyCollectionValueImpl(collectionTypeId, new FromCollectionIterator(elements), null);
+	public static @NonNull CollectionValue create(@NonNull CollectionTypeId collectionTypeId, boolean uniqueElements, @NonNull Iterable<@Nullable ? extends Object> elements) {
+		LazyCollectionValueImpl collectionValue = new LazyCollectionValueImpl(collectionTypeId, new FromIterableIterator(elements), null);
 		if (!uniqueElements && !collectionValue.isSequence()) {
 			collectionValue.eagerIterable();	// uniqueness/counts must be eager
 		}
 		return collectionValue;
 	}
 
-	private @NonNull Collection<@Nullable ? extends Object> elements;
+	private @NonNull Iterable<@Nullable ? extends Object> elements;
 	private @NonNull Iterator<@Nullable ? extends Object> iterator;
 
-	protected FromCollectionIterator(@NonNull Collection<@Nullable ? extends Object> elements) {
+	protected FromIterableIterator(@NonNull Iterable<@Nullable ? extends Object> elements) {
 		this.elements = elements;
 		this.iterator = elements.iterator();
 	}
@@ -56,7 +55,7 @@ public class FromCollectionIterator extends AbstractLazyIterator
 
 	@Override
 	public @NonNull LazyIterator reIterator() {
-		return new FromCollectionIterator(elements);
+		return new FromIterableIterator(elements);
 	}
 
 	@Override

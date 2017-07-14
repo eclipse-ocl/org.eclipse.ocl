@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -279,7 +280,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		return asOperation;
 	}
 
-	protected @NonNull VariableExp createThisVariableExp(@NonNull Variable thisVariable) {
+	protected @NonNull VariableExp createThisVariableExp(@NonNull VariableDeclaration thisVariable) {
 		return PivotUtil.createVariableExp(thisVariable);
 	}
 
@@ -323,7 +324,6 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		return getSuperVisitorPackageName();
 	}
 
-	@SuppressWarnings("null")
 	protected @NonNull String extractTypeNameFromEnvOp(@NonNull String envOpName) {
 		boolean isGeneralLookup = envOperationName.equals(envOpName);
 		return isGeneralLookup ? "" : envOperationName.substring(envOpName.length() + 1 /*extra underscore */);

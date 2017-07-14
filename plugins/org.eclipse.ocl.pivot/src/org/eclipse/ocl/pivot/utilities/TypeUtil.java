@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -45,9 +47,11 @@ import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.internal.values.MapTypeParametersImpl;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.types.TemplateParametersImpl;
+import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
+import org.eclipse.ocl.pivot.values.OrderedSet;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class TypeUtil
@@ -134,6 +138,40 @@ public class TypeUtil
 		CompleteInheritance firstInheritance = firstTupleType.getInheritance(standardLibrary);
 		CompleteInheritance secondInheritance = secondTupleType.getInheritance(standardLibrary);
 		return firstInheritance.isSuperInheritanceOf(secondInheritance);
+	}
+
+	public static @NonNull CollectionTypeId getCollectionTypeId(@NonNull Iterable<?> unboxedValue) {
+		if ((unboxedValue instanceof LinkedHashSet) || (unboxedValue instanceof OrderedSet)) {
+			return TypeId.ORDERED_SET;
+		}
+		else if (unboxedValue instanceof Bag) {
+			return TypeId.BAG;
+		}
+		else if (unboxedValue instanceof Set) {
+			return TypeId.SET;
+		}
+		else {
+			return TypeId.SEQUENCE;
+		}
+	}
+
+	public static @NonNull CollectionTypeId getCollectionTypeId(boolean isOrdered, boolean isUnique) {
+		if (isOrdered) {
+			if (isUnique) {
+				return TypeId.ORDERED_SET;
+			}
+			else {
+				return TypeId.SEQUENCE;
+			}
+		}
+		else {
+			if (isUnique) {
+				return TypeId.SET;
+			}
+			else {
+				return TypeId.BAG;
+			}
+		}
 	}
 
 	/**

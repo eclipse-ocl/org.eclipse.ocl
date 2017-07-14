@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.iterators.FromArrayIterator;
 import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
@@ -40,6 +41,6 @@ public class BooleanAllInstancesOperation extends AbstractUntypedUnaryOperation
 	@Override
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @Nullable Object sourceVal) {
 		// Boolean has two instances: false, true
-		return executor.getIdResolver().createSetOfEach(SET_BOOLEAN, Boolean.FALSE, Boolean.TRUE);
+		return FromArrayIterator.create(SET_BOOLEAN, true, Boolean.FALSE, Boolean.TRUE);
 	}
 }

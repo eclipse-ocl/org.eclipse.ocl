@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016 Willink Transformations and others.
+ * Copyright (c) 2017 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,29 +11,30 @@
 package org.eclipse.ocl.pivot.internal.iterators;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.values.LazyCollectionValueImpl;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.LazyIterator;
-import org.eclipse.ocl.pivot.values.Value;
 
 /**
- * AsEcoreIterator provides a lazy evaluation of the Collection::asEcore operation.
+ * AsBoxedIterator provides a lazy evaluation of the IdResolver::boxedValueOf operation.
  *
  * @since 1.3
  */
-public class AsEcoreIterator extends AbstractLazyIterator
+public class AsBoxedIterator extends AbstractLazyIterator
 {
+	public static @NonNull CollectionValue asBoxed(@NonNull CollectionValue sourceValue, @NonNull IdResolver idResolver) {
+		LazyCollectionValueImpl collectionValue = new LazyCollectionValueImpl(sourceValue.getTypeId(), new AsBoxedIterator(sourceValue, idResolver), null);
+		return collectionValue;
+	}
+
 	private final @NonNull CollectionValue sourceValue;
 	private final @NonNull IdResolver idResolver;
-	private final @Nullable Class<?> instanceClass;
 	private final @NonNull LazyIterator sourceIterator;
 
-	public AsEcoreIterator(@NonNull CollectionValue sourceValue, @NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
+	public AsBoxedIterator(@NonNull CollectionValue sourceValue, @NonNull IdResolver idResolver) {
 		this.sourceValue = sourceValue;
 		this.idResolver = idResolver;
-		this.instanceClass = instanceClass;
 		this.sourceIterator = sourceValue.lazyIterator();
 	}
 
@@ -42,28 +43,20 @@ public class AsEcoreIterator extends AbstractLazyIterator
 		int hasNextCount = sourceIterator.hasNextCount();
 		if (hasNextCount > 0) {
 			Object element = sourceIterator.next();
-			Object ecoreElement;
-			if (element instanceof Value) {
-				ecoreElement = ((Value)element).asEcoreObject(idResolver, instanceClass);
-			} else if (element instanceof EnumerationLiteralId) {
-				ecoreElement = idResolver.unboxedValueOf(element);
-			}
-			else {
-				ecoreElement = element;
-			}
-			return setNext(ecoreElement, hasNextCount);
+			Object boxedElement = idResolver.boxedValueOf(element);
+			return setNext(boxedElement, hasNextCount);
 		}
 		return 0;
 	}
 
 	@Override
 	public @NonNull LazyIterator reIterator() {
-		return new AsEcoreIterator(sourceValue, idResolver, instanceClass);
+		return new AsBoxedIterator(sourceValue, idResolver);
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {
-		s.append("AsEcore");
+		s.append("AsBoxed");
 		sourceIterator.reIterator().toString(s, sizeLimit);
 	}
 }

@@ -19,30 +19,36 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
  * The CachingAnalysis sets VariableDeclaration.cacheNeeded for colletion variables that are accessed more than once.
  */
 public class CachingAnalysis
 {
-	public static void analyze(@NonNull ExpressionInOCL expressionInOCL) {
-		CachingAnalysis cachingAnalysis = new CachingAnalysis(expressionInOCL);
+	public static void analyze(@NonNull Element rootElement) {
+		CachingAnalysis cachingAnalysis = new CachingAnalysis(rootElement);
 		cachingAnalysis.analyze();
 	}
 
-	protected final @NonNull ExpressionInOCL expressionInOCL;
+	public static void initCaching(@NonNull VariableDeclaration variableDeclaration, Object initValue) {
+		if (variableDeclaration.isCacheNeeded() && (initValue instanceof CollectionValue)) {
+			((CollectionValue)initValue).eagerIterable();
+		}
+	}
+
+	protected final @NonNull Element rootElement;
 	private final @NonNull Map<@NonNull VariableDeclaration, @NonNull Set<@NonNull VariableExp>> variable2users = new HashMap<>();
 	private final @NonNull Map<@NonNull Element, @Nullable Boolean> element2multiple = new HashMap<>();
 
-	protected CachingAnalysis(@NonNull ExpressionInOCL expressionInOCL) {
-		this.expressionInOCL = expressionInOCL;
+	protected CachingAnalysis(@NonNull Element rootElement) {
+		this.rootElement = rootElement;
 	}
 
 	protected void addUser(@NonNull VariableDeclaration asVariable, @NonNull VariableExp asVariableExp) {
@@ -55,7 +61,7 @@ public class CachingAnalysis
 	}
 
 	protected void analyze() {
-		for (@NonNull Object object : new TreeIterable(expressionInOCL, true)) {
+		for (@NonNull Object object : new TreeIterable(rootElement, true)) {
 			analyzeUsage(object);
 		}
 		for (@NonNull VariableDeclaration asVariable : variable2users.keySet()) {
