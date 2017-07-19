@@ -278,6 +278,12 @@ public class PivotUtil
 		specializedType.setUpper(unspecializedType.getUpper());
 		specializedType.setUnspecializedElement(unspecializedType);
 		specializedType.setElementType(instanceType);
+		TemplateParameter templateParameter = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
+		assert templateParameter != null;
+		TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(templateParameter, instanceType);
+		TemplateBinding templateBinding = createTemplateBinding(templateParameterSubstitution);
+		specializedType.getOwnedBindings().add(templateBinding);
+		assert specializedType.getElementType() == instanceType;
 		return specializedType;
 	}
 
@@ -405,6 +411,16 @@ public class PivotUtil
 		specializedType.setUnspecializedElement(unspecializedType);
 		specializedType.setKeyType(keyType);
 		specializedType.setValueType(valueType);
+		TemplateParameter templateParameter1 = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
+		TemplateParameter templateParameter2 = unspecializedType.getOwnedSignature().getOwnedParameters().get(1);
+		assert templateParameter1 != null;
+		assert templateParameter2 != null;
+		TemplateParameterSubstitution templateParameterSubstitution1 = createTemplateParameterSubstitution(templateParameter1, keyType);
+		TemplateParameterSubstitution templateParameterSubstitution2 = createTemplateParameterSubstitution(templateParameter2, valueType);
+		TemplateBinding templateBinding = createTemplateBinding(templateParameterSubstitution1, templateParameterSubstitution2);
+		specializedType.getOwnedBindings().add(templateBinding);
+		assert specializedType.getKeyType() == keyType;
+		assert specializedType.getValueType() == valueType;
 		return specializedType;
 	}
 
