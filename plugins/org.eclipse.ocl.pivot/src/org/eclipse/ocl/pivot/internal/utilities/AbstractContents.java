@@ -10,6 +10,8 @@
  *******************************************************************************/
 package	org.eclipse.ocl.pivot.internal.utilities;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -34,7 +36,9 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
@@ -51,8 +55,40 @@ import org.eclipse.ocl.pivot.values.Unlimited;
 
 public abstract class AbstractContents extends PivotUtil
 {
+	/**
+	 * @since 1.4
+	 */
+	protected static void addBindings(@NonNull TemplateableElement specializedType, @NonNull Type @NonNull ... actualTypes) {
+		TemplateableElement unspecializedType = specializedType.getUnspecializedElement();
+		TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
+		List<TemplateParameterSubstitution> parameterSubstitutions = templateBinding.getOwnedSubstitutions();
+		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
+		assert templateSignature != null;
+		List<@NonNull TemplateParameter> templateParameters = PivotUtilInternal.getOwnedParametersList(templateSignature);
+		for (int i = 0; i < actualTypes.length; i++) {
+			TemplateParameter templateParameter = templateParameters.get(i);
+			TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(templateParameter, actualTypes[i]);
+			parameterSubstitutions.add(templateParameterSubstitution);
+		}
+		specializedType.getOwnedBindings().add(templateBinding);
+		if (specializedType instanceof CollectionType) {			// FIXME delete me
+			((CollectionType)specializedType).setElementType(actualTypes[0]);
+		}
+		if (specializedType instanceof MapType) {			// FIXME delete me
+			((MapType)specializedType).setKeyType(actualTypes[0]);
+			((MapType)specializedType).setValueType(actualTypes[1]);
+		}
+	}
+
 	protected @NonNull BagType createBagType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		return createCollectionType(PivotFactory.eINSTANCE.createBagType(), name, lower, upper, templateParameter);
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull BagType createBagType(@NonNull BagType unspecializedType) {
+		return createCollectionType(PivotFactory.eINSTANCE.createBagType(), unspecializedType);
 	}
 
 	protected @NonNull <@NonNull T extends CollectionType> T createCollectionType(@NonNull T pivotType, @NonNull String name, @Nullable  String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
@@ -66,6 +102,24 @@ public abstract class AbstractContents extends PivotUtil
 
 	protected @NonNull CollectionType createCollectionType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		return createCollectionType(PivotFactory.eINSTANCE.createCollectionType(), name, lower, upper, templateParameter);
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull CollectionType createCollectionType(@NonNull CollectionType unspecializedType) {
+		return createCollectionType(PivotFactory.eINSTANCE.createCollectionType(), unspecializedType);
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull <@NonNull T extends CollectionType> T createCollectionType(/*@NonNull*/ T specializedType, @NonNull T unspecializedType) {
+		specializedType.setName(unspecializedType.getName());
+		specializedType.setLower(unspecializedType.getLower());
+		specializedType.setUpper(unspecializedType.getUpper());
+		specializedType.setUnspecializedElement(unspecializedType);
+		return specializedType;
 	}
 
 	protected @NonNull ExpressionInOCL createExpressionInOCL(@NonNull Type type, @NonNull String exprString) {
@@ -99,6 +153,7 @@ public abstract class AbstractContents extends PivotUtil
 		return pivotLibrary;
 	}
 
+	@Deprecated /* @deprecated no longer used */
 	protected @NonNull MapType createMapType(/*@NonNull*/ MapType pivotType, @NonNull String name, @NonNull TemplateParameter keyParameter, @NonNull TemplateParameter valueParameter) {
 		pivotType.setName(name);
 		initTemplateParameters(pivotType, keyParameter, valueParameter);
@@ -108,7 +163,22 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull MapType createMapType(@NonNull String name, @NonNull TemplateParameter keyParameter, @NonNull TemplateParameter valueParameter) {
-		return createMapType(PivotFactory.eINSTANCE.createMapType(), name, keyParameter, valueParameter);
+		MapType mapType = PivotFactory.eINSTANCE.createMapType();
+		mapType.setName(name);
+		initTemplateParameters(mapType, keyParameter, valueParameter);
+		mapType.setKeyType(keyParameter);
+		mapType.setValueType(valueParameter);
+		return mapType;
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull MapType createMapType(@NonNull MapType unspecializedType) {
+		MapType specializedType = PivotFactory.eINSTANCE.createMapType();
+		specializedType.setName(unspecializedType.getName());
+		specializedType.setUnspecializedElement(unspecializedType);
+		return specializedType;
 	}
 
 	protected @NonNull Operation createOperation(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation, TemplateParameter... templateParameters) {
@@ -121,12 +191,33 @@ public abstract class AbstractContents extends PivotUtil
 		return createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), name, lower, upper, templateParameter);
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull OrderedSetType createOrderedSetType(@NonNull OrderedSetType unspecializedType) {
+		return createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), unspecializedType);
+	}
+
 	protected @NonNull SequenceType createSequenceType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), name, lower, upper, templateParameter);
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull SequenceType createSequenceType(@NonNull SequenceType unspecializedType) {
+		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), unspecializedType);
+	}
+
 	protected @NonNull SetType createSetType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
 		return createCollectionType(PivotFactory.eINSTANCE.createSetType(), name, lower, upper, templateParameter);
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull SetType createSetType(@NonNull SetType unspecializedType) {
+		return createCollectionType(PivotFactory.eINSTANCE.createSetType(), unspecializedType);
 	}
 
 	protected @NonNull AnyType getAnyType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {

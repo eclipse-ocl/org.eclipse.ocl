@@ -17,41 +17,31 @@
  *******************************************************************************/
 package	org.eclipse.ocl.pivot.model;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.Class;
-import org.eclipse.ocl.pivot.CollectionKind;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.PseudostateKind;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TransitionKind;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -333,226 +323,226 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull EnumerationLiteral el__TransitionKind_local = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral(TransitionKind.LOCAL_VALUE));
 		private final @NonNull EnumerationLiteral el__TransitionKind_external = createEnumerationLiteral(PivotPackage.Literals.TRANSITION_KIND.getEEnumLiteral(TransitionKind.EXTERNAL_VALUE));
 
-		private final @NonNull BagType _Bag_Annotation = createBagType(_Bag, _Annotation);
-		private final @NonNull BagType _Bag_AssociationClassCallExp = createBagType(_Bag, _AssociationClassCallExp);
-		private final @NonNull BagType _Bag_CallOperationAction = createBagType(_Bag, _CallOperationAction);
-		private final @NonNull BagType _Bag_Class = createBagType(_Bag, _Class);
-		private final @NonNull BagType _Bag_CollectionType = createBagType(_Bag, _CollectionType);
-		private final @NonNull BagType _Bag_CompleteClass = createBagType(_Bag, _CompleteClass);
-		private final @NonNull BagType _Bag_CompleteModel = createBagType(_Bag, _CompleteModel);
-		private final @NonNull BagType _Bag_CompletePackage = createBagType(_Bag, _CompletePackage);
-		private final @NonNull BagType _Bag_ConnectionPointReference = createBagType(_Bag, _ConnectionPointReference);
-		private final @NonNull BagType _Bag_Constraint = createBagType(_Bag, _Constraint);
-		private final @NonNull BagType _Bag_DataType = createBagType(_Bag, _DataType);
-		private final @NonNull BagType _Bag_DynamicElement = createBagType(_Bag, _DynamicElement);
-		private final @NonNull BagType _Bag_DynamicProperty = createBagType(_Bag, _DynamicProperty);
-		private final @NonNull BagType _Bag_ElementExtension = createBagType(_Bag, _ElementExtension);
-		private final @NonNull BagType _Bag_EnumLiteralExp = createBagType(_Bag, _EnumLiteralExp);
-		private final @NonNull BagType _Bag_Import = createBagType(_Bag, _Import);
-		private final @NonNull BagType _Bag_InstanceSpecification = createBagType(_Bag, _InstanceSpecification);
-		private final @NonNull BagType _Bag_LambdaType = createBagType(_Bag, _LambdaType);
-		private final @NonNull BagType _Bag_LoopExp = createBagType(_Bag, _LoopExp);
-		private final @NonNull BagType _Bag_MapType = createBagType(_Bag, _MapType);
-		private final @NonNull BagType _Bag_MessageType = createBagType(_Bag, _MessageType);
-		private final @NonNull BagType _Bag_NavigationCallExp = createBagType(_Bag, _NavigationCallExp);
-		private final @NonNull BagType _Bag_OCLExpression = createBagType(_Bag, _OCLExpression);
-		private final @NonNull BagType _Bag_Operation = createBagType(_Bag, _Operation);
-		private final @NonNull BagType _Bag_OperationCallExp = createBagType(_Bag, _OperationCallExp);
-		private final @NonNull BagType _Bag_OppositePropertyCallExp = createBagType(_Bag, _OppositePropertyCallExp);
-		private final @NonNull BagType _Bag_Package = createBagType(_Bag, _Package);
-		private final @NonNull BagType _Bag_PrimitiveType = createBagType(_Bag, _PrimitiveType);
-		private final @NonNull BagType _Bag_Property = createBagType(_Bag, _Property);
-		private final @NonNull BagType _Bag_PropertyCallExp = createBagType(_Bag, _PropertyCallExp);
-		private final @NonNull BagType _Bag_Region = createBagType(_Bag, _Region);
-		private final @NonNull BagType _Bag_SendSignalAction = createBagType(_Bag, _SendSignalAction);
-		private final @NonNull BagType _Bag_ShadowPart = createBagType(_Bag, _ShadowPart);
-		private final @NonNull BagType _Bag_Slot = createBagType(_Bag, _Slot);
-		private final @NonNull BagType _Bag_State = createBagType(_Bag, _State);
-		private final @NonNull BagType _Bag_StateExp = createBagType(_Bag, _StateExp);
-		private final @NonNull BagType _Bag_StateMachine = createBagType(_Bag, _StateMachine);
-		private final @NonNull BagType _Bag_TemplateBinding = createBagType(_Bag, _TemplateBinding);
-		private final @NonNull BagType _Bag_TemplateParameter = createBagType(_Bag, _TemplateParameter);
-		private final @NonNull BagType _Bag_TemplateParameterSubstitution = createBagType(_Bag, _TemplateParameterSubstitution);
-		private final @NonNull BagType _Bag_TemplateableElement = createBagType(_Bag, _TemplateableElement);
-		private final @NonNull BagType _Bag_TypeExp = createBagType(_Bag, _TypeExp);
-		private final @NonNull BagType _Bag_TypedElement = createBagType(_Bag, _TypedElement);
-		private final @NonNull BagType _Bag_Variable = createBagType(_Bag, _Variable);
-		private final @NonNull BagType _Bag_VariableDeclaration = createBagType(_Bag, _VariableDeclaration);
-		private final @NonNull BagType _Bag_VariableExp = createBagType(_Bag, _VariableExp);
-		private final @NonNull BagType _Bag_WildcardType = createBagType(_Bag, _WildcardType);
-		private final @NonNull CollectionType _Collection_Annotation = createCollectionType(_Collection, _Annotation);
-		private final @NonNull CollectionType _Collection_AssociationClassCallExp = createCollectionType(_Collection, _AssociationClassCallExp);
-		private final @NonNull CollectionType _Collection_Behavior = createCollectionType(_Collection, _Behavior);
-		private final @NonNull CollectionType _Collection_CallOperationAction = createCollectionType(_Collection, _CallOperationAction);
-		private final @NonNull CollectionType _Collection_Class = createCollectionType(_Collection, _Class);
-		private final @NonNull CollectionType _Collection_CollectionLiteralPart = createCollectionType(_Collection, _CollectionLiteralPart);
-		private final @NonNull CollectionType _Collection_CollectionType = createCollectionType(_Collection, _CollectionType);
-		private final @NonNull CollectionType _Collection_Comment = createCollectionType(_Collection, _Comment);
-		private final @NonNull CollectionType _Collection_CompleteClass = createCollectionType(_Collection, _CompleteClass);
-		private final @NonNull CollectionType _Collection_CompleteModel = createCollectionType(_Collection, _CompleteModel);
-		private final @NonNull CollectionType _Collection_CompletePackage = createCollectionType(_Collection, _CompletePackage);
-		private final @NonNull CollectionType _Collection_ConnectionPointReference = createCollectionType(_Collection, _ConnectionPointReference);
-		private final @NonNull CollectionType _Collection_Constraint = createCollectionType(_Collection, _Constraint);
-		private final @NonNull CollectionType _Collection_DataType = createCollectionType(_Collection, _DataType);
-		private final @NonNull CollectionType _Collection_Detail = createCollectionType(_Collection, _Detail);
-		private final @NonNull CollectionType _Collection_DynamicElement = createCollectionType(_Collection, _DynamicElement);
-		private final @NonNull CollectionType _Collection_DynamicProperty = createCollectionType(_Collection, _DynamicProperty);
-		private final @NonNull CollectionType _Collection_Element = createCollectionType(_Collection, _Element);
-		private final @NonNull CollectionType _Collection_ElementExtension = createCollectionType(_Collection, _ElementExtension);
-		private final @NonNull CollectionType _Collection_EnumLiteralExp = createCollectionType(_Collection, _EnumLiteralExp);
-		private final @NonNull CollectionType _Collection_EnumerationLiteral = createCollectionType(_Collection, _EnumerationLiteral);
-		private final @NonNull CollectionType _Collection_Import = createCollectionType(_Collection, _Import);
-		private final @NonNull CollectionType _Collection_InstanceSpecification = createCollectionType(_Collection, _InstanceSpecification);
-		private final @NonNull CollectionType _Collection_LambdaType = createCollectionType(_Collection, _LambdaType);
-		private final @NonNull CollectionType _Collection_LoopExp = createCollectionType(_Collection, _LoopExp);
-		private final @NonNull CollectionType _Collection_MapLiteralPart = createCollectionType(_Collection, _MapLiteralPart);
-		private final @NonNull CollectionType _Collection_MapType = createCollectionType(_Collection, _MapType);
-		private final @NonNull CollectionType _Collection_MessageType = createCollectionType(_Collection, _MessageType);
-		private final @NonNull CollectionType _Collection_Model = createCollectionType(_Collection, _Model);
-		private final @NonNull CollectionType _Collection_NavigationCallExp = createCollectionType(_Collection, _NavigationCallExp);
-		private final @NonNull CollectionType _Collection_OCLExpression = createCollectionType(_Collection, _OCLExpression);
-		private final @NonNull CollectionType _Collection_Operation = createCollectionType(_Collection, _Operation);
-		private final @NonNull CollectionType _Collection_OperationCallExp = createCollectionType(_Collection, _OperationCallExp);
-		private final @NonNull CollectionType _Collection_OppositePropertyCallExp = createCollectionType(_Collection, _OppositePropertyCallExp);
-		private final @NonNull CollectionType _Collection_Package = createCollectionType(_Collection, _Package);
-		private final @NonNull CollectionType _Collection_Parameter = createCollectionType(_Collection, _Parameter);
-		private final @NonNull CollectionType _Collection_Precedence = createCollectionType(_Collection, _Precedence);
-		private final @NonNull CollectionType _Collection_PrimitiveType = createCollectionType(_Collection, _PrimitiveType);
-		private final @NonNull CollectionType _Collection_ProfileApplication = createCollectionType(_Collection, _ProfileApplication);
-		private final @NonNull CollectionType _Collection_Property = createCollectionType(_Collection, _Property);
-		private final @NonNull CollectionType _Collection_PropertyCallExp = createCollectionType(_Collection, _PropertyCallExp);
-		private final @NonNull CollectionType _Collection_Pseudostate = createCollectionType(_Collection, _Pseudostate);
-		private final @NonNull CollectionType _Collection_Region = createCollectionType(_Collection, _Region);
-		private final @NonNull CollectionType _Collection_SendSignalAction = createCollectionType(_Collection, _SendSignalAction);
-		private final @NonNull CollectionType _Collection_ShadowPart = createCollectionType(_Collection, _ShadowPart);
-		private final @NonNull CollectionType _Collection_Slot = createCollectionType(_Collection, _Slot);
-		private final @NonNull CollectionType _Collection_State = createCollectionType(_Collection, _State);
-		private final @NonNull CollectionType _Collection_StateExp = createCollectionType(_Collection, _StateExp);
-		private final @NonNull CollectionType _Collection_StateMachine = createCollectionType(_Collection, _StateMachine);
-		private final @NonNull CollectionType _Collection_StereotypeExtender = createCollectionType(_Collection, _StereotypeExtender);
-		private final @NonNull CollectionType _Collection_String = createCollectionType(_Collection, _String);
-		private final @NonNull CollectionType _Collection_TemplateBinding = createCollectionType(_Collection, _TemplateBinding);
-		private final @NonNull CollectionType _Collection_TemplateParameter = createCollectionType(_Collection, _TemplateParameter);
-		private final @NonNull CollectionType _Collection_TemplateParameterSubstitution = createCollectionType(_Collection, _TemplateParameterSubstitution);
-		private final @NonNull CollectionType _Collection_TemplateableElement = createCollectionType(_Collection, _TemplateableElement);
-		private final @NonNull CollectionType _Collection_Transition = createCollectionType(_Collection, _Transition);
-		private final @NonNull CollectionType _Collection_Trigger = createCollectionType(_Collection, _Trigger);
-		private final @NonNull CollectionType _Collection_TupleLiteralPart = createCollectionType(_Collection, _TupleLiteralPart);
-		private final @NonNull CollectionType _Collection_Type = createCollectionType(_Collection, _Type);
-		private final @NonNull CollectionType _Collection_TypeExp = createCollectionType(_Collection, _TypeExp);
-		private final @NonNull CollectionType _Collection_TypedElement = createCollectionType(_Collection, _TypedElement);
-		private final @NonNull CollectionType _Collection_ValueSpecification = createCollectionType(_Collection, _ValueSpecification);
-		private final @NonNull CollectionType _Collection_Variable = createCollectionType(_Collection, _Variable);
-		private final @NonNull CollectionType _Collection_VariableDeclaration = createCollectionType(_Collection, _VariableDeclaration);
-		private final @NonNull CollectionType _Collection_VariableExp = createCollectionType(_Collection, _VariableExp);
-		private final @NonNull CollectionType _Collection_Vertex = createCollectionType(_Collection, _Vertex);
-		private final @NonNull CollectionType _Collection_WildcardType = createCollectionType(_Collection, _WildcardType);
-		private final @NonNull CollectionType _OrderedCollection_CollectionLiteralPart = createCollectionType(_OrderedCollection, _CollectionLiteralPart);
-		private final @NonNull CollectionType _OrderedCollection_Detail = createCollectionType(_OrderedCollection, _Detail);
-		private final @NonNull CollectionType _OrderedCollection_Element = createCollectionType(_OrderedCollection, _Element);
-		private final @NonNull CollectionType _OrderedCollection_EnumerationLiteral = createCollectionType(_OrderedCollection, _EnumerationLiteral);
-		private final @NonNull CollectionType _OrderedCollection_Import = createCollectionType(_OrderedCollection, _Import);
-		private final @NonNull CollectionType _OrderedCollection_MapLiteralPart = createCollectionType(_OrderedCollection, _MapLiteralPart);
-		private final @NonNull CollectionType _OrderedCollection_OCLExpression = createCollectionType(_OrderedCollection, _OCLExpression);
-		private final @NonNull CollectionType _OrderedCollection_Operation = createCollectionType(_OrderedCollection, _Operation);
-		private final @NonNull CollectionType _OrderedCollection_Parameter = createCollectionType(_OrderedCollection, _Parameter);
-		private final @NonNull CollectionType _OrderedCollection_Precedence = createCollectionType(_OrderedCollection, _Precedence);
-		private final @NonNull CollectionType _OrderedCollection_Property = createCollectionType(_OrderedCollection, _Property);
-		private final @NonNull CollectionType _OrderedCollection_ShadowPart = createCollectionType(_OrderedCollection, _ShadowPart);
-		private final @NonNull CollectionType _OrderedCollection_TemplateParameter = createCollectionType(_OrderedCollection, _TemplateParameter);
-		private final @NonNull CollectionType _OrderedCollection_TupleLiteralPart = createCollectionType(_OrderedCollection, _TupleLiteralPart);
-		private final @NonNull CollectionType _OrderedCollection_Type = createCollectionType(_OrderedCollection, _Type);
-		private final @NonNull CollectionType _OrderedCollection_ValueSpecification = createCollectionType(_OrderedCollection, _ValueSpecification);
-		private final @NonNull CollectionType _OrderedCollection_Variable = createCollectionType(_OrderedCollection, _Variable);
-		private final @NonNull OrderedSetType _OrderedSet_CollectionLiteralPart_NullFree = createOrderedSetType(_OrderedSet, _CollectionLiteralPart);
-		private final @NonNull OrderedSetType _OrderedSet_Detail_NullFree = createOrderedSetType(_OrderedSet, _Detail);
-		private final @NonNull OrderedSetType _OrderedSet_Element_NullFree = createOrderedSetType(_OrderedSet, _Element);
-		private final @NonNull OrderedSetType _OrderedSet_EnumerationLiteral_NullFree = createOrderedSetType(_OrderedSet, _EnumerationLiteral);
-		private final @NonNull OrderedSetType _OrderedSet_Import_NullFree = createOrderedSetType(_OrderedSet, _Import);
-		private final @NonNull OrderedSetType _OrderedSet_MapLiteralPart_NullFree = createOrderedSetType(_OrderedSet, _MapLiteralPart);
-		private final @NonNull OrderedSetType _OrderedSet_OCLExpression_NullFree = createOrderedSetType(_OrderedSet, _OCLExpression);
-		private final @NonNull OrderedSetType _OrderedSet_Operation_NullFree = createOrderedSetType(_OrderedSet, _Operation);
-		private final @NonNull OrderedSetType _OrderedSet_Parameter_NullFree = createOrderedSetType(_OrderedSet, _Parameter);
-		private final @NonNull OrderedSetType _OrderedSet_Precedence_NullFree = createOrderedSetType(_OrderedSet, _Precedence);
-		private final @NonNull OrderedSetType _OrderedSet_Property_NullFree = createOrderedSetType(_OrderedSet, _Property);
-		private final @NonNull OrderedSetType _OrderedSet_ShadowPart_NullFree = createOrderedSetType(_OrderedSet, _ShadowPart);
-		private final @NonNull OrderedSetType _OrderedSet_TemplateParameter_NullFree = createOrderedSetType(_OrderedSet, _TemplateParameter);
-		private final @NonNull OrderedSetType _OrderedSet_TupleLiteralPart_NullFree = createOrderedSetType(_OrderedSet, _TupleLiteralPart);
-		private final @NonNull OrderedSetType _OrderedSet_ValueSpecification_NullFree = createOrderedSetType(_OrderedSet, _ValueSpecification);
-		private final @NonNull OrderedSetType _OrderedSet_Variable_NullFree = createOrderedSetType(_OrderedSet, _Variable);
-		private final @NonNull SequenceType _Sequence_Type_NullFree = createSequenceType(_Sequence, _Type);
-		private final @NonNull SetType _Set_Behavior_NullFree = createSetType(_Set, _Behavior);
-		private final @NonNull SetType _Set_Class_NullFree = createSetType(_Set, _Class);
-		private final @NonNull SetType _Set_Comment_NullFree = createSetType(_Set, _Comment);
-		private final @NonNull SetType _Set_CompleteClass_NullFree = createSetType(_Set, _CompleteClass);
-		private final @NonNull SetType _Set_CompletePackage_NullFree = createSetType(_Set, _CompletePackage);
-		private final @NonNull SetType _Set_ConnectionPointReference_NullFree = createSetType(_Set, _ConnectionPointReference);
-		private final @NonNull SetType _Set_Constraint_NullFree = createSetType(_Set, _Constraint);
-		private final @NonNull SetType _Set_DynamicProperty_NullFree = createSetType(_Set, _DynamicProperty);
-		private final @NonNull SetType _Set_Element_NullFree = createSetType(_Set, _Element);
-		private final @NonNull SetType _Set_ElementExtension_NullFree = createSetType(_Set, _ElementExtension);
-		private final @NonNull SetType _Set_InstanceSpecification_NullFree = createSetType(_Set, _InstanceSpecification);
-		private final @NonNull SetType _Set_Model_NullFree = createSetType(_Set, _Model);
-		private final @NonNull SetType _Set_Operation_NullFree = createSetType(_Set, _Operation);
-		private final @NonNull SetType _Set_Package_NullFree = createSetType(_Set, _Package);
-		private final @NonNull SetType _Set_ProfileApplication_NullFree = createSetType(_Set, _ProfileApplication);
-		private final @NonNull SetType _Set_Property_NullFree = createSetType(_Set, _Property);
-		private final @NonNull SetType _Set_Pseudostate_NullFree = createSetType(_Set, _Pseudostate);
-		private final @NonNull SetType _Set_Region_NullFree = createSetType(_Set, _Region);
-		private final @NonNull SetType _Set_Region_NullFree_1 = createSetType(_Set, _Region);
-		private final @NonNull SetType _Set_Slot_NullFree = createSetType(_Set, _Slot);
-		private final @NonNull SetType _Set_State_NullFree = createSetType(_Set, _State);
-		private final @NonNull SetType _Set_StateMachine_NullFree = createSetType(_Set, _StateMachine);
-		private final @NonNull SetType _Set_StereotypeExtender_NullFree = createSetType(_Set, _StereotypeExtender);
-		private final @NonNull SetType _Set_String_NullFree = createSetType(_Set, _String);
-		private final @NonNull SetType _Set_TemplateBinding_NullFree = createSetType(_Set, _TemplateBinding);
-		private final @NonNull SetType _Set_TemplateParameterSubstitution_NullFree = createSetType(_Set, _TemplateParameterSubstitution);
-		private final @NonNull SetType _Set_Transition_NullFree = createSetType(_Set, _Transition);
-		private final @NonNull SetType _Set_Trigger_NullFree = createSetType(_Set, _Trigger);
-		private final @NonNull SetType _Set_Type_NullFree = createSetType(_Set, _Type);
-		private final @NonNull SetType _Set_Vertex_NullFree = createSetType(_Set, _Vertex);
-		private final @NonNull CollectionType _UniqueCollection_Behavior = createCollectionType(_UniqueCollection, _Behavior);
-		private final @NonNull CollectionType _UniqueCollection_Class = createCollectionType(_UniqueCollection, _Class);
-		private final @NonNull CollectionType _UniqueCollection_CollectionLiteralPart = createCollectionType(_UniqueCollection, _CollectionLiteralPart);
-		private final @NonNull CollectionType _UniqueCollection_Comment = createCollectionType(_UniqueCollection, _Comment);
-		private final @NonNull CollectionType _UniqueCollection_CompleteClass = createCollectionType(_UniqueCollection, _CompleteClass);
-		private final @NonNull CollectionType _UniqueCollection_CompletePackage = createCollectionType(_UniqueCollection, _CompletePackage);
-		private final @NonNull CollectionType _UniqueCollection_ConnectionPointReference = createCollectionType(_UniqueCollection, _ConnectionPointReference);
-		private final @NonNull CollectionType _UniqueCollection_Constraint = createCollectionType(_UniqueCollection, _Constraint);
-		private final @NonNull CollectionType _UniqueCollection_Detail = createCollectionType(_UniqueCollection, _Detail);
-		private final @NonNull CollectionType _UniqueCollection_DynamicProperty = createCollectionType(_UniqueCollection, _DynamicProperty);
-		private final @NonNull CollectionType _UniqueCollection_Element = createCollectionType(_UniqueCollection, _Element);
-		private final @NonNull CollectionType _UniqueCollection_ElementExtension = createCollectionType(_UniqueCollection, _ElementExtension);
-		private final @NonNull CollectionType _UniqueCollection_EnumerationLiteral = createCollectionType(_UniqueCollection, _EnumerationLiteral);
-		private final @NonNull CollectionType _UniqueCollection_Import = createCollectionType(_UniqueCollection, _Import);
-		private final @NonNull CollectionType _UniqueCollection_InstanceSpecification = createCollectionType(_UniqueCollection, _InstanceSpecification);
-		private final @NonNull CollectionType _UniqueCollection_MapLiteralPart = createCollectionType(_UniqueCollection, _MapLiteralPart);
-		private final @NonNull CollectionType _UniqueCollection_Model = createCollectionType(_UniqueCollection, _Model);
-		private final @NonNull CollectionType _UniqueCollection_OCLExpression = createCollectionType(_UniqueCollection, _OCLExpression);
-		private final @NonNull CollectionType _UniqueCollection_Operation = createCollectionType(_UniqueCollection, _Operation);
-		private final @NonNull CollectionType _UniqueCollection_Package = createCollectionType(_UniqueCollection, _Package);
-		private final @NonNull CollectionType _UniqueCollection_Parameter = createCollectionType(_UniqueCollection, _Parameter);
-		private final @NonNull CollectionType _UniqueCollection_Precedence = createCollectionType(_UniqueCollection, _Precedence);
-		private final @NonNull CollectionType _UniqueCollection_ProfileApplication = createCollectionType(_UniqueCollection, _ProfileApplication);
-		private final @NonNull CollectionType _UniqueCollection_Property = createCollectionType(_UniqueCollection, _Property);
-		private final @NonNull CollectionType _UniqueCollection_Pseudostate = createCollectionType(_UniqueCollection, _Pseudostate);
-		private final @NonNull CollectionType _UniqueCollection_Region = createCollectionType(_UniqueCollection, _Region);
-		private final @NonNull CollectionType _UniqueCollection_ShadowPart = createCollectionType(_UniqueCollection, _ShadowPart);
-		private final @NonNull CollectionType _UniqueCollection_Slot = createCollectionType(_UniqueCollection, _Slot);
-		private final @NonNull CollectionType _UniqueCollection_State = createCollectionType(_UniqueCollection, _State);
-		private final @NonNull CollectionType _UniqueCollection_StateMachine = createCollectionType(_UniqueCollection, _StateMachine);
-		private final @NonNull CollectionType _UniqueCollection_StereotypeExtender = createCollectionType(_UniqueCollection, _StereotypeExtender);
-		private final @NonNull CollectionType _UniqueCollection_String = createCollectionType(_UniqueCollection, _String);
-		private final @NonNull CollectionType _UniqueCollection_TemplateBinding = createCollectionType(_UniqueCollection, _TemplateBinding);
-		private final @NonNull CollectionType _UniqueCollection_TemplateParameter = createCollectionType(_UniqueCollection, _TemplateParameter);
-		private final @NonNull CollectionType _UniqueCollection_TemplateParameterSubstitution = createCollectionType(_UniqueCollection, _TemplateParameterSubstitution);
-		private final @NonNull CollectionType _UniqueCollection_Transition = createCollectionType(_UniqueCollection, _Transition);
-		private final @NonNull CollectionType _UniqueCollection_Trigger = createCollectionType(_UniqueCollection, _Trigger);
-		private final @NonNull CollectionType _UniqueCollection_TupleLiteralPart = createCollectionType(_UniqueCollection, _TupleLiteralPart);
-		private final @NonNull CollectionType _UniqueCollection_Type = createCollectionType(_UniqueCollection, _Type);
-		private final @NonNull CollectionType _UniqueCollection_ValueSpecification = createCollectionType(_UniqueCollection, _ValueSpecification);
-		private final @NonNull CollectionType _UniqueCollection_Variable = createCollectionType(_UniqueCollection, _Variable);
-		private final @NonNull CollectionType _UniqueCollection_Vertex = createCollectionType(_UniqueCollection, _Vertex);
+		private final @NonNull BagType _Bag_Annotation = createBagType(_Bag);
+		private final @NonNull BagType _Bag_AssociationClassCallExp = createBagType(_Bag);
+		private final @NonNull BagType _Bag_CallOperationAction = createBagType(_Bag);
+		private final @NonNull BagType _Bag_Class = createBagType(_Bag);
+		private final @NonNull BagType _Bag_CollectionType = createBagType(_Bag);
+		private final @NonNull BagType _Bag_CompleteClass = createBagType(_Bag);
+		private final @NonNull BagType _Bag_CompleteModel = createBagType(_Bag);
+		private final @NonNull BagType _Bag_CompletePackage = createBagType(_Bag);
+		private final @NonNull BagType _Bag_ConnectionPointReference = createBagType(_Bag);
+		private final @NonNull BagType _Bag_Constraint = createBagType(_Bag);
+		private final @NonNull BagType _Bag_DataType = createBagType(_Bag);
+		private final @NonNull BagType _Bag_DynamicElement = createBagType(_Bag);
+		private final @NonNull BagType _Bag_DynamicProperty = createBagType(_Bag);
+		private final @NonNull BagType _Bag_ElementExtension = createBagType(_Bag);
+		private final @NonNull BagType _Bag_EnumLiteralExp = createBagType(_Bag);
+		private final @NonNull BagType _Bag_Import = createBagType(_Bag);
+		private final @NonNull BagType _Bag_InstanceSpecification = createBagType(_Bag);
+		private final @NonNull BagType _Bag_LambdaType = createBagType(_Bag);
+		private final @NonNull BagType _Bag_LoopExp = createBagType(_Bag);
+		private final @NonNull BagType _Bag_MapType = createBagType(_Bag);
+		private final @NonNull BagType _Bag_MessageType = createBagType(_Bag);
+		private final @NonNull BagType _Bag_NavigationCallExp = createBagType(_Bag);
+		private final @NonNull BagType _Bag_OCLExpression = createBagType(_Bag);
+		private final @NonNull BagType _Bag_Operation = createBagType(_Bag);
+		private final @NonNull BagType _Bag_OperationCallExp = createBagType(_Bag);
+		private final @NonNull BagType _Bag_OppositePropertyCallExp = createBagType(_Bag);
+		private final @NonNull BagType _Bag_Package = createBagType(_Bag);
+		private final @NonNull BagType _Bag_PrimitiveType = createBagType(_Bag);
+		private final @NonNull BagType _Bag_Property = createBagType(_Bag);
+		private final @NonNull BagType _Bag_PropertyCallExp = createBagType(_Bag);
+		private final @NonNull BagType _Bag_Region = createBagType(_Bag);
+		private final @NonNull BagType _Bag_SendSignalAction = createBagType(_Bag);
+		private final @NonNull BagType _Bag_ShadowPart = createBagType(_Bag);
+		private final @NonNull BagType _Bag_Slot = createBagType(_Bag);
+		private final @NonNull BagType _Bag_State = createBagType(_Bag);
+		private final @NonNull BagType _Bag_StateExp = createBagType(_Bag);
+		private final @NonNull BagType _Bag_StateMachine = createBagType(_Bag);
+		private final @NonNull BagType _Bag_TemplateBinding = createBagType(_Bag);
+		private final @NonNull BagType _Bag_TemplateParameter = createBagType(_Bag);
+		private final @NonNull BagType _Bag_TemplateParameterSubstitution = createBagType(_Bag);
+		private final @NonNull BagType _Bag_TemplateableElement = createBagType(_Bag);
+		private final @NonNull BagType _Bag_TypeExp = createBagType(_Bag);
+		private final @NonNull BagType _Bag_TypedElement = createBagType(_Bag);
+		private final @NonNull BagType _Bag_Variable = createBagType(_Bag);
+		private final @NonNull BagType _Bag_VariableDeclaration = createBagType(_Bag);
+		private final @NonNull BagType _Bag_VariableExp = createBagType(_Bag);
+		private final @NonNull BagType _Bag_WildcardType = createBagType(_Bag);
+		private final @NonNull CollectionType _Collection_Annotation = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_AssociationClassCallExp = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Behavior = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_CallOperationAction = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Class = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_CollectionLiteralPart = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_CollectionType = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Comment = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_CompleteClass = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_CompleteModel = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_CompletePackage = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_ConnectionPointReference = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Constraint = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_DataType = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Detail = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_DynamicElement = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_DynamicProperty = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Element = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_ElementExtension = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_EnumLiteralExp = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_EnumerationLiteral = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Import = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_InstanceSpecification = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_LambdaType = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_LoopExp = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_MapLiteralPart = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_MapType = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_MessageType = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Model = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_NavigationCallExp = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_OCLExpression = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Operation = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_OperationCallExp = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_OppositePropertyCallExp = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Package = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Parameter = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Precedence = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_PrimitiveType = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_ProfileApplication = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Property = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_PropertyCallExp = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Pseudostate = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Region = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_SendSignalAction = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_ShadowPart = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Slot = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_State = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_StateExp = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_StateMachine = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_StereotypeExtender = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_String = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_TemplateBinding = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_TemplateParameter = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_TemplateParameterSubstitution = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_TemplateableElement = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Transition = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Trigger = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_TupleLiteralPart = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Type = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_TypeExp = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_TypedElement = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_ValueSpecification = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Variable = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_VariableDeclaration = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_VariableExp = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_Vertex = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_WildcardType = createCollectionType(_Collection);
+		private final @NonNull CollectionType _OrderedCollection_CollectionLiteralPart = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_Detail = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_Element = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_EnumerationLiteral = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_Import = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_MapLiteralPart = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_OCLExpression = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_Operation = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_Parameter = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_Precedence = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_Property = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_ShadowPart = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_TemplateParameter = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_TupleLiteralPart = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_Type = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_ValueSpecification = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_Variable = createCollectionType(_OrderedCollection);
+		private final @NonNull OrderedSetType _OrderedSet_CollectionLiteralPart_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_Detail_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_Element_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_EnumerationLiteral_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_Import_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_MapLiteralPart_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_OCLExpression_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_Operation_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_Parameter_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_Precedence_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_Property_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_ShadowPart_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_TemplateParameter_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_TupleLiteralPart_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_ValueSpecification_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_Variable_NullFree = createOrderedSetType(_OrderedSet);
+		private final @NonNull SequenceType _Sequence_Type_NullFree = createSequenceType(_Sequence);
+		private final @NonNull SetType _Set_Behavior_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Class_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Comment_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_CompleteClass_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_CompletePackage_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_ConnectionPointReference_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Constraint_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_DynamicProperty_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Element_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_ElementExtension_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_InstanceSpecification_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Model_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Operation_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Package_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_ProfileApplication_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Property_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Pseudostate_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Region_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Region_NullFree_1 = createSetType(_Set);
+		private final @NonNull SetType _Set_Slot_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_State_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_StateMachine_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_StereotypeExtender_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_String_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_TemplateBinding_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_TemplateParameterSubstitution_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Transition_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Trigger_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Type_NullFree = createSetType(_Set);
+		private final @NonNull SetType _Set_Vertex_NullFree = createSetType(_Set);
+		private final @NonNull CollectionType _UniqueCollection_Behavior = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Class = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_CollectionLiteralPart = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Comment = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_CompleteClass = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_CompletePackage = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_ConnectionPointReference = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Constraint = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Detail = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_DynamicProperty = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Element = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_ElementExtension = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_EnumerationLiteral = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Import = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_InstanceSpecification = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_MapLiteralPart = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Model = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_OCLExpression = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Operation = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Package = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Parameter = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Precedence = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_ProfileApplication = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Property = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Pseudostate = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Region = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_ShadowPart = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Slot = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_State = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_StateMachine = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_StereotypeExtender = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_String = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_TemplateBinding = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_TemplateParameter = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_TemplateParameterSubstitution = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Transition = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Trigger = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_TupleLiteralPart = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Type = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_ValueSpecification = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Variable = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_Vertex = createCollectionType(_UniqueCollection);
 
 		private void installClassTypes() {
 			List<Class> ownedClasses;
@@ -3938,446 +3928,226 @@ public class OCLmetamodel extends ASResourceImpl
 		}
 
 		private void installTemplateBindings() {
-			/*			_Bag_Annotation.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _Annotation)));
-			_Bag_AssociationClassCallExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _AssociationClassCallExp)));
-			_Bag_CallOperationAction.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _CallOperationAction)));
-			_Bag_Class.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _Class)));
-			_Bag_CollectionType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _CollectionType)));
-			_Bag_CompleteClass.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _CompleteClass)));
-			_Bag_CompleteModel.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _CompleteModel)));
-			_Bag_CompletePackage.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _CompletePackage)));
-			_Bag_ConnectionPointReference.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _ConnectionPointReference)));
-			_Bag_Constraint.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _Constraint)));
-			_Bag_DataType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _DataType)));
-			_Bag_DynamicElement.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _DynamicElement)));
-			_Bag_DynamicProperty.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _DynamicProperty)));
-			_Bag_ElementExtension.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _ElementExtension)));
-			_Bag_EnumLiteralExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _EnumLiteralExp)));
-			_Bag_Import.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _Import)));
-			_Bag_InstanceSpecification.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _InstanceSpecification)));
-			_Bag_LambdaType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _LambdaType)));
-			_Bag_LoopExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _LoopExp)));
-			_Bag_MapType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _MapType)));
-			_Bag_MessageType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _MessageType)));
-			_Bag_NavigationCallExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _NavigationCallExp)));
-			_Bag_OCLExpression.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _OCLExpression)));
-			_Bag_Operation.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _Operation)));
-			_Bag_OperationCallExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _OperationCallExp)));
-			_Bag_OppositePropertyCallExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _OppositePropertyCallExp)));
-			_Bag_Package.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _Package)));
-			_Bag_PrimitiveType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _PrimitiveType)));
-			_Bag_Property.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _Property)));
-			_Bag_PropertyCallExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _PropertyCallExp)));
-			_Bag_Region.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _Region)));
-			_Bag_SendSignalAction.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _SendSignalAction)));
-			_Bag_ShadowPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _ShadowPart)));
-			_Bag_Slot.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _Slot)));
-			_Bag_State.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _State)));
-			_Bag_StateExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _StateExp)));
-			_Bag_StateMachine.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _StateMachine)));
-			_Bag_TemplateBinding.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _TemplateBinding)));
-			_Bag_TemplateParameter.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _TemplateParameter)));
-			_Bag_TemplateParameterSubstitution.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _TemplateParameterSubstitution)));
-			_Bag_TemplateableElement.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _TemplateableElement)));
-			_Bag_TypeExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _TypeExp)));
-			_Bag_TypedElement.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _TypedElement)));
-			_Bag_Variable.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _Variable)));
-			_Bag_VariableDeclaration.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _VariableDeclaration)));
-			_Bag_VariableExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _VariableExp)));
-			_Bag_WildcardType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Bag_T, _WildcardType)));
-			_Collection_Annotation.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Annotation)));
-			_Collection_AssociationClassCallExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _AssociationClassCallExp)));
-			_Collection_Behavior.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Behavior)));
-			_Collection_CallOperationAction.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _CallOperationAction)));
-			_Collection_Class.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Class)));
-			_Collection_CollectionLiteralPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _CollectionLiteralPart)));
-			_Collection_CollectionType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _CollectionType)));
-			_Collection_Comment.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Comment)));
-			_Collection_CompleteClass.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _CompleteClass)));
-			_Collection_CompleteModel.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _CompleteModel)));
-			_Collection_CompletePackage.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _CompletePackage)));
-			_Collection_ConnectionPointReference.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _ConnectionPointReference)));
-			_Collection_Constraint.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Constraint)));
-			_Collection_DataType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _DataType)));
-			_Collection_Detail.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Detail)));
-			_Collection_DynamicElement.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _DynamicElement)));
-			_Collection_DynamicProperty.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _DynamicProperty)));
-			_Collection_Element.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Element)));
-			_Collection_ElementExtension.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _ElementExtension)));
-			_Collection_EnumLiteralExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _EnumLiteralExp)));
-			_Collection_EnumerationLiteral.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _EnumerationLiteral)));
-			_Collection_Import.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Import)));
-			_Collection_InstanceSpecification.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _InstanceSpecification)));
-			_Collection_LambdaType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _LambdaType)));
-			_Collection_LoopExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _LoopExp)));
-			_Collection_MapLiteralPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _MapLiteralPart)));
-			_Collection_MapType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _MapType)));
-			_Collection_MessageType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _MessageType)));
-			_Collection_Model.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Model)));
-			_Collection_NavigationCallExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _NavigationCallExp)));
-			_Collection_OCLExpression.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _OCLExpression)));
-			_Collection_Operation.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Operation)));
-			_Collection_OperationCallExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _OperationCallExp)));
-			_Collection_OppositePropertyCallExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _OppositePropertyCallExp)));
-			_Collection_Package.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Package)));
-			_Collection_Parameter.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Parameter)));
-			_Collection_Precedence.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Precedence)));
-			_Collection_PrimitiveType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _PrimitiveType)));
-			_Collection_ProfileApplication.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _ProfileApplication)));
-			_Collection_Property.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Property)));
-			_Collection_PropertyCallExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _PropertyCallExp)));
-			_Collection_Pseudostate.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Pseudostate)));
-			_Collection_Region.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Region)));
-			_Collection_SendSignalAction.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _SendSignalAction)));
-			_Collection_ShadowPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _ShadowPart)));
-			_Collection_Slot.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Slot)));
-			_Collection_State.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _State)));
-			_Collection_StateExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _StateExp)));
-			_Collection_StateMachine.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _StateMachine)));
-			_Collection_StereotypeExtender.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _StereotypeExtender)));
-			_Collection_String.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _String)));
-			_Collection_TemplateBinding.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _TemplateBinding)));
-			_Collection_TemplateParameter.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _TemplateParameter)));
-			_Collection_TemplateParameterSubstitution.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _TemplateParameterSubstitution)));
-			_Collection_TemplateableElement.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _TemplateableElement)));
-			_Collection_Transition.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Transition)));
-			_Collection_Trigger.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Trigger)));
-			_Collection_TupleLiteralPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _TupleLiteralPart)));
-			_Collection_Type.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Type)));
-			_Collection_TypeExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _TypeExp)));
-			_Collection_TypedElement.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _TypedElement)));
-			_Collection_ValueSpecification.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _ValueSpecification)));
-			_Collection_Variable.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Variable)));
-			_Collection_VariableDeclaration.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _VariableDeclaration)));
-			_Collection_VariableExp.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _VariableExp)));
-			_Collection_Vertex.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _Vertex)));
-			_Collection_WildcardType.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Collection_T, _WildcardType)));
-			_OrderedCollection_CollectionLiteralPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _CollectionLiteralPart)));
-			_OrderedCollection_Detail.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _Detail)));
-			_OrderedCollection_Element.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _Element)));
-			_OrderedCollection_EnumerationLiteral.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _EnumerationLiteral)));
-			_OrderedCollection_Import.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _Import)));
-			_OrderedCollection_MapLiteralPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _MapLiteralPart)));
-			_OrderedCollection_OCLExpression.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _OCLExpression)));
-			_OrderedCollection_Operation.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _Operation)));
-			_OrderedCollection_Parameter.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _Parameter)));
-			_OrderedCollection_Precedence.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _Precedence)));
-			_OrderedCollection_Property.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _Property)));
-			_OrderedCollection_ShadowPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _ShadowPart)));
-			_OrderedCollection_TemplateParameter.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _TemplateParameter)));
-			_OrderedCollection_TupleLiteralPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _TupleLiteralPart)));
-			_OrderedCollection_Type.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _Type)));
-			_OrderedCollection_ValueSpecification.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _ValueSpecification)));
-			_OrderedCollection_Variable.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedCollection_T, _Variable)));
-			_OrderedSet_CollectionLiteralPart_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _CollectionLiteralPart)));
-			_OrderedSet_Detail_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _Detail)));
-			_OrderedSet_Element_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _Element)));
-			_OrderedSet_EnumerationLiteral_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _EnumerationLiteral)));
-			_OrderedSet_Import_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _Import)));
-			_OrderedSet_MapLiteralPart_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _MapLiteralPart)));
-			_OrderedSet_OCLExpression_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _OCLExpression)));
-			_OrderedSet_Operation_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _Operation)));
-			_OrderedSet_Parameter_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _Parameter)));
-			_OrderedSet_Precedence_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _Precedence)));
-			_OrderedSet_Property_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _Property)));
-			_OrderedSet_ShadowPart_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _ShadowPart)));
-			_OrderedSet_TemplateParameter_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _TemplateParameter)));
-			_OrderedSet_TupleLiteralPart_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _TupleLiteralPart)));
-			_OrderedSet_ValueSpecification_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _ValueSpecification)));
-			_OrderedSet_Variable_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_OrderedSet_T, _Variable)));
-			_Sequence_Type_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Sequence_T, _Type)));
-			_Set_Behavior_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Behavior)));
-			_Set_Class_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Class)));
-			_Set_Comment_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Comment)));
-			_Set_CompleteClass_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _CompleteClass)));
-			_Set_CompletePackage_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _CompletePackage)));
-			_Set_ConnectionPointReference_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _ConnectionPointReference)));
-			_Set_Constraint_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Constraint)));
-			_Set_DynamicProperty_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _DynamicProperty)));
-			_Set_ElementExtension_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _ElementExtension)));
-			_Set_Element_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Element)));
-			_Set_InstanceSpecification_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _InstanceSpecification)));
-			_Set_Model_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Model)));
-			_Set_Operation_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Operation)));
-			_Set_Package_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Package)));
-			_Set_ProfileApplication_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _ProfileApplication)));
-			_Set_Property_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Property)));
-			_Set_Pseudostate_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Pseudostate)));
-			_Set_Region_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Region)));
-			_Set_Region_NullFree_1.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Region)));
-			_Set_Slot_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Slot)));
-			_Set_StateMachine_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _StateMachine)));
-			_Set_State_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _State)));
-			_Set_StereotypeExtender_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _StereotypeExtender)));
-			_Set_String_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _String)));
-			_Set_TemplateBinding_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _TemplateBinding)));
-			_Set_TemplateParameterSubstitution_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _TemplateParameterSubstitution)));
-			_Set_Transition_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Transition)));
-			_Set_Trigger_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Trigger)));
-			_Set_Type_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Type)));
-			_Set_Vertex_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_Set_T, _Vertex)));
-			_UniqueCollection_Behavior.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Behavior)));
-			_UniqueCollection_Class.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Class)));
-			_UniqueCollection_CollectionLiteralPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _CollectionLiteralPart)));
-			_UniqueCollection_Comment.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Comment)));
-			_UniqueCollection_CompleteClass.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _CompleteClass)));
-			_UniqueCollection_CompletePackage.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _CompletePackage)));
-			_UniqueCollection_ConnectionPointReference.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _ConnectionPointReference)));
-			_UniqueCollection_Constraint.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Constraint)));
-			_UniqueCollection_Detail.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Detail)));
-			_UniqueCollection_DynamicProperty.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _DynamicProperty)));
-			_UniqueCollection_Element.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Element)));
-			_UniqueCollection_ElementExtension.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _ElementExtension)));
-			_UniqueCollection_EnumerationLiteral.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _EnumerationLiteral)));
-			_UniqueCollection_Import.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Import)));
-			_UniqueCollection_InstanceSpecification.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _InstanceSpecification)));
-			_UniqueCollection_MapLiteralPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _MapLiteralPart)));
-			_UniqueCollection_Model.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Model)));
-			_UniqueCollection_OCLExpression.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _OCLExpression)));
-			_UniqueCollection_Operation.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Operation)));
-			_UniqueCollection_Package.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Package)));
-			_UniqueCollection_Parameter.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Parameter)));
-			_UniqueCollection_Precedence.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Precedence)));
-			_UniqueCollection_ProfileApplication.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _ProfileApplication)));
-			_UniqueCollection_Property.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Property)));
-			_UniqueCollection_Pseudostate.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Pseudostate)));
-			_UniqueCollection_Region.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Region)));
-			_UniqueCollection_ShadowPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _ShadowPart)));
-			_UniqueCollection_Slot.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Slot)));
-			_UniqueCollection_State.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _State)));
-			_UniqueCollection_StateMachine.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _StateMachine)));
-			_UniqueCollection_StereotypeExtender.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _StereotypeExtender)));
-			_UniqueCollection_String.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _String)));
-			_UniqueCollection_TemplateBinding.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _TemplateBinding)));
-			_UniqueCollection_TemplateParameter.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _TemplateParameter)));
-			_UniqueCollection_TemplateParameterSubstitution.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _TemplateParameterSubstitution)));
-			_UniqueCollection_Transition.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Transition)));
-			_UniqueCollection_Trigger.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Trigger)));
-			_UniqueCollection_TupleLiteralPart.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _TupleLiteralPart)));
-			_UniqueCollection_Type.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Type)));
-			_UniqueCollection_ValueSpecification.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _ValueSpecification)));
-			_UniqueCollection_Variable.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Variable)));
-			_UniqueCollection_Vertex.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(_UniqueCollection_T, _Vertex))); */
+			addBindings(_Bag_Annotation, _Annotation);
+			addBindings(_Bag_AssociationClassCallExp, _AssociationClassCallExp);
+			addBindings(_Bag_CallOperationAction, _CallOperationAction);
+			addBindings(_Bag_Class, _Class);
+			addBindings(_Bag_CollectionType, _CollectionType);
+			addBindings(_Bag_CompleteClass, _CompleteClass);
+			addBindings(_Bag_CompleteModel, _CompleteModel);
+			addBindings(_Bag_CompletePackage, _CompletePackage);
+			addBindings(_Bag_ConnectionPointReference, _ConnectionPointReference);
+			addBindings(_Bag_Constraint, _Constraint);
+			addBindings(_Bag_DataType, _DataType);
+			addBindings(_Bag_DynamicElement, _DynamicElement);
+			addBindings(_Bag_DynamicProperty, _DynamicProperty);
+			addBindings(_Bag_ElementExtension, _ElementExtension);
+			addBindings(_Bag_EnumLiteralExp, _EnumLiteralExp);
+			addBindings(_Bag_Import, _Import);
+			addBindings(_Bag_InstanceSpecification, _InstanceSpecification);
+			addBindings(_Bag_LambdaType, _LambdaType);
+			addBindings(_Bag_LoopExp, _LoopExp);
+			addBindings(_Bag_MapType, _MapType);
+			addBindings(_Bag_MessageType, _MessageType);
+			addBindings(_Bag_NavigationCallExp, _NavigationCallExp);
+			addBindings(_Bag_OCLExpression, _OCLExpression);
+			addBindings(_Bag_Operation, _Operation);
+			addBindings(_Bag_OperationCallExp, _OperationCallExp);
+			addBindings(_Bag_OppositePropertyCallExp, _OppositePropertyCallExp);
+			addBindings(_Bag_Package, _Package);
+			addBindings(_Bag_PrimitiveType, _PrimitiveType);
+			addBindings(_Bag_Property, _Property);
+			addBindings(_Bag_PropertyCallExp, _PropertyCallExp);
+			addBindings(_Bag_Region, _Region);
+			addBindings(_Bag_SendSignalAction, _SendSignalAction);
+			addBindings(_Bag_ShadowPart, _ShadowPart);
+			addBindings(_Bag_Slot, _Slot);
+			addBindings(_Bag_State, _State);
+			addBindings(_Bag_StateExp, _StateExp);
+			addBindings(_Bag_StateMachine, _StateMachine);
+			addBindings(_Bag_TemplateBinding, _TemplateBinding);
+			addBindings(_Bag_TemplateParameter, _TemplateParameter);
+			addBindings(_Bag_TemplateParameterSubstitution, _TemplateParameterSubstitution);
+			addBindings(_Bag_TemplateableElement, _TemplateableElement);
+			addBindings(_Bag_TypeExp, _TypeExp);
+			addBindings(_Bag_TypedElement, _TypedElement);
+			addBindings(_Bag_Variable, _Variable);
+			addBindings(_Bag_VariableDeclaration, _VariableDeclaration);
+			addBindings(_Bag_VariableExp, _VariableExp);
+			addBindings(_Bag_WildcardType, _WildcardType);
+			addBindings(_Collection_Annotation, _Annotation);
+			addBindings(_Collection_AssociationClassCallExp, _AssociationClassCallExp);
+			addBindings(_Collection_Behavior, _Behavior);
+			addBindings(_Collection_CallOperationAction, _CallOperationAction);
+			addBindings(_Collection_Class, _Class);
+			addBindings(_Collection_CollectionLiteralPart, _CollectionLiteralPart);
+			addBindings(_Collection_CollectionType, _CollectionType);
+			addBindings(_Collection_Comment, _Comment);
+			addBindings(_Collection_CompleteClass, _CompleteClass);
+			addBindings(_Collection_CompleteModel, _CompleteModel);
+			addBindings(_Collection_CompletePackage, _CompletePackage);
+			addBindings(_Collection_ConnectionPointReference, _ConnectionPointReference);
+			addBindings(_Collection_Constraint, _Constraint);
+			addBindings(_Collection_DataType, _DataType);
+			addBindings(_Collection_Detail, _Detail);
+			addBindings(_Collection_DynamicElement, _DynamicElement);
+			addBindings(_Collection_DynamicProperty, _DynamicProperty);
+			addBindings(_Collection_Element, _Element);
+			addBindings(_Collection_ElementExtension, _ElementExtension);
+			addBindings(_Collection_EnumLiteralExp, _EnumLiteralExp);
+			addBindings(_Collection_EnumerationLiteral, _EnumerationLiteral);
+			addBindings(_Collection_Import, _Import);
+			addBindings(_Collection_InstanceSpecification, _InstanceSpecification);
+			addBindings(_Collection_LambdaType, _LambdaType);
+			addBindings(_Collection_LoopExp, _LoopExp);
+			addBindings(_Collection_MapLiteralPart, _MapLiteralPart);
+			addBindings(_Collection_MapType, _MapType);
+			addBindings(_Collection_MessageType, _MessageType);
+			addBindings(_Collection_Model, _Model);
+			addBindings(_Collection_NavigationCallExp, _NavigationCallExp);
+			addBindings(_Collection_OCLExpression, _OCLExpression);
+			addBindings(_Collection_Operation, _Operation);
+			addBindings(_Collection_OperationCallExp, _OperationCallExp);
+			addBindings(_Collection_OppositePropertyCallExp, _OppositePropertyCallExp);
+			addBindings(_Collection_Package, _Package);
+			addBindings(_Collection_Parameter, _Parameter);
+			addBindings(_Collection_Precedence, _Precedence);
+			addBindings(_Collection_PrimitiveType, _PrimitiveType);
+			addBindings(_Collection_ProfileApplication, _ProfileApplication);
+			addBindings(_Collection_Property, _Property);
+			addBindings(_Collection_PropertyCallExp, _PropertyCallExp);
+			addBindings(_Collection_Pseudostate, _Pseudostate);
+			addBindings(_Collection_Region, _Region);
+			addBindings(_Collection_SendSignalAction, _SendSignalAction);
+			addBindings(_Collection_ShadowPart, _ShadowPart);
+			addBindings(_Collection_Slot, _Slot);
+			addBindings(_Collection_State, _State);
+			addBindings(_Collection_StateExp, _StateExp);
+			addBindings(_Collection_StateMachine, _StateMachine);
+			addBindings(_Collection_StereotypeExtender, _StereotypeExtender);
+			addBindings(_Collection_String, _String);
+			addBindings(_Collection_TemplateBinding, _TemplateBinding);
+			addBindings(_Collection_TemplateParameter, _TemplateParameter);
+			addBindings(_Collection_TemplateParameterSubstitution, _TemplateParameterSubstitution);
+			addBindings(_Collection_TemplateableElement, _TemplateableElement);
+			addBindings(_Collection_Transition, _Transition);
+			addBindings(_Collection_Trigger, _Trigger);
+			addBindings(_Collection_TupleLiteralPart, _TupleLiteralPart);
+			addBindings(_Collection_Type, _Type);
+			addBindings(_Collection_TypeExp, _TypeExp);
+			addBindings(_Collection_TypedElement, _TypedElement);
+			addBindings(_Collection_ValueSpecification, _ValueSpecification);
+			addBindings(_Collection_Variable, _Variable);
+			addBindings(_Collection_VariableDeclaration, _VariableDeclaration);
+			addBindings(_Collection_VariableExp, _VariableExp);
+			addBindings(_Collection_Vertex, _Vertex);
+			addBindings(_Collection_WildcardType, _WildcardType);
+			addBindings(_OrderedCollection_CollectionLiteralPart, _CollectionLiteralPart);
+			addBindings(_OrderedCollection_Detail, _Detail);
+			addBindings(_OrderedCollection_Element, _Element);
+			addBindings(_OrderedCollection_EnumerationLiteral, _EnumerationLiteral);
+			addBindings(_OrderedCollection_Import, _Import);
+			addBindings(_OrderedCollection_MapLiteralPart, _MapLiteralPart);
+			addBindings(_OrderedCollection_OCLExpression, _OCLExpression);
+			addBindings(_OrderedCollection_Operation, _Operation);
+			addBindings(_OrderedCollection_Parameter, _Parameter);
+			addBindings(_OrderedCollection_Precedence, _Precedence);
+			addBindings(_OrderedCollection_Property, _Property);
+			addBindings(_OrderedCollection_ShadowPart, _ShadowPart);
+			addBindings(_OrderedCollection_TemplateParameter, _TemplateParameter);
+			addBindings(_OrderedCollection_TupleLiteralPart, _TupleLiteralPart);
+			addBindings(_OrderedCollection_Type, _Type);
+			addBindings(_OrderedCollection_ValueSpecification, _ValueSpecification);
+			addBindings(_OrderedCollection_Variable, _Variable);
+			addBindings(_OrderedSet_CollectionLiteralPart_NullFree, _CollectionLiteralPart);
+			addBindings(_OrderedSet_Detail_NullFree, _Detail);
+			addBindings(_OrderedSet_Element_NullFree, _Element);
+			addBindings(_OrderedSet_EnumerationLiteral_NullFree, _EnumerationLiteral);
+			addBindings(_OrderedSet_Import_NullFree, _Import);
+			addBindings(_OrderedSet_MapLiteralPart_NullFree, _MapLiteralPart);
+			addBindings(_OrderedSet_OCLExpression_NullFree, _OCLExpression);
+			addBindings(_OrderedSet_Operation_NullFree, _Operation);
+			addBindings(_OrderedSet_Parameter_NullFree, _Parameter);
+			addBindings(_OrderedSet_Precedence_NullFree, _Precedence);
+			addBindings(_OrderedSet_Property_NullFree, _Property);
+			addBindings(_OrderedSet_ShadowPart_NullFree, _ShadowPart);
+			addBindings(_OrderedSet_TemplateParameter_NullFree, _TemplateParameter);
+			addBindings(_OrderedSet_TupleLiteralPart_NullFree, _TupleLiteralPart);
+			addBindings(_OrderedSet_ValueSpecification_NullFree, _ValueSpecification);
+			addBindings(_OrderedSet_Variable_NullFree, _Variable);
+			addBindings(_Sequence_Type_NullFree, _Type);
+			addBindings(_Set_Behavior_NullFree, _Behavior);
+			addBindings(_Set_Class_NullFree, _Class);
+			addBindings(_Set_Comment_NullFree, _Comment);
+			addBindings(_Set_CompleteClass_NullFree, _CompleteClass);
+			addBindings(_Set_CompletePackage_NullFree, _CompletePackage);
+			addBindings(_Set_ConnectionPointReference_NullFree, _ConnectionPointReference);
+			addBindings(_Set_Constraint_NullFree, _Constraint);
+			addBindings(_Set_DynamicProperty_NullFree, _DynamicProperty);
+			addBindings(_Set_ElementExtension_NullFree, _ElementExtension);
+			addBindings(_Set_Element_NullFree, _Element);
+			addBindings(_Set_InstanceSpecification_NullFree, _InstanceSpecification);
+			addBindings(_Set_Model_NullFree, _Model);
+			addBindings(_Set_Operation_NullFree, _Operation);
+			addBindings(_Set_Package_NullFree, _Package);
+			addBindings(_Set_ProfileApplication_NullFree, _ProfileApplication);
+			addBindings(_Set_Property_NullFree, _Property);
+			addBindings(_Set_Pseudostate_NullFree, _Pseudostate);
+			addBindings(_Set_Region_NullFree, _Region);
+			addBindings(_Set_Region_NullFree_1, _Region);
+			addBindings(_Set_Slot_NullFree, _Slot);
+			addBindings(_Set_StateMachine_NullFree, _StateMachine);
+			addBindings(_Set_State_NullFree, _State);
+			addBindings(_Set_StereotypeExtender_NullFree, _StereotypeExtender);
+			addBindings(_Set_String_NullFree, _String);
+			addBindings(_Set_TemplateBinding_NullFree, _TemplateBinding);
+			addBindings(_Set_TemplateParameterSubstitution_NullFree, _TemplateParameterSubstitution);
+			addBindings(_Set_Transition_NullFree, _Transition);
+			addBindings(_Set_Trigger_NullFree, _Trigger);
+			addBindings(_Set_Type_NullFree, _Type);
+			addBindings(_Set_Vertex_NullFree, _Vertex);
+			addBindings(_UniqueCollection_Behavior, _Behavior);
+			addBindings(_UniqueCollection_Class, _Class);
+			addBindings(_UniqueCollection_CollectionLiteralPart, _CollectionLiteralPart);
+			addBindings(_UniqueCollection_Comment, _Comment);
+			addBindings(_UniqueCollection_CompleteClass, _CompleteClass);
+			addBindings(_UniqueCollection_CompletePackage, _CompletePackage);
+			addBindings(_UniqueCollection_ConnectionPointReference, _ConnectionPointReference);
+			addBindings(_UniqueCollection_Constraint, _Constraint);
+			addBindings(_UniqueCollection_Detail, _Detail);
+			addBindings(_UniqueCollection_DynamicProperty, _DynamicProperty);
+			addBindings(_UniqueCollection_Element, _Element);
+			addBindings(_UniqueCollection_ElementExtension, _ElementExtension);
+			addBindings(_UniqueCollection_EnumerationLiteral, _EnumerationLiteral);
+			addBindings(_UniqueCollection_Import, _Import);
+			addBindings(_UniqueCollection_InstanceSpecification, _InstanceSpecification);
+			addBindings(_UniqueCollection_MapLiteralPart, _MapLiteralPart);
+			addBindings(_UniqueCollection_Model, _Model);
+			addBindings(_UniqueCollection_OCLExpression, _OCLExpression);
+			addBindings(_UniqueCollection_Operation, _Operation);
+			addBindings(_UniqueCollection_Package, _Package);
+			addBindings(_UniqueCollection_Parameter, _Parameter);
+			addBindings(_UniqueCollection_Precedence, _Precedence);
+			addBindings(_UniqueCollection_ProfileApplication, _ProfileApplication);
+			addBindings(_UniqueCollection_Property, _Property);
+			addBindings(_UniqueCollection_Pseudostate, _Pseudostate);
+			addBindings(_UniqueCollection_Region, _Region);
+			addBindings(_UniqueCollection_ShadowPart, _ShadowPart);
+			addBindings(_UniqueCollection_Slot, _Slot);
+			addBindings(_UniqueCollection_State, _State);
+			addBindings(_UniqueCollection_StateMachine, _StateMachine);
+			addBindings(_UniqueCollection_StereotypeExtender, _StereotypeExtender);
+			addBindings(_UniqueCollection_String, _String);
+			addBindings(_UniqueCollection_TemplateBinding, _TemplateBinding);
+			addBindings(_UniqueCollection_TemplateParameter, _TemplateParameter);
+			addBindings(_UniqueCollection_TemplateParameterSubstitution, _TemplateParameterSubstitution);
+			addBindings(_UniqueCollection_Transition, _Transition);
+			addBindings(_UniqueCollection_Trigger, _Trigger);
+			addBindings(_UniqueCollection_TupleLiteralPart, _TupleLiteralPart);
+			addBindings(_UniqueCollection_Type, _Type);
+			addBindings(_UniqueCollection_ValueSpecification, _ValueSpecification);
+			addBindings(_UniqueCollection_Variable, _Variable);
+			addBindings(_UniqueCollection_Vertex, _Vertex);
 		}
 
 		private void installComments() {

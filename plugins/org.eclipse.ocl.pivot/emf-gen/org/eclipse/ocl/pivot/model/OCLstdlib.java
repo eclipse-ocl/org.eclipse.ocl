@@ -18,50 +18,40 @@
 package	org.eclipse.ocl.pivot.model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.AssociativityKind;
-import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.*;
 import org.eclipse.ocl.pivot.Class;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.Library;
-import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.SelfType;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -378,146 +368,146 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull SetType _Set_Set_T = createSetType("Set"/*T*/, "0", "*", tp_Set_T);
 		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T = createCollectionType("UniqueCollection"/*T*/, "0", "*", tp_UniqueCollection_T);
 
-		private final @NonNull BagType _Bag_Bag_collectNested_V_NullFree = createBagType(_Bag_Bag_T, tp_Bag_collectNested_V);
-		private final @NonNull BagType _Bag_Bag_collect_V_NullFree = createBagType(_Bag_Bag_T, tp_Bag_collect_V);
-		private final @NonNull BagType _Bag_Bag_flatten_T2_NullFree = createBagType(_Bag_Bag_T, tp_Bag_flatten_T2);
-		private final @NonNull BagType _Bag_Bag_selectByKind_TT_NullFree = createBagType(_Bag_Bag_T, tp_Bag_selectByKind_TT);
-		private final @NonNull BagType _Bag_Bag_selectByType_TT_NullFree = createBagType(_Bag_Bag_T, tp_Bag_selectByType_TT);
-		private final @NonNull BagType _Bag_Collection_T_NullFree = createBagType(_Bag_Bag_T, tp_Collection_T);
-		private final @NonNull BagType _Bag_Enumeration = createBagType(_Bag_Bag_T, _Enumeration);
-		private final @NonNull BagType _Bag_Map_V_NullFree = createBagType(_Bag_Bag_T, tp_Map_V);
-		private final @NonNull BagType _Bag_OclElement = createBagType(_Bag_Bag_T, _OclElement);
-		private final @NonNull BagType _Bag_OclEnumeration = createBagType(_Bag_Bag_T, _OclEnumeration);
-		private final @NonNull BagType _Bag_Set_collectNested_V_NullFree = createBagType(_Bag_Bag_T, tp_Set_collectNested_V);
-		private final @NonNull BagType _Bag_Set_collect_V_NullFree = createBagType(_Bag_Bag_T, tp_Set_collect_V);
-		private final @NonNull CollectionType _Collection_Integer = createCollectionType(_Collection_Collection_T, _Integer);
-		private final @NonNull CollectionType _Collection_String = createCollectionType(_Collection_Collection_T, _String);
-		private final @NonNull CollectionType _Collection_Tuple = createCollectionType(_Collection_Collection_T, _Tuple);
-		private final @NonNull CollectionType _Collection_Bag_collectNested_V = createCollectionType(_Collection_Collection_T, tp_Bag_collectNested_V);
-		private final @NonNull CollectionType _Collection_Bag_collect_V = createCollectionType(_Collection_Collection_T, tp_Bag_collect_V);
-		private final @NonNull CollectionType _Collection_Bag_flatten_T2 = createCollectionType(_Collection_Collection_T, tp_Bag_flatten_T2);
-		private final @NonNull CollectionType _Collection_Bag_selectByKind_TT = createCollectionType(_Collection_Collection_T, tp_Bag_selectByKind_TT);
-		private final @NonNull CollectionType _Collection_Bag_selectByType_TT = createCollectionType(_Collection_Collection_T, tp_Bag_selectByType_TT);
-		private final @NonNull CollectionType _Collection_Bag_T_NullFree = createCollectionType(_Collection_Collection_T, tp_Bag_T);
-		private final @NonNull CollectionType _Collection_Bag_T = createCollectionType(_Collection_Collection_T, tp_Bag_T);
-		private final @NonNull CollectionType _Collection_Collection_collectNested_V_NullFree = createCollectionType(_Collection_Collection_T, tp_Collection_collectNested_V);
-		private final @NonNull CollectionType _Collection_Collection_collect_V_NullFree = createCollectionType(_Collection_Collection_T, tp_Collection_collect_V);
-		private final @NonNull CollectionType _Collection_Collection_excludesAll_T2_NullFree = createCollectionType(_Collection_Collection_T, tp_Collection_excludesAll_T2);
-		private final @NonNull CollectionType _Collection_Collection_flatten_T2_NullFree = createCollectionType(_Collection_Collection_T, tp_Collection_flatten_T2);
-		private final @NonNull CollectionType _Collection_Collection_includesAll_T2_NullFree = createCollectionType(_Collection_Collection_T, tp_Collection_includesAll_T2);
-		private final @NonNull CollectionType _Collection_Collection_product_T2_NullFree = createCollectionType(_Collection_Collection_T, tp_Collection_product_T2);
-		private final @NonNull CollectionType _Collection_Collection_selectByKind_TT_NullFree = createCollectionType(_Collection_Collection_T, tp_Collection_selectByKind_TT);
-		private final @NonNull CollectionType _Collection_Collection_selectByType_TT_NullFree = createCollectionType(_Collection_Collection_T, tp_Collection_selectByType_TT);
-		private final @NonNull CollectionType _Collection_Collection_T_1 = createCollectionType(_Collection_Collection_T, tp_Collection_T);
-		private final @NonNull CollectionType _Collection_EnumerationLiteral = createCollectionType(_Collection_Collection_T, _EnumerationLiteral);
-		private final @NonNull CollectionType _Collection_Enumeration = createCollectionType(_Collection_Collection_T, _Enumeration);
-		private final @NonNull CollectionType _Collection_Map_excludesAll_K2_NullFree = createCollectionType(_Collection_Collection_T, tp_Map_excludesAll_K2);
-		private final @NonNull CollectionType _Collection_Map_includesAll_K2_NullFree = createCollectionType(_Collection_Collection_T, tp_Map_includesAll_K2);
-		private final @NonNull CollectionType _Collection_Map_K = createCollectionType(_Collection_Collection_T, tp_Map_K);
-		private final @NonNull CollectionType _Collection_Map_V = createCollectionType(_Collection_Collection_T, tp_Map_V);
-		private final @NonNull CollectionType _Collection_OclAny_NullFree = createCollectionType(_Collection_Collection_T, _OclAny);
-		private final @NonNull CollectionType _Collection_OclAny = createCollectionType(_Collection_Collection_T, _OclAny);
-		private final @NonNull CollectionType _Collection_OclElement = createCollectionType(_Collection_Collection_T, _OclElement);
-		private final @NonNull CollectionType _Collection_OclEnumeration = createCollectionType(_Collection_Collection_T, _OclEnumeration);
-		private final @NonNull CollectionType _Collection_OclSelf = createCollectionType(_Collection_Collection_T, _OclSelf);
-		private final @NonNull CollectionType _Collection_OrderedCollection_T_NullFree = createCollectionType(_Collection_Collection_T, tp_OrderedCollection_T);
-		private final @NonNull CollectionType _Collection_OrderedSet_collectNested_V = createCollectionType(_Collection_Collection_T, tp_OrderedSet_collectNested_V);
-		private final @NonNull CollectionType _Collection_OrderedSet_collect_V = createCollectionType(_Collection_Collection_T, tp_OrderedSet_collect_V);
-		private final @NonNull CollectionType _Collection_OrderedSet_flatten_T2 = createCollectionType(_Collection_Collection_T, tp_OrderedSet_flatten_T2);
-		private final @NonNull CollectionType _Collection_OrderedSet_selectByKind_TT = createCollectionType(_Collection_Collection_T, tp_OrderedSet_selectByKind_TT);
-		private final @NonNull CollectionType _Collection_OrderedSet_selectByType_TT = createCollectionType(_Collection_Collection_T, tp_OrderedSet_selectByType_TT);
-		private final @NonNull CollectionType _Collection_OrderedSet_T = createCollectionType(_Collection_Collection_T, tp_OrderedSet_T);
-		private final @NonNull CollectionType _Collection_Sequence_collectNested_V = createCollectionType(_Collection_Collection_T, tp_Sequence_collectNested_V);
-		private final @NonNull CollectionType _Collection_Sequence_collect_V = createCollectionType(_Collection_Collection_T, tp_Sequence_collect_V);
-		private final @NonNull CollectionType _Collection_Sequence_flatten_T2 = createCollectionType(_Collection_Collection_T, tp_Sequence_flatten_T2);
-		private final @NonNull CollectionType _Collection_Sequence_selectByKind_TT = createCollectionType(_Collection_Collection_T, tp_Sequence_selectByKind_TT);
-		private final @NonNull CollectionType _Collection_Sequence_selectByType_TT = createCollectionType(_Collection_Collection_T, tp_Sequence_selectByType_TT);
-		private final @NonNull CollectionType _Collection_Sequence_T = createCollectionType(_Collection_Collection_T, tp_Sequence_T);
-		private final @NonNull CollectionType _Collection_Set_collectNested_V = createCollectionType(_Collection_Collection_T, tp_Set_collectNested_V);
-		private final @NonNull CollectionType _Collection_Set_collect_V = createCollectionType(_Collection_Collection_T, tp_Set_collect_V);
-		private final @NonNull CollectionType _Collection_Set_flatten_T2 = createCollectionType(_Collection_Collection_T, tp_Set_flatten_T2);
-		private final @NonNull CollectionType _Collection_Set_selectByKind_TT = createCollectionType(_Collection_Collection_T, tp_Set_selectByKind_TT);
-		private final @NonNull CollectionType _Collection_Set_selectByType_TT = createCollectionType(_Collection_Collection_T, tp_Set_selectByType_TT);
-		private final @NonNull CollectionType _Collection_Set_T_NullFree = createCollectionType(_Collection_Collection_T, tp_Set_T);
-		private final @NonNull CollectionType _Collection_Set_T = createCollectionType(_Collection_Collection_T, tp_Set_T);
-		private final @NonNull CollectionType _Collection_UniqueCollection_T_NullFree = createCollectionType(_Collection_Collection_T, tp_UniqueCollection_T);
-		private final @NonNull CollectionType _Collection_UniqueCollection_T = createCollectionType(_Collection_Collection_T, tp_UniqueCollection_T);
-		private final @NonNull CollectionType _OrderedCollection_Integer = createCollectionType(_OrderedCollection_OrderedCollection_T, _Integer);
-		private final @NonNull CollectionType _OrderedCollection_String = createCollectionType(_OrderedCollection_OrderedCollection_T, _String);
-		private final @NonNull CollectionType _OrderedCollection_Bag_T = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_Bag_T);
-		private final @NonNull CollectionType _OrderedCollection_Collection_T = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_Collection_T);
-		private final @NonNull CollectionType _OrderedCollection_EnumerationLiteral = createCollectionType(_OrderedCollection_OrderedCollection_T, _EnumerationLiteral);
-		private final @NonNull CollectionType _OrderedCollection_OrderedSet_collectNested_V = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_collectNested_V);
-		private final @NonNull CollectionType _OrderedCollection_OrderedSet_collect_V = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_collect_V);
-		private final @NonNull CollectionType _OrderedCollection_OrderedSet_flatten_T2 = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_flatten_T2);
-		private final @NonNull CollectionType _OrderedCollection_OrderedSet_selectByKind_TT = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_selectByKind_TT);
-		private final @NonNull CollectionType _OrderedCollection_OrderedSet_selectByType_TT = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_selectByType_TT);
-		private final @NonNull CollectionType _OrderedCollection_OrderedSet_T_NullFree = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_OrderedSet_T);
-		private final @NonNull CollectionType _OrderedCollection_Sequence_collectNested_V = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_collectNested_V);
-		private final @NonNull CollectionType _OrderedCollection_Sequence_collect_V = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_collect_V);
-		private final @NonNull CollectionType _OrderedCollection_Sequence_flatten_T2 = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_flatten_T2);
-		private final @NonNull CollectionType _OrderedCollection_Sequence_selectByKind_TT = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_selectByKind_TT);
-		private final @NonNull CollectionType _OrderedCollection_Sequence_selectByType_TT = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_selectByType_TT);
-		private final @NonNull CollectionType _OrderedCollection_Sequence_T_NullFree = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_T);
-		private final @NonNull CollectionType _OrderedCollection_Sequence_T = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_Sequence_T);
-		private final @NonNull CollectionType _OrderedCollection_Set_T = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_Set_T);
-		private final @NonNull CollectionType _OrderedCollection_UniqueCollection_T = createCollectionType(_OrderedCollection_OrderedCollection_T, tp_UniqueCollection_T);
-		private final @NonNull OrderedSetType _OrderedSet_Collection_T_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T, tp_Collection_T);
-		private final @NonNull OrderedSetType _OrderedSet_EnumerationLiteral_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T, _EnumerationLiteral);
-		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_flatten_T2_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T, tp_OrderedSet_flatten_T2);
-		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_selectByKind_TT_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByKind_TT);
-		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_selectByType_TT_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByType_TT);
-		private final @NonNull OrderedSetType _OrderedSet_Sequence_T_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T, tp_Sequence_T);
-		private final @NonNull OrderedSetType _OrderedSet_Set_T_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T, tp_Set_T);
-		private final @NonNull OrderedSetType _OrderedSet_UniqueCollection_T_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T, tp_UniqueCollection_T);
-		private final @NonNull SequenceType _Sequence_Integer_NullFree = createSequenceType(_Sequence_Sequence_T, _Integer);
-		private final @NonNull SequenceType _Sequence_String_NullFree = createSequenceType(_Sequence_Sequence_T, _String);
-		private final @NonNull SequenceType _Sequence_Bag_T_NullFree = createSequenceType(_Sequence_Sequence_T, tp_Bag_T);
-		private final @NonNull SequenceType _Sequence_Collection_T_NullFree = createSequenceType(_Sequence_Sequence_T, tp_Collection_T);
-		private final @NonNull SequenceType _Sequence_OrderedSet_collectNested_V_NullFree = createSequenceType(_Sequence_Sequence_T, tp_OrderedSet_collectNested_V);
-		private final @NonNull SequenceType _Sequence_OrderedSet_collect_V_NullFree = createSequenceType(_Sequence_Sequence_T, tp_OrderedSet_collect_V);
-		private final @NonNull SequenceType _Sequence_Sequence_collectNested_V_NullFree = createSequenceType(_Sequence_Sequence_T, tp_Sequence_collectNested_V);
-		private final @NonNull SequenceType _Sequence_Sequence_collect_V_NullFree = createSequenceType(_Sequence_Sequence_T, tp_Sequence_collect_V);
-		private final @NonNull SequenceType _Sequence_Sequence_flatten_T2_NullFree = createSequenceType(_Sequence_Sequence_T, tp_Sequence_flatten_T2);
-		private final @NonNull SequenceType _Sequence_Sequence_selectByKind_TT_NullFree = createSequenceType(_Sequence_Sequence_T, tp_Sequence_selectByKind_TT);
-		private final @NonNull SequenceType _Sequence_Sequence_selectByType_TT_NullFree = createSequenceType(_Sequence_Sequence_T, tp_Sequence_selectByType_TT);
-		private final @NonNull SetType _Set_Tuple_NullFree = createSetType(_Set_Set_T, _Tuple);
-		private final @NonNull SetType _Set_Bag_T_NullFree = createSetType(_Set_Set_T, tp_Bag_T);
-		private final @NonNull SetType _Set_Collection_T_NullFree = createSetType(_Set_Set_T, tp_Collection_T);
-		private final @NonNull SetType _Set_Map_K_NullFree = createSetType(_Set_Set_T, tp_Map_K);
-		private final @NonNull SetType _Set_OclElement_NullFree = createSetType(_Set_Set_T, _OclElement);
-		private final @NonNull SetType _Set_OclSelf_NullFree = createSetType(_Set_Set_T, _OclSelf);
-		private final @NonNull SetType _Set_OclSelf = createSetType(_Set_Set_T, _OclSelf);
-		private final @NonNull SetType _Set_Set_flatten_T2_NullFree = createSetType(_Set_Set_T, tp_Set_flatten_T2);
-		private final @NonNull SetType _Set_Set_selectByKind_TT_NullFree = createSetType(_Set_Set_T, tp_Set_selectByKind_TT);
-		private final @NonNull SetType _Set_Set_selectByType_TT_NullFree = createSetType(_Set_Set_T, tp_Set_selectByType_TT);
-		private final @NonNull SetType _Set_UniqueCollection_T_NullFree = createSetType(_Set_Set_T, tp_UniqueCollection_T);
-		private final @NonNull CollectionType _UniqueCollection_Tuple = createCollectionType(_UniqueCollection_UniqueCollection_T, _Tuple);
-		private final @NonNull CollectionType _UniqueCollection_Bag_T = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Bag_T);
-		private final @NonNull CollectionType _UniqueCollection_Collection_T_NullFree = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Collection_T);
-		private final @NonNull CollectionType _UniqueCollection_Collection_T = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Collection_T);
-		private final @NonNull CollectionType _UniqueCollection_EnumerationLiteral = createCollectionType(_UniqueCollection_UniqueCollection_T, _EnumerationLiteral);
-		private final @NonNull CollectionType _UniqueCollection_Map_K = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Map_K);
-		private final @NonNull CollectionType _UniqueCollection_OclAny_NullFree = createCollectionType(_UniqueCollection_UniqueCollection_T, _OclAny);
-		private final @NonNull CollectionType _UniqueCollection_OclElement = createCollectionType(_UniqueCollection_UniqueCollection_T, _OclElement);
-		private final @NonNull CollectionType _UniqueCollection_OclSelf = createCollectionType(_UniqueCollection_UniqueCollection_T, _OclSelf);
-		private final @NonNull CollectionType _UniqueCollection_OrderedSet_flatten_T2 = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_flatten_T2);
-		private final @NonNull CollectionType _UniqueCollection_OrderedSet_selectByKind_TT = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_selectByKind_TT);
-		private final @NonNull CollectionType _UniqueCollection_OrderedSet_selectByType_TT = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_selectByType_TT);
-		private final @NonNull CollectionType _UniqueCollection_OrderedSet_T_NullFree = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_OrderedSet_T);
-		private final @NonNull CollectionType _UniqueCollection_Sequence_T = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Sequence_T);
-		private final @NonNull CollectionType _UniqueCollection_Set_flatten_T2 = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_flatten_T2);
-		private final @NonNull CollectionType _UniqueCollection_Set_selectByKind_TT = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_selectByKind_TT);
-		private final @NonNull CollectionType _UniqueCollection_Set_selectByType_TT = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_selectByType_TT);
-		private final @NonNull CollectionType _UniqueCollection_Set_T_NullFree = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_T);
-		private final @NonNull CollectionType _UniqueCollection_Set_T = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_Set_T);
-		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T_1 = createCollectionType(_UniqueCollection_UniqueCollection_T, tp_UniqueCollection_T);
+		private final @NonNull BagType _Bag_Bag_collectNested_V_NullFree = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Bag_collect_V_NullFree = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Bag_flatten_T2_NullFree = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Bag_selectByKind_TT_NullFree = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Bag_selectByType_TT_NullFree = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Collection_T_NullFree = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Enumeration = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Map_V_NullFree = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_OclElement = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_OclEnumeration = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Set_collectNested_V_NullFree = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Set_collect_V_NullFree = createBagType(_Bag_Bag_T);
+		private final @NonNull CollectionType _Collection_Integer = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_String = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Tuple = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Bag_collectNested_V = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Bag_collect_V = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Bag_flatten_T2 = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Bag_selectByKind_TT = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Bag_selectByType_TT = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Bag_T_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Bag_T = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection_collectNested_V_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection_collect_V_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection_excludesAll_T2_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection_flatten_T2_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection_includesAll_T2_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection_product_T2_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection_selectByKind_TT_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection_selectByType_TT_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection_T_1 = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_EnumerationLiteral = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Enumeration = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Map_excludesAll_K2_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Map_includesAll_K2_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Map_K = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Map_V = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OclAny_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OclAny = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OclElement = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OclEnumeration = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OclSelf = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OrderedCollection_T_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OrderedSet_collectNested_V = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OrderedSet_collect_V = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OrderedSet_flatten_T2 = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OrderedSet_selectByKind_TT = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OrderedSet_selectByType_TT = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OrderedSet_T = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Sequence_collectNested_V = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Sequence_collect_V = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Sequence_flatten_T2 = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Sequence_selectByKind_TT = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Sequence_selectByType_TT = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Sequence_T = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Set_collectNested_V = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Set_collect_V = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Set_flatten_T2 = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Set_selectByKind_TT = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Set_selectByType_TT = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Set_T_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Set_T = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_UniqueCollection_T_NullFree = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_UniqueCollection_T = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _OrderedCollection_Integer = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_String = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_Bag_T = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_Collection_T = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_EnumerationLiteral = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_OrderedSet_collectNested_V = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_OrderedSet_collect_V = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_OrderedSet_flatten_T2 = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_OrderedSet_selectByKind_TT = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_OrderedSet_selectByType_TT = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_OrderedSet_T_NullFree = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_Sequence_collectNested_V = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_Sequence_collect_V = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_Sequence_flatten_T2 = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_Sequence_selectByKind_TT = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_Sequence_selectByType_TT = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_Sequence_T_NullFree = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_Sequence_T = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_Set_T = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_UniqueCollection_T = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull OrderedSetType _OrderedSet_Collection_T_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T);
+		private final @NonNull OrderedSetType _OrderedSet_EnumerationLiteral_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T);
+		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_flatten_T2_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T);
+		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_selectByKind_TT_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T);
+		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_selectByType_TT_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T);
+		private final @NonNull OrderedSetType _OrderedSet_Sequence_T_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T);
+		private final @NonNull OrderedSetType _OrderedSet_Set_T_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T);
+		private final @NonNull OrderedSetType _OrderedSet_UniqueCollection_T_NullFree = createOrderedSetType(_OrderedSet_OrderedSet_T);
+		private final @NonNull SequenceType _Sequence_Integer_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_String_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_Bag_T_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_Collection_T_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_OrderedSet_collectNested_V_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_OrderedSet_collect_V_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_Sequence_collectNested_V_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_Sequence_collect_V_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_Sequence_flatten_T2_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_Sequence_selectByKind_TT_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_Sequence_selectByType_TT_NullFree = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SetType _Set_Tuple_NullFree = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_Bag_T_NullFree = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_Collection_T_NullFree = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_Map_K_NullFree = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_OclElement_NullFree = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_OclSelf_NullFree = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_OclSelf = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_Set_flatten_T2_NullFree = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_Set_selectByKind_TT_NullFree = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_Set_selectByType_TT_NullFree = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_UniqueCollection_T_NullFree = createSetType(_Set_Set_T);
+		private final @NonNull CollectionType _UniqueCollection_Tuple = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_Bag_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_Collection_T_NullFree = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_Collection_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_EnumerationLiteral = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_Map_K = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_OclAny_NullFree = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_OclElement = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_OclSelf = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_OrderedSet_flatten_T2 = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_OrderedSet_selectByKind_TT = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_OrderedSet_selectByType_TT = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_OrderedSet_T_NullFree = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_Sequence_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_Set_flatten_T2 = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_Set_selectByKind_TT = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_Set_selectByType_TT = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_Set_T_NullFree = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_Set_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T_1 = createCollectionType(_UniqueCollection_UniqueCollection_T);
 
 		private final @NonNull MapType _Map_Map_K_Map_V = createMapType("Map"/*K V*/, tp_Map_K, tp_Map_V);
-		private final @NonNull MapType _Map_Map_excludesMap_K2_Map_excludesMap_V2 = createMapType(_Map_Map_K_Map_V, tp_Map_excludesMap_K2, tp_Map_excludesMap_V2);
-		private final @NonNull MapType _Map_Map_excludingMap_K2_Map_excludingMap_V2 = createMapType(_Map_Map_K_Map_V, tp_Map_excludingMap_K2, tp_Map_excludingMap_V2);
-		private final @NonNull MapType _Map_Map_includesMap_K2_Map_includesMap_V2 = createMapType(_Map_Map_K_Map_V, tp_Map_includesMap_K2, tp_Map_includesMap_V2);
-		private final @NonNull MapType _Map_Map_includingMap_K2_Map_includingMap_V2 = createMapType(_Map_Map_K_Map_V, tp_Map_includingMap_K2, tp_Map_includingMap_V2);
+		private final @NonNull MapType _Map_Map_excludesMap_K2_Map_excludesMap_V2 = createMapType(_Map_Map_K_Map_V);
+		private final @NonNull MapType _Map_Map_excludingMap_K2_Map_excludingMap_V2 = createMapType(_Map_Map_K_Map_V);
+		private final @NonNull MapType _Map_Map_includesMap_K2_Map_includesMap_V2 = createMapType(_Map_Map_K_Map_V);
+		private final @NonNull MapType _Map_Map_includingMap_K2_Map_includingMap_V2 = createMapType(_Map_Map_K_Map_V);
 
 		private void installClassTypes() {
 			List<Class> ownedClasses;
@@ -2711,286 +2701,144 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installTemplateBindings() {
-			/*			_Bag_Bag_collectNested_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, tp_Bag_collectNested_V)));
-			_Bag_Bag_collect_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, tp_Bag_collect_V)));
-			_Bag_Bag_flatten_T2_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, tp_Bag_flatten_T2)));
-			_Bag_Bag_selectByKind_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, tp_Bag_selectByKind_TT)));
-			_Bag_Bag_selectByType_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, tp_Bag_selectByType_TT)));
-			_Bag_Collection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, tp_Collection_T)));
-			_Bag_Enumeration.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, _Enumeration)));
-			_Bag_Map_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, tp_Map_V)));
-			_Bag_OclElement.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, _OclElement)));
-			_Bag_OclEnumeration.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, _OclEnumeration)));
-			_Bag_Set_collectNested_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, tp_Set_collectNested_V)));
-			_Bag_Set_collect_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Bag_T, tp_Set_collect_V)));
-			_Collection_Bag_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Bag_T)));
-			_Collection_Bag_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Bag_T)));
-			_Collection_Bag_collectNested_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Bag_collectNested_V)));
-			_Collection_Bag_collect_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Bag_collect_V)));
-			_Collection_Bag_flatten_T2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Bag_flatten_T2)));
-			_Collection_Bag_selectByKind_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Bag_selectByKind_TT)));
-			_Collection_Bag_selectByType_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Bag_selectByType_TT)));
-			_Collection_Collection_T_1.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Collection_T)));
-			_Collection_Collection_collectNested_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Collection_collectNested_V)));
-			_Collection_Collection_collect_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Collection_collect_V)));
-			_Collection_Collection_excludesAll_T2_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Collection_excludesAll_T2)));
-			_Collection_Collection_flatten_T2_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Collection_flatten_T2)));
-			_Collection_Collection_includesAll_T2_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Collection_includesAll_T2)));
-			_Collection_Collection_product_T2_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Collection_product_T2)));
-			_Collection_Collection_selectByKind_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Collection_selectByKind_TT)));
-			_Collection_Collection_selectByType_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Collection_selectByType_TT)));
-			_Collection_Enumeration.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _Enumeration)));
-			_Collection_EnumerationLiteral.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _EnumerationLiteral)));
-			_Collection_Integer.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _Integer)));
-			_Collection_Map_K.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Map_K)));
-			_Collection_Map_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Map_V)));
-			_Collection_Map_excludesAll_K2_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Map_excludesAll_K2)));
-			_Collection_Map_includesAll_K2_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Map_includesAll_K2)));
-			_Collection_OclAny.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _OclAny)));
-			_Collection_OclAny_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _OclAny)));
-			_Collection_OclElement.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _OclElement)));
-			_Collection_OclEnumeration.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _OclEnumeration)));
-			_Collection_OclSelf.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _OclSelf)));
-			_Collection_OrderedCollection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_OrderedCollection_T)));
-			_Collection_OrderedSet_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_OrderedSet_T)));
-			_Collection_OrderedSet_collectNested_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_OrderedSet_collectNested_V)));
-			_Collection_OrderedSet_collect_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_OrderedSet_collect_V)));
-			_Collection_OrderedSet_flatten_T2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_OrderedSet_flatten_T2)));
-			_Collection_OrderedSet_selectByKind_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_OrderedSet_selectByKind_TT)));
-			_Collection_OrderedSet_selectByType_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_OrderedSet_selectByType_TT)));
-			_Collection_Sequence_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Sequence_T)));
-			_Collection_Sequence_collectNested_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Sequence_collectNested_V)));
-			_Collection_Sequence_collect_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Sequence_collect_V)));
-			_Collection_Sequence_flatten_T2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Sequence_flatten_T2)));
-			_Collection_Sequence_selectByKind_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Sequence_selectByKind_TT)));
-			_Collection_Sequence_selectByType_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Sequence_selectByType_TT)));
-			_Collection_Set_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Set_T)));
-			_Collection_Set_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Set_T)));
-			_Collection_Set_collectNested_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Set_collectNested_V)));
-			_Collection_Set_collect_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Set_collect_V)));
-			_Collection_Set_flatten_T2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Set_flatten_T2)));
-			_Collection_Set_selectByKind_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Set_selectByKind_TT)));
-			_Collection_Set_selectByType_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_Set_selectByType_TT)));
-			_Collection_String.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _String)));
-			_Collection_Tuple.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, _Tuple)));
-			_Collection_UniqueCollection_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_UniqueCollection_T)));
-			_Collection_UniqueCollection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Collection_T, tp_UniqueCollection_T)));
-			_Map_Map_excludesMap_K2_Map_excludesMap_V2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Map_K, tp_Map_excludesMap_K2),
-						createTemplateParameterSubstitution(tp_Map_V, tp_Map_excludesMap_V2)));
-			_Map_Map_excludingMap_K2_Map_excludingMap_V2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Map_K, tp_Map_excludingMap_K2),
-						createTemplateParameterSubstitution(tp_Map_V, tp_Map_excludingMap_V2)));
-			_Map_Map_includesMap_K2_Map_includesMap_V2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Map_K, tp_Map_includesMap_K2),
-						createTemplateParameterSubstitution(tp_Map_V, tp_Map_includesMap_V2)));
-			_Map_Map_includingMap_K2_Map_includingMap_V2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Map_K, tp_Map_includingMap_K2),
-						createTemplateParameterSubstitution(tp_Map_V, tp_Map_includingMap_V2)));
-			_OrderedCollection_Bag_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Bag_T)));
-			_OrderedCollection_Collection_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Collection_T)));
-			_OrderedCollection_EnumerationLiteral.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, _EnumerationLiteral)));
-			_OrderedCollection_Integer.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, _Integer)));
-			_OrderedCollection_OrderedSet_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_OrderedSet_T)));
-			_OrderedCollection_OrderedSet_collectNested_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_OrderedSet_collectNested_V)));
-			_OrderedCollection_OrderedSet_collect_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_OrderedSet_collect_V)));
-			_OrderedCollection_OrderedSet_flatten_T2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_OrderedSet_flatten_T2)));
-			_OrderedCollection_OrderedSet_selectByKind_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_OrderedSet_selectByKind_TT)));
-			_OrderedCollection_OrderedSet_selectByType_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_OrderedSet_selectByType_TT)));
-			_OrderedCollection_Sequence_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Sequence_T)));
-			_OrderedCollection_Sequence_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Sequence_T)));
-			_OrderedCollection_Sequence_collectNested_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Sequence_collectNested_V)));
-			_OrderedCollection_Sequence_collect_V.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Sequence_collect_V)));
-			_OrderedCollection_Sequence_flatten_T2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Sequence_flatten_T2)));
-			_OrderedCollection_Sequence_selectByKind_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Sequence_selectByKind_TT)));
-			_OrderedCollection_Sequence_selectByType_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Sequence_selectByType_TT)));
-			_OrderedCollection_Set_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_Set_T)));
-			_OrderedCollection_String.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, _String)));
-			_OrderedCollection_UniqueCollection_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedCollection_T, tp_UniqueCollection_T)));
-			_OrderedSet_Collection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedSet_T, tp_Collection_T)));
-			_OrderedSet_EnumerationLiteral_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedSet_T, _EnumerationLiteral)));
-			_OrderedSet_OrderedSet_flatten_T2_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedSet_T, tp_OrderedSet_flatten_T2)));
-			_OrderedSet_OrderedSet_selectByKind_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedSet_T, tp_OrderedSet_selectByKind_TT)));
-			_OrderedSet_OrderedSet_selectByType_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedSet_T, tp_OrderedSet_selectByType_TT)));
-			_OrderedSet_Sequence_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedSet_T, tp_Sequence_T)));
-			_OrderedSet_Set_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedSet_T, tp_Set_T)));
-			_OrderedSet_UniqueCollection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_OrderedSet_T, tp_UniqueCollection_T)));
-			_Sequence_Bag_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, tp_Bag_T)));
-			_Sequence_Collection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, tp_Collection_T)));
-			_Sequence_Integer_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, _Integer)));
-			_Sequence_OrderedSet_collectNested_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, tp_OrderedSet_collectNested_V)));
-			_Sequence_OrderedSet_collect_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, tp_OrderedSet_collect_V)));
-			_Sequence_Sequence_collectNested_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, tp_Sequence_collectNested_V)));
-			_Sequence_Sequence_collect_V_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, tp_Sequence_collect_V)));
-			_Sequence_Sequence_flatten_T2_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, tp_Sequence_flatten_T2)));
-			_Sequence_Sequence_selectByKind_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, tp_Sequence_selectByKind_TT)));
-			_Sequence_Sequence_selectByType_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, tp_Sequence_selectByType_TT)));
-			_Sequence_String_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Sequence_T, _String)));
-			_Set_Bag_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, tp_Bag_T)));
-			_Set_Collection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, tp_Collection_T)));
-			_Set_Map_K_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, tp_Map_K)));
-			_Set_OclElement_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, _OclElement)));
-			_Set_OclSelf.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, _OclSelf)));
-			_Set_OclSelf_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, _OclSelf)));
-			_Set_Set_flatten_T2_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, tp_Set_flatten_T2)));
-			_Set_Set_selectByKind_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, tp_Set_selectByKind_TT)));
-			_Set_Set_selectByType_TT_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, tp_Set_selectByType_TT)));
-			_Set_Tuple_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, _Tuple)));
-			_Set_UniqueCollection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_Set_T, tp_UniqueCollection_T)));
-			_UniqueCollection_Bag_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_Bag_T)));
-			_UniqueCollection_Collection_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_Collection_T)));
-			_UniqueCollection_Collection_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_Collection_T)));
-			_UniqueCollection_EnumerationLiteral.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, _EnumerationLiteral)));
-			_UniqueCollection_Map_K.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_Map_K)));
-			_UniqueCollection_OclAny_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, _OclAny)));
-			_UniqueCollection_OclElement.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, _OclElement)));
-			_UniqueCollection_OclSelf.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, _OclSelf)));
-			_UniqueCollection_OrderedSet_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_OrderedSet_T)));
-			_UniqueCollection_OrderedSet_flatten_T2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_OrderedSet_flatten_T2)));
-			_UniqueCollection_OrderedSet_selectByKind_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_OrderedSet_selectByKind_TT)));
-			_UniqueCollection_OrderedSet_selectByType_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_OrderedSet_selectByType_TT)));
-			_UniqueCollection_Sequence_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_Sequence_T)));
-			_UniqueCollection_Set_T.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_Set_T)));
-			_UniqueCollection_Set_T_NullFree.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_Set_T)));
-			_UniqueCollection_Set_flatten_T2.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_Set_flatten_T2)));
-			_UniqueCollection_Set_selectByKind_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_Set_selectByKind_TT)));
-			_UniqueCollection_Set_selectByType_TT.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_Set_selectByType_TT)));
-			_UniqueCollection_Tuple.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, _Tuple)));
-			_UniqueCollection_UniqueCollection_T_1.getOwnedBindings().add(createTemplateBinding(
-				createTemplateParameterSubstitution(tp_UniqueCollection_T, tp_UniqueCollection_T))); */
+			addBindings(_Bag_Bag_collectNested_V_NullFree, tp_Bag_collectNested_V);
+			addBindings(_Bag_Bag_collect_V_NullFree, tp_Bag_collect_V);
+			addBindings(_Bag_Bag_flatten_T2_NullFree, tp_Bag_flatten_T2);
+			addBindings(_Bag_Bag_selectByKind_TT_NullFree, tp_Bag_selectByKind_TT);
+			addBindings(_Bag_Bag_selectByType_TT_NullFree, tp_Bag_selectByType_TT);
+			addBindings(_Bag_Collection_T_NullFree, tp_Collection_T);
+			addBindings(_Bag_Enumeration, _Enumeration);
+			addBindings(_Bag_Map_V_NullFree, tp_Map_V);
+			addBindings(_Bag_OclElement, _OclElement);
+			addBindings(_Bag_OclEnumeration, _OclEnumeration);
+			addBindings(_Bag_Set_collectNested_V_NullFree, tp_Set_collectNested_V);
+			addBindings(_Bag_Set_collect_V_NullFree, tp_Set_collect_V);
+			addBindings(_Collection_Bag_T, tp_Bag_T);
+			addBindings(_Collection_Bag_T_NullFree, tp_Bag_T);
+			addBindings(_Collection_Bag_collectNested_V, tp_Bag_collectNested_V);
+			addBindings(_Collection_Bag_collect_V, tp_Bag_collect_V);
+			addBindings(_Collection_Bag_flatten_T2, tp_Bag_flatten_T2);
+			addBindings(_Collection_Bag_selectByKind_TT, tp_Bag_selectByKind_TT);
+			addBindings(_Collection_Bag_selectByType_TT, tp_Bag_selectByType_TT);
+			addBindings(_Collection_Collection_T_1, tp_Collection_T);
+			addBindings(_Collection_Collection_collectNested_V_NullFree, tp_Collection_collectNested_V);
+			addBindings(_Collection_Collection_collect_V_NullFree, tp_Collection_collect_V);
+			addBindings(_Collection_Collection_excludesAll_T2_NullFree, tp_Collection_excludesAll_T2);
+			addBindings(_Collection_Collection_flatten_T2_NullFree, tp_Collection_flatten_T2);
+			addBindings(_Collection_Collection_includesAll_T2_NullFree, tp_Collection_includesAll_T2);
+			addBindings(_Collection_Collection_product_T2_NullFree, tp_Collection_product_T2);
+			addBindings(_Collection_Collection_selectByKind_TT_NullFree, tp_Collection_selectByKind_TT);
+			addBindings(_Collection_Collection_selectByType_TT_NullFree, tp_Collection_selectByType_TT);
+			addBindings(_Collection_Enumeration, _Enumeration);
+			addBindings(_Collection_EnumerationLiteral, _EnumerationLiteral);
+			addBindings(_Collection_Integer, _Integer);
+			addBindings(_Collection_Map_K, tp_Map_K);
+			addBindings(_Collection_Map_V, tp_Map_V);
+			addBindings(_Collection_Map_excludesAll_K2_NullFree, tp_Map_excludesAll_K2);
+			addBindings(_Collection_Map_includesAll_K2_NullFree, tp_Map_includesAll_K2);
+			addBindings(_Collection_OclAny, _OclAny);
+			addBindings(_Collection_OclAny_NullFree, _OclAny);
+			addBindings(_Collection_OclElement, _OclElement);
+			addBindings(_Collection_OclEnumeration, _OclEnumeration);
+			addBindings(_Collection_OclSelf, _OclSelf);
+			addBindings(_Collection_OrderedCollection_T_NullFree, tp_OrderedCollection_T);
+			addBindings(_Collection_OrderedSet_T, tp_OrderedSet_T);
+			addBindings(_Collection_OrderedSet_collectNested_V, tp_OrderedSet_collectNested_V);
+			addBindings(_Collection_OrderedSet_collect_V, tp_OrderedSet_collect_V);
+			addBindings(_Collection_OrderedSet_flatten_T2, tp_OrderedSet_flatten_T2);
+			addBindings(_Collection_OrderedSet_selectByKind_TT, tp_OrderedSet_selectByKind_TT);
+			addBindings(_Collection_OrderedSet_selectByType_TT, tp_OrderedSet_selectByType_TT);
+			addBindings(_Collection_Sequence_T, tp_Sequence_T);
+			addBindings(_Collection_Sequence_collectNested_V, tp_Sequence_collectNested_V);
+			addBindings(_Collection_Sequence_collect_V, tp_Sequence_collect_V);
+			addBindings(_Collection_Sequence_flatten_T2, tp_Sequence_flatten_T2);
+			addBindings(_Collection_Sequence_selectByKind_TT, tp_Sequence_selectByKind_TT);
+			addBindings(_Collection_Sequence_selectByType_TT, tp_Sequence_selectByType_TT);
+			addBindings(_Collection_Set_T, tp_Set_T);
+			addBindings(_Collection_Set_T_NullFree, tp_Set_T);
+			addBindings(_Collection_Set_collectNested_V, tp_Set_collectNested_V);
+			addBindings(_Collection_Set_collect_V, tp_Set_collect_V);
+			addBindings(_Collection_Set_flatten_T2, tp_Set_flatten_T2);
+			addBindings(_Collection_Set_selectByKind_TT, tp_Set_selectByKind_TT);
+			addBindings(_Collection_Set_selectByType_TT, tp_Set_selectByType_TT);
+			addBindings(_Collection_String, _String);
+			addBindings(_Collection_Tuple, _Tuple);
+			addBindings(_Collection_UniqueCollection_T, tp_UniqueCollection_T);
+			addBindings(_Collection_UniqueCollection_T_NullFree, tp_UniqueCollection_T);
+			addBindings(_Map_Map_excludesMap_K2_Map_excludesMap_V2, tp_Map_excludesMap_K2, tp_Map_excludesMap_V2);
+			addBindings(_Map_Map_excludingMap_K2_Map_excludingMap_V2, tp_Map_excludingMap_K2, tp_Map_excludingMap_V2);
+			addBindings(_Map_Map_includesMap_K2_Map_includesMap_V2, tp_Map_includesMap_K2, tp_Map_includesMap_V2);
+			addBindings(_Map_Map_includingMap_K2_Map_includingMap_V2, tp_Map_includingMap_K2, tp_Map_includingMap_V2);
+			addBindings(_OrderedCollection_Bag_T, tp_Bag_T);
+			addBindings(_OrderedCollection_Collection_T, tp_Collection_T);
+			addBindings(_OrderedCollection_EnumerationLiteral, _EnumerationLiteral);
+			addBindings(_OrderedCollection_Integer, _Integer);
+			addBindings(_OrderedCollection_OrderedSet_T_NullFree, tp_OrderedSet_T);
+			addBindings(_OrderedCollection_OrderedSet_collectNested_V, tp_OrderedSet_collectNested_V);
+			addBindings(_OrderedCollection_OrderedSet_collect_V, tp_OrderedSet_collect_V);
+			addBindings(_OrderedCollection_OrderedSet_flatten_T2, tp_OrderedSet_flatten_T2);
+			addBindings(_OrderedCollection_OrderedSet_selectByKind_TT, tp_OrderedSet_selectByKind_TT);
+			addBindings(_OrderedCollection_OrderedSet_selectByType_TT, tp_OrderedSet_selectByType_TT);
+			addBindings(_OrderedCollection_Sequence_T, tp_Sequence_T);
+			addBindings(_OrderedCollection_Sequence_T_NullFree, tp_Sequence_T);
+			addBindings(_OrderedCollection_Sequence_collectNested_V, tp_Sequence_collectNested_V);
+			addBindings(_OrderedCollection_Sequence_collect_V, tp_Sequence_collect_V);
+			addBindings(_OrderedCollection_Sequence_flatten_T2, tp_Sequence_flatten_T2);
+			addBindings(_OrderedCollection_Sequence_selectByKind_TT, tp_Sequence_selectByKind_TT);
+			addBindings(_OrderedCollection_Sequence_selectByType_TT, tp_Sequence_selectByType_TT);
+			addBindings(_OrderedCollection_Set_T, tp_Set_T);
+			addBindings(_OrderedCollection_String, _String);
+			addBindings(_OrderedCollection_UniqueCollection_T, tp_UniqueCollection_T);
+			addBindings(_OrderedSet_Collection_T_NullFree, tp_Collection_T);
+			addBindings(_OrderedSet_EnumerationLiteral_NullFree, _EnumerationLiteral);
+			addBindings(_OrderedSet_OrderedSet_flatten_T2_NullFree, tp_OrderedSet_flatten_T2);
+			addBindings(_OrderedSet_OrderedSet_selectByKind_TT_NullFree, tp_OrderedSet_selectByKind_TT);
+			addBindings(_OrderedSet_OrderedSet_selectByType_TT_NullFree, tp_OrderedSet_selectByType_TT);
+			addBindings(_OrderedSet_Sequence_T_NullFree, tp_Sequence_T);
+			addBindings(_OrderedSet_Set_T_NullFree, tp_Set_T);
+			addBindings(_OrderedSet_UniqueCollection_T_NullFree, tp_UniqueCollection_T);
+			addBindings(_Sequence_Bag_T_NullFree, tp_Bag_T);
+			addBindings(_Sequence_Collection_T_NullFree, tp_Collection_T);
+			addBindings(_Sequence_Integer_NullFree, _Integer);
+			addBindings(_Sequence_OrderedSet_collectNested_V_NullFree, tp_OrderedSet_collectNested_V);
+			addBindings(_Sequence_OrderedSet_collect_V_NullFree, tp_OrderedSet_collect_V);
+			addBindings(_Sequence_Sequence_collectNested_V_NullFree, tp_Sequence_collectNested_V);
+			addBindings(_Sequence_Sequence_collect_V_NullFree, tp_Sequence_collect_V);
+			addBindings(_Sequence_Sequence_flatten_T2_NullFree, tp_Sequence_flatten_T2);
+			addBindings(_Sequence_Sequence_selectByKind_TT_NullFree, tp_Sequence_selectByKind_TT);
+			addBindings(_Sequence_Sequence_selectByType_TT_NullFree, tp_Sequence_selectByType_TT);
+			addBindings(_Sequence_String_NullFree, _String);
+			addBindings(_Set_Bag_T_NullFree, tp_Bag_T);
+			addBindings(_Set_Collection_T_NullFree, tp_Collection_T);
+			addBindings(_Set_Map_K_NullFree, tp_Map_K);
+			addBindings(_Set_OclElement_NullFree, _OclElement);
+			addBindings(_Set_OclSelf, _OclSelf);
+			addBindings(_Set_OclSelf_NullFree, _OclSelf);
+			addBindings(_Set_Set_flatten_T2_NullFree, tp_Set_flatten_T2);
+			addBindings(_Set_Set_selectByKind_TT_NullFree, tp_Set_selectByKind_TT);
+			addBindings(_Set_Set_selectByType_TT_NullFree, tp_Set_selectByType_TT);
+			addBindings(_Set_Tuple_NullFree, _Tuple);
+			addBindings(_Set_UniqueCollection_T_NullFree, tp_UniqueCollection_T);
+			addBindings(_UniqueCollection_Bag_T, tp_Bag_T);
+			addBindings(_UniqueCollection_Collection_T, tp_Collection_T);
+			addBindings(_UniqueCollection_Collection_T_NullFree, tp_Collection_T);
+			addBindings(_UniqueCollection_EnumerationLiteral, _EnumerationLiteral);
+			addBindings(_UniqueCollection_Map_K, tp_Map_K);
+			addBindings(_UniqueCollection_OclAny_NullFree, _OclAny);
+			addBindings(_UniqueCollection_OclElement, _OclElement);
+			addBindings(_UniqueCollection_OclSelf, _OclSelf);
+			addBindings(_UniqueCollection_OrderedSet_T_NullFree, tp_OrderedSet_T);
+			addBindings(_UniqueCollection_OrderedSet_flatten_T2, tp_OrderedSet_flatten_T2);
+			addBindings(_UniqueCollection_OrderedSet_selectByKind_TT, tp_OrderedSet_selectByKind_TT);
+			addBindings(_UniqueCollection_OrderedSet_selectByType_TT, tp_OrderedSet_selectByType_TT);
+			addBindings(_UniqueCollection_Sequence_T, tp_Sequence_T);
+			addBindings(_UniqueCollection_Set_T, tp_Set_T);
+			addBindings(_UniqueCollection_Set_T_NullFree, tp_Set_T);
+			addBindings(_UniqueCollection_Set_flatten_T2, tp_Set_flatten_T2);
+			addBindings(_UniqueCollection_Set_selectByKind_TT, tp_Set_selectByKind_TT);
+			addBindings(_UniqueCollection_Set_selectByType_TT, tp_Set_selectByType_TT);
+			addBindings(_UniqueCollection_Tuple, _Tuple);
+			addBindings(_UniqueCollection_UniqueCollection_T_1, tp_UniqueCollection_T);
 		}
 
 		private void installPrecedences() {

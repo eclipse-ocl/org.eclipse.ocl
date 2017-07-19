@@ -65,7 +65,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ENDFOR»
 			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
 			«IF type.getOwnedSignature() == null»
-			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()», «type.elementType.getSymbolName()»);
+			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
 			«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -107,7 +107,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 				«IF type.getOwnedSignature() == null»
 					private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
-					eClass.name»(«type.getUnspecializedElement().getSymbolName()», «type.keyType.getSymbolName()», «type.valueType.getSymbolName()»);
+					eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
 				«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -204,6 +204,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String defineCollectionTypes(/*@NonNull*/ Model root) {
+		// FIXME Probably need to interleave all specialized types in reverse dependency order
 		var pkge2collectionTypes = root.getSortedCollectionTypes();
 		if (pkge2collectionTypes.isEmpty()) return "";
 		var sortedPackages = root.getSortedPackages(pkge2collectionTypes.keySet());
@@ -624,9 +625,7 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			private void installTemplateBindings() {
 				«FOR templateableElement : allTemplateableElements»
 					«FOR templateBinding : templateableElement.ownedBindings»
-						«templateableElement.getSymbolName()».getOwnedBindings().add(createTemplateBinding(
-							«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions SEPARATOR (",\n")»
-							createTemplateParameterSubstitution(«templateParameterSubstitution.formal.getSymbolName()», «templateParameterSubstitution.actual.getSymbolName()»)«ENDFOR»));
+						addBindings(«templateableElement.getSymbolName()»«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions», «templateParameterSubstitution.actual.getSymbolName()»«ENDFOR»);
 					«ENDFOR»
 				«ENDFOR»
 			}
