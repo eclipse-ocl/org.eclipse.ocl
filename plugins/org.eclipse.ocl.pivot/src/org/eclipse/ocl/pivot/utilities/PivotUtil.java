@@ -277,7 +277,6 @@ public class PivotUtil
 		specializedType.setLower(unspecializedType.getLower());
 		specializedType.setUpper(unspecializedType.getUpper());
 		specializedType.setUnspecializedElement(unspecializedType);
-		specializedType.setElementType(instanceType);
 		TemplateParameter templateParameter = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
 		assert templateParameter != null;
 		TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(templateParameter, instanceType);
@@ -409,8 +408,6 @@ public class PivotUtil
 	protected static @NonNull <@NonNull T extends MapType> T createMapType(T specializedType, T unspecializedType, @NonNull Type keyType, @NonNull Type valueType) {
 		specializedType.setName(unspecializedType.getName());
 		specializedType.setUnspecializedElement(unspecializedType);
-		specializedType.setKeyType(keyType);
-		specializedType.setValueType(valueType);
 		TemplateParameter templateParameter1 = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
 		TemplateParameter templateParameter2 = unspecializedType.getOwnedSignature().getOwnedParameters().get(1);
 		assert templateParameter1 != null;

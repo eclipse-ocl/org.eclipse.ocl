@@ -11,10 +11,10 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
@@ -32,6 +32,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
@@ -67,16 +69,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class CollectionTypeImpl
 extends DataTypeImpl
 implements CollectionType {
-
-	/**
-	 * The cached value of the '{@link #getElementType() <em>Element Type</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getElementType()
-	 * @generated
-	 * @ordered
-	 */
-	protected Type elementType;
 
 	/**
 	 * The default value of the '{@link #isIsNullFree() <em>Is Null Free</em>}' attribute.
@@ -151,48 +143,6 @@ implements CollectionType {
 	@Override
 	protected EClass eStaticClass() {
 		return PivotPackage.Literals.COLLECTION_TYPE;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Type getElementType() {
-		if (elementType != null && elementType.eIsProxy())
-		{
-			InternalEObject oldElementType = (InternalEObject)elementType;
-			elementType = (Type)eResolveProxy(oldElementType);
-			if (elementType != oldElementType)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.COLLECTION_TYPE__ELEMENT_TYPE, oldElementType, elementType));
-			}
-		}
-		return elementType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Type basicGetElementType() {
-		return elementType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setElementType(Type newElementType) {
-		Type oldElementType = elementType;
-		elementType = newElementType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.COLLECTION_TYPE__ELEMENT_TYPE, oldElementType, elementType));
 	}
 
 	/**
@@ -327,8 +277,7 @@ implements CollectionType {
 			case PivotPackage.COLLECTION_TYPE__VALUE:
 				return getValue();
 			case PivotPackage.COLLECTION_TYPE__ELEMENT_TYPE:
-				if (resolve) return getElementType();
-				return basicGetElementType();
+				return getElementType();
 			case PivotPackage.COLLECTION_TYPE__IS_NULL_FREE:
 				return isIsNullFree();
 			case PivotPackage.COLLECTION_TYPE__LOWER:
@@ -590,7 +539,7 @@ implements CollectionType {
 			case PivotPackage.COLLECTION_TYPE__VALUE:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case PivotPackage.COLLECTION_TYPE__ELEMENT_TYPE:
-				return elementType != null;
+				return getElementType() != null;
 			case PivotPackage.COLLECTION_TYPE__IS_NULL_FREE:
 				return ((eFlags & IS_NULL_FREE_EFLAG) != 0) != IS_NULL_FREE_EDEFAULT;
 			case PivotPackage.COLLECTION_TYPE__LOWER:
@@ -614,6 +563,14 @@ implements CollectionType {
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitCollectionType(this);
+	}
+
+	@Deprecated /* @deprecated no longer duplicates template binding */
+	protected Type elementType = null;
+
+	@Deprecated /* @deprecated no longer duplicates template binding */
+	public Type basicGetElementType() {
+		return getElementType();
 	}
 
 	@Override
@@ -720,6 +677,20 @@ implements CollectionType {
 	}
 
 	@Override
+	public Type getElementType() {
+		TemplateSignature templateSignature = getOwnedSignature();
+		if (templateSignature != null) {
+			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+			return templateParameters.get(0);
+		}
+		else {
+			List<TemplateBinding> templateBindings = getOwnedBindings();
+			List<TemplateParameterSubstitution> templateParameterSubstitutions = templateBindings.get(0).getOwnedSubstitutions();
+			return templateParameterSubstitutions.get(0).getActual();
+		}
+	}
+
+	@Override
 	public @NonNull IntegerValue getLowerValue() {
 		Number lower2 = lower;
 		assert lower2 != null;
@@ -731,6 +702,11 @@ implements CollectionType {
 		Number upper2 = upper;
 		assert upper2 != null;
 		return ValueUtil.unlimitedNaturalValueOf(upper2);
+	}
+
+	@Override
+	public void setElementType(Type newElementType) {				// FIXME delete me once compatibility not needed
+		System.err.println(eClass().getName() + ".setElementType() is ignored");
 	}
 
 	@Override

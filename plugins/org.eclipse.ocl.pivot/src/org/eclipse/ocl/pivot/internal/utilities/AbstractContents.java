@@ -71,13 +71,6 @@ public abstract class AbstractContents extends PivotUtil
 			parameterSubstitutions.add(templateParameterSubstitution);
 		}
 		specializedType.getOwnedBindings().add(templateBinding);
-		if (specializedType instanceof CollectionType) {			// FIXME delete me
-			((CollectionType)specializedType).setElementType(actualTypes[0]);
-		}
-		if (specializedType instanceof MapType) {			// FIXME delete me
-			((MapType)specializedType).setKeyType(actualTypes[0]);
-			((MapType)specializedType).setValueType(actualTypes[1]);
-		}
 	}
 
 	protected @NonNull BagType createBagType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
@@ -96,7 +89,6 @@ public abstract class AbstractContents extends PivotUtil
 		pivotType.setLower(lower != null ? StringUtil.createNumberFromString(lower) : Integer.valueOf(0));
 		pivotType.setUpper(upper != null ? StringUtil.createNumberFromString(upper) : Unlimited.INSTANCE);
 		initTemplateParameter(pivotType, templateParameter);
-		pivotType.setElementType(templateParameter);
 		return pivotType;
 	}
 
@@ -157,8 +149,6 @@ public abstract class AbstractContents extends PivotUtil
 	protected @NonNull MapType createMapType(/*@NonNull*/ MapType pivotType, @NonNull String name, @NonNull TemplateParameter keyParameter, @NonNull TemplateParameter valueParameter) {
 		pivotType.setName(name);
 		initTemplateParameters(pivotType, keyParameter, valueParameter);
-		pivotType.setKeyType(keyParameter);
-		pivotType.setValueType(valueParameter);
 		return pivotType;
 	}
 
@@ -166,8 +156,6 @@ public abstract class AbstractContents extends PivotUtil
 		MapType mapType = PivotFactory.eINSTANCE.createMapType();
 		mapType.setName(name);
 		initTemplateParameters(mapType, keyParameter, valueParameter);
-		mapType.setKeyType(keyParameter);
-		mapType.setValueType(valueParameter);
 		return mapType;
 	}
 

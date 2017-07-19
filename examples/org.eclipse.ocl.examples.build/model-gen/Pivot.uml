@@ -213,7 +213,8 @@
     <ownedAttribute xmi:id="Ppivot.TCollectionType.Pupper" name="upper" visibility="public" type="Ppivot.TUnlimitedNatural" isOrdered="true">
       <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TCollectionType.Pupper.dlV" value="*"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="Ppivot.TCollectionType.PelementType" name="elementType" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_elementType_CollectionType"/>
+    <ownedAttribute xmi:id="Ppivot.TCollectionType.PelementType" name="elementType" type="Ppivot.TType" isOrdered="true" isDerived="true"
+        association="Ppivot.A_elementType_CollectionType"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TComment" name="Comment">
     <generalization xmi:id="Ppivot.TComment.g0" general="Ppivot.TElement"/>
@@ -666,8 +667,8 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TMapType" name="MapType">
     <generalization xmi:id="Ppivot.TMapType.g0" general="Ppivot.TDataType"/>
-    <ownedAttribute xmi:id="Ppivot.TMapType.PkeyType" name="keyType" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_keyType_MapType"/>
-    <ownedAttribute xmi:id="Ppivot.TMapType.PvalueType" name="valueType" type="Ppivot.TType" isOrdered="true" association="Ppivot.A_valueType_MapType"/>
+    <ownedAttribute xmi:id="Ppivot.TMapType.PkeyType" name="keyType" type="Ppivot.TType" isOrdered="true" isDerived="true" association="Ppivot.A_keyType_MapType"/>
+    <ownedAttribute xmi:id="Ppivot.TMapType.PvalueType" name="valueType" type="Ppivot.TType" isOrdered="true" isDerived="true" association="Ppivot.A_valueType_MapType"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TMessageExp" name="MessageExp">
     <generalization xmi:id="Ppivot.TMessageExp.g0" general="Ppivot.TOCLExpression"/>

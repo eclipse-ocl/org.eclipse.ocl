@@ -503,11 +503,11 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_Set_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T_1 = createCollectionType(_UniqueCollection_UniqueCollection_T);
 
-		private final @NonNull MapType _Map_Map_K_Map_V = createMapType("Map"/*K V*/, tp_Map_K, tp_Map_V);
-		private final @NonNull MapType _Map_Map_excludesMap_K2_Map_excludesMap_V2 = createMapType(_Map_Map_K_Map_V);
-		private final @NonNull MapType _Map_Map_excludingMap_K2_Map_excludingMap_V2 = createMapType(_Map_Map_K_Map_V);
-		private final @NonNull MapType _Map_Map_includesMap_K2_Map_includesMap_V2 = createMapType(_Map_Map_K_Map_V);
-		private final @NonNull MapType _Map_Map_includingMap_K2_Map_includingMap_V2 = createMapType(_Map_Map_K_Map_V);
+		private final @NonNull MapType _Map_Map_K_Map_K = createMapType("Map"/*K K*/, tp_Map_K, tp_Map_V);
+		private final @NonNull MapType _Map_Map_excludesMap_K2_Map_excludesMap_V2 = createMapType(_Map_Map_K_Map_K);
+		private final @NonNull MapType _Map_Map_excludingMap_K2_Map_excludingMap_V2 = createMapType(_Map_Map_K_Map_K);
+		private final @NonNull MapType _Map_Map_includesMap_K2_Map_includesMap_V2 = createMapType(_Map_Map_K_Map_K);
+		private final @NonNull MapType _Map_Map_includingMap_K2_Map_includingMap_V2 = createMapType(_Map_Map_K_Map_K);
 
 		private void installClassTypes() {
 			List<Class> ownedClasses;
@@ -1115,7 +1115,7 @@ public class OCLstdlib extends ASResourceImpl
 			MapType type;
 
 			ownedClasses = ocl.getOwnedClasses();
-			ownedClasses.add(type = _Map_Map_K_Map_V);
+			ownedClasses.add(type = _Map_Map_K_Map_K);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 
@@ -1430,17 +1430,17 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Map_excludesAll = createOperation("excludesAll", _Boolean, "org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation.INSTANCE, tp_Map_excludesAll_K2);
 		private final @NonNull Operation op_Map_excludesMap = createOperation("excludesMap", _Boolean, "org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation.INSTANCE, tp_Map_excludesMap_K2, tp_Map_excludesMap_V2);
 		private final @NonNull Operation op_Map_excludesValue = createOperation("excludesValue", _Boolean, "org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation", org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation.INSTANCE);
-		private final @NonNull Operation op_Map_excluding = createOperation("excluding", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapExcludingOperation", org.eclipse.ocl.pivot.library.map.MapExcludingOperation.INSTANCE);
-		private final @NonNull Operation op_Map_excluding_1 = createOperation("excluding", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation.INSTANCE);
-		private final @NonNull Operation op_Map_excludingAll = createOperation("excludingAll", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
-		private final @NonNull Operation op_Map_excludingMap = createOperation("excludingMap", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE, tp_Map_excludingMap_K2, tp_Map_excludingMap_V2);
+		private final @NonNull Operation op_Map_excluding = createOperation("excluding", _Map_Map_K_Map_K, "org.eclipse.ocl.pivot.library.map.MapExcludingOperation", org.eclipse.ocl.pivot.library.map.MapExcludingOperation.INSTANCE);
+		private final @NonNull Operation op_Map_excluding_1 = createOperation("excluding", _Map_Map_K_Map_K, "org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation", org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation.INSTANCE);
+		private final @NonNull Operation op_Map_excludingAll = createOperation("excludingAll", _Map_Map_K_Map_K, "org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation", org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_Map_excludingMap = createOperation("excludingMap", _Map_Map_K_Map_K, "org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation", org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE, tp_Map_excludingMap_K2, tp_Map_excludingMap_V2);
 		private final @NonNull Operation op_Map_includes = createOperation("includes", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIncludesOperation", org.eclipse.ocl.pivot.library.map.MapIncludesOperation.INSTANCE);
 		private final @NonNull Operation op_Map_includes_1 = createOperation("includes", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation.INSTANCE);
 		private final @NonNull Operation op_Map_includesAll = createOperation("includesAll", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation", org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation.INSTANCE, tp_Map_includesAll_K2);
 		private final @NonNull Operation op_Map_includesMap = createOperation("includesMap", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation.INSTANCE, tp_Map_includesMap_K2, tp_Map_includesMap_V2);
 		private final @NonNull Operation op_Map_includesValue = createOperation("includesValue", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation", org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation.INSTANCE);
-		private final @NonNull Operation op_Map_including = createOperation("including", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
-		private final @NonNull Operation op_Map_includingMap = createOperation("includingMap", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE, tp_Map_includingMap_K2, tp_Map_includingMap_V2);
+		private final @NonNull Operation op_Map_including = createOperation("including", _Map_Map_K_Map_K, "org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation", org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
+		private final @NonNull Operation op_Map_includingMap = createOperation("includingMap", _Map_Map_K_Map_K, "org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation", org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE, tp_Map_includingMap_K2, tp_Map_includingMap_V2);
 		private final @NonNull Operation op_Map_isEmpty = createOperation("isEmpty", _Boolean, "org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation", org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
 		private final @NonNull Operation op_Map_keys = createOperation("keys", _Set_Map_K_NullFree, "org.eclipse.ocl.pivot.library.map.MapKeysOperation", org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
 		private final @NonNull Operation op_Map_notEmpty = createOperation("notEmpty", _Boolean, "org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation", org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
@@ -1902,7 +1902,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Enumeration_allInstances);
 			operation.setIsStatic(true);
 
-			ownedOperations = _Map_Map_K_Map_V.getOwnedOperations();
+			ownedOperations = _Map_Map_K_Map_K.getOwnedOperations();
 			ownedOperations.add(operation = op_Map__lt__gt_);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -2656,7 +2656,7 @@ public class OCLstdlib extends ASResourceImpl
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_OclEnumeration_allLiterals);
 
-			ownedProperties = _Map_Map_K_Map_V.getOwnedProperties();
+			ownedProperties = _Map_Map_K_Map_K.getOwnedProperties();
 			ownedProperties.add(property = pr_Map_keyType);
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);

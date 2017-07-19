@@ -13,11 +13,9 @@ package org.eclipse.ocl.pivot.utilities;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LoopExp;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
@@ -51,19 +49,6 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 			superClasses.set(i, resolvedClass);
 		}
 		return super.visitClass(object);
-	}
-
-	@Override
-	public Object visitCollectionType(@NonNull CollectionType object) {
-		Type referredType = ClassUtil.nonNullModel(object.getElementType());
-		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
-		if (referredClass != null) {
-			Type resolvedType = context.resolveType(referredClass);
-			if (resolvedType != referredType) {
-				object.setElementType(resolvedType);
-			}
-		}
-		return super.visitCollectionType(object);
 	}
 
 	@Override
@@ -106,27 +91,6 @@ public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSa
 		Iteration resolvedIteration = context.resolveOperation(referredIteration);
 		object.setReferredIteration(resolvedIteration);
 		return super.visitLoopExp(object);
-	}
-
-	@Override
-	public Object visitMapType(@NonNull MapType object) {
-		Type referredType = ClassUtil.nonNullModel(object.getKeyType());
-		org.eclipse.ocl.pivot.Class referredClass = referredType.isClass();
-		if (referredClass != null) {
-			Type resolvedType = context.resolveType(referredClass);
-			if (resolvedType != referredType) {
-				object.setKeyType(resolvedType);
-			}
-		}
-		referredType = ClassUtil.nonNullModel(object.getValueType());
-		referredClass = referredType.isClass();
-		if (referredClass != null) {
-			Type resolvedType = context.resolveType(referredClass);
-			if (resolvedType != referredType) {
-				object.setValueType(resolvedType);
-			}
-		}
-		return super.visitMapType(object);
 	}
 
 	@Override

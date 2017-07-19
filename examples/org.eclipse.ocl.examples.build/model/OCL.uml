@@ -108,7 +108,9 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Types-CollectionType" name="CollectionType">
         <generalization xmi:id="_XpdiSH7VEeOu79LxSz8Ylw" general="_vJ60ABu3EeSIos3S87O_rg"/>
-        <ownedAttribute xmi:id="OCL-OCL_Types-CollectionType-elementType" name="elementType" type="_2vtgsBu3EeSIos3S87O_rg"/>
+        <ownedAttribute xmi:id="OCL-OCL_Types-CollectionType-elementType" name="elementType" type="_2vtgsBu3EeSIos3S87O_rg" isDerived="true">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_JM2PoGx-EeeGs8EXqqLgaA" value="1"/>
+        </ownedAttribute>
         <ownedAttribute xmi:id="_0hdJcPrfEeSaDrogyTMIhA" name="isNullFree" type="_PHnfsBu4EeSIos3S87O_rg">
           <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_0hdJcfrfEeSaDrogyTMIhA"/>
         </ownedAttribute>
@@ -543,9 +545,19 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_YcxwYM8yEeS-B8MCFKKocw" name="MapType">
         <generalization xmi:id="_daxUYM8yEeS-B8MCFKKocw" general="OCL-OCL_UML-DataType"/>
-        <ownedAttribute xmi:id="_g0fCMM8yEeS-B8MCFKKocw" name="keyType" type="_2vtgsBu3EeSIos3S87O_rg"/>
-        <ownedAttribute xmi:id="_hPdG8M8yEeS-B8MCFKKocw" name="valueType" type="_2vtgsBu3EeSIos3S87O_rg"/>
+        <ownedAttribute xmi:id="_g0fCMM8yEeS-B8MCFKKocw" name="keyType" type="_2vtgsBu3EeSIos3S87O_rg" isDerived="true">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_J52fkGx-EeeGs8EXqqLgaA" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_hPdG8M8yEeS-B8MCFKKocw" name="valueType" type="_2vtgsBu3EeSIos3S87O_rg" isDerived="true">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KW6PAGx-EeeGs8EXqqLgaA" value="1"/>
+        </ownedAttribute>
       </packagedElement>
+      <profileApplication xmi:id="_-5po4Gx6EeeGs8EXqqLgaA">
+        <eAnnotations xmi:id="_-5zZ4Gx6EeeGs8EXqqLgaA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+          <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA"/>
+        </eAnnotations>
+        <appliedProfile href="pathmap://UML_PROFILES/Ecore.profile.uml#_0"/>
+      </profileApplication>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_LII0oBsDEeSM9LreJtBwBg" name="OCL_Messages">
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Expressions-CallOperationAction" name="CallOperationAction">
@@ -663,7 +675,9 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="OCL-OCL_Types-LambdaType" name="LambdaType">
         <generalization xmi:id="_XpnTAH7VEeOu79LxSz8Ylw" general="OCL-OCL_UML-DataType"/>
-        <ownedAttribute xmi:id="OCL-OCL_Types-LambdaType-contextType" name="contextType" type="OCL-OCL_UML-Type"/>
+        <ownedAttribute xmi:id="OCL-OCL_Types-LambdaType-contextType" name="contextType" type="OCL-OCL_UML-Type">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_YEBfQGx-EeeGs8EXqqLgaA" value="1"/>
+        </ownedAttribute>
         <ownedAttribute xmi:id="OCL-OCL_Types-LambdaType-parameterType" name="parameterType" type="OCL-OCL_UML-Type" isOrdered="true" isUnique="false">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XpdiSn7VEeOu79LxSz8Ylw"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XpdiS37VEeOu79LxSz8Ylw" value="*"/>
@@ -736,4 +750,7 @@
   <Ecore:EReference xmi:id="_b3swsH9cEeOrlIuDtf7a6A" isTransient="true" isVolatile="true" isResolveProxies="false"/>
   <Ecore:EReference xmi:id="_pxI0MENFEeSgQZUbTRZNbQ" isTransient="true" base_Property="_O7klUDmUEeSB95ugQCao7g" isResolveProxies="false"/>
   <Ecore:EReference xmi:id="_tmbDsENFEeSgQZUbTRZNbQ" isTransient="true" base_Property="_UlEkcDmUEeSB95ugQCao7g" isResolveProxies="false"/>
+  <Ecore:EReference xmi:id="_BoTAcGx7EeeGs8EXqqLgaA" isTransient="true" isVolatile="true" base_Property="_g0fCMM8yEeS-B8MCFKKocw" isResolveProxies="false"/>
+  <Ecore:EReference xmi:id="_DpMhMGx7EeeGs8EXqqLgaA" isTransient="true" isVolatile="true" base_Property="_hPdG8M8yEeS-B8MCFKKocw" isResolveProxies="false"/>
+  <Ecore:EReference xmi:id="_Lxs5YGx7EeeGs8EXqqLgaA" isTransient="true" isVolatile="true" base_Property="OCL-OCL_Types-CollectionType-elementType" isResolveProxies="false"/>
 </xmi:XMI>

@@ -382,7 +382,8 @@
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CollectionType" name="CollectionType"
       eSuperTypes="#T-pivot-DataType">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CollectionType-elementType"
-        name="elementType" lowerBound="1" eType="#T-pivot-Type"/>
+        name="elementType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
+        derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CollectionType-isNullFree"
         name="isNullFree" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-CollectionType-lower"
@@ -1425,9 +1426,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MapType" name="MapType" eSuperTypes="#T-pivot-DataType">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapType-keyType"
-        name="keyType" lowerBound="1" eType="#T-pivot-Type"/>
+        name="keyType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
+        derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapType-valueType"
-        name="valueType" lowerBound="1" eType="#T-pivot-Type"/>
+        name="valueType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
+        derived="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MessageExp" name="MessageExp"
       eSuperTypes="#T-pivot-OCLExpression">

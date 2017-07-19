@@ -2426,7 +2426,9 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedProperties = _CollectionType.getOwnedProperties();
 			ownedProperties.add(property = pr_CollectionType_elementType);
-			property.setIsResolveProxies(true);
+			property.setIsDerived(true);
+			property.setIsTransient(true);
+			property.setIsVolatile(true);
 			property.setOpposite(pr_Type_CollectionType_elementType);
 			ownedProperties.add(property = pr_CollectionType_isNullFree);
 			property.setIsResolveProxies(true);
@@ -2892,10 +2894,14 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedProperties = _MapType.getOwnedProperties();
 			ownedProperties.add(property = pr_MapType_keyType);
-			property.setIsResolveProxies(true);
+			property.setIsDerived(true);
+			property.setIsTransient(true);
+			property.setIsVolatile(true);
 			property.setOpposite(pr_Type_MapType_keyType);
 			ownedProperties.add(property = pr_MapType_valueType);
-			property.setIsResolveProxies(true);
+			property.setIsDerived(true);
+			property.setIsTransient(true);
+			property.setIsVolatile(true);
 			property.setOpposite(pr_Type_MapType_valueType);
 
 			ownedProperties = _MessageExp.getOwnedProperties();

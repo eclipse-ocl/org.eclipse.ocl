@@ -11,11 +11,9 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
+import java.util.List;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
@@ -28,6 +26,8 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
@@ -51,26 +51,6 @@ import org.eclipse.ocl.pivot.util.Visitor;
 public class MapTypeImpl extends DataTypeImpl implements MapType
 {
 	/**
-	 * The cached value of the '{@link #getKeyType() <em>Key Type</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getKeyType()
-	 * @generated
-	 * @ordered
-	 */
-	protected Type keyType;
-
-	/**
-	 * The cached value of the '{@link #getValueType() <em>Value Type</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValueType()
-	 * @generated
-	 * @ordered
-	 */
-	protected Type valueType;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -89,96 +69,6 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 	protected EClass eStaticClass()
 	{
 		return PivotPackage.Literals.MAP_TYPE;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Type getKeyType()
-	{
-		if (keyType != null && keyType.eIsProxy())
-		{
-			InternalEObject oldKeyType = (InternalEObject)keyType;
-			keyType = (Type)eResolveProxy(oldKeyType);
-			if (keyType != oldKeyType)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.MAP_TYPE__KEY_TYPE, oldKeyType, keyType));
-			}
-		}
-		return keyType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Type basicGetKeyType()
-	{
-		return keyType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setKeyType(Type newKeyType)
-	{
-		Type oldKeyType = keyType;
-		keyType = newKeyType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_TYPE__KEY_TYPE, oldKeyType, keyType));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Type getValueType()
-	{
-		if (valueType != null && valueType.eIsProxy())
-		{
-			InternalEObject oldValueType = (InternalEObject)valueType;
-			valueType = (Type)eResolveProxy(oldValueType);
-			if (valueType != oldValueType)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PivotPackage.MAP_TYPE__VALUE_TYPE, oldValueType, valueType));
-			}
-		}
-		return valueType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Type basicGetValueType()
-	{
-		return valueType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setValueType(Type newValueType)
-	{
-		Type oldValueType = valueType;
-		valueType = newValueType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MAP_TYPE__VALUE_TYPE, oldValueType, valueType));
 	}
 
 	/**
@@ -239,11 +129,9 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 			case PivotPackage.MAP_TYPE__VALUE:
 				return getValue();
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
-				if (resolve) return getKeyType();
-				return basicGetKeyType();
+				return getKeyType();
 			case PivotPackage.MAP_TYPE__VALUE_TYPE:
-				if (resolve) return getValueType();
-				return basicGetValueType();
+				return getValueType();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -490,9 +378,9 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 			case PivotPackage.MAP_TYPE__VALUE:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case PivotPackage.MAP_TYPE__KEY_TYPE:
-				return keyType != null;
+				return getKeyType() != null;
 			case PivotPackage.MAP_TYPE__VALUE_TYPE:
-				return valueType != null;
+				return getValueType() != null;
 		}
 		return eDynamicIsSet(featureID);
 	}
@@ -506,6 +394,21 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 		return visitor.visitMapType(this);
 	}
 
+	@Deprecated /* @deprecated no longer duplicates template binding */
+	protected Type keyType = null;
+	@Deprecated /* @deprecated no longer duplicates template binding */
+	protected Type valueType = null;
+
+	@Deprecated /* @deprecated no longer duplicates template binding */
+	public Type basicGetKeyType() {
+		return getKeyType();
+	}
+
+	@Deprecated /* @deprecated no longer duplicates template binding */
+	public Type basicGetValueType() {
+		return getValueType();
+	}
+
 	@Override
 	public @NonNull TypeId computeId() {
 		if (getUnspecializedElement() == null) {
@@ -514,5 +417,43 @@ public class MapTypeImpl extends DataTypeImpl implements MapType
 		else {
 			return TypeId.MAP.getSpecializedId(getKeyType().getTypeId(), getValueType().getTypeId());
 		}
+	}
+
+	@Override
+	public Type getKeyType() {
+		TemplateSignature templateSignature = getOwnedSignature();
+		if (templateSignature != null) {
+			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+			return templateParameters.get(0);
+		}
+		else {
+			List<TemplateBinding> templateBindings = getOwnedBindings();
+			List<TemplateParameterSubstitution> templateParameterSubstitutions = templateBindings.get(0).getOwnedSubstitutions();
+			return templateParameterSubstitutions.get(0).getActual();
+		}
+	}
+
+	@Override
+	public Type getValueType() {
+		TemplateSignature templateSignature = getOwnedSignature();
+		if (templateSignature != null) {
+			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+			return templateParameters.get(1);
+		}
+		else {
+			List<TemplateBinding> templateBindings = getOwnedBindings();
+			List<TemplateParameterSubstitution> templateParameterSubstitutions = templateBindings.get(0).getOwnedSubstitutions();
+			return templateParameterSubstitutions.get(1).getActual();
+		}
+	}
+
+	@Override
+	public void setKeyType(Type newKeyType) {				// FIXME delete me once compatibility not needed
+		System.err.println(eClass().getName() + ".setKeyType() is ignored");
+	}
+
+	@Override
+	public void setValueType(Type newValueType) {			// FIXME delete me once compatibility not needed
+		System.err.println(eClass().getName() + ".setValueType() is ignored");
 	}
 } //MapTypeImpl
