@@ -393,9 +393,10 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, s.toString(), firstThrowable));
 				}
 				ASResource asResource = null;
+				EObject xmiRoot = null;
 				EList<EObject> contents = xmiResource.getContents();
 				if (contents.size() > 0) {
-					EObject xmiRoot = contents.get(0);
+					xmiRoot = contents.get(0);
 					if (xmiRoot instanceof Model) {
 						asResource = (ASResource) xmiResource;
 						persistAs = PERSIST_AS_PIVOT;
@@ -404,7 +405,8 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 					// FIXME general extensibility
 				}
 				if (asResource == null) {
-					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, "Failed to load"));
+					String failMessage = "Failed to load - " + (xmiRoot != null ? "root should be a 'Model' but is a '" + xmiRoot.eClass().getName() + "'" : "no root");
+					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, failMessage));
 				}
 				//
 				ResourceSetImpl csResourceSet = (ResourceSetImpl)getOCL().getResourceSet();
