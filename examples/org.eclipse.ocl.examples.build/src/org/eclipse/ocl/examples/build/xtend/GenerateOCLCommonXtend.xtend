@@ -625,7 +625,9 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			private void installTemplateBindings() {
 				«FOR templateableElement : allTemplateableElements»
 					«FOR templateBinding : templateableElement.ownedBindings»
-						addBindings(«templateableElement.getSymbolName()»«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions», «templateParameterSubstitution.actual.getSymbolName()»«ENDFOR»);
+						«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions»
+							addBinding(«templateableElement.getSymbolName()», «templateParameterSubstitution.actual.getSymbolName()»);
+						«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
 			}

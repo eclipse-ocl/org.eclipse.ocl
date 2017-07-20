@@ -58,19 +58,25 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
-	protected static void addBindings(@NonNull TemplateableElement specializedType, @NonNull Type @NonNull ... actualTypes) {
+	protected static void addBinding(@NonNull TemplateableElement specializedType, @NonNull Type actualType) {
 		TemplateableElement unspecializedType = specializedType.getUnspecializedElement();
-		TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
+		List<TemplateBinding> templateBindings = specializedType.getOwnedBindings();
+		TemplateBinding templateBinding ;
+		if (templateBindings.size() > 0) {
+			templateBinding = templateBindings.get(0);
+		}
+		else {
+			templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
+			templateBindings.add(templateBinding);
+		}
 		List<TemplateParameterSubstitution> parameterSubstitutions = templateBinding.getOwnedSubstitutions();
 		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
 		assert templateSignature != null;
 		List<@NonNull TemplateParameter> templateParameters = PivotUtilInternal.getOwnedParametersList(templateSignature);
-		for (int i = 0; i < actualTypes.length; i++) {
-			TemplateParameter templateParameter = templateParameters.get(i);
-			TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(templateParameter, actualTypes[i]);
-			parameterSubstitutions.add(templateParameterSubstitution);
-		}
-		specializedType.getOwnedBindings().add(templateBinding);
+		TemplateParameter templateParameter = templateParameters.get(parameterSubstitutions.size());
+		assert templateParameter != null;
+		TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(templateParameter, actualType);
+		parameterSubstitutions.add(templateParameterSubstitution);
 	}
 
 	protected @NonNull BagType createBagType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
