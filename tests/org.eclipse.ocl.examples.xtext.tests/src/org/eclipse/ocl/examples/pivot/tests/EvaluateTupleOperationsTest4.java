@@ -82,6 +82,10 @@ public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 
 	@Test public void testTupleType_Collections() {
 		TestOCL ocl = createOCL();
+		ocl.assertValidationErrorQuery(null, "let s : Set(Tuple(a:Integer)) = Set{Tuple{a = 3}, Tuple{b = 4}} in s",
+			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, PivotTables.STR_LetVariable_c_c_CompatibleTypeForInitializer,
+				"s : Set(Tuple(a:Integer[1])) = Set{Tuple{a : Integer[1] = 3}, Tuple{b : Integer[1] = 4}}");
+
 		TuplePartId aTuplePartId = IdManager.getTuplePartId(0, "a", TypeId.INTEGER);
 		@SuppressWarnings("null") TupleTypeId aTupleTypeId = IdManager.getTupleTypeId("Tuple", Collections.singletonList(aTuplePartId));
 		Map<@NonNull TuplePartId, @Nullable Object> aValues = new HashMap<@NonNull TuplePartId, @Nullable Object>();
@@ -104,8 +108,11 @@ public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 
 	@Test public void testTupleType_Conformance() {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryEquals(null, 3, "let s : Sequence(OclAny) = Sequence{Tuple{a = 3}, Tuple{b = 4}} in s->first().oclAsType(Tuple(b:UnlimitedNatural)).b");
 		ocl.assertSemanticErrorQuery(null, "let s : Sequence(OclAny) = Sequence{Tuple{a = 3}, Tuple{b = 4}} in s->first().a", PivotMessagesInternal.UnresolvedProperty_ERROR_, "OclAny", "a");
 		ocl.assertQueryEquals(null, 3, "let s : Sequence(OclAny) = Sequence{Tuple{a = 3}, Tuple{b = 4}} in s->first().oclAsType(Tuple(a:Integer)).a");
+		ocl.assertQueryResults(null, "Sequence{3,5}", "let s : Sequence(Tuple(a:Integer)) = Sequence{Tuple{a = 3}, Tuple{a = 5, b = 4}} in s.a");
+		ocl.assertSemanticErrorQuery(null, "let s : Sequence(Tuple(a:Integer)) = Sequence{Tuple{a = 3}, Tuple{a = 5, b = 4}} in s.b", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Sequence(Tuple(a:Integer[1]))", "b");
 		// BUG 440453		ocl.assertQueryEquals(null, 3, "let s : Sequence(OclAny) = Sequence{Tuple{a = 3}, Tuple{b = 4}} in s->first().oclAsType(Tuple(b:UnlimitedNatural)).b");
 		//
 		ocl.dispose();

@@ -191,6 +191,13 @@ public abstract class ValueImpl extends ValueUtil implements Value
 	}
 
 	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 100);
+		return s.toString();
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s, int sizeLimit) {		// FIXME change to abstract once a major version permits the API change
 		s.append(getClass().getSimpleName());
 	}

@@ -69,7 +69,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 		@Override
 		protected boolean useEquals() {
-		    return false;
+			return false;
 		}
 	}
 
@@ -113,7 +113,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 			throw new UnsupportedOperationException();
 		}
 	}
-	
+
 	/**
 	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
 	 * and any call to next() is guarded by hasNext().
@@ -154,7 +154,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 			throw new UnsupportedOperationException();
 		}
 	}
-	
+
 	/**
 	 * Optimized iterator over a List for use in OCL contents where the list is known to be stable
 	 * and any call to next() is guarded by hasNext().
@@ -187,14 +187,14 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 			throw new UnsupportedOperationException();
 		}
 	}
-	
+
 	public static @NonNull NullIterator EMPTY_ITERATOR = new NullIterator();
-	
+
 	/**
 	 * A simple public static method that may be used to force class initialization.
 	 */
 	public static void initStatics() {}
-	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -208,13 +208,13 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	protected final @NonNull CollectionTypeId typeId;
 	protected final @NonNull Collection<? extends Object> elements;		// Using Value instances where necessary to ensure correct equals semantics
 	private int hashCode = 0;
-	
+
 	protected CollectionValueImpl(@NonNull CollectionTypeId typeId, @NonNull Collection<? extends Object> values) {
 		this.typeId = typeId;
 		this.elements = values;
 		assert checkElementsAreValues(values);
 	}
-	
+
 	protected boolean checkElementsAreUnique(Iterable<? extends Object> elements) {
 		Set<Object> knownElements = new HashSet<Object>();
 		for (Object element : elements) {
@@ -222,14 +222,14 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		}
 		return true;
 	}
-	
+
 	private boolean checkElementsAreValues(Iterable<? extends Object> elements) {
 		for (Object element : elements) {
 			assert ValueUtil.isBoxed(element);
-//			if (element instanceof Collection<?>) {
-//				assert isNormalized((Iterable<?>)element);
-//				assert checkElementsAreValues((Iterable<?>)element);
-//			}
+			//			if (element instanceof Collection<?>) {
+			//				assert isNormalized((Iterable<?>)element);
+			//				assert checkElementsAreValues((Iterable<?>)element);
+			//			}
 		}
 		return true;
 	}
@@ -241,14 +241,14 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	 * The default implementation is appropriate for non-unique collections and
 	 * must be overridden to support OCL rather than Java uniqueness semantics.
 	 */
-//	protected boolean add(C values, Value value) {
-//		return values.add(value);
-//	}
+	//	protected boolean add(C values, Value value) {
+	//		return values.add(value);
+	//	}
 
-    @Override
-    public @NonNull BagValue asBagValue() {
-        return new BagValueImpl(getBagTypeId(), new BagImpl<Object>(elements));
-    }
+	@Override
+	public @NonNull BagValue asBagValue() {
+		return new BagValueImpl(getBagTypeId(), new BagImpl<Object>(elements));
+	}
 
 	@Override
 	public @NonNull Collection<? extends Object> asCollection() {
@@ -259,7 +259,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	public @NonNull CollectionValue asCollectionValue() {
 		return this;
 	}
-		
+
 	@Override
 	public @NonNull List<Object> asEcoreObject(@NonNull IdResolver idResolver, @Nullable Class<?> instanceClass) {
 		Object[] unboxedValues = new Object[elements.size()];
@@ -276,7 +276,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		}
 		return new UnmodifiableEcoreObjects(i, unboxedValues);
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")			// FIXME check element types
 	public @Nullable <T> List<T> asEcoreObjects(@NonNull IdResolver idResolver, @Nullable Class<T> instanceClass) {
@@ -292,119 +292,119 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return elements;
 	}
 
-    @Override
+	@Override
 	public @NonNull OrderedSetValue asOrderedSetValue() {
 		OrderedSet<Object> uniqueElements = new OrderedSetImpl<Object>();
 		for (Object element : elements) {
 			uniqueElements.add(element);
 		}
-        return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), uniqueElements);
-    }
+		return new SparseOrderedSetValueImpl(getOrderedSetTypeId(), uniqueElements);
+	}
 
-    @Override
-    public @NonNull SequenceValue asSequenceValue() {
-        return new SparseSequenceValueImpl(getSequenceTypeId(), new ArrayList<Object>(elements));
-    }
+	@Override
+	public @NonNull SequenceValue asSequenceValue() {
+		return new SparseSequenceValueImpl(getSequenceTypeId(), new ArrayList<Object>(elements));
+	}
 
-    @Override
-    public @NonNull SetValue asSetValue() {
+	@Override
+	public @NonNull SetValue asSetValue() {
 		Set<Object> uniqueElements = new HashSet<Object>();
 		for (Object element : elements) {
 			uniqueElements.add(element);
 		}
 		return new SetValueImpl(getSetTypeId(), uniqueElements);
-    }
-
-    /**
-     * Implementation of the OCL
-     * <tt>Collection::count(object : T) : Integer</tt>
-     * operation.
-     * 
-     * @param value an object
-     * @return the number of occurrences of the object in the collection
-     * @throws InvalidValueException 
-     */
-    @Override
-	public @NonNull IntegerValue count(@Nullable Object value) {
-        long count = 0;
-        if (value == null) {
-	        for (Object next : elements) {
-	            if (next == null) {
-	                count++;
-	            }
-	        } 
-        }
-        else {
-	        for (Object next : elements) {
-	            if (value.equals(next)) {
-	                count++;
-	            }
-	        } 
-        }
-	    return ValueUtil.integerValueOf(count);
-    }
-
-    /**
-     * Implementation of the OCL
-     * <tt>Collection::excludes(object : T) : Boolean</tt>
-     * operation.
-     * 
-     * @param value an object
-     * @return whether the collection does not include the object
-     */
-    @Override
-	public @NonNull Boolean excludes(@Nullable Object value) {
-        if (value == null) {
-	        for (Object next : elements) {
-	            if (next == null) {
-	            	return false;
-	            }
-	        } 
-        }
-        else {
-	        for (Object next : elements) {
-	            if (value.equals(next)) {
-	            	return false;
-	            }
-	        } 
-        }
-        return true;
-    }
+	}
 
 	/**
-     * Implementation of the OCL
-     * <tt>Collection::excludesAll(c : Collection(T)) : Boolean</tt>
-     * operation.
-     * 
-     * @param c another collection
-     * @return whether the source collection does not contain any of the
-     *     elements of the other
-     */
-    @Override
-	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
-        for (Object e1 : elements) {
-            if (e1 == null) {
-            	for (Object e2 : c.iterable()) {
-		            if (e2 == null) {
-		            	return false;
-		            }
-	            }
-	        } 
-	        else {
-            	for (Object e2 : c.iterable()) {
-		            if (e1.equals(e2)) {
-		            	return false;
-		            }
-            	}
-	        }
-        } 
-        return true;
-    }
+	 * Implementation of the OCL
+	 * <tt>Collection::count(object : T) : Integer</tt>
+	 * operation.
+	 *
+	 * @param value an object
+	 * @return the number of occurrences of the object in the collection
+	 * @throws InvalidValueException
+	 */
+	@Override
+	public @NonNull IntegerValue count(@Nullable Object value) {
+		long count = 0;
+		if (value == null) {
+			for (Object next : elements) {
+				if (next == null) {
+					count++;
+				}
+			}
+		}
+		else {
+			for (Object next : elements) {
+				if (value.equals(next)) {
+					count++;
+				}
+			}
+		}
+		return ValueUtil.integerValueOf(count);
+	}
 
-    /**
-     * Returns true if any element flattened.
-     * @throws InvalidValueException 
-     */
+	/**
+	 * Implementation of the OCL
+	 * <tt>Collection::excludes(object : T) : Boolean</tt>
+	 * operation.
+	 *
+	 * @param value an object
+	 * @return whether the collection does not include the object
+	 */
+	@Override
+	public @NonNull Boolean excludes(@Nullable Object value) {
+		if (value == null) {
+			for (Object next : elements) {
+				if (next == null) {
+					return false;
+				}
+			}
+		}
+		else {
+			for (Object next : elements) {
+				if (value.equals(next)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Implementation of the OCL
+	 * <tt>Collection::excludesAll(c : Collection(T)) : Boolean</tt>
+	 * operation.
+	 *
+	 * @param c another collection
+	 * @return whether the source collection does not contain any of the
+	 *     elements of the other
+	 */
+	@Override
+	public @NonNull Boolean excludesAll(@NonNull CollectionValue c) {
+		for (Object e1 : elements) {
+			if (e1 == null) {
+				for (Object e2 : c.iterable()) {
+					if (e2 == null) {
+						return false;
+					}
+				}
+			}
+			else {
+				for (Object e2 : c.iterable()) {
+					if (e1.equals(e2)) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Returns true if any element flattened.
+	 * @throws InvalidValueException
+	 */
 	@Override
 	public boolean flatten(@NonNull Collection<Object> flattenedElements) {
 		boolean flattened = false;
@@ -421,7 +421,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return flattened;
 	}
 
-/*	@Override
+	/*	@Override
 	public @NonNull DomainType getActualType(@NonNull DomainStandardLibrary standardLibrary) {
 		DomainType actualType2 = actualType;
 		if (actualType2 == null) {
@@ -450,7 +450,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 				assert containerType != null;
 				actualType2 = actualType = standardLibrary.getCollectionType(containerType, elementType, null, null);
 			}
-		}	
+		}
 		return actualType2;
 	} */
 
@@ -458,32 +458,32 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return TypeId.BAG.getSpecializedId(getElementTypeId());
 	}
 
-//	public @NonNull CollectionTypeId getCollectionTypeId() {
-//		return TypeId.COLLECTION.getCollectedTypeId(getElementType().getTypeId());
-//	}
+	//	public @NonNull CollectionTypeId getCollectionTypeId() {
+	//		return TypeId.COLLECTION.getCollectedTypeId(getElementType().getTypeId());
+	//	}
 
-//	public @NonNull CollectionTypeId getCollectionTypeId() {
-//		CollectionTypeId typeId2 = typeId;
-//		if (typeId2 == null) {
-//			typeId2 = getCollectionTypeId().getCollectedTypeId(getElementTypeId());
-//		}
-//		return typeId2;
-//	}
+	//	public @NonNull CollectionTypeId getCollectionTypeId() {
+	//		CollectionTypeId typeId2 = typeId;
+	//		if (typeId2 == null) {
+	//			typeId2 = getCollectionTypeId().getCollectedTypeId(getElementTypeId());
+	//		}
+	//		return typeId2;
+	//	}
 
-//	public @NonNull CollectionTypeId getCollectionTypeId() {
-//		return TypeId.COLLECTION;
-//	}
+	//	public @NonNull CollectionTypeId getCollectionTypeId() {
+	//		return TypeId.COLLECTION;
+	//	}
 
 	public @NonNull TypeId getElementTypeId() {
-//    	DomainType elementType = standardLibrary.getOclVoidType();
-//    	for (Object value : values) {
-//    		assert value != null;
-//    		elementType = elementType.getCommonType(standardLibrary, standardLibrary.typeOf(value));
-//    	}
-//		for (Value element : iterable()) {
-//			
-//		}
-		
+		//    	DomainType elementType = standardLibrary.getOclVoidType();
+		//    	for (Object value : values) {
+		//    		assert value != null;
+		//    		elementType = elementType.getCommonType(standardLibrary, standardLibrary.typeOf(value));
+		//    	}
+		//		for (Value element : iterable()) {
+		//
+		//		}
+
 		return getTypeId().getElementTypeId();
 	}
 
@@ -531,43 +531,43 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	@Override
 	public @NonNull Boolean includes(@Nullable Object value) {
 		return elements.contains(value) != false;			// FIXME redundant test to suppress warning
-    }
+	}
 
-    /**
-     * Implementation of the OCL
-     * <tt>Collection::includesAll(c : Collection(T)) : Boolean</tt>
-     * operation.
-     * 
-     * @param c another collection
-     * @return whether the source collection includes all of the elements
-     *     of the other
-     */
-    @Override
+	/**
+	 * Implementation of the OCL
+	 * <tt>Collection::includesAll(c : Collection(T)) : Boolean</tt>
+	 * operation.
+	 *
+	 * @param c another collection
+	 * @return whether the source collection includes all of the elements
+	 *     of the other
+	 */
+	@Override
 	public @NonNull Boolean includesAll(@NonNull CollectionValue c) {
-        for (Object e1 : c.iterable()) {
-        	boolean gotIt = false;
-        	if (e1 == null) {
-		        for (Object e2 : elements) {
-		            if (e2 == null) {
-		            	gotIt = true;
-		            	break;
-		            }
-		        }
-        	}
-        	else {
-		        for (Object e2 : elements) {
-		            if (e1.equals(e2)) {
-		            	gotIt = true;
-		            	break;
-		            }
-		        }
-        	}
-        	if (!gotIt) {
-        		return false;
-        	}
-        } 
-        return true;
-    }
+		for (Object e1 : c.iterable()) {
+			boolean gotIt = false;
+			if (e1 == null) {
+				for (Object e2 : elements) {
+					if (e2 == null) {
+						gotIt = true;
+						break;
+					}
+				}
+			}
+			else {
+				for (Object e2 : elements) {
+					if (e1.equals(e2)) {
+						gotIt = true;
+						break;
+					}
+				}
+			}
+			if (!gotIt) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	@Override
 	public int intSize() {
@@ -576,53 +576,53 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 
 	@Override
 	public @NonNull CollectionValue intersection(@NonNull CollectionValue that) {
-    	assert !this.isUndefined() && !that.isUndefined();
+		assert !this.isUndefined() && !that.isUndefined();
 		Collection<? extends Object> theseElements = this.asCollection();
-        Collection<? extends Object> thoseElements = that.asCollection();
-        int thisSize = theseElements.size();
-        int thatSize = thoseElements.size();
+		Collection<? extends Object> thoseElements = that.asCollection();
+		int thisSize = theseElements.size();
+		int thatSize = thoseElements.size();
 		if (this instanceof UniqueCollectionValue || that instanceof UniqueCollectionValue) {
-        	@NonNull CollectionTypeId typeId = getSetTypeId();
-        	if ((thisSize == 0) || (thatSize == 0)) {
-    			return new SetValueImpl(typeId, ValueUtil.EMPTY_SET);
-            }    	
-            Set<Object> results;
-            // loop over the smaller collection and add only elements
-            // that are in the larger collection
-            if (thisSize <= thatSize) {
-                results = new HashSet<Object>(theseElements);
-            	results.retainAll(thoseElements);
-            }
-            else {
-                results = new HashSet<Object>(thoseElements);
-            	results.retainAll(theseElements);
-            }
-        	return new SetValueImpl(typeId, results.size() > 0 ? results : ValueUtil.EMPTY_SET);
-        }
-        else {
-        	@NonNull CollectionTypeId typeId = getBagTypeId();
-        	if ((thisSize == 0) || (thatSize == 0)) {
-                return new BagValueImpl(typeId, ValueUtil.EMPTY_BAG);
-            }    	
-            Bag<Object> results = new BagImpl<Object>();
-            // loop over the smaller collection and add only elements
-            // that are in the larger collection
-            Set<Object> minElements = new HashSet<Object>(thisSize < thatSize ? theseElements : thoseElements);
-            for (Object e : minElements) {
-        		IntegerValue leftCount = this.count(e);
-            	IntegerValue rightCount = that.count(e);
-            	for (int i = Math.min(leftCount.asInteger(), rightCount.asInteger()); i > 0; i--) {
-            		results.add(e);
-            	}
-            }
-        	return new BagValueImpl(typeId, results.size() > 0 ? results : ValueUtil.EMPTY_BAG);
-        }
+			@NonNull CollectionTypeId typeId = getSetTypeId();
+			if ((thisSize == 0) || (thatSize == 0)) {
+				return new SetValueImpl(typeId, ValueUtil.EMPTY_SET);
+			}
+			Set<Object> results;
+			// loop over the smaller collection and add only elements
+			// that are in the larger collection
+			if (thisSize <= thatSize) {
+				results = new HashSet<Object>(theseElements);
+				results.retainAll(thoseElements);
+			}
+			else {
+				results = new HashSet<Object>(thoseElements);
+				results.retainAll(theseElements);
+			}
+			return new SetValueImpl(typeId, results.size() > 0 ? results : ValueUtil.EMPTY_SET);
+		}
+		else {
+			@NonNull CollectionTypeId typeId = getBagTypeId();
+			if ((thisSize == 0) || (thatSize == 0)) {
+				return new BagValueImpl(typeId, ValueUtil.EMPTY_BAG);
+			}
+			Bag<Object> results = new BagImpl<Object>();
+			// loop over the smaller collection and add only elements
+			// that are in the larger collection
+			Set<Object> minElements = new HashSet<Object>(thisSize < thatSize ? theseElements : thoseElements);
+			for (Object e : minElements) {
+				IntegerValue leftCount = this.count(e);
+				IntegerValue rightCount = that.count(e);
+				for (int i = Math.min(leftCount.asInteger(), rightCount.asInteger()); i > 0; i--) {
+					results.add(e);
+				}
+			}
+			return new BagValueImpl(typeId, results.size() > 0 ? results : ValueUtil.EMPTY_BAG);
+		}
 	}
 
-//	@Override
-//	public @NonNull CollectionValue isCollectionValue() {
-//		return this;
-//	}
+	//	@Override
+	//	public @NonNull CollectionValue isCollectionValue() {
+	//		return this;
+	//	}
 
 	@Override
 	public @NonNull Boolean isEmpty() {
@@ -656,27 +656,20 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 		return intSize() != 0;
 	}
 
-    @Override
-	public @NonNull Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {   	
-    	Set<TupleValue> result = new HashSet<TupleValue>();		
-        for (Object next1 : iterable()) {
-         	for (Object next2 : c.iterable()) {
-    			result.add(new TupleValueImpl(tupleTypeId, next1, next2));
-        	}
-        }
-        return result;
-    }
+	@Override
+	public @NonNull Set<TupleValue> product(@NonNull CollectionValue c, @NonNull TupleTypeId tupleTypeId) {
+		Set<TupleValue> result = new HashSet<TupleValue>();
+		for (Object next1 : iterable()) {
+			for (Object next2 : c.iterable()) {
+				result.add(new TupleValueImpl(tupleTypeId, next1, next2));
+			}
+		}
+		return result;
+	}
 
 	@Override
 	public @NonNull IntegerValue size() {
 		return ValueUtil.integerValueOf(intSize());
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		toString(s, 100);
-		return s.toString();
 	}
 
 	@Override
@@ -696,39 +689,39 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 			}
 			isFirst = false;
 		}
-		s.append("}");		
+		s.append("}");
 	}
 
-    @Override
+	@Override
 	public @NonNull CollectionValue union(@NonNull CollectionValue that) {
-    	assert !this.isUndefined() && !that.isUndefined();
+		assert !this.isUndefined() && !that.isUndefined();
 		Collection<? extends Object> theseElements = this.asCollection();
-        Collection<? extends Object> thoseElements = that.asCollection();
-    	if (this instanceof UniqueCollectionValue && that instanceof UniqueCollectionValue) {
-        	if (theseElements.isEmpty()) {
-                return that.asSetValue();
-            }
-        	else if (thoseElements.isEmpty()) {
-                return this.asSetValue();
-            }    	
-        	else {
-    			Set<Object> result = new HashSet<Object>(theseElements);
-    			result.addAll(thoseElements);
-        		return new SetValueImpl(getSetTypeId(), result);
-            } 
-        }
-        else {
-        	if (theseElements.isEmpty()) {
-                return that.asBagValue();
-            }
-        	else if (thoseElements.isEmpty()) {
-                return this.asBagValue();
-            }    	
-        	else {
-    			Bag<Object> result = new BagImpl<Object>(theseElements);
-    			result.addAll(thoseElements);
-        		return new BagValueImpl(getBagTypeId(), result);
-            } 
-        }
-    }
+		Collection<? extends Object> thoseElements = that.asCollection();
+		if (this instanceof UniqueCollectionValue && that instanceof UniqueCollectionValue) {
+			if (theseElements.isEmpty()) {
+				return that.asSetValue();
+			}
+			else if (thoseElements.isEmpty()) {
+				return this.asSetValue();
+			}
+			else {
+				Set<Object> result = new HashSet<Object>(theseElements);
+				result.addAll(thoseElements);
+				return new SetValueImpl(getSetTypeId(), result);
+			}
+		}
+		else {
+			if (theseElements.isEmpty()) {
+				return that.asBagValue();
+			}
+			else if (thoseElements.isEmpty()) {
+				return this.asBagValue();
+			}
+			else {
+				Bag<Object> result = new BagImpl<Object>(theseElements);
+				result.addAll(thoseElements);
+				return new BagValueImpl(getBagTypeId(), result);
+			}
+		}
+	}
 }

@@ -132,37 +132,29 @@ public class TupleTypeManager
 
 	public @Nullable Type getCommonType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
-		List<Property> leftProperties = leftType.getOwnedProperties();
-		List<Property> rightProperties = rightType.getOwnedProperties();
+		List<@NonNull Property> leftProperties = PivotUtilInternal.getOwnedPropertiesList(leftType);
+		List<@NonNull Property> rightProperties = PivotUtilInternal.getOwnedPropertiesList(rightType);
 		int iSize = leftProperties.size();
-		if (iSize != rightProperties.size()) {
-			return null;
-		}
 		List<@NonNull TuplePartId> commonPartIds = new ArrayList<>(iSize);
-		for (int i = 0; i < iSize; i++) {
-			Property leftProperty = leftProperties.get(i);
-			if (leftProperty == null) {
-				return null;				// Never happens
-			}
+		for (@NonNull Property leftProperty : leftProperties) {
 			String name = leftProperty.getName();
 			if (name == null) {
 				return null;				// Never happens
 			}
 			Property rightProperty = NameUtil.getNameable(rightProperties, name);
-			if (rightProperty == null) {
-				return null;				// Happens for inconsistent tuples
+			if (rightProperty != null) {
+				Type leftPropertyType = leftProperty.getType();
+				if (leftPropertyType == null) {
+					return null;				// Never happens
+				}
+				Type rightPropertyType = rightProperty.getType();
+				if (rightPropertyType == null) {
+					return null;				// Never happens
+				}
+				Type commonType = metamodelManager.getCommonType(leftPropertyType, leftSubstitutions, rightPropertyType, rightSubstitutions);
+				TuplePartId commonPartId = IdManager.getTuplePartId(commonPartIds.size(), name, commonType.getTypeId());
+				commonPartIds.add(commonPartId);
 			}
-			Type leftPropertyType = leftProperty.getType();
-			if (leftPropertyType == null) {
-				return null;				// Never happens
-			}
-			Type rightPropertyType = rightProperty.getType();
-			if (rightPropertyType == null) {
-				return null;				// Never happens
-			}
-			Type commonType = metamodelManager.getCommonType(leftPropertyType, leftSubstitutions, rightPropertyType, rightSubstitutions);
-			TuplePartId commonPartId = IdManager.getTuplePartId(i, name, commonType.getTypeId());
-			commonPartIds.add(commonPartId);
 		}
 		TupleTypeId commonTupleTypeId = IdManager.getTupleTypeId(TypeId.TUPLE_NAME, commonPartIds);
 		return getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), commonTupleTypeId);

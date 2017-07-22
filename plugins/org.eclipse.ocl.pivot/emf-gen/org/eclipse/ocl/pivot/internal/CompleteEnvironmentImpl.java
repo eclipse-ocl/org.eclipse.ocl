@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -565,14 +566,17 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 
 	protected boolean conformsToTupleType(@NonNull TupleType actualType, @NonNull TemplateParameterSubstitutions actualSubstitutions,
 			@NonNull TupleType requiredType, @NonNull TemplateParameterSubstitutions requiredSubstitutions) {
-		List<Property> actualProperties = actualType.getOwnedProperties();
-		List<Property> requiredProperties = requiredType.getOwnedProperties();
-		if (actualProperties.size() != requiredProperties.size()) {
+		List<@NonNull Property> actualProperties = PivotUtilInternal.getOwnedPropertiesList(actualType);
+		List<@NonNull Property> requiredProperties = PivotUtilInternal.getOwnedPropertiesList(requiredType);
+		if (actualProperties.size() < requiredProperties.size()) {
 			return false;
 		}
-		for (Property actualProperty : actualProperties) {
-			Property requiredProperty = NameUtil.getNameable(requiredProperties, actualProperty.getName());
-			if (requiredProperty == null) {
+		for (@NonNull Property requiredProperty : requiredProperties) {
+			Property actualProperty = NameUtil.getNameable(actualProperties, requiredProperty.getName());
+			if (actualProperty == null) {
+				return false;
+			}
+			if (!actualProperty.isIsRequired() && requiredProperty.isIsRequired()) {
 				return false;
 			}
 			Type actualPropertyType = actualProperty.getType();
