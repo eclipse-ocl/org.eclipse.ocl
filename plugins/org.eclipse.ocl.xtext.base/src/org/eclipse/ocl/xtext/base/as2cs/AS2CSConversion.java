@@ -575,7 +575,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				if (lower != 1) {
 					csMultiplicity.setLowerBound(lower);
 				}
-				if (upper != 1) {
+				if (upper != lower) {
 					csMultiplicity.setUpperBound(upper);
 				}
 				csMultiplicity.setIsNullFree(isNullFree);;
