@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.xtext.base.ui.BaseUiModule;
 import org.eclipse.ocl.xtext.base.ui.model.BaseCSorASDocumentProvider;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.oclinecore.ui.OCLinEcoreUiModule;
@@ -65,15 +64,15 @@ import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSynt
 
 /**
  * OCLinEcoreDocumentProvider orchestrates the load and saving of optional XMI content
- * externally while maintaining the serialised human friendly form internally. 
+ * externally while maintaining the serialised human friendly form internally.
  */
 public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 {		// FIXME share more code with BaseCSorASDocumentProvider
 	private static final Logger log = Logger.getLogger(OCLinEcoreDocumentProvider.class);
-	
+
 	public static final String PERSIST_AS_ECORE = "as-ecore";
 	public static final String PERSIST_IN_ECORE = "in-ecore";
-//	public static final String PERSIST_AS_PIVOT = "pivot";
+	//	public static final String PERSIST_AS_PIVOT = "pivot";
 	public static final String PERSIST_AS_OCLINECORE = "oclinecore";
 	public static final String PERSIST_AS_UML = "uml";
 
@@ -158,6 +157,11 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 	}
 
 	@Override
+	protected String getPluginId() {
+		return OCLinEcoreUiModule.PLUGIN_ID;
+	}
+
+	@Override
 	protected boolean isText(String loadedAs) {
 		return PERSIST_AS_OCLINECORE.equals(loadedAs) || super.isText(loadedAs);
 	}
@@ -165,13 +169,13 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 	@Override
 	protected void setDocumentContent(IDocument document, InputStream inputStream, String encoding) throws CoreException {
 		boolean reload = false;
-//		@NonNull String displayText = sourceText;
+		//		@NonNull String displayText = sourceText;
 		try {
-//			String xmlEncoding = URIConverter.ReadableInputStream.getEncoding(sourceText);
+			//			String xmlEncoding = URIConverter.ReadableInputStream.getEncoding(sourceText);
 			if (!inputStream.markSupported()) {
 				inputStream = createResettableInputStream(inputStream);
 			}
-			boolean isXML = isXML(inputStream, encoding);		
+			boolean isXML = isXML(inputStream, encoding);
 			String persistAs = PERSIST_AS_OCLINECORE;
 			if (isXML) {
 				ResourceSet esResourceSet = getEnvironmentFactory().getResourceSet();
@@ -180,18 +184,18 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 				projectMap.configure(esResourceSet, StandaloneProjectMap.LoadFirstStrategy.INSTANCE, conflictHandler);
 				StandaloneProjectMap.IProjectDescriptor pivotPackageDescriptor = projectMap.getProjectDescriptor(PivotConstantsInternal.PLUGIN_ID);
 				if (pivotPackageDescriptor != null) {
-					pivotPackageDescriptor.configure(esResourceSet, StandaloneProjectMap.LoadBothStrategy.INSTANCE, conflictHandler);	
+					pivotPackageDescriptor.configure(esResourceSet, StandaloneProjectMap.LoadBothStrategy.INSTANCE, conflictHandler);
 				}
 				URI uri = uriMap.get(document);
 				XMLResource xmiResource = (XMLResource) esResourceSet.getResource(uri, false);
 				if ((xmiResource == null) || (xmiResource.getResourceSet() == null)) {	// Skip built-ins and try again as a file read.
-					xmiResource = (XMLResource) esResourceSet.createResource(uri, null);					
+					xmiResource = (XMLResource) esResourceSet.createResource(uri, null);
 				}
 				else {
 					xmiResource.unload();
 					reload = true;
 				}
-//				xmiResource.load(new InputSource(new StringReader(sourceText)), null);
+				//				xmiResource.load(new InputSource(new StringReader(sourceText)), null);
 				xmiResource.load(inputStream, null);
 				EcoreUtil.resolveAll(esResourceSet);
 				List<Resource.Diagnostic> allErrors = null;
@@ -210,7 +214,7 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 						s.append("\n");
 						s.append(diagnostic.toString());
 					}
-					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, s.toString()));
+					throwCoreException(s.toString(), null);
 				}
 				ASResource asResource = null;
 				EList<EObject> contents = xmiResource.getContents();
@@ -242,17 +246,18 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 					// FIXME general extensibility
 				}
 				if (asResource == null) {
-					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, "Failed to load"));
+					throwCoreException("Failed to load", null);
+					return; 	// never happens
 				}
-//				
+				//
 				ResourceSetImpl csResourceSet = (ResourceSetImpl)getOCL().getResourceSet();
 				csResourceSet.getPackageRegistry().put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
 				URI textURI = xmiResource.getURI().appendFileExtension(getFileExtension());
 				CSResource csResource = (CSResource) csResourceSet.getResource(textURI, false);
 				if (csResource == null) {
 					csResource = (CSResource) csResourceSet.createResource(textURI, getCScontentType());
-				    Map<URI, Resource> map = csResourceSet.getURIResourceMap();
-				    map.put(textURI, csResource);
+					Map<URI, Resource> map = csResourceSet.getURIResourceMap();
+					map.put(textURI, csResource);
 					csResource.setURI(xmiResource.getURI());
 				}
 				//
@@ -262,9 +267,9 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 				//
 				csResource.updateFrom(asResource, getOCL().getEnvironmentFactory());
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//				StringWriter writer = new StringWriter();
+				//				StringWriter writer = new StringWriter();
 				try {
-//					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
+					//					csResource.save(new URIConverter.WriteableOutputStream(writer, xmlEncoding), null);
 					csResource.save(outputStream, null);
 					inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 				} catch (InvalidConcreteSyntaxException e) {
@@ -273,15 +278,15 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 					diagnoseErrors((XtextResource) csResource, e);
 				}
 				csResource.unload();
-//				@SuppressWarnings("null")@NonNull String string = writer.toString();
-//				displayText = string;
-////				CS2ASResourceAdapter resourceAdapter = ((BaseCSResource)csResource).getCS2ASAdapter();
-////				resourceAdapter.dispose();
+				//				@SuppressWarnings("null")@NonNull String string = writer.toString();
+				//				displayText = string;
+				////				CS2ASResourceAdapter resourceAdapter = ((BaseCSResource)csResource).getCS2ASAdapter();
+				////				resourceAdapter.dispose();
 				((BaseCSResource)csResource).dispose();
 				csResourceSet.getResources().remove(csResource);
 				inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 			}
-//			else if (sourceText.length() <= 0) {		// Empty document
+			//			else if (sourceText.length() <= 0) {		// Empty document
 			else if (inputStream.available() == 0) {		// Empty document
 				URI uri = ClassUtil.nonNullState(uriMap.get(document));
 				Resource.Factory factory = Resource.Factory.Registry.INSTANCE.getFactory(uri);
@@ -291,23 +296,23 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 				else if (factory instanceof OCLASResourceFactory) {
 					persistAs = PERSIST_AS_PIVOT;
 				}
-//				else if (factory instanceof UMLResourceFactoryImpl) {
-//					persistAs = PERSIST_AS_UML;
-//				}
+				//				else if (factory instanceof UMLResourceFactoryImpl) {
+				//					persistAs = PERSIST_AS_UML;
+				//				}
 				String lastSegment = uri.trimFileExtension().lastSegment();
 				if (lastSegment == null) {
 					lastSegment = "Default";
 				}
 				String testDocument = createTestDocument(uri, lastSegment);
-				inputStream = new ByteArrayInputStream(testDocument.getBytes());				
+				inputStream = new ByteArrayInputStream(testDocument.getBytes());
 			}
 			loadedAsMap.put(document, persistAs);
 			saveAsMap.put(document, persistAs);
 		} catch (ParserException e) {
-			throw new CoreException(new Status(IStatus.ERROR, OCLinEcoreUiModule.PLUGIN_ID, "Failed to load", e));
+			throwCoreException("Failed to load", e);
 		} catch (IOException e) {
-			throw new CoreException(new Status(IStatus.ERROR, OCLinEcoreUiModule.PLUGIN_ID, "Failed to load", e));
-/*		} catch (Throwable e) {
+			throwCoreException("Failed to load", e);
+			/*		} catch (Throwable e) {
 			Runnable displayRefresh = new Runnable() {
 				@Override
 				public void run() {
@@ -320,12 +325,12 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 			};
 			Display.getDefault().asyncExec(displayRefresh);
 			displayText = "/* Load failed * /";
-*/		}
-/*
- * 		This fails to setup Xtext correctly: No state leads to NPE from EcoreUtil.resolveAll.
- * 
-  		if (reload) {		
-			final InputStream finalInputStream = inputStream; 
+			 */		}
+		/*
+		 * 		This fails to setup Xtext correctly: No state leads to NPE from EcoreUtil.resolveAll.
+		 *
+  		if (reload) {
+			final InputStream finalInputStream = inputStream;
 			((XtextDocument)document).modify(new IUnitOfWork<Object, XtextResource>() {
 
 				public Object exec(XtextResource state) throws Exception {
@@ -336,7 +341,7 @@ public class OCLinEcoreDocumentProvider extends BaseCSorASDocumentProvider
 		}
 		else { */
 		superSetDocumentContent(document, inputStream, encoding);
-//		superSetDocumentText(document, displayText);
-//		}
+		//		superSetDocumentText(document, displayText);
+		//		}
 	}
 }

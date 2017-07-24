@@ -16,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +41,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -123,6 +125,11 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 
 	protected Map<IDocument, URI> uriMap = new HashMap<IDocument, URI>();		// Helper for setDocumentContent
 
+	/**
+	 * Flag to inhibit CoreException appearing in both Console Log and initial Editor Failure Page
+	 */
+	private boolean setDocumentContentInProgress = true;
+
 	public static @NonNull InputStream createResettableInputStream(@NonNull InputStream inputStream) throws IOException {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		try {
@@ -147,10 +154,10 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 				s.append("\n");
 				s.append(diagnostic.toString());
 			}
-			throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, s.toString(), e));
+			throwCoreException(s.toString(), e);
 		}
 		else {
-			throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, "Failed to load", e));
+			throwCoreException("Failed to load", e);
 		}
 	}
 
@@ -192,6 +199,17 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 	protected abstract String getCScontentType();
 
 	protected abstract @NonNull String getFileExtension();
+
+	protected String getPluginId() {
+		return BaseUiModule.PLUGIN_ID;
+	}
+
+	@Override
+	protected void handleCoreException(CoreException exception, String message) {
+		if (!setDocumentContentInProgress ) {
+			super.handleCoreException(exception, message);
+		}
+	}
 
 	@Override
 	protected void handleElementContentChanged(IFileEditorInput fileEditorInput) {
@@ -308,7 +326,14 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 	protected boolean setDocumentContent(IDocument document, IEditorInput editorInput, String encoding) throws CoreException {
 		URI uri = EditUIUtil.getURI(editorInput);
 		uriMap.put(document, uri);
-		return super.setDocumentContent(document, editorInput, encoding);
+		boolean savedSetDocumentContentInProgress = setDocumentContentInProgress;
+		try {
+			setDocumentContentInProgress = true;
+			return super.setDocumentContent(document, editorInput, encoding);
+		}
+		finally {
+			setDocumentContentInProgress = savedSetDocumentContentInProgress;
+		}
 	}
 
 	@Override
@@ -390,7 +415,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 						}
 						isFirst = false;
 					}
-					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, s.toString(), firstThrowable));
+					throwCoreException(s.toString(), null); //firstThrowable);
 				}
 				ASResource asResource = null;
 				EObject xmiRoot = null;
@@ -405,8 +430,8 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 					// FIXME general extensibility
 				}
 				if (asResource == null) {
-					String failMessage = "Failed to load - " + (xmiRoot != null ? "root should be a 'Model' but is a '" + xmiRoot.eClass().getName() + "'" : "no root");
-					throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, failMessage));
+					throwCoreException("Failed to load - \" + (xmiRoot != null ? \"root should be a 'Model' but is a '\" + xmiRoot.eClass().getName() + \"'\" : \"no root\"", null);
+					return;		// Never happens
 				}
 				//
 				ResourceSetImpl csResourceSet = (ResourceSetImpl)getOCL().getResourceSet();
@@ -484,8 +509,10 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 			saveAsMap.put(document, persistAs);
 			//		} catch (ParserException e) {
 			//			throw new CoreException(new Status(IStatus.ERROR, OCLExamplesCommonPlugin.PLUGIN_ID, "Failed to load", e));
+			//		} catch (WrappedException e) {
+			//			throw new CoreException(new Status(IStatus.ERROR, getPluginId(), "Failed to load", e.exception()));
 		} catch (IOException e) {
-			throw new CoreException(new Status(IStatus.ERROR, BaseUiModule.PLUGIN_ID, "Failed to load", e));
+			throwCoreException("Failed to load", e);
 			/*		} catch (Throwable e) {
 			Runnable displayRefresh = new Runnable() {
 				@Override
@@ -559,5 +586,18 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 
 	protected void superSetDocumentContent(IDocument document, InputStream inputStream, String encoding) throws CoreException {
 		super.setDocumentContent(document, inputStream, encoding);
+	}
+
+	protected void throwCoreException(@NonNull String string, @Nullable Throwable e) throws CoreException {
+		if (e != null) {
+			StringWriter s = new StringWriter();
+			PrintWriter pw = new PrintWriter(s);
+			e.printStackTrace(pw);
+			pw.close();
+			throw new CoreException(new Status(IStatus.ERROR, getPluginId(), string + "\n" + s.toString(), e));
+		}
+		else {
+			throw new CoreException(new Status(IStatus.ERROR, getPluginId(), string));
+		}
 	}
 }
