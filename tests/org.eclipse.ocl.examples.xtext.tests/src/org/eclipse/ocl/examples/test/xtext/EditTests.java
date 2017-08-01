@@ -425,7 +425,7 @@ public class EditTests extends XtextTestCase
 						"		{\n" +
 						"			body: 'default-label';\n" +
 						"		}\n" +
-						"		operation nameLabel(name : String[1]) : String[1]\n" +
+						"		operation nameLabel(name : String[?]) : String[1]\n" +
 						"		{\n" +
 						"			body: if name = null then 'null' else name endif;\n" +
 						"		}\n" +
@@ -433,7 +433,7 @@ public class EditTests extends XtextTestCase
 						"		{\n" +
 						"			body: operations->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | let type : uml::Type = if p.class <> null then p.class else p.interface endif in acc + ' ' + nameLabel(p.class.package.name) + '::' + nameLabel(p.class.name) + '::' + nameLabel(p.name));\n" +
 						"		}\n" +
-						"		operation packageLabel(p : uml::Package[1]) : String[1]\n" +
+						"		operation packageLabel(p : uml::Package[?]) : String[1]\n" +
 						"		{\n" +
 						"			body: if p <> null then nameLabel(p.name) else 'null' endif;\n" +
 						"		}\n" +
@@ -441,7 +441,7 @@ public class EditTests extends XtextTestCase
 						"		{\n" +
 						"			body: packages->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | acc + ' ' + packageLabel(p));\n" +
 						"		}\n" +
-						"		operation propertyLabel(p : uml::Property[1]) : String[1]\n" +
+						"		operation propertyLabel(p : uml::Property[?]) : String[1]\n" +
 						"		{\n" +
 						"			body: if p <> null then let t = if p.class <> null then p.class else p.association endif in typeLabel(t) + '::' + nameLabel(p.name) else 'null' endif;\n" +
 						"		}\n" +
@@ -449,7 +449,7 @@ public class EditTests extends XtextTestCase
 						"		{\n" +
 						"			body: properties->sortedBy(nameLabel(name))->iterate(p; acc : String = '' | acc + ' ' + propertyLabel(p));\n" +
 						"		}\n" +
-						"		operation typeLabel(t : uml::Type[1]) : String[1]\n" +
+						"		operation typeLabel(t : uml::Type[?]) : String[1]\n" +
 						"		{\n" +
 						"			body: if t <> null then packageLabel(t.package) + '::' + nameLabel(t.name) else 'null' endif;\n" +
 						"		}\n" +
