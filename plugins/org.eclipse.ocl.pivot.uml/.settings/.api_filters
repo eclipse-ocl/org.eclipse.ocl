@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot.uml" version="2">
-    <resource path="src/org/eclipse/ocl/pivot/uml/internal/es2as/UML2ASReferenceSwitch.java" type="org.eclipse.ocl.pivot.uml.internal.es2as.UML2ASReferenceSwitch">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="caseClassifier(Classifier)"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/pivot/uml/internal/utilities/UML2Moniker.java" type="org.eclipse.ocl.pivot.uml.internal.utilities.UML2Moniker">
         <filter comment="Bug 512402 workaround" id="574619656">
             <message_arguments>
