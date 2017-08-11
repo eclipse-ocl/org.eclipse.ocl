@@ -1488,6 +1488,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_OrderedCollection_ShadowPart);
 			superClasses.add(_UniqueCollection_ShadowPart);
 			ownedClasses.add(type = _OrderedSet_TemplateParameter_NullFree);
+			type.setLower(1);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OrderedCollection_TemplateParameter);
@@ -1584,6 +1585,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_Region);
 			ownedClasses.add(type = _Set_Region_NullFree_1);
+			type.setLower(1);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_Region);
@@ -1604,6 +1606,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_StereotypeExtender);
 			ownedClasses.add(type = _Set_String_NullFree);
+			type.setLower(1);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_String);
@@ -1612,6 +1615,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_TemplateBinding);
 			ownedClasses.add(type = _Set_TemplateParameterSubstitution_NullFree);
+			type.setLower(1);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_TemplateParameterSubstitution);

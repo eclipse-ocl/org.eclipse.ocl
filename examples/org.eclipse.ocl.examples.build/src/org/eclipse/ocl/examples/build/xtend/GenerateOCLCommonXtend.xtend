@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution
 import org.eclipse.ocl.pivot.TemplateSignature
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
+import org.eclipse.ocl.pivot.values.Unlimited
 
 public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -221,6 +222,12 @@ public abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						ownedClasses.add(type = «type.getSymbolName()»);
 						«IF type.isAbstract»
 						type.setIsAbstract(true);
+						«ENDIF»
+						«IF type.lower.intValue() != 0»
+						type.setLower(«type.lower.intValue()»);
+						«ENDIF»
+						«IF !(type.upper instanceof Unlimited)»
+						type.setUpper(«type.upper.intValue()»);
 						«ENDIF»
 						«IF type.isNullFree»
 						type.setIsNullFree(true);
