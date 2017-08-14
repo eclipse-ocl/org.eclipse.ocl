@@ -664,8 +664,10 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		if (isUnspecialized) {
 			return containerType;
 		}
+		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
+		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper);
 		@SuppressWarnings("unchecked")
-		T specializedType = (T) ownedCompleteModel.getCollectionType(ownedCompleteModel.getCompleteClass(containerType), TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper));
+		T specializedType = (T) completeClass.getCollectionType(typeParameters);
 		return specializedType;
 	}
 
@@ -765,7 +767,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		if (isUnspecialized) {
 			return containerType;
 		}
-		MapType specializedType = ownedCompleteModel.getMapType(ownedCompleteModel.getCompleteClass(containerType), TypeUtil.createMapTypeParameters(keyType, valueType));
+		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
+		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, valueType);
+		MapType specializedType = ownedCompleteModel.getMapType(completeClass, typeParameters);
 		return specializedType;
 	}
 

@@ -471,12 +471,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @Nullable CollectionType findCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return completeEnvironment.findCollectionType(completeClass, typeParameters);
+		return completeClass.findCollectionType(typeParameters);
 	}
 
 	@Override
 	public @Nullable MapType findMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return completeEnvironment.findMapType(completeClass, typeParameters);
+		return completeClass.findMapType(typeParameters);
 	}
 
 	@Override
@@ -491,11 +491,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return completeEnvironment.getCollectionType(completeClass, typeParameters);
+		return completeClass.getCollectionType(typeParameters);
 	}
 
 	public @NonNull CollectionType getCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return completeEnvironment.getCollectionType(completeClass, TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper));
+		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper);
+		return completeClass.getCollectionType(typeParameters);
 	}
 
 	@Override
@@ -542,7 +543,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull MapType getMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return completeEnvironment.getMapType(completeClass, typeParameters);
+		return completeClass.getMapType(typeParameters);
 	}
 
 	public @Nullable CompletePackage getMemberPackage(@NonNull String memberPackageName) {
