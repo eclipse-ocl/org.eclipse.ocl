@@ -26,13 +26,10 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 /**
- * An ShadowCache caches the results of each distinct operation implementation and source and argument value
- * for re-use if the same implementation is re-attempted.
+ * A ShadowCache caches the singleton instances of distinct type instantiation
+ * for re-use if the same instantiation is re-attempted.
  *
- * The cache is normally accessed as a consequence of AbstractOperation.evaluate redirecting to the cache.
- * A call-back to AbstractOperation.basicEvaluate occurs when evaluation is actually necessary.
- *
- * The cache is bypassed for derived implementations that override AbstractOperation.evaluate.
+ * The cache is normally accessed as a consequence of evaluating a ShadowExp.
  *
  * @since 1.3
  */
@@ -41,7 +38,7 @@ public class ShadowCache
 	public static final @NonNull TracingOption SHADOWS = new TracingOption(PivotPlugin.PLUGIN_ID, "shadows");
 
 	/**
-	 * An ShadowResult maintains the cached result of the invocation of implementation with theseValues.
+	 * An ShadowResult maintains the cached singleton instance of thisClass with corresponding theseValues for theseProperties.
 	 */
 	private static final class ShadowResult
 	{
@@ -88,10 +85,10 @@ public class ShadowCache
 	protected final @NonNull Executor executor;
 
 	/**
-	 * Map from implementation, source, arguments hashCode to one or more evaluations with that hashCode. Single map entries use the
+	 * Map from class, properties, slot-values hashCode to one or more instances with that hashCode. Single map entries use the
 	 * ShadowResult directly as the entry. Colliding entries use a List<@NonNull ShadowResult> for the collisions.
 	 * <br>
-	 * This map is used to inhibit repeated evaluations.
+	 * This map is used to inhibit repeated instances.
 	 */
 	private final @NonNull Map<@NonNull Integer, @NonNull Object> hashCode2shadows = new HashMap<>();
 
