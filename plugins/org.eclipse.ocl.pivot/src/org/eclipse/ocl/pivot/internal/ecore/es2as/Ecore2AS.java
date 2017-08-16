@@ -341,19 +341,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (pivotModel2 == null) {
 			loadImports(ecoreResource);
 			pivotModel2 = pivotModel = importObjects(ClassUtil.nonNullEMF(ecoreResource.getContents()), createPivotURI());
-			@SuppressWarnings("null") @NonNull Resource asResource = pivotModel2.eResource();
-			AliasAdapter ecoreAdapter = AliasAdapter.findAdapter(ecoreResource);
-			if (ecoreAdapter != null) {
-				Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
-				AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
-				Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
-				for (EObject eObject : ecoreAliasMap.keySet()) {
-					String alias = ecoreAliasMap.get(eObject);
-					Element element = newCreateMap.get(eObject);
-					pivotAliasMap.put(element, alias);
-				}
-			}
-			metamodelManager.installResource(asResource);
 			installImports();
 		}
 		return pivotModel2;
@@ -944,6 +931,18 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		PivotUtilInternal.refreshList(pivotModel.getOwnedPackages(), newPackages);
+		AliasAdapter ecoreAdapter = AliasAdapter.findAdapter(ecoreResource);
+		if (ecoreAdapter != null) {
+			Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
+			AliasAdapter pivotAdapter = AliasAdapter.getAdapter(asResource);
+			Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
+			for (EObject eObject : ecoreAliasMap.keySet()) {
+				String alias = ecoreAliasMap.get(eObject);
+				Element element = newCreateMap.get(eObject);
+				pivotAliasMap.put(element, alias);
+			}
+		}
+		metamodelManager.installResource(asResource);
 		Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<@NonNull String, @NonNull Type>();
 		for (@NonNull EGenericType eGenericType : genericTypes) {
 			Type pivotType = resolveType(resolvedSpecializations, eGenericType);

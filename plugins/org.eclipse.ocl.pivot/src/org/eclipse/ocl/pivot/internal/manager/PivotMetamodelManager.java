@@ -280,7 +280,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * The resource of the Standard Library defined by loadDefaultLibrary. If the URI corresponds to a
 	 * registered library, the registered library is loaded, else the first library in asLibraries with a matching
 	 * URI is installed. Once asLibraryResource is determined all types libraries in asLibraries and all future
-	 * asLibraries are automatically merged into the Standard LIbrary.
+	 * asLibraries are automatically merged into the Standard Library.
 	 */
 	protected @Nullable Resource asLibraryResource = null;
 
@@ -394,7 +394,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	/**
 	 * Assign xmi:id values to referenceable elements in the libraries.
+	 *
+	 * @deprecated only used by AS2XMIid which is no longer used.
 	 */
+	@Deprecated
 	public void assignLibraryIds(@NonNull AS2XMIid as2xmIid, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		for (@NonNull Library asLibrary : asLibraries) {
 			Resource eResource = asLibrary.eResource();
@@ -1746,6 +1749,32 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	/**
+	 * @since 1.4
+	 */
+	protected void installLibrary(@NonNull Library asLibrary) {
+		if (!asLibraries.contains(asLibrary)) {
+			String uri = asLibrary.getURI();
+			if (asLibraries.isEmpty()) {
+				if (uri == null) {
+					throw new IllegalLibraryException(PivotMessagesInternal.MissingLibraryURI_ERROR_);
+				}
+				if (!standardLibrary.isExplicitDefaultStandardLibraryURI()) {
+					for (org.eclipse.ocl.pivot.Class asClass : asLibrary.getOwnedClasses()) {
+						if ("OclAny".equals(asClass.getName())) {
+							standardLibrary.setDefaultStandardLibraryURI(uri);
+							break;
+						}
+					}
+				}
+			}
+			asLibraries.add(asLibrary);
+			if (asLibraryResource != null) {
+				installLibraryContents(asLibrary);
+			}
+		}
+	}
+
+	/**
 	 * Merge all types in asLibrary into the overall Standard Library.
 	 */
 	protected void installLibraryContents(@NonNull Library asLibrary) {
@@ -1842,26 +1871,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		completeModel.getPartialModels().add(pivotModel);
 		for (org.eclipse.ocl.pivot.Package asPackage : ownedPackages) {
-			if ((asPackage instanceof Library) && !asLibraries.contains(asPackage)) {
-				Library asLibrary = (Library)asPackage;
-				String uri = asLibrary.getURI();
-				if (asLibraries.isEmpty()) {
-					if (uri == null) {
-						throw new IllegalLibraryException(PivotMessagesInternal.MissingLibraryURI_ERROR_);
-					}
-					if (!standardLibrary.isExplicitDefaultStandardLibraryURI()) {
-						for (org.eclipse.ocl.pivot.Class asClass : asLibrary.getOwnedClasses()) {
-							if ("OclAny".equals(asClass.getName())) {
-								standardLibrary.setDefaultStandardLibraryURI(uri);
-								break;
-							}
-						}
-					}
-				}
-				asLibraries.add(asLibrary);
-				if (asLibraryResource != null) {
-					installLibraryContents(asLibrary);
-				}
+			if (asPackage instanceof Library) {
+				installLibrary((Library)asPackage);
 			}
 		}
 		for (Import asImport : ownedImports) {
@@ -1966,8 +1977,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	/**
 	 * Load the Standard Library for a given uri. If the uri corresponds to a registered library, that library
-	 * is isntalled, otherwise the already loaded asLibraries are examined and the fuirst library with a matching
-	 * URI is used. Return the resource of tghe library, and merges all types of all libraries into the overall
+	 * is installed, otherwise the already loaded asLibraries are examined and the first library with a matching
+	 * URI is used. Return the resource of the library, and merges all types of all libraries into the overall
 	 * stnadard library.
 	 */
 	public @Nullable Resource loadDefaultLibrary(@Nullable String uri) {
@@ -2014,7 +2025,18 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		// FIXME alias not used
 		URI resourceURI = uri.trimFragment();
 		if (PivotUtilInternal.isASURI(resourceURI)) {
-			return getASElement(uri);
+			Element asElement = getASElement(uri);
+			if (asElement instanceof Model) {
+				for (EObject eObject : ((Model)asElement).getOwnedPackages()) {
+					if (eObject instanceof Library) {
+						if (asLibraries.isEmpty() && (asLibraryResource == null)) {
+							asLibraryResource = asElement.eResource();
+							installLibrary((Library)eObject);
+						}
+					}
+				}
+			}
+			return asElement;
 		}
 		// if (EPackage.Registry.INSTANCE.containsKey(resourceOrNsURI))
 		// return EPackage.Registry.INSTANCE.getEPackage(resourceOrNsURI);

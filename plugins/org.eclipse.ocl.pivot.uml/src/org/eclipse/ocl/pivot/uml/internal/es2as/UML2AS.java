@@ -601,6 +601,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 						}
 					}
 					installImports();
+					installAliases(asResource);
+					metamodelManager.installResource(asResource);
 					installReferencers();
 					modelAnalysis.installStereotypes();
 					installProperties();
@@ -616,8 +618,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 				if (errors != null) {
 					asResource.getErrors().addAll(errors);
 				}
-				installAliases(asResource);
-				metamodelManager.installResource(asResource);
 				ResourceSet resourceSet = umlResource.getResourceSet();
 				if (resourceSet != null) {
 					environmentFactory.addExternalResources(resourceSet);				// FIXME redundant ?? -- no updates URIResourceMap
