@@ -49,7 +49,7 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 		private URI uri = null;
 		private Element importedElement = null;
 		private Throwable throwable = null;
-	
+
 		public ScopeView computeLookup(ImportCS targetElement, EnvironmentView environmentView, ScopeView scopeView) {
 			String name = environmentView.getName();
 			if (name != null) {				// Looking for a specific name
@@ -74,11 +74,11 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 			}
 			return null;
 		}
-	
+
 		public String getMessage() {
 			return throwable != null ? throwable.toString() : null;
 		}
-	
+
 		protected void importModel(ImportCS target, EnvironmentView environmentView) {
 			String name = environmentView.getName();
 			if (name == null) {
@@ -97,7 +97,7 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 			BaseCSResource csResource = (BaseCSResource) target.eResource();
 			@NonNull URI uri2;
 			try {
-				 @NonNull URI newURI = URI.createURI(name);
+				@NonNull URI newURI = URI.createURI(name);
 				newURI = csResource.resolve(newURI);
 				if (newURI.equals(uri)) {
 					return;
@@ -113,24 +113,26 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 				return;
 			}
 			try {
-				importedElement = environmentFactory.getMetamodelManager().loadResource(uri2, null, null);				
-				Resource importedResource = importedElement.eResource();
-				if (importedResource != null) {
-					List<Resource.Diagnostic> errors = importedResource.getErrors();
-					if (errors.size() > 0) {
-//						INode node = NodeModelUtils.getNode(target);
-						String errorMessage = PivotUtil.formatResourceDiagnostics(errors, StringUtil.bind(PivotMessagesInternal.ErrorsInURI, uri), "\n\t");
-						throw new IOException(errorMessage);
-//						Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, errorMessage);
-//						csResource.getErrors().add(resourceDiagnostic);
-					}
-					List<Resource.Diagnostic> warnings = importedResource.getWarnings();
-					if (warnings.size() > 0) {
-//						INode node = NodeModelUtils.getNode(target);
-						String warningMessage = PivotUtil.formatResourceDiagnostics(warnings, StringUtil.bind(PivotMessagesInternal.WarningsInURI, uri2), "\n\t");
-						throw new IOException(warningMessage);
-//						Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, errorMessage);
-//						csResource.getWarnings().add(resourceDiagnostic);
+				importedElement = environmentFactory.getMetamodelManager().loadResource(uri2, null, null);
+				if (importedElement != null) {
+					Resource importedResource = importedElement.eResource();
+					if (importedResource != null) {
+						List<Resource.Diagnostic> errors = importedResource.getErrors();
+						if (errors.size() > 0) {
+							//						INode node = NodeModelUtils.getNode(target);
+							String errorMessage = PivotUtil.formatResourceDiagnostics(errors, StringUtil.bind(PivotMessagesInternal.ErrorsInURI, uri), "\n\t");
+							throw new IOException(errorMessage);
+							//						Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, errorMessage);
+							//						csResource.getErrors().add(resourceDiagnostic);
+						}
+						List<Resource.Diagnostic> warnings = importedResource.getWarnings();
+						if (warnings.size() > 0) {
+							//						INode node = NodeModelUtils.getNode(target);
+							String warningMessage = PivotUtil.formatResourceDiagnostics(warnings, StringUtil.bind(PivotMessagesInternal.WarningsInURI, uri2), "\n\t");
+							throw new IOException(warningMessage);
+							//						Resource.Diagnostic resourceDiagnostic = new ValidationDiagnostic(node, errorMessage);
+							//						csResource.getWarnings().add(resourceDiagnostic);
+						}
 					}
 				}
 			} catch (WrappedException e) {

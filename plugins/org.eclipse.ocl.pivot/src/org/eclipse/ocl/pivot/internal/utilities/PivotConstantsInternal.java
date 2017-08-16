@@ -89,6 +89,10 @@ public interface PivotConstantsInternal
 	static final @NonNull String BINDINGS_PREFIX = "/"; //$NON-NLS-1$ // FIXME Rename
 	static final @NonNull String ITERATOR_SEPARATOR = ";"; //$NON-NLS-1$
 	static final @NonNull String ACCUMULATOR_SEPARATOR = "|"; //$NON-NLS-1$
+	/**
+	 * @since 1.4
+	 */
+	static final @NonNull String COLLECTION_ELEMENT_SEPARATOR = "|"; //$NON-NLS-1$
 	static final @NonNull String NULL_MARKER = "<<null-element>>"; //$NON-NLS-1$
 	static final @NonNull String NULL_ROOT = "$null$"; //$NON-NLS-1$
 	static final @NonNull String OVERFLOW_MARKER = "##"; //$NON-NLS-1$

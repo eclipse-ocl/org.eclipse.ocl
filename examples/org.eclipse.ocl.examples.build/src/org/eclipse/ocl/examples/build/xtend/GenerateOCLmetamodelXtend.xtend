@@ -59,7 +59,7 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 	protected override String generateMetamodel(Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		thisModel = root;
 		var Package pkg = root.ownedPackages.findPackage();
-		if (pkg == null) {
+		if (pkg === null) {
 			return null;
 		}
 		var externalPackages = root.getSortedExternalPackages();
@@ -105,7 +105,7 @@ public class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 			import org.eclipse.ocl.pivot.utilities.PivotUtil;
-			«IF ((externalPackages != null) && !externalPackages.isEmpty())»
+			«IF ((externalPackages !== null) && !externalPackages.isEmpty())»
 			
 			«FOR externalPackage : externalPackages»
 				«externalPackage.declarePackageImport()»

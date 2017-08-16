@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -30,11 +31,16 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Pseudostate;
 import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VariableDeclaration;
@@ -61,7 +67,8 @@ import org.eclipse.ocl.pivot.util.Visitable;
  * in the context Moniker to XMIId Map.
  *
  */
-public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
+@Deprecated /* @deprecated only used to generate legacy Model.xmiidVersion 0 xmiids */
+public class AS2XMIidVisitor extends AbstractExtendingVisitor<@Nullable Boolean, @NonNull AS2XMIid>
 {
 	public static final int OVERFLOW_LIMIT = 1024;
 	public static final @NonNull String OVERFLOW_MARKER = "##"; //$NON-NLS-1$
@@ -71,6 +78,10 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 	public static final @NonNull String FRAGMENT_SEPARATOR = "#"; //$NON-NLS-1$
 
 	public static final @NonNull String ACCUMULATOR_PREFIX = "a"; //$NON-NLS-1$
+	/**
+	 * @since 1.4
+	 */
+	public static final @NonNull String ANNOTATION_PREFIX = "a."; //$NON-NLS-1$
 	public static final @NonNull String BODYCONDITION_PREFIX = "c="; //$NON-NLS-1$
 	/**
 	 * @since 1.1
@@ -89,7 +100,15 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 	public static final @NonNull String POSTCONDITION_PREFIX = "c+"; //$NON-NLS-1$
 	public static final @NonNull String PRECONDITION_PREFIX = "c-"; //$NON-NLS-1$
 	public static final @NonNull String PRECEDENCE_PREFIX = "Z."; //$NON-NLS-1$
+	/**
+	 * @since 1.4
+	 */
+	public static final @NonNull String PROFILE_APPLICATION_PREFIX = "pa."; //$NON-NLS-1$
 	public static final @NonNull String PROPERTY_PREFIX = "p."; //$NON-NLS-1$
+	/**
+	 * @since 1.4
+	 */
+	public static final @NonNull String STEREOTYPE_EXTENDER_PREFIX = "se."; //$NON-NLS-1$
 	public static final @NonNull String TEMPLATE_PARAMETER_PREFIX = "t."; //$NON-NLS-1$
 	public static final @NonNull String TEMPLATE_SIGNATURE_PREFIX = "s."; //$NON-NLS-1$
 	public static final @NonNull String TYPE_PREFIX = "T."; //$NON-NLS-1$
@@ -207,6 +226,14 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 	@Override
 	public String toString() {
 		return s.toString();
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	public @Nullable Boolean visitAnnotation(@NonNull Annotation object) {
+		return false;
 	}
 
 	@Override
@@ -370,6 +397,14 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 		return true;
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	public @Nullable Boolean visitProfileApplication(@NonNull ProfileApplication object) {
+		return false;
+	}
+
 	@Override
 	public @Nullable Boolean visitProperty(@NonNull Property object) {
 		EObject eContainer = object.eContainer();
@@ -395,10 +430,34 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 		return true;
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	public @Nullable Boolean visitPseudostate(@NonNull Pseudostate object) {
+		return false;
+	}
+
 	@Override
 	public @Nullable Boolean visitSelfType(@NonNull SelfType object) {
 		appendName(object.getName());
 		return true;
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	public @Nullable Boolean visitState(@NonNull State object) {
+		return false;
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	public @Nullable Boolean visitStereotypeExtender(@NonNull StereotypeExtender object) {
+		return false;
 	}
 
 	@Override
@@ -423,6 +482,14 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 		return true;
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	public @Nullable Boolean visitTransition(@NonNull Transition object) {
+		return false;
+	}
+
 	@Override
 	public @Nullable Boolean visitTupleType(@NonNull TupleType object) {
 		return false;
@@ -430,7 +497,7 @@ public class AS2XMIidVisitor extends AbstractExtendingVisitor<Boolean, AS2XMIid>
 
 	@Override
 	public @Nullable Boolean visitVariableDeclaration(@NonNull VariableDeclaration object) {
-		return null;
+		return false;
 	}
 
 	@Override

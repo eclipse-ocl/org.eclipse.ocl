@@ -10,32 +10,26 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.utilities;
 
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor;
 import org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
+@Deprecated /* @deprecated only used to generate legacy Model.xmiidVersion 0 xmiids */
 public class AS2XMIid
 {
 	/**
@@ -79,45 +73,17 @@ public class AS2XMIid
 	/**
 	 * Create an AS2ID conversion primed with the xmi:id values obtained by loading uri.
 	 */
+	@Deprecated /* @deprecated no longer used */
 	public static @NonNull AS2XMIid load(@NonNull URI uri) {
-		Map<@NonNull String, @NonNull String> moniker2id = new HashMap<>();
-		ResourceSet resourceSet = new ResourceSetImpl();
-		ASResourceFactoryRegistry.INSTANCE.configureResourceSet(resourceSet);
-		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(PivotConstants.OCL_AS_FILE_EXTENSION, OCLASResourceFactory.INSTANCE);
-		try {
-			Resource resource = resourceSet.getResource(uri, true);
-			if (resource instanceof XMLResource) {
-				@SuppressWarnings("null")@NonNull List<Adapter> eAdapters = resource.eAdapters();
-				AS2MonikerVisitor monikerVisitor = ClassUtil.getAdapter(AS2MonikerVisitor.class, eAdapters);
-				if (monikerVisitor != null) {
-					XMLResource xmlResource = (XMLResource) resource;
-					for (TreeIterator<EObject> tit = xmlResource.getAllContents(); tit.hasNext(); ) {
-						EObject eObject = tit.next();
-						if (eObject instanceof Element) {
-							Element element = (Element) eObject;
-							String oldID = xmlResource.getID(element);
-							if (oldID != null) {
-								Object moniker = element.accept(monikerVisitor);
-								if (moniker instanceof String) {
-									moniker2id.put((String) moniker, oldID);
-								}
-							}
-						}
-					}
-				}
-			}
-		} catch (Exception e) {}
-		return new AS2XMIid(moniker2id);
+		return new AS2XMIid();
 	}
 
-	protected final @NonNull Map<@NonNull String, @NonNull String> moniker2id;
+	@Deprecated /* @deprecated no longer used */
+	protected final @NonNull Map<@NonNull String, @NonNull String> moniker2id = Collections.emptyMap();
 
-	public AS2XMIid() {
-		this.moniker2id = new HashMap<>();
-	}
+	public AS2XMIid() {}
 
 	protected AS2XMIid(@NonNull Map<@NonNull String, @NonNull String> moniker2id) {
-		this.moniker2id = moniker2id;
 	}
 
 	/**
@@ -174,7 +140,7 @@ public class AS2XMIid
 	 */
 	public void assignIds(@NonNull ResourceSet asResourceSet, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		EcoreUtil.resolveAll(asResourceSet);		// Pending a fix to BUG 451928 this may provoke  CME unless all resources already loaded
-		for (@SuppressWarnings("null")@NonNull Resource resource : asResourceSet.getResources()) {
+		for (@NonNull Resource resource : asResourceSet.getResources()) {
 			if (resource instanceof ASResource) {
 				assignIds((ASResource)resource, options);
 			}

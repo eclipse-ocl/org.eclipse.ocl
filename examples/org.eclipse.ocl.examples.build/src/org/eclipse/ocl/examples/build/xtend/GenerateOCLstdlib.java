@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -42,6 +43,7 @@ import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
+import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -151,7 +153,16 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			asResource.setURI(saveURI);
 			Map<String, Object> options = new HashMap<String, Object>();
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
+			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
 			asResource.save(options);
+			for (Resource resource : asResource.getResourceSet().getResources()) {
+				String saveMessage = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), "Save", "\n\t");
+				if (saveMessage != null) {
+					issues.addError(this, saveMessage, null, null, null);
+					return;
+				}
+			}
 			if (ecoreFile != null) {
 				@NonNull URI ecoreURI = URI.createPlatformResourceURI(ecoreFile, true);
 				AS2Ecore converter = new AS2Ecore(getEnvironmentFactory(), ecoreURI, null);

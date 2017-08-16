@@ -353,7 +353,10 @@ public class PivotUtilInternal //extends PivotUtil
 
 	/**
 	 * Return a URI based on the nsURI of the immediate parent package.
+	 *
+	 * @deprecated only used by AS2Moniker - gives unpleasant long location-dependent results for uri-less packages
 	 */
+	@Deprecated
 	public static String getNsURI(@NonNull Element element) {
 		if (element instanceof org.eclipse.ocl.pivot.Package) {
 			String nsURI = ((org.eclipse.ocl.pivot.Package)element).getURI();

@@ -24,13 +24,12 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.MapLiteralExp;
-import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.Detail;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.FinalState;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
@@ -38,6 +37,8 @@ import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
+import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NullLiteralExp;
@@ -48,15 +49,21 @@ import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
+import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
+import org.eclipse.ocl.pivot.Pseudostate;
 import org.eclipse.ocl.pivot.RealLiteralExp;
+import org.eclipse.ocl.pivot.ShadowExp;
+import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -72,7 +79,7 @@ import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
 public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Moniker> implements PivotConstantsInternal
-{	
+{
 	private static boolean initialized = false;
 
 	@Deprecated			// The TPS policy pursued here is suspect
@@ -92,18 +99,18 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 			if (eObject instanceof org.eclipse.ocl.pivot.Class) {
 				for (org.eclipse.ocl.pivot.Class superType : ((org.eclipse.ocl.pivot.Class)eObject).getSuperClasses()) {
 					map = getAllTemplateParameterSubstitutions(map, superType);
-				}		
+				}
 			}
 		}
 		return map;
 	}
-	
+
 	public static void initialize() {
 		if (!initialized) {
 			initialized = true;
 			roleNames.put(PivotPackage.Literals.LOOP_EXP__OWNED_BODY, "argument");
-//			roleNames.put(PivotPackage.Literals.EXPRESSION_IN_OCL__BODY_EXPRESSION, "ownedExpression");
-	
+			//			roleNames.put(PivotPackage.Literals.EXPRESSION_IN_OCL__BODY_EXPRESSION, "ownedExpression");
+
 			/*		roleNames.put(PivotPackage.Literals.CALL_EXP__SOURCE, "s");
 			roleNames.put(PivotPackage.Literals.CONSTRAINT__SPECIFICATION, "z");
 			roleNames.put(PivotPackage.Literals.EXPRESSION_IN_OCL__BODY_EXPRESSION, "x");
@@ -116,11 +123,11 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 			roleNames.put(PivotPackage.Literals.LOOP_EXP__ITERATOR, "i");
 			roleNames.put(PivotPackage.Literals.OPERATION_CALL_EXP__ARGUMENT, "a");
 			roleNames.put(PivotPackage.Literals.VARIABLE__INIT_EXPRESSION, "i");
-	*/	}
+			 */	}
 	}
-	
+
 	protected final @Nullable Map<TemplateParameter, Type> templateBindings;
-	
+
 	public AS2MonikerVisitor(@NonNull AS2Moniker context) {
 		super(context);
 		templateBindings = null;
@@ -219,17 +226,6 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 			context.appendName(object);
 			context.appendTemplateParameters(object);
 		}
-		if (object instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)object;
-			Number lower = collectionType.getLower();
-			Number upper = collectionType.getUpper();
-			if ((lower.longValue() != 0) || !(upper instanceof Unlimited)) {
-				context.append("_" + lower);
-				if (!(upper instanceof Unlimited)) {
-					context.append("_" + upper);
-				}
-			}
-		}
 		return true;
 	}
 
@@ -248,11 +244,29 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	}
 
 	@Override
+	public Object visitCollectionType(@NonNull CollectionType object) {
+		super.visitCollectionType(object);
+		Number lower = object.getLower();
+		Number upper = object.getUpper();
+		if ((lower.longValue() != 0) || !(upper instanceof Unlimited)) {
+			context.append("_" + lower);
+			if (!(upper instanceof Unlimited)) {
+				context.append("_" + upper);
+			}
+		}
+		if (!object.isIsNullFree()) {
+			context.append(COLLECTION_ELEMENT_SEPARATOR);
+			context.append("1");
+		}
+		return true;
+	}
+
+	@Override
 	public Object visitConstraint(@NonNull Constraint object) {
 		context.appendParent(object, MONIKER_SCOPE_SEPARATOR);
 		context.append(PivotUtilInternal.getStereotype(object));
 		Object container = object.eContainer().eGet(object.eContainingFeature());
-		if (container instanceof List<?>) {		
+		if (container instanceof List<?>) {
 			int index = 0;
 			String name2 = object.getName();
 			for (Object content : (List<?>)container) {
@@ -302,11 +316,20 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	public Object visitExpressionInOCL(@NonNull ExpressionInOCL object) {
 		if (object.eContainer() != null) {
 			context.appendParent(object, MONIKER_SCOPE_SEPARATOR);
-			context.appendRole(object);		
+			context.appendRole(object);
 		}
 		else {
 			context.append(MONIKER_ROOT_EXP);
 		}
+		return true;
+	}
+
+	@Override
+	public Object visitFinalState(@NonNull FinalState object) {
+		context.appendParent(object, MONIKER_PART_SEPARATOR);
+		context.append("FS");
+		context.append(MONIKER_SCOPE_SEPARATOR);
+		context.appendName(object);
 		return true;
 	}
 
@@ -334,7 +357,7 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	@Override
 	public Object visitLambdaType(@NonNull LambdaType object) {
 		context.append(object.getName());
-//		context.appendTemplateParameters(object);
+		//		context.appendTemplateParameters(object);
 		Map<TemplateParameter, Type> bindings = getAllTemplateParameterSubstitutions(null, object);
 		context.appendLambdaType(object.getContextType(), object.getParameterType(), object.getResultType(), bindings);
 		return true;
@@ -440,9 +463,9 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 
 	@Override
 	public Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package object) {
-//		if (!object.hasMoniker()) {
-//			throw new IllegalStateException("No moniker has been configured for " + object);
-//		}
+		//		if (!object.hasMoniker()) {
+		//			throw new IllegalStateException("No moniker has been configured for " + object);
+		//		}
 		context.append(PivotUtilInternal.getNsURI(object));
 		return true;
 	}
@@ -461,9 +484,25 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	}
 
 	@Override
+	public Object visitProfileApplication(@NonNull ProfileApplication object) {
+		context.appendParent(object, MONIKER_SCOPE_SEPARATOR);
+		context.appendElement(object.getAppliedProfile());
+		return true;
+	}
+
+	@Override
 	public Object visitPropertyCallExp(@NonNull PropertyCallExp object) {
 		appendExpPrefix(object);
 		context.appendName(object.getReferredProperty());
+		return true;
+	}
+
+	@Override
+	public Object visitPseudostate(@NonNull Pseudostate object) {
+		context.appendParent(object, MONIKER_PART_SEPARATOR);
+		context.append("PS");
+		context.append(MONIKER_SCOPE_SEPARATOR);
+		context.appendName(object);
 		return true;
 	}
 
@@ -478,16 +517,35 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	public String visitShadowExp(@NonNull ShadowExp shadowExp) {
 		appendExpPrefix(shadowExp);
 		context.append(MONIKER_TUPLE_LITERAL_EXP);
-//		appendQualifiedName(constructorExp.getReferredType());
-//		append("{");//$NON-NLS-1$
-//		String prefix = "";
-//		for (TupleLiteralPart part : constructorExp.getPart()) {
-//			append(prefix);
-//           safeVisit(part);
-//			prefix = ", ";//$NON-NLS-1$
-//		}
-//		append("}");
+		//		appendQualifiedName(constructorExp.getReferredType());
+		//		append("{");//$NON-NLS-1$
+		//		String prefix = "";
+		//		for (TupleLiteralPart part : constructorExp.getPart()) {
+		//			append(prefix);
+		//           safeVisit(part);
+		//			prefix = ", ";//$NON-NLS-1$
+		//		}
+		//		append("}");
 		return null;
+	}
+
+	@Override
+	public Object visitState(@NonNull State object) {
+		context.appendParent(object, MONIKER_PART_SEPARATOR);
+		context.append("S");
+		context.append(MONIKER_SCOPE_SEPARATOR);
+		context.appendName(object);
+		return true;
+	}
+
+	@Override
+	public Object visitStereotypeExtender(@NonNull StereotypeExtender object) {
+		context.appendElement(object.getClass_());
+		context.append(MONIKER_SCOPE_SEPARATOR);
+		context.append("X");
+		context.append(MONIKER_PART_SEPARATOR);
+		context.appendElement((Element) object.eContainer());
+		return true;
 	}
 
 	@Override
@@ -526,6 +584,15 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	@Override
 	public Object visitTemplateSignature(@NonNull TemplateSignature object) {
 		context.appendParent(object, MONIKER_SCOPE_SEPARATOR);
+		return true;
+	}
+
+	@Override
+	public Object visitTransition(@NonNull Transition object) {
+		context.appendParent(object, MONIKER_PART_SEPARATOR);
+		context.append("T");
+		context.append(MONIKER_SCOPE_SEPARATOR);
+		context.appendName(object);
 		return true;
 	}
 
@@ -581,5 +648,5 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	@Override
 	public Object visiting(@NonNull Visitable visitable) {
 		throw new IllegalArgumentException("Unsupported " + visitable.eClass().getName() + " for " + getClass().getSimpleName());
-	}	
+	}
 }

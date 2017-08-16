@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -64,9 +63,8 @@ public final class PivotSaveImpl extends XMISaveImpl
 	protected void init(XMLResource resource, Map<?, ?> options) {
 		XMLResource asResource = ClassUtil.nonNullState(resource);
 		ASSaver asSaver = new ASSaver(asResource);
-		AS2XMIid as2xmIid = new AS2XMIid();
 		asSaver.localizeSpecializations();
-		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<>();
+		Map<@NonNull Object, @Nullable Object> saveOptions = new HashMap<>();
 		if (options != null) {
 			for (Object key : options.keySet()) {
 				saveOptions.put(String.valueOf(key), options.get(key));
@@ -89,10 +87,10 @@ public final class PivotSaveImpl extends XMISaveImpl
 		}
 		ResourceSet asResourceSet = asResource.getResourceSet();
 		if (asResourceSet != null) {
-			as2xmIid.assignIds(asResourceSet, saveOptions);
+			AS2ID.assignIds(asResourceSet.getResources(), saveOptions);
 		}
 		else if (asResource instanceof ASResource){
-			as2xmIid.assignIds((ASResource) asResource, saveOptions);
+			AS2ID.assignIds((ASResource) asResource, saveOptions);
 		}
 		super.init(asResource, saveOptions);
 	}

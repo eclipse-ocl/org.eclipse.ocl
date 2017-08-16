@@ -16,12 +16,10 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.uml2.types.TypesPackage;
 import org.eclipse.uml2.uml.UMLPackage;
@@ -33,7 +31,7 @@ public class UMLASResourceImpl extends ASResourceImpl
 	 * Mapping from the OMG namespace UML types to the Eclipse UML2 namespace classes.
 	 */
 	private /*@LazyNonNull*/ Map<org.eclipse.uml2.uml.Type, EClassifier> uml2ecore = null;
-	
+
 	public UMLASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 		super(uri, asResourceFactory);
 	}
@@ -64,15 +62,6 @@ public class UMLASResourceImpl extends ASResourceImpl
 		}
 		uml2ecore.put(umlType, eClassifier);
 		return eClassifier;
-	}
-
-	@Override
-	public EObject getEObject(String uriFragment) {
-		if (idToEObjectMap == null) {
-			AS2XMIid as2id = new AS2XMIid();
-			as2id.assignIds(this, null);
-		}
-		return super.getEObject(uriFragment);
 	}
 
 	@Override

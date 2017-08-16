@@ -845,6 +845,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Element getActual(@NonNull TemplateParameterSubstitution templateParameterSubstitution) {
+		return ClassUtil.nonNullState(templateParameterSubstitution.getActual());
+	}
+
+	/**
 	 * Return the type of a TypedElement, exploiting the known non-null and non-TypeParameter characteristics.
 	 * @throws IllegalStateException for a null type
 	 * @throws ClassCastException for a TypeParameter
@@ -949,6 +956,13 @@ public class PivotUtil
 			}
 		}
 		return depth;
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Type getContextType(@NonNull LambdaType lambdaType) {
+		return ClassUtil.nonNullState(lambdaType.getContextType());
 	}
 
 	/**
@@ -1060,6 +1074,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Iterable<@NonNull Parameter> getOwnedAccumulators(@NonNull Iteration iteration) {
+		return ClassUtil.nullFree(iteration.getOwnedAccumulators());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull OCLExpression getOwnedArgument(@NonNull OperationCallExp object, int index) {
@@ -1071,6 +1092,13 @@ public class PivotUtil
 	 */
 	public static @NonNull Iterable<@NonNull OCLExpression> getOwnedArguments(@NonNull OperationCallExp operationCallExp) {
 		return ClassUtil.nullFree(operationCallExp.getOwnedArguments());
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Iterable<@NonNull TemplateBinding> getOwnedBindings(@NonNull TemplateableElement asElement) {
+		return ClassUtil.nullFree(asElement.getOwnedBindings());
 	}
 
 	/**
@@ -1172,6 +1200,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Iterable<@NonNull Parameter> getOwnedIterators(@NonNull Iteration iteration) {
+		return ClassUtil.nullFree(iteration.getOwnedIterators());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<@NonNull Variable> getOwnedIterators(@NonNull LoopExp loopExp) {
@@ -1260,6 +1295,13 @@ public class PivotUtil
 	 */
 	public static @NonNull OCLExpression getOwnedSource(@NonNull CallExp object) {
 		return ClassUtil.nonNullState(object.getOwnedSource());
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Iterable<@NonNull TemplateParameterSubstitution> getOwnedSubstitutions(@NonNull TemplateBinding asTemplateBinding) {
+		return ClassUtil.nullFree(asTemplateBinding.getOwnedSubstitutions());
 	}
 
 	/**
@@ -1432,6 +1474,13 @@ public class PivotUtil
 	 */
 	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ClassUtil.nullFree(asClass.getSuperClasses());
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	public static @NonNull Type getResultType(@NonNull LambdaType lambdaType) {
+		return ClassUtil.nonNullState(lambdaType.getResultType());
 	}
 
 	/**

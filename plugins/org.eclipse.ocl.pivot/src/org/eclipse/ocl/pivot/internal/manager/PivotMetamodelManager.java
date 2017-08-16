@@ -394,10 +394,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	/**
 	 * Assign xmi:id values to referenceable elements in the libraries.
-	 *
-	 * @deprecated only used by AS2XMIid which is no longer used.
 	 */
-	@Deprecated
+	@Deprecated /* @deprecated only used when AS2XMIID generates legacy Model.xmiidVersion 0 xmiids */
 	public void assignLibraryIds(@NonNull AS2XMIid as2xmIid, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		for (@NonNull Library asLibrary : asLibraries) {
 			Resource eResource = asLibrary.eResource();

@@ -333,10 +333,12 @@ public class PivotTestCase extends TestCase
 
 	public static void assertResourceDiagnostics(@NonNull String prefix, @NonNull List<Resource.Diagnostic> resourceDiagnostics, String... messages) {
 		Map<String, Integer> expected = new HashMap<String, Integer>();
-		for (String message : messages) {
-			Integer count = expected.get(message);
-			count = count == null ? 1 : count + 1;
-			expected.put(message, count);
+		if (messages != null) {
+			for (String message : messages) {
+				Integer count = expected.get(message);
+				count = count == null ? 1 : count + 1;
+				expected.put(message, count);
+			}
 		}
 		StringBuilder s1 = null;
 		for (Resource.Diagnostic error : resourceDiagnostics) {

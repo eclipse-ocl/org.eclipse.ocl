@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
+import java.util.Map;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
@@ -41,11 +43,22 @@ import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
 
 /**
  * ASResourceFactory provides Resource-type-dependent functionality for an OCL Abstract Syntax (Pivot) Model
- * without requiring a corresponding Resource to exist. It is therefore typically used to 
+ * without requiring a corresponding Resource to exist. It is therefore typically used to
  * create ASResource-related artefacts.
  */
 public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryContribution
 {
+	/**
+	 * @since 1.4
+	 */
+	interface ASResourceFactoryExtension extends ASResourceFactory
+	{
+		/**
+		 * Create the LUSSID allocator for an asResource.
+		 */
+		@NonNull LUSSIDs createLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options);
+	}
+
 	/**
 	 * Configure the MetamodelManager's external ResourceSet. Implementations may install
 	 * any required extension or content to factory mappings in the resource factory registry.
@@ -54,44 +67,47 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	void configure(@NonNull ResourceSet resourceSet);
 
 	/**
-	 * Create a visitor to compute a structural descriptor for an element. 
+	 * Create a visitor to compute a structural descriptor for an element.
 	 */
 	@NonNull AS2MonikerVisitor createAS2MonikerVisitor(@NonNull AS2Moniker as2moniker);
 
 	/**
-	 * Create a visitor to compute the xmi:id value of an element. 
+	 * Create a visitor to compute the xmi:id value of an element.
+	 *
+	 * @deprecated AS2XMIid replaced by as2IS
 	 */
+	@Deprecated
 	@NonNull AS2XMIidVisitor createAS2XMIidVisitor(@NonNull AS2XMIid as2id);
 
 	/**
-	 * Create a visitor to locate orphan specializations. 
+	 * Create a visitor to locate orphan specializations.
 	 */
 	@NonNull ASSaverLocateVisitor createASSaverLocateVisitor(@NonNull ASSaver asSaver);
 
 	/**
-	 * Create a visitor to normalize content. 
+	 * Create a visitor to normalize content.
 	 */
 	@NonNull ASSaverNormalizeVisitor createASSaverNormalizeVisitor(@NonNull ASSaver asSaver);
 
 	/**
-	 * Create a visitor to resolve orphan specializations. 
+	 * Create a visitor to resolve orphan specializations.
 	 */
 	@NonNull ASSaverResolveVisitor createASSaverResolveVisitor(@NonNull ASSaver asSaver);
 
-//	@NonNull EnvironmentFactoryInternal createEnvironmentFactory(@Nullable ProjectManager projectManager);
+	//	@NonNull EnvironmentFactoryInternal createEnvironmentFactory(@Nullable ProjectManager projectManager);
 
 	/**
-	 * Create a visitor to provide a pretty printed representation of one or more elements in the resource. 
+	 * Create a visitor to provide a pretty printed representation of one or more elements in the resource.
 	 */
 	@NonNull PrettyPrintVisitor createPrettyPrintVisitor(@NonNull PrettyPrinter prettyPrinter);
 
 	/**
-	 * Create a visitor to resolve template substitutions. 
+	 * Create a visitor to resolve template substitutions.
 	 */
 	@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue);
 
 	/**
-	 * Create a visitor to provide a debug representation of one or more elements in the resource. 
+	 * Create a visitor to provide a debug representation of one or more elements in the resource.
 	 */
 	@NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s);
 
@@ -100,14 +116,14 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 * the correspondence and ensuring that the result is of asClass.
 	 */
 	@Nullable <T extends Element> T getASElement(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Class<T> asClass, @NonNull EObject eObject) throws ParserException;
-	
+
 	@NonNull String getContentType();
 
 	/**
 	 * Return an EOperation for a pivot Operation if one is available.
 	 * <br>
 	 * For UML this locates the corresponding operation in the Eclipse namespace for the OMG namespace.
-	 * @param asResource 
+	 * @param asResource
 	 */
 	@Nullable EOperation getEOperation(@NonNull ASResource asResource, @NonNull EObject eObject);
 
@@ -126,11 +142,11 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	@Nullable URI getPackageURI(@NonNull EObject eObject);
 
 	@Nullable String getResourceClassName();
-	
+
 	/**
 	 * Return the root element in the Pivot resource resulting from import of the available
-	 * resource. 
-	 * @throws ParserException 
+	 * resource.
+	 * @throws ParserException
 	 */
 	@Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource resource, @Nullable URI uri) throws ParserException;
 

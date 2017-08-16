@@ -25,10 +25,12 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
+import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -51,7 +53,7 @@ public class PivotTests extends XtextTestCase
 		}
 
 		public void assertContainedBy(@NonNull CS2AS thatConverter) {
-/*			Map<String, MonikeredElement> thisMoniker2asMap = metamodelManager.computeMoniker2asMap(getPivotResources());
+			/*			Map<String, MonikeredElement> thisMoniker2asMap = metamodelManager.computeMoniker2asMap(getPivotResources());
 			Map<String, MonikeredElement> thatMoniker2asMap = metamodelManager.computeMoniker2asMap(thatConverter.getPivotResources());
 			List<String> theseMonikers = new ArrayList<String>(thisMoniker2asMap.keySet());
 			List<String> thoseMonikers = new ArrayList<String>(thatMoniker2asMap.keySet());
@@ -67,7 +69,7 @@ public class PivotTests extends XtextTestCase
 		}
 
 		public void assertSameContents() { // WIP
-/*			Map<String, MonikeredElement> moniker2asMap = metamodelManager.computeMoniker2asMap(getPivotResources());
+			/*			Map<String, MonikeredElement> moniker2asMap = metamodelManager.computeMoniker2asMap(getPivotResources());
 			Collection<? extends Resource> csResources = cs2asResourceMap.keySet();
 			for (Resource csResource : csResources) {
 				for (TreeIterator<EObject> tit = csResource.getAllContents(); tit.hasNext(); ) {
@@ -92,7 +94,7 @@ public class PivotTests extends XtextTestCase
 					}
 				}
 			} */
-/*			Collection<? extends Resource> pivotResources = cs2asResourceMap.values();
+			/*			Collection<? extends Resource> pivotResources = cs2asResourceMap.values();
 			Map<String, MonikeredElementCS> moniker2CSMap = computeMoniker2CSMap(csResources);
 			for (Resource asResource : pivotResources) {
 				for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
@@ -116,7 +118,7 @@ public class PivotTests extends XtextTestCase
 			} */
 		}
 
-/*		public List<EObject> getRoots() {
+		/*		public List<EObject> getRoots() {
 			List<EObject> roots = new ArrayList<EObject>();
 			for (Map.Entry<? extends Resource, ? extends Resource> entry : cs2asResourceMap.entrySet()) {
 				roots.addAll(entry.getKey().getContents());
@@ -126,12 +128,12 @@ public class PivotTests extends XtextTestCase
 		} */
 	}
 
-/*	public static class Damager extends Checker
+	/*	public static class Damager extends Checker
 	{
 		private Damager(CS2AS aConverter) {
 			super(aConverter);
 		}
-		
+
 		public List<MonikeredElement> chooseVictims() {
 			List<String> pivotKeys = new ArrayList<String>(moniker2asMap.keySet());
 			List<MonikeredElement> pivotElements = new ArrayList<MonikeredElement>();
@@ -174,41 +176,41 @@ public class PivotTests extends XtextTestCase
 	@SuppressWarnings("null")
 	public BaseCSResource doLoadOCLstdlib(@NonNull OCL ocl, @NonNull String stem, @NonNull String extension) throws IOException {
 		ResourceSet resourceSet = ocl.getResourceSet();
-//		CS2ASResourceSetAdapter.getAdapter(resourceSet, metamodelManager);
-//		long startTime = System.currentTimeMillis();
-//		System.out.println("Start at " + startTime);
+		//		CS2ASResourceSetAdapter.getAdapter(resourceSet, metamodelManager);
+		//		long startTime = System.currentTimeMillis();
+		//		System.out.println("Start at " + startTime);
 		String inputName = stem + "." + extension;
 		String outputName = stem + "." + extension + ".xmi";
 		String output2Name = stem + ".saved." + extension;
 		URI inputURI = getProjectFileURI(inputName);
 		URI outputURI = getProjectFileURI(outputName);
 		URI output2URI = getProjectFileURI(output2Name);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
 		BaseCSResource xtextResource = (BaseCSResource) resourceSet.createResource(inputURI);
 		JavaClassScope.getAdapter(xtextResource, getClass().getClassLoader());
 		ocl.getEnvironmentFactory().adapt(xtextResource);
 		xtextResource.load(null);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " gotResource()");
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " gotResource()");
 		assertNoResourceErrors("Load failed", xtextResource);
-//		assertNoCSErrors("Load failed", xtextResource);
-//		CSAliasCreator.refreshPackageAliases(xtextResource);
-//		CS2ASResourceAdapter adapter = CS2ASResourceAdapter.getAdapter(xtextResource);
-//		Resource asResource = adapter.getPivotResource(xtextResource);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
+		//		assertNoCSErrors("Load failed", xtextResource);
+		//		CSAliasCreator.refreshPackageAliases(xtextResource);
+		//		CS2ASResourceAdapter adapter = CS2ASResourceAdapter.getAdapter(xtextResource);
+		//		Resource asResource = adapter.getPivotResource(xtextResource);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
 		assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
-//		assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
+		//		assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 		xtextResource.setURI(output2URI);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		xtextResource.save(null);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xtextResource);
 		Resource xmiResource = resourceSet.createResource(outputURI);
 		xmiResource.getContents().addAll(xtextResource.getContents());
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		xmiResource.save(null);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xmiResource);
 		xtextResource.getContents().addAll(xmiResource.getContents());
 		return xtextResource;
@@ -250,101 +252,104 @@ public class PivotTests extends XtextTestCase
 		//
 		// Damage the Pivot model and update to repair.
 		//
-//		Damager damager = damagePivot(creator);
-//		damager.assertContainedBy(updater);
-//		damager.update();
-//		damager.assertSameContents();
+		//		Damager damager = damagePivot(creator);
+		//		damager.assertContainedBy(updater);
+		//		damager.update();
+		//		damager.assertSameContents();
 		//
 		assertPivotIsValid(pivotURI);
 		ocl.dispose();
 	}
-	
+
 	@SuppressWarnings("null")
 	public void doPivotTestEcore(@NonNull String stem) throws IOException {
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		MetamodelManagerInternal metamodelManager = ocl.getMetamodelManager();
 		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
-//		long startTime = System.currentTimeMillis();
-//		System.out.println("Start at " + startTime);
-//		String libraryName = "oclstdlib.pivot";
-//		String libraryName = "oclstdlib.oclstdlib";
-//		URI libraryURI = getProjectFileURI(libraryName);
-//		BaseCSResource xtextLibraryResource = (BaseCSResource) resourceSet.getResource(libraryURI, true);
-//		CS2ASResourceAdapter adapter = CS2ASResourceAdapter.refreshPivotMappings(xtextLibraryResource, null);
-//		Resource asResource = adapter.getPivotResource(xtextLibraryResource);
-//		asResourceSet.getResource(libraryURI, true);
+		//		long startTime = System.currentTimeMillis();
+		//		System.out.println("Start at " + startTime);
+		//		String libraryName = "oclstdlib.pivot";
+		//		String libraryName = "oclstdlib.oclstdlib";
+		//		URI libraryURI = getProjectFileURI(libraryName);
+		//		BaseCSResource xtextLibraryResource = (BaseCSResource) resourceSet.getResource(libraryURI, true);
+		//		CS2ASResourceAdapter adapter = CS2ASResourceAdapter.refreshPivotMappings(xtextLibraryResource, null);
+		//		Resource asResource = adapter.getPivotResource(xtextLibraryResource);
+		//		asResourceSet.getResource(libraryURI, true);
 		String inputName = stem + ".ecore";
 		String csName = stem + ".ecore.cs";
 		URI inputURI = getProjectFileURI(inputName);
 		URI csURI = getProjectFileURI(csName);
-//		URI output2URI = getProjectFileURI(output2Name);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
+		//		URI output2URI = getProjectFileURI(output2Name);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " getResource()");
 		Resource ecoreResource = ocl.getResourceSet().getResource(inputURI, true);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " gotResource()");
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " gotResource()");
 		assertNoResourceErrors("Load failed", ecoreResource);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " resolveProxies()");
 		assertNoUnresolvedProxies("Unresolved proxies", ecoreResource);
-//		EcoreAliasCreator.createPackageAliases(ecoreResource);
+		//		EcoreAliasCreator.createPackageAliases(ecoreResource);
 		Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, metamodelManager.getEnvironmentFactory());
 		Model pivotModel = ecore2as.getASModel();
-		
-		
-//		checkPivotMonikers(pivotModel);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
-//		assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
-//		xtextResource.setURI(output2URI);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
-//		xtextResource.save(null);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
-//		assertNoResourceErrors("Save failed", xtextResource.getErrors());
+
+
+		//		checkPivotMonikers(pivotModel);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validate()");
+		//		assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
+		//		xtextResource.setURI(output2URI);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
+		//		xtextResource.save(null);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
+		//		assertNoResourceErrors("Save failed", xtextResource.getErrors());
 		@SuppressWarnings("unused")
 		ASResource asResource = (ASResource) pivotModel.eResource();
-//		CS2ASAliasCreator.createPackageAliases(asResource);
-//		Resource asResource = resourceSet.createResource(outputURI);
-//		asResource.getContents().add(pivotModel);
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
+		//		CS2ASAliasCreator.createPackageAliases(asResource);
+		//		Resource asResource = resourceSet.createResource(outputURI);
+		//		asResource.getContents().add(pivotModel);
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
 		for (Resource pResource : asResourceSet.getResources()) {
 			URI uri = pResource.getURI();
 			if (uri.isFile()) {
-				pResource.save(null);
+				Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+				saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+				saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+				pResource.save(saveOptions);
 			}
 			assertNoResourceErrors("Pivot Save failed", pResource);
 		}
-//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
-//		return asResource;
+		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
+		//		return asResource;
 		ResourceSetImpl csResourceSet = new ResourceSetImpl();
 		csResourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("cs", new EcoreResourceFactoryImpl());
 		csResourceSet.getPackageRegistry().put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
 		Resource csResource = csResourceSet.createResource(csURI);
 		Map<BaseCSResource, ASResource> cs2asResourceMap = new HashMap<BaseCSResource, ASResource>();
-//		cs2asResourceMap.put(csResource, asResource);
+		//		cs2asResourceMap.put(csResource, asResource);
 		AS2CS as2cs = new OCLinEcoreAS2CS(cs2asResourceMap, metamodelManager.getEnvironmentFactory());
 		as2cs.update();
 		csResource.save(null);
 		ocl.dispose();
 	}
-	
-//	public Damager damagePivot(CS2AS aConverter) {
-//		Damager damager = new Damager(aConverter);
-//		List<MonikeredElement> pivotElements = damager.chooseVictims();
-//		damager.removeAll(pivotElements);
-//		return damager;
-//	}
+
+	//	public Damager damagePivot(CS2AS aConverter) {
+	//		Damager damager = new Damager(aConverter);
+	//		List<MonikeredElement> pivotElements = damager.chooseVictims();
+	//		damager.removeAll(pivotElements);
+	//		return damager;
+	//	}
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("trace", new EcoreResourceFactoryImpl());
+		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("trace", new EcoreResourceFactoryImpl());
 	}
 
-//	public void testPivot_mini_oclstdlib() throws IOException, InterruptedException {
-//		doPivotTestOCLstdlib("mini");
-//	}
+	//	public void testPivot_mini_oclstdlib() throws IOException, InterruptedException {
+	//		doPivotTestOCLstdlib("mini");
+	//	}
 
-//	public void testPivot_midi_oclstdlib() throws IOException, InterruptedException {
-//		doPivotTestOCLstdlib("midi");
-//	}
+	//	public void testPivot_midi_oclstdlib() throws IOException, InterruptedException {
+	//		doPivotTestOCLstdlib("midi");
+	//	}
 
 	@Override
 	protected void tearDown() throws Exception {
@@ -358,26 +363,26 @@ public class PivotTests extends XtextTestCase
 		ocl.dispose();
 	}
 
-//	public void testPivot_temp_oclstdlib() throws IOException, InterruptedException {
-//		doPivotTestOCLstdlib("temp");
-//	}
+	//	public void testPivot_temp_oclstdlib() throws IOException, InterruptedException {
+	//		doPivotTestOCLstdlib("temp");
+	//	}
 
-//	public void testPivot_temp2_oclstdlib() throws IOException, InterruptedException {
-//		doPivotTestOCLstdlib("temp2");
-//	}
+	//	public void testPivot_temp2_oclstdlib() throws IOException, InterruptedException {
+	//		doPivotTestOCLstdlib("temp2");
+	//	}
 
 	public void testPivot_Ecore_ecore() throws IOException, InterruptedException {
-//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
+		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doPivotTestEcore("Ecore");
 	}
 
 	public void testPivot_Names_ecore() throws IOException, InterruptedException {
-//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
+		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		doPivotTestEcore("Names");
 	}
 
-//	public void testPivot_Temp_ecore() throws IOException, InterruptedException {
-//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
-//		doPivotTestEcore("Temp");
-//	}
+	//	public void testPivot_Temp_ecore() throws IOException, InterruptedException {
+	//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
+	//		doPivotTestEcore("Temp");
+	//	}
 }

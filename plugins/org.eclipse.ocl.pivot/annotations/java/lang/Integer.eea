@@ -5,3 +5,6 @@ toString
 toString
  (I)Ljava/lang/String;
  (I)L1java/lang/String;
+valueOf
+ (I)Ljava/lang/Integer;
+ (I)L1java/lang/Integer;

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -220,7 +220,7 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 		if (!source.isNonNull() || !source.isNonInvalid()) {
 			return false;
 		}
-			for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
+		for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
 			if (!iterator.isNonNull() || !iterator.isNonInvalid()) {
 				return false;
 			}

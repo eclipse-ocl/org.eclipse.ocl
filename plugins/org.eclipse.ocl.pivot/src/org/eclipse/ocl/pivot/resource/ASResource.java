@@ -29,10 +29,9 @@ public interface ASResource extends XMIResource
 	 * {@link Resource#save(Map)} option.
 	 * <p>
 	 * Use UUIDs as the xmi:id of each element, such as a specialization, that cannot be referenced externally.
-	 * The default behavior is to leave such elements without an explicit xmi:id so that they are
-	 * referenced using the default EMF referencing scheme of e.g. #//@nestedPackage.1/@ownedType.106.
+	 * The default behavior is to leave such elements with a shorter simple sequential xmi:id.
 	 * <p>
-	 * If UUIDs are used, the XMI file may be safely edited manually without disrupting references, but
+	 * The XMI file may be safely edited manually without disrupting references, but
 	 * regeneration will produce a new set of UUIDs resulting in unstable content for the purposes
 	 * of configuration management.
 	 * <p>
@@ -64,11 +63,13 @@ public interface ASResource extends XMIResource
 	@NonNull String COMPLETE_OCL_CONTENT_TYPE = CONTENT_TYPE + "." + PivotConstants.OCL_FILE_EXTENSION;
 	@NonNull String ECORE_CONTENT_TYPE = CONTENT_TYPE + ".ecore";
 	@NonNull String ESSENTIALOCL_CONTENT_TYPE = CONTENT_TYPE + "." + PivotConstants.ESSENTIAL_OCL_FILE_EXTENSION;;
-//	@NonNull String LIBRARY_CONTENT_TYPE = CONTENT_TYPE + ".library";
+	//	@NonNull String LIBRARY_CONTENT_TYPE = CONTENT_TYPE + ".library";
 	@NonNull String OCLINECORE_CONTENT_TYPE = CONTENT_TYPE + "." + PivotConstants.OCLINECORE_FILE_EXTENSION;
 	@NonNull String OCLSTDLIB_CONTENT_TYPE = CONTENT_TYPE + "." + PivotConstants.OCLSTDLIB_FILE_EXTENSION;
 	@NonNull String UML_CONTENT_TYPE = CONTENT_TYPE + ".uml";
-	
+
+	// FIXME add API	@Nullable EObject basicGetEObjectByID(@Nullable String id);
+
 	/**
 	 * Return the ASResourceFactory that created this ASResource and which may be used
 	 * to create further artefacts.

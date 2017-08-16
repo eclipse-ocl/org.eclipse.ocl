@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -67,6 +68,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -495,8 +497,13 @@ public class LoadTests extends XtextTestCase
 		}
 	}
 
-	public Resource doLoad_Concrete(@NonNull OCL ocl, @NonNull String stem, @NonNull String extension) throws IOException {
+	public Resource doLoad_Concrete(@NonNull OCL ocl, @NonNull String stem, @NonNull String extension, String... resourceErrors) throws IOException {
 		BaseCSResource xtextResource = doLoad_Concrete1(ocl, stem, extension);
+		CS2AS cs2as = xtextResource.findCS2AS();
+		if (cs2as != null) {
+			ASResource asResource = cs2as.getASResource();
+			assertResourceErrors("Pre-save", asResource, resourceErrors);
+		}
 		Resource asResource = doLoad_Concrete2(xtextResource, stem, extension);
 		return asResource;
 	}
@@ -512,6 +519,10 @@ public class LoadTests extends XtextTestCase
 		CS2AS cs2as = xtextResource.findCS2AS();
 		if (cs2as != null) {
 			ASResource asResource = cs2as.getASResource();
+			Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+			saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+			saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+			AS2ID.assignIds(asResource, saveOptions);
 			assertNoValidationErrors("Loaded pivot", asResource);
 		}
 		return xtextResource;
@@ -531,13 +542,16 @@ public class LoadTests extends XtextTestCase
 		//FIXME		assertNoValidationErrors("Validation errors", xtextResource.getContents().get(0));
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 		xtextResource.setURI(savedURI);
-		xtextResource.save(null);
+		Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
+		saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+		saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+		xtextResource.save(saveOptions);
 		xtextResource.setURI(inputURI);
 		assertNoResourceErrors("Save failed", xtextResource);
 		saveAsXMI(xtextResource, cstURI);
 		asResource.setURI(pivotURI);
 		assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
-		asResource.save(null);
+		asResource.save(saveOptions);
 		return asResource;
 	}
 
@@ -1048,8 +1062,9 @@ public class LoadTests extends XtextTestCase
 						"def : isB() : Boolean = true\n" +
 						"endpackage\n";
 		createOCLinEcoreFile("Bug450950.ocl", bug450950);
-		Resource asResource = doLoad_Concrete(ocl, "Bug450950", "ocl");
-		assertResourceErrors("Save", asResource, StringUtil.bind(PivotMessagesInternal.UnstableXMIid_ERROR_, "\\n Package 'P.bug450950'"));
+		String message = "\\nAmbiguous xmi:id TVXWp\\n	 bug450950\\n	 bug450950\\ncollision at 693728595\\n	bug450950\\n	bug450950";
+		Resource asResource = doLoad_Concrete(ocl, "Bug450950", "ocl", StringUtil.bind(PivotMessagesInternal.UnstableXMIid_ERROR_, message));
+		assertResourceErrors("Save", asResource, StringUtil.bind(PivotMessagesInternal.UnstableXMIid_ERROR_, message));
 		ocl.dispose();
 	}
 
@@ -1383,7 +1398,7 @@ public class LoadTests extends XtextTestCase
 		URI esasURI = getProjectFileURI(ecoreFileName + ".oclas");
 		asResource.setURI(esasURI);
 		Map<String, Object> options = new HashMap<String, Object>();
-		options.put(ASResource.OPTION_INTERNAL_UUIDS, Boolean.TRUE);
+		//		options.put(ASResource.OPTION_INTERNAL_UUIDS, Boolean.TRUE);
 		asResource.save(options);
 		Map<EObject, String> eObject2id = new HashMap<EObject, String>();
 		Map<String, EObject> id2eObject = new HashMap<String, EObject>();

@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
-import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -202,17 +201,6 @@ public class OCLstdlib extends ASResourceImpl
 		if (this != INSTANCE) {
 			super.doUnload();
 		}
-	}
-
-	/**
-	 * Ensure xmi:ids are auto-generated before reference.
-	 */
-	@Override
-	public EObject getEObject(String uriFragment) {
-		if (getEObjectToIDMap().isEmpty()) {
-			new AS2XMIid().assignIds(this, null);
-		}
-		return super.getEObject(uriFragment);
 	}
 
 	/**

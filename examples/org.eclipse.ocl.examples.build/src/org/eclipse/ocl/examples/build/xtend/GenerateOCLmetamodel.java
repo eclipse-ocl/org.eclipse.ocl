@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -180,8 +181,8 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		File outputFolder = projectDescriptor.getLocationFile(javaFolder + '/' + javaPackageName.replace('.', '/'));
 		OCLstdlib.install();
 		log.info("Loading Pivot Model '" + inputURI);
+		OCLInternal ocl = OCLInternal.newInstance();
 		try {
-			OCLInternal ocl = OCLInternal.newInstance();
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
 			ResourceSet asResourceSet = metamodelManager.getASResourceSet();
 			Resource ecoreResource = ClassUtil.nonNullState(asResourceSet.getResource(inputURI, true));
@@ -241,12 +242,22 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			//	    	as2id.assignIds(asResource.getResourceSet());
 			Map<Object, Object> options = XMIUtil.createSaveOptions();
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
+			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
 			asResource.save(options);
-			ocl.dispose();
+			for (Resource resource : asResource.getResourceSet().getResources()) {
+				String saveMessage = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), "Save", "\n\t");
+				if (saveMessage != null) {
+					issues.addError(this, saveMessage, null, null, null);
+					return;
+				}
+			}
 		} catch (RuntimeException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
+		} finally {
+			ocl.dispose();
 		}
 	}
 

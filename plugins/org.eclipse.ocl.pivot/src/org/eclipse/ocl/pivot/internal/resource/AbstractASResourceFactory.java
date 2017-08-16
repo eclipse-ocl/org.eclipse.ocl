@@ -35,14 +35,12 @@ import org.eclipse.ocl.pivot.internal.prettyprint.EssentialOCLPrettyPrintVisitor
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintVisitor;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
-import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
 import org.eclipse.ocl.pivot.internal.utilities.EcoreTechnology;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor;
-import org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverLocateVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverResolveVisitor;
@@ -54,7 +52,7 @@ import org.eclipse.ocl.pivot.utilities.ToStringVisitor;
  * AbstractASResourceFactory provides the abstract functionality for creating and maintaining
  * OCL Abstract Syntax Resources.
  */
-public abstract class AbstractASResourceFactory extends ResourceFactoryImpl implements ASResourceFactory
+public abstract class AbstractASResourceFactory extends ResourceFactoryImpl implements ASResourceFactory.ASResourceFactoryExtension
 {
 	public static void installContentHandler(int priority, @NonNull ContentHandler contentHandler) {
 		List<ContentHandler> contentHandlers = ContentHandler.Registry.INSTANCE.get(priority);
@@ -92,15 +90,16 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		defaultSaveOptions.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
 		defaultSaveOptions.put(XMLResource.OPTION_SCHEMA_LOCATION_IMPLEMENTATION, Boolean.TRUE);
 	}
-	
+
 	@Override
 	public @NonNull AS2MonikerVisitor createAS2MonikerVisitor(@NonNull AS2Moniker as2moniker) {
 		return new AS2MonikerVisitor(as2moniker);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public @NonNull AS2XMIidVisitor createAS2XMIidVisitor(@NonNull AS2XMIid as2id) {
-		return new AS2XMIidVisitor(as2id);
+	public org.eclipse.ocl.pivot.utilities.@NonNull AS2XMIidVisitor createAS2XMIidVisitor(org.eclipse.ocl.pivot.internal.utilities.@NonNull AS2XMIid as2id) {
+		return new org.eclipse.ocl.pivot.utilities.AS2XMIidVisitor(as2id);
 	}
 
 	@Override
@@ -117,12 +116,20 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	public @NonNull ASSaverResolveVisitor createASSaverResolveVisitor(@NonNull ASSaver saver) {
 		return new ASSaverResolveVisitor(saver);
 	}
-	
+
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	public @NonNull LUSSIDs createLUSSIDs(@NonNull ASResource asResource, @NonNull Map<@NonNull Object, @Nullable Object> options) {
+		return new PivotLUSSIDs(asResource, options);
+	}
+
 	@Override
 	public @NonNull PrettyPrintVisitor createPrettyPrintVisitor(@NonNull PrettyPrinter prettyPrinter) {
 		return new EssentialOCLPrettyPrintVisitor(prettyPrinter);
 	}
-	
+
 	@Override
 	public @NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		return new TemplateParameterSubstitutionVisitor((EnvironmentFactoryInternal) environmentFactory, selfType, selfTypeValue);
@@ -141,7 +148,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		assert uri != null;
 		ASResource result = new ASResourceImpl(uri, this);
 		configureResource(result);
-	    return result;
+		return result;
 	}
 
 	@Override
@@ -164,7 +171,7 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	public @Nullable EOperation getEOperation(@NonNull ASResource asResource, @NonNull EObject eObject) {
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable EReference getEReference(@NonNull ASResource asResource, @NonNull EObject eObject) {
 		return null;
