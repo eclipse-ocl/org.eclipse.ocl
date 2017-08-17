@@ -157,7 +157,7 @@ public class PivotLUSSIDs extends LUSSIDs
 			}
 			else {
 				Type propertyType = property.getType();
-				if (!(propertyType instanceof DataType) && !(propertyType instanceof TemplateParameter)) {
+				if (!(propertyType instanceof DataType) && !(propertyType instanceof TemplateParameter) && (propertyType != null)) {  // FIXME BUG 521077 testExample4_Interpreted has erroneous null
 					System.out.println("No opposite for " + element);
 				}
 			}
