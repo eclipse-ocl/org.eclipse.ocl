@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
@@ -405,6 +406,7 @@ public abstract class LUSSIDs
 	}
 
 	protected void assignXMIIDs(@NonNull AS2ID as2id) {
+		asResource.setXmiidVersion(PivotConstants.XMIIDS_CURRENT);
 		Map<@NonNull String, @NonNull List<@NonNull Element>> xmiid2collisions2 = xmiid2collisions;
 		for (@NonNull Element element : identifiedElement2lussid.keySet()) {
 			Integer lussid = identifiedElement2lussid.get(element);

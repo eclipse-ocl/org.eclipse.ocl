@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
@@ -378,6 +379,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 				pivotElement.setImportedNamespace(namespace);
 			}
 		}
+		pivotElement.setXmiidVersion(PivotConstants.XMIIDS_CURRENT);
 		return null;								// FIXME: CS2AS.computeRootContainmentFeatures may allow the above now
 	}
 

@@ -164,11 +164,39 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 1.4
 	 */
 	// FIXME @Override promote API
+	public int getXmiidVersion() {
+		for (EObject eRoot : getContents()) {
+			if (eRoot instanceof Model) {
+				Number xmiidVersion = ((Model)eRoot).getXmiidVersion();
+				if (xmiidVersion != null) {
+					return xmiidVersion.intValue();
+				}
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	// FIXME @Override promote API
 	public void resetLUSSIDs() {
 		LUSSIDs lussids2 = lussids;
 		lussids = null;
 		if (lussids2 != null) {
 			lussids2.dispose();
+		}
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	// FIXME @Override promote API
+	public void setXmiidVersion(int xmiidVersion) {
+		for (EObject eRoot : getContents()) {
+			if (eRoot instanceof Model) {
+				((Model)eRoot).setXmiidVersion(xmiidVersion);
+			}
 		}
 	}
 

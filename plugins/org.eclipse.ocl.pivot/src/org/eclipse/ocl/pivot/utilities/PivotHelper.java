@@ -150,6 +150,7 @@ public class PivotHelper
 		Import asImport = PivotFactory.eINSTANCE.createImport();
 		asImport.setName(name);
 		asImport.setImportedNamespace(namespace);
+		asImport.setXmiidVersion(PivotConstants.XMIIDS_CURRENT);
 		return asImport;
 	}
 
