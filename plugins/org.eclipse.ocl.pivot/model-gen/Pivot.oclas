@@ -328,6 +328,7 @@
     </ownedClasses>
     <ownedClasses xmi:id="WdWUd" name="Import" superClasses="#0kVqz">
       <ownedProperties xmi:id="weowt" name="importedNamespace" opposite="#6j3Na" type="#MzHoc"/>
+      <ownedProperties xmi:id=",Q0hp" defaultValueString="0" name="xmiidVersion" type="#vCSey"/>
       <ownedProperties xmi:id="ercGZ" isImplicit="true" isRequired="false" name="Model" opposite="#SkSMM" type="#aKB,e"/>
     </ownedClasses>
     <ownedClasses xmi:id="f3gRG" name="InstanceSpecification" superClasses="#0kVqz">
@@ -530,7 +531,7 @@
       <ownedProperties xmi:id="rZ9f7" isRequired="false" name="externalURI" type="#CPVxu"/>
       <ownedProperties xmi:id="SkSMM" isComposite="true" name="ownedImports" opposite="#ercGZ" type="#SiPAU"/>
       <ownedProperties xmi:id="7ywSU" isComposite="true" name="ownedPackages" opposite="#aNkee" type="#4WjM+"/>
-      <ownedProperties xmi:id="zJFNP" defaultValueString="0" isRequired="false" name="xmiidVersion" type="#vCSey"/>
+      <ownedProperties xmi:id="zJFNP" defaultValueString="0" name="xmiidVersion" type="#vCSey"/>
       <ownedProperties xmi:id="n0An," isImplicit="true" name="CompleteModel" opposite="#wZJhR" type="#zUrgD"/>
     </ownedClasses>
     <ownedClasses xmi:id="4w3oz" instanceClassName="org.eclipse.ocl.pivot.utilities.MorePivotable" isAbstract="true" isInterface="true"

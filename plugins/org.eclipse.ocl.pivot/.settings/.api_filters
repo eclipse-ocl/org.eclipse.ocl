@@ -64,6 +64,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Import.java" type="org.eclipse.ocl.pivot.Import">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Import"/>
+                <message_argument value="getXmiidVersion()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Import"/>
+                <message_argument value="setXmiidVersion(Number)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/InvalidType.java" type="org.eclipse.ocl.pivot.InvalidType">
         <filter comment="Bug 512402 workaround" id="576720909">
             <message_arguments>
@@ -120,11 +134,55 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Model.java" type="org.eclipse.ocl.pivot.Model">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Model"/>
+                <message_argument value="getXmiidVersion()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Model"/>
+                <message_argument value="setXmiidVersion(Number)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/Parameter.java" type="org.eclipse.ocl.pivot.Parameter">
         <filter comment="Bug 512402 workaround" id="576720909">
             <message_arguments>
                 <message_argument value="VariableDeclaration"/>
                 <message_argument value="Parameter"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="IMPORT_FEATURE_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="MODEL_FEATURE_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="IMPORT__XMIID_VERSION"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage.Literals"/>
+                <message_argument value="MODEL__XMIID_VERSION"/>
             </message_arguments>
         </filter>
     </resource>
@@ -280,6 +338,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ImportImpl.java" type="org.eclipse.ocl.pivot.internal.ImportImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ImportImpl"/>
+                <message_argument value="XMIID_VERSION_EDEFAULT"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ImportImpl"/>
+                <message_argument value="xmiidVersion"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IteratorExpImpl.java" type="org.eclipse.ocl.pivot.internal.IteratorExpImpl">
         <filter comment="Bug 512402 workaround" id="576725006">
             <message_arguments>
@@ -293,6 +365,20 @@
             <message_arguments>
                 <message_argument value="LetExp"/>
                 <message_argument value="LetExpImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ModelImpl.java" type="org.eclipse.ocl.pivot.internal.ModelImpl">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ModelImpl"/>
+                <message_argument value="XMIID_VERSION_EDEFAULT"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.ModelImpl"/>
+                <message_argument value="xmiidVersion"/>
             </message_arguments>
         </filter>
     </resource>

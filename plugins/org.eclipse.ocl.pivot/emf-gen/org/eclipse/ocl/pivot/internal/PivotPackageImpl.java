@@ -2161,6 +2161,18 @@ implements PivotPackage  {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getImport_XmiidVersion()
+	{
+		return (EAttribute)importEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -3291,6 +3303,18 @@ implements PivotPackage  {
 	public EReference getModel_OwnedPackages()
 	{
 		return (EReference)modelEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getModel_XmiidVersion()
+	{
+		return (EAttribute)modelEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -7043,6 +7067,7 @@ implements PivotPackage  {
 
 		importEClass = createEClass(IMPORT);
 		createEReference(importEClass, IMPORT__IMPORTED_NAMESPACE);
+		createEAttribute(importEClass, IMPORT__XMIID_VERSION);
 
 		instanceSpecificationEClass = createEClass(INSTANCE_SPECIFICATION);
 		createEReference(instanceSpecificationEClass, INSTANCE_SPECIFICATION__CLASSES);
@@ -7155,6 +7180,7 @@ implements PivotPackage  {
 		createEAttribute(modelEClass, MODEL__EXTERNAL_URI);
 		createEReference(modelEClass, MODEL__OWNED_IMPORTS);
 		createEReference(modelEClass, MODEL__OWNED_PACKAGES);
+		createEAttribute(modelEClass, MODEL__XMIID_VERSION);
 
 		morePivotableEClass = createEClass(MORE_PIVOTABLE);
 
@@ -8017,6 +8043,7 @@ implements PivotPackage  {
 
 		initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getImport_ImportedNamespace(), this.getNamespace(), null, "importedNamespace", null, 1, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getImport_XmiidVersion(), this.getInteger(), "xmiidVersion", "0", 1, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(instanceSpecificationEClass, InstanceSpecification.class, "InstanceSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getInstanceSpecification_Classes(), this.getClass_(), null, "classes", null, 0, -1, InstanceSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
@@ -8417,6 +8444,7 @@ implements PivotPackage  {
 		initEAttribute(getModel_ExternalURI(), this.getString(), "externalURI", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getModel_OwnedImports(), this.getImport(), null, "ownedImports", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getModel_OwnedPackages(), this.getPackage(), null, "ownedPackages", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getModel_XmiidVersion(), this.getInteger(), "xmiidVersion", "0", 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(morePivotableEClass, MorePivotable.class, "MorePivotable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

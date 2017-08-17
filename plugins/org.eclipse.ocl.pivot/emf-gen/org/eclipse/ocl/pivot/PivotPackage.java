@@ -10607,13 +10607,24 @@ extends EPackage
 	int IMPORT__IMPORTED_NAMESPACE = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Import</em>' class.
+	 * The feature id for the '<em><b>Xmiid Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
+	int IMPORT__XMIID_VERSION = NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Import</em>' class.
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMPORT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -15983,13 +15994,24 @@ extends EPackage
 	int MODEL__OWNED_PACKAGES = NAMESPACE_FEATURE_COUNT + 2;
 
 	/**
-	 * The number of structural features of the '<em>Model</em>' class.
+	 * The feature id for the '<em><b>Xmiid Version</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_FEATURE_COUNT = NAMESPACE_FEATURE_COUNT + 3;
+	int MODEL__XMIID_VERSION = NAMESPACE_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Model</em>' class.
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_FEATURE_COUNT = NAMESPACE_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>All Owned Elements</em>' operation.
@@ -26312,6 +26334,18 @@ extends EPackage
 	EReference getImport_ImportedNamespace();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.Import#getXmiidVersion <em>Xmiid Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Xmiid Version</em>'.
+	 * @see org.eclipse.ocl.pivot.Import#getXmiidVersion()
+	 * @see #getImport()
+	 * @generated
+	 */
+	EAttribute getImport_XmiidVersion();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.InstanceSpecification <em>Instance Specification</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -27391,6 +27425,18 @@ extends EPackage
 	 * @generated
 	 */
 	EReference getModel_OwnedPackages();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.Model#getXmiidVersion <em>Xmiid Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Xmiid Version</em>'.
+	 * @see org.eclipse.ocl.pivot.Model#getXmiidVersion()
+	 * @see #getModel()
+	 * @generated
+	 */
+	EAttribute getModel_XmiidVersion();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.MessageType#getReferredOperation <em>Referred Operation</em>}'.
@@ -31671,6 +31717,15 @@ extends EPackage
 		EReference IMPORT__IMPORTED_NAMESPACE = eINSTANCE.getImport_ImportedNamespace();
 
 		/**
+		 * The meta object literal for the '<em><b>Xmiid Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * @since 1.4
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IMPORT__XMIID_VERSION = eINSTANCE.getImport_XmiidVersion();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.InstanceSpecificationImpl <em>Instance Specification</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -32513,6 +32568,15 @@ extends EPackage
 		 * @generated
 		 */
 		EReference MODEL__OWNED_PACKAGES = eINSTANCE.getModel_OwnedPackages();
+
+		/**
+		 * The meta object literal for the '<em><b>Xmiid Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * @since 1.4
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL__XMIID_VERSION = eINSTANCE.getModel_XmiidVersion();
 
 		/**
 		 * The meta object literal for the '<em><b>Referred Operation</b></em>' reference feature.

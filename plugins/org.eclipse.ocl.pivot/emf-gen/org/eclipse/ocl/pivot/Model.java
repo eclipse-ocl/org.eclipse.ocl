@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.NonNull;
  *   <li>{@link org.eclipse.ocl.pivot.Model#getExternalURI <em>External URI</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.Model#getOwnedImports <em>Owned Imports</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.Model#getOwnedPackages <em>Owned Packages</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.Model#getXmiidVersion <em>Xmiid Version</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getModel()
@@ -52,6 +53,34 @@ public interface Model extends Namespace
 	 * @generated
 	 */
 	@NonNull List<org.eclipse.ocl.pivot.Package> getOwnedPackages();
+
+	/**
+	 * Returns the value of the '<em><b>Xmiid Version</b></em>' attribute.
+	 * The default value is <code>"0"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Xmiid Version</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Xmiid Version</em>' attribute.
+	 * @see #setXmiidVersion(Number)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getModel_XmiidVersion()
+	 * @generated
+	 */
+	Number getXmiidVersion();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.Model#getXmiidVersion <em>Xmiid Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Xmiid Version</em>' attribute.
+	 * @see #getXmiidVersion()
+	 * @generated
+	 */
+	void setXmiidVersion(Number value);
 
 	/**
 	 * Returns the value of the '<em><b>External URI</b></em>' attribute.

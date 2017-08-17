@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.util.Visitor;
 
@@ -34,6 +35,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ImportImpl#getImportedNamespace <em>Imported Namespace</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ImportImpl#getXmiidVersion <em>Xmiid Version</em>}</li>
  * </ul>
  *
  * @generated
@@ -49,6 +51,26 @@ public class ImportImpl extends NamedElementImpl implements Import
 	 * @ordered
 	 */
 	protected Namespace importedNamespace;
+	/**
+	 * The default value of the '{@link #getXmiidVersion() <em>Xmiid Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @see #getXmiidVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Number XMIID_VERSION_EDEFAULT = (Number)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0"); //$NON-NLS-1$
+	/**
+	 * The cached value of the '{@link #getXmiidVersion() <em>Xmiid Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @see #getXmiidVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected Number xmiidVersion = XMIID_VERSION_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -117,6 +139,33 @@ public class ImportImpl extends NamedElementImpl implements Import
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Number getXmiidVersion()
+	{
+		return xmiidVersion;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setXmiidVersion(Number newXmiidVersion)
+	{
+		Number oldXmiidVersion = xmiidVersion;
+		xmiidVersion = newXmiidVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.IMPORT__XMIID_VERSION, oldXmiidVersion, xmiidVersion));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -138,6 +187,8 @@ public class ImportImpl extends NamedElementImpl implements Import
 			case PivotPackage.IMPORT__IMPORTED_NAMESPACE:
 				if (resolve) return getImportedNamespace();
 				return basicGetImportedNamespace();
+			case PivotPackage.IMPORT__XMIID_VERSION:
+				return getXmiidVersion();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -175,6 +226,9 @@ public class ImportImpl extends NamedElementImpl implements Import
 			case PivotPackage.IMPORT__IMPORTED_NAMESPACE:
 				setImportedNamespace((Namespace)newValue);
 				return;
+			case PivotPackage.IMPORT__XMIID_VERSION:
+				setXmiidVersion((Number)newValue);
+				return;
 		}
 		eDynamicSet(featureID, newValue);
 	}
@@ -207,6 +261,9 @@ public class ImportImpl extends NamedElementImpl implements Import
 			case PivotPackage.IMPORT__IMPORTED_NAMESPACE:
 				setImportedNamespace((Namespace)null);
 				return;
+			case PivotPackage.IMPORT__XMIID_VERSION:
+				setXmiidVersion(XMIID_VERSION_EDEFAULT);
+				return;
 		}
 		eDynamicUnset(featureID);
 	}
@@ -233,8 +290,20 @@ public class ImportImpl extends NamedElementImpl implements Import
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case PivotPackage.IMPORT__IMPORTED_NAMESPACE:
 				return importedNamespace != null;
+			case PivotPackage.IMPORT__XMIID_VERSION:
+				return XMIID_VERSION_EDEFAULT == null ? xmiidVersion != null : !XMIID_VERSION_EDEFAULT.equals(xmiidVersion);
 		}
 		return eDynamicIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		return super.toString();
 	}
 
 	@Override

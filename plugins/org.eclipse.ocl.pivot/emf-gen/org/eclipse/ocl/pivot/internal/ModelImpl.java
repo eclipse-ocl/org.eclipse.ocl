@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.complete.ModelListeners;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -44,6 +45,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
  *   <li>{@link org.eclipse.ocl.pivot.internal.ModelImpl#getExternalURI <em>External URI</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ModelImpl#getOwnedImports <em>Owned Imports</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ModelImpl#getOwnedPackages <em>Owned Packages</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ModelImpl#getXmiidVersion <em>Xmiid Version</em>}</li>
  * </ul>
  *
  * @generated
@@ -89,6 +91,26 @@ public class ModelImpl extends NamespaceImpl implements Model
 	 */
 	protected EList<org.eclipse.ocl.pivot.Package> ownedPackages;
 	/**
+	 * The default value of the '{@link #getXmiidVersion() <em>Xmiid Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @see #getXmiidVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Number XMIID_VERSION_EDEFAULT = (Number)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0"); //$NON-NLS-1$
+	/**
+	 * The cached value of the '{@link #getXmiidVersion() <em>Xmiid Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @see #getXmiidVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected Number xmiidVersion = XMIID_VERSION_EDEFAULT;
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -133,6 +155,33 @@ public class ModelImpl extends NamespaceImpl implements Model
 			};
 		}
 		return ownedPackages2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Number getXmiidVersion()
+	{
+		return xmiidVersion;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setXmiidVersion(Number newXmiidVersion)
+	{
+		Number oldXmiidVersion = xmiidVersion;
+		xmiidVersion = newXmiidVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, PivotPackage.MODEL__XMIID_VERSION, oldXmiidVersion, xmiidVersion));
 	}
 
 	/**
@@ -215,6 +264,8 @@ public class ModelImpl extends NamespaceImpl implements Model
 				return getOwnedImports();
 			case PivotPackage.MODEL__OWNED_PACKAGES:
 				return getOwnedPackages();
+			case PivotPackage.MODEL__XMIID_VERSION:
+				return getXmiidVersion();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -264,6 +315,9 @@ public class ModelImpl extends NamespaceImpl implements Model
 				getOwnedPackages().clear();
 				getOwnedPackages().addAll((Collection<? extends org.eclipse.ocl.pivot.Package>)newValue);
 				return;
+			case PivotPackage.MODEL__XMIID_VERSION:
+				setXmiidVersion((Number)newValue);
+				return;
 		}
 		eDynamicSet(featureID, newValue);
 	}
@@ -305,6 +359,9 @@ public class ModelImpl extends NamespaceImpl implements Model
 			case PivotPackage.MODEL__OWNED_PACKAGES:
 				getOwnedPackages().clear();
 				return;
+			case PivotPackage.MODEL__XMIID_VERSION:
+				setXmiidVersion(XMIID_VERSION_EDEFAULT);
+				return;
 		}
 		eDynamicUnset(featureID);
 	}
@@ -337,6 +394,8 @@ public class ModelImpl extends NamespaceImpl implements Model
 				return ownedImports != null && !ownedImports.isEmpty();
 			case PivotPackage.MODEL__OWNED_PACKAGES:
 				return ownedPackages != null && !ownedPackages.isEmpty();
+			case PivotPackage.MODEL__XMIID_VERSION:
+				return XMIID_VERSION_EDEFAULT == null ? xmiidVersion != null : !XMIID_VERSION_EDEFAULT.equals(xmiidVersion);
 		}
 		return eDynamicIsSet(featureID);
 	}

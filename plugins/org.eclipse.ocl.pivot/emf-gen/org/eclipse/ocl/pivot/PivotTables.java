@@ -2340,7 +2340,8 @@ public class PivotTables
 		public static final @NonNull ExecutorProperty _IfExp__ownedThen = new EcoreExecutorProperty(PivotPackage.Literals.IF_EXP__OWNED_THEN, Types._IfExp, 3);
 
 		public static final @NonNull ExecutorProperty _Import__importedNamespace = new EcoreExecutorProperty(PivotPackage.Literals.IMPORT__IMPORTED_NAMESPACE, Types._Import, 0);
-		public static final @NonNull ExecutorProperty _Import__Model__ownedImports = new ExecutorPropertyWithImplementation("Model", Types._Import, 1, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MODEL__OWNED_IMPORTS));
+		public static final @NonNull ExecutorProperty _Import__xmiidVersion = new EcoreExecutorProperty(PivotPackage.Literals.IMPORT__XMIID_VERSION, Types._Import, 1);
+		public static final @NonNull ExecutorProperty _Import__Model__ownedImports = new ExecutorPropertyWithImplementation("Model", Types._Import, 2, new EcoreLibraryOppositeProperty(PivotPackage.Literals.MODEL__OWNED_IMPORTS));
 
 		public static final @NonNull ExecutorProperty _InstanceSpecification__classes = new EcoreExecutorProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__CLASSES, Types._InstanceSpecification, 0);
 		public static final @NonNull ExecutorProperty _InstanceSpecification__ownedSlots = new EcoreExecutorProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SLOTS, Types._InstanceSpecification, 1);
@@ -2395,7 +2396,8 @@ public class PivotTables
 		public static final @NonNull ExecutorProperty _Model__externalURI = new EcoreExecutorProperty(PivotPackage.Literals.MODEL__EXTERNAL_URI, Types._Model, 0);
 		public static final @NonNull ExecutorProperty _Model__ownedImports = new EcoreExecutorProperty(PivotPackage.Literals.MODEL__OWNED_IMPORTS, Types._Model, 1);
 		public static final @NonNull ExecutorProperty _Model__ownedPackages = new EcoreExecutorProperty(PivotPackage.Literals.MODEL__OWNED_PACKAGES, Types._Model, 2);
-		public static final @NonNull ExecutorProperty _Model__CompleteModel__partialModels = new ExecutorPropertyWithImplementation("CompleteModel", Types._Model, 3, new EcoreLibraryOppositeProperty(PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS));
+		public static final @NonNull ExecutorProperty _Model__xmiidVersion = new EcoreExecutorProperty(PivotPackage.Literals.MODEL__XMIID_VERSION, Types._Model, 3);
+		public static final @NonNull ExecutorProperty _Model__CompleteModel__partialModels = new ExecutorPropertyWithImplementation("CompleteModel", Types._Model, 4, new EcoreLibraryOppositeProperty(PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS));
 
 		public static final @NonNull ExecutorProperty _NamedElement__name = new EcoreExecutorProperty(PivotPackage.Literals.NAMED_ELEMENT__NAME, Types._NamedElement, 0);
 
@@ -12227,7 +12229,8 @@ public class PivotTables
 			PivotTables.Properties._NamedElement__name,
 			PivotTables.Properties._Element__ownedAnnotations,
 			PivotTables.Properties._Element__ownedComments,
-			PivotTables.Properties._Element__ownedExtensions
+			PivotTables.Properties._Element__ownedExtensions,
+			PivotTables.Properties._Import__xmiidVersion
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _InstanceSpecification = {
@@ -12596,7 +12599,8 @@ public class PivotTables
 			PivotTables.Properties._Namespace__ownedConstraints,
 			PivotTables.Properties._Element__ownedExtensions,
 			PivotTables.Properties._Model__ownedImports,
-			PivotTables.Properties._Model__ownedPackages
+			PivotTables.Properties._Model__ownedPackages,
+			PivotTables.Properties._Model__xmiidVersion
 		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _MorePivotable = {};

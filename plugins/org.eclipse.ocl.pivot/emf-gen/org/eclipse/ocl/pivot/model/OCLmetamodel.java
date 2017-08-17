@@ -1987,6 +1987,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_IfExp_ownedElse = createProperty(PivotPackage.Literals.IF_EXP__OWNED_ELSE, _OCLExpression);
 		private final @NonNull Property pr_IfExp_ownedThen = createProperty(PivotPackage.Literals.IF_EXP__OWNED_THEN, _OCLExpression);
 		private final @NonNull Property pr_Import_importedNamespace = createProperty(PivotPackage.Literals.IMPORT__IMPORTED_NAMESPACE, _Namespace);
+		private final @NonNull Property pr_Import_xmiidVersion = createProperty(PivotPackage.Literals.IMPORT__XMIID_VERSION, _Integer);
 		private final @NonNull Property pr_Import_Model_ownedImports = createProperty("Model", _Model);
 		private final @NonNull Property pr_InstanceSpecification_classes = createProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__CLASSES, _Set_Class_NullFree);
 		private final @NonNull Property pr_InstanceSpecification_ownedSlots = createProperty(PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SLOTS, _Set_Slot_NullFree);
@@ -2027,6 +2028,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Model_externalURI = createProperty(PivotPackage.Literals.MODEL__EXTERNAL_URI, _String);
 		private final @NonNull Property pr_Model_ownedImports = createProperty(PivotPackage.Literals.MODEL__OWNED_IMPORTS, _OrderedSet_Import_NullFree);
 		private final @NonNull Property pr_Model_ownedPackages = createProperty(PivotPackage.Literals.MODEL__OWNED_PACKAGES, _Set_Package_NullFree);
+		private final @NonNull Property pr_Model_xmiidVersion = createProperty(PivotPackage.Literals.MODEL__XMIID_VERSION, _Integer);
 		private final @NonNull Property pr_Model_CompleteModel_partialModels = createProperty("CompleteModel", _Bag_CompleteModel);
 		private final @NonNull Property pr_NamedElement_name = createProperty(PivotPackage.Literals.NAMED_ELEMENT__NAME, _String);
 		private final @NonNull Property pr_Namespace_ownedConstraints = createProperty(PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS, _Set_Constraint_NullFree);
@@ -2755,6 +2757,8 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_Import_importedNamespace);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Namespace_Import_importedNamespace);
+			ownedProperties.add(property = pr_Import_xmiidVersion);
+			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_Import_Model_ownedImports);
 			property.setIsImplicit(true);
 			property.setIsRequired(false);
@@ -2950,6 +2954,8 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Package_Model_ownedPackages);
+			ownedProperties.add(property = pr_Model_xmiidVersion);
+			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_Model_CompleteModel_partialModels);
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
