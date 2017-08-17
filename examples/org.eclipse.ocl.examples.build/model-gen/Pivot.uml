@@ -532,6 +532,9 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TImport" name="Import">
     <generalization xmi:id="Ppivot.TImport.g0" general="Ppivot.TNamedElement"/>
+    <ownedAttribute xmi:id="Ppivot.TImport.PxmiidVersion" name="xmiidVersion" visibility="public" type="Ppivot.TInteger" isOrdered="true">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TImport.PxmiidVersion.dlV" value="0"/>
+    </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TImport.PimportedNamespace" name="importedNamespace" type="Ppivot.TNamespace" isOrdered="true" association="Ppivot.A_importedNamespace_Import"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="Ppivot.TInstanceSpecification" name="InstanceSpecification">
@@ -702,6 +705,9 @@
     <generalization xmi:id="Ppivot.TModel.g0" general="Ppivot.TNamespace"/>
     <ownedAttribute xmi:id="Ppivot.TModel.PexternalURI" name="externalURI" visibility="public" type="Ppivot.TString" isOrdered="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="Ppivot.TModel.PexternalURI.lV"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="Ppivot.TModel.PxmiidVersion" name="xmiidVersion" visibility="public" type="Ppivot.TInteger" isOrdered="true">
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="Ppivot.TModel.PxmiidVersion.dlV" value="0"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="Ppivot.TModel.PownedImports" name="ownedImports" type="Ppivot.TImport" isOrdered="true" aggregation="composite"
         association="Ppivot.A_ownedImports_Model">

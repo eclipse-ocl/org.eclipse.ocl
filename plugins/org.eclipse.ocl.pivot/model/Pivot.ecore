@@ -804,6 +804,8 @@
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Import" name="Import" eSuperTypes="#T-pivot-NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Import-importedNamespace"
         name="importedNamespace" lowerBound="1" eType="#T-pivot-Namespace"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Import-xmiidVersion"
+        name="xmiidVersion" lowerBound="1" eType="#T-pivot-Integer" defaultValueLiteral="0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-InstanceSpecification" name="InstanceSpecification"
       eSuperTypes="#T-pivot-NamedElement">
@@ -1491,6 +1493,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Model-ownedPackages"
         name="ownedPackages" ordered="false" upperBound="-1" eType="#T-pivot-Package"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-Model-xmiidVersion"
+        name="xmiidVersion" lowerBound="1" eType="#T-pivot-Integer" defaultValueLiteral="0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MorePivotable" name="MorePivotable"
       instanceClassName="org.eclipse.ocl.pivot.utilities.MorePivotable" abstract="true"

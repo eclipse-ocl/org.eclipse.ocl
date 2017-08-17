@@ -530,6 +530,7 @@
       <ownedProperties xmi:id="rZ9f7" isRequired="false" name="externalURI" type="#CPVxu"/>
       <ownedProperties xmi:id="SkSMM" isComposite="true" name="ownedImports" opposite="#ercGZ" type="#SiPAU"/>
       <ownedProperties xmi:id="7ywSU" isComposite="true" name="ownedPackages" opposite="#aNkee" type="#4WjM+"/>
+      <ownedProperties xmi:id="zJFNP" defaultValueString="0" isRequired="false" name="xmiidVersion" type="#vCSey"/>
       <ownedProperties xmi:id="n0An," isImplicit="true" name="CompleteModel" opposite="#wZJhR" type="#zUrgD"/>
     </ownedClasses>
     <ownedClasses xmi:id="4w3oz" instanceClassName="org.eclipse.ocl.pivot.utilities.MorePivotable" isAbstract="true" isInterface="true"

@@ -299,7 +299,12 @@
       <packagedElement xmi:type="uml:Class" xmi:id="_hor24OC2EeK2XIQZsal-uQ" name="Import">
         <generalization xmi:id="_PG7HtvcPEeOIuskgmmQAHw" general="_0pHa4OC2EeK2XIQZsal-uQ"/>
         <ownedAttribute xmi:id="_-mmXsOC2EeK2XIQZsal-uQ" name="importedNamespace" type="_lVjxQOC2EeK2XIQZsal-uQ"/>
+        <ownedAttribute xmi:id="_jgfE0IMiEeeICb4a4dPhhA" name="xmiidVersion" type="_0Oz78IMlEeeICb4a4dPhhA">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_jgfE0YMiEeeICb4a4dPhhA" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_jgfE0oMiEeeICb4a4dPhhA" value="0"/>
+        </ownedAttribute>
       </packagedElement>
+      <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_0Oz78IMlEeeICb4a4dPhhA" name="Integer"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_noL7MOC2EeK2XIQZsal-uQ" name="Model">
         <generalization xmi:id="_PG7Ht_cPEeOIuskgmmQAHw" general="_lVjxQOC2EeK2XIQZsal-uQ"/>
         <ownedAttribute xmi:id="_XLYVEOC3EeK2XIQZsal-uQ" name="externalURI" type="_ZX1lkOC3EeK2XIQZsal-uQ">
@@ -312,6 +317,10 @@
         <ownedAttribute xmi:id="_KGF50OC3EeK2XIQZsal-uQ" name="ownedPackages" type="_lkT-8OC2EeK2XIQZsal-uQ" aggregation="composite">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_PG7HsfcPEeOIuskgmmQAHw"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_PG7HsvcPEeOIuskgmmQAHw" value="*"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_SL3KEIMcEeedgq8GnLaA1w" name="xmiidVersion" type="_0Oz78IMlEeeICb4a4dPhhA">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_SL3KEYMcEeedgq8GnLaA1w" value="1"/>
+          <defaultValue xmi:type="uml:LiteralString" xmi:id="_aj3W0IMcEeedgq8GnLaA1w" value="0"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_0pHa4OC2EeK2XIQZsal-uQ" name="NamedElement" isAbstract="true"/>
@@ -531,4 +540,6 @@
   <Ecore:EAttribute xmi:id="_zxJwsDTYEeS3ndOfdXtkXQ" isTransient="true" isVolatile="true" base_Property="_iMnUQBuwEeSIos3S87O_rg"/>
   <Ecore:EReference xmi:id="_7JX7cDTYEeS3ndOfdXtkXQ" isTransient="true" base_Property="_x-pUsC9bEeSc2LncrXmagQ" isResolveProxies="false"/>
   <Ecore:EAttribute xmi:id="_-z330IhJEeS7_fz8n0YOtw" isTransient="true" base_Property="_2RIFkIhHEeS7_fz8n0YOtw"/>
+  <Ecore:EDataType xmi:id="_TvWR4IMjEeeICb4a4dPhhA" instanceClassName="java.lang.int"/>
+  <Ecore:EClass xmi:id="_yI4cIIMjEeeICb4a4dPhhA" instanceClassName="int"/>
 </xmi:XMI>
