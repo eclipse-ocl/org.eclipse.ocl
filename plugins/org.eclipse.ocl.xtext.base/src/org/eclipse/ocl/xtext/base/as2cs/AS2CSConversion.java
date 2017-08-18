@@ -126,7 +126,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			throw new IllegalStateException("No EnvironmentFactory");
 		}
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		AliasAnalysis aliasAnalysis = null;
+		//		AliasAnalysis aliasAnalysis = null;
 		URI csURI = csResource.getURI();
 		List<@NonNull ImportCS> imports = new ArrayList<>();
 		List<@NonNull Namespace> sortedImportedNamespaces = new ArrayList<>(importedNamespaces.keySet());
@@ -144,11 +144,12 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			}
 			List<@NonNull String> aliases = importedNamespaces.get(importedNamespace);
 			if ((aliases == null) || aliases.isEmpty()) {
-				if (aliasAnalysis == null) {
-					aliasAnalysis = AliasAnalysis.getAdapter(csResource, environmentFactory);
-				}
-				String alias = aliasAnalysis.getAlias(importedNamespace, null);
-				aliases = alias != null ? Collections.singletonList(alias) : Collections.emptyList();
+				//				if (aliasAnalysis == null) {
+				//					aliasAnalysis = AliasAnalysis.getAdapter(csResource, environmentFactory);
+				//				}
+				//				String alias = aliasAnalysis.getAlias(importedNamespace, null);
+				//				aliases = alias != null ? Collections.singletonList(alias) : Collections.emptyList();
+				aliases = Collections.emptyList();
 			}
 			EObject eObject = importedNamespace.getESObject();
 			String importURI = null;
@@ -166,7 +167,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			}
 			for (@NonNull String alias : aliases) {
 				ImportCS importCS = BaseCSFactory.eINSTANCE.createImportCS();
-				importCS.setName(alias);
+				importCS.setName(alias.length() > 0 ? alias : null);
 				PathNameCS csPathName = BaseCSFactory.eINSTANCE.createPathNameCS();
 				importCS.setOwnedPathName(csPathName);
 				List<PathElementCS> csPath = csPathName.getOwnedPathElements();
@@ -178,10 +179,10 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				imports.add(importCS);
 			}
 		}
-		if (aliasAnalysis != null) {
-			aliasAnalysis.dispose();
-		}
-		aliasAnalysis = AliasAnalysis.getAdapter(csResource, metamodelManager.getEnvironmentFactory());
+		//		if (aliasAnalysis != null) {
+		//			aliasAnalysis.dispose();
+		//		}
+		/*		aliasAnalysis = AliasAnalysis.getAdapter(csResource, metamodelManager.getEnvironmentFactory());
 		for (@NonNull ImportCS csImport : imports) {
 			Namespace namespace = csImport.getReferredNamespace();
 			String alias = csImport.getName();
@@ -206,7 +207,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 					csImport.setName(alias);
 				}
 			}
-		}
+		} */
 		Collections.sort(imports, new Comparator<@NonNull ImportCS>()
 		{
 			@Override
@@ -220,6 +221,8 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				}
 				String n1 = o1.getName();
 				String n2 = o2.getName();
+				if (n1 == null) n1 = "";
+				if (n2 == null) n2 = "";
 				return n1.compareTo(n2);
 			}
 		});

@@ -580,7 +580,7 @@ public class Ecore2AS extends AbstractExternal2AS
 							Element importedObject = metamodelManager.loadResource(uri, null, ecoreResource.getResourceSet());
 							if (importedObject instanceof Namespace) {
 								Import anImport = PivotFactory.eINSTANCE.createImport();
-								anImport.setName(key);
+								anImport.setName(key != null ? key : "");
 								anImport.setImportedNamespace((Namespace) importedObject);
 								allImports.add(anImport);
 							}
