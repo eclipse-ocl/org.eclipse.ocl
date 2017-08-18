@@ -642,6 +642,19 @@ public class RoundTripTests extends XtextTestCase
 		ocl.dispose();
 	}
 
+	public void testBug521100_oclinecore() throws IOException, InterruptedException {
+		String testFile =
+				"import 'http://www.eclipse.org/emf/2002/Ecore';\n" +
+						"\n" +
+						"package stk : stk = 'http://stk'\n" +
+						"{\n" +
+						"}";
+		createOCLinEcoreFile("Bug521100.oclinecore", testFile);
+		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
+		doRoundTripFromOCLinEcore(ocl, "Bug521100");
+		ocl.dispose();
+	}
+
 	public void testCompleteOCLRoundTrip_Bug496768() throws IOException, InterruptedException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		doRoundTripFromCompleteOCL(ocl, getProjectFileURI("Bug496768.ocl"));
