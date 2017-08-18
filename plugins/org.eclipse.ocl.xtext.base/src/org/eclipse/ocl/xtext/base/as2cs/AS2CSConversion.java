@@ -223,6 +223,12 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				return n1.compareTo(n2);
 			}
 		});
+		for (@NonNull ImportCS csImport : imports) {
+			String alias = csImport.getName();
+			if (alias.length() == 0) {
+				csImport.setName(null);
+			}
+		}
 		documentCS.getOwnedImports().addAll(imports);
 	}
 

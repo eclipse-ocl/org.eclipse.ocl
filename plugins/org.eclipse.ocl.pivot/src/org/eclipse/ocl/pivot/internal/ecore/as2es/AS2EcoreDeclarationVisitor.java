@@ -646,6 +646,16 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			}
 			EAnnotation importAnnotation = null;
 			URI ecoreURI = context.getEcoreURI();
+			int noNames = 0;
+			for (Import anImport : imports) {
+				Namespace importedNamespace = anImport.getImportedNamespace();
+				if (importedNamespace != null) {
+					String key = anImport.getName();
+					if ((key == null) || "".equals(key)) {
+						noNames++;
+					}
+				}
+			}
 			for (Import anImport : imports) {
 				Namespace importedNamespace = anImport.getImportedNamespace();
 				if (importedNamespace != null) {
@@ -654,6 +664,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 						importAnnotation.setSource(PivotConstants.IMPORT_ANNOTATION_SOURCE);
 					}
 					EObject eTarget = importedNamespace.getESObject();
+					String value;
 					if (eTarget != null) {
 						URI uri = null;
 						if ((eTarget instanceof EPackage) && ClassUtil.isRegistered(eTarget.eResource())) {
@@ -666,13 +677,22 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 							uri = EcoreUtil.getURI(eTarget);
 						}
 						URI uri2 = uri.deresolve(ecoreURI, true, true, true);
-						importAnnotation.getDetails().put(anImport.getName(), uri2.toString());
+						value = uri2.toString();
 					}
 					else if (importedNamespace instanceof org.eclipse.ocl.pivot.Package) {
-						importAnnotation.getDetails().put(anImport.getName(), ((org.eclipse.ocl.pivot.Package)importedNamespace).getURI());
+						value = ((org.eclipse.ocl.pivot.Package)importedNamespace).getURI();
 					}
 					else {
-						importAnnotation.getDetails().put(anImport.getName(), importedNamespace.toString());
+						value = importedNamespace.toString();
+					}
+					String key = anImport.getName();
+					if ((noNames > 1) && ((key == null) || "".equals(key))) {
+						key = value;
+						value = null;
+					}
+					String oldValue = importAnnotation.getDetails().put(key, value);
+					if (oldValue != null) {
+						System.out.println("Conflicting " + PivotConstants.IMPORT_ANNOTATION_SOURCE + " for \"" + key + "\" => \"" + oldValue + "\" / \"" + value + "\"");
 					}
 				}
 			}

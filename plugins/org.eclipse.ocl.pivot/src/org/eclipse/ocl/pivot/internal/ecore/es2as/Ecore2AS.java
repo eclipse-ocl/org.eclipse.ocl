@@ -566,7 +566,12 @@ public class Ecore2AS extends AbstractExternal2AS
 				if (importAnnotation != null) {
 					EMap<String, String> details = importAnnotation.getDetails();
 					for (String key : details.keySet()) {
-						URI uri = URI.createURI(details.get(key));
+						String value = details.get(key);
+						if (value == null) {
+							value = key;
+							key = "";
+						}
+						URI uri = URI.createURI(value);
 						if (baseURI != null) {
 							uri = uri.resolve(baseURI);
 						}
@@ -662,7 +667,12 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (importAnnotation != null) {
 			EMap<String, String> details = importAnnotation.getDetails();
 			for (String key : details.keySet()) {
-				URI uri = URI.createURI(details.get(key));
+				String value = details.get(key);
+				if (value == null) {
+					value = key;
+					key = "";
+				}
+				URI uri = URI.createURI(value);
 				uri = resolveImportURI(uri, ePackage, baseURI);
 				assert uri != null;
 				ResourceSet resourceSet = environmentFactory.getResourceSet();
