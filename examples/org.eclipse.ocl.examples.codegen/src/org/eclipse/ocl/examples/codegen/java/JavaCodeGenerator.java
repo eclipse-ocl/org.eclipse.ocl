@@ -103,7 +103,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	/**
 	 * The known classes that templates may use in unqualified form. The list is
 	 * here in a Java form to reduce the impact of refactoring templates.
+	 *
+	 * @deprecated no longer used; the import generator is smart enough to anlyze what is actually used
 	 */
+	@Deprecated
 	public static final @NonNull Class<?>[] knownClasses = {
 		java.lang.Class.class,
 		java.lang.Object.class,

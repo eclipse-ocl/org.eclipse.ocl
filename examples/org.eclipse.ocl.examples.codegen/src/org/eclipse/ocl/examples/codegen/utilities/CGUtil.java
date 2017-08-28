@@ -141,10 +141,10 @@ public class CGUtil
 						break;
 					}
 				}
-				if (!line.startsWith("import org.eclipse.ocl.pivot.Class;") && !line.startsWith("import org.eclipse.ocl.pivot.Package;")) {
-					s.append(line);
-					s.append("\n");
-				}
+				//				if (!line.startsWith("import org.eclipse.ocl.pivot.Class;") && !line.startsWith("import org.eclipse.ocl.pivot.Package;")) {
+				s.append(line);
+				s.append("\n");
+				//				}
 			}
 			return s.toString();
 		} catch (IOException e) {
