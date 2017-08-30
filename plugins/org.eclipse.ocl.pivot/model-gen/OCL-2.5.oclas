@@ -778,7 +778,7 @@
           isStatic="true" name="allInstances" type="#UQF4+">
         <ownedComments body="Return a set of all enumeration values of oclText[self]."/>
       </ownedOperations>
-      <ownedProperties xmi:id="sRm33" implementationClass="org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty"
+      <ownedProperties xmi:id="bVY,D" implementationClass="org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty"
           isStatic="true" name="allLiterals" opposite="#9qMPm" type="#rET9a">
         <ownedComments body="Evaluates to the literals of the enumeration.&#xA;"/>
       </ownedProperties>
@@ -790,8 +790,8 @@
         </ownedDetails>
       </ownedAnnotations>
       <ownedComments body="The standard type EnumerationLiteral represents a named constant value of an Enumeration.&#xA;"/>
-      <ownedProperties xmi:id="9qMPm" isImplicit="true" name="Enumeration" opposite="#sRm33" type="#ATAYr"/>
-      <ownedProperties xmi:id="Fr0SV" isImplicit="true" name="OclEnumeration" opposite="#MSIGu" type="#IeoaH"/>
+      <ownedProperties xmi:id="9qMPm" isImplicit="true" name="Enumeration" opposite="#bVY,D" type="#ATAYr"/>
+      <ownedProperties xmi:id="Fr0SV" isImplicit="true" name="OclEnumeration" opposite="#DVi0w" type="#IeoaH"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="tYtCd" coercions="#RRcEo" name="Integer" superClasses="#Nr4QF">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -1210,16 +1210,16 @@
           type="#PRF4+">
         <ownedComments body="Evaluates to all of the most derived model types of which oclText[self] is an instance. The return from oclText[oclModelTypes()]&#xA;is normally equivalent to that from oclText[oclModelType()] unless oclText[self] is an instance of multiply classified model type.&#xA;&#xA;The return is normally oclText[invalid] since few model elements have model types. UML's InstanceSpecification::classifier provides&#xA;a multiple classification for a model type.&#xA;"/>
       </ownedOperations>
-      <ownedProperties xmi:id="ENtwH" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty" isRequired="false"
+      <ownedProperties xmi:id="IcnIy" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty" isRequired="false"
           name="oclContainer" opposite="#i+8xQ" type="#zfDWR">
         <ownedComments body="The object for which self is a composed content or null if there is no such object.&#xA;"/>
       </ownedProperties>
-      <ownedProperties xmi:id="N1K1l" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty" name="oclContents"
+      <ownedProperties xmi:id="REFNQ" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty" name="oclContents"
           opposite="#hXMRj" type="#U6ALG">
         <ownedComments body="The composed contents of self."/>
       </ownedProperties>
-      <ownedProperties xmi:id="i+8xQ" isImplicit="true" name="OclElement" opposite="#ENtwH" type="#158KG"/>
-      <ownedProperties xmi:id="hXMRj" isImplicit="true" name="OclElement" opposite="#N1K1l" type="#158KG"/>
+      <ownedProperties xmi:id="i+8xQ" isImplicit="true" name="OclElement" opposite="#IcnIy" type="#158KG"/>
+      <ownedProperties xmi:id="hXMRj" isImplicit="true" name="OclElement" opposite="#REFNQ" type="#158KG"/>
     </ownedClasses>
     <ownedClasses xmi:id="+8+by" isAbstract="true" name="OclEnumeration" superClasses="#hlrMH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -1232,7 +1232,7 @@
           isStatic="true" name="allInstances" type="#UQF4+">
         <ownedComments body="Return a set of all enumeration values of oclText[self]."/>
       </ownedOperations>
-      <ownedProperties xmi:id="MSIGu" implementationClass="org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty"
+      <ownedProperties xmi:id="DVi0w" implementationClass="org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty"
           isStatic="true" name="allLiterals" opposite="#Fr0SV" type="#rET9a">
         <ownedComments body="Evaluates to the literals of the enumeration.&#xA;"/>
       </ownedProperties>
