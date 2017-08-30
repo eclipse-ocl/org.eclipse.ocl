@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Iteration;
@@ -148,16 +147,15 @@ public class PivotLUSSIDs extends LUSSIDs
 		}
 		else if (element instanceof Property) {
 			Property property = (Property)element;
-			Property oppositeProperty = property.getOpposite();
-			if (oppositeProperty != null) {
-				String oppositeName = oppositeProperty.getName();
-				if (oppositeName != null) {
-					localId += OPPOSITE_PROPERTY_NAME_MULTIPLIER * oppositeName.hashCode();
+			if (property.isIsImplicit()) {
+				Property oppositeProperty = property.getOpposite();
+				if (oppositeProperty != null) {
+					String oppositeName = oppositeProperty.getName();
+					if (oppositeName != null) {
+						localId += OPPOSITE_PROPERTY_NAME_MULTIPLIER * oppositeName.hashCode();
+					}
 				}
-			}
-			else {
-				Type propertyType = property.getType();
-				if (!(propertyType instanceof DataType) && !(propertyType instanceof TemplateParameter) && (propertyType != null)) {  // FIXME BUG 521077 testExample4_Interpreted has erroneous null
+				else {				// Never happens
 					System.out.println("No opposite for " + element);
 				}
 			}
