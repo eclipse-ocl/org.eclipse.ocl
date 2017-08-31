@@ -297,7 +297,7 @@ public class ClassUtil
 	 */
 	public static <T extends Comparable<T>> int safeCompareTo(@Nullable T object, @Nullable T otherObject) {
 		if (object == null) {
-			return otherObject == null ? 1 : 0;
+			return otherObject == null ? 0 : 1;
 		}
 		else {
 			return otherObject == null ? -1 : object.compareTo(otherObject);
