@@ -20,13 +20,14 @@ import java.util.WeakHashMap;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class ExecutorStandardLibrary extends ExecutableStandardLibrary
@@ -36,7 +37,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	private /*@LazyNonNull*/ Map<EcoreExecutorPackage, List<EcoreExecutorPackage>> extensions = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
-	
+
 	public ExecutorStandardLibrary(EcoreExecutorPackage... execPackages) {
 		OCLstdlibTables.PACKAGE.getClass();
 		for (EcoreExecutorPackage execPackage : execPackages) {
@@ -61,12 +62,12 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	public synchronized void addPackage(@NonNull EcoreExecutorPackage execPackage, @Nullable EcoreExecutorPackage extendedPackage) {
 		@SuppressWarnings("unused")
 		WeakReference<EcoreExecutorPackage> oldExecPackage = ePackageMap.put(execPackage.getURI(), new WeakReference<EcoreExecutorPackage>(execPackage));
-//		if ((oldExecPackage != null) && (oldExecPackage != execPackage)) {
-//			Iterable<ExecutorType> newTypes = execPackage.getOwnedType();
-//			for (DomainType oldType : oldExecPackage.getOwnedType()) {
-//				-- check for type compatibility
-//			}
-//		}
+		//		if ((oldExecPackage != null) && (oldExecPackage != execPackage)) {
+		//			Iterable<ExecutorType> newTypes = execPackage.getOwnedType();
+		//			for (DomainType oldType : oldExecPackage.getOwnedType()) {
+		//				-- check for type compatibility
+		//			}
+		//		}
 	}
 
 	@Override
@@ -106,7 +107,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		if (domainClass instanceof CompleteInheritance) {
 			return (CompleteInheritance) domainClass;
 		}
-/*		if (type instanceof DomainMetaclass) {
+		/*		if (type instanceof DomainMetaclass) {
 			DomainType instanceType = ClassUtil.nonNullPivot(((DomainMetaclass)type).getInstanceType());
 			org.eclipse.ocl.pivot.Class metaclass = getMetaclass(instanceType);
 			DomainType containerType = metaclass;//.getContainerType();
@@ -184,6 +185,14 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	public @NonNull Property getOclInvalidProperty() {
+		throw new UnsupportedOperationException();
+	}
+
 	public synchronized @Nullable EcoreExecutorPackage getPackage(@NonNull EPackage ePackage) {
 		String nsURI = ePackage.getNsURI();
 		return nsURI != null ? weakGet(ePackageMap, nsURI) : null;
@@ -192,7 +201,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	@Override
 	public synchronized org.eclipse.ocl.pivot.Class getOclType(@NonNull String typeName) {
 		for (WeakReference<EcoreExecutorPackage> dPackage : ePackageMap.values()) {
-// FIXME			if (OCLstdlibTables.PACKAGE.getNsURI().equals(dPackage.getNsURI())) {
+			// FIXME			if (OCLstdlibTables.PACKAGE.getNsURI().equals(dPackage.getNsURI())) {
 			if (dPackage != null) {
 				EcoreExecutorPackage packageRef = dPackage.get();
 				if (packageRef != null) {

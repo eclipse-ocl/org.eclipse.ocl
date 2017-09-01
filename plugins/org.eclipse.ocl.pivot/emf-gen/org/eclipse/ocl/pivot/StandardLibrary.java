@@ -181,6 +181,11 @@ public interface StandardLibrary extends Element
 	@NonNull Operation getOclInvalidOperation();
 
 	/**
+	 * @since 1.4
+	 */
+	@NonNull Property getOclInvalidProperty();
+
+	/**
 	 * Obtains the single instance of the InvalidType metatype, named
 	 * <tt>OclInvalid</tt>.
 	 *

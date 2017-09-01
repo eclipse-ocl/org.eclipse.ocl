@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotTables;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
@@ -95,12 +96,20 @@ public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	@Override
+	public @NonNull Property getOclInvalidProperty() {
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public Type getOclType(@NonNull String typeName) {
 		ExecutorType type = PivotTables.PACKAGE.getOwnedClass(typeName);
 		return type != null ? type.getPivotClass() : null;
 	}
-	
+
 	@SuppressWarnings("null")
 	protected org.eclipse.ocl.pivot.Class getType(Type typeType) {
 		if (typeType instanceof CollectionType) {
@@ -110,7 +119,7 @@ public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 		if (typeMap == null) {
 			typeMap = new HashMap<Type, org.eclipse.ocl.pivot.Class>();
 		}
-		else {			
+		else {
 			org.eclipse.ocl.pivot.Class type = typeMap.get(typeType);
 			if (type != null) {
 				return type;
@@ -118,7 +127,7 @@ public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 		}
 		if (packageMap == null) {
 			packageMap = new HashMap<org.eclipse.ocl.pivot.Package, org.eclipse.ocl.pivot.Package>();
-		}		
+		}
 		org.eclipse.ocl.pivot.Package domainPackage = ((org.eclipse.ocl.pivot.Class)typeType).getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotPackage = packageMap.get(domainPackage);
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
