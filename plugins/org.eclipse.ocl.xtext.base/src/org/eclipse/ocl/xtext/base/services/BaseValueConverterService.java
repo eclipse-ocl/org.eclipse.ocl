@@ -46,7 +46,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 		protected String internalToValue(String string, INode node) {
 			int length = string.length();
 			if (string.startsWith("_'") && (length >= 3) && string.endsWith("'")) {
-				return string.substring(2, length-1);
+				return StringUtil.convertFromOCLString(string.substring(2, length-1));
 			}
 			else if (string.startsWith("'") && (length >= 2) && string.endsWith("'")) {
 				return string.substring(1, length-1);
@@ -61,7 +61,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 	}
 
 	protected static class BinaryOperatorNameConverter implements IValueConverter<String>
-	{	
+	{
 		private final Set<String> navigationOperatorNameKeywords;
 
 		protected static Set<String> computeKeywords(Grammar grammar) {
@@ -71,14 +71,14 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 
 		public BinaryOperatorNameConverter(Grammar grammar) {
 			navigationOperatorNameKeywords = computeKeywords(grammar);
-//			printKeywords("NavigationOperatorName", navigationOperatorNameKeywords);
+			//			printKeywords("NavigationOperatorName", navigationOperatorNameKeywords);
 		}
 
 		@Override
 		public String toValue(String string, INode node) {
 			return string.trim();
 		}
-		
+
 		@Override
 		public String toString(String value) {
 			if (navigationOperatorNameKeywords.contains(value)) {
@@ -174,9 +174,9 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 
 		public NameConverter(Grammar grammar) {
 			nameKeywords = computeKeywords(grammar);
-//			printKeywords("Name", nameKeywords);
+			//			printKeywords("Name", nameKeywords);
 		}
-		
+
 		@Override
 		protected String internalToString(String value) {
 			if (nameKeywords.contains(value)) {
@@ -192,7 +192,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 	}
 
 	protected static class NumberConverter implements IValueConverter<Number>
-	{	
+	{
 		@Override
 		public Number toValue(String string, INode node) {
 			if (Strings.isEmpty(string))
@@ -208,7 +208,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 				throw new ValueConverterException("Couldn't convert '"+string+"' to number", node, e);
 			}
 		}
-		
+
 		@Override
 		public String toString(Number value) {
 			return value.toString();
@@ -227,9 +227,9 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 			return value;
 		}
 	}
-	
+
 	protected static class SingleQuotedStringConverter extends AbstractNullSafeConverter<String>
-	{		
+	{
 		@Override
 		protected String internalToValue(String string, INode node) {
 			try {
@@ -240,7 +240,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 				throw new ValueConverterException(e.getMessage(), node, e);
 			}
 		}
-		
+
 		@Override
 		protected String internalToString(String value) {
 			return "'" + StringUtil.convertToOCLString(value) + "'";
@@ -259,7 +259,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 				throw new ValueConverterException(e.getMessage(), node, e);
 			}
 		}
-		
+
 		@Override
 		protected String internalToString(String value) {
 			value = value.replace("\r", "");
@@ -270,9 +270,9 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 					value = value + "\n";				// Avoid the trailing ';' getting added within the comment
 				}
 			}
-//			if ((value.length() > 0) && (value.charAt(0) == '\n')) {
-//				value = " " + value;
-//			}
+			//			if ((value.length() > 0) && (value.charAt(0) == '\n')) {
+			//				value = " " + value;
+			//			}
 			return value;
 		}
 	}
@@ -283,18 +283,18 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 
 		protected static Set<String> computeReservedKeywords(Grammar grammar) {
 			Set<String> keywords = new HashSet<String>(GrammarUtil.getAllKeywords(grammar));
-//			printKeywords("All", keywords);
+			//			printKeywords("All", keywords);
 			Set<String> unreservedNames = getAllKeywords(grammar, "UnreservedName", true);
-//			printKeywords("Unreserved", unreservedNames);
+			//			printKeywords("Unreserved", unreservedNames);
 			keywords.removeAll(unreservedNames);
 			return keywords;
 		}
 
 		public UnreservedNameConverter(Grammar grammar) {
 			reservedKeywords = computeReservedKeywords(grammar);
-//			printKeywords("Reserved", reservedKeywords);
+			//			printKeywords("Reserved", reservedKeywords);
 		}
-		
+
 		@Override
 		protected String internalToString(String value) {
 			if (reservedKeywords.contains(value)) {
@@ -316,16 +316,16 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 		protected static Set<String> computeRestrictedKeywords(Grammar grammar) {
 			Set<String> keywords = new HashSet<String>(GrammarUtil.getAllKeywords(grammar));
 			Set<String> unrestrictedNames = getAllKeywords(grammar, "UnrestrictedName", true);
-//			printKeywords("Unrestricted", unrestrictedNames);
+			//			printKeywords("Unrestricted", unrestrictedNames);
 			keywords.removeAll(unrestrictedNames);
 			return keywords;
 		}
 
 		public UnrestrictedNameConverter(Grammar grammar) {
 			restrictedKeywords = computeRestrictedKeywords(grammar);
-//			printKeywords("Restricted", restrictedKeywords);
+			//			printKeywords("Restricted", restrictedKeywords);
 		}
-		
+
 		@Override
 		protected String internalToString(String value) {
 			if (restrictedKeywords.contains(value)) {
@@ -341,7 +341,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 	}
 
 	public static String escapeIdentifier(String value) {
-		return "_'" + value + "'";
+		return "_'" + StringUtil.convertToOCLString(value) + "'";
 	}
 
 	public static Set<String> getAllKeywords(Grammar g, String name, boolean validIdentifiersOnly) {
@@ -369,12 +369,12 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 			}
 		}
 	}
-	
-//	private static void printKeywords(String prefix, Collection<String> keywords) {
-//		List<String> list = new ArrayList<String>(keywords);
-//		Collections.sort(list);
-//		System.out.println(prefix + ": " + StringUtils.splice(list, ", "));
-//	}
+
+	//	private static void printKeywords(String prefix, Collection<String> keywords) {
+	//		List<String> list = new ArrayList<String>(keywords);
+	//		Collections.sort(list);
+	//		System.out.println(prefix + ": " + StringUtils.splice(list, ", "));
+	//	}
 
 	private BinaryOperatorNameConverter binaryOperatorNameConverter = null;			// not static - grammar-dependent
 	private static DoubleQuotedStringConverter doubleQuotedStringConverter = null;
@@ -389,7 +389,7 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 	private UnreservedNameConverter unreservedNameConverter = null; 				// not static - grammar-dependent
 	private UnrestrictedNameConverter unrestrictedNameConverter = null; 			// not static - grammar-dependent
 	private static SingleQuotedStringConverter uriConverter = null;
-	
+
 	@ValueConverter(rule = "BinaryOperatorName")
 	public IValueConverter<String> BinaryOperatorName() {
 		if (binaryOperatorNameConverter == null) {
@@ -434,10 +434,10 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 		}
 		return multiLineSingleQuotedStringConverter;
 	}
-	
+
 	@ValueConverter(rule = "Name")
 	public IValueConverter<String> Name() {
-//		return ID();
+		//		return ID();
 		if (nameConverter == null) {
 			nameConverter = new NameConverter(getGrammar());
 		}
@@ -467,12 +467,12 @@ public class BaseValueConverterService extends AbstractDeclarativeValueConverter
 		}
 		return singleQuotedStringConverter;
 	}
-	
+
 	@ValueConverter(rule = "StringLiteral")
 	public IValueConverter<String> StringLiteral() {
 		return SINGLE_QUOTED_STRING();
 	}
-	
+
 	@ValueConverter(rule = "UNQUOTED_STRING")
 	public IValueConverter<String> UNQUOTED_STRING() {
 		if (unquotedStringConverter == null) {
