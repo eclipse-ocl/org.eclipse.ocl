@@ -48,7 +48,7 @@ public class ModelAnalysis
 	public static class ElementComparator implements Comparator<Element>
 	{
 		public static final @NonNull ElementComparator INSTANCE = new ElementComparator();
-		
+
 		@Override
 		public int compare(Element o1, Element o2) {
 			if (o1 instanceof NamedElement) {
@@ -84,7 +84,7 @@ public class ModelAnalysis
 	 * All the ProfileApplication elements.
 	 */
 	private final @NonNull List<ProfileApplication> asProfileApplications = new ArrayList<ProfileApplication>();
-//	private @Nullable Map<Profile, Set<Profile>> profile2allProfiles = new HashMap<Profile, Set<Profile>>();
+	//	private @Nullable Map<Profile, Set<Profile>> profile2allProfiles = new HashMap<Profile, Set<Profile>>();
 
 	/**
 	 * All the Profiles that are applied to something.
@@ -137,7 +137,7 @@ public class ModelAnalysis
 			}
 			else {
 				UML2AS.ADD_STEREOTYPE_APPLICATION.println(NameUtil.qualifiedNameFor(eClass));
-//					ADD_STEREOTYPE_APPLICATION.println(umlStereotypeApplication.toString());
+				//					ADD_STEREOTYPE_APPLICATION.println(umlStereotypeApplication.toString());
 			}
 		}
 		List<EObject> umlStereotypeApplications2 = umlStereotypeApplications;
@@ -148,7 +148,7 @@ public class ModelAnalysis
 		EPackage ePackage = eClass.getEPackage();
 		Resource eResource = ePackage.eResource();
 		if (eResource != null) {
-//			converter.addImportedResource(eResource);	// -- leads to CCEs for the wrong ES2AS
+			//			converter.addImportedResource(eResource);	// -- leads to CCEs for the wrong ES2AS
 		}
 	}
 
@@ -179,13 +179,13 @@ public class ModelAnalysis
 				element2stereotype2extension.put(asStereotypedElement, stereotype2extension);
 			}
 			for (@SuppressWarnings("null")@NonNull EObject umlStereotypeApplication : umlStereotypeApplications) {
-//					EClass eClass = umlStereotypeApplication.eClass();
+				//					EClass eClass = umlStereotypeApplication.eClass();
 				List<org.eclipse.uml2.uml.Element> umlStereotypedElements = umlStereotypeApplication2umlStereotypedElements.get(umlStereotypeApplication);
-					assert umlStereotypedElements != null;
+				assert umlStereotypedElements != null;
 				Stereotype asStereotype = converter.resolveStereotype(umlStereotypeApplication, umlStereotypedElements);
-				if (asStereotype == null) {
-					asStereotype = converter.resolveStereotype(umlStereotypeApplication, umlStereotypedElements);		// FIXME debugging
-				}
+				//				if (asStereotype == null) {
+				//					asStereotype = converter.resolveStereotype(umlStereotypeApplication, umlStereotypedElements);		// FIXME debugging
+				//				}
 				if (asStereotype != null) {
 					ElementExtension elementExtension = metamodelManager.getElementExtension(asStereotypedElement, asStereotype);
 					converter.setOriginalMapping(elementExtension, umlStereotypeApplication);
@@ -269,9 +269,9 @@ public class ModelAnalysis
 						if (appliedProfileClosure2 == null) {
 							appliedProfileClosure2 = new HashSet<Profile>();
 							package2appliedProfileClosure.put(asPackage, appliedProfileClosure2);
-						}	
+						}
 						appliedProfileClosure2.addAll(appliedProfileClosure1);
-					}	
+					}
 				}
 			}
 		}
@@ -295,7 +295,7 @@ public class ModelAnalysis
 	/**
 	 * Install implicit ElementExtensions for all the required ExtensionEnds in all the applied Profiles to the all the packages,
 	 * and explicit ElementsExtenmsions for all the applied Stereotype applications.
-	 * @param umlStereotypeApplications 
+	 * @param umlStereotypeApplications
 	 */
 	private void installElementExtensionPropertyValues(@NonNull Map<Element, @NonNull Map<Stereotype, ElementExtension>> element2stereotype2extension,
 			@NonNull Map<EObject, @NonNull List<org.eclipse.uml2.uml.Element>> umlStereotypeApplication2umlStereotypedElements) {
@@ -306,11 +306,11 @@ public class ModelAnalysis
 		//
 		//	Compute and install the ElementExtensions from required ExtensionEnds and Stereotype applications
 		//
-//		Map<Element, List<ElementExtension>> element2elementExtension = new HashMap<Element, List<ElementExtension>>();
-//			Map<org.eclipse.uml2.uml.Profile, List<ExtensionEnd>> profile2requiredExtensionEnds2 = profile2requiredExtensionEnds;
-//			if (profile2requiredExtensionEnds2 != null) {
-//				computeImplicitElementExtensions(element2elementExtension, package2allProfiles, profile2requiredExtensionEnds2);
-//			}
+		//		Map<Element, List<ElementExtension>> element2elementExtension = new HashMap<Element, List<ElementExtension>>();
+		//			Map<org.eclipse.uml2.uml.Profile, List<ExtensionEnd>> profile2requiredExtensionEnds2 = profile2requiredExtensionEnds;
+		//			if (profile2requiredExtensionEnds2 != null) {
+		//				computeImplicitElementExtensions(element2elementExtension, package2allProfiles, profile2requiredExtensionEnds2);
+		//			}
 		//
 		// Compute an explicit ElementExtension for each stereotype application.
 		//
@@ -325,7 +325,7 @@ public class ModelAnalysis
 			List<ElementExtension> oldElementExtensions = asElement.getOwnedExtensions();
 			converter.refreshList(oldElementExtensions, newElementExtensions);
 		}
-/*		if (UML2AS.ADD_ELEMENT_EXTENSION.isActive()) {
+		/*		if (UML2AS.ADD_ELEMENT_EXTENSION.isActive()) {
 			StringBuffer s = new StringBuffer();
 			List<Element> asElements = new ArrayList<Element>(element2elementExtension.keySet());
 			Collections.sort(asElements, ElementComparator.INSTANCE);
@@ -349,11 +349,11 @@ public class ModelAnalysis
 		profileAnalysis.analyze();
 		computeAppliedProfile2profileClosure();
 		computePackage2AppliedProfileClosure();
-////				@SuppressWarnings("null")@NonNull Set<Profile> appliedProfileClosure = package2appliedProfileClosure.get(asPackage);
-//				Map<Type, Set<TypeExtension>> metatype2typeExtensions = profileAnalysis.computeMetatypes2typeExtensions(/*appliedProfileClosure*/);
-//				Map<Element, Map<Stereotype, ElementExtension>> element2stereotype2extension = new HashMap<Element, Map<Stereotype, ElementExtension>>();
-//		for (org.eclipse.ocl.pivot.Package asPackage : package2appliedProfileClosure.keySet()) {
-//			if ((asPackage != null) /*&& !(asPackage instanceof Profile)*/) {
+		////				@SuppressWarnings("null")@NonNull Set<Profile> appliedProfileClosure = package2appliedProfileClosure.get(asPackage);
+		//				Map<Type, Set<TypeExtension>> metatype2typeExtensions = profileAnalysis.computeMetatypes2typeExtensions(/*appliedProfileClosure*/);
+		//				Map<Element, Map<Stereotype, ElementExtension>> element2stereotype2extension = new HashMap<Element, Map<Stereotype, ElementExtension>>();
+		//		for (org.eclipse.ocl.pivot.Package asPackage : package2appliedProfileClosure.keySet()) {
+		//			if ((asPackage != null) /*&& !(asPackage instanceof Profile)*/) {
 		Map<Element, @NonNull Map<Stereotype, ElementExtension>> element2stereotype2extension = new HashMap<Element, @NonNull Map<Stereotype, ElementExtension>>();
 		for (org.eclipse.ocl.pivot.Package asPackage : package2appliedProfileClosure.keySet()) {
 			if ((asPackage != null) && !(asPackage instanceof Profile)) {
@@ -392,16 +392,16 @@ public class ModelAnalysis
 			Map<EObject, @NonNull List<org.eclipse.uml2.uml.Element>> umlStereotypeApplication2umlStereotypedElements = UML2ASUtil.computeAppliedStereotypes(umlStereotypeApplications2);
 			installElementExtensionPropertyValues(element2stereotype2extension, umlStereotypeApplication2umlStereotypedElements);
 		}
-//			Map<Metaclass<?>, List<Property>> metaclass2properties = new HashMap<Metaclass<?>, List<Property>>();
+		//			Map<Metaclass<?>, List<Property>> metaclass2properties = new HashMap<Metaclass<?>, List<Property>>();
 		//
 		//	Install all the metaclass properties.
 		//
-//			for (Metaclass<?> metaclass : metaclass2properties.keySet()) {
-//				List<Property> newProperties = metaclass2properties.get(metaclass);
-//				List<Property> oldProperties = metaclass.getOwnedAttribute();
-//				assert oldProperties != null;
-//				refreshList(oldProperties, newProperties);
-//			}
+		//			for (Metaclass<?> metaclass : metaclass2properties.keySet()) {
+		//				List<Property> newProperties = metaclass2properties.get(metaclass);
+		//				List<Property> oldProperties = metaclass.getOwnedAttribute();
+		//				assert oldProperties != null;
+		//				refreshList(oldProperties, newProperties);
+		//			}
 	}
 
 	private @NonNull Map<Stereotype, ElementExtension> installExtensions(@NonNull Element asElement, @NonNull Set<StereotypeExtender> typeExtensions) {
@@ -452,7 +452,7 @@ public class ModelAnalysis
 	/**
 	 * Determine the UML stereotype applications for each stereotyped pivot element, from the pre-computed mapping
 	 * of stereotyped UML elements for each UML stereotype application.
-	 * @param umlStereotypeApplications 
+	 * @param umlStereotypeApplications
 	 */
 	private @NonNull Map<Element, @NonNull List<EObject>> resolveStereotypeApplications(@NonNull Map<EObject, @NonNull List<org.eclipse.uml2.uml.Element>> umlStereotypeApplication2umlStereotypedElements) {
 		Map<Element, @NonNull List<EObject>> asElement2umlStereotypeApplications = new HashMap<Element, @NonNull List<EObject>>();
