@@ -1085,6 +1085,21 @@ public abstract class UML2AS extends AbstractExternal2AS
 		return ClassUtil.nonNullState(umlResource.getURI());
 	}
 
+	private void growAllAppliedProfiles(@NonNull Set<org.eclipse.uml2.uml.Profile> allProfiles, org.eclipse.uml2.uml.Profile umlProfile) {	// FIXME fixes Bug 521984
+		if (allProfiles.add(umlProfile)) {
+			for (org.eclipse.uml2.uml.Package umlNestedPackage : umlProfile.getNestedPackages()) {
+				if (umlNestedPackage instanceof org.eclipse.uml2.uml.Profile) {
+					growAllAppliedProfiles(allProfiles, (org.eclipse.uml2.uml.Profile)umlNestedPackage);
+				}
+			}
+			for (org.eclipse.uml2.uml.Package umlImportedPackage : umlProfile.getImportedPackages()) {
+				if (umlImportedPackage instanceof org.eclipse.uml2.uml.Profile) {
+					growAllAppliedProfiles(allProfiles, (org.eclipse.uml2.uml.Profile)umlImportedPackage);
+				}
+			}
+		}
+	}
+
 	protected @NonNull Model installDeclarations(@NonNull Resource asResource) {
 		URI pivotURI = asResource.getURI();
 		Model pivotModel2 = pivotModel = PivotUtil.createModel(umlURI != null ? umlURI.toString() : pivotURI.toString());
@@ -1245,32 +1260,23 @@ public abstract class UML2AS extends AbstractExternal2AS
 		//	Get the pivot profile for which the profileNsURI is an application to the stereotypedPackage
 		//
 		EPackage umlProfileEPackage = umlStereotypeEClass.getEPackage();
-		//			String profileNsURI = umlProfileEPackage.getNsURI();		// FIXME UML profiles have no URI.
 		if (umlStereotypedPackage != null) {
-			//				for (org.eclipse.uml2.uml.ProfileApplication umlProfileApplication : umlStereotypedPackage.getProfileApplications()) {
-			//					org.eclipse.uml2.uml.Profile umlProfile = umlProfileApplication.getAppliedProfile();
-			//					if (profileNsURI.equals(umlProfile.getURI())) {
-			//						return umlProfile.getOwnedStereotype(umlStereotypeEClass.getName());
-			//					}
-			//				}
+			Set<org.eclipse.uml2.uml.@NonNull Profile> allAppliedProfiles = new HashSet<>();
+			for (org.eclipse.uml2.uml.Profile umlAppliedProfile : umlStereotypedPackage.getAllAppliedProfiles()) {		// FIXME thi works around BUG 521984
+				growAllAppliedProfiles(allAppliedProfiles, umlAppliedProfile);
+			}
 			String profileNsURI = umlProfileEPackage.getNsURI();
-			for (org.eclipse.uml2.uml.Package umlPackage = umlStereotypedPackage; umlPackage != null; umlPackage = umlPackage.getNestingPackage()) {
-				for (org.eclipse.uml2.uml.ProfileApplication umlProfileApplication : umlPackage.getProfileApplications()) {
-					org.eclipse.uml2.uml.Profile umlProfile = umlProfileApplication.getAppliedProfile();
-					if (profileNsURI.equals(umlProfile.getURI())) {
-						org.eclipse.uml2.uml.Stereotype umlStereotype = umlProfile.getOwnedStereotype(umlStereotypeEClass.getName());
-						return umlStereotype != null ? getCreated(Stereotype.class, umlStereotype) : null;
-					}
+			for (org.eclipse.uml2.uml.Profile umlProfile : allAppliedProfiles) {
+				if (profileNsURI.equals(umlProfile.getURI())) {
+					org.eclipse.uml2.uml.Stereotype umlStereotype = umlProfile.getOwnedStereotype(umlStereotypeEClass.getName());
+					return umlStereotype != null ? getCreated(Stereotype.class, umlStereotype) : null;
 				}
 			}
 			String profileName = umlProfileEPackage.getName();		// This is really only needed for a bad legacy test case
-			for (org.eclipse.uml2.uml.Package umlPackage = umlStereotypedPackage; umlPackage != null; umlPackage = umlPackage.getNestingPackage()) {
-				for (org.eclipse.uml2.uml.ProfileApplication umlProfileApplication : umlPackage.getProfileApplications()) {
-					org.eclipse.uml2.uml.Profile umlProfile = umlProfileApplication.getAppliedProfile();
-					if (profileName.equals(umlProfile.getName())) {
-						org.eclipse.uml2.uml.Stereotype umlStereotype = umlProfile.getOwnedStereotype(umlStereotypeEClass.getName());
-						return umlStereotype != null ? getCreated(Stereotype.class, umlStereotype) : null;
-					}
+			for (org.eclipse.uml2.uml.Profile umlProfile : allAppliedProfiles) {
+				if (profileName.equals(umlProfile.getName())) {
+					org.eclipse.uml2.uml.Stereotype umlStereotype = umlProfile.getOwnedStereotype(umlStereotypeEClass.getName());
+					return umlStereotype != null ? getCreated(Stereotype.class, umlStereotype) : null;
 				}
 			}
 		}
