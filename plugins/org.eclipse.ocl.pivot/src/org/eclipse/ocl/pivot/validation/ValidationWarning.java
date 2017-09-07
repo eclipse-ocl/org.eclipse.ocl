@@ -17,6 +17,6 @@ import org.eclipse.osgi.util.NLS;
 public class ValidationWarning extends BasicDiagnostic
 {
 	public ValidationWarning(String messageTemplate, Object... bindings) {
-		super(PivotMessages.Validation, WARNING, NLS.bind(messageTemplate, bindings), null);
+		super(WARNING, PivotMessages.Validation, 0, NLS.bind(messageTemplate, bindings), null);
 	}
 }

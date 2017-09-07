@@ -47,7 +47,7 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 	public static class ValidationDiagnostic extends BasicDiagnostic implements Resource.Diagnostic
 	{
 		private ValidationDiagnostic() {
-			super(EObjectValidator.DIAGNOSTIC_SOURCE, 0, "", null);
+			super(WARNING, EObjectValidator.DIAGNOSTIC_SOURCE, 0, "", null);
 		}
 
 		@Override

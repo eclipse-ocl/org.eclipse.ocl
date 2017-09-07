@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -62,6 +61,7 @@ import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.oclforuml.OCLforUMLPackage;
@@ -101,8 +101,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 	public static final @SuppressWarnings("null")@NonNull String STEREOTYPE_BASE_PREFIX = org.eclipse.uml2.uml.Extension.METACLASS_ROLE_PREFIX; //"base_";
 	public static final @SuppressWarnings("null")@NonNull String STEREOTYPE_EXTENSION_PREFIX = org.eclipse.uml2.uml.Extension.STEREOTYPE_ROLE_PREFIX; //"extension_";
-
-	private static final Logger logger = Logger.getLogger(UML2AS.class);
 
 	public static @NonNull UML2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		UMLStandaloneSetup.assertInitialized();
@@ -680,7 +678,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 				}
 			}
 			if (!requiredClass.isAssignableFrom(element.getClass())) {
-				logger.error("UML " + element.getClass().getName() + "' element is not a '" + requiredClass.getName() + "'"); //$NON-NLS-1$
+				error("UML " + element.getClass().getName() + "' element is not a '" + requiredClass.getName() + "'"); //$NON-NLS-1$
 				return null;
 			}
 			@SuppressWarnings("unchecked")
@@ -1250,7 +1248,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 						umlStereotypedPackage = (org.eclipse.uml2.uml.Package)eObject;
 					}
 					else if (umlStereotypedPackage != (org.eclipse.uml2.uml.Package)eObject) {
-						logger.error("Conflicting packages for stereotype application of " + umlStereotypeEClass.getName());
+						error("Conflicting packages for stereotype application of " + umlStereotypeEClass.getName());
 					}
 					break;
 				}
@@ -1280,7 +1278,19 @@ public abstract class UML2AS extends AbstractExternal2AS
 				}
 			}
 		}
-		logger.error("Missing package for stereotype application of " + umlStereotypeEClass.getName());
+		StringBuilder s = new StringBuilder();
+		s.append("Failed to resolve package URI '");
+		s.append(umlProfileEPackage.getNsURI());
+		s.append("' for «");
+		s.append(umlStereotypeEClass.getName());
+		s.append("» for");
+		Map<ILabelGenerator.Option<?>, Object> options = new HashMap<>();
+		options.put(ILabelGenerator.Builder.SHOW_QUALIFIER, "::");
+		for (org.eclipse.uml2.uml.Element umlStereotypedElement : umlStereotypedElements) {
+			s.append(" ");
+			s.append(ILabelGenerator.Registry.INSTANCE.labelFor(umlStereotypedElement, options));
+		}
+		error(s.toString());
 		return null;
 	}
 

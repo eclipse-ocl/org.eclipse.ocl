@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2ASUtil;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -74,6 +75,50 @@ import org.eclipse.uml2.uml.util.UMLValidator;
  */
 public class UMLOCLEValidator implements EValidator
 {
+	private static final class ASResourceProblems extends BasicDiagnostic
+	{
+		private @NonNull Resource asResource;
+
+		public ASResourceProblems(@NonNull Resource asResource) {
+			super(asResource.getErrors().size() > 0 ? ERROR : WARNING, PivotMessages.Validation, 0, null, null);
+			this.asResource = asResource;
+		}
+
+		public @NonNull Resource getASResource() {
+			return asResource;
+		}
+
+		@Override
+		public String getMessage() {
+			if (message == null) {
+				boolean isFirst = true;
+				StringBuilder s = new StringBuilder();
+				for (Resource.Diagnostic error : asResource.getErrors()) {
+					if (!isFirst) {
+						s.append("\n");
+					}
+					s.append(error.getMessage());
+					isFirst = false;
+				}
+				for (Resource.Diagnostic warning : asResource.getWarnings()) {
+					if (!isFirst) {
+						s.append("\n");
+					}
+					s.append(warning.getMessage());
+					isFirst = false;
+				}
+				message = s.toString();
+			}
+			return super.getMessage();
+		}
+
+		@Override
+		public String toString() {
+			getMessage();
+			return super.toString();
+		}
+	}
+
 	/**
 	 * ConstraintEvaluatorWithoutDiagnostics provides the minimal ConstraintEvaluator support for
 	 * use when no diagnostics are required.
@@ -225,6 +270,20 @@ public class UMLOCLEValidator implements EValidator
 
 	public UMLOCLEValidator(boolean mayUseNewLines) {
 		this.mayUseNewLines = mayUseNewLines;
+	}
+
+	private void propagateProblems(@NonNull DiagnosticChain diagnostics, @NonNull Resource asResource) {
+		if (!(diagnostics instanceof Diagnostic)) {
+			return;
+		}
+		for (Diagnostic childDiagnostic : ((Diagnostic) diagnostics).getChildren()) {
+			if (childDiagnostic instanceof ASResourceProblems) {
+				if (((ASResourceProblems)childDiagnostic).getASResource() == asResource) {
+					return ;
+				}
+			}
+		}
+		diagnostics.add(new ASResourceProblems(asResource));
 	}
 
 	@Override
@@ -531,6 +590,10 @@ public class UMLOCLEValidator implements EValidator
 						0, message,  new Object[] { opaqueElement }));
 				}
 				return false;
+			}
+			Resource asResource = asSpecification.eResource();
+			if ((diagnostics != null) && ((asResource.getErrors().size() > 0) || (asResource.getWarnings().size() > 0))) {
+				propagateProblems(diagnostics, asResource);
 			}
 			ExpressionInOCL asQuery = metamodelManager.parseSpecification(asSpecification);
 			return validateSemantics(opaqueElement, asQuery, diagnostics, context);
