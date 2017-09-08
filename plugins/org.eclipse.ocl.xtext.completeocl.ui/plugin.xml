@@ -225,6 +225,7 @@
             </attribute>
       </markerResolutionGenerator>
    </extension>
+   
 	<!-- Load Complete OCL Document -->
 	<extension
 		point="org.eclipse.ui.handlers">
@@ -238,16 +239,11 @@
 			</activeWhen-->
 		</handler>
 	</extension>
-	<extension
-		point="org.eclipse.ui.commands">
-		<command
-			description="%MF_LoadOCLResource"
-			id="org.eclipse.ocl.xtext.completeocl.loadresource"
-			name="%MF_LoadOCLResource_label">
-		</command>
+	<extension point="org.eclipse.ui.commands">
+	  <command id="org.eclipse.ocl.xtext.completeocl.loadresource"
+		name="%MF_LoadOCLResource_label" description="%MF_LoadOCLResource"/>
 	</extension>
 	<extension point="org.eclipse.ui.menus">
-		<!-- Generated Ecore editors have no shared menuID so must hit any -->
 	  <menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=load">
 			<command commandId="org.eclipse.ocl.xtext.completeocl.loadresource"
 				style="push"
@@ -265,10 +261,44 @@
 		-->
 	</extension>
 
+	<!-- Export Complete OCL Document -->
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler 
+			class="org.eclipse.ocl.xtext.completeocl.ui.commands.ExportCompleteOCLHandler"
+			commandId="org.eclipse.ocl.xtext.completeocl.ui.ExportCompleteOCLCommand">
+			<!--activeWhen>
+				<reference
+					definitionId="org.eclipse.ocl.xtext.completeocl.CompleteOCL.Editor.opened">
+				</reference>
+			</activeWhen-->
+		</handler>
+	</extension>
+	<extension point="org.eclipse.ui.commands">
+	  <command id="org.eclipse.ocl.xtext.completeocl.ui.ExportCompleteOCLCommand"
+	    name="%MF_ExportCompleteOCL_label" description="%MF_ExportCompleteOCL"/>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+	  <menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=load">
+	    <command commandId="org.eclipse.ocl.xtext.completeocl.ui.ExportCompleteOCLCommand"
+	      label="%MF_ExportCompleteOCL_label">
+				style="push"
+        	    icon="$nl$/icons/OCLModelFile.gif"
+				tooltip="%MF_ExportCompleteOCL">
+				<visibleWhen checkEnabled="false">
+					<test property="org.eclipse.ocl.examples.ui.resourceSetAvailable" forcePluginActivation="true"/>
+				</visibleWhen>
+	    </command>
+	  </menuContribution>
+	</extension>
+
 	<extension point="org.eclipse.ui.menus">
 	  <menuContribution locationURI="popup:org.eclipse.ocl.examples.ui.Menu?after=save">
 	    <command commandId="org.eclipse.ocl.xtext.base.ui.SaveASCommand"
 	      label="%MF_Save_AS">
+				style="push"
+        	    icon="$nl$/icons/OCLModelFile.gif"
+				tooltip="%MF_Save_AS_Description">
             <visibleWhen checkEnabled="false">
                 <reference
                     definitionId="org.eclipse.ocl.xtext.completeocl.CompleteOCL.Editor.opened">
@@ -280,6 +310,9 @@
 	    <command commandId="org.eclipse.ocl.xtext.base.ui.SaveCSCommand"
 	      label="%MF_Save_CS">
             <visibleWhen checkEnabled="false">
+				style="push"
+        	    icon="$nl$/icons/OCLModelFile.gif"
+				tooltip="%MF_Save_CS_Description">
                 <reference
                     definitionId="org.eclipse.ocl.xtext.completeocl.CompleteOCL.Editor.opened">
                 </reference>

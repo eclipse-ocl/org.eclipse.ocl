@@ -1079,7 +1079,7 @@ public abstract class ValueUtil
 	/**
 	 * Throw an InvalidValueException without subsequent code appearing to be unreachable.
 	 */
-	public static Object throwInvalidValueException() {
+	public static @NonNull Object throwInvalidValueException() {
 		throw new InvalidValueException("invalid");
 	}
 

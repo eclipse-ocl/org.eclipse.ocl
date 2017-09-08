@@ -21,8 +21,34 @@ public class BaseUIMessages
 	static {
 		NLS.initializeMessages(BaseUIMessages.class.getName(), BaseUIMessages.class);
 	}
-	
+
+	/**
+	 * @since 1.4
+	 */
+	public static String ExportError_Title;
+	/**
+	 * @since 1.4
+	 */
+	public static String Export_Description;
+	/**
+	 * @since 1.4
+	 */
+	public static String Export_ShellTitle;
+	/**
+	 * @since 1.4
+	 */
+	public static String Export_Title;
+
 	public static String LoadError_Title;
+
+	/**
+	 * @since 1.4
+	 */
+	public static String MissingSelection;
+	/**
+	 * @since 1.4
+	 */
+	public static String MissingSelectionResourceSet;
 
 	public static String NewWizardPage_errorTitle;
 	public static String NewWizardPage_file;
@@ -41,11 +67,11 @@ public class BaseUIMessages
 	public static String SaveCS_Title;
 	public static String SaveCS_Description;
 	public static String SaveError_Title;
-	
-	// source IDEWorkbenchMessages	
+
+	// source IDEWorkbenchMessages
 	public static String ContainerGroup_message;
 	public static String ContainerGroup_selectFolder;
-	
+
 	public static String ResourceGroup_resource;
 	public static String ResourceGroup_nameExists;
 	public static String ResourceGroup_folderEmpty;
@@ -53,7 +79,7 @@ public class BaseUIMessages
 	public static String ResourceGroup_emptyName;
 	public static String ResourceGroup_invalidFilename;
 	public static String ResourceGroup_pathOccupied;
-	
+
 	/*
 	 * @deprecated no longer used
 	 */
