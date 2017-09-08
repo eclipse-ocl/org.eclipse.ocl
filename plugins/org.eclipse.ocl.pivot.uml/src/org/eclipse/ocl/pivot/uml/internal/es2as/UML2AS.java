@@ -1041,6 +1041,24 @@ public abstract class UML2AS extends AbstractExternal2AS
 
 	public abstract @Nullable Type getASType(@NonNull EObject eObject);
 
+	private Set<org.eclipse.uml2.uml.@NonNull Package> getAllAppliedProfilePackages(org.eclipse.uml2.uml.Package umlStereotypedPackage) {
+		Set<org.eclipse.uml2.uml.@NonNull Package> allAppliedProfilePackages = new HashSet<>();
+		for (org.eclipse.uml2.uml.Profile umlAppliedProfile : umlStereotypedPackage.getAllAppliedProfiles()) {
+			getAllAppliedProfilePackages(allAppliedProfilePackages, umlAppliedProfile);
+		}
+		return allAppliedProfilePackages;
+	}
+	private void getAllAppliedProfilePackages(@NonNull Set<org.eclipse.uml2.uml.Package> allAppliedProfilePackages, org.eclipse.uml2.uml.Package umlPackage) {
+		if (allAppliedProfilePackages.add(umlPackage)) {
+			for (org.eclipse.uml2.uml.Package umlNestedPackage : umlPackage.getNestedPackages()) {
+				getAllAppliedProfilePackages(allAppliedProfilePackages, umlNestedPackage);
+			}
+			for (org.eclipse.uml2.uml.Package umlImportedPackage : umlPackage.getImportedPackages()) {
+				getAllAppliedProfilePackages(allAppliedProfilePackages, umlImportedPackage);
+			}
+		}
+	}
+
 	/**
 	 * Return all the pivot properties with which asAssociationClass supports umlProperties in an order that
 	 * is positionally consistent with the order of umlProperties.
@@ -1081,21 +1099,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 	@Override
 	public @NonNull URI getURI() {
 		return ClassUtil.nonNullState(umlResource.getURI());
-	}
-
-	private void growAllAppliedProfiles(@NonNull Set<org.eclipse.uml2.uml.Profile> allProfiles, org.eclipse.uml2.uml.Profile umlProfile) {	// FIXME fixes Bug 521984
-		if (allProfiles.add(umlProfile)) {
-			for (org.eclipse.uml2.uml.Package umlNestedPackage : umlProfile.getNestedPackages()) {
-				if (umlNestedPackage instanceof org.eclipse.uml2.uml.Profile) {
-					growAllAppliedProfiles(allProfiles, (org.eclipse.uml2.uml.Profile)umlNestedPackage);
-				}
-			}
-			for (org.eclipse.uml2.uml.Package umlImportedPackage : umlProfile.getImportedPackages()) {
-				if (umlImportedPackage instanceof org.eclipse.uml2.uml.Profile) {
-					growAllAppliedProfiles(allProfiles, (org.eclipse.uml2.uml.Profile)umlImportedPackage);
-				}
-			}
-		}
 	}
 
 	protected @NonNull Model installDeclarations(@NonNull Resource asResource) {
@@ -1259,21 +1262,18 @@ public abstract class UML2AS extends AbstractExternal2AS
 		//
 		EPackage umlProfileEPackage = umlStereotypeEClass.getEPackage();
 		if (umlStereotypedPackage != null) {
-			Set<org.eclipse.uml2.uml.@NonNull Profile> allAppliedProfiles = new HashSet<>();
-			for (org.eclipse.uml2.uml.Profile umlAppliedProfile : umlStereotypedPackage.getAllAppliedProfiles()) {		// FIXME thi works around BUG 521984
-				growAllAppliedProfiles(allAppliedProfiles, umlAppliedProfile);
-			}
+			Set<org.eclipse.uml2.uml.@NonNull Package> allAppliedProfilePackages = getAllAppliedProfilePackages(umlStereotypedPackage);
 			String profileNsURI = umlProfileEPackage.getNsURI();
-			for (org.eclipse.uml2.uml.Profile umlProfile : allAppliedProfiles) {
-				if (profileNsURI.equals(umlProfile.getURI())) {
-					org.eclipse.uml2.uml.Stereotype umlStereotype = umlProfile.getOwnedStereotype(umlStereotypeEClass.getName());
+			for (org.eclipse.uml2.uml.Package umlPackage : allAppliedProfilePackages) {
+				if (profileNsURI.equals(umlPackage.getURI())) {
+					org.eclipse.uml2.uml.Stereotype umlStereotype = umlPackage.getOwnedStereotype(umlStereotypeEClass.getName());
 					return umlStereotype != null ? getCreated(Stereotype.class, umlStereotype) : null;
 				}
 			}
 			String profileName = umlProfileEPackage.getName();		// This is really only needed for a bad legacy test case
-			for (org.eclipse.uml2.uml.Profile umlProfile : allAppliedProfiles) {
-				if (profileName.equals(umlProfile.getName())) {
-					org.eclipse.uml2.uml.Stereotype umlStereotype = umlProfile.getOwnedStereotype(umlStereotypeEClass.getName());
+			for (org.eclipse.uml2.uml.Package umlPackage : allAppliedProfilePackages) {
+				if (profileName.equals(umlPackage.getName())) {
+					org.eclipse.uml2.uml.Stereotype umlStereotype = umlPackage.getOwnedStereotype(umlStereotypeEClass.getName());
 					return umlStereotype != null ? getCreated(Stereotype.class, umlStereotype) : null;
 				}
 			}
