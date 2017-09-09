@@ -88,6 +88,8 @@ import junit.framework.TestCase;
 @SuppressWarnings("null")
 public class LoadTests extends XtextTestCase
 {
+	protected static final @NonNull String @NonNull [] NO_MESSAGES = new @NonNull String[] {};
+
 	/*	public void checkMonikers(Resource resource) {
 		Map<String, NamedElementCS> sigMap = new HashMap<String, NamedElementCS>();
 		for (Iterator<EObject> it = resource.getAllContents(); it.hasNext(); ) {
@@ -266,19 +268,19 @@ public class LoadTests extends XtextTestCase
 		//		return xmiResource;
 	}
 
-	public Model doLoadUML(@NonNull OCL ocl, @NonNull URI inputURI, boolean ignoreNonExistence, boolean validateEmbeddedOCL, boolean validateCompleteOCL, @NonNull String @Nullable [] messages) throws IOException, ParserException {
-		return doLoadUML(ocl, inputURI, new AbstractLoadCallBack(ignoreNonExistence, validateCompleteOCL, validateEmbeddedOCL), messages);
+	public Model doLoadUML(@NonNull OCL ocl, @NonNull URI inputURI, boolean ignoreNonExistence, boolean validateEmbeddedOCL, @NonNull String @Nullable [] validateCompleteOCLMessages, @NonNull String @Nullable [] messages) throws IOException, ParserException {
+		return doLoadUML(ocl, inputURI, new AbstractLoadCallBack(ignoreNonExistence, validateCompleteOCLMessages, validateEmbeddedOCL), messages);
 	}
 
 	private static class AbstractLoadCallBack implements ILoadCallBack
 	{
 		private final boolean ignoreNonExistence;
-		private final boolean validateCompleteOCL;
+		private final @NonNull String @Nullable [] validateCompleteOCLMessages;
 		private final boolean validateEmbeddedOCL;
 
-		private AbstractLoadCallBack(boolean ignoreNonExistence, boolean validateCompleteOCL, boolean validateEmbeddedOCL) {
+		private AbstractLoadCallBack(boolean ignoreNonExistence, @NonNull String @Nullable [] validateCompleteOCLMessages, boolean validateEmbeddedOCL) {
 			this.ignoreNonExistence = ignoreNonExistence;
-			this.validateCompleteOCL = validateCompleteOCL;
+			this.validateCompleteOCLMessages = validateCompleteOCLMessages;
 			this.validateEmbeddedOCL = validateEmbeddedOCL;
 		}
 
@@ -292,12 +294,12 @@ public class LoadTests extends XtextTestCase
 
 		@Override
 		public void validateCompleteOCL(@NonNull OCL ocl, @NonNull BaseCSResource reloadCS) throws IOException {
-			if (validateCompleteOCL) {
+			if (validateCompleteOCLMessages != null) {
 				reloadCS.load(null);
 				assertNoResourceErrors("Load failed", reloadCS);
 				Resource reloadAS = reloadCS.getASResource();
 				assertNoUnresolvedProxies("Unresolved proxies", reloadAS);
-				assertNoValidationErrors("Reloading", reloadAS);
+				assertValidationDiagnostics("Reloading", reloadAS, validateCompleteOCLMessages);
 			}
 		}
 
@@ -1189,14 +1191,14 @@ public class LoadTests extends XtextTestCase
 		//		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/UML/20120801", UMLPackage.eINSTANCE);
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", XMI2UMLResource.Factory.INSTANCE);
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.xtext.tests/model/Internationalized.profile.uml", true);
-		doLoadUML(ocl, uri, false, false, false, null);
+		doLoadUML(ocl, uri, false, false, null, null);
 		ocl.dispose();
 	}
 
 	public void testLoad_NullFree_uml() throws IOException, InterruptedException, ParserException {
 		OCLInternal ocl = createOCL();
 		URI uri = getProjectFileURI("NullFree.uml");
-		Model model = doLoadUML(ocl, uri, false, true, true, null);
+		Model model = doLoadUML(ocl, uri, false, true, NO_MESSAGES, null);
 		org.eclipse.ocl.pivot.Package asPackage = model.getOwnedPackages().get(0);
 		org.eclipse.ocl.pivot.Class asInheritedNullFree = NameUtil.getNameable(asPackage.getOwnedClasses(), "InheritedNullFree");
 		org.eclipse.ocl.pivot.Class asNonNullFree = NameUtil.getNameable(asPackage.getOwnedClasses(), "NonNullFree");
@@ -1221,7 +1223,7 @@ public class LoadTests extends XtextTestCase
 		//		EPackage.Registry.INSTANCE.put("http://www.omg.org/spec/UML/20120801", UMLPackage.eINSTANCE);
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", XMI2UMLResource.Factory.INSTANCE);
 		URI uri = getProjectFileURI("StereotypeApplications.uml");
-		doLoadUML(ocl, uri, new AbstractLoadCallBack(false, false, false) {
+		doLoadUML(ocl, uri, new AbstractLoadCallBack(false, NO_MESSAGES, false) {
 			@Override
 			public void postLoad(@NonNull OCL ocl, @NonNull ASResource asResource) {
 				for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
