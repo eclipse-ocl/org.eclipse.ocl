@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -84,8 +85,8 @@ public class UMLOCLEValidator implements EValidator
 	{
 		private @NonNull Resource asResource;
 
-		public ASResourceProblems(@NonNull Resource asResource) {
-			super(asResource.getErrors().size() > 0 ? ERROR : WARNING, PivotMessages.Validation, 0, null, null);
+		public ASResourceProblems(@NonNull Resource asResource, @Nullable EObject umlElement) {
+			super(asResource.getErrors().size() > 0 ? ERROR : WARNING, PivotMessages.Validation, 0, null, umlElement != null ? new Object[] {umlElement} : null);
 			this.asResource = asResource;
 		}
 
@@ -277,7 +278,7 @@ public class UMLOCLEValidator implements EValidator
 		this.mayUseNewLines = mayUseNewLines;
 	}
 
-	private void propagateProblems(@NonNull DiagnosticChain diagnostics, @NonNull Resource asResource) {
+	private void propagateProblems(@NonNull DiagnosticChain diagnostics, @NonNull Resource asResource, @Nullable EObject umlElement) {
 		if (!(diagnostics instanceof Diagnostic)) {
 			return;
 		}
@@ -288,7 +289,7 @@ public class UMLOCLEValidator implements EValidator
 				}
 			}
 		}
-		diagnostics.add(new ASResourceProblems(asResource));
+		diagnostics.add(new ASResourceProblems(asResource, umlElement));
 	}
 
 	@Override
@@ -611,7 +612,7 @@ public class UMLOCLEValidator implements EValidator
 			}
 			Resource asResource = asSpecification.eResource();
 			if ((diagnostics != null) && ((asResource.getErrors().size() > 0) || (asResource.getWarnings().size() > 0))) {
-				propagateProblems(diagnostics, asResource);
+				propagateProblems(diagnostics, asResource, EcoreUtil.getRootContainer(opaqueElement));
 			}
 			ExpressionInOCL asQuery = metamodelManager.parseSpecification(asSpecification);
 			return validateSemantics(opaqueElement, asQuery, diagnostics, context);
