@@ -30,13 +30,13 @@ public final class OCLinEcoreASResourceFactory extends AbstractASResourceFactory
 
 	public static synchronized @NonNull OCLinEcoreASResourceFactory getInstance() {
 		if (INSTANCE == null) {
-//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.OCLINECORE_CONTENT_TYPE);
-//			if (asResourceRegistry != null) {
-//				INSTANCE = (OCLinEcoreASResourceFactory) asResourceRegistry.getASResourceFactory();		// Create the registered singleton
-//			}
-//			else {
-				INSTANCE = new OCLinEcoreASResourceFactory();											// Create our own singleton
-//			}
+			//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.OCLINECORE_CONTENT_TYPE);
+			//			if (asResourceRegistry != null) {
+			//				INSTANCE = (OCLinEcoreASResourceFactory) asResourceRegistry.getASResourceFactory();		// Create the registered singleton
+			//			}
+			//			else {
+			INSTANCE = new OCLinEcoreASResourceFactory();											// Create our own singleton
+			//			}
 			assert INSTANCE != null;
 			INSTANCE.install(PivotConstants.OCLINECORE_FILE_EXTENSION, null);
 		}
@@ -46,6 +46,14 @@ public final class OCLinEcoreASResourceFactory extends AbstractASResourceFactory
 
 	public OCLinEcoreASResourceFactory() {
 		super(ASResource.OCLINECORE_CONTENT_TYPE);
+	}
+
+	@Override
+	public @NonNull Resource createResource(URI uri) {
+		assert uri != null;
+		ASResource asResource = new OCLinEcoreASResourceImpl(uri, this);
+		configureResource(asResource);
+		return asResource;
 	}
 
 	@Override
@@ -61,7 +69,7 @@ public final class OCLinEcoreASResourceFactory extends AbstractASResourceFactory
 				String uri = ((Model)pivot).getExternalURI();
 				if (uri != null) {
 					if (uri.endsWith("oclinecore")) {
-						uri = uri.substring(0, uri.length()-10) + "ecore"; 
+						uri = uri.substring(0, uri.length()-10) + "ecore";
 					}
 					return URI.createURI(uri);
 				}
