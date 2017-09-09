@@ -52,20 +52,20 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 
 	public static synchronized @NonNull UMLASResourceFactory getInstance() {
 		if (INSTANCE == null) {
-//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.UML_CONTENT_TYPE);
-//			if (asResourceRegistry != null) {
-//				INSTANCE = (UMLASResourceFactory) asResourceRegistry.getASResourceFactory();	// Create the registered singleton
-//			}
-//			else {
-				INSTANCE = new UMLASResourceFactory();											// Create our own singleton
-//			}
+			//			ASResourceFactoryContribution asResourceRegistry = ASResourceFactoryRegistry.INSTANCE.get(ASResource.UML_CONTENT_TYPE);
+			//			if (asResourceRegistry != null) {
+			//				INSTANCE = (UMLASResourceFactory) asResourceRegistry.getASResourceFactory();	// Create the registered singleton
+			//			}
+			//			else {
+			INSTANCE = new UMLASResourceFactory();											// Create our own singleton
+			//			}
 			assert INSTANCE != null;
 			INSTANCE.install("uml", INSTANCE.getResourceClassName());
 		}
 		assert INSTANCE != null;
 		return INSTANCE;
 	}
-	
+
 	public UMLASResourceFactory() {
 		super(ASResource.UML_CONTENT_TYPE);
 	}
@@ -81,7 +81,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 		assert uri != null;
 		ASResource asResource = new UMLASResourceImpl(uri, this);
 		configureResource(asResource);
-	    return asResource;
+		return asResource;
 	}
 
 	@Override
@@ -209,7 +209,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 		}
 		return null;
 	}
-	
+
 	@Override
 	public @Nullable EReference getEReference(@NonNull ASResource asResource, @NonNull EObject eObject) {
 		UMLASResourceImpl umlResource = (UMLASResourceImpl) asResource;
@@ -300,7 +300,7 @@ public final class UMLASResourceFactory extends AbstractASResourceFactory
 	@Override
 	public @Nullable Element importFromResource(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource umlResource, @Nullable URI uri) throws ParserException {
 		UML2AS conversion = UML2AS.getAdapter(umlResource, environmentFactory);
-		conversion.setUMLURI(uri);
+		conversion.setUMLURI(uri != null ? uri.trimFragment() : null);
 		Model pivotModel = conversion.getASModel();
 		String uriFragment = uri != null ? uri.fragment() : null;
 		if (uriFragment == null) {
