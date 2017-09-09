@@ -18,9 +18,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Iteration;
@@ -33,7 +37,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -42,6 +45,7 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.ParameterCS;
+import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.completeoclcs.ClassifierContextDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
@@ -59,12 +63,10 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 {
 	public class OperationDeclScopeFilter implements ScopeFilter
 	{
-		protected final @Nullable Type sourceType;
-		private final @NonNull List<ParameterCS> csParameters;
+		protected final @NonNull OperationContextDeclCS csElement;
 
-		public OperationDeclScopeFilter(@Nullable Type sourceType, @NonNull List<ParameterCS> csParameters) {
-			this.sourceType = sourceType != null ? PivotUtilInternal.getType(sourceType) : null;		// FIXME redundant
-			this.csParameters = csParameters;
+		public OperationDeclScopeFilter(@NonNull OperationContextDeclCS csElement) {
+			this.csElement = csElement;
 		}
 
 		@Override
@@ -73,8 +75,31 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 				return false;
 			}
 			if (object instanceof Operation) {
+				Element owningElement = null;
+				EObject csContainer = csElement.eContainer();
+				List<PathElementCS> csPathElements = csElement.getOwnedPathName().getOwnedPathElements();
+				if (csPathElements.size() > 1) {
+					owningElement = csPathElements.get(csPathElements.size()-2).basicGetReferredElement();
+				} else if (csContainer instanceof ClassifierContextDeclCS) {
+					owningElement = ((ClassifierContextDeclCS)csContainer).getReferredClass();
+				}
+				if (!(owningElement instanceof Type)) {
+					return false;
+				}
+				CompleteModel completeModel = environmentView.getEnvironmentFactory().getCompleteModel();
+				CompleteClass owningCompleteClass = completeModel.getCompleteClass((Type) owningElement);
 				Operation candidateOperation = (Operation)object;
+				Type candidateClass = candidateOperation.getOwningClass();
+				if (candidateClass == null) {
+					return false;
+				}
+				CompleteClass candidateCompleteClass = completeModel.getCompleteClass(candidateClass);
+				if (candidateCompleteClass != owningCompleteClass) {
+					return false;
+				}
 				List<Parameter> candidateParameters = candidateOperation.getOwnedParameters();
+				List<ParameterCS> csParameters = csElement.getOwnedParameters();
+				assert csParameters != null;
 				int iMax = csParameters.size();
 				if (iMax != candidateParameters.size()) {
 					return false;
@@ -388,11 +413,9 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 
 	@Override
 	public Continuation<?> visitOperationContextDeclCS(@NonNull OperationContextDeclCS csElement) {
-		List<ParameterCS> csParameters = csElement.getOwnedParameters();
-		assert csParameters != null;
 		PathNameCS pathName = csElement.getOwnedPathName();
 		assert pathName != null;
-		CS2AS.setElementType(pathName, PivotPackage.Literals.OPERATION, csElement, new OperationDeclScopeFilter(null, csParameters));
+		CS2AS.setElementType(pathName, PivotPackage.Literals.OPERATION, csElement, new OperationDeclScopeFilter(csElement));
 		return null;
 	}
 
