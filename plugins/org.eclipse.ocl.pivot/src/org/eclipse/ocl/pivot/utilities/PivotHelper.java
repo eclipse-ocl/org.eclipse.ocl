@@ -102,6 +102,29 @@ public class PivotHelper
 		return asBoolean;
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	public @NonNull OCLExpression createCoercionCallExp(@NonNull OCLExpression asExpression, @NonNull Operation coercion) {
+		if (asExpression instanceof IntegerLiteralExp) {
+			IntegerLiteralExp asIntegerLiteralExp = (IntegerLiteralExp)asExpression;
+			Number integerSymbol = asIntegerLiteralExp.getIntegerSymbol();
+			if (integerSymbol.longValue() >= 0) {
+				org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
+				Operation asCoercion = NameUtil.getNameable(integerType.getOwnedOperations(), "toUnlimitedNatural");
+				if (coercion == asCoercion) {
+					return createUnlimitedNaturalLiteralExp(integerSymbol);
+				}
+			}
+		}
+		OperationCallExp asCoercionCallExp = PivotFactory.eINSTANCE.createOperationCallExp();
+		asCoercionCallExp.setOwnedSource(asExpression);
+		asCoercionCallExp.setReferredOperation(coercion);
+		asCoercionCallExp.setType(coercion.getType());
+		asCoercionCallExp.setIsRequired(coercion.isIsRequired());
+		return asCoercionCallExp;
+	}
+
 	public @NonNull CollectionItem createCollectionItem(@NonNull OCLExpression asItem) {
 		CollectionItem collectionItem = PivotFactory.eINSTANCE.createCollectionItem();
 		collectionItem.setOwnedItem(asItem);

@@ -58,7 +58,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -91,6 +90,7 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -268,16 +268,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				break;
 			}
 		}
-	}
-
-	protected @NonNull OperationCallExp createCoercionCallExp(@NonNull OCLExpression sourceExp, @NonNull Operation coercion) {
-		OperationCallExp asCoercionCallExp;
-		asCoercionCallExp = PivotFactory.eINSTANCE.createOperationCallExp();
-		asCoercionCallExp.setOwnedSource(sourceExp);
-		asCoercionCallExp.setReferredOperation(coercion);
-		asCoercionCallExp.setType(coercion.getType());
-		asCoercionCallExp.setIsRequired(coercion.isIsRequired());
-		return asCoercionCallExp;
 	}
 
 	protected ImplicitSourceTypeIterator createImplicitSourceTypeIterator(@NonNull ElementCS csElement) {
@@ -684,7 +674,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				}
 				if (asCoercion != null) {
 					operationCallExp.setOwnedSource(null);
-					OperationCallExp asCoercionCallExp = createCoercionCallExp(sourceExp, asCoercion);
+					OCLExpression asCoercionCallExp = new PivotHelper(environmentFactory).createCoercionCallExp(sourceExp, asCoercion);
 					operationCallExp.setOwnedSource(asCoercionCallExp);
 				}
 			}
@@ -1130,7 +1120,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						if (parameterType != null) {
 							Operation asCoercion = resolveCoercionFrom(argType, parameterType);
 							if (asCoercion != null) {
-								arg = createCoercionCallExp(arg, asCoercion);
+								arg = new PivotHelper(environmentFactory).createCoercionCallExp(arg, asCoercion);
 							}
 						}
 					}
@@ -1643,13 +1633,37 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if ((csCondition != null) && (csThen != null)) {
 			expression.setOwnedCondition(context.visitLeft2Right(OCLExpression.class, csCondition));
 			OCLExpression thenExpression = context.visitLeft2Right(OCLExpression.class, csThen);
-			expression.setOwnedThen(thenExpression);
-			expression.setOwnedElse(elseExpression);
 			Type thenType = thenExpression != null ? thenExpression.getType() : null;
 			Type elseType = elseExpression != null ? elseExpression.getType() : null;
+			Type commonType = null;
+			if ((thenType != null) && (elseType != null)) {
+				commonType = metamodelManager.getCommonType(thenType, TemplateParameterSubstitutions.EMPTY, elseType, TemplateParameterSubstitutions.EMPTY);
+				if ((commonType != thenType) && (commonType != elseType)) {
+					PrimitiveType integerType = standardLibrary.getIntegerType();
+					Operation asCoercion = NameUtil.getNameable(integerType.getOwnedOperations(), "toUnlimitedNatural");
+					if (asCoercion != null) {
+						PrimitiveType unlimitedNaturalType = standardLibrary.getUnlimitedNaturalType();
+						if (thenType.conformsTo(standardLibrary, unlimitedNaturalType)) {
+							if (elseType.conformsTo(standardLibrary, integerType)) {
+								assert elseExpression != null;
+								elseExpression = new PivotHelper(environmentFactory).createCoercionCallExp(elseExpression, asCoercion);
+								commonType = unlimitedNaturalType;
+							}
+						}
+						else if (elseType.conformsTo(standardLibrary, unlimitedNaturalType)) {
+							if (thenType.conformsTo(standardLibrary, integerType)) {
+								assert thenExpression != null;
+								thenExpression = new PivotHelper(environmentFactory).createCoercionCallExp(thenExpression, asCoercion);
+								commonType = unlimitedNaturalType;
+							}
+						}
+					}
+				}
+			}
+			expression.setOwnedThen(thenExpression);
+			expression.setOwnedElse(elseExpression);
 			Type thenTypeValue = thenExpression != null ? thenExpression.getTypeValue() : null;
 			Type elseTypeValue = elseExpression != null ? elseExpression.getTypeValue() : null;
-			Type commonType = (thenType != null) && (elseType != null) ? metamodelManager.getCommonType(thenType, TemplateParameterSubstitutions.EMPTY, elseType, TemplateParameterSubstitutions.EMPTY) : null;
 			Type commonTypeValue = (thenTypeValue != null) && (elseTypeValue != null) ? metamodelManager.getCommonType(thenTypeValue, TemplateParameterSubstitutions.EMPTY, elseTypeValue, TemplateParameterSubstitutions.EMPTY) : null;
 			boolean isRequired = ((thenExpression != null) && thenExpression.isIsRequired()) && ((elseExpression != null) && elseExpression.isIsRequired());
 			context.setType(expression, commonType, isRequired, commonTypeValue);
@@ -1818,7 +1832,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						if ((initType != null) && (variableType != null)) {
 							Operation asCoercion = resolveCoercionFrom(initType, variableType);
 							if (asCoercion != null) {
-								initExpression = createCoercionCallExp(initExpression, asCoercion);
+								initExpression = new PivotHelper(environmentFactory).createCoercionCallExp(initExpression, asCoercion);
 							}
 						}
 					}

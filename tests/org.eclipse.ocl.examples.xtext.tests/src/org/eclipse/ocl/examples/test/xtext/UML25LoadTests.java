@@ -193,10 +193,8 @@ public class UML25LoadTests extends LoadTests
 		URI uml_2_5 = URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/UML.xmi", true);
 		doLoadUML(ocl, uml_2_5, true, true, new @NonNull String[] {
 			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::Classification::Operation::returnResult() : Set(UML::Classification::Parameter)'", // needs ->asSet()
-			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::CommonStructure::MultiplicityElement::upperBound() : UnlimitedNatural[1]'", // FIXME Bug 522087 - needs oclAsType(UnlimitedNatural)
 			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::StructuredClassifiers::Association::endType() : Set(UML::CommonStructure::Type[+|1])'", // needs ->oclAsType(Set(uml::CommonStructure::Type[+|1]))
-			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::StructuredClassifiers::StructuredClassifier::part() : Set(UML::Classification::Property)'", // needs ->asSet()
-			"The 'Property::CompatibleDefaultExpression' constraint is violated for 'UML::Values::LiteralUnlimitedNatural::value'" // FIXME Bug 522087 - needs oclAsType(UnlimitedNatural)
+			"The 'Operation::CompatibleReturn' constraint is violated for 'UML::StructuredClassifiers::StructuredClassifier::part() : Set(UML::Classification::Property)'" // needs ->asSet()
 		}, null);		// FIXME BUG 419132 eliminate last argument; always true
 		ocl.dispose();
 	}

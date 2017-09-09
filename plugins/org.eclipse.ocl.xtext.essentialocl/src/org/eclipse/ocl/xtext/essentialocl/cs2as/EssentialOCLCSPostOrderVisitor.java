@@ -182,7 +182,7 @@ public class EssentialOCLCSPostOrderVisitor extends AbstractEssentialOCLCSPostOr
 	}
 
 	@Override
-	public final @Nullable Continuation<?> visitExpSpecificationCS(@NonNull ExpSpecificationCS csElement) {
+	public @Nullable Continuation<?> visitExpSpecificationCS(@NonNull ExpSpecificationCS csElement) {
 		if (!(csElement.eContainer() instanceof ConstraintCS)) {
 			return new ExpSpecificationCSCompletion(context, csElement);
 		}

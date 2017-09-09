@@ -426,6 +426,9 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 
 	@Override
 	public Continuation<?> visitPropertyContextDeclCS(@NonNull PropertyContextDeclCS csElement) {
+		PathNameCS pathName = csElement.getOwnedPathName();
+		assert pathName != null;
+		CS2AS.setElementType(pathName, PivotPackage.Literals.PROPERTY, csElement, null);
 		return null;
 	}
 }
