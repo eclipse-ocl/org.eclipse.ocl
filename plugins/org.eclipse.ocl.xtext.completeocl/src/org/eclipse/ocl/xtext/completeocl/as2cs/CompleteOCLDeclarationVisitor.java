@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -182,12 +183,12 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 
 	@Override
 	public ElementCS visitDataType(@NonNull DataType object) {
-		return visitType(object);
+		return visitClass(object);
 	}
 
 	@Override
 	public ElementCS visitEnumeration(org.eclipse.ocl.pivot.@NonNull Enumeration object) {
-		return visitType(object);
+		return visitClass(object);
 	}
 
 	@Override
@@ -260,6 +261,11 @@ public class CompleteOCLDeclarationVisitor extends EssentialOCLDeclarationVisito
 		ParameterCS csElement = context.refreshNamedElement(ParameterCS.class, BaseCSPackage.Literals.PARAMETER_CS, object);
 		csElement.setOwnedType(convertTypeRef(object));
 		return csElement;
+	}
+
+	@Override
+	public @Nullable ElementCS visitPrimitiveType(@NonNull PrimitiveType object) {
+		return visitClass(object);
 	}
 
 	@Override

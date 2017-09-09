@@ -414,10 +414,14 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	public @Nullable ElementCS visitEnumLiteralExp(@NonNull EnumLiteralExp asEnumLiteralExp) {
 		EnumerationLiteral asEnumLiteral = asEnumLiteralExp.getReferredLiteral();
 		if (asEnumLiteral != null) {
-			NameExpCS csNameExp = createNameExpCS(asEnumLiteral.getOwningEnumeration());
-			PathElementCS csPathElement = BaseCSFactory.eINSTANCE.createPathElementCS();
-			csPathElement.setReferredElement(asEnumLiteralExp.getReferredLiteral());
-			csNameExp.getOwnedPathName().getOwnedPathElements().add(csPathElement);
+			NameExpCS csNameExp = EssentialOCLCSFactory.eINSTANCE.createNameExpCS();
+			PathNameCS csPathName = BaseCSFactory.eINSTANCE.createPathNameCS();
+			csNameExp.setOwnedPathName(csPathName);
+			context.refreshPathName(csPathName, asEnumLiteral, null);
+			//			NameExpCS csNameExp = createNameExpCS(asEnumLiteral.getOwningEnumeration());
+			//			PathElementCS csPathElement = BaseCSFactory.eINSTANCE.createPathElementCS();
+			//			csPathElement.setReferredElement(asEnumLiteralExp.getReferredLiteral());
+			//			csNameExp.getOwnedPathName().getOwnedPathElements().add(csPathElement);
 			return csNameExp;
 		}
 		else {
@@ -426,6 +430,11 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			return csInvalidLiteralExp;
 		}
 	}
+	//	NameExpCS csNameExp = EssentialOCLCSFactory.eINSTANCE.createNameExpCS();
+	//	PathNameCS csPathName = BaseCSFactory.eINSTANCE.createPathNameCS();
+	//	csNameExp.setOwnedPathName(csPathName);
+	//	Type asType = getNonNullType(asTypeExp.getReferredType());
+	//	context.refreshPathName(csPathName, asType, null);
 
 	@Override
 	public ElementCS visitExpressionInOCL(@NonNull ExpressionInOCL object) {
