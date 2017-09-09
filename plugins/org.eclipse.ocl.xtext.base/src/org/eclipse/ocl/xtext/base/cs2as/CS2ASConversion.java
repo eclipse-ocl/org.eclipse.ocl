@@ -929,11 +929,14 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 	}
 
-	public void refreshContextVariable(@NonNull ExpressionInOCL pivotSpecification) {
+	public void refreshContextVariable(@NonNull ElementCS csElement, @NonNull ExpressionInOCL pivotSpecification) {
 		//		System.out.println(ClassUtil.debugSimpleName(pivotSpecification) + " " + pivotSpecification);
 		EObject eContainer = pivotSpecification.eContainer();
 		EStructuralFeature eContainingFeature = pivotSpecification.eContainingFeature();
-		if (eContainingFeature == PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION) {
+		if ((eContainer == null) || (eContainingFeature == null)) {
+			addDiagnostic(csElement, "No context container for: " + pivotSpecification);
+		}
+		else if (eContainingFeature == PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION) {
 			Constraint contextConstraint = (Constraint)eContainer;
 			eContainer = contextConstraint.eContainer();
 			eContainingFeature = contextConstraint.eContainingFeature();
@@ -964,35 +967,22 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
 				}
 			}
-			else if (eContainingFeature == null) {
-				logger.error("No context container for: " + pivotSpecification);
-			}
 			else {
-				logger.error("Unsupported refreshContextVariable for a constraint: " + eContainingFeature);
+				addDiagnostic(csElement, "Unsupported refreshContextVariable for a constraint: " + eContainingFeature);
 			}
 		}
 		else if (eContainingFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
 			Property contextProperty = (Property)eContainer;
-			if (contextProperty != null) {
-				setPropertyContext(pivotSpecification, contextProperty);
-				setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextProperty.getOwningClass(), null);
-			}
-			else {
-				setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
-			}
+			setPropertyContext(pivotSpecification, contextProperty);
+			setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextProperty.getOwningClass(), null);
 		}
 		else if (eContainingFeature == PivotPackage.Literals.OPERATION__BODY_EXPRESSION) {
 			Operation contextOperation = (Operation)eContainer;
-			if (contextOperation != null) {
-				setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
-				setOperationContext(pivotSpecification, contextOperation, null);
-			}
-			else {
-				setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
-			}
+			setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
+			setOperationContext(pivotSpecification, contextOperation, null);
 		}
 		else {
-			logger.error("Unsupported refreshContextVariable for a specification: " + eContainingFeature);
+			addDiagnostic(csElement, "Unsupported refreshContextVariable for a specification: " + eContainingFeature);
 		}
 	}
 
@@ -1230,7 +1220,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//		logger.trace("Specializing " + moniker); //$NON-NLS-1$
 		if ((unspecializedPivotElement == null) || unspecializedPivotElement.eIsProxy()) {
 			String moniker = csElement.toString();
-			logger.error("Nothing to specialize as " + moniker); //$NON-NLS-1$
+			addDiagnostic(csElement, "Nothing to specialize as " + moniker); //$NON-NLS-1$
 			return null;
 		}
 		//
