@@ -41,6 +41,10 @@ public class ModelAttribution extends AbstractAttribution
 					else if (namespace instanceof Model) {
 						environmentView.addAllPackages((Model)namespace);
 					}
+					else if (namespace instanceof org.eclipse.ocl.pivot.Package) {
+						environmentView.addAllPackages((org.eclipse.ocl.pivot.Package)namespace);
+						environmentView.addAllTypes((org.eclipse.ocl.pivot.Package)namespace);
+					}
 					else {
 						environmentView.addNamedElement(namespace);
 					}
@@ -54,9 +58,9 @@ public class ModelAttribution extends AbstractAttribution
 						Resource eResource = targetModel.eResource();
 						if (eResource != null) {
 							URI baseURI = eResource.getURI();
-				           	if (baseURI != null) {
-				           		environmentView.addImportedElement(baseURI);
-				           	}
+							if (baseURI != null) {
+								environmentView.addImportedElement(baseURI);
+							}
 						}
 					}
 				}
