@@ -72,7 +72,7 @@ import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.xtext.completeocl.as2cs.CompleteOCLSplitter;
+import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.eclipse.ocl.xtext.oclstdlib.scoping.JavaClassScope;
@@ -423,25 +423,38 @@ public class LoadTests extends XtextTestCase
 			//
 			//	Split off any embedded OCL to a separate file
 			//
-			ASResource oclResource = CompleteOCLSplitter.separate(environmentFactory, allResources.get(0));
+			ASResource oclResource = (ASResource)allResources.get(0);//CompleteOCLSplitter.separate(environmentFactory, allResources.get(0));
 			if (oclResource != null) {
 				URI xtextURI = oclURI;// != null ? URI.createPlatformResourceURI(oclURI, true) : uri.trimFileExtension().appendFileExtension("ocl");
 				ResourceSet csResourceSet = ocl.getResourceSet();
 				environmentFactory.adapt(csResourceSet);
+				boolean hasOCLcontent = false;
 				BaseCSResource xtextResource = (BaseCSResource) csResourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 				if (xtextResource != null) {
 					xtextResource.updateFrom(oclResource, environmentFactory);
-					xtextResource.save(null);
+					List<@NonNull EObject> csContents = xtextResource.getContents();
+					if (csContents.size() > 0) {
+						EObject csRoot = csContents.get(0);
+						if (csRoot instanceof CompleteOCLDocumentCS) {
+							CompleteOCLDocumentCS csDocument = (CompleteOCLDocumentCS)csRoot;
+							if (csDocument.getOwnedPackages().size() > 0) {
+								hasOCLcontent = true;
+								xtextResource.save(null);
+							}
+						}
+					}
 				}
 				//
 				//	Check that the split off file is loadable
 				//
-				OCL ocl2 = createOCL();
-				ResourceSet resourceSet2 = ocl2.getResourceSet();
-				BaseCSResource reloadCS = (BaseCSResource) resourceSet2.createResource(oclURI);
-				ocl2.getEnvironmentFactory().adapt(reloadCS);
-				loadCallBacks.validateCompleteOCL(ocl2, reloadCS);
-				ocl2.dispose();
+				if (hasOCLcontent) {
+					OCL ocl2 = createOCL();
+					ResourceSet resourceSet2 = ocl2.getResourceSet();
+					BaseCSResource reloadCS = (BaseCSResource) resourceSet2.createResource(oclURI);
+					ocl2.getEnvironmentFactory().adapt(reloadCS);
+					loadCallBacks.validateCompleteOCL(ocl2, reloadCS);
+					ocl2.dispose();
+				}
 			}
 			return pivotModel;
 		}
