@@ -20,10 +20,12 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -76,6 +78,34 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class EnvironmentView
 {
+	private static class DiagnosticWrappedException extends WrappedException implements Resource.Diagnostic
+	{
+		private static final long serialVersionUID = 1L;
+
+		public DiagnosticWrappedException(String message, Exception exception)
+		{
+			super(message, exception);
+		}
+
+		@Override
+		public String getLocation()
+		{
+			return "unknown";			// FIXME
+		}
+
+		@Override
+		public int getColumn()
+		{
+			return 0;
+		}
+
+		@Override
+		public int getLine()
+		{
+			return 0;
+		}
+	}
+
 	public static abstract class Disambiguator</*@NonNull*/ T> implements Comparator<T>
 	{
 		@Override
@@ -779,7 +809,10 @@ public class EnvironmentView
 			throw e;
 		}
 		catch (Exception e) {
-			logger.warn("Lookup of '" + name + "' failed", e);
+			EObject target = scopeView.getTarget();
+			assert target != null;
+			target.eResource().getErrors().add(new DiagnosticWrappedException("Lookup of '" + name + "' failed", e));
+			//			logger.warn("Lookup of '" + name + "' failed", e);
 		}
 		return resolveDuplicates();
 	}

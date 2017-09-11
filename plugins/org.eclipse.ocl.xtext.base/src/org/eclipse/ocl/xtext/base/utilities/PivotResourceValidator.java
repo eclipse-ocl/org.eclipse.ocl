@@ -46,8 +46,8 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 {
 	public static class ValidationDiagnostic extends BasicDiagnostic implements Resource.Diagnostic
 	{
-		private ValidationDiagnostic() {
-			super(WARNING, EObjectValidator.DIAGNOSTIC_SOURCE, 0, "", null);
+		private ValidationDiagnostic(String message) {
+			super(WARNING, EObjectValidator.DIAGNOSTIC_SOURCE, 0, message, null);
 		}
 
 		@Override
@@ -81,7 +81,7 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 		//		Object objectLabel = diagnostician.getObjectLabel(pivotObject);
 		//		return new ValidationDiagnostic(EcorePlugin.INSTANCE.getString("_UI_DiagnosticRoot_diagnostic",
 		//			new Object[] { objectLabel }), new Object[] { pivotObject });
-		return new ValidationDiagnostic();
+		return new ValidationDiagnostic("");
 	}
 
 	protected void issueFromDiagnostics(IAcceptor<Issue> acceptor, ValidationDiagnostic diagnostic) {
@@ -123,7 +123,8 @@ public class PivotResourceValidator extends ResourceValidatorImpl
 				}
 			} catch (RuntimeException e) {
 				if (!monitor.isCanceled()) {
-					log.error(e.getMessage(), e);
+					pResource.getErrors().add(new ValidationDiagnostic(e.getMessage()));
+					//					log.error(e.getMessage(), e);
 				}
 			}
 		}

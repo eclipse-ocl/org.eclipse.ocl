@@ -1940,7 +1940,7 @@ public class StandaloneProjectMap implements ProjectManager
 				resourceDescriptor.setEcoreModel(ecorePackages, nsURI2packageDescriptor);
 			}
 			catch (Exception e) {
-				logger.warn("Failed lo read " + genModelURI, e);
+				logger.warn("Failed to read " + genModelURI, e);
 			}
 		}
 

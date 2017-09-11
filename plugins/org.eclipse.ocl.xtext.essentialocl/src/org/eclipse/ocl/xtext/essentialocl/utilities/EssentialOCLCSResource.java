@@ -59,6 +59,7 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
 import org.eclipse.ocl.xtext.base.cs2as.LibraryDiagnostic;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.CS2ASLinker;
 import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.base.utilities.ExtendedParserContext;
@@ -347,7 +348,12 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 				}
 			}
 		}
-		super.doLinking();
+		try {
+			super.doLinking();
+		}
+		catch (Exception e) {
+			getErrors().add(new CS2ASLinker.DiagnosticWrappedException(e));
+		}
 		//		CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLinking end", false, -1);
 	}
 
@@ -357,6 +363,12 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		try {
 			super.doLoad(inputStream, options);
 		}
+		catch (IOException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new Resource.IOWrappedException(e);
+		}
 		finally {
 			//			CS2AS.printDiagnostic(getClass().getSimpleName() + ".doLoad end", true, -1);
 		}
@@ -364,11 +376,19 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public void doSave(final OutputStream outputStream, Map<?, ?> options) throws IOException {	// FIXME Workaround Bug 439440
-		if ((options != null) && "\n".equals(options.get(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER)) && (outputStream != null)) {
-			super.doSave(new UnixOutputStream(outputStream), options);
+		try {
+			if ((options != null) && "\n".equals(options.get(DerivedConstants.RESOURCE_OPTION_LINE_DELIMITER)) && (outputStream != null)) {
+				super.doSave(new UnixOutputStream(outputStream), options);
+			}
+			else {
+				super.doSave(outputStream, options);
+			}
 		}
-		else {
-			super.doSave(outputStream, options);
+		catch (IOException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new Resource.IOWrappedException(e);
 		}
 	}
 
