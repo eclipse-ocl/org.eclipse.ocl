@@ -518,10 +518,24 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	@Override
 	public @Nullable ElementCS visitIteratorExp(@NonNull IteratorExp asIteratorExp) {
 		OCLExpression body = asIteratorExp.getOwnedBody();
-		if (asIteratorExp.isIsImplicit()) {					// Flatten implicit collect/oclAsSet
-			ElementCS csExp = body.accept(this);
-			if (csExp instanceof ExpCS) {
-				return createNavigationOperatorCS(asIteratorExp, (ExpCS) csExp, true);
+		if (asIteratorExp.isIsImplicit() && (body instanceof CallExp)) {	// Flatten implicit collect/oclAsSet
+			CallExp asCallExp = (CallExp)body;
+			OCLExpression asBodySource = asCallExp.getOwnedSource();
+			if (asBodySource instanceof VariableExp) {
+				VariableExp sourceVariableExp = (VariableExp)asBodySource;
+				if (sourceVariableExp.getReferredVariable() == asIteratorExp.getOwnedIterators().get(0)) {
+					if (body instanceof NavigationCallExp) {
+						NavigationCallExp asNavigationCallExp = (NavigationCallExp)body;
+						NameExpCS csNameExp = createNameExpCS(PivotUtil.getReferredProperty(asNavigationCallExp));
+						return createNavigationOperatorCS(asIteratorExp, csNameExp, true);
+					}
+					else {
+						ElementCS csExp = body.accept(this);
+						if (csExp instanceof ExpCS) {
+							return createNavigationOperatorCS(asIteratorExp, (ExpCS) csExp, true);
+						}
+					}
+				}
 			}
 		}
 		Operation asIteration = getNonNullOperation(asIteratorExp.getReferredIteration());
