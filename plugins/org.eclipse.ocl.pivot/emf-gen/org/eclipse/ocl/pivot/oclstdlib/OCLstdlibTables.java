@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
@@ -755,18 +756,20 @@ public class OCLstdlibTables
 			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclAsType = new ExecutorOperation("oclAsType", Parameters._OclInvalid_oclAsType_TT, Types._OclInvalid,
 			7, TypeUtil.createTemplateParameters(TypeParameters.__OclInvalid__oclAsType_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
+		public static final @NonNull ExecutorOperation _OclInvalid__oclBadOperation = new ExecutorOperation("oclBadOperation", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
+			8, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclIsInvalid = new ExecutorOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
+			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclIsKindOf = new ExecutorOperation("oclIsKindOf", Parameters._OclType, Types._OclInvalid,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
+			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclIsTypeOf = new ExecutorOperation("oclIsTypeOf", Parameters._OclType, Types._OclInvalid,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
+			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclIsUndefined = new ExecutorOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
+			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__oclType = new ExecutorOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
+			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
 		public static final @NonNull ExecutorOperation _OclInvalid__toString = new ExecutorOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclInvalid,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull ExecutorOperation _OclMessage__hasReturned = new ExecutorOperation("hasReturned", TypeUtil.EMPTY_PARAMETER_TYPES, Types._OclMessage,
 			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
@@ -1093,10 +1096,14 @@ public class OCLstdlibTables
 		public static final @NonNull ExecutorProperty _Map__keyType = new ExecutorPropertyWithImplementation("keyType", Types._Map, 0, org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _Map__valueType = new ExecutorPropertyWithImplementation("valueType", Types._Map, 1, org.eclipse.ocl.pivot.library.map.MapValueTypeProperty.INSTANCE);
 
+		public static final @NonNull ExecutorProperty _OclAny__OclInvalid__oclBadProperty = new ExecutorPropertyWithImplementation("OclInvalid", Types._OclAny, 0, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_INVALID__OCL_BAD_PROPERTY));
+
 		public static final @NonNull ExecutorProperty _OclElement__oclContainer = new ExecutorPropertyWithImplementation("oclContainer", Types._OclElement, 0, org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _OclElement__oclContents = new ExecutorPropertyWithImplementation("oclContents", Types._OclElement, 1, org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
 		public static final @NonNull ExecutorProperty _OclElement__OclElement__oclContainer = new ExecutorPropertyWithImplementation("OclElement", Types._OclElement, 2, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER));
 		public static final @NonNull ExecutorProperty _OclElement__OclElement__oclContents = new ExecutorPropertyWithImplementation("OclElement", Types._OclElement, 3, new EcoreLibraryOppositeProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTENTS));
+
+		public static final @NonNull ExecutorProperty _OclInvalid__oclBadProperty = new EcoreExecutorProperty(OCLstdlibPackage.Literals.OCL_INVALID__OCL_BAD_PROPERTY, Types._OclInvalid, 0);
 		static {
 			Init.initEnd();
 		}
@@ -1765,6 +1772,7 @@ public class OCLstdlibTables
 			OCLstdlibTables.Operations._OclInvalid__allInstances /* allInstances() */,
 			OCLstdlibTables.Operations._OclInvalid__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclInvalid__oclAsType /* oclAsType(TT)(TT[?]) */,
+			OCLstdlibTables.Operations._OclInvalid__oclBadOperation /* oclBadOperation() */,
 			OCLstdlibTables.Operations._OclInvalid__oclIsInvalid /* oclIsInvalid() */,
 			OCLstdlibTables.Operations._OclInvalid__oclIsKindOf /* oclIsKindOf(OclType[?]) */,
 			OCLstdlibTables.Operations._OclInvalid__oclIsTypeOf /* oclIsTypeOf(OclType[?]) */,
@@ -2731,7 +2739,9 @@ public class OCLstdlibTables
 			OCLstdlibTables.Properties._OclElement__oclContents
 		};
 
-		private static final @NonNull ExecutorProperty @NonNull [] _OclInvalid = {};
+		private static final @NonNull ExecutorProperty @NonNull [] _OclInvalid = {
+			OCLstdlibTables.Properties._OclInvalid__oclBadProperty
+		};
 
 		private static final @NonNull ExecutorProperty @NonNull [] _OclLambda = {};
 

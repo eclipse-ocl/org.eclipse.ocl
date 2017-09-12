@@ -610,13 +610,22 @@ public class OCLstdlibPackage extends EPackageImpl {
 	public static final int OCL_VOID_FEATURE_COUNT = OCL_ANY_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Ocl Bad Property</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OCL_INVALID__OCL_BAD_PROPERTY = OCL_VOID_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Ocl Invalid</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	public static final int OCL_INVALID_FEATURE_COUNT = OCL_VOID_FEATURE_COUNT + 0;
+	public static final int OCL_INVALID_FEATURE_COUNT = OCL_VOID_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Ocl Lambda</em>' class.
@@ -1162,6 +1171,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
+	 * Returns the meta object for the reference '{@link java.lang.Object#getOclBadProperty <em>Ocl Bad Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Ocl Bad Property</em>'.
+	 * @see java.lang.Object#getOclBadProperty()
+	 * @see #getOclInvalid()
+	 * @generated
+	 */
+	public EReference getOclInvalid_OclBadProperty() {
+		return (EReference)oclInvalidEClass.getEStructuralFeatures().get(0);
+	}
+
+
+	/**
 	 * Returns the meta object for class '{@link java.lang.Object <em>Ocl Lambda</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1558,6 +1581,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 		oclEnumerationEClass = createEClass(OCL_ENUMERATION);
 
 		oclInvalidEClass = createEClass(OCL_INVALID);
+		createEReference(oclInvalidEClass, OCL_INVALID__OCL_BAD_PROPERTY);
 
 		oclLambdaEClass = createEClass(OCL_LAMBDA);
 
@@ -1700,6 +1724,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 		initEClass(oclEnumerationEClass, Object.class, "OclEnumeration", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(oclInvalidEClass, Object.class, "OclInvalid", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getOclInvalid_OclBadProperty(), this.getOclAny(), null, "oclBadProperty", null, 0, 1, Object.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(oclLambdaEClass, Object.class, "OclLambda", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -1753,10 +1778,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 	protected void createASLibraryAnnotations() {
 		String source = "http://www.eclipse.org/OCL/ASLibrary"; //$NON-NLS-1$
 		addAnnotation
-		  (this,
-		   source,
-		   new String[] {
-		   });
+		(this,
+			source,
+			new String[] {
+		});
 	}
 
 	/**
@@ -1839,6 +1864,15 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EClass OCL_INVALID = eINSTANCE.getOclInvalid();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Bad Property</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * @since 1.4
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference OCL_INVALID__OCL_BAD_PROPERTY = eINSTANCE.getOclInvalid_OclBadProperty();
 
 		/**
 		 * The meta object literal for the '{@link java.lang.Object <em>Ocl Lambda</em>}' class.

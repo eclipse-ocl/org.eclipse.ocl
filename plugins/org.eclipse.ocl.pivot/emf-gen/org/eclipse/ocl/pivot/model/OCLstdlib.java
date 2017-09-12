@@ -366,6 +366,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull BagType _Bag_Map_V_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclElement = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclEnumeration = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_OclInvalid = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Set_collectNested_V_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Set_collect_V_NullFree = createBagType(_Bag_Bag_T);
 		private final @NonNull CollectionType _Collection_Integer = createCollectionType(_Collection_Collection_T);
@@ -397,6 +398,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_OclAny = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclElement = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclEnumeration = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OclInvalid = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclSelf = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OrderedCollection_T_NullFree = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OrderedSet_collectNested_V = createCollectionType(_Collection_Collection_T);
@@ -663,6 +665,9 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type = _Bag_OclEnumeration);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_OclEnumeration);
+			ownedClasses.add(type = _Bag_OclInvalid);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_OclInvalid);
 			ownedClasses.add(type = _Bag_Set_collectNested_V_NullFree);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -768,6 +773,9 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_OclEnumeration);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type = _Collection_OclInvalid);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type = _Collection_OclSelf);
@@ -1469,6 +1477,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclInvalid_implies = createOperation("implies", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation", org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid_oclAsSet = createOperation("oclAsSet", _Set_OclSelf_NullFree, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid_oclAsType = createOperation("oclAsType", tp_OclInvalid_oclAsType_TT, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE, tp_OclInvalid_oclAsType_TT);
+		private final @NonNull Operation op_OclInvalid_oclBadOperation = createOperation("oclBadOperation", _OclAny, null, null);
 		private final @NonNull Operation op_OclInvalid_oclIsInvalid = createOperation("oclIsInvalid", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid_oclIsKindOf = createOperation("oclIsKindOf", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid_oclIsTypeOf = createOperation("oclIsTypeOf", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
@@ -2068,6 +2077,8 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("type", tp_OclInvalid_oclAsType_TT, false));
 			parameter.setIsTypeof(true);
+			ownedOperations.add(operation = op_OclInvalid_oclBadOperation);
+			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_OclInvalid_oclIsInvalid);
 			operation.setIsValidating(true);
 			ownedOperations.add(operation = op_OclInvalid_oclIsKindOf);
@@ -2599,11 +2610,13 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Property pr_EnumerationLiteral_OclEnumeration_allLiterals = createProperty("OclEnumeration", _Bag_OclEnumeration);
 		private final @NonNull Property pr_Map_keyType = createProperty("keyType", tp_Map_K);
 		private final @NonNull Property pr_Map_valueType = createProperty("valueType", tp_Map_V);
+		private final @NonNull Property pr_OclAny_OclInvalid_oclBadProperty = createProperty("OclInvalid", _Bag_OclInvalid);
 		private final @NonNull Property pr_OclElement_oclContainer = createProperty("oclContainer", _OclElement);
 		private final @NonNull Property pr_OclElement_oclContents = createProperty("oclContents", _Set_OclElement_NullFree);
 		private final @NonNull Property pr_OclElement_OclElement_oclContainer = createProperty("OclElement", _Bag_OclElement);
 		private final @NonNull Property pr_OclElement_OclElement_oclContents = createProperty("OclElement", _Bag_OclElement);
 		private final @NonNull Property pr_OclEnumeration_allLiterals = createProperty("allLiterals", _OrderedSet_EnumerationLiteral_NullFree);
+		private final @NonNull Property pr_OclInvalid_oclBadProperty = createProperty("oclBadProperty", _OclAny);
 
 		private void installProperties() {
 			List<Property> ownedProperties;
@@ -2658,6 +2671,12 @@ public class OCLstdlib extends ASResourceImpl
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.map.MapValueTypeProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.map.MapValueTypeProperty.INSTANCE);
 
+			ownedProperties = _OclAny.getOwnedProperties();
+			ownedProperties.add(property = pr_OclAny_OclInvalid_oclBadProperty);
+			property.setIsImplicit(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_OclInvalid_oclBadProperty);
+
 			ownedProperties = _OclElement.getOwnedProperties();
 			ownedProperties.add(property = pr_OclElement_oclContainer);
 			property.setIsRequired(false);
@@ -2686,6 +2705,12 @@ public class OCLstdlib extends ASResourceImpl
 			property.setOpposite(pr_EnumerationLiteral_OclEnumeration_allLiterals);
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.enumeration.EnumerationOwnedLiteralProperty.INSTANCE);
+
+			ownedProperties = _OclInvalid.getOwnedProperties();
+			ownedProperties.add(property = pr_OclInvalid_oclBadProperty);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_OclAny_OclInvalid_oclBadProperty);
 		}
 
 		private void installTemplateBindings() {
@@ -2699,6 +2724,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Bag_Map_V_NullFree, tp_Map_V);
 			addBinding(_Bag_OclElement, _OclElement);
 			addBinding(_Bag_OclEnumeration, _OclEnumeration);
+			addBinding(_Bag_OclInvalid, _OclInvalid);
 			addBinding(_Bag_Set_collectNested_V_NullFree, tp_Set_collectNested_V);
 			addBinding(_Bag_Set_collect_V_NullFree, tp_Set_collect_V);
 			addBinding(_Collection_Bag_T, tp_Bag_T);
@@ -2728,6 +2754,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Collection_OclAny_NullFree, _OclAny);
 			addBinding(_Collection_OclElement, _OclElement);
 			addBinding(_Collection_OclEnumeration, _OclEnumeration);
+			addBinding(_Collection_OclInvalid, _OclInvalid);
 			addBinding(_Collection_OclSelf, _OclSelf);
 			addBinding(_Collection_OrderedCollection_T_NullFree, tp_OrderedCollection_T);
 			addBinding(_Collection_OrderedSet_T, tp_OrderedSet_T);
@@ -3116,6 +3143,8 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_OclInvalid__lt__gt_, "Returns oclText[invalid].");
 			installComment(op_OclInvalid__eq_, "Returns oclText[invalid].");
 			installComment(op_OclInvalid_allInstances, "Returns oclText[invalid].");
+			installComment(op_OclInvalid_oclBadOperation, "An oclBadOperation may be used as a placeholder in an unsuccessfully created OCLExpression.");
+			installComment(pr_OclInvalid_oclBadProperty, "An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression.");
 			installComment(op_OclInvalid_toString, "Returns \'invalid\'.");
 			installComment(_OclLambda, "The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda\ntherefore apply to all lambda expressions.");
 			installComment(_OclMessage, "OclMessage\nThis sub clause contains the definition of the standard type OclMessage.\nAs defined in this sub clause, each ocl message type is actually a template type with one parameter.\n\u2018T\u2019 denotes the parameter.\nA concrete ocl message type is created by substituting an operation or signal for the T.\n\nThe predefined type OclMessage is an instance of MessageType.\nEvery OclMessage is fully determined by either the operation, or signal given as parameter.\nNote that there is conceptually an undefined (infinite) number of these types,\nas each is determined by a different operation or signal.\nThese types are unnamed. Every type has as attributes the name of the operation or signal,\nand either all formal parameters of the operation, or all attributes of the signal.\nOclMessage is itself an instance of the metatype MessageType.\n\nOclMessage has a number of predefined operations, as shown in the OCL Standard Library.");

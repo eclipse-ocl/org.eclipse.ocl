@@ -73,7 +73,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="OclEnumeration" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclAny"/>
   <eClassifiers xsi:type="ecore:EClass" name="OclInvalid" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclVoid"/>
+      abstract="true" interface="true" eSuperTypes="#//OclVoid">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oclBadProperty" eType="#//OclAny">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclLambda" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclAny"/>
   <eClassifiers xsi:type="ecore:EClass" name="OclMessage" instanceClassName="java.lang.Object"

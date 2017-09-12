@@ -1007,6 +1007,16 @@ abstract type OclInvalid : InvalidType conformsTo OclVoid {
 	Returns 'invalid'.
 	*/
 	operation toString() : String[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation';
+	
+	/**
+	 * An oclBadOperation may be used as a placeholder in an unsuccessfully created OCLExpression.
+	 */
+	operation oclBadOperation() : OclAny;
+	
+	/**
+	 * An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression.
+	 */
+	property oclBadProperty : OclAny;
 }
 
 /**

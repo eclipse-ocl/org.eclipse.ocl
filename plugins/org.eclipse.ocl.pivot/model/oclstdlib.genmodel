@@ -43,7 +43,9 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//OclElement/oclContents"/>
     </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclEnumeration"/>
-    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclInvalid"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclInvalid">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//OclInvalid/oclBadProperty"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclLambda"/>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclMessage"/>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclSelf"/>

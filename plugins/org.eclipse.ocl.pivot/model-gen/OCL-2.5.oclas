@@ -1125,6 +1125,7 @@
           type="#AlwVZ">
         <ownedComments body="Returns a string representation of oclText[self]."/>
       </ownedOperations>
+      <ownedProperties xmi:id="c8rKW" isImplicit="true" name="OclInvalid" opposite="#QSjNW" type="#4eSgX"/>
     </ownedClasses>
     <ownedClasses xmi:id="BEwMu" isAbstract="true" name="OclComparable" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -1297,6 +1298,12 @@
           type="#AlwVZ">
         <ownedComments body="Returns 'invalid'."/>
       </ownedOperations>
+      <ownedOperations xmi:id="FGLX2" isRequired="false" name="oclBadOperation" type="#jbMkR">
+        <ownedComments body="An oclBadOperation may be used as a placeholder in an unsuccessfully created OCLExpression."/>
+      </ownedOperations>
+      <ownedProperties xmi:id="QSjNW" isRequired="false" name="oclBadProperty" opposite="#c8rKW" type="#jbMkR">
+        <ownedComments body="An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression."/>
+      </ownedProperties>
     </ownedClasses>
     <ownedClasses xmi:id="ufpqK" isAbstract="true" name="OclLambda" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -2263,6 +2270,11 @@
         <ownedSubstitutions actual="#+8+by" formal="#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="4eSgX" name="Bag" superClasses="#O66hm">
+      <ownedBindings>
+        <ownedSubstitutions actual="#urQRp" formal="#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="ZxUl9" isNullFree="true" name="Bag" superClasses="#qN9mM">
       <ownedBindings>
         <ownedSubstitutions actual="#qs59R" formal="#k2OA6"/>
@@ -2356,6 +2368,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="e5QcW" name="Collection" superClasses="#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#+8+by" formal="#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="O66hm" name="Collection" superClasses="#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#urQRp" formal="#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Lrp5N" name="Collection" superClasses="#jbMkR">
