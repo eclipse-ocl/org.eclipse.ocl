@@ -17,12 +17,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
+import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
+import org.eclipse.ocl.xtext.basecs.RootCS;
 
 public class PathElementCSAttribution extends AbstractAttribution
 {
@@ -47,12 +50,34 @@ public class PathElementCSAttribution extends AbstractAttribution
 			PathNameCS csPathName = csPathElement.getOwningPathName();
 			List<PathElementCS> path = csPathName.getOwnedPathElements();
 			int index = path.indexOf(csPathElement);
-			boolean lastElement = index >= path.size()-1;
+			int indexes = path.size();
+			boolean lastElement = index >= indexes-1;
 			environmentView.setIsQualifier(!lastElement);
 			if (lastElement) {			// Last element may have a scope filter
 				scopeFilter = csPathName.getScopeFilter();
 				if (scopeFilter != null) {
 					environmentView.addFilter(scopeFilter);
+				}
+			}
+			if ((index == 0) && (1 < indexes)) {				// First path element may be an import alias
+				for (EObject eObject = csPathElement; (eObject = eObject.eContainer()) != null; ) {
+					if (eObject instanceof ImportCS) {
+						break;
+					}
+					if (eObject instanceof RootCS) {
+						for (ImportCS csImport : ((RootCS)eObject).getOwnedImports()) {
+							String aliasName = csImport.getName();
+							if (aliasName != null) {
+								Namespace asNamespace = csImport.getReferredNamespace();
+								if ((asNamespace != null) && !asNamespace.eIsProxy()) {
+									environmentView.addElement(aliasName, asNamespace);
+								}
+							}
+						}
+					}
+				}
+				if (environmentView.hasFinalResult()) {			// If an alias was found
+					return null;
 				}
 			}
 			if (index <= 0) {						// First path element is resolved in parent's parent scope
@@ -61,7 +86,7 @@ public class PathElementCSAttribution extends AbstractAttribution
 			else {									// Subsequent elements in previous scope
 				Element parent = path.get(index-1).getReferredElement();
 				if ((parent != null) && !parent.eIsProxy()) {
-//					environmentView.computeLookups(parent, null);
+					//					environmentView.computeLookups(parent, null);
 					environmentView.computeQualifiedLookups(parent);
 				}
 			}
