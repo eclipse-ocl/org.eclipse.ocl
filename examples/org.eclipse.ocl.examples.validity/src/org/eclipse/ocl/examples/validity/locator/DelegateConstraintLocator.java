@@ -85,10 +85,13 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 		assert validatableNode != null;
 		return validatableNode.getConstrainedObject();
 	}
-	
+
 	@Override
 	public @Nullable Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> getConstraints(@NonNull ValidityModel validityModel,
 			@NonNull EPackage ePackage, @NonNull Set<@NonNull Resource> resources, @NonNull Monitor monitor) {
+		if (ePackage.eContainer() instanceof EAnnotation) {			// Applied UML Profiles are UML not Ecore constraints
+			return null;
+		}
 		Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> map = null;
 		for (@SuppressWarnings("null")@NonNull EClassifier eClassifier : ePackage.getEClassifiers()) {
 			if (monitor.isCanceled()) {
@@ -211,9 +214,9 @@ public class DelegateConstraintLocator extends AbstractPivotConstraintLocator
 					org.eclipse.ocl.pivot.Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
 					EClassifier classifier = primaryType != null ?  (EClassifier)primaryType.getESObject() : null;
 					return classifier != null ? classifier.getName() : "??";
-//								return ClassUtil.getLabel(classifier, object, context);
+					//								return ClassUtil.getLabel(classifier, object, context);
 				}
-				
+
 			};
 			Diagnostic diagnostic = constraintEvaluator.evaluate(evaluationVisitor);
 			result.setDiagnostic(diagnostic);
