@@ -134,6 +134,9 @@ public abstract class LUSSIDs
 				EReference f1 = child1.eContainmentFeature();
 				EReference f2 = child2.eContainmentFeature();
 				if (f1 == f2) {
+					if (f1 == null) {
+						return 0;
+					}
 					List<?> s = (List<?>) parent1.eGet(f1);
 					int i1 = s.indexOf(child1);
 					int i2 = s.indexOf(child2);
