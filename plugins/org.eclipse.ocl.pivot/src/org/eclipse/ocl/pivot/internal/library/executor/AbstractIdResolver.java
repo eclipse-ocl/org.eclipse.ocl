@@ -410,7 +410,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return ((EnumerationLiteral) unboxedValue).getEnumerationLiteralId();
 		}
 		else if (unboxedValue instanceof EEnumLiteral) {
-			return IdManager.getEnumerationLiteralId((EEnumLiteral) unboxedValue);
+			return getEnumerationLiteralId((EEnumLiteral) unboxedValue);
 		}
 		else if (unboxedValue instanceof EObject) {
 			return unboxedValue;
@@ -433,11 +433,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return unboxedValue;
 		}
 		else if (eClassifier instanceof EEnum) {
-			EEnum eEnum = (EEnum)eClassifier;
+			EnumerationId enumId = getEnumerationId((EEnum)eClassifier);
 			String name = ClassUtil.nonNullModel(((Enumerator)unboxedValue).getName());
-			EnumerationId enumId = IdManager.getEnumerationId(eEnum);
-			EnumerationLiteralId enumerationLiteralId = enumId.getEnumerationLiteralId(name);
-			return enumerationLiteralId;
+			return enumId.getEnumerationLiteralId(name);
 		}
 		else {
 			return boxedValueOf(unboxedValue);
@@ -858,6 +856,27 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		return elementType;
 	}
 
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull EnumerationId getEnumerationId(@NonNull EEnum eEnum) {
+		String name = eEnum.getName();
+		assert name != null;
+		EPackage parentPackage = eEnum.getEPackage();
+		assert parentPackage != null;
+		return getPackageId(parentPackage).getEnumerationId(name);
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull EEnumLiteral eEnumLiteral) {
+		EEnum eEnum = ClassUtil.nonNullModel(eEnumLiteral.getEEnum());
+		String name = ClassUtil.nonNullModel(eEnumLiteral.getName());
+		EnumerationId enumerationId = getEnumerationId(eEnum);
+		return enumerationId.getEnumerationLiteralId(name);
+	}
+
 	@Override
 	public @NonNull CompleteEnvironment getEnvironment() {
 		return environment;
@@ -931,6 +950,13 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			return (org.eclipse.ocl.pivot.Package) element;
 		}
 		throw new IllegalStateException("No " + packageId); //$NON-NLS-1$
+	}
+
+	/**
+	 * @since 1.4
+	 */
+	protected @NonNull PackageId getPackageId(@NonNull EPackage ePackage) {	// UML overrides to resolve EPackages that are applied Profiles
+		return IdManager.getPackageId(ePackage);
 	}
 
 	@Override

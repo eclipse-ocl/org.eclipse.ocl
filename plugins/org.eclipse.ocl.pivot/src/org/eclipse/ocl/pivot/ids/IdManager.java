@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -275,7 +276,11 @@ public final class IdManager
 
 	/**
 	 * Return the typeId for an EEnum.
+	 *
+	 * @Deprecated (UML-aware) caller should resolve the PackageId and then tunnel down.
+	 * The UML-blind implementation here fails to resolve Ecore profiles.
 	 */
+	@Deprecated
 	public static @NonNull EnumerationId getEnumerationId(@NonNull EEnum eEnum) {
 		String name = eEnum.getName();
 		assert name != null;
@@ -284,6 +289,13 @@ public final class IdManager
 		return getPackageId(parentPackage).getEnumerationId(name);
 	}
 
+	/**
+	 * Return the typeId for an EEnumLiteral.
+	 *
+	 * @Deprecated (UML-aware) caller should resolve the PackageId and then tunnel down.
+	 * The UML-blind implementation here fails to resolve Ecore profiles.
+	 */
+	@Deprecated
 	public static @NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull EEnumLiteral eEnumLiteral) {
 		EEnum eEnum = ClassUtil.nonNullModel(eEnumLiteral.getEEnum());
 		String name = ClassUtil.nonNullModel(eEnumLiteral.getName());
@@ -442,6 +454,9 @@ public final class IdManager
 			//			else if (nsURI.equals(TypesPackage.eNS_URI)) {		// FIXME use extension point
 			//				return getRootPackageId(PivotConstants.TYPES_METAMODEL_NAME);
 			//			}
+			if (aPackage.eContainer() instanceof EAnnotation) {
+				System.out.println("Looks like a UML Profile has not been used in place of its EPackage for " + nsURI);
+			}
 			return getNsURIPackageId(nsURI, aPackage.getNsPrefix(), aPackage);
 		}
 		String name = aPackage.getName();
