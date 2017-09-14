@@ -11,18 +11,12 @@
 package org.eclipse.ocl.examples.xtext.console.actions;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -37,7 +31,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.Action;
@@ -47,14 +40,11 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ocl.examples.debug.launching.OCLLaunchConstants;
 import org.eclipse.ocl.examples.debug.vm.ui.launching.LaunchingUtils;
+import org.eclipse.ocl.examples.debug.vm.ui.utils.DebugUtil;
 import org.eclipse.ocl.examples.xtext.console.OCLConsolePage;
 import org.eclipse.ocl.examples.xtext.console.XtextConsolePlugin;
 import org.eclipse.ocl.examples.xtext.console.messages.ConsoleMessages;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
-import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -74,16 +64,16 @@ import org.eclipse.ui.progress.IProgressService;
  */
 public final class DebugAction extends Action
 {
-    /**
-     * The DebugStarter sequences the start up of the debugger off the thread.
-     */
-    protected static class DebugStarter implements IRunnableWithProgress
+	/**
+	 * The DebugStarter sequences the start up of the debugger off the thread.
+	 */
+	protected static class DebugStarter implements IRunnableWithProgress
 	{
 		protected final @NonNull Shell shell;
-    	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-    	protected final @Nullable EObject contextObject;
-    	protected final @NonNull String expression;
-    	private @Nullable ILaunch launch = null;
+		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+		protected final @Nullable EObject contextObject;
+		protected final @NonNull String expression;
+		private @Nullable ILaunch launch = null;
 
 		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactory environmentFactory, @Nullable EObject contextObject, @NonNull String expression) {
 			this.shell = shell;
@@ -97,50 +87,9 @@ public final class DebugAction extends Action
 		 * Returns its URI.
 		 */
 		protected @NonNull URI createDocument(IProgressMonitor monitor) throws IOException, CoreException {
-			IdResolver idResolver = environmentFactory.getIdResolver();
-			org.eclipse.ocl.pivot.Class staticType = idResolver.getStaticTypeOf(contextObject);
-			org.eclipse.ocl.pivot.Class contextType = environmentFactory.getMetamodelManager().getPrimaryClass(staticType);
-//			if (contextType instanceof Metaclass) {
-//				contextType = (org.eclipse.ocl.pivot.Class)((Metaclass<?>)contextType).getInstanceType();	// FIXME cast
-//			}
-			org.eclipse.ocl.pivot.Package contextPackage = contextType.getOwningPackage();
-			IPath documentPath = XtextConsolePlugin.getInstance().getStateLocation().append("debug" + EcoreUtil.generateUUID() + ".ocl");
-			IFileStore documentStore = EFS.getLocalFileSystem().getStore(documentPath);
-			OutputStream documentStream = documentStore.openOutputStream(0, monitor);
-			PrettyPrintOptions.Global printOptions = PrettyPrinter.createOptions(null);
-			printOptions.addReservedNames(PrettyPrinter.restrictedNameList);
-			Writer s = new OutputStreamWriter(documentStream);
-			String externalURI = null;
-			if (contextPackage != null) {
-				Model containingRoot = PivotUtil.getContainingModel(contextPackage);
-				if (containingRoot == null) {
-					externalURI = contextPackage.getURI();
-				}
-				else if (containingRoot != PivotUtil.getContainingModel(environmentFactory.getStandardLibrary().getOclAnyType())) {
-					externalURI = containingRoot.getExternalURI();
-				}
-				if (externalURI != null) {
-					s.append("import '" + externalURI + "'\n\n");
-				}
-//				s.append("package " + PrettyPrinter.printName(contextPackage, printOptions) + "\n\n");
-			}
-			s.append("context ");
-			if (externalURI == null) {
-				s.append("ocl::");			// FIXME use printOptions, FIXME support UML non-OCL classes
-			}
-			s.append(PrettyPrinter.printName(contextType, printOptions) + "\n");
-			s.append("def: oclDebuggerExpression() : OclAny = \n\t");
-			s.append(expression.replace("\n", "\n\t"));
-			s.append("\n");
-//			if (contextPackage != null) {
-//				s.append("\n\nendpackage\n");
-//			}
-			s.close();
-			java.net.URI documentURI1 = documentStore.toURI();
-			@NonNull URI documentURI2 = URI.createURI(documentURI1.toString());
-			return documentURI2;
+			return DebugUtil.createDebugDocument(environmentFactory, contextObject, expression, monitor);
 		}
-		
+
 		public ILaunch getLaunch() {
 			return launch;
 		}
@@ -161,7 +110,7 @@ public final class DebugAction extends Action
 
 		/**
 		 * Load and parse the test document.
-		 * @throws IOException 
+		 * @throws IOException
 		 */
 		protected @Nullable BaseCSResource loadDocument(IProgressMonitor monitor, @NonNull URI documentURI) throws Exception {
 			ResourceSet externalResourceSet = environmentFactory.getResourceSet();
@@ -267,9 +216,9 @@ public final class DebugAction extends Action
 			}
 		}
 	}
-	
+
 	protected final @NonNull OCLConsolePage oclConsolePage;
-	
+
 	public DebugAction(@NonNull OCLConsolePage oclConsolePage) {
 		super(ConsoleMessages.Debug_Title, ImageDescriptor.createFromURL(
 			FileLocator.find(XtextConsolePlugin.getInstance().getBundle(),
@@ -285,9 +234,9 @@ public final class DebugAction extends Action
 			MessageDialog.openError(shell, ConsoleMessages.Debug_Starter, ConsoleMessages.Debug_FailStart_NoShell);
 			return null;
 		}
-	    EObject contextObject = oclConsolePage.getContextObject();
-    	BaseDocument editorDocument = oclConsolePage.getEditorDocument();
-    	String text = editorDocument.get();
+		EObject contextObject = oclConsolePage.getContextObject();
+		BaseDocument editorDocument = oclConsolePage.getEditorDocument();
+		String text = editorDocument.get();
 		String expression = text.trim();
 		if (expression.length() <= 0) {
 			MessageDialog.openError(shell, ConsoleMessages.Debug_Starter, ConsoleMessages.Debug_FailStart_NoOCL);

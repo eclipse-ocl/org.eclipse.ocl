@@ -14,8 +14,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -27,6 +25,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.xtext.basecs.StructuredClassCS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -48,7 +47,6 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 public class CreateDynamicInstanceHandler extends AbstractHandler
 // Based on org.eclipse.emf.ecore.action.CreateDynamicInstanceAction
 {
-	protected static final URI PLATFORM_RESOURCE = URI.createPlatformResourceURI("/", false);
 	private org.eclipse.ocl.pivot.Class selectedClass = null;
 
 	@Override
@@ -61,16 +59,12 @@ public class CreateDynamicInstanceHandler extends AbstractHandler
 			}
 			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 			if (selectedEClass != null) {
-				URI uri = selectedEClass.eResource().getURI();
 				IStructuredSelection selection = StructuredSelection.EMPTY;
-				if (uri.isHierarchical()) {
-					if (uri.isRelative()
-						|| (uri = uri.deresolve(PLATFORM_RESOURCE)).isRelative()) {
-						IFile file = ResourcesPlugin.getWorkspace().getRoot()
-							.getFile(new Path(uri.toString()));
-						if (file.exists()) {
-							selection = new StructuredSelection(file);
-						}
+				URI uri = selectedEClass.eResource().getURI();
+				if (uri != null) {
+					IFile file = URIUtil.getResolvedFile(uri);
+					if ((file != null) && file.exists()) {
+						selection = new StructuredSelection(file);
 					}
 				}
 				DynamicModelWizard dynamicModelWizard = new DynamicModelWizard(selectedEClass);
@@ -80,8 +74,8 @@ public class CreateDynamicInstanceHandler extends AbstractHandler
 			}
 			else {
 				MessageDialog.openError(shell, "Create Dynamic Instance",
-					"No Ecore prototype found for '" + selectedClass.getName() + 
-					"'\nPlease Save as Ecore and Re-open.");
+					"No Ecore prototype found for '" + selectedClass.getName() +
+						"'\nPlease Save as Ecore and Re-open.");
 			}
 		}
 		return null;
@@ -116,19 +110,19 @@ public class CreateDynamicInstanceHandler extends AbstractHandler
 				if (parseResult == null)
 					throw new NullPointerException("parseResult is null");
 				ICompositeNode rootNode = parseResult.getRootNode();
-//				INode lastVisibleNode = NodeModelUtils.getLastCompleteNodeByOffset(rootNode, selection.getOffset());
-//				EObject currentModel = NodeModelUtils.getNearestSemanticObject(lastVisibleNode);						
+				//				INode lastVisibleNode = NodeModelUtils.getLastCompleteNodeByOffset(rootNode, selection.getOffset());
+				//				EObject currentModel = NodeModelUtils.getNearestSemanticObject(lastVisibleNode);
 				INode lastVisibleNode = NodeModelUtils.findLeafNodeAtOffset(rootNode, selection.getOffset());
 				if (lastVisibleNode == null) {
-					return null; 
-				}		
-				EObject currentModel = NodeModelUtils.findActualSemanticObjectFor(lastVisibleNode);						
+					return null;
+				}
+				EObject currentModel = NodeModelUtils.findActualSemanticObjectFor(lastVisibleNode);
 				if (!(currentModel instanceof StructuredClassCS)) {
-					return null; 
-				}		
+					return null;
+				}
 				StructuredClassCS oclInEcoreClass = (StructuredClassCS) currentModel;
 				return PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, oclInEcoreClass);
-			}					
+			}
 		});
 	}
 }

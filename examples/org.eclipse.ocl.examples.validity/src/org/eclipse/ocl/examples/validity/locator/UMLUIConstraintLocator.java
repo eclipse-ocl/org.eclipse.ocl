@@ -11,16 +11,10 @@
 package org.eclipse.ocl.examples.validity.locator;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -34,13 +28,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.ocl.examples.debug.launching.OCLLaunchConstants;
+import org.eclipse.ocl.examples.debug.vm.ui.utils.DebugUtil;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.examples.emf.validation.validity.locator.ConstraintLocator;
@@ -51,10 +45,7 @@ import org.eclipse.ocl.examples.xtext.console.messages.ConsoleMessages;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
-import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -68,16 +59,16 @@ import org.eclipse.swt.widgets.Shell;
 
 public class UMLUIConstraintLocator extends UMLConstraintLocator implements ConstraintUILocator
 {
-    /**
-     * The DebugStarter sequences the start up of the debugger off the thread.
-     */
-    protected static class DebugStarter implements IRunnableWithProgress
+	/**
+	 * The DebugStarter sequences the start up of the debugger off the thread.
+	 */
+	protected static class DebugStarter implements IRunnableWithProgress
 	{
 		protected final @NonNull Shell shell;
-    	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-    	protected final @Nullable EObject contextObject;
-    	protected final @NonNull String expression;
-    	private @Nullable ILaunch launch = null;
+		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+		protected final @Nullable EObject contextObject;
+		protected final @NonNull String expression;
+		private @Nullable ILaunch launch = null;
 
 		public DebugStarter(@NonNull Shell shell, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable EObject contextObject, @NonNull String expression) {
 			this.shell = shell;
@@ -91,54 +82,9 @@ public class UMLUIConstraintLocator extends UMLConstraintLocator implements Cons
 		 * Returns its URI.
 		 */
 		protected @NonNull URI createDocument(IProgressMonitor monitor) throws IOException, CoreException {
-			IdResolver idResolver = environmentFactory.getIdResolver();
-			org.eclipse.ocl.pivot.Class staticType = idResolver.getStaticTypeOf(contextObject);
-			org.eclipse.ocl.pivot.Class contextType = environmentFactory.getMetamodelManager().getPrimaryClass(staticType);
-//			if (contextType instanceof Metaclass) {
-//				contextType = (org.eclipse.ocl.pivot.Class)((Metaclass<?>)contextType).getInstanceType();	// FIXME cast
-//			}
-			org.eclipse.ocl.pivot.Package contextPackage = contextType.getOwningPackage();
-			IPath documentPath = XtextConsolePlugin.getInstance().getStateLocation().append("debug" + EcoreUtil.generateUUID() + ".ocl");
-			IFileStore documentStore = EFS.getLocalFileSystem().getStore(documentPath);
-			OutputStream documentStream = documentStore.openOutputStream(0, monitor);
-			PrettyPrintOptions.Global printOptions = PrettyPrinter.createOptions(null);
-			printOptions.addReservedNames(PrettyPrinter.restrictedNameList);
-			Writer s = new OutputStreamWriter(documentStream);
-			String externalURI = null;
-			if (contextPackage != null) {
-				Model containingRoot = PivotUtil.getContainingModel(contextPackage);
-				if (containingRoot == null) {
-					externalURI = contextPackage.getURI();
-				}
-				else if (containingRoot != PivotUtil.getContainingModel(environmentFactory.getStandardLibrary().getOclAnyType())) {
-					externalURI = containingRoot.getExternalURI();
-					if (PivotUtilInternal.isASURI(externalURI)) {
-						@NonNull URI uri = URI.createURI(externalURI);
-						externalURI = PivotUtilInternal.getNonASURI(uri).toString();
-					}
-				}
-				if (externalURI != null) {
-					s.append("import '" + externalURI + "'\n\n");
-				}
-//				s.append("package " + PrettyPrinter.printName(contextPackage, printOptions) + "\n\n");
-			}
-			s.append("context ");
-			if (externalURI == null) {
-				s.append("ocl::");			// FIXME use printOptions, FIXME support UML non-OCL classes
-			}
-			s.append(PrettyPrinter.printName(contextType, printOptions) + "\n");
-			s.append("def: oclDebuggerExpression() : OclAny = \n\t");
-			s.append(expression.replace("\n", "\n\t"));
-			s.append("\n");
-//			if (contextPackage != null) {
-//				s.append("\n\nendpackage\n");
-//			}
-			s.close();
-			java.net.URI documentURI1 = documentStore.toURI();
-			@NonNull URI documentURI2 = URI.createURI(documentURI1.toString());
-			return documentURI2;
+			return DebugUtil.createDebugDocument(environmentFactory, contextObject, expression, monitor);
 		}
-		
+
 		public ILaunch getLaunch() {
 			return launch;
 		}
@@ -159,7 +105,7 @@ public class UMLUIConstraintLocator extends UMLConstraintLocator implements Cons
 
 		/**
 		 * Load and parse the test document.
-		 * @throws IOException 
+		 * @throws IOException
 		 */
 		protected @Nullable BaseCSResource loadDocument(IProgressMonitor monitor, @NonNull URI documentURI) throws Exception {
 			Resource contextResource = contextObject != null ? contextObject.eResource()  : null;
@@ -252,14 +198,14 @@ public class UMLUIConstraintLocator extends UMLConstraintLocator implements Cons
 		}
 	}
 
-    public static @NonNull UMLUIConstraintLocator INSTANCE = new UMLUIConstraintLocator();
+	public static @NonNull UMLUIConstraintLocator INSTANCE = new UMLUIConstraintLocator();
 
 	@Override
 	public boolean debug(@NonNull ResultConstrainingNode resultConstrainingNode, final @NonNull ValidityView validityView, @NonNull IProgressMonitor monitor) throws CoreException {
 		final Object object = resultConstrainingNode.getParent().getConstrainingObject();
 		if (!(object instanceof org.eclipse.uml2.uml.Constraint)) {
 			throw new IllegalStateException("non-UML Constraint " + object);
-//			return false;
+			//			return false;
 		}
 		org.eclipse.uml2.uml.Constraint umlConstraint = (org.eclipse.uml2.uml.Constraint)object;
 		Resource eResource = umlConstraint.eResource();
@@ -277,51 +223,51 @@ public class UMLUIConstraintLocator extends UMLConstraintLocator implements Cons
 		}
 		if (constraint == null) {
 			throw new IllegalStateException("non-UML Constraint " + object);
-//			return false;
+			//			return false;
 		}
-		
 
-		
-		
-		
-//		URI constraintURI = EcoreUtil.getURI(constraint);
-//        Path path = new Path(constraintURI.toPlatformString(true));
+
+
+
+
+		//		URI constraintURI = EcoreUtil.getURI(constraint);
+		//        Path path = new Path(constraintURI.toPlatformString(true));
 		LanguageExpression specification = constraint.getOwnedSpecification();
 		String expression = specification != null ? PrettyPrinter.print(specification) : "";
-		
+
 		ValidatableNode parent = resultConstrainingNode.getResultValidatableNode().getParent();
 		if (parent == null) {
 			return false;
 		}
 		EObject eObject = parent.getConstrainedObject();
-		
+
 		Shell shell = validityView.getSite().getShell();
 		if (shell == null) {
 			return false;
 		}
 		DebugStarter runnable = new DebugStarter(shell, environmentFactory, eObject, expression);
-		
-		
-//		IProgressService progressService = PlatformUI.getWorkbench().getProgressService();
-//		try {
-//			progressService.run(true, true, runnable);
-			runnable.run(monitor);
-//		} catch (InvocationTargetException e) {
-//			Throwable targetException = e.getTargetException();
-//			IStatus status = new Status(IStatus.ERROR, XtextConsolePlugin.PLUGIN_ID, targetException.getLocalizedMessage(), targetException);
-//			ErrorDialog.openError(shell, ConsoleMessages.Debug_Starter, ConsoleMessages.Debug_FailStart, status);
-//		} catch (InterruptedException e) {
-			/* Cancel is not a problem. */
-//		}
+
+
+		//		IProgressService progressService = PlatformUI.getWorkbench().getProgressService();
+		//		try {
+		//			progressService.run(true, true, runnable);
+		runnable.run(monitor);
+		//		} catch (InvocationTargetException e) {
+		//			Throwable targetException = e.getTargetException();
+		//			IStatus status = new Status(IStatus.ERROR, XtextConsolePlugin.PLUGIN_ID, targetException.getLocalizedMessage(), targetException);
+		//			ErrorDialog.openError(shell, ConsoleMessages.Debug_Starter, ConsoleMessages.Debug_FailStart, status);
+		//		} catch (InterruptedException e) {
+		/* Cancel is not a problem. */
+		//		}
 		return runnable.getLaunch() != null;
-/*		
-		
+		/*
+
 		IPath trimmedPath = path.removeLastSegments(1);
 		IContainer folder = (IContainer) ResourcesPlugin.getWorkspace().getRoot().findMember(trimmedPath);
 		Path tailPath = new Path(constraint.getName() + ".essentialocl");
 		final IFile file = folder.getFile(tailPath);
 		file.create(new URIConverter.ReadableInputStream(string, "UTF-8"), false, null);
-		
+
 //		URI contextURI = EcoreUtil.getURI(eObject);
 
 //		ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();

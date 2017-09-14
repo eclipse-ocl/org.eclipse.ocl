@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
@@ -60,8 +61,6 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
  */
 public class ExportCompleteOCLHandler extends AbstractHandler
 {
-	protected static final URI PLATFORM_RESOURCE = URI.createPlatformResourceURI("/", false);
-
 	public static @Nullable ResourceSet getResourceSet(@Nullable Object evaluationContext) {
 		Object o = HandlerUtil.getVariable(evaluationContext, ISources.ACTIVE_EDITOR_NAME);
 		if (!(o instanceof IEditorPart)) {
@@ -121,7 +120,7 @@ public class ExportCompleteOCLHandler extends AbstractHandler
 			return null;
 		}
 		if (!modelURI.isRelative()) {
-			modelURI = modelURI.deresolve(PLATFORM_RESOURCE);
+			modelURI = modelURI.deresolve(URIUtil.PLATFORM_RESOURCE);
 			if (!modelURI.isRelative()) {
 				MessageDialog.openError(shell, BaseUIMessages.ExportError_Title, "Relative URI required:\n" + modelURI);
 				return null;
