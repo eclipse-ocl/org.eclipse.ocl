@@ -521,4 +521,28 @@ public class ImportTests extends XtextTestCase
 		doLoadFromString(ocl, "Bug477283.ocl", testFile);
 		ocl.dispose();
 	}
+	
+	public void testImport_CompleteOCL_DisposeNoISE() throws Exception {
+		/*
+		 * Defining an operation with a parameter of type is asub::ASub has
+		 * the same effect as calling completeModel.getCompleteClass(thatClass)
+		 * in PivotMetamodelManager.getEquivalentClass(...). Hence, this can
+		 * also be considered as a testcase for Bug477342.
+		 * 
+		 * Note: this test might pass even _without_ applying a fix (it
+		 * 		 depends on the iteration order of es2ases.values() in
+		 * 		 PivotMetamodelManager.dispose()).
+		 */
+		Bug477283APackage.eINSTANCE.getClass();
+		Bug477283BPackage.eINSTANCE.getClass();
+		TestOCL ocl = createOCL();
+		String testFile =
+				"import 'http://www.eclipse.org/ocl/Bug477283b'\n" +
+				"import 'http://www.eclipse.org/ocl/Bug477283asub'\n" +
+				"context b::B\n" +
+				"def: x(a : asub::ASub) : Boolean = true\n";
+		doLoadFromString(ocl, "string.ocl", testFile);
+		// we test that the dispose code throws no IllegalStateException
+		ocl.dispose();
+	}
 }
