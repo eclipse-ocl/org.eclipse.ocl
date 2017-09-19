@@ -1150,35 +1150,55 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	/**
 	 * Return the equivalent class to thatClass in thisModel, where equivalent is the same
-	 * class/package name hierarchy. THis is typically used to create a merge contribution
+	 * class/package name hierarchy. This is typically used to create a merge contribution
 	 * for thatClass in thisModel avoiding the need to modify thatClass.
 	 */
-	public org.eclipse.ocl.pivot.Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
+	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
+		completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
 		Model thatModel = PivotUtil.getContainingModel(thatClass);
 		if (thisModel == thatModel) {
 			return thatClass;
 		}
-		org.eclipse.ocl.pivot.Class thisOppositeClass;
-		org.eclipse.ocl.pivot.Package thatPackage = thatClass.getOwningPackage();
-		assert thatPackage != null;
-		completeModel.getCompletePackage(thatPackage);
-		//		completeModel.getCompleteClass(thatClass);		// FIXME BUG 477342 uncommenting this gives intermirttent dispose() ISEs
-		List<org.eclipse.ocl.pivot.Package> thesePackages = thisModel.getOwnedPackages();
-		String thatPackageName = ClassUtil.nonNullModel(thatPackage.getName());
-		org.eclipse.ocl.pivot.Package thisOppositePackage = NameUtil.getNameable(thesePackages, thatPackageName);
-		if (thisOppositePackage == null) {
-			String thatPackageURI = ClassUtil.nonNullModel(thatPackage.getURI());
-			thisOppositePackage = PivotUtil.createPackage(thatPackageName, thatPackage.getNsPrefix(), thatPackageURI, thatPackage.getPackageId());
-			thesePackages.add(thisOppositePackage);
+		org.eclipse.ocl.pivot.Package thatPackage = PivotUtil.getOwningPackage(thatClass);
+		org.eclipse.ocl.pivot.Package thisPackage = getEquivalentPackage(thisModel, thatPackage);
+		List<org.eclipse.ocl.pivot.Class> theseClasses = thisPackage.getOwnedClasses();
+		String className = PivotUtil.getName(thatClass);
+		org.eclipse.ocl.pivot.Class thisClass = NameUtil.getNameable(theseClasses, className);
+		if (thisClass == null) {
+			thisClass = PivotUtil.createClass(className);
+			theseClasses.add(thisClass);
 		}
-		List<org.eclipse.ocl.pivot.Class> theseOppositeClasses = thisOppositePackage.getOwnedClasses();
-		String thatClassName = ClassUtil.nonNullModel(thatClass.getName());
-		thisOppositeClass = NameUtil.getNameable(theseOppositeClasses, thatClassName);
-		if (thisOppositeClass == null) {
-			thisOppositeClass = PivotUtil.createClass(thatClassName);
-			theseOppositeClasses.add(thisOppositeClass);
+		return thisClass;
+	}
+
+	/**
+	 * Return the equivalent package to thatPackage in thisModel, where equivalent is the same
+	 * package name hierarchy. This is typically used to create a merge contribution
+	 * for thatClass in thisModel avoiding the need to modify thatClass.
+	 */
+	private org.eclipse.ocl.pivot.@NonNull Package getEquivalentPackage(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Package thatPackage) {
+		completeModel.getCompletePackage(thatPackage);					// Ensure thatPackage has a complete representation
+		Model thatModel = PivotUtil.getContainingModel(thatPackage);
+		if (thisModel == thatModel) {
+			return thatPackage;
 		}
-		return thisOppositeClass;
+		List<org.eclipse.ocl.pivot.Package> thesePackages;
+		org.eclipse.ocl.pivot.Package thatParentPackage = thatPackage.getOwningPackage();
+		if (thatParentPackage == null) {
+			thesePackages = thisModel.getOwnedPackages();
+		}
+		else {
+			org.eclipse.ocl.pivot.Package thisParentPackage = getEquivalentPackage(thisModel, thatParentPackage);
+			thesePackages = thisParentPackage.getOwnedPackages();
+		}
+		String packageName = PivotUtil.getName(thatPackage);
+		org.eclipse.ocl.pivot.Package thisPackage = NameUtil.getNameable(thesePackages, packageName);
+		if (thisPackage == null) {
+			String pkgURI = ClassUtil.nonNullModel(thatPackage.getURI());
+			thisPackage = PivotUtil.createPackage(packageName, thatPackage.getNsPrefix(), pkgURI, thatPackage.getPackageId());
+			thesePackages.add(thisPackage);
+		}
+		return thisPackage;
 	}
 
 	public @Nullable External2AS getES2AS(@NonNull Resource esResource) {
@@ -1965,10 +1985,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		String name = ClassUtil.nonNullState(asLibrary.getName());
 		//		String nsURI = ClassUtil.nonNullState(asLibrary.getNsURI());
 		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, name, asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
-		asResourceSet.getResources().add(oclMetamodel.eResource());
+		Resource asResource = oclMetamodel.eResource();
+		assert asResource != null;
+		asResourceSet.getResources().add(asResource);
 		setASmetamodel(oclMetamodel);		// Standard meta-model
-		@SuppressWarnings("null")
-		@NonNull Resource asResource = oclMetamodel.eResource();
 		//		asResourceSet.getResources().add(asResource);
 		installResource(asResource);
 	}
