@@ -1,4 +1,4 @@
-<%@ jet package="org.eclipse.ocl.examples.build.templates.model" imports="java.util.* org.eclipse.emf.ecore.* org.eclipse.emf.ecore.util.EcoreUtil org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.impl.Literals" class="PackageClass"%>
+<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.ecore.* org.eclipse.emf.ecore.util.EcoreUtil org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.impl.Literals org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil" class="PackageClass"%>
 <%
 /**
  * Copyright (c) 2002-2010 IBM Corporation and others.
@@ -12,7 +12,9 @@
  */
 %>
 <%final GenPackage genPackage = (GenPackage)((Object[])argument)[0]; final GenModel genModel=genPackage.getGenModel();%>
+<%final boolean isJDK50 = genModel.getComplianceLevel().getValue() >= GenJDKLevel.JDK50;%>
 <%boolean isInterface = Boolean.TRUE.equals(((Object[])argument)[1]); boolean isImplementation = Boolean.TRUE.equals(((Object[])argument)[2]);%>
+<%boolean packageNeedsSuppressDeprecation = isJDK50 && GenModelUtil.hasAPIDeprecatedTag(genPackage.getOrderedGenClassifiers()) && !genPackage.hasAPIDeprecatedTag();%>
 <%String publicStaticFinalFlag = isImplementation ? "public static final " : "";%>
 <%boolean needsAddEOperation = false;%>
 <%boolean needsAddEParameter = false;%>
@@ -72,10 +74,19 @@ package <%=genPackage.getReflectionPackageName()%>;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
+<%if (genPackage.hasAPITags()) {%>
+ * <%=genPackage.getAPITags(genModel.getIndentation(stringBuffer))%>
+<%}%>
  * @generated
  */
 <%}%>
+<%if (isJDK50 && genPackage.hasAPIDeprecatedTag()) {%>
+@Deprecated
+<%}%>
 <%if (isImplementation) {%>
+  <%if (packageNeedsSuppressDeprecation) {%>
+@SuppressWarnings("deprecation")
+  <%}%>
 public class <%=genPackage.getPackageClassName()%> extends <%=genModel.getImportedName("org.eclipse.emf.ecore.impl.EPackageImpl")%><%if (!isInterface){%> implements <%=genPackage.getImportedPackageInterfaceName()%><%}%>
 <%} else {%>
 public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.getImportedName("org.eclipse.emf.ecore.EPackage")%>
@@ -161,8 +172,14 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
       <%}%>
     <%}%>
 	 * @see <%=genPackage.getQualifiedPackageClassName()%>#get<%=genClassifier.getClassifierAccessorName()%>()
+  <%if (genClassifier.hasAPITags()) {%>
+	 * <%=genClassifier.getAPITags(genModel.getIndentation(stringBuffer))%>
+  <%}%>
 	 * @generated
 	 */
+  <%if (isJDK50 && genClassifier.hasAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
 	<%=publicStaticFinalFlag%>int <%=genPackage.getClassifierID(genClassifier)%> = <%=genPackage.getClassifierValue(genClassifier)%>;
 
     <%if (genClassifier instanceof GenClass) { GenClass genClass = (GenClass)genClassifier;%>
@@ -171,9 +188,15 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 * The feature id for the '<em><b><%=genFeature.getFormattedName()%></b></em>' <%=genFeature.getFeatureKind()%>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+    <%if (genFeature.hasImplicitAPITags()) {%>
+	 * <%=genFeature.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
 	 * @generated
 	 * @ordered
 	 */
+  <%if (isJDK50 && genFeature.hasImplicitAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
 	<%=publicStaticFinalFlag%>int <%=genClass.getFeatureID(genFeature)%> = <%=genClass.getFeatureValue(genFeature)%>;
 
       <%}%>
@@ -181,9 +204,15 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 * The number of structural features of the '<em><%=genClass.getFormattedName()%></em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+    <%if (genClass.hasAPITags()) {%>
+	 * <%=genClass.getAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
 	 * @generated
 	 * @ordered
 	 */
+  <%if (isJDK50 && genClass.hasAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
 	<%=publicStaticFinalFlag%>int <%=genClass.getFeatureCountID()%> = <%=genClass.getFeatureCountValue()%>;
 
       <%if (genModel.isOperationReflection()) {%>
@@ -193,9 +222,15 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 * The operation id for the '<em><%=genOperation.getFormattedName()%></em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+    <%if (genOperation.hasImplicitAPITags()) {%>
+	 * <%=genOperation.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
 	 * @generated
 	 * @ordered
 	 */
+  <%if (isJDK50 && genOperation.hasImplicitAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
 	<%=publicStaticFinalFlag%>int <%=genClass.getOperationID(genOperation, false)%> = <%=genClass.getOperationValue(genOperation)%>;
 
           <%}%>
@@ -204,9 +239,15 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 * The number of operations of the '<em><%=genClass.getFormattedName()%></em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+    <%if (genClass.hasAPITags()) {%>
+	 * <%=genClass.getAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
 	 * @generated
 	 * @ordered
 	 */
+  <%if (isJDK50 && genClass.hasAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
 	<%=publicStaticFinalFlag%>int <%=genClass.getOperationCountID()%> = <%=genClass.getOperationCountValue()%>;
 
       <%}%>
@@ -227,8 +268,14 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+    <%if (genClassifier.hasAPITags()) {%>
+	 * <%=genClassifier.getAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
 	 * @generated
 	 */
+  <%if (isJDK50 && genClassifier.hasAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
 	private <%=genClassifier.getImportedMetaType()%> <%=genClassifier.getClassifierInstanceName()%> = null;
 
   <%}%>
@@ -261,7 +308,7 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link <%=genPackage.getImportedPackageInterfaceName()%>#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -282,8 +329,8 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 
     <%}%>
 		// Obtain or create and register package
-		Object ePackage = <%=genModel.getImportedName("org.eclipse.emf.ecore.EPackage")%>.Registry.INSTANCE.get(eNS_URI);
-		<%=genPackage.getPackageClassName()%> the<%=genPackage.getBasicPackageName()%> = (<%=genPackage.getPackageClassName()%>)(ePackage instanceof <%=genPackage.getPackageClassName()%> ? ePackage : new <%=genPackage.getPackageClassName()%>());
+		Object registered<%=genPackage.getBasicPackageName()%> = <%=genModel.getImportedName("org.eclipse.emf.ecore.EPackage")%>.Registry.INSTANCE.get(eNS_URI);
+		<%=genPackage.getPackageClassName()%> the<%=genPackage.getBasicPackageName()%> = registered<%=genPackage.getBasicPackageName()%> instanceof <%=genPackage.getPackageClassName()%> ? (<%=genPackage.getPackageClassName()%>)registered<%=genPackage.getBasicPackageName()%> : new <%=genPackage.getPackageClassName()%>();
 
 		isInited = true;
 
@@ -296,8 +343,9 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
   <%}%>
   <%if (!genPackage.getPackageInterDependencies().isEmpty()) {%>
 		// Obtain or create and register interdependencies
-    <%for (GenPackage interdep : genPackage.getPackageInterDependencies()) {%>
-		<%=interdep.getImportedPackageClassName()%> <%=genPackage.getPackageInstanceVariable(interdep)%> = (<%=interdep.getImportedPackageClassName()%>)(<%=genModel.getImportedName("org.eclipse.emf.ecore.EPackage")%>.Registry.INSTANCE.getEPackage(<%=interdep.getImportedPackageInterfaceName()%>.eNS_URI) instanceof <%=interdep.getImportedPackageClassName()%> ? <%=genModel.getImportedName("org.eclipse.emf.ecore.EPackage")%>.Registry.INSTANCE.getEPackage(<%=interdep.getImportedPackageInterfaceName()%>.eNS_URI) : <%=interdep.getImportedPackageInterfaceName()%>.eINSTANCE);
+    <%for (ListIterator<GenPackage> i = genPackage.getPackageInterDependencies().listIterator(); i.hasNext(); ) { GenPackage interdep = i.next(); %>
+		<%if (i.previousIndex() == 0) {%>Object <%}%>registeredPackage = <%=genModel.getImportedName("org.eclipse.emf.ecore.EPackage")%>.Registry.INSTANCE.getEPackage(<%=interdep.getImportedPackageInterfaceName()%>.eNS_URI);
+		<%=interdep.getImportedPackageClassName()%> <%=genPackage.getPackageInstanceVariable(interdep)%> = (<%=interdep.getImportedPackageClassName()%>)(registeredPackage instanceof <%=interdep.getImportedPackageClassName()%> ? registeredPackage : <%=interdep.getImportedPackageInterfaceName()%>.eINSTANCE);
     <%}%>
 
   <%}%>
@@ -344,7 +392,7 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
   <%if (genPackage.hasConstraints()) {%>
 		// Register package validator
 		<%=genModel.getImportedName("org.eclipse.emf.ecore.EValidator")%>.Registry.INSTANCE.put
-			(the<%=genPackage.getBasicPackageName()%>, 
+			(the<%=genPackage.getBasicPackageName()%>,
 			 new <%=genModel.getImportedName("org.eclipse.emf.ecore.EValidator")%>.Descriptor()
 			 {
 				 public <%=genModel.getImportedName("org.eclipse.emf.ecore.EValidator")%> getEValidator()
@@ -359,7 +407,6 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 		the<%=genPackage.getBasicPackageName()%>.freeze();
 
   <%}%>
-  
 		// Update the registry and return the package
 		<%=genModel.getImportedName("org.eclipse.emf.ecore.EPackage")%>.Registry.INSTANCE.put(<%=genPackage.getImportedPackageInterfaceName()%>.eNS_URI, the<%=genPackage.getBasicPackageName()%>);
 		return the<%=genPackage.getBasicPackageName()%>;
@@ -377,8 +424,8 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
       <%if (genClassifier instanceof GenClass) { GenClass genClass = (GenClass)genClassifier;%>
         <%if (!genClass.isDynamic()) { String theClass = genClass.isMapEntry() ? genClass.getImportedClassName() : genClass.getRawImportedInterfaceName(); if (helpers.add(theClass)) {%>
 		<%=genModel.getImportedName("org.eclipse.emf.common.util.Reflect")%>.register
-			(<%=theClass%>.class, 
-			 new <%=genModel.getImportedName("org.eclipse.emf.common.util.Reflect")%>.Helper() 
+			(<%=theClass%>.class,
+			 new <%=genModel.getImportedName("org.eclipse.emf.common.util.Reflect")%>.Helper()
 			 {
 				 public boolean isInstance(Object instance)
 				 {
@@ -394,8 +441,8 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
       <%} else if (genClassifier instanceof GenDataType) { GenDataType genDataType = (GenDataType)genClassifier;%>
         <%if (!genDataType.isPrimitiveType() && !genDataType.isObjectType()) { String theClass = genDataType.getRawImportedInstanceClassName(); if (helpers.add(theClass)) { %>
 		<%=genModel.getImportedName("org.eclipse.emf.common.util.Reflect")%>.register
-			(<%=theClass%>.class, 
-			 new <%=genModel.getImportedName("org.eclipse.emf.common.util.Reflect")%>.Helper() 
+			(<%=theClass%>.class,
+			 new <%=genModel.getImportedName("org.eclipse.emf.common.util.Reflect")%>.Helper()
 			 {
 				 public boolean isInstance(Object instance)
 				 {
@@ -484,6 +531,11 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
       <%}%>
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+      <%if (genDataType.hasDocumentation()) {%>
+     * <!-- begin-model-doc -->
+     * <%=genDataType.getDocumentation(genModel.getIndentation(stringBuffer))%>
+     * <!-- end-model-doc -->
+      <%}%>
 	 * @return the meta object for data type '<em><%=genDataType.getFormattedName()%></em>'.
       <%if (!genDataType.isPrimitiveType() && !genDataType.isArrayType()) {%>
 	 * @see <%=genDataType.getRawInstanceClassName()%>
@@ -496,15 +548,24 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 * @model
       <%}}%>
     <%}%>
+  <%if ((genClassifier instanceof GenClass || genClassifier instanceof GenEnum) && genClassifier.hasAPITags()) {%>
+	 * <%=genClassifier.getAPITags(genModel.getIndentation(stringBuffer))%>
+  <%}%>
 	 * @generated
 	 */
 <%} else {%>
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+  <%if (genClassifier.hasAPITags()) {%>
+	 * <%=genClassifier.getAPITags(genModel.getIndentation(stringBuffer))%>
+  <%}%>
 	 * @generated
 	 */
 <%}%>
+  <%if (isJDK50 && genClassifier.hasAPIDeprecatedTag()) {%>
+	@Deprecated
+  <%}%>
 <%if (isImplementation) {%>
 	public <%=genClassifier.getImportedMetaType()%> get<%=genClassifier.getClassifierAccessorName()%>()
 	{
@@ -531,14 +592,23 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 * @return the meta object for the <%=genFeature.getFeatureKind()%> '<em><%=genFeature.getFormattedName()%></em>'.
 	 * @see <%=genClass.getQualifiedInterfaceName()%><%if (!genClass.isMapEntry() && !genFeature.isSuppressedGetVisibility()) {%>#<%=genFeature.getGetAccessor()%>()<%}%>
 	 * @see #get<%=genClass.getClassifierAccessorName()%>()
+    <%if (genFeature.hasImplicitAPITags()) {%>
+	 * <%=genFeature.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
 	 * @generated
 	 */
 <%} else {%>
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+    <%if (genFeature.hasImplicitAPITags()) {%>
+	 * <%=genFeature.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
 	 * @generated
 	 */
+<%}%>
+<%if (isJDK50 && genFeature.hasImplicitAPIDeprecatedTag()) {%>
+	@Deprecated
 <%}%>
 <%if (isImplementation) {%>
 	public <%=genFeature.getImportedMetaType()%> get<%=genFeature.getFeatureAccessorName()%>()
@@ -563,14 +633,23 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em><%=genOperation.getFormattedName()%></em>' operation.
 	 * @see <%=genClass.getQualifiedInterfaceName()%>#<%=genOperation.getName()%>(<%=genOperation.getParameterTypes(", ")%>)
+    <%if (genOperation.hasImplicitAPITags()) {%>
+	 * <%=genOperation.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
 	 * @generated
 	 */
 <%} else {%>
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+    <%if (genOperation.hasImplicitAPITags()) {%>
+	 * <%=genOperation.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
 	 * @generated
 	 */
+<%}%>
+<%if (isJDK50 && genOperation.hasImplicitAPIDeprecatedTag()) {%>
+	@Deprecated
 <%}%>
 <%if (isImplementation) {%>
 	public <%=genOperation.getImportedMetaType()%> get<%=genOperation.getOperationAccessorName()%>()
@@ -629,6 +708,10 @@ public interface <%=genPackage.getPackageInterfaceName()%> extends <%=genModel.g
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+    <%{boolean needsSuppressDeprecation = false; if (!packageNeedsSuppressDeprecation && isJDK50) { LOOP: for (GenClass genClass : genPackage.getGenClasses()) { for (GenFeature genFeature : genClass.getGenFeatures()) { if (genFeature.hasAPIDeprecatedTag()) { needsSuppressDeprecation = true; break LOOP; }}
+      for (GenOperation genOperation : genClass.getGenOperations()) { if (genOperation.hasAPIDeprecatedTag()) { needsSuppressDeprecation = true; break LOOP; }}} if (needsSuppressDeprecation) {%>
+	@SuppressWarnings("deprecation")
+    <%}}}%>
 	public void createPackageContents()
 	{
 		if (isCreated) return;
@@ -751,6 +834,9 @@ int maxGenericTypeAssignment = 0;
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+    <%{boolean needsSuppressDeprecation = false; if (!packageNeedsSuppressDeprecation && isJDK50) { LOOP: for (GenEnum genEnum : genPackage.getGenEnums()) { for (GenEnumLiteral genEnumLiteral : genEnum.getGenEnumLiterals()) { if (genEnumLiteral.hasAPIDeprecatedTag()) { needsSuppressDeprecation = true; break LOOP; }}} if (needsSuppressDeprecation) {%>
+	@SuppressWarnings("deprecation")
+    <%}}}%>
 	public void initializePackageContents()
 	{
 		if (isInitialized) return;
@@ -967,18 +1053,18 @@ int maxGenericTypeAssignment = 0;
 	{
 		String source = <%if (annotationSource == null) {%>null;<%} else {%>"<%=annotationSource%>";<%=genModel.getNonNLS()%><%}%>
       <%for (EAnnotation eAnnotation : genPackage.getAllAnnotations()) { List<GenPackage.AnnotationReferenceData> annotationReferenceDataList = genPackage.getReferenceData(eAnnotation);%>
-        <%if (annotationSource == null ? eAnnotation.getSource() == null : annotationSource.equals(eAnnotation.getSource())) {%>	
+        <%if (annotationSource == null ? eAnnotation.getSource() == null : annotationSource.equals(eAnnotation.getSource())) {%>
 		addAnnotation
-		  (<%=genPackage.getAnnotatedModelElementAccessor(eAnnotation)%>, 
-		   source, 
-		   new String[] 
+		  (<%=genPackage.getAnnotatedModelElementAccessor(eAnnotation)%>,
+		   source,
+		   new String[]
 		   {
           <%for (Iterator<Map.Entry<String, String>> k = eAnnotation.getDetails().iterator(); k.hasNext();) { Map.Entry<String, String> detail = k.next(); String key = Literals.toStringLiteral(detail.getKey(), genModel); String value = Literals.toStringLiteral(detail.getValue(), genModel);%>
-			 <%=key%>, <%=value%><%=k.hasNext() ? "," : ""%><%=genModel.getNonNLS(key + value)%>
+			   <%=key%>, <%=value%><%=k.hasNext() ? "," : ""%><%=genModel.getNonNLS(key + value)%>
           <%}%>
 		   }<%if (annotationReferenceDataList.isEmpty()) {%>);<%} else {%>,<%}%>
           <%if (!annotationReferenceDataList.isEmpty()) {%>
-		   new <%=genModel.getImportedName("org.eclipse.emf.common.util.URI")%>[] 
+		   new <%=genModel.getImportedName("org.eclipse.emf.common.util.URI")%>[]
 		   {
             <%for (Iterator<GenPackage.AnnotationReferenceData> k = annotationReferenceDataList.iterator(); k.hasNext();) { GenPackage.AnnotationReferenceData annotationReferenceData = k.next();%>
 			 <%=genModel.getImportedName("org.eclipse.emf.common.util.URI")%>.createURI(<%if (annotationReferenceData.containingGenPackage != genPackage) {%><%=annotationReferenceData.containingGenPackage.getImportedPackageInterfaceName()%>.<%}%>eNS_URI).appendFragment("<%=annotationReferenceData.uriFragment%>")<%if (k.hasNext()) {%>,<%}%><%=genModel.getNonNLS()%>
@@ -987,17 +1073,17 @@ int maxGenericTypeAssignment = 0;
           <%}%>
           <%for (EAnnotation nestedEAnnotation : genPackage.getAllNestedAnnotations(eAnnotation)) {String nestedAnnotationSource = nestedEAnnotation.getSource();  int depth = 0; boolean nonContentAnnotation = false; StringBuilder path = new StringBuilder();  for (EObject eContainer = nestedEAnnotation.eContainer(), child = nestedEAnnotation; child != eAnnotation; child = eContainer, eContainer = eContainer.eContainer())  {  boolean nonContentChild = child.eContainmentFeature() != EcorePackage.Literals.EANNOTATION__CONTENTS; if (path.length() != 0) { path.insert(0, ", ");  } path.insert(0, nonContentChild); if (nonContentChild) { nonContentAnnotation = true; } ++depth;  } List<GenPackage.AnnotationReferenceData> nestedAnnotationReferenceDataList = genPackage.getReferenceData(nestedEAnnotation);%>
 		addAnnotation
-		  (<%=genPackage.getAnnotatedModelElementAccessor(eAnnotation)%>, 
+		  (<%=genPackage.getAnnotatedModelElementAccessor(eAnnotation)%>,
 		   <%if (nonContentAnnotation && genModel.getRuntimeVersion().getValue() >= GenRuntimeVersion.EMF210_VALUE) {%>new boolean[] { <%=path.toString()%> }<%} else {%><%=depth%><%}%>,
 		   <%if (nestedAnnotationSource == null) {%>null,<%} else {%>"<%=nestedAnnotationSource%>",<%=genModel.getNonNLS()%><%}%>
-		   new String[] 
+		   new String[]
 		   {
             <%for (Iterator<Map.Entry<String, String>> l = nestedEAnnotation.getDetails().iterator(); l.hasNext();) { Map.Entry<String, String> detail = l.next(); String key = Literals.toStringLiteral(detail.getKey(), genModel); String value = Literals.toStringLiteral(detail.getValue(), genModel);%>
-			 <%=key%>, <%=value%><%=l.hasNext() ? "," : ""%><%=genModel.getNonNLS(key + value)%>
+			   <%=key%>, <%=value%><%=l.hasNext() ? "," : ""%><%=genModel.getNonNLS(key + value)%>
             <%}%>
 		   }<%if (nestedAnnotationReferenceDataList.isEmpty()) {%>);<%} else {%>,<%}%>
             <%if (!nestedAnnotationReferenceDataList.isEmpty()) {%>
-		   new <%=genModel.getImportedName("org.eclipse.emf.common.util.URI")%>[] 
+		   new <%=genModel.getImportedName("org.eclipse.emf.common.util.URI")%>[]
 		   {
             <%for (Iterator<GenPackage.AnnotationReferenceData> l = nestedAnnotationReferenceDataList.iterator(); l.hasNext();) { GenPackage.AnnotationReferenceData annotationReferenceData = l.next();%>
 			 <%=genModel.getImportedName("org.eclipse.emf.common.util.URI")%>.createURI(<%if (annotationReferenceData.containingGenPackage != genPackage) {%><%=annotationReferenceData.containingGenPackage.getImportedPackageInterfaceName()%>.<%}%>eNS_URI).appendFragment("<%=annotationReferenceData.uriFragment%>")<%if (l.hasNext()) {%>,<%}%><%=genModel.getNonNLS()%>
@@ -1124,7 +1210,7 @@ int maxGenericTypeAssignment = 0;
 		o.setOrdered(isOrdered);
 		return o;
 	}
-	
+
   <%}%>
   <%if (needsAddEParameter) {%>
 	/**
@@ -1144,7 +1230,7 @@ int maxGenericTypeAssignment = 0;
 		owner.getEParameters().add(p);
 		return p;
 	}
-	
+
   <%}%>
 <%}%>
 <%if (isInterface && genPackage.isLiteralsInterface()) {%>
@@ -1193,8 +1279,14 @@ int maxGenericTypeAssignment = 0;
       <%}%>
     <%}%>
 		 * @see <%=genPackage.getQualifiedPackageClassName()%>#get<%=genClassifier.getClassifierAccessorName()%>()
+    <%if (genClassifier.hasAPITags()) {%>
+		 * <%=genClassifier.getAPITags(genModel.getIndentation(stringBuffer))%>
+    <%}%>
 		 * @generated
 		 */
+  <%if (isJDK50 && genClassifier.hasAPIDeprecatedTag()) {%>
+		@Deprecated
+  <%}%>
 		<%=publicStaticFinalFlag%><%=genClassifier.getImportedMetaType()%> <%=genPackage.getClassifierID(genClassifier)%> = eINSTANCE.get<%=genClassifier.getClassifierAccessorName()%>();
 
     <%if (genClassifier instanceof GenClass) { GenClass genClass = (GenClass)genClassifier;%>
@@ -1203,8 +1295,14 @@ int maxGenericTypeAssignment = 0;
 		 * The meta object literal for the '<em><b><%=genFeature.getFormattedName()%></b></em>' <%=genFeature.getFeatureKind()%> feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+        <%if (genFeature.hasImplicitAPITags()) {%>
+		 * <%=genFeature.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
+        <%}%>
 		 * @generated
 		 */
+        <%if (isJDK50 && genFeature.hasImplicitAPIDeprecatedTag()) {%>
+		@Deprecated
+        <%}%>
 		<%=publicStaticFinalFlag%><%=genFeature.getImportedMetaType()%> <%=genClass.getFeatureID(genFeature)%> = eINSTANCE.get<%=genFeature.getFeatureAccessorName()%>();
 
       <%}%>
@@ -1214,8 +1312,14 @@ int maxGenericTypeAssignment = 0;
 		 * The meta object literal for the '<em><b><%=genOperation.getFormattedName()%></b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+          <%if (genOperation.hasImplicitAPITags()) {%>
+		 * <%=genOperation.getImplicitAPITags(genModel.getIndentation(stringBuffer))%>
+          <%}%>
 		 * @generated
 		 */
+        <%if (isJDK50 && genOperation.hasImplicitAPIDeprecatedTag()) {%>
+		@Deprecated
+        <%}%>
 		<%=publicStaticFinalFlag%><%=genOperation.getImportedMetaType()%> <%=genClass.getOperationID(genOperation, false)%> = eINSTANCE.get<%=genOperation.getOperationAccessorName()%>();
 
         <%}%>
