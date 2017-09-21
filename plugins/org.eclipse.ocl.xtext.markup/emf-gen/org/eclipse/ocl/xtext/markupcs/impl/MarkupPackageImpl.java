@@ -173,7 +173,7 @@ public class MarkupPackageImpl extends EPackageImpl implements MarkupPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link MarkupPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -187,8 +187,8 @@ public class MarkupPackageImpl extends EPackageImpl implements MarkupPackage {
 		if (isInited) return (MarkupPackage)EPackage.Registry.INSTANCE.getEPackage(MarkupPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		MarkupPackageImpl theMarkupPackage = (MarkupPackageImpl)(ePackage instanceof MarkupPackageImpl ? ePackage : new MarkupPackageImpl());
+		Object registeredMarkupPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		MarkupPackageImpl theMarkupPackage = registeredMarkupPackage instanceof MarkupPackageImpl ? (MarkupPackageImpl)registeredMarkupPackage : new MarkupPackageImpl();
 
 		isInited = true;
 
@@ -201,7 +201,6 @@ public class MarkupPackageImpl extends EPackageImpl implements MarkupPackage {
 		// Mark meta-data to indicate it can't be changed
 		theMarkupPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(MarkupPackage.eNS_URI, theMarkupPackage);
 		return theMarkupPackage;

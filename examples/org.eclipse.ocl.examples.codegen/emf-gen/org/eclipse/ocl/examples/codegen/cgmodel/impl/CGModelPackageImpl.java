@@ -917,7 +917,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link CGModelPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -931,8 +931,8 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		if (isInited) return (CGModelPackage)EPackage.Registry.INSTANCE.getEPackage(CGModelPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		CGModelPackageImpl theCGModelPackage = (CGModelPackageImpl)(ePackage instanceof CGModelPackageImpl ? ePackage : new CGModelPackageImpl());
+		Object registeredCGModelPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		CGModelPackageImpl theCGModelPackage = registeredCGModelPackage instanceof CGModelPackageImpl ? (CGModelPackageImpl)registeredCGModelPackage : new CGModelPackageImpl();
 
 		isInited = true;
 
@@ -945,7 +945,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		// Mark meta-data to indicate it can't be changed
 		theCGModelPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(CGModelPackage.eNS_URI, theCGModelPackage);
 		return theCGModelPackage;
@@ -3825,13 +3824,13 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	protected void createImportAnnotations() {
-		String source = "http://www.eclipse.org/OCL/Import";	
+		String source = "http://www.eclipse.org/OCL/Import";
 		addAnnotation
-		  (this, 
-		   source, 
-		   new String[] {
-			 "ecore", "http://www.eclipse.org/emf/2002/Ecore#/"
-		   });
+		(this,
+			source,
+			new String[] {
+				"ecore", "http://www.eclipse.org/emf/2002/Ecore#/"
+		});
 	}
 
 } //CGModelPackageImpl

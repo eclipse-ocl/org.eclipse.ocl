@@ -502,7 +502,7 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link BaseCSPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -516,8 +516,8 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		if (isInited) return (BaseCSPackage)EPackage.Registry.INSTANCE.getEPackage(BaseCSPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		BaseCSPackageImpl theBaseCSPackage = (BaseCSPackageImpl)(ePackage instanceof BaseCSPackageImpl ? ePackage : new BaseCSPackageImpl());
+		Object registeredBaseCSPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		BaseCSPackageImpl theBaseCSPackage = registeredBaseCSPackage instanceof BaseCSPackageImpl ? (BaseCSPackageImpl)registeredBaseCSPackage : new BaseCSPackageImpl();
 
 		isInited = true;
 
@@ -533,7 +533,6 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		// Mark meta-data to indicate it can't be changed
 		theBaseCSPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(BaseCSPackage.eNS_URI, theBaseCSPackage);
 		return theBaseCSPackage;

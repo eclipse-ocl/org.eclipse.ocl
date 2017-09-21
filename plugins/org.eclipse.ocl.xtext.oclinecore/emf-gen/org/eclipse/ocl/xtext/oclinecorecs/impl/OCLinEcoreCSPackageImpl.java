@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSFactory;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -77,7 +78,7 @@ public class OCLinEcoreCSPackageImpl extends EPackageImpl implements OCLinEcoreC
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link OCLinEcoreCSPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -91,13 +92,14 @@ public class OCLinEcoreCSPackageImpl extends EPackageImpl implements OCLinEcoreC
 		if (isInited) return (OCLinEcoreCSPackage)EPackage.Registry.INSTANCE.getEPackage(OCLinEcoreCSPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		OCLinEcoreCSPackageImpl theOCLinEcoreCSPackage = (OCLinEcoreCSPackageImpl)(ePackage instanceof OCLinEcoreCSPackageImpl ? ePackage : new OCLinEcoreCSPackageImpl());
+		Object registeredOCLinEcoreCSPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		OCLinEcoreCSPackageImpl theOCLinEcoreCSPackage = registeredOCLinEcoreCSPackage instanceof OCLinEcoreCSPackageImpl ? (OCLinEcoreCSPackageImpl)registeredOCLinEcoreCSPackage : new OCLinEcoreCSPackageImpl();
 
 		isInited = true;
 
 		// Initialize simple dependencies
 		BaseCSPackage.eINSTANCE.eClass();
+		PivotPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theOCLinEcoreCSPackage.createPackageContents();
@@ -108,7 +110,6 @@ public class OCLinEcoreCSPackageImpl extends EPackageImpl implements OCLinEcoreC
 		// Mark meta-data to indicate it can't be changed
 		theOCLinEcoreCSPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(OCLinEcoreCSPackage.eNS_URI, theOCLinEcoreCSPackage);
 		return theOCLinEcoreCSPackage;

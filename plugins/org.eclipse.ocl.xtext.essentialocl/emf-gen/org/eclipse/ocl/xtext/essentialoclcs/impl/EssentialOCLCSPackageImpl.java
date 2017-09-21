@@ -474,13 +474,14 @@ implements EssentialOCLCSPackage {
 		if (isInited) return (EssentialOCLCSPackage)EPackage.Registry.INSTANCE.getEPackage(EssentialOCLCSPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		EssentialOCLCSPackageImpl theEssentialOCLCSPackage = (EssentialOCLCSPackageImpl)(ePackage instanceof EssentialOCLCSPackageImpl ? ePackage : new EssentialOCLCSPackageImpl());
+		Object registeredEssentialOCLCSPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		EssentialOCLCSPackageImpl theEssentialOCLCSPackage = registeredEssentialOCLCSPackage instanceof EssentialOCLCSPackageImpl ? (EssentialOCLCSPackageImpl)registeredEssentialOCLCSPackage : new EssentialOCLCSPackageImpl();
 
 		isInited = true;
 
 		// Initialize simple dependencies
 		BaseCSPackage.eINSTANCE.eClass();
+		PivotPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theEssentialOCLCSPackage.createPackageContents();
@@ -490,7 +491,6 @@ implements EssentialOCLCSPackage {
 
 		// Mark meta-data to indicate it can't be changed
 		theEssentialOCLCSPackage.freeze();
-
 
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(EssentialOCLCSPackage.eNS_URI, theEssentialOCLCSPackage);

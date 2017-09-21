@@ -40,8 +40,8 @@ import org.eclipse.ocl.xtext.oclstdlibcs.PrecedenceCS;
  * @generated
  */
 public class OCLstdlibCSPackageImpl
-		extends EPackageImpl
-		implements OCLstdlibCSPackage {
+extends EPackageImpl
+implements OCLstdlibCSPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -155,7 +155,7 @@ public class OCLstdlibCSPackageImpl
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link OCLstdlibCSPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -169,13 +169,14 @@ public class OCLstdlibCSPackageImpl
 		if (isInited) return (OCLstdlibCSPackage)EPackage.Registry.INSTANCE.getEPackage(OCLstdlibCSPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		OCLstdlibCSPackageImpl theOCLstdlibCSPackage = (OCLstdlibCSPackageImpl)(ePackage instanceof OCLstdlibCSPackageImpl ? ePackage : new OCLstdlibCSPackageImpl());
+		Object registeredOCLstdlibCSPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		OCLstdlibCSPackageImpl theOCLstdlibCSPackage = registeredOCLstdlibCSPackage instanceof OCLstdlibCSPackageImpl ? (OCLstdlibCSPackageImpl)registeredOCLstdlibCSPackage : new OCLstdlibCSPackageImpl();
 
 		isInited = true;
 
 		// Initialize simple dependencies
 		BaseCSPackage.eINSTANCE.eClass();
+		PivotPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theOCLstdlibCSPackage.createPackageContents();
@@ -186,7 +187,6 @@ public class OCLstdlibCSPackageImpl
 		// Mark meta-data to indicate it can't be changed
 		theOCLstdlibCSPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(OCLstdlibCSPackage.eNS_URI, theOCLstdlibCSPackage);
 		return theOCLstdlibCSPackage;

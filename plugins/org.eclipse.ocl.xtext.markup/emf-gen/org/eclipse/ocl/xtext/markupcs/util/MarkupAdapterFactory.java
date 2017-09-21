@@ -88,71 +88,71 @@ public class MarkupAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected MarkupSwitch<@Nullable Adapter> modelSwitch =
 			new MarkupSwitch<@Nullable Adapter>() {
-			@Override
-			public Adapter caseBulletElement(BulletElement object) {
-				return createBulletElementAdapter();
-			}
-			@Override
-			public Adapter caseCompoundElement(CompoundElement object) {
-				return createCompoundElementAdapter();
-			}
-			@Override
-			public Adapter caseFigureElement(FigureElement object) {
-				return createFigureElementAdapter();
-			}
-			@Override
-			public Adapter caseFigureRefElement(FigureRefElement object) {
-				return createFigureRefElementAdapter();
-			}
-			@Override
-			public Adapter caseFontElement(FontElement object) {
-				return createFontElementAdapter();
-			}
-			@Override
-			public Adapter caseFootnoteElement(FootnoteElement object) {
-				return createFootnoteElementAdapter();
-			}
-			@Override
-			public Adapter caseHeadingElement(HeadingElement object) {
-				return createHeadingElementAdapter();
-			}
-			@Override
-			public Adapter caseMarkup(Markup object) {
-				return createMarkupAdapter();
-			}
-			@Override
-			public Adapter caseMarkupElement(MarkupElement object) {
-				return createMarkupElementAdapter();
-			}
-			@Override
-			public Adapter caseNewLineElement(NewLineElement object) {
-				return createNewLineElementAdapter();
-			}
-			@Override
-			public Adapter caseNullElement(NullElement object) {
-				return createNullElementAdapter();
-			}
-			@Override
-			public Adapter caseOCLCodeElement(OCLCodeElement object) {
-				return createOCLCodeElementAdapter();
-			}
-			@Override
-			public Adapter caseOCLEvalElement(OCLEvalElement object) {
-				return createOCLEvalElementAdapter();
-			}
-			@Override
-			public Adapter caseOCLTextElement(OCLTextElement object) {
-				return createOCLTextElementAdapter();
-			}
-			@Override
-			public Adapter caseTextElement(TextElement object) {
-				return createTextElementAdapter();
-			}
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseBulletElement(BulletElement object) {
+			return createBulletElementAdapter();
+		}
+		@Override
+		public Adapter caseCompoundElement(CompoundElement object) {
+			return createCompoundElementAdapter();
+		}
+		@Override
+		public Adapter caseFigureElement(FigureElement object) {
+			return createFigureElementAdapter();
+		}
+		@Override
+		public Adapter caseFigureRefElement(FigureRefElement object) {
+			return createFigureRefElementAdapter();
+		}
+		@Override
+		public Adapter caseFontElement(FontElement object) {
+			return createFontElementAdapter();
+		}
+		@Override
+		public Adapter caseFootnoteElement(FootnoteElement object) {
+			return createFootnoteElementAdapter();
+		}
+		@Override
+		public Adapter caseHeadingElement(HeadingElement object) {
+			return createHeadingElementAdapter();
+		}
+		@Override
+		public Adapter caseMarkup(Markup object) {
+			return createMarkupAdapter();
+		}
+		@Override
+		public Adapter caseMarkupElement(MarkupElement object) {
+			return createMarkupElementAdapter();
+		}
+		@Override
+		public Adapter caseNewLineElement(NewLineElement object) {
+			return createNewLineElementAdapter();
+		}
+		@Override
+		public Adapter caseNullElement(NullElement object) {
+			return createNullElementAdapter();
+		}
+		@Override
+		public Adapter caseOCLCodeElement(OCLCodeElement object) {
+			return createOCLCodeElementAdapter();
+		}
+		@Override
+		public Adapter caseOCLEvalElement(OCLEvalElement object) {
+			return createOCLEvalElementAdapter();
+		}
+		@Override
+		public Adapter caseOCLTextElement(OCLTextElement object) {
+			return createOCLTextElementAdapter();
+		}
+		@Override
+		public Adapter caseTextElement(TextElement object) {
+			return createTextElementAdapter();
+		}
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

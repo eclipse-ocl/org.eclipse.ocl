@@ -40,8 +40,8 @@ import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
  * @generated
  */
 public class CompleteOCLCSPackageImpl
-		extends EPackageImpl
-		implements CompleteOCLCSPackage {
+extends EPackageImpl
+implements CompleteOCLCSPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -155,7 +155,7 @@ public class CompleteOCLCSPackageImpl
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link CompleteOCLCSPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -169,13 +169,15 @@ public class CompleteOCLCSPackageImpl
 		if (isInited) return (CompleteOCLCSPackage)EPackage.Registry.INSTANCE.getEPackage(CompleteOCLCSPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object ePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		CompleteOCLCSPackageImpl theCompleteOCLCSPackage = (CompleteOCLCSPackageImpl)(ePackage instanceof CompleteOCLCSPackageImpl ? ePackage : new CompleteOCLCSPackageImpl());
+		Object registeredCompleteOCLCSPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		CompleteOCLCSPackageImpl theCompleteOCLCSPackage = registeredCompleteOCLCSPackage instanceof CompleteOCLCSPackageImpl ? (CompleteOCLCSPackageImpl)registeredCompleteOCLCSPackage : new CompleteOCLCSPackageImpl();
 
 		isInited = true;
 
 		// Initialize simple dependencies
+		BaseCSPackage.eINSTANCE.eClass();
 		EssentialOCLCSPackage.eINSTANCE.eClass();
+		PivotPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theCompleteOCLCSPackage.createPackageContents();
@@ -186,7 +188,6 @@ public class CompleteOCLCSPackageImpl
 		// Mark meta-data to indicate it can't be changed
 		theCompleteOCLCSPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(CompleteOCLCSPackage.eNS_URI, theCompleteOCLCSPackage);
 		return theCompleteOCLCSPackage;

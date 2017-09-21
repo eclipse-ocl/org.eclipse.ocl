@@ -30829,6 +30829,9 @@ extends EPackage
 	 * Returns the meta object for data type '<em>Boolean</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Boolean is used for logical expressions, consisting of the predefined values true and false.
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Boolean</em>'.
 	 * @generated
 	 */
@@ -30838,6 +30841,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Integer is a primitive type representing integer values.
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Integer</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -30868,6 +30874,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Real is a primitive type representing the mathematical concept of real.
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Real</em>'.
 	 * @see java.lang.Number
 	 * @generated
@@ -30878,6 +30887,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.String <em>String</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>String</em>'.
 	 * @see java.lang.String
 	 * @generated
@@ -30898,6 +30910,9 @@ extends EPackage
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Unlimited Natural</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * UnlimitedNatural is a primitive type representing unlimited natural values.
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
 	 * @see java.lang.Number
 	 * @generated
