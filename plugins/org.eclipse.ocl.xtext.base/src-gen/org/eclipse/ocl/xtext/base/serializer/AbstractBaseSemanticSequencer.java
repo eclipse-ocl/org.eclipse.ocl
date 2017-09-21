@@ -117,7 +117,7 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementUnrestrictedNameParserRuleCall_0_1(), semanticObject.getReferredElement());
+		feeder.accept(grammarAccess.getFirstPathElementCSAccess().getReferredElementNamedElementUnrestrictedNameParserRuleCall_0_1(), semanticObject.eGet(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, false));
 		feeder.finish();
 	}
 
@@ -183,7 +183,7 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementUnreservedNameParserRuleCall_0_1(), semanticObject.getReferredElement());
+		feeder.accept(grammarAccess.getNextPathElementCSAccess().getReferredElementNamedElementUnreservedNameParserRuleCall_0_1(), semanticObject.eGet(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, false));
 		feeder.finish();
 	}
 

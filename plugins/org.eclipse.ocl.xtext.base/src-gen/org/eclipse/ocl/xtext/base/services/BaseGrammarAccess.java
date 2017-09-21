@@ -83,7 +83,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//'['
 		public Keyword getLeftSquareBracketKeyword_0() { return cLeftSquareBracketKeyword_0; }
 
-		//(MultiplicityBoundsCS | MultiplicityStringCS)
+		//MultiplicityBoundsCS | MultiplicityStringCS
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
 		//MultiplicityBoundsCS
@@ -179,7 +179,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cReferredElementNamedElementUnrestrictedNameParserRuleCall_0_1 = (RuleCall)cReferredElementNamedElementCrossReference_0.eContents().get(1);
 
 		//FirstPathElementCS PathElementCS:
-		//	referredElement=[pivot::NamedElement|UnrestrictedName]
+		//	referredElement=[pivot::NamedElement|UnrestrictedName];
 		@Override public ParserRule getRule() { return rule; }
 
 		//referredElement=[pivot::NamedElement|UnrestrictedName]
@@ -199,7 +199,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cReferredElementNamedElementUnreservedNameParserRuleCall_0_1 = (RuleCall)cReferredElementNamedElementCrossReference_0.eContents().get(1);
 
 		//NextPathElementCS PathElementCS:
-		//	referredElement=[pivot::NamedElement|UnreservedName]
+		//	referredElement=[pivot::NamedElement|UnreservedName];
 		@Override public ParserRule getRule() { return rule; }
 
 		//referredElement=[pivot::NamedElement|UnreservedName]
@@ -540,9 +540,9 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.LOWER");
 		private final RuleCall cINTTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 
-		/// * A lowerbounded integer is used to define the lowerbound of a collection multiplicity. The value may not be the unlimited value. * /
+		///* A lowerbounded integer is used to define the lowerbound of a collection multiplicity. The value may not be the unlimited value. */
 		//LOWER ecore::EInt:
-		//	INT
+		//	INT;
 		@Override public ParserRule getRule() { return rule; }
 
 		//INT
@@ -553,13 +553,13 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.NUMBER_LITERAL");
 		private final RuleCall cINTTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 
-		/// * A number may be an integer or floating point value. The declaration here appears to be that for just an integer. This is to avoid
+		///* A number may be an integer or floating point value. The declaration here appears to be that for just an integer. This is to avoid
 		// * lookahead conflicts in simple lexers between a dot within a floating point number and the dot-dot in a CollectionLiteralPartCS. A
 		// * practical implementation should give high priority to a successful parse of INT ('.' INT)? (('e' | 'E') ('+' | '-')? INT)? than
 		// * to the unsuccessful partial parse of INT '..'. The type of the INT terminal is String to allow the floating point syntax to be used.
-		// * /
+		// */
 		//NUMBER_LITERAL BigNumber:
-		//	INT
+		//	INT;
 		@Override public ParserRule getRule() { return rule; }
 
 		//// Not terminal to allow parser backtracking to sort out "5..7"
@@ -586,9 +586,9 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cINTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final Keyword cAsteriskKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
 
-		/// * An upperbounded integer is used to define the upperbound of a collection multiplicity. The value may be the unlimited value. * /
+		///* An upperbounded integer is used to define the upperbound of a collection multiplicity. The value may be the unlimited value. */
 		//UPPER ecore::EInt:
-		//	INT | '*'
+		//	INT | '*';
 		@Override public ParserRule getRule() { return rule; }
 
 		//INT | '*'
@@ -756,7 +756,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FirstPathElementCS PathElementCS:
-	//	referredElement=[pivot::NamedElement|UnrestrictedName]
+	//	referredElement=[pivot::NamedElement|UnrestrictedName];
 	public FirstPathElementCSElements getFirstPathElementCSAccess() {
 		return pFirstPathElementCS;
 	}
@@ -766,7 +766,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//NextPathElementCS PathElementCS:
-	//	referredElement=[pivot::NamedElement|UnreservedName]
+	//	referredElement=[pivot::NamedElement|UnreservedName];
 	public NextPathElementCSElements getNextPathElementCSAccess() {
 		return pNextPathElementCS;
 	}
@@ -896,9 +896,9 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		return getIdentifierAccess().getRule();
 	}
 
-	/// * A lowerbounded integer is used to define the lowerbound of a collection multiplicity. The value may not be the unlimited value. * /
+	///* A lowerbounded integer is used to define the lowerbound of a collection multiplicity. The value may not be the unlimited value. */
 	//LOWER ecore::EInt:
-	//	INT
+	//	INT;
 	public LOWERElements getLOWERAccess() {
 		return pLOWER;
 	}
@@ -907,13 +907,13 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		return getLOWERAccess().getRule();
 	}
 
-	/// * A number may be an integer or floating point value. The declaration here appears to be that for just an integer. This is to avoid
+	///* A number may be an integer or floating point value. The declaration here appears to be that for just an integer. This is to avoid
 	// * lookahead conflicts in simple lexers between a dot within a floating point number and the dot-dot in a CollectionLiteralPartCS. A
 	// * practical implementation should give high priority to a successful parse of INT ('.' INT)? (('e' | 'E') ('+' | '-')? INT)? than
 	// * to the unsuccessful partial parse of INT '..'. The type of the INT terminal is String to allow the floating point syntax to be used.
-	// * /
+	// */
 	//NUMBER_LITERAL BigNumber:
-	//	INT
+	//	INT;
 	public NUMBER_LITERALElements getNUMBER_LITERALAccess() {
 		return pNUMBER_LITERAL;
 	}
@@ -933,9 +933,9 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		return getStringLiteralAccess().getRule();
 	}
 
-	/// * An upperbounded integer is used to define the upperbound of a collection multiplicity. The value may be the unlimited value. * /
+	///* An upperbounded integer is used to define the upperbound of a collection multiplicity. The value may be the unlimited value. */
 	//UPPER ecore::EInt:
-	//	INT | '*'
+	//	INT | '*';
 	public UPPERElements getUPPERAccess() {
 		return pUPPER;
 	}
@@ -1003,7 +1003,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal ML_COMMENT:
-	//	'/ *'->'* /';
+	//	'/*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return tML_COMMENT;
 	}

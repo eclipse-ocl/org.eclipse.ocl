@@ -135,7 +135,7 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getFigureRefElementAccess().getRefFigureElementIDTerminalRuleCall_2_0_1(), semanticObject.getRef());
+		feeder.accept(grammarAccess.getFigureRefElementAccess().getRefFigureElementIDTerminalRuleCall_2_0_1(), semanticObject.eGet(MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF, false));
 		feeder.finish();
 	}
 

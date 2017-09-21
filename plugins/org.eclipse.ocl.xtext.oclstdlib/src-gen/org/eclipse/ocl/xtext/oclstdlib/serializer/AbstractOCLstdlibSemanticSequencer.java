@@ -780,7 +780,7 @@ public abstract class AbstractOCLstdlibSemanticSequencer extends EssentialOCLSem
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getLibPathElementCSAccess().getReferredElementNamedElementNameParserRuleCall_0_1(), semanticObject.getReferredElement());
+		feeder.accept(grammarAccess.getLibPathElementCSAccess().getReferredElementNamedElementNameParserRuleCall_0_1(), semanticObject.eGet(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, false));
 		feeder.finish();
 	}
 
