@@ -1,2 +1,2 @@
-<%@ jet package="org.eclipse.ocl.examples.build.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.util.CodeGenUtil org.eclipse.ocl.examples.build.genmodel.OCLBuildGenModelUtil org.eclipse.ocl.examples.build.modelspecs.ModelSpec" class="Class"%>
+<%@ jet package="org.eclipse.ocl.examples.build.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil org.eclipse.emf.codegen.util.CodeGenUtil org.eclipse.ocl.examples.build.genmodel.OCLBuildGenModelUtil org.eclipse.ocl.examples.build.modelspecs.ModelSpec" class="Class"%>
 <%@ include file="Class.javajet"%>
