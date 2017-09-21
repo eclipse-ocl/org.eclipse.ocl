@@ -1,4 +1,4 @@
-<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil" class="SwitchClass"%>
+<%@ jet package="org.eclipse.ocl.examples.build.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil" class="SwitchClass"%>
 <%
 /**
  * Copyright (c) 2002-2006 IBM Corporation and others.
@@ -25,6 +25,7 @@ package <%=genPackage.getUtilitiesPackageName()%>;
 <%genModel.addImport("org.eclipse.emf.ecore.EClass");%>
 <%genModel.addImport("org.eclipse.emf.ecore.EObject");%>
 <%}%>
+<%genModel.addImport("org.eclipse.jdt.annotation.Nullable");%>
 <%if (!genPackage.hasJavaLangConflict() && !genPackage.getUtilitiesPackageName().equals(genPackage.getInterfacePackageName())) genModel.addImport(genPackage.getInterfacePackageName() + ".*");%>
 <%
 String templateParameterName = null;
@@ -78,7 +79,7 @@ if (genModel.useGenerics())
 <%} else if (isJDK50 && GenModelUtil.hasAPIDeprecatedTag(genPackage.getGenClasses())) {%>
 	@SuppressWarnings("deprecation")
 <%}%>
-public class <%=genPackage.getSwitchClassName()%><%=templateParameters%><%if (supportsComposition){%> extends Switch<%=templateParameters%><%}%>
+public class <%=genPackage.getSwitchClassName()%><@Nullable <%=templateParameters.substring(1)%><%if (supportsComposition){%> extends Switch<%=templateParameters%><%}%>
 {
 <%if (genModel.hasCopyrightField()) {%>
 	/**
