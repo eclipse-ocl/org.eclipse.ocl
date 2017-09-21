@@ -1,4 +1,4 @@
-<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.*" class="AdapterFactoryClass"%>
+<%@ jet package="org.eclipse.ocl.examples.build.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.*" class="AdapterFactoryClass"%>
 <%
 /**
  * Copyright (c) 2002-2006 IBM Corporation and others.
@@ -19,6 +19,7 @@ package <%=genPackage.getUtilitiesPackageName()%>;
 <%genModel.addImport("org.eclipse.emf.common.notify.Notifier");%>
 <%genModel.addImport("org.eclipse.emf.common.notify.impl.AdapterFactoryImpl");%>
 <%genModel.addImport("org.eclipse.emf.ecore.EObject");%>
+<%genModel.addImport("org.eclipse.jdt.annotation.Nullable");%>
 <%if (!genPackage.hasJavaLangConflict() && !genPackage.getUtilitiesPackageName().equals(genPackage.getInterfacePackageName())) genModel.addImport(genPackage.getInterfacePackageName() + ".*");%>
 <%String typeArgument = genModel.useGenerics() ? "<Adapter>" : "";%>
 <%String returnType = genModel.useGenerics() ? "Adapter" : genModel.getImportedName("java.lang.Object");%>
@@ -96,8 +97,8 @@ public class <%=genPackage.getAdapterFactoryClassName()%> extends AdapterFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected <%=genPackage.getSwitchClassName()%><%=typeArgument%> modelSwitch =
-		new <%=genPackage.getSwitchClassName()%><%=typeArgument%>()
+	protected <%=genPackage.getSwitchClassName()%><@Nullable <%=typeArgument.substring(1)%> modelSwitch =
+		new <%=genPackage.getSwitchClassName()%><@Nullable <%=typeArgument.substring(1)%>()
 		{
 <%for (GenClass genClass : genPackage.getAllSwitchGenClasses()) {%>
   <%if (genModel.useClassOverrideAnnotation()) {%>
