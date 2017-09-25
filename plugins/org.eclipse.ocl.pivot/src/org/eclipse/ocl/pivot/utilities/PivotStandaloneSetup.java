@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.internal.scoping.PivotScoping;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.LabelGeneratorRegistry;
@@ -39,13 +40,13 @@ import com.google.inject.Injector;
 public class PivotStandaloneSetup //implements ISetup
 {
 	private static Injector injector = null;
-	
+
 	public static void doSetup() {
 		if (injector == null) {
 			new PivotStandaloneSetup().createInjectorAndDoEMFRegistration();
 		}
 	}
-	
+
 	public static void doTearDown() {
 		injector = null;
 	}
@@ -59,13 +60,14 @@ public class PivotStandaloneSetup //implements ISetup
 			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(ASResource.FILE_EXTENSION, theOCLASResourceFactory);
 		}
 		EcorePackage.eINSTANCE.getClass();
+		PivotEAnnotationValidator.initializeEcoreEAnnotationValidators();
 		PivotScoping.init();
 		ToStringVisitor.FACTORY.getClass();
 		EPackage.Registry.INSTANCE.put(PivotPackage.eNS_URI, PivotPackage.eINSTANCE);
 		EValidator.Registry.INSTANCE.put(PivotPackage.eINSTANCE, PivotValidator.INSTANCE);
 		LabelGeneratorRegistry.initialize(ILabelGenerator.Registry.INSTANCE);
 	}
-	
+
 	/**
 	 * Return the Injector for this plugin.
 	 */
@@ -100,12 +102,12 @@ public class PivotStandaloneSetup //implements ISetup
 		register(injector);
 		return injector;
 	}
-	
+
 	public void register(Injector injector) {
-//		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
-//		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);
-//		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("essentialocl", resourceFactory);
-//		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("essentialocl", serviceProvider);
+		//		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
+		//		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);
+		//		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("essentialocl", resourceFactory);
+		//		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("essentialocl", serviceProvider);
 	}
 }
 
