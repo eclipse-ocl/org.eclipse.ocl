@@ -57,7 +57,7 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public class ValidityManager
-{	
+{
 	private static final @NonNull Map<@Nullable String, @NonNull List<ConstraintLocator.@NonNull Descriptor>> constraintLocatorDescriptors = new HashMap<@Nullable String, @NonNull List<ConstraintLocator.@NonNull Descriptor>>();
 	private static final @NonNull Map<@NonNull String, @NonNull List<@NonNull ConstraintLocator>> constraintLocators = new HashMap<@NonNull String, @NonNull List<@NonNull ConstraintLocator>>();
 
@@ -67,7 +67,7 @@ public class ValidityManager
 	public static final @NonNull TracingOption CREATE_RESULT = new TracingOption(ValidityPlugin.PLUGIN_ID, "create/result");
 	public static final @NonNull TracingOption CREATE_VALIDATABLE = new TracingOption(ValidityPlugin.PLUGIN_ID, "create/validatable");
 	public static final @NonNull TracingOption LOCATE_RESOURCE = new TracingOption(ValidityPlugin.PLUGIN_ID, "locate/resource");
-	
+
 	public static final @NonNull Map<ILabelGenerator.@NonNull Option<?>, @Nullable Object> LABEL_OPTIONS = new HashMap<ILabelGenerator.@NonNull Option<?>, @Nullable Object>();
 	static {
 		LABEL_OPTIONS.put(ILabelGenerator.Builder.SHOW_QUALIFIER, null);
@@ -76,11 +76,11 @@ public class ValidityManager
 	private final @NonNull LinkedHashSet<@NonNull Resource> newResources = new LinkedHashSet<@NonNull Resource>();
 
 	private final @NonNull Set<@NonNull Resource> oldResources = new HashSet<@NonNull Resource>();
-	
+
 	/**
 	 * This add the corresponding constraint locator if it exists in the list of
 	 * defined descriptors.
-	 * 
+	 *
 	 * @param nsURI
 	 *            the nsURI of the validated resource
 	 * @param constraintLocator
@@ -144,7 +144,7 @@ public class ValidityManager
 		}
 		return list;
 	}
-	
+
 	protected final @NonNull ComposedAdapterFactory adapterFactory;
 	protected final @NonNull Map<@NonNull ResultValidatableNode, @NonNull Result> resultsMap = new HashMap<@NonNull ResultValidatableNode, @NonNull Result>();
 	protected final @SuppressWarnings("null")@NonNull Map<Object, Object> context = Diagnostician.INSTANCE.createDefaultContext();
@@ -154,10 +154,10 @@ public class ValidityManager
 	private @Nullable Object lastInput = null;
 
 	public ValidityManager() {
-	    adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-	    adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-	    adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
-	    adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 	}
 
 	public void addConstrainingFilter(@NonNull IVisibilityFilter filter) {
@@ -166,7 +166,7 @@ public class ValidityManager
 			model2.addConstrainingFilter(filter);
 		}
 	}
-	
+
 	public void addFilteredSeverity(@NonNull Severity severity) {
 		ValidityModel model2 = model;
 		if (model2 != null) {
@@ -231,7 +231,7 @@ public class ValidityManager
 		lastResultSet = null;
 		resultsMap.clear();
 	}
-	
+
 	protected @Nullable Set<@NonNull ConstraintLocator> gatherConstraintLocators(@Nullable Set<@NonNull ConstraintLocator> set, @NonNull List<@NonNull ConstraintLocator> list) {
 		if (set == null) {
 			set = new HashSet<@NonNull ConstraintLocator>();
@@ -270,10 +270,10 @@ public class ValidityManager
 		}
 		return results;
 	}
-	
+
 	/**
 	 * Returns the eObject uri
-	 * 
+	 *
 	 * @param eObject
 	 * @return the eObject uri
 	 */
@@ -325,7 +325,7 @@ public class ValidityManager
 		appendResourceURI(s, eObject);
 		return s.toString();
 	}
-	
+
 	public @Nullable ValidityModel getModel() {
 		return model;
 	}
@@ -378,7 +378,7 @@ public class ValidityManager
 	public @NonNull String getValidatableLabel(@NonNull EObject eObject, boolean withContext) {
 		StringBuilder s = new StringBuilder();
 		s.append(LabelUtil.SIMPLE_NAME_REGISTRY.labelFor(eObject, LABEL_OPTIONS));
-/*		if (eObject instanceof ENamedElement) {
+		/*		if (eObject instanceof ENamedElement) {
 			s.append(((ENamedElement)eObject).getName());
 		}
 		else {
@@ -410,7 +410,7 @@ public class ValidityManager
 
 	/**
 	 * Returns the eObject uri
-	 * 
+	 *
 	 * @param eObject
 	 * @return the eObject uri
 	 */
@@ -425,7 +425,7 @@ public class ValidityManager
 		this.forceRefresh = false;
 	}
 
-/*	public void refreshModel(List<AbstractNode> grayedValidatableNodes,
+	/*	public void refreshModel(List<AbstractNode> grayedValidatableNodes,
 			List<AbstractNode> grayedConstrainingNodes) {
 		model.refreshModel(grayedValidatableNodes, grayedConstrainingNodes);
 		RootNode rootNode = validityModel.getRootNode();
@@ -439,8 +439,8 @@ public class ValidityManager
 			}
 		}
 //		System.out.format(Thread.currentThread().getName() + " %3.3f Redraw schedule main\n", (System.currentTimeMillis() - start) * 0.001);
-		
-		
+
+
 	} */
 
 	protected @Nullable List<@NonNull Result> installResultSet(@NonNull ResultSet resultSet, @NonNull IProgressMonitor monitor) {
@@ -470,7 +470,7 @@ public class ValidityManager
 			model2.removeConstrainingFilter(filter);
 		}
 	}
-	
+
 	public void removeFilteredSeverity(@NonNull Severity severity) {
 		ValidityModel model2 = model;
 		if (model2 != null) {
@@ -486,10 +486,10 @@ public class ValidityManager
 	}
 
 	private void resetResults(@NonNull List<@NonNull ? extends AbstractNode> nodes) {
-		for (@NonNull AbstractNode node : nodes) {
+		for (@NonNull AbstractNode node : new ArrayList<>(nodes)) {
 			resetResults(ClassUtil.nullFree(node.getChildren()));
 			node.setWorstResult(null);
-		}	
+		}
 	}
 
 	public void setInput(Object newInput) {
@@ -504,13 +504,13 @@ public class ValidityManager
 		EObject selectedObject = null;
 		newResources.clear();
 		lastInput = newInput;
-		
+
 		if (newInput == null) {
 			oldResources.clear();
 			model = null;
 			return;
 		}
-		
+
 		if (newInput instanceof ResourceSet) {
 			selectedResourceSet = (ResourceSet) newInput;
 		} else if (newInput instanceof Resource) {
@@ -546,11 +546,11 @@ public class ValidityManager
 				newResources.addAll(ClassUtil.nullFree(selectedResourceSet.getResources()));
 			}
 		}
-		
+
 		if (newResources.isEmpty()) {
 			return;
 		}
-		
+
 		if (!forceRefresh && !oldResources.isEmpty() && oldResources.equals(newResources)) {
 			return;
 		}
