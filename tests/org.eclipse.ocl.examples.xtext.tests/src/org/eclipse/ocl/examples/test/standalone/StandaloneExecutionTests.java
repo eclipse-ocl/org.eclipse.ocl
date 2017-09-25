@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.standalone;
 
@@ -33,10 +33,13 @@ import org.eclipse.ocl.examples.standalone.StandaloneApplication;
 import org.eclipse.ocl.examples.standalone.StandaloneResponse;
 import org.eclipse.ocl.examples.validity.locator.AbstractPivotConstraintLocator;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
+import org.eclipse.ocl.pivot.internal.resource.PivotEAnnotationValidator;
 import org.junit.Test;
 
 public class StandaloneExecutionTests extends StandaloneTestCase
 {
+	protected static int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.hasEcoreEAnnotationValidators() ? 3 : 0;
+
 	protected static void assertNoLogFile(@NonNull String logFileName) {
 		File file = new File(logFileName);
 		assertFalse(file.exists());
@@ -76,7 +79,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		assertEquals("- Number of Failures: " + fails, lines.get(metricsLine + 6));
 		return lines;
 	}
-	
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -94,15 +97,15 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", inputModelName,
 			"-rules", inputOCLFileName};
-		doOKTest(arguments);
-		assertNoLogFile(getTextLogFileName());
+			doOKTest(arguments);
+			assertNoLogFile(getTextLogFileName());
 	}
 
 	@Test
 	public void test_missingOutputArgument() throws CoreException, IOException {
-		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate", 
-			"-model", inputModelName, 
-			"-rules", inputOCLFileName, 
+		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
+			"-model", inputModelName,
+			"-rules", inputOCLFileName,
 			"-output"
 		};
 		doFailingTest(arguments);
@@ -139,8 +142,8 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-rules", inputOCLFileName,
 			"-output", textLogFileName,
 			"-exporter", TextExporter.EXPORTER_TYPE};
-		doOKTest(arguments);
-		checkLogFile(textLogFileName, 36, 1, 1, 1, 0);
+			doOKTest(arguments);
+			checkLogFile(textLogFileName, 36+EXTRA_EAnnotationValidator_SUCCESSES, 1, 1, 1, 0);
 	}
 
 	@Test
@@ -150,20 +153,21 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-model", inputModelName,
 			"-rules", inputOCLFileName,
 			"-output", modelLogFileName,
-//			"-using", "ocl",
+			//			"-using", "ocl",
 			"-exporter", ModelExporter.EXPORTER_TYPE};
-		doOKTest(arguments);
-		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
-		URI newFileURI = URI.createFileURI(modelLogFileName);
-		Resource newResource = resourceSet.getResource(newFileURI, true);
-		EObject eObject = newResource.getContents().get(0);
-		assertTrue(eObject instanceof RootNode);
-		Resource refResource = resourceSet.getResource(newFileURI.trimFileExtension().appendFileExtension("reference").appendFileExtension("validity"), true);
-		refResource.setURI(newFileURI);
-		TestUtil.assertSameModel(refResource, newResource);
+			doOKTest(arguments);
+			ResourceSet resourceSet = new ResourceSetImpl();
+			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+			URI newFileURI = URI.createFileURI(modelLogFileName);
+			Resource newResource = resourceSet.getResource(newFileURI, true);
+			EObject eObject = newResource.getContents().get(0);
+			assertTrue(eObject instanceof RootNode);
+			URI appendFileExtension = newFileURI.trimFileExtension().appendFileExtension(PivotEAnnotationValidator.hasEcoreEAnnotationValidators() ? "referenceWithEAnnotationValidators" : "reference");
+			Resource refResource = resourceSet.getResource(appendFileExtension.appendFileExtension("validity"), true);
+			refResource.setURI(newFileURI);
+			TestUtil.assertSameModel(refResource, newResource);
 	}
-	
+
 
 	@Test
 	public void test_htmlExportedFile() throws CoreException {
@@ -172,9 +176,9 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-rules", inputOCLFileName,
 			"-output", getHTMLLogFileName(),
 			"-exporter", HTMLExporter.EXPORTER_TYPE};
-		doOKTest(arguments);
-		File file = new File(getHTMLLogFileName());
-		assertTrue(file.exists());
+			doOKTest(arguments);
+			File file = new File(getHTMLLogFileName());
+			assertTrue(file.exists());
 	}
 
 	@Test
@@ -184,8 +188,8 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-rules", inputOCLFileName,
 			"-output", getTextLogFileName(),
 			"-exporter", "anotherExporterAttribute"};
-		doFailingTest(arguments);
-		assertNoLogFile(getTextLogFileName());
+			doFailingTest(arguments);
+			assertNoLogFile(getTextLogFileName());
 	}
 
 	@Test
@@ -196,8 +200,8 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-rules", inputOCLFileName,
 			"-output", textLogFileName,
 			"-exporter", TextExporter.EXPORTER_TYPE};
-		doFailingTest(arguments);
-		assertNoLogFile(textLogFileName);
+			doFailingTest(arguments);
+			assertNoLogFile(textLogFileName);
 	}
 
 	@Test
@@ -208,11 +212,11 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-rules", String.valueOf(getProjectFileURI("models/nonExistentFile.ocl")),
 			"-output", textLogFileName,
 			"-exporter", TextExporter.EXPORTER_TYPE};
-		doOKTest(arguments);				// Missing file is ignored
-		checkLogFile(textLogFileName, 30, 0, 0, 0, 0);
+			doOKTest(arguments);				// Missing file is ignored
+			checkLogFile(textLogFileName, 30+EXTRA_EAnnotationValidator_SUCCESSES, 0, 0, 0, 0);
 	}
 
-/*	@Test
+	/*	@Test
 	public void test_unexistingOutputFileTest() throws CoreException, IOException {
 		@NonNull String @NonNull [] arguments = {"validate",
 			"-model", inputModelName,
@@ -237,8 +241,8 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-rules", inputOCLFileName,
 			"-output", nonExistentOutputFolderPath,
 			"-exporter", TextExporter.EXPORTER_TYPE};
-		doFailingTest(arguments);
-		assertNoLogFile(nonExistentOutputFolderPath);
+			doFailingTest(arguments);
+			assertNoLogFile(nonExistentOutputFolderPath);
 	}
 
 	@Test
@@ -249,8 +253,8 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-rules", textInputOCLFileName,
 			"-output", textLogFileName,
 			"-exporter", TextExporter.EXPORTER_TYPE};
-		doOKTest(arguments);
-		checkLogFile(textLogFileName, 42, 2, 2, 2, 0);
+			doOKTest(arguments);
+			checkLogFile(textLogFileName, 42+EXTRA_EAnnotationValidator_SUCCESSES, 2, 2, 2, 0);
 	}
 
 	@Test
@@ -259,7 +263,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-model", inputModelName,
 			"-rules", textInputOCLFileName,
 			"-exporter", TextExporter.EXPORTER_TYPE};
-		doOKTest(arguments);
-		assertNoLogFile(getTextLogFileName());
+			doOKTest(arguments);
+			assertNoLogFile(getTextLogFileName());
 	}
 }
