@@ -86,7 +86,7 @@ inv UniqueInvariantName: ownedInvariants->isUnique(name)
 
 context IteratorExp
 inv ClosureBodyTypeIsConformanttoIteratorType:
-	true
+	true -- FIXME obsolete
 inv SortedByIteratorTypeIsComparable:
 	true
 
@@ -168,7 +168,7 @@ inv AnyTypeIsSourceElementType: name = 'any' implies type = ownedSource?.type?.o
 
 context IteratorExp
 /** The type of the body must be Boolean. */
-inv AnyBodyTypeIsBoolean: name = 'any' implies ownedBody.type = 'Boolean'
+inv AnyBodyTypeIsBoolean: name = 'any' implies ownedBody.type = Boolean
 
 context IteratorExp
 /** There is exactly one iterator. */ 
@@ -185,25 +185,22 @@ type.oclIsKindOf(SetType)
 endif
 
 context IteratorExp
-/** The source element type is the same as type of the body elements or element. */
-inv ClosureSourceElementTypeIsBodyElementType: name = 'closure' implies
-ownedSource?.type.oclAsType(CollectionType).elementType =
-if ownedBody.type.oclIsKindOf(CollectionType)
-then ownedBody.type.oclAsType(CollectionType).elementType
-else ownedBody.type
-endif
+inv ClosureSourceElementTypeIsBodyElementType: true -- FIXME obsolete
+/** The result element type is the same as type of the body elements or element. */
+inv ClosureBodyElementTypeIsIteratorType: name = 'closure' implies
+	let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType else ownedBody.type endif in 
+	let iteratorType = ownedIterators->at(1).type in
+	bodyElementType.conformsTo(iteratorType)
 
 context IteratorExp
 /** The element type is the same as the source element type. */
-inv ClosureElementTypeIsSourceElementType: name = 'closure' implies
-type.oclAsType(CollectionType).elementType
-= ownedSource?.type.oclAsType(CollectionType).elementType
+inv ClosureElementTypeIsSourceElementType:  true -- FIXME obsolete
 /** Each body element is assignable to the iterator. */
-inv ClosureBodyElementTypeIsIteratorType:
+inv ClosureResultElementTypeIsIteratorType:
 	name = 'closure' implies
-		let bodyElementType = ownedBody.type.oclAsType(CollectionType).elementType in 
+		let resultElementType = type.oclAsType(CollectionType).elementType in 
 		let iteratorType = ownedIterators->at(1).type in
-			bodyElementType.conformsTo(iteratorType)
+		iteratorType.conformsTo(resultElementType)
 
 context IteratorExp
 /* The collection type for an OrderedSet or a Sequence type is a Sequence,
@@ -234,7 +231,7 @@ context IteratorExp
 /** The element type is the type of the body elements. */
 inv SortedByElementTypeIsSourceElementType: name = 'sortedBy' implies
 type.oclAsType(CollectionType).elementType =
-ownedBody.type.oclAsType(CollectionType).elementType
+ownedSource?.type.oclAsType(CollectionType).elementType
 
 context IterateExp
 /** The type of the iterate is the type of the result variable. */
