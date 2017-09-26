@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation;
-import org.eclipse.ocl.pivot.library.iterator.ClosureIteration;
 import org.eclipse.ocl.pivot.library.iterator.SortedByIteration;
 import org.eclipse.ocl.pivot.library.logical.BooleanAndOperation;
 import org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation;
@@ -101,31 +100,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	@Override
 	public boolean validateClosureBodyTypeIsConformanttoIteratorType(DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		if (getReferredIteration().getImplementation() != ClosureIteration.INSTANCE) {
-			return true;
-		}
-		Diagnostic diagnostic = null;
-		Resource asResource = ClassUtil.nonNullState(eResource());
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(asResource);
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		Type bodyType = getOwnedBody().getType();
-		if (bodyType instanceof CollectionType) {
-			bodyType = ((CollectionType)bodyType).getElementType();
-		}
-		Type bodyType2 = ClassUtil.nonNullState(bodyType);
-		Type iteratorType = ClassUtil.nonNullState(getOwnedIterators().get(0).getType());
-		//		TemplateParameterSubstitutions bindings = null; //new HashMap<TemplateParameter, Type>();
-		if (!metamodelManager.conformsTo(bodyType2, TemplateParameterSubstitutions.EMPTY, iteratorType, TemplateParameterSubstitutions.EMPTY)) {
-			if (diagnostics == null) {
-				return false;
-			}
-			diagnostic = new ValidationWarning(PivotMessagesInternal.IncompatibleBodyType_WARNING_, bodyType2, iteratorType);
-		}
-		if (diagnostic == null) {
-			return true;
-		}
-		diagnostics.add(diagnostic);
-		return false;
+		return true;
 	}
 
 	/**
@@ -643,6 +618,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */

@@ -2588,6 +2588,7 @@ implements PivotPackage  {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */

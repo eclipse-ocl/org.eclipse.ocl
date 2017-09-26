@@ -88,6 +88,7 @@ public interface IteratorExp extends LoopExp, ReferringElement
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */

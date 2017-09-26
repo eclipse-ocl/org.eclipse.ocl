@@ -1089,6 +1089,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	public void setReferredIteration(@NonNull LoopExp expression, @Nullable Iteration iteration) {
 		expression.setReferredIteration(iteration);
+		expression.setName(iteration != null ? iteration.getName() : null);
 	}
 
 	public void setReferredOperation(@NonNull OperationCallExp expression, @Nullable Operation operation) {

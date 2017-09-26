@@ -13891,23 +13891,29 @@ public class PivotTables
 /**
  * Manually restored elements to avoid API removal violations.
  */
-@Deprecated
-public static final @NonNull String STR_ = "";
-@Deprecated
-public static final @NonNull String STR_Constraint_c_c_UniqueName = "Constraint::UniqueName";
-@Deprecated
-public static final @NonNull String STR_IteratorExp_c_c_ClosureBodyTypeIsConformanttoIteratorType = "IteratorExp::ClosureBodyTypeIsConformanttoIteratorType";
-@Deprecated
-public static final @NonNull String STR_IteratorExp_c_c_SortedByIteratorTypeIsComparable = "IteratorExp::SortedByIteratorTypeIsComparable";
-@Deprecated
-public static final @NonNull String STR_Operation_c_c_LoadableImplementation = "Operation::LoadableImplementation";
-@Deprecated
-public static final @NonNull String STR_ShadowExp_c_c_ClassHasNoStringValueInitializer = "ShadowExp::ClassHasNoStringValueInitializer";
-@Deprecated
-public static final @NonNull String STR_ShadowExp_c_c_DataTypeHasNoPartInitializers = "ShadowExp::DataTypeHasNoPartInitializers";
-@Deprecated
-public static final @NonNull String STR_ShadowExp_c_c_DataTypeHasStringValueInitializer = "ShadowExp::DataTypeHasStringValueInitializer";
-@Deprecated
-public static final @NonNull String STR_Variable_c_c_CompatibleInitialiserType = "Variable::CompatibleInitialiserType";
-@Deprecated
-public static final org.eclipse.ocl.pivot.values.@NonNull TupleValue symbol_0 = org.eclipse.ocl.pivot.utilities.ValueUtil.createTupleOfEach(PivotTables.TUPLid_, PivotTables.STR_, org.eclipse.ocl.pivot.utilities.ValueUtil.TRUE_VALUE);}
+	@Deprecated
+	public static final @NonNull String STR_ = "";
+	@Deprecated
+	public static final @NonNull String STR_Boolean = "Boolean";
+	@Deprecated
+	public static final @NonNull String STR_Constraint_c_c_UniqueName = "Constraint::UniqueName";
+	@Deprecated
+	public static final @NonNull String STR_IteratorExp_c_c_ClosureBodyTypeIsConformanttoIteratorType = "IteratorExp::ClosureBodyTypeIsConformanttoIteratorType";
+	@Deprecated
+	public static final @NonNull String STR_IteratorExp_c_c_ClosureElementTypeIsSourceElementType = "IteratorExp::ClosureElementTypeIsSourceElementType";
+	@Deprecated
+	public static final @NonNull String STR_IteratorExp_c_c_ClosureSourceElementTypeIsBodyElementType = "IteratorExp::ClosureSourceElementTypeIsBodyElementType";
+	@Deprecated
+	public static final @NonNull String STR_IteratorExp_c_c_SortedByIteratorTypeIsComparable = "IteratorExp::SortedByIteratorTypeIsComparable";
+	@Deprecated
+	public static final @NonNull String STR_Operation_c_c_LoadableImplementation = "Operation::LoadableImplementation";
+	@Deprecated
+	public static final @NonNull String STR_ShadowExp_c_c_ClassHasNoStringValueInitializer = "ShadowExp::ClassHasNoStringValueInitializer";
+	@Deprecated
+	public static final @NonNull String STR_ShadowExp_c_c_DataTypeHasNoPartInitializers = "ShadowExp::DataTypeHasNoPartInitializers";
+	@Deprecated
+	public static final @NonNull String STR_ShadowExp_c_c_DataTypeHasStringValueInitializer = "ShadowExp::DataTypeHasStringValueInitializer";
+	@Deprecated
+	public static final @NonNull String STR_Variable_c_c_CompatibleInitialiserType = "Variable::CompatibleInitialiserType";
+	@Deprecated
+	public static final org.eclipse.ocl.pivot.values.@NonNull TupleValue symbol_0 = org.eclipse.ocl.pivot.utilities.ValueUtil.createTupleOfEach(PivotTables.TUPLid_, PivotTables.STR_, org.eclipse.ocl.pivot.utilities.ValueUtil.TRUE_VALUE);}

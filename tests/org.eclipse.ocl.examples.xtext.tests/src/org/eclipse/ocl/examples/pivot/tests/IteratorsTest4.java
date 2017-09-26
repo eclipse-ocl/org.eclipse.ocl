@@ -75,10 +75,11 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Tests for iterator expressions.
  */
-@SuppressWarnings("nls")
 @RunWith(value = Parameterized.class)
 public class IteratorsTest4 extends PivotTestSuite
 {
+	public static final @NonNull String VIOLATED_TEMPLATE = "The ''{0}'' constraint is violated for ''{1}''";	// _UI_GenericConstraint_diagnostic = The ''{0}'' constraint is violated on ''{1}''
+
 	public static class MyOCL extends TestOCL
 	{
 		// need a metamodel that has a reflexive EReference.
@@ -564,8 +565,9 @@ public class IteratorsTest4 extends PivotTestSuite
 		IdResolver idResolver = ocl.getIdResolver();
 		@SuppressWarnings("null") org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = metamodelManager.getASClass("Package");
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
-		Property ownedPackages = getAttribute(packageMetaclass, "ownedPackages", packageMetaclass);
-		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
+		Object ownedPackages = getAttribute(packageMetaclass, "ownedPackages", packageMetaclass);
+		Object owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
+		assert (owningPackage != null) && (ownedPackages != null);
 		SetValue expected = idResolver.createSetOfEach(typeId, ownedPackages, owningPackage); // cyclic closure *does* include self
 		ocl.assertQueryEquals(owningPackage, expected, "self->closure(opposite)");
 		ocl.assertQueryEquals(ownedPackages, expected, "self->closure(opposite)");
@@ -635,7 +637,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		// is more general than the iterator variable, so cannot be
 		// assigned recursively
 		ocl.assertValidationErrorQuery(subFake, "self->closure(getFakes())",
-			PivotMessagesInternal.IncompatibleBodyType_WARNING_, fake, subFake);
+			VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->closure(1_ : fake::Subfake[1] | 1_.getFakes())");
 
 		// this should parse OK because the result of the closure expression
 		// is more specific than the iterator variable, so it can be
@@ -655,8 +657,8 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
 		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
 		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
-		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
-		ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(oclContainer())", PivotMessagesInternal.IncompatibleBodyType_WARNING_, "OclElement", "Property");
+		//		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
+		ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(oclContainer())", VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->closure(1_ : Property[1] | 1_.oclContainer())");
 		ocl.dispose();
 	}
 
