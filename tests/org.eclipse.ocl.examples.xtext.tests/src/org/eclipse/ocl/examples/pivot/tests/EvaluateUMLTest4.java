@@ -179,7 +179,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class contextType = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, ocl.c1Class);
 		assert contextType != null;
 		ocl.assertSemanticErrorQuery(contextType, "self.oclIsInState(S2b)", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::C1", "S2b");
-		ocl.assertQueryInvalid(context, "self.oclIsInState(S1a)", StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "OclAny::oclIsInState(OclState[?]) : Boolean[1]", "C1", "self.oclIsInState(null)"), UnsupportedOperationException.class);
+		ocl.assertQueryInvalid(context, "self.oclIsInState(S1a)", StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "OclAny::oclIsInState(OclState[?]) : Boolean[1]", "C1", "self.oclIsInState(S1a)"), UnsupportedOperationException.class);
 		ocl.dispose();
 	}
 

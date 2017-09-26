@@ -446,6 +446,7 @@ public class PivotUtil
 			asCallExp.setReferredProperty(asProperty);
 			asNavigationCallExp = asCallExp;
 		}
+		asNavigationCallExp.setName(asProperty.getName());
 		asNavigationCallExp.setOwnedSource(asSource);
 		asNavigationCallExp.setType(asProperty.getType());
 		asNavigationCallExp.setIsRequired(asProperty.isIsRequired());
@@ -485,6 +486,7 @@ public class PivotUtil
 	public static @NonNull OperationCallExp createOperationCallExp(@NonNull OCLExpression asSource, @NonNull Operation asOperation, /*@NonNull*/ OCLExpression... asArguments) {
 		OperationCallExp asCallExp = PivotFactory.eINSTANCE.createOperationCallExp();
 		asCallExp.setReferredOperation(asOperation);
+		asCallExp.setName(asOperation.getName());
 		asCallExp.setOwnedSource(asSource);
 		if (asArguments != null) {
 			List<OCLExpression> asCallArguments = asCallExp.getOwnedArguments();
@@ -710,6 +712,7 @@ public class PivotUtil
 	public static @NonNull VariableExp createVariableExp(@NonNull VariableDeclaration asVariable) {
 		VariableExp asVariableExp = PivotFactory.eINSTANCE.createVariableExp();
 		asVariableExp.setReferredVariable(asVariable);
+		asVariableExp.setName(asVariable.getName());
 		asVariableExp.setType(asVariable.getType());
 		asVariableExp.setIsRequired(asVariable.isIsRequired());
 		return asVariableExp;

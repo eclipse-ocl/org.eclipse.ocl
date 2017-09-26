@@ -292,6 +292,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected @NonNull VariableExp createImplicitVariableExp(@NonNull VariableDeclaration variable) {
 		VariableExp variableExp = context.refreshModelElement(VariableExp.class, PivotPackage.Literals.VARIABLE_EXP, null); // FIXME reuse
 		variableExp.setReferredVariable(variable);
+		variableExp.setName(variable.getName());
 		variableExp.setIsImplicit(true);
 		context.setType(variableExp, variable.getType(), variable.isIsRequired(), variable.getTypeValue());
 		return variableExp;
@@ -552,6 +553,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		OppositePropertyCallExp callExp = context.refreshModelElement(OppositePropertyCallExp.class, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP, csNameExp);
 		callExp.setOwnedSource(sourceExp);
 		callExp.setReferredProperty(property.getOpposite());
+		callExp.setName(property.getName());
 		return callExp;
 	}
 
@@ -559,6 +561,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		PropertyCallExp callExp = context.refreshModelElement(PropertyCallExp.class, PivotPackage.Literals.PROPERTY_CALL_EXP, csNameExp);
 		callExp.setOwnedSource(sourceExp);
 		callExp.setReferredProperty(property);
+		callExp.setName(property.getName());
 		return callExp;
 	}
 
@@ -710,6 +713,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		EnumLiteralExp expression = context.refreshModelElement(EnumLiteralExp.class, PivotPackage.Literals.ENUM_LITERAL_EXP, csExp);
 		context.setType(expression, enumerationLiteral.getOwningEnumeration(), true, null);
 		expression.setReferredLiteral(enumerationLiteral);
+		expression.setName(enumerationLiteral.getName());
 		return expression;
 	}
 
@@ -1417,6 +1421,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		StateExp expression = context.refreshModelElement(StateExp.class, PivotPackage.Literals.STATE_EXP, csExp);
 		context.setType(expression, metamodelManager.getASClass("State"), true, null);		// FIXME What should this be
 		expression.setReferredState(state);
+		expression.setName(state.getName());
 		return expression;
 	}
 
@@ -1424,12 +1429,14 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		TypeExp expression = context.refreshModelElement(TypeExp.class, PivotPackage.Literals.TYPE_EXP, csExp);
 		context.setType(expression, standardLibrary.getClassType(), true, type);
 		expression.setReferredType(type);
+		expression.setName(type.getName());
 		return expression;
 	}
 
 	protected @NonNull VariableExp resolveVariableExp(@NonNull NameExpCS csNameExp, @NonNull VariableDeclaration variableDeclaration) {
 		VariableExp expression = context.refreshModelElement(VariableExp.class, PivotPackage.Literals.VARIABLE_EXP, csNameExp);
 		expression.setReferredVariable(variableDeclaration);
+		expression.setName(variableDeclaration.getName());
 		context.setType(expression, variableDeclaration.getType(), variableDeclaration.isIsRequired(), variableDeclaration.getTypeValue());
 		return expression;
 	}
@@ -2080,6 +2087,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					return context.addBadExpressionError(csSelfExp, StringUtil.bind(PivotMessages.UnspecifiedSelfContext));
 				}
 				expression.setReferredVariable(variableDeclaration);
+				expression.setName(variableDeclaration.getName());
 				context.setType(expression, variableDeclaration.getType(), true, variableDeclaration.getTypeValue());
 			}
 		}

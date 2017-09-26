@@ -1094,6 +1094,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	public void setReferredOperation(@NonNull OperationCallExp expression, @Nullable Operation operation) {
 		expression.setReferredOperation(operation);
+		expression.setName(operation != null ? operation.getName() : null);
 	}
 
 	/**

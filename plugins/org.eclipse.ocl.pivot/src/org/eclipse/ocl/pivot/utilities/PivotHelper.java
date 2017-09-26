@@ -197,6 +197,7 @@ public class PivotHelper
 	public @NonNull IterateExp createIterateExp(@NonNull OCLExpression asSource, @NonNull Iteration asIteration, @NonNull List<@NonNull ? extends Variable> asIterators, @NonNull Variable asResult, @NonNull OCLExpression asBody) {
 		IterateExp asCallExp = PivotFactory.eINSTANCE.createIterateExp();
 		asCallExp.setReferredIteration(asIteration);
+		asCallExp.setName(asIteration.getName());
 		asCallExp.setOwnedSource(asSource);
 		asCallExp.getOwnedIterators().addAll(asIterators);
 		asCallExp.setOwnedResult(asResult);
@@ -215,6 +216,7 @@ public class PivotHelper
 	public @NonNull IteratorExp createIteratorExp(@NonNull OCLExpression asSource, @NonNull Iteration asIteration, @NonNull List<@NonNull ? extends Variable> asIterators, @NonNull OCLExpression asBody) {
 		IteratorExp asCallExp = PivotFactory.eINSTANCE.createIteratorExp();
 		asCallExp.setReferredIteration(asIteration);
+		asCallExp.setName(asIteration.getName());
 		asCallExp.setOwnedSource(asSource);
 		asCallExp.getOwnedIterators().addAll(asIterators);
 		asCallExp.setOwnedBody(asBody);
@@ -362,6 +364,7 @@ public class PivotHelper
 		OperationCallExp asOperationCallExp = PivotFactory.eINSTANCE.createOperationCallExp();
 		asOperationCallExp.setOwnedSource(asSourceExpression);
 		asOperationCallExp.setReferredOperation(asOperation);
+		asOperationCallExp.setName(asOperation.getName());
 		if (asArguments != null) {
 			asOperationCallExp.getOwnedArguments().addAll(asArguments);
 		}
@@ -493,6 +496,7 @@ public class PivotHelper
 		TypeExp asTypeExp = PivotFactory.eINSTANCE.createTypeExp();
 		asTypeExp.setIsRequired(true);
 		asTypeExp.setReferredType(type);
+		asTypeExp.setName(type.getName());
 		asTypeExp.setType(standardLibrary.getClassType());
 		asTypeExp.setTypeValue(type);
 		return asTypeExp;

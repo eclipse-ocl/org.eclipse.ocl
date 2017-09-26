@@ -657,7 +657,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
 		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
 		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
-		//		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
+		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
 		ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(oclContainer())", VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->closure(1_ : Property[1] | 1_.oclContainer())");
 		ocl.dispose();
 	}
