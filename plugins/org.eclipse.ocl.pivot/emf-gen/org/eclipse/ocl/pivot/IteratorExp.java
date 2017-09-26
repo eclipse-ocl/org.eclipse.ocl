@@ -91,6 +91,13 @@ public interface IteratorExp extends LoopExp, ReferringElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	boolean validateClosureResultElementTypeIsIteratorType(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	boolean validateClosureTypeIsUniqueCollection(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**

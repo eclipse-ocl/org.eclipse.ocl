@@ -383,7 +383,7 @@
     </ownedClasses>
     <ownedClasses xmi:id="AprzZ" name="IteratorExp" superClasses="#KhrnS #dXAFV">
       <ownedInvariants xmi:id="uX2KR" isCallable="true" name="AnyBodyTypeIsBoolean">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'any' implies ownedBody.type = 'Boolean'&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'any' implies ownedBody.type = Boolean&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="+IUau" isCallable="true" name="AnyHasOneIterator">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'any' implies ownedIterators->size() = 1&#xA;&#xA;"/>
@@ -392,19 +392,22 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'any' implies type = ownedSource?.type?.oclAsType(CollectionType)?.elementType&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="DSk3n" isCallable="true" name="ClosureBodyElementTypeIsIteratorType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;name = 'closure' implies&#xA;&#x9;&#x9;let bodyElementType = ownedBody.type.oclAsType(CollectionType).elementType in &#xA;&#x9;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;&#x9;&#x9;bodyElementType.conformsTo(iteratorType)&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies&#xA;&#x9;let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType else ownedBody.type endif in &#xA;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;bodyElementType.conformsTo(iteratorType)&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="9srpT" isCallable="true" name="ClosureBodyTypeIsConformanttoIteratorType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;true&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="OlB4W" isCallable="true" name="ClosureElementTypeIsSourceElementType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies&#xA;type.oclAsType(CollectionType).elementType&#xA;= ownedSource?.type.oclAsType(CollectionType).elementType&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body=" true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="NxSxQ" isCallable="true" name="ClosureHasOneIterator">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies ownedIterators->size() = 1&#xA;&#xA;"/>
       </ownedInvariants>
+      <ownedInvariants xmi:id="oEhWV" isCallable="true" name="ClosureResultElementTypeIsIteratorType">
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;name = 'closure' implies&#xA;&#x9;&#x9;let resultElementType = type.oclAsType(CollectionType).elementType in &#xA;&#x9;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;&#x9;iteratorType.conformsTo(resultElementType)&#xA;&#xA;"/>
+      </ownedInvariants>
       <ownedInvariants xmi:id="i2WeK" isCallable="true" name="ClosureSourceElementTypeIsBodyElementType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies&#xA;ownedSource?.type.oclAsType(CollectionType).elementType =&#xA;if ownedBody.type.oclIsKindOf(CollectionType)&#xA;then ownedBody.type.oclAsType(CollectionType).elementType&#xA;else ownedBody.type&#xA;endif&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="true "/>
       </ownedInvariants>
       <ownedInvariants xmi:id="G7Q4a" isCallable="true" name="ClosureTypeIsUniqueCollection">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'closure' implies&#xA;if ownedSource?.type?.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(OrderedSetType) then&#xA;type.oclIsKindOf(OrderedSetType)&#xA;else&#xA;type.oclIsKindOf(SetType)&#xA;endif&#xA;&#xA;"/>
@@ -425,7 +428,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isSafe implies not ownedSource?.type.oclAsType(CollectionType).isNullFree&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="HG8Sn" isCallable="true" name="SortedByElementTypeIsSourceElementType">
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'sortedBy' implies&#xA;type.oclAsType(CollectionType).elementType =&#xA;ownedBody.type.oclAsType(CollectionType).elementType&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'sortedBy' implies&#xA;type.oclAsType(CollectionType).elementType =&#xA;ownedSource?.type.oclAsType(CollectionType).elementType&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="UgAQH" isCallable="true" name="SortedByIsOrderedIfSourceIsOrdered">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name = 'sortedBy' implies&#xA;if ownedSource?.type.oclIsKindOf(SequenceType) or ownedSource?.type.oclIsKindOf(BagType) then&#xA;type.oclIsKindOf(SequenceType)&#xA;else&#xA;type.oclIsKindOf(OrderedSetType)&#xA;endif&#xA;&#xA;"/>

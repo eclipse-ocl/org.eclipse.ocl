@@ -1221,7 +1221,6 @@ implements PivotPackage  {
 		// Mark meta-data to indicate it can't be changed
 		thePivotPackage.freeze();
 
-
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(PivotPackage.eNS_URI, thePivotPackage);
 		return thePivotPackage;
@@ -2495,7 +2494,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateSortedByIteratorTypeIsComparable__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(16);
+		return iteratorExpEClass.getEOperations().get(17);
 	}
 
 	/**
@@ -2506,7 +2505,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(17);
+		return iteratorExpEClass.getEOperations().get(18);
 	}
 
 	/**
@@ -2593,9 +2592,9 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getIteratorExp__ValidateClosureTypeIsUniqueCollection__DiagnosticChain_Map()
+	public EOperation getIteratorExp__ValidateClosureResultElementTypeIsIteratorType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(8);
+		return iteratorExpEClass.getEOperations().get(7);
 	}
 
 	/**
@@ -2604,7 +2603,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getIteratorExp__ValidateCollectElementTypeIsFlattenedBodyType__DiagnosticChain_Map()
+	public EOperation getIteratorExp__ValidateClosureTypeIsUniqueCollection__DiagnosticChain_Map()
 	{
 		return iteratorExpEClass.getEOperations().get(9);
 	}
@@ -2615,9 +2614,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EOperation getIteratorExp__ValidateCollectElementTypeIsFlattenedBodyType__DiagnosticChain_Map()
+	{
+		return iteratorExpEClass.getEOperations().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EOperation getIteratorExp__ValidateClosureSourceElementTypeIsBodyElementType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(7);
+		return iteratorExpEClass.getEOperations().get(8);
 	}
 
 	/**
@@ -2639,7 +2649,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateCollectTypeIsUnordered__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(10);
+		return iteratorExpEClass.getEOperations().get(11);
 	}
 
 	/**
@@ -2650,7 +2660,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateSortedByIsOrderedIfSourceIsOrdered__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(15);
+		return iteratorExpEClass.getEOperations().get(16);
 	}
 
 	/**
@@ -2661,7 +2671,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateSortedByElementTypeIsSourceElementType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(14);
+		return iteratorExpEClass.getEOperations().get(15);
 	}
 
 	/**
@@ -2672,7 +2682,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateIteratorTypeIsSourceElementType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(11);
+		return iteratorExpEClass.getEOperations().get(12);
 	}
 
 	/**
@@ -2683,7 +2693,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateSafeIteratorIsRequired__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(12);
+		return iteratorExpEClass.getEOperations().get(13);
 	}
 
 	/**
@@ -2694,7 +2704,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(13);
+		return iteratorExpEClass.getEOperations().get(14);
 	}
 
 	/**
@@ -7104,6 +7114,7 @@ implements PivotPackage  {
 		createEOperation(iteratorExpEClass, ITERATOR_EXP___VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP);
 		createEOperation(iteratorExpEClass, ITERATOR_EXP___VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP);
 		createEOperation(iteratorExpEClass, ITERATOR_EXP___VALIDATE_CLOSURE_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP);
+		createEOperation(iteratorExpEClass, ITERATOR_EXP___VALIDATE_CLOSURE_RESULT_ELEMENT_TYPE_IS_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP);
 		createEOperation(iteratorExpEClass, ITERATOR_EXP___VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP);
 		createEOperation(iteratorExpEClass, ITERATOR_EXP___VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION__DIAGNOSTICCHAIN_MAP);
 		createEOperation(iteratorExpEClass, ITERATOR_EXP___VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE__DIAGNOSTICCHAIN_MAP);
@@ -8185,6 +8196,15 @@ implements PivotPackage  {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getIteratorExp__ValidateClosureHasOneIterator__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateClosureHasOneIterator", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getIteratorExp__ValidateClosureResultElementTypeIsIteratorType__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateClosureResultElementTypeIsIteratorType", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());
@@ -9389,6 +9409,13 @@ implements PivotPackage  {
 			new String[]
 					{
 						"originalName", "ClosureHasOneIterator" //$NON-NLS-1$ //$NON-NLS-2$
+					});
+		addAnnotation
+		(getIteratorExp__ValidateClosureResultElementTypeIsIteratorType__DiagnosticChain_Map(),
+			source,
+			new String[]
+					{
+						"originalName", "ClosureResultElementTypeIsIteratorType" //$NON-NLS-1$ //$NON-NLS-2$
 					});
 		addAnnotation
 		(getIteratorExp__ValidateClosureSourceElementTypeIsBodyElementType__DiagnosticChain_Map(),

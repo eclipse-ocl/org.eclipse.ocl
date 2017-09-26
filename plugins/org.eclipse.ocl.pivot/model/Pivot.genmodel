@@ -394,6 +394,10 @@
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureHasOneIterator/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureHasOneIterator/context"/>
       </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureResultElementTypeIsIteratorType">
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureResultElementTypeIsIteratorType/diagnostics"/>
+        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureResultElementTypeIsIteratorType/context"/>
+      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureSourceElementTypeIsBodyElementType">
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureSourceElementTypeIsBodyElementType/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureSourceElementTypeIsBodyElementType/context"/>

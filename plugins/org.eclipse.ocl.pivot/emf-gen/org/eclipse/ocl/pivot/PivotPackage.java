@@ -12961,13 +12961,22 @@ extends EPackage
 	int ITERATOR_EXP___VALIDATE_CLOSURE_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 7;
 
 	/**
+	 * The operation id for the '<em>Validate Closure Result Element Type Is Iterator Type</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATOR_EXP___VALIDATE_CLOSURE_RESULT_ELEMENT_TYPE_IS_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 8;
+
+	/**
 	 * The operation id for the '<em>Validate Closure Source Element Type Is Body Element Type</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 8;
+	int ITERATOR_EXP___VALIDATE_CLOSURE_SOURCE_ELEMENT_TYPE_IS_BODY_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 9;
 
 	/**
 	 * The operation id for the '<em>Validate Closure Type Is Unique Collection</em>' operation.
@@ -12976,7 +12985,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 9;
+	int ITERATOR_EXP___VALIDATE_CLOSURE_TYPE_IS_UNIQUE_COLLECTION__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 10;
 
 	/**
 	 * The operation id for the '<em>Validate Collect Element Type Is Flattened Body Type</em>' operation.
@@ -12985,7 +12994,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 10;
+	int ITERATOR_EXP___VALIDATE_COLLECT_ELEMENT_TYPE_IS_FLATTENED_BODY_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 11;
 
 	/**
 	 * The operation id for the '<em>Validate Collect Type Is Unordered</em>' operation.
@@ -12994,7 +13003,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_COLLECT_TYPE_IS_UNORDERED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 11;
+	int ITERATOR_EXP___VALIDATE_COLLECT_TYPE_IS_UNORDERED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 12;
 
 	/**
 	 * The operation id for the '<em>Validate Iterator Type Is Source Element Type</em>' operation.
@@ -13003,7 +13012,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 12;
+	int ITERATOR_EXP___VALIDATE_ITERATOR_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 13;
 
 	/**
 	 * The operation id for the '<em>Validate Safe Iterator Is Required</em>' operation.
@@ -13012,7 +13021,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 13;
+	int ITERATOR_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 14;
 
 	/**
 	 * The operation id for the '<em>Validate Safe Source Can Be Null</em>' operation.
@@ -13021,7 +13030,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 14;
+	int ITERATOR_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 15;
 
 	/**
 	 * The operation id for the '<em>Validate Sorted By Element Type Is Source Element Type</em>' operation.
@@ -13030,7 +13039,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 15;
+	int ITERATOR_EXP___VALIDATE_SORTED_BY_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 16;
 
 	/**
 	 * The operation id for the '<em>Validate Sorted By Is Ordered If Source Is Ordered</em>' operation.
@@ -13039,7 +13048,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 16;
+	int ITERATOR_EXP___VALIDATE_SORTED_BY_IS_ORDERED_IF_SOURCE_IS_ORDERED__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 17;
 
 	/**
 	 * The operation id for the '<em>Validate Sorted By Iterator Type Is Comparable</em>' operation.
@@ -13048,7 +13057,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 17;
+	int ITERATOR_EXP___VALIDATE_SORTED_BY_ITERATOR_TYPE_IS_COMPARABLE__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 18;
 
 	/**
 	 * The operation id for the '<em>Validate Unsafe Source Can Not Be Null</em>' operation.
@@ -13057,7 +13066,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 18;
+	int ITERATOR_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = LOOP_EXP_OPERATION_COUNT + 19;
 
 	/**
 	 * The number of operations of the '<em>Iterator Exp</em>' class.
@@ -13066,7 +13075,7 @@ extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATOR_EXP_OPERATION_COUNT = LOOP_EXP_OPERATION_COUNT + 19;
+	int ITERATOR_EXP_OPERATION_COUNT = LOOP_EXP_OPERATION_COUNT + 20;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.LetVariableImpl <em>Let Variable</em>}' class.
@@ -26736,6 +26745,16 @@ extends EPackage
 	EOperation getIteratorExp__ValidateClosureHasOneIterator__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateClosureResultElementTypeIsIteratorType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Closure Result Element Type Is Iterator Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Closure Result Element Type Is Iterator Type</em>' operation.
+	 * @see org.eclipse.ocl.pivot.IteratorExp#validateClosureResultElementTypeIsIteratorType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getIteratorExp__ValidateClosureResultElementTypeIsIteratorType__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateClosureTypeIsUniqueCollection(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Closure Type Is Unique Collection</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -32022,6 +32041,14 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation ITERATOR_EXP___VALIDATE_CLOSURE_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorExp__ValidateClosureHasOneIterator__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Closure Result Element Type Is Iterator Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ITERATOR_EXP___VALIDATE_CLOSURE_RESULT_ELEMENT_TYPE_IS_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorExp__ValidateClosureResultElementTypeIsIteratorType__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Closure Type Is Unique Collection</b></em>' operation.

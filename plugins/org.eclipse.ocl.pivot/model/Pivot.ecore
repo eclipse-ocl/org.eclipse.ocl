@@ -964,7 +964,7 @@
       eSuperTypes="#T-pivot-LoopExp #T-pivot-ReferringElement">
     <eOperations name="validateAnyBodyTypeIsBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'any' implies ownedBody.type = 'Boolean'&#xA;&#xA;"/>
+        <details key="body" value="name = 'any' implies ownedBody.type = Boolean&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="AnyBodyTypeIsBoolean"/>
@@ -1009,7 +1009,7 @@
     </eOperations>
     <eOperations name="validateClosureBodyElementTypeIsIteratorType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;name = 'closure' implies&#xA;&#x9;&#x9;let bodyElementType = ownedBody.type.oclAsType(CollectionType).elementType in &#xA;&#x9;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;&#x9;&#x9;bodyElementType.conformsTo(iteratorType)&#xA;&#xA;"/>
+        <details key="body" value="name = 'closure' implies&#xA;&#x9;let bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType else ownedBody.type endif in &#xA;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;bodyElementType.conformsTo(iteratorType)&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureBodyElementTypeIsIteratorType"/>
@@ -1024,7 +1024,7 @@
     </eOperations>
     <eOperations name="validateClosureBodyTypeIsConformanttoIteratorType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;true&#xA;"/>
+        <details key="body" value="&#xA;&#x9;true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureBodyTypeIsConformanttoIteratorType"/>
@@ -1039,7 +1039,7 @@
     </eOperations>
     <eOperations name="validateClosureElementTypeIsSourceElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'closure' implies&#xA;type.oclAsType(CollectionType).elementType&#xA;= ownedSource?.type.oclAsType(CollectionType).elementType&#xA;"/>
+        <details key="body" value=" true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureElementTypeIsSourceElementType"/>
@@ -1067,9 +1067,24 @@
         </eGenericType>
       </eParameters>
     </eOperations>
+    <eOperations name="validateClosureResultElementTypeIsIteratorType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="&#xA;&#x9;name = 'closure' implies&#xA;&#x9;&#x9;let resultElementType = type.oclAsType(CollectionType).elementType in &#xA;&#x9;&#x9;let iteratorType = ownedIterators->at(1).type in&#xA;&#x9;&#x9;iteratorType.conformsTo(resultElementType)&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="ClosureResultElementTypeIsIteratorType"/>
+      </eAnnotations>
+      <eParameters name="diagnostics" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
     <eOperations name="validateClosureSourceElementTypeIsBodyElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'closure' implies&#xA;ownedSource?.type.oclAsType(CollectionType).elementType =&#xA;if ownedBody.type.oclIsKindOf(CollectionType)&#xA;then ownedBody.type.oclAsType(CollectionType).elementType&#xA;else ownedBody.type&#xA;endif&#xA;&#xA;"/>
+        <details key="body" value="true "/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="ClosureSourceElementTypeIsBodyElementType"/>
@@ -1174,7 +1189,7 @@
     </eOperations>
     <eOperations name="validateSortedByElementTypeIsSourceElementType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="name = 'sortedBy' implies&#xA;type.oclAsType(CollectionType).elementType =&#xA;ownedBody.type.oclAsType(CollectionType).elementType&#xA;&#xA;"/>
+        <details key="body" value="name = 'sortedBy' implies&#xA;type.oclAsType(CollectionType).elementType =&#xA;ownedSource?.type.oclAsType(CollectionType).elementType&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="SortedByElementTypeIsSourceElementType"/>
