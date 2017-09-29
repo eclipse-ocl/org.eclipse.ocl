@@ -1997,7 +1997,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	@Override
 	public Element visitNavigatingArgCS(@NonNull NavigatingArgCS csNavigatingArg) {
-		OCLExpression pivot = PivotUtil.getPivot(OCLExpression.class, csNavigatingArg.getOwnedNameExpression());
+		OCLExpression pivot = PivotUtil.getPivot(OCLExpression.class, csNavigatingArg);
 		if (pivot != null) {
 			context.installPivotUsage(csNavigatingArg, pivot);
 		}
