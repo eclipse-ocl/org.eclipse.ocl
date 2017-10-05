@@ -423,7 +423,8 @@ public final class IdManager
 			return getNsURIPackageId(nsURI, aPackage.getNsPrefix(), aPackage.getEPackage());
 		}
 		String name = aPackage.getName();
-		assert name != null;
+		//		assert name != null;
+		if (name == null) name = "";
 		org.eclipse.ocl.pivot.Package parentPackage = aPackage.getOwningPackage();
 		if (parentPackage != null) {
 			return parentPackage.getPackageId().getNestedPackageId(name);
