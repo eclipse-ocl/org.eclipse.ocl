@@ -26,8 +26,8 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * @generated
  */
 public class AnyTypeImpl
-		extends ClassImpl
-		implements AnyType {
+extends ClassImpl
+implements AnyType {
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -53,7 +53,7 @@ public class AnyTypeImpl
 		return visitor.visitAnyType(this);
 	}
 
-/*	@Override
+	/*	@Override
 	public boolean conformsTo(@NonNull DomainStandardLibrary standardLibrary, @NonNull DomainType type) {
 		if (type instanceof AnyType) {
 			return true;
@@ -69,9 +69,7 @@ public class AnyTypeImpl
 			return TypeId.OCL_ANY;
 		}
 		else {
-			String name2 = name;
-			assert name2 != null;
-			return IdManager.getPrimitiveTypeId(name2);		// e.g. the orphan $$ type
+			return IdManager.getPrimitiveTypeId(name != null ? name : "");		// e.g. the orphan $$ type
 		}
 	}
 } //AnyTypeImpl

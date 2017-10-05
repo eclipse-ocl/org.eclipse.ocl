@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -21,8 +21,7 @@ import org.eclipse.ocl.pivot.internal.ids.UnscopedId;
 public class JavaTypeId extends UnscopedId implements PrimitiveTypeId
 {
 	protected final @NonNull Class<?> javaClass;
-	
-	@SuppressWarnings("null")
+
 	public JavaTypeId(@NonNull Class<?> javaClass) {
 		super(javaClass.getName());
 		this.javaClass = javaClass;

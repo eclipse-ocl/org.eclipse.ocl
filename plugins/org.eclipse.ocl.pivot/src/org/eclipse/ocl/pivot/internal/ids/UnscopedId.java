@@ -11,14 +11,15 @@
 package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 public abstract class UnscopedId extends AbstractTypeId
 {
 	protected final @NonNull String name;
 	protected final int hashCode;
 
-	protected UnscopedId(@NonNull String name) {
-		this.name = name;
+	protected UnscopedId(@Nullable String name) {
+		this.name = name != null ? name : "";
 		this.hashCode = name.hashCode();
 	}
 
