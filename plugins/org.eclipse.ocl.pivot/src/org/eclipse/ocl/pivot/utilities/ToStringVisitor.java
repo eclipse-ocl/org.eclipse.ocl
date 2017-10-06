@@ -412,7 +412,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	/**
-	 * A null-safe visitation of the specified visitable, appending any generted text to the toStringVisitor context.
+	 * A null-safe visitation of the specified visitable, appending any generated text to the toStringVisitor context.
 	 *
 	 * @param v a visitable, or <code>null</code>
 	 * @return <code>null</code>
@@ -425,6 +425,22 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		else {
 			try {
 				v.accept(this);
+			}
+			catch (ClassCastException e) {
+				if (v instanceof EObject) {
+					Factory factory = getFactory((EObject)v);
+					if (factory != null) {
+						ToStringVisitor stringVisitor2 = factory.createToStringVisitor(this.context);
+						Class<?> thatClass = stringVisitor2.getClass();
+						Class<?> thisClass = getClass();
+						if ((thatClass != thisClass) && thisClass.isAssignableFrom(thatClass)) {
+							return stringVisitor2.safeVisit(v);
+						}
+					}
+				}
+				append("«");
+				append(e.getMessage());
+				append("»");
 			}
 			catch (Throwable e) {
 				append("«");
