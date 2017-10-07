@@ -16,7 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
@@ -24,6 +26,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -62,6 +65,16 @@ public final class PivotSaveImpl extends XMISaveImpl
 	@Override
 	protected void init(XMLResource resource, Map<?, ?> options) {
 		XMLResource asResource = ClassUtil.nonNullState(resource);
+		EList<@NonNull EObject> contents = asResource.getContents();
+		if (contents.size() > 0) {
+			EObject root = contents.get(0);
+			if (root instanceof Model) {
+				Model model = (Model)root;
+				if (model.getExternalURI() == null) {
+					model.setExternalURI(asResource.getURI().toString());
+				}
+			}
+		}
 		ASSaver asSaver = new ASSaver(asResource);
 		asSaver.localizeSpecializations();
 		Map<@NonNull Object, @Nullable Object> saveOptions = new HashMap<>();
