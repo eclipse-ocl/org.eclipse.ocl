@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2XMIid;
  * @since 1.1
  * @noextend This class is not intended to be subclassed by clients. It is part of the hierarchy for auto-generated visitors.
  */
+@SuppressWarnings("deprecation")
 public class PivotAS2XMIidVisitor extends AS2XMIidVisitor {
 
 	public PivotAS2XMIidVisitor(@NonNull AS2XMIid context) {
