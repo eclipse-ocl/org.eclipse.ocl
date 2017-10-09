@@ -430,7 +430,7 @@ public abstract class BaseCSorASDocumentProvider extends BaseDocumentProvider
 					// FIXME general extensibility
 				}
 				if (asResource == null) {
-					throwCoreException("Failed to load - \" + (xmiRoot != null ? \"root should be a 'Model' but is a '\" + xmiRoot.eClass().getName() + \"'\" : \"no root\"", null);
+					throwCoreException("Failed to load - " + (xmiRoot != null ? "root should be a 'Model' but is a '" + xmiRoot.eClass().getName() + "'" : "no root"), null);
 					return;		// Never happens
 				}
 				//
