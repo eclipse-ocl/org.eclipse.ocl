@@ -11,10 +11,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.validity.test;
 
+import java.io.File;
 import java.io.IOException;
+//import java.net.URI;
 import java.net.URL;
-
-import junit.framework.TestCase;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -28,6 +28,8 @@ import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.junit.After;
 import org.junit.Before;
+
+import junit.framework.TestCase;
 
 /**
  * Class testing the AbstractExport class.
@@ -52,22 +54,23 @@ public class AbstractExportOCLValidationResultTests extends AbstractValidityTest
 		catch (Throwable e) {}
 		return ClassUtil.nonNullState(projectURL);
 	}
-	
-	protected @NonNull String getProjectFileName(String referenceName) {
+
+	protected @NonNull String getProjectFileName(String referenceName) throws IOException {
 		String projectName = getClass().getPackage().getName().replace('.', '/');
-		URL projectURL = getTestResource(projectName);	
+		URL projectURL = getTestResource(projectName);
 		assertNotNull(projectURL);
-		return projectURL.getFile().replace("\\", "/") + "/" + referenceName;
+		String projectFileName = projectURL.getFile().replace("\\", "/") + "/" + referenceName;
+		//
+		//	Tycho tests packaged classes, so create a temporary file.
+		//
+		int jarIndex = projectFileName.indexOf(".jar!/");
+		if (jarIndex > 0) {
+			File projectFile = File.createTempFile("ocltest", referenceName);
+			projectFile.deleteOnExit();
+			projectFileName = projectFile.toString();
+		}
+		return projectFileName;
 	}
-
-	protected @NonNull String getHTMLLogFileName() {
-		return getProjectFileName("models/" + getName() + ".html");
-	}
-
-	protected @NonNull String getTextLogFileName() {
-		return getProjectFileName("models/log_" + getName() + ".txt");
-	}
-	
 
 	protected void initExporter(@NonNull String exporterType) {
 		exporter = ValidityExporterRegistry.INSTANCE.getExporter(exporterType);
@@ -75,9 +78,10 @@ public class AbstractExportOCLValidationResultTests extends AbstractValidityTest
 		TEST_PROGRESS.println("exporter = " + exporter);
 	}
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
-//		TEST_PROGRESS.setState(true);
+		//		TEST_PROGRESS.setState(true);
 		super.setUp();
 		initTestModels();
 		initValidityManager(EMFPlugin.IS_ECLIPSE_RUNNING ? null : new ValidityManager());
@@ -85,6 +89,7 @@ public class AbstractExportOCLValidationResultTests extends AbstractValidityTest
 		TEST_PROGRESS.println("results = " + results);
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		exporter = null;
