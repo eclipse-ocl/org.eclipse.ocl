@@ -1,0 +1,21 @@
+<project name="P2 Repository Tuning" default="tuneup.p2.repository">
+	<target name="tuneup.p2.repository">
+		<property name="repository.root" value="." />
+		<property name="repository.type" value="milestones" />
+		<property name="version" value="0.0.0" />
+		<property name="qualifier" value="_0.0.0" />
+		<echo>Append statistic and mirrorsURL information in ${repository.root}</echo>
+		<echo>Qualifier: ${qualifier}</echo>
+		<echo>Repository Type: ${repository.type}</echo>
+		<echo>Version: ${version}</echo>
+		<copy file="${repository.root}/artifacts.jar" tofile="artifacts.jar.backup" />
+		<unjar src="${repository.root}/artifacts.jar" dest="." />
+		<move file="artifacts.xml" tofile="artifacts.xml.original" />
+		<xslt style="p2RepoTuning/p2RepoTuning.xsl" in="artifacts.xml.original" out="artifacts.xml">
+			<param name="repo_type" expression="${repository.type}"/>
+			<param name="version" expression="${version}"/>
+			<param name="qualifier" expression="${qualifier}" />
+		</xslt>
+		<zip destfile="${repository.root}/artifacts.jar" filesonly="true" basedir="." includes="artifacts.xml" />
+	</target>
+</project>

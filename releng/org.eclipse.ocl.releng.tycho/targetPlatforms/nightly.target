@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target includeMode="feature" name="Eclipse OCL Nightly Build Target Platform" sequenceNumber="16">
+<locations>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/eclipse/updates/4.8-I-builds"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
+    <unit id="org.eclipse.emf.examples.library" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/modeling/emf/emf/updates/nightly/core"/>
+    <repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.14milestones/core"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.emf.validation" version="0.0.0"/>
+    <!--repository location="http://download.eclipse.org/modeling/emf/validation/updates/interim"/-->
+    <repository location="http://download.eclipse.org/modeling/emf/validation/updates/releases/R201706061352"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
+    <!--repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/5.4-I-builds"/-->
+    <!--repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/5.4milestones"/-->
+    <repository location="http://download.eclipse.org/modeling/mdt/uml2/updates/5.3"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.draw2d" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/tools/gef/updates/legacy/releases/4.0.0_gef-master_1952"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.emf.mwe.sdk.feature.group" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/modeling/emft/mwe/updates/nightly"/>
+    <!--repository location="http://download.eclipse.org/modeling/emft/mwe/updates/milestones"/-->
+    <repository location="http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.1"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.xtend" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/modeling/m2t/xpand/updates/nightly"/>
+    <!--repository location="http://download.eclipse.org/modeling/m2t/xpand/updates/milestones"/-->
+    <repository location="http://download.eclipse.org/modeling/m2t/xpand/updates/releases/R201605260315"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>
+    <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/nightly/head"/>
+    <!--repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/milestones"/-->
+    <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.12.0"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/cbi/updates/license"/>
+  </location>
+  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+    <unit id="com.google.guava" version="0.0.0"/>
+    <unit id="lpg.runtime.java" version="0.0.0"/>
+    <unit id="lpg.runtime.java.source" version="0.0.0"/>
+    <repository location="http://download.eclipse.org/tools/orbit/S-builds/S20170912163609/repository"/>
+  </location>
+</locations>
+</target>
