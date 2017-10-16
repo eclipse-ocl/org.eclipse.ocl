@@ -30,23 +30,11 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.ocl.doc.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.ocl.edit"
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.ocl.edit.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.ocl.ui"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ocl.ui.source"
          version="0.0.0"/>
 
 </feature>

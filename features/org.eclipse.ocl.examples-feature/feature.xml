@@ -21,10 +21,6 @@
    </url>
 
    <includes
-         id="org.eclipse.ocl.examples.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.ocl.examples.classic"
          version="0.0.0"/>
 

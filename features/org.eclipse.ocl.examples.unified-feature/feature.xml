@@ -22,19 +22,7 @@
    </url>
 
    <includes
-         id="org.eclipse.ocl.unified.core.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ocl.examples.unified.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.ocl.doc"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ocl.doc.source"
          version="0.0.0"/>
 
    <includes

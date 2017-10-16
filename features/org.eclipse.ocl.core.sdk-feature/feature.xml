@@ -25,12 +25,4 @@
          id="org.eclipse.ocl.all"
          version="0.0.0"/>
 
-   <includes
-         id="org.eclipse.ocl.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ocl.uml.source"
-         version="0.0.0"/>
-
 </feature>
