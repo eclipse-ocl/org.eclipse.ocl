@@ -59,10 +59,10 @@ public abstract class JavaFileUtil
 			compilationOptions.add("-d");
 			compilationOptions.add(objectPath);
 			compilationOptions.add("-g");
-			if (true/*useNullAnnotations*/) {
-				compilationOptions.add("-source");
-				compilationOptions.add("1.8");
-			}
+			//			if (true/*useNullAnnotations*/) {			// This was a good idea to prevent Java 7 / Java 8 annotation confusion
+			//				compilationOptions.add("-source");		//  but with the advent of Java 9 specifying the other of 8/9 is a cross
+			//				compilationOptions.add("1.8");			//  compilation requiring the path to the bootstrap JDK to be specified
+			//			}
 			if (EcorePlugin.IS_ECLIPSE_RUNNING && (classpathProjects != null)) {
 				compilationOptions.add("-cp");
 				compilationOptions.add(createClassPath(classpathProjects));

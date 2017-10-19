@@ -198,12 +198,11 @@ public class CompletionProposalTests extends XtextTestCase
 					"Bundle-Name: CompletionProposalTests\n"+
 					"Bundle-SymbolicName: CompletionProposalTests\n"+
 					"Bundle-Version: 1.0.0.qualifier\n"+
-					"Bundle-RequiredExecutionEnvironment: JavaSE-1.7\n"+
 					"Require-Bundle: org.eclipse.ocl.pivot\n"+
 				"");
 		TestUtil.createIFile(project, ".classpath",
 			"<classpath>\n" +
-					"			<classpathentry kind=\"con\" path=\"org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7\"/>\n" +
+					"			<classpathentry kind=\"con\" path=\"org.eclipse.jdt.launching.JRE_CONTAINER\"/>\n" +
 					"			<classpathentry kind=\"con\" path=\"org.eclipse.pde.core.requiredPlugins\"/>\n" +
 					"			<classpathentry kind=\"src\" path=\"src\"/>\n" +
 					"			<classpathentry kind=\"output\" path=\"bin\"/>\n" +
