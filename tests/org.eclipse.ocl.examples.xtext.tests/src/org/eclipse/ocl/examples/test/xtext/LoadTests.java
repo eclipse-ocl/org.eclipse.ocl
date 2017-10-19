@@ -450,7 +450,7 @@ public class LoadTests extends XtextTestCase
 				//	Check that the split off file is loadable
 				//
 				if (hasOCLcontent) {
-					OCL ocl2 = createOCL();
+					OCL ocl2 = createOCLWithProjectMap();
 					ResourceSet resourceSet2 = ocl2.getResourceSet();
 					BaseCSResource reloadCS = (BaseCSResource) resourceSet2.createResource(oclURI);
 					ocl2.getEnvironmentFactory().adapt(reloadCS);

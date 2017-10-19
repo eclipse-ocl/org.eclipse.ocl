@@ -1,6 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Royalandloyal
+Bundle-Name: %Plugin.name
+Bundle-Vendor: %Plugin.providerName
+Bundle-Localization: plugin
 Bundle-SymbolicName: org.eclipse.ocl.examples.project.royalandloyal
 Bundle-Version: 1.0.300.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

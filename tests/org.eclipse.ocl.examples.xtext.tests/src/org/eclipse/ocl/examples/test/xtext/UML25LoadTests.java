@@ -44,6 +44,15 @@ public class UML25LoadTests extends LoadTests
 		return ocl;
 	}
 
+	@Override
+	public @NonNull TestOCL createOCLWithProjectMap() {
+		UMLStandaloneSetup.init();
+		TestOCL ocl = new TestOCL("UML25LoadTests", getName(), getProjectMap());
+		ResourceSet resourceSet = ocl.getResourceSet();
+		XMI252UMLResourceFactoryImpl.install(resourceSet, URI.createPlatformResourceURI("/org.eclipse.ocl.examples.uml25/model/", true));
+		return ocl;
+	}
+
 	//	public void testLoad_UML_ecore() throws IOException, InterruptedException {
 	//		doLoadEcore(URI.createPlatformResourceURI("/org.eclipse.uml2.uml/model/UML.ecore", true));
 	//	}

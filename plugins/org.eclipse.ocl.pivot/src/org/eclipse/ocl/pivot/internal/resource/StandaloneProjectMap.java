@@ -234,6 +234,7 @@ public class StandaloneProjectMap implements ProjectManager
 		//		PROJECT_MAP_ADD_GENERATED_PACKAGE.setState(true);
 		//		PROJECT_MAP_ADD_URI_MAP.setState(true);
 		//		PROJECT_MAP_CONFIGURE.setState(true);
+		//		PROJECT_MAP_GET.setState(true);
 		//		PROJECT_MAP_INSTALL.setState(true);
 		//		PROJECT_MAP_RESOLVE.setState(true);
 	}
