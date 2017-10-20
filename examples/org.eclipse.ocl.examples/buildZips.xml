@@ -9,33 +9,32 @@
 	
 	<target name="zip.examples" depends="init">
 		<!-- OCL examples -->
-		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.interpreter" property="projectDir"/>
-		<zip destfile="zips/interpreter.zip" basedir="${projectDir}">
+		<!--eclipse.convertPath resourcePath="org.eclipse.ocl.examples.interpreter" property="projectDir"/-->
+		<zip destfile="zips/interpreter.zip" basedir="../org.eclipse.ocl.examples.interpreter">
 			<patternset refid="zip.excludes"/>
 		</zip>
 		
-		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.empty" property="projectDir"/>
-		<zip destfile="zips/empty.zip" basedir="${projectDir}">
+		<!--eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.empty" property="projectDir"/-->
+		<zip destfile="zips/empty.zip" basedir="../org.eclipse.ocl.examples.project.empty">
 			<patternset refid="zip.excludes"/>
 		</zip>
 		
-		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.completeocltutorial" property="projectDir"/>
-		<zip destfile="zips/completeocltutorial.zip" basedir="${projectDir}">
+		<!--eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.completeocltutorial" property="projectDir"/-->
+		<zip destfile="zips/completeocltutorial.zip" basedir="../org.eclipse.ocl.examples.project.completeocltutorial">
 			<patternset refid="zip.excludes"/>
 		</zip>
 		
-		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.oclinecoretutorial" property="projectDir"/>
-		
-		<zip destfile="zips/oclinecoretutorial.zip" basedir="${projectDir}">
+		<!--eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.oclinecoretutorial" property="projectDir"/-->
+		<zip destfile="zips/oclinecoretutorial.zip" basedir="../org.eclipse.ocl.examples.project.oclinecoretutorial">
 			<patternset refid="zip.excludes"/>
 		</zip>
 		
-		<eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.royalandloyal" property="projectDir"/>
-		<zip destfile="zips/royalandloyal.zip" basedir="${projectDir}">
+		<!--eclipse.convertPath resourcePath="org.eclipse.ocl.examples.project.royalandloyal" property="projectDir"/-->
+		<zip destfile="zips/royalandloyal.zip" basedir="../org.eclipse.ocl.examples.project.royalandloyal">
 			<patternset refid="zip.excludes"/>
 		</zip>
 
-		<!-- EMF examples -->
+		<!-- EMF examples - FIXME Bug 526320 ->
 		<eclipse.convertPath resourcePath="org.eclipse.emf.examples.library" property="projectDir"/>
 		<zip destfile="zips/library.zip" basedir="${projectDir}"/>
 			
@@ -43,7 +42,7 @@
 		<zip destfile="zips/libraryEdit.zip" basedir="${projectDir}"/>
 		
 		<eclipse.convertPath resourcePath="org.eclipse.emf.examples.library.editor" property="projectDir"/>
-		<zip destfile="zips/libraryEditor.zip" basedir="${projectDir}"/>
+		<zip destfile="zips/libraryEditor.zip" basedir="${projectDir}"/-->
 	</target>
 
 	<target name="clean" depends="init" description="Clean the plug-in: org.eclipse.ocl.examples.">
