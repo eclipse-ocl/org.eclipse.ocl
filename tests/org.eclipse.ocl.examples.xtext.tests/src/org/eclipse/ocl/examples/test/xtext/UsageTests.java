@@ -37,6 +37,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
@@ -356,26 +357,24 @@ extends PivotTestSuite// XtextTestCase
 		//		compilationOptions.add("-g");
 		List<@NonNull JavaFileObject> compilationUnits = new ArrayList<>();
 		Object context = null;
+		String objectPath = "bin";
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			IWorkspace workspace = ResourcesPlugin.getWorkspace();
 			IProject project = workspace.getRoot().getProject(testProjectName);
 			if (project != null) {
 				getCompilationUnits(compilationUnits, project);
-				//				java.net.URI locationURI = project.getLocationURI();
-				//				String binURI = URIUtil.toUnencodedString(locationURI) + "/bin";
-				//				URI uri = URI.createURI(binURI);
-				//				if (uri.isFile()) {
-				//					String fileString = uri.toFileString();
-				//					assert fileString != null;
-				//					binURI = fileString.replace("\\", "/");
-				//				}
-				//				compilationOptions.set(1, binURI);
-				//				new File(locationURI.getPath() + "/bin").mkdirs();
-				//				compilationOptions.add("-cp");
-				//				String path = createClassPath(classpathProjects);
-				//				compilationOptions.add(path);
+				java.net.URI locationURI = project.getLocationURI();
+				objectPath = URIUtil.toUnencodedString(locationURI) + "/bin";	// Tycho on HIdson needs this
+				URI uri = URI.createURI(objectPath);
+				if (uri.isFile()) {
+					String fileString = uri.toFileString();
+					assert fileString != null;
+					objectPath = fileString.replace("\\", "/");
+					new File(objectPath).mkdirs();
+				}
 			}
 			context = project;
+			System.out.println("objectPath = " + objectPath);
 		} else {
 			File dir = new File("src-gen/" + testProjectName);
 			getCompilationUnits(compilationUnits, dir);
@@ -423,7 +422,7 @@ extends PivotTestSuite// XtextTestCase
 			System.out.println("Compilation of " + context + " returned false but no diagnostics");
 		} */
 
-		JavaFileUtil.compileClasses(compilationUnits, String.valueOf(context), "bin", classpathProjects);
+		JavaFileUtil.compileClasses(compilationUnits, String.valueOf(context), objectPath, classpathProjects);
 
 
 
