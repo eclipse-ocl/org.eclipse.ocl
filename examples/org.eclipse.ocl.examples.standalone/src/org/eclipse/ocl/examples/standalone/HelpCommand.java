@@ -6,10 +6,11 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.standalone;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -55,7 +56,8 @@ public class HelpCommand extends StandaloneCommand
 	public HelpCommand(@NonNull StandaloneApplication standaloneApplication) {
 		super(standaloneApplication, "help", StandaloneMessages.HelpCommand_Help);
 	}
-	
+
+	@Override
 	public @NonNull StandaloneResponse execute(@NonNull Map<CommandToken, List<String>> token2strings) {
 		List<StandaloneCommand> commands = new ArrayList<StandaloneCommand>(standaloneApplication.getCommands());
 		Collections.sort(commands, CommandComparator.INSTANCE);
@@ -104,8 +106,11 @@ public class HelpCommand extends StandaloneCommand
 			}
 			s.append("\n");
 		}
-        System.out.println(s.toString());
-		return StandaloneResponse.OK;
+		try {
+			DEFAULT_OUTPUT_STREAM.append(s.toString());
+			return StandaloneResponse.OK;
+		} catch (IOException e) {}
+		return StandaloneResponse.FAIL;
 	}
 
 	@Override

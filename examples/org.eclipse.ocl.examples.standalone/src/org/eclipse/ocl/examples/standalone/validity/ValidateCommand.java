@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.standalone.validity;
 
@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,11 +74,13 @@ public class ValidateCommand extends StandaloneCommand
 		public ExporterToken() {
 			super("-exporter", StandaloneMessages.ValidateCommand_Exporter_Help);
 		}
-		
+
+		@Override
 		public boolean check(@NonNull List<String> strings) {
 			return getExporter(strings) != null;
 		}
 
+		@Override
 		public @Nullable String getArgsHelp() {
 			List<IValidityExporterDescriptor> exporters = new ArrayList<IValidityExporterDescriptor>(ValidityExporterRegistry.INSTANCE.getRegisteredExtensions());
 			Collections.sort(exporters, ExporterComparator.INSTANCE);
@@ -111,12 +114,12 @@ public class ValidateCommand extends StandaloneCommand
 		/**
 		 * Gets the validation exporter corresponding to the argument read after the
 		 * <b>-report</b> argument.
-		 * 
+		 *
 		 * @return The validation exporter.
 		 */
-//		public AbstractExporter getExporter() {
-//			return exporter;
-//		}
+		//		public AbstractExporter getExporter() {
+		//			return exporter;
+		//		}
 	}
 
 	/**
@@ -128,11 +131,13 @@ public class ValidateCommand extends StandaloneCommand
 		public ModelToken() {
 			super("-model", StandaloneMessages.ValidateCommand_Model_Help);
 		}
-		
+
+		@Override
 		public boolean check(@NonNull List<String> strings) {
 			return getModelFileName(strings) != null;
 		}
 
+		@Override
 		public @Nullable String getArgsHelp() {
 			return "<file-name>";
 		}
@@ -156,12 +161,12 @@ public class ValidateCommand extends StandaloneCommand
 		/**
 		 * Gets the absolute path to the model file deduced from the value specified
 		 * after the argument <b>-model</b>.
-		 * 
+		 *
 		 * @return the model path as a String.
 		 */
-//		public IPath getModelFilePath() {
-//			return modelPath;
-//		}
+		//		public IPath getModelFilePath() {
+		//			return modelPath;
+		//		}
 	}
 
 	/**
@@ -173,11 +178,13 @@ public class ValidateCommand extends StandaloneCommand
 		public OutputToken() {
 			super("-output", StandaloneMessages.ValidateCommand_Output_Help);
 		}
-		
+
+		@Override
 		public boolean check(@NonNull List<String> strings) {
 			return getOutputFile(strings) != null;
 		}
 
+		@Override
 		public @Nullable String getArgsHelp() {
 			return "<file-name>";
 		}
@@ -199,8 +206,8 @@ public class ValidateCommand extends StandaloneCommand
 					}
 				}
 				if (!file.exists()) {
-//					outputFilePath = new Path(file.getAbsolutePath());
-//					outputFile = file;
+					//					outputFilePath = new Path(file.getAbsolutePath());
+					//					outputFile = file;
 					File outputFolder = file.getParentFile();
 					if (!outputFolder.exists()) {
 						logger.error(StandaloneMessages.OCLArgumentAnalyzer_OutputDir
@@ -245,19 +252,21 @@ public class ValidateCommand extends StandaloneCommand
 			super("-rules", StandaloneMessages.ValidateCommand_Rules_Help);
 		}
 
+		@Override
 		public boolean check(@NonNull List<String> strings) {
 			if (strings.size() <= 0) {
-//				return false;			-- all files might be ignored
+				//				return false;			-- all files might be ignored
 			}
 			for (String string : strings) {
 				String checkedName = getCheckedFileName(string);
 				if (checkedName == null) {
-					return false; 
+					return false;
 				}
 			}
 			return true;
 		}
 
+		@Override
 		public int parseArgument(@NonNull List<String> strings, @NonNull String @NonNull [] arguments, int i) {
 			if (i < arguments.length){
 				String argument = arguments[i++];
@@ -272,7 +281,7 @@ public class ValidateCommand extends StandaloneCommand
 
 		/**
 		 * Checks consistency of the ocl file passed to the command line.
-		 * 
+		 *
 		 * @param argument
 		 *            is the path to the relative/absolute path to the resource
 		 * @return <code>true</code> if the model exists and is a file,
@@ -320,10 +329,10 @@ public class ValidateCommand extends StandaloneCommand
 							+ file.getAbsolutePath()
 							+ StandaloneMessages.OCLArgumentAnalyzer_ignored);
 
-//				} else {
-//					logger.info(StandaloneMessages.OCLArgumentAnalyzer_OCLFile
-//							+ file.getAbsolutePath()
-//							+ StandaloneMessages.OCLArgumentAnalyzer_found);
+					//				} else {
+					//					logger.info(StandaloneMessages.OCLArgumentAnalyzer_OCLFile
+					//							+ file.getAbsolutePath()
+					//							+ StandaloneMessages.OCLArgumentAnalyzer_found);
 				}
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
@@ -332,7 +341,7 @@ public class ValidateCommand extends StandaloneCommand
 
 		/**
 		 * Extracts information contained in the text file.
-		 * 
+		 *
 		 * @param txtFile
 		 *            The file containing relative path to OCL files.
 		 */
@@ -356,6 +365,7 @@ public class ValidateCommand extends StandaloneCommand
 			}
 		}
 
+		@Override
 		public @Nullable String getArgsHelp() {
 			return "<file-name>";
 		}
@@ -363,7 +373,7 @@ public class ValidateCommand extends StandaloneCommand
 		/**
 		 * Gets the collection of OCL resources deduced from values specified after
 		 * the <b>-rule</b> argument.
-		 * 
+		 *
 		 * @return A List of OCL Uris
 		 */
 		public @NonNull List<String> getOCLFileNames(@NonNull Map<CommandToken, List<String>> token2strings) {
@@ -395,7 +405,8 @@ public class ValidateCommand extends StandaloneCommand
 		public UsingToken() {
 			super("-using", StandaloneMessages.ValidateCommand_Using_Help);
 		}
-		
+
+		@Override
 		public boolean check(@NonNull List<String> locators) {
 			for (String locator : locators) {
 				if (!ALL_LOCATORS.equals(locator) && !JAVA_LOCATOR.equals(locator) && !OCL_LOCATOR.equals(locator) && !UML_LOCATOR.equals(locator)) {
@@ -421,6 +432,7 @@ public class ValidateCommand extends StandaloneCommand
 			return (strings == null) || strings.contains(UML_LOCATOR) || strings.contains(ALL_LOCATORS);
 		}
 
+		@Override
 		public @Nullable String getArgsHelp() {
 			return ALL_LOCATORS + "|" + JAVA_LOCATOR + "|" + OCL_LOCATOR + "|" + UML_LOCATOR;
 		}
@@ -469,9 +481,9 @@ public class ValidateCommand extends StandaloneCommand
 			} else {
 				@SuppressWarnings("unused")
 				IPath modelPath = new Path(file.getAbsolutePath());
-//				logger.info(StandaloneMessages.OCLArgumentAnalyzer_ModelFile
-//						+ file.getAbsolutePath()
-//						+ StandaloneMessages.OCLArgumentAnalyzer_found);
+				//				logger.info(StandaloneMessages.OCLArgumentAnalyzer_ModelFile
+				//						+ file.getAbsolutePath()
+				//						+ StandaloneMessages.OCLArgumentAnalyzer_found);
 				return string;//modelPath;
 			}
 		} catch (IOException e) {
@@ -482,7 +494,7 @@ public class ValidateCommand extends StandaloneCommand
 
 	/**
 	 * Gets an URI from a file Path.
-	 * 
+	 *
 	 * @param filePath
 	 *            the file path.
 	 * @return an URI from the path.
@@ -493,7 +505,7 @@ public class ValidateCommand extends StandaloneCommand
 		try {
 			file = new File(fileName).getCanonicalFile();		// FIXME is this necessary
 			IPath filePath = new Path(file.getAbsolutePath());
-//			IPath filePath = new Path(fileName);
+			//			IPath filePath = new Path(fileName);
 			if (isRelativePath(filePath)) {
 				fileUri = URI.createPlatformResourceURI(filePath.toString(), true);
 			} else {
@@ -509,7 +521,7 @@ public class ValidateCommand extends StandaloneCommand
 
 	/**
 	 * Checks if the path is relative or absolute.
-	 * 
+	 *
 	 * @param path
 	 *            a file path.
 	 * @return true if the path is relative, false otherwise.
@@ -545,7 +557,8 @@ public class ValidateCommand extends StandaloneCommand
 		addToken(exporterToken);
 		addToken(usingToken);
 	}
-	
+
+	@Override
 	public @NonNull StandaloneResponse execute(@NonNull Map<CommandToken, List<String>> token2strings) {
 		standaloneApplication.doCompleteOCLSetup();
 		String modelFileName = modelToken.getModelFileName(token2strings);
@@ -566,7 +579,7 @@ public class ValidateCommand extends StandaloneCommand
 			return StandaloneResponse.FAIL;
 		}
 		StandaloneValidityManager validityManager = initiateValidityManager(standaloneApplication.getResourceSet(), token2strings);
-		
+
 		if (validityManager != null) {
 			// run the validation
 			validate(validityManager);
@@ -574,19 +587,19 @@ public class ValidateCommand extends StandaloneCommand
 			// export results
 			File outputFile = outputToken.getOutputFile(token2strings);
 			exportValidationResults(validityManager.getRootNode(), outputFile, token2strings);
-//			try {
-//				exportValidationResults(getOutputWriter(), validityManager.getRootNode());
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			//			try {
+			//				exportValidationResults(getOutputWriter(), validityManager.getRootNode());
+			//			} catch (IOException e) {
+			//				// TODO Auto-generated catch block
+			//				e.printStackTrace();
+			//			}
 		}
 		return StandaloneResponse.OK;
 	}
 
 	/**
 	 * Exports Validation results.
-	 * 
+	 *
 	 * @param rootNode
 	 *            the validity model rootNode.
 	 * @param outputPath
@@ -595,29 +608,29 @@ public class ValidateCommand extends StandaloneCommand
 	private void exportValidationResults(@NonNull RootNode rootNode, @Nullable File outputFile, @NonNull Map<CommandToken, List<String>> token2strings) {
 		final IValidityExporter selectedExporter = exporterToken.getExporter(token2strings);
 		if (selectedExporter != null && rootNode != null) {
-//			logger.info(StandaloneMessages.OCLValidatorApplication_ExportStarting);
+			//			logger.info(StandaloneMessages.OCLValidatorApplication_ExportStarting);
 			Appendable s = null;
 			try {
-				s = outputFile != null ? new FileWriter(outputFile) : System.out;
+				s = outputFile != null ? new FileWriter(outputFile) : DEFAULT_OUTPUT_STREAM;
 				selectedExporter.export(s, rootNode, outputFile != null ? outputFile.toString() : null);
 			} catch (IOException e) {
 				logger.error(StandaloneMessages.OCLValidatorApplication_ExportProblem, e);
 			} finally {
-				if (s != System.out) {
+				if ((s != DEFAULT_OUTPUT_STREAM) && (s instanceof OutputStreamWriter)) {
 					try {
-						((FileWriter)s).close();
+						((OutputStreamWriter)s).close();
 					} catch (IOException e) {}
 				}
 			}
-//			logger.info(StandaloneMessages.OCLValidatorApplication_ExportedFileGenerated);
-//		} else {
-//			logger.info(StandaloneMessages.OCLValidatorApplication_ExportProblem);
+			//			logger.info(StandaloneMessages.OCLValidatorApplication_ExportedFileGenerated);
+			//		} else {
+			//			logger.info(StandaloneMessages.OCLValidatorApplication_ExportProblem);
 		}
 	}
 
 	/**
 	 * Initiates the validity manager using the resourceSet.
-	 * 
+	 *
 	 * @param resourceSet
 	 *            the resource set.
 	 */
@@ -632,7 +645,7 @@ public class ValidateCommand extends StandaloneCommand
 
 	/**
 	 * Loads the entered model and ocl files.
-	 * 
+	 *
 	 * @param modelFilePath
 	 *            the model to validate file path.
 	 * @param oclPaths
@@ -659,10 +672,10 @@ public class ValidateCommand extends StandaloneCommand
 			}
 
 			// Load ocl models
-//			if (done && standaloneApplication.loadModelFile(oclURI) == null) {
-//				logger.error(MessageFormat.format(StandaloneMessages.OCLValidatorApplication_OclLoadProblem, oclFileName));
-//				done = false;
-//			}
+			//			if (done && standaloneApplication.loadModelFile(oclURI) == null) {
+			//				logger.error(MessageFormat.format(StandaloneMessages.OCLValidatorApplication_OclLoadProblem, oclFileName));
+			//				done = false;
+			//			}
 
 			// Load as ocl documents
 			try {
@@ -693,8 +706,8 @@ public class ValidateCommand extends StandaloneCommand
 	 * Runs the validation
 	 */
 	private void validate(@NonNull StandaloneValidityManager validityManager) {
-//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationStarting);
+		//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationStarting);
 		validityManager.runValidation();
-//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationComplete);
+		//		logger.info(StandaloneMessages.OCLValidatorApplication_ValidationComplete);
 	}
 }

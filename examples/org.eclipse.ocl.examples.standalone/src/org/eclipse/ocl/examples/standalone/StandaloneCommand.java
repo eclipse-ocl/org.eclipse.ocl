@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.standalone;
 
@@ -27,6 +27,16 @@ import org.eclipse.jdt.annotation.Nullable;
 public abstract class StandaloneCommand
 {
 	private static final Logger logger = Logger.getLogger(StandaloneCommand.class);
+	protected static @NonNull Appendable DEFAULT_OUTPUT_STREAM = System.out;
+
+	/**
+	 * Redirect the default stdout clutter for test purposes.
+	 */
+	public static @NonNull Appendable setDefaultOutputStream(@NonNull Appendable defaultOutputStream) {
+		Appendable savedDefaultOutputStream = defaultOutputStream;
+		DEFAULT_OUTPUT_STREAM = defaultOutputStream;
+		return savedDefaultOutputStream;
+	}
 
 	public static abstract class CommandToken
 	{
@@ -46,15 +56,15 @@ public abstract class StandaloneCommand
 		public @Nullable String getArgsHelp() {
 			return null;
 		}
-		
+
 		public @NonNull String getHelp() {
 			return help;
 		}
-		
+
 		public @NonNull String getName() {
 			return name;
 		}
-		
+
 		public boolean isRequired() {
 			return isRequired;
 		}
@@ -76,21 +86,24 @@ public abstract class StandaloneCommand
 			return name;
 		}
 	}
-	
+
 	public static class StringToken extends CommandToken
 	{
 		protected StringToken(@NonNull String name, @NonNull String help) {
 			super(name, help);
 		}
 
+		@Override
 		public boolean check(@NonNull List<String> strings) {
 			return strings.size() == 1;
 		}
 
+		@Override
 		public @Nullable String getArgsHelp() {
 			return "<string-value>";
 		}
 
+		@Override
 		public int parseArgument(@NonNull List<String> strings, @NonNull String @NonNull [] arguments, int i) {
 			if (i < arguments.length){
 				String argument = arguments[i++];
@@ -103,7 +116,7 @@ public abstract class StandaloneCommand
 			}
 		}
 	}
-	
+
 	protected final @NonNull StandaloneApplication standaloneApplication;
 	protected final @NonNull String name;
 	protected final @NonNull String help;
@@ -114,11 +127,11 @@ public abstract class StandaloneCommand
 		this.name = name;
 		this.help = help;
 	}
-	
+
 	protected void addToken(@NonNull CommandToken commandToken) {
 		tokens.put(commandToken.getName(), commandToken);
 	}
-	
+
 	public boolean check(@NonNull Map<CommandToken, List<String>> token2strings) {
 		for (CommandToken token : token2strings.keySet()) {
 			List<String> strings = token2strings.get(token);
@@ -136,9 +149,9 @@ public abstract class StandaloneCommand
 		}
 		return true;
 	}
-	
+
 	public abstract @NonNull StandaloneResponse execute(@NonNull Map<CommandToken, List<String>> tokens);
-	
+
 	public @NonNull String getHelp() {
 		return help;
 	}
@@ -150,7 +163,7 @@ public abstract class StandaloneCommand
 	public @NonNull Collection<CommandToken> getTokens() {
 		return tokens.values();
 	}
-	
+
 	public @Nullable Map<CommandToken, List<String>> parse(@NonNull String @NonNull [] arguments) {
 		Map<CommandToken, List<String>> parsedTokens = new HashMap<CommandToken, List<String>>();
 		for (int i = 1; i < arguments.length;) {
@@ -159,7 +172,7 @@ public abstract class StandaloneCommand
 			List<String> strings = parsedTokens.get(token);
 			if (strings == null) {
 				strings = new ArrayList<String>();
-				parsedTokens.put(token, strings);		
+				parsedTokens.put(token, strings);
 			}
 			else if (token.isSingleton()) {
 				logger.error("Token '" + token.getName() + "' may only be used once");
