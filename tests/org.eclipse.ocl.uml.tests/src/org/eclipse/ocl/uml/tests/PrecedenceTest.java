@@ -40,161 +40,161 @@ import org.eclipse.uml2.uml.UMLFactory;
  */
 @SuppressWarnings("nls")
 public class PrecedenceTest
-	extends AbstractTestSuite {
+extends AbstractTestSuite {
 
-    Resource res;
-    Package pkg;
-    Class class1;
-    
+	Resource res;
+	Package pkg;
+	Class class1;
+
 	/**
 	 * Test that let expressions require parenthesis when embedding them in
 	 * other expressions.
 	 */
-    public void test_let() {
-        helper.setContext(class1);
+	public void test_let() {
+		helper.setContext(class1);
 
-        try {
-            helper.createInvariant(
-                "self.base_Property.redefinedProperty->isEmpty() = false implies \n" +
-                "   self.base_Property.redefinedProperty->size() = 1 and\n" +
-                "   let rp : UML::Property =\n" +
-                "            self.base_Property.redefinedProperty->asSequence()->at(1) in \n" +
-                "     self.base_Property.name = rp.name and\n" +
-                "     self.base_Property.type = rp.type");
-        } catch (Exception e) {
-            fail("Failed to parse: " + e.getLocalizedMessage());
-        }
-        
-        helper.setContext(getMetaclass("NamedElement"));
-        
-        try {
-            helper.createInvariant(
-                "namespace.getNamesOfMember(\n" +
-                "   let ne : NamedElement = self in ne)->exists(n |\n" +
-                "       let len : Integer = n.size() in len = 1)");
-        } catch (Exception e) {
-            fail("Failed to parse: " + e.getLocalizedMessage());
-        }
-    }
+		try {
+			helper.createInvariant(
+				"self.base_Property.redefinedProperty->isEmpty() = false implies \n" +
+						"   self.base_Property.redefinedProperty->size() = 1 and\n" +
+						"   let rp : UML::Property =\n" +
+						"            self.base_Property.redefinedProperty->asSequence()->at(1) in \n" +
+						"     self.base_Property.name = rp.name and\n" +
+					"     self.base_Property.type = rp.type");
+		} catch (Exception e) {
+			fail("Failed to parse: " + e.getLocalizedMessage());
+		}
 
-    /**
-     * Test that the "in" expression part of a let expression consumes as much
-     * of the input as possible, so that
-     * <blockquote><code>let a = ... in a.b</code></blockquote>
-     * parses as
-     * <blockquote><code>let a = ... in (a.b)</code></blockquote>
-     * not as
-     * <blockquote><code>(let a = ... in a).b</code></blockquote>
-     */
-    @SuppressWarnings("unchecked")
+		helper.setContext(getMetaclass("NamedElement"));
+
+		try {
+			helper.createInvariant(
+				"namespace.getNamesOfMember(\n" +
+						"   let ne : NamedElement = self in ne)->exists(n |\n" +
+					"       let len : Integer = n.size() in len = 1)");
+		} catch (Exception e) {
+			fail("Failed to parse: " + e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * Test that the "in" expression part of a let expression consumes as much
+	 * of the input as possible, so that
+	 * <blockquote><code>let a = ... in a.b</code></blockquote>
+	 * parses as
+	 * <blockquote><code>let a = ... in (a.b)</code></blockquote>
+	 * not as
+	 * <blockquote><code>(let a = ... in a).b</code></blockquote>
+	 */
+	@SuppressWarnings("unchecked")
 	public void test_let_inExpression_182201() {
-        helper.setContext(getMetaclass("NamedElement"));
+		helper.setContext(getMetaclass("NamedElement"));
 
-        OCLExpression<Classifier> expr = null;
-        
-        try {
-            expr = helper.createQuery("let ne : NamedElement = self in ne.name");
-        } catch (Exception e) {
-            fail("Failed to parse: " + e.getLocalizedMessage());
-        }
+		OCLExpression<Classifier> expr = null;
 
-        assertNotNull(expr);
-        assertTrue(expr instanceof LetExp<?, ?>);  // not a PropertyCallExp
-        
-        LetExp<Classifier, ?> letExp = (LetExp<Classifier, ?>) expr;
-        assertTrue(letExp.getIn() instanceof PropertyCallExp<?, ?>);
-        
-        try {
-            expr = helper.createQuery(
-                "let n : String = let ne : NamedElement = self in ne.name in n.size()");
-        } catch (Exception e) {
-            fail("Failed to parse: " + e.getLocalizedMessage());
-        }
+		try {
+			expr = helper.createQuery("let ne : NamedElement = self in ne.name");
+		} catch (Exception e) {
+			fail("Failed to parse: " + e.getLocalizedMessage());
+		}
 
-        assertNotNull(expr);
-        assertTrue(expr instanceof LetExp<?, ?>);  // not a PropertyCallExp
-        
-        letExp = (LetExp<Classifier, ?>) expr;
-        assertTrue(letExp.getIn() instanceof OperationCallExp<?, ?>);
-        
-        OperationCallExp<Classifier, Operation> opCall =
-            (OperationCallExp<Classifier, Operation>) letExp.getIn();
-        
-        assertEquals("size", opCall.getReferredOperation().getName());
-        
-        expr = letExp.getVariable().getInitExpression();
-        assertTrue(expr instanceof LetExp<?, ?>);
-        
-        letExp = (LetExp<Classifier, ?>) letExp.getVariable().getInitExpression();
-        assertTrue(letExp.getIn() instanceof PropertyCallExp<?, ?>);
-        
-        // a different nesting
-        try {
-            expr = helper.createQuery(
-                "let ne : NamedElement = self in let n : String = ne.name in n.size()");
-        } catch (Exception e) {
-            fail("Failed to parse: " + e.getLocalizedMessage());
-        }
+		assertNotNull(expr);
+		assertTrue(expr instanceof LetExp<?, ?>);  // not a PropertyCallExp
 
-        assertNotNull(expr);
-        assertTrue(expr instanceof LetExp<?, ?>);  // not a PropertyCallExp
-        
-        letExp = (LetExp<Classifier, ?>) expr;
-        assertTrue(letExp.getIn() instanceof LetExp<?, ?>);
-        
-        letExp = (LetExp<Classifier, ?>) letExp.getIn();
-        assertTrue(letExp.getIn() instanceof OperationCallExp<?, ?>);
-        
-        OperationCallExp<Classifier, Operation> opCall2 =
-            (OperationCallExp<Classifier, Operation>) letExp.getIn();
-        
-        assertEquals("size", opCall2.getReferredOperation().getName());
-    }
-    
-    public void test_equality_relational_179249() {
-        helper.setContext(class1);
-        
-        try {
-            // this should parse, because "1 < 2" has higher precedence.
-            //    If it hadn't, then we would fail to parse because
-            //    Integer has no "< Boolean" operation (we would parse this
-            //    expression as "1 < (2 = true)"
-            
-            helper.createInvariant("1 < 2 = true");
-        } catch (Exception e) {
-            fail("Failed to parse: " + e.getLocalizedMessage());
-        }
-    }
-        
+		LetExp<Classifier, ?> letExp = (LetExp<Classifier, ?>) expr;
+		assertTrue(letExp.getIn() instanceof PropertyCallExp<?, ?>);
+
+		try {
+			expr = helper.createQuery(
+				"let n : String = let ne : NamedElement = self in ne.name in n.size()");
+		} catch (Exception e) {
+			fail("Failed to parse: " + e.getLocalizedMessage());
+		}
+
+		assertNotNull(expr);
+		assertTrue(expr instanceof LetExp<?, ?>);  // not a PropertyCallExp
+
+		letExp = (LetExp<Classifier, ?>) expr;
+		assertTrue(letExp.getIn() instanceof OperationCallExp<?, ?>);
+
+		OperationCallExp<Classifier, Operation> opCall =
+				(OperationCallExp<Classifier, Operation>) letExp.getIn();
+
+		assertEquals("size", opCall.getReferredOperation().getName());
+
+		expr = letExp.getVariable().getInitExpression();
+		assertTrue(expr instanceof LetExp<?, ?>);
+
+		letExp = (LetExp<Classifier, ?>) letExp.getVariable().getInitExpression();
+		assertTrue(letExp.getIn() instanceof PropertyCallExp<?, ?>);
+
+		// a different nesting
+		try {
+			expr = helper.createQuery(
+				"let ne : NamedElement = self in let n : String = ne.name in n.size()");
+		} catch (Exception e) {
+			fail("Failed to parse: " + e.getLocalizedMessage());
+		}
+
+		assertNotNull(expr);
+		assertTrue(expr instanceof LetExp<?, ?>);  // not a PropertyCallExp
+
+		letExp = (LetExp<Classifier, ?>) expr;
+		assertTrue(letExp.getIn() instanceof LetExp<?, ?>);
+
+		letExp = (LetExp<Classifier, ?>) letExp.getIn();
+		assertTrue(letExp.getIn() instanceof OperationCallExp<?, ?>);
+
+		OperationCallExp<Classifier, Operation> opCall2 =
+				(OperationCallExp<Classifier, Operation>) letExp.getIn();
+
+		assertEquals("size", opCall2.getReferredOperation().getName());
+	}
+
+	public void test_equality_relational_179249() {
+		helper.setContext(class1);
+
+		try {
+			// this should parse, because "1 < 2" has higher precedence.
+			//    If it hadn't, then we would fail to parse because
+			//    Integer has no "< Boolean" operation (we would parse this
+			//    expression as "1 < (2 = true)"
+
+			helper.createInvariant("1 < 2 = true");
+		} catch (Exception e) {
+			fail("Failed to parse: " + e.getLocalizedMessage());
+		}
+	}
+
 	public void test_or_and_precedence() throws ParserException {
-        ParsingOptions.setOption(helper.getEnvironment(), ProblemOption.ELEMENT_NAME_QUOTE_ESCAPE, ProblemHandler.Severity.OK);
-        helper.setContext(class1);
-        assertTrueWithoutWarning("(true or (false and false)) = true");
-        assertTrueWithoutWarning("(true or false.\"and\"(false)) = true");
-        assertTrueWithoutWarning("((true or false) and false) = false");
+		ParsingOptions.setOption(helper.getEnvironment(), ProblemOption.ELEMENT_NAME_QUOTE_ESCAPE, ProblemHandler.Severity.OK);
+		helper.setContext(class1);
+		assertTrueWithoutWarning("(true or (false and false)) = true");
+		assertTrueWithoutWarning("(true or false.\"and\"(false)) = true");
+		assertTrueWithoutWarning("((true or false) and false) = false");
 		assertTrueWithoutWarning("(true or false and false) = true");
 		ParsingOptions.setOption(helper.getEnvironment(), ParsingOptions.WARN_OF_XOR_OR_AND_PRECEDENCE_CHANGE, true);
-        assertTrueWithoutWarning("(true or (false and false)) = true");
-        assertTrueWithoutWarning("(true or false.\"and\"(false)) = true");
-        assertTrueWithoutWarning("((true or false) and false) = false");
-//1.x		assertTrue(check(helper, class1, "(true or false and false) = false"));
+		assertTrueWithoutWarning("(true or (false and false)) = true");
+		assertTrueWithoutWarning("(true or false.\"and\"(false)) = true");
+		assertTrueWithoutWarning("((true or false) and false) = false");
+		//1.x		assertTrue(check(helper, class1, "(true or false and false) = false"));
 		assertTrueWithWarning("(true or false and false) = true", OCLMessages.XorOrAndPrecedence_WARNING);
-    }
-    
-    public void test_xor_or_precedence() throws ParserException {
-        ParsingOptions.setOption(helper.getEnvironment(), ProblemOption.ELEMENT_NAME_QUOTE_ESCAPE, ProblemHandler.Severity.OK);
-        helper.setContext(class1);
-        assertTrueWithoutWarning("(true xor (false or false)) = true");
-        assertTrueWithoutWarning("(true xor false.\"or\"(false)) = true");
-        assertTrueWithoutWarning("((true xor false) or true) = true");
+	}
+
+	public void test_xor_or_precedence() throws ParserException {
+		ParsingOptions.setOption(helper.getEnvironment(), ProblemOption.ELEMENT_NAME_QUOTE_ESCAPE, ProblemHandler.Severity.OK);
+		helper.setContext(class1);
+		assertTrueWithoutWarning("(true xor (false or false)) = true");
+		assertTrueWithoutWarning("(true xor false.\"or\"(false)) = true");
+		assertTrueWithoutWarning("((true xor false) or true) = true");
 		assertTrueWithoutWarning("(true xor false or true) = false");
 		ParsingOptions.setOption(helper.getEnvironment(), ParsingOptions.WARN_OF_XOR_OR_AND_PRECEDENCE_CHANGE, true);
-        assertTrueWithoutWarning("(true xor (false or false)) = true");
-        assertTrueWithoutWarning("(true xor false.\"or\"(false)) = true");
-        assertTrueWithoutWarning("((true xor false) or true) = true");
-//1.x		assertTrue(check(helper, class1, "(true xor false or true) = true"));
-        assertTrueWithWarning("(true xor false or true) = false", OCLMessages.XorOrAndPrecedence_WARNING);
-    }
+		assertTrueWithoutWarning("(true xor (false or false)) = true");
+		assertTrueWithoutWarning("(true xor false.\"or\"(false)) = true");
+		assertTrueWithoutWarning("((true xor false) or true) = true");
+		//1.x		assertTrue(check(helper, class1, "(true xor false or true) = true"));
+		assertTrueWithWarning("(true xor false or true) = false", OCLMessages.XorOrAndPrecedence_WARNING);
+	}
 
 	protected void assertTrueWithWarning(String expression, String warning)throws ParserException {
 		helper.createInvariant(expression);
@@ -202,7 +202,7 @@ public class PrecedenceTest
 			OCLUtil.checkForErrorsOrWarnings(helper.getEnvironment());
 			fail("Missing warning: " + warning);
 		} catch (SemanticException e) {
-			System.out.println("Got expected warning: " + e.getLocalizedMessage());
+			debugPrintln("Got expected warning: " + e.getLocalizedMessage());
 			assertEquals(warning, e.getMessage());
 		}
 	}
@@ -211,27 +211,27 @@ public class PrecedenceTest
 		helper.createInvariant(expression);
 		OCLUtil.checkForErrorsOrWarnings(helper.getEnvironment());
 	}
-    
-    //
-    // Framework methods
-    //
-    
-    @Override
-    protected void setUp() {
-        
-        super.setUp();
-        
-        // create a little test model for a Smalltalk-like collection class that
-        //    defines operations corresponding to OCL iterators
-        
-        res = new ResourceImpl(URI.createURI("foo://uml"));
-        
-        pkg = UMLFactory.eINSTANCE.createPackage();
-        pkg.setName("testpkg");
-        
-        res.getContents().add(pkg);
-        
-        class1 = pkg.createOwnedClass("Class1", false);
-        class1.createOwnedAttribute("base_Property", getMetaclass("Property"));
-    }
+
+	//
+	// Framework methods
+	//
+
+	@Override
+	protected void setUp() {
+
+		super.setUp();
+
+		// create a little test model for a Smalltalk-like collection class that
+		//    defines operations corresponding to OCL iterators
+
+		res = new ResourceImpl(URI.createURI("foo://uml"));
+
+		pkg = UMLFactory.eINSTANCE.createPackage();
+		pkg.setName("testpkg");
+
+		res.getContents().add(pkg);
+
+		class1 = pkg.createOwnedClass("Class1", false);
+		class1.createOwnedAttribute("base_Property", getMetaclass("Property"));
+	}
 }

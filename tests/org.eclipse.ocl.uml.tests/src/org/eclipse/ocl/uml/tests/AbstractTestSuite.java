@@ -70,47 +70,47 @@ import org.eclipse.uml2.uml.util.UMLUtil;
  */
 @SuppressWarnings("nls")
 public abstract class AbstractTestSuite
-	extends GenericFruitTestSuite<EObject, Package, Type, Classifier, Class, DataType, PrimitiveType, Enumeration, Operation, Parameter, Property,
-	Property, Property, EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint> {
-    
+extends GenericFruitTestSuite<EObject, Package, Type, Classifier, Class, DataType, PrimitiveType, Enumeration, Operation, Parameter, Property,
+Property, Property, EnumerationLiteral, State, CallOperationAction, SendSignalAction, Constraint> {
+
 	protected static final ExecutorService exec = Executors
-		.newSingleThreadExecutor();
-	
+			.newSingleThreadExecutor();
+
 	@SuppressWarnings("unused")
 	private static org.eclipse.uml2.types.TypesPackage umltypes =
-        org.eclipse.uml2.types.TypesPackage.eINSTANCE;		// FIXME Until BUG 366083 fixed
-	
+	org.eclipse.uml2.types.TypesPackage.eINSTANCE;		// FIXME Until BUG 366083 fixed
+
 	protected static org.eclipse.ocl.uml.UMLPackage ocltypes =
-        org.eclipse.ocl.uml.UMLPackage.eINSTANCE;
-	
+			org.eclipse.ocl.uml.UMLPackage.eINSTANCE;
+
 	protected static UMLPackage uml = UMLPackage.eINSTANCE;
 	protected static UMLFactory umlf = uml.getUMLFactory();
-	
+
 	protected EPackage fruitEPackage;
 	protected EFactory fruitEFactory;
-	
+
 	protected Class fruit;
 	protected Operation fruit_ripen;
 	protected Operation fruit_preferredColor;
 	protected Operation fruit_newFruit;
 	protected Operation fruit_setColor;
 	protected Property fruit_color;
-    protected Property fruit_friends;
-	
+	protected Property fruit_friends;
+
 	protected Class apple;
 	protected Property apple_label;
 	protected Property apple_tree;
-    protected Property apple_appleFriends;
+	protected Property apple_appleFriends;
 	protected Operation apple_labelOper;
 	protected Operation apple_newApple;
-	
+
 	protected AssociationClass stem;
 	protected Property stem_length;
-	
+
 	protected Class tree;
 	protected Property tree_apples;
-    protected Property tree_height;
-	
+	protected Property tree_height;
+
 	protected Enumeration color;
 	protected EnumerationLiteral color_black;
 	protected EnumerationLiteral color_red;
@@ -119,16 +119,16 @@ public abstract class AbstractTestSuite
 	protected EnumerationLiteral color_orange;
 	protected EnumerationLiteral color_brown;
 	protected EnumerationLiteral color_pink;
-	
+
 	protected Class forest;
 	protected Property forest_trees;
 	protected Property forest_trees_zoneQualifier;
 	protected Property forest_trees_indexQualifier;
-    protected Property forest_area;
-	
+	protected Property forest_area;
+
 	protected Association a_forest_tree;
 	protected Property a_forest_tree_forest;
-	
+
 	protected Class util;
 	protected Property util_orderedSet;
 	protected Property util_set;
@@ -141,7 +141,7 @@ public abstract class AbstractTestSuite
 
 	/**
 	 * Adds parser-style independent tests to the test suite.
-	 * 
+	 *
 	 * @param result the suite
 	 */
 	public static void suite(CheckedTestSuite result) {
@@ -151,13 +151,13 @@ public abstract class AbstractTestSuite
 		result.createTestSuite(EvaluationNumberOperationTest.class, "Numeric operations Tests");
 		result.createTestSuite(EvaluationOclAnyOperationTest.class, "OclAny operations Tests");
 		result.createTestSuite(EvaluationStringOperationTest.class, "String operations Tests");
-        result.createTestSuite(PrimitiveTypesTest.class, "Primitive Type Tests");
+		result.createTestSuite(PrimitiveTypesTest.class, "Primitive Type Tests");
 		result.createTestSuite(ComparisonTest.class, "Comparison/Ordering Tests");
 		result.createTestSuite(CollectionsTest.class, "Collection Type Tests");
 		result.createTestSuite(AssociationTest.class, "Association Tests");
 		result.createTestSuite(IteratorsTest.class, "Iterator Tests");
-        result.createTestSuite(KeywordsTest.class, "LPG and OCL Keyword Tests");
-        result.createTestSuite(PrecedenceTest.class, "Operator Precedence Tests");
+		result.createTestSuite(KeywordsTest.class, "LPG and OCL Keyword Tests");
+		result.createTestSuite(PrecedenceTest.class, "Operator Precedence Tests");
 		result.createTestSuite(TuplesTest.class, "Tuple Tests");
 		result.createTestSuite(StatesTest.class, "State Expression Tests");
 		result.createTestSuite(MessagesTest.class, "Message Expression Tests");
@@ -168,10 +168,10 @@ public abstract class AbstractTestSuite
 		result.createTestSuite(FeatureRedefinitionTest.class, "Feature redefinition tests");
 		result.createTestSuite(DefExpressionTest.class, "Def Expression Tests");
 		result.createTestSuite(InitOrDerExpressionTest.class, "Initial and Derivation Expression Tests");
-        result.createTestSuite(UMLTest.class, "UML-Specific Tests");
+		result.createTestSuite(UMLTest.class, "UML-Specific Tests");
 		result.createTestSuite(OCLDocumentTest.class, "OCL Document Parsing Tests");
-        result.createTestSuite(UtilitiesTest.class, "OCLUMLUtil Utility Class Tests");
-        result.createTestSuite(UMLEnvironmentTest.class, "UML Environment Tests");
+		result.createTestSuite(UtilitiesTest.class, "OCLUMLUtil Utility Class Tests");
+		result.createTestSuite(UMLEnvironmentTest.class, "UML Environment Tests");
 		result.addTestSuite(org.eclipse.ocl.uml.helper.tests.AbstractTestSuite.suite());
 		result.createTestSuite(RegressionTest.class, "Regression Tests");
 		result.createTestSuite(ValidationTest.class, "Expression Validation Tests");
@@ -180,16 +180,16 @@ public abstract class AbstractTestSuite
 		result.createTestSuite(SerializationTest.class, "Serialization Tests");
 		result.createTestSuite(EvaluationHaltedTest.class, "UML Halted Evaluation Tests");
 	}
-	
+
 	/**
 	 * Adds backtracking tests to the test suite.
-	 * 
+	 *
 	 * @param result the suite
 	 */
 	public static void suiteBacktracking(CheckedTestSuite result) {
 		result.createTestSuite(ParserBacktrackingTest.class, "Parser Backtracking Tests");
 	}
-	
+
 	//
 	// Framework methods
 	//
@@ -198,13 +198,13 @@ public abstract class AbstractTestSuite
 	public UMLTestReflection.Static getStaticReflection() {
 		return UMLTestReflection.Static.INSTANCE;
 	}
-	
+
 	/**
 	 * Clean up on behalf of derived tests, alleviating them of the tedious need to avoid
 	 * leaks. All loaded resources are unloaded and all fields are nulled, by invoking
 	 * tearDown_xxx() if such a method is available, or setting it to null otherwise.
 	 * public access must be provided.
-	 * 
+	 *
 	 * This method is final to force invocation. Provide a tearDown_xxx method to do
 	 * some derived action during tearDown.
 	 *
@@ -223,7 +223,7 @@ public abstract class AbstractTestSuite
 				i.remove();
 				res.unload();
                 res.eAdapters().clear();
-			}				
+			}
 		}
 		//
 		//	Null out any references that a test may have left behind, so that unwanted
@@ -260,12 +260,12 @@ public abstract class AbstractTestSuite
 				}
 				else if (aClass != AbstractTestSuite.class) {
 					// Tests may not have statics since they are prone to memory leakage
-					fail("static test variable:" + field); 
+					fail("static test variable:" + field);
 				}
 			}
 		}
-		assertTrue(isModified == expectIsModified  );	    
-		System.out.println("==> Finish " + getName());
+		assertTrue(isModified == expectIsModified  );
+		debugPrintln("==> Finish " + getName());
 	} */
 
 	@Override
@@ -290,30 +290,30 @@ public abstract class AbstractTestSuite
 		resourceSet.getPackageRegistry().remove(fruitEPackage.getNsURI());
 		fruitEPackage = null;
 	}
-	
+
 	protected final String getStereotype(Constraint constraint) {
 		EList<String> keywords = constraint.getKeywords();
 		return keywords.isEmpty()? null : keywords.get(0);
 	}
-	
+
 	protected InstanceSpecification instantiate(Package pkg, Classifier classifier) {
 		InstanceSpecification result = (InstanceSpecification) pkg.createPackagedElement(
-				null, uml.getInstanceSpecification());
-		
+			null, uml.getInstanceSpecification());
+
 		if (classifier != null) {
 			result.getClassifiers().add(classifier);
 		}
-		
+
 		return result;
 	}
-	
+
 	protected Slot setValue(
 			InstanceSpecification instance,
 			Property property,
 			Object value) {
-		
+
 		Slot result = null;
-		
+
 		for (Slot slot : instance.getSlots()) {
 			if (slot.getDefiningFeature() == property) {
 				result = slot;
@@ -321,12 +321,12 @@ public abstract class AbstractTestSuite
 				break;
 			}
 		}
-		
+
 		if (result == null) {
 			result = instance.createSlot();
 			result.setDefiningFeature(property);
 		}
-		
+
 		if (value instanceof Collection<?>) {
 			for (Object e : (Collection<?>) value) {
 				addValue(result, e);
@@ -334,14 +334,14 @@ public abstract class AbstractTestSuite
 		} else {
 			addValue(result, value);
 		}
-		
+
 		return result;
 	}
-	
+
 	protected void clearValue(
 			InstanceSpecification instance,
 			Property property) {
-		
+
 		for (Slot slot : instance.getSlots()) {
 			if (slot.getDefiningFeature() == property) {
 				instance.getSlots().remove(slot);
@@ -349,98 +349,98 @@ public abstract class AbstractTestSuite
 			}
 		}
 	}
-	
+
 	protected Slot addValue(
 			InstanceSpecification instance,
 			Property property,
 			Object value) {
-		
+
 		Slot result = null;
-		
+
 		for (Slot slot : instance.getSlots()) {
 			if (slot.getDefiningFeature() == property) {
 				result = slot;
 				break;
 			}
 		}
-		
+
 		if (result == null) {
 			result = setValue(instance, property, value);
 		} else {
 			addValue(result, value);
 		}
-		
+
 		return result;
 	}
-	
+
 	protected ValueSpecification addValue(Slot slot, Object value) {
 		ValueSpecification result;
-		
+
 		if (value instanceof InstanceSpecification) {
 			InstanceValue valueSpec = (InstanceValue) slot.createValue(
-					null, null, uml.getInstanceValue());
+				null, null, uml.getInstanceValue());
 			valueSpec.setInstance((InstanceSpecification) value);
 			result = valueSpec;
 		} else if (value instanceof String) {
 			LiteralString valueSpec = (LiteralString) slot.createValue(
-					null, null, uml.getLiteralString());
+				null, null, uml.getLiteralString());
 			valueSpec.setValue((String) value);
 			result = valueSpec;
 		} else if (value instanceof Integer) {
 			if (slot.getDefiningFeature().getType() == getUMLUnlimitedNatural()) {
 				LiteralUnlimitedNatural valueSpec =
-					(LiteralUnlimitedNatural) slot.createValue(
-						null, null, uml.getLiteralUnlimitedNatural());
+						(LiteralUnlimitedNatural) slot.createValue(
+							null, null, uml.getLiteralUnlimitedNatural());
 				valueSpec.setValue(((Integer) value).intValue());
 				result = valueSpec;
 			} else {
 				LiteralInteger valueSpec = (LiteralInteger) slot.createValue(
-						null, null, uml.getLiteralInteger());
+					null, null, uml.getLiteralInteger());
 				valueSpec.setValue(((Integer) value).intValue());
 				result = valueSpec;
 			}
 		} else if (value instanceof Boolean) {
 			LiteralBoolean valueSpec = (LiteralBoolean) slot.createValue(
-					null, null, uml.getLiteralBoolean());
+				null, null, uml.getLiteralBoolean());
 			valueSpec.setValue(((Boolean) value).booleanValue());
 			result = valueSpec;
 		} else if (value == null) {
 			LiteralNull valueSpec = (LiteralNull) slot.createValue(
-					null, null, uml.getLiteralNull());
+				null, null, uml.getLiteralNull());
 			result = valueSpec;
 		} else {
 			throw new IllegalArgumentException("Unrecognized slot value: " + value);
 		}
-		
+
 		return result;
 	}
-	
+
 	protected Object getValue(InstanceSpecification owner, Property property) {
 		for (Slot slot : owner.getSlots()) {
 			if (slot.getDefiningFeature() == property) {
 				EList<ValueSpecification> values = slot.getValues();
-				
+
 				if (!property.isMultivalued()) {
 					return values.isEmpty()? null : convert(values.get(0));
 				} else {
 					EList<Object> result = new BasicEList.FastCompare<Object>(values.size());
-					
+
 					for (ValueSpecification value : values) {
 						result.add(convert(value));
 					}
-					
+
 					return result;
 				}
 			}
 		}
-		
+
 		fail("No such property value: " + property.getName());
 		return null;
 	}
-	
+
 	protected Object convert(ValueSpecification value) {
 		Object result;
-		
+
 		if (value instanceof InstanceValue) {
 			result = ((InstanceValue) value).getInstance();
 		} else if (value instanceof LiteralString) {
@@ -456,92 +456,92 @@ public abstract class AbstractTestSuite
 		} else {
 			throw new IllegalArgumentException("Unrecognized slot value: " + value);
 		}
-		
+
 		return result;
 	}
-	
+
 	protected InstanceSpecification link(
 			Package pkg,
 			InstanceSpecification instance1, Property end1,
 			InstanceSpecification instance2, Property end2,
 			Association assoc) {
-		
+
 		InstanceSpecification result = instantiate(pkg, assoc);
-		
+
 		setValue(result, end1, instance2);
 		if (end1.getOwningAssociation() == null) {
 			addValue(instance1, end1, instance2);
 		}
-		
+
 		setValue(result, end2, instance1);
 		if (end2.getOwningAssociation() == null) {
 			addValue(instance2, end2, instance1);
 		}
-		
+
 		return result;
 	}
-	
+
 	protected InstanceSpecification link(
 			Package pkg,
 			InstanceSpecification instance1, Property end1,
 			Object[] qualifierValues,
 			InstanceSpecification instance2, Property end2,
 			Association assoc) {
-		
+
 		InstanceSpecification result = link(pkg, instance1, end1, instance2, end2, assoc);
-		
+
 		List<Property> qualifiers = end1.getQualifiers();
 		int count = qualifiers.size();
-		
+
 		for (int i = 0; i < count; i++) {
 			setValue(result, qualifiers.get(i), qualifierValues[i]);
 		}
-		
+
 		return result;
 	}
-	
+
 	protected void unload(EObject eObject) {
-	    eObject.eAdapters().clear();
-	    for (Iterator<EObject> iter = eObject.eAllContents(); iter.hasNext();) {
-	        iter.next().eAdapters().clear();
-	    }
+		eObject.eAdapters().clear();
+		for (Iterator<EObject> iter = eObject.eAllContents(); iter.hasNext();) {
+			iter.next().eAdapters().clear();
+		}
 	}
-	
+
 	protected void unload(Collection<? extends EObject> eObjects) {
-	    for (EObject eObject : eObjects) {
-	        unload(eObject);
-	    }
+		for (EObject eObject : eObjects) {
+			unload(eObject);
+		}
 	}
-	
+
 	@Override
 	protected void initFruitPackage() {
 		URI uri = getTestModelURI("/model/OCLTest.uml");
 		Resource res = resourceSet.getResource(uri, true);
-		
+
 		fruitPackage = (Package) res.getContents().get(0);
-		
+
 		fruit = (Class) fruitPackage.getOwnedType("Fruit");
 		fruit_ripen = fruit.getOwnedOperation("ripen", null, null);
 		fruit_preferredColor = fruit.getOwnedOperation("preferredColor", null, null);
 		fruit_newFruit = fruit.getOwnedOperation("newFruit", null, null);
 		fruit_setColor = fruit.getOwnedOperation("setColor", null, null);
-        fruit_color = fruit.getOwnedAttribute("color", null);
-        fruit_friends = fruit.getOwnedAttribute("friends", null);
-		
+		fruit_color = fruit.getOwnedAttribute("color", null);
+		fruit_friends = fruit.getOwnedAttribute("friends", null);
+
 		apple = (Class) fruitPackage.getOwnedType("Apple");
 		apple_label = apple.getOwnedAttribute("label", null);
 		apple_tree = apple.getOwnedAttribute("tree", null);
-        apple_appleFriends = apple.getOwnedAttribute("appleFriends", null);
+		apple_appleFriends = apple.getOwnedAttribute("appleFriends", null);
 		apple_labelOper = apple.getOwnedOperation("label", null, null);
 		apple_newApple = apple.getOwnedOperation("newApple", null, null);
-		
+
 		stem = (AssociationClass) fruitPackage.getOwnedType("Stem");
 		stem_length = stem.getOwnedAttribute("length", null);
-		
+
 		tree = (Class) fruitPackage.getOwnedType("Tree");
 		tree_apples = tree.getOwnedAttribute("apples", null);
 		tree_height = tree.getOwnedAttribute("height", null);
-        
+
 		color = (Enumeration) fruitPackage.getOwnedType("Color");
 		color_black = color.getOwnedLiteral("black");
 		color_red = color.getOwnedLiteral("red");
@@ -550,16 +550,16 @@ public abstract class AbstractTestSuite
 		color_orange = color.getOwnedLiteral("orange");
 		color_brown = color.getOwnedLiteral("brown");
 		color_pink = color.getOwnedLiteral("pink");
-		
+
 		forest = (Class) fruitPackage.getOwnedType("Forest");
 		forest_trees = forest.getOwnedAttribute("trees", null);
 		forest_trees_zoneQualifier = forest_trees.getQualifier("zone", null);
 		forest_trees_indexQualifier = forest_trees.getQualifier("index", null);
-        forest_area = forest.getOwnedAttribute("area", null);
-		
+		forest_area = forest.getOwnedAttribute("area", null);
+
 		a_forest_tree = (Association) fruitPackage.getOwnedType("A_Forest_Tree");
 		a_forest_tree_forest = a_forest_tree.getOwnedEnd("forest", null);
-		
+
 		util = (Class) fruitPackage.getOwnedType("FruitUtil");
 		util_orderedSet = util.getOwnedAttribute("orderedSet", null);
 		util_set = util.getOwnedAttribute("set", null);
@@ -569,8 +569,8 @@ public abstract class AbstractTestSuite
 		util_processSet = util.getOwnedOperation("processSet", null, null);
 		util_processBag = util.getOwnedOperation("processBag", null, null);
 		util_processSequence = util.getOwnedOperation("processSequence", null, null);
-		
-		
+
+
 		// convert the Package to Ecore for evaluation on instances
 		fruitEPackage = UMLUtil.convertToEcore(fruitPackage, null).iterator().next();
 		resourceSet.getPackageRegistry().put(fruitEPackage.getNsURI(), fruitEPackage);
@@ -580,7 +580,7 @@ public abstract class AbstractTestSuite
 		assertSame(
 			fruitPackage,
 			OCLUMLUtil.findPackage(
-					Collections.singletonList(fruitPackage.getName()),
-					resourceSet));
+				Collections.singletonList(fruitPackage.getName()),
+				resourceSet));
 	}
 }

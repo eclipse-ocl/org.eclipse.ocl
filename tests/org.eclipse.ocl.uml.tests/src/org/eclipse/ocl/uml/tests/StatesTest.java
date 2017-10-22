@@ -25,14 +25,14 @@ import org.eclipse.uml2.uml.StateMachine;
  */
 @SuppressWarnings("nls")
 public class StatesTest
-	extends AbstractTestSuite {
-	
+extends AbstractTestSuite {
+
 	/**
 	 * Tests the parsing of the oclIsInState() expression.
 	 */
 	public void test_isInState() {
 		helper.setContext(fruit);
-		
+
 		try {
 			// test implicit and explicit source
 			helper.createInvariant(
@@ -40,115 +40,115 @@ public class StatesTest
 
 			// test source of different type than context (and also implicit)
 			helper.createInvariant(
-				"Apple.allInstances()->forAll(not oclIsInState(Bad::Rotten))");
+					"Apple.allInstances()->forAll(not oclIsInState(Bad::Rotten))");
 		} catch (Exception e) {
 			fail("Failed to parse: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// just to make sure that the second test, above, wasn't a fluke.
 			// Fruit doesn't have this state
 			helper.createInvariant(
-				"Fruit.allInstances()->forAll(not oclIsInState(Bad::Rotten))");
-			
+					"Fruit.allInstances()->forAll(not oclIsInState(Bad::Rotten))");
+
 			fail("Should have failed to parse non-existent state");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests some validation of the oclIsInState() expression.
 	 */
 	public void test_isInState_validation() {
 		helper.setContext(fruit);
-		
+
 		try {
 			// not enough arguments
 			helper.createInvariant(
-				"self.oclIsInState()");
-			
+					"self.oclIsInState()");
+
 			fail("Should have failed to parse empty arglist");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// too many arguments
 			helper.createInvariant(
-				"Apple.allInstances()->forAll(oclIsInState(Bad, Rotten))");
-			
+					"Apple.allInstances()->forAll(oclIsInState(Bad, Rotten))");
+
 			fail("Should have failed to parse overabundant arglist");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// wrong kind of argument
 			helper.createInvariant(
-				"self.oclIsInState(color <> Color::black)");
-			
+					"self.oclIsInState(color <> Color::black)");
+
 			fail("Should have failed to parse arg of wrong type");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// another kind of wrong kind of argument
 			helper.createInvariant(
-				"self.oclIsInState(OclTest::Fruit)");
-			
+					"self.oclIsInState(OclTest::Fruit)");
+
 			fail("Should have failed to parse arg of wrong type");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the content-assist for states.
 	 */
 	public void test_stateContentAssist() {
 		helper.setContext(fruit);
-		
+
 		try {
 			// simplest case of first path name part completion
 			List<Choice> choices = helper.getSyntaxHelp(
-					ConstraintKind.INVARIANT, "self.oclIsInState(");
+				ConstraintKind.INVARIANT, "self.oclIsInState(");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.STATE, "Ripe");
 			assertChoice(choices, ChoiceKind.STATE, "Bad");
 
 			// case of no more completions (path is already complete)
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.INVARIANT, "self.oclIsInState(Ripe::");
+				ConstraintKind.INVARIANT, "self.oclIsInState(Ripe::");
 			assertNotNull(choices);
 			assertTrue(choices.isEmpty());
-			
+
 			// explicit source of non-self type
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.INVARIANT,
-					"Apple.allInstances()->forAll(a : Apple | a.oclIsInState(");
+				ConstraintKind.INVARIANT,
+				"Apple.allInstances()->forAll(a : Apple | a.oclIsInState(");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.STATE, "Ripe");
 			assertChoice(choices, ChoiceKind.STATE, "Bad");
-			
+
 			// implicit source of non-self type
-//			choices = helper.getSyntaxHelp(
-//					ConstraintType.INVARIANT,
-//					"Apple.allInstances()->forAll(oclIsInState(");
-//			assertNotNull(choices);
-//			assertChoice(choices, ChoiceType.STATE, "Ripe");
-//			assertChoice(choices, ChoiceType.STATE, "Bad");
-			
+			//			choices = helper.getSyntaxHelp(
+			//					ConstraintType.INVARIANT,
+			//					"Apple.allInstances()->forAll(oclIsInState(");
+			//			assertNotNull(choices);
+			//			assertChoice(choices, ChoiceType.STATE, "Ripe");
+			//			assertChoice(choices, ChoiceType.STATE, "Bad");
+
 			// available second-level completions
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.INVARIANT,
-					"Apple.allInstances()->forAll(a : Apple | a.oclIsInState(Bad::");
+				ConstraintKind.INVARIANT,
+				"Apple.allInstances()->forAll(a : Apple | a.oclIsInState(Bad::");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.STATE, "Bruised");
 			assertChoice(choices, ChoiceKind.STATE, "Rotten");
@@ -156,16 +156,16 @@ public class StatesTest
 			fail("Parse failed: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the case of multiple state machines with same-named states.
 	 */
 	public void test_multipleStateMachines() {
-        expectModified = true;
+		expectModified = true;
 		helper.setContext(fruit);
 		StateMachine machine2 = (StateMachine) fruit.createOwnedBehavior("Machine2", uml.getStateMachine());
 		machine2.createRegion("Region1").createSubvertex("Ripe", uml.getState());
-		
+
 		try {
 			try {
 				// qualify reference with first machine name
@@ -178,16 +178,16 @@ public class StatesTest
 			} catch (Exception e) {
 				fail("Failed to parse: " + e.getLocalizedMessage());
 			}
-			
+
 			try {
 				// ambiguous reference
 				helper.createInvariant(
-					"oclIsInState(Ripe) implies not self.oclIsInState(Bad)");
-				
+						"oclIsInState(Ripe) implies not self.oclIsInState(Bad)");
+
 				fail("Should have failed to parse ambiguous state");
 			} catch (Exception e) {
 				// success
-				System.out.println("Got expected error: " + e.getLocalizedMessage());
+				debugPrintln("Got expected error: " + e.getLocalizedMessage());
 			}
 		} finally {
 			machine2.destroy();

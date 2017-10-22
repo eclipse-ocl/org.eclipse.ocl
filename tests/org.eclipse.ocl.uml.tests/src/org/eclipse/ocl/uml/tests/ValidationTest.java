@@ -23,35 +23,35 @@ import org.eclipse.uml2.uml.Classifier;
  */
 @SuppressWarnings("nls")
 public class ValidationTest extends AbstractTestSuite {
-	
+
 	/**
-	 * Tests that operation calls may only invoke query operations. 
+	 * Tests that operation calls may only invoke query operations.
 	 */
 	public void test_callNonQueryOperation_136778() {
-        expectModified = true;
+		expectModified = true;
 		// newApple() is not a query operation
 		OCLExpression<Classifier> expr = parseConstraintUnvalidated(
-				"package ocltest context Apple " +
-				"inv: Apple.allInstances()->includes(self.newApple()) " +
+			"package ocltest context Apple " +
+					"inv: Apple.allInstances()->includes(self.newApple()) " +
 				"endpackage");
-		
+
 		try {
 			ocl.validate(expr);
 			fail("Should not have successfully validated");
 		} catch (SemanticException e) {
 			// success
-			System.out.println("Got expected exception: " + e.getLocalizedMessage());
+			debugPrintln("Got expected exception: " + e.getLocalizedMessage());
 		}
 	}
 
 	//
 	// Fixture methods
 	//
-	
+
 	@Override
 	protected void setUp() {
 		super.setUp();
-		
+
 		apple_newApple.setIsQuery(false);
 	}
 }
