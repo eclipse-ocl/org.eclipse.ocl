@@ -14,8 +14,6 @@ package org.eclipse.ocl.ecore.tests;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.AssertionFailedError;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -48,6 +46,8 @@ import org.eclipse.ocl.helper.ChoiceKind;
 import org.eclipse.ocl.helper.ConstraintKind;
 import org.eclipse.ocl.utilities.UMLReflection;
 
+import junit.framework.AssertionFailedError;
+
 
 /**
  * Tests for association navigation.
@@ -56,19 +56,19 @@ import org.eclipse.ocl.utilities.UMLReflection;
  */
 @SuppressWarnings("nls")
 public class AssociationTest
-	extends AbstractTestSuite {
+extends AbstractTestSuite {
 
 	EReference stem_apple;
 	EReference stem_tree;
-	EAttribute stem_thickness;	
-	EReference apple_tree;	
-//	EClass tree;
-	EReference tree_apples;	
+	EAttribute stem_thickness;
+	EReference apple_tree;
+	//	EClass tree;
+	EReference tree_apples;
 	EClass forest;
-	EReference forest_trees;	
+	EReference forest_trees;
 	EStructuralFeature q1;
 	EStructuralFeature q2;
-	
+
 	/**
 	 * Tests support for association end qualifiers.
 	 */
@@ -76,57 +76,57 @@ public class AssociationTest
 		// allowed to specify no qualifiers
 		parse(
 			"package ocltest context Forest " +
-			"inv: self.trees->forAll(t : Tree | not t.apples->isEmpty())" +
-			" endpackage");
-		
+					"inv: self.trees->forAll(t : Tree | not t.apples->isEmpty())" +
+				" endpackage");
+
 		// allowed to specify both qualifiers
 		parse(
 			"package ocltest context Forest " +
-			"inv: not self.trees['foo', 3].apples->isEmpty()" +
-			" endpackage");
-		
+					"inv: not self.trees['foo', 3].apples->isEmpty()" +
+				" endpackage");
+
 		AssertionFailedError err = null;
-		
+
 		try {
 			// must specify both qualifiers or none
 			parse(
 				"package ocltest context Forest " +
-				"inv: not self.trees['foo'].apples->isEmpty()" +
-				" endpackage");
+						"inv: not self.trees['foo'].apples->isEmpty()" +
+					" endpackage");
 		} catch (AssertionFailedError e) {
 			// this is expected (success case)
 			err = e;
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 		assertNotNull("Parse should have failed", err);
-		
+
 		try {
 			// qualifiers must conform
 			parse(
 				"package ocltest context Forest " +
-				"inv: not self.trees[3, 'foo'].apples->isEmpty()" +
-				" endpackage");
+						"inv: not self.trees[3, 'foo'].apples->isEmpty()" +
+					" endpackage");
 		} catch (AssertionFailedError e) {
 			// this is expected (success case)
 			err = e;
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 		assertNotNull("Parse should have failed", err);
-		
+
 		try {
 			// too many qualifiers
 			parse(
 				"package ocltest context Forest " +
-				"inv: not self.trees['foo', 3, 'bar'].apples->isEmpty()" +
-				" endpackage");
+						"inv: not self.trees['foo', 3, 'bar'].apples->isEmpty()" +
+					" endpackage");
 		} catch (AssertionFailedError e) {
 			// this is expected (success case)
 			err = e;
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 		assertNotNull("Parse should have failed", err);
 	}
-	
+
 	/**
 	 * Tests support for association class navigation.
 	 */
@@ -134,16 +134,16 @@ public class AssociationTest
 		// navigate the association end as usual
 		parse(
 			"package ocltest context Tree " +
-			"inv: self.apples->forAll(a : Apple | a.color <> Color::black)" +
-			" endpackage");
-		
+					"inv: self.apples->forAll(a : Apple | a.color <> Color::black)" +
+				" endpackage");
+
 		// navigate to the association class, itself
 		parse(
 			"package ocltest context Tree " +
-			"inv: self.stem->forAll(s : Stem | s.thickness > 0)" +
-			" endpackage");
+					"inv: self.stem->forAll(s : Stem | s.thickness > 0)" +
+				" endpackage");
 	}
-	
+
 	/**
 	 * Tests support for association class navigation qualifiers.
 	 */
@@ -151,51 +151,51 @@ public class AssociationTest
 		// navigate to the association class using the optional qualifier
 		parse(
 			"package ocltest context Tree " +
-			"inv: self.stem[apples]->forAll(s : Stem | s.thickness > 0)" +
-			" endpackage");
-		
+					"inv: self.stem[apples]->forAll(s : Stem | s.thickness > 0)" +
+				" endpackage");
+
 		AssertionFailedError err = null;
-		
+
 		try {
 			// cannot use role name "tree" as a qualifier
 			parse(
 				"package ocltest context Tree " +
-				"inv: self.stem[tree]->forAll(s : Stem | s.thickness > 0)" +
-				" endpackage");
+						"inv: self.stem[tree]->forAll(s : Stem | s.thickness > 0)" +
+					" endpackage");
 		} catch (AssertionFailedError e) {
 			// this is expected (success case)
 			err = e;
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 		assertNotNull("Parse should have failed", err);
-			
+
 		try {
 			// cannot use other expressions as qualifiers
 			parse(
 				"package ocltest context Tree " +
-				"inv: self.stem[3]->forAll(s : Stem | s.thickness > 0)" +
-				" endpackage");
+						"inv: self.stem[3]->forAll(s : Stem | s.thickness > 0)" +
+					" endpackage");
 		} catch (AssertionFailedError e) {
 			// this is expected (success case)
 			err = e;
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 		assertNotNull("Parse should have failed", err);
-		
+
 		try {
 			// only one qualifier is allowed
 			parse(
 				"package ocltest context Tree " +
-				"inv: self.stem[apples, apples]->forAll(s : Stem | s.thickness > 0)" +
-				" endpackage");
+						"inv: self.stem[apples, apples]->forAll(s : Stem | s.thickness > 0)" +
+					" endpackage");
 		} catch (AssertionFailedError e) {
 			// this is expected (success case)
 			err = e;
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 		assertNotNull("Parse should have failed", err);
 	}
-	
+
 	/**
 	 * Tests support for association class navigation in the case of a
 	 * reflexive association.
@@ -205,69 +205,69 @@ public class AssociationTest
 		EClass ac = EcoreFactory.eINSTANCE.createEClass();
 		ac.setName("AC");
 		fruitPackage.getEClassifiers().add(ac);
-		
+
 		EAttribute x = EcoreFactory.eINSTANCE.createEAttribute();
 		x.setName("x");
 		x.setEType(EcorePackage.eINSTANCE.getEInt());
 		ac.getEStructuralFeatures().add(x);
-		
+
 		EReference parent = EcoreFactory.eINSTANCE.createEReference();
 		parent.setName("parent");
 		parent.setEType(tree);
 		tree.getEStructuralFeatures().add(parent);
-		
+
 		EReference children = EcoreFactory.eINSTANCE.createEReference();
 		children.setName("children");
 		children.setEType(tree);
 		children.setUpperBound(-1);
 		tree.getEStructuralFeatures().add(children);
-		
+
 		EReference parentTree = EcoreFactory.eINSTANCE.createEReference();
 		parentTree.setName("parentTree");
 		parentTree.setEType(tree);
 		parentTree.setEOpposite(parent);
 		ac.getEStructuralFeatures().add(parentTree);
-		
+
 		EReference childTree = EcoreFactory.eINSTANCE.createEReference();
 		childTree.setName("childTree");
 		childTree.setEType(tree);
 		childTree.setEOpposite(children);
 		ac.getEStructuralFeatures().add(childTree);
-		
+
 		// navigate the association end as usual
 		parse(
 			"package ocltest context Tree " +
-			"inv: self.children->forAll(t : Tree | not t.apples->isEmpty())" +
-			" endpackage");
-		
+					"inv: self.children->forAll(t : Tree | not t.apples->isEmpty())" +
+				" endpackage");
+
 		// navigate to the association class, itself, using the role qualifier
 		parse(
 			"package ocltest context Tree " +
-			"inv: self.aC[children]->forAll(ac : AC | ac.x > 0)" +
-			" endpackage");
-		
+					"inv: self.aC[children]->forAll(ac : AC | ac.x > 0)" +
+				" endpackage");
+
 		// this direction is a scalar reference
 		parse(
 			"package ocltest context Tree " +
-			"inv: self.aC[parent].x > 0" +
-			" endpackage");
-		
+					"inv: self.aC[parent].x > 0" +
+				" endpackage");
+
 		AssertionFailedError err = null;
-		
+
 		try {
 			// ambiguous navigation to association class
 			parse(
 				"package ocltest context Tree " +
-				"inv: self.aC->forAll(ac : AC | ac.x > 0)" +
-				" endpackage");
+						"inv: self.aC->forAll(ac : AC | ac.x > 0)" +
+					" endpackage");
 		} catch (AssertionFailedError e) {
 			// this is expected (success case)
 			err = e;
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 		assertNotNull("Parse should have failed", err);
 	}
-	
+
 	/**
 	 * Tests support for navigation from association class to its ends.
 	 */
@@ -276,36 +276,36 @@ public class AssociationTest
 		//    definition
 		parse(
 			"package ocltest context Stem " +
-			"inv: self.apple.color <> Color::black" +
-			" endpackage");
-		
+					"inv: self.apple.color <> Color::black" +
+				" endpackage");
+
 		// this end, too, is 1..1
 		parse(
 			"package ocltest context Stem " +
-			"inv: self.tree.apples->forAll(a : Apple | a.color <> Color::black)" +
-			" endpackage");
-		
+					"inv: self.tree.apples->forAll(a : Apple | a.color <> Color::black)" +
+				" endpackage");
+
 		// I have my own attributes, too
 		parse(
 			"package ocltest context Stem " +
-			"inv: self.thickness > 0" +
-			" endpackage");
+					"inv: self.thickness > 0" +
+				" endpackage");
 	}
-	
+
 	/**
 	 * Tests that content-assist suggests association class navigation.
 	 */
 	public void test_associationClass_contextAssist_RATLC00538077() {
 		helper.setContext(tree);
-		
+
 		try {
 			List<Choice> choices = helper.getSyntaxHelp(
-					ConstraintKind.INVARIANT, "self.");
+				ConstraintKind.INVARIANT, "self.");
 			assertNotNull(choices);
-			
+
 			// regular reference feature
 			assertChoice(choices, ChoiceKind.PROPERTY, "apples");
-			
+
 			// association class navigation
 			assertChoice(choices, ChoiceKind.ASSOCIATION_CLASS, "stem");
 		} catch (Exception e) {
@@ -319,14 +319,14 @@ public class AssociationTest
 	 */
 	public void test_propertyPositions_associationClassEndCall() {
 		final String exprString =
-			"self.apples->notEmpty()";
+				"self.apples->notEmpty()";
 		OCLExpression<EClassifier> constraint = createQuery(tree, exprString);
-		
+
 		OperationCallExp<EClassifier, EOperation> notEmptyExp = LocationInformationTest.asOperationCall(
 			constraint);
 		FeatureCallExp<EClassifier> mpcExp = LocationInformationTest.asFeatureCall(
 			notEmptyExp.getSource());
-		
+
 		LocationInformationTest.assertPropertyLocation(mpcExp,
 			exprString.indexOf("apples"),
 			exprString.indexOf("->"));
@@ -338,15 +338,15 @@ public class AssociationTest
 	 */
 	public void test_propertyPositions_associationClassCall() {
 		final String exprString =
-			"self.stem[apples]->notEmpty()";
+				"self.stem[apples]->notEmpty()";
 		OCLExpression<EClassifier> constraint = createQuery(tree, exprString);
-		
+
 		OperationCallExp<EClassifier, EOperation> notEmptyExp = LocationInformationTest.asOperationCall(
 			constraint);
-		
+
 		FeatureCallExp<EClassifier> mpcExp = LocationInformationTest.asFeatureCall(
-				notEmptyExp.getSource());
-		
+			notEmptyExp.getSource());
+
 		LocationInformationTest.assertPropertyLocation(mpcExp,
 			exprString.indexOf("stem"),
 			exprString.indexOf("["));
@@ -359,19 +359,19 @@ public class AssociationTest
 	 */
 	public void test_propertyPositions_associationClassCall_implicitCollect() {
 		final String exprString =
-			"Tree.allInstances().stem[apples]->notEmpty()";
+				"Tree.allInstances().stem[apples]->notEmpty()";
 		OCLExpression<EClassifier> constraint = createQuery(tree, exprString);
-		
+
 		OperationCallExp<EClassifier, EOperation> notEmptyExp = LocationInformationTest.asOperationCall(
 			constraint);
-		
+
 		// the OCL is implicitly ->collect(stem[apples])->notEmpty()
 		LoopExp<EClassifier, EParameter> loopExp = LocationInformationTest.asLoop(
 			notEmptyExp.getSource());
-		
+
 		FeatureCallExp<EClassifier> mpcExp = LocationInformationTest.asFeatureCall(
 			loopExp.getBody());
-		
+
 		LocationInformationTest.assertPropertyLocation(mpcExp,
 			exprString.indexOf("stem"),
 			exprString.indexOf("["));
@@ -383,20 +383,20 @@ public class AssociationTest
 	 */
 	public void test_propertyPositions_associationClassQualified() {
 		final String exprString =
-			"self.stem[apples]->notEmpty()";
+				"self.stem[apples]->notEmpty()";
 		OCLExpression<EClassifier> constraint = createQuery(tree, exprString);
-		
+
 		OperationCallExp<EClassifier, EOperation> notEmptyExp = LocationInformationTest.asOperationCall(
 			constraint);
-		
+
 		AssociationClassCallExp<EClassifier, EStructuralFeature> accExp = LocationInformationTest.asAssociationClassCall(
-				notEmptyExp.getSource());
-		
+			notEmptyExp.getSource());
+
 		List<OCLExpression<EClassifier>> qualifiers = accExp.getQualifier();
 		assertEquals(1, qualifiers.size());
-		
+
 		OCLExpression<EClassifier> qualifier = qualifiers.get(0);
-		
+
 		LocationInformationTest.assertLocation(qualifier,
 			exprString.indexOf("apples"),
 			exprString.indexOf("]->"));
@@ -409,29 +409,29 @@ public class AssociationTest
 	 */
 	public void test_propertyPositions_associationClassQualified_implicitCollect() {
 		final String exprString =
-			"Tree.allInstances().stem[apples]->notEmpty()";
+				"Tree.allInstances().stem[apples]->notEmpty()";
 		OCLExpression<EClassifier> constraint = createQuery(tree, exprString);
-		
+
 		OperationCallExp<EClassifier, EOperation> notEmptyExp = LocationInformationTest.asOperationCall(
 			constraint);
-		
+
 		// the OCL is implicitly ->collect(stem[apples])->notEmpty()
 		LoopExp<EClassifier, EParameter> loopExp = LocationInformationTest.asLoop(
 			notEmptyExp.getSource());
-		
+
 		AssociationClassCallExp<EClassifier, EStructuralFeature> accExp = LocationInformationTest.asAssociationClassCall(
 			loopExp.getBody());
-		
+
 		List<OCLExpression<EClassifier>> qualifiers = accExp.getQualifier();
 		assertEquals(1, qualifiers.size());
-		
+
 		OCLExpression<EClassifier> qualifier = qualifiers.get(0);
-		
+
 		LocationInformationTest.assertLocation(qualifier,
 			exprString.indexOf("apples"),
 			exprString.indexOf("]->"));
 	}
-	
+
 	/**
 	 * Tests that navigation through association ends does not throws NPE
 	 * in case that at least one end in the navigation path
@@ -443,7 +443,7 @@ public class AssociationTest
 		epackage.setNsPrefix("mypkg");
 		epackage.setNsURI("http:///mypkg.ecore");
 		resourceSet.getPackageRegistry().put(epackage.getNsURI(), epackage);
-		
+
 		// Employee class
 		EClass employee = EcoreFactory.eINSTANCE.createEClass();
 		employee.setName("Employee");
@@ -457,20 +457,20 @@ public class AssociationTest
 		employee.getEStructuralFeatures().add(manager);
 
 		EFactory efactory = epackage.getEFactoryInstance();
-		
+
 		// create our test instance
 		EObject emp1 = efactory.create(employee);
 
 		// parse & evaluate expression
 		OCLExpression<EClassifier> expr = parse(
-				"package mypkg context Employee " +
-				"inv: self.manager.manager" +
+			"package mypkg context Employee " +
+					"inv: self.manager.manager" +
 				" endpackage");
 
 		Object result = evaluate(expr, emp1);
 		assertInvalid(result);
 	}
-	
+
 	/**
 	 * Tests that the result of qualifying an association navigation is a
 	 * scalar value (not a collection).
@@ -478,96 +478,96 @@ public class AssociationTest
 	public void test_qualifiedAssociation_scalar_133435() {
 		// unqualified navigation
 		OCLExpression<EClassifier> expr = parse(
-				"package ocltest context Forest " +
-				"inv: self.trees" +
+			"package ocltest context Forest " +
+					"inv: self.trees" +
 				" endpackage");
-			
+
 		assertTrue(expr.getType() instanceof CollectionType);
 		CollectionType collType = (CollectionType) expr.getType();
 		assertSame(tree, collType.getElementType());
-		
+
 		// qualified navigation
 		expr = parse(
 			"package ocltest context Forest " +
-			"inv: self.trees['foo', 3]" +
-			" endpackage");
-		
+					"inv: self.trees['foo', 3]" +
+				" endpackage");
+
 		assertSame(tree, expr.getType());
 	}
 
 	//
 	// Fixture methods
 	//
-	
+
 	/**
 	 * Sets up a common fixture for the association class tests.
 	 */
 	@Override
-    public void setUp() {
+	public void setUp() {
 		super.setUp();
 		expectModified = true;
 		initFruitExtensions();
 	}
-	
+
 	private void initFruitExtensions() {
 		if (q1 != null) {
 			// already inited
 			return;
 		}
-		
+
 		fruitPackage.getEClassifiers().remove(stem);
-		
+
 		// "stem" is more appropriately modeled as an association class
 		stem = EcoreFactory.eINSTANCE.createEClass();
 		stem.setName("Stem");
-		
+
 		// tree already created by initFruitPackage
-//		tree = EcoreFactory.eINSTANCE.createEClass();
-//		tree.setName("Tree");
-		
+		//		tree = EcoreFactory.eINSTANCE.createEClass();
+		//		tree.setName("Tree");
+
 		fruitPackage.getEClassifiers().add(stem);
-//		fruitPackage.getEClassifiers().add(tree);
-		
+		//		fruitPackage.getEClassifiers().add(tree);
+
 		apple.getEStructuralFeatures().remove(apple_stem);
 		apple_stem = null;
-		
+
 		apple_tree = EcoreFactory.eINSTANCE.createEReference();
 		apple_tree.setName("tree");
 		apple_tree.setEType(tree);
 		apple.getEStructuralFeatures().add(apple_tree);
-		
+
 		tree_apples = EcoreFactory.eINSTANCE.createEReference();
 		tree_apples.setName("apples");
 		tree_apples.setEType(apple);
 		tree_apples.setUpperBound(-1);
 		tree.getEStructuralFeatures().add(tree_apples);
-		
+
 		stem_thickness = EcoreFactory.eINSTANCE.createEAttribute();
 		stem_thickness.setName("thickness");
 		stem_thickness.setEType(EcorePackage.eINSTANCE.getEInt());
 		stem.getEStructuralFeatures().add(stem_thickness);
-		
+
 		stem_apple = EcoreFactory.eINSTANCE.createEReference();
 		stem_apple.setName("apple");
 		stem_apple.setEType(apple);
 		stem.getEStructuralFeatures().add(stem_apple);
-		
+
 		stem_tree = EcoreFactory.eINSTANCE.createEReference();
 		stem_tree.setName("tree");
 		stem_tree.setEType(tree);
 		stem.getEStructuralFeatures().add(stem_tree);
-		
+
 		// add a Forest::trees association with qualifiers
 		forest = EcoreFactory.eINSTANCE.createEClass();
 		forest.setName("Forest");
 		fruitPackage.getEClassifiers().add(forest);
-		
+
 		forest_trees = EcoreFactory.eINSTANCE.createEReference();
 		forest_trees.setName("trees");
 		forest_trees.setEType(tree);
 		forest_trees.setUpperBound(-1);
 		forest.getEStructuralFeatures().add(forest_trees);
-		
+
 		q1 = EcoreFactory.eINSTANCE.createEAttribute();
 		q1.setName("q1");
 		q1.setEType(EcorePackage.eINSTANCE.getEString());
@@ -575,119 +575,119 @@ public class AssociationTest
 		q2.setName("q2");
 		q2.setEType(EcorePackage.eINSTANCE.getEInt());
 	}
-	
+
 	@Override
 	protected OCL createOCL() {
 		return OCL.newInstance(new AssocClassFruitEnvironmentFactory());
 	}
-	
+
 	@Override
-    protected void tearDown()
-		throws Exception {
-		
+	protected void tearDown()
+			throws Exception {
+
 		super.tearDown();
-		
+
 		// delete customizations, to re-initialize schema for subsequent tests
 		fruitPackage = null;
 	}
-	
+
 	private class AssocClassFruitEnvironmentFactory extends EcoreEnvironmentFactory {
 
 		public AssocClassFruitEnvironmentFactory() {
 			super(resourceSet.getPackageRegistry());
 		}
-		
+
 		@Override
-        public EcoreEnvironment createEnvironment() {
+		public EcoreEnvironment createEnvironment() {
 			return new AssocClassFruitEnvironment(this);
 		}
 
 		@Override
-        public EcoreEnvironment createEnvironment(
+		public EcoreEnvironment createEnvironment(
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
 			return new AssocClassFruitEnvironment(parent);
 		}
 	}
-	
+
 	private class AssocClassFruitEnvironment extends EcoreEnvironment implements InitEnvironment {
 		private List<EStructuralFeature> stemEnds =
-			new java.util.ArrayList<EStructuralFeature>(2);
-		
+				new java.util.ArrayList<EStructuralFeature>(2);
+
 		private List<EStructuralFeature> qualifiers =
-			new java.util.ArrayList<EStructuralFeature>(2);
-		
+				new java.util.ArrayList<EStructuralFeature>(2);
+
 		public AssocClassFruitEnvironment(AssocClassFruitEnvironmentFactory factory) {
 			super(factory, null);
 			setContextPackage(fruitPackage);
-			
-	//		init();
+
+			//		init();
 		}
-		
+
 		public AssocClassFruitEnvironment(
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
 			super(parent);
-			
-	//		init();
+
+			//		init();
 		}
 
 		public void init() {
 			initFruitExtensions();
-			
+
 			stemEnds.add(stem_tree);
 			stemEnds.add(stem_apple);
-			
+
 			qualifiers.add(q1);
 			qualifiers.add(q2);
 		}
-		
-        @Override
-        public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
-            return new UMLReflectionImpl() {
-        		@Override
-        		public boolean isAssociationClass(EClassifier eclass) {
-        			return eclass == stem || eclass.getName().equals("AC");
-        		}
-        		
-        		@Override
-        		public EClass getAssociationClass(EStructuralFeature reference) {
-        			if (reference == tree_apples || reference == apple_tree) {
-        				return stem;
-        			} else if (reference.getName().equals("parent")
-        					|| reference.getName().equals("children")) {
-        				return (EClass) fruitPackage.getEClassifier("AC");
-        			}
-        			
-        			return null;
-        		}
-        		
-        		@Override
-        		public List<EStructuralFeature> getMemberEnds(
-        				EClassifier associationClass) {
-        			
-        			if (associationClass == stem) {
-        				return stemEnds;
-        			} else if (associationClass.getName().equals("AC")) {
-        				EClass ac = (EClass) associationClass;
-        				
-        				List<EStructuralFeature> result = new java.util.ArrayList<EStructuralFeature>(2);
-        				result.add(ac.getEStructuralFeature("parentTree"));
-        				result.add(ac.getEStructuralFeature("childTree"));
-        				
-        				return result;
-        			}
-        			
-        			return Collections.emptyList();
-        		}
-        		
-        		@Override
-        		public List<EStructuralFeature> getQualifiers(EStructuralFeature property) {
-        			if (property == forest_trees) {
-        				return qualifiers;
-        			}
-        			
-        			return Collections.emptyList();
-        		}};
-        }
+
+		@Override
+		public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+			return new UMLReflectionImpl() {
+				@Override
+				public boolean isAssociationClass(EClassifier eclass) {
+					return eclass == stem || eclass.getName().equals("AC");
+				}
+
+				@Override
+				public EClass getAssociationClass(EStructuralFeature reference) {
+					if (reference == tree_apples || reference == apple_tree) {
+						return stem;
+					} else if (reference.getName().equals("parent")
+							|| reference.getName().equals("children")) {
+						return (EClass) fruitPackage.getEClassifier("AC");
+					}
+
+					return null;
+				}
+
+				@Override
+				public List<EStructuralFeature> getMemberEnds(
+						EClassifier associationClass) {
+
+					if (associationClass == stem) {
+						return stemEnds;
+					} else if (associationClass.getName().equals("AC")) {
+						EClass ac = (EClass) associationClass;
+
+						List<EStructuralFeature> result = new java.util.ArrayList<EStructuralFeature>(2);
+						result.add(ac.getEStructuralFeature("parentTree"));
+						result.add(ac.getEStructuralFeature("childTree"));
+
+						return result;
+					}
+
+					return Collections.emptyList();
+				}
+
+				@Override
+				public List<EStructuralFeature> getQualifiers(EStructuralFeature property) {
+					if (property == forest_trees) {
+						return qualifiers;
+					}
+
+					return Collections.emptyList();
+				}};
+		}
 	}
 
 }

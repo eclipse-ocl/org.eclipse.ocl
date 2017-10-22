@@ -40,92 +40,92 @@ import org.eclipse.ocl.types.util.TypesValidator;
 public class TypesValidatorTest extends AbstractTestSuite {
 
 	private final EcoreFactory factory = EcoreFactory.eINSTANCE;
-	
+
 	public void test_CollectionType_checkCollectionTypeName() {
 		CollectionType type = factory.createCollectionType();
 		type.setElementType(fruit);
-		
+
 		assertOK(type, TypesValidator.COLLECTION_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		type.setName("Collection(Integer)");
-		
+
 		assertProblem(type, TypesValidator.COLLECTION_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		type.setName("Sequence(Fruit)");
-		
+
 		assertProblem(type, TypesValidator.COLLECTION_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		assertOK(getOCLStandardLibrary().getCollection(), TypesValidator.COLLECTION_TYPE__COLLECTION_TYPE_NAME);
 	}
-	
+
 	public void test_BagType_checkCollectionTypeName() {
 		CollectionType type = factory.createBagType();
 		type.setElementType(fruit);
-		
+
 		assertOK(type, TypesValidator.BAG_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		type.setName("Bag(Integer)");
-		
+
 		assertProblem(type, TypesValidator.BAG_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		type.setName("Collection(Fruit)");
-		
+
 		assertProblem(type, TypesValidator.BAG_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		assertOK(getOCLStandardLibrary().getBag(), TypesValidator.BAG_TYPE__COLLECTION_TYPE_NAME);
 	}
-	
+
 	public void test_SetType_checkCollectionTypeName() {
 		CollectionType type = factory.createSetType();
 		type.setElementType(fruit);
-		
+
 		assertOK(type, TypesValidator.SET_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		type.setName("Set(Integer)");
-		
+
 		assertProblem(type, TypesValidator.SET_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		type.setName("Collection(Fruit)");
-		
+
 		assertProblem(type, TypesValidator.SET_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		assertOK(getOCLStandardLibrary().getSet(), TypesValidator.SET_TYPE__COLLECTION_TYPE_NAME);
 	}
-	
+
 	public void test_SequenceType_checkCollectionTypeName() {
 		CollectionType type = factory.createSequenceType();
 		type.setElementType(fruit);
-		
+
 		assertOK(type, TypesValidator.SEQUENCE_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		type.setName("Sequence(Integer)");
-		
+
 		assertProblem(type, TypesValidator.SEQUENCE_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		type.setName("Collection(Fruit)");
-		
+
 		assertProblem(type, TypesValidator.SEQUENCE_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		assertOK(getOCLStandardLibrary().getSequence(), TypesValidator.SEQUENCE_TYPE__COLLECTION_TYPE_NAME);
 	}
-	
+
 	public void test_OrderedSetType_checkCollectionTypeName() {
 		CollectionType type = factory.createOrderedSetType();
 		type.setElementType(fruit);
-		
+
 		assertOK(type, TypesValidator.ORDERED_SET_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		type.setName("OrderedSet(Integer)");
-		
+
 		assertProblem(type, TypesValidator.ORDERED_SET_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		type.setName("Collection(Fruit)");
-		
+
 		assertProblem(type, TypesValidator.ORDERED_SET_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		assertOK(getOCLStandardLibrary().getOrderedSet(), TypesValidator.ORDERED_SET_TYPE__COLLECTION_TYPE_NAME);
 	}
-	
+
 	/**
 	 * Test that the default name of the collection type of an empty collection
 	 * shows <tt>OclVoid</tt> as the element type.
@@ -135,17 +135,17 @@ public class TypesValidatorTest extends AbstractTestSuite {
 		URI uri = getTestModelURI("/model/VoidCollectionTypes.ecore");
 		Resource res = resourceSet.getResource(uri, true);
 		EPackage epackage = (EPackage) res.getContents().get(0);
-		
+
 		// this one is ill-named
 		CollectionType setType = (CollectionType) epackage.getEClassifier("Set(T)");
 		assertSame(getOCLStandardLibrary().getOclVoid(), setType.getElementType());
 		assertProblem(setType, TypesValidator.SET_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		// this one is well-named
 		CollectionType bagType = (CollectionType) epackage.getEClassifier("Bag(OclVoid)");
 		assertSame(getOCLStandardLibrary().getOclVoid(), bagType.getElementType());
 		assertOK(setType, TypesValidator.BAG_TYPE__COLLECTION_TYPE_NAME);
-		
+
 		// create a new void collection type
 		CollectionType collectionType = factory.createCollectionType();
 		collectionType.setElementType(getOCLStandardLibrary().getOclVoid());
@@ -163,7 +163,7 @@ public class TypesValidatorTest extends AbstractTestSuite {
 		sequenceType.setElementType(getOCLStandardLibrary().getOclVoid());
 		assertOK(sequenceType, TypesValidator.SEQUENCE_TYPE__COLLECTION_TYPE_NAME);
 	}
-	
+
 	/**
 	 * Tests that the well-formed name constraint from Ecore is
 	 * disinherited for OCL types.
@@ -185,12 +185,12 @@ public class TypesValidatorTest extends AbstractTestSuite {
 		assertWellFormedName(oclFactory.createOperationMessageType(fruit_ripen));
 		assertWellFormedName(oclFactory.createTypeType(fruit));
 	}
-	
+
 	private void assertWellFormedName(EObject type) {
 		assertOK(type, EcoreValidator.WELL_FORMED_NAME,
 			EcoreValidator.DIAGNOSTIC_SOURCE);
 	}
-	
+
 	/**
 	 * Tests that the well-formed instance type name constraint from Ecore is
 	 * disinherited for OCL types.
@@ -211,7 +211,7 @@ public class TypesValidatorTest extends AbstractTestSuite {
 		assertWellFormedInstanceTypeName(oclFactory.createOperationMessageType(fruit_ripen));
 		assertWellFormedInstanceTypeName(oclFactory.createTypeType(fruit));
 	}
-	
+
 	private void assertWellFormedInstanceTypeName(EObject type) {
 		assertOK(type, EcoreValidator.WELL_FORMED_INSTANCE_TYPE_NAME,
 			EcoreValidator.DIAGNOSTIC_SOURCE);
@@ -220,91 +220,91 @@ public class TypesValidatorTest extends AbstractTestSuite {
 	//
 	// Fixture methods
 	//
-	
+
 	protected Diagnostic validate(EObject target) {
 		Map<Object, Object> ctx = new java.util.HashMap<Object, Object>();
 		ctx.put(Environment.class, ocl.getEnvironment());
 		return Diagnostician.INSTANCE.validate(target, ctx);
 	}
-	
+
 	protected void assertProblem(EObject target, int code) {
 		assertProblem(validate(target), target, code);
 	}
-	
+
 	protected void assertProblem(Diagnostic diagnostic, EObject target, int code) {
 		Diagnostic problem = findProblem(diagnostic, target, code);
 		assertNotNull("Problem not found", problem);
-		System.out.println("Found expected problem: " + problem.getMessage());
+		debugPrintln("Found expected problem: " + problem.getMessage());
 	}
-	
+
 	protected Diagnostic findProblem(Diagnostic diagnostic, EObject target,
 			int code, String source) {
-		
+
 		if (source.equals(diagnostic
-				.getSource())
+			.getSource())
 				&& (diagnostic.getSeverity() != Diagnostic.OK)
 				&& diagnostic.getData().contains(target)
 				&& (diagnostic.getCode() == code)) {
 			return diagnostic;
 		}
-		
+
 		for (Diagnostic child : diagnostic.getChildren()) {
 			Diagnostic result = findProblem(child, target, code, source);
-			
+
 			if (result != null) {
 				return result;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	protected Diagnostic findProblem(Diagnostic diagnostic, EObject target, int code) {
 		return findProblem(diagnostic, target, code, TypesValidator.DIAGNOSTIC_SOURCE);
 	}
-	
+
 	protected Diagnostic findProblem(Diagnostic diagnostic, EObject target) {
 		if (TypesValidator.DIAGNOSTIC_SOURCE.equals(diagnostic
-				.getSource())
+			.getSource())
 				&& (diagnostic.getSeverity() != Diagnostic.OK)
 				&& diagnostic.getData().contains(target)) {
 			return diagnostic;
 		}
-		
+
 		for (Diagnostic child : diagnostic.getChildren()) {
 			Diagnostic result = findProblem(child, target);
-			
+
 			if (result != null) {
 				return result;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	protected void assertOK(EObject target, int code) {
 		assertOK(validate(target), target, code);
 	}
-	
+
 	protected void assertOK(EObject target, int code, String source) {
 		assertOK(validate(target), target, code, source);
 	}
-	
+
 	protected void assertOK(Diagnostic diagnostic, EObject target, int code) {
 		assertNull("Problem found", findProblem(diagnostic, target, code));
 	}
-	
+
 	protected void assertOK(Diagnostic diagnostic, EObject target, int code,
 			String source) {
-		
+
 		assertNull(
 			"Problem found", findProblem(diagnostic, target, code, source));
 	}
-	
+
 	protected void assertOK(EObject target) {
 		assertOK(validate(target), target);
 	}
-	
+
 	protected void assertOK(Diagnostic diagnostic, EObject target) {
 		assertNull("Problem found", findProblem(diagnostic, target));
 	}

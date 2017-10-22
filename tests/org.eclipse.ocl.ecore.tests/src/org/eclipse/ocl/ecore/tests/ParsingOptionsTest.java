@@ -35,12 +35,12 @@ import org.eclipse.ocl.utilities.UMLReflection;
 
 /**
  * Tests for parsing options.
- * 
+ *
  * @author Christian W. Damus (cdamus)
  */
 @SuppressWarnings("nls")
 public class ParsingOptionsTest
-		extends AbstractTestSuite {
+extends AbstractTestSuite {
 
 	/**
 	 * Tests the implicit root class option for access to operations.
@@ -55,8 +55,7 @@ public class ParsingOptionsTest
 			fail("Should not have successfully parsed.");
 		} catch (ParserException e) {
 			// success
-			System.out
-				.println("Got expected exception: " + e.getLocalizedMessage());
+			debugPrintln("Got expected exception: " + e.getLocalizedMessage());
 		}
 
 		ParsingOptions.setOption(ocl.getEnvironment(), ParsingOptions
@@ -93,13 +92,12 @@ public class ParsingOptionsTest
 			fail("Should not have successfully parsed.");
 		} catch (ParserException e) {
 			// success
-			System.out
-				.println("Got expected exception: " + e.getLocalizedMessage());
+			debugPrintln("Got expected exception: " + e.getLocalizedMessage());
 		}
 
 		ParsingOptions.setOption(ocl.getEnvironment(), ParsingOptions
 			.implicitRootClass(ocl.getEnvironment()), apple); // don't try this
-																// at home!
+		// at home!
 
 		// parse with the option
 		try {
@@ -148,19 +146,19 @@ public class ParsingOptionsTest
 		assertEquals(UMLReflection.STRICT_SUBTYPE, TypeUtil.getRelationship(ocl
 			.getEnvironment(), apple, EcorePackage.Literals.EOBJECT));
 	}
-	
+
 	public void test_implicitRootClass_option_get_380755() {
 		Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env = ocl.getEnvironment();
 		Option<EClassifier> implicitRootClass = ParsingOptions.implicitRootClass(env);
-		
+
 		ParsingOptions.setOption(env, implicitRootClass, EcorePackage.Literals.EOBJECT);
 		EClassifier value = ParsingOptions.getValue(env, implicitRootClass);
 		assertSame(EcorePackage.Literals.EOBJECT, value);
-		
+
 		ParsingOptions.setOption(env, implicitRootClass, null);
 		value = ParsingOptions.getValue(env, implicitRootClass);
 		assertSame(null, value);
-		
+
 		ParsingOptions.setOption(env, implicitRootClass, EcorePackage.Literals.ECLASS);
 		value = ParsingOptions.getValue(env, implicitRootClass);
 		assertSame(EcorePackage.Literals.ECLASS, value);

@@ -63,359 +63,359 @@ import org.eclipse.ocl.utilities.Visitor;
  */
 @SuppressWarnings("nls")
 public class ExtensibilityTest
-    extends AbstractTestSuite {
+extends AbstractTestSuite {
 
-    /**
-     * Tests that we can successfully parse with an environment that does not
-     * implement the optional adapter protocols.
-     */
-    public void test_noAdapters_parseSuccessfully() {
-        helper.setContext(EcorePackage.Literals.EPACKAGE);
-        
-        try {
-            helper.createInvariant("not self.eClassifiers->isEmpty()");
-        } catch (ParserException e) {
-            fail("Failed to parse: " + e.getLocalizedMessage());
-        }
-        
-        try {
-            ocl.parse(new OCLInput(
-                "context ecore::EPackage\n" +
-                "inv: not self.eClassifiers->isEmpty()"));
-        } catch (ParserException e) {
-            fail("Failed to parse: " + e.getLocalizedMessage());
-        }
-    }
+	/**
+	 * Tests that we can successfully parse with an environment that does not
+	 * implement the optional adapter protocols.
+	 */
+	public void test_noAdapters_parseSuccessfully() {
+		helper.setContext(EcorePackage.Literals.EPACKAGE);
 
-    /**
-     * Tests that we can produce warnings with an environment that does not
-     * implement the optional adapter protocols.
-     */
-    public void test_noAdapters_parseWithWarning() {
-        helper.setContext(EcorePackage.Literals.EPACKAGE);
-        
-        try {
-            helper.createInvariant("not self.\"eClassifiers\"->isEmpty()");
-            
-            Diagnostic diag = helper.getProblems();
-            assertNotNull(diag);
-            assertEquals(Diagnostic.WARNING, diag.getSeverity());
-            
-            System.out.println("Got expected warning: " + diag.getMessage());
-        } catch (ParserException e) {
-            fail("Failed to parse: " + e.getLocalizedMessage());
-        }
-        
-        try {
-            ocl.parse(new OCLInput(
-                "context ecore::EPackage\n" +
-                "inv: not self.\"eClassifiers\"->isEmpty()"));
-            
-            Diagnostic diag = ocl.getProblems();
-            assertNotNull(diag);
-            assertEquals(Diagnostic.WARNING, diag.getSeverity());
-            
-            System.out.println("Got expected warning: " + diag.getMessage());
-        } catch (ParserException e) {
-            fail("Failed to parse: " + e.getLocalizedMessage());
-        }
-    }
+		try {
+			helper.createInvariant("not self.eClassifiers->isEmpty()");
+		} catch (ParserException e) {
+			fail("Failed to parse: " + e.getLocalizedMessage());
+		}
 
-    /**
-     * Tests that we can produce errors with an environment that does not
-     * implement the optional adapter protocols.
-     */
-    public void test_noAdapters_parseWithError() {
-        helper.setContext(EcorePackage.Literals.EPACKAGE);
-        
-        try {
-            helper.createInvariant("not self.classifiers->isEmpty()");
-            fail("Should not have parsed");
-        } catch (ParserException e) {
-            // success
-            System.out.println("Got expected error: " + e.getLocalizedMessage());
-        }
-        
-        try {
-            ocl.parse(new OCLInput(
-                "context ecore::EPackage\n" +
-                "inv: not self.classifiers->isEmpty()"));
-            fail("Should not have parsed");
-        } catch (ParserException e) {
-            // success
-            System.out.println("Got expected error: " + e.getLocalizedMessage());
-        }
-    }
+		try {
+			ocl.parse(new OCLInput(
+				"context ecore::EPackage\n" +
+					"inv: not self.eClassifiers->isEmpty()"));
+		} catch (ParserException e) {
+			fail("Failed to parse: " + e.getLocalizedMessage());
+		}
+	}
 
-    /**
-     * Tests that we can report lexer problems with an environment that does not
-     * implement the optional adapter protocols.
-     */
-    public void test_noAdapters_parseWithTokenError() {
-        helper.setContext(EcorePackage.Literals.EPACKAGE);
-        
-        try {
-            helper.createInvariant("not self.;->isEmpty()");
-            fail("Should not have parsed");
-        } catch (ParserException e) {
-            // success
-            System.out.println("Got expected error: " + e.getLocalizedMessage());
-        }
-        
-        try {
-            ocl.parse(new OCLInput(
-                "context ecore::EPackage\n" +
-                "inv: not self.;->isEmpty()"));
-            fail("Should not have parsed");
-        } catch (ParserException e) {
-            // success
-            System.out.println("Got expected error: " + e.getLocalizedMessage());
-        }
-    }
-    
+	/**
+	 * Tests that we can produce warnings with an environment that does not
+	 * implement the optional adapter protocols.
+	 */
+	public void test_noAdapters_parseWithWarning() {
+		helper.setContext(EcorePackage.Literals.EPACKAGE);
+
+		try {
+			helper.createInvariant("not self.\"eClassifiers\"->isEmpty()");
+
+			Diagnostic diag = helper.getProblems();
+			assertNotNull(diag);
+			assertEquals(Diagnostic.WARNING, diag.getSeverity());
+
+			debugPrintln("Got expected warning: " + diag.getMessage());
+		} catch (ParserException e) {
+			fail("Failed to parse: " + e.getLocalizedMessage());
+		}
+
+		try {
+			ocl.parse(new OCLInput(
+				"context ecore::EPackage\n" +
+					"inv: not self.\"eClassifiers\"->isEmpty()"));
+
+			Diagnostic diag = ocl.getProblems();
+			assertNotNull(diag);
+			assertEquals(Diagnostic.WARNING, diag.getSeverity());
+
+			debugPrintln("Got expected warning: " + diag.getMessage());
+		} catch (ParserException e) {
+			fail("Failed to parse: " + e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * Tests that we can produce errors with an environment that does not
+	 * implement the optional adapter protocols.
+	 */
+	public void test_noAdapters_parseWithError() {
+		helper.setContext(EcorePackage.Literals.EPACKAGE);
+
+		try {
+			helper.createInvariant("not self.classifiers->isEmpty()");
+			fail("Should not have parsed");
+		} catch (ParserException e) {
+			// success
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
+		}
+
+		try {
+			ocl.parse(new OCLInput(
+				"context ecore::EPackage\n" +
+					"inv: not self.classifiers->isEmpty()"));
+			fail("Should not have parsed");
+		} catch (ParserException e) {
+			// success
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * Tests that we can report lexer problems with an environment that does not
+	 * implement the optional adapter protocols.
+	 */
+	public void test_noAdapters_parseWithTokenError() {
+		helper.setContext(EcorePackage.Literals.EPACKAGE);
+
+		try {
+			helper.createInvariant("not self.;->isEmpty()");
+			fail("Should not have parsed");
+		} catch (ParserException e) {
+			// success
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
+		}
+
+		try {
+			ocl.parse(new OCLInput(
+				"context ecore::EPackage\n" +
+					"inv: not self.;->isEmpty()"));
+			fail("Should not have parsed");
+		} catch (ParserException e) {
+			// success
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
+		}
+	}
+
 	//
 	// Framework methods
 	//
-	
+
 	@Override
 	protected OCL createOCL() {
-	    return OCL.newInstance(new WrapperEnvironmentFactory());
+		return OCL.newInstance(new WrapperEnvironmentFactory());
 	}
-	
+
 	class WrapperEnvironment implements EnvironmentWithHiddenOpposites {
-	    
-	    private final EnvironmentWithHiddenOpposites
-	    delegate;
-	    
-        private final EnvironmentWithHiddenOpposites
-        parent;
-        
-        private final WrapperEnvironmentFactory factory;
-        
-	    WrapperEnvironment(WrapperEnvironmentFactory factory,
-	            Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> delegate) {
-	        this(factory, delegate, null);
-	    }
 
-        WrapperEnvironment(WrapperEnvironmentFactory factory,
-            Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> delegate,
-            Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
-            
-            this.factory = factory;
-            this.delegate = (EnvironmentWithHiddenOpposites) delegate;
-            this.parent = (EnvironmentWithHiddenOpposites) parent;
-        }
-    
-        public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> getParent() {
-            return parent;
-        }
+		private final EnvironmentWithHiddenOpposites
+		delegate;
 
-        public EnvironmentFactory<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> getFactory() {
-            return factory;
-        }
+		private final EnvironmentWithHiddenOpposites
+		parent;
 
-        public boolean addElement(String name,
-                Variable<EClassifier, EParameter> elem, boolean explicit) {
-            return delegate.addElement(name, elem, explicit);
-        }
+		private final WrapperEnvironmentFactory factory;
 
-        public EStructuralFeature defineAttribute(EClassifier owner,
-                Variable<EClassifier, EParameter> variable,
-                Constraint constraint) {
-            return delegate.defineAttribute(owner, variable, constraint);
-        }
+		WrapperEnvironment(WrapperEnvironmentFactory factory,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> delegate) {
+			this(factory, delegate, null);
+		}
 
-        public EOperation defineOperation(EClassifier owner, String name,
-                EClassifier type,
-                List<Variable<EClassifier, EParameter>> params,
-                Constraint constraint) {
-            return delegate.defineOperation(owner, name, type, params,
-                constraint);
-        }
+		WrapperEnvironment(WrapperEnvironmentFactory factory,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> delegate,
+			Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
 
-        public void deleteElement(String name) {
-            delegate.deleteElement(name);
-        }
+			this.factory = factory;
+			this.delegate = (EnvironmentWithHiddenOpposites) delegate;
+			this.parent = (EnvironmentWithHiddenOpposites) parent;
+		}
 
-        public List<EStructuralFeature> getAdditionalAttributes(
-                EClassifier classifier) {
-            return delegate.getAdditionalAttributes(classifier);
-        }
+		public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> getParent() {
+			return parent;
+		}
 
-        public List<EOperation> getAdditionalOperations(EClassifier classifier) {
-            return delegate.getAdditionalOperations(classifier);
-        }
+		public EnvironmentFactory<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> getFactory() {
+			return factory;
+		}
 
-        public Constraint getBodyCondition(EOperation operation) {
-            return delegate.getBodyCondition(operation);
-        }
+		public boolean addElement(String name,
+				Variable<EClassifier, EParameter> elem, boolean explicit) {
+			return delegate.addElement(name, elem, explicit);
+		}
 
-        public EClassifier getContextClassifier() {
-            return delegate.getContextClassifier();
-        }
+		public EStructuralFeature defineAttribute(EClassifier owner,
+				Variable<EClassifier, EParameter> variable,
+				Constraint constraint) {
+			return delegate.defineAttribute(owner, variable, constraint);
+		}
 
-        public EOperation getContextOperation() {
-            return delegate.getContextOperation();
-        }
+		public EOperation defineOperation(EClassifier owner, String name,
+				EClassifier type,
+				List<Variable<EClassifier, EParameter>> params,
+				Constraint constraint) {
+			return delegate.defineOperation(owner, name, type, params,
+				constraint);
+		}
 
-        public EPackage getContextPackage() {
-            return delegate.getContextPackage();
-        }
+		public void deleteElement(String name) {
+			delegate.deleteElement(name);
+		}
 
-        public EStructuralFeature getContextProperty() {
-            return delegate.getContextProperty();
-        }
+		public List<EStructuralFeature> getAdditionalAttributes(
+				EClassifier classifier) {
+			return delegate.getAdditionalAttributes(classifier);
+		}
 
-        public Constraint getDefinition(Object feature) {
-            return delegate.getDefinition(feature);
-        }
+		public List<EOperation> getAdditionalOperations(EClassifier classifier) {
+			return delegate.getAdditionalOperations(classifier);
+		}
 
-        public Constraint getDeriveConstraint(EStructuralFeature property) {
-            return delegate.getDeriveConstraint(property);
-        }
+		public Constraint getBodyCondition(EOperation operation) {
+			return delegate.getBodyCondition(operation);
+		}
 
-        public Constraint getInitConstraint(EStructuralFeature property) {
-            return delegate.getInitConstraint(property);
-        }
+		public EClassifier getContextClassifier() {
+			return delegate.getContextClassifier();
+		}
 
-        public OCLFactory getOCLFactory() {
-            return delegate.getOCLFactory();
-        }
+		public EOperation getContextOperation() {
+			return delegate.getContextOperation();
+		}
 
-        public OCLStandardLibrary<EClassifier> getOCLStandardLibrary() {
-            return delegate.getOCLStandardLibrary();
-        }
+		public EPackage getContextPackage() {
+			return delegate.getContextPackage();
+		}
 
-        public Variable<EClassifier, EParameter> getSelfVariable() {
-            return delegate.getSelfVariable();
-        }
+		public EStructuralFeature getContextProperty() {
+			return delegate.getContextProperty();
+		}
 
-        public List<EObject> getStates(EClassifier owner,
-                List<String> pathPrefix) {
-            return delegate.getStates(owner, pathPrefix);
-        }
+		public Constraint getDefinition(Object feature) {
+			return delegate.getDefinition(feature);
+		}
 
-        public TypeResolver<EClassifier, EOperation, EStructuralFeature> getTypeResolver() {
-            return delegate.getTypeResolver();
-        }
+		public Constraint getDeriveConstraint(EStructuralFeature property) {
+			return delegate.getDeriveConstraint(property);
+		}
 
-        public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
-            return delegate.getUMLReflection();
-        }
+		public Constraint getInitConstraint(EStructuralFeature property) {
+			return delegate.getInitConstraint(property);
+		}
 
-        public Collection<Variable<EClassifier, EParameter>> getVariables() {
-            return delegate.getVariables();
-        }
+		public OCLFactory getOCLFactory() {
+			return delegate.getOCLFactory();
+		}
 
-        public boolean isEmpty() {
-            return delegate.isEmpty();
-        }
+		public OCLStandardLibrary<EClassifier> getOCLStandardLibrary() {
+			return delegate.getOCLStandardLibrary();
+		}
 
-        public boolean isInPostcondition(OCLExpression<EClassifier> exp) {
-            return delegate.isInPostcondition(exp);
-        }
+		public Variable<EClassifier, EParameter> getSelfVariable() {
+			return delegate.getSelfVariable();
+		}
 
-        public Variable<EClassifier, EParameter> lookup(String name) {
-            return delegate.lookup(name);
-        }
+		public List<EObject> getStates(EClassifier owner,
+				List<String> pathPrefix) {
+			return delegate.getStates(owner, pathPrefix);
+		}
 
-        public EClassifier lookupAssociationClassReference(EClassifier owner,
-                String name) {
-            return delegate.lookupAssociationClassReference(owner, name);
-        }
+		public TypeResolver<EClassifier, EOperation, EStructuralFeature> getTypeResolver() {
+			return delegate.getTypeResolver();
+		}
 
-        public EClassifier lookupClassifier(List<String> names) {
-            return delegate.lookupClassifier(names);
-        }
+		public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+			return delegate.getUMLReflection();
+		}
 
-        public Variable<EClassifier, EParameter> lookupImplicitSourceForAssociationClass(
-                String name) {
-            return delegate.lookupImplicitSourceForAssociationClass(name);
-        }
+		public Collection<Variable<EClassifier, EParameter>> getVariables() {
+			return delegate.getVariables();
+		}
 
-        public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(
-                String name, List<? extends TypedElement<EClassifier>> args) {
-            return delegate.lookupImplicitSourceForOperation(name, args);
-        }
+		public boolean isEmpty() {
+			return delegate.isEmpty();
+		}
 
-        public Variable<EClassifier, EParameter> lookupImplicitSourceForProperty(
-                String name) {
-            return delegate.lookupImplicitSourceForProperty(name);
-        }
+		public boolean isInPostcondition(OCLExpression<EClassifier> exp) {
+			return delegate.isInPostcondition(exp);
+		}
 
-        public Variable<EClassifier, EParameter> lookupImplicitSourceForSignal(
-                String name, List<? extends TypedElement<EClassifier>> args) {
-            return delegate.lookupImplicitSourceForSignal(name, args);
-        }
+		public Variable<EClassifier, EParameter> lookup(String name) {
+			return delegate.lookup(name);
+		}
 
-        public Variable<EClassifier, EParameter> lookupImplicitSourceForState(
-                List<String> path)
-            throws LookupException, SemanticException {
-            return delegate.lookupImplicitSourceForState(path);
-        }
+		public EClassifier lookupAssociationClassReference(EClassifier owner,
+				String name) {
+			return delegate.lookupAssociationClassReference(owner, name);
+		}
 
-        public Variable<EClassifier, EParameter> lookupLocal(String name) {
-            return delegate.lookupLocal(name);
-        }
+		public EClassifier lookupClassifier(List<String> names) {
+			return delegate.lookupClassifier(names);
+		}
 
-        public EOperation lookupOperation(EClassifier owner, String name,
-                List<? extends TypedElement<EClassifier>> args) {
-            return delegate.lookupOperation(owner, name, args);
-        }
+		public Variable<EClassifier, EParameter> lookupImplicitSourceForAssociationClass(
+				String name) {
+			return delegate.lookupImplicitSourceForAssociationClass(name);
+		}
 
-        public EPackage lookupPackage(List<String> names) {
-            return delegate.lookupPackage(names);
-        }
+		public Variable<EClassifier, EParameter> lookupImplicitSourceForOperation(
+				String name, List<? extends TypedElement<EClassifier>> args) {
+			return delegate.lookupImplicitSourceForOperation(name, args);
+		}
 
-        public EStructuralFeature lookupProperty(EClassifier owner, String name) {
-            return delegate.lookupProperty(owner, name);
-        }
+		public Variable<EClassifier, EParameter> lookupImplicitSourceForProperty(
+				String name) {
+			return delegate.lookupImplicitSourceForProperty(name);
+		}
 
-        public EReference lookupOppositeProperty(EClassifier owner, String name)
-            throws LookupException {
-	    return delegate.lookupOppositeProperty(owner, name);
-	}
+		public Variable<EClassifier, EParameter> lookupImplicitSourceForSignal(
+				String name, List<? extends TypedElement<EClassifier>> args) {
+			return delegate.lookupImplicitSourceForSignal(name, args);
+		}
 
-	public EClassifier getOppositePropertyType(EClassifier owner, EReference property) {
-		return delegate.getOppositePropertyType(owner, property);
-	}
+		public Variable<EClassifier, EParameter> lookupImplicitSourceForState(
+				List<String> path)
+						throws LookupException, SemanticException {
+			return delegate.lookupImplicitSourceForState(path);
+		}
 
-	public EClassifier lookupSignal(EClassifier owner, String name,
-                List<? extends TypedElement<EClassifier>> args) {
-            return delegate.lookupSignal(owner, name, args);
-        }
+		public Variable<EClassifier, EParameter> lookupLocal(String name) {
+			return delegate.lookupLocal(name);
+		}
 
-        public EObject lookupState(EClassifier owner, List<String> path)
-            throws LookupException, SemanticException {
-            return delegate.lookupState(owner, path);
-        }
+		public EOperation lookupOperation(EClassifier owner, String name,
+				List<? extends TypedElement<EClassifier>> args) {
+			return delegate.lookupOperation(owner, name, args);
+		}
 
-        public void setBodyCondition(EOperation operation, Constraint constraint) {
-            delegate.setBodyCondition(operation, constraint);
-        }
+		public EPackage lookupPackage(List<String> names) {
+			return delegate.lookupPackage(names);
+		}
 
-        public void setDeriveConstraint(EStructuralFeature property,
-                Constraint constraint) {
-            delegate.setDeriveConstraint(property, constraint);
-        }
+		public EStructuralFeature lookupProperty(EClassifier owner, String name) {
+			return delegate.lookupProperty(owner, name);
+		}
 
-        public void setInitConstraint(EStructuralFeature property,
-                Constraint constraint) {
-            delegate.setInitConstraint(property, constraint);
-        }
+		public EReference lookupOppositeProperty(EClassifier owner, String name)
+				throws LookupException {
+			return delegate.lookupOppositeProperty(owner, name);
+		}
 
-        public void setParent(
-                Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-            delegate.setParent(env);
-        }
+		public EClassifier getOppositePropertyType(EClassifier owner, EReference property) {
+			return delegate.getOppositePropertyType(owner, property);
+		}
 
-        public void setSelfVariable(Variable<EClassifier, EParameter> var) {
-            delegate.setSelfVariable(var);
-        }
+		public EClassifier lookupSignal(EClassifier owner, String name,
+				List<? extends TypedElement<EClassifier>> args) {
+			return delegate.lookupSignal(owner, name, args);
+		}
 
-        public void undefine(Object feature) {
-            delegate.undefine(feature);
-        }
+		public EObject lookupState(EClassifier owner, List<String> path)
+				throws LookupException, SemanticException {
+			return delegate.lookupState(owner, path);
+		}
+
+		public void setBodyCondition(EOperation operation, Constraint constraint) {
+			delegate.setBodyCondition(operation, constraint);
+		}
+
+		public void setDeriveConstraint(EStructuralFeature property,
+				Constraint constraint) {
+			delegate.setDeriveConstraint(property, constraint);
+		}
+
+		public void setInitConstraint(EStructuralFeature property,
+				Constraint constraint) {
+			delegate.setInitConstraint(property, constraint);
+		}
+
+		public void setParent(
+				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+			delegate.setParent(env);
+		}
+
+		public void setSelfVariable(Variable<EClassifier, EParameter> var) {
+			delegate.setSelfVariable(var);
+		}
+
+		public void undefine(Object feature) {
+			delegate.undefine(feature);
+		}
 
 		public Map<String, EReference> getHiddenOppositeProperties(
 				EClassifier classifier) {
@@ -429,112 +429,112 @@ public class ExtensibilityTest
 	}
 
 	class WrapperEnvironmentFactory implements EnvironmentFactory<
-            EPackage, EClassifier, EOperation, EStructuralFeature,
-            EEnumLiteral, EParameter,
-            EObject, CallOperationAction, SendSignalAction, Constraint,
-            EClass, EObject> {
-	    
-	    private final EnvironmentFactory<
-            EPackage, EClassifier, EOperation, EStructuralFeature,
-            EEnumLiteral, EParameter,
-            EObject, CallOperationAction, SendSignalAction, Constraint,
-            EClass, EObject> delegate;
-	    
-	    WrapperEnvironmentFactory(EnvironmentFactory<
-                EPackage, EClassifier, EOperation, EStructuralFeature,
-                EEnumLiteral, EParameter,
-                EObject, CallOperationAction, SendSignalAction, Constraint,
-                EClass, EObject> delegate) {
-	        this.delegate = delegate;
-	    }
-	    
-	    WrapperEnvironmentFactory() {
-	        this(new EcoreEnvironmentFactory());
-	    }
+	EPackage, EClassifier, EOperation, EStructuralFeature,
+	EEnumLiteral, EParameter,
+	EObject, CallOperationAction, SendSignalAction, Constraint,
+	EClass, EObject> {
 
-	    private Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
-	    getWrappedEnvironment(Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-	        if (env instanceof WrapperEnvironment) {
-	            return ((WrapperEnvironment) env).delegate;
-	        } else {
-	            return env;
-	        }
-	    }
-	    
-        public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createAttributeContext(
-                Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
-                EStructuralFeature property) {
-            return new WrapperEnvironment(this, delegate.createAttributeContext(getWrappedEnvironment(parent), property), parent);
-        }
+		private final EnvironmentFactory<
+		EPackage, EClassifier, EOperation, EStructuralFeature,
+		EEnumLiteral, EParameter,
+		EObject, CallOperationAction, SendSignalAction, Constraint,
+		EClass, EObject> delegate;
 
-        public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createClassifierContext(
-                Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
-                EClassifier context) {
-            return new WrapperEnvironment(this, delegate.createClassifierContext(getWrappedEnvironment(parent), context), parent);
-        }
+		WrapperEnvironmentFactory(EnvironmentFactory<
+			EPackage, EClassifier, EOperation, EStructuralFeature,
+			EEnumLiteral, EParameter,
+			EObject, CallOperationAction, SendSignalAction, Constraint,
+			EClass, EObject> delegate) {
+			this.delegate = delegate;
+		}
 
-        public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createEnvironment() {
-            return new WrapperEnvironment(this, delegate.createEnvironment());
-        }
+		WrapperEnvironmentFactory() {
+			this(new EcoreEnvironmentFactory());
+		}
 
-        public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createEnvironment(
-                Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
-            return new WrapperEnvironment(this, delegate.createEnvironment(getWrappedEnvironment(parent)), parent);
-        }
+		private Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject>
+		getWrappedEnvironment(Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
+			if (env instanceof WrapperEnvironment) {
+				return ((WrapperEnvironment) env).delegate;
+			} else {
+				return env;
+			}
+		}
 
-        public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> createEvaluationEnvironment() {
-            return delegate.createEvaluationEnvironment();
-        }
+		public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createAttributeContext(
+				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
+				EStructuralFeature property) {
+			return new WrapperEnvironment(this, delegate.createAttributeContext(getWrappedEnvironment(parent), property), parent);
+		}
 
-        public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> createEvaluationEnvironment(
-                EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent) {
-            return delegate.createEvaluationEnvironment(parent);
-        }
+		public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createClassifierContext(
+				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
+				EClassifier context) {
+			return new WrapperEnvironment(this, delegate.createClassifierContext(getWrappedEnvironment(parent), context), parent);
+		}
 
-        public EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createEvaluationVisitor(
-                Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
-                EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> evalEnv,
-                Map<? extends EClass, ? extends Set<? extends EObject>> extentMap) {
-            return delegate.createEvaluationVisitor(env, evalEnv, extentMap);
-        }
+		public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createEnvironment() {
+			return new WrapperEnvironment(this, delegate.createEnvironment());
+		}
 
-        public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createInstanceContext(
-                Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
-                Object context) {
-            return new WrapperEnvironment(this, delegate.createInstanceContext(getWrappedEnvironment(parent), context), parent);
-        }
+		public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createEnvironment(
+				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
+			return new WrapperEnvironment(this, delegate.createEnvironment(getWrappedEnvironment(parent)), parent);
+		}
 
-        public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createOperationContext(
-                Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
-                EOperation operation) {
-            return new WrapperEnvironment(this, delegate.createOperationContext(getWrappedEnvironment(parent), operation), parent);
-        }
+		public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> createEvaluationEnvironment() {
+			return delegate.createEvaluationEnvironment();
+		}
 
-        public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createPackageContext(
-                Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
-                List<String> pathname) {
-            return new WrapperEnvironment(this, delegate.createPackageContext(getWrappedEnvironment(parent), pathname), parent);
-        }
+		public EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> createEvaluationEnvironment(
+				EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent) {
+			return delegate.createEvaluationEnvironment(parent);
+		}
 
-        public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> loadEnvironment(
-                Resource resource) {
-            return new WrapperEnvironment(this, delegate.loadEnvironment(resource));
-        }
+		public EvaluationVisitor<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createEvaluationVisitor(
+				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
+				EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> evalEnv,
+				Map<? extends EClass, ? extends Set<? extends EObject>> extentMap) {
+			return delegate.createEvaluationVisitor(env, evalEnv, extentMap);
+		}
+
+		public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createInstanceContext(
+				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
+				Object context) {
+			return new WrapperEnvironment(this, delegate.createInstanceContext(getWrappedEnvironment(parent), context), parent);
+		}
+
+		public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createOperationContext(
+				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
+				EOperation operation) {
+			return new WrapperEnvironment(this, delegate.createOperationContext(getWrappedEnvironment(parent), operation), parent);
+		}
+
+		public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createPackageContext(
+				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent,
+				List<String> pathname) {
+			return new WrapperEnvironment(this, delegate.createPackageContext(getWrappedEnvironment(parent), pathname), parent);
+		}
+
+		public Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> loadEnvironment(
+				Resource resource) {
+			return new WrapperEnvironment(this, delegate.loadEnvironment(resource));
+		}
 
 		public Visitor<Boolean, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> createValidationVisitor(
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-            return delegate.createValidationVisitor(env);
+			return delegate.createValidationVisitor(env);
 		}
 
 		public OCLAnalyzer<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createOCLAnalyzer(
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env,
 				String input) {
-            return delegate.createOCLAnalyzer(env, input);
+			return delegate.createOCLAnalyzer(env, input);
 		}
 
 		public OCLAnalyzer<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> createOCLAnalyzer(
 				AbstractOCLParser parser) {
-            return delegate.createOCLAnalyzer(parser);
+			return delegate.createOCLAnalyzer(parser);
 		}
 
 		public OCLFactoryWithHistory createOCLFactoryWithHistory(
@@ -544,7 +544,7 @@ public class ExtensibilityTest
 
 		public OCLSyntaxHelper createOCLSyntaxHelper(
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> env) {
-            return delegate.createOCLSyntaxHelper(env);
+			return delegate.createOCLSyntaxHelper(env);
 		}
 	}
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *  E.D.Willink - Initial API and implementation
  *******************************************************************************/
@@ -58,7 +58,7 @@ public class DocumentationExamples extends AbstractTestSuite
 		URL url = new URL(uri.toString());
 		return url.openStream();
 	}
-	
+
 	private List<Library> getLibraries() {
 		return Collections.emptyList();
 	}
@@ -70,7 +70,7 @@ public class DocumentationExamples extends AbstractTestSuite
 		library.getBooks().add(aBook);
 		return library;
 	}
-	
+
 	/*
 	 * This 'test' provides the source text for the 'Parsing OCL Document' example
 	 * in org.eclipse.ocl.doc/doc/5120-parsing-constraints.textile
@@ -87,17 +87,17 @@ public class DocumentationExamples extends AbstractTestSuite
 		helper.setContext(EXTLibraryPackage.Literals.LIBRARY);
 
 		Constraint invariant = helper.createInvariant(
-		    "books->forAll(b1, b2 | b1 <> b2 implies b1.title <> b2.title)");
-		   
+				"books->forAll(b1, b2 | b1 <> b2 implies b1.title <> b2.title)");
+
 		OCLExpression<EClassifier> query = helper.createQuery(
-		    "books->collect(b : Book | b.category)->asSet()");
+				"books->collect(b : Book | b.category)->asSet()");
 
 		EOperation oper = null;
 		for (EOperation next : EcorePackage.Literals.EMODEL_ELEMENT.getEOperations()) {
-		    if ("getEAnnotation".equals(next.getName())) {
-		        oper = next;
-		        break;
-		    }
+			if ("getEAnnotation".equals(next.getName())) {
+				oper = next;
+				break;
+			}
 		}
 
 		// define a post-condition specifying the value of EModelElement::getEAnnotation(EString).
@@ -105,19 +105,19 @@ public class DocumentationExamples extends AbstractTestSuite
 		// parameters (in this case, only "source : String") and the operation result
 		helper.setOperationContext(EcorePackage.Literals.ECLASS, oper);
 		Constraint body = helper.createPostcondition(
-		    "result = self.eAnnotations->any(ann | ann.source = source)");
+				"result = self.eAnnotations->any(ann | ann.source = source)");
 
 		// define a derivation constraint for the EReference::eReferenceType property
 		helper.setAttributeContext(
-		    EcorePackage.Literals.EREFERENCE,
-		    EcorePackage.Literals.EREFERENCE__EREFERENCE_TYPE);
+			EcorePackage.Literals.EREFERENCE,
+			EcorePackage.Literals.EREFERENCE__EREFERENCE_TYPE);
 		Constraint derive = helper.createDerivedValueExpression(
-		    "self.eType->any(true).oclAsType(EClass)");
-	
+				"self.eType->any(true).oclAsType(EClass)");
+
 		if ((body == derive) && (invariant == query)) { /* the yellow markers go away */ }
 	}
-	
-	
+
+
 	/*
 	 * This 'test' provides the source text for the 'Parsing OCL Document' example
 	 * in org.eclipse.ocl.doc/doc/5115-evaluating-constraints.textile
@@ -128,9 +128,9 @@ public class DocumentationExamples extends AbstractTestSuite
 
 		helper.setContext(EXTLibraryPackage.Literals.LIBRARY);
 		Constraint invariant = helper.createInvariant(
-		    "books->forAll(b1, b2 | b1 <> b2 implies b1.title <> b2.title)");
+				"books->forAll(b1, b2 | b1 <> b2 implies b1.title <> b2.title)");
 		OCLExpression<EClassifier> query = helper.createQuery(
-		    "books->collect(b : Book | b.category)->asSet()");
+				"books->collect(b : Book | b.category)->asSet()");
 
 		// create a Query to evaluate our query expression
 		Query queryEval = ocl.createQuery(query);
@@ -142,31 +142,31 @@ public class DocumentationExamples extends AbstractTestSuite
 
 		// only print the set of book categories for valid libraries
 		for (Library next : libraries) {
-		    if (constraintEval.check(next)) {
-		        // the OCL result type of our query expression is Set(BookCategory)
-		        @SuppressWarnings("unchecked")
-		        Set<BookCategory> categories = (Set<BookCategory>) queryEval.evaluate(next);
-		        
-		        System.out.printf("%s: %s%n", next.getName(), categories);
-		    }
+			if (constraintEval.check(next)) {
+				// the OCL result type of our query expression is Set(BookCategory)
+				@SuppressWarnings("unchecked")
+				Set<BookCategory> categories = (Set<BookCategory>) queryEval.evaluate(next);
+
+				if (!noDebug) System.out.printf("%s: %s\n", next.getName(), categories);
+			}
 		}
 
 		// Check one
-		
+
 		// check a single library
 		Library lib = getLibrary();  // hypothetical source of a library
 
 		// check whether it satisfies the constraint
-		System.out.printf("%s valid: %b", lib.getName(), ocl.check(lib, invariant));
+		if (!noDebug) System.out.printf("%s valid: %b\n", lib.getName(), ocl.check(lib, invariant));
 
 		// MoreSuccinct
 
 		// only print the set of book categories for valid libraries
 		for (Library next : constraintEval.select(libraries)) {
-		    @SuppressWarnings("unchecked")
-		    Set<BookCategory> categories = (Set<BookCategory>) queryEval.evaluate(next);
-		    
-		    System.out.printf("%s: %s%n", next.getName(), categories);
+			@SuppressWarnings("unchecked")
+			Set<BookCategory> categories = (Set<BookCategory>) queryEval.evaluate(next);
+
+			if (!noDebug) System.out.printf("%s: %s%n", next.getName(), categories);
 		}
 	}
 
@@ -190,17 +190,17 @@ public class DocumentationExamples extends AbstractTestSuite
 
 		// parse the contents as an OCL document
 		try {
-		    OCLInput document = new OCLInput(in);
-		    
-		    List<Constraint> constraints = ocl.parse(document);
-		    for (Constraint next : constraints) {
-		        constraintMap.put(next.getName(), next);
-		        
-		        OCLExpression<EClassifier> body = next.getSpecification().getBodyExpression();
-		        System.out.printf("%s: %s%n", next.getName(), body);
-		    }
+			OCLInput document = new OCLInput(in);
+
+			List<Constraint> constraints = ocl.parse(document);
+			for (Constraint next : constraints) {
+				constraintMap.put(next.getName(), next);
+
+				OCLExpression<EClassifier> body = next.getSpecification().getBodyExpression();
+				if (!noDebug) System.out.printf("%s: %s%n", next.getName(), body);
+			}
 		} finally {
-		    in.close();
+			in.close();
 		}
 		//-------------------------------------------------------------------------
 		//	Accessing the Constraints
@@ -214,22 +214,22 @@ public class DocumentationExamples extends AbstractTestSuite
 		// use the getBooks() additional operation to find a book
 		helper.setContext(EXTLibraryPackage.Literals.LIBRARY);
 		OCLExpression<EClassifier> query = helper.createQuery(
-		    "getBooks('Bleak House')->asSequence()->first()");
+				"getBooks('Bleak House')->asSequence()->first()");
 
 		Book book = (Book) ocl.evaluate(library, query);
-		System.out.printf("Got book: %s%n", book);
+		if (!noDebug) System.out.printf("Got book: %s%n", book);
 
 		// use the unique_title constraint to validate the book
-		System.out.printf("Validate book: %b%n",
-		    ocl.check(book, constraintMap.get("unique_title")));	
+		if (!noDebug) System.out.printf("Validate book: %b%n",
+			ocl.check(book, constraintMap.get("unique_title")));
 	}
-	
+
 	private class MyOppositeEndFinder extends DefaultOppositeEndFinder {
 		public MyOppositeEndFinder() {
 			super(EPackage.Registry.INSTANCE);
 		}
 	}
-	
+
 	/**
 	 * The following is documented in doc/org.eclipse.ocl.doc/doc/5160-customization.textile
 	 * in section "Customizing Hidden Opposite Lookup and Navigation"
@@ -237,7 +237,7 @@ public class DocumentationExamples extends AbstractTestSuite
 	public void testCustomizingOppositeEndFinder() {
 		OppositeEndFinder oef = new MyOppositeEndFinder();
 		OCL ocl = OCL.newInstance(new EcoreEnvironmentFactoryWithHiddenOpposites(
-			                     EPackage.Registry.INSTANCE, oef));
+			EPackage.Registry.INSTANCE, oef));
 		assertSame(oef, ((EcoreEnvironment) ocl.getEnvironment()).getOppositeEndFinder());
 	}
 }

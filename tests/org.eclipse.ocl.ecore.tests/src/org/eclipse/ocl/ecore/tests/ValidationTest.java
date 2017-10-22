@@ -41,46 +41,46 @@ import org.eclipse.ocl.utilities.UMLReflection;
  */
 @SuppressWarnings("nls")
 public class ValidationTest extends AbstractTestSuite {
-	
+
 	/**
-	 * Tests that operation calls may only invoke query operations. 
+	 * Tests that operation calls may only invoke query operations.
 	 */
 	public void test_callNonQueryOperation_136778() {
 		// newApple() is not a query operation
 		OCLExpression<EClassifier> expr = parseConstraintUnvalidated(
-				"package ocltest context Apple " +
-				"inv: Apple.allInstances()->includes(self.newApple()) " +
+			"package ocltest context Apple " +
+					"inv: Apple.allInstances()->includes(self.newApple()) " +
 				"endpackage");
-		
+
 		try {
 			ocl.validate(expr);
 			fail("Should not have successfully validated");
 		} catch (SemanticException e) {
 			// success
-			System.out.println("Got expected exception: " + e.getLocalizedMessage());
+			debugPrintln("Got expected exception: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests that only one problem is reported for a sequence of call
 	 * expressions on an unrecognized variable (<tt>simpleNameCS</tt>).
 	 */
 	public void test_callExpOnUnrecognizedVariable_226083() {
 		helper.setContext(apple);
-		
+
 		try {
 			helper.createInvariant(
-				"noSuchVariable.noSuchProperty->includes(self.noSuchOperation())");
+					"noSuchVariable.noSuchProperty->includes(self.noSuchOperation())");
 			fail("Should not have successfully parsed");
 		} catch (SemanticException e) {
 			// success: semantic parse failed (not concrete parse)
 			Diagnostic diagnostic = e.getDiagnostic();
 			assertNotNull(diagnostic);
 			assertEquals(Diagnostic.ERROR, diagnostic.getSeverity());
-			
+
 			// the problem reported is the unrecognized 'noSuchVariable'
 			assertTrue(diagnostic.getMessage().contains("noSuchVariable"));
-			
+
 			// there is no complaint about the 'noSuchProperty' but there
 			// is a complaint about 'noSuchOperation'
 			boolean found = false;
@@ -92,27 +92,27 @@ public class ValidationTest extends AbstractTestSuite {
 			fail("Wrong kind of parse failure: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests that only one problem is reported for an iterator expression
 	 * on an unparseable source expression.
 	 */
 	public void test_bodyOfUnrcognizableIteratorSource_226083() {
 		helper.setContext(apple);
-		
+
 		try {
 			helper.createInvariant(
-				"Set{noSuchVariable}->forAll(e | e.noSuchOperation())");
+					"Set{noSuchVariable}->forAll(e | e.noSuchOperation())");
 			fail("Should not have successfully parsed");
 		} catch (SemanticException e) {
 			// success: semantic parse failed (not concrete parse)
 			Diagnostic diagnostic = e.getDiagnostic();
 			assertNotNull(diagnostic);
 			assertEquals(Diagnostic.ERROR, diagnostic.getSeverity());
-			
+
 			// the problem reported is the unrecognized 'noSuchVariable'
 			assertTrue(diagnostic.getMessage().contains("noSuchVariable"));
-			
+
 			// only one problem was reported, not two (the noSuchOperation
 			// operation was not attempted)
 			assertEquals(0, diagnostic.getChildren().size());
@@ -124,13 +124,13 @@ public class ValidationTest extends AbstractTestSuite {
 	//
 	// Fixture methods
 	//
-	
+
 
 	@Override
 	protected OCL createOCL() {
 		return OCL.newInstance(new CustomFruitEnvironmentFactory());
 	}
-	
+
 	private class CustomFruitEnvironmentFactory extends EcoreEnvironmentFactory {
 
 		public CustomFruitEnvironmentFactory() {
@@ -138,37 +138,37 @@ public class ValidationTest extends AbstractTestSuite {
 		}
 
 		@Override
-        public EcoreEnvironment createEnvironment() {
+		public EcoreEnvironment createEnvironment() {
 			return new CustomFruitEnvironment(this);
 		}
 
 		@Override
-        public EcoreEnvironment createEnvironment(
+		public EcoreEnvironment createEnvironment(
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
 			return new CustomFruitEnvironment(this, parent);
 		}
 	}
-	
+
 	private class CustomFruitEnvironment extends EcoreEnvironment {
 		public CustomFruitEnvironment(CustomFruitEnvironmentFactory factory) {
 			super(factory, null);
 			setContextPackage(fruitPackage);
 		}
-		
+
 		public CustomFruitEnvironment(
 				CustomFruitEnvironmentFactory factory,
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
 			super(parent);
 		}
-		
-        
-        @Override
-        public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
-            return new UMLReflectionImpl() {
-        		@Override
-        		public boolean isQuery(EOperation operation) {
-        			return operation != apple_newApple;
-        		}};
-        }
+
+
+		@Override
+		public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+			return new UMLReflectionImpl() {
+				@Override
+				public boolean isQuery(EOperation operation) {
+					return operation != apple_newApple;
+				}};
+		}
 	}
 }

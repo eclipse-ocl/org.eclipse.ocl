@@ -44,14 +44,14 @@ import org.eclipse.ocl.utilities.UMLReflection;
  */
 @SuppressWarnings("nls")
 public class StatesTest
-	extends AbstractTestSuite {
-	
+extends AbstractTestSuite {
+
 	/**
 	 * Tests the parsing of the oclIsInState() expression.
 	 */
 	public void test_isInState() {
 		helper.setContext(fruit);
-		
+
 		try {
 			// test implicit and explicit source
 			helper.createInvariant(
@@ -59,115 +59,115 @@ public class StatesTest
 
 			// test source of different type than context (and also implicit)
 			helper.createInvariant(
-				"Apple.allInstances()->forAll(not oclIsInState(Bad::Rotten))");
+					"Apple.allInstances()->forAll(not oclIsInState(Bad::Rotten))");
 		} catch (Exception e) {
 			fail("Failed to parse: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// just to make sure that the second test, above, wasn't a fluke.
 			// Fruit doesn't have this state
 			helper.createInvariant(
-				"Fruit.allInstances()->forAll(not oclIsInState(Bad::Rotten))");
-			
+					"Fruit.allInstances()->forAll(not oclIsInState(Bad::Rotten))");
+
 			fail("Should have failed to parse non-existent state");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests some validation of the oclIsInState() expression.
 	 */
 	public void test_isInState_validation() {
 		helper.setContext(fruit);
-		
+
 		try {
 			// not enough arguments
 			helper.createInvariant(
-				"self.oclIsInState()");
-			
+					"self.oclIsInState()");
+
 			fail("Should have failed to parse empty arglist");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// too many arguments
 			helper.createInvariant(
-				"Apple.allInstances()->forAll(oclIsInState(Bad, Rotten))");
-			
+					"Apple.allInstances()->forAll(oclIsInState(Bad, Rotten))");
+
 			fail("Should have failed to parse overabundant arglist");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// wrong kind of argument
 			helper.createInvariant(
-				"self.oclIsInState(color <> Color::black)");
-			
+					"self.oclIsInState(color <> Color::black)");
+
 			fail("Should have failed to parse arg of wrong type");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// another kind of wrong kind of argument
 			helper.createInvariant(
-				"self.oclIsInState(OclTest::Fruit)");
-			
+					"self.oclIsInState(OclTest::Fruit)");
+
 			fail("Should have failed to parse arg of wrong type");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the content-assist for states.
 	 */
 	public void test_stateContentAssist() {
 		helper.setContext(fruit);
-		
+
 		try {
 			// simplest case of first path name part completion
 			List<Choice> choices = helper.getSyntaxHelp(
-					ConstraintKind.INVARIANT, "self.oclIsInState(");
+				ConstraintKind.INVARIANT, "self.oclIsInState(");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.STATE, "Ripe");
 			assertChoice(choices, ChoiceKind.STATE, "Bad");
 
 			// case of no more completions (path is already complete)
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.INVARIANT, "self.oclIsInState(Ripe::");
+				ConstraintKind.INVARIANT, "self.oclIsInState(Ripe::");
 			assertNotNull(choices);
 			assertTrue(choices.isEmpty());
-			
+
 			// explicit source of non-self type
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.INVARIANT,
-					"Apple.allInstances()->forAll(a : Apple | a.oclIsInState(");
+				ConstraintKind.INVARIANT,
+				"Apple.allInstances()->forAll(a : Apple | a.oclIsInState(");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.STATE, "Ripe");
 			assertChoice(choices, ChoiceKind.STATE, "Bad");
-			
+
 			// implicit source of non-self type
-//			choices = helper.getSyntaxHelp(
-//					ConstraintType.INVARIANT,
-//					"Apple.allInstances()->forAll(oclIsInState(");
-//			assertNotNull(choices);
-//			assertChoice(choices, ChoiceType.STRUCTURAL_FEATURE, "Ripe");
-//			assertChoice(choices, ChoiceType.STRUCTURAL_FEATURE, "Bad");
-			
+			//			choices = helper.getSyntaxHelp(
+			//					ConstraintType.INVARIANT,
+			//					"Apple.allInstances()->forAll(oclIsInState(");
+			//			assertNotNull(choices);
+			//			assertChoice(choices, ChoiceType.STRUCTURAL_FEATURE, "Ripe");
+			//			assertChoice(choices, ChoiceType.STRUCTURAL_FEATURE, "Bad");
+
 			// available second-level completions
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.INVARIANT,
-					"Apple.allInstances()->forAll(a : Apple | a.oclIsInState(Bad::");
+				ConstraintKind.INVARIANT,
+				"Apple.allInstances()->forAll(a : Apple | a.oclIsInState(Bad::");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.STATE, "Bruised");
 			assertChoice(choices, ChoiceKind.STATE, "Rotten");
@@ -175,78 +175,78 @@ public class StatesTest
 			fail("Parse failed: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	//
 	// Test framework
 	//
-	
+
 	@Override
 	protected OCL createOCL() {
 		return OCL.newInstance(new StatefulFruitEnvironmentFactory(this));
 	}
-	
+
 	private static final List<String> FRUIT_BAD = Arrays.asList(new String[] {"Bad"});
-	
+
 	public static class StatefulFruitEnvironmentFactory extends EcoreEnvironmentFactory {
 		protected final AbstractTestSuite suite;
-		
+
 		public StatefulFruitEnvironmentFactory(AbstractTestSuite suite) {
 			this.suite = suite;
 		}
-		
+
 		@Override
-        public EcoreEnvironment createEnvironment() {
+		public EcoreEnvironment createEnvironment() {
 			return new StatefulFruitEnvironment(this, suite);
 		}
 
 		@Override
-        public EcoreEnvironment createEnvironment(
+		public EcoreEnvironment createEnvironment(
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
 			return new StatefulFruitEnvironment(this, parent, suite);
 		}
 	}
-	
+
 	private static class StatefulFruitEnvironment extends EcoreEnvironment {
 		protected final AbstractTestSuite suite;
 		private EObject fruitRipe;
 		private EObject fruitBad;
 		private EObject appleBruised;
 		private EObject appleRotten;
-		
+
 		public StatefulFruitEnvironment(StatefulFruitEnvironmentFactory factory, AbstractTestSuite suite) {
 			super(factory, null);
 			this.suite = suite;
 			setContextPackage(suite.fruitPackage);
-			
+
 			initStates();
 		}
-		
+
 		public StatefulFruitEnvironment(
 				StatefulFruitEnvironmentFactory factory,
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent, AbstractTestSuite suite) {
 			super(parent);
 			this.suite = suite;
-			
+
 			initStates();
 		}
-		
+
 		private void initStates() {
 			fruitRipe = EcoreFactory.eINSTANCE.createEObject();
 			((InternalEObject) fruitRipe).eSetClass(
-					(EClass) getOCLStandardLibrary().getState());
+				(EClass) getOCLStandardLibrary().getState());
 			fruitBad = EcoreFactory.eINSTANCE.createEObject();
 			((InternalEObject) fruitBad).eSetClass(
-					(EClass) getOCLStandardLibrary().getState());
+				(EClass) getOCLStandardLibrary().getState());
 			appleBruised = EcoreFactory.eINSTANCE.createEObject();
 			((InternalEObject) appleBruised).eSetClass(
-					(EClass) getOCLStandardLibrary().getState());
+				(EClass) getOCLStandardLibrary().getState());
 			appleRotten = EcoreFactory.eINSTANCE.createEObject();
 			((InternalEObject) appleRotten).eSetClass(
-					(EClass) getOCLStandardLibrary().getState());
+				(EClass) getOCLStandardLibrary().getState());
 		}
 
 		@Override
-        protected void collectStates(EClassifier owner, List<String> pathPrefix, List<EObject> states) {
+		protected void collectStates(EClassifier owner, List<String> pathPrefix, List<EObject> states) {
 			if (owner == suite.fruit) {
 				if (pathPrefix.isEmpty()) {
 					states.add(fruitRipe);
@@ -261,25 +261,25 @@ public class StatesTest
 				}
 			}
 		}
-		
-        
-        @Override
-        public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
-            return new UMLReflectionImpl() {
-        		@Override
-                public String getName(Object namedElement) {
-        			if (namedElement == fruitRipe) {
-        				return "Ripe";
-        			} else if (namedElement == fruitBad) {
-        				return "Bad";
-        			} else if (namedElement == appleBruised) {
-        				return "Bruised";
-        			} else if (namedElement == appleRotten) {
-        				return "Rotten";
-        			} else {
-        				return super.getName(namedElement);
-        			}
-        		}};
-        }
+
+
+		@Override
+		public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+			return new UMLReflectionImpl() {
+				@Override
+				public String getName(Object namedElement) {
+					if (namedElement == fruitRipe) {
+						return "Ripe";
+					} else if (namedElement == fruitBad) {
+						return "Bad";
+					} else if (namedElement == appleBruised) {
+						return "Bruised";
+					} else if (namedElement == appleRotten) {
+						return "Rotten";
+					} else {
+						return super.getName(namedElement);
+					}
+				}};
+		}
 	}
 }

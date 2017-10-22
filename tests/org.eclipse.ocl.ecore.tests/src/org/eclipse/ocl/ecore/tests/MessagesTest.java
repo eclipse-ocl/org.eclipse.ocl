@@ -44,14 +44,14 @@ import org.eclipse.ocl.utilities.UMLReflection;
  */
 @SuppressWarnings("nls")
 public class MessagesTest
-	extends AbstractTestSuite {
-	
+extends AbstractTestSuite {
+
 	/**
 	 * Tests the parsing of the hasSent ("^") expression for operations.
 	 */
 	public void test_hasSent_operation() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			// test query operation calls without any arguments
 			helper.createPostcondition("self^preferredColor()");
@@ -63,19 +63,19 @@ public class MessagesTest
 			//    interesting expression as the target
 			helper.createPostcondition(
 					"Apple.allInstances()->any(true) ^ripen(Color::yellow)");
-			
+
 			// test operation calls with multiple arguments
 			helper.createPostcondition(
 					"Fruit.allInstances()->forAll(f | self^setColor(f, Color::red))");
-			
+
 			// test operation signature conformance matching
 			helper.createPostcondition(
 					"Apple.allInstances()->forAll(a | self^setColor(a, Color::red))");
-			
+
 			// test operation signature conformance matching with null object type
 			helper.createPostcondition(
 					"Apple.allInstances()->forAll(a | self^setColor(null, Color::red))");
-			
+
 			// test operation signature conformance matching with null data type
 			helper.createPostcondition(
 					"Apple.allInstances()->forAll(a | self^setColor(a, null))");
@@ -83,92 +83,92 @@ public class MessagesTest
 			fail("Failed to parse: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the validation of the hasSent ("^") expression for operations.
 	 */
 	public void test_hasSent_operation_validation() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			// non-existent operation
 			helper.createPostcondition("self^label('foo')");
-			
+
 			fail("Should have failed to parse unknown operation");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// non-conformant argument
 			helper.createPostcondition("self^setColor(self, 'red')");
-			
+
 			fail("Should have failed to parse non-conformant arg");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests parsing of the hasSent ("^") expression with unspecified value
 	 * expressions for operations.
 	 */
 	public void test_hasSent_operation_unspecifiedValue() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			helper.createPostcondition(
 					"Apple.allInstances()->any(true)^ripen(? : Color)");
-			
+
 			helper.createPostcondition(
 					"Fruit.allInstances()->forAll(f | self^setColor(? : Fruit, ? : Color))");
-			
+
 			helper.createPostcondition(
 					"Apple.allInstances()->any(true)^ripen(?)");
-	
+
 			helper.createPostcondition(
 					"Fruit.allInstances()->forAll(f | self^setColor(?, ?))");
 		} catch (Exception e) {
 			fail("Failed to parse: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests validation of the hasSent ("^") expression with unspecified value
 	 * expressions for operations.
 	 */
 	public void test_hasSent_operation_unspecifiedValue_validation() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			// non-existent operation
 			helper.createPostcondition("self^label(?)");
-			
+
 			fail("Should have failed to parse unknown operation");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// non-conformant argument
 			helper.createPostcondition("self^setColor(self, ? : String)");
-			
+
 			fail("Should have failed to parse non-conformant arg");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the parsing of the sentMessages ("^^") expression for operations.
 	 */
 	public void test_sentMessages_operation() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			// test query operation calls without any arguments
 			helper.createPostcondition(
@@ -181,19 +181,19 @@ public class MessagesTest
 			//    interesting expression as the target
 			helper.createPostcondition(
 					"Apple.allInstances()->any(true)^^ripen(Color::yellow)->notEmpty()");
-			
+
 			// test operation calls with multiple arguments
 			helper.createPostcondition(
 					"Fruit.allInstances()->collect(f | self^^setColor(f, Color::red))->notEmpty()");
-			
+
 			// test operation signature conformance matching
 			helper.createPostcondition(
 					"Apple.allInstances()->collect(a | self^^setColor(a, Color::red))->notEmpty()");
-			
+
 			// test operation signature conformance matching with null object type
 			helper.createPostcondition(
 					"Apple.allInstances()->collect(a | self^^setColor(null, Color::red))->notEmpty()");
-			
+
 			// test operation signature conformance matching with null data type
 			helper.createPostcondition(
 					"Apple.allInstances()->collect(a | self^^setColor(a, null))->notEmpty()");
@@ -201,17 +201,17 @@ public class MessagesTest
 			fail("Failed to parse: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the parsing of OclMessage expressions for operations.
 	 */
 	public void test_message_access_operation() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			// test type conformance
 			helper.createPostcondition(
-					"let msgs : Sequence(OclMessage) = self^^preferredColor() in " +
+				"let msgs : Sequence(OclMessage) = self^^preferredColor() in " +
 					"msgs->forAll(m | m.hasReturned() and m.isOperationCall() and not m.isSignalSent())");
 
 			// test non-query operation calls without any arguments
@@ -221,55 +221,55 @@ public class MessagesTest
 			//    interesting expression as the target
 			helper.createPostcondition(
 					"Apple.allInstances()->any(true)^^ripen(Color::yellow)->notEmpty()");
-			
+
 			// types of the OclMessage properties are determined by the actual
 			//    operation type, not by the MessageExp arguments
 			helper.createPostcondition(
-					"let msgs : Collection(OclMessage) = Fruit.allInstances()->collect(f | self^^setColor(?, ?)) in " +
+				"let msgs : Collection(OclMessage) = Fruit.allInstances()->collect(f | self^^setColor(?, ?)) in " +
 					"msgs->forAll(m | m.fruit.color = Color::black implies m.newColor = Color::black)");
-			
+
 			// return values
 			helper.createPostcondition(
-					"let msgs : Collection(OclMessage) = Fruit.allInstances()->collect(f | self^^newFruit()) in " +
+				"let msgs : Collection(OclMessage) = Fruit.allInstances()->collect(f | self^^newFruit()) in " +
 					"msgs->forAll(m | m.hasReturned() implies m.result().color = Color::green)");
 		} catch (Exception e) {
 			fail("Failed to parse: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the validation of the setMessages ("^^") expression for operations.
 	 */
 	public void test_sentMessages_operation_validation() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			// non-existent operation
 			helper.createPostcondition("self^^label('foo')->notEmpty()");
-			
+
 			fail("Should have failed to parse unknown operation");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// non-conformant argument
 			helper.createPostcondition("self^^setColor(self, 'red')->notEmpty()");
-			
+
 			fail("Should have failed to parse non-conformant arg");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the parsing of the hasSent ("^") expression for signals.
 	 */
 	public void test_hasSent_signal() {
 		helper.setOperationContext(apple, fruit_ripen);
-		
+
 		try {
 			helper.createPostcondition("self^Drop(3, self.stem)");
 
@@ -281,50 +281,50 @@ public class MessagesTest
 
 			helper.createPostcondition(
 					"Apple.allInstances()->any(true)^Drop(3, stem)");
-			
+
 			helper.createPostcondition(
 					"Apple.allInstances()->exists(a | a^Drop(3, stem))");
-	
+
 			helper.createPostcondition(
 					"Fruit.allInstances()->forAll(f | f^Drop(?, ?) implies self^Drop(?, ?))");
 		} catch (Exception e) {
 			fail("Failed to parse: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the validation of the hasSent ("^") expression for signals.
 	 */
 	public void test_hasSent_signal_validation() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			// non-existent signal
 			helper.createPostcondition("self^Rot(3, stem)");
-			
+
 			fail("Should have failed to parse unknown signal");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// non-conformant argument
 			helper.createPostcondition("self^Drop('red', ?)");
-			
+
 			fail("Should have failed to parse non-conformant arg");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the parsing of the sentMessages ("^^") expression for signals.
 	 */
 	public void test_sentMessages_signal() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			helper.createPostcondition(
 					"self^^Drop(3, self.oclAsType(Apple).stem)->notEmpty()");
@@ -333,82 +333,82 @@ public class MessagesTest
 
 			helper.createPostcondition(
 					"Apple.allInstances()->any(true)^^Drop(3, ?)->notEmpty()");
-			
+
 			helper.createPostcondition(
 					"Apple.allInstances()->collect(a | self^^Drop(null, ? : Stem))->notEmpty()");
-			
+
 			helper.createPostcondition(
 					"Apple.allInstances()->collect(a | self^^Drop(3, null))->notEmpty()");
 		} catch (Exception e) {
 			fail("Failed to parse: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the parsing of OclMessage expressions for signals.
 	 */
 	public void test_message_access_signal() {
 		helper.setOperationContext(apple, fruit_ripen);
-		
+
 		try {
 			helper.createPostcondition(
-					"let msgs : Sequence(OclMessage) = self^^Drop(?, ?) in " +
+				"let msgs : Sequence(OclMessage) = self^^Drop(?, ?) in " +
 					"msgs->forAll(m | m.isSignalSent() and not m.isOperationCall())");
 
 			helper.createPostcondition("self^^Drop(?, ?)->first().oclIsKindOf(OclMessage)");
 
 			helper.createPostcondition(
-					"let msgs : Collection(OclMessage) = Fruit.allInstances()->collect(f | self^^Drop(?, ?)) in " +
+				"let msgs : Collection(OclMessage) = Fruit.allInstances()->collect(f | self^^Drop(?, ?)) in " +
 					"msgs->forAll(m | m.delay > 0 and stem <> self.stem)");
 		} catch (Exception e) {
 			fail("Failed to parse: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the validation of the setMessages ("^^") expression for signals.
 	 */
 	public void test_sentMessages_signal_validation() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			// non-existent signal
 			helper.createPostcondition("self^^Rot('now')->notEmpty()");
-			
+
 			fail("Should have failed to parse unknown signal");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
-		
+
 		try {
 			// non-conformant argument
 			helper.createPostcondition("self^^Drop(self, ?)->notEmpty()");
-			
+
 			fail("Should have failed to parse non-conformant arg");
 		} catch (Exception e) {
 			// success
-			System.out.println("Got expected error: " + e.getLocalizedMessage());
+			debugPrintln("Got expected error: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the presentation of operation call choices.
 	 */
 	public void test_contentAssist_operations() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			List<Choice> choices = helper.getSyntaxHelp(
-					ConstraintKind.POSTCONDITION,
+				ConstraintKind.POSTCONDITION,
 					"self^");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.OPERATION, "newFruit");
 			assertChoice(choices, ChoiceKind.OPERATION, "setColor");
 			assertNotChoice(choices, ChoiceKind.OPERATION, "oclIsKindOf");
-			
+
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.POSTCONDITION, "self^^");
+				ConstraintKind.POSTCONDITION, "self^^");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.OPERATION, "newFruit");
 			assertChoice(choices, ChoiceKind.OPERATION, "setColor");
@@ -416,21 +416,21 @@ public class MessagesTest
 
 			// doesn't parse
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.POSTCONDITION, "self^^^");
+				ConstraintKind.POSTCONDITION, "self^^^");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.VARIABLE, "color");
 
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.POSTCONDITION,
+				ConstraintKind.POSTCONDITION,
 					"Apple.allInstances()->any(true)^");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.OPERATION, "newFruit");
 			assertChoice(choices, ChoiceKind.OPERATION, "setColor");
 			assertChoice(choices, ChoiceKind.OPERATION, "label");
 			assertNotChoice(choices, ChoiceKind.OPERATION, "oclIsKindOf");
-			
+
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.POSTCONDITION,
+				ConstraintKind.POSTCONDITION,
 					"Apple.allInstances()->collect(a : Apple | a^^");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.OPERATION, "newFruit");
@@ -441,39 +441,39 @@ public class MessagesTest
 			fail("Parse failed: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Tests the presentation of signal send choices.
 	 */
 	public void test_contentAssist_signals() {
 		helper.setOperationContext(fruit, fruit_ripen);
-		
+
 		try {
 			List<Choice> choices = helper.getSyntaxHelp(
-					ConstraintKind.POSTCONDITION,
+				ConstraintKind.POSTCONDITION,
 					"self^");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.SIGNAL, "Drop");
 
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.POSTCONDITION, "self^^");
+				ConstraintKind.POSTCONDITION, "self^^");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.SIGNAL, "Drop");
 
 			// doesn't parse
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.POSTCONDITION, "self^^^");
+				ConstraintKind.POSTCONDITION, "self^^^");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.VARIABLE, "color");
 
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.POSTCONDITION,
+				ConstraintKind.POSTCONDITION,
 					"Apple.allInstances()->any(true)^");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.SIGNAL, "Drop");
-			
+
 			choices = helper.getSyntaxHelp(
-					ConstraintKind.POSTCONDITION,
+				ConstraintKind.POSTCONDITION,
 					"Apple.allInstances()->collect(a : Apple | a^^");
 			assertNotNull(choices);
 			assertChoice(choices, ChoiceKind.SIGNAL, "Drop");
@@ -481,68 +481,68 @@ public class MessagesTest
 			fail("Parse failed: " + e.getLocalizedMessage());
 		}
 	}
-	
+
 	//
 	// Test framework
 	//
-	
+
 	@Override
 	protected OCL createOCL() {
 		return OCL.newInstance(new MessagingFruitEnvironmentFactory(this));
 	}
-	
+
 	@Override
-    public void setUp() {
+	public void setUp() {
 		super.setUp();
 		expectModified = true;
 	}
-	
+
 	public static class MessagingFruitEnvironmentFactory extends EcoreEnvironmentFactory {
 
 		protected final AbstractTestSuite suite;
-		
+
 		public MessagingFruitEnvironmentFactory(AbstractTestSuite suite) {
 			this.suite = suite;
 		}
-		
+
 		@Override
-        public EcoreEnvironment createEnvironment() {
+		public EcoreEnvironment createEnvironment() {
 			return new MessagingFruitEnvironment(this, suite);
 		}
 
 		@Override
-        public EcoreEnvironment createEnvironment(
+		public EcoreEnvironment createEnvironment(
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent) {
 			return new MessagingFruitEnvironment(parent, suite);
 		}
 	}
-	
+
 	private static class MessagingFruitEnvironment extends EcoreEnvironment implements InitEnvironment {
 		protected final AbstractTestSuite suite;
 		private EClass dropSignal;
-		
+
 		private EList<EClassifier> signals = new BasicEList<EClassifier>();
-		
+
 		public MessagingFruitEnvironment(MessagingFruitEnvironmentFactory factory, AbstractTestSuite suite) {
 			super(factory, null);
 			this.suite = suite;
 			setContextPackage(suite.fruitPackage);
 
-//			init();
+			//			init();
 		}
-		
+
 		public MessagingFruitEnvironment(
 				Environment<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint, EClass, EObject> parent, AbstractTestSuite suite) {
 			super(parent);
 			this.suite = suite;
-			
+
 			init();
 		}
-		
+
 		public void init() {
 			dropSignal = EcoreFactory.eINSTANCE.createEClass();
 			dropSignal.setName("Drop");
-			
+
 			EStructuralFeature property = EcoreFactory.eINSTANCE.createEAttribute();
 			property.setName("delay");
 			property.setEType(getOCLStandardLibrary().getReal());
@@ -551,24 +551,24 @@ public class MessagesTest
 			property.setName("stem");
 			property.setEType(suite.stem);
 			dropSignal.getEStructuralFeatures().add(property);
-			
+
 			signals.add(dropSignal);
-			
+
 			suite.fruitPackage.getEClassifiers().add(dropSignal);
 		}
 
-        
-        @Override
-        public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
-            return new UMLReflectionImpl() {
-        		@Override
-                public List<EClassifier> getSignals(EClassifier owner) {
-        			if (owner == suite.fruit || owner == suite.apple) {
-        				return signals;
-        			}
-        			
-        			return super.getSignals(owner);
-        		}};
-        }
+
+		@Override
+		public UMLReflection<EPackage, EClassifier, EOperation, EStructuralFeature, EEnumLiteral, EParameter, EObject, CallOperationAction, SendSignalAction, Constraint> getUMLReflection() {
+			return new UMLReflectionImpl() {
+				@Override
+				public List<EClassifier> getSignals(EClassifier owner) {
+					if (owner == suite.fruit || owner == suite.apple) {
+						return signals;
+					}
+
+					return super.getSignals(owner);
+				}};
+		}
 	}
 }

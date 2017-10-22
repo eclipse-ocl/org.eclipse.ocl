@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *  C.Damus, K.Hussey, E.D.Willink - Initial API and implementation
  * 	E.D.Willink - Bug 306079, 322159, 353171
@@ -98,7 +98,7 @@ import noreflectioncompany.NoreflectioncompanyPackage;
 @SuppressWarnings("nls")
 public class DelegatesTest extends AbstractTestSuite
 {
-	protected static final String COMPANY_XMI = "/model/Company.xmi";	
+	protected static final String COMPANY_XMI = "/model/Company.xmi";
 	protected static final String NO_REFLECTION_COMPANY_XMI = "/model/NoReflectionCompany.xmi";
 	protected static final String MODEL_WITH_ERRORS_XMI = "/model/ModelWithErrors.xmi";
 
@@ -136,8 +136,8 @@ public class DelegatesTest extends AbstractTestSuite
 		eclipseIsRunning = EMFPlugin.IS_ECLIPSE_RUNNING;
 		usedLocalRegistry = false;
 
-		initializeResourceSet(OCLConstants.OCL_DELEGATE_URI_LPG);			
-		OCLDelegateDomain.initializeMappingFrom(null, OCLConstants.OCL_DELEGATE_URI);			
+		initializeResourceSet(OCLConstants.OCL_DELEGATE_URI_LPG);
+		OCLDelegateDomain.initializeMappingFrom(null, OCLConstants.OCL_DELEGATE_URI);
 	}
 
 	protected void initializeResourceSet(String oclDelegateURI) {
@@ -151,8 +151,8 @@ public class DelegatesTest extends AbstractTestSuite
 			QueryDelegate.Factory.Registry.INSTANCE.put(oclDelegateURI,
 				new OCLQueryDelegateFactory.Global());
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-				"xmi", new EcoreResourceFactoryImpl());		
-			EPackage.Registry.INSTANCE.remove(CompanyPackage.eNS_URI);	// Reference and nullify the side effect of the reference			
+				"xmi", new EcoreResourceFactoryImpl());
+			EPackage.Registry.INSTANCE.remove(CompanyPackage.eNS_URI);	// Reference and nullify the side effect of the reference
 			resourceSet.getPackageRegistry().remove(CompanyPackage.eNS_URI);	// In case previous test failed
 			EPackage.Registry.INSTANCE.remove(NoreflectioncompanyPackage.eNS_URI);	// Reference and nullify the side effect of the reference
 			resourceSet.getPackageRegistry().remove(NoreflectioncompanyPackage.eNS_URI);	// In case previous test failed
@@ -163,13 +163,13 @@ public class DelegatesTest extends AbstractTestSuite
 
 		// Install a local DelegateDomain.Factory
 		DelegateDomain.Factory.Registry.Impl delegateDomainFactory =
-			new DelegateDomain.Factory.Registry.Impl();
+				new DelegateDomain.Factory.Registry.Impl();
 		delegateDomainFactory.put(oclDelegateURI, new OCLDelegateDomainFactory());
 		adapter.putRegistry(DelegateDomain.Factory.Registry.class, delegateDomainFactory);
-				
+
 		// Install a local ValidationDelegate.Factory
 		ValidationDelegate.Factory.Registry validationDelegateFactoryRegistry =
-			new ValidationDelegate.Factory.Registry.Impl();
+				new ValidationDelegate.Factory.Registry.Impl();
 		validationDelegateFactoryRegistry.put(oclDelegateURI, new OCLValidationDelegateFactory(oclDelegateURI) {
 
 			@Override
@@ -177,13 +177,13 @@ public class DelegatesTest extends AbstractTestSuite
 				usedLocalRegistry = true;
 				return super.createValidationDelegate(classifier);
 			}
-			
+
 		});
 		adapter.putRegistry(ValidationDelegate.Factory.Registry.class, validationDelegateFactoryRegistry);
 
 		// Install a local SettingDelegate.Factory
 		EStructuralFeature.Internal.SettingDelegate.Factory.Registry settingDelegateFactoryRegistry =
-			new EStructuralFeature.Internal.SettingDelegate.Factory.Registry.Impl();
+				new EStructuralFeature.Internal.SettingDelegate.Factory.Registry.Impl();
 		settingDelegateFactoryRegistry.put(oclDelegateURI, new OCLSettingDelegateFactory(oclDelegateURI) {
 
 			@Override
@@ -191,26 +191,26 @@ public class DelegatesTest extends AbstractTestSuite
 				usedLocalRegistry = true;
 				return super.createSettingDelegate(structuralFeature);
 			}
-			
+
 		});
 		adapter.putRegistry(EStructuralFeature.Internal.SettingDelegate.Factory.Registry.class, settingDelegateFactoryRegistry);
 
 		// Install a local InvocationDelegate.Factory
 		EOperation.Internal.InvocationDelegate.Factory.Registry invocationDelegateFactoryRegistry =
-			new EOperation.Internal.InvocationDelegate.Factory.Registry.Impl();
+				new EOperation.Internal.InvocationDelegate.Factory.Registry.Impl();
 		invocationDelegateFactoryRegistry.put(oclDelegateURI, new OCLInvocationDelegateFactory(oclDelegateURI) {
 			@Override
 			public InvocationDelegate createInvocationDelegate(EOperation operation) {
 				usedLocalRegistry = true;
 				return super.createInvocationDelegate(operation);
 			}
-			
+
 		});
-		adapter.putRegistry(EOperation.Internal.InvocationDelegate.Factory.Registry.class, invocationDelegateFactoryRegistry);	
+		adapter.putRegistry(EOperation.Internal.InvocationDelegate.Factory.Registry.class, invocationDelegateFactoryRegistry);
 
 		// Install a local QueryDelegate.Factory
 		QueryDelegate.Factory.Registry queryDelegateFactoryRegistry =
-			new QueryDelegate.Factory.Registry.Impl();
+				new QueryDelegate.Factory.Registry.Impl();
 		queryDelegateFactoryRegistry.put(oclDelegateURI, new OCLQueryDelegateFactory(oclDelegateURI) {
 			@Override
 			public QueryDelegate createQueryDelegate(EClassifier context,
@@ -224,7 +224,7 @@ public class DelegatesTest extends AbstractTestSuite
 	protected void initModel(String testModelName) {
 		URI uri = getTestModelURI(testModelName);
 		testResource = resourceSet.getResource(uri, true);
-		
+
 		acme = testResource.getContents().get(0);
 
 		companyClass = acme.eClass();
@@ -233,17 +233,17 @@ public class DelegatesTest extends AbstractTestSuite
 
 		companyName = (EAttribute) companyClass.getEStructuralFeature("name");
 		companyEmployees = (EReference) companyClass
-			.getEStructuralFeature("employees");
+				.getEStructuralFeature("employees");
 		companySize = (EAttribute) companyClass.getEStructuralFeature("size");
 
 		employeeClass = companyEmployees.getEReferenceType();
 		employeeName = (EAttribute) employeeClass.getEStructuralFeature("name");
 		employeeManager = (EReference) employeeClass
-			.getEStructuralFeature("manager");
+				.getEStructuralFeature("manager");
 		employeeDirectReports = (EReference) employeeClass
-			.getEStructuralFeature("directReports");
+				.getEStructuralFeature("directReports");
 		employeeAllReports = (EReference) employeeClass
-			.getEStructuralFeature("allReports");
+				.getEStructuralFeature("allReports");
 		employeeReportsTo = getOperation(employeeClass, "reportsTo");
 
 		sizeKind = (EEnum) companySize.getEAttributeType();
@@ -296,7 +296,7 @@ public class DelegatesTest extends AbstractTestSuite
 		EObject employee = create(acme, companyEmployees, employeeClass, null);
 		set(employee, employeeManager, employee("Bob"));
 		validateConstraintWithError("mustHaveName", employee);
-		
+
 		set(employee, employeeName, "Joe");
 		validateWithoutError(employee);
 
@@ -372,7 +372,7 @@ public class DelegatesTest extends AbstractTestSuite
 		initModel(modelName);
 
 		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
-			.getFactory(OCLConstants.OCL_DELEGATE_URI_LPG);
+				.getFactory(OCLConstants.OCL_DELEGATE_URI_LPG);
 
 		String n = "n";
 		String expression = "self.employees->select(employee | employee.manager <> null and employee.manager.name = n)";
@@ -420,7 +420,7 @@ public class DelegatesTest extends AbstractTestSuite
 		initModel(modelName);
 
 		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
-			.getFactory(OCLConstants.OCL_DELEGATE_URI_LPG);
+				.getFactory(OCLConstants.OCL_DELEGATE_URI_LPG);
 
 		String okName = "ok";
 		String badName = "xyzzy";
@@ -435,7 +435,7 @@ public class DelegatesTest extends AbstractTestSuite
 		//
 		delegate = factory.createQueryDelegate(companyClass, null, "n=");
 		executeWithException(delegate, amy, null,
-			"2:2:2:2 \"relationalNotLetCS\" expected after \"=\"");
+				"2:2:2:2 \"relationalNotLetCS\" expected after \"=\"");
 		//
 		//	Undeclared variable
 		//
@@ -552,7 +552,7 @@ public class DelegatesTest extends AbstractTestSuite
 	 * Ensures that {@link InvocationBehavior#getOperationBody(OCL, EOperation)}
 	 * consistently returns <code>null</code> for stdlib operations that don't
 	 * have a body defined at all instead of returning an <code>invalid</code> literal.
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	public void test_attributeNotDefinedInOCLRemainsNull() throws ParserException {
 		helper.setContext(EcorePackage.eINSTANCE.getEClassifier());
@@ -616,8 +616,8 @@ public class DelegatesTest extends AbstractTestSuite
 	/**
 	 * Caches an operation AST in the annotation used by the {@link SettingBehavior} implementation
 	 * and ensures that it's used by the delegate as well as the {@link EvaluationVisitorImpl}
-	 * @throws ParserException 
-	 * @throws InvocationTargetException 
+	 * @throws ParserException
+	 * @throws InvocationTargetException
 	 */
 	public void test_eReferenceDerivationUsedFromCache() throws ParserException, InvocationTargetException {
 		initModel(COMPANY_XMI);
@@ -674,7 +674,7 @@ public class DelegatesTest extends AbstractTestSuite
 		Object o = sup2Obj.eInvoke(getUnrelated, null);
 		assertEquals(unrelatedObj, o);
 	}
-	
+
 	public static class LocalOppositeEndFinder extends DefaultOppositeEndFinder {
 		public static boolean localOppositeEndFinderUsed = false;
 		public LocalOppositeEndFinder(Registry registry) {
@@ -682,7 +682,7 @@ public class DelegatesTest extends AbstractTestSuite
 			localOppositeEndFinderUsed = true;
 		}
 	}
-	
+
 	public static class LocalEnvironmentFactory extends EcoreEnvironmentFactoryWithHiddenOpposites {
 		public static boolean localEnvironmentFactoryUsed = false;
 		public LocalEnvironmentFactory(Registry registry) {
@@ -727,7 +727,7 @@ public class DelegatesTest extends AbstractTestSuite
 		initPackageRegistrations();
 		initModel(COMPANY_XMI);
 		EAnnotation annotation = OCLCommon.getDelegateAnnotation(employeeClass);
-		
+
 		DiagnosticChain diagnostics = new BasicDiagnostic();
 		// first ensure that contents are padded up to where we need it:
 		assertTrue("Expecting \"Amy\" to be a valid name",
@@ -751,7 +751,7 @@ public class DelegatesTest extends AbstractTestSuite
 			ValidationBehavior.INSTANCE.cacheOCLExpression(employeeClass, constraintName, null);
 		}
 	}
-	
+
 	public void test_invariantCachingForFirst() {
 		initPackageRegistrations();
 		initModel(COMPANY_XMI);
@@ -762,7 +762,7 @@ public class DelegatesTest extends AbstractTestSuite
 		assertTrue("Expected to find compiled expression in cache",
 			cached != null && !ValidationBehavior.isNoOCLDefinition(cached));
 	}
-	
+
 	public void test_invariantCachingForSecond() {
 		initPackageRegistrations();
 		initModel(COMPANY_XMI);
@@ -773,7 +773,7 @@ public class DelegatesTest extends AbstractTestSuite
 		assertTrue("Expected to find compiled expression in cache",
 			cached != null && !ValidationBehavior.isNoOCLDefinition(cached));
 	}
-	
+
 	public void test_invariantValidation() {
 		doTest_invariantValidation(COMPANY_XMI, true);
 		assertEquals(!eclipseIsRunning, usedLocalRegistry);
@@ -864,7 +864,7 @@ public class DelegatesTest extends AbstractTestSuite
 	 * Ensures that {@link InvocationBehavior#getOperationBody(OCL, EOperation)}
 	 * consistently returns <code>null</code> for stdlib operations that don't
 	 * have a body defined at all instead of returning an <code>invalid</code> literal.
-	 * @throws ParserException 
+	 * @throws ParserException
 	 */
 	public void test_operationDefinedInStdlibBodyRemainsNull() throws ParserException {
 		helper.setContext(EcorePackage.eINSTANCE.getEClassifier());
@@ -878,16 +878,16 @@ public class DelegatesTest extends AbstractTestSuite
 		OCLExpression bodyStillNull = InvocationBehavior.INSTANCE.getOperationBody((OCL) ocl, o);;
 		assertTrue(bodyStillNull == null || InvocationBehavior.isNoOCLDefinition(bodyStillNull));
 	}
-	
+
 	/**
 	 * Caches an operation AST in the annotation used by the {@link InvocationBehavior} implementation
 	 * and ensures that it's used by the delegate as well as the {@link EvaluationVisitorImpl}.
 	 * Implicitly, the test ensures that no modification is applied to the original textual annotation,
 	 * so that the annotation's contents are <em>not</em> used to cache the compiled AST because that
 	 * may make some clients expecting the metamodel resources to remain unchanged angry.
-	 * 
-	 * @throws ParserException 
-	 * @throws InvocationTargetException 
+	 *
+	 * @throws ParserException
+	 * @throws InvocationTargetException
 	 */
 	public void test_operationUsedFromCache() throws ParserException, InvocationTargetException {
 		initModel(COMPANY_XMI);
@@ -914,7 +914,7 @@ public class DelegatesTest extends AbstractTestSuite
 			InvocationBehavior.INSTANCE.cacheOCLExpression(reportsToOp, null);
 		}
 	}
-	
+
 	public void test_performanceOfCacheRetrieval() throws ParserException {
 		initModel(COMPANY_XMI);
 		EObject manager = companyFactory.create(employeeClass);
@@ -933,7 +933,7 @@ public class DelegatesTest extends AbstractTestSuite
 				ocl.evaluate(employee, expr);
 			}
 			long end = System.currentTimeMillis();
-			System.out.println("Executing " + expression + " " + TIMES
+			debugPrintln("Executing " + expression + " " + TIMES
 				+ " times took " + (end - start) + "ms");
 		}
 	}
@@ -965,7 +965,7 @@ public class DelegatesTest extends AbstractTestSuite
 	 */
 	public void test_queryExecution_Bug353171() {
 		QueryDelegate.Factory factory = QueryDelegate.Factory.Registry.INSTANCE
-			.getFactory(OCLConstants.OCL_DELEGATE_URI_LPG);
+				.getFactory(OCLConstants.OCL_DELEGATE_URI_LPG);
 		String n = "n";
 		String expression = "self.name";
 		Library library = EXTLibraryFactory.eINSTANCE.createLibrary();
@@ -988,7 +988,7 @@ public class DelegatesTest extends AbstractTestSuite
 		EObject badClassInstance = create(acme, companyDetritus, badClassClass, null);
 		validateConstraintWithError("MissingConstraint", badClassInstance);
 	} */
-	
+
 	/**
 	 * EObjectValidator  .validateDelegatedConstraints just skips over null bodies.
 	 *
@@ -997,7 +997,7 @@ public class DelegatesTest extends AbstractTestSuite
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("MissingConstraintBody"), null);
 		validateConstraintWithError("MissingConstraint", badClassInstance);
 	} */
-	
+
 	public void test_validationEvaluatingToInvalid() {
 		initModelWithErrors();
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToInvalid"), null);
@@ -1006,7 +1006,7 @@ public class DelegatesTest extends AbstractTestSuite
 			"evaluatingToInvalid", EObjectValidator.getObjectLabel(badClassInstance, context), message,
 			org.eclipse.ocl.ecore.delegate.OCLDelegateException.class.getName());
 	}
-	
+
 	public void test_validationEvaluatingToNull() {
 		initModelWithErrors();
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToNull"), null);
@@ -1015,7 +1015,7 @@ public class DelegatesTest extends AbstractTestSuite
 			"evaluatingToNull", EObjectValidator.getObjectLabel(badClassInstance, context), message,
 			org.eclipse.ocl.ecore.delegate.OCLDelegateException.class.getName());
 	}
-	
+
 	public void test_validationEvaluatingToWrongType() {
 		initModelWithErrors();
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationEvaluatingToWrongType"), null);
@@ -1024,7 +1024,7 @@ public class DelegatesTest extends AbstractTestSuite
 			"evaluatingToWrongType", EObjectValidator.getObjectLabel(badClassInstance, context), message,
 			org.eclipse.ocl.ecore.delegate.OCLDelegateException.class.getName());
 	}
-	
+
 	public void test_validationParsingToLexicalError() {
 		initModelWithErrors();
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToLexicalError"), null);
@@ -1033,7 +1033,7 @@ public class DelegatesTest extends AbstractTestSuite
 			"parsingToLexicalError", EObjectValidator.getObjectLabel(badClassInstance, context), message,
 			org.eclipse.ocl.ecore.delegate.OCLDelegateException.class.getName());
 	}
-	
+
 	public void test_validationParsingToSemanticError() {
 		initModelWithErrors();
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSemanticError"), null);
@@ -1042,7 +1042,7 @@ public class DelegatesTest extends AbstractTestSuite
 			"parsingToSemanticError", EObjectValidator.getObjectLabel(badClassInstance, context), message,
 			org.eclipse.ocl.ecore.delegate.OCLDelegateException.class.getName());
 	}
-	
+
 	public void test_validationParsingToSyntacticError() {
 		initModelWithErrors();
 		EObject badClassInstance = create(acme, companyDetritus, (EClass) companyPackage.getEClassifier("ValidationParsingToSyntacticError"), null);
@@ -1130,15 +1130,15 @@ public class DelegatesTest extends AbstractTestSuite
 		} catch (OCLDelegateException e) {
 			assertEquals("OCLDelegateException: ", expectedMessage, e.getLocalizedMessage());
 		}
-	}	
+	}
 
 	@SuppressWarnings("unchecked")
 	<T> T invoke(EObject target, EOperation operation, Object... arguments) {
 		try {
 			return (T) target.eInvoke(operation, (arguments.length == 0)
 				? ECollections.<Object> emptyEList()
-				: new BasicEList.UnmodifiableEList<Object>(arguments.length,
-					arguments));
+					: new BasicEList.UnmodifiableEList<Object>(arguments.length,
+							arguments));
 		} catch (InvocationTargetException ite) {
 			fail("Failed to invoke operation: " + ite.getLocalizedMessage());
 			return null;
@@ -1198,8 +1198,8 @@ public class DelegatesTest extends AbstractTestSuite
 
 	String name(EObject employeeOrCompany) {
 		EAttribute name = employeeClass.isInstance(employeeOrCompany)
-			? employeeName
-			: companyName;
+				? employeeName
+					: companyName;
 
 		return get(employeeOrCompany, name);
 	}
