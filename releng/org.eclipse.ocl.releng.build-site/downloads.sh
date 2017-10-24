@@ -8,33 +8,33 @@
 #	PUBLISH__QUALIFIER		Version qualifier e.g. 201710201234
 #	PUBLISH__ALIAS			Non blank to use alias as part of final name
 #
-FOLDER="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/downloads/drops/"
-GROUP="modeling.mdt.ocl"
-ZIP_PREFIX="mdt-ocl-Update-"
+dropsFolder="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/downloads/drops/"
+group="modeling.mdt.ocl"
+zipPrefix="mdt-ocl-Update-"
 
 if [ -n "${PUBLISH__BUILD_T}" ]
 then
 
-  FOLDER="${FOLDER}${PUBLISH__VERSION}/${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER}"
-  if [ ! -d "${FOLDER}" ]
+  versionFolder="${dropsFolder}${PUBLISH__VERSION}/${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER}"
+  if [ ! -d "${versionFolder}" ]
   then
-    mkdir -p ${FOLDER}
+    mkdir -p ${versionFolder}
   fi
 
-  FILE_STEM="${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER}"
+  fileStem="${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER}"
   if [ -n "${PUBLISH__ALIAS}" ]
   then
-    FILE_STEM=${PUBLISH__ALIAS}
+    fileStem=${PUBLISH__ALIAS}
   fi
-  ZIP_FILE="${ZIP_PREFIX}${FILE_STEM}.zip"
+  zipFile="${zipPrefix}${fileStem}.zip"
 
-  pushd ${FOLDER}
-    curl -s -k ${PUBLISH__URL} > ${ZIP_FILE}
-    md5sum -b ${ZIP_FILE} > ${ZIP_FILE}.md5
-    sha512sum -b ${ZIP_FILE} > ${ZIP_FILE}.sha1
+  pushd ${versionFolder}
+    curl -s -k ${PUBLISH__URL} > ${zipFile}
+    md5sum -b ${zipFile} > ${zipFile}.md5
+    sha512sum -b ${zipFile} > ${zipFile}.sha1
     # make sure permissions are for the intended group
-    chgrp -R ${GROUP} ${ZIP_FILE} ${ZIP_FILE}.md5 ${ZIP_FILE}.sha1
-    chmod -R g+w ${ZIP_FILE} ${ZIP_FILE}.md5 ${ZIP_FILE}.sha1
+    chgrp -R ${group} ${zipFile} ${zipFile}.md5 ${zipFile}.sha1
+    chmod -R g+w ${zipFile} ${zipFile}.md5 ${zipFile}.sha1
   popd
 
 fi

@@ -1,82 +1,90 @@
 #!/bin/bash -xv
 #
-#	Promote the PUBLISH__URL to an updates repository.
+#    Promote the PUBLISH__URL to an updates repository.
 #
-#	PUBLISH__URL			The zip to be published e.g. https://hudson.eclipse.org/ocl/job/ocl-photon-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.4.0.201710211702.zip
-#	PUBLISH__VERSION		Unqualified version e.g. 6.4.0
-#	PUBLISH__BUILD_T		Build type N/I/S, blank suppresses promotion
-#	PUBLISH__QUALIFIER		Version qualifier e.g. 201710201234
+#    PUBLISH__URL            The zip to be published e.g. https://hudson.eclipse.org/ocl/job/ocl-photon-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.4.0.201710211702.zip
+#    PUBLISH__VERSION        Unqualified version e.g. 6.4.0
+#    PUBLISH__BUILD_T        Build type N/I/S, blank suppresses promotion
+#    PUBLISH__QUALIFIER        Version qualifier e.g. 201710201234
 #
-FOLDER="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/"
-GROUP="modeling.mdt.ocl"
-LOCAL_ZIP="ocl.zip"
-ANT="/shared/common/apache-ant-latest/bin/ant"
-PROJECT_NAME="OCL"
-MANAGE_COMPOSITE="${ANT} -f /shared/modeling/tools/promotion/manage-composite.xml"
+updatesFolder="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/"
+group="modeling.mdt.ocl"
+localZip="ocl.zip"
+projectName="OCL"
+manageComposite="/shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml"
 
 if [ -n "${PUBLISH__BUILD_T}" ]
 then
 
   if [ "${PUBLISH__BUILD_T}" = "N" ]
   then
-	FOLDER="${FOLDER}nightly"
-	REPO_NAME="Nightly"
+    buildFolder="${updatesFolder}nightly"
+    buildRepoName="Nightly"
   elif [ "${PUBLISH__BUILD_T}" = "I" ]
   then
-	FOLDER="${FOLDER}interim"
-	REPO_NAME="Interim"
+    buildFolder="${updatesFolder}interim"
+    buildRepoName="Interim"
   elif [ "${PUBLISH__BUILD_T}" = "S" ]
   then
-	FOLDER="${FOLDER}milestones"
-	REPO_NAME="Milestones"
+    buildFolder="${updatesFolder}milestones"
+    buildRepoName="Milestones"
   else
-	FOLDER="${FOLDER}other"
-	REPO_NAME="Other"
+    buildFolder="${updatesFolder}other"
+    buildRepoName="Other"
   fi
-  
-  if [ ! -d "${FOLDER}" ]
+
+  if [ ! -d "${buildFolder}" ]
   then
-    mkdir -p ${FOLDER}
+    mkdir -p ${buildFolder}
   fi
-  
-  pushd ${FOLDER}
+
+  pushd ${buildFolder}
     if [ ! -d "${PUBLISH__VERSION}" ]
     then
       mkdir ${PUBLISH__VERSION}
-	  VERSION_COMPOSITE_NAME="${PROJECT_NAME} ${REPO_NAME} Repository"
-	  ${MANAGE_COMPOSITE} add -Dchild.repository=${PUBLISH__VERSION} -Dcomposite.name="${VERSION_COMPOSITE_NAME}"
+      versionCompositeName="${projectName} ${buildRepoName} Repository"
+      ${manageComposite} add -Dchild.repository=${PUBLISH__VERSION} -Dcomposite.name="${versionCompositeName}"
     fi
 
-    pushd ${FOLDER}/${PUBLISH__VERSION}
+    if [ "${PUBLISH__BUILD_T}" = "N" ]
+    then
+      curl -s -k ${PUBLISH__URL} > ${localZip}
+      unzip -ou ${localZip} -d ${PUBLISH__VERSION}
+      rm ${localZip}
 
-	  T_QUALIFIER="${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER}"
-	  VERSION_FOLDER="${FOLDER}/${T_QUALIFIER}"
-	  if [ ! -d "${T_QUALIFIER}" ]
-	  then
-	    mkdir ${T_QUALIFIER}
-	  fi
-	  
-      curl -s -k ${PUBLISH__URL} > ${LOCAL_ZIP}
-	  unzip ${LOCAL_ZIP} -d ${T_QUALIFIER}
-	  rm ${LOCAL_ZIP}
+      chgrp -R ${group} ${PUBLISH__VERSION}
+      chmod -R g+w ${PUBLISH__VERSION}
+    elif [ "${PUBLISH__BUILD_T}" = "I" ]
+    then
+      curl -s -k ${PUBLISH__URL} > ${localZip}
+      unzip -ou ${localZip} -d ${PUBLISH__VERSION}
+      rm ${localZip}
 
-	  VERSION_NAME="${T_QUALIFIER}"
-	  ${MANAGE_COMPOSITE} add -Dchild.repository=${VERSION_NAME} -Dcomposite.name="${PROJECT_NAME} ${PUBLISH__VERSION} ${REPO_NAME} Repository"
+      chgrp -R ${group} ${PUBLISH__VERSION}
+      chmod -R g+w ${PUBLISH__VERSION}
+    elif [ "${PUBLISH__BUILD_T}" = "S" ]
+    then
+      pushd ${buildFolder}/${PUBLISH__VERSION}
 
-	  chgrp -R ${GROUP} ${T_QUALIFIER}
-	  chmod -R g+w ${T_QUALIFIER}
-    
-	  if [ ! -d "latest" ]
-	  then
-	    mkdir latest
-	  fi
-	  pushd ${FOLDER}/${PUBLISH__VERSION}/latest
-	    rm -rf ${FOLDER}/${PUBLISH__VERSION}/latest/*
-	    cp -pr ../${T_QUALIFIER}/* .
-	  popd
-	  
-    popd
-    
+        tQualifier="${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER}"
+        versionFolder="${buildFolder}/${tQualifier}"
+        if [ ! -d "${tQualifier}" ]
+        then
+          mkdir ${tQualifier}
+        fi
+
+        curl -s -k ${PUBLISH__URL} > ${localZip}
+        unzip ${localZip} -d ${tQualifier}
+        rm ${localZip}
+
+        versionName="${tQualifier}"
+        ${manageComposite} add -Dchild.repository=${versionName} -Dcomposite.name="${projectName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
+
+        chgrp -R ${group} ${tQualifier}
+        chmod -R g+w ${tQualifier}
+      popd
+    fi
+   
   popd
 
 fi
