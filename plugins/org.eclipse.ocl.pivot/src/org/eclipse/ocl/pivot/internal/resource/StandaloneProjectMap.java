@@ -2819,17 +2819,19 @@ public class StandaloneProjectMap implements ProjectManager
 						registerBundle(f, saxParser);
 					} else if (!scanFolder(f, saxParser, new HashSet<>(), 0)) {
 						// eclipse bin folder?
-						File parentFile = f.getParentFile();
-						File dotProject = new File(parentFile, ".project");
-						if (dotProject.exists()) {
-							IProjectDescriptor projectDescriptor = registerProject(dotProject);
-							if (projectDescriptor != null) {
-								File plugIn = new File(parentFile, "plugin.xml");
-								if (plugIn.exists()) {
-									PluginReader pluginReader = new PluginReader(projectDescriptor);
-									saxParser.parse(plugIn, pluginReader);
-									pluginReader.scanContents(saxParser);
+						while((f = f.getParentFile()) != null) {
+							File dotProject = new File(f, ".project");
+							if (dotProject.exists()) {
+								IProjectDescriptor projectDescriptor = registerProject(dotProject);
+								if (projectDescriptor != null) {
+									File plugIn = new File(f, "plugin.xml");
+									if (plugIn.exists()) {
+										PluginReader pluginReader = new PluginReader(projectDescriptor);
+										saxParser.parse(plugIn, pluginReader);
+										pluginReader.scanContents(saxParser);
+									}
 								}
+								break;
 							}
 						}
 					}

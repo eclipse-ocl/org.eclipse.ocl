@@ -28,14 +28,14 @@ import org.w3c.dom.Document;
 /**
  * PluginFinder assists in the resolution of plugin locations in a standalone environment.
  * It should be replaced by StandaloneProjectMap once promoted to ocl.common.
- * 
+ *
  * @since 3.2
  */
 public class PluginFinder // BUG 375640 Stolen from StandaloneProjectMap
 {
 	private final Set<String> requiredMappings;
 	private final Map<String, String> resolvedMappings = new HashMap<String, String>();
-	
+
 	public PluginFinder(String... requiredProjects) {
 		this.requiredMappings = new HashSet<String>();
 		for (String requiredProject : requiredProjects) {
@@ -90,8 +90,8 @@ public class PluginFinder // BUG 375640 Stolen from StandaloneProjectMap
 			}
 		}
 		catch (Exception e) {
-//			logException(file, new WrappedException("Couldn't read " + file, e));
-//			return null;
+			//			logException(file, new WrappedException("Couldn't read " + file, e));
+			//			return null;
 		} finally {
 			if (inputStream != null) {
 				try {
@@ -101,7 +101,7 @@ public class PluginFinder // BUG 375640 Stolen from StandaloneProjectMap
 		}
 		return false;
 	}
-	
+
 	public void resolve() {
 		String property = System.getProperty("java.class.path"); //$NON-NLS-1$
 		if (property == null) {
@@ -116,13 +116,15 @@ public class PluginFinder // BUG 375640 Stolen from StandaloneProjectMap
 				if (f.getPath().endsWith(".jar")) { //$NON-NLS-1$
 					registerBundle(f);
 				} else if (scanFolder(f, new HashSet<String>(), 0)) {
-					
+
 				} else {
-					// eclipse bin folder?
-					File parentFile = f.getParentFile();
-					File dotProject = new File(parentFile, ".project"); //$NON-NLS-1$
-					if (dotProject.exists()) {
-						registerProject(dotProject);
+					// eclipse bin folder? Tycho target/classes folder?
+					while ((f = f.getParentFile()) != null) {
+						File dotProject = new File(f, ".project"); //$NON-NLS-1$
+						if (dotProject.exists()) {
+							registerProject(dotProject);
+							break;
+						}
 					}
 				}
 				if (resolvedMappings.size() >= requiredMappings.size()) {
