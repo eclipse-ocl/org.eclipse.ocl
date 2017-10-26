@@ -28,6 +28,7 @@
       <module>org.eclipse.ocl.examples.impactanalyzer.ui</module>
       <module>org.eclipse.ocl.examples.impactanalyzer.util</module>
       <module>org.eclipse.ocl.examples.interpreter</module>
+      <module>org.eclipse.ocl.examples.project.completeocltutorial</module>
       <module>org.eclipse.ocl.examples.project.royalandloyal</module>
       <module>org.eclipse.ocl.examples.standalone</module>
       <module>org.eclipse.ocl.examples.ui</module>

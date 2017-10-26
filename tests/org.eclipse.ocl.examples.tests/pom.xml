@@ -12,27 +12,28 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <build>
-  <plugins>
-    <plugin>
-     <groupId>org.eclipse.tycho</groupId>
-     <artifactId>tycho-surefire-plugin</artifactId>
-     <configuration>
-       <testClass>org.eclipse.ocl.examples.test.AllExamplesTests</testClass>
-       <useUIHarness>false</useUIHarness>
-       <useUIThread>false</useUIThread>
-       <argLine>-DtestSuiteName="org.eclipse.ocl.examples.tests [Standalone]" -ea</argLine>
-     </configuration>
-    </plugin>
-    <!--plugin>
-     <groupId>org.eclipse.tycho</groupId>
-     <artifactId>tycho-surefire-plugin</artifactId>
-     <configuration>
-       <testClass>org.eclipse.ocl.uml.tests.AllTests</testClass>
-       <useUIHarness>true</useUIHarness>
-       <useUIThread>true</useUIThread>
-       <argLine>-DtestSuiteName="org.eclipse.ocl.uml.tests [Plugin]" -Dorg.eclipse.ocl.uml.tests.nodebug=true -ea -Xmx256M</argLine>
-     </configuration>
-    </plugin-->
-  </plugins>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/AllExamplesTests.java</include>
+          </includes>
+          <argLine>-DtestSuiteName="org.eclipse.ocl.examples.tests [Standalone]" -ea</argLine>
+          <reportsDirectory>${project.build.directory}/surefire-reports/standalone</reportsDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+       <groupId>org.eclipse.tycho</groupId>
+       <artifactId>tycho-surefire-plugin</artifactId>
+       <configuration>
+         <testClass>org.eclipse.ocl.examples.test.AllExamplesTests</testClass>
+         <useUIHarness>true</useUIHarness>
+         <useUIThread>true</useUIThread>
+         <argLine>-DtestSuiteName="org.eclipse.ocl.examples.tests [Standalone]" -ea</argLine>
+       </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
