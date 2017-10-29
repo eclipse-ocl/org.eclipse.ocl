@@ -61,16 +61,18 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 		return exported;
 	}
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		exportedFileName = getProjectFileName(getName() + ".html");
+		exportedFileName = getProjectFileName(getTestName() + ".html");
 		initExporter(HTMLExporter.EXPORTER_TYPE);
 		XPathFactory factory = XPathFactory.newInstance();
 		xPathEngine = factory.newXPath();
 		TEST_PROGRESS.println("xPathEngine = " + xPathEngine);
 	}
 
+	@Override
 	@After
 	public void tearDown() throws Exception {
 		super.tearDown();
@@ -79,7 +81,7 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	/**
 	 * Tests that the exported file contains the expected log for metrics
 	 * section.
-	 * 
+	 *
 	 * @throws IOException
 	 * @throws XPathExpressionException
 	 * @throws CoreException
@@ -89,8 +91,8 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 			throws XPathExpressionException, CoreException, IOException {
 		// initiate the test case
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.OK);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
+		.setSeverity(Severity.OK);
 
 		// launch the exporter
 		String exported = doTest();
@@ -106,7 +108,7 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	/**
 	 * Tests that the exported file contains the expected log for metrics
 	 * section.
-	 * 
+	 *
 	 * @throws IOException
 	 * @throws XPathExpressionException
 	 * @throws CoreException
@@ -115,11 +117,11 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	public void testHTMLExport_LoggingMetricsWithInformationSeverity()
 			throws IOException, XPathExpressionException, CoreException {
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.OK);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
+		.setSeverity(Severity.OK);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.INFO);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
+		.setSeverity(Severity.INFO);
 
 		// launch the exporter
 		String exported = doTest();
@@ -134,7 +136,7 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	/**
 	 * Tests that the exported file contains the expected log for metrics
 	 * section.
-	 * 
+	 *
 	 * @throws IOException
 	 * @throws XPathExpressionException
 	 * @throws CoreException
@@ -143,14 +145,14 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	public void testHTMLExport_LoggingMetricsWithWarningSeverity()
 			throws IOException, XPathExpressionException, CoreException {
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.OK);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
+		.setSeverity(Severity.OK);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.INFO);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
+		.setSeverity(Severity.INFO);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.WARNING);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING)
+		.setSeverity(Severity.WARNING);
 
 		// launch the exporter
 		String exported = doTest();
@@ -165,7 +167,7 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	/**
 	 * Tests that the exported file contains the expected log for metrics
 	 * section.
-	 * 
+	 *
 	 * @throws IOException
 	 * @throws XPathExpressionException
 	 * @throws CoreException
@@ -174,17 +176,17 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	public void testHTMLExport_LoggingMetricsWithErrorSeverity()
 			throws IOException, XPathExpressionException, CoreException {
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.OK);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
+		.setSeverity(Severity.OK);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.INFO);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
+		.setSeverity(Severity.INFO);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.WARNING);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING)
+		.setSeverity(Severity.WARNING);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE2_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.ERROR);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE2_E_STRING)
+		.setSeverity(Severity.ERROR);
 
 		// launch the exporter
 		String exported = doTest();
@@ -199,7 +201,7 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	/**
 	 * Tests that the exported file contains the expected log for metrics
 	 * section.
-	 * 
+	 *
 	 * @throws IOException
 	 * @throws XPathExpressionException
 	 * @throws CoreException
@@ -208,20 +210,20 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	public void testHTMLExport_LoggingMetricsWithFailureSeverity()
 			throws IOException, XPathExpressionException, CoreException {
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.OK);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
+		.setSeverity(Severity.OK);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.INFO);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
+		.setSeverity(Severity.INFO);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.WARNING);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING)
+		.setSeverity(Severity.WARNING);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE2_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.ERROR);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE2_E_STRING)
+		.setSeverity(Severity.ERROR);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE4_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.FATAL);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE4_E_STRING)
+		.setSeverity(Severity.FATAL);
 
 		// launch the exporter
 		String exported = doTest();
@@ -236,7 +238,7 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	/**
 	 * Tests that the exported contents contains the expected diagnostics for a
 	 * constraint.
-	 * 
+	 *
 	 * @throws XPathExpressionException
 	 * @throws CoreException
 	 * @throws IOException
@@ -245,8 +247,8 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	public void testHTMLExport_LogNullDiagnosticMessage()
 			throws XPathExpressionException, CoreException, IOException {
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.INFO);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
+		.setSeverity(Severity.INFO);
 
 		// launch the exporter
 		String exported = doTest();
@@ -257,7 +259,7 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	/**
 	 * Tests that the exported content contains the expected diagnostics for a
 	 * constraint.
-	 * 
+	 *
 	 * @throws XPathExpressionException
 	 * @throws CoreException
 	 * @throws IOException
@@ -266,12 +268,12 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 	public void testHTMLExport_LogInfoDiagnosticMessage()
 			throws XPathExpressionException, CoreException, IOException {
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.INFO);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
+		.setSeverity(Severity.INFO);
 		String diagnostic = "Diag INFO"; //$NON-NLS-1$
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT) //$NON-NLS-1$ //$NON-NLS-2$
-				.setDiagnostic(diagnostic);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
+		.setDiagnostic(diagnostic);
 
 		// launch the exporter
 		String exported = doTest();
@@ -281,10 +283,10 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 
 	@Test
 	public void testHTMLExport_ProducesOneLogHeading() throws IOException,
-			XPathExpressionException, CoreException {
+	XPathExpressionException, CoreException {
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.FATAL);
+				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5)
+		.setSeverity(Severity.FATAL);
 
 		// launch the exporter
 		String exported = doTest();
@@ -295,22 +297,22 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 
 	@Test
 	public void testHTMLExport_ProducesAllLogHeadings() throws IOException,
-			XPathExpressionException, CoreException {
+	XPathExpressionException, CoreException {
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.FATAL);
+				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5)
+		.setSeverity(Severity.FATAL);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_ECLASS1_CONSTRAINT, VALIDATABLE_ECLASS1_E1_ATT1).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.ERROR);
+				CONSTRAINABLE_ECLASS1_CONSTRAINT, VALIDATABLE_ECLASS1_E1_ATT1).setSeverity(
+						Severity.ERROR);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EPACKAGE_CONSTRAINT, VALIDATABLE_ECORE_TEST).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.FATAL);
+				CONSTRAINABLE_EPACKAGE_CONSTRAINT, VALIDATABLE_ECORE_TEST).setSeverity(
+						Severity.FATAL);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.WARNING);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
+		.setSeverity(Severity.WARNING);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_ECLASS2_CONSTRAINT, VALIDATABLE_E_CLASS2).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.INFO);
+				CONSTRAINABLE_ECLASS2_CONSTRAINT, VALIDATABLE_E_CLASS2).setSeverity(
+						Severity.INFO);
 
 		// launch the exporter
 		String exported = doTest();
@@ -324,36 +326,36 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 
 	@Test
 	public void testHTMLExport_LogContent() throws IOException,
-			XPathExpressionException, CoreException {
+	XPathExpressionException, CoreException {
 		// Initialize test case
 		for (Result result : results) {
 			result.setSeverity(Severity.OK);
 		}
 
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_ECLASS1_CONSTRAINT, VALIDATABLE_ECLASS1_E1_ATT1).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.ERROR);
+				CONSTRAINABLE_ECLASS1_CONSTRAINT, VALIDATABLE_ECLASS1_E1_ATT1).setSeverity(
+						Severity.ERROR);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EPACKAGE_CONSTRAINT_2, VALIDATABLE_ECORE_TEST).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.ERROR);
+				CONSTRAINABLE_EPACKAGE_CONSTRAINT_2, VALIDATABLE_ECORE_TEST).setSeverity(
+						Severity.ERROR);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EPACKAGE_CONSTRAINT, VALIDATABLE_ECORE_TEST).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.FATAL);
+				CONSTRAINABLE_EPACKAGE_CONSTRAINT, VALIDATABLE_ECORE_TEST).setSeverity(
+						Severity.FATAL);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.FATAL);
+				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5)
+		.setSeverity(Severity.FATAL);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.WARNING);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
+		.setSeverity(Severity.WARNING);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_ECLASS2_CONSTRAINT, VALIDATABLE_E_CLASS2).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.INFO);
+				CONSTRAINABLE_ECLASS2_CONSTRAINT, VALIDATABLE_E_CLASS2).setSeverity(
+						Severity.INFO);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.INFO);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
+		.setSeverity(Severity.INFO);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.WARNING);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING)
+		.setSeverity(Severity.WARNING);
 
 		// launch the exporter
 		String exported = doTest();
@@ -418,35 +420,35 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 
 	@Test
 	public void testHTMLExport_Statistics() throws IOException,
-			XPathExpressionException, CoreException {
+	XPathExpressionException, CoreException {
 		for (Result result : results) {
 			result.setSeverity(Severity.OK);
 		}
 
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_ECLASS1_CONSTRAINT, VALIDATABLE_ECLASS1_E1_ATT1).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.ERROR);
+				CONSTRAINABLE_ECLASS1_CONSTRAINT, VALIDATABLE_ECLASS1_E1_ATT1).setSeverity(
+						Severity.ERROR);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EPACKAGE_CONSTRAINT_2, VALIDATABLE_ECORE_TEST).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.ERROR);
+				CONSTRAINABLE_EPACKAGE_CONSTRAINT_2, VALIDATABLE_ECORE_TEST).setSeverity(
+						Severity.ERROR);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EPACKAGE_CONSTRAINT, VALIDATABLE_ECORE_TEST).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.FATAL);
+				CONSTRAINABLE_EPACKAGE_CONSTRAINT, VALIDATABLE_ECORE_TEST).setSeverity(
+						Severity.FATAL);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.FATAL);
+				CONSTRAINABLE_ECLASS_CONSTRAINT, VALIDATABLE_E_CLASS3_ECLASS5)
+		.setSeverity(Severity.FATAL);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_ECLASS2_CONSTRAINT, VALIDATABLE_E_CLASS2).setSeverity( //$NON-NLS-1$ //$NON-NLS-2$
-				Severity.INFO);
+				CONSTRAINABLE_ECLASS2_CONSTRAINT, VALIDATABLE_E_CLASS2).setSeverity(
+						Severity.INFO);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.INFO);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE5_E_STRING)
+		.setSeverity(Severity.INFO);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.WARNING);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE1_E_STRING)
+		.setSeverity(Severity.WARNING);
 		getResultOfValidatableNodeFromLabel(results,
-				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT) //$NON-NLS-1$ //$NON-NLS-2$
-				.setSeverity(Severity.WARNING);
+				CONSTRAINABLE_EATTRIBUTE_CONSTRAINT, VALIDATABLE_E_ATTRIBUTE3_E_SHORT)
+		.setSeverity(Severity.WARNING);
 
 		// launch the exporter
 		String exported = doTest();
@@ -455,9 +457,9 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 		assertXPathTrue(exported, "//table[1]/tr/td[2]='" + exportedFileName + "'");
 
 		// test resource validated
-//		assertXPathTrue(exported, "//ul[1]/li[1]='" + TEST_PROJECT_LOCATION + "/" + OCL_CONSTRAINTS_MODEL + "'");
+		//		assertXPathTrue(exported, "//ul[1]/li[1]='" + TEST_PROJECT_LOCATION + "/" + OCL_CONSTRAINTS_MODEL + "'");
 		assertXPathTrue(exported, "//ul[1]/li[1]='" + TEST_PROJECT_LOCATION + "/" + ECORE_MODEL_NAME + "'");
-//		assertXPathTrue(exported, "//ul[1]/li[3]='" + TEST_PROJECT_LOCATION + "/" + OCL_CONSTRAINTS_MODEL2 + "'");
+		//		assertXPathTrue(exported, "//ul[1]/li[3]='" + TEST_PROJECT_LOCATION + "/" + OCL_CONSTRAINTS_MODEL2 + "'");
 		assertXPathTrue(exported, "//ul[1]/li[2]='" + TEST_PROJECT_LOCATION + "/" + ECORE_MODEL_NAME3 + "'");
 		assertXPathTrue(exported, "//ul[1]/li[3]='" + TEST_PROJECT_LOCATION + "/" + ECORE_MODEL_NAME2 + "'");
 
@@ -493,9 +495,9 @@ public class HTMLExportOCLValidationResultTests extends AbstractExportOCLValidat
 		assertXPathTrue(exported, "//table[1]/tr/td[2]='" + exportedFileName + "'");
 
 		// test resource validated
-//		assertXPathTrue(exported, "//ul[1]/li[1]='" + TEST_PROJECT_LOCATION + "/" + OCL_CONSTRAINTS_MODEL + "'");
+		//		assertXPathTrue(exported, "//ul[1]/li[1]='" + TEST_PROJECT_LOCATION + "/" + OCL_CONSTRAINTS_MODEL + "'");
 		assertXPathTrue(exported, "//ul[1]/li[1]='" + TEST_PROJECT_LOCATION + "/" + ECORE_MODEL_NAME + "'");
-//		assertXPathTrue(exported, "//ul[1]/li[3]='" + TEST_PROJECT_LOCATION + "/" + OCL_CONSTRAINTS_MODEL2 + "'");
+		//		assertXPathTrue(exported, "//ul[1]/li[3]='" + TEST_PROJECT_LOCATION + "/" + OCL_CONSTRAINTS_MODEL2 + "'");
 		assertXPathTrue(exported, "//ul[1]/li[2]='" + TEST_PROJECT_LOCATION + "/" + ECORE_MODEL_NAME3 + "'");
 		assertXPathTrue(exported, "//ul[1]/li[3]='" + TEST_PROJECT_LOCATION + "/" + ECORE_MODEL_NAME2 + "'");
 

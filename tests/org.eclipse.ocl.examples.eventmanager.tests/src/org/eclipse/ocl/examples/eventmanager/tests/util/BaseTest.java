@@ -8,7 +8,7 @@
  * Contributors:
  * E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.testutils;
+package org.eclipse.ocl.examples.eventmanager.tests.util;
 
 import org.junit.Ignore;
 

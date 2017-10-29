@@ -688,7 +688,11 @@ public class PivotTestCase extends TestCase
 	@Rule public TestName testName = new TestName();
 
 	@Override
-	public @NonNull String getName() {
+	public String getName() {
+		return TestUtil.getName(getTestName());
+	}
+
+	public @NonNull String getTestName() {
 		String name = super.getName();
 		if (name != null) {
 			return name;

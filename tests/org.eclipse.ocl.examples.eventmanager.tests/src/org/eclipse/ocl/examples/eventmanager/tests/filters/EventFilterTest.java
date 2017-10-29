@@ -4,17 +4,16 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     SAP AG - initial API and implementation
  ******************************************************************************/
 package org.eclipse.ocl.examples.eventmanager.tests.filters;
 
-import junit.framework.TestCase;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.ocl.examples.eventmanager.EventFilter;
 import org.eclipse.ocl.examples.eventmanager.filters.AbstractEventFilter;
+import org.eclipse.ocl.examples.eventmanager.tests.util.BaseTest;
 import org.junit.Test;
 
 
@@ -33,17 +32,17 @@ import org.junit.Test;
  * <em>hashCode</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  */
-public abstract class EventFilterTest extends TestCase {
+public abstract class EventFilterTest extends BaseTest {
 	/**
 	 * The fixture for this Event Filter test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 */
 	protected EventFilter fixture = null;
 	/**
 	 * Sets the fixture for this Event Filter test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 */
 	protected void setFixture(EventFilter fixture) {
 		this.fixture = fixture;
@@ -51,7 +50,7 @@ public abstract class EventFilterTest extends TestCase {
 
 	/**
 	 * Returns the fixture for this Event Filter test case. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 */
 	protected EventFilter getFixture() {
 		return fixture;
@@ -61,39 +60,39 @@ public abstract class EventFilterTest extends TestCase {
 	 * Tests the '
 	 * {@link org.eclipse.ocl.examples.eventmanager.filters.AbstractEventFilter#matchesFor(org.eclipse.emf.common.notify.Notification)
 	 * <em>Matches For</em>}' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.ocl.examples.eventmanager.filters.AbstractEventFilter#matchesFor(org.eclipse.emf.common.notify.Notification)
 	 */
 	abstract public void testMatchesFor__Notification();
-	
+
 	@Test
 	public void testClone() {
 		EventFilter f = getFixture();
 		EventFilter c = f.clone();
-		
+
 		assertTrue("Clone not equals source", c.equals(f));
 		assertTrue("Clone has  not same hashkey", c.hashCode() == f.hashCode());
 
 	}
-    /**
-     * Helper method to test the equals/hashcode methods
-     * Creates a filter object dependent on the incoming object
-     * @param f influence the filter creation
-     * @return new FIlter
-     */
-    abstract EventFilter getFilterFor(Object f);
-    
-    /**
-     * Gives one object which create a filter by using {@link #getFilterFor(Object)}
-     * @return an object
-     */
-    abstract Object getFilterCriterion1();
-    
-    /**
-     * Gives a object which creates if applicable a different filter to {@link #getFilterCriterion2()}
-     * @return an object
-     */
-    abstract Object getFilterCriterion2();
+	/**
+	 * Helper method to test the equals/hashcode methods
+	 * Creates a filter object dependent on the incoming object
+	 * @param f influence the filter creation
+	 * @return new FIlter
+	 */
+	abstract EventFilter getFilterFor(Object f);
+
+	/**
+	 * Gives one object which create a filter by using {@link #getFilterFor(Object)}
+	 * @return an object
+	 */
+	abstract Object getFilterCriterion1();
+
+	/**
+	 * Gives a object which creates if applicable a different filter to {@link #getFilterCriterion2()}
+	 * @return an object
+	 */
+	abstract Object getFilterCriterion2();
 	/**
 	 * Simple test for the hashCode / equals contract
 	 */

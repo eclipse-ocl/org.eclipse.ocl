@@ -14,14 +14,14 @@
   <build>
   <plugins>
     <plugin>
-     <groupId>org.eclipse.tycho</groupId>
-     <artifactId>tycho-surefire-plugin</artifactId>
-     <version>${tycho-version}</version>
-     <configuration>
-       <testClass>org.eclipse.ocl.examples.eventmanager.tests.EventManagerTests</testClass>
-       <useUIHarness>true</useUIHarness>
-       <useUIThread>true</useUIThread>
-       <argLine>-ea</argLine>
+      <groupId>org.eclipse.tycho</groupId>
+      <artifactId>tycho-surefire-plugin</artifactId>
+      <version>${tycho-version}</version>
+      <configuration>
+        <testClass>org.eclipse.ocl.examples.eventmanager.tests.EventManagerTests</testClass>
+        <useUIHarness>true</useUIHarness>
+        <useUIThread>true</useUIThread>
+        <argLine>-DtestNameSuffix="tycho" -ea</argLine>
      </configuration>
     </plugin>
   </plugins>

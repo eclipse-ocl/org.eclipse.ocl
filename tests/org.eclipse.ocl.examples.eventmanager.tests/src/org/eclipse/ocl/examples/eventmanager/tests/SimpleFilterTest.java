@@ -4,14 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     SAP AG - initial API and implementation
  ******************************************************************************/
 package org.eclipse.ocl.examples.eventmanager.tests;
 
-
-import junit.framework.TestCase;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -31,6 +29,7 @@ import org.eclipse.ocl.examples.eventmanager.tests.filters.NewValueClassFilterTe
 import org.eclipse.ocl.examples.eventmanager.tests.filters.NewValueClassIncludingSubclassesFilterTest;
 import org.eclipse.ocl.examples.eventmanager.tests.filters.OldValueClassFilterTest;
 import org.eclipse.ocl.examples.eventmanager.tests.filters.OldValueClassIncludingSubclassesFilterTest;
+import org.eclipse.ocl.examples.eventmanager.tests.util.BaseTest;
 
 /**
  * This class test whether the {@link EventManagerFactory#createEventManager() event manager}
@@ -38,16 +37,18 @@ import org.eclipse.ocl.examples.eventmanager.tests.filters.OldValueClassIncludin
  * @author Philipp Berger
  *
  */
-public class SimpleFilterTest extends TestCase{
+public class SimpleFilterTest extends BaseTest{
 
 	private EventManager fixture;
 	private Application app;
 
+	@Override
 	public void setUp() throws Exception {
 		fixture = EventManagerFactory.eINSTANCE.createEventManager();
 		app = new Application();
 	}
 
+	@Override
 	public void tearDown() throws Exception {
 		fixture.unsubscribe(app);
 		fixture=null;
@@ -63,16 +64,16 @@ public class SimpleFilterTest extends TestCase{
 		}
 
 	}
-    public void testBehaviourForUnknownFilter(){
-    	ClassFilter f = new MyClassFilter(null, false);
-    	boolean thrown=false;
-    	try {
-        	fixture.subscribe(f,app );
+	public void testBehaviourForUnknownFilter(){
+		ClassFilter f = new MyClassFilter(null, false);
+		boolean thrown=false;
+		try {
+			fixture.subscribe(f,app );
 		} catch (IllegalArgumentException e) {
 			thrown = true;
 		}
 		assertTrue("No Exception thrown", thrown);
-    }
+	}
 	/**
 	 * Tests whether the {@link Notification notifications} defined by
 	 * the {@link EventFilterTest test} trigger the {@link EventManager manager}
@@ -112,6 +113,7 @@ public class SimpleFilterTest extends TestCase{
 		}
 		fixture.unsubscribe(app);
 	}
+
 	/**
 	 * @see AssociationFilterTest#giveTestFilter()
 	 * @see AssociationFilterTest#giveMatchingNotifications()
@@ -193,5 +195,5 @@ public class SimpleFilterTest extends TestCase{
 		assertHandleEmfEvent(new OldValueClassIncludingSubclassesFilterTest());
 		assertNegatedHandleEmfEvent(new OldValueClassIncludingSubclassesFilterTest());
 	}
-	
+
 }

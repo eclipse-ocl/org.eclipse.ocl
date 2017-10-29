@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
+import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry;
 import org.eclipse.ocl.pivot.internal.registry.CompleteOCLRegistry.Registration;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
@@ -40,6 +41,11 @@ import junit.framework.TestCase;
  */
 public class RegistryTests extends TestCase
 {
+	@Override
+	public String getName() {
+		return TestUtil.getName(super.getName());
+	}
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();

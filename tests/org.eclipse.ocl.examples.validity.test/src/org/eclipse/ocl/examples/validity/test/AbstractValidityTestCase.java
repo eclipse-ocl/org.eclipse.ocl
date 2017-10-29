@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
@@ -48,6 +46,8 @@ import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLCSResource;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 
+import junit.framework.TestCase;
+
 /**
  * Abstract shared functionality for testing.
  */
@@ -77,7 +77,7 @@ public abstract class AbstractValidityTestCase extends TestCase
 	protected static final @NonNull String ECORE_MODEL_NAME = "model/ecoreTest.ecore";
 	protected static final @NonNull String ECORE_MODEL_NAME2 = "model/validityModelTest.ecoretest";
 	protected static final @NonNull String ECORE_MODEL_NAME3 = "model/ecoreTest2.ecore";
-	
+
 	protected static final Integer EXPECTED_SUCCESSES = 145; //147; //145;
 	protected static final Integer EXPECTED_INFOS = 2;
 	protected static final Integer EXPECTED_WARNINGS = 2;
@@ -89,7 +89,7 @@ public abstract class AbstractValidityTestCase extends TestCase
 	protected static final @NonNull String CONSTRAINABLE_ECORE_OCL_ECORE = "ecore.ocl";
 	protected static final @NonNull String CONSTRAINABLE_ECORETEST = "ecoreTest in ecoreTest.ecore";
 	protected static final @NonNull String CONSTRAINABLE_ECORETEST_OCL_ECORE = "ecoreTest.ocl";
-//	protected static final @NonNull String CONSTRAINABLE_ECORETEST2 = "ecoreTest2 in ecoreTest2.ecore";
+	//	protected static final @NonNull String CONSTRAINABLE_ECORETEST2 = "ecoreTest2 in ecoreTest2.ecore";
 	protected static final @NonNull String CONSTRAINABLE_ECLASS1_E1_ATT1 = "Eclass1 in validityModelTest.ecoretest";
 	protected static final @NonNull String CONSTRAINABLE_EATTRIBUTE_CONSTRAINT = "ecore.ocl::ecore::EAttribute::eattribute_constraint";
 	protected static final @NonNull String CONSTRAINABLE_ECLASS_CONSTRAINT = "ecore.ocl::ecore::EClass::eclass_constraint";
@@ -101,7 +101,7 @@ public abstract class AbstractValidityTestCase extends TestCase
 	protected static final @NonNull String CONSTRAINABLE_ECLASS2 = "ecoreTest::EClass2";
 	protected static final @NonNull String CONSTRAINABLE_ECLASS3 = "ecoreTest::EClass3";
 	protected static final @NonNull String CONSTRAINABLE_ECLASS5 = "ecoreTest2::Eclass5";
-	
+
 	protected static final @NonNull String VALIDATABLE_ECORE_TEST = "ecoreTest in ecoreTest.ecore";
 	protected static final @NonNull String VALIDATABLE_ECORETEST2 = "ecoreTest2 in ecoreTest2.ecore";
 	protected static final @NonNull String VALIDATABLE_ECLASS1_E1_ATT1 = "Eclass1 in validityModelTest.ecoretest";
@@ -116,7 +116,7 @@ public abstract class AbstractValidityTestCase extends TestCase
 	protected static final @NonNull String VALIDATABLE_E_ATTRIBUTE5_E_STRING = "ecoreTest2::Eclass5::eAttribute5";
 
 	protected static final @NonNull String TITLE_E_ATTRIBUTE5_E_STRING = "eAttribute5";
-	
+
 	private static ProjectMap projectMap = null;
 
 	public static ConstrainingNode getConstrainingNodeByLabel(@NonNull Iterable<? extends ConstrainingNode> rootNodeChildren, @NonNull String label) {
@@ -164,11 +164,11 @@ public abstract class AbstractValidityTestCase extends TestCase
 		}
 		return null;
 	}
-	
+
 	public static Result getResultOfValidatableNodeFromLabel(@NonNull Iterable<Result> results, @NonNull String labelValidatableNode, @NonNull String labelResultConstrainingNode) {
 		for (Result resultIter : results) {
 			if (labelValidatableNode.equals(resultIter.getResultValidatableNode().getLabel())
-			 && labelResultConstrainingNode.equals(resultIter.getResultConstrainingNode().getLabel())) {
+					&& labelResultConstrainingNode.equals(resultIter.getResultConstrainingNode().getLabel())) {
 				return resultIter;
 			}
 		}
@@ -191,7 +191,7 @@ public abstract class AbstractValidityTestCase extends TestCase
 		String urlString = projectMap.getLocation(PLUGIN_ID).toString();
 		return ClassUtil.nonNullEMF(URI.createURI(urlString + localFileName));
 	}
-	
+
 	public static ValidatableNode getValidatableNodeByLabel(@NonNull Iterable<? extends ValidatableNode> validatableNodes, @NonNull String label) {
 		for (ValidatableNode constrainingNode : validatableNodes) {
 			if (label.equals(constrainingNode.getLabel())) {
@@ -221,6 +221,16 @@ public abstract class AbstractValidityTestCase extends TestCase
 	protected ValidityManager validityManager;
 	protected RootNode rootNode;
 	protected ResultSet resultSet;
+
+	@Override
+	public String getName() {
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		return getTestName() + " <" + testNameSuffix + ">";
+	}
+
+	public String getTestName() {
+		return super.getName();
+	}
 
 	public void initTestModels() throws Exception {
 		ResourceSet resourceSet = ocl.getResourceSet(); //new ResourceSetImpl();
@@ -280,8 +290,9 @@ public abstract class AbstractValidityTestCase extends TestCase
 		ocl = OCL.newInstance(OCL.NO_PROJECTS);
 	}
 
+	@Override
 	public void tearDown() throws Exception {
-/*		if (resourceSet != null) {
+		/*		if (resourceSet != null) {
 			for (Resource resource : resourceSet.getResources()) {
 				resource.unload();
 			}

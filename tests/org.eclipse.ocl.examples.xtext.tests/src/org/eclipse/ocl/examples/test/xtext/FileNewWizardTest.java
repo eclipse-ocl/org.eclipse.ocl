@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
@@ -17,8 +17,6 @@ import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -36,6 +34,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ocl.examples.test.xtext.models.ParserModels;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
+import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.xtext.base.ui.messages.BaseUIMessages;
 import org.eclipse.ocl.xtext.base.ui.wizards.AbstractFileNewWizardPage;
@@ -55,6 +54,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.junit.Test;
+
+import junit.framework.TestCase;
 
 /**
  * Tests that exercise the new complete OCL creation wizard page.
@@ -119,7 +120,7 @@ public class FileNewWizardTest extends TestCase
 								finishPressed();
 							}
 						});
-					}			
+					}
 				};
 				thread.start();
 				return super.open();
@@ -131,6 +132,11 @@ public class FileNewWizardTest extends TestCase
 	protected XtextEditor getActiveEditor() {
 		IWorkbenchPage currentPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		return (XtextEditor)currentPage.getActiveEditor();
+	}
+
+	@Override
+	public String getName() {
+		return TestUtil.getName(super.getName());
 	}
 
 	protected @NonNull String readNewFile(String fileName) throws CoreException, IOException {
@@ -212,7 +218,7 @@ public class FileNewWizardTest extends TestCase
 		wizard.dispose();
 	}
 
-/*	@Test
+	/*	@Test
 	public void test_CompleteOCLFile_NewWizardPage_FileContent() {
 		CompleteOCLFileNewWizard wizard = new CompleteOCLFileNewWizard();
 		AbstractFileNewWizardPage wizardPage = wizard.createNewWizardPage(modelFile);

@@ -10,15 +10,21 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.label;
 
-import junit.framework.TestCase;
-
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.labels.EcoreURILabelGenerator;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.LabelGeneratorRegistry;
 
+import junit.framework.TestCase;
+
 public class StandaloneLabelTests extends TestCase
 {
+	@Override
+	public String getName() {
+		return TestUtil.getName(super.getName());
+	}
+
 	public void testEcoreURILabel() {
 		String testURI = "http://xyzzy/jj";
 		URI uri = URI.createURI(testURI);
@@ -28,23 +34,23 @@ public class StandaloneLabelTests extends TestCase
 		String expectedLabel2 = "<unknown-Hierarchical " + testURI + ">";		// URI post Kepler M6.
 		String expectedLabel = actualLabel.contains("URI") ? expectedLabel1 : expectedLabel2;
 		assertEquals(expectedLabel, actualLabel);
-		
+
 		myRegistry = new LabelGeneratorRegistry(ILabelGenerator.Registry.INSTANCE);
 		EcoreURILabelGenerator.initialize(myRegistry);
 		actualLabel = myRegistry.labelFor(uri);
 		expectedLabel = testURI;
 		assertEquals(expectedLabel, actualLabel);
-		
+
 		EcoreURILabelGenerator.initialize(ILabelGenerator.Registry.INSTANCE);
 		actualLabel = myRegistry.labelFor(uri);
 		expectedLabel = testURI;
 		assertEquals(expectedLabel, actualLabel);
-		
+
 		myRegistry.uninstall(URI.class);
 		actualLabel = myRegistry.labelFor(uri);
 		expectedLabel = testURI;
 		assertEquals(expectedLabel, actualLabel);
-		
+
 		ILabelGenerator.Registry.INSTANCE.uninstall(URI.class);
 		actualLabel = myRegistry.labelFor(uri);
 		assertEquals(expectedLabel, actualLabel);

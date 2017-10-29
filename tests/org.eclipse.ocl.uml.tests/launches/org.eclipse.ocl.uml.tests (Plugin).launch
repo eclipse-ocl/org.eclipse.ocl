@@ -29,7 +29,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.ocl.uml.tests"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-DtestSuiteName=&quot;org.eclipse.ocl.uml.tests [Plugin]&quot;&#13;&#10;-Dorg.eclipse.ocl.uml.tests.nodebug=true&#13;&#10;-ea -Xmx256M"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-DtestSuiteName=&quot;org.eclipse.ocl.uml.tests [Plugin]&quot;&#13;&#10;-DtestNameSuffix=plugin&#13;&#10;-Dorg.eclipse.ocl.uml.tests.nodebug=true&#13;&#10;-ea -Xmx256M"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value=""/>
 <booleanAttribute key="run_in_ui_thread" value="true"/>

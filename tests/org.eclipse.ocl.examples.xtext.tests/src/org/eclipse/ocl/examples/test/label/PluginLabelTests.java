@@ -10,14 +10,20 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.label;
 
-import junit.framework.TestCase;
-
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.labels.LabelGeneratorRegistry;
 
+import junit.framework.TestCase;
+
 public class PluginLabelTests extends TestCase
 {
+	@Override
+	public String getName() {
+		return TestUtil.getName(super.getName());
+	}
+
 	public void testEcoreURIGlobalLabel() {
 		String testURI = "http://xyzzy/jj";
 		URI uri = URI.createURI(testURI);
@@ -25,7 +31,7 @@ public class PluginLabelTests extends TestCase
 		String expectedLabel = testURI;
 		assertEquals(expectedLabel, actualLabel);
 	}
-	
+
 	public void testEcoreURILocalLabel() {
 		String testURI = "http://xyzzy/jj";
 		URI uri = URI.createURI(testURI);

@@ -43,22 +43,22 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 
 	@Override
 	protected @NonNull TestOCL createOCL() {
-		return new TestOCL(getTestPackageName(), getName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
+		return new TestOCL(getTestPackageName(), getTestName(), useCodeGen ? getProjectMap() : OCL.NO_PROJECTS);
 	}
 
 	@Override
 	protected @NonNull String getTestPackageName() {
 		return "EvaluateBooleanOperations";
 	}
-	
+
 	@BeforeClass public static void resetCounter() throws Exception {
 		PivotTestSuite.resetCounter();
-    }
+	}
 
-    @Override
-    @Before public void setUp() throws Exception {
-        super.setUp();
-    }
+	@Override
+	@Before public void setUp() throws Exception {
+		super.setUp();
+	}
 
 	@Override
 	@After public void tearDown() throws Exception {

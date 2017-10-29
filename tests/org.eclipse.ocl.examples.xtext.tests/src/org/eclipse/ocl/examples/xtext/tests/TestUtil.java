@@ -306,6 +306,14 @@ public class TestUtil
 		return uri;
 	}
 
+	public static String getName(String name) {
+		if (name == null) {
+			return name;
+		}
+		String testNameSuffix = System.getProperty("testNameSuffix", "");
+		return name + " <" + testNameSuffix + ">";
+	}
+
 	private static URL getTestResource(@NonNull Class<?> loadedClass, String classRelativeName) {
 		String loaderRelativeName = loadedClass.getPackage().getName().replace(".",  "/") + "/" + classRelativeName;
 		URL projectURL = loadedClass.getClassLoader().getResource(loaderRelativeName);
@@ -392,5 +400,4 @@ public class TestUtil
 		assertNoResourceErrors("Save failed", xmiResource);
 		resource.getContents().addAll(xmiResource.getContents());
 	}
-
 }

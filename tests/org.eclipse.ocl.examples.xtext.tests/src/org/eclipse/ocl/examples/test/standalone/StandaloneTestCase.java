@@ -40,15 +40,15 @@ public class StandaloneTestCase extends PivotTestCase
 	}
 
 	protected @NonNull String getHTMLLogFileName() {
-		return getProjectFileName("models/log_" + getName() + ".html");
+		return getProjectFileName("models/log_" + getTestName() + ".html");
 	}
 
 	protected @NonNull String getTextLogFileName() {
-		return getProjectFileName("models/log_" + getName() + ".txt");
+		return getProjectFileName("models/log_" + getTestName() + ".txt");
 	}
 
 	protected @NonNull String getLogFileName(@NonNull IValidityExporter exporter) {
-		return getProjectFileName("models/log_" + getName() + "." + exporter.getPreferredExtension());
+		return getProjectFileName("models/log_" + getTestName() + "." + exporter.getPreferredExtension());
 	}
 
 	@Override
