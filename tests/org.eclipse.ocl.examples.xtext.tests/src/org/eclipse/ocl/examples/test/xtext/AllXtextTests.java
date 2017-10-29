@@ -134,8 +134,8 @@ extends TestCase {
 		}
 		else {
 			result.addTestSuite(StandaloneLabelTests.class);
-			result.addTestSuite(GrammarTests.class);		// *.xtextbin fail to load in EClipse, but we don't need to test twice anyway.
 		}
+		result.addTestSuite(GrammarTests.class);
 		return result;
 	}
 

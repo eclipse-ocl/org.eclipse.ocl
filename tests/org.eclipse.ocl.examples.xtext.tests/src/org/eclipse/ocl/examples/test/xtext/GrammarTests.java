@@ -31,33 +31,33 @@ public class GrammarTests extends AbstractGrammarTests
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}
-	
+
 	/**
 	 * Checks that the local *.xtextbin is the same as the pre-compiled Java implementation.
-	 * 
+	 *
 	 * FIXME check the library/model version instead.
 	 */
 	public void testGrammar_Base() throws Exception {
-		doTestGrammar(BaseGrammarResource.class.getResource("Base.xtextbin"), BaseGrammarResource.INSTANCE);
+		doTestGrammar(BaseGrammarResource.class, "Base.xtextbin", BaseGrammarResource.INSTANCE);
 	}
-	
+
 	public void testGrammar_EssentialOCL() throws Exception {
-		doTestGrammar(EssentialOCLGrammarResource.class.getResource("EssentialOCL.xtextbin"), EssentialOCLGrammarResource.INSTANCE);
+		doTestGrammar(EssentialOCLGrammarResource.class, "EssentialOCL.xtextbin", EssentialOCLGrammarResource.INSTANCE);
 	}
-	
+
 	public void testGrammar_Markup() throws Exception {
-		doTestGrammar(MarkupGrammarResource.class.getResource("Markup.xtextbin"), MarkupGrammarResource.INSTANCE);
+		doTestGrammar(MarkupGrammarResource.class, "Markup.xtextbin", MarkupGrammarResource.INSTANCE);
 	}
-	
+
 	public void testGrammar_OCLinEcore() throws Exception {
-		doTestGrammar(OCLinEcoreGrammarResource.class.getResource("OCLinEcore.xtextbin"), OCLinEcoreGrammarResource.INSTANCE);
+		doTestGrammar(OCLinEcoreGrammarResource.class, "OCLinEcore.xtextbin", OCLinEcoreGrammarResource.INSTANCE);
 	}
-	
+
 	public void testGrammar_CompleteOCL() throws Exception {
-		doTestGrammar(CompleteOCLGrammarResource.class.getResource("CompleteOCL.xtextbin"), CompleteOCLGrammarResource.INSTANCE);
+		doTestGrammar(CompleteOCLGrammarResource.class, "CompleteOCL.xtextbin", CompleteOCLGrammarResource.INSTANCE);
 	}
-	
+
 	public void testGrammar_OCLstdlib() throws Exception {
-		doTestGrammar(OCLstdlibGrammarResource.class.getResource("OCLstdlib.xtextbin"), OCLstdlibGrammarResource.INSTANCE);
+		doTestGrammar(OCLstdlibGrammarResource.class, "OCLstdlib.xtextbin", OCLstdlibGrammarResource.INSTANCE);
 	}
 }

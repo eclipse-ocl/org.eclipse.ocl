@@ -10,17 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
-import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.xtext.resource.impl.BinaryGrammarResourceFactoryImpl;
 
 /**
@@ -38,16 +37,15 @@ public abstract class AbstractGrammarTests extends XtextTestCase
 		super.tearDown();
 	}
 
-	protected void doTestGrammar(URL binaryURL, @NonNull Resource javaResource) throws IOException, InterruptedException {
-		OCL ocl = OCL.newInstance(OCL.CLASS_PATH);
+	protected void doTestGrammar(@NonNull Class<?> grammarClass, @NonNull String fileName, @NonNull Resource javaResource) throws IOException, InterruptedException {
 		//
 		//	Load binary grammar
 		//
-		ResourceSet resourceSet = ocl.getResourceSet();
-		File binaryFile = new File(binaryURL.getFile());
-		URI binaryURI = URI.createFileURI(binaryFile.toString());
+		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xtextbin", new BinaryGrammarResourceFactoryImpl());
-		Resource binaryResource = resourceSet.getResource(binaryURI, true);
+		Resource binaryResource = resourceSet.createResource(URI.createURI(fileName), null);
+		InputStream inputStream = grammarClass.getResourceAsStream(fileName);
+		binaryResource.load(inputStream, null);
 		assert binaryResource != null;
 		assertNoResourceErrors("Load failed", binaryResource);
 		assertNoUnresolvedProxies("Java Model", binaryResource);
@@ -62,6 +60,5 @@ public abstract class AbstractGrammarTests extends XtextTestCase
 		//	Check similar content
 		//
 		TestUtil.assertSameModel(binaryResource, javaResource);
-		ocl.dispose();
 	}
 }
