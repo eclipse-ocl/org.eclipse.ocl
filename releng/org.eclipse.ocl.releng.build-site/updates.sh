@@ -48,6 +48,7 @@ then
 
     if [ "${PUBLISH__BUILD_T}" = "N" ]
     then
+      rm -rf ${buildFolder}/${PUBLISH__VERSION}/*
       curl -s -k ${PUBLISH__URL} > ${localZip}
       unzip -ou ${localZip} -d ${PUBLISH__VERSION}
       rm ${localZip}
@@ -56,6 +57,7 @@ then
       chmod -R g+w ${PUBLISH__VERSION}
     elif [ "${PUBLISH__BUILD_T}" = "I" ]
     then
+      rm -rf ${buildFolder}/${PUBLISH__VERSION}/*
       curl -s -k ${PUBLISH__URL} > ${localZip}
       unzip -ou ${localZip} -d ${PUBLISH__VERSION}
       rm ${localZip}
