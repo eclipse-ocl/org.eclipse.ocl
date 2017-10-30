@@ -222,9 +222,10 @@
             <archive>
               <addMavenDescriptor>false</addMavenDescriptor>
             </archive>
-              <sourceReferences>
-                <generate>true</generate>
-              </sourceReferences>
+            <format>'v'yyyyMMdd'-'HHmm</format>
+            <sourceReferences>
+              <generate>true</generate>
+            </sourceReferences>
            </configuration>
            <dependencies>
               <dependency>
