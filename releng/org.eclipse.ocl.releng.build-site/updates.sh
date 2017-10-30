@@ -10,7 +10,7 @@
 updatesFolder="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/"
 group="modeling.mdt.ocl"
 localZip="ocl.zip"
-projectName="OCL"
+projectRepoName="OCL"
 manageComposite="/shared/common/apache-ant-latest/bin/ant -f /shared/modeling/tools/promotion/manage-composite.xml"
 
 if [ -n "${PUBLISH__BUILD_T}" ]
@@ -42,7 +42,7 @@ then
     if [ ! -d "${PUBLISH__VERSION}" ]
     then
       mkdir ${PUBLISH__VERSION}
-      versionCompositeName="${projectName} ${buildRepoName} Repository"
+      versionCompositeName="${projectRepoName} ${buildRepoName} Repository"
       ${manageComposite} add -Dchild.repository=${PUBLISH__VERSION} -Dcomposite.name="${versionCompositeName}"
     fi
 
@@ -77,11 +77,10 @@ then
         unzip ${localZip} -d ${tQualifier}
         rm ${localZip}
 
-        versionName="${tQualifier}"
-        ${manageComposite} add -Dchild.repository=${versionName} -Dcomposite.name="${projectName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
-
         chgrp -R ${group} ${tQualifier}
         chmod -R g+w ${tQualifier}
+        ${manageComposite} add -Dchild.repository=${tQualifier} -Dcomposite.name="${projectRepoName} ${PUBLISH__VERSION} ${buildRepoName} Repository"
+
       popd
     fi
    
