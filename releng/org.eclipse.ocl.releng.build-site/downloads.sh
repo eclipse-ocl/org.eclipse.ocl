@@ -2,10 +2,10 @@
 #
 #	Promote the PUBLISH__URL to the downloads 'page'.
 #
-#	PUBLISH__URL			The zip to be published e.g. https://hudson.eclipse.org/ocl/job/ocl-photon-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.4.0.201710211702.zip
+#	PUBLISH__URL			The zip to be published e.g. https://hudson.eclipse.org/ocl/job/ocl-photon-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.4.0.v20171021-1702.zip
 #	PUBLISH__VERSION		Unqualified version e.g. 6.4.0
 #	PUBLISH__BUILD_T		Build type N/I/S, blank suppresses promotion
-#	PUBLISH__QUALIFIER		Version qualifier e.g. 201710201234
+#	PUBLISH__QUALIFIER		Version qualifier e.g. v20171020-1234
 #	PUBLISH__ALIAS			Non blank to use alias as part of final name
 #
 dropsFolder="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/downloads/drops/"
@@ -15,13 +15,14 @@ zipPrefix="mdt-ocl-Update-"
 if [ -n "${PUBLISH__BUILD_T}" ]
 then
 
-  versionFolder="${dropsFolder}${PUBLISH__VERSION}/${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER}"
+  tQualifier="${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER:1:8}${PUBLISH__QUALIFIER:10:4}"
+  versionFolder="${dropsFolder}${PUBLISH__VERSION}/${tQualifier}"
   if [ ! -d "${versionFolder}" ]
   then
     mkdir -p ${versionFolder}
   fi
 
-  fileStem="${PUBLISH__BUILD_T}${PUBLISH__QUALIFIER}"
+  fileStem="${tQualifier}"
   if [ -n "${PUBLISH__ALIAS}" ]
   then
     fileStem=${PUBLISH__ALIAS}
