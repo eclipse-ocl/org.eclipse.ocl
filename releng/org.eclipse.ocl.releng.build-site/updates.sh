@@ -5,7 +5,7 @@
 #    PUBLISH__URL            The zip to be published e.g. https://hudson.eclipse.org/ocl/job/ocl-photon-master/38/artifact/releng/org.eclipse.ocl.releng.build-site/target/org.eclipse.ocl-6.4.0.v20171021-1702.zip
 #    PUBLISH__VERSION        Unqualified version e.g. 6.4.0
 #    PUBLISH__BUILD_T        Build type N/I/S, blank suppresses promotion
-#    PUBLISH__QUALIFIER        Version qualifier e.g. v20171020-1234
+#    PUBLISH__QUALIFIER      Version qualifier e.g. v20171020-1234
 #
 updatesFolder="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/updates/"
 group="modeling.mdt.ocl"
@@ -48,22 +48,22 @@ then
 
     if [ "${PUBLISH__BUILD_T}" = "N" ]
     then
-      rm -rf ${buildFolder}/${PUBLISH__VERSION}/*
       curl -s -k ${PUBLISH__URL} > ${localZip}
-      unzip -ou ${localZip} -d ${PUBLISH__VERSION}
-      rm ${localZip}
-
-      chgrp -R ${group} ${PUBLISH__VERSION}
-      chmod -R g+w ${PUBLISH__VERSION}
+      unzip -ou ${localZip} -d new${PUBLISH__VERSION}
+      chgrp -R ${group} new${PUBLISH__VERSION}
+      chmod -R g+w new${PUBLISH__VERSION}
+      mv ${PUBLISH__VERSION} old${PUBLISH__VERSION}
+      mv new${PUBLISH__VERSION} ${PUBLISH__VERSION}
+      rm -rf old${PUBLISH__VERSION} ${localZip}
     elif [ "${PUBLISH__BUILD_T}" = "I" ]
     then
-      rm -rf ${buildFolder}/${PUBLISH__VERSION}/*
       curl -s -k ${PUBLISH__URL} > ${localZip}
-      unzip -ou ${localZip} -d ${PUBLISH__VERSION}
-      rm ${localZip}
-
-      chgrp -R ${group} ${PUBLISH__VERSION}
-      chmod -R g+w ${PUBLISH__VERSION}
+      unzip -ou ${localZip} -d new${PUBLISH__VERSION}
+      chgrp -R ${group} new${PUBLISH__VERSION}
+      chmod -R g+w new${PUBLISH__VERSION}
+      mv ${PUBLISH__VERSION} old${PUBLISH__VERSION}
+      mv new${PUBLISH__VERSION} ${PUBLISH__VERSION}
+      rm -rf old${PUBLISH__VERSION} ${localZip}
     elif [ "${PUBLISH__BUILD_T}" = "S" ]
     then
       pushd ${buildFolder}/${PUBLISH__VERSION}
