@@ -654,7 +654,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		safeVisit(source);
 		OperationCallExp operationCallExp = (OperationCallExp) oc.getAst();
 		Operation oper = operationCallExp.getReferredOperation();
-		Type sourceType = source != null ? operationCallExp.getOwnedSource().getType() : null;
+		Type sourceType = operationCallExp.getOwnedSource() != null ? operationCallExp.getOwnedSource().getType() : null;
 		append(PivotUtil.getNavigationOperator(false/*operationCallExp.isIsSafe()*/, PivotUtil.isAggregate(sourceType)));
 		appendName(oper);
 		append("(");
