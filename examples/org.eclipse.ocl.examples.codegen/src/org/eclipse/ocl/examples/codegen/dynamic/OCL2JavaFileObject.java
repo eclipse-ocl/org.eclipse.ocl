@@ -22,6 +22,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 
+import com.google.common.collect.Lists;
+
 public class OCL2JavaFileObject extends SimpleJavaFileObject
 {
 	/** @deprecated use saveClass/some-class-loader-loadClass */
@@ -36,9 +38,15 @@ public class OCL2JavaFileObject extends SimpleJavaFileObject
 	 * Load the class whose Java name is qualifiedClassName and whose class file can be found below explicitClassPath.
 	 * Subsequent loads of classes such as nested classes whose names are prefixed by qualifiedClassName are also loaded from explicitClassPath.
 	 * This method always uses a new ClassLoader to load the class and so ignores any previously cached loads.
+	 * @param fallBackClassLoader
 	 */
 	public static Class<?> loadExplicitClass(@NonNull File explicitClassPath, @NonNull String qualifiedClassName) throws ClassNotFoundException, IOException {
-		ExplicitClassLoader classLoader = new ExplicitClassLoader(explicitClassPath, qualifiedClassName);
+		return loadExplicitClass(explicitClassPath, qualifiedClassName, null);
+	}
+	public static Class<?> loadExplicitClass(@NonNull File explicitClassPath, @NonNull String qualifiedClassName, @Nullable ClassLoader fallBackClassLoader) throws ClassNotFoundException, IOException {
+		int lastDot = qualifiedClassName.lastIndexOf(".");
+		String qualifiedClassPackage = lastDot >= 0 ? qualifiedClassName.substring(0, lastDot) : qualifiedClassName;
+		ExplicitClassLoader classLoader = new ExplicitClassLoader(explicitClassPath, qualifiedClassPackage, fallBackClassLoader);
 		return classLoader.loadClass(qualifiedClassName);
 	}
 
@@ -59,10 +67,10 @@ public class OCL2JavaFileObject extends SimpleJavaFileObject
 		saveClass("bin", qualifiedName, javaCodeSource);
 	}
 
-	public static @Nullable String saveClass(@NonNull String explicitClassPath, @NonNull String qualifiedName, @NonNull String javaCodeSource) {
+	public static @Nullable String saveClass(@NonNull String explicitClassPath, @NonNull String qualifiedName, @NonNull String javaCodeSource, @NonNull String... extraClasspathProjects) {
 		List<@NonNull JavaFileObject> compilationUnits = Collections.singletonList(
 			new OCL2JavaFileObject(qualifiedName, javaCodeSource));
-		return JavaFileUtil.compileClasses(compilationUnits, qualifiedName, explicitClassPath, null);
+		return JavaFileUtil.compileClasses(compilationUnits, qualifiedName, explicitClassPath, Lists.newArrayList(extraClasspathProjects));
 	}
 
 	private @NonNull String javaCode;

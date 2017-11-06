@@ -14,14 +14,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * ExplicitClassLoader supports loading all classes sharing a qualifiedClassNamePrefix from an explicitClassPath.
+ * ExplicitClassLoader supports loading all classes from one or more qualifiedPackageNames from an explicitClassPath.
  * This may be used to load classes not on the normal classpath or to reload classes that may have changed since
  * previously loaded.
  * <p>
@@ -30,23 +32,29 @@ import org.eclipse.jdt.annotation.Nullable;
  * <br>defineClass to transform byte[] to Class<?>
  * <p>
  * is motivated by http://www.toptal.com/java/java-wizardry-101-a-guide-to-java-class-reloading.
+ *
+ * FIXME This class confuses two cases.
+ * Reloading neds to verride loadClass as this class does.
+ * Additional path loading should use findClass to preserve the parent loader.
  */
 public class ExplicitClassLoader extends ClassLoader
 {
 	protected final @NonNull File explicitClassPath;
-	protected final @NonNull String qualifiedClassNamePrefix;
+	protected final @NonNull List<@NonNull String> qualifiedPackageNames;
 	protected final @Nullable ClassLoader fallBackClassLoader;
 	private final @NonNull Map<String, Class<?>> hitsAndMisses = new HashMap<String, Class<?>>();	// Miss signalled by ExplicitClassLoader.class
 
-	public ExplicitClassLoader(@NonNull File explicitClassPath, @NonNull String qualifiedClassNamePrefix) {
-		this.explicitClassPath = explicitClassPath;
-		this.qualifiedClassNamePrefix = qualifiedClassNamePrefix;
-		this.fallBackClassLoader = null;
+	public ExplicitClassLoader(@NonNull File explicitClassPath, @NonNull String qualifiedPackageName) {
+		this(explicitClassPath, qualifiedPackageName, null);
 	}
 
-	public ExplicitClassLoader(@NonNull File explicitClassPath, @NonNull String qualifiedClassNamePrefix, @Nullable ClassLoader fallBackClassLoader) {
+	public ExplicitClassLoader(@NonNull File explicitClassPath, @NonNull String qualifiedPackageName, @Nullable ClassLoader fallBackClassLoader) {
+		this(explicitClassPath, Collections.singletonList(qualifiedPackageName), fallBackClassLoader);
+	}
+
+	public ExplicitClassLoader(@NonNull File explicitClassPath, @NonNull List<@NonNull String> qualifiedPackageNames, @Nullable ClassLoader fallBackClassLoader) {
 		this.explicitClassPath = explicitClassPath;
-		this.qualifiedClassNamePrefix = qualifiedClassNamePrefix;
+		this.qualifiedPackageNames = qualifiedPackageNames;
 		this.fallBackClassLoader = fallBackClassLoader;
 	}
 
@@ -56,7 +64,9 @@ public class ExplicitClassLoader extends ClassLoader
 	 */
 	@Override
 	protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-		if (name.startsWith(qualifiedClassNamePrefix)) {
+		int index = name.lastIndexOf(".");
+		String packageName = index >= 0 ? name.substring(0, index) : "";
+		if (qualifiedPackageNames.contains(packageName)) {
 			Class<?> hitOrMiss = hitsAndMisses.get(name);
 			if (hitOrMiss != null) {
 				if (hitOrMiss == ExplicitClassLoader.class) {
@@ -75,7 +85,7 @@ public class ExplicitClassLoader extends ClassLoader
 				throw new ClassNotFoundException(e.getMessage(), e);
 			}
 		}
-		else if (fallBackClassLoader != null) {
+		if (fallBackClassLoader != null) {
 			return fallBackClassLoader.loadClass(name);
 		}
 		else {
